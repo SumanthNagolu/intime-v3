@@ -1,0 +1,3272 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_16_02.mp4",
+    "video_stem": "In_Policy_16_02",
+    "duration_seconds": 282.3,
+    "duration_formatted": "00:04:42.300",
+    "segment_count": 38,
+    "word_count": 478,
+    "avg_confidence": 0.9397,
+    "transcription_time_seconds": 21.2,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:34:13.231000"
+  },
+  "full_text": "In this demo, we create a new underwriting rule for drivers over 80. It should be evaluated before quote time, and no quote should be provided if the condition is true. The approval will expire after one year by default. First login as superuser. Go to Administration. Select Business Settings, Business Rules, Underwriting Rules. Click Add. Enter the required fields to define the rule on the Rule Details tab. The code must be unique. Take pre-quote as the checking set since it should be evaluated before quote. Select Block Quote for blocking point. Select 1 year for default duration after the underwriting issue is approved. Enter the description. Go to the Advanced tab. Set the fields related to approving the issue. Select at most for value comparator, so that you can set a upper limit in the underwriting authority for this underwriting issue type. Select age as the value formatter type. Select Fixed as the default value assignment type, so that the driver's age is used directly to be compared with the user's underwriting authority limit. Go back to the rule details page. Go back to the Rule Details page. In the Applies to section, click Selected for policy lines. Select Personal Auto and click the right arrow to move it to the selected list on the right. Select the Rule Context Personal Auto policy, for each driver, which provides data objects to the drivers on the policy. Next, set up the condition that raises the underwriting issue. Click in the Expression field. The list of available objects are displayed for the selected rule context. Select the object PIA driver. Type a dot to show the fields on the object. Select age. In the Operation drop-down, select the greater than sign. In the Write Expression field, type in the number 80. Next, set underwriting issue details. Use the syntax of $ and curly braces to wrap the policy objects. The fixed ID of the driver object is unique, so it can be used as the issue key to identify the underwriter issue once it is raised. Use the driver's age as the value of the underwriting issue. Enter the short description for the underwriting issue for all languages. Enter the long description for the underwriting issue. Enter the rule. Save the rule. Log out. Log in as a producer Archie Armstrong. Create a personal auto submission with a driver of Rady. We have prepared one as an example. Driver Tom Newton is 84 years old. Try to quote. The issue driver over 80 is raised, and it blocks quote. Go to risk analysis. The age is displayed with the issue, because we configured the underwriting rule to record the value. The Approve button is grayed out because the user does not have the authority. We will discuss authority profile in a separate demonstration. The Filogy of the !",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 26.08,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:26.080",
+      "text": "In this demo, we create a new underwriting rule for drivers over 80. It should be evaluated before quote time, and no quote should be provided if the condition is true. The approval will expire after one year by default. First login as superuser. Go to Administration. Select Business Settings, Business Rules, Underwriting Rules. Click Add.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.52,
+          "probability": 0.9771
+        },
+        {
+          "word": "this",
+          "start": 0.52,
+          "end": 0.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "demo,",
+          "start": 0.66,
+          "end": 0.98,
+          "probability": 0.9932
+        },
+        {
+          "word": "we",
+          "start": 1.22,
+          "end": 1.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "create",
+          "start": 1.44,
+          "end": 1.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "a",
+          "start": 1.78,
+          "end": 1.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "new",
+          "start": 1.94,
+          "end": 2.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "underwriting",
+          "start": 2.08,
+          "end": 2.64,
+          "probability": 0.9375
+        },
+        {
+          "word": "rule",
+          "start": 2.64,
+          "end": 2.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "for",
+          "start": 2.94,
+          "end": 3.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "drivers",
+          "start": 3.14,
+          "end": 3.54,
+          "probability": 0.8921
+        },
+        {
+          "word": "over",
+          "start": 3.54,
+          "end": 3.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "80.",
+          "start": 3.86,
+          "end": 4.1,
+          "probability": 0.9785
+        },
+        {
+          "word": "It",
+          "start": 4.4,
+          "end": 4.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "should",
+          "start": 4.74,
+          "end": 4.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 4.9,
+          "end": 5.06,
+          "probability": 0.999
+        },
+        {
+          "word": "evaluated",
+          "start": 5.06,
+          "end": 5.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "before",
+          "start": 5.62,
+          "end": 5.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "quote",
+          "start": 5.96,
+          "end": 6.28,
+          "probability": 0.7529
+        },
+        {
+          "word": "time,",
+          "start": 6.28,
+          "end": 6.68,
+          "probability": 0.9756
+        },
+        {
+          "word": "and",
+          "start": 6.86,
+          "end": 7.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "no",
+          "start": 7.1,
+          "end": 7.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "quote",
+          "start": 7.26,
+          "end": 7.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "should",
+          "start": 7.5,
+          "end": 7.7,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 7.7,
+          "end": 7.84,
+          "probability": 0.999
+        },
+        {
+          "word": "provided",
+          "start": 7.84,
+          "end": 8.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 8.22,
+          "end": 8.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 8.44,
+          "end": 8.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "condition",
+          "start": 8.54,
+          "end": 8.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 8.92,
+          "end": 9.18,
+          "probability": 0.999
+        },
+        {
+          "word": "true.",
+          "start": 9.18,
+          "end": 9.42,
+          "probability": 0.9883
+        },
+        {
+          "word": "The",
+          "start": 9.68,
+          "end": 10.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "approval",
+          "start": 10.04,
+          "end": 10.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "will",
+          "start": 10.42,
+          "end": 10.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "expire",
+          "start": 10.7,
+          "end": 11.12,
+          "probability": 0.999
+        },
+        {
+          "word": "after",
+          "start": 11.12,
+          "end": 11.4,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 11.4,
+          "end": 11.64,
+          "probability": 0.6675
+        },
+        {
+          "word": "year",
+          "start": 11.64,
+          "end": 11.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 11.82,
+          "end": 12.02,
+          "probability": 0.999
+        },
+        {
+          "word": "default.",
+          "start": 12.02,
+          "end": 12.46,
+          "probability": 1.0
+        },
+        {
+          "word": "First",
+          "start": 12.8,
+          "end": 13.28,
+          "probability": 0.9658
+        },
+        {
+          "word": "login",
+          "start": 13.28,
+          "end": 13.62,
+          "probability": 0.4565
+        },
+        {
+          "word": "as",
+          "start": 13.62,
+          "end": 13.82,
+          "probability": 0.9653
+        },
+        {
+          "word": "superuser.",
+          "start": 13.82,
+          "end": 14.36,
+          "probability": 0.4636
+        },
+        {
+          "word": "Go",
+          "start": 16.18,
+          "end": 16.82,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 16.82,
+          "end": 17.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "Administration.",
+          "start": 17.0,
+          "end": 17.64,
+          "probability": 0.6919
+        },
+        {
+          "word": "Select",
+          "start": 20.66,
+          "end": 21.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "Business",
+          "start": 21.3,
+          "end": 21.66,
+          "probability": 0.9536
+        },
+        {
+          "word": "Settings,",
+          "start": 21.66,
+          "end": 22.2,
+          "probability": 0.9048
+        },
+        {
+          "word": "Business",
+          "start": 22.5,
+          "end": 22.88,
+          "probability": 0.998
+        },
+        {
+          "word": "Rules,",
+          "start": 22.88,
+          "end": 23.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "Underwriting",
+          "start": 23.7,
+          "end": 24.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Rules.",
+          "start": 24.28,
+          "end": 24.68,
+          "probability": 0.9658
+        },
+        {
+          "word": "Click",
+          "start": 25.2,
+          "end": 25.78,
+          "probability": 0.999
+        },
+        {
+          "word": "Add.",
+          "start": 25.78,
+          "end": 26.08,
+          "probability": 0.9346
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.34,
+      "end": 54.32,
+      "start_formatted": "00:00:29.340",
+      "end_formatted": "00:00:54.320",
+      "text": "Enter the required fields to define the rule on the Rule Details tab. The code must be unique. Take pre-quote as the checking set since it should be evaluated before quote. Select Block Quote for blocking point.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 29.34,
+          "end": 29.96,
+          "probability": 0.9751
+        },
+        {
+          "word": "the",
+          "start": 29.96,
+          "end": 30.14,
+          "probability": 0.998
+        },
+        {
+          "word": "required",
+          "start": 30.14,
+          "end": 30.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "fields",
+          "start": 30.58,
+          "end": 31.02,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 31.02,
+          "end": 31.2,
+          "probability": 0.999
+        },
+        {
+          "word": "define",
+          "start": 31.2,
+          "end": 31.56,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 31.56,
+          "end": 31.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 31.72,
+          "end": 31.92,
+          "probability": 0.9854
+        },
+        {
+          "word": "on",
+          "start": 31.92,
+          "end": 32.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 32.08,
+          "end": 32.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Rule",
+          "start": 32.22,
+          "end": 32.42,
+          "probability": 0.689
+        },
+        {
+          "word": "Details",
+          "start": 32.42,
+          "end": 32.92,
+          "probability": 0.9741
+        },
+        {
+          "word": "tab.",
+          "start": 32.92,
+          "end": 33.3,
+          "probability": 0.9873
+        },
+        {
+          "word": "The",
+          "start": 37.64,
+          "end": 38.26,
+          "probability": 0.9917
+        },
+        {
+          "word": "code",
+          "start": 38.26,
+          "end": 38.52,
+          "probability": 0.9878
+        },
+        {
+          "word": "must",
+          "start": 38.52,
+          "end": 38.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 38.74,
+          "end": 38.9,
+          "probability": 1.0
+        },
+        {
+          "word": "unique.",
+          "start": 38.9,
+          "end": 39.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "Take",
+          "start": 47.44,
+          "end": 48.06,
+          "probability": 0.9893
+        },
+        {
+          "word": "pre",
+          "start": 48.06,
+          "end": 48.28,
+          "probability": 0.4609
+        },
+        {
+          "word": "-quote",
+          "start": 48.28,
+          "end": 48.5,
+          "probability": 0.8574
+        },
+        {
+          "word": "as",
+          "start": 48.5,
+          "end": 48.68,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 48.68,
+          "end": 48.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "checking",
+          "start": 48.78,
+          "end": 49.08,
+          "probability": 0.9844
+        },
+        {
+          "word": "set",
+          "start": 49.08,
+          "end": 49.42,
+          "probability": 0.998
+        },
+        {
+          "word": "since",
+          "start": 49.42,
+          "end": 49.6,
+          "probability": 0.998
+        },
+        {
+          "word": "it",
+          "start": 49.6,
+          "end": 49.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "should",
+          "start": 49.8,
+          "end": 49.96,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 49.96,
+          "end": 50.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "evaluated",
+          "start": 50.12,
+          "end": 50.72,
+          "probability": 0.999
+        },
+        {
+          "word": "before",
+          "start": 50.72,
+          "end": 51.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "quote.",
+          "start": 51.08,
+          "end": 51.5,
+          "probability": 0.9839
+        },
+        {
+          "word": "Select",
+          "start": 52.12,
+          "end": 52.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "Block",
+          "start": 52.74,
+          "end": 53.0,
+          "probability": 0.4468
+        },
+        {
+          "word": "Quote",
+          "start": 53.0,
+          "end": 53.32,
+          "probability": 0.7363
+        },
+        {
+          "word": "for",
+          "start": 53.32,
+          "end": 53.46,
+          "probability": 0.999
+        },
+        {
+          "word": "blocking",
+          "start": 53.46,
+          "end": 53.82,
+          "probability": 0.9019
+        },
+        {
+          "word": "point.",
+          "start": 53.82,
+          "end": 54.32,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.8,
+      "end": 84.48,
+      "start_formatted": "00:00:59.800",
+      "end_formatted": "00:01:24.480",
+      "text": "Select 1 year for default duration after the underwriting issue is approved. Enter the description. Go to the Advanced tab. Set the fields related to approving the issue.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 59.8,
+          "end": 60.54,
+          "probability": 0.9761
+        },
+        {
+          "word": "1",
+          "start": 60.54,
+          "end": 60.76,
+          "probability": 0.3994
+        },
+        {
+          "word": "year",
+          "start": 60.76,
+          "end": 60.96,
+          "probability": 0.8765
+        },
+        {
+          "word": "for",
+          "start": 60.96,
+          "end": 61.12,
+          "probability": 0.998
+        },
+        {
+          "word": "default",
+          "start": 61.12,
+          "end": 61.48,
+          "probability": 0.9824
+        },
+        {
+          "word": "duration",
+          "start": 61.48,
+          "end": 61.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "after",
+          "start": 61.9,
+          "end": 62.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 62.24,
+          "end": 62.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "underwriting",
+          "start": 62.4,
+          "end": 62.94,
+          "probability": 0.9736
+        },
+        {
+          "word": "issue",
+          "start": 62.94,
+          "end": 63.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 63.32,
+          "end": 63.5,
+          "probability": 0.999
+        },
+        {
+          "word": "approved.",
+          "start": 63.5,
+          "end": 63.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "Enter",
+          "start": 64.36,
+          "end": 65.1,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 65.1,
+          "end": 65.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "description.",
+          "start": 65.28,
+          "end": 65.76,
+          "probability": 0.9404
+        },
+        {
+          "word": "Go",
+          "start": 77.3,
+          "end": 78.04,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 78.04,
+          "end": 78.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 78.22,
+          "end": 78.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "Advanced",
+          "start": 78.32,
+          "end": 78.7,
+          "probability": 0.5308
+        },
+        {
+          "word": "tab.",
+          "start": 78.7,
+          "end": 79.12,
+          "probability": 0.9614
+        },
+        {
+          "word": "Set",
+          "start": 81.64,
+          "end": 82.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 82.38,
+          "end": 82.54,
+          "probability": 0.998
+        },
+        {
+          "word": "fields",
+          "start": 82.54,
+          "end": 82.84,
+          "probability": 0.9868
+        },
+        {
+          "word": "related",
+          "start": 82.84,
+          "end": 83.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 83.28,
+          "end": 83.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "approving",
+          "start": 83.5,
+          "end": 83.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 83.96,
+          "end": 84.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "issue.",
+          "start": 84.14,
+          "end": 84.48,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 86.38,
+      "end": 93.34,
+      "start_formatted": "00:01:26.380",
+      "end_formatted": "00:01:33.340",
+      "text": "Select at most for value comparator, so that you can set a upper limit in the underwriting authority for this underwriting issue type.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 86.38,
+          "end": 86.94,
+          "probability": 0.9673
+        },
+        {
+          "word": "at",
+          "start": 86.94,
+          "end": 87.08,
+          "probability": 0.2932
+        },
+        {
+          "word": "most",
+          "start": 87.08,
+          "end": 87.3,
+          "probability": 0.7505
+        },
+        {
+          "word": "for",
+          "start": 87.3,
+          "end": 87.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "value",
+          "start": 87.5,
+          "end": 87.86,
+          "probability": 0.7026
+        },
+        {
+          "word": "comparator,",
+          "start": 87.86,
+          "end": 88.54,
+          "probability": 0.9624
+        },
+        {
+          "word": "so",
+          "start": 88.76,
+          "end": 89.04,
+          "probability": 0.9888
+        },
+        {
+          "word": "that",
+          "start": 89.04,
+          "end": 89.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "you",
+          "start": 89.2,
+          "end": 89.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 89.32,
+          "end": 89.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "set",
+          "start": 89.48,
+          "end": 89.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 89.7,
+          "end": 89.82,
+          "probability": 0.7705
+        },
+        {
+          "word": "upper",
+          "start": 89.82,
+          "end": 90.08,
+          "probability": 0.9878
+        },
+        {
+          "word": "limit",
+          "start": 90.08,
+          "end": 90.38,
+          "probability": 0.9912
+        },
+        {
+          "word": "in",
+          "start": 90.38,
+          "end": 90.56,
+          "probability": 0.9658
+        },
+        {
+          "word": "the",
+          "start": 90.56,
+          "end": 90.68,
+          "probability": 0.9883
+        },
+        {
+          "word": "underwriting",
+          "start": 90.68,
+          "end": 91.22,
+          "probability": 0.9658
+        },
+        {
+          "word": "authority",
+          "start": 91.22,
+          "end": 91.54,
+          "probability": 0.9897
+        },
+        {
+          "word": "for",
+          "start": 91.54,
+          "end": 91.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 91.9,
+          "end": 92.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "underwriting",
+          "start": 92.08,
+          "end": 92.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "issue",
+          "start": 92.68,
+          "end": 93.0,
+          "probability": 0.8916
+        },
+        {
+          "word": "type.",
+          "start": 93.0,
+          "end": 93.34,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 97.74,
+      "end": 99.98,
+      "start_formatted": "00:01:37.740",
+      "end_formatted": "00:01:39.980",
+      "text": "Select age as the value formatter type.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 97.74,
+          "end": 98.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "age",
+          "start": 98.3,
+          "end": 98.56,
+          "probability": 0.8521
+        },
+        {
+          "word": "as",
+          "start": 98.56,
+          "end": 98.72,
+          "probability": 0.9702
+        },
+        {
+          "word": "the",
+          "start": 98.72,
+          "end": 98.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "value",
+          "start": 98.8,
+          "end": 99.08,
+          "probability": 0.9761
+        },
+        {
+          "word": "formatter",
+          "start": 99.08,
+          "end": 99.58,
+          "probability": 0.9854
+        },
+        {
+          "word": "type.",
+          "start": 99.58,
+          "end": 99.98,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 105.4,
+      "end": 113.32,
+      "start_formatted": "00:01:45.400",
+      "end_formatted": "00:01:53.320",
+      "text": "Select Fixed as the default value assignment type, so that the driver's age is used directly to be compared with the user's underwriting authority limit.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 105.4,
+          "end": 105.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fixed",
+          "start": 105.96,
+          "end": 106.34,
+          "probability": 0.5508
+        },
+        {
+          "word": "as",
+          "start": 106.34,
+          "end": 106.44,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 106.44,
+          "end": 106.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "default",
+          "start": 106.54,
+          "end": 106.86,
+          "probability": 0.979
+        },
+        {
+          "word": "value",
+          "start": 106.86,
+          "end": 107.3,
+          "probability": 0.9849
+        },
+        {
+          "word": "assignment",
+          "start": 107.3,
+          "end": 107.72,
+          "probability": 0.9897
+        },
+        {
+          "word": "type,",
+          "start": 107.72,
+          "end": 108.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 108.42,
+          "end": 108.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 108.64,
+          "end": 108.8,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 108.8,
+          "end": 108.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "driver's",
+          "start": 108.92,
+          "end": 109.42,
+          "probability": 0.9624
+        },
+        {
+          "word": "age",
+          "start": 109.42,
+          "end": 109.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 109.64,
+          "end": 109.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 109.82,
+          "end": 110.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "directly",
+          "start": 110.04,
+          "end": 110.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 110.44,
+          "end": 110.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 110.62,
+          "end": 110.74,
+          "probability": 0.999
+        },
+        {
+          "word": "compared",
+          "start": 110.74,
+          "end": 111.14,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 111.14,
+          "end": 111.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 111.36,
+          "end": 111.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "user's",
+          "start": 111.5,
+          "end": 111.9,
+          "probability": 0.9902
+        },
+        {
+          "word": "underwriting",
+          "start": 111.9,
+          "end": 112.5,
+          "probability": 0.9937
+        },
+        {
+          "word": "authority",
+          "start": 112.5,
+          "end": 112.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "limit.",
+          "start": 112.92,
+          "end": 113.32,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 113.92,
+      "end": 116.28,
+      "start_formatted": "00:01:53.920",
+      "end_formatted": "00:01:56.280",
+      "text": "Go back to the rule details page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 113.92,
+          "end": 114.52,
+          "probability": 0.958
+        },
+        {
+          "word": "back",
+          "start": 114.52,
+          "end": 114.8,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 114.8,
+          "end": 114.96,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 114.96,
+          "end": 115.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "rule",
+          "start": 115.08,
+          "end": 115.32,
+          "probability": 0.1577
+        },
+        {
+          "word": "details",
+          "start": 115.32,
+          "end": 115.68,
+          "probability": 0.9541
+        },
+        {
+          "word": "page.",
+          "start": 115.68,
+          "end": 116.28,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 117.84,
+      "end": 118.44,
+      "start_formatted": "00:01:57.840",
+      "end_formatted": "00:01:58.440",
+      "text": "Go back to the Rule Details page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 117.84,
+          "end": 118.44,
+          "probability": 0.0001
+        },
+        {
+          "word": "back",
+          "start": 118.44,
+          "end": 118.44,
+          "probability": 0.77
+        },
+        {
+          "word": "to",
+          "start": 118.44,
+          "end": 118.44,
+          "probability": 0.9678
+        },
+        {
+          "word": "the",
+          "start": 118.44,
+          "end": 118.44,
+          "probability": 0.958
+        },
+        {
+          "word": "Rule",
+          "start": 118.44,
+          "end": 118.44,
+          "probability": 0.1648
+        },
+        {
+          "word": "Details",
+          "start": 118.44,
+          "end": 118.44,
+          "probability": 0.9248
+        },
+        {
+          "word": "page.",
+          "start": 118.44,
+          "end": 118.44,
+          "probability": 0.9062
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 118.44,
+      "end": 122.24,
+      "start_formatted": "00:01:58.440",
+      "end_formatted": "00:02:02.240",
+      "text": "In the Applies to section, click Selected for policy lines.",
+      "words": [
+        {
+          "word": "In",
+          "start": 118.44,
+          "end": 118.92,
+          "probability": 0.9775
+        },
+        {
+          "word": "the",
+          "start": 118.92,
+          "end": 119.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "Applies",
+          "start": 119.02,
+          "end": 119.42,
+          "probability": 0.6904
+        },
+        {
+          "word": "to",
+          "start": 119.42,
+          "end": 119.58,
+          "probability": 0.8887
+        },
+        {
+          "word": "section,",
+          "start": 119.58,
+          "end": 120.02,
+          "probability": 0.98
+        },
+        {
+          "word": "click",
+          "start": 120.32,
+          "end": 120.66,
+          "probability": 0.9746
+        },
+        {
+          "word": "Selected",
+          "start": 120.66,
+          "end": 121.16,
+          "probability": 0.895
+        },
+        {
+          "word": "for",
+          "start": 121.16,
+          "end": 121.3,
+          "probability": 0.9863
+        },
+        {
+          "word": "policy",
+          "start": 121.3,
+          "end": 121.74,
+          "probability": 0.5737
+        },
+        {
+          "word": "lines.",
+          "start": 121.74,
+          "end": 122.24,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 122.98,
+      "end": 127.42,
+      "start_formatted": "00:02:02.980",
+      "end_formatted": "00:02:07.420",
+      "text": "Select Personal Auto and click the right arrow to move it to the selected list on the right.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 122.98,
+          "end": 123.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "Personal",
+          "start": 123.58,
+          "end": 123.98,
+          "probability": 0.9351
+        },
+        {
+          "word": "Auto",
+          "start": 123.98,
+          "end": 124.32,
+          "probability": 0.9331
+        },
+        {
+          "word": "and",
+          "start": 124.32,
+          "end": 124.52,
+          "probability": 0.9844
+        },
+        {
+          "word": "click",
+          "start": 124.52,
+          "end": 124.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 124.72,
+          "end": 124.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "right",
+          "start": 124.88,
+          "end": 125.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "arrow",
+          "start": 125.08,
+          "end": 125.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 125.36,
+          "end": 125.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "move",
+          "start": 125.54,
+          "end": 125.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "it",
+          "start": 125.78,
+          "end": 125.92,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 125.92,
+          "end": 126.04,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 126.04,
+          "end": 126.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "selected",
+          "start": 126.16,
+          "end": 126.56,
+          "probability": 0.9619
+        },
+        {
+          "word": "list",
+          "start": 126.56,
+          "end": 126.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "on",
+          "start": 126.86,
+          "end": 127.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 127.04,
+          "end": 127.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "right.",
+          "start": 127.14,
+          "end": 127.42,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 131.66,
+      "end": 138.94,
+      "start_formatted": "00:02:11.660",
+      "end_formatted": "00:02:18.940",
+      "text": "Select the Rule Context Personal Auto policy, for each driver, which provides data objects to the drivers on the policy.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 131.66,
+          "end": 132.26,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 132.26,
+          "end": 132.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "Rule",
+          "start": 132.44,
+          "end": 132.62,
+          "probability": 0.749
+        },
+        {
+          "word": "Context",
+          "start": 132.62,
+          "end": 133.2,
+          "probability": 0.9565
+        },
+        {
+          "word": "Personal",
+          "start": 133.2,
+          "end": 133.6,
+          "probability": 0.9072
+        },
+        {
+          "word": "Auto",
+          "start": 133.6,
+          "end": 134.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "policy,",
+          "start": 134.02,
+          "end": 134.54,
+          "probability": 0.606
+        },
+        {
+          "word": "for",
+          "start": 134.82,
+          "end": 135.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "each",
+          "start": 135.12,
+          "end": 135.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "driver,",
+          "start": 135.38,
+          "end": 135.78,
+          "probability": 0.9873
+        },
+        {
+          "word": "which",
+          "start": 136.02,
+          "end": 136.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "provides",
+          "start": 136.3,
+          "end": 136.72,
+          "probability": 0.998
+        },
+        {
+          "word": "data",
+          "start": 136.72,
+          "end": 137.0,
+          "probability": 0.9751
+        },
+        {
+          "word": "objects",
+          "start": 137.0,
+          "end": 137.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 137.44,
+          "end": 137.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 137.7,
+          "end": 137.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "drivers",
+          "start": 137.8,
+          "end": 138.18,
+          "probability": 0.9912
+        },
+        {
+          "word": "on",
+          "start": 138.18,
+          "end": 138.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 138.38,
+          "end": 138.46,
+          "probability": 0.998
+        },
+        {
+          "word": "policy.",
+          "start": 138.46,
+          "end": 138.94,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 138.94,
+      "end": 144.94,
+      "start_formatted": "00:02:18.940",
+      "end_formatted": "00:02:24.940",
+      "text": "Next, set up the condition that raises the underwriting issue. Click in the Expression field.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 138.94,
+          "end": 140.16,
+          "probability": 0.9653
+        },
+        {
+          "word": "set",
+          "start": 140.54,
+          "end": 140.74,
+          "probability": 0.938
+        },
+        {
+          "word": "up",
+          "start": 140.74,
+          "end": 140.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 140.86,
+          "end": 141.0,
+          "probability": 0.999
+        },
+        {
+          "word": "condition",
+          "start": 141.0,
+          "end": 141.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 141.36,
+          "end": 141.58,
+          "probability": 0.999
+        },
+        {
+          "word": "raises",
+          "start": 141.58,
+          "end": 141.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 141.88,
+          "end": 142.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "underwriting",
+          "start": 142.12,
+          "end": 142.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "issue.",
+          "start": 142.6,
+          "end": 143.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "Click",
+          "start": 143.28,
+          "end": 143.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 143.76,
+          "end": 143.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 143.88,
+          "end": 143.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "Expression",
+          "start": 143.98,
+          "end": 144.54,
+          "probability": 0.8057
+        },
+        {
+          "word": "field.",
+          "start": 144.54,
+          "end": 144.94,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 145.5,
+      "end": 151.88,
+      "start_formatted": "00:02:25.500",
+      "end_formatted": "00:02:31.880",
+      "text": "The list of available objects are displayed for the selected rule context. Select the object PIA driver.",
+      "words": [
+        {
+          "word": "The",
+          "start": 145.5,
+          "end": 146.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "list",
+          "start": 146.12,
+          "end": 146.34,
+          "probability": 0.9917
+        },
+        {
+          "word": "of",
+          "start": 146.34,
+          "end": 146.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 146.48,
+          "end": 146.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "objects",
+          "start": 146.88,
+          "end": 147.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 147.28,
+          "end": 147.5,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed",
+          "start": 147.5,
+          "end": 147.92,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 147.92,
+          "end": 148.1,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 148.1,
+          "end": 148.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "selected",
+          "start": 148.24,
+          "end": 148.64,
+          "probability": 0.9868
+        },
+        {
+          "word": "rule",
+          "start": 148.64,
+          "end": 148.96,
+          "probability": 0.915
+        },
+        {
+          "word": "context.",
+          "start": 148.96,
+          "end": 149.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "Select",
+          "start": 149.9,
+          "end": 150.5,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 150.5,
+          "end": 150.68,
+          "probability": 0.999
+        },
+        {
+          "word": "object",
+          "start": 150.68,
+          "end": 151.14,
+          "probability": 0.729
+        },
+        {
+          "word": "PIA",
+          "start": 151.14,
+          "end": 151.52,
+          "probability": 0.8145
+        },
+        {
+          "word": "driver.",
+          "start": 151.52,
+          "end": 151.88,
+          "probability": 0.8623
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 152.58,
+      "end": 154.96,
+      "start_formatted": "00:02:32.580",
+      "end_formatted": "00:02:34.960",
+      "text": "Type a dot to show the fields on the object.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 152.58,
+          "end": 153.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 153.08,
+          "end": 153.26,
+          "probability": 0.9937
+        },
+        {
+          "word": "dot",
+          "start": 153.26,
+          "end": 153.38,
+          "probability": 0.9629
+        },
+        {
+          "word": "to",
+          "start": 153.38,
+          "end": 153.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "show",
+          "start": 153.56,
+          "end": 153.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.74,
+          "end": 153.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "fields",
+          "start": 153.9,
+          "end": 154.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 154.26,
+          "end": 154.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 154.44,
+          "end": 154.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "object.",
+          "start": 154.54,
+          "end": 154.96,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 155.82,
+      "end": 156.88,
+      "start_formatted": "00:02:35.820",
+      "end_formatted": "00:02:36.880",
+      "text": "Select age.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 155.82,
+          "end": 156.54,
+          "probability": 0.998
+        },
+        {
+          "word": "age.",
+          "start": 156.54,
+          "end": 156.88,
+          "probability": 0.2568
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 163.42,
+      "end": 167.1,
+      "start_formatted": "00:02:43.420",
+      "end_formatted": "00:02:47.100",
+      "text": "In the Operation drop-down, select the greater than sign.",
+      "words": [
+        {
+          "word": "In",
+          "start": 163.42,
+          "end": 164.02,
+          "probability": 0.9731
+        },
+        {
+          "word": "the",
+          "start": 164.02,
+          "end": 164.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "Operation",
+          "start": 164.14,
+          "end": 164.72,
+          "probability": 0.5151
+        },
+        {
+          "word": "drop",
+          "start": 164.72,
+          "end": 165.14,
+          "probability": 0.5884
+        },
+        {
+          "word": "-down,",
+          "start": 165.14,
+          "end": 165.44,
+          "probability": 0.981
+        },
+        {
+          "word": "select",
+          "start": 165.66,
+          "end": 166.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 166.1,
+          "end": 166.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "greater",
+          "start": 166.26,
+          "end": 166.46,
+          "probability": 0.8521
+        },
+        {
+          "word": "than",
+          "start": 166.46,
+          "end": 166.72,
+          "probability": 0.7012
+        },
+        {
+          "word": "sign.",
+          "start": 166.72,
+          "end": 167.1,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 167.58,
+      "end": 170.76,
+      "start_formatted": "00:02:47.580",
+      "end_formatted": "00:02:50.760",
+      "text": "In the Write Expression field, type in the number 80.",
+      "words": [
+        {
+          "word": "In",
+          "start": 167.58,
+          "end": 168.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 168.18,
+          "end": 168.28,
+          "probability": 1.0
+        },
+        {
+          "word": "Write",
+          "start": 168.28,
+          "end": 168.44,
+          "probability": 0.8076
+        },
+        {
+          "word": "Expression",
+          "start": 168.44,
+          "end": 169.02,
+          "probability": 0.9409
+        },
+        {
+          "word": "field,",
+          "start": 169.02,
+          "end": 169.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 169.74,
+          "end": 169.98,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 169.98,
+          "end": 170.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 170.12,
+          "end": 170.2,
+          "probability": 1.0
+        },
+        {
+          "word": "number",
+          "start": 170.2,
+          "end": 170.46,
+          "probability": 0.9902
+        },
+        {
+          "word": "80.",
+          "start": 170.46,
+          "end": 170.76,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 171.38,
+      "end": 173.92,
+      "start_formatted": "00:02:51.380",
+      "end_formatted": "00:02:53.920",
+      "text": "Next, set underwriting issue details.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 171.38,
+          "end": 171.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "set",
+          "start": 172.26,
+          "end": 172.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "underwriting",
+          "start": 172.56,
+          "end": 173.08,
+          "probability": 0.8447
+        },
+        {
+          "word": "issue",
+          "start": 173.08,
+          "end": 173.42,
+          "probability": 0.9858
+        },
+        {
+          "word": "details.",
+          "start": 173.42,
+          "end": 173.92,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 175.5,
+      "end": 179.76,
+      "start_formatted": "00:02:55.500",
+      "end_formatted": "00:02:59.760",
+      "text": "Use the syntax of $ and curly braces to wrap the policy objects.",
+      "words": [
+        {
+          "word": "Use",
+          "start": 175.5,
+          "end": 176.06,
+          "probability": 0.938
+        },
+        {
+          "word": "the",
+          "start": 176.06,
+          "end": 176.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "syntax",
+          "start": 176.24,
+          "end": 176.62,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 176.62,
+          "end": 176.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "$",
+          "start": 176.84,
+          "end": 177.08,
+          "probability": 0.446
+        },
+        {
+          "word": "and",
+          "start": 177.08,
+          "end": 177.58,
+          "probability": 0.8862
+        },
+        {
+          "word": "curly",
+          "start": 177.58,
+          "end": 177.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "braces",
+          "start": 177.88,
+          "end": 178.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 178.24,
+          "end": 178.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "wrap",
+          "start": 178.48,
+          "end": 178.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 178.68,
+          "end": 178.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "policy",
+          "start": 178.82,
+          "end": 179.24,
+          "probability": 0.9644
+        },
+        {
+          "word": "objects.",
+          "start": 179.24,
+          "end": 179.76,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 180.24,
+      "end": 187.62,
+      "start_formatted": "00:03:00.240",
+      "end_formatted": "00:03:07.620",
+      "text": "The fixed ID of the driver object is unique, so it can be used as the issue key to identify the underwriter issue once it is raised.",
+      "words": [
+        {
+          "word": "The",
+          "start": 180.24,
+          "end": 180.8,
+          "probability": 0.9917
+        },
+        {
+          "word": "fixed",
+          "start": 180.8,
+          "end": 181.08,
+          "probability": 0.856
+        },
+        {
+          "word": "ID",
+          "start": 181.08,
+          "end": 181.28,
+          "probability": 0.8843
+        },
+        {
+          "word": "of",
+          "start": 181.28,
+          "end": 181.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 181.5,
+          "end": 181.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "driver",
+          "start": 181.58,
+          "end": 181.86,
+          "probability": 0.8315
+        },
+        {
+          "word": "object",
+          "start": 181.86,
+          "end": 182.28,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 182.28,
+          "end": 182.58,
+          "probability": 0.998
+        },
+        {
+          "word": "unique,",
+          "start": 182.58,
+          "end": 183.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "so",
+          "start": 183.24,
+          "end": 183.52,
+          "probability": 0.9922
+        },
+        {
+          "word": "it",
+          "start": 183.52,
+          "end": 183.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "can",
+          "start": 183.68,
+          "end": 183.8,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 183.8,
+          "end": 183.92,
+          "probability": 0.999
+        },
+        {
+          "word": "used",
+          "start": 183.92,
+          "end": 184.2,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 184.2,
+          "end": 184.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 184.4,
+          "end": 184.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "issue",
+          "start": 184.52,
+          "end": 184.8,
+          "probability": 0.8438
+        },
+        {
+          "word": "key",
+          "start": 184.8,
+          "end": 184.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 184.98,
+          "end": 185.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "identify",
+          "start": 185.14,
+          "end": 185.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 185.56,
+          "end": 185.82,
+          "probability": 0.998
+        },
+        {
+          "word": "underwriter",
+          "start": 185.82,
+          "end": 186.32,
+          "probability": 0.9854
+        },
+        {
+          "word": "issue",
+          "start": 186.32,
+          "end": 186.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "once",
+          "start": 186.66,
+          "end": 186.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "it",
+          "start": 186.92,
+          "end": 187.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 187.1,
+          "end": 187.24,
+          "probability": 0.999
+        },
+        {
+          "word": "raised.",
+          "start": 187.24,
+          "end": 187.62,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 194.58,
+      "end": 197.9,
+      "start_formatted": "00:03:14.580",
+      "end_formatted": "00:03:17.900",
+      "text": "Use the driver's age as the value of the underwriting issue.",
+      "words": [
+        {
+          "word": "Use",
+          "start": 194.58,
+          "end": 195.22,
+          "probability": 0.96
+        },
+        {
+          "word": "the",
+          "start": 195.22,
+          "end": 195.38,
+          "probability": 0.9893
+        },
+        {
+          "word": "driver's",
+          "start": 195.38,
+          "end": 195.88,
+          "probability": 0.8901
+        },
+        {
+          "word": "age",
+          "start": 195.88,
+          "end": 196.06,
+          "probability": 0.856
+        },
+        {
+          "word": "as",
+          "start": 196.06,
+          "end": 196.22,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 196.22,
+          "end": 196.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "value",
+          "start": 196.32,
+          "end": 196.64,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 196.64,
+          "end": 196.8,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 196.8,
+          "end": 196.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "underwriting",
+          "start": 196.92,
+          "end": 197.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "issue.",
+          "start": 197.44,
+          "end": 197.9,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 201.52,
+      "end": 205.24,
+      "start_formatted": "00:03:21.520",
+      "end_formatted": "00:03:25.240",
+      "text": "Enter the short description for the underwriting issue for all languages.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 201.52,
+          "end": 202.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 202.16,
+          "end": 202.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "short",
+          "start": 202.36,
+          "end": 202.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "description",
+          "start": 202.62,
+          "end": 203.06,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 203.06,
+          "end": 203.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 203.34,
+          "end": 203.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "underwriting",
+          "start": 203.46,
+          "end": 204.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "issue",
+          "start": 204.0,
+          "end": 204.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 204.34,
+          "end": 204.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "all",
+          "start": 204.5,
+          "end": 204.74,
+          "probability": 0.9824
+        },
+        {
+          "word": "languages.",
+          "start": 204.74,
+          "end": 205.24,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 208.78,
+      "end": 211.72,
+      "start_formatted": "00:03:28.780",
+      "end_formatted": "00:03:31.720",
+      "text": "Enter the long description for the underwriting issue.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 208.78,
+          "end": 209.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 209.42,
+          "end": 209.62,
+          "probability": 0.999
+        },
+        {
+          "word": "long",
+          "start": 209.62,
+          "end": 209.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "description",
+          "start": 209.84,
+          "end": 210.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 210.32,
+          "end": 210.64,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 210.64,
+          "end": 210.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "underwriting",
+          "start": 210.78,
+          "end": 211.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "issue.",
+          "start": 211.3,
+          "end": 211.72,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 227.58,
+      "end": 229.08,
+      "start_formatted": "00:03:47.580",
+      "end_formatted": "00:03:49.080",
+      "text": "Enter the rule.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 227.58,
+          "end": 228.32,
+          "probability": 0.0
+        },
+        {
+          "word": "the",
+          "start": 228.32,
+          "end": 229.06,
+          "probability": 0.3228
+        },
+        {
+          "word": "rule.",
+          "start": 229.06,
+          "end": 229.08,
+          "probability": 0.4946
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 229.6,
+      "end": 230.9,
+      "start_formatted": "00:03:49.600",
+      "end_formatted": "00:03:50.900",
+      "text": "Save the rule.",
+      "words": [
+        {
+          "word": "Save",
+          "start": 229.6,
+          "end": 230.34,
+          "probability": 0.3342
+        },
+        {
+          "word": "the",
+          "start": 230.34,
+          "end": 230.66,
+          "probability": 0.9697
+        },
+        {
+          "word": "rule.",
+          "start": 230.66,
+          "end": 230.9,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 237.68,
+      "end": 238.7,
+      "start_formatted": "00:03:57.680",
+      "end_formatted": "00:03:58.700",
+      "text": "Log out.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 237.68,
+          "end": 238.36,
+          "probability": 0.9829
+        },
+        {
+          "word": "out.",
+          "start": 238.36,
+          "end": 238.7,
+          "probability": 0.7632
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 241.82,
+      "end": 244.42,
+      "start_formatted": "00:04:01.820",
+      "end_formatted": "00:04:04.420",
+      "text": "Log in as a producer Archie Armstrong.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 241.82,
+          "end": 242.5,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 242.5,
+          "end": 242.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "as",
+          "start": 242.74,
+          "end": 242.88,
+          "probability": 0.9922
+        },
+        {
+          "word": "a",
+          "start": 242.88,
+          "end": 242.96,
+          "probability": 0.9136
+        },
+        {
+          "word": "producer",
+          "start": 242.96,
+          "end": 243.34,
+          "probability": 0.9775
+        },
+        {
+          "word": "Archie",
+          "start": 243.34,
+          "end": 243.88,
+          "probability": 0.9868
+        },
+        {
+          "word": "Armstrong.",
+          "start": 243.88,
+          "end": 244.42,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 246.14,
+      "end": 249.4,
+      "start_formatted": "00:04:06.140",
+      "end_formatted": "00:04:09.400",
+      "text": "Create a personal auto submission with a driver of Rady.",
+      "words": [
+        {
+          "word": "Create",
+          "start": 246.14,
+          "end": 246.82,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 246.82,
+          "end": 246.96,
+          "probability": 1.0
+        },
+        {
+          "word": "personal",
+          "start": 246.96,
+          "end": 247.36,
+          "probability": 0.998
+        },
+        {
+          "word": "auto",
+          "start": 247.36,
+          "end": 247.7,
+          "probability": 0.998
+        },
+        {
+          "word": "submission",
+          "start": 247.7,
+          "end": 248.14,
+          "probability": 0.5464
+        },
+        {
+          "word": "with",
+          "start": 248.14,
+          "end": 248.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 248.44,
+          "end": 248.54,
+          "probability": 0.9492
+        },
+        {
+          "word": "driver",
+          "start": 248.54,
+          "end": 248.88,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 248.88,
+          "end": 249.14,
+          "probability": 0.7744
+        },
+        {
+          "word": "Rady.",
+          "start": 249.14,
+          "end": 249.4,
+          "probability": 0.7109
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 249.76,
+      "end": 251.68,
+      "start_formatted": "00:04:09.760",
+      "end_formatted": "00:04:11.680",
+      "text": "We have prepared one as an example.",
+      "words": [
+        {
+          "word": "We",
+          "start": 249.76,
+          "end": 250.06,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 250.06,
+          "end": 250.26,
+          "probability": 1.0
+        },
+        {
+          "word": "prepared",
+          "start": 250.26,
+          "end": 250.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 250.68,
+          "end": 250.92,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 250.92,
+          "end": 251.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 251.08,
+          "end": 251.18,
+          "probability": 1.0
+        },
+        {
+          "word": "example.",
+          "start": 251.18,
+          "end": 251.68,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 255.78,
+      "end": 258.5,
+      "start_formatted": "00:04:15.780",
+      "end_formatted": "00:04:18.500",
+      "text": "Driver Tom Newton is 84 years old.",
+      "words": [
+        {
+          "word": "Driver",
+          "start": 255.78,
+          "end": 256.46,
+          "probability": 0.9893
+        },
+        {
+          "word": "Tom",
+          "start": 256.46,
+          "end": 256.78,
+          "probability": 0.999
+        },
+        {
+          "word": "Newton",
+          "start": 256.78,
+          "end": 257.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 257.06,
+          "end": 257.28,
+          "probability": 0.999
+        },
+        {
+          "word": "84",
+          "start": 257.28,
+          "end": 257.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "years",
+          "start": 257.68,
+          "end": 258.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "old.",
+          "start": 258.12,
+          "end": 258.5,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 258.74,
+      "end": 259.56,
+      "start_formatted": "00:04:18.740",
+      "end_formatted": "00:04:19.560",
+      "text": "Try to quote.",
+      "words": [
+        {
+          "word": "Try",
+          "start": 258.74,
+          "end": 259.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 259.12,
+          "end": 259.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "quote.",
+          "start": 259.26,
+          "end": 259.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 259.56,
+      "end": 263.58,
+      "start_formatted": "00:04:19.560",
+      "end_formatted": "00:04:23.580",
+      "text": "The issue driver over 80 is raised, and it blocks quote.",
+      "words": [
+        {
+          "word": "The",
+          "start": 259.56,
+          "end": 260.56,
+          "probability": 0.9062
+        },
+        {
+          "word": "issue",
+          "start": 260.56,
+          "end": 260.88,
+          "probability": 0.9536
+        },
+        {
+          "word": "driver",
+          "start": 260.88,
+          "end": 261.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "over",
+          "start": 261.24,
+          "end": 261.52,
+          "probability": 0.8613
+        },
+        {
+          "word": "80",
+          "start": 261.52,
+          "end": 261.78,
+          "probability": 0.9106
+        },
+        {
+          "word": "is",
+          "start": 261.78,
+          "end": 261.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "raised,",
+          "start": 261.98,
+          "end": 262.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 262.58,
+          "end": 262.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 262.78,
+          "end": 262.92,
+          "probability": 1.0
+        },
+        {
+          "word": "blocks",
+          "start": 262.92,
+          "end": 263.22,
+          "probability": 0.999
+        },
+        {
+          "word": "quote.",
+          "start": 263.22,
+          "end": 263.58,
+          "probability": 0.9082
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 263.88,
+      "end": 265.2,
+      "start_formatted": "00:04:23.880",
+      "end_formatted": "00:04:25.200",
+      "text": "Go to risk analysis.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 263.88,
+          "end": 264.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 264.24,
+          "end": 264.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "risk",
+          "start": 264.4,
+          "end": 264.66,
+          "probability": 0.9209
+        },
+        {
+          "word": "analysis.",
+          "start": 264.66,
+          "end": 265.2,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 265.74,
+      "end": 271.26,
+      "start_formatted": "00:04:25.740",
+      "end_formatted": "00:04:31.260",
+      "text": "The age is displayed with the issue, because we configured the underwriting rule to record the value.",
+      "words": [
+        {
+          "word": "The",
+          "start": 265.74,
+          "end": 266.32,
+          "probability": 1.0
+        },
+        {
+          "word": "age",
+          "start": 266.32,
+          "end": 266.62,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 266.62,
+          "end": 266.78,
+          "probability": 1.0
+        },
+        {
+          "word": "displayed",
+          "start": 266.78,
+          "end": 267.22,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 267.22,
+          "end": 267.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 267.42,
+          "end": 267.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "issue,",
+          "start": 267.54,
+          "end": 267.88,
+          "probability": 1.0
+        },
+        {
+          "word": "because",
+          "start": 268.08,
+          "end": 268.4,
+          "probability": 1.0
+        },
+        {
+          "word": "we",
+          "start": 268.4,
+          "end": 268.62,
+          "probability": 1.0
+        },
+        {
+          "word": "configured",
+          "start": 268.62,
+          "end": 269.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 269.08,
+          "end": 269.32,
+          "probability": 1.0
+        },
+        {
+          "word": "underwriting",
+          "start": 269.32,
+          "end": 269.84,
+          "probability": 0.999
+        },
+        {
+          "word": "rule",
+          "start": 269.84,
+          "end": 270.16,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 270.16,
+          "end": 270.32,
+          "probability": 1.0
+        },
+        {
+          "word": "record",
+          "start": 270.32,
+          "end": 270.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 270.68,
+          "end": 270.86,
+          "probability": 1.0
+        },
+        {
+          "word": "value.",
+          "start": 270.86,
+          "end": 271.26,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 271.54,
+      "end": 275.1,
+      "start_formatted": "00:04:31.540",
+      "end_formatted": "00:04:35.100",
+      "text": "The Approve button is grayed out because the user does not have the authority.",
+      "words": [
+        {
+          "word": "The",
+          "start": 271.54,
+          "end": 271.92,
+          "probability": 1.0
+        },
+        {
+          "word": "Approve",
+          "start": 271.92,
+          "end": 272.34,
+          "probability": 0.4924
+        },
+        {
+          "word": "button",
+          "start": 272.34,
+          "end": 272.58,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 272.58,
+          "end": 272.8,
+          "probability": 1.0
+        },
+        {
+          "word": "grayed",
+          "start": 272.8,
+          "end": 273.12,
+          "probability": 0.9106
+        },
+        {
+          "word": "out",
+          "start": 273.12,
+          "end": 273.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 273.22,
+          "end": 273.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 273.48,
+          "end": 273.7,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 273.7,
+          "end": 273.96,
+          "probability": 1.0
+        },
+        {
+          "word": "does",
+          "start": 273.96,
+          "end": 274.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 274.18,
+          "end": 274.38,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 274.38,
+          "end": 274.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 274.58,
+          "end": 274.7,
+          "probability": 1.0
+        },
+        {
+          "word": "authority.",
+          "start": 274.7,
+          "end": 275.1,
+          "probability": 0.9707
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 275.46,
+      "end": 278.3,
+      "start_formatted": "00:04:35.460",
+      "end_formatted": "00:04:38.300",
+      "text": "We will discuss authority profile in a separate demonstration.",
+      "words": [
+        {
+          "word": "We",
+          "start": 275.46,
+          "end": 275.8,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 275.8,
+          "end": 275.94,
+          "probability": 1.0
+        },
+        {
+          "word": "discuss",
+          "start": 275.94,
+          "end": 276.34,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 276.34,
+          "end": 276.74,
+          "probability": 0.6777
+        },
+        {
+          "word": "profile",
+          "start": 276.74,
+          "end": 277.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 277.3,
+          "end": 277.52,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 277.52,
+          "end": 277.64,
+          "probability": 1.0
+        },
+        {
+          "word": "separate",
+          "start": 277.64,
+          "end": 277.94,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration.",
+          "start": 277.94,
+          "end": 278.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 278.48,
+      "end": 278.64,
+      "start_formatted": "00:04:38.480",
+      "end_formatted": "00:04:38.640",
+      "text": "The Filogy of the",
+      "words": [
+        {
+          "word": "The",
+          "start": 278.48,
+          "end": 278.56,
+          "probability": 0.0234
+        },
+        {
+          "word": "Filogy",
+          "start": 278.56,
+          "end": 278.6,
+          "probability": 0.0001
+        },
+        {
+          "word": "of",
+          "start": 278.6,
+          "end": 278.64,
+          "probability": 0.5474
+        },
+        {
+          "word": "the!",
+          "start": 278.64,
+          "end": 278.64,
+          "probability": 0.3101
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 281.9,
+      "end": 282.3,
+      "start_formatted": "00:04:41.900",
+      "end_formatted": "00:04:42.300",
+      "text": "!",
+      "words": []
+    }
+  ]
+}

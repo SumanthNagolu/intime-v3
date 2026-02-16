@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { LocationPicker } from '@/components/addresses'
+import { LocationPicker, AddressForm, type AddressFormData } from '@/components/addresses'
 import { PhoneInput, type PhoneInputValue } from '@/components/ui/phone-input'
 import { CurrencyInput, type CurrencyInputValue } from '@/components/ui/currency-input'
 import { PercentageInput } from '@/components/ui/percentage-input'
@@ -391,6 +391,27 @@ export function FormFieldRenderer({
         )
 
       // ============================================
+      // ADDRESS FORM (Full structured)
+      // ============================================
+      case 'address':
+        const addressValue: Partial<AddressFormData> =
+          typeof value === 'object' && value !== null
+            ? (value as Partial<AddressFormData>)
+            : {}
+
+        return (
+          <AddressForm
+            value={addressValue}
+            onChange={(data) => onChange({ ...addressValue, ...data })}
+            required={field.required}
+            disabled={isDisabled}
+            showCounty
+            showAddressLine2
+            compact={false}
+          />
+        )
+
+      // ============================================
       // DEFAULT TEXT INPUT
       // ============================================
       case 'text':
@@ -491,6 +512,8 @@ export function ViewFieldRenderer({ field, value, className }: ViewFieldRenderer
         return 'tags'
       case 'number':
         return 'number'
+      case 'address':
+        return 'address'
       default:
         return 'text'
     }

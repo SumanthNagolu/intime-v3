@@ -1,0 +1,412 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-16",
+    "slide_count": 36,
+    "slides_with_text": 31,
+    "total_words": 1282,
+    "avg_confidence": 89.17,
+    "processing_time_seconds": 13.68,
+    "extracted_at": "2026-02-13T12:15:43.019174"
+  },
+  "full_text": "Managing Disbursements\n\nLesson\nobjectives\n\n¢ Describe the lifecycle of a disbursement\n\n* Create a manual disbursement\n\n¢ Explain how billing plan settings control\nautomatic disbursements\n\nHandling refunds\n\nMarcus\n\neens) = How does BillingCenter handle\n\nAnalyst\n\nrefunds? Suppose a\npolicyholder has overpaid.\n\nMost of the time,\ndisbursements are\nhandling automatically.\nHowever, if required, the\nbilling clerk can initiate the\nrefund by creating a\ndisbursement.\n\nZhang\nBilling Clerk\n\n| Disbursement lifecycle (1 of 4) G\n\nA disbursement is a refund paid to an account\n\nDisbursement\n\nUnapplied has is created\nexcess funds\n\n| Disbursement lifecycle (2 of 4) G\n\nA disbursement is a refund paid to an account\n\nisbursement Disbursement\nUnapplied has is created is approved\nexcess funds\n\n| Disbursement lifecycle (3 of 4) G\n\nA disbursement is a refund paid to an account\n\n(—\n\nKasi Disbursement\nUnapplied has is created is ~s\nexcess funds\n\ne-\nprocess\n\n©\n\nDisbursement is\nrejected\n\n| Disbursement lifecycle (4 of 4) G\n\nA disbursement is a refund paid to an account\n\n(— to are\n\nKasi Disbursement Disbursement\nUnapplied has is created is ~s is sent fn.\nexcess funds\ne-\nDisbursement is Disbursement is\n\nrejected voided\n\nActors in disbursement lifecycle Ga\n\nManual disbursement\n\nGy\n® BillingCenter user initiates Depending on user Due date reached\n\n= system permissions, bi)\napproval may be lors Disbursement batch process runs\nrequired Sar\nGy e / a ; ad j—> e\nDisbursement is Disbursement Disbursement\nUnapplied has created is approved is sent Policyholder\n\nexcess funds\n\nCreating the manual disbursement Ga\n\nAccount Disbursement Wizard - Step 1 of 2\n\nCustomer Details\nAccount #\n\nAccount Name\n\nUnapplied Fund *\n\nUnapplied Amount\nDisbursements Pending\n\nDisbursement Info\n\nAmount *\nPayment Date *\nReason *\nPayee Info\n\nPay To *\nMail To *\nMail To Address\n\nDEMo0260\n\nCharles Brewer LLC\n\nPAO1-CBREWER\n\n$500\n\n06/16/2018\n\n$1,100.00\n\n<none>\n\n<none>\nCancellation\nOther\n\nIf account uses cash separation,\nyou need to select the unapplied\nfund\n\nAmount cannot exceed amount in\nselected unapplied fund\n(disbursement can draw from a single\nsource of unapplied funds only)\n\ncD —_—_t+ A disbursement must have a reason\n\nReturn Premi\nReturn Premi\nWrong Payer\n\n‘Audit\nPolicyChange\n\nDisbursement batch process\n\nOr):\n\nDisbursement\n\n¢ Disbursement batch process issues disbursement payments for\napproved disbursements on their due date\n\n* On the due date of an approved disbursement\nthe batch process:\n\n1. Creates a request for payment through integration to a third party system\n\n2. Updates the disbursement status to Sent\n\nDisbursements\nAll °\n\nDate Paid >\n\n09/15/2018\n\nDate Rejected >\n\nAl oa\n\nCollateral Unapplied Fund Status > PaymentStatus > Amount * PayTo >  PaymentMethod\n\neS\n\nDisbursement # >\n1000000005 No $100.00 Bill Baker\n\n1000000004 No $500.00 BillBaker Responsive\n\nDemonstration G\n\nManual disbursement\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nMost disbursements are automatic Ga\n\nMarcus\nBusiness\n\nAnalyst What about automatic\n4 disbursements?\n\nA Zhang\nMost disbursements are ailing Gta\ncreated automatically in\nBillingCenter, which is the goal\nat Succeed Insurance.\n\nLet me show you.\n\n| Actors in the disbursement lifecycle Gi\n\nAutomatic disbursement\n\nThe billing plan controls the behavior of the Automatic Disbursement batch process\n\nAutomatic Disbursement iz EL] acter plan settings Due date is reached\nbatch process initiates él] determine whether\n\napproval is required [Exp] Disbursement batch process runs\n\nset! ete! 2.8\n\nDisbursement Disbursement Disbursement\nUnapplied has is created is approved is sent in.\nexcess funds\n\nAutomatic Disbursement batch process Ga\n\n¢« Automatic Disbursements batch process operates on accounts (©)\nwith positive unapplied balances “ar\n\n¢ For each account, the batch process: Automatic\nDisbursement\n1. Allocates money to eligible unsettled invoice items, if any\n2. Creates a disbursement if surplus unapplied funds remain\n\n¢ Typically, Automatic Disbursement is run every day\n\nQuestion G\n\n,— — What does a billing clerk need to do to ensure that most refunds are sent\nY to policyholders?\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gl\n\n_— — What does a billing clerk need to do to ensure that most refunds are sent\nY to policyholders?\n\nNo action is needed — BillingCenter automatically handles disbursements.\n\n~- SSS 5S 555555 5-5 =--=\n\nQuestion\n\n- — Identify the actor that initiates each step for a manual and an automatic\n: disbursement (1 of 2).\n\nAnswer Gi\n\n,- — !dentify the actor that initiates each step for a manual and an automatic\n¢ disbursement (1 of 2).\n\n¢\n¢\n\nQuestion G\n\n- — Identify the actor that initiates each step for a manual and an automatic\n: disbursement (2 of 2).\n\nAnswer Gi\n\n,~ — !dentify the actor that initiates each step for a manual and an automatic\n¢ disbursement (2 of 2).\n\n¢\n¢\n\nDemonstration G\n\nAutomatic disbursement\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nBilling plan settings for automatic\ndisbursements\n\nDetermining whether there are surplus funds Ga\n\nMarcus.\nBusiness\nAnalyst\n\nHow does the batch process\n\ndetermine whether there is a\nsurplus?\n\nZhang \\=)34\nBilling Clerk ‘2\n\nSettings on the billing plan\ncontrol the behavior of the\nAutomatic Disbursement\nbatch process.\n\n| Options that determine whether there is asurplus [5\n\nBilling plan settings control automatic disbursements\n\nBilling plan\nAutomatic Disbursements Specifies how to calculate whether a surplus exists\nAmount Amount Available = unapplied amount — amount under\nCreation Threshold (If set to Unapplied minus billed:\nuso Amount Available = unapplied amount — billed amount )\nAoproval Specifies upper limit for amounts too trivial to\nApproval Required Yes disburse\neperchse tastiest If surplus <= $4.99, do not automatically disburse\nUSD $1,000.00\n\nSend Date\n\nDays Until Payment 2\nCreated\n\nOption for setting the due date Ga\n\nBilling plan settings control automatic disbursements\n\nBilling plan\nAutomatic Disbursements Setting a due date in the future allows\nAmount time for clearing incoming payments\nAmount Available Unapplied minus under contract\n\nCreation Threshold\n\nuUsD $4.99\nApproval .\n\ni Used to set disbursement due date\nApproval Required Yes\n\nDue date = current date + 2\nApproval Required Threshold\n\nusD $1,000.00\n\nSend Date\n\nDays Until Payment\nCreated\n\nOptions for handling approvals Ga\n\nBilling plan fields control automatic disbursements\nBilling plan\n\nAutomatic Disbursements\n\n‘Amount\n\nAmount Available Unapplied minus under contract\nCreation Threshold\n\nme aes A “Yes” enables creation of an approval activity if\n\ndisbursement amount exceeds Approval Required\nThreshold value\n\nApproval Required Threshold\n\nSpecifies threshold for requiring approval\n\nvee If amount to disburse > $1,000, create approval activity\n\nSend Date\n\nDays Until Payment 2\nCreated\n\nQuestion G\n\n,~ — Given: $1000 in Default Unapplied, billed invoice items amounting to\n¢ $200, and unbilled invoice items amounting to $600:\n\n¢\n4\n\nHow much money is available for automatic disbursement if Unapplied\nminus under contract is used for the calculation?\n\nHow much money is available for automatic disbursement if Unapplied\nminus billed is used for the calculation?\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gl\n\n,~ — Given: $1000 in Default Unapplied, billed invoice items amounting to\n¢ $200, and unbilled invoice items amounting to $600:\n\n¢\n4\n\nHow much money is available for automatic disbursement if Unapplied\nminus under contract is used for the calculation?\n\nHow much money is available for automatic disbursement if Unapplied\nminus billed is used for the calculation?\n\na. $200\nb. $800\n\n~- SSS 5S 555555 5-5 =--=\n\nDemonstration G\n\n—_. Automatic disbursement with approval\n— required\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nLesson\nobjectives ¢ Describe the lifecycle of a disbursement\nreview * Create a manual disbursement\n\n¢ Explain how billing plan settings control\nautomatic disbursements\n\nStudent exercise\n\nCreate disbursements",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Managing Disbursements",
+      "word_count": 2,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the lifecycle of a disbursement\n\n* Create a manual disbursement\n\n¢ Explain how billing plan settings control\nautomatic disbursements",
+      "word_count": 23,
+      "avg_confidence": 88.22,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Handling refunds\n\nMarcus\n\neens) = How does BillingCenter handle\n\nAnalyst\n\nrefunds? Suppose a\npolicyholder has overpaid.\n\nMost of the time,\ndisbursements are\nhandling automatically.\nHowever, if required, the\nbilling clerk can initiate the\nrefund by creating a\ndisbursement.\n\nZhang\nBilling Clerk",
+      "word_count": 41,
+      "avg_confidence": 94.72,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Disbursement lifecycle (1 of 4) G\n\nA disbursement is a refund paid to an account\n\nDisbursement\n\nUnapplied has is created\nexcess funds",
+      "word_count": 23,
+      "avg_confidence": 90.13,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Disbursement lifecycle (2 of 4) G\n\nA disbursement is a refund paid to an account\n\nisbursement Disbursement\nUnapplied has is created is approved\nexcess funds",
+      "word_count": 26,
+      "avg_confidence": 90.54,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Disbursement lifecycle (3 of 4) G\n\nA disbursement is a refund paid to an account\n\n(—\n\nKasi Disbursement\nUnapplied has is created is ~s\nexcess funds\n\ne-\nprocess\n\n©\n\nDisbursement is\nrejected",
+      "word_count": 33,
+      "avg_confidence": 87.41,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Disbursement lifecycle (4 of 4) G\n\nA disbursement is a refund paid to an account\n\n(— to are\n\nKasi Disbursement Disbursement\nUnapplied has is created is ~s is sent fn.\nexcess funds\ne-\nDisbursement is Disbursement is\n\nrejected voided",
+      "word_count": 40,
+      "avg_confidence": 84.97,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Actors in disbursement lifecycle Ga\n\nManual disbursement\n\nGy\n® BillingCenter user initiates Depending on user Due date reached\n\n= system permissions, bi)\napproval may be lors Disbursement batch process runs\nrequired Sar\nGy e / a ; ad j—> e\nDisbursement is Disbursement Disbursement\nUnapplied has created is approved is sent Policyholder\n\nexcess funds",
+      "word_count": 54,
+      "avg_confidence": 82.56,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Creating the manual disbursement Ga\n\nAccount Disbursement Wizard - Step 1 of 2\n\nCustomer Details\nAccount #\n\nAccount Name\n\nUnapplied Fund *\n\nUnapplied Amount\nDisbursements Pending\n\nDisbursement Info\n\nAmount *\nPayment Date *\nReason *\nPayee Info\n\nPay To *\nMail To *\nMail To Address\n\nDEMo0260\n\nCharles Brewer LLC\n\nPAO1-CBREWER\n\n$500\n\n06/16/2018\n\n$1,100.00\n\n<none>\n\n<none>\nCancellation\nOther\n\nIf account uses cash separation,\nyou need to select the unapplied\nfund\n\nAmount cannot exceed amount in\nselected unapplied fund\n(disbursement can draw from a single\nsource of unapplied funds only)\n\ncD —_—_t+ A disbursement must have a reason\n\nReturn Premi\nReturn Premi\nWrong Payer\n\n‘Audit\nPolicyChange",
+      "word_count": 105,
+      "avg_confidence": 87.21,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Disbursement batch process\n\nOr):\n\nDisbursement\n\n¢ Disbursement batch process issues disbursement payments for\napproved disbursements on their due date\n\n* On the due date of an approved disbursement\nthe batch process:\n\n1. Creates a request for payment through integration to a third party system\n\n2. Updates the disbursement status to Sent\n\nDisbursements\nAll °\n\nDate Paid >\n\n09/15/2018\n\nDate Rejected >\n\nAl oa\n\nCollateral Unapplied Fund Status > PaymentStatus > Amount * PayTo >  PaymentMethod\n\neS\n\nDisbursement # >\n1000000005 No $100.00 Bill Baker\n\n1000000004 No $500.00 BillBaker Responsive",
+      "word_count": 89,
+      "avg_confidence": 82.36,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Demonstration G\n\nManual disbursement\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Most disbursements are automatic Ga\n\nMarcus\nBusiness\n\nAnalyst What about automatic\n4 disbursements?\n\nA Zhang\nMost disbursements are ailing Gta\ncreated automatically in\nBillingCenter, which is the goal\nat Succeed Insurance.\n\nLet me show you.",
+      "word_count": 35,
+      "avg_confidence": 88.77,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Actors in the disbursement lifecycle Gi\n\nAutomatic disbursement\n\nThe billing plan controls the behavior of the Automatic Disbursement batch process\n\nAutomatic Disbursement iz EL] acter plan settings Due date is reached\nbatch process initiates él] determine whether\n\napproval is required [Exp] Disbursement batch process runs\n\nset! ete! 2.8\n\nDisbursement Disbursement Disbursement\nUnapplied has is created is approved is sent in.\nexcess funds",
+      "word_count": 63,
+      "avg_confidence": 87.14,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Automatic Disbursement batch process Ga\n\n¢« Automatic Disbursements batch process operates on accounts (©)\nwith positive unapplied balances “ar\n\n¢ For each account, the batch process: Automatic\nDisbursement\n1. Allocates money to eligible unsettled invoice items, if any\n2. Creates a disbursement if surplus unapplied funds remain\n\n¢ Typically, Automatic Disbursement is run every day",
+      "word_count": 55,
+      "avg_confidence": 88.6,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question G\n\n,— — What does a billing clerk need to do to ensure that most refunds are sent\nY to policyholders?\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 26,
+      "avg_confidence": 83.48,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer Gl\n\n_— — What does a billing clerk need to do to ensure that most refunds are sent\nY to policyholders?\n\nNo action is needed — BillingCenter automatically handles disbursements.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 37,
+      "avg_confidence": 83.37,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n- — Identify the actor that initiates each step for a manual and an automatic\n: disbursement (1 of 2).",
+      "word_count": 21,
+      "avg_confidence": 91.91,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer Gi\n\n,- — !dentify the actor that initiates each step for a manual and an automatic\n¢ disbursement (1 of 2).\n\n¢\n¢",
+      "word_count": 24,
+      "avg_confidence": 80.23,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n- — Identify the actor that initiates each step for a manual and an automatic\n: disbursement (2 of 2).",
+      "word_count": 22,
+      "avg_confidence": 91.52,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\n,~ — !dentify the actor that initiates each step for a manual and an automatic\n¢ disbursement (2 of 2).\n\n¢\n¢",
+      "word_count": 24,
+      "avg_confidence": 80.35,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Demonstration G\n\nAutomatic disbursement\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.53,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Billing plan settings for automatic\ndisbursements",
+      "word_count": 6,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Determining whether there are surplus funds Ga\n\nMarcus.\nBusiness\nAnalyst\n\nHow does the batch process\n\ndetermine whether there is a\nsurplus?\n\nZhang \\=)34\nBilling Clerk ‘2\n\nSettings on the billing plan\ncontrol the behavior of the\nAutomatic Disbursement\nbatch process.",
+      "word_count": 40,
+      "avg_confidence": 91.17,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Options that determine whether there is asurplus [5\n\nBilling plan settings control automatic disbursements\n\nBilling plan\nAutomatic Disbursements Specifies how to calculate whether a surplus exists\nAmount Amount Available = unapplied amount — amount under\nCreation Threshold (If set to Unapplied minus billed:\nuso Amount Available = unapplied amount — billed amount )\nAoproval Specifies upper limit for amounts too trivial to\nApproval Required Yes disburse\neperchse tastiest If surplus <= $4.99, do not automatically disburse\nUSD $1,000.00\n\nSend Date\n\nDays Until Payment 2\nCreated",
+      "word_count": 86,
+      "avg_confidence": 89.58,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Option for setting the due date Ga\n\nBilling plan settings control automatic disbursements\n\nBilling plan\nAutomatic Disbursements Setting a due date in the future allows\nAmount time for clearing incoming payments\nAmount Available Unapplied minus under contract\n\nCreation Threshold\n\nuUsD $4.99\nApproval .\n\ni Used to set disbursement due date\nApproval Required Yes\n\nDue date = current date + 2\nApproval Required Threshold\n\nusD $1,000.00\n\nSend Date\n\nDays Until Payment\nCreated",
+      "word_count": 71,
+      "avg_confidence": 89.58,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Options for handling approvals Ga\n\nBilling plan fields control automatic disbursements\nBilling plan\n\nAutomatic Disbursements\n\n‘Amount\n\nAmount Available Unapplied minus under contract\nCreation Threshold\n\nme aes A “Yes” enables creation of an approval activity if\n\ndisbursement amount exceeds Approval Required\nThreshold value\n\nApproval Required Threshold\n\nSpecifies threshold for requiring approval\n\nvee If amount to disburse > $1,000, create approval activity\n\nSend Date\n\nDays Until Payment 2\nCreated",
+      "word_count": 67,
+      "avg_confidence": 90.26,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question G\n\n,~ — Given: $1000 in Default Unapplied, billed invoice items amounting to\n¢ $200, and unbilled invoice items amounting to $600:\n\n¢\n4\n\nHow much money is available for automatic disbursement if Unapplied\nminus under contract is used for the calculation?\n\nHow much money is available for automatic disbursement if Unapplied\nminus billed is used for the calculation?\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 64,
+      "avg_confidence": 90.1,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer Gl\n\n,~ — Given: $1000 in Default Unapplied, billed invoice items amounting to\n¢ $200, and unbilled invoice items amounting to $600:\n\n¢\n4\n\nHow much money is available for automatic disbursement if Unapplied\nminus under contract is used for the calculation?\n\nHow much money is available for automatic disbursement if Unapplied\nminus billed is used for the calculation?\n\na. $200\nb. $800\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 70,
+      "avg_confidence": 88.84,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Demonstration G\n\n—_. Automatic disbursement with approval\n— required\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 92.56,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Lesson\nobjectives ¢ Describe the lifecycle of a disbursement\nreview * Create a manual disbursement\n\n¢ Explain how billing plan settings control\nautomatic disbursements",
+      "word_count": 24,
+      "avg_confidence": 90.38,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Student exercise\n\nCreate disbursements",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    }
+  ]
+}

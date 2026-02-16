@@ -468,7 +468,7 @@ export const usersRouter = router({
       id: z.string().uuid(),
       firstName: z.string().min(1).max(100).optional(),
       lastName: z.string().min(1).max(100).optional(),
-      phone: z.string().optional().nullable(),
+      phone: z.string().max(20).regex(/^[\d\s+\-()]*$/, 'Invalid phone number format').optional().nullable(),
       roleId: z.string().uuid().optional(),
       podId: z.string().uuid().optional().nullable(),
       podRole: z.enum(['junior', 'senior']).optional(), // Pod role assignment

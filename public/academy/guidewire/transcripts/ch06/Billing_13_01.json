@@ -1,0 +1,7040 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_13_01.mp4",
+    "video_stem": "Billing_13_01",
+    "duration_seconds": 328.2,
+    "duration_formatted": "00:05:28.200",
+    "segment_count": 102,
+    "word_count": 1005,
+    "avg_confidence": 0.9624,
+    "transcription_time_seconds": 32.07,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:04:31.024372"
+  },
+  "full_text": "In this demonstration, we create a trouble ticket. The trouble ticket will place holds on delinquency processing and invoice billing. Ashley, a policyholder, has requested a reduction in her bill because she has just lowered the coverage on her homeowner's policy. An alert warns that the account has a passed due delinquency. Let's look at the policy. $130 is passed due and a late fee of $50 has been charged. The first step in resolving this issue is to place a hold on delinquency processing and on billing. I can do this by means of a trouble ticket. I click the trouble tickets link in the sidebar. I click New to launch the trouble ticket wizard. I need to select the type of trouble ticket. I select Customer Complaint from the list of types. Next is the trouble ticket. Next is the trouble ticket subject. I enter the policy number that the trouble ticket is for. I type in a short description in the details field. The bill needs to be adjusted because of a change in coverage. Next is the priority of this trouble ticket. I select Urgent from the list. Next is the priority of this customer. We want to act fast to fix this issue to keep the customer happy. So I type in today's date in the date due field. I also type in today's date for the escalation date. Let's go to step 2. Here I see the account, policy, and policy period are already associated with the trouble ticket. This means a trouble ticket alert will be displayed in the UI for the account, the policy, and the policy period. Let's go to the next step. The primary purpose of this trouble ticket is to place holds on both delinquencies and billing, so I will select those two holds. A hold on delinquency blocks the automatic processing of delinquencies. I also place a hold on invoice sending. I decide not to specify dates for automatically releasing the holds on a certain date. The holds can be released manually. Also, closing the trouble ticket automatically releases all trouble ticket holds. Let's move to step 4. In step 4, I can add any related transactions. This is purely for documentation purposes. Here I'll add the late fee that Ashley was charged. I select the policy late fee charge transaction. And click select. Let's go to step 5. This is the last step. I want to assign the trouble ticket to myself. I select Jeff Park. Now I click finish to save the trouble ticket. The new trouble ticket is listed here. I click the trouble ticket number to view the trouble ticket. There are some tabs at the bottom of the trouble ticket screen. Currently, the trouble ticket has no notes or activities. I will add an activity to the ticket later in the demo. Let's look at transactions. On the transactions tab, I see the late fee transaction listed. Let's look at the holds tab. The holds I placed on billing and delinquency processing are shown here. Let's go back to the policy. As expected, on the policy summary, troubled ticket alerts for the policy and policy period have been generated. Let's see what's happening with the delinquency. The status of the past due delinquency is on hold. The next delinquency event, which is Dunning Letter 2, is in one week. I'll switch to Super User to advance the clock and run a batch process to wake up the workflow. I click Add Week to advance the clock by 7 days. Next I click Server Tools to run the batch process. I click the sort arrow icon to make it easy to access the Workflow Writer batch process. I find Workflow Writer and I click Run. Let's return to Jeff Park's browser to see what has changed. First, I'll refresh the display by visiting another screen. Now I return to the delinquencies screen. The target date for the Dunning Letter 2 event is now red. But the event cannot be completed because of the trouble ticket hold. We know the delinquency hold is working. Now I want to see the effect of the hold on invoice sending. I'll switch over to Super User to make the third invoice build. First I add a month to the testing clock. Next, I go to the Server Tools tab. Here's the invoice batch process. I click Run. Let's return to the Jeff Park browser to see the result. I click the account number in the info bar to go to the account. Let's go to the Invoices screen for the account to see how Billing Center handles the hold on billing. Here's the invoice we're interested in. Notice the due date has passed. The status field for the third invoice is carried forward. This means Billing Center carried the invoice items forward to the next planned invoice as a result of the invoice hold. The amount field on the third invoice is empty. This concludes our demonstration on trouble tickets and trouble ticket holds. Let's return to the lesson to learn more about trouble tickets.  Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Fil                            ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 18.92,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:18.920",
+      "text": "In this demonstration, we create a trouble ticket. The trouble ticket will place holds on delinquency processing and invoice billing. Ashley, a policyholder, has requested a reduction in her bill because she has just lowered the coverage on her homeowner's policy. An alert warns that the account has a passed due delinquency. Let's look at the policy.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.12,
+          "probability": 0.8989
+        },
+        {
+          "word": "this",
+          "start": 0.12,
+          "end": 0.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "demonstration,",
+          "start": 0.28,
+          "end": 0.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "we",
+          "start": 1.24,
+          "end": 1.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "create",
+          "start": 1.46,
+          "end": 1.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 1.76,
+          "end": 1.86,
+          "probability": 0.999
+        },
+        {
+          "word": "trouble",
+          "start": 1.86,
+          "end": 2.06,
+          "probability": 0.8457
+        },
+        {
+          "word": "ticket.",
+          "start": 2.06,
+          "end": 2.42,
+          "probability": 0.9907
+        },
+        {
+          "word": "The",
+          "start": 2.7,
+          "end": 3.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "trouble",
+          "start": 3.04,
+          "end": 3.28,
+          "probability": 0.9912
+        },
+        {
+          "word": "ticket",
+          "start": 3.28,
+          "end": 3.56,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 3.56,
+          "end": 3.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "place",
+          "start": 3.78,
+          "end": 4.06,
+          "probability": 0.999
+        },
+        {
+          "word": "holds",
+          "start": 4.06,
+          "end": 4.32,
+          "probability": 0.9854
+        },
+        {
+          "word": "on",
+          "start": 4.32,
+          "end": 4.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "delinquency",
+          "start": 4.52,
+          "end": 5.12,
+          "probability": 0.9878
+        },
+        {
+          "word": "processing",
+          "start": 5.12,
+          "end": 5.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 5.64,
+          "end": 5.84,
+          "probability": 0.9927
+        },
+        {
+          "word": "invoice",
+          "start": 5.84,
+          "end": 6.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "billing.",
+          "start": 6.22,
+          "end": 6.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "Ashley,",
+          "start": 7.1,
+          "end": 7.46,
+          "probability": 0.9287
+        },
+        {
+          "word": "a",
+          "start": 7.7,
+          "end": 7.94,
+          "probability": 0.998
+        },
+        {
+          "word": "policyholder,",
+          "start": 7.94,
+          "end": 8.64,
+          "probability": 0.7339
+        },
+        {
+          "word": "has",
+          "start": 8.88,
+          "end": 9.16,
+          "probability": 0.999
+        },
+        {
+          "word": "requested",
+          "start": 9.16,
+          "end": 9.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 9.66,
+          "end": 9.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "reduction",
+          "start": 9.8,
+          "end": 10.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 10.12,
+          "end": 10.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "her",
+          "start": 10.36,
+          "end": 10.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "bill",
+          "start": 10.48,
+          "end": 10.66,
+          "probability": 0.999
+        },
+        {
+          "word": "because",
+          "start": 10.66,
+          "end": 10.94,
+          "probability": 0.999
+        },
+        {
+          "word": "she",
+          "start": 10.94,
+          "end": 11.16,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 11.16,
+          "end": 11.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "just",
+          "start": 11.3,
+          "end": 11.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "lowered",
+          "start": 11.5,
+          "end": 11.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 11.8,
+          "end": 11.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "coverage",
+          "start": 11.94,
+          "end": 12.24,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 12.24,
+          "end": 12.48,
+          "probability": 0.999
+        },
+        {
+          "word": "her",
+          "start": 12.48,
+          "end": 12.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "homeowner's",
+          "start": 12.64,
+          "end": 13.16,
+          "probability": 0.959
+        },
+        {
+          "word": "policy.",
+          "start": 13.16,
+          "end": 13.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "An",
+          "start": 14.0,
+          "end": 14.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "alert",
+          "start": 14.46,
+          "end": 14.7,
+          "probability": 0.9922
+        },
+        {
+          "word": "warns",
+          "start": 14.7,
+          "end": 15.18,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 15.18,
+          "end": 15.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 15.32,
+          "end": 15.44,
+          "probability": 0.998
+        },
+        {
+          "word": "account",
+          "start": 15.44,
+          "end": 15.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 15.74,
+          "end": 15.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 15.96,
+          "end": 16.08,
+          "probability": 0.9839
+        },
+        {
+          "word": "passed",
+          "start": 16.08,
+          "end": 16.32,
+          "probability": 0.2717
+        },
+        {
+          "word": "due",
+          "start": 16.32,
+          "end": 16.46,
+          "probability": 0.8945
+        },
+        {
+          "word": "delinquency.",
+          "start": 16.46,
+          "end": 17.1,
+          "probability": 0.998
+        },
+        {
+          "word": "Let's",
+          "start": 17.54,
+          "end": 18.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "look",
+          "start": 18.06,
+          "end": 18.24,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 18.24,
+          "end": 18.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 18.36,
+          "end": 18.46,
+          "probability": 0.998
+        },
+        {
+          "word": "policy.",
+          "start": 18.46,
+          "end": 18.92,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 21.98,
+      "end": 39.06,
+      "start_formatted": "00:00:21.980",
+      "end_formatted": "00:00:39.060",
+      "text": "$130 is passed due and a late fee of $50 has been charged. The first step in resolving this issue is to place a hold on delinquency processing and on billing. I can do this by means of a trouble ticket. I click the trouble tickets link in the sidebar. I click New to launch the trouble ticket wizard.",
+      "words": [
+        {
+          "word": "$130",
+          "start": 21.98,
+          "end": 22.5,
+          "probability": 0.9565
+        },
+        {
+          "word": "is",
+          "start": 22.5,
+          "end": 23.02,
+          "probability": 0.98
+        },
+        {
+          "word": "passed",
+          "start": 23.02,
+          "end": 23.32,
+          "probability": 0.3811
+        },
+        {
+          "word": "due",
+          "start": 23.32,
+          "end": 23.5,
+          "probability": 0.8994
+        },
+        {
+          "word": "and",
+          "start": 23.5,
+          "end": 23.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 23.64,
+          "end": 23.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "late",
+          "start": 23.76,
+          "end": 23.9,
+          "probability": 0.998
+        },
+        {
+          "word": "fee",
+          "start": 23.9,
+          "end": 24.12,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 24.12,
+          "end": 24.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "$50",
+          "start": 24.26,
+          "end": 24.56,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 24.56,
+          "end": 25.1,
+          "probability": 0.998
+        },
+        {
+          "word": "been",
+          "start": 25.1,
+          "end": 25.28,
+          "probability": 1.0
+        },
+        {
+          "word": "charged.",
+          "start": 25.28,
+          "end": 25.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 26.22,
+          "end": 26.72,
+          "probability": 0.999
+        },
+        {
+          "word": "first",
+          "start": 26.72,
+          "end": 26.98,
+          "probability": 0.999
+        },
+        {
+          "word": "step",
+          "start": 26.98,
+          "end": 27.28,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 27.28,
+          "end": 27.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "resolving",
+          "start": 27.44,
+          "end": 27.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 27.86,
+          "end": 28.1,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 28.1,
+          "end": 28.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 28.36,
+          "end": 28.54,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 28.54,
+          "end": 28.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "place",
+          "start": 28.66,
+          "end": 28.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 28.9,
+          "end": 29.02,
+          "probability": 1.0
+        },
+        {
+          "word": "hold",
+          "start": 29.02,
+          "end": 29.26,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 29.26,
+          "end": 29.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "delinquency",
+          "start": 29.38,
+          "end": 29.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "processing",
+          "start": 29.96,
+          "end": 30.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 30.48,
+          "end": 30.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 30.7,
+          "end": 30.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "billing.",
+          "start": 30.82,
+          "end": 31.08,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 31.4,
+          "end": 31.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 31.78,
+          "end": 31.92,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 31.92,
+          "end": 32.06,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 32.06,
+          "end": 32.24,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 32.24,
+          "end": 32.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "means",
+          "start": 32.44,
+          "end": 32.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 32.72,
+          "end": 32.88,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 32.88,
+          "end": 32.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 32.96,
+          "end": 33.22,
+          "probability": 0.918
+        },
+        {
+          "word": "ticket.",
+          "start": 33.22,
+          "end": 33.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 33.86,
+          "end": 34.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 34.2,
+          "end": 34.44,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 34.44,
+          "end": 34.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 34.6,
+          "end": 34.84,
+          "probability": 0.5083
+        },
+        {
+          "word": "tickets",
+          "start": 34.84,
+          "end": 35.18,
+          "probability": 0.9326
+        },
+        {
+          "word": "link",
+          "start": 35.18,
+          "end": 35.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 35.46,
+          "end": 35.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 35.62,
+          "end": 35.7,
+          "probability": 1.0
+        },
+        {
+          "word": "sidebar.",
+          "start": 35.7,
+          "end": 36.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 36.66,
+          "end": 37.18,
+          "probability": 1.0
+        },
+        {
+          "word": "click",
+          "start": 37.18,
+          "end": 37.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "New",
+          "start": 37.42,
+          "end": 37.56,
+          "probability": 0.1947
+        },
+        {
+          "word": "to",
+          "start": 37.56,
+          "end": 37.7,
+          "probability": 1.0
+        },
+        {
+          "word": "launch",
+          "start": 37.7,
+          "end": 37.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 37.98,
+          "end": 38.18,
+          "probability": 1.0
+        },
+        {
+          "word": "trouble",
+          "start": 38.18,
+          "end": 38.44,
+          "probability": 0.9116
+        },
+        {
+          "word": "ticket",
+          "start": 38.44,
+          "end": 38.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "wizard.",
+          "start": 38.74,
+          "end": 39.06,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 40.62,
+      "end": 47.38,
+      "start_formatted": "00:00:40.620",
+      "end_formatted": "00:00:47.380",
+      "text": "I need to select the type of trouble ticket. I select Customer Complaint from the list of types.",
+      "words": [
+        {
+          "word": "I",
+          "start": 40.62,
+          "end": 41.14,
+          "probability": 1.0
+        },
+        {
+          "word": "need",
+          "start": 41.14,
+          "end": 41.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 41.32,
+          "end": 41.46,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 41.46,
+          "end": 41.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 41.76,
+          "end": 41.92,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 41.92,
+          "end": 42.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 42.16,
+          "end": 42.32,
+          "probability": 1.0
+        },
+        {
+          "word": "trouble",
+          "start": 42.32,
+          "end": 42.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "ticket.",
+          "start": 42.6,
+          "end": 42.86,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 44.54,
+          "end": 45.06,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 45.06,
+          "end": 45.46,
+          "probability": 0.999
+        },
+        {
+          "word": "Customer",
+          "start": 45.46,
+          "end": 45.86,
+          "probability": 0.4805
+        },
+        {
+          "word": "Complaint",
+          "start": 45.86,
+          "end": 46.4,
+          "probability": 0.9004
+        },
+        {
+          "word": "from",
+          "start": 46.4,
+          "end": 46.56,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 46.56,
+          "end": 46.68,
+          "probability": 1.0
+        },
+        {
+          "word": "list",
+          "start": 46.68,
+          "end": 46.9,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 46.9,
+          "end": 47.04,
+          "probability": 1.0
+        },
+        {
+          "word": "types.",
+          "start": 47.04,
+          "end": 47.38,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 48.76,
+      "end": 55.38,
+      "start_formatted": "00:00:48.760",
+      "end_formatted": "00:00:55.380",
+      "text": "Next is the trouble ticket. Next is the trouble ticket subject. I enter the policy number that the trouble ticket is for.",
+      "words": [
+        {
+          "word": "Next",
+          "start": 48.76,
+          "end": 49.24,
+          "probability": 0.9731
+        },
+        {
+          "word": "is",
+          "start": 49.24,
+          "end": 49.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 49.44,
+          "end": 49.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 49.58,
+          "end": 49.82,
+          "probability": 0.748
+        },
+        {
+          "word": "ticket.",
+          "start": 49.82,
+          "end": 50.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "Next",
+          "start": 50.42,
+          "end": 50.6,
+          "probability": 0.0091
+        },
+        {
+          "word": "is",
+          "start": 50.6,
+          "end": 50.6,
+          "probability": 0.9707
+        },
+        {
+          "word": "the",
+          "start": 50.6,
+          "end": 50.6,
+          "probability": 0.9727
+        },
+        {
+          "word": "trouble",
+          "start": 50.6,
+          "end": 50.6,
+          "probability": 0.6406
+        },
+        {
+          "word": "ticket",
+          "start": 50.6,
+          "end": 50.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "subject.",
+          "start": 50.6,
+          "end": 50.6,
+          "probability": 0.9531
+        },
+        {
+          "word": "I",
+          "start": 52.56,
+          "end": 53.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "enter",
+          "start": 53.04,
+          "end": 53.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 53.28,
+          "end": 53.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 53.44,
+          "end": 53.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "number",
+          "start": 53.84,
+          "end": 54.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 54.12,
+          "end": 54.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 54.32,
+          "end": 54.42,
+          "probability": 0.998
+        },
+        {
+          "word": "trouble",
+          "start": 54.42,
+          "end": 54.66,
+          "probability": 0.998
+        },
+        {
+          "word": "ticket",
+          "start": 54.66,
+          "end": 54.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 54.94,
+          "end": 55.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "for.",
+          "start": 55.14,
+          "end": 55.38,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 58.88,
+      "end": 64.88,
+      "start_formatted": "00:00:58.880",
+      "end_formatted": "00:01:04.880",
+      "text": "I type in a short description in the details field. The bill needs to be adjusted because of a change in coverage.",
+      "words": [
+        {
+          "word": "I",
+          "start": 58.88,
+          "end": 59.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "type",
+          "start": 59.36,
+          "end": 59.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "in",
+          "start": 59.64,
+          "end": 59.78,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 59.78,
+          "end": 59.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "short",
+          "start": 59.9,
+          "end": 60.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "description",
+          "start": 60.12,
+          "end": 60.56,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 60.56,
+          "end": 60.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 60.76,
+          "end": 60.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "details",
+          "start": 60.86,
+          "end": 61.28,
+          "probability": 0.8882
+        },
+        {
+          "word": "field.",
+          "start": 61.28,
+          "end": 61.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "The",
+          "start": 62.04,
+          "end": 62.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "bill",
+          "start": 62.52,
+          "end": 62.68,
+          "probability": 0.998
+        },
+        {
+          "word": "needs",
+          "start": 62.68,
+          "end": 62.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 62.92,
+          "end": 63.04,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 63.04,
+          "end": 63.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "adjusted",
+          "start": 63.16,
+          "end": 63.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "because",
+          "start": 63.56,
+          "end": 63.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 63.82,
+          "end": 64.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 64.02,
+          "end": 64.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "change",
+          "start": 64.1,
+          "end": 64.36,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 64.36,
+          "end": 64.5,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage.",
+          "start": 64.5,
+          "end": 64.88,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 71.78,
+      "end": 77.3,
+      "start_formatted": "00:01:11.780",
+      "end_formatted": "00:01:17.300",
+      "text": "Next is the priority of this trouble ticket. I select Urgent from the list.",
+      "words": [
+        {
+          "word": "Next",
+          "start": 71.78,
+          "end": 72.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 72.26,
+          "end": 72.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 72.46,
+          "end": 72.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "priority",
+          "start": 72.6,
+          "end": 73.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 73.0,
+          "end": 73.18,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 73.18,
+          "end": 73.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "trouble",
+          "start": 73.34,
+          "end": 73.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "ticket.",
+          "start": 73.62,
+          "end": 73.96,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 75.56,
+          "end": 76.04,
+          "probability": 0.979
+        },
+        {
+          "word": "select",
+          "start": 76.04,
+          "end": 76.44,
+          "probability": 0.999
+        },
+        {
+          "word": "Urgent",
+          "start": 76.44,
+          "end": 76.78,
+          "probability": 0.6187
+        },
+        {
+          "word": "from",
+          "start": 76.78,
+          "end": 76.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 76.96,
+          "end": 77.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "list.",
+          "start": 77.08,
+          "end": 77.3,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 79.58,
+      "end": 83.02,
+      "start_formatted": "00:01:19.580",
+      "end_formatted": "00:01:23.020",
+      "text": "Next is the priority of this customer. We want to act fast to fix this issue to keep the customer happy.",
+      "words": [
+        {
+          "word": "Next",
+          "start": 79.58,
+          "end": 80.06,
+          "probability": 0.0047
+        },
+        {
+          "word": "is",
+          "start": 80.06,
+          "end": 80.06,
+          "probability": 0.0172
+        },
+        {
+          "word": "the",
+          "start": 80.06,
+          "end": 80.06,
+          "probability": 0.4297
+        },
+        {
+          "word": "priority",
+          "start": 80.06,
+          "end": 80.06,
+          "probability": 0.0003
+        },
+        {
+          "word": "of",
+          "start": 80.06,
+          "end": 80.06,
+          "probability": 0.0553
+        },
+        {
+          "word": "this",
+          "start": 80.06,
+          "end": 80.06,
+          "probability": 0.0475
+        },
+        {
+          "word": "customer.",
+          "start": 80.06,
+          "end": 80.06,
+          "probability": 0.0302
+        },
+        {
+          "word": "We",
+          "start": 80.06,
+          "end": 80.06,
+          "probability": 0.4221
+        },
+        {
+          "word": "want",
+          "start": 80.06,
+          "end": 80.22,
+          "probability": 0.9536
+        },
+        {
+          "word": "to",
+          "start": 80.22,
+          "end": 80.34,
+          "probability": 0.9927
+        },
+        {
+          "word": "act",
+          "start": 80.34,
+          "end": 80.58,
+          "probability": 0.9478
+        },
+        {
+          "word": "fast",
+          "start": 80.58,
+          "end": 80.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 80.88,
+          "end": 81.1,
+          "probability": 0.9897
+        },
+        {
+          "word": "fix",
+          "start": 81.1,
+          "end": 81.28,
+          "probability": 0.9829
+        },
+        {
+          "word": "this",
+          "start": 81.28,
+          "end": 81.5,
+          "probability": 0.9834
+        },
+        {
+          "word": "issue",
+          "start": 81.5,
+          "end": 81.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 81.8,
+          "end": 81.98,
+          "probability": 0.9263
+        },
+        {
+          "word": "keep",
+          "start": 81.98,
+          "end": 82.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 82.16,
+          "end": 82.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "customer",
+          "start": 82.32,
+          "end": 82.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "happy.",
+          "start": 82.66,
+          "end": 83.02,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 83.62,
+      "end": 86.26,
+      "start_formatted": "00:01:23.620",
+      "end_formatted": "00:01:26.260",
+      "text": "So I type in today's date in the date due field.",
+      "words": [
+        {
+          "word": "So",
+          "start": 83.62,
+          "end": 84.1,
+          "probability": 0.9551
+        },
+        {
+          "word": "I",
+          "start": 84.1,
+          "end": 84.28,
+          "probability": 0.8921
+        },
+        {
+          "word": "type",
+          "start": 84.28,
+          "end": 84.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 84.54,
+          "end": 84.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "today's",
+          "start": 84.68,
+          "end": 85.02,
+          "probability": 0.8643
+        },
+        {
+          "word": "date",
+          "start": 85.02,
+          "end": 85.2,
+          "probability": 0.9868
+        },
+        {
+          "word": "in",
+          "start": 85.2,
+          "end": 85.36,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 85.36,
+          "end": 85.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "date",
+          "start": 85.44,
+          "end": 85.64,
+          "probability": 0.6333
+        },
+        {
+          "word": "due",
+          "start": 85.64,
+          "end": 85.84,
+          "probability": 0.2771
+        },
+        {
+          "word": "field.",
+          "start": 85.84,
+          "end": 86.26,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 89.38,
+      "end": 92.32,
+      "start_formatted": "00:01:29.380",
+      "end_formatted": "00:01:32.320",
+      "text": "I also type in today's date for the escalation date.",
+      "words": [
+        {
+          "word": "I",
+          "start": 89.38,
+          "end": 89.86,
+          "probability": 0.9834
+        },
+        {
+          "word": "also",
+          "start": 89.86,
+          "end": 90.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "type",
+          "start": 90.14,
+          "end": 90.44,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 90.44,
+          "end": 90.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "today's",
+          "start": 90.62,
+          "end": 90.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "date",
+          "start": 90.94,
+          "end": 91.14,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 91.14,
+          "end": 91.34,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 91.34,
+          "end": 91.46,
+          "probability": 0.999
+        },
+        {
+          "word": "escalation",
+          "start": 91.46,
+          "end": 92.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "date.",
+          "start": 92.08,
+          "end": 92.32,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 95.42,
+      "end": 96.74,
+      "start_formatted": "00:01:35.420",
+      "end_formatted": "00:01:36.740",
+      "text": "Let's go to step 2.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 95.42,
+          "end": 95.9,
+          "probability": 0.9775
+        },
+        {
+          "word": "go",
+          "start": 95.9,
+          "end": 96.04,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 96.04,
+          "end": 96.2,
+          "probability": 0.999
+        },
+        {
+          "word": "step",
+          "start": 96.2,
+          "end": 96.42,
+          "probability": 0.9355
+        },
+        {
+          "word": "2.",
+          "start": 96.42,
+          "end": 96.74,
+          "probability": 0.7354
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 99.3,
+      "end": 104.74,
+      "start_formatted": "00:01:39.300",
+      "end_formatted": "00:01:44.740",
+      "text": "Here I see the account, policy, and policy period are already associated with the trouble ticket.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 99.3,
+          "end": 99.78,
+          "probability": 0.9707
+        },
+        {
+          "word": "I",
+          "start": 99.78,
+          "end": 99.9,
+          "probability": 0.9888
+        },
+        {
+          "word": "see",
+          "start": 99.9,
+          "end": 100.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 100.1,
+          "end": 100.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "account,",
+          "start": 100.24,
+          "end": 100.62,
+          "probability": 0.9756
+        },
+        {
+          "word": "policy,",
+          "start": 100.84,
+          "end": 101.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 101.62,
+          "end": 101.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 101.88,
+          "end": 102.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "period",
+          "start": 102.28,
+          "end": 102.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "are",
+          "start": 102.58,
+          "end": 102.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "already",
+          "start": 102.84,
+          "end": 103.22,
+          "probability": 0.998
+        },
+        {
+          "word": "associated",
+          "start": 103.22,
+          "end": 103.8,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 103.8,
+          "end": 104.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 104.02,
+          "end": 104.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "trouble",
+          "start": 104.16,
+          "end": 104.4,
+          "probability": 0.9702
+        },
+        {
+          "word": "ticket.",
+          "start": 104.4,
+          "end": 104.74,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 104.74,
+      "end": 111.04,
+      "start_formatted": "00:01:44.740",
+      "end_formatted": "00:01:51.040",
+      "text": "This means a trouble ticket alert will be displayed in the UI for the account, the policy, and the policy period.",
+      "words": [
+        {
+          "word": "This",
+          "start": 104.74,
+          "end": 105.44,
+          "probability": 0.9878
+        },
+        {
+          "word": "means",
+          "start": 105.44,
+          "end": 105.7,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 105.7,
+          "end": 105.88,
+          "probability": 1.0
+        },
+        {
+          "word": "trouble",
+          "start": 105.88,
+          "end": 106.1,
+          "probability": 0.8096
+        },
+        {
+          "word": "ticket",
+          "start": 106.1,
+          "end": 106.36,
+          "probability": 0.9858
+        },
+        {
+          "word": "alert",
+          "start": 106.36,
+          "end": 106.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 106.62,
+          "end": 106.84,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 106.84,
+          "end": 107.0,
+          "probability": 1.0
+        },
+        {
+          "word": "displayed",
+          "start": 107.0,
+          "end": 107.44,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 107.44,
+          "end": 107.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 107.62,
+          "end": 107.72,
+          "probability": 1.0
+        },
+        {
+          "word": "UI",
+          "start": 107.72,
+          "end": 108.0,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 108.0,
+          "end": 108.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 108.22,
+          "end": 108.36,
+          "probability": 1.0
+        },
+        {
+          "word": "account,",
+          "start": 108.36,
+          "end": 108.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 108.96,
+          "end": 109.2,
+          "probability": 1.0
+        },
+        {
+          "word": "policy,",
+          "start": 109.2,
+          "end": 109.66,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 109.88,
+          "end": 110.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 110.14,
+          "end": 110.26,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 110.26,
+          "end": 110.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "period.",
+          "start": 110.66,
+          "end": 111.04,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 111.62,
+      "end": 113.06,
+      "start_formatted": "00:01:51.620",
+      "end_formatted": "00:01:53.060",
+      "text": "Let's go to the next step.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 111.62,
+          "end": 112.14,
+          "probability": 0.999
+        },
+        {
+          "word": "go",
+          "start": 112.14,
+          "end": 112.26,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 112.26,
+          "end": 112.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 112.38,
+          "end": 112.5,
+          "probability": 1.0
+        },
+        {
+          "word": "next",
+          "start": 112.5,
+          "end": 112.68,
+          "probability": 1.0
+        },
+        {
+          "word": "step.",
+          "start": 112.68,
+          "end": 113.06,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 114.94,
+      "end": 121.68,
+      "start_formatted": "00:01:54.940",
+      "end_formatted": "00:02:01.680",
+      "text": "The primary purpose of this trouble ticket is to place holds on both delinquencies and billing, so I will select those two holds.",
+      "words": [
+        {
+          "word": "The",
+          "start": 114.94,
+          "end": 115.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "primary",
+          "start": 115.46,
+          "end": 115.88,
+          "probability": 1.0
+        },
+        {
+          "word": "purpose",
+          "start": 115.88,
+          "end": 116.3,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 116.3,
+          "end": 116.48,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 116.48,
+          "end": 116.62,
+          "probability": 1.0
+        },
+        {
+          "word": "trouble",
+          "start": 116.62,
+          "end": 116.92,
+          "probability": 0.998
+        },
+        {
+          "word": "ticket",
+          "start": 116.92,
+          "end": 117.22,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 117.22,
+          "end": 117.44,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 117.44,
+          "end": 117.56,
+          "probability": 1.0
+        },
+        {
+          "word": "place",
+          "start": 117.56,
+          "end": 117.82,
+          "probability": 1.0
+        },
+        {
+          "word": "holds",
+          "start": 117.82,
+          "end": 118.06,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 118.06,
+          "end": 118.28,
+          "probability": 1.0
+        },
+        {
+          "word": "both",
+          "start": 118.28,
+          "end": 118.5,
+          "probability": 1.0
+        },
+        {
+          "word": "delinquencies",
+          "start": 118.5,
+          "end": 119.2,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 119.2,
+          "end": 119.46,
+          "probability": 1.0
+        },
+        {
+          "word": "billing,",
+          "start": 119.46,
+          "end": 119.72,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 119.92,
+          "end": 120.22,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 120.22,
+          "end": 120.38,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 120.38,
+          "end": 120.5,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 120.5,
+          "end": 120.8,
+          "probability": 1.0
+        },
+        {
+          "word": "those",
+          "start": 120.8,
+          "end": 121.02,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 121.02,
+          "end": 121.24,
+          "probability": 0.9932
+        },
+        {
+          "word": "holds.",
+          "start": 121.24,
+          "end": 121.68,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 121.94,
+      "end": 125.6,
+      "start_formatted": "00:02:01.940",
+      "end_formatted": "00:02:05.600",
+      "text": "A hold on delinquency blocks the automatic processing of delinquencies.",
+      "words": [
+        {
+          "word": "A",
+          "start": 121.94,
+          "end": 122.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "hold",
+          "start": 122.34,
+          "end": 122.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 122.54,
+          "end": 122.68,
+          "probability": 0.999
+        },
+        {
+          "word": "delinquency",
+          "start": 122.68,
+          "end": 123.26,
+          "probability": 0.998
+        },
+        {
+          "word": "blocks",
+          "start": 123.26,
+          "end": 123.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 123.58,
+          "end": 123.76,
+          "probability": 1.0
+        },
+        {
+          "word": "automatic",
+          "start": 123.76,
+          "end": 124.16,
+          "probability": 1.0
+        },
+        {
+          "word": "processing",
+          "start": 124.16,
+          "end": 124.72,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 124.72,
+          "end": 124.92,
+          "probability": 1.0
+        },
+        {
+          "word": "delinquencies.",
+          "start": 124.92,
+          "end": 125.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 125.6,
+      "end": 128.34,
+      "start_formatted": "00:02:05.600",
+      "end_formatted": "00:02:08.340",
+      "text": "I also place a hold on invoice sending.",
+      "words": [
+        {
+          "word": "I",
+          "start": 125.6,
+          "end": 126.44,
+          "probability": 0.9536
+        },
+        {
+          "word": "also",
+          "start": 126.44,
+          "end": 126.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "place",
+          "start": 126.72,
+          "end": 127.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 127.04,
+          "end": 127.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "hold",
+          "start": 127.14,
+          "end": 127.38,
+          "probability": 0.9712
+        },
+        {
+          "word": "on",
+          "start": 127.38,
+          "end": 127.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "invoice",
+          "start": 127.52,
+          "end": 127.92,
+          "probability": 0.751
+        },
+        {
+          "word": "sending.",
+          "start": 127.92,
+          "end": 128.34,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 129.76,
+      "end": 134.58,
+      "start_formatted": "00:02:09.760",
+      "end_formatted": "00:02:14.580",
+      "text": "I decide not to specify dates for automatically releasing the holds on a certain date.",
+      "words": [
+        {
+          "word": "I",
+          "start": 129.76,
+          "end": 130.4,
+          "probability": 0.9902
+        },
+        {
+          "word": "decide",
+          "start": 130.4,
+          "end": 130.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "not",
+          "start": 130.78,
+          "end": 130.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 130.96,
+          "end": 131.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "specify",
+          "start": 131.12,
+          "end": 131.6,
+          "probability": 0.999
+        },
+        {
+          "word": "dates",
+          "start": 131.6,
+          "end": 132.02,
+          "probability": 0.9849
+        },
+        {
+          "word": "for",
+          "start": 132.02,
+          "end": 132.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "automatically",
+          "start": 132.24,
+          "end": 132.72,
+          "probability": 0.998
+        },
+        {
+          "word": "releasing",
+          "start": 132.72,
+          "end": 133.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 133.26,
+          "end": 133.48,
+          "probability": 0.999
+        },
+        {
+          "word": "holds",
+          "start": 133.48,
+          "end": 133.74,
+          "probability": 0.9922
+        },
+        {
+          "word": "on",
+          "start": 133.74,
+          "end": 133.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 133.92,
+          "end": 134.04,
+          "probability": 0.999
+        },
+        {
+          "word": "certain",
+          "start": 134.04,
+          "end": 134.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "date.",
+          "start": 134.26,
+          "end": 134.58,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 134.88,
+      "end": 136.68,
+      "start_formatted": "00:02:14.880",
+      "end_formatted": "00:02:16.680",
+      "text": "The holds can be released manually.",
+      "words": [
+        {
+          "word": "The",
+          "start": 134.88,
+          "end": 135.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "holds",
+          "start": 135.26,
+          "end": 135.52,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 135.52,
+          "end": 135.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 135.7,
+          "end": 135.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "released",
+          "start": 135.84,
+          "end": 136.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "manually.",
+          "start": 136.2,
+          "end": 136.68,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 137.28,
+      "end": 141.32,
+      "start_formatted": "00:02:17.280",
+      "end_formatted": "00:02:21.320",
+      "text": "Also, closing the trouble ticket automatically releases all trouble ticket holds.",
+      "words": [
+        {
+          "word": "Also,",
+          "start": 137.28,
+          "end": 137.6,
+          "probability": 0.9858
+        },
+        {
+          "word": "closing",
+          "start": 137.94,
+          "end": 138.3,
+          "probability": 0.9673
+        },
+        {
+          "word": "the",
+          "start": 138.3,
+          "end": 138.48,
+          "probability": 0.999
+        },
+        {
+          "word": "trouble",
+          "start": 138.48,
+          "end": 138.7,
+          "probability": 0.939
+        },
+        {
+          "word": "ticket",
+          "start": 138.7,
+          "end": 138.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "automatically",
+          "start": 138.98,
+          "end": 139.44,
+          "probability": 0.999
+        },
+        {
+          "word": "releases",
+          "start": 139.44,
+          "end": 140.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "all",
+          "start": 140.02,
+          "end": 140.3,
+          "probability": 0.999
+        },
+        {
+          "word": "trouble",
+          "start": 140.3,
+          "end": 140.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "ticket",
+          "start": 140.58,
+          "end": 140.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "holds.",
+          "start": 140.92,
+          "end": 141.32,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 141.72,
+      "end": 143.22,
+      "start_formatted": "00:02:21.720",
+      "end_formatted": "00:02:23.220",
+      "text": "Let's move to step 4.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 141.72,
+          "end": 142.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "move",
+          "start": 142.24,
+          "end": 142.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 142.46,
+          "end": 142.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 142.64,
+          "end": 142.86,
+          "probability": 0.7236
+        },
+        {
+          "word": "4.",
+          "start": 142.86,
+          "end": 143.22,
+          "probability": 0.8276
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 143.62,
+      "end": 146.6,
+      "start_formatted": "00:02:23.620",
+      "end_formatted": "00:02:26.600",
+      "text": "In step 4, I can add any related transactions.",
+      "words": [
+        {
+          "word": "In",
+          "start": 143.62,
+          "end": 144.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "step",
+          "start": 144.06,
+          "end": 144.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "4,",
+          "start": 144.28,
+          "end": 144.68,
+          "probability": 0.9868
+        },
+        {
+          "word": "I",
+          "start": 144.86,
+          "end": 145.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 145.06,
+          "end": 145.22,
+          "probability": 1.0
+        },
+        {
+          "word": "add",
+          "start": 145.22,
+          "end": 145.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 145.38,
+          "end": 145.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "related",
+          "start": 145.58,
+          "end": 145.92,
+          "probability": 0.999
+        },
+        {
+          "word": "transactions.",
+          "start": 145.92,
+          "end": 146.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 147.06,
+      "end": 149.38,
+      "start_formatted": "00:02:27.060",
+      "end_formatted": "00:02:29.380",
+      "text": "This is purely for documentation purposes.",
+      "words": [
+        {
+          "word": "This",
+          "start": 147.06,
+          "end": 147.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 147.46,
+          "end": 147.6,
+          "probability": 1.0
+        },
+        {
+          "word": "purely",
+          "start": 147.6,
+          "end": 147.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 147.92,
+          "end": 148.14,
+          "probability": 1.0
+        },
+        {
+          "word": "documentation",
+          "start": 148.14,
+          "end": 148.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "purposes.",
+          "start": 148.7,
+          "end": 149.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 149.38,
+      "end": 152.38,
+      "start_formatted": "00:02:29.380",
+      "end_formatted": "00:02:32.380",
+      "text": "Here I'll add the late fee that Ashley was charged.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 149.38,
+          "end": 150.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "I'll",
+          "start": 150.2,
+          "end": 150.5,
+          "probability": 0.6528
+        },
+        {
+          "word": "add",
+          "start": 150.5,
+          "end": 150.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 150.6,
+          "end": 150.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "late",
+          "start": 150.74,
+          "end": 150.94,
+          "probability": 0.9331
+        },
+        {
+          "word": "fee",
+          "start": 150.94,
+          "end": 151.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "that",
+          "start": 151.16,
+          "end": 151.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ashley",
+          "start": 151.36,
+          "end": 151.64,
+          "probability": 0.9849
+        },
+        {
+          "word": "was",
+          "start": 151.64,
+          "end": 151.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "charged.",
+          "start": 151.9,
+          "end": 152.38,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 152.96,
+      "end": 155.86,
+      "start_formatted": "00:02:32.960",
+      "end_formatted": "00:02:35.860",
+      "text": "I select the policy late fee charge transaction.",
+      "words": [
+        {
+          "word": "I",
+          "start": 152.96,
+          "end": 153.52,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 153.52,
+          "end": 153.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 153.88,
+          "end": 154.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 154.02,
+          "end": 154.42,
+          "probability": 0.7319
+        },
+        {
+          "word": "late",
+          "start": 154.42,
+          "end": 154.66,
+          "probability": 0.9712
+        },
+        {
+          "word": "fee",
+          "start": 154.66,
+          "end": 154.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "charge",
+          "start": 154.86,
+          "end": 155.16,
+          "probability": 0.9854
+        },
+        {
+          "word": "transaction.",
+          "start": 155.16,
+          "end": 155.86,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 156.42,
+      "end": 157.5,
+      "start_formatted": "00:02:36.420",
+      "end_formatted": "00:02:37.500",
+      "text": "And click select.",
+      "words": [
+        {
+          "word": "And",
+          "start": 156.42,
+          "end": 156.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 156.98,
+          "end": 157.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "select.",
+          "start": 157.22,
+          "end": 157.5,
+          "probability": 0.5967
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 160.48,
+      "end": 161.96,
+      "start_formatted": "00:02:40.480",
+      "end_formatted": "00:02:41.960",
+      "text": "Let's go to step 5.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 160.48,
+          "end": 161.04,
+          "probability": 0.999
+        },
+        {
+          "word": "go",
+          "start": 161.04,
+          "end": 161.18,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 161.18,
+          "end": 161.34,
+          "probability": 1.0
+        },
+        {
+          "word": "step",
+          "start": 161.34,
+          "end": 161.56,
+          "probability": 0.9858
+        },
+        {
+          "word": "5.",
+          "start": 161.56,
+          "end": 161.96,
+          "probability": 0.9565
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 164.54,
+      "end": 166.02,
+      "start_formatted": "00:02:44.540",
+      "end_formatted": "00:02:46.020",
+      "text": "This is the last step.",
+      "words": [
+        {
+          "word": "This",
+          "start": 164.54,
+          "end": 165.1,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 165.1,
+          "end": 165.26,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 165.26,
+          "end": 165.38,
+          "probability": 1.0
+        },
+        {
+          "word": "last",
+          "start": 165.38,
+          "end": 165.64,
+          "probability": 1.0
+        },
+        {
+          "word": "step.",
+          "start": 165.64,
+          "end": 166.02,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 166.3,
+      "end": 168.5,
+      "start_formatted": "00:02:46.300",
+      "end_formatted": "00:02:48.500",
+      "text": "I want to assign the trouble ticket to myself.",
+      "words": [
+        {
+          "word": "I",
+          "start": 166.3,
+          "end": 166.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "want",
+          "start": 166.64,
+          "end": 166.84,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 166.84,
+          "end": 166.98,
+          "probability": 1.0
+        },
+        {
+          "word": "assign",
+          "start": 166.98,
+          "end": 167.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 167.3,
+          "end": 167.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 167.44,
+          "end": 167.66,
+          "probability": 0.96
+        },
+        {
+          "word": "ticket",
+          "start": 167.66,
+          "end": 167.94,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 167.94,
+          "end": 168.14,
+          "probability": 1.0
+        },
+        {
+          "word": "myself.",
+          "start": 168.14,
+          "end": 168.5,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 168.94,
+      "end": 170.4,
+      "start_formatted": "00:02:48.940",
+      "end_formatted": "00:02:50.400",
+      "text": "I select Jeff Park.",
+      "words": [
+        {
+          "word": "I",
+          "start": 168.94,
+          "end": 169.42,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 169.42,
+          "end": 169.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Jeff",
+          "start": 169.8,
+          "end": 170.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "Park.",
+          "start": 170.06,
+          "end": 170.4,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 172.96,
+      "end": 175.4,
+      "start_formatted": "00:02:52.960",
+      "end_formatted": "00:02:55.400",
+      "text": "Now I click finish to save the trouble ticket.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 172.96,
+          "end": 173.52,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 173.52,
+          "end": 173.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 173.68,
+          "end": 173.92,
+          "probability": 0.998
+        },
+        {
+          "word": "finish",
+          "start": 173.92,
+          "end": 174.2,
+          "probability": 0.9829
+        },
+        {
+          "word": "to",
+          "start": 174.2,
+          "end": 174.4,
+          "probability": 1.0
+        },
+        {
+          "word": "save",
+          "start": 174.4,
+          "end": 174.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 174.64,
+          "end": 174.78,
+          "probability": 1.0
+        },
+        {
+          "word": "trouble",
+          "start": 174.78,
+          "end": 175.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "ticket.",
+          "start": 175.04,
+          "end": 175.4,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 176.94,
+      "end": 178.98,
+      "start_formatted": "00:02:56.940",
+      "end_formatted": "00:02:58.980",
+      "text": "The new trouble ticket is listed here.",
+      "words": [
+        {
+          "word": "The",
+          "start": 176.94,
+          "end": 177.46,
+          "probability": 0.9727
+        },
+        {
+          "word": "new",
+          "start": 177.46,
+          "end": 177.62,
+          "probability": 0.9888
+        },
+        {
+          "word": "trouble",
+          "start": 177.62,
+          "end": 177.88,
+          "probability": 0.7793
+        },
+        {
+          "word": "ticket",
+          "start": 177.88,
+          "end": 178.14,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 178.14,
+          "end": 178.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "listed",
+          "start": 178.38,
+          "end": 178.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "here.",
+          "start": 178.66,
+          "end": 178.98,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 179.26,
+      "end": 181.92,
+      "start_formatted": "00:02:59.260",
+      "end_formatted": "00:03:01.920",
+      "text": "I click the trouble ticket number to view the trouble ticket.",
+      "words": [
+        {
+          "word": "I",
+          "start": 179.26,
+          "end": 179.6,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 179.6,
+          "end": 179.82,
+          "probability": 0.7373
+        },
+        {
+          "word": "the",
+          "start": 179.82,
+          "end": 179.98,
+          "probability": 0.998
+        },
+        {
+          "word": "trouble",
+          "start": 179.98,
+          "end": 180.24,
+          "probability": 0.9482
+        },
+        {
+          "word": "ticket",
+          "start": 180.24,
+          "end": 180.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "number",
+          "start": 180.56,
+          "end": 180.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 180.8,
+          "end": 180.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "view",
+          "start": 180.98,
+          "end": 181.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 181.16,
+          "end": 181.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 181.34,
+          "end": 181.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "ticket.",
+          "start": 181.6,
+          "end": 181.92,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 182.34,
+      "end": 185.06,
+      "start_formatted": "00:03:02.340",
+      "end_formatted": "00:03:05.060",
+      "text": "There are some tabs at the bottom of the trouble ticket screen.",
+      "words": [
+        {
+          "word": "There",
+          "start": 182.34,
+          "end": 182.86,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 182.86,
+          "end": 183.0,
+          "probability": 1.0
+        },
+        {
+          "word": "some",
+          "start": 183.0,
+          "end": 183.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "tabs",
+          "start": 183.18,
+          "end": 183.44,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 183.44,
+          "end": 183.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 183.62,
+          "end": 183.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "bottom",
+          "start": 183.72,
+          "end": 183.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 183.94,
+          "end": 184.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 184.1,
+          "end": 184.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 184.2,
+          "end": 184.46,
+          "probability": 0.9829
+        },
+        {
+          "word": "ticket",
+          "start": 184.46,
+          "end": 184.72,
+          "probability": 0.998
+        },
+        {
+          "word": "screen.",
+          "start": 184.72,
+          "end": 185.06,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 185.6,
+      "end": 188.38,
+      "start_formatted": "00:03:05.600",
+      "end_formatted": "00:03:08.380",
+      "text": "Currently, the trouble ticket has no notes or activities.",
+      "words": [
+        {
+          "word": "Currently,",
+          "start": 185.6,
+          "end": 186.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 186.36,
+          "end": 186.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 186.58,
+          "end": 186.8,
+          "probability": 0.9805
+        },
+        {
+          "word": "ticket",
+          "start": 186.8,
+          "end": 187.1,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 187.1,
+          "end": 187.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 187.36,
+          "end": 187.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "notes",
+          "start": 187.54,
+          "end": 187.8,
+          "probability": 0.999
+        },
+        {
+          "word": "or",
+          "start": 187.8,
+          "end": 187.94,
+          "probability": 1.0
+        },
+        {
+          "word": "activities.",
+          "start": 187.94,
+          "end": 188.38,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 188.74,
+      "end": 191.36,
+      "start_formatted": "00:03:08.740",
+      "end_formatted": "00:03:11.360",
+      "text": "I will add an activity to the ticket later in the demo.",
+      "words": [
+        {
+          "word": "I",
+          "start": 188.74,
+          "end": 189.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 189.08,
+          "end": 189.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 189.26,
+          "end": 189.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 189.42,
+          "end": 189.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "activity",
+          "start": 189.52,
+          "end": 189.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 189.88,
+          "end": 190.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 190.1,
+          "end": 190.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "ticket",
+          "start": 190.22,
+          "end": 190.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "later",
+          "start": 190.46,
+          "end": 190.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 190.78,
+          "end": 190.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 190.98,
+          "end": 191.08,
+          "probability": 1.0
+        },
+        {
+          "word": "demo.",
+          "start": 191.08,
+          "end": 191.36,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 191.68,
+      "end": 193.06,
+      "start_formatted": "00:03:11.680",
+      "end_formatted": "00:03:13.060",
+      "text": "Let's look at transactions.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 191.68,
+          "end": 192.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "look",
+          "start": 192.18,
+          "end": 192.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 192.34,
+          "end": 192.48,
+          "probability": 1.0
+        },
+        {
+          "word": "transactions.",
+          "start": 192.48,
+          "end": 193.06,
+          "probability": 0.8428
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 193.8,
+      "end": 197.68,
+      "start_formatted": "00:03:13.800",
+      "end_formatted": "00:03:17.680",
+      "text": "On the transactions tab, I see the late fee transaction listed.",
+      "words": [
+        {
+          "word": "On",
+          "start": 193.8,
+          "end": 194.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 194.32,
+          "end": 194.44,
+          "probability": 1.0
+        },
+        {
+          "word": "transactions",
+          "start": 194.44,
+          "end": 194.98,
+          "probability": 0.9722
+        },
+        {
+          "word": "tab,",
+          "start": 194.98,
+          "end": 195.46,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 195.72,
+          "end": 195.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 195.9,
+          "end": 196.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 196.1,
+          "end": 196.24,
+          "probability": 1.0
+        },
+        {
+          "word": "late",
+          "start": 196.24,
+          "end": 196.46,
+          "probability": 0.9863
+        },
+        {
+          "word": "fee",
+          "start": 196.46,
+          "end": 196.66,
+          "probability": 0.9883
+        },
+        {
+          "word": "transaction",
+          "start": 196.66,
+          "end": 197.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "listed.",
+          "start": 197.1,
+          "end": 197.68,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 198.06,
+      "end": 199.52,
+      "start_formatted": "00:03:18.060",
+      "end_formatted": "00:03:19.520",
+      "text": "Let's look at the holds tab.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 198.06,
+          "end": 198.54,
+          "probability": 1.0
+        },
+        {
+          "word": "look",
+          "start": 198.54,
+          "end": 198.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 198.7,
+          "end": 198.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 198.84,
+          "end": 198.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "holds",
+          "start": 198.94,
+          "end": 199.18,
+          "probability": 0.9937
+        },
+        {
+          "word": "tab.",
+          "start": 199.18,
+          "end": 199.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 200.3,
+      "end": 204.06,
+      "start_formatted": "00:03:20.300",
+      "end_formatted": "00:03:24.060",
+      "text": "The holds I placed on billing and delinquency processing are shown here.",
+      "words": [
+        {
+          "word": "The",
+          "start": 200.3,
+          "end": 200.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "holds",
+          "start": 200.82,
+          "end": 201.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 201.06,
+          "end": 201.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "placed",
+          "start": 201.22,
+          "end": 201.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 201.54,
+          "end": 201.72,
+          "probability": 1.0
+        },
+        {
+          "word": "billing",
+          "start": 201.72,
+          "end": 201.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 201.96,
+          "end": 202.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "delinquency",
+          "start": 202.16,
+          "end": 202.64,
+          "probability": 0.999
+        },
+        {
+          "word": "processing",
+          "start": 202.64,
+          "end": 203.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 203.24,
+          "end": 203.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "shown",
+          "start": 203.48,
+          "end": 203.74,
+          "probability": 1.0
+        },
+        {
+          "word": "here.",
+          "start": 203.74,
+          "end": 204.06,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 204.06,
+      "end": 205.98,
+      "start_formatted": "00:03:24.060",
+      "end_formatted": "00:03:25.980",
+      "text": "Let's go back to the policy.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 204.06,
+          "end": 204.96,
+          "probability": 0.9727
+        },
+        {
+          "word": "go",
+          "start": 204.96,
+          "end": 205.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "back",
+          "start": 205.08,
+          "end": 205.32,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 205.32,
+          "end": 205.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 205.48,
+          "end": 205.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy.",
+          "start": 205.58,
+          "end": 205.98,
+          "probability": 0.8452
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 208.28,
+      "end": 210.68,
+      "start_formatted": "00:03:28.280",
+      "end_formatted": "00:03:30.680",
+      "text": "As expected, on the policy summary,",
+      "words": [
+        {
+          "word": "As",
+          "start": 208.28,
+          "end": 208.84,
+          "probability": 0.9922
+        },
+        {
+          "word": "expected,",
+          "start": 208.84,
+          "end": 209.26,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 209.56,
+          "end": 209.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 209.76,
+          "end": 209.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 209.86,
+          "end": 210.28,
+          "probability": 0.9189
+        },
+        {
+          "word": "summary,",
+          "start": 210.28,
+          "end": 210.68,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 211.04,
+      "end": 214.38,
+      "start_formatted": "00:03:31.040",
+      "end_formatted": "00:03:34.380",
+      "text": "troubled ticket alerts for the policy and policy period have been generated.",
+      "words": [
+        {
+          "word": "troubled",
+          "start": 211.04,
+          "end": 211.32,
+          "probability": 0.8052
+        },
+        {
+          "word": "ticket",
+          "start": 211.32,
+          "end": 211.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "alerts",
+          "start": 211.58,
+          "end": 211.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 211.9,
+          "end": 212.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 212.1,
+          "end": 212.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy",
+          "start": 212.2,
+          "end": 212.6,
+          "probability": 0.9795
+        },
+        {
+          "word": "and",
+          "start": 212.6,
+          "end": 212.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy",
+          "start": 212.8,
+          "end": 213.24,
+          "probability": 0.9858
+        },
+        {
+          "word": "period",
+          "start": 213.24,
+          "end": 213.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 213.58,
+          "end": 213.76,
+          "probability": 0.999
+        },
+        {
+          "word": "been",
+          "start": 213.76,
+          "end": 213.92,
+          "probability": 1.0
+        },
+        {
+          "word": "generated.",
+          "start": 213.92,
+          "end": 214.38,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 214.82,
+      "end": 217.18,
+      "start_formatted": "00:03:34.820",
+      "end_formatted": "00:03:37.180",
+      "text": "Let's see what's happening with the delinquency.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 214.82,
+          "end": 215.36,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 215.36,
+          "end": 215.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "what's",
+          "start": 215.56,
+          "end": 215.92,
+          "probability": 1.0
+        },
+        {
+          "word": "happening",
+          "start": 215.92,
+          "end": 216.22,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 216.22,
+          "end": 216.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 216.44,
+          "end": 216.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "delinquency.",
+          "start": 216.56,
+          "end": 217.18,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 218.64,
+      "end": 221.54,
+      "start_formatted": "00:03:38.640",
+      "end_formatted": "00:03:41.540",
+      "text": "The status of the past due delinquency is on hold.",
+      "words": [
+        {
+          "word": "The",
+          "start": 218.64,
+          "end": 219.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "status",
+          "start": 219.2,
+          "end": 219.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 219.52,
+          "end": 219.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 219.72,
+          "end": 219.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "past",
+          "start": 219.8,
+          "end": 220.08,
+          "probability": 0.9194
+        },
+        {
+          "word": "due",
+          "start": 220.08,
+          "end": 220.26,
+          "probability": 0.9326
+        },
+        {
+          "word": "delinquency",
+          "start": 220.26,
+          "end": 220.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 220.82,
+          "end": 221.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 221.02,
+          "end": 221.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "hold.",
+          "start": 221.18,
+          "end": 221.54,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 221.82,
+      "end": 226.12,
+      "start_formatted": "00:03:41.820",
+      "end_formatted": "00:03:46.120",
+      "text": "The next delinquency event, which is Dunning Letter 2, is in one week.",
+      "words": [
+        {
+          "word": "The",
+          "start": 221.82,
+          "end": 222.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 222.22,
+          "end": 222.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "delinquency",
+          "start": 222.44,
+          "end": 223.08,
+          "probability": 0.998
+        },
+        {
+          "word": "event,",
+          "start": 223.08,
+          "end": 223.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 223.66,
+          "end": 223.92,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 223.92,
+          "end": 224.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Dunning",
+          "start": 224.06,
+          "end": 224.34,
+          "probability": 0.7437
+        },
+        {
+          "word": "Letter",
+          "start": 224.34,
+          "end": 224.56,
+          "probability": 0.771
+        },
+        {
+          "word": "2,",
+          "start": 224.56,
+          "end": 224.92,
+          "probability": 0.9712
+        },
+        {
+          "word": "is",
+          "start": 225.14,
+          "end": 225.42,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 225.42,
+          "end": 225.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 225.54,
+          "end": 225.76,
+          "probability": 0.8364
+        },
+        {
+          "word": "week.",
+          "start": 225.76,
+          "end": 226.12,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 226.12,
+      "end": 230.94,
+      "start_formatted": "00:03:46.120",
+      "end_formatted": "00:03:50.940",
+      "text": "I'll switch to Super User to advance the clock and run a batch process to wake up the workflow.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 226.12,
+          "end": 226.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "switch",
+          "start": 226.76,
+          "end": 227.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 227.0,
+          "end": 227.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "Super",
+          "start": 227.18,
+          "end": 227.44,
+          "probability": 0.7041
+        },
+        {
+          "word": "User",
+          "start": 227.44,
+          "end": 227.76,
+          "probability": 0.4233
+        },
+        {
+          "word": "to",
+          "start": 227.76,
+          "end": 227.98,
+          "probability": 0.999
+        },
+        {
+          "word": "advance",
+          "start": 227.98,
+          "end": 228.32,
+          "probability": 0.9741
+        },
+        {
+          "word": "the",
+          "start": 228.32,
+          "end": 228.54,
+          "probability": 0.999
+        },
+        {
+          "word": "clock",
+          "start": 228.54,
+          "end": 228.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "and",
+          "start": 228.8,
+          "end": 229.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "run",
+          "start": 229.0,
+          "end": 229.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 229.14,
+          "end": 229.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "batch",
+          "start": 229.28,
+          "end": 229.48,
+          "probability": 0.9639
+        },
+        {
+          "word": "process",
+          "start": 229.48,
+          "end": 229.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 229.86,
+          "end": 230.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "wake",
+          "start": 230.12,
+          "end": 230.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "up",
+          "start": 230.34,
+          "end": 230.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 230.5,
+          "end": 230.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "workflow.",
+          "start": 230.62,
+          "end": 230.94,
+          "probability": 0.9727
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 231.48,
+      "end": 234.36,
+      "start_formatted": "00:03:51.480",
+      "end_formatted": "00:03:54.360",
+      "text": "I click Add Week to advance the clock by 7 days.",
+      "words": [
+        {
+          "word": "I",
+          "start": 231.48,
+          "end": 231.96,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 231.96,
+          "end": 232.22,
+          "probability": 0.9922
+        },
+        {
+          "word": "Add",
+          "start": 232.22,
+          "end": 232.42,
+          "probability": 0.7769
+        },
+        {
+          "word": "Week",
+          "start": 232.42,
+          "end": 232.58,
+          "probability": 0.728
+        },
+        {
+          "word": "to",
+          "start": 232.58,
+          "end": 232.74,
+          "probability": 0.999
+        },
+        {
+          "word": "advance",
+          "start": 232.74,
+          "end": 233.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 233.08,
+          "end": 233.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "clock",
+          "start": 233.3,
+          "end": 233.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 233.52,
+          "end": 233.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "7",
+          "start": 233.72,
+          "end": 234.0,
+          "probability": 0.9141
+        },
+        {
+          "word": "days.",
+          "start": 234.0,
+          "end": 234.36,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 235.58,
+      "end": 238.44,
+      "start_formatted": "00:03:55.580",
+      "end_formatted": "00:03:58.440",
+      "text": "Next I click Server Tools to run the batch process.",
+      "words": [
+        {
+          "word": "Next",
+          "start": 235.58,
+          "end": 236.1,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 236.1,
+          "end": 236.26,
+          "probability": 0.8276
+        },
+        {
+          "word": "click",
+          "start": 236.26,
+          "end": 236.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "Server",
+          "start": 236.5,
+          "end": 236.78,
+          "probability": 0.9775
+        },
+        {
+          "word": "Tools",
+          "start": 236.78,
+          "end": 237.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 237.1,
+          "end": 237.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "run",
+          "start": 237.34,
+          "end": 237.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 237.54,
+          "end": 237.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "batch",
+          "start": 237.68,
+          "end": 237.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "process.",
+          "start": 237.9,
+          "end": 238.44,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 239.32,
+      "end": 243.96,
+      "start_formatted": "00:03:59.320",
+      "end_formatted": "00:04:03.960",
+      "text": "I click the sort arrow icon to make it easy to access the Workflow Writer batch process.",
+      "words": [
+        {
+          "word": "I",
+          "start": 239.32,
+          "end": 239.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 239.84,
+          "end": 240.1,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 240.1,
+          "end": 240.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "sort",
+          "start": 240.24,
+          "end": 240.5,
+          "probability": 0.4272
+        },
+        {
+          "word": "arrow",
+          "start": 240.5,
+          "end": 240.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "icon",
+          "start": 240.7,
+          "end": 241.0,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 241.0,
+          "end": 241.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "make",
+          "start": 241.22,
+          "end": 241.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 241.4,
+          "end": 241.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "easy",
+          "start": 241.54,
+          "end": 241.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 241.74,
+          "end": 241.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 241.9,
+          "end": 242.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 242.24,
+          "end": 242.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "Workflow",
+          "start": 242.46,
+          "end": 242.84,
+          "probability": 0.9238
+        },
+        {
+          "word": "Writer",
+          "start": 242.84,
+          "end": 243.14,
+          "probability": 0.9082
+        },
+        {
+          "word": "batch",
+          "start": 243.14,
+          "end": 243.42,
+          "probability": 0.9683
+        },
+        {
+          "word": "process.",
+          "start": 243.42,
+          "end": 243.96,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 244.4,
+      "end": 246.68,
+      "start_formatted": "00:04:04.400",
+      "end_formatted": "00:04:06.680",
+      "text": "I find Workflow Writer and I click Run.",
+      "words": [
+        {
+          "word": "I",
+          "start": 244.4,
+          "end": 244.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "find",
+          "start": 244.78,
+          "end": 245.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "Workflow",
+          "start": 245.08,
+          "end": 245.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "Writer",
+          "start": 245.54,
+          "end": 245.88,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 245.88,
+          "end": 246.04,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 246.04,
+          "end": 246.14,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 246.14,
+          "end": 246.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "Run.",
+          "start": 246.4,
+          "end": 246.68,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 248.62,
+      "end": 251.76,
+      "start_formatted": "00:04:08.620",
+      "end_formatted": "00:04:11.760",
+      "text": "Let's return to Jeff Park's browser to see what has changed.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 248.62,
+          "end": 249.2,
+          "probability": 0.9546
+        },
+        {
+          "word": "return",
+          "start": 249.2,
+          "end": 249.46,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 249.46,
+          "end": 249.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "Jeff",
+          "start": 249.68,
+          "end": 249.9,
+          "probability": 0.9243
+        },
+        {
+          "word": "Park's",
+          "start": 249.9,
+          "end": 250.28,
+          "probability": 0.876
+        },
+        {
+          "word": "browser",
+          "start": 250.28,
+          "end": 250.62,
+          "probability": 0.9731
+        },
+        {
+          "word": "to",
+          "start": 250.62,
+          "end": 250.82,
+          "probability": 0.998
+        },
+        {
+          "word": "see",
+          "start": 250.82,
+          "end": 251.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "what",
+          "start": 251.0,
+          "end": 251.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 251.16,
+          "end": 251.3,
+          "probability": 0.9727
+        },
+        {
+          "word": "changed.",
+          "start": 251.3,
+          "end": 251.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 252.26,
+      "end": 255.62,
+      "start_formatted": "00:04:12.260",
+      "end_formatted": "00:04:15.620",
+      "text": "First, I'll refresh the display by visiting another screen.",
+      "words": [
+        {
+          "word": "First,",
+          "start": 252.26,
+          "end": 252.84,
+          "probability": 0.9922
+        },
+        {
+          "word": "I'll",
+          "start": 253.12,
+          "end": 253.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "refresh",
+          "start": 253.42,
+          "end": 253.74,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 253.74,
+          "end": 254.02,
+          "probability": 0.998
+        },
+        {
+          "word": "display",
+          "start": 254.02,
+          "end": 254.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "by",
+          "start": 254.36,
+          "end": 254.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "visiting",
+          "start": 254.56,
+          "end": 254.94,
+          "probability": 0.998
+        },
+        {
+          "word": "another",
+          "start": 254.94,
+          "end": 255.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen.",
+          "start": 255.24,
+          "end": 255.62,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 256.02,
+      "end": 258.42,
+      "start_formatted": "00:04:16.020",
+      "end_formatted": "00:04:18.420",
+      "text": "Now I return to the delinquencies screen.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 256.02,
+          "end": 256.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 256.6,
+          "end": 256.78,
+          "probability": 0.9595
+        },
+        {
+          "word": "return",
+          "start": 256.78,
+          "end": 257.12,
+          "probability": 0.9712
+        },
+        {
+          "word": "to",
+          "start": 257.12,
+          "end": 257.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 257.32,
+          "end": 257.42,
+          "probability": 0.9946
+        },
+        {
+          "word": "delinquencies",
+          "start": 257.42,
+          "end": 258.04,
+          "probability": 0.8599
+        },
+        {
+          "word": "screen.",
+          "start": 258.04,
+          "end": 258.42,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 261.6,
+      "end": 264.68,
+      "start_formatted": "00:04:21.600",
+      "end_formatted": "00:04:24.680",
+      "text": "The target date for the Dunning Letter 2 event is now red.",
+      "words": [
+        {
+          "word": "The",
+          "start": 261.6,
+          "end": 262.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "target",
+          "start": 262.18,
+          "end": 262.5,
+          "probability": 0.9697
+        },
+        {
+          "word": "date",
+          "start": 262.5,
+          "end": 262.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 262.72,
+          "end": 262.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 262.9,
+          "end": 263.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "Dunning",
+          "start": 263.0,
+          "end": 263.28,
+          "probability": 0.9673
+        },
+        {
+          "word": "Letter",
+          "start": 263.28,
+          "end": 263.5,
+          "probability": 0.8511
+        },
+        {
+          "word": "2",
+          "start": 263.5,
+          "end": 263.74,
+          "probability": 0.8335
+        },
+        {
+          "word": "event",
+          "start": 263.74,
+          "end": 264.04,
+          "probability": 0.9697
+        },
+        {
+          "word": "is",
+          "start": 264.04,
+          "end": 264.24,
+          "probability": 0.999
+        },
+        {
+          "word": "now",
+          "start": 264.24,
+          "end": 264.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "red.",
+          "start": 264.4,
+          "end": 264.68,
+          "probability": 0.8384
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 264.68,
+      "end": 268.3,
+      "start_formatted": "00:04:24.680",
+      "end_formatted": "00:04:28.300",
+      "text": "But the event cannot be completed because of the trouble ticket hold.",
+      "words": [
+        {
+          "word": "But",
+          "start": 264.68,
+          "end": 265.4,
+          "probability": 0.9146
+        },
+        {
+          "word": "the",
+          "start": 265.4,
+          "end": 265.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "event",
+          "start": 265.56,
+          "end": 265.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "cannot",
+          "start": 265.86,
+          "end": 266.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "be",
+          "start": 266.12,
+          "end": 266.38,
+          "probability": 1.0
+        },
+        {
+          "word": "completed",
+          "start": 266.38,
+          "end": 266.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 266.8,
+          "end": 267.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 267.12,
+          "end": 267.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 267.32,
+          "end": 267.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 267.44,
+          "end": 267.7,
+          "probability": 0.8989
+        },
+        {
+          "word": "ticket",
+          "start": 267.7,
+          "end": 267.94,
+          "probability": 0.9648
+        },
+        {
+          "word": "hold.",
+          "start": 267.94,
+          "end": 268.3,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 268.66,
+      "end": 270.52,
+      "start_formatted": "00:04:28.660",
+      "end_formatted": "00:04:30.520",
+      "text": "We know the delinquency hold is working.",
+      "words": [
+        {
+          "word": "We",
+          "start": 268.66,
+          "end": 268.98,
+          "probability": 0.999
+        },
+        {
+          "word": "know",
+          "start": 268.98,
+          "end": 269.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 269.12,
+          "end": 269.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "delinquency",
+          "start": 269.24,
+          "end": 269.8,
+          "probability": 0.9932
+        },
+        {
+          "word": "hold",
+          "start": 269.8,
+          "end": 270.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 270.08,
+          "end": 270.22,
+          "probability": 1.0
+        },
+        {
+          "word": "working.",
+          "start": 270.22,
+          "end": 270.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 270.88,
+      "end": 273.7,
+      "start_formatted": "00:04:30.880",
+      "end_formatted": "00:04:33.700",
+      "text": "Now I want to see the effect of the hold on invoice sending.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 270.88,
+          "end": 271.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 271.26,
+          "end": 271.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "want",
+          "start": 271.44,
+          "end": 271.62,
+          "probability": 0.9878
+        },
+        {
+          "word": "to",
+          "start": 271.62,
+          "end": 271.72,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 271.72,
+          "end": 271.88,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 271.88,
+          "end": 272.02,
+          "probability": 1.0
+        },
+        {
+          "word": "effect",
+          "start": 272.02,
+          "end": 272.3,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 272.3,
+          "end": 272.48,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 272.48,
+          "end": 272.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "hold",
+          "start": 272.56,
+          "end": 272.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "on",
+          "start": 272.74,
+          "end": 272.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "invoice",
+          "start": 272.9,
+          "end": 273.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "sending.",
+          "start": 273.32,
+          "end": 273.7,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 274.06,
+      "end": 277.18,
+      "start_formatted": "00:04:34.060",
+      "end_formatted": "00:04:37.180",
+      "text": "I'll switch over to Super User to make the third invoice build.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 274.06,
+          "end": 274.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "switch",
+          "start": 274.46,
+          "end": 274.68,
+          "probability": 1.0
+        },
+        {
+          "word": "over",
+          "start": 274.68,
+          "end": 274.9,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 274.9,
+          "end": 275.08,
+          "probability": 1.0
+        },
+        {
+          "word": "Super",
+          "start": 275.08,
+          "end": 275.38,
+          "probability": 0.5698
+        },
+        {
+          "word": "User",
+          "start": 275.38,
+          "end": 275.68,
+          "probability": 0.5
+        },
+        {
+          "word": "to",
+          "start": 275.68,
+          "end": 275.88,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 275.88,
+          "end": 276.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 276.06,
+          "end": 276.22,
+          "probability": 1.0
+        },
+        {
+          "word": "third",
+          "start": 276.22,
+          "end": 276.42,
+          "probability": 0.9878
+        },
+        {
+          "word": "invoice",
+          "start": 276.42,
+          "end": 276.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "build.",
+          "start": 276.86,
+          "end": 277.18,
+          "probability": 0.707
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 277.7,
+      "end": 279.76,
+      "start_formatted": "00:04:37.700",
+      "end_formatted": "00:04:39.760",
+      "text": "First I add a month to the testing clock.",
+      "words": [
+        {
+          "word": "First",
+          "start": 277.7,
+          "end": 278.22,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 278.22,
+          "end": 278.4,
+          "probability": 0.9585
+        },
+        {
+          "word": "add",
+          "start": 278.4,
+          "end": 278.5,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 278.5,
+          "end": 278.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "month",
+          "start": 278.64,
+          "end": 278.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 278.76,
+          "end": 278.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 278.92,
+          "end": 279.04,
+          "probability": 1.0
+        },
+        {
+          "word": "testing",
+          "start": 279.04,
+          "end": 279.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "clock.",
+          "start": 279.36,
+          "end": 279.76,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 281.72,
+      "end": 283.96,
+      "start_formatted": "00:04:41.720",
+      "end_formatted": "00:04:43.960",
+      "text": "Next, I go to the Server Tools tab.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 281.72,
+          "end": 282.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 282.46,
+          "end": 282.66,
+          "probability": 1.0
+        },
+        {
+          "word": "go",
+          "start": 282.66,
+          "end": 282.78,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 282.78,
+          "end": 282.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 282.9,
+          "end": 283.0,
+          "probability": 1.0
+        },
+        {
+          "word": "Server",
+          "start": 283.0,
+          "end": 283.26,
+          "probability": 0.7271
+        },
+        {
+          "word": "Tools",
+          "start": 283.26,
+          "end": 283.62,
+          "probability": 0.9858
+        },
+        {
+          "word": "tab.",
+          "start": 283.62,
+          "end": 283.96,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 287.2,
+      "end": 289.04,
+      "start_formatted": "00:04:47.200",
+      "end_formatted": "00:04:49.040",
+      "text": "Here's the invoice batch process.",
+      "words": [
+        {
+          "word": "Here's",
+          "start": 287.2,
+          "end": 287.72,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 287.72,
+          "end": 287.82,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 287.82,
+          "end": 288.2,
+          "probability": 0.9897
+        },
+        {
+          "word": "batch",
+          "start": 288.2,
+          "end": 288.48,
+          "probability": 0.8828
+        },
+        {
+          "word": "process.",
+          "start": 288.48,
+          "end": 289.04,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 289.38,
+      "end": 290.26,
+      "start_formatted": "00:04:49.380",
+      "end_formatted": "00:04:50.260",
+      "text": "I click Run.",
+      "words": [
+        {
+          "word": "I",
+          "start": 289.38,
+          "end": 289.7,
+          "probability": 1.0
+        },
+        {
+          "word": "click",
+          "start": 289.7,
+          "end": 289.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "Run.",
+          "start": 289.98,
+          "end": 290.26,
+          "probability": 0.8789
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 291.14,
+      "end": 293.98,
+      "start_formatted": "00:04:51.140",
+      "end_formatted": "00:04:53.980",
+      "text": "Let's return to the Jeff Park browser to see the result.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 291.14,
+          "end": 291.66,
+          "probability": 1.0
+        },
+        {
+          "word": "return",
+          "start": 291.66,
+          "end": 291.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 291.96,
+          "end": 292.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 292.18,
+          "end": 292.28,
+          "probability": 1.0
+        },
+        {
+          "word": "Jeff",
+          "start": 292.28,
+          "end": 292.52,
+          "probability": 0.9443
+        },
+        {
+          "word": "Park",
+          "start": 292.52,
+          "end": 292.76,
+          "probability": 0.8408
+        },
+        {
+          "word": "browser",
+          "start": 292.76,
+          "end": 293.1,
+          "probability": 0.9565
+        },
+        {
+          "word": "to",
+          "start": 293.1,
+          "end": 293.3,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 293.3,
+          "end": 293.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 293.46,
+          "end": 293.6,
+          "probability": 1.0
+        },
+        {
+          "word": "result.",
+          "start": 293.6,
+          "end": 293.98,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 293.98,
+      "end": 297.38,
+      "start_formatted": "00:04:53.980",
+      "end_formatted": "00:04:57.380",
+      "text": "I click the account number in the info bar to go to the account.",
+      "words": [
+        {
+          "word": "I",
+          "start": 293.98,
+          "end": 294.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "click",
+          "start": 294.82,
+          "end": 295.04,
+          "probability": 0.9077
+        },
+        {
+          "word": "the",
+          "start": 295.04,
+          "end": 295.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "account",
+          "start": 295.2,
+          "end": 295.54,
+          "probability": 0.8643
+        },
+        {
+          "word": "number",
+          "start": 295.54,
+          "end": 295.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 295.8,
+          "end": 296.02,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 296.02,
+          "end": 296.1,
+          "probability": 0.999
+        },
+        {
+          "word": "info",
+          "start": 296.1,
+          "end": 296.36,
+          "probability": 0.8799
+        },
+        {
+          "word": "bar",
+          "start": 296.36,
+          "end": 296.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 296.58,
+          "end": 296.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "go",
+          "start": 296.7,
+          "end": 296.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 296.84,
+          "end": 296.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 296.94,
+          "end": 297.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "account.",
+          "start": 297.06,
+          "end": 297.38,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 297.96,
+      "end": 302.56,
+      "start_formatted": "00:04:57.960",
+      "end_formatted": "00:05:02.560",
+      "text": "Let's go to the Invoices screen for the account to see how Billing Center handles the hold on billing.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 297.96,
+          "end": 298.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "go",
+          "start": 298.48,
+          "end": 298.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 298.62,
+          "end": 298.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 298.74,
+          "end": 298.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Invoices",
+          "start": 298.88,
+          "end": 299.34,
+          "probability": 0.7749
+        },
+        {
+          "word": "screen",
+          "start": 299.34,
+          "end": 299.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 299.68,
+          "end": 299.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 299.92,
+          "end": 300.04,
+          "probability": 0.999
+        },
+        {
+          "word": "account",
+          "start": 300.04,
+          "end": 300.34,
+          "probability": 0.9868
+        },
+        {
+          "word": "to",
+          "start": 300.34,
+          "end": 300.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 300.52,
+          "end": 300.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "how",
+          "start": 300.68,
+          "end": 300.84,
+          "probability": 0.999
+        },
+        {
+          "word": "Billing",
+          "start": 300.84,
+          "end": 301.2,
+          "probability": 0.9873
+        },
+        {
+          "word": "Center",
+          "start": 301.2,
+          "end": 301.4,
+          "probability": 0.7241
+        },
+        {
+          "word": "handles",
+          "start": 301.4,
+          "end": 301.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 301.78,
+          "end": 301.96,
+          "probability": 0.999
+        },
+        {
+          "word": "hold",
+          "start": 301.96,
+          "end": 302.18,
+          "probability": 0.9673
+        },
+        {
+          "word": "on",
+          "start": 302.18,
+          "end": 302.32,
+          "probability": 0.9722
+        },
+        {
+          "word": "billing.",
+          "start": 302.32,
+          "end": 302.56,
+          "probability": 0.9673
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 303.5,
+      "end": 305.42,
+      "start_formatted": "00:05:03.500",
+      "end_formatted": "00:05:05.420",
+      "text": "Here's the invoice we're interested in.",
+      "words": [
+        {
+          "word": "Here's",
+          "start": 303.5,
+          "end": 304.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 304.02,
+          "end": 304.12,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 304.12,
+          "end": 304.48,
+          "probability": 0.9839
+        },
+        {
+          "word": "we're",
+          "start": 304.48,
+          "end": 304.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "interested",
+          "start": 304.74,
+          "end": 305.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "in.",
+          "start": 305.08,
+          "end": 305.42,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 305.78,
+      "end": 307.4,
+      "start_formatted": "00:05:05.780",
+      "end_formatted": "00:05:07.400",
+      "text": "Notice the due date has passed.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 305.78,
+          "end": 306.24,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 306.24,
+          "end": 306.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "due",
+          "start": 306.4,
+          "end": 306.54,
+          "probability": 0.9067
+        },
+        {
+          "word": "date",
+          "start": 306.54,
+          "end": 306.76,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 306.76,
+          "end": 307.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "passed.",
+          "start": 307.02,
+          "end": 307.4,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 307.82,
+      "end": 310.74,
+      "start_formatted": "00:05:07.820",
+      "end_formatted": "00:05:10.740",
+      "text": "The status field for the third invoice is carried forward.",
+      "words": [
+        {
+          "word": "The",
+          "start": 307.82,
+          "end": 308.34,
+          "probability": 0.999
+        },
+        {
+          "word": "status",
+          "start": 308.34,
+          "end": 308.64,
+          "probability": 0.855
+        },
+        {
+          "word": "field",
+          "start": 308.64,
+          "end": 308.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 308.92,
+          "end": 309.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 309.1,
+          "end": 309.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "third",
+          "start": 309.22,
+          "end": 309.4,
+          "probability": 0.9531
+        },
+        {
+          "word": "invoice",
+          "start": 309.4,
+          "end": 309.82,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 309.82,
+          "end": 310.06,
+          "probability": 1.0
+        },
+        {
+          "word": "carried",
+          "start": 310.06,
+          "end": 310.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "forward.",
+          "start": 310.32,
+          "end": 310.74,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 311.1,
+      "end": 316.84,
+      "start_formatted": "00:05:11.100",
+      "end_formatted": "00:05:16.840",
+      "text": "This means Billing Center carried the invoice items forward to the next planned invoice as a result of the invoice hold.",
+      "words": [
+        {
+          "word": "This",
+          "start": 311.1,
+          "end": 311.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "means",
+          "start": 311.54,
+          "end": 311.84,
+          "probability": 1.0
+        },
+        {
+          "word": "Billing",
+          "start": 311.84,
+          "end": 312.22,
+          "probability": 0.9927
+        },
+        {
+          "word": "Center",
+          "start": 312.22,
+          "end": 312.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "carried",
+          "start": 312.44,
+          "end": 312.8,
+          "probability": 0.6938
+        },
+        {
+          "word": "the",
+          "start": 312.8,
+          "end": 312.94,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 312.94,
+          "end": 313.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "items",
+          "start": 313.34,
+          "end": 313.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "forward",
+          "start": 313.66,
+          "end": 314.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 314.0,
+          "end": 314.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 314.16,
+          "end": 314.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 314.28,
+          "end": 314.52,
+          "probability": 0.999
+        },
+        {
+          "word": "planned",
+          "start": 314.52,
+          "end": 314.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "invoice",
+          "start": 314.84,
+          "end": 315.22,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 315.22,
+          "end": 315.44,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 315.44,
+          "end": 315.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "result",
+          "start": 315.54,
+          "end": 315.82,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 315.82,
+          "end": 316.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 316.0,
+          "end": 316.1,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice",
+          "start": 316.1,
+          "end": 316.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "hold.",
+          "start": 316.5,
+          "end": 316.84,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 317.06,
+      "end": 319.46,
+      "start_formatted": "00:05:17.060",
+      "end_formatted": "00:05:19.460",
+      "text": "The amount field on the third invoice is empty.",
+      "words": [
+        {
+          "word": "The",
+          "start": 317.06,
+          "end": 317.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "amount",
+          "start": 317.5,
+          "end": 317.78,
+          "probability": 0.9502
+        },
+        {
+          "word": "field",
+          "start": 317.78,
+          "end": 318.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 318.06,
+          "end": 318.24,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 318.24,
+          "end": 318.34,
+          "probability": 1.0
+        },
+        {
+          "word": "third",
+          "start": 318.34,
+          "end": 318.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 318.54,
+          "end": 318.96,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 318.96,
+          "end": 319.18,
+          "probability": 1.0
+        },
+        {
+          "word": "empty.",
+          "start": 319.18,
+          "end": 319.46,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 319.74,
+      "end": 323.5,
+      "start_formatted": "00:05:19.740",
+      "end_formatted": "00:05:23.500",
+      "text": "This concludes our demonstration on trouble tickets and trouble ticket holds.",
+      "words": [
+        {
+          "word": "This",
+          "start": 319.74,
+          "end": 320.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "concludes",
+          "start": 320.22,
+          "end": 320.6,
+          "probability": 1.0
+        },
+        {
+          "word": "our",
+          "start": 320.6,
+          "end": 320.8,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 320.8,
+          "end": 321.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 321.28,
+          "end": 321.68,
+          "probability": 1.0
+        },
+        {
+          "word": "trouble",
+          "start": 321.68,
+          "end": 321.92,
+          "probability": 0.7227
+        },
+        {
+          "word": "tickets",
+          "start": 321.92,
+          "end": 322.32,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 322.32,
+          "end": 322.54,
+          "probability": 0.999
+        },
+        {
+          "word": "trouble",
+          "start": 322.54,
+          "end": 322.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "ticket",
+          "start": 322.8,
+          "end": 323.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "holds.",
+          "start": 323.08,
+          "end": 323.5,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 323.5,
+      "end": 326.9,
+      "start_formatted": "00:05:23.500",
+      "end_formatted": "00:05:26.900",
+      "text": "Let's return to the lesson to learn more about trouble tickets.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 323.5,
+          "end": 324.44,
+          "probability": 0.9014
+        },
+        {
+          "word": "return",
+          "start": 324.44,
+          "end": 324.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 324.68,
+          "end": 324.9,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 324.9,
+          "end": 325.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "lesson",
+          "start": 325.0,
+          "end": 325.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 325.28,
+          "end": 325.48,
+          "probability": 0.998
+        },
+        {
+          "word": "learn",
+          "start": 325.48,
+          "end": 325.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "more",
+          "start": 325.68,
+          "end": 325.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "about",
+          "start": 325.92,
+          "end": 326.18,
+          "probability": 0.999
+        },
+        {
+          "word": "trouble",
+          "start": 326.18,
+          "end": 326.46,
+          "probability": 0.876
+        },
+        {
+          "word": "tickets.",
+          "start": 326.46,
+          "end": 326.9,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "start": 327.14,
+      "end": 327.14,
+      "start_formatted": "00:05:27.140",
+      "end_formatted": "00:05:27.140",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 73,
+      "start": 327.64,
+      "end": 328.22,
+      "start_formatted": "00:05:27.640",
+      "end_formatted": "00:05:28.220",
+      "text": "Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Fil",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 327.64,
+          "end": 327.82,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.2795
+        },
+        {
+          "word": "the",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.1572
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.468
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.7539
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.4653
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.749
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.4966
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.8223
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.6138
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.8716
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.7788
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9014
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.8691
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9209
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9194
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9409
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9414
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9565
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9609
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9688
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9712
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9736
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9756
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9771
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9775
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.98
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.98
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.82,
+          "end": 327.82,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.82,
+          "end": 327.84,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.84,
+          "end": 327.84,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.84,
+          "end": 327.84,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.84,
+          "end": 327.84,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.84,
+          "end": 327.84,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.84,
+          "end": 327.84,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.84,
+          "end": 327.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.98
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 327.92,
+          "end": 327.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 327.92,
+          "end": 327.96,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 327.96,
+          "end": 327.96,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.96,
+          "end": 327.96,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 327.96,
+          "end": 327.96,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 327.96,
+          "end": 327.96,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 327.96,
+          "end": 328.12,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 328.12,
+          "end": 328.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "Fil",
+          "start": 328.22,
+          "end": 328.22,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 75,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 76,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 77,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 78,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 79,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 80,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 81,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 82,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 83,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 84,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 85,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 86,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 87,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 88,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 89,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 90,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 91,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 92,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 93,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 94,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 95,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 96,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 97,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 98,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 99,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 100,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 101,
+      "start": 328.2,
+      "end": 328.2,
+      "start_formatted": "00:05:28.200",
+      "end_formatted": "00:05:28.200",
+      "text": "",
+      "words": []
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-28",
+    "slide_count": 16,
+    "slides_with_text": 15,
+    "total_words": 753,
+    "avg_confidence": 87.01,
+    "processing_time_seconds": 6.47,
+    "extracted_at": "2026-02-13T12:07:50.251960"
+  },
+  "full_text": "Validation\n\nLesson\nobjectives\n\nDescribe validation with field validators\nDescribe validation during save\n\nDescribe validation at some level during a job\nDescribe warnings and errors\n\nGi\n\nMarcus A +\nBusiness | need to write requirements that ensure that\nnalys' ©\n\nthe business data is valid. For example, we\n\nneed to validate addresses. How does\n\nPolicyCenter validate information that the user\n¢ has entered?\n\n| Validation basics G\n\n¢ Validation is a check executed by PolicyCenter prior to a given action, to ensure\nthat the current business data is valid\n\n« Ensures that the user enters data that makes sense\n* Ensures that the user enters all necessary data\n+ Manages relationships between data fields\n¢ Validation behaviors:\n* Validation with field validators\n* Validation during a save, such as clicking ‘update’\n\n« Using validation levels in a transaction which are run at certain points in a transaction\n\n| Validation with field validators\n\n¢ Field validators handle simple validation for a single field\n« Must match patterns or input-masks specified by the field validator\n\n¢ Restricts user inputs\n\nSSN\n\n| Validation when data is saved\n\n¢ Consists of coded validation checks\n\n* In the user interface, required fields are marked with an asterisk\n« In the business rules for validated entities\n\n¢ Checked before validatable entity is committed to database\n\nNew Producer Code\n\n@ Code: Missing required field \"Code\"\n\nBasics | Roles | Groups | Users\n\nRequired field ———[]\n\nDescription\n\nOrganization * | Builders’ Risk brokers Q\n\n| Validation at some level during a job Gi\n\n* Consists of validation checks coded in Gosu classes\n* In base application, used for validation associated to policy objects\n* Can be checked at any time when validation is required\n\n* Can be configured to display either a warning or an error based on the level in the\n\njob\n5 .\niy Vehicles\nVe c les Validation Results\nThere is a Message on another page Validation Results\nA The policy must specify at least one vehicle.\nThere is a Message on another page\n@ The policy must specify at least one vehicle.\n\nOn Save (navigating away from page\n( gating y page) At Quote\n\n| Warnings and errors Gi\n\n¢ PolicyCenter displays warning/error messages in the UI if a problem is detected\n« Warnings\n\n« Warnings are non-blocking\n\n« User can continue with the action without clearing the warning\n\n* It is recommended to clear the warnings as they appear\n\nA There are no assigned drivers for vehicle(s) #1.\n¢ Errors\n* Errors are blocking\n\n* Situations causing error must be rectified before reattempting the same action\n\n@ Written Date: Missing required field \"Written Date\"\n\n| Warning and error appearance\n\n¢ Attop of page\n\n¢ Most errors appear during save, such as\nmissing required fields\n\n« Warnings in a job on the current page\n\n¢ At the bottom on the worksheet\n\n* During a save that calls validation rules using\nspecial validation methods\n\n« When clicking Quote or Bind buttons in a job\n\n* Displays a message about the page when\nthe user is on a different page from where the\nerror occurred\n\n| There is a Message on another page\n\nA. There are no assigned drivers for vehicle(s) # 1.\n\nr PA Coverages\n\nLiability - Bodily Injury and Property Damage\n\nValidation Results\n\nValidation Results\n\n© There are no assigned drivers for vehicle(s) # 1.\n\n| Demonstration G\n\nValidation basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,~ — What are the three types of PolicyCenter validation?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\nae What are the three types of PolicyCenter validation?\n\n¢\n¢\n\nValidation with field validators, validation during save and validation on demand which\ncan be run in a job wizard step or at a certain time in a job.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n,~ — What is the difference between an error and a waming?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n,~ — What is the difference between an error and a waming?\n¢\n\n¢\n¢\n\nErrors block the action that the user was taking. Warnings are non-blocking and allow\nthe user to proceed to the next step and continue performing actions.\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobjectives\nreview\n\nDescribe validation with field validators\nDescribe validation during save\n\nDescribe validation at some level during a job\nDescribe warnings and errors",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Validation",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nDescribe validation with field validators\nDescribe validation during save\n\nDescribe validation at some level during a job\nDescribe warnings and errors",
+      "word_count": 23,
+      "avg_confidence": 95.65,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Gi\n\nMarcus A +\nBusiness | need to write requirements that ensure that\nnalys' ©\n\nthe business data is valid. For example, we\n\nneed to validate addresses. How does\n\nPolicyCenter validate information that the user\n¢ has entered?",
+      "word_count": 38,
+      "avg_confidence": 88.31,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Validation basics G\n\n¢ Validation is a check executed by PolicyCenter prior to a given action, to ensure\nthat the current business data is valid\n\n« Ensures that the user enters data that makes sense\n* Ensures that the user enters all necessary data\n+ Manages relationships between data fields\n¢ Validation behaviors:\n* Validation with field validators\n* Validation during a save, such as clicking ‘update’\n\n« Using validation levels in a transaction which are run at certain points in a transaction",
+      "word_count": 84,
+      "avg_confidence": 87.15,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Validation with field validators\n\n¢ Field validators handle simple validation for a single field\n« Must match patterns or input-masks specified by the field validator\n\n¢ Restricts user inputs\n\nSSN",
+      "word_count": 31,
+      "avg_confidence": 90.26,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Validation when data is saved\n\n¢ Consists of coded validation checks\n\n* In the user interface, required fields are marked with an asterisk\n« In the business rules for validated entities\n\n¢ Checked before validatable entity is committed to database\n\nNew Producer Code\n\n@ Code: Missing required field \"Code\"\n\nBasics | Roles | Groups | Users\n\nRequired field ———[]\n\nDescription\n\nOrganization * | Builders’ Risk brokers Q",
+      "word_count": 68,
+      "avg_confidence": 87.06,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Validation at some level during a job Gi\n\n* Consists of validation checks coded in Gosu classes\n* In base application, used for validation associated to policy objects\n* Can be checked at any time when validation is required\n\n* Can be configured to display either a warning or an error based on the level in the\n\njob\n5 .\niy Vehicles\nVe c les Validation Results\nThere is a Message on another page Validation Results\nA The policy must specify at least one vehicle.\nThere is a Message on another page\n@ The policy must specify at least one vehicle.\n\nOn Save (navigating away from page\n( gating y page) At Quote",
+      "word_count": 114,
+      "avg_confidence": 89.87,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Warnings and errors Gi\n\n¢ PolicyCenter displays warning/error messages in the UI if a problem is detected\n« Warnings\n\n« Warnings are non-blocking\n\n« User can continue with the action without clearing the warning\n\n* It is recommended to clear the warnings as they appear\n\nA There are no assigned drivers for vehicle(s) #1.\n¢ Errors\n* Errors are blocking\n\n* Situations causing error must be rectified before reattempting the same action\n\n@ Written Date: Missing required field \"Written Date\"",
+      "word_count": 81,
+      "avg_confidence": 84.96,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Warning and error appearance\n\n¢ Attop of page\n\n¢ Most errors appear during save, such as\nmissing required fields\n\n« Warnings in a job on the current page\n\n¢ At the bottom on the worksheet\n\n* During a save that calls validation rules using\nspecial validation methods\n\n« When clicking Quote or Bind buttons in a job\n\n* Displays a message about the page when\nthe user is on a different page from where the\nerror occurred\n\n| There is a Message on another page\n\nA. There are no assigned drivers for vehicle(s) # 1.\n\nr PA Coverages\n\nLiability - Bodily Injury and Property Damage\n\nValidation Results\n\nValidation Results\n\n© There are no assigned drivers for vehicle(s) # 1.",
+      "word_count": 120,
+      "avg_confidence": 88.04,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Demonstration G\n\nValidation basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.54,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Question\n\n,~ — What are the three types of PolicyCenter validation?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 20,
+      "avg_confidence": 66.24,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Answer\n\nae What are the three types of PolicyCenter validation?\n\n¢\n¢\n\nValidation with field validators, validation during save and validation on demand which\ncan be run in a job wizard step or at a certain time in a job.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 45,
+      "avg_confidence": 89.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Question\n\n,~ — What is the difference between an error and a waming?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 22,
+      "avg_confidence": 63.68,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Answer\n\n,~ — What is the difference between an error and a waming?\n¢\n\n¢\n¢\n\nErrors block the action that the user was taking. Warnings are non-blocking and allow\nthe user to proceed to the next step and continue performing actions.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 47,
+      "avg_confidence": 87.59,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Lesson\nobjectives\nreview\n\nDescribe validation with field validators\nDescribe validation during save\n\nDescribe validation at some level during a job\nDescribe warnings and errors",
+      "word_count": 24,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

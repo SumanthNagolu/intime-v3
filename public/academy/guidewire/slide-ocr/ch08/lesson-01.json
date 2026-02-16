@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-01",
+    "slide_count": 25,
+    "slides_with_text": 25,
+    "total_words": 679,
+    "avg_confidence": 84.59,
+    "processing_time_seconds": 8.85,
+    "extracted_at": "2026-02-13T12:21:31.772342"
+  },
+  "full_text": "PolicyCenter Data Model\n\nLesson\nobjectives\n\nDescribe the business entities of the\nPolicyCenter data model and their relationships\n\ni Data model answers questions about the business [5\n\nAccount oon\n\ni Data model answers questions about the business [5\n\nWhat does each policy\nperiod look like?\n\ni Data model answers questions about the business [5\n\neg\n\nWhat is covered period look like?\non the policy?\n\nWhat does each policy\n\ni Data model answers questions about the business [5\n\nWho holds the policy?\n\neg\n\nWhat is covered period look like?\non the policy?\n\nWhat does each policy\n\ni Data model answers questions about the business [5\n\nicy? What is the work to be\nWho holds the policy? done for the policy?\n\now =\n\nse 2\n\nWhat is covered period look like?\non the policy?\n\nWhat does each policy\n\ni Data model answers questions about the business [5\n\nicy? What is the work to be\nWho holds the policy? done for the policy?\n\nQ\n\now =\n6m\nWhat does each policy Who is processing\n\nWhat is covered eriod look like? .\non the policy? Pr the policy?\n\ni Two primary entities in data model G&G\n\neee Ce) id\n\n8 AccountHolder (e Activities\nQ PrimaryLocation {£°\"}PolicyPeriods\n\n& ProducerCodes ca Jobs\n\nAn account can have one or more relationships to a policy\n\nA—* B Ahas0 or more Bs\nA—>B AhasaB\nA—  B AijisrelatedtoB\n\ni Policy periods\n\n(# Activities\n£\"\"}PolicyPeriods\n\n(E23 Jobs\n\n(«What does each policy period look like?\n\nPolicyNumber\n\nBopLine, CPLine, PALine ..,\nJob\n\nPeriodStart, PeriodEnd\n\ni Policy lines\n\nPersonalAutoLine\n\n@ PALineCoverages\nVehicles (Coverables)\n38 PAModifiers\n2 PACosts\n\n|| What is covered on the policy?\n\nCommercialPropertyLine\n@ CPLineCoverages\n9 CPLocations (Coverables)\n«3&7 CPModifiers\nQi CPCosts\n\ni Coverable-specific entities\n\nMe CommercialPropertyLine\n\n@ CPLineCoverages\n\nPersonalAutoLine\n\n@ PALineCoverages\n\nPersonalVehicle\n\n@ PersonalVehicleCovs\n\nCPLocation\nHe\nPolicyLine G@ CPlocationcoverages\n\ncPBubding\n\n@ CPBuildingCoverages\n\nCoverable\n\nCoverableCov\n\n|| What is covered on the policy?\n\ni Line-specific entities\n\nCoverable\n\n|| What is covered on the policy?\n\nTransaction\n\ni General policy line entities\n\nRateFactor\n\nCoverable —\n\n~ Coverablecoy ————* Cost\n\n|| What is covered on the policy?\n\ni Policy transaction entities\n\n(MM What is the work to be done for the policy?\n\nPolicyLine\n\ni User assignment\n\nUserRole\nAssignment\n\n|| Who is processing the policy?\n(MM What is the work to be done for the policy?\n\ni Account details\n\nUserRole\n\ni Who holds the policy?\n|| Who is processing the policy?\n(MM What is the work to be done for the policy?\n|| What is covered on the policy?\n\nPolicyContact\n\nQuestion G\n\n,~ — Which entities below answer the business question of what is covered\no on the policy?\n\n“ A) PolicyLine\nB) Coverable\nC) CoverableCov\nD) Cost\nE) Form\nF) Job\nG\n\nUnderwriting Issue\n\nSS oe ee oe oe oo\n\nAnswer G\n\n_~ — Which entities below answer the business question of what is covered\noo on the policy?\n\n“ A) PolicyLine\nB) Coverable\nC) CoverableCov\nD) Cost\nE) Form\nF) Job\nG\n\nUnderwriting Issue\n\nCorrect answers: A, B, C, D, E\n\nSS Se ee eee eo\n\nQuestion G\n\nAssume a given instance of PolicyCenter\n77 — has 2 policy lines, each with 3 coverables.\n¢\n\nAccount\nPe How many entities are there that store... kL.\n1. Coverables? Policy\n\n2. Coverages?\n3. Costs?\n\nPolicy Period\n\nSS Se SS Se\n\nAnswer G\n\nAssume a given instance of PolicyCenter\n77 — has 2 policy lines, each with 3 coverables.\n¢\n\n? How many entities are there that store...\n1. Coverables?\n2. Coverages?\n3. Costs?\n\nModifier\n\nAnswer:\n\n1. 6 Coverables\n\n2. 6 Coverages\n\n3. 2Costs\n\noverableCo\\\n\nSS Se SSS Se\n\nQuestion G\n\n,- — Whatis the purpose of the\n¢ UserRoleAssignment entity?\n\n4\n¢\n\nAccount\n\nPolicy\n\nSS oe ee oe oe oo\n\nAnswer\n\n,~ — Whatis the purpose of the\nx UserRoleAssignment entity?\n¢\n\nUserRoleAssignment is used to pair a\nuser/group combination with an ownable\nobject and a specific role on that object (such\nas underwriter\"). An individual user can have\nmultiple roles.\n\nSS Se ee eee eo\n\nLesson\nobjectives Describe the business entities of the\n\nreview PolicyCenter data model and their relationships\n\ni Student exercise\n\nPolicyCenter Data Model",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "PolicyCenter Data Model",
+      "word_count": 3,
+      "avg_confidence": 94.0,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nDescribe the business entities of the\nPolicyCenter data model and their relationships",
+      "word_count": 14,
+      "avg_confidence": 95.64,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "i Data model answers questions about the business [5\n\nAccount oon",
+      "word_count": 11,
+      "avg_confidence": 80.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Data model answers questions about the business [5\n\nWhat does each policy\nperiod look like?",
+      "word_count": 16,
+      "avg_confidence": 91.12,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Data model answers questions about the business [5\n\neg\n\nWhat is covered period look like?\non the policy?\n\nWhat does each policy",
+      "word_count": 23,
+      "avg_confidence": 91.35,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Data model answers questions about the business [5\n\nWho holds the policy?\n\neg\n\nWhat is covered period look like?\non the policy?\n\nWhat does each policy",
+      "word_count": 27,
+      "avg_confidence": 92.93,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Data model answers questions about the business [5\n\nicy? What is the work to be\nWho holds the policy? done for the policy?\n\now =\n\nse 2\n\nWhat is covered period look like?\non the policy?\n\nWhat does each policy",
+      "word_count": 41,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Data model answers questions about the business [5\n\nicy? What is the work to be\nWho holds the policy? done for the policy?\n\nQ\n\now =\n6m\nWhat does each policy Who is processing\n\nWhat is covered eriod look like? .\non the policy? Pr the policy?",
+      "word_count": 48,
+      "avg_confidence": 86.96,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Two primary entities in data model G&G\n\neee Ce) id\n\n8 AccountHolder (e Activities\nQ PrimaryLocation {£°\"}PolicyPeriods\n\n& ProducerCodes ca Jobs\n\nAn account can have one or more relationships to a policy\n\nA—* B Ahas0 or more Bs\nA—>B AhasaB\nA—  B AijisrelatedtoB",
+      "word_count": 44,
+      "avg_confidence": 76.77,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Policy periods\n\n(# Activities\n£\"\"}PolicyPeriods\n\n(E23 Jobs\n\n(«What does each policy period look like?\n\nPolicyNumber\n\nBopLine, CPLine, PALine ..,\nJob\n\nPeriodStart, PeriodEnd",
+      "word_count": 23,
+      "avg_confidence": 78.54,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Policy lines\n\nPersonalAutoLine\n\n@ PALineCoverages\nVehicles (Coverables)\n38 PAModifiers\n2 PACosts\n\n|| What is covered on the policy?\n\nCommercialPropertyLine\n@ CPLineCoverages\n9 CPLocations (Coverables)\n«3&7 CPModifiers\nQi CPCosts",
+      "word_count": 29,
+      "avg_confidence": 79.79,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Coverable-specific entities\n\nMe CommercialPropertyLine\n\n@ CPLineCoverages\n\nPersonalAutoLine\n\n@ PALineCoverages\n\nPersonalVehicle\n\n@ PersonalVehicleCovs\n\nCPLocation\nHe\nPolicyLine G@ CPlocationcoverages\n\ncPBubding\n\n@ CPBuildingCoverages\n\nCoverable\n\nCoverableCov\n\n|| What is covered on the policy?",
+      "word_count": 30,
+      "avg_confidence": 85.6,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Line-specific entities\n\nCoverable\n\n|| What is covered on the policy?\n\nTransaction",
+      "word_count": 12,
+      "avg_confidence": 84.54,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i General policy line entities\n\nRateFactor\n\nCoverable —\n\n~ Coverablecoy ————* Cost\n\n|| What is covered on the policy?",
+      "word_count": 19,
+      "avg_confidence": 78.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Policy transaction entities\n\n(MM What is the work to be done for the policy?\n\nPolicyLine",
+      "word_count": 16,
+      "avg_confidence": 87.58,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i User assignment\n\nUserRole\nAssignment\n\n|| Who is processing the policy?\n(MM What is the work to be done for the policy?",
+      "word_count": 22,
+      "avg_confidence": 84.36,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Account details\n\nUserRole\n\ni Who holds the policy?\n|| Who is processing the policy?\n(MM What is the work to be done for the policy?\n|| What is covered on the policy?\n\nPolicyContact",
+      "word_count": 34,
+      "avg_confidence": 86.72,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question G\n\n,~ — Which entities below answer the business question of what is covered\no on the policy?\n\n“ A) PolicyLine\nB) Coverable\nC) CoverableCov\nD) Cost\nE) Form\nF) Job\nG\n\nUnderwriting Issue\n\nSS oe ee oe oe oo",
+      "word_count": 41,
+      "avg_confidence": 77.35,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer G\n\n_~ — Which entities below answer the business question of what is covered\noo on the policy?\n\n“ A) PolicyLine\nB) Coverable\nC) CoverableCov\nD) Cost\nE) Form\nF) Job\nG\n\nUnderwriting Issue\n\nCorrect answers: A, B, C, D, E\n\nSS Se ee eee eo",
+      "word_count": 47,
+      "avg_confidence": 80.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question G\n\nAssume a given instance of PolicyCenter\n77 — has 2 policy lines, each with 3 coverables.\n¢\n\nAccount\nPe How many entities are there that store... kL.\n1. Coverables? Policy\n\n2. Coverages?\n3. Costs?\n\nPolicy Period\n\nSS Se SS Se",
+      "word_count": 42,
+      "avg_confidence": 82.87,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer G\n\nAssume a given instance of PolicyCenter\n77 — has 2 policy lines, each with 3 coverables.\n¢\n\n? How many entities are there that store...\n1. Coverables?\n2. Coverages?\n3. Costs?\n\nModifier\n\nAnswer:\n\n1. 6 Coverables\n\n2. 6 Coverages\n\n3. 2Costs\n\noverableCo\\\n\nSS Se SSS Se",
+      "word_count": 48,
+      "avg_confidence": 82.61,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n,- — Whatis the purpose of the\n¢ UserRoleAssignment entity?\n\n4\n¢\n\nAccount\n\nPolicy\n\nSS oe ee oe oe oo",
+      "word_count": 22,
+      "avg_confidence": 64.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n,~ — Whatis the purpose of the\nx UserRoleAssignment entity?\n¢\n\nUserRoleAssignment is used to pair a\nuser/group combination with an ownable\nobject and a specific role on that object (such\nas underwriter\"). An individual user can have\nmultiple roles.\n\nSS Se ee eee eo",
+      "word_count": 46,
+      "avg_confidence": 81.33,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Lesson\nobjectives Describe the business entities of the\n\nreview PolicyCenter data model and their relationships",
+      "word_count": 15,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "i Student exercise\n\nPolicyCenter Data Model",
+      "word_count": 6,
+      "avg_confidence": 85.86,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

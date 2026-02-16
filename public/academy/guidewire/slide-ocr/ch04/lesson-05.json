@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-05",
+    "slide_count": 35,
+    "slides_with_text": 30,
+    "total_words": 1080,
+    "avg_confidence": 87.2,
+    "processing_time_seconds": 14.8,
+    "extracted_at": "2026-02-13T12:04:04.052234"
+  },
+  "full_text": "Full Application Submission\n\nLesson\nobjectives\n\n¢ Explain how the submission process works\n\nDescribe how submissions vary across lines\nof business\n\nCreate full application submissions\n\nBind and issue a policy\n\nDescribe asynchronous quoting and two-step\nquoting\n\ni =\nConfiguration y\n\nDeveloper\n\n| want to see how the submission process\nworks so that | can determine my\norganization’s best approach to configuration\n\nMarcus\nBusiness\nAnalyst\n\n| would like to see this as\nwell. As a Business Analyst,\nthis is important to my job\nrole.\n\n| Submissions Gi\n\nthe policy holder.\n\n| —— The goal of the submission process is for the producer\n| or insurer to create a policy and get acceptance from\n\nSubmission Wizard\n\n| Policy submission: full application Gi\n\n—\n| Risk Analysis | | Risk Analysis |\nPolicy Review\nFull ae\nae\n\naS Policy Contract\n\nLOB Specific steps\n\nModify quote\n\nIn the next a few slides, select the\n-----45 demonstration for the line of business that\nrelates to your work\n\nD trati\n| emonstration GG\nPersonal Auto submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nDemonstration\nGi\nBusinessowners submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nDemonstration\nGi\nHomeowners submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nGi\n\nMarci ; &\nConfiguration \\ Vas\n\nFor certain lines of business, generating quotes\n\ncan take a long time (for example, a commercial\n\nproperty policy with a large number of buildings).\n} d How does PolicyCenter optimize quoting\nperformance?\n\nDeveloper\n\n| Rating and quoting performance improvements\n\n¢ Parallel rating\n* Rates coverables in parallel using multiple threads\n¢« Asynchronous quoting\n« Runs the quote process in the background\n* Two-step quoting\n* The first step validates the policy data and rates the policy\n\n* The second step completes post-rating tasks, such as generating forms and raising\nunderwriting issues\n\nTanya\n\nCustomer\n\nService\nRepresentative\n\nGreat! With asynchronous quoting, | can\nnavigate to other screens and work while\nPolicyCenter is generating the quote, and | can\nbe notified when the quote process is complete.\n\n| Asynchronous quoting\n\nOccurs under these conditions\n\n+ Asynchronous quoting is enabled (AsynchronousQuotingEnabled = true in config.xml)\n* The number of coverables exceeds a threshold\n\n* The line supports it\n\nCommercial auto Vehicles\nBusiness owners Buildings\nCommercial property Buildings\nGeneral liability Exposures\nInland marine Signs\n\nWorkers’ compensation Covered employees\n\n| Asynchronous quoting flow\n\noo\n&\n\nClicks quote\n\nAlert\nmessage\n\n°\n\nQuoting runs in the\nbackground, and the\npolicy transaction is\nlocked\n\n‘@)\n=\n\nwe\n\nQuoting\ncompletes,\nunlocks, and\ncreates activity\n\nClicking the\nactivity subject\ndisplays the quote\npage, if successful\n\n| Demonstration G\n\nCommercial Auto submission with\n—_ asynchronous quoting\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nSimone\nAgent\n\nGi\n\nWith two-step quoting, | can generate the quote\nand let the clients know the premium first and\nthen complete the post-rating tasks if they are\nsatisfied with the quote.\n\n| Two-step quoting Gi\n\nImprove the quote time by splitting the quote process into two parts so that the part\nrequired to finish the quote is run after the price is finalized\n\nSync Product Model Infer forms\nValidate Check reinsurance\nCheck UW Issues Check UW Issues\n\n(pre-quote checking set) (Quote release checking set)\nRate\n\n| Demonstration G\n\nCommercial Property submission with two step\n—_ quoting\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_ _ Based only on the submission wizard, what is the main screen which will\ni likely trigger an underwriting issue first?\n\n¢\n¢\n\nSoS oD DD DDS De Say\n\nGi\n\nAnswer Gi\n\nBased only on the submission wizard, what is the main screen which will\n/’ _ likely trigger an underwriting issue first?\n\n¢\n¢\n\nPre-Qualification is the screen that will likely trigger an underwriting issue first. Other\nissues may be triggered later. (All underwriting issues appear on the Risk Analysis\nScreen - UW Issues tab.)\n\nSop DD DD SDSS oe\n\nQuestion\n\n,~ — Where do users specify modifiers?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say\n\nAnswer\n\n7\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nWhere do users specify modifiers?\n\nIn the LOB-specific section. For example, the Commercial Auto line has a dedicated\nmodifier page.\n\nQuestion\n\n_ Inwhich screen does an underwriter review issues raised during the\n7’ submission process?\n\n¢\n¢\n\nSoS oD DD DDS De Say\n\nGi\n\nAnswer\n\n7\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nIn which screen does an underwriter review issues raised during the\nsubmission process?\n\nUnderwriters review the issues in the Risk Analysis screen, Underwriting Issues tab.\n\nGi\n\nQuestion G\n\n_~ — What conditions trigger asynchronous quoting?\n\n4\n¢\n¢\n\nAsynchronous quoting must be enabled in the PolicyCenter installation\nWhen the number of coverables exceeds the threshold\n\nIf the current line of business supports asynchronous quoting\n\nA, B, and C\n\nAandC\n\nmoo 8 >\n\nSoS oD DD DDS De Say\n\nAnswer Gi\n\n_~ — What conditions trigger asynchronous quoting?\n\n¢\n¢\n¢\n\nAsynchronous quoting must be enabled in the PolicyCenter installation\nWhen the number of coverables exceeds the threshold\n\nIf the current line of business supports asynchronous quoting\n\nA, B, and C\n\nAandC\n\nmoom >\n\nCorrect answer: D\n\nSop DD DD SDSS oe\n\nQuestion\n\n_ _ Inthe base configuration, for which line of business is two-step quoting\n7 enabled?\n\n¢ A.\n\nSoS oD DD DDS De Say\n\nCommercial property\n\nB. Commercial auto\nC.\nD\nE\n\nBusinessowners\n\n. General liability\n. Allofthem\n\nGi\n\nAnswer\n\nSop DD DD SDSS oe\n\nIn the base configuration, for which line of business is two-step quoting\n\n~ enabled?\n\nCommercial property\nCommercial auto\nBusinessowners\nGeneral liability\n\nAll of them\n\nmoom >\n\nCorrect answer: A\n\nGi\n\nLesson\nobjectives\nreview\n\n¢ Explain how the submission process works\n\nDescribe how submissions vary across lines\nof business\n\nCreate full application submissions\n\nBind and issue a policy\n\nDescribe asynchronous quoting and two-step\nquoting\n\n| Student exercise\n\nFull Application Submission —\nCreating a full application submission",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Full Application Submission",
+      "word_count": 3,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Explain how the submission process works\n\nDescribe how submissions vary across lines\nof business\n\nCreate full application submissions\n\nBind and issue a policy\n\nDescribe asynchronous quoting and two-step\nquoting",
+      "word_count": 32,
+      "avg_confidence": 95.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "i =\nConfiguration y\n\nDeveloper\n\n| want to see how the submission process\nworks so that | can determine my\norganization’s best approach to configuration\n\nMarcus\nBusiness\nAnalyst\n\n| would like to see this as\nwell. As a Business Analyst,\nthis is important to my job\nrole.",
+      "word_count": 47,
+      "avg_confidence": 91.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Submissions Gi\n\nthe policy holder.\n\n| —— The goal of the submission process is for the producer\n| or insurer to create a policy and get acceptance from\n\nSubmission Wizard",
+      "word_count": 31,
+      "avg_confidence": 89.94,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Policy submission: full application Gi\n\n—\n| Risk Analysis | | Risk Analysis |\nPolicy Review\nFull ae\nae\n\naS Policy Contract\n\nLOB Specific steps\n\nModify quote",
+      "word_count": 28,
+      "avg_confidence": 78.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "In the next a few slides, select the\n-----45 demonstration for the line of business that\nrelates to your work",
+      "word_count": 20,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "D trati\n| emonstration GG\nPersonal Auto submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 94.21,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Demonstration\nGi\nBusinessowners submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 94.59,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Demonstration\nGi\nHomeowners submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 94.76,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Gi\n\nMarci ; &\nConfiguration \\ Vas\n\nFor certain lines of business, generating quotes\n\ncan take a long time (for example, a commercial\n\nproperty policy with a large number of buildings).\n} d How does PolicyCenter optimize quoting\nperformance?\n\nDeveloper",
+      "word_count": 40,
+      "avg_confidence": 88.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Rating and quoting performance improvements\n\n¢ Parallel rating\n* Rates coverables in parallel using multiple threads\n¢« Asynchronous quoting\n« Runs the quote process in the background\n* Two-step quoting\n* The first step validates the policy data and rates the policy\n\n* The second step completes post-rating tasks, such as generating forms and raising\nunderwriting issues",
+      "word_count": 58,
+      "avg_confidence": 89.64,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Tanya\n\nCustomer\n\nService\nRepresentative\n\nGreat! With asynchronous quoting, | can\nnavigate to other screens and work while\nPolicyCenter is generating the quote, and | can\nbe notified when the quote process is complete.",
+      "word_count": 33,
+      "avg_confidence": 95.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Asynchronous quoting\n\nOccurs under these conditions\n\n+ Asynchronous quoting is enabled (AsynchronousQuotingEnabled = true in config.xml)\n* The number of coverables exceeds a threshold\n\n* The line supports it\n\nCommercial auto Vehicles\nBusiness owners Buildings\nCommercial property Buildings\nGeneral liability Exposures\nInland marine Signs\n\nWorkers’ compensation Covered employees",
+      "word_count": 49,
+      "avg_confidence": 92.18,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Asynchronous quoting flow\n\noo\n&\n\nClicks quote\n\nAlert\nmessage\n\n°\n\nQuoting runs in the\nbackground, and the\npolicy transaction is\nlocked\n\n‘@)\n=\n\nwe\n\nQuoting\ncompletes,\nunlocks, and\ncreates activity\n\nClicking the\nactivity subject\ndisplays the quote\npage, if successful",
+      "word_count": 41,
+      "avg_confidence": 90.02,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Demonstration G\n\nCommercial Auto submission with\n—_ asynchronous quoting\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 40,
+      "avg_confidence": 94.2,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Simone\nAgent\n\nGi\n\nWith two-step quoting, | can generate the quote\nand let the clients know the premium first and\nthen complete the post-rating tasks if they are\nsatisfied with the quote.",
+      "word_count": 32,
+      "avg_confidence": 93.97,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Two-step quoting Gi\n\nImprove the quote time by splitting the quote process into two parts so that the part\nrequired to finish the quote is run after the price is finalized\n\nSync Product Model Infer forms\nValidate Check reinsurance\nCheck UW Issues Check UW Issues\n\n(pre-quote checking set) (Quote release checking set)\nRate",
+      "word_count": 54,
+      "avg_confidence": 94.65,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Demonstration G\n\nCommercial Property submission with two step\n—_ quoting\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 41,
+      "avg_confidence": 94.22,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n_ _ Based only on the submission wizard, what is the main screen which will\ni likely trigger an underwriting issue first?\n\n¢\n¢\n\nSoS oD DD DDS De Say\n\nGi",
+      "word_count": 32,
+      "avg_confidence": 74.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer Gi\n\nBased only on the submission wizard, what is the main screen which will\n/’ _ likely trigger an underwriting issue first?\n\n¢\n¢\n\nPre-Qualification is the screen that will likely trigger an underwriting issue first. Other\nissues may be triggered later. (All underwriting issues appear on the Risk Analysis\nScreen - UW Issues tab.)\n\nSop DD DD SDSS oe",
+      "word_count": 61,
+      "avg_confidence": 84.63,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n,~ — Where do users specify modifiers?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "word_count": 17,
+      "avg_confidence": 57.16,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n7\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nWhere do users specify modifiers?\n\nIn the LOB-specific section. For example, the Commercial Auto line has a dedicated\nmodifier page.",
+      "word_count": 30,
+      "avg_confidence": 77.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question\n\n_ Inwhich screen does an underwriter review issues raised during the\n7’ submission process?\n\n¢\n¢\n\nSoS oD DD DDS De Say\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 67.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer\n\n7\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nIn which screen does an underwriter review issues raised during the\nsubmission process?\n\nUnderwriters review the issues in the Risk Analysis screen, Underwriting Issues tab.\n\nGi",
+      "word_count": 36,
+      "avg_confidence": 79.34,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n_~ — What conditions trigger asynchronous quoting?\n\n4\n¢\n¢\n\nAsynchronous quoting must be enabled in the PolicyCenter installation\nWhen the number of coverables exceeds the threshold\n\nIf the current line of business supports asynchronous quoting\n\nA, B, and C\n\nAandC\n\nmoo 8 >\n\nSoS oD DD DDS De Say",
+      "word_count": 52,
+      "avg_confidence": 78.45,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer Gi\n\n_~ — What conditions trigger asynchronous quoting?\n\n¢\n¢\n¢\n\nAsynchronous quoting must be enabled in the PolicyCenter installation\nWhen the number of coverables exceeds the threshold\n\nIf the current line of business supports asynchronous quoting\n\nA, B, and C\n\nAandC\n\nmoom >\n\nCorrect answer: D\n\nSop DD DD SDSS oe",
+      "word_count": 53,
+      "avg_confidence": 81.28,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n_ _ Inthe base configuration, for which line of business is two-step quoting\n7 enabled?\n\n¢ A.\n\nSoS oD DD DDS De Say\n\nCommercial property\n\nB. Commercial auto\nC.\nD\nE\n\nBusinessowners\n\n. General liability\n. Allofthem\n\nGi",
+      "word_count": 39,
+      "avg_confidence": 78.22,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\nSop DD DD SDSS oe\n\nIn the base configuration, for which line of business is two-step quoting\n\n~ enabled?\n\nCommercial property\nCommercial auto\nBusinessowners\nGeneral liability\n\nAll of them\n\nmoom >\n\nCorrect answer: A\n\nGi",
+      "word_count": 36,
+      "avg_confidence": 84.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Explain how the submission process works\n\nDescribe how submissions vary across lines\nof business\n\nCreate full application submissions\n\nBind and issue a policy\n\nDescribe asynchronous quoting and two-step\nquoting",
+      "word_count": 33,
+      "avg_confidence": 95.84,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Student exercise\n\nFull Application Submission —\nCreating a full application submission",
+      "word_count": 12,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

@@ -1,0 +1,599 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-07",
+    "slide_count": 53,
+    "slides_with_text": 48,
+    "total_words": 2566,
+    "avg_confidence": 86.63,
+    "processing_time_seconds": 18.66,
+    "extracted_at": "2026-02-15T18:16:37.183730"
+  },
+  "full_text": "Claim setup rules\n\nLesson\nobjectives\n\n¢ Describe how claim setup rules execute claim\nsetup\n\n¢ Write presetup rules\n\n¢ Write segmentation rules\n\n¢ Describe the rules executed for exposure and\nactivity setup\n\n| The intake process: automated claim setup Ga\n\nClaim\nentered in\nPortal\n\nClaim\nentered in\nNew Claim Wizard\n\nValidate\nClaim\n\na\nin external\nFNOL application\n\n| Automated claim setup\n\n¢ Aseries of rules designed to:\n« Execute any work required for generating the claim, which can be done automatically\n+ Example: Generating a list of activities to complete\n« Ensure that the claim is ready for adjudication\n* Sometimes referred to as SAW:\n* segment\n* Assign\n\nAutomated Claim Setup\n. Workplan Cee eee eeeeeeeneneeeeeeneneececccnceeeneerseerececcccncananccoaannassnnsnsnngs *\n\n| Claim setup rules\n\n¢ Series of rules executed to complete claim setup\n*« Some are exclusive to setup\n*« Some are used outside of setup\n\n¢ For most of these rules, there are both claim-level\nand exposure-level rules\n\nactwty rues)\n\n* In most cases, claim-level rules run before exposure-level\nrules\n\n\"Unique to setup _ Used outside setup Preupdate\n\nValidation\n\nTULL\n\n| Exposures in claim setup Ga\n\n* Can exist at the start of setup * Can be created during setup\n* Created during new claim wizard * Typically, in Presetup rules\n* Imported with imported claim « May not be present at all\n\n« If no exposures exist, exposure-level\nrules are skipped\n\nimported ¢\nwith claim\n\ney)\n\ncreated @\nin wizard\n\nyy\n\n2=—o=6>\n\ncreated\nduring\nsetup\n\né\n\n| Loaded rules\n\n¢ Executed only for imported claims and\n\nexposures\n\n« Purpose\n\n« Execute actions related to import\n\n¢« Example\n\n¢ Log information about every claim received\n\nt:,\n\nvia FNOL import\n\nAS\n\nLoaded Exposure Gi\n\nPresetup\n\nSegmentation\nAssignment\n\nWorkplan\n\nactivity rules I)\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\n| Presetup rules\n\n¢ Purpose\n\n« Execute actions that must occur at\n\nbeginning of setup process, particularly\n\nbefore segmentation\n\n« Examples\n\n* Create \"automated\" exposures where need\n\nfor exposure can be inferred\n\n+ Example: If loss cause is \"collision with\nvehicle\", create vehicle collision exposure\n\n¢ Set deductible status to \"unpaid\"\n\nLoaded\n\nClaim\n\nPresetup Exposure\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nactivity rules I\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nl Segmentation rules\n\nPresetup\n\n¢ Purpose\n\n* \"Segment\" the object (identify high-level\nstrategy for processing object)\n\nClaim\n\nSegmentation Exposure\n\n« Examples Assignment\n\n* In workers' comp claim, if injury severity is\n\n\"fatal\", segment exposure as \"complex\" elisa\n\nactivity rules I\n\n* In auto claim, if auto damage is only\n\"broken windshield\", segment claim as\n\"simple - glass\"\n\nPostsetup\n\nInitial Reserve\n« Exposure-level rules execute before\n\nclaim-level rules Preupdate\n\nValidation\n\n| Assignment rules\n\nPresetup\n\n¢ Purpose\n\n« Assign claim to group and user Segmentation\n\n« Assign each exposure to group and user\n\nClaim\nExposure\n\nactivity rules I\n\nAssignment\n« Examples Z\n\n* Assign workers’ comp claim with segment\n\"complex\" to national \"complex WC\" group\n\nWorkplan\n\n« Assign auto claims with segment \"simple - Postsetup\n\nauto glass\" to auto glass group in same\n\nregion as insured's address Initial Reserve\n\nPreupdate\n\nValidation\n\n| Segmentation versus assignment\n\nSegmentation\n\n¢ Determines the strategy for processing ¢\n\nthe object\n\n¢ Is done only for claims and exposures\n¢ Sets a single field on the object to a\n\nSimple\nMedium\nComplex\n\nvalue from a predefined list\n\n¢ Is only done once for a given object\n\nWS\nBia, oe\nrE)\n\nAssignment\n\nobject\n\nnl\n\nge ag ge\nBe Be Be\n\nDetermines the group and owner of the\n\n¢ Is done for several object types\n¢ Associates (foreign key) object with\n\ngroup and user\n\n¢ May occur many times for a given\n\nobject\n\n| Workplan rules\n\n¢ Purpose\n\n* Create initial claim workplan (list of activities\nfor claim and each exposure)\n\n« Examples\n* Create \"contact insured\" activity\n\n+ If claim is Workers’ Compensation, create\nspecial “claim_acceptance” activity\n\n+ If claim is auto, create \"scene_inspection\"\nactivity\n¢ For each activity created: presetup,\n\nassignment, and postsetup rules are\nexecuted\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nClaim\n\nExposure\n\nactivity rules H\n\n| Summary: automated claim setup\n\n| Postsetup rules\n\n¢ Purpose\n\n« Execute actions that must be done at the\nend of claim setup\n\n« Examples\n\n+ If a Fraud Review activity was created, set\nthe Claim SIU (Special Investigations Unit)\nStatus field to “Under Investigation”\n\n¢ Ifa matter is created, set the Claim’s\nLitigation Status field to “In litigation”\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nactivity rules I\n\nClaim\n\nPostsetup Exposure\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\n| Initial reserve rules\n\n¢ Purpose\n\n* Set initial reserves for existing exposures\n\n¢« Example\n\n« For low-complexity collision exposures,\n\nalways set reserve to $1000\n\n¢ Noclaim-level initial reserve rules —\n\nexposure only\n\nPresetup\n\nSegmentation\nAssignment\n\nWorkplan\n\nactivity rules I\n\nPostsetup\nInitial Reserve Scere\n\nPreupdate\n\nValidation\n\n| Preupdate and validation rules\n\n¢ Executed for all objects (including\nclaims and exposures), whenever the\nobject is created or changed\n\n¢ Preupdate rules\n\n* Make changes or additions to object before\nvalidating and saving\n\nValidation rules\n\n¢ Execute only if the object is Validatable\n\n« Reject object if data is not correct and/or\n\ncomplete\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nactivity rules I\n\n| Preupdate and validation rule\nexamples\n¢ Preupdate example:\n\n* Create SIU review activity if changes to\nclaim cause it to cross fraud detection\nthreshold\n\n¢ Validation example:\n\n¢ Reject creation of claim if the loss date is in\nthe future\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nactivity rules I\n\n| Claim setup rules review\n\nUnless otherwise noted:\n\n¢ Rules at both claim level and exposure level\n\n* Claim-level rules run first\n\nSome are 9UiCteterens\nSome are\n\nThis lesson discusses:\n\n« Presetup\n\n* Segmentation\n\nPresetup\n\nSegmentation\nAssignment\n\nWorkplan\n\nactivity rules H\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nPresetup rules\n\n| Presetup rules\n\n¢ Five entities have presetup rule sets\n\n¢ Executed whenever object of that type\nis created\n\n¢ During claim setup:\n* Claim presetup rules are run\n\n¢ Exposure and activity presetup are run for\neach exposure and activity created during\nsetup\n\nPresetup\n\n#) ActivityPresetup\n\n#) ClaimPresetup\n\n#) ExposurePresetup\n\n#) MatterPresetup\n\n#) TransactionSetPresetup\n\n| Presetup rules automatically create Workers Comp [\nexposures\n¢« WC claims create exposures automatically upon intake based on Yes/No answers\nin the NCW and Loss Details\n*« The mechanism ClaimCenter uses to create WC exposures during the NCW is\nprovided in the presetup rule CPRO1000 — WCDefaultExposures\n\n@) ClaimPresetup.grs\n\nClaim Pre-setup\n#2) Y) cpRo1000 - WCDefaultExposures\n\n@MoLosx\n\nfunction createRelevantiiorkce\n\nee)\n1) 7C_NCHORRERSCOMPMED)\n\nAE (this. TimeLosoRepors\n\ncreateandset!\n\n| FNOL.gsx (10f2) =\n\nexport\nenhancenent ENOL : entity.claim (\n\n“flags” refer to\nYes/No questions in\nNew Claim Wizard\n\nAE (this.MedicalReport or !this.IncidentReport) (\ncreateAndSetUpExposure (7C_MCHORRERSCOMPCOY, 7C_NCHORKERSCOMPMED)\n\nAE (this.TimetossReport or this.DeathReport) {\n\ncreateandSecUpexposure (7C_MCHORRERSCCHPCOY, 7C_MCHORRERSCOMPHAGES)\n\nAE (this.tmployertiabilicy) (\ncreatenndsetUpExposure (TC_NCEMPLIASCOV, TC_NCEMPLIABCOY)\n)\n\nLinkitcexposurestecoverages ()\n\nFNOL.gsx (2 of 2) =\n\nfunction LinkiiCExposuresToCoverages ()\nfor (var exposure in this.Exposures) (\nfor (coverage in exposure.Claim.Policy.getAllcoverages()) {\nAf (coverage. Type == TC_WCHORKERSCOMPCOY and\n(exposure .coverageSubType == TC_WCHORKERSCOMPHAGES) oF\n(exposure .CoverageSub?ype == TC_NCWORKERSCOMPMED) )\n\nMatches coverages on\n\n(coverage. Type\n\n‘7C_NCEMPLIABCOV and\n‘7C_NCEMPLIABCOV)) (\n\nexposure.Coverage = coverage\n\non the policy to : cnpowure.Coverageubtype\nexposure coverages\n\nbreak\n\nprivate function createAndsetupexposure (coveragetype : Coveragetype, coveragesubtype : Coveragetubtype) {\nAf (not this.hasExposureOftype (this.getNewExposuretype (coveragesubtype))) ( Handles exposure setup\n\nAe (this. Claimgtate.2¢_CLOsED) {\nthrow new Displayablezxception(\"(Tex.Exposures.Proper) cannot be added to clo.. for new and existing\nWorkers’ Comp claims\n\n“f\n\n)\n\nvar exposure = this.newExposure (coverage?ype, coveragesubtype, true)\nCreatedvia.7C_RULESE\n\n‘BC_OPEN) (\n\nexposure .createdy:\nAE (this.state\n‘exposure. saveandsetup ()\n\n)\n\n| Demonstration G\n\nPresetup rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nSegmentation rules\n\nSegment\nfields\n\nClaim\nSegment\n\nExposure\nSegment\n\nClaimSegment (ct\\_ciaimsegment)\n‘Types of seaments a claim can have\n\nTypecodes\n[code Name [Description Priority [Internal [Retired]\nfauto_olass [Auto - glass [Auto - glass\nfauto_high [Auto - high complexity [Auto - high complexity\nfauto low [Auto -low complexity [Auto - low complexity\nfauto_mid [Auto - mid complexity [Auto - mid complexity\n\n|contents_high |Contents - high complexity\n\n[Contents - high complexity\n\njcontents_jow [Contents - low complexity\n\n[Contents - low complexity\n\niniury_high [Injury - high complexity Injury - high complexity\ninjury_tow | Injury - low complexity Injury - low complexity\ninjury_mid [Injury - mid complexity Injury - mid complexity\niab_high [Liability - high complexity Liability - high complexity\n\nliab_tow Liability - low complexity\n\nLiability - low complexity\n\nliad_mid [Liability - mid complexity Liabinity - mid complexity\n\nfprop_high _ [Property - high complexity Property - high complexity\n\njprop_low |Property - low complexity |Property - low complexity\n\nferop_mid —_[ Property - mid complexity [Property - mid complexity\n\nfravel_high | Travel - high complexity Travel - high complexity\n\nfravel_low | Travel - low complexity Travel - low complexity\n\nfravel_mid | Travel - mid complexity Travel - mid complexity\n\njunknown [Unknown [Unknown segment, or segment not automatically set by rules|\n\nliability [Workers' Comp - employer's liability\n\n|Workers’ Comp - employers liability\n\nfwe lost time |Workers’ Comp - indemnity\n\nWorkers’ Comp - indemnity\n\nwe_med_only |Workers’ Comp - med only_\n\n|Workers’ Comp - med only_\n\n| Exposure segmentation rules: example Ga\n\n4) ExposureSegmentationRules gts\n\nY DB ~ Exposure Seqmentation Rules USES\n‘Au\n\n¥ @ EY Esc01000 - Auto\n\nESGO1100 - Auto low uses\n\n£$G01200 - Auto Medium\n\n3 ens CONDITION (¢ tity .Bs Ys\n\nEsc01300 = Auto Hiah (exposure: entity. Exposure\n> 5600000 - Property return (exposure.Incident.Severity == TC_SEVERE_INJURY\n> 503000 - We oF exposure Incident Severity == 7C_MAJOR_INJURY\n> 504000 - GL or exposure. Vehicleincident.ZotalLoss == true\n> 505000 - Travel or exposure. Incident.severity == 1¢_FATAL)\n\nACTION (exposure :  entity.Exp.\nexposure. Segment = T%_AUTO_HIGH\ncctoggerCategory.APPLTCATION_SEGMENTATION debug (Displaykey. get mules\n-Segnentation.Exposure\", actions.shortRulewane}|\n\nCcLoggexCategory .APPLICATION_SEGHENTATION. debug ((DiaplayRey.get (\"Rules\n-Segnentation.Exposure.SegnentedTo\", exposure.Segnent)))\nactions exit ()\n\nwe, actions : gw.rules.Action)\n\nIf the severity of an exposure's incident is \"severe-\ninjury\", “major-injury\", or \"fatal\", or if exposure's\nincident is a vehicle incident which is a total loss, set\n\nsegment to \"auto_high\"\n\nExit after segmenting\n\nnl\n\nUSES:\nuses ...\nCONDITION (exposure : entity.Exposure):\nAfter assigning the return (exposure. Incident .Severity == TC_SEVERE_INJURY\nor exposure. Incident.Severity == TC_MAJOR_INJURY\nsegment for the or exposure.VehicleIncident.Totalloss == true\n\nclaim or exposure...\n\nor exposure. Incident.Severity == TC_FATAL)\n\nACTION (exposure entity.Exposure, actions : gw.rules.Action):\n\nSggerCategery m ‘ATION. debug (DisplayKey.get(\"Rules\n.Segmentation.Exposure\", actions. ShortRuleName)p\n\ncCLoggerCategoryAPPLICATION_SEGMENTATION. debug ( (DisplayKey.get (\"Rules\n. Segmentation .Exposure.SegmentedTo\", exposure.Segment)))\n\nactions.exit ()]\n\n-exit the\nsegmentation rule set\n\n| Claim segmentation rules in the base application Ga\n\n(1 of 2)\n\nAssign claim segment to highest exposure segment\n\n* This is a common practice\n\n#) ClaimSegmentationRules.grs\n\n| lv] CSGO1100 - Auto\n| lv} CSG01200 - Auto Default_]\nCSG02000 - Property\n\nCSG03000 - WC\n\nCSG04000 - GL\n\nCSG05000 - Travel\n\nFor auto claims...\n\n...if exposures exist, set claim segment\nto highest exposure segment...\n\n..if not, set claim segment to\n“auto_low”\n\n| Claim segmentation rules in the base application Ga\n(of2)\n\nACTION (claim : entity.Claim, actions : gw.rules.Action)\n\n... if exposures exist,\nset claim segment to\n*€)ciaimsegmentaionkulesgrs highest exposure\n\n© higheatexposure = claim. Exposurt\n\n(CSG01100 - Auto\n\n€5G01200 - Auto Default 17C_AUTO_HIGH)\n\n€5602000 - Property\n\n3603000 - we AE (nighestexposure == mull) (\n\nbree highestexposure = clain.Exposures.firstithere(\\ © -> ¢-Segnent ==\n\n'7¢_AUTO_MID)\nd\n\nA€ (highestexposure == null) (\n” highestExposure = claim.Exposures.firetwhere(\\ © -> e.seguent =\nnot, set claim AvF0 sem)\n\n) J\n\nsegment to “auto_low” Af (highestExposure 1= mull) ( ,\n- clain.Segnent = highestexposure.Segnent\n\nccuoggerCategory APPLICATION _SEGHENTATION. debug (DisplayRey.get (“Rules\n\nGegmentation.clain\", actions.shortRuleNane) )\n\nCcLoggexCategory -APPLICATION_SEGHENTATION. debug (DisplayRey.got (\"Rules\n\n-Segmentation.Clain.SegnentedTo\", claim. Segnent))\n\nactions .exit()\n\nAcTION (claim: entity.claim, actions : gw.rules.Action):\nSegment = 3C_AUIO_LoW\n\ncotoggercategory. APPLICATION _#EGENTATION. debug (DisplayRey.get (\"Rules\n\nGegneneation.clain\", actions.shoreRlexne) )\n\nela!\n\ncCLoggercategory.APPLICATION_SEGMENTATION. debug (DisplayKey.get (\"Rules )\n-Segnentation.Claim.SegmentedTo\", claim.Segment) )\nactions exit () 6 END\n\n| Exposure and activity setup G\n\n* Claim setup only occurs at the time a claim is created\n\n* Only once at the start of the claims process\n\n¢ Exposure and Activity setup occurs upon Exposure and Activity creation\n\n« May occur multiple times during the claims process\n\nNew Exposure - Vehicle\n\nES\n\nExposure\nLoss Party\n\nPrimary Coverage\nCoverage Subtype\n\nCoverage\n\nInsured’s loss\n\nCollision\n\nCollision\n\n=<none>\n\nNew Activity in Claim 235-53-365871\n\nSubject\n\nDescription\n\nRelated To\n\nOther Carrier Involvement\n\nOther Coverage Yes No\n\nDetails El\n\n [ Geta statement from witness\n\n* | Claim .\n\n| Exposure setup rules Ga\n\nPresetup\n\n¢ After claim setup, when an exposure is\ncreated, this series of rules is executed\n\nSegmentation\n¢ All are exposure-level\n\n(except the activity rules) Assignment\n\nWorkplan\n\nactivity rules H\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\n| Activity setup rules\n\n¢ After claim setup, when an activity is\ncreated, this series of rules is executed\n\n¢ All are activity-level\n\n« Note that activities are not segmented, have\nno workplan, and no reserves\n\nPresetup\n\nAssignment\n\nPostsetup\n\nPreupdate\n\nValidation\n\n| Demonstration G\n\nSegmentation rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Which rule set category does not provide rules for both claims and\n\nPa exposures?\n¢\n\nSS Seeoesese sees ee ese\n\nAnswer G\n\n,- — Which rule set category does not provide rules for both claims and\nKs exposures?\n¢\nThe correct answer is Initial Reserve rules, which provides rules only at the exposure\nlevel.\n\nSS eeesee seen ee ese\n\nQuestion G\n\na wa a rule set category do exposure rules run before claim rules?\n\n7\n¢\n\nSS Seeoesese sees ee ese\n\nAnswer Gi\n\n_— — For which rule set category do exposure rules run before claim rules?\n7 Why?\n¢\n\nThe correct answer is Segmentation. Exposure rules are run first because claim\nsegmentation typically depends upon the outcome of exposure segmentation.\n\nSS eeesee seen ee ese\n\nQuestion\n\n_— — What type of objects are most likely to be created in\nKa (a) Presetup rules?\n: (b) Workplan rules?\n\nSS Seeoesese sees ee ese\n\nAnswer\n\n,— — What type of objects are most likely to be created in\nKs (a) Presetup rules?\n: (b) Workplan rules?\n\nThe correct answer is for (a) Presetup rules, is exposures.\nThe correct answer is for (b) Workplan rules is activities.\n\nSS eeesee seen ee ese\n\nQuestion\n\n_— — Which claim-evel rule set categories are also executed outside of claim\nKa setup?\n¢\n\nFor each, give a non-claim setup example of when they might run.\n\nSS Seeoesese sees ee ese\n\nGi\n\nAnswer Gi\n\n,- — Which claim-evel rule set categories are also executed outside of claim\n\nKs setup?\n¢\n\nFor each, give a non-claim setup example of when they might run.\n\nThe correct answers are:\n\nAssignment rules — Run whenever an object such as an activity is reassigned using\nautomated assignment.\n\nPreupdate rules — Run whenever an object such as an exposure is created or\nmodified.\n\nValidation rules — Run whenever an object such as an activity is created or modified.\n\nSS eeesee seen ee ese\n\nQuestion\n\n_— — Inthe diagram, what rule sets are included\n: in “activity rules”? Segmentation\n\n7\n¢\n\nInitial Reserve\n\nSS Seeoesese sees ee ese\n\nAnswer\n\n_— — Inthe diagram, what rule sets are included\n7 in “activity rules”?\n¢\n\nThe correct answer is activity presetup,\nactivity assignment, activity postsetup,\nactivity preupdate, and activity validation.\n\n| Student exercise\n\nExploration\n\n| Student exercise\n\nSet note for unverified policies\n\n| Student exercise\n\nSegmentation for property\nclaim fraud detection\n\nLesson\nobjectives ¢ Describe how claim setup rules execute claim\nreview setup\n\n¢ Write presetup rules\n\n¢ Write segmentation rules\n\n¢ Describe the rules executed for exposure and\nactivity setup",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Claim setup rules",
+      "word_count": 3,
+      "avg_confidence": 95.4,
+      "image_size": {
+        "width": 1280,
+        "height": 549
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe how claim setup rules execute claim\nsetup\n\n¢ Write presetup rules\n\n¢ Write segmentation rules\n\n¢ Describe the rules executed for exposure and\nactivity setup",
+      "word_count": 29,
+      "avg_confidence": 87.86,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| The intake process: automated claim setup Ga\n\nClaim\nentered in\nPortal\n\nClaim\nentered in\nNew Claim Wizard\n\nValidate\nClaim\n\na\nin external\nFNOL application",
+      "word_count": 25,
+      "avg_confidence": 89.19,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Automated claim setup\n\n¢ Aseries of rules designed to:\n« Execute any work required for generating the claim, which can be done automatically\n+ Example: Generating a list of activities to complete\n« Ensure that the claim is ready for adjudication\n* Sometimes referred to as SAW:\n* segment\n* Assign\n\nAutomated Claim Setup\n. Workplan Cee eee eeeeeeeneneeeeeeneneececccnceeeneerseerececcccncananccoaannassnnsnsnngs *",
+      "word_count": 61,
+      "avg_confidence": 90.38,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Claim setup rules\n\n¢ Series of rules executed to complete claim setup\n*« Some are exclusive to setup\n*« Some are used outside of setup\n\n¢ For most of these rules, there are both claim-level\nand exposure-level rules\n\nactwty rues)\n\n* In most cases, claim-level rules run before exposure-level\nrules\n\n\"Unique to setup _ Used outside setup Preupdate\n\nValidation\n\nTULL",
+      "word_count": 61,
+      "avg_confidence": 86.1,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Exposures in claim setup Ga\n\n* Can exist at the start of setup * Can be created during setup\n* Created during new claim wizard * Typically, in Presetup rules\n* Imported with imported claim « May not be present at all\n\n« If no exposures exist, exposure-level\nrules are skipped\n\nimported ¢\nwith claim\n\ney)\n\ncreated @\nin wizard\n\nyy\n\n2=—o=6>\n\ncreated\nduring\nsetup\n\né",
+      "word_count": 67,
+      "avg_confidence": 81.6,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Loaded rules\n\n¢ Executed only for imported claims and\n\nexposures\n\n« Purpose\n\n« Execute actions related to import\n\n¢« Example\n\n¢ Log information about every claim received\n\nt:,\n\nvia FNOL import\n\nAS\n\nLoaded Exposure Gi\n\nPresetup\n\nSegmentation\nAssignment\n\nWorkplan\n\nactivity rules I)\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation",
+      "word_count": 48,
+      "avg_confidence": 86.21,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Presetup rules\n\n¢ Purpose\n\n« Execute actions that must occur at\n\nbeginning of setup process, particularly\n\nbefore segmentation\n\n« Examples\n\n* Create \"automated\" exposures where need\n\nfor exposure can be inferred\n\n+ Example: If loss cause is \"collision with\nvehicle\", create vehicle collision exposure\n\n¢ Set deductible status to \"unpaid\"\n\nLoaded\n\nClaim\n\nPresetup Exposure\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nactivity rules I\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation",
+      "word_count": 66,
+      "avg_confidence": 91.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "l Segmentation rules\n\nPresetup\n\n¢ Purpose\n\n* \"Segment\" the object (identify high-level\nstrategy for processing object)\n\nClaim\n\nSegmentation Exposure\n\n« Examples Assignment\n\n* In workers' comp claim, if injury severity is\n\n\"fatal\", segment exposure as \"complex\" elisa\n\nactivity rules I\n\n* In auto claim, if auto damage is only\n\"broken windshield\", segment claim as\n\"simple - glass\"\n\nPostsetup\n\nInitial Reserve\n« Exposure-level rules execute before\n\nclaim-level rules Preupdate\n\nValidation",
+      "word_count": 69,
+      "avg_confidence": 88.21,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Assignment rules\n\nPresetup\n\n¢ Purpose\n\n« Assign claim to group and user Segmentation\n\n« Assign each exposure to group and user\n\nClaim\nExposure\n\nactivity rules I\n\nAssignment\n« Examples Z\n\n* Assign workers’ comp claim with segment\n\"complex\" to national \"complex WC\" group\n\nWorkplan\n\n« Assign auto claims with segment \"simple - Postsetup\n\nauto glass\" to auto glass group in same\n\nregion as insured's address Initial Reserve\n\nPreupdate\n\nValidation",
+      "word_count": 70,
+      "avg_confidence": 87.66,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Segmentation versus assignment\n\nSegmentation\n\n¢ Determines the strategy for processing ¢\n\nthe object\n\n¢ Is done only for claims and exposures\n¢ Sets a single field on the object to a\n\nSimple\nMedium\nComplex\n\nvalue from a predefined list\n\n¢ Is only done once for a given object\n\nWS\nBia, oe\nrE)\n\nAssignment\n\nobject\n\nnl\n\nge ag ge\nBe Be Be\n\nDetermines the group and owner of the\n\n¢ Is done for several object types\n¢ Associates (foreign key) object with\n\ngroup and user\n\n¢ May occur many times for a given\n\nobject",
+      "word_count": 94,
+      "avg_confidence": 83.74,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Workplan rules\n\n¢ Purpose\n\n* Create initial claim workplan (list of activities\nfor claim and each exposure)\n\n« Examples\n* Create \"contact insured\" activity\n\n+ If claim is Workers’ Compensation, create\nspecial “claim_acceptance” activity\n\n+ If claim is auto, create \"scene_inspection\"\nactivity\n¢ For each activity created: presetup,\n\nassignment, and postsetup rules are\nexecuted\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nClaim\n\nExposure\n\nactivity rules H",
+      "word_count": 70,
+      "avg_confidence": 89.24,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Summary: automated claim setup",
+      "word_count": 5,
+      "avg_confidence": 85.83,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Postsetup rules\n\n¢ Purpose\n\n« Execute actions that must be done at the\nend of claim setup\n\n« Examples\n\n+ If a Fraud Review activity was created, set\nthe Claim SIU (Special Investigations Unit)\nStatus field to “Under Investigation”\n\n¢ Ifa matter is created, set the Claim’s\nLitigation Status field to “In litigation”\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nactivity rules I\n\nClaim\n\nPostsetup Exposure\n\nInitial Reserve\n\nPreupdate\n\nValidation",
+      "word_count": 69,
+      "avg_confidence": 89.63,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Initial reserve rules\n\n¢ Purpose\n\n* Set initial reserves for existing exposures\n\n¢« Example\n\n« For low-complexity collision exposures,\n\nalways set reserve to $1000\n\n¢ Noclaim-level initial reserve rules —\n\nexposure only\n\nPresetup\n\nSegmentation\nAssignment\n\nWorkplan\n\nactivity rules I\n\nPostsetup\nInitial Reserve Scere\n\nPreupdate\n\nValidation",
+      "word_count": 46,
+      "avg_confidence": 88.35,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Preupdate and validation rules\n\n¢ Executed for all objects (including\nclaims and exposures), whenever the\nobject is created or changed\n\n¢ Preupdate rules\n\n* Make changes or additions to object before\nvalidating and saving\n\nValidation rules\n\n¢ Execute only if the object is Validatable\n\n« Reject object if data is not correct and/or\n\ncomplete\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nactivity rules I",
+      "word_count": 68,
+      "avg_confidence": 89.9,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Preupdate and validation rule\nexamples\n¢ Preupdate example:\n\n* Create SIU review activity if changes to\nclaim cause it to cross fraud detection\nthreshold\n\n¢ Validation example:\n\n¢ Reject creation of claim if the loss date is in\nthe future\n\nLoaded\n\nPresetup\n\nSegmentation\n\nAssignment\n\nWorkplan\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation\n\nactivity rules I",
+      "word_count": 54,
+      "avg_confidence": 90.55,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Claim setup rules review\n\nUnless otherwise noted:\n\n¢ Rules at both claim level and exposure level\n\n* Claim-level rules run first\n\nSome are 9UiCteterens\nSome are\n\nThis lesson discusses:\n\n« Presetup\n\n* Segmentation\n\nPresetup\n\nSegmentation\nAssignment\n\nWorkplan\n\nactivity rules H\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation",
+      "word_count": 46,
+      "avg_confidence": 90.76,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Presetup rules",
+      "word_count": 2,
+      "avg_confidence": 94.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Presetup rules\n\n¢ Five entities have presetup rule sets\n\n¢ Executed whenever object of that type\nis created\n\n¢ During claim setup:\n* Claim presetup rules are run\n\n¢ Exposure and activity presetup are run for\neach exposure and activity created during\nsetup\n\nPresetup\n\n#) ActivityPresetup\n\n#) ClaimPresetup\n\n#) ExposurePresetup\n\n#) MatterPresetup\n\n#) TransactionSetPresetup",
+      "word_count": 55,
+      "avg_confidence": 87.11,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Presetup rules automatically create Workers Comp [\nexposures\n¢« WC claims create exposures automatically upon intake based on Yes/No answers\nin the NCW and Loss Details\n*« The mechanism ClaimCenter uses to create WC exposures during the NCW is\nprovided in the presetup rule CPRO1000 — WCDefaultExposures\n\n@) ClaimPresetup.grs\n\nClaim Pre-setup\n#2) Y) cpRo1000 - WCDefaultExposures\n\n@MoLosx\n\nfunction createRelevantiiorkce\n\nee)\n1) 7C_NCHORRERSCOMPMED)\n\nAE (this. TimeLosoRepors\n\ncreateandset!",
+      "word_count": 67,
+      "avg_confidence": 80.92,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| FNOL.gsx (10f2) =\n\nexport\nenhancenent ENOL : entity.claim (\n\n“flags” refer to\nYes/No questions in\nNew Claim Wizard\n\nAE (this.MedicalReport or !this.IncidentReport) (\ncreateAndSetUpExposure (7C_MCHORRERSCOMPCOY, 7C_NCHORKERSCOMPMED)\n\nAE (this.TimetossReport or this.DeathReport) {\n\ncreateandSecUpexposure (7C_MCHORRERSCCHPCOY, 7C_MCHORRERSCOMPHAGES)\n\nAE (this.tmployertiabilicy) (\ncreatenndsetUpExposure (TC_NCEMPLIASCOV, TC_NCEMPLIABCOY)\n)\n\nLinkitcexposurestecoverages ()",
+      "word_count": 44,
+      "avg_confidence": 69.81,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "FNOL.gsx (2 of 2) =\n\nfunction LinkiiCExposuresToCoverages ()\nfor (var exposure in this.Exposures) (\nfor (coverage in exposure.Claim.Policy.getAllcoverages()) {\nAf (coverage. Type == TC_WCHORKERSCOMPCOY and\n(exposure .coverageSubType == TC_WCHORKERSCOMPHAGES) oF\n(exposure .CoverageSub?ype == TC_NCWORKERSCOMPMED) )\n\nMatches coverages on\n\n(coverage. Type\n\n‘7C_NCEMPLIABCOV and\n‘7C_NCEMPLIABCOV)) (\n\nexposure.Coverage = coverage\n\non the policy to : cnpowure.Coverageubtype\nexposure coverages\n\nbreak\n\nprivate function createAndsetupexposure (coveragetype : Coveragetype, coveragesubtype : Coveragetubtype) {\nAf (not this.hasExposureOftype (this.getNewExposuretype (coveragesubtype))) ( Handles exposure setup\n\nAe (this. Claimgtate.2¢_CLOsED) {\nthrow new Displayablezxception(\"(Tex.Exposures.Proper) cannot be added to clo.. for new and existing\nWorkers’ Comp claims\n\n“f\n\n)\n\nvar exposure = this.newExposure (coverage?ype, coveragesubtype, true)\nCreatedvia.7C_RULESE\n\n‘BC_OPEN) (\n\nexposure .createdy:\nAE (this.state\n‘exposure. saveandsetup ()\n\n)",
+      "word_count": 114,
+      "avg_confidence": 70.51,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Demonstration G\n\nPresetup rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.31,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Segmentation rules",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Segment\nfields\n\nClaim\nSegment\n\nExposure\nSegment\n\nClaimSegment (ct\\_ciaimsegment)\n‘Types of seaments a claim can have\n\nTypecodes\n[code Name [Description Priority [Internal [Retired]\nfauto_olass [Auto - glass [Auto - glass\nfauto_high [Auto - high complexity [Auto - high complexity\nfauto low [Auto -low complexity [Auto - low complexity\nfauto_mid [Auto - mid complexity [Auto - mid complexity\n\n|contents_high |Contents - high complexity\n\n[Contents - high complexity\n\njcontents_jow [Contents - low complexity\n\n[Contents - low complexity\n\niniury_high [Injury - high complexity Injury - high complexity\ninjury_tow | Injury - low complexity Injury - low complexity\ninjury_mid [Injury - mid complexity Injury - mid complexity\niab_high [Liability - high complexity Liability - high complexity\n\nliab_tow Liability - low complexity\n\nLiability - low complexity\n\nliad_mid [Liability - mid complexity Liabinity - mid complexity\n\nfprop_high _ [Property - high complexity Property - high complexity\n\njprop_low |Property - low complexity |Property - low complexity\n\nferop_mid —_[ Property - mid complexity [Property - mid complexity\n\nfravel_high | Travel - high complexity Travel - high complexity\n\nfravel_low | Travel - low complexity Travel - low complexity\n\nfravel_mid | Travel - mid complexity Travel - mid complexity\n\njunknown [Unknown [Unknown segment, or segment not automatically set by rules|\n\nliability [Workers' Comp - employer's liability\n\n|Workers’ Comp - employers liability\n\nfwe lost time |Workers’ Comp - indemnity\n\nWorkers’ Comp - indemnity\n\nwe_med_only |Workers’ Comp - med only_\n\n|Workers’ Comp - med only_",
+      "word_count": 232,
+      "avg_confidence": 77.16,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Exposure segmentation rules: example Ga\n\n4) ExposureSegmentationRules gts\n\nY DB ~ Exposure Seqmentation Rules USES\n‘Au\n\n¥ @ EY Esc01000 - Auto\n\nESGO1100 - Auto low uses\n\n£$G01200 - Auto Medium\n\n3 ens CONDITION (¢ tity .Bs Ys\n\nEsc01300 = Auto Hiah (exposure: entity. Exposure\n> 5600000 - Property return (exposure.Incident.Severity == TC_SEVERE_INJURY\n> 503000 - We oF exposure Incident Severity == 7C_MAJOR_INJURY\n> 504000 - GL or exposure. Vehicleincident.ZotalLoss == true\n> 505000 - Travel or exposure. Incident.severity == 1¢_FATAL)\n\nACTION (exposure :  entity.Exp.\nexposure. Segment = T%_AUTO_HIGH\ncctoggerCategory.APPLTCATION_SEGMENTATION debug (Displaykey. get mules\n-Segnentation.Exposure\", actions.shortRulewane}|\n\nCcLoggexCategory .APPLICATION_SEGHENTATION. debug ((DiaplayRey.get (\"Rules\n-Segnentation.Exposure.SegnentedTo\", exposure.Segnent)))\nactions exit ()\n\nwe, actions : gw.rules.Action)\n\nIf the severity of an exposure's incident is \"severe-\ninjury\", “major-injury\", or \"fatal\", or if exposure's\nincident is a vehicle incident which is a total loss, set\n\nsegment to \"auto_high\"",
+      "word_count": 141,
+      "avg_confidence": 69.96,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Exit after segmenting\n\nnl\n\nUSES:\nuses ...\nCONDITION (exposure : entity.Exposure):\nAfter assigning the return (exposure. Incident .Severity == TC_SEVERE_INJURY\nor exposure. Incident.Severity == TC_MAJOR_INJURY\nsegment for the or exposure.VehicleIncident.Totalloss == true\n\nclaim or exposure...\n\nor exposure. Incident.Severity == TC_FATAL)\n\nACTION (exposure entity.Exposure, actions : gw.rules.Action):\n\nSggerCategery m ‘ATION. debug (DisplayKey.get(\"Rules\n.Segmentation.Exposure\", actions. ShortRuleName)p\n\ncCLoggerCategoryAPPLICATION_SEGMENTATION. debug ( (DisplayKey.get (\"Rules\n. Segmentation .Exposure.SegmentedTo\", exposure.Segment)))\n\nactions.exit ()]\n\n-exit the\nsegmentation rule set",
+      "word_count": 70,
+      "avg_confidence": 74.72,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Claim segmentation rules in the base application Ga\n\n(1 of 2)\n\nAssign claim segment to highest exposure segment\n\n* This is a common practice\n\n#) ClaimSegmentationRules.grs\n\n| lv] CSGO1100 - Auto\n| lv} CSG01200 - Auto Default_]\nCSG02000 - Property\n\nCSG03000 - WC\n\nCSG04000 - GL\n\nCSG05000 - Travel\n\nFor auto claims...\n\n...if exposures exist, set claim segment\nto highest exposure segment...\n\n..if not, set claim segment to\n“auto_low”",
+      "word_count": 70,
+      "avg_confidence": 86.55,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "| Claim segmentation rules in the base application Ga\n(of2)\n\nACTION (claim : entity.Claim, actions : gw.rules.Action)\n\n... if exposures exist,\nset claim segment to\n*€)ciaimsegmentaionkulesgrs highest exposure\n\n© higheatexposure = claim. Exposurt\n\n(CSG01100 - Auto\n\n€5G01200 - Auto Default 17C_AUTO_HIGH)\n\n€5602000 - Property\n\n3603000 - we AE (nighestexposure == mull) (\n\nbree highestexposure = clain.Exposures.firstithere(\\ © -> ¢-Segnent ==\n\n'7¢_AUTO_MID)\nd\n\nA€ (highestexposure == null) (\n” highestExposure = claim.Exposures.firetwhere(\\ © -> e.seguent =\nnot, set claim AvF0 sem)\n\n) J\n\nsegment to “auto_low” Af (highestExposure 1= mull) ( ,\n- clain.Segnent = highestexposure.Segnent\n\nccuoggerCategory APPLICATION _SEGHENTATION. debug (DisplayRey.get (“Rules\n\nGegmentation.clain\", actions.shortRuleNane) )\n\nCcLoggexCategory -APPLICATION_SEGHENTATION. debug (DisplayRey.got (\"Rules\n\n-Segmentation.Clain.SegnentedTo\", claim. Segnent))\n\nactions .exit()\n\nAcTION (claim: entity.claim, actions : gw.rules.Action):\nSegment = 3C_AUIO_LoW\n\ncotoggercategory. APPLICATION _#EGENTATION. debug (DisplayRey.get (\"Rules\n\nGegneneation.clain\", actions.shoreRlexne) )\n\nela!\n\ncCLoggercategory.APPLICATION_SEGMENTATION. debug (DisplayKey.get (\"Rules )\n-Segnentation.Claim.SegmentedTo\", claim.Segment) )\nactions exit () 6 END",
+      "word_count": 146,
+      "avg_confidence": 67.9,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "| Exposure and activity setup G\n\n* Claim setup only occurs at the time a claim is created\n\n* Only once at the start of the claims process\n\n¢ Exposure and Activity setup occurs upon Exposure and Activity creation\n\n« May occur multiple times during the claims process\n\nNew Exposure - Vehicle\n\nES\n\nExposure\nLoss Party\n\nPrimary Coverage\nCoverage Subtype\n\nCoverage\n\nInsured’s loss\n\nCollision\n\nCollision\n\n=<none>\n\nNew Activity in Claim 235-53-365871\n\nSubject\n\nDescription\n\nRelated To\n\nOther Carrier Involvement\n\nOther Coverage Yes No\n\nDetails El\n\n [ Geta statement from witness\n\n* | Claim .",
+      "word_count": 93,
+      "avg_confidence": 87.81,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Exposure setup rules Ga\n\nPresetup\n\n¢ After claim setup, when an exposure is\ncreated, this series of rules is executed\n\nSegmentation\n¢ All are exposure-level\n\n(except the activity rules) Assignment\n\nWorkplan\n\nactivity rules H\n\nPostsetup\n\nInitial Reserve\n\nPreupdate\n\nValidation",
+      "word_count": 40,
+      "avg_confidence": 89.61,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "| Activity setup rules\n\n¢ After claim setup, when an activity is\ncreated, this series of rules is executed\n\n¢ All are activity-level\n\n« Note that activities are not segmented, have\nno workplan, and no reserves\n\nPresetup\n\nAssignment\n\nPostsetup\n\nPreupdate\n\nValidation",
+      "word_count": 41,
+      "avg_confidence": 90.19,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Demonstration G\n\nSegmentation rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.43,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Question\n\n_- — Which rule set category does not provide rules for both claims and\n\nPa exposures?\n¢\n\nSS Seeoesese sees ee ese",
+      "word_count": 23,
+      "avg_confidence": 85.53,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Answer G\n\n,- — Which rule set category does not provide rules for both claims and\nKs exposures?\n¢\nThe correct answer is Initial Reserve rules, which provides rules only at the exposure\nlevel.\n\nSS eeesee seen ee ese",
+      "word_count": 39,
+      "avg_confidence": 87.19,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Question G\n\na wa a rule set category do exposure rules run before claim rules?\n\n7\n¢\n\nSS Seeoesese sees ee ese",
+      "word_count": 22,
+      "avg_confidence": 81.61,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Answer Gi\n\n_— — For which rule set category do exposure rules run before claim rules?\n7 Why?\n¢\n\nThe correct answer is Segmentation. Exposure rules are run first because claim\nsegmentation typically depends upon the outcome of exposure segmentation.\n\nSS eeesee seen ee ese",
+      "word_count": 45,
+      "avg_confidence": 87.05,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "Question\n\n_— — What type of objects are most likely to be created in\nKa (a) Presetup rules?\n: (b) Workplan rules?\n\nSS Seeoesese sees ee ese",
+      "word_count": 27,
+      "avg_confidence": 88.36,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "Answer\n\n,— — What type of objects are most likely to be created in\nKs (a) Presetup rules?\n: (b) Workplan rules?\n\nThe correct answer is for (a) Presetup rules, is exposures.\nThe correct answer is for (b) Workplan rules is activities.\n\nSS eeesee seen ee ese",
+      "word_count": 47,
+      "avg_confidence": 89.53,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-46.png",
+      "slide_number": 46,
+      "text": "Question\n\n_— — Which claim-evel rule set categories are also executed outside of claim\nKa setup?\n¢\n\nFor each, give a non-claim setup example of when they might run.\n\nSS Seeoesese sees ee ese\n\nGi",
+      "word_count": 35,
+      "avg_confidence": 86.16,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-47.png",
+      "slide_number": 47,
+      "text": "Answer Gi\n\n,- — Which claim-evel rule set categories are also executed outside of claim\n\nKs setup?\n¢\n\nFor each, give a non-claim setup example of when they might run.\n\nThe correct answers are:\n\nAssignment rules — Run whenever an object such as an activity is reassigned using\nautomated assignment.\n\nPreupdate rules — Run whenever an object such as an exposure is created or\nmodified.\n\nValidation rules — Run whenever an object such as an activity is created or modified.\n\nSS eeesee seen ee ese",
+      "word_count": 85,
+      "avg_confidence": 90.01,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-48.png",
+      "slide_number": 48,
+      "text": "Question\n\n_— — Inthe diagram, what rule sets are included\n: in “activity rules”? Segmentation\n\n7\n¢\n\nInitial Reserve\n\nSS Seeoesese sees ee ese",
+      "word_count": 24,
+      "avg_confidence": 84.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-49.png",
+      "slide_number": 49,
+      "text": "Answer\n\n_— — Inthe diagram, what rule sets are included\n7 in “activity rules”?\n¢\n\nThe correct answer is activity presetup,\nactivity assignment, activity postsetup,\nactivity preupdate, and activity validation.",
+      "word_count": 30,
+      "avg_confidence": 90.56,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-50.png",
+      "slide_number": 50,
+      "text": "| Student exercise\n\nExploration",
+      "word_count": 4,
+      "avg_confidence": 84.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-51.png",
+      "slide_number": 51,
+      "text": "| Student exercise\n\nSet note for unverified policies",
+      "word_count": 8,
+      "avg_confidence": 89.33,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-52.png",
+      "slide_number": 52,
+      "text": "| Student exercise\n\nSegmentation for property\nclaim fraud detection",
+      "word_count": 9,
+      "avg_confidence": 89.8,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-53.png",
+      "slide_number": 53,
+      "text": "Lesson\nobjectives ¢ Describe how claim setup rules execute claim\nreview setup\n\n¢ Write presetup rules\n\n¢ Write segmentation rules\n\n¢ Describe the rules executed for exposure and\nactivity setup",
+      "word_count": 30,
+      "avg_confidence": 88.13,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    }
+  ]
+}

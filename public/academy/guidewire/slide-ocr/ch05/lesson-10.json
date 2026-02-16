@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-10",
+    "slide_count": 43,
+    "slides_with_text": 38,
+    "total_words": 1593,
+    "avg_confidence": 87.24,
+    "processing_time_seconds": 17.56,
+    "extracted_at": "2026-02-13T12:10:52.994130"
+  },
+  "full_text": "Creating payments and reserves\n\nLesson\nobjectives\n\n* Create and modify reserves\n\n¢ Create payments\n\n* Create payments with multiple payees and\npayments\n\nThe business of adjudicating claims takes\nthe claim from intake all the way to paying\nthe claimant for covered losses. As an\nadjuster, | need to know how to create\npayments against the correct coverage\nand apply deductibles when required.\n\nTanvi\n\nAdjuster \\ee/\n\n| Reserves review fa\noO Coverage: Workers’ Comp\ne3 Claimant: Jim Means\n= @\nes Reserve Line 1 (Medical Details)\n\nCost type: Claim Cost\nCost category: Medical\n\nReserve Line 2 (Medical Details)\nCost type: Expense\nCost category: Case management\n\n« Areserve line is an amount of money set aside for expected payments related to a given exposure\n* Reserve transactions are the credits and debits against a reserve line\n\n* Reserve lines are uniquely defined by exposure, cost type, and cost category\n\n| Creating and changing reserves (1 of 4) Gi\n\nON Coverage: Medical Details\n(\\ () Claimant: Jim Means\nNas\n\nLL\n\nReserve Line 1 (Medical Details)\nCost type: Claim Cost\nCost category: Medical\n\n| Creating and changing reserves (2 of 4) G\n\nON Coverage: Medical Details\n\n(\\ Claimant: Jim Means\nNe\n$2000\nReserve Line 1 (Medical Details)\n[oX\\+) Cost type Claim Cost\n$2000 Cost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\n| Creating and changing reserves (3 of 4) Gi\n\nON Coverage: Medical Details\n12 Claimant: Jim Means\nes\n\nCox)\n\nReserve Line 1 (Medical Details)\nCost type: Claim Cost\nCost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\n¢ Changing a reserve line initiates a transaction with the amount of the change\n\n| Creating and changing reserves (4 of 4) Gi\n\nON Coverage: Medical Details\n\n\\ Claimant: Jim Means $2300\n\ne $2500\n$2060\nry Reserve Line 1 (Medical Details)\nry Cost type: Claim Cost\nor Cost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\nOW\n\n-$200\n\n¢ Changing a reserve line initiates a transaction with the amount of the change\n\n* Changes can add or subtract amounts from the reserve line\n\n| Eroding payments review (1 of 3) Gi\n\nCoverage: ON\nMedical \\O@\nDetails eo\n\nLe EE $4000\n\ni)\n\nER $1800\n\n* Eroding payment transactions reduce the reserve line by the amount of the payment\n\n| Eroding payments review (2 of 3) Gi\n\nCoverage: or\nMedical Y¥O@ $1750\nDetails eo $4000\" Partial\n\nCa === ff <>\n\n$2250 ——))\nCoverage:\n@) =)\n)\n\n$1800\n\n* Eroding payment transactions reduce the reserve line by the amount of the payment\n\n* Apartial payment reduces remaining reserves by the amount of the payment\n\n| Eroding payments review (3 of 3) Gi\n\nDetails ‘eo Partial\n| cay.\n\n$2250\n\nCoverage:\nLost On\nWages oe\n\ncox Final\n\n$1465\n\n$0\n* Eroding payment transactions reduce the reserve line by the amount of the payment\n\n* Apartial payment reduces remaining reserves by the amount of the payment\n\n« A final payment also creates a reserve transaction to remove the remainder of the reserve\n\n| Demonstration G\n\nReserves demonstration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| What is a check? G\n\nChecks are transfers of funds to a claimant or other third party co\nFunds come from one or more reserve lines =f\n\nin\nChecks may be ‘checks’ or Electronic Funds Transfers (EFTs) == ae aE\n\n&\nChecks may be to one or more parties D4 Bn\n\nChecks may be for one or more payments { o} oy\nChecks are always part of a CheckSet =)\n\n| Payment wizard (1 of 3) i\n\nStep 1: Specify the payees.\n\nCheckset\n\npay to: Jim Means(injured worker)\n\nam, (1\n\nSas\n\npay to: Paula Gellar (lawyer)\nportion: 20%\n\n| Payment wizard (2 of 3) i\n\nStep 1: Specify the payees.\nStep 2: Specify the payment transactions.\n(The wizard calculates the checkset total and each check amount.)\n\nCheckset e\n$1100 FS\n<)>) w\n-$1175 ‘aD\npay to: Jim Means(injured worker)\n$275 @\nro Nate\n-$200\n\npay to: Paula Gellar (lawyer)\nportion: 20%\n\n| Payment wizard (3 of 3) i\n\nStep 1: Specify the payees.\n\nStep 2: Specify the payment transactions.\n\n(The wizard calculates the checkset total and each check amount.)\nStep 3: Specify the check instructions.\n\nCheckset &\n\n“$1175 pay to: Jim Means(injured worker)\n$275 2\n-$200 pay to: Paula Gellar (lawyer)\n\nportion: 20%\n\n| Automatic payments (recurring payments) Gi\n\n¢ The Check wizard allows creation of automatic future payments\n¢ Specify frequency and number of checks\n* Service period is the timeframe this set of checks covers\n\n« When the second-to-last check is submitted, an activity for two days before the last\ncheck is created\n\n¢ The activity is a reminder that the payment stream is ending\n\nCheck set 4@)\nJune ==> =\n\nAugust\n\n| Check processing integration\n\n- check data (and check number) —-!\n=. Oe eS\n—__«—- P\n\nstatus (and check number) Check\n\nClaimCenter Processing\nSystem\n\nClaimCenter does not write checks or issue Electronic Funds Transfers\nClaimCenter uses an integration point to an external check processing system\nThis system prints paper checks and/or manages Electronic Funds Transfers\n\nInformation exchange\n+ ClaimCenter sends check data (amount, line items, ...)\n\n+ ClaimCenter receives the check status (such as requesting or issued)\n\n| The life cycle of a check\n\nClaimCenter\n\nCO ]>\n\nExternal\nCheck\nProcessing\n\n| The life cycle of a check - Step 1 G\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing\n\n| The life cycle of a check - Step 2 G\n\na\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing\n\n| The life cycle of a check - Step 3 G\n\nPy Oo sn — Ras\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing\n\n] The life cycle of a check - Step 4 Gi\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing\n\n| The life cycle of a check - Step 5\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ieee,\n\nExternal\nCheck\nProcessing\n\n| The life cycle of a check - Step 6\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ies,\n\nExternal\nCheck\nProcessing\n\n| The life cycle of a check - Step 7 G\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ies,\n\nExternal\nCheck Cleared\nProcessing\n\n| The life cycle of a check - Step 8 G\n\nMay be deleted\nClaimCenter or edited\n\nbatch\nBP] process\n\nIV EWM e-miel(e(-temm Requesting / Requested\n=O => y q ie] q\n\nExternal\nCheck May be stopped Cleared\nProcessing\n\n| Demonstration G\n\nIssuing payments\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nCreating payments\n\nQuestion G\n\n_~ — Betty Baker went through the payment wizard one time. She specified\noo three payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\n\nc. Can you tell how many payment transactions there are?\n\nSS oe ooo e eo oe ooooOoD\n\nAnswer ia\n\n_~ — Betty Baker went through the payment wizard one time. She specified\no three payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\n\nA. Can you tell how many CheckSets there are? Yes. There is one.\n(Each iteration of the payment wizard creates one checkset.)\n\nB. Can you tell how many checks there are? Yes. There are three.\n(Unless there are joint payees, each payee has a separate check.\nUnless there are recurring checks, then for three payees, there\nmust be three checks.)\n\nc. Can you tell how many payment transactions there are? No. You can't\ntell. (The number of payment transactions is not tied to the\nnumber of payees.)\n\nSSS eee oe eo ooo e SoD\n\nQuestion\n\n,- — Acheck includes a $200 final payment from a $500 reserve line. Why\n¢ does ClaimCenter create a second transaction? What is the dollar\n\n“ amount of this transaction?\n\nSS oe ooo e eo oe ooooOoD\n\nGi\n\nAnswer ia\n\n,- — Acheck includes a $200 final payment from a $500 reserve line. Why\no does ClaimCenter create a second transaction? What is the dollar\n: amount of this transaction?\n\nThe second transaction is used to zero out the reserve line. The dollar amount of this\ntransaction will be -$300, since there is $300 remaining after the $200 payment\ntransaction.\n\nSSS eee oe eo ooo e SoD\n\nQuestion\n\n,~ — Inwhat status must a check be for a user to delete the check?\n\n¢\n4\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nAnswer\n\n,~ — Inwhat status must a check be for a user to delete the check?\n¢\n4\n4\n\nAwaiting submission\n\nSSS eee oe eo ooo e SoD\n\nQuestion\n\n,7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nGi\n\nAnswer ia\n\n,7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n\n¢\n\nNo. Validation rules prevent you from starting the payment wizard if the claim is not at\n“ability to pay\".\n\nSSS eee oe eo ooo e SoD\n\nLesson\nobj ectives * Create and modify reserves\nreview * Create payments\n\n* Create payments with multiple payees and\npayments",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Creating payments and reserves",
+      "word_count": 4,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 561
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Create and modify reserves\n\n¢ Create payments\n\n* Create payments with multiple payees and\npayments",
+      "word_count": 18,
+      "avg_confidence": 84.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "The business of adjudicating claims takes\nthe claim from intake all the way to paying\nthe claimant for covered losses. As an\nadjuster, | need to know how to create\npayments against the correct coverage\nand apply deductibles when required.\n\nTanvi\n\nAdjuster \\ee/",
+      "word_count": 43,
+      "avg_confidence": 95.37,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Reserves review fa\noO Coverage: Workers’ Comp\ne3 Claimant: Jim Means\n= @\nes Reserve Line 1 (Medical Details)\n\nCost type: Claim Cost\nCost category: Medical\n\nReserve Line 2 (Medical Details)\nCost type: Expense\nCost category: Case management\n\n« Areserve line is an amount of money set aside for expected payments related to a given exposure\n* Reserve transactions are the credits and debits against a reserve line\n\n* Reserve lines are uniquely defined by exposure, cost type, and cost category",
+      "word_count": 82,
+      "avg_confidence": 89.35,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Creating and changing reserves (1 of 4) Gi\n\nON Coverage: Medical Details\n(\\ () Claimant: Jim Means\nNas\n\nLL\n\nReserve Line 1 (Medical Details)\nCost type: Claim Cost\nCost category: Medical",
+      "word_count": 32,
+      "avg_confidence": 86.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Creating and changing reserves (2 of 4) G\n\nON Coverage: Medical Details\n\n(\\ Claimant: Jim Means\nNe\n$2000\nReserve Line 1 (Medical Details)\n[oX\\+) Cost type Claim Cost\n$2000 Cost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve",
+      "word_count": 48,
+      "avg_confidence": 90.47,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Creating and changing reserves (3 of 4) Gi\n\nON Coverage: Medical Details\n12 Claimant: Jim Means\nes\n\nCox)\n\nReserve Line 1 (Medical Details)\nCost type: Claim Cost\nCost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\n¢ Changing a reserve line initiates a transaction with the amount of the change",
+      "word_count": 60,
+      "avg_confidence": 89.78,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Creating and changing reserves (4 of 4) Gi\n\nON Coverage: Medical Details\n\n\\ Claimant: Jim Means $2300\n\ne $2500\n$2060\nry Reserve Line 1 (Medical Details)\nry Cost type: Claim Cost\nor Cost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\nOW\n\n-$200\n\n¢ Changing a reserve line initiates a transaction with the amount of the change\n\n* Changes can add or subtract amounts from the reserve line",
+      "word_count": 78,
+      "avg_confidence": 87.7,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Eroding payments review (1 of 3) Gi\n\nCoverage: ON\nMedical \\O@\nDetails eo\n\nLe EE $4000\n\ni)\n\nER $1800\n\n* Eroding payment transactions reduce the reserve line by the amount of the payment",
+      "word_count": 34,
+      "avg_confidence": 83.81,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Eroding payments review (2 of 3) Gi\n\nCoverage: or\nMedical Y¥O@ $1750\nDetails eo $4000\" Partial\n\nCa === ff <>\n\n$2250 ——))\nCoverage:\n@) =)\n)\n\n$1800\n\n* Eroding payment transactions reduce the reserve line by the amount of the payment\n\n* Apartial payment reduces remaining reserves by the amount of the payment",
+      "word_count": 54,
+      "avg_confidence": 82.25,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Eroding payments review (3 of 3) Gi\n\nDetails ‘eo Partial\n| cay.\n\n$2250\n\nCoverage:\nLost On\nWages oe\n\ncox Final\n\n$1465\n\n$0\n* Eroding payment transactions reduce the reserve line by the amount of the payment\n\n* Apartial payment reduces remaining reserves by the amount of the payment\n\n« A final payment also creates a reserve transaction to remove the remainder of the reserve",
+      "word_count": 65,
+      "avg_confidence": 87.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Demonstration G\n\nReserves demonstration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| What is a check? G\n\nChecks are transfers of funds to a claimant or other third party co\nFunds come from one or more reserve lines =f\n\nin\nChecks may be ‘checks’ or Electronic Funds Transfers (EFTs) == ae aE\n\n&\nChecks may be to one or more parties D4 Bn\n\nChecks may be for one or more payments { o} oy\nChecks are always part of a CheckSet =)",
+      "word_count": 71,
+      "avg_confidence": 86.38,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Payment wizard (1 of 3) i\n\nStep 1: Specify the payees.\n\nCheckset\n\npay to: Jim Means(injured worker)\n\nam, (1\n\nSas\n\npay to: Paula Gellar (lawyer)\nportion: 20%",
+      "word_count": 28,
+      "avg_confidence": 87.12,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Payment wizard (2 of 3) i\n\nStep 1: Specify the payees.\nStep 2: Specify the payment transactions.\n(The wizard calculates the checkset total and each check amount.)\n\nCheckset e\n$1100 FS\n<)>) w\n-$1175 ‘aD\npay to: Jim Means(injured worker)\n$275 @\nro Nate\n-$200\n\npay to: Paula Gellar (lawyer)\nportion: 20%",
+      "word_count": 53,
+      "avg_confidence": 86.02,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Payment wizard (3 of 3) i\n\nStep 1: Specify the payees.\n\nStep 2: Specify the payment transactions.\n\n(The wizard calculates the checkset total and each check amount.)\nStep 3: Specify the check instructions.\n\nCheckset &\n\n“$1175 pay to: Jim Means(injured worker)\n$275 2\n-$200 pay to: Paula Gellar (lawyer)\n\nportion: 20%",
+      "word_count": 52,
+      "avg_confidence": 93.23,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Automatic payments (recurring payments) Gi\n\n¢ The Check wizard allows creation of automatic future payments\n¢ Specify frequency and number of checks\n* Service period is the timeframe this set of checks covers\n\n« When the second-to-last check is submitted, an activity for two days before the last\ncheck is created\n\n¢ The activity is a reminder that the payment stream is ending\n\nCheck set 4@)\nJune ==> =\n\nAugust",
+      "word_count": 71,
+      "avg_confidence": 87.18,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Check processing integration\n\n- check data (and check number) —-!\n=. Oe eS\n—__«—- P\n\nstatus (and check number) Check\n\nClaimCenter Processing\nSystem\n\nClaimCenter does not write checks or issue Electronic Funds Transfers\nClaimCenter uses an integration point to an external check processing system\nThis system prints paper checks and/or manages Electronic Funds Transfers\n\nInformation exchange\n+ ClaimCenter sends check data (amount, line items, ...)\n\n+ ClaimCenter receives the check status (such as requesting or issued)",
+      "word_count": 77,
+      "avg_confidence": 91.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| The life cycle of a check\n\nClaimCenter\n\nCO ]>\n\nExternal\nCheck\nProcessing",
+      "word_count": 13,
+      "avg_confidence": 85.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| The life cycle of a check - Step 1 G\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing",
+      "word_count": 17,
+      "avg_confidence": 91.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| The life cycle of a check - Step 2 G\n\na\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing",
+      "word_count": 18,
+      "avg_confidence": 85.6,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| The life cycle of a check - Step 3 G\n\nPy Oo sn — Ras\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing",
+      "word_count": 22,
+      "avg_confidence": 78.71,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "] The life cycle of a check - Step 4 Gi\n\nClaimCenter\n\n3 O)>\n\nExternal\nCheck\nProcessing",
+      "word_count": 17,
+      "avg_confidence": 87.16,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| The life cycle of a check - Step 5\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ieee,\n\nExternal\nCheck\nProcessing",
+      "word_count": 22,
+      "avg_confidence": 87.52,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| The life cycle of a check - Step 6\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ies,\n\nExternal\nCheck\nProcessing",
+      "word_count": 22,
+      "avg_confidence": 87.8,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| The life cycle of a check - Step 7 G\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ies,\n\nExternal\nCheck Cleared\nProcessing",
+      "word_count": 24,
+      "avg_confidence": 87.63,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| The life cycle of a check - Step 8 G\n\nMay be deleted\nClaimCenter or edited\n\nbatch\nBP] process\n\nIV EWM e-miel(e(-temm Requesting / Requested\n=O => y q ie] q\n\nExternal\nCheck May be stopped Cleared\nProcessing",
+      "word_count": 39,
+      "avg_confidence": 85.23,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Demonstration G\n\nIssuing payments\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.45,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "| Student exercise\n\nCreating payments",
+      "word_count": 5,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question G\n\n_~ — Betty Baker went through the payment wizard one time. She specified\noo three payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\n\nc. Can you tell how many payment transactions there are?\n\nSS oe ooo e eo oe ooooOoD",
+      "word_count": 68,
+      "avg_confidence": 87.36,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer ia\n\n_~ — Betty Baker went through the payment wizard one time. She specified\no three payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\n\nA. Can you tell how many CheckSets there are? Yes. There is one.\n(Each iteration of the payment wizard creates one checkset.)\n\nB. Can you tell how many checks there are? Yes. There are three.\n(Unless there are joint payees, each payee has a separate check.\nUnless there are recurring checks, then for three payees, there\nmust be three checks.)\n\nc. Can you tell how many payment transactions there are? No. You can't\ntell. (The number of payment transactions is not tied to the\nnumber of payees.)\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 127,
+      "avg_confidence": 90.38,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Question\n\n,- — Acheck includes a $200 final payment from a $500 reserve line. Why\n¢ does ClaimCenter create a second transaction? What is the dollar\n\n“ amount of this transaction?\n\nSS oe ooo e eo oe ooooOoD\n\nGi",
+      "word_count": 39,
+      "avg_confidence": 81.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Answer ia\n\n,- — Acheck includes a $200 final payment from a $500 reserve line. Why\no does ClaimCenter create a second transaction? What is the dollar\n: amount of this transaction?\n\nThe second transaction is used to zero out the reserve line. The dollar amount of this\ntransaction will be -$300, since there is $300 remaining after the $200 payment\ntransaction.\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 69,
+      "avg_confidence": 87.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Question\n\n,~ — Inwhat status must a check be for a user to delete the check?\n\n¢\n4\n¢\n\nSS oe ooo e eo oe ooooOoD",
+      "word_count": 26,
+      "avg_confidence": 70.85,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Answer\n\n,~ — Inwhat status must a check be for a user to delete the check?\n¢\n4\n4\n\nAwaiting submission\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 28,
+      "avg_confidence": 70.79,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Question\n\n,7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nGi",
+      "word_count": 29,
+      "avg_confidence": 70.08,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Answer ia\n\n,7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n\n¢\n\nNo. Validation rules prevent you from starting the payment wizard if the claim is not at\n“ability to pay\".\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 48,
+      "avg_confidence": 77.72,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Lesson\nobj ectives * Create and modify reserves\nreview * Create payments\n\n* Create payments with multiple payees and\npayments",
+      "word_count": 20,
+      "avg_confidence": 87.8,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

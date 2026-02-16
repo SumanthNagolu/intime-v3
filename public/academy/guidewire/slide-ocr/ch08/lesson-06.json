@@ -1,0 +1,456 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-06",
+    "slide_count": 40,
+    "slides_with_text": 33,
+    "total_words": 1595,
+    "avg_confidence": 82.84,
+    "processing_time_seconds": 16.64,
+    "extracted_at": "2026-02-13T12:22:43.992444"
+  },
+  "full_text": "Raising Underwriting Issues\n\nLesson\nobjectives\n\n¢ Describe the underwriting process and the\n\nkey concepts of underwriting authority\nDescribe the fields related to defining the\nUnderwriting Rule and evaluating the\nUnderwriting Issue\n\nDefine a new underwriting rule and specify\nrule conditions to raise the underwriting issue\nConfigure the rule context definitions to be\nused in the underwriting rule user interface\n\ni Review: Underwriting process Ga\n\nAgent requests UW approves UW releases\nUW review 4 issue(s) @ policy back to\nand quotes agent\n\n°\n\nPolicy has Under UW Review Agent cannot Agent can view\nunderwriting issues edit policy or see quote, edit, bind\nAgent cannot edit the quote and issue policy\n\nAgent cannot policy\n\napprove\n\ni Review: Underwriting authority Ga\n\n¢ Provides underwriting rules and an underwriting infrastructure to manage\nunderwriting issues\n\n« Major components\n« Underwriting Issue — A specific occurrence on a policy transaction where an underwriting\ncondition was true.\n\n¢ Underwriting Rule — It describes how the policy transaction is affected by underwriting\nissues, and how issues can be approved. The rules includes the condition under which it will\nraise an underwriting issue.\n\n¢ Authority — The ability to approve underwriting issues and to what degree.\n\n¢ Authority Profile — A group of authorities that can be given to a user, allowing the user to\napprove underwriting issues.\n\ni Review: Underwriting issues\n\n¢ Created when a condition gives undesirable result,\nbased on data on the policy or account such as:\n\n* alevel or coverage or price of a coverable or\n\n* ajurisdiction or\n\n* more complex issue such as driver in urban areas\n* Can stop jobs unless approved\n\nHow are UW issues raised? Gi\n\nChecks at every\n[ay cones set and\ncreates issues\n\nNo issues on Risk\nAnalysis page\n\nSubmission JobProcess- IPolicyEvaluation- UW Issues created:\nwith VIN FRE1, UWlssue- Plugin calls LOB- 1. Vehicle req. FRE\n$200,000 value Evaluator() specific evaluator approval\n\nclasses that 2. High vehicle value\n\nevaluate and raise\nUW issues\n\ni Implementing underwriting authority Ga\n\nSteps to configure UW authority are:\n1. [Optional] Configure context definition\n2. Create a new UW rule\n\n3. Configure UW rule conditions in UI to raise UW issue\n\n4. Add authority grant for new issue type\n\ni Demonstration G\nUnderwriting authority overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — What is underwriting authority?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — What is underwriting authority?\n\n¢\n4\n¢\n\nUnderwriting authority provides underwriting rules and an underwriting infrastructure\nwhich user can modify or augment.\n\nSS Se ee eee eo\n\ni Underwriting rules Gi\n\n¢ Anunderwriting rule defines an underwriting issue type, specifies when to check\nand under what conditions to raise the issue.\n\n¢ In PolicyCenter, Go to Administration > Business Rules >> Underwriting\nRules\n\n¢ Fields related to defining the UW Rule\n« Fields related to evaluating the UW Issue\n¢ Fields related to approving the UW Issue\n« UW Rules can be edited, enabled / disabled by authorized users\n\n« UW Rules can be imported, exported and deployed into different environment\n\ni Checking set Gi\n\n« Achecking set represents a point in a job at which issues can be raised such as\n* pre-quote\n* bind\n* pre-issuance\n* etc\n¢ Used to specify when to check whether an issue exists\n¢ Defined in WWissueCheckingSet typelist\n¢ Mapped to TriggeringPointKey\n\ni Blocking point\n\n¢ Ablocking point stops progress of the job until an issue is approved\n\nUnderwriter\n@) Quote oe Te Ss acl issues @\nio\n= — — ct\nAgent creates UW issues blocking Policy can be quoted,\nsubmission quote, bind or issue bound and issued\n\n* Specific issue types can be configured as informational (non-blocking)\n\n« Agent can progress further in job\n\n* Do not need underwriter approval ieormauonas\n\nDriver under 25 23 Reject\n\ni Raise UW Issues with Rule Conditions in Ul Gi\n\n« UWissues can be raised by specifying the rule conditions in the user interface\n* The Applicability criteria restricts when the rule can be triggered\n* The Rule Context supplies data to be used by the rule conditions and issue details\n* The Rule Condition uses expressions constructed with the available context objects\n* The Context Definition classes define the rule contexts and objects\n¢ The UW Issue details (Issue Key, Description) are entered on the UI\n¢ It allows authorized users to edit, enable and disable the rule conditions\n\n« UW Rules can be easily deployed and moved between different environment\n\ni Specify Rule Conditions\n\n* Create conditions using expressions and operands\n* The expressions can be in different modes\n¢ Formula: literals, comparisons, context object properties and methods\n* paPolicyDrivers.Count / vehicles.Count * 100\n+ 50\n* Count: count the number of items matching a given condition\n« Sum: sum up the expression for every item matching a given condition\n¢ Lookup: use the parameters to find the values defined in data sources (e.g., system tables)\n* Some Gosu formulas are NOT supported in the Ul\n\n* Object casting , assignment, block code, loop, and accessing array element\n\ni Demonstration G\nUnderwriting rule\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Configure Context Definition\n\n¢ Rule Contexts are defined in the\ngw. bizrules.provisioning.contexts package\n¢ To add objects to existing contexts, use\n* addSymbol (objectName, objectType, objectPath)\n¢ additerativeSymbol (objectName, objectType, objectPath)\n* objectName: object variable name used in the Ul\n* objectType: the type of the object\n* objectPath : the block code that resolves the actual object at run time.\n¢ RuleContextDefinitionKey uniquely identifies each context definition\n\n« Add a new type code when creating a new Context Definition\n\ni Context Definition and UW Rule Gi\n\n¢ BizRulesPlugin contains the list of context definitions that the Rule framework\nsupports\n\n¢ UnderwriterEvaluatorTriggeringPoint maintains the set of supported contexts\nfor checking set / triggering point.\n\ni Demonstration G\nUnderwriting rule context definition\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,- — What does the UW Rule define?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — What does the UW Rule define?\n\n¢\n4\n¢\n\nThe UW Rule defines the underwriting issues type, conditions to raise the issue in the\nbase product.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Whatis the rule context?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — Whatis the rule context?\n¢\n4\n4\n\nThe rule context supplies data to the UW rule so that the objects in the context can be\nused to create rule conditions. It is defined in the context definition classes.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — What values should be used as IssueKey to raise issues? Should this\noo value be changed after a rule is in production?\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n_~ — What values should be used as IssueKey to raise issues? Should this\nFa value be changed after a rule is in production?\n\nValues that uniquely identify the issue and do not change over the life time of the\npolicy should be used to raise underwriting issues. Guidewire recommends that you\ndo not change the algorithm for forming the key for an issue once that rule is in\nproduction.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Name three blocking points for an issue.\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer\n\n,~ — Name three blocking points for an issue.\n\n¢\n4\n¢\n\nQuote, bind, prequote, issuance.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Whatis a checking set?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — Whats a checking set?\n\n¢\n4\n¢\n\nA checking set represents a point in a job at which issues can be raised such as pre-\nquote, bind or pre-issuance.\n\nSS Se ee eee eo\n\ni Demonstration G\nCreate a new underwriting rule\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Define a new UW rule Gi\n\nPoints to think about to come up with a clear definition of the UW rule:\n\n1.\n\nRule exists or new?\n\n2. Decide value on fields that will define the rule.\n3.\n4\n\n. Onwhich job (submissions, policy changes, etc.) should this issue be detected?\n\nDoes this issue need a value to be associated with it?\n\n* Should it be detected at multiple points, or can it be detected at one point only?\n\n5. At what point in the job is the issue raised?\n\n6. What line of business does the issue apply to?\n\n7. Are there existing rule contexts and objects available to create the condition?\n\nLesson\nobjectives\nreview\n\n¢ Describe the underwriting process and the\n\nkey concepts of underwriting authority\n\n¢ Describe the fields related to defining the\n\nUnderwriting Rule and evaluating the\nUnderwriting Issue\n\nDefine a new underwriting rule and specify\nrule conditions to raise the underwriting issue\nConfigure the rule context definitions to be\nused in the underwriting rule user interface\n\ni Student exercise\n\nRaising Underwriting Issues",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Raising Underwriting Issues",
+      "word_count": 3,
+      "avg_confidence": 95.25,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the underwriting process and the\n\nkey concepts of underwriting authority\nDescribe the fields related to defining the\nUnderwriting Rule and evaluating the\nUnderwriting Issue\n\nDefine a new underwriting rule and specify\nrule conditions to raise the underwriting issue\nConfigure the rule context definitions to be\nused in the underwriting rule user interface",
+      "word_count": 56,
+      "avg_confidence": 93.59,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Review: Underwriting process Ga\n\nAgent requests UW approves UW releases\nUW review 4 issue(s) @ policy back to\nand quotes agent\n\n°\n\nPolicy has Under UW Review Agent cannot Agent can view\nunderwriting issues edit policy or see quote, edit, bind\nAgent cannot edit the quote and issue policy\n\nAgent cannot policy\n\napprove",
+      "word_count": 54,
+      "avg_confidence": 89.82,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Review: Underwriting authority Ga\n\n¢ Provides underwriting rules and an underwriting infrastructure to manage\nunderwriting issues\n\n« Major components\n« Underwriting Issue — A specific occurrence on a policy transaction where an underwriting\ncondition was true.\n\n¢ Underwriting Rule — It describes how the policy transaction is affected by underwriting\nissues, and how issues can be approved. The rules includes the condition under which it will\nraise an underwriting issue.\n\n¢ Authority — The ability to approve underwriting issues and to what degree.\n\n¢ Authority Profile — A group of authorities that can be given to a user, allowing the user to\napprove underwriting issues.",
+      "word_count": 106,
+      "avg_confidence": 91.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Review: Underwriting issues\n\n¢ Created when a condition gives undesirable result,\nbased on data on the policy or account such as:\n\n* alevel or coverage or price of a coverable or\n\n* ajurisdiction or\n\n* more complex issue such as driver in urban areas\n* Can stop jobs unless approved",
+      "word_count": 51,
+      "avg_confidence": 91.02,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "How are UW issues raised? Gi\n\nChecks at every\n[ay cones set and\ncreates issues\n\nNo issues on Risk\nAnalysis page\n\nSubmission JobProcess- IPolicyEvaluation- UW Issues created:\nwith VIN FRE1, UWlssue- Plugin calls LOB- 1. Vehicle req. FRE\n$200,000 value Evaluator() specific evaluator approval\n\nclasses that 2. High vehicle value\n\nevaluate and raise\nUW issues",
+      "word_count": 55,
+      "avg_confidence": 90.33,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Implementing underwriting authority Ga\n\nSteps to configure UW authority are:\n1. [Optional] Configure context definition\n2. Create a new UW rule\n\n3. Configure UW rule conditions in UI to raise UW issue\n\n4. Add authority grant for new issue type",
+      "word_count": 41,
+      "avg_confidence": 92.27,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Demonstration G\nUnderwriting authority overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.72,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Question G\n\n,~ — What is underwriting authority?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 17,
+      "avg_confidence": 50.16,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Answer Gi\n\n,~ — What is underwriting authority?\n\n¢\n4\n¢\n\nUnderwriting authority provides underwriting rules and an underwriting infrastructure\nwhich user can modify or augment.\n\nSS Se ee eee eo",
+      "word_count": 31,
+      "avg_confidence": 73.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Underwriting rules Gi\n\n¢ Anunderwriting rule defines an underwriting issue type, specifies when to check\nand under what conditions to raise the issue.\n\n¢ In PolicyCenter, Go to Administration > Business Rules >> Underwriting\nRules\n\n¢ Fields related to defining the UW Rule\n« Fields related to evaluating the UW Issue\n¢ Fields related to approving the UW Issue\n« UW Rules can be edited, enabled / disabled by authorized users\n\n« UW Rules can be imported, exported and deployed into different environment",
+      "word_count": 84,
+      "avg_confidence": 86.82,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Checking set Gi\n\n« Achecking set represents a point in a job at which issues can be raised such as\n* pre-quote\n* bind\n* pre-issuance\n* etc\n¢ Used to specify when to check whether an issue exists\n¢ Defined in WWissueCheckingSet typelist\n¢ Mapped to TriggeringPointKey",
+      "word_count": 49,
+      "avg_confidence": 83.82,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Blocking point\n\n¢ Ablocking point stops progress of the job until an issue is approved\n\nUnderwriter\n@) Quote oe Te Ss acl issues @\nio\n= — — ct\nAgent creates UW issues blocking Policy can be quoted,\nsubmission quote, bind or issue bound and issued\n\n* Specific issue types can be configured as informational (non-blocking)\n\n« Agent can progress further in job\n\n* Do not need underwriter approval ieormauonas\n\nDriver under 25 23 Reject",
+      "word_count": 76,
+      "avg_confidence": 87.01,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Raise UW Issues with Rule Conditions in Ul Gi\n\n« UWissues can be raised by specifying the rule conditions in the user interface\n* The Applicability criteria restricts when the rule can be triggered\n* The Rule Context supplies data to be used by the rule conditions and issue details\n* The Rule Condition uses expressions constructed with the available context objects\n* The Context Definition classes define the rule contexts and objects\n¢ The UW Issue details (Issue Key, Description) are entered on the UI\n¢ It allows authorized users to edit, enable and disable the rule conditions\n\n« UW Rules can be easily deployed and moved between different environment",
+      "word_count": 112,
+      "avg_confidence": 90.21,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Specify Rule Conditions\n\n* Create conditions using expressions and operands\n* The expressions can be in different modes\n¢ Formula: literals, comparisons, context object properties and methods\n* paPolicyDrivers.Count / vehicles.Count * 100\n+ 50\n* Count: count the number of items matching a given condition\n« Sum: sum up the expression for every item matching a given condition\n¢ Lookup: use the parameters to find the values defined in data sources (e.g., system tables)\n* Some Gosu formulas are NOT supported in the Ul\n\n* Object casting , assignment, block code, loop, and accessing array element",
+      "word_count": 98,
+      "avg_confidence": 89.48,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i Demonstration G\nUnderwriting rule\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.63,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Configure Context Definition\n\n¢ Rule Contexts are defined in the\ngw. bizrules.provisioning.contexts package\n¢ To add objects to existing contexts, use\n* addSymbol (objectName, objectType, objectPath)\n¢ additerativeSymbol (objectName, objectType, objectPath)\n* objectName: object variable name used in the Ul\n* objectType: the type of the object\n* objectPath : the block code that resolves the actual object at run time.\n¢ RuleContextDefinitionKey uniquely identifies each context definition\n\n« Add a new type code when creating a new Context Definition",
+      "word_count": 81,
+      "avg_confidence": 86.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Context Definition and UW Rule Gi\n\n¢ BizRulesPlugin contains the list of context definitions that the Rule framework\nsupports\n\n¢ UnderwriterEvaluatorTriggeringPoint maintains the set of supported contexts\nfor checking set / triggering point.",
+      "word_count": 34,
+      "avg_confidence": 88.21,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i Demonstration G\nUnderwriting rule context definition\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.73,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question G\n\n,- — What does the UW Rule define?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 19,
+      "avg_confidence": 63.05,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer Gi\n\n,~ — What does the UW Rule define?\n\n¢\n4\n¢\n\nThe UW Rule defines the underwriting issues type, conditions to raise the issue in the\nbase product.\n\nSS Se ee eee eo",
+      "word_count": 35,
+      "avg_confidence": 77.62,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question G\n\n,~ — Whatis the rule context?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 17,
+      "avg_confidence": 56.58,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer Gi\n\n,~ — Whatis the rule context?\n¢\n4\n4\n\nThe rule context supplies data to the UW rule so that the objects in the context can be\nused to create rule conditions. It is defined in the context definition classes.\n\nSS Se ee eee eo",
+      "word_count": 47,
+      "avg_confidence": 81.61,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n,~ — What values should be used as IssueKey to raise issues? Should this\noo value be changed after a rule is in production?\n\nSS oe ee oe oe oo",
+      "word_count": 32,
+      "avg_confidence": 76.67,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer Gi\n\n_~ — What values should be used as IssueKey to raise issues? Should this\nFa value be changed after a rule is in production?\n\nValues that uniquely identify the issue and do not change over the life time of the\npolicy should be used to raise underwriting issues. Guidewire recommends that you\ndo not change the algorithm for forming the key for an issue once that rule is in\nproduction.\n\nSS Se ee eee eo",
+      "word_count": 77,
+      "avg_confidence": 87.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n,~ — Name three blocking points for an issue.\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 20,
+      "avg_confidence": 62.68,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\n,~ — Name three blocking points for an issue.\n\n¢\n4\n¢\n\nQuote, bind, prequote, issuance.\n\nSS Se ee eee eo",
+      "word_count": 22,
+      "avg_confidence": 70.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question G\n\n,~ — Whatis a checking set?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 17,
+      "avg_confidence": 55.37,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer Gi\n\n,~ — Whats a checking set?\n\n¢\n4\n¢\n\nA checking set represents a point in a job at which issues can be raised such as pre-\nquote, bind or pre-issuance.\n\nSS Se ee eee eo",
+      "word_count": 38,
+      "avg_confidence": 75.47,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "i Demonstration G\nCreate a new underwriting rule\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 93.66,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "i Define a new UW rule Gi\n\nPoints to think about to come up with a clear definition of the UW rule:\n\n1.\n\nRule exists or new?\n\n2. Decide value on fields that will define the rule.\n3.\n4\n\n. Onwhich job (submissions, policy changes, etc.) should this issue be detected?\n\nDoes this issue need a value to be associated with it?\n\n* Should it be detected at multiple points, or can it be detected at one point only?\n\n5. At what point in the job is the issue raised?\n\n6. What line of business does the issue apply to?\n\n7. Are there existing rule contexts and objects available to create the condition?",
+      "word_count": 113,
+      "avg_confidence": 93.79,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe the underwriting process and the\n\nkey concepts of underwriting authority\n\n¢ Describe the fields related to defining the\n\nUnderwriting Rule and evaluating the\nUnderwriting Issue\n\nDefine a new underwriting rule and specify\nrule conditions to raise the underwriting issue\nConfigure the rule context definitions to be\nused in the underwriting rule user interface",
+      "word_count": 58,
+      "avg_confidence": 92.67,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "i Student exercise\n\nRaising Underwriting Issues",
+      "word_count": 6,
+      "avg_confidence": 86.43,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

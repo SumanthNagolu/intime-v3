@@ -1,0 +1,3194 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_15_04.mp4",
+    "video_stem": "Billing_15_04",
+    "duration_seconds": 91.02,
+    "duration_formatted": "00:01:31.020",
+    "segment_count": 109,
+    "word_count": 364,
+    "avg_confidence": 0.9491,
+    "transcription_time_seconds": 22.08,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:07:02.240655"
+  },
+  "full_text": "Previous demonstration, we cancelled the personal auto policy, for Gail Lohmann. Let's assume the cancellation was made in error, so we need to immediately reinstate the policy. We can do this as super user, using another run command in our debug tool set. Here's Gail Lohmann's policy. The cancellation status is cancelled. I'll go to the quick jump box, and issue a run command to reinstate the policy for the same amount as the cancellation. The command is run policy. The command is run policy. This followed by the amount of the reinstatement. The amount is $540 in this case. I press return to execute the reinstatement command. BillingCenter tells me that the policy has been reinstated. We can also see the cancellation status is now open. Let's go to the charges for the policy. The run command created two new charges, reinstatement fee, and a premium charge for the reinstated policy. The $100 reinstatement fee amount is specified on the general tab of the delinquency plan. I click the premium charge for the reinstatement. Here we see the reinstatement. Here we see the reinstated invoice items, which are the result of slicing the charge according to the payment plan. This concludes our brief demonstration on testing policy reinstatement using a debug command. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy so so       so                  so                                                                            ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.1,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.100",
+      "text": "Previous demonstration, we cancelled the personal auto policy, for Gail Lohmann. Let's assume the cancellation was made in error, so we need to immediately reinstate the policy. We can do this as super user, using another run command in our debug tool set. Here's Gail Lohmann's policy. The cancellation status is cancelled. I'll go to the quick jump box, and issue a run command to reinstate the policy for the same amount as the cancellation.",
+      "words": [
+        {
+          "word": "Previous",
+          "start": 0.0,
+          "end": 0.36,
+          "probability": 0.9102
+        },
+        {
+          "word": "demonstration,",
+          "start": 0.36,
+          "end": 1.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "we",
+          "start": 1.4,
+          "end": 1.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "cancelled",
+          "start": 1.64,
+          "end": 2.08,
+          "probability": 0.6729
+        },
+        {
+          "word": "the",
+          "start": 2.08,
+          "end": 2.3,
+          "probability": 0.999
+        },
+        {
+          "word": "personal",
+          "start": 2.3,
+          "end": 2.72,
+          "probability": 0.7476
+        },
+        {
+          "word": "auto",
+          "start": 2.72,
+          "end": 3.02,
+          "probability": 0.9482
+        },
+        {
+          "word": "policy,",
+          "start": 3.02,
+          "end": 3.68,
+          "probability": 0.9048
+        },
+        {
+          "word": "for",
+          "start": 3.88,
+          "end": 4.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "Gail",
+          "start": 4.24,
+          "end": 4.58,
+          "probability": 0.7847
+        },
+        {
+          "word": "Lohmann.",
+          "start": 4.58,
+          "end": 4.94,
+          "probability": 0.7847
+        },
+        {
+          "word": "Let's",
+          "start": 5.24,
+          "end": 5.78,
+          "probability": 0.998
+        },
+        {
+          "word": "assume",
+          "start": 5.78,
+          "end": 6.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 6.12,
+          "end": 6.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "cancellation",
+          "start": 6.3,
+          "end": 6.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "was",
+          "start": 6.72,
+          "end": 7.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "made",
+          "start": 7.22,
+          "end": 7.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 7.54,
+          "end": 7.74,
+          "probability": 0.9907
+        },
+        {
+          "word": "error,",
+          "start": 7.74,
+          "end": 8.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "so",
+          "start": 8.2,
+          "end": 8.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 8.5,
+          "end": 8.7,
+          "probability": 1.0
+        },
+        {
+          "word": "need",
+          "start": 8.7,
+          "end": 8.92,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 8.92,
+          "end": 9.1,
+          "probability": 1.0
+        },
+        {
+          "word": "immediately",
+          "start": 9.1,
+          "end": 9.68,
+          "probability": 0.999
+        },
+        {
+          "word": "reinstate",
+          "start": 9.68,
+          "end": 10.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 10.32,
+          "end": 10.54,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 10.54,
+          "end": 11.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "We",
+          "start": 11.26,
+          "end": 11.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 11.68,
+          "end": 11.9,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 11.9,
+          "end": 12.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 12.08,
+          "end": 12.34,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 12.34,
+          "end": 12.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "super",
+          "start": 12.56,
+          "end": 12.86,
+          "probability": 0.7905
+        },
+        {
+          "word": "user,",
+          "start": 12.86,
+          "end": 13.28,
+          "probability": 0.689
+        },
+        {
+          "word": "using",
+          "start": 13.56,
+          "end": 13.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "another",
+          "start": 13.96,
+          "end": 14.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "run",
+          "start": 14.36,
+          "end": 14.66,
+          "probability": 0.9526
+        },
+        {
+          "word": "command",
+          "start": 14.66,
+          "end": 15.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 15.02,
+          "end": 15.38,
+          "probability": 1.0
+        },
+        {
+          "word": "our",
+          "start": 15.38,
+          "end": 15.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "debug",
+          "start": 15.62,
+          "end": 15.92,
+          "probability": 0.9873
+        },
+        {
+          "word": "tool",
+          "start": 15.92,
+          "end": 16.26,
+          "probability": 0.9863
+        },
+        {
+          "word": "set.",
+          "start": 16.26,
+          "end": 16.72,
+          "probability": 0.8647
+        },
+        {
+          "word": "Here's",
+          "start": 17.1,
+          "end": 17.72,
+          "probability": 0.999
+        },
+        {
+          "word": "Gail",
+          "start": 17.72,
+          "end": 18.06,
+          "probability": 0.999
+        },
+        {
+          "word": "Lohmann's",
+          "start": 18.06,
+          "end": 18.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy.",
+          "start": 18.58,
+          "end": 19.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 19.32,
+          "end": 19.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "cancellation",
+          "start": 19.7,
+          "end": 20.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "status",
+          "start": 20.18,
+          "end": 20.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 20.88,
+          "end": 21.24,
+          "probability": 1.0
+        },
+        {
+          "word": "cancelled.",
+          "start": 21.24,
+          "end": 21.6,
+          "probability": 0.8765
+        },
+        {
+          "word": "I'll",
+          "start": 22.0,
+          "end": 22.62,
+          "probability": 1.0
+        },
+        {
+          "word": "go",
+          "start": 22.62,
+          "end": 22.76,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 22.76,
+          "end": 22.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 22.92,
+          "end": 23.04,
+          "probability": 1.0
+        },
+        {
+          "word": "quick",
+          "start": 23.04,
+          "end": 23.28,
+          "probability": 0.9575
+        },
+        {
+          "word": "jump",
+          "start": 23.28,
+          "end": 23.56,
+          "probability": 0.9795
+        },
+        {
+          "word": "box,",
+          "start": 23.56,
+          "end": 24.14,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 24.34,
+          "end": 24.58,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 24.58,
+          "end": 24.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 24.82,
+          "end": 25.02,
+          "probability": 1.0
+        },
+        {
+          "word": "run",
+          "start": 25.02,
+          "end": 25.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "command",
+          "start": 25.18,
+          "end": 25.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 25.6,
+          "end": 25.84,
+          "probability": 1.0
+        },
+        {
+          "word": "reinstate",
+          "start": 25.84,
+          "end": 26.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 26.4,
+          "end": 26.6,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 26.6,
+          "end": 27.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 27.04,
+          "end": 27.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 27.3,
+          "end": 27.42,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 27.42,
+          "end": 27.7,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 27.7,
+          "end": 28.08,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 28.08,
+          "end": 28.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 28.34,
+          "end": 28.46,
+          "probability": 1.0
+        },
+        {
+          "word": "cancellation.",
+          "start": 28.46,
+          "end": 29.1,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.1,
+      "end": 38.52,
+      "start_formatted": "00:00:29.100",
+      "end_formatted": "00:00:38.520",
+      "text": "The command is run policy. The command is run policy. This followed by the amount of the reinstatement. The amount is $540 in this case.",
+      "words": [
+        {
+          "word": "The",
+          "start": 29.1,
+          "end": 30.08,
+          "probability": 0.7349
+        },
+        {
+          "word": "command",
+          "start": 30.08,
+          "end": 30.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 30.42,
+          "end": 30.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "run",
+          "start": 30.74,
+          "end": 30.98,
+          "probability": 0.5864
+        },
+        {
+          "word": "policy.",
+          "start": 30.98,
+          "end": 31.54,
+          "probability": 0.6919
+        },
+        {
+          "word": "The",
+          "start": 31.64,
+          "end": 32.26,
+          "probability": 0.0001
+        },
+        {
+          "word": "command",
+          "start": 32.26,
+          "end": 32.26,
+          "probability": 0.3872
+        },
+        {
+          "word": "is",
+          "start": 32.26,
+          "end": 32.26,
+          "probability": 0.8999
+        },
+        {
+          "word": "run",
+          "start": 32.26,
+          "end": 32.26,
+          "probability": 0.3438
+        },
+        {
+          "word": "policy.",
+          "start": 32.26,
+          "end": 32.26,
+          "probability": 0.8203
+        },
+        {
+          "word": "This",
+          "start": 32.26,
+          "end": 32.84,
+          "probability": 0.4626
+        },
+        {
+          "word": "followed",
+          "start": 32.84,
+          "end": 33.3,
+          "probability": 0.9478
+        },
+        {
+          "word": "by",
+          "start": 33.3,
+          "end": 33.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 33.46,
+          "end": 33.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "amount",
+          "start": 33.6,
+          "end": 33.84,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 33.84,
+          "end": 34.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 34.06,
+          "end": 34.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "reinstatement.",
+          "start": 34.18,
+          "end": 34.92,
+          "probability": 0.9482
+        },
+        {
+          "word": "The",
+          "start": 35.26,
+          "end": 35.54,
+          "probability": 0.9746
+        },
+        {
+          "word": "amount",
+          "start": 35.54,
+          "end": 35.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 35.86,
+          "end": 36.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "$540",
+          "start": 36.08,
+          "end": 37.2,
+          "probability": 0.8784
+        },
+        {
+          "word": "in",
+          "start": 37.2,
+          "end": 37.98,
+          "probability": 0.8633
+        },
+        {
+          "word": "this",
+          "start": 37.98,
+          "end": 38.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "case.",
+          "start": 38.2,
+          "end": 38.52,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 41.42,
+      "end": 56.16,
+      "start_formatted": "00:00:41.420",
+      "end_formatted": "00:00:56.160",
+      "text": "I press return to execute the reinstatement command. BillingCenter tells me that the policy has been reinstated. We can also see the cancellation status is now open. Let's go to the charges for the policy.",
+      "words": [
+        {
+          "word": "I",
+          "start": 41.42,
+          "end": 42.06,
+          "probability": 0.9927
+        },
+        {
+          "word": "press",
+          "start": 42.06,
+          "end": 42.38,
+          "probability": 0.998
+        },
+        {
+          "word": "return",
+          "start": 42.38,
+          "end": 42.68,
+          "probability": 0.8716
+        },
+        {
+          "word": "to",
+          "start": 42.68,
+          "end": 42.96,
+          "probability": 0.999
+        },
+        {
+          "word": "execute",
+          "start": 42.96,
+          "end": 43.46,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 43.46,
+          "end": 43.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "reinstatement",
+          "start": 43.72,
+          "end": 44.52,
+          "probability": 0.9434
+        },
+        {
+          "word": "command.",
+          "start": 44.52,
+          "end": 44.96,
+          "probability": 0.9897
+        },
+        {
+          "word": "BillingCenter",
+          "start": 45.96,
+          "end": 46.6,
+          "probability": 0.7275
+        },
+        {
+          "word": "tells",
+          "start": 46.6,
+          "end": 46.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "me",
+          "start": 46.88,
+          "end": 47.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 47.12,
+          "end": 47.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 47.36,
+          "end": 47.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 47.48,
+          "end": 47.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "has",
+          "start": 47.94,
+          "end": 48.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "been",
+          "start": 48.2,
+          "end": 48.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "reinstated.",
+          "start": 48.38,
+          "end": 49.06,
+          "probability": 0.979
+        },
+        {
+          "word": "We",
+          "start": 49.42,
+          "end": 49.86,
+          "probability": 0.9912
+        },
+        {
+          "word": "can",
+          "start": 49.86,
+          "end": 50.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 50.06,
+          "end": 50.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "see",
+          "start": 50.38,
+          "end": 50.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 50.72,
+          "end": 50.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "cancellation",
+          "start": 50.9,
+          "end": 51.32,
+          "probability": 0.9302
+        },
+        {
+          "word": "status",
+          "start": 51.32,
+          "end": 52.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 52.04,
+          "end": 52.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "now",
+          "start": 52.46,
+          "end": 52.74,
+          "probability": 0.998
+        },
+        {
+          "word": "open.",
+          "start": 52.74,
+          "end": 53.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "Let's",
+          "start": 53.68,
+          "end": 54.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "go",
+          "start": 54.32,
+          "end": 54.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 54.52,
+          "end": 54.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 54.7,
+          "end": 54.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "charges",
+          "start": 54.86,
+          "end": 55.18,
+          "probability": 0.98
+        },
+        {
+          "word": "for",
+          "start": 55.18,
+          "end": 55.52,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 55.52,
+          "end": 55.64,
+          "probability": 0.999
+        },
+        {
+          "word": "policy.",
+          "start": 55.64,
+          "end": 56.16,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 57.42,
+      "end": 75.4,
+      "start_formatted": "00:00:57.420",
+      "end_formatted": "00:01:15.400",
+      "text": "The run command created two new charges, reinstatement fee, and a premium charge for the reinstated policy. The $100 reinstatement fee amount is specified on the general tab of the delinquency plan. I click the premium charge for the reinstatement.",
+      "words": [
+        {
+          "word": "The",
+          "start": 57.42,
+          "end": 58.1,
+          "probability": 0.9824
+        },
+        {
+          "word": "run",
+          "start": 58.1,
+          "end": 58.3,
+          "probability": 0.3228
+        },
+        {
+          "word": "command",
+          "start": 58.3,
+          "end": 58.62,
+          "probability": 0.998
+        },
+        {
+          "word": "created",
+          "start": 58.62,
+          "end": 59.26,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 59.26,
+          "end": 59.54,
+          "probability": 0.959
+        },
+        {
+          "word": "new",
+          "start": 59.54,
+          "end": 59.78,
+          "probability": 1.0
+        },
+        {
+          "word": "charges,",
+          "start": 59.78,
+          "end": 60.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "reinstatement",
+          "start": 60.64,
+          "end": 61.54,
+          "probability": 0.959
+        },
+        {
+          "word": "fee,",
+          "start": 61.54,
+          "end": 61.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 62.04,
+          "end": 62.34,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 62.34,
+          "end": 62.46,
+          "probability": 1.0
+        },
+        {
+          "word": "premium",
+          "start": 62.46,
+          "end": 62.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "charge",
+          "start": 62.84,
+          "end": 63.32,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 63.32,
+          "end": 63.66,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 63.66,
+          "end": 63.8,
+          "probability": 1.0
+        },
+        {
+          "word": "reinstated",
+          "start": 63.8,
+          "end": 64.46,
+          "probability": 0.9844
+        },
+        {
+          "word": "policy.",
+          "start": 64.46,
+          "end": 65.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 65.36,
+          "end": 65.94,
+          "probability": 1.0
+        },
+        {
+          "word": "$100",
+          "start": 65.94,
+          "end": 66.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "reinstatement",
+          "start": 66.68,
+          "end": 67.94,
+          "probability": 0.9897
+        },
+        {
+          "word": "fee",
+          "start": 67.94,
+          "end": 68.18,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 68.18,
+          "end": 68.56,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 68.56,
+          "end": 68.86,
+          "probability": 1.0
+        },
+        {
+          "word": "specified",
+          "start": 68.86,
+          "end": 69.34,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 69.34,
+          "end": 69.66,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 69.66,
+          "end": 69.8,
+          "probability": 1.0
+        },
+        {
+          "word": "general",
+          "start": 69.8,
+          "end": 70.08,
+          "probability": 0.6851
+        },
+        {
+          "word": "tab",
+          "start": 70.08,
+          "end": 70.38,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 70.38,
+          "end": 70.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 70.56,
+          "end": 70.66,
+          "probability": 0.999
+        },
+        {
+          "word": "delinquency",
+          "start": 70.66,
+          "end": 71.38,
+          "probability": 0.9858
+        },
+        {
+          "word": "plan.",
+          "start": 71.38,
+          "end": 71.8,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 72.16,
+          "end": 72.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 72.8,
+          "end": 73.08,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 73.08,
+          "end": 73.26,
+          "probability": 1.0
+        },
+        {
+          "word": "premium",
+          "start": 73.26,
+          "end": 73.62,
+          "probability": 0.999
+        },
+        {
+          "word": "charge",
+          "start": 73.62,
+          "end": 74.14,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 74.14,
+          "end": 74.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 74.44,
+          "end": 74.6,
+          "probability": 1.0
+        },
+        {
+          "word": "reinstatement.",
+          "start": 74.6,
+          "end": 75.4,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 75.4,
+      "end": 89.42,
+      "start_formatted": "00:01:15.400",
+      "end_formatted": "00:01:29.420",
+      "text": "Here we see the reinstatement. Here we see the reinstated invoice items, which are the result of slicing the charge according to the payment plan. This concludes our brief demonstration on testing policy reinstatement using a debug command.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 75.4,
+          "end": 76.76,
+          "probability": 0.9741
+        },
+        {
+          "word": "we",
+          "start": 76.76,
+          "end": 76.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "see",
+          "start": 76.96,
+          "end": 77.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 77.22,
+          "end": 77.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "reinstatement.",
+          "start": 77.38,
+          "end": 78.1,
+          "probability": 0.3105
+        },
+        {
+          "word": "Here",
+          "start": 78.1,
+          "end": 78.1,
+          "probability": 0.7046
+        },
+        {
+          "word": "we",
+          "start": 78.1,
+          "end": 78.1,
+          "probability": 0.9907
+        },
+        {
+          "word": "see",
+          "start": 78.1,
+          "end": 78.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 78.1,
+          "end": 78.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "reinstated",
+          "start": 78.1,
+          "end": 78.1,
+          "probability": 0.9438
+        },
+        {
+          "word": "invoice",
+          "start": 78.1,
+          "end": 78.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "items,",
+          "start": 78.56,
+          "end": 79.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "which",
+          "start": 79.3,
+          "end": 79.6,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 79.6,
+          "end": 79.82,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 79.82,
+          "end": 79.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "result",
+          "start": 79.96,
+          "end": 80.32,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 80.32,
+          "end": 80.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "slicing",
+          "start": 80.56,
+          "end": 81.02,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 81.02,
+          "end": 81.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "charge",
+          "start": 81.28,
+          "end": 81.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "according",
+          "start": 81.56,
+          "end": 81.96,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 81.96,
+          "end": 82.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 82.2,
+          "end": 82.32,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 82.32,
+          "end": 82.68,
+          "probability": 0.998
+        },
+        {
+          "word": "plan.",
+          "start": 82.68,
+          "end": 83.06,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 83.44,
+          "end": 84.12,
+          "probability": 0.999
+        },
+        {
+          "word": "concludes",
+          "start": 84.12,
+          "end": 84.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "our",
+          "start": 84.6,
+          "end": 84.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "brief",
+          "start": 84.96,
+          "end": 85.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 85.28,
+          "end": 85.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 85.94,
+          "end": 86.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "testing",
+          "start": 86.42,
+          "end": 86.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "policy",
+          "start": 86.78,
+          "end": 87.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "reinstatement",
+          "start": 87.36,
+          "end": 88.24,
+          "probability": 0.9775
+        },
+        {
+          "word": "using",
+          "start": 88.24,
+          "end": 88.56,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 88.56,
+          "end": 88.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "debug",
+          "start": 88.74,
+          "end": 89.0,
+          "probability": 0.958
+        },
+        {
+          "word": "command.",
+          "start": 89.0,
+          "end": 89.42,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 89.42,
+      "end": 90.96,
+      "start_formatted": "00:01:29.420",
+      "end_formatted": "00:01:30.960",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 89.42,
+          "end": 89.42,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 89.42,
+          "end": 89.42,
+          "probability": 0.2859
+        },
+        {
+          "word": "Filogy",
+          "start": 89.42,
+          "end": 89.42,
+          "probability": 0.3372
+        },
+        {
+          "word": "of",
+          "start": 89.42,
+          "end": 89.5,
+          "probability": 0.8442
+        },
+        {
+          "word": "Filogy",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.4714
+        },
+        {
+          "word": "of",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.9038
+        },
+        {
+          "word": "Filogy",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.5649
+        },
+        {
+          "word": "of",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.9419
+        },
+        {
+          "word": "Filogy",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.7314
+        },
+        {
+          "word": "of",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.9575
+        },
+        {
+          "word": "Filogy",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.8535
+        },
+        {
+          "word": "of",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.9668
+        },
+        {
+          "word": "Filogy",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.9043
+        },
+        {
+          "word": "of",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.9727
+        },
+        {
+          "word": "Filogy",
+          "start": 89.5,
+          "end": 89.5,
+          "probability": 0.9287
+        },
+        {
+          "word": "of",
+          "start": 89.5,
+          "end": 89.54,
+          "probability": 0.978
+        },
+        {
+          "word": "Filogy",
+          "start": 89.54,
+          "end": 89.56,
+          "probability": 0.9404
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9551
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.957
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9619
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 89.56,
+          "end": 89.66,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 89.66,
+          "end": 89.66,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 89.66,
+          "end": 90.78,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 90.78,
+          "end": 90.82,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 90.82,
+          "end": 90.96,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 90.96,
+      "end": 90.98,
+      "start_formatted": "00:01:30.960",
+      "end_formatted": "00:01:30.980",
+      "text": "so",
+      "words": [
+        {
+          "word": "so",
+          "start": 90.96,
+          "end": 90.98,
+          "probability": 0.0136
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 90.98,
+      "end": 91.0,
+      "start_formatted": "00:01:30.980",
+      "end_formatted": "00:01:31.000",
+      "text": "so",
+      "words": [
+        {
+          "word": "so",
+          "start": 90.98,
+          "end": 91.0,
+          "probability": 0.0394
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 91.0,
+      "end": 91.0,
+      "start_formatted": "00:01:31.000",
+      "end_formatted": "00:01:31.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 9,
+      "start": 91.0,
+      "end": 91.0,
+      "start_formatted": "00:01:31.000",
+      "end_formatted": "00:01:31.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 10,
+      "start": 91.0,
+      "end": 91.0,
+      "start_formatted": "00:01:31.000",
+      "end_formatted": "00:01:31.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 11,
+      "start": 91.0,
+      "end": 91.0,
+      "start_formatted": "00:01:31.000",
+      "end_formatted": "00:01:31.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 12,
+      "start": 91.0,
+      "end": 91.0,
+      "start_formatted": "00:01:31.000",
+      "end_formatted": "00:01:31.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 13,
+      "start": 91.0,
+      "end": 91.0,
+      "start_formatted": "00:01:31.000",
+      "end_formatted": "00:01:31.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 14,
+      "start": 91.0,
+      "end": 91.02,
+      "start_formatted": "00:01:31.000",
+      "end_formatted": "00:01:31.020",
+      "text": "so",
+      "words": [
+        {
+          "word": "so",
+          "start": 91.0,
+          "end": 91.02,
+          "probability": 0.9365
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 16,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 17,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 18,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 19,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 91.02,
+      "end": 91.04,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.040",
+      "text": "so",
+      "words": [
+        {
+          "word": "so",
+          "start": 91.02,
+          "end": 91.04,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 38,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 42,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 43,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 44,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 45,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 46,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 47,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 48,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 49,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 50,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 51,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 52,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 53,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 54,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 55,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 56,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 57,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 58,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 59,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 60,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 61,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 62,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 63,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 64,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 65,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 66,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 67,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 68,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 69,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 70,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 71,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 72,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 73,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 74,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 75,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 76,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 77,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 78,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 79,
+      "start": 91.04,
+      "end": 91.04,
+      "start_formatted": "00:01:31.040",
+      "end_formatted": "00:01:31.040",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 80,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 81,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 82,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 83,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 84,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 85,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 86,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 87,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 88,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 89,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 90,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 91,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 92,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 93,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 94,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 95,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 96,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 97,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 98,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 99,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 100,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 101,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 102,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 103,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 104,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 105,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 106,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 107,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 108,
+      "start": 91.02,
+      "end": 91.02,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:31.020",
+      "text": "",
+      "words": []
+    }
+  ]
+}

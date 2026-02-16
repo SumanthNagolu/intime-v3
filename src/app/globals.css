@@ -1,6 +1,9 @@
 /* InTime Brand Fonts - Hublot-inspired Luxury Typography */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+/* Academy Lesson Fonts - Warm Editorial Mentorship */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Code+Pro:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -504,5 +507,48 @@
   /* Focus within for form groups */
   .focus-within-ring:focus-within {
     @apply ring-1 ring-forest-500/20 ring-offset-1 rounded-sm;
+  }
+
+  /* Academy Lesson - Warm Editorial Scoped Styles */
+  .academy-lesson {
+    --al-bg: #faf6f0;
+    --al-cream: #f5efe5;
+    --al-primary: #2a2520;
+    --al-secondary: #5a524a;
+    --al-muted: #9a9088;
+    --al-light: #b8b0a4;
+    --al-copper: #c06830;
+    --al-sage: #5a7a5a;
+    --al-border: rgba(42, 37, 32, 0.08);
+    --al-border-strong: rgba(42, 37, 32, 0.15);
+  }
+
+  .academy-lesson .divider-warm {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(192, 104, 48, 0.2) 50%, transparent 100%);
+  }
+
+  /* Warm scrollbar for academy lesson */
+  .scrollbar-warm {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(192, 104, 48, 0.15) transparent;
+  }
+
+  .scrollbar-warm::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  .scrollbar-warm::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-warm::-webkit-scrollbar-thumb {
+    background: rgba(192, 104, 48, 0.15);
+    border-radius: 9999px;
+  }
+
+  .scrollbar-warm::-webkit-scrollbar-thumb:hover {
+    background: rgba(192, 104, 48, 0.25);
   }
 }

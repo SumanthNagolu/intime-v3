@@ -1,0 +1,1333 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_08_02.mp4",
+    "video_stem": "PP_08_02",
+    "duration_seconds": 101.0,
+    "duration_formatted": "00:01:41.000",
+    "segment_count": 15,
+    "word_count": 188,
+    "avg_confidence": 0.9489,
+    "transcription_time_seconds": 8.08,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:28:28.558848"
+  },
+  "full_text": "Validation chaining is the process of one validation class calling methods in another validation class to perform additional checks. Let's examine validation chaining in policy period validation.validateMV. Example 1, the policy contact role validation class gets called within a block to validate each contact role in the policy period. It is chaining to policy contact role validation.validateMV. Example 2, policy contact role for same contact validation performs validation on all policy contact roles that share the same contact. This also loops through all the shared contacts. It is chaining to policy contact role for same contact validation.validateMV. Example 3, Policy Location Validation gets called to validate each location. It also validates all territory codes on each policy location. In the Policy Location Validation's Validate Imple method, it calls Check Answers. Control-click to go to that method. In Check Answers method, it calls the answer validation to validate the location answers. Therefore it is another level of validation chaining. Control-click on Answer Validation. It is chaining to answer validation.validateimple. Use validation chaining to validate policy entities to meet the business requirement. This is the end of Validation Chaining Overview.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.16,
+      "end": 13.4,
+      "start_formatted": "00:00:01.160",
+      "end_formatted": "00:00:13.400",
+      "text": "Validation chaining is the process of one validation class calling methods in another validation class to perform additional checks. Let's examine validation chaining in policy period validation.validateMV.",
+      "words": [
+        {
+          "word": "Validation",
+          "start": 1.16,
+          "end": 1.92,
+          "probability": 0.9927
+        },
+        {
+          "word": "chaining",
+          "start": 1.92,
+          "end": 2.24,
+          "probability": 0.9277
+        },
+        {
+          "word": "is",
+          "start": 2.24,
+          "end": 2.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 2.42,
+          "end": 2.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "process",
+          "start": 2.54,
+          "end": 2.94,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 2.94,
+          "end": 3.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "one",
+          "start": 3.14,
+          "end": 3.32,
+          "probability": 0.9883
+        },
+        {
+          "word": "validation",
+          "start": 3.32,
+          "end": 3.88,
+          "probability": 0.9204
+        },
+        {
+          "word": "class",
+          "start": 3.88,
+          "end": 4.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "calling",
+          "start": 4.32,
+          "end": 4.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "methods",
+          "start": 4.68,
+          "end": 5.06,
+          "probability": 0.9922
+        },
+        {
+          "word": "in",
+          "start": 5.06,
+          "end": 5.26,
+          "probability": 0.9604
+        },
+        {
+          "word": "another",
+          "start": 5.26,
+          "end": 5.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "validation",
+          "start": 5.54,
+          "end": 6.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "class",
+          "start": 6.18,
+          "end": 6.6,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 6.6,
+          "end": 6.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "perform",
+          "start": 6.82,
+          "end": 7.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "additional",
+          "start": 7.2,
+          "end": 7.64,
+          "probability": 0.999
+        },
+        {
+          "word": "checks.",
+          "start": 7.64,
+          "end": 8.06,
+          "probability": 0.9927
+        },
+        {
+          "word": "Let's",
+          "start": 8.4,
+          "end": 8.92,
+          "probability": 0.9912
+        },
+        {
+          "word": "examine",
+          "start": 8.92,
+          "end": 9.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "validation",
+          "start": 9.3,
+          "end": 9.98,
+          "probability": 0.8862
+        },
+        {
+          "word": "chaining",
+          "start": 9.98,
+          "end": 10.44,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 10.44,
+          "end": 10.62,
+          "probability": 0.9902
+        },
+        {
+          "word": "policy",
+          "start": 10.62,
+          "end": 11.04,
+          "probability": 0.5244
+        },
+        {
+          "word": "period",
+          "start": 11.04,
+          "end": 11.48,
+          "probability": 0.6533
+        },
+        {
+          "word": "validation",
+          "start": 11.48,
+          "end": 12.16,
+          "probability": 0.8945
+        },
+        {
+          "word": ".validateMV.",
+          "start": 12.16,
+          "end": 13.4,
+          "probability": 0.709
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 13.82,
+      "end": 21.8,
+      "start_formatted": "00:00:13.820",
+      "end_formatted": "00:00:21.800",
+      "text": "Example 1, the policy contact role validation class gets called within a block to validate each contact role in the policy period.",
+      "words": [
+        {
+          "word": "Example",
+          "start": 13.82,
+          "end": 14.58,
+          "probability": 0.9902
+        },
+        {
+          "word": "1,",
+          "start": 14.58,
+          "end": 14.92,
+          "probability": 0.9136
+        },
+        {
+          "word": "the",
+          "start": 15.12,
+          "end": 15.34,
+          "probability": 0.9883
+        },
+        {
+          "word": "policy",
+          "start": 15.34,
+          "end": 15.8,
+          "probability": 0.7485
+        },
+        {
+          "word": "contact",
+          "start": 15.8,
+          "end": 16.24,
+          "probability": 0.9541
+        },
+        {
+          "word": "role",
+          "start": 16.24,
+          "end": 16.62,
+          "probability": 0.939
+        },
+        {
+          "word": "validation",
+          "start": 16.62,
+          "end": 17.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "class",
+          "start": 17.24,
+          "end": 17.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "gets",
+          "start": 17.66,
+          "end": 17.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "called",
+          "start": 17.96,
+          "end": 18.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "within",
+          "start": 18.3,
+          "end": 18.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 18.56,
+          "end": 18.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "block",
+          "start": 18.7,
+          "end": 18.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 18.9,
+          "end": 19.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "validate",
+          "start": 19.08,
+          "end": 19.44,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 19.44,
+          "end": 19.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 19.82,
+          "end": 20.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "role",
+          "start": 20.26,
+          "end": 20.64,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 20.64,
+          "end": 20.78,
+          "probability": 0.8789
+        },
+        {
+          "word": "the",
+          "start": 20.78,
+          "end": 20.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy",
+          "start": 20.86,
+          "end": 21.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "period.",
+          "start": 21.32,
+          "end": 21.8,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 23.96,
+      "end": 28.54,
+      "start_formatted": "00:00:23.960",
+      "end_formatted": "00:00:28.540",
+      "text": "It is chaining to policy contact role validation.validateMV.",
+      "words": [
+        {
+          "word": "It",
+          "start": 23.96,
+          "end": 24.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 24.72,
+          "end": 24.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "chaining",
+          "start": 24.86,
+          "end": 25.22,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 25.22,
+          "end": 25.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 25.38,
+          "end": 25.8,
+          "probability": 0.999
+        },
+        {
+          "word": "contact",
+          "start": 25.8,
+          "end": 26.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "role",
+          "start": 26.24,
+          "end": 26.62,
+          "probability": 0.999
+        },
+        {
+          "word": "validation",
+          "start": 26.62,
+          "end": 27.3,
+          "probability": 0.9976
+        },
+        {
+          "word": ".validateMV.",
+          "start": 27.3,
+          "end": 28.54,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 30.92,
+      "end": 42.4,
+      "start_formatted": "00:00:30.920",
+      "end_formatted": "00:00:42.400",
+      "text": "Example 2, policy contact role for same contact validation performs validation on all policy contact roles that share the same contact. This also loops through all the shared contacts.",
+      "words": [
+        {
+          "word": "Example",
+          "start": 30.92,
+          "end": 31.64,
+          "probability": 0.9199
+        },
+        {
+          "word": "2,",
+          "start": 31.64,
+          "end": 31.96,
+          "probability": 0.8906
+        },
+        {
+          "word": "policy",
+          "start": 32.2,
+          "end": 32.7,
+          "probability": 0.4487
+        },
+        {
+          "word": "contact",
+          "start": 32.7,
+          "end": 33.18,
+          "probability": 0.8838
+        },
+        {
+          "word": "role",
+          "start": 33.18,
+          "end": 33.52,
+          "probability": 0.9741
+        },
+        {
+          "word": "for",
+          "start": 33.52,
+          "end": 33.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "same",
+          "start": 33.72,
+          "end": 34.02,
+          "probability": 0.9692
+        },
+        {
+          "word": "contact",
+          "start": 34.02,
+          "end": 34.5,
+          "probability": 0.8643
+        },
+        {
+          "word": "validation",
+          "start": 34.5,
+          "end": 35.22,
+          "probability": 0.9917
+        },
+        {
+          "word": "performs",
+          "start": 35.22,
+          "end": 35.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "validation",
+          "start": 35.78,
+          "end": 36.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 36.4,
+          "end": 36.74,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 36.74,
+          "end": 36.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 36.88,
+          "end": 37.32,
+          "probability": 0.9912
+        },
+        {
+          "word": "contact",
+          "start": 37.32,
+          "end": 37.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "roles",
+          "start": 37.76,
+          "end": 38.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 38.16,
+          "end": 38.44,
+          "probability": 0.999
+        },
+        {
+          "word": "share",
+          "start": 38.44,
+          "end": 38.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 38.68,
+          "end": 38.84,
+          "probability": 0.998
+        },
+        {
+          "word": "same",
+          "start": 38.84,
+          "end": 39.08,
+          "probability": 0.999
+        },
+        {
+          "word": "contact.",
+          "start": 39.08,
+          "end": 39.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "This",
+          "start": 39.92,
+          "end": 40.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "also",
+          "start": 40.34,
+          "end": 40.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "loops",
+          "start": 40.64,
+          "end": 40.98,
+          "probability": 0.999
+        },
+        {
+          "word": "through",
+          "start": 40.98,
+          "end": 41.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 41.18,
+          "end": 41.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 41.36,
+          "end": 41.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "shared",
+          "start": 41.52,
+          "end": 41.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "contacts.",
+          "start": 41.78,
+          "end": 42.4,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 45.08,
+      "end": 50.66,
+      "start_formatted": "00:00:45.080",
+      "end_formatted": "00:00:50.660",
+      "text": "It is chaining to policy contact role for same contact validation.validateMV.",
+      "words": [
+        {
+          "word": "It",
+          "start": 45.08,
+          "end": 45.8,
+          "probability": 0.9844
+        },
+        {
+          "word": "is",
+          "start": 45.8,
+          "end": 45.96,
+          "probability": 0.999
+        },
+        {
+          "word": "chaining",
+          "start": 45.96,
+          "end": 46.36,
+          "probability": 0.9692
+        },
+        {
+          "word": "to",
+          "start": 46.36,
+          "end": 46.52,
+          "probability": 0.8335
+        },
+        {
+          "word": "policy",
+          "start": 46.52,
+          "end": 46.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "contact",
+          "start": 46.88,
+          "end": 47.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "role",
+          "start": 47.38,
+          "end": 47.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 47.7,
+          "end": 47.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 47.88,
+          "end": 48.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "contact",
+          "start": 48.2,
+          "end": 48.7,
+          "probability": 0.9902
+        },
+        {
+          "word": "validation",
+          "start": 48.7,
+          "end": 49.48,
+          "probability": 0.9976
+        },
+        {
+          "word": ".validateMV.",
+          "start": 49.48,
+          "end": 50.66,
+          "probability": 0.7119
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 53.02,
+      "end": 58.02,
+      "start_formatted": "00:00:53.020",
+      "end_formatted": "00:00:58.020",
+      "text": "Example 3, Policy Location Validation gets called to validate each location.",
+      "words": [
+        {
+          "word": "Example",
+          "start": 53.02,
+          "end": 53.68,
+          "probability": 0.9712
+        },
+        {
+          "word": "3,",
+          "start": 53.68,
+          "end": 53.98,
+          "probability": 0.9678
+        },
+        {
+          "word": "Policy",
+          "start": 54.24,
+          "end": 54.78,
+          "probability": 0.7388
+        },
+        {
+          "word": "Location",
+          "start": 54.78,
+          "end": 55.4,
+          "probability": 0.9404
+        },
+        {
+          "word": "Validation",
+          "start": 55.4,
+          "end": 56.1,
+          "probability": 0.9819
+        },
+        {
+          "word": "gets",
+          "start": 56.1,
+          "end": 56.38,
+          "probability": 0.937
+        },
+        {
+          "word": "called",
+          "start": 56.38,
+          "end": 56.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 56.68,
+          "end": 56.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "validate",
+          "start": 56.82,
+          "end": 57.18,
+          "probability": 0.998
+        },
+        {
+          "word": "each",
+          "start": 57.18,
+          "end": 57.54,
+          "probability": 1.0
+        },
+        {
+          "word": "location.",
+          "start": 57.54,
+          "end": 58.02,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 58.34,
+      "end": 62.4,
+      "start_formatted": "00:00:58.340",
+      "end_formatted": "00:01:02.400",
+      "text": "It also validates all territory codes on each policy location.",
+      "words": [
+        {
+          "word": "It",
+          "start": 58.34,
+          "end": 58.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 58.74,
+          "end": 59.06,
+          "probability": 1.0
+        },
+        {
+          "word": "validates",
+          "start": 59.06,
+          "end": 59.72,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 59.72,
+          "end": 59.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "territory",
+          "start": 59.96,
+          "end": 60.38,
+          "probability": 0.9707
+        },
+        {
+          "word": "codes",
+          "start": 60.38,
+          "end": 60.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 60.86,
+          "end": 61.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "each",
+          "start": 61.08,
+          "end": 61.26,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 61.26,
+          "end": 61.74,
+          "probability": 0.8262
+        },
+        {
+          "word": "location.",
+          "start": 61.74,
+          "end": 62.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 64.18,
+      "end": 69.66,
+      "start_formatted": "00:01:04.180",
+      "end_formatted": "00:01:09.660",
+      "text": "In the Policy Location Validation's Validate Imple method, it calls Check Answers.",
+      "words": [
+        {
+          "word": "In",
+          "start": 64.18,
+          "end": 64.84,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 64.84,
+          "end": 64.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "Policy",
+          "start": 64.92,
+          "end": 65.36,
+          "probability": 0.9458
+        },
+        {
+          "word": "Location",
+          "start": 65.36,
+          "end": 66.0,
+          "probability": 0.998
+        },
+        {
+          "word": "Validation's",
+          "start": 66.0,
+          "end": 66.9,
+          "probability": 0.9717
+        },
+        {
+          "word": "Validate",
+          "start": 66.9,
+          "end": 67.42,
+          "probability": 0.9741
+        },
+        {
+          "word": "Imple",
+          "start": 67.42,
+          "end": 67.66,
+          "probability": 0.6104
+        },
+        {
+          "word": "method,",
+          "start": 67.66,
+          "end": 67.98,
+          "probability": 0.916
+        },
+        {
+          "word": "it",
+          "start": 68.24,
+          "end": 68.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "calls",
+          "start": 68.48,
+          "end": 68.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Check",
+          "start": 68.8,
+          "end": 69.04,
+          "probability": 0.6934
+        },
+        {
+          "word": "Answers.",
+          "start": 69.04,
+          "end": 69.66,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 69.96,
+      "end": 71.88,
+      "start_formatted": "00:01:09.960",
+      "end_formatted": "00:01:11.880",
+      "text": "Control-click to go to that method.",
+      "words": [
+        {
+          "word": "Control",
+          "start": 69.96,
+          "end": 70.48,
+          "probability": 0.7319
+        },
+        {
+          "word": "-click",
+          "start": 70.48,
+          "end": 70.8,
+          "probability": 0.854
+        },
+        {
+          "word": "to",
+          "start": 70.8,
+          "end": 71.02,
+          "probability": 1.0
+        },
+        {
+          "word": "go",
+          "start": 71.02,
+          "end": 71.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 71.16,
+          "end": 71.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 71.32,
+          "end": 71.52,
+          "probability": 1.0
+        },
+        {
+          "word": "method.",
+          "start": 71.52,
+          "end": 71.88,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 73.68,
+      "end": 79.22,
+      "start_formatted": "00:01:13.680",
+      "end_formatted": "00:01:19.220",
+      "text": "In Check Answers method, it calls the answer validation to validate the location answers.",
+      "words": [
+        {
+          "word": "In",
+          "start": 73.68,
+          "end": 74.34,
+          "probability": 0.999
+        },
+        {
+          "word": "Check",
+          "start": 74.34,
+          "end": 74.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "Answers",
+          "start": 74.56,
+          "end": 75.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "method,",
+          "start": 75.04,
+          "end": 75.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "it",
+          "start": 75.66,
+          "end": 75.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "calls",
+          "start": 75.88,
+          "end": 76.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 76.2,
+          "end": 76.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "answer",
+          "start": 76.4,
+          "end": 76.72,
+          "probability": 0.8013
+        },
+        {
+          "word": "validation",
+          "start": 76.72,
+          "end": 77.26,
+          "probability": 0.9346
+        },
+        {
+          "word": "to",
+          "start": 77.26,
+          "end": 77.6,
+          "probability": 1.0
+        },
+        {
+          "word": "validate",
+          "start": 77.6,
+          "end": 78.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 78.0,
+          "end": 78.24,
+          "probability": 1.0
+        },
+        {
+          "word": "location",
+          "start": 78.24,
+          "end": 78.76,
+          "probability": 0.999
+        },
+        {
+          "word": "answers.",
+          "start": 78.76,
+          "end": 79.22,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 79.22,
+      "end": 82.36,
+      "start_formatted": "00:01:19.220",
+      "end_formatted": "00:01:22.360",
+      "text": "Therefore it is another level of validation chaining.",
+      "words": [
+        {
+          "word": "Therefore",
+          "start": 79.22,
+          "end": 80.16,
+          "probability": 0.9238
+        },
+        {
+          "word": "it",
+          "start": 80.16,
+          "end": 80.38,
+          "probability": 0.8071
+        },
+        {
+          "word": "is",
+          "start": 80.38,
+          "end": 80.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "another",
+          "start": 80.5,
+          "end": 80.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "level",
+          "start": 80.74,
+          "end": 81.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 81.02,
+          "end": 81.22,
+          "probability": 0.999
+        },
+        {
+          "word": "validation",
+          "start": 81.22,
+          "end": 81.8,
+          "probability": 0.918
+        },
+        {
+          "word": "chaining.",
+          "start": 81.8,
+          "end": 82.36,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 82.88,
+      "end": 85.34,
+      "start_formatted": "00:01:22.880",
+      "end_formatted": "00:01:25.340",
+      "text": "Control-click on Answer Validation.",
+      "words": [
+        {
+          "word": "Control",
+          "start": 82.88,
+          "end": 83.46,
+          "probability": 0.5825
+        },
+        {
+          "word": "-click",
+          "start": 83.46,
+          "end": 83.88,
+          "probability": 0.0281
+        },
+        {
+          "word": "on",
+          "start": 83.88,
+          "end": 84.26,
+          "probability": 0.9771
+        },
+        {
+          "word": "Answer",
+          "start": 84.26,
+          "end": 84.58,
+          "probability": 0.5322
+        },
+        {
+          "word": "Validation.",
+          "start": 84.58,
+          "end": 85.34,
+          "probability": 0.9468
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 87.16,
+      "end": 90.86,
+      "start_formatted": "00:01:27.160",
+      "end_formatted": "00:01:30.860",
+      "text": "It is chaining to answer validation.validateimple.",
+      "words": [
+        {
+          "word": "It",
+          "start": 87.16,
+          "end": 87.92,
+          "probability": 0.981
+        },
+        {
+          "word": "is",
+          "start": 87.92,
+          "end": 88.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "chaining",
+          "start": 88.06,
+          "end": 88.44,
+          "probability": 0.9795
+        },
+        {
+          "word": "to",
+          "start": 88.44,
+          "end": 88.58,
+          "probability": 0.9736
+        },
+        {
+          "word": "answer",
+          "start": 88.58,
+          "end": 88.94,
+          "probability": 0.835
+        },
+        {
+          "word": "validation",
+          "start": 88.94,
+          "end": 89.58,
+          "probability": 0.7935
+        },
+        {
+          "word": ".validateimple.",
+          "start": 89.58,
+          "end": 90.86,
+          "probability": 0.6045
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 92.98,
+      "end": 97.88,
+      "start_formatted": "00:01:32.980",
+      "end_formatted": "00:01:37.880",
+      "text": "Use validation chaining to validate policy entities to meet the business requirement.",
+      "words": [
+        {
+          "word": "Use",
+          "start": 92.98,
+          "end": 93.74,
+          "probability": 0.9829
+        },
+        {
+          "word": "validation",
+          "start": 93.74,
+          "end": 94.38,
+          "probability": 0.8652
+        },
+        {
+          "word": "chaining",
+          "start": 94.38,
+          "end": 94.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 94.86,
+          "end": 95.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "validate",
+          "start": 95.02,
+          "end": 95.44,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 95.44,
+          "end": 96.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "entities",
+          "start": 96.0,
+          "end": 96.38,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 96.38,
+          "end": 96.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "meet",
+          "start": 96.64,
+          "end": 96.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 96.82,
+          "end": 96.96,
+          "probability": 0.999
+        },
+        {
+          "word": "business",
+          "start": 96.96,
+          "end": 97.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "requirement.",
+          "start": 97.28,
+          "end": 97.88,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 98.32,
+      "end": 101.0,
+      "start_formatted": "00:01:38.320",
+      "end_formatted": "00:01:41.000",
+      "text": "This is the end of Validation Chaining Overview.",
+      "words": [
+        {
+          "word": "This",
+          "start": 98.32,
+          "end": 98.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 98.94,
+          "end": 99.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 99.04,
+          "end": 99.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "end",
+          "start": 99.18,
+          "end": 99.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 99.38,
+          "end": 99.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Validation",
+          "start": 99.54,
+          "end": 100.2,
+          "probability": 0.7349
+        },
+        {
+          "word": "Chaining",
+          "start": 100.2,
+          "end": 100.56,
+          "probability": 0.9746
+        },
+        {
+          "word": "Overview.",
+          "start": 100.56,
+          "end": 101.0,
+          "probability": 0.8525
+        }
+      ]
+    }
+  ]
+}

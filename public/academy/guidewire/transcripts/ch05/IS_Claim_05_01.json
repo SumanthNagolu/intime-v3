@@ -1,0 +1,2644 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_05_01.mp4",
+    "video_stem": "IS_Claim_05_01",
+    "duration_seconds": 105.32,
+    "duration_formatted": "00:01:45.320",
+    "segment_count": 18,
+    "word_count": 408,
+    "avg_confidence": 0.8089,
+    "transcription_time_seconds": 16.66,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:47:36.057237"
+  },
+  "full_text": "Welcome to the segmentation demonstration. I enter Eileen Lang's username and password and click Login. Let's look at the Carrie Jones claim. Note that there are no exposures on this claim because it is an incident only claim. On the status page.  I see that the claim segment is, workers compensation, medical only. By way of comparison. Let's look at the Jim Anderson claim. Here, there are two exposures, one for medical details and one for indemnity. And, when I look at the status page. Because there is an indemnity exposure associated with the claim, this claim is segmented as workers comp, indemnity. There is a third segment, workers comp, employers liability. But because segmentation takes place during claim setup, and the new claim wizard in the base configuration does not provide an option to indicate employers liability, this segment will not ordinarily be used. However, claims with employers liability may enter the system from an external FNULL application, and the wizard can be configured to enable indicating employers liability. I logout as Eileen Lang. This concludes the demonstration of segmentation.  This concludes the demonstration of segmentation. of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition exhibition of the exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of exhibition exhibition of the exhibition ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.22,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.220",
+      "text": "Welcome to the segmentation demonstration. I enter Eileen Lang's username and password and click Login. Let's look at the Carrie Jones claim. Note that there are no exposures on this claim because it is an incident only claim.",
+      "words": [
+        {
+          "word": "Welcome",
+          "start": 0.0,
+          "end": 0.56,
+          "probability": 0.9805
+        },
+        {
+          "word": "to",
+          "start": 0.56,
+          "end": 0.72,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 0.72,
+          "end": 0.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "segmentation",
+          "start": 0.86,
+          "end": 1.58,
+          "probability": 0.9893
+        },
+        {
+          "word": "demonstration.",
+          "start": 1.58,
+          "end": 2.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 2.9,
+          "end": 3.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "enter",
+          "start": 3.62,
+          "end": 3.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "Eileen",
+          "start": 3.88,
+          "end": 4.24,
+          "probability": 0.7915
+        },
+        {
+          "word": "Lang's",
+          "start": 4.24,
+          "end": 4.68,
+          "probability": 0.916
+        },
+        {
+          "word": "username",
+          "start": 4.68,
+          "end": 5.14,
+          "probability": 0.96
+        },
+        {
+          "word": "and",
+          "start": 5.14,
+          "end": 8.26,
+          "probability": 0.6304
+        },
+        {
+          "word": "password",
+          "start": 8.26,
+          "end": 8.72,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 8.72,
+          "end": 12.52,
+          "probability": 0.7676
+        },
+        {
+          "word": "click",
+          "start": 12.52,
+          "end": 12.8,
+          "probability": 0.9932
+        },
+        {
+          "word": "Login.",
+          "start": 12.8,
+          "end": 13.36,
+          "probability": 0.439
+        },
+        {
+          "word": "Let's",
+          "start": 15.96,
+          "end": 16.76,
+          "probability": 0.998
+        },
+        {
+          "word": "look",
+          "start": 16.76,
+          "end": 16.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "at",
+          "start": 16.96,
+          "end": 17.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 17.2,
+          "end": 20.62,
+          "probability": 0.8213
+        },
+        {
+          "word": "Carrie",
+          "start": 20.62,
+          "end": 20.9,
+          "probability": 0.4058
+        },
+        {
+          "word": "Jones",
+          "start": 20.9,
+          "end": 21.28,
+          "probability": 0.8091
+        },
+        {
+          "word": "claim.",
+          "start": 21.28,
+          "end": 21.68,
+          "probability": 0.7651
+        },
+        {
+          "word": "Note",
+          "start": 24.2,
+          "end": 25.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 25.0,
+          "end": 25.16,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 25.16,
+          "end": 25.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 25.3,
+          "end": 25.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 25.42,
+          "end": 25.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "exposures",
+          "start": 25.6,
+          "end": 26.22,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 26.22,
+          "end": 26.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 26.4,
+          "end": 26.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 26.56,
+          "end": 26.96,
+          "probability": 0.999
+        },
+        {
+          "word": "because",
+          "start": 26.96,
+          "end": 27.5,
+          "probability": 0.7314
+        },
+        {
+          "word": "it",
+          "start": 27.5,
+          "end": 27.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 27.74,
+          "end": 27.86,
+          "probability": 0.998
+        },
+        {
+          "word": "an",
+          "start": 27.86,
+          "end": 28.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "incident",
+          "start": 28.0,
+          "end": 28.42,
+          "probability": 0.9438
+        },
+        {
+          "word": "only",
+          "start": 28.42,
+          "end": 28.82,
+          "probability": 0.4841
+        },
+        {
+          "word": "claim.",
+          "start": 28.82,
+          "end": 29.22,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.22,
+      "end": 31.22,
+      "start_formatted": "00:00:29.220",
+      "end_formatted": "00:00:31.220",
+      "text": "On the status page.",
+      "words": [
+        {
+          "word": "On",
+          "start": 29.22,
+          "end": 30.3,
+          "probability": 0.9473
+        },
+        {
+          "word": "the",
+          "start": 30.3,
+          "end": 30.44,
+          "probability": 1.0
+        },
+        {
+          "word": "status",
+          "start": 30.44,
+          "end": 30.74,
+          "probability": 0.876
+        },
+        {
+          "word": "page.",
+          "start": 30.74,
+          "end": 31.22,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 31.28,
+      "end": 31.28,
+      "start_formatted": "00:00:31.280",
+      "end_formatted": "00:00:31.280",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 3,
+      "start": 33.76,
+      "end": 38.28,
+      "start_formatted": "00:00:33.760",
+      "end_formatted": "00:00:38.280",
+      "text": "I see that the claim segment is, workers compensation, medical only.",
+      "words": [
+        {
+          "word": "I",
+          "start": 33.76,
+          "end": 34.36,
+          "probability": 0.9785
+        },
+        {
+          "word": "see",
+          "start": 34.36,
+          "end": 34.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 34.58,
+          "end": 34.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 34.74,
+          "end": 34.86,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 34.86,
+          "end": 35.14,
+          "probability": 0.6494
+        },
+        {
+          "word": "segment",
+          "start": 35.14,
+          "end": 35.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "is,",
+          "start": 35.52,
+          "end": 35.82,
+          "probability": 0.998
+        },
+        {
+          "word": "workers",
+          "start": 35.94,
+          "end": 36.3,
+          "probability": 0.8394
+        },
+        {
+          "word": "compensation,",
+          "start": 36.3,
+          "end": 36.96,
+          "probability": 0.5308
+        },
+        {
+          "word": "medical",
+          "start": 37.36,
+          "end": 37.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "only.",
+          "start": 37.8,
+          "end": 38.28,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 39.3,
+      "end": 40.8,
+      "start_formatted": "00:00:39.300",
+      "end_formatted": "00:00:40.800",
+      "text": "By way of comparison.",
+      "words": [
+        {
+          "word": "By",
+          "start": 39.3,
+          "end": 39.9,
+          "probability": 0.998
+        },
+        {
+          "word": "way",
+          "start": 39.9,
+          "end": 40.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 40.1,
+          "end": 40.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "comparison.",
+          "start": 40.24,
+          "end": 40.8,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 44.08,
+      "end": 46.08,
+      "start_formatted": "00:00:44.080",
+      "end_formatted": "00:00:46.080",
+      "text": "Let's look at the Jim Anderson claim.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 44.08,
+          "end": 44.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "look",
+          "start": 44.68,
+          "end": 44.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 44.86,
+          "end": 44.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 44.96,
+          "end": 45.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Jim",
+          "start": 45.06,
+          "end": 45.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "Anderson",
+          "start": 45.26,
+          "end": 45.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim.",
+          "start": 45.68,
+          "end": 46.08,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 49.78,
+      "end": 54.6,
+      "start_formatted": "00:00:49.780",
+      "end_formatted": "00:00:54.600",
+      "text": "Here, there are two exposures, one for medical details and one for indemnity.",
+      "words": [
+        {
+          "word": "Here,",
+          "start": 49.78,
+          "end": 50.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "there",
+          "start": 50.6,
+          "end": 50.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 50.82,
+          "end": 50.96,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 50.96,
+          "end": 51.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "exposures,",
+          "start": 51.18,
+          "end": 51.82,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 52.08,
+          "end": 52.32,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 52.32,
+          "end": 52.5,
+          "probability": 1.0
+        },
+        {
+          "word": "medical",
+          "start": 52.5,
+          "end": 52.78,
+          "probability": 0.999
+        },
+        {
+          "word": "details",
+          "start": 52.78,
+          "end": 53.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 53.36,
+          "end": 53.72,
+          "probability": 0.4761
+        },
+        {
+          "word": "one",
+          "start": 53.72,
+          "end": 53.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 53.92,
+          "end": 54.1,
+          "probability": 1.0
+        },
+        {
+          "word": "indemnity.",
+          "start": 54.1,
+          "end": 54.6,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 55.48,
+      "end": 57.84,
+      "start_formatted": "00:00:55.480",
+      "end_formatted": "00:00:57.840",
+      "text": "And, when I look at the status page.",
+      "words": [
+        {
+          "word": "And,",
+          "start": 55.48,
+          "end": 56.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "when",
+          "start": 56.3,
+          "end": 56.54,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 56.54,
+          "end": 56.64,
+          "probability": 1.0
+        },
+        {
+          "word": "look",
+          "start": 56.64,
+          "end": 56.82,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 56.82,
+          "end": 56.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 56.92,
+          "end": 57.04,
+          "probability": 1.0
+        },
+        {
+          "word": "status",
+          "start": 57.04,
+          "end": 57.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "page.",
+          "start": 57.36,
+          "end": 57.84,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 60.92,
+      "end": 67.48,
+      "start_formatted": "00:01:00.920",
+      "end_formatted": "00:01:07.480",
+      "text": "Because there is an indemnity exposure associated with the claim, this claim is segmented as workers comp, indemnity.",
+      "words": [
+        {
+          "word": "Because",
+          "start": 60.92,
+          "end": 61.56,
+          "probability": 0.9341
+        },
+        {
+          "word": "there",
+          "start": 61.56,
+          "end": 61.86,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 61.86,
+          "end": 62.0,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 62.0,
+          "end": 62.12,
+          "probability": 1.0
+        },
+        {
+          "word": "indemnity",
+          "start": 62.12,
+          "end": 62.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "exposure",
+          "start": 62.6,
+          "end": 63.08,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 63.08,
+          "end": 63.78,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 63.78,
+          "end": 64.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 64.02,
+          "end": 64.14,
+          "probability": 0.9634
+        },
+        {
+          "word": "claim,",
+          "start": 64.14,
+          "end": 64.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 64.68,
+          "end": 65.0,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 65.0,
+          "end": 65.28,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 65.28,
+          "end": 65.46,
+          "probability": 1.0
+        },
+        {
+          "word": "segmented",
+          "start": 65.46,
+          "end": 65.96,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 65.96,
+          "end": 66.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "workers",
+          "start": 66.1,
+          "end": 66.44,
+          "probability": 0.7656
+        },
+        {
+          "word": "comp,",
+          "start": 66.44,
+          "end": 66.82,
+          "probability": 0.0991
+        },
+        {
+          "word": "indemnity.",
+          "start": 66.98,
+          "end": 67.48,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 68.48,
+      "end": 72.38,
+      "start_formatted": "00:01:08.480",
+      "end_formatted": "00:01:12.380",
+      "text": "There is a third segment, workers comp, employers liability.",
+      "words": [
+        {
+          "word": "There",
+          "start": 68.48,
+          "end": 69.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 69.12,
+          "end": 69.26,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 69.26,
+          "end": 69.36,
+          "probability": 1.0
+        },
+        {
+          "word": "third",
+          "start": 69.36,
+          "end": 69.54,
+          "probability": 0.999
+        },
+        {
+          "word": "segment,",
+          "start": 69.54,
+          "end": 70.02,
+          "probability": 1.0
+        },
+        {
+          "word": "workers",
+          "start": 70.34,
+          "end": 70.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "comp,",
+          "start": 70.74,
+          "end": 71.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "employers",
+          "start": 71.36,
+          "end": 71.88,
+          "probability": 0.6655
+        },
+        {
+          "word": "liability.",
+          "start": 71.88,
+          "end": 72.38,
+          "probability": 0.9297
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 73.06,
+      "end": 84.46,
+      "start_formatted": "00:01:13.060",
+      "end_formatted": "00:01:24.460",
+      "text": "But because segmentation takes place during claim setup, and the new claim wizard in the base configuration does not provide an option to indicate employers liability, this segment will not ordinarily be used.",
+      "words": [
+        {
+          "word": "But",
+          "start": 73.06,
+          "end": 73.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 73.44,
+          "end": 73.76,
+          "probability": 0.998
+        },
+        {
+          "word": "segmentation",
+          "start": 73.76,
+          "end": 74.48,
+          "probability": 1.0
+        },
+        {
+          "word": "takes",
+          "start": 74.48,
+          "end": 74.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "place",
+          "start": 74.74,
+          "end": 75.06,
+          "probability": 1.0
+        },
+        {
+          "word": "during",
+          "start": 75.06,
+          "end": 75.32,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 75.32,
+          "end": 75.66,
+          "probability": 0.9106
+        },
+        {
+          "word": "setup,",
+          "start": 75.66,
+          "end": 76.02,
+          "probability": 0.9819
+        },
+        {
+          "word": "and",
+          "start": 76.26,
+          "end": 76.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 76.52,
+          "end": 76.64,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 76.64,
+          "end": 76.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 76.8,
+          "end": 77.12,
+          "probability": 0.9897
+        },
+        {
+          "word": "wizard",
+          "start": 77.12,
+          "end": 77.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 77.44,
+          "end": 77.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 77.62,
+          "end": 77.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 77.7,
+          "end": 77.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "configuration",
+          "start": 77.92,
+          "end": 78.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "does",
+          "start": 78.58,
+          "end": 78.92,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 78.92,
+          "end": 79.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "provide",
+          "start": 79.12,
+          "end": 79.46,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 79.46,
+          "end": 79.66,
+          "probability": 1.0
+        },
+        {
+          "word": "option",
+          "start": 79.66,
+          "end": 79.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 79.98,
+          "end": 80.2,
+          "probability": 1.0
+        },
+        {
+          "word": "indicate",
+          "start": 80.2,
+          "end": 80.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "employers",
+          "start": 80.62,
+          "end": 81.2,
+          "probability": 0.9702
+        },
+        {
+          "word": "liability,",
+          "start": 81.2,
+          "end": 81.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 82.16,
+          "end": 82.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "segment",
+          "start": 82.44,
+          "end": 82.76,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 82.76,
+          "end": 83.0,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 83.0,
+          "end": 83.22,
+          "probability": 1.0
+        },
+        {
+          "word": "ordinarily",
+          "start": 83.22,
+          "end": 83.84,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 83.84,
+          "end": 84.06,
+          "probability": 1.0
+        },
+        {
+          "word": "used.",
+          "start": 84.06,
+          "end": 84.46,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 84.46,
+      "end": 94.52,
+      "start_formatted": "00:01:24.460",
+      "end_formatted": "00:01:34.520",
+      "text": "However, claims with employers liability may enter the system from an external FNULL application, and the wizard can be configured to enable indicating employers liability.",
+      "words": [
+        {
+          "word": "However,",
+          "start": 84.46,
+          "end": 85.38,
+          "probability": 0.9546
+        },
+        {
+          "word": "claims",
+          "start": 85.72,
+          "end": 85.98,
+          "probability": 0.9858
+        },
+        {
+          "word": "with",
+          "start": 85.98,
+          "end": 86.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "employers",
+          "start": 86.2,
+          "end": 86.72,
+          "probability": 0.4478
+        },
+        {
+          "word": "liability",
+          "start": 86.72,
+          "end": 87.1,
+          "probability": 0.6455
+        },
+        {
+          "word": "may",
+          "start": 87.1,
+          "end": 87.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "enter",
+          "start": 87.66,
+          "end": 88.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 88.02,
+          "end": 88.2,
+          "probability": 0.999
+        },
+        {
+          "word": "system",
+          "start": 88.2,
+          "end": 88.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 88.52,
+          "end": 88.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "an",
+          "start": 88.76,
+          "end": 88.9,
+          "probability": 0.999
+        },
+        {
+          "word": "external",
+          "start": 88.9,
+          "end": 89.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "FNULL",
+          "start": 89.34,
+          "end": 89.92,
+          "probability": 0.563
+        },
+        {
+          "word": "application,",
+          "start": 89.92,
+          "end": 90.46,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 90.8,
+          "end": 91.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 91.06,
+          "end": 91.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "wizard",
+          "start": 91.16,
+          "end": 91.42,
+          "probability": 0.9858
+        },
+        {
+          "word": "can",
+          "start": 91.42,
+          "end": 91.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 91.62,
+          "end": 91.76,
+          "probability": 1.0
+        },
+        {
+          "word": "configured",
+          "start": 91.76,
+          "end": 92.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 92.2,
+          "end": 92.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "enable",
+          "start": 92.4,
+          "end": 92.74,
+          "probability": 0.999
+        },
+        {
+          "word": "indicating",
+          "start": 92.74,
+          "end": 93.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "employers",
+          "start": 93.3,
+          "end": 94.0,
+          "probability": 0.9312
+        },
+        {
+          "word": "liability.",
+          "start": 94.0,
+          "end": 94.52,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 97.9,
+      "end": 100.04,
+      "start_formatted": "00:01:37.900",
+      "end_formatted": "00:01:40.040",
+      "text": "I logout as Eileen Lang.",
+      "words": [
+        {
+          "word": "I",
+          "start": 97.9,
+          "end": 98.74,
+          "probability": 0.8286
+        },
+        {
+          "word": "logout",
+          "start": 98.74,
+          "end": 99.18,
+          "probability": 0.6226
+        },
+        {
+          "word": "as",
+          "start": 99.18,
+          "end": 99.36,
+          "probability": 0.8218
+        },
+        {
+          "word": "Eileen",
+          "start": 99.36,
+          "end": 99.72,
+          "probability": 0.7783
+        },
+        {
+          "word": "Lang.",
+          "start": 99.72,
+          "end": 100.04,
+          "probability": 0.5884
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 102.02,
+      "end": 105.14,
+      "start_formatted": "00:01:42.020",
+      "end_formatted": "00:01:45.140",
+      "text": "This concludes the demonstration of segmentation.",
+      "words": [
+        {
+          "word": "This",
+          "start": 102.02,
+          "end": 102.86,
+          "probability": 0.9834
+        },
+        {
+          "word": "concludes",
+          "start": 102.86,
+          "end": 103.28,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 103.28,
+          "end": 103.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "demonstration",
+          "start": 103.52,
+          "end": 104.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 104.04,
+          "end": 104.46,
+          "probability": 0.9932
+        },
+        {
+          "word": "segmentation.",
+          "start": 104.46,
+          "end": 105.14,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 105.14,
+      "end": 105.14,
+      "start_formatted": "00:01:45.140",
+      "end_formatted": "00:01:45.140",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 15,
+      "start": 105.14,
+      "end": 105.16,
+      "start_formatted": "00:01:45.140",
+      "end_formatted": "00:01:45.160",
+      "text": "This concludes the demonstration of segmentation.",
+      "words": [
+        {
+          "word": "This",
+          "start": 105.14,
+          "end": 105.14,
+          "probability": 0.6685
+        },
+        {
+          "word": "concludes",
+          "start": 105.14,
+          "end": 105.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 105.14,
+          "end": 105.14,
+          "probability": 0.9937
+        },
+        {
+          "word": "demonstration",
+          "start": 105.14,
+          "end": 105.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 105.14,
+          "end": 105.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "segmentation.",
+          "start": 105.14,
+          "end": 105.16,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 105.16,
+      "end": 105.34,
+      "start_formatted": "00:01:45.160",
+      "end_formatted": "00:01:45.340",
+      "text": "of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition of the exhibition exhibition of the exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of the exhibition exhibition of exhibition exhibition of the exhibition",
+      "words": [
+        {
+          "word": "of",
+          "start": 105.16,
+          "end": 105.16,
+          "probability": 0.0033
+        },
+        {
+          "word": "the",
+          "start": 105.16,
+          "end": 105.16,
+          "probability": 0.2379
+        },
+        {
+          "word": "exhibition",
+          "start": 105.16,
+          "end": 105.18,
+          "probability": 0.001
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.0111
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.2883
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.0547
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.0626
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.5249
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.4189
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.1045
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.6558
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.7651
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.1322
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.7305
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.8906
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.1512
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.7769
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.9258
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.163
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.8154
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.9409
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.1614
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.8296
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.9497
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.1636
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.835
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.9556
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.1716
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.8516
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.958
+        },
+        {
+          "word": "of",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.192
+        },
+        {
+          "word": "the",
+          "start": 105.18,
+          "end": 105.18,
+          "probability": 0.8579
+        },
+        {
+          "word": "exhibition",
+          "start": 105.18,
+          "end": 105.2,
+          "probability": 0.9604
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.1967
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.8755
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9619
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2101
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.8755
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9629
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2137
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.8862
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9624
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2169
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.8799
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2329
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.8901
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2549
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.896
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2683
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9048
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9624
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2646
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9009
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9619
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2688
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.915
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9614
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.251
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.917
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9614
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.27
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9116
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9619
+        },
+        {
+          "word": "of",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.2483
+        },
+        {
+          "word": "the",
+          "start": 105.2,
+          "end": 105.2,
+          "probability": 0.9116
+        },
+        {
+          "word": "exhibition",
+          "start": 105.2,
+          "end": 105.22,
+          "probability": 0.9604
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2612
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9189
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.96
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2323
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.915
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9585
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2764
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9282
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9585
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2656
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9272
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.96
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2267
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9253
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9585
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2729
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9263
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.957
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2703
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9233
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9565
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2375
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9253
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9561
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2549
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9233
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9551
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2389
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9292
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9546
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2607
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9214
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9546
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2474
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9204
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9536
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2732
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9233
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9536
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2793
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9204
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9546
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2969
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9185
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9541
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2734
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9141
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9546
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2375
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9053
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9541
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2654
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9077
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9526
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2808
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9053
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9531
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.2479
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.915
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9546
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.3096
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9106
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9536
+        },
+        {
+          "word": "of",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.291
+        },
+        {
+          "word": "the",
+          "start": 105.22,
+          "end": 105.22,
+          "probability": 0.9043
+        },
+        {
+          "word": "exhibition",
+          "start": 105.22,
+          "end": 105.24,
+          "probability": 0.9541
+        },
+        {
+          "word": "exhibition",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.4751
+        },
+        {
+          "word": "of",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.7915
+        },
+        {
+          "word": "the",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.9438
+        },
+        {
+          "word": "exhibition",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.9526
+        },
+        {
+          "word": "of",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.1772
+        },
+        {
+          "word": "the",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.8965
+        },
+        {
+          "word": "exhibition",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.9526
+        },
+        {
+          "word": "exhibition",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.7412
+        },
+        {
+          "word": "of",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.7466
+        },
+        {
+          "word": "the",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.938
+        },
+        {
+          "word": "exhibition",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.9526
+        },
+        {
+          "word": "exhibition",
+          "start": 105.24,
+          "end": 105.24,
+          "probability": 0.7905
+        },
+        {
+          "word": "of",
+          "start": 105.24,
+          "end": 105.26,
+          "probability": 0.6968
+        },
+        {
+          "word": "the",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.9209
+        },
+        {
+          "word": "exhibition",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.9526
+        },
+        {
+          "word": "exhibition",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.8774
+        },
+        {
+          "word": "of",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.6377
+        },
+        {
+          "word": "the",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.9136
+        },
+        {
+          "word": "exhibition",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.9512
+        },
+        {
+          "word": "exhibition",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.8931
+        },
+        {
+          "word": "of",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.5923
+        },
+        {
+          "word": "the",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.9058
+        },
+        {
+          "word": "exhibition",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.9502
+        },
+        {
+          "word": "exhibition",
+          "start": 105.26,
+          "end": 105.26,
+          "probability": 0.9146
+        },
+        {
+          "word": "of",
+          "start": 105.26,
+          "end": 105.3,
+          "probability": 0.5308
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9028
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9502
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.937
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.4629
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.896
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9517
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9478
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.3718
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8843
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9497
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9546
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.3572
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8809
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9478
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9565
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.2893
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8638
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9473
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9604
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.2556
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8657
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9619
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.2158
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8564
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9673
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.1718
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8491
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9722
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.1561
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8384
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9448
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.1252
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8413
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9463
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.1443
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8516
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9741
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.0942
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8398
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9771
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.089
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8271
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9771
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.0734
+        },
+        {
+          "word": "the",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.8252
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9448
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.0795
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.0531
+        },
+        {
+          "word": "exhibition",
+          "start": 105.3,
+          "end": 105.3,
+          "probability": 0.9268
+        },
+        {
+          "word": "of",
+          "start": 105.3,
+          "end": 105.34,
+          "probability": 0.2546
+        },
+        {
+          "word": "the",
+          "start": 105.34,
+          "end": 105.34,
+          "probability": 0.8174
+        },
+        {
+          "word": "exhibition",
+          "start": 105.34,
+          "end": 105.34,
+          "probability": 0.9443
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 105.32,
+      "end": 105.32,
+      "start_formatted": "00:01:45.320",
+      "end_formatted": "00:01:45.320",
+      "text": "",
+      "words": []
+    }
+  ]
+}

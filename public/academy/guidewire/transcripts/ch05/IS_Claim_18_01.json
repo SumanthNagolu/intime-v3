@@ -1,0 +1,6248 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_18_01.mp4",
+    "video_stem": "IS_Claim_18_01",
+    "duration_seconds": 275.42,
+    "duration_formatted": "00:04:35.420",
+    "segment_count": 32,
+    "word_count": 985,
+    "avg_confidence": 0.9534,
+    "transcription_time_seconds": 26.1,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:59:00.109908"
+  },
+  "full_text": "Contact Manager is the system of record for vendors. ClaimCenter allows users to create vendors, but they are stored in, and linked to, Contact Manager. Vendors created or modified from ClaimCenter require approval from Contact Manager. Andy Applegate logs into ClaimCenter. He is working on the Andrew Williams claim. Andy learns that the vendor that he chose for the claim, Meineke Car Care Center, is not able to take Mr. Williams' call. He goes to the car. He goes to parties involved. Since he is not going to use Meineke, he selects it. And clicks Delete. This simply removes the vendor from a relationship to this claim, it does not delete the vendor from the system of record, Contact Manager. Andy found a vendor that can repair Mr. Williams' car, but the vendor is not in the system. Since Andy thinks this vendor may be able to do the work and that it could prove useful later, he creates the vendor that can repair Mr. Williams' car, but the vendor is not in the system. Since Andy thinks this vendor may be able to do the work and that it could prove useful later, it's the vendor. The name of the vendor is Bill's Quick Auto Repair. The shop is located on Beamer Road in San Mateo, California. He has heard that the shop is not easy to find, so he adds that note to the vendor record. Like any parties involved, vendors need at least one rule to be related to a claim. Bill's Quick Auto Repair is going to be the repair shop for Mr. Williams' car, so he selects the Ford and sets the rule to repair shop. He also wants to set Bill's Quick Auto Repair as a service vendor for the claim. So he accepts the default related to, which is the claim, and selects service vendor as the role. He clicks Update to save the new vendor. The update adds the vendor to Claim Center and Contact Manager, as indicated by the linked message. However, although it is in sync, the contact is pending approval. Vendors created in Claim Center have a pending status until approved in Contact Manager. Carla Clark is the vendor manager for Succeed Insurance. She logs into Contact Manager to check for any vendors that have been changed or added from Claim Center. On the opening screen, she sees that there is one pending change. There are two tabs on the Pending Changes screen, one for Updates and one for Creates. The Updates tab shows that there are no updates that need approval. The Create tab shows that there is one Create action that needs to be approved. This is a new vendor created from Claim Center or another core product. Carla clicks the Create tab. Carla sees that the pending vendor is Bill's Quick Auto Repair. She looks at the details and although they are not very complete, she decides to approve the vendor creation. She clicks Approve to approve the new vendor. Meanwhile, back in Claim Center, Andy is still logged in, and has not moved off of the Contact screen. He refreshes the Contact record by selecting any other contact. And then clicks Bill's Quick Auto Repair. After the Contact is Refreshed, the Sync Message shows that the Contact is linked to the Address Book and is in Sync. Recall that earlier it was linked but not in Sync. Once Carla approved the new vendor, the contract was automatically flagged as in Sync in Claim Center. Next, we look at what happens when a vendor is changed in Contact Manager. Carla opens the Search screen. She enters Bill as the company name and clicks Search. Carla clicks Bill's Quick Auto Repair. She looks at the vendor details. The location description is not something she wants on a vendor record. So she edits the contact. Carla deletes the location description. Carla clicks Update to save the changes to the vendor record. She sees that the location description is now Blink in Contact Manager. Just as before, back in Claim Center, Andy is still logged in and is still on the Contact screen. To refresh the vendor contact, Andy clicks on any other contact. He then clicks Bill's Quick Auto Repair. Andy notices two things. First, that the contact is linked to Address Book and is in Sync. Secondly, he sees that the location description is now Blank. That's because Carla, the vendor manager for Succeed Insurance, removed the location description from the contact. This ends the Adding Contacts in Claim Center demonstration. Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "Contact Manager is the system of record for vendors. ClaimCenter allows users to create vendors, but they are stored in, and linked to, Contact Manager. Vendors created or modified from ClaimCenter require approval from Contact Manager. Andy Applegate logs into ClaimCenter. He is working on the Andrew Williams claim. Andy learns that the vendor that he chose for the claim, Meineke Car Care Center, is not able to take Mr. Williams' call.",
+      "words": [
+        {
+          "word": "Contact",
+          "start": 0.0,
+          "end": 0.42,
+          "probability": 0.9092
+        },
+        {
+          "word": "Manager",
+          "start": 0.42,
+          "end": 0.94,
+          "probability": 0.5347
+        },
+        {
+          "word": "is",
+          "start": 0.94,
+          "end": 1.26,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 1.26,
+          "end": 1.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "system",
+          "start": 1.4,
+          "end": 1.76,
+          "probability": 0.9233
+        },
+        {
+          "word": "of",
+          "start": 1.76,
+          "end": 2.0,
+          "probability": 0.999
+        },
+        {
+          "word": "record",
+          "start": 2.0,
+          "end": 2.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "for",
+          "start": 2.34,
+          "end": 2.54,
+          "probability": 0.999
+        },
+        {
+          "word": "vendors.",
+          "start": 2.54,
+          "end": 2.88,
+          "probability": 0.9634
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 3.52,
+          "end": 4.16,
+          "probability": 0.7476
+        },
+        {
+          "word": "allows",
+          "start": 4.16,
+          "end": 4.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "users",
+          "start": 4.5,
+          "end": 4.9,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 4.9,
+          "end": 5.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 5.18,
+          "end": 5.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "vendors,",
+          "start": 5.56,
+          "end": 5.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "but",
+          "start": 6.26,
+          "end": 6.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "they",
+          "start": 6.48,
+          "end": 6.66,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 6.66,
+          "end": 6.78,
+          "probability": 0.998
+        },
+        {
+          "word": "stored",
+          "start": 6.78,
+          "end": 7.12,
+          "probability": 0.999
+        },
+        {
+          "word": "in,",
+          "start": 7.12,
+          "end": 7.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 7.58,
+          "end": 8.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "linked",
+          "start": 8.02,
+          "end": 8.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "to,",
+          "start": 8.3,
+          "end": 8.72,
+          "probability": 0.998
+        },
+        {
+          "word": "Contact",
+          "start": 8.94,
+          "end": 9.46,
+          "probability": 0.8838
+        },
+        {
+          "word": "Manager.",
+          "start": 9.46,
+          "end": 10.14,
+          "probability": 0.979
+        },
+        {
+          "word": "Vendors",
+          "start": 10.5,
+          "end": 10.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "created",
+          "start": 10.98,
+          "end": 11.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 11.44,
+          "end": 11.68,
+          "probability": 0.999
+        },
+        {
+          "word": "modified",
+          "start": 11.68,
+          "end": 12.14,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 12.14,
+          "end": 12.5,
+          "probability": 0.999
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 12.5,
+          "end": 13.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "require",
+          "start": 13.2,
+          "end": 13.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "approval",
+          "start": 13.62,
+          "end": 14.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 14.1,
+          "end": 14.38,
+          "probability": 1.0
+        },
+        {
+          "word": "Contact",
+          "start": 14.38,
+          "end": 14.8,
+          "probability": 0.979
+        },
+        {
+          "word": "Manager.",
+          "start": 14.8,
+          "end": 15.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "Andy",
+          "start": 16.02,
+          "end": 16.66,
+          "probability": 0.8833
+        },
+        {
+          "word": "Applegate",
+          "start": 16.66,
+          "end": 17.26,
+          "probability": 0.9907
+        },
+        {
+          "word": "logs",
+          "start": 17.26,
+          "end": 17.6,
+          "probability": 0.8945
+        },
+        {
+          "word": "into",
+          "start": 17.6,
+          "end": 17.92,
+          "probability": 0.9912
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 17.92,
+          "end": 18.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "He",
+          "start": 19.0,
+          "end": 19.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 19.64,
+          "end": 19.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "working",
+          "start": 19.86,
+          "end": 20.14,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 20.14,
+          "end": 20.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 20.44,
+          "end": 20.56,
+          "probability": 0.998
+        },
+        {
+          "word": "Andrew",
+          "start": 20.56,
+          "end": 20.9,
+          "probability": 0.999
+        },
+        {
+          "word": "Williams",
+          "start": 20.9,
+          "end": 21.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "claim.",
+          "start": 21.38,
+          "end": 21.78,
+          "probability": 0.8203
+        },
+        {
+          "word": "Andy",
+          "start": 22.66,
+          "end": 23.3,
+          "probability": 0.978
+        },
+        {
+          "word": "learns",
+          "start": 23.3,
+          "end": 23.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 23.58,
+          "end": 23.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 23.8,
+          "end": 23.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "vendor",
+          "start": 23.94,
+          "end": 24.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 24.22,
+          "end": 24.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 24.42,
+          "end": 24.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "chose",
+          "start": 24.58,
+          "end": 24.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 24.88,
+          "end": 25.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 25.08,
+          "end": 25.22,
+          "probability": 0.999
+        },
+        {
+          "word": "claim,",
+          "start": 25.22,
+          "end": 25.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "Meineke",
+          "start": 25.84,
+          "end": 26.34,
+          "probability": 0.7461
+        },
+        {
+          "word": "Car",
+          "start": 26.34,
+          "end": 26.62,
+          "probability": 0.9116
+        },
+        {
+          "word": "Care",
+          "start": 26.62,
+          "end": 26.84,
+          "probability": 0.9819
+        },
+        {
+          "word": "Center,",
+          "start": 26.84,
+          "end": 27.24,
+          "probability": 0.9736
+        },
+        {
+          "word": "is",
+          "start": 27.46,
+          "end": 27.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 27.76,
+          "end": 27.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "able",
+          "start": 27.98,
+          "end": 28.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 28.24,
+          "end": 28.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "take",
+          "start": 28.44,
+          "end": 28.7,
+          "probability": 0.999
+        },
+        {
+          "word": "Mr.",
+          "start": 28.7,
+          "end": 29.02,
+          "probability": 0.998
+        },
+        {
+          "word": "Williams'",
+          "start": 29.24,
+          "end": 29.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "call.",
+          "start": 29.78,
+          "end": 29.98,
+          "probability": 0.3345
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.96,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.960",
+      "text": "He goes to the car. He goes to parties involved. Since he is not going to use Meineke, he selects it. And clicks Delete. This simply removes the vendor from a relationship to this claim, it does not delete the vendor from the system of record, Contact Manager. Andy found a vendor that can repair Mr. Williams' car, but the vendor is not in the system. Since Andy thinks this vendor may be able to do the work and that it could prove useful later, he creates the vendor that can repair Mr. Williams' car, but the vendor is not in the system. Since Andy thinks this vendor may be able to do the work and that it could prove useful later,",
+      "words": [
+        {
+          "word": "He",
+          "start": 29.98,
+          "end": 30.7,
+          "probability": 0.6284
+        },
+        {
+          "word": "goes",
+          "start": 30.7,
+          "end": 30.96,
+          "probability": 0.9644
+        },
+        {
+          "word": "to",
+          "start": 30.96,
+          "end": 31.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 31.18,
+          "end": 31.4,
+          "probability": 0.0104
+        },
+        {
+          "word": "car.",
+          "start": 31.4,
+          "end": 31.42,
+          "probability": 0.0
+        },
+        {
+          "word": "He",
+          "start": 31.54,
+          "end": 31.54,
+          "probability": 0.8867
+        },
+        {
+          "word": "goes",
+          "start": 31.54,
+          "end": 31.54,
+          "probability": 0.9609
+        },
+        {
+          "word": "to",
+          "start": 31.54,
+          "end": 31.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "parties",
+          "start": 31.54,
+          "end": 31.54,
+          "probability": 0.8569
+        },
+        {
+          "word": "involved.",
+          "start": 31.54,
+          "end": 32.02,
+          "probability": 0.9922
+        },
+        {
+          "word": "Since",
+          "start": 32.84,
+          "end": 33.36,
+          "probability": 0.9775
+        },
+        {
+          "word": "he",
+          "start": 33.36,
+          "end": 33.54,
+          "probability": 0.9854
+        },
+        {
+          "word": "is",
+          "start": 33.54,
+          "end": 33.72,
+          "probability": 0.9834
+        },
+        {
+          "word": "not",
+          "start": 33.72,
+          "end": 33.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "going",
+          "start": 33.92,
+          "end": 34.2,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 34.2,
+          "end": 34.38,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 34.38,
+          "end": 34.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "Meineke,",
+          "start": 34.66,
+          "end": 35.08,
+          "probability": 0.5322
+        },
+        {
+          "word": "he",
+          "start": 35.3,
+          "end": 35.58,
+          "probability": 0.9536
+        },
+        {
+          "word": "selects",
+          "start": 35.58,
+          "end": 36.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "it.",
+          "start": 36.1,
+          "end": 36.24,
+          "probability": 0.9932
+        },
+        {
+          "word": "And",
+          "start": 36.68,
+          "end": 37.2,
+          "probability": 0.7886
+        },
+        {
+          "word": "clicks",
+          "start": 37.2,
+          "end": 37.56,
+          "probability": 0.9438
+        },
+        {
+          "word": "Delete.",
+          "start": 37.56,
+          "end": 37.9,
+          "probability": 0.3162
+        },
+        {
+          "word": "This",
+          "start": 39.48,
+          "end": 40.0,
+          "probability": 0.98
+        },
+        {
+          "word": "simply",
+          "start": 40.0,
+          "end": 40.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "removes",
+          "start": 40.4,
+          "end": 40.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 40.88,
+          "end": 41.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "vendor",
+          "start": 41.1,
+          "end": 41.36,
+          "probability": 0.9824
+        },
+        {
+          "word": "from",
+          "start": 41.36,
+          "end": 41.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 41.62,
+          "end": 41.74,
+          "probability": 0.9868
+        },
+        {
+          "word": "relationship",
+          "start": 41.74,
+          "end": 42.3,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 42.3,
+          "end": 42.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "this",
+          "start": 42.68,
+          "end": 42.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "claim,",
+          "start": 42.9,
+          "end": 43.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "it",
+          "start": 43.48,
+          "end": 43.76,
+          "probability": 0.8809
+        },
+        {
+          "word": "does",
+          "start": 43.76,
+          "end": 43.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "not",
+          "start": 43.96,
+          "end": 44.2,
+          "probability": 0.9897
+        },
+        {
+          "word": "delete",
+          "start": 44.2,
+          "end": 44.56,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 44.56,
+          "end": 44.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "vendor",
+          "start": 44.82,
+          "end": 45.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "from",
+          "start": 45.08,
+          "end": 45.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 45.34,
+          "end": 45.46,
+          "probability": 0.9897
+        },
+        {
+          "word": "system",
+          "start": 45.46,
+          "end": 45.8,
+          "probability": 0.7563
+        },
+        {
+          "word": "of",
+          "start": 45.8,
+          "end": 46.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "record,",
+          "start": 46.0,
+          "end": 46.38,
+          "probability": 0.9858
+        },
+        {
+          "word": "Contact",
+          "start": 46.52,
+          "end": 47.02,
+          "probability": 0.4822
+        },
+        {
+          "word": "Manager.",
+          "start": 47.02,
+          "end": 47.68,
+          "probability": 0.7358
+        },
+        {
+          "word": "Andy",
+          "start": 48.42,
+          "end": 48.94,
+          "probability": 0.9194
+        },
+        {
+          "word": "found",
+          "start": 48.94,
+          "end": 49.26,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 49.26,
+          "end": 49.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "vendor",
+          "start": 49.42,
+          "end": 49.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 49.66,
+          "end": 49.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "can",
+          "start": 49.88,
+          "end": 50.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "repair",
+          "start": 50.08,
+          "end": 50.44,
+          "probability": 0.9937
+        },
+        {
+          "word": "Mr.",
+          "start": 50.44,
+          "end": 50.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "Williams'",
+          "start": 50.98,
+          "end": 51.28,
+          "probability": 0.9688
+        },
+        {
+          "word": "car,",
+          "start": 51.5,
+          "end": 51.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "but",
+          "start": 52.04,
+          "end": 52.28,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 52.28,
+          "end": 52.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "vendor",
+          "start": 52.38,
+          "end": 52.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 52.66,
+          "end": 52.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "not",
+          "start": 52.88,
+          "end": 53.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "in",
+          "start": 53.1,
+          "end": 53.28,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 53.28,
+          "end": 53.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "system.",
+          "start": 53.38,
+          "end": 53.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "Since",
+          "start": 54.1,
+          "end": 54.6,
+          "probability": 0.9897
+        },
+        {
+          "word": "Andy",
+          "start": 54.6,
+          "end": 54.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "thinks",
+          "start": 54.94,
+          "end": 55.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "this",
+          "start": 55.32,
+          "end": 55.56,
+          "probability": 0.9907
+        },
+        {
+          "word": "vendor",
+          "start": 55.56,
+          "end": 55.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "may",
+          "start": 55.9,
+          "end": 56.12,
+          "probability": 0.9917
+        },
+        {
+          "word": "be",
+          "start": 56.12,
+          "end": 56.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "able",
+          "start": 56.24,
+          "end": 56.48,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 56.48,
+          "end": 56.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "do",
+          "start": 56.64,
+          "end": 56.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 56.78,
+          "end": 56.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "work",
+          "start": 56.92,
+          "end": 57.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 57.16,
+          "end": 57.38,
+          "probability": 0.9878
+        },
+        {
+          "word": "that",
+          "start": 57.38,
+          "end": 57.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "it",
+          "start": 57.52,
+          "end": 57.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "could",
+          "start": 57.64,
+          "end": 57.8,
+          "probability": 0.9863
+        },
+        {
+          "word": "prove",
+          "start": 57.8,
+          "end": 58.08,
+          "probability": 0.979
+        },
+        {
+          "word": "useful",
+          "start": 58.08,
+          "end": 58.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "later,",
+          "start": 58.54,
+          "end": 58.9,
+          "probability": 0.9927
+        },
+        {
+          "word": "he",
+          "start": 59.12,
+          "end": 59.4,
+          "probability": 0.98
+        },
+        {
+          "word": "creates",
+          "start": 59.4,
+          "end": 59.88,
+          "probability": 0.9707
+        },
+        {
+          "word": "the",
+          "start": 59.88,
+          "end": 59.96,
+          "probability": 0.8442
+        },
+        {
+          "word": "vendor",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.004
+        },
+        {
+          "word": "that",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.1455
+        },
+        {
+          "word": "can",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.3267
+        },
+        {
+          "word": "repair",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.8423
+        },
+        {
+          "word": "Mr.",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9199
+        },
+        {
+          "word": "Williams'",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.978
+        },
+        {
+          "word": "car,",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9673
+        },
+        {
+          "word": "but",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.7314
+        },
+        {
+          "word": "the",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.8784
+        },
+        {
+          "word": "vendor",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.978
+        },
+        {
+          "word": "is",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.8979
+        },
+        {
+          "word": "not",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9614
+        },
+        {
+          "word": "in",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9609
+        },
+        {
+          "word": "the",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9868
+        },
+        {
+          "word": "system.",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9795
+        },
+        {
+          "word": "Since",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.8945
+        },
+        {
+          "word": "Andy",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9907
+        },
+        {
+          "word": "thinks",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9785
+        },
+        {
+          "word": "this",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.957
+        },
+        {
+          "word": "vendor",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "may",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9746
+        },
+        {
+          "word": "be",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "able",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.998
+        },
+        {
+          "word": "do",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9839
+        },
+        {
+          "word": "the",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "work",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.98
+        },
+        {
+          "word": "and",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9805
+        },
+        {
+          "word": "that",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "it",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9922
+        },
+        {
+          "word": "could",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9565
+        },
+        {
+          "word": "prove",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9526
+        },
+        {
+          "word": "useful",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9854
+        },
+        {
+          "word": "later,",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.96,
+      "end": 89.02,
+      "start_formatted": "00:00:59.960",
+      "end_formatted": "00:01:29.020",
+      "text": "it's the vendor. The name of the vendor is Bill's Quick Auto Repair. The shop is located on Beamer Road in San Mateo, California. He has heard that the shop is not easy to find, so he adds that note to the vendor record. Like any parties involved, vendors need at least one rule to be related to a claim. Bill's Quick Auto Repair is going to be the repair shop for Mr. Williams' car, so he selects the Ford and sets the rule to repair shop.",
+      "words": [
+        {
+          "word": "it's",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.4724
+        },
+        {
+          "word": "the",
+          "start": 59.96,
+          "end": 60.08,
+          "probability": 0.9639
+        },
+        {
+          "word": "vendor.",
+          "start": 60.08,
+          "end": 60.34,
+          "probability": 0.9409
+        },
+        {
+          "word": "The",
+          "start": 60.96,
+          "end": 61.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "name",
+          "start": 61.48,
+          "end": 61.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 61.72,
+          "end": 61.86,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 61.86,
+          "end": 61.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "vendor",
+          "start": 61.98,
+          "end": 62.22,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 62.22,
+          "end": 62.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "Bill's",
+          "start": 62.5,
+          "end": 62.84,
+          "probability": 0.9731
+        },
+        {
+          "word": "Quick",
+          "start": 62.84,
+          "end": 63.06,
+          "probability": 0.9385
+        },
+        {
+          "word": "Auto",
+          "start": 63.06,
+          "end": 63.3,
+          "probability": 0.957
+        },
+        {
+          "word": "Repair.",
+          "start": 63.3,
+          "end": 63.8,
+          "probability": 0.998
+        },
+        {
+          "word": "The",
+          "start": 64.2,
+          "end": 64.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "shop",
+          "start": 64.72,
+          "end": 64.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 64.98,
+          "end": 65.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "located",
+          "start": 65.18,
+          "end": 65.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 65.64,
+          "end": 65.92,
+          "probability": 0.999
+        },
+        {
+          "word": "Beamer",
+          "start": 65.92,
+          "end": 66.26,
+          "probability": 0.958
+        },
+        {
+          "word": "Road",
+          "start": 66.26,
+          "end": 66.54,
+          "probability": 0.9771
+        },
+        {
+          "word": "in",
+          "start": 66.54,
+          "end": 66.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "San",
+          "start": 66.84,
+          "end": 67.06,
+          "probability": 0.999
+        },
+        {
+          "word": "Mateo,",
+          "start": 67.06,
+          "end": 67.54,
+          "probability": 0.998
+        },
+        {
+          "word": "California.",
+          "start": 67.64,
+          "end": 68.12,
+          "probability": 0.9111
+        },
+        {
+          "word": "He",
+          "start": 68.72,
+          "end": 69.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 69.24,
+          "end": 69.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "heard",
+          "start": 69.46,
+          "end": 69.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 69.7,
+          "end": 69.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 69.88,
+          "end": 70.02,
+          "probability": 0.998
+        },
+        {
+          "word": "shop",
+          "start": 70.02,
+          "end": 70.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 70.28,
+          "end": 70.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 70.46,
+          "end": 70.68,
+          "probability": 0.998
+        },
+        {
+          "word": "easy",
+          "start": 70.68,
+          "end": 71.0,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 71.0,
+          "end": 71.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "find,",
+          "start": 71.2,
+          "end": 71.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 71.82,
+          "end": 72.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 72.1,
+          "end": 72.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "adds",
+          "start": 72.34,
+          "end": 72.62,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 72.62,
+          "end": 72.8,
+          "probability": 0.999
+        },
+        {
+          "word": "note",
+          "start": 72.8,
+          "end": 73.06,
+          "probability": 0.979
+        },
+        {
+          "word": "to",
+          "start": 73.06,
+          "end": 73.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 73.22,
+          "end": 73.34,
+          "probability": 0.999
+        },
+        {
+          "word": "vendor",
+          "start": 73.34,
+          "end": 73.6,
+          "probability": 0.9761
+        },
+        {
+          "word": "record.",
+          "start": 73.6,
+          "end": 74.04,
+          "probability": 0.999
+        },
+        {
+          "word": "Like",
+          "start": 74.56,
+          "end": 75.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "any",
+          "start": 75.08,
+          "end": 75.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "parties",
+          "start": 75.34,
+          "end": 75.7,
+          "probability": 0.9888
+        },
+        {
+          "word": "involved,",
+          "start": 75.7,
+          "end": 76.22,
+          "probability": 1.0
+        },
+        {
+          "word": "vendors",
+          "start": 76.52,
+          "end": 76.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "need",
+          "start": 76.84,
+          "end": 77.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 77.24,
+          "end": 77.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "least",
+          "start": 77.42,
+          "end": 77.66,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 77.66,
+          "end": 77.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "rule",
+          "start": 77.88,
+          "end": 78.08,
+          "probability": 0.4177
+        },
+        {
+          "word": "to",
+          "start": 78.08,
+          "end": 78.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 78.28,
+          "end": 78.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "related",
+          "start": 78.46,
+          "end": 78.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 78.82,
+          "end": 79.02,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 79.02,
+          "end": 79.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "claim.",
+          "start": 79.18,
+          "end": 79.5,
+          "probability": 0.999
+        },
+        {
+          "word": "Bill's",
+          "start": 80.28,
+          "end": 80.8,
+          "probability": 0.9922
+        },
+        {
+          "word": "Quick",
+          "start": 80.8,
+          "end": 81.04,
+          "probability": 0.9795
+        },
+        {
+          "word": "Auto",
+          "start": 81.04,
+          "end": 81.3,
+          "probability": 0.999
+        },
+        {
+          "word": "Repair",
+          "start": 81.3,
+          "end": 81.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 81.68,
+          "end": 81.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "going",
+          "start": 81.84,
+          "end": 82.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 82.06,
+          "end": 82.26,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 82.26,
+          "end": 82.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 82.44,
+          "end": 82.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "repair",
+          "start": 82.6,
+          "end": 82.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "shop",
+          "start": 82.94,
+          "end": 83.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 83.22,
+          "end": 83.42,
+          "probability": 1.0
+        },
+        {
+          "word": "Mr.",
+          "start": 83.42,
+          "end": 83.74,
+          "probability": 0.999
+        },
+        {
+          "word": "Williams'",
+          "start": 83.92,
+          "end": 84.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "car,",
+          "start": 84.42,
+          "end": 84.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 84.94,
+          "end": 85.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 85.24,
+          "end": 85.44,
+          "probability": 1.0
+        },
+        {
+          "word": "selects",
+          "start": 85.44,
+          "end": 85.94,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 85.94,
+          "end": 86.08,
+          "probability": 0.999
+        },
+        {
+          "word": "Ford",
+          "start": 86.08,
+          "end": 86.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 86.4,
+          "end": 87.38,
+          "probability": 0.8125
+        },
+        {
+          "word": "sets",
+          "start": 87.38,
+          "end": 87.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 87.68,
+          "end": 87.86,
+          "probability": 1.0
+        },
+        {
+          "word": "rule",
+          "start": 87.86,
+          "end": 88.02,
+          "probability": 0.439
+        },
+        {
+          "word": "to",
+          "start": 88.02,
+          "end": 88.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "repair",
+          "start": 88.2,
+          "end": 88.58,
+          "probability": 0.9136
+        },
+        {
+          "word": "shop.",
+          "start": 88.58,
+          "end": 89.02,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.02,
+      "end": 115.04,
+      "start_formatted": "00:01:29.020",
+      "end_formatted": "00:01:55.040",
+      "text": "He also wants to set Bill's Quick Auto Repair as a service vendor for the claim. So he accepts the default related to, which is the claim, and selects service vendor as the role. He clicks Update to save the new vendor. The update adds the vendor to Claim Center and Contact Manager, as indicated by the linked message. However, although it is in sync, the contact is pending approval.",
+      "words": [
+        {
+          "word": "He",
+          "start": 89.02,
+          "end": 90.06,
+          "probability": 0.9512
+        },
+        {
+          "word": "also",
+          "start": 90.06,
+          "end": 90.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "wants",
+          "start": 90.46,
+          "end": 90.78,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 90.78,
+          "end": 90.96,
+          "probability": 0.999
+        },
+        {
+          "word": "set",
+          "start": 90.96,
+          "end": 91.24,
+          "probability": 0.9844
+        },
+        {
+          "word": "Bill's",
+          "start": 91.24,
+          "end": 91.58,
+          "probability": 0.6733
+        },
+        {
+          "word": "Quick",
+          "start": 91.58,
+          "end": 91.86,
+          "probability": 0.3098
+        },
+        {
+          "word": "Auto",
+          "start": 91.86,
+          "end": 92.12,
+          "probability": 0.5239
+        },
+        {
+          "word": "Repair",
+          "start": 92.12,
+          "end": 92.56,
+          "probability": 0.9287
+        },
+        {
+          "word": "as",
+          "start": 92.56,
+          "end": 92.82,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 92.82,
+          "end": 92.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "service",
+          "start": 92.94,
+          "end": 93.3,
+          "probability": 0.5913
+        },
+        {
+          "word": "vendor",
+          "start": 93.3,
+          "end": 93.62,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 93.62,
+          "end": 93.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 93.86,
+          "end": 94.0,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 94.0,
+          "end": 94.36,
+          "probability": 0.9658
+        },
+        {
+          "word": "So",
+          "start": 95.14,
+          "end": 95.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "he",
+          "start": 95.76,
+          "end": 96.0,
+          "probability": 0.9824
+        },
+        {
+          "word": "accepts",
+          "start": 96.0,
+          "end": 96.44,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 96.44,
+          "end": 96.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "default",
+          "start": 96.66,
+          "end": 97.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "related",
+          "start": 97.04,
+          "end": 97.48,
+          "probability": 0.9067
+        },
+        {
+          "word": "to,",
+          "start": 97.48,
+          "end": 97.82,
+          "probability": 0.8711
+        },
+        {
+          "word": "which",
+          "start": 98.02,
+          "end": 98.34,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 98.34,
+          "end": 98.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 98.5,
+          "end": 98.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 98.62,
+          "end": 99.0,
+          "probability": 0.9731
+        },
+        {
+          "word": "and",
+          "start": 99.18,
+          "end": 99.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "selects",
+          "start": 99.46,
+          "end": 99.96,
+          "probability": 0.998
+        },
+        {
+          "word": "service",
+          "start": 99.96,
+          "end": 100.26,
+          "probability": 0.6528
+        },
+        {
+          "word": "vendor",
+          "start": 100.26,
+          "end": 100.62,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 100.62,
+          "end": 100.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 100.9,
+          "end": 101.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "role.",
+          "start": 101.02,
+          "end": 101.28,
+          "probability": 0.9863
+        },
+        {
+          "word": "He",
+          "start": 101.68,
+          "end": 102.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 102.3,
+          "end": 102.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "Update",
+          "start": 102.64,
+          "end": 102.98,
+          "probability": 0.8184
+        },
+        {
+          "word": "to",
+          "start": 102.98,
+          "end": 103.3,
+          "probability": 1.0
+        },
+        {
+          "word": "save",
+          "start": 103.3,
+          "end": 103.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 103.58,
+          "end": 103.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 103.74,
+          "end": 103.9,
+          "probability": 0.998
+        },
+        {
+          "word": "vendor.",
+          "start": 103.9,
+          "end": 104.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "The",
+          "start": 104.7,
+          "end": 105.28,
+          "probability": 0.998
+        },
+        {
+          "word": "update",
+          "start": 105.28,
+          "end": 105.62,
+          "probability": 0.9526
+        },
+        {
+          "word": "adds",
+          "start": 105.62,
+          "end": 105.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 105.92,
+          "end": 106.1,
+          "probability": 0.999
+        },
+        {
+          "word": "vendor",
+          "start": 106.1,
+          "end": 106.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 106.42,
+          "end": 106.62,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 106.62,
+          "end": 106.88,
+          "probability": 0.9814
+        },
+        {
+          "word": "Center",
+          "start": 106.88,
+          "end": 107.24,
+          "probability": 0.9741
+        },
+        {
+          "word": "and",
+          "start": 107.24,
+          "end": 107.52,
+          "probability": 0.9912
+        },
+        {
+          "word": "Contact",
+          "start": 107.52,
+          "end": 107.96,
+          "probability": 0.9419
+        },
+        {
+          "word": "Manager,",
+          "start": 107.96,
+          "end": 108.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "as",
+          "start": 108.72,
+          "end": 109.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "indicated",
+          "start": 109.04,
+          "end": 109.44,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 109.44,
+          "end": 109.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 109.8,
+          "end": 109.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "linked",
+          "start": 109.96,
+          "end": 110.24,
+          "probability": 0.9683
+        },
+        {
+          "word": "message.",
+          "start": 110.24,
+          "end": 110.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "However,",
+          "start": 111.1,
+          "end": 111.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "although",
+          "start": 112.02,
+          "end": 112.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 112.28,
+          "end": 112.48,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 112.48,
+          "end": 112.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 112.62,
+          "end": 112.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "sync,",
+          "start": 112.8,
+          "end": 113.12,
+          "probability": 0.9839
+        },
+        {
+          "word": "the",
+          "start": 113.32,
+          "end": 113.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 113.54,
+          "end": 113.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "is",
+          "start": 113.92,
+          "end": 114.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "pending",
+          "start": 114.26,
+          "end": 114.56,
+          "probability": 0.9756
+        },
+        {
+          "word": "approval.",
+          "start": 114.56,
+          "end": 115.04,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 115.92,
+      "end": 121.04,
+      "start_formatted": "00:01:55.920",
+      "end_formatted": "00:02:01.040",
+      "text": "Vendors created in Claim Center have a pending status until approved in Contact Manager.",
+      "words": [
+        {
+          "word": "Vendors",
+          "start": 115.92,
+          "end": 116.56,
+          "probability": 0.979
+        },
+        {
+          "word": "created",
+          "start": 116.56,
+          "end": 117.02,
+          "probability": 0.9858
+        },
+        {
+          "word": "in",
+          "start": 117.02,
+          "end": 117.3,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 117.3,
+          "end": 117.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "Center",
+          "start": 117.56,
+          "end": 117.88,
+          "probability": 0.9341
+        },
+        {
+          "word": "have",
+          "start": 117.88,
+          "end": 118.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 118.14,
+          "end": 118.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "pending",
+          "start": 118.3,
+          "end": 118.52,
+          "probability": 0.7729
+        },
+        {
+          "word": "status",
+          "start": 118.52,
+          "end": 118.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "until",
+          "start": 118.98,
+          "end": 119.32,
+          "probability": 0.999
+        },
+        {
+          "word": "approved",
+          "start": 119.32,
+          "end": 119.78,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 119.78,
+          "end": 120.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "Contact",
+          "start": 120.02,
+          "end": 120.38,
+          "probability": 0.9722
+        },
+        {
+          "word": "Manager.",
+          "start": 120.38,
+          "end": 121.04,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 121.6,
+      "end": 131.16,
+      "start_formatted": "00:02:01.600",
+      "end_formatted": "00:02:11.160",
+      "text": "Carla Clark is the vendor manager for Succeed Insurance. She logs into Contact Manager to check for any vendors that have been changed or added from Claim Center.",
+      "words": [
+        {
+          "word": "Carla",
+          "start": 121.6,
+          "end": 122.24,
+          "probability": 0.9331
+        },
+        {
+          "word": "Clark",
+          "start": 122.24,
+          "end": 122.62,
+          "probability": 0.9795
+        },
+        {
+          "word": "is",
+          "start": 122.62,
+          "end": 122.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 122.9,
+          "end": 123.04,
+          "probability": 1.0
+        },
+        {
+          "word": "vendor",
+          "start": 123.04,
+          "end": 123.3,
+          "probability": 0.8052
+        },
+        {
+          "word": "manager",
+          "start": 123.3,
+          "end": 123.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 123.68,
+          "end": 123.94,
+          "probability": 1.0
+        },
+        {
+          "word": "Succeed",
+          "start": 123.94,
+          "end": 124.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "Insurance.",
+          "start": 124.44,
+          "end": 124.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "She",
+          "start": 125.4,
+          "end": 125.8,
+          "probability": 1.0
+        },
+        {
+          "word": "logs",
+          "start": 125.8,
+          "end": 126.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "into",
+          "start": 126.14,
+          "end": 126.4,
+          "probability": 0.9019
+        },
+        {
+          "word": "Contact",
+          "start": 126.4,
+          "end": 126.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "Manager",
+          "start": 126.9,
+          "end": 127.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 127.4,
+          "end": 127.64,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 127.64,
+          "end": 127.9,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 127.9,
+          "end": 128.1,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 128.1,
+          "end": 128.34,
+          "probability": 1.0
+        },
+        {
+          "word": "vendors",
+          "start": 128.34,
+          "end": 128.72,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 128.72,
+          "end": 128.94,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 128.94,
+          "end": 129.1,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 129.1,
+          "end": 129.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "changed",
+          "start": 129.26,
+          "end": 129.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 129.66,
+          "end": 129.9,
+          "probability": 1.0
+        },
+        {
+          "word": "added",
+          "start": 129.9,
+          "end": 130.16,
+          "probability": 0.9604
+        },
+        {
+          "word": "from",
+          "start": 130.16,
+          "end": 130.42,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 130.42,
+          "end": 130.78,
+          "probability": 1.0
+        },
+        {
+          "word": "Center.",
+          "start": 130.78,
+          "end": 131.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 131.16,
+      "end": 154.26,
+      "start_formatted": "00:02:11.160",
+      "end_formatted": "00:02:34.260",
+      "text": "On the opening screen, she sees that there is one pending change. There are two tabs on the Pending Changes screen, one for Updates and one for Creates. The Updates tab shows that there are no updates that need approval. The Create tab shows that there is one Create action that needs to be approved. This is a new vendor created from Claim Center or another core product.",
+      "words": [
+        {
+          "word": "On",
+          "start": 131.16,
+          "end": 132.24,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 132.24,
+          "end": 132.42,
+          "probability": 1.0
+        },
+        {
+          "word": "opening",
+          "start": 132.42,
+          "end": 132.82,
+          "probability": 0.958
+        },
+        {
+          "word": "screen,",
+          "start": 132.82,
+          "end": 133.3,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 133.54,
+          "end": 133.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "sees",
+          "start": 133.88,
+          "end": 134.22,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 134.22,
+          "end": 134.38,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 134.38,
+          "end": 134.56,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 134.56,
+          "end": 134.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "one",
+          "start": 134.7,
+          "end": 134.96,
+          "probability": 0.9878
+        },
+        {
+          "word": "pending",
+          "start": 134.96,
+          "end": 135.32,
+          "probability": 0.9551
+        },
+        {
+          "word": "change.",
+          "start": 135.32,
+          "end": 135.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "There",
+          "start": 136.28,
+          "end": 136.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 136.84,
+          "end": 136.98,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 136.98,
+          "end": 137.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "tabs",
+          "start": 137.2,
+          "end": 137.54,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 137.54,
+          "end": 137.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 137.78,
+          "end": 137.9,
+          "probability": 1.0
+        },
+        {
+          "word": "Pending",
+          "start": 137.9,
+          "end": 138.18,
+          "probability": 0.707
+        },
+        {
+          "word": "Changes",
+          "start": 138.18,
+          "end": 138.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "screen,",
+          "start": 138.7,
+          "end": 139.08,
+          "probability": 0.998
+        },
+        {
+          "word": "one",
+          "start": 139.4,
+          "end": 139.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 139.72,
+          "end": 139.96,
+          "probability": 1.0
+        },
+        {
+          "word": "Updates",
+          "start": 139.96,
+          "end": 140.42,
+          "probability": 0.9702
+        },
+        {
+          "word": "and",
+          "start": 140.42,
+          "end": 140.64,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 140.64,
+          "end": 140.86,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 140.86,
+          "end": 141.1,
+          "probability": 1.0
+        },
+        {
+          "word": "Creates.",
+          "start": 141.1,
+          "end": 141.7,
+          "probability": 0.9902
+        },
+        {
+          "word": "The",
+          "start": 141.82,
+          "end": 142.26,
+          "probability": 1.0
+        },
+        {
+          "word": "Updates",
+          "start": 142.26,
+          "end": 142.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "tab",
+          "start": 142.74,
+          "end": 143.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "shows",
+          "start": 143.0,
+          "end": 143.32,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 143.32,
+          "end": 143.54,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 143.54,
+          "end": 143.72,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 143.72,
+          "end": 143.88,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 143.88,
+          "end": 144.04,
+          "probability": 1.0
+        },
+        {
+          "word": "updates",
+          "start": 144.04,
+          "end": 144.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 144.48,
+          "end": 144.74,
+          "probability": 1.0
+        },
+        {
+          "word": "need",
+          "start": 144.74,
+          "end": 144.96,
+          "probability": 1.0
+        },
+        {
+          "word": "approval.",
+          "start": 144.96,
+          "end": 145.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 145.64,
+          "end": 146.04,
+          "probability": 1.0
+        },
+        {
+          "word": "Create",
+          "start": 146.04,
+          "end": 146.4,
+          "probability": 0.998
+        },
+        {
+          "word": "tab",
+          "start": 146.4,
+          "end": 146.68,
+          "probability": 0.999
+        },
+        {
+          "word": "shows",
+          "start": 146.68,
+          "end": 147.06,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 147.06,
+          "end": 147.28,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 147.28,
+          "end": 147.44,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 147.44,
+          "end": 147.58,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 147.58,
+          "end": 147.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "Create",
+          "start": 147.84,
+          "end": 148.26,
+          "probability": 0.7017
+        },
+        {
+          "word": "action",
+          "start": 148.26,
+          "end": 148.76,
+          "probability": 0.9414
+        },
+        {
+          "word": "that",
+          "start": 148.76,
+          "end": 149.0,
+          "probability": 1.0
+        },
+        {
+          "word": "needs",
+          "start": 149.0,
+          "end": 149.32,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 149.32,
+          "end": 149.48,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 149.48,
+          "end": 149.62,
+          "probability": 1.0
+        },
+        {
+          "word": "approved.",
+          "start": 149.62,
+          "end": 150.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 150.38,
+          "end": 150.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 150.86,
+          "end": 151.0,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 151.0,
+          "end": 151.12,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 151.12,
+          "end": 151.26,
+          "probability": 0.999
+        },
+        {
+          "word": "vendor",
+          "start": 151.26,
+          "end": 151.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "created",
+          "start": 151.52,
+          "end": 151.94,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 151.94,
+          "end": 152.2,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 152.2,
+          "end": 152.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "Center",
+          "start": 152.52,
+          "end": 152.88,
+          "probability": 0.9702
+        },
+        {
+          "word": "or",
+          "start": 152.88,
+          "end": 153.18,
+          "probability": 1.0
+        },
+        {
+          "word": "another",
+          "start": 153.18,
+          "end": 153.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "core",
+          "start": 153.5,
+          "end": 153.76,
+          "probability": 0.937
+        },
+        {
+          "word": "product.",
+          "start": 153.76,
+          "end": 154.26,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 154.9,
+      "end": 170.32,
+      "start_formatted": "00:02:34.900",
+      "end_formatted": "00:02:50.320",
+      "text": "Carla clicks the Create tab. Carla sees that the pending vendor is Bill's Quick Auto Repair. She looks at the details and although they are not very complete, she decides to approve the vendor creation. She clicks Approve to approve the new vendor.",
+      "words": [
+        {
+          "word": "Carla",
+          "start": 154.9,
+          "end": 155.5,
+          "probability": 0.9072
+        },
+        {
+          "word": "clicks",
+          "start": 155.5,
+          "end": 155.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 155.92,
+          "end": 156.12,
+          "probability": 0.999
+        },
+        {
+          "word": "Create",
+          "start": 156.12,
+          "end": 156.5,
+          "probability": 0.0443
+        },
+        {
+          "word": "tab.",
+          "start": 156.5,
+          "end": 156.9,
+          "probability": 0.9019
+        },
+        {
+          "word": "Carla",
+          "start": 157.58,
+          "end": 158.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "sees",
+          "start": 158.18,
+          "end": 158.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 158.52,
+          "end": 158.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 158.72,
+          "end": 158.88,
+          "probability": 1.0
+        },
+        {
+          "word": "pending",
+          "start": 158.88,
+          "end": 159.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "vendor",
+          "start": 159.18,
+          "end": 159.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 159.52,
+          "end": 159.82,
+          "probability": 1.0
+        },
+        {
+          "word": "Bill's",
+          "start": 159.82,
+          "end": 160.18,
+          "probability": 0.9912
+        },
+        {
+          "word": "Quick",
+          "start": 160.18,
+          "end": 160.38,
+          "probability": 0.3916
+        },
+        {
+          "word": "Auto",
+          "start": 160.38,
+          "end": 160.6,
+          "probability": 0.9087
+        },
+        {
+          "word": "Repair.",
+          "start": 160.6,
+          "end": 161.08,
+          "probability": 0.9873
+        },
+        {
+          "word": "She",
+          "start": 161.36,
+          "end": 161.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "looks",
+          "start": 161.8,
+          "end": 162.12,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 162.12,
+          "end": 162.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 162.32,
+          "end": 162.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "details",
+          "start": 162.46,
+          "end": 162.9,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 162.9,
+          "end": 163.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "although",
+          "start": 163.16,
+          "end": 163.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "they",
+          "start": 163.42,
+          "end": 163.64,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 163.64,
+          "end": 163.76,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 163.76,
+          "end": 164.0,
+          "probability": 1.0
+        },
+        {
+          "word": "very",
+          "start": 164.0,
+          "end": 164.3,
+          "probability": 1.0
+        },
+        {
+          "word": "complete,",
+          "start": 164.3,
+          "end": 164.76,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 165.08,
+          "end": 165.38,
+          "probability": 0.999
+        },
+        {
+          "word": "decides",
+          "start": 165.38,
+          "end": 165.82,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 165.82,
+          "end": 166.08,
+          "probability": 1.0
+        },
+        {
+          "word": "approve",
+          "start": 166.08,
+          "end": 166.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 166.38,
+          "end": 166.54,
+          "probability": 1.0
+        },
+        {
+          "word": "vendor",
+          "start": 166.54,
+          "end": 166.8,
+          "probability": 0.9922
+        },
+        {
+          "word": "creation.",
+          "start": 166.8,
+          "end": 167.3,
+          "probability": 0.999
+        },
+        {
+          "word": "She",
+          "start": 167.84,
+          "end": 168.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 168.44,
+          "end": 168.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "Approve",
+          "start": 168.84,
+          "end": 169.22,
+          "probability": 0.9541
+        },
+        {
+          "word": "to",
+          "start": 169.22,
+          "end": 169.38,
+          "probability": 1.0
+        },
+        {
+          "word": "approve",
+          "start": 169.38,
+          "end": 169.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 169.72,
+          "end": 169.86,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 169.86,
+          "end": 170.02,
+          "probability": 0.999
+        },
+        {
+          "word": "vendor.",
+          "start": 170.02,
+          "end": 170.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 170.32,
+      "end": 177.68,
+      "start_formatted": "00:02:50.320",
+      "end_formatted": "00:02:57.680",
+      "text": "Meanwhile, back in Claim Center, Andy is still logged in, and has not moved off of the Contact screen.",
+      "words": [
+        {
+          "word": "Meanwhile,",
+          "start": 170.32,
+          "end": 171.54,
+          "probability": 0.9673
+        },
+        {
+          "word": "back",
+          "start": 171.94,
+          "end": 172.22,
+          "probability": 0.9907
+        },
+        {
+          "word": "in",
+          "start": 172.22,
+          "end": 172.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "Claim",
+          "start": 172.44,
+          "end": 172.76,
+          "probability": 0.9277
+        },
+        {
+          "word": "Center,",
+          "start": 172.76,
+          "end": 173.16,
+          "probability": 0.9614
+        },
+        {
+          "word": "Andy",
+          "start": 173.48,
+          "end": 173.76,
+          "probability": 0.9844
+        },
+        {
+          "word": "is",
+          "start": 173.76,
+          "end": 173.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "still",
+          "start": 173.98,
+          "end": 174.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "logged",
+          "start": 174.24,
+          "end": 174.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "in,",
+          "start": 174.58,
+          "end": 175.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 175.2,
+          "end": 175.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 175.46,
+          "end": 175.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 175.66,
+          "end": 175.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "moved",
+          "start": 175.86,
+          "end": 176.16,
+          "probability": 1.0
+        },
+        {
+          "word": "off",
+          "start": 176.16,
+          "end": 176.42,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 176.42,
+          "end": 176.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 176.68,
+          "end": 176.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "Contact",
+          "start": 176.8,
+          "end": 177.22,
+          "probability": 0.0319
+        },
+        {
+          "word": "screen.",
+          "start": 177.22,
+          "end": 177.68,
+          "probability": 0.8389
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 178.28,
+      "end": 182.54,
+      "start_formatted": "00:02:58.280",
+      "end_formatted": "00:03:02.540",
+      "text": "He refreshes the Contact record by selecting any other contact.",
+      "words": [
+        {
+          "word": "He",
+          "start": 178.28,
+          "end": 178.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "refreshes",
+          "start": 178.92,
+          "end": 179.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 179.54,
+          "end": 179.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "Contact",
+          "start": 179.68,
+          "end": 180.06,
+          "probability": 0.446
+        },
+        {
+          "word": "record",
+          "start": 180.06,
+          "end": 180.58,
+          "probability": 0.687
+        },
+        {
+          "word": "by",
+          "start": 180.58,
+          "end": 180.78,
+          "probability": 0.999
+        },
+        {
+          "word": "selecting",
+          "start": 180.78,
+          "end": 181.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "any",
+          "start": 181.3,
+          "end": 181.6,
+          "probability": 0.7427
+        },
+        {
+          "word": "other",
+          "start": 181.6,
+          "end": 182.0,
+          "probability": 0.9741
+        },
+        {
+          "word": "contact.",
+          "start": 182.0,
+          "end": 182.54,
+          "probability": 0.8135
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 183.26,
+      "end": 185.9,
+      "start_formatted": "00:03:03.260",
+      "end_formatted": "00:03:05.900",
+      "text": "And then clicks Bill's Quick Auto Repair.",
+      "words": [
+        {
+          "word": "And",
+          "start": 183.26,
+          "end": 183.9,
+          "probability": 0.9297
+        },
+        {
+          "word": "then",
+          "start": 183.9,
+          "end": 184.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "clicks",
+          "start": 184.16,
+          "end": 184.54,
+          "probability": 0.9834
+        },
+        {
+          "word": "Bill's",
+          "start": 184.54,
+          "end": 184.96,
+          "probability": 0.916
+        },
+        {
+          "word": "Quick",
+          "start": 184.96,
+          "end": 185.14,
+          "probability": 0.73
+        },
+        {
+          "word": "Auto",
+          "start": 185.14,
+          "end": 185.4,
+          "probability": 0.8545
+        },
+        {
+          "word": "Repair.",
+          "start": 185.4,
+          "end": 185.9,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 186.52,
+      "end": 202.48,
+      "start_formatted": "00:03:06.520",
+      "end_formatted": "00:03:22.480",
+      "text": "After the Contact is Refreshed, the Sync Message shows that the Contact is linked to the Address Book and is in Sync. Recall that earlier it was linked but not in Sync. Once Carla approved the new vendor, the contract was automatically flagged as in Sync in Claim Center.",
+      "words": [
+        {
+          "word": "After",
+          "start": 186.52,
+          "end": 187.04,
+          "probability": 0.9355
+        },
+        {
+          "word": "the",
+          "start": 187.04,
+          "end": 187.22,
+          "probability": 0.998
+        },
+        {
+          "word": "Contact",
+          "start": 187.22,
+          "end": 187.62,
+          "probability": 0.0298
+        },
+        {
+          "word": "is",
+          "start": 187.62,
+          "end": 187.92,
+          "probability": 0.9785
+        },
+        {
+          "word": "Refreshed,",
+          "start": 187.92,
+          "end": 188.64,
+          "probability": 0.7231
+        },
+        {
+          "word": "the",
+          "start": 188.76,
+          "end": 188.96,
+          "probability": 0.9624
+        },
+        {
+          "word": "Sync",
+          "start": 188.96,
+          "end": 189.22,
+          "probability": 0.7075
+        },
+        {
+          "word": "Message",
+          "start": 189.22,
+          "end": 189.56,
+          "probability": 0.5762
+        },
+        {
+          "word": "shows",
+          "start": 189.56,
+          "end": 189.96,
+          "probability": 0.9658
+        },
+        {
+          "word": "that",
+          "start": 189.96,
+          "end": 190.2,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 190.2,
+          "end": 190.32,
+          "probability": 0.9888
+        },
+        {
+          "word": "Contact",
+          "start": 190.32,
+          "end": 190.68,
+          "probability": 0.3716
+        },
+        {
+          "word": "is",
+          "start": 190.68,
+          "end": 191.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "linked",
+          "start": 191.0,
+          "end": 191.26,
+          "probability": 0.9189
+        },
+        {
+          "word": "to",
+          "start": 191.26,
+          "end": 191.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 191.44,
+          "end": 191.58,
+          "probability": 0.9897
+        },
+        {
+          "word": "Address",
+          "start": 191.58,
+          "end": 192.06,
+          "probability": 0.6836
+        },
+        {
+          "word": "Book",
+          "start": 192.06,
+          "end": 192.28,
+          "probability": 0.8589
+        },
+        {
+          "word": "and",
+          "start": 192.28,
+          "end": 192.48,
+          "probability": 0.9756
+        },
+        {
+          "word": "is",
+          "start": 192.48,
+          "end": 192.68,
+          "probability": 0.979
+        },
+        {
+          "word": "in",
+          "start": 192.68,
+          "end": 192.86,
+          "probability": 0.9385
+        },
+        {
+          "word": "Sync.",
+          "start": 192.86,
+          "end": 193.3,
+          "probability": 0.7339
+        },
+        {
+          "word": "Recall",
+          "start": 193.52,
+          "end": 194.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 194.04,
+          "end": 194.22,
+          "probability": 0.9907
+        },
+        {
+          "word": "earlier",
+          "start": 194.22,
+          "end": 194.58,
+          "probability": 0.9697
+        },
+        {
+          "word": "it",
+          "start": 194.58,
+          "end": 194.82,
+          "probability": 0.9907
+        },
+        {
+          "word": "was",
+          "start": 194.82,
+          "end": 194.98,
+          "probability": 0.999
+        },
+        {
+          "word": "linked",
+          "start": 194.98,
+          "end": 195.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "but",
+          "start": 195.22,
+          "end": 195.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "not",
+          "start": 195.48,
+          "end": 195.74,
+          "probability": 0.9927
+        },
+        {
+          "word": "in",
+          "start": 195.74,
+          "end": 195.94,
+          "probability": 0.9888
+        },
+        {
+          "word": "Sync.",
+          "start": 195.94,
+          "end": 196.34,
+          "probability": 0.8564
+        },
+        {
+          "word": "Once",
+          "start": 196.58,
+          "end": 197.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "Carla",
+          "start": 197.1,
+          "end": 197.44,
+          "probability": 0.7183
+        },
+        {
+          "word": "approved",
+          "start": 197.44,
+          "end": 197.84,
+          "probability": 0.9365
+        },
+        {
+          "word": "the",
+          "start": 197.84,
+          "end": 198.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 198.0,
+          "end": 198.18,
+          "probability": 0.8911
+        },
+        {
+          "word": "vendor,",
+          "start": 198.18,
+          "end": 198.48,
+          "probability": 0.6655
+        },
+        {
+          "word": "the",
+          "start": 198.82,
+          "end": 198.98,
+          "probability": 0.9912
+        },
+        {
+          "word": "contract",
+          "start": 198.98,
+          "end": 199.4,
+          "probability": 0.5679
+        },
+        {
+          "word": "was",
+          "start": 199.4,
+          "end": 199.74,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 199.74,
+          "end": 200.3,
+          "probability": 0.9937
+        },
+        {
+          "word": "flagged",
+          "start": 200.3,
+          "end": 200.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "as",
+          "start": 200.92,
+          "end": 201.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 201.18,
+          "end": 201.4,
+          "probability": 0.7974
+        },
+        {
+          "word": "Sync",
+          "start": 201.4,
+          "end": 201.68,
+          "probability": 0.9307
+        },
+        {
+          "word": "in",
+          "start": 201.68,
+          "end": 201.86,
+          "probability": 0.8271
+        },
+        {
+          "word": "Claim",
+          "start": 201.86,
+          "end": 202.14,
+          "probability": 0.9883
+        },
+        {
+          "word": "Center.",
+          "start": 202.14,
+          "end": 202.48,
+          "probability": 0.957
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 203.24,
+      "end": 207.72,
+      "start_formatted": "00:03:23.240",
+      "end_formatted": "00:03:27.720",
+      "text": "Next, we look at what happens when a vendor is changed in Contact Manager.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 203.24,
+          "end": 203.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "we",
+          "start": 203.98,
+          "end": 204.22,
+          "probability": 0.9819
+        },
+        {
+          "word": "look",
+          "start": 204.22,
+          "end": 204.5,
+          "probability": 0.98
+        },
+        {
+          "word": "at",
+          "start": 204.5,
+          "end": 204.64,
+          "probability": 0.999
+        },
+        {
+          "word": "what",
+          "start": 204.64,
+          "end": 204.82,
+          "probability": 0.98
+        },
+        {
+          "word": "happens",
+          "start": 204.82,
+          "end": 205.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "when",
+          "start": 205.28,
+          "end": 205.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 205.48,
+          "end": 205.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "vendor",
+          "start": 205.64,
+          "end": 205.84,
+          "probability": 0.5884
+        },
+        {
+          "word": "is",
+          "start": 205.84,
+          "end": 206.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "changed",
+          "start": 206.08,
+          "end": 206.46,
+          "probability": 0.9731
+        },
+        {
+          "word": "in",
+          "start": 206.46,
+          "end": 206.68,
+          "probability": 0.9897
+        },
+        {
+          "word": "Contact",
+          "start": 206.68,
+          "end": 207.06,
+          "probability": 0.9624
+        },
+        {
+          "word": "Manager.",
+          "start": 207.06,
+          "end": 207.72,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 208.52,
+      "end": 210.36,
+      "start_formatted": "00:03:28.520",
+      "end_formatted": "00:03:30.360",
+      "text": "Carla opens the Search screen.",
+      "words": [
+        {
+          "word": "Carla",
+          "start": 208.52,
+          "end": 209.04,
+          "probability": 0.9824
+        },
+        {
+          "word": "opens",
+          "start": 209.04,
+          "end": 209.44,
+          "probability": 0.9263
+        },
+        {
+          "word": "the",
+          "start": 209.44,
+          "end": 209.66,
+          "probability": 0.998
+        },
+        {
+          "word": "Search",
+          "start": 209.66,
+          "end": 209.92,
+          "probability": 0.5972
+        },
+        {
+          "word": "screen.",
+          "start": 209.92,
+          "end": 210.36,
+          "probability": 0.6465
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 210.36,
+      "end": 214.34,
+      "start_formatted": "00:03:30.360",
+      "end_formatted": "00:03:34.340",
+      "text": "She enters Bill as the company name and clicks Search.",
+      "words": [
+        {
+          "word": "She",
+          "start": 210.36,
+          "end": 211.74,
+          "probability": 0.9829
+        },
+        {
+          "word": "enters",
+          "start": 211.74,
+          "end": 212.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "Bill",
+          "start": 212.1,
+          "end": 212.38,
+          "probability": 0.667
+        },
+        {
+          "word": "as",
+          "start": 212.38,
+          "end": 212.52,
+          "probability": 0.978
+        },
+        {
+          "word": "the",
+          "start": 212.52,
+          "end": 212.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "company",
+          "start": 212.64,
+          "end": 212.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "name",
+          "start": 212.98,
+          "end": 213.34,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 213.34,
+          "end": 213.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 213.58,
+          "end": 213.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Search.",
+          "start": 213.96,
+          "end": 214.34,
+          "probability": 0.2106
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 214.98,
+      "end": 217.34,
+      "start_formatted": "00:03:34.980",
+      "end_formatted": "00:03:37.340",
+      "text": "Carla clicks Bill's Quick Auto Repair.",
+      "words": [
+        {
+          "word": "Carla",
+          "start": 214.98,
+          "end": 215.66,
+          "probability": 0.8545
+        },
+        {
+          "word": "clicks",
+          "start": 215.66,
+          "end": 216.06,
+          "probability": 0.999
+        },
+        {
+          "word": "Bill's",
+          "start": 216.06,
+          "end": 216.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "Quick",
+          "start": 216.44,
+          "end": 216.6,
+          "probability": 0.3733
+        },
+        {
+          "word": "Auto",
+          "start": 216.6,
+          "end": 216.84,
+          "probability": 0.8135
+        },
+        {
+          "word": "Repair.",
+          "start": 216.84,
+          "end": 217.34,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 217.74,
+      "end": 219.36,
+      "start_formatted": "00:03:37.740",
+      "end_formatted": "00:03:39.360",
+      "text": "She looks at the vendor details.",
+      "words": [
+        {
+          "word": "She",
+          "start": 217.74,
+          "end": 218.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "looks",
+          "start": 218.4,
+          "end": 218.74,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 218.74,
+          "end": 218.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 218.96,
+          "end": 219.08,
+          "probability": 1.0
+        },
+        {
+          "word": "vendor",
+          "start": 219.08,
+          "end": 219.34,
+          "probability": 0.9683
+        },
+        {
+          "word": "details.",
+          "start": 219.34,
+          "end": 219.7,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 220.24,
+      "end": 224.04,
+      "start_formatted": "00:03:40.240",
+      "end_formatted": "00:03:44.040",
+      "text": "The location description is not something she wants on a vendor record.",
+      "words": [
+        {
+          "word": "The",
+          "start": 220.24,
+          "end": 220.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "location",
+          "start": 220.56,
+          "end": 221.0,
+          "probability": 0.9644
+        },
+        {
+          "word": "description",
+          "start": 221.0,
+          "end": 221.5,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 221.5,
+          "end": 221.9,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 221.9,
+          "end": 222.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "something",
+          "start": 222.12,
+          "end": 222.5,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 222.5,
+          "end": 222.72,
+          "probability": 1.0
+        },
+        {
+          "word": "wants",
+          "start": 222.72,
+          "end": 223.04,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 223.04,
+          "end": 223.26,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 223.26,
+          "end": 223.4,
+          "probability": 1.0
+        },
+        {
+          "word": "vendor",
+          "start": 223.4,
+          "end": 223.62,
+          "probability": 0.9902
+        },
+        {
+          "word": "record.",
+          "start": 223.62,
+          "end": 224.04,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 224.4,
+      "end": 226.22,
+      "start_formatted": "00:03:44.400",
+      "end_formatted": "00:03:46.220",
+      "text": "So she edits the contact.",
+      "words": [
+        {
+          "word": "So",
+          "start": 224.4,
+          "end": 225.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 225.08,
+          "end": 225.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "edits",
+          "start": 225.3,
+          "end": 225.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 225.62,
+          "end": 225.8,
+          "probability": 1.0
+        },
+        {
+          "word": "contact.",
+          "start": 225.8,
+          "end": 226.22,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 227.3,
+      "end": 229.76,
+      "start_formatted": "00:03:47.300",
+      "end_formatted": "00:03:49.760",
+      "text": "Carla deletes the location description.",
+      "words": [
+        {
+          "word": "Carla",
+          "start": 227.3,
+          "end": 228.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "deletes",
+          "start": 228.02,
+          "end": 228.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 228.58,
+          "end": 228.74,
+          "probability": 1.0
+        },
+        {
+          "word": "location",
+          "start": 228.74,
+          "end": 229.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "description.",
+          "start": 229.2,
+          "end": 229.76,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 230.36,
+      "end": 234.06,
+      "start_formatted": "00:03:50.360",
+      "end_formatted": "00:03:54.060",
+      "text": "Carla clicks Update to save the changes to the vendor record.",
+      "words": [
+        {
+          "word": "Carla",
+          "start": 230.36,
+          "end": 231.06,
+          "probability": 0.999
+        },
+        {
+          "word": "clicks",
+          "start": 231.06,
+          "end": 231.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "Update",
+          "start": 231.5,
+          "end": 231.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 231.9,
+          "end": 232.22,
+          "probability": 1.0
+        },
+        {
+          "word": "save",
+          "start": 232.22,
+          "end": 232.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 232.48,
+          "end": 232.64,
+          "probability": 1.0
+        },
+        {
+          "word": "changes",
+          "start": 232.64,
+          "end": 233.0,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 233.0,
+          "end": 233.26,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 233.26,
+          "end": 233.38,
+          "probability": 1.0
+        },
+        {
+          "word": "vendor",
+          "start": 233.38,
+          "end": 233.66,
+          "probability": 0.998
+        },
+        {
+          "word": "record.",
+          "start": 233.66,
+          "end": 234.06,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 234.44,
+      "end": 238.84,
+      "start_formatted": "00:03:54.440",
+      "end_formatted": "00:03:58.840",
+      "text": "She sees that the location description is now Blink in Contact Manager.",
+      "words": [
+        {
+          "word": "She",
+          "start": 234.44,
+          "end": 235.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "sees",
+          "start": 235.06,
+          "end": 235.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 235.34,
+          "end": 235.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 235.52,
+          "end": 235.66,
+          "probability": 1.0
+        },
+        {
+          "word": "location",
+          "start": 235.66,
+          "end": 236.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "description",
+          "start": 236.08,
+          "end": 236.64,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 236.64,
+          "end": 236.96,
+          "probability": 1.0
+        },
+        {
+          "word": "now",
+          "start": 236.96,
+          "end": 237.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Blink",
+          "start": 237.22,
+          "end": 237.66,
+          "probability": 0.9326
+        },
+        {
+          "word": "in",
+          "start": 237.66,
+          "end": 237.84,
+          "probability": 0.4688
+        },
+        {
+          "word": "Contact",
+          "start": 237.84,
+          "end": 238.22,
+          "probability": 0.9692
+        },
+        {
+          "word": "Manager.",
+          "start": 238.22,
+          "end": 238.84,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 239.74,
+      "end": 245.98,
+      "start_formatted": "00:03:59.740",
+      "end_formatted": "00:04:05.980",
+      "text": "Just as before, back in Claim Center, Andy is still logged in and is still on the Contact screen.",
+      "words": [
+        {
+          "word": "Just",
+          "start": 239.74,
+          "end": 240.38,
+          "probability": 0.9678
+        },
+        {
+          "word": "as",
+          "start": 240.38,
+          "end": 240.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "before,",
+          "start": 240.64,
+          "end": 241.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 241.34,
+          "end": 241.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "in",
+          "start": 241.66,
+          "end": 241.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 241.8,
+          "end": 242.1,
+          "probability": 0.9648
+        },
+        {
+          "word": "Center,",
+          "start": 242.1,
+          "end": 242.52,
+          "probability": 0.9746
+        },
+        {
+          "word": "Andy",
+          "start": 242.84,
+          "end": 243.12,
+          "probability": 0.9751
+        },
+        {
+          "word": "is",
+          "start": 243.12,
+          "end": 243.32,
+          "probability": 1.0
+        },
+        {
+          "word": "still",
+          "start": 243.32,
+          "end": 243.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "logged",
+          "start": 243.58,
+          "end": 243.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 243.9,
+          "end": 244.12,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 244.12,
+          "end": 244.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 244.3,
+          "end": 244.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "still",
+          "start": 244.5,
+          "end": 244.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 244.76,
+          "end": 244.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 244.98,
+          "end": 245.1,
+          "probability": 0.999
+        },
+        {
+          "word": "Contact",
+          "start": 245.1,
+          "end": 245.48,
+          "probability": 0.0287
+        },
+        {
+          "word": "screen.",
+          "start": 245.48,
+          "end": 245.98,
+          "probability": 0.8413
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 246.44,
+      "end": 250.84,
+      "start_formatted": "00:04:06.440",
+      "end_formatted": "00:04:10.840",
+      "text": "To refresh the vendor contact, Andy clicks on any other contact.",
+      "words": [
+        {
+          "word": "To",
+          "start": 246.44,
+          "end": 247.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "refresh",
+          "start": 247.08,
+          "end": 247.46,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 247.46,
+          "end": 247.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "vendor",
+          "start": 247.64,
+          "end": 247.9,
+          "probability": 0.7549
+        },
+        {
+          "word": "contact,",
+          "start": 247.9,
+          "end": 248.48,
+          "probability": 0.9634
+        },
+        {
+          "word": "Andy",
+          "start": 248.8,
+          "end": 249.1,
+          "probability": 0.9946
+        },
+        {
+          "word": "clicks",
+          "start": 249.1,
+          "end": 249.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 249.54,
+          "end": 249.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "any",
+          "start": 249.8,
+          "end": 250.04,
+          "probability": 0.6831
+        },
+        {
+          "word": "other",
+          "start": 250.04,
+          "end": 250.38,
+          "probability": 0.9878
+        },
+        {
+          "word": "contact.",
+          "start": 250.38,
+          "end": 250.84,
+          "probability": 0.9595
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 251.36,
+      "end": 253.9,
+      "start_formatted": "00:04:11.360",
+      "end_formatted": "00:04:13.900",
+      "text": "He then clicks Bill's Quick Auto Repair.",
+      "words": [
+        {
+          "word": "He",
+          "start": 251.36,
+          "end": 252.0,
+          "probability": 0.998
+        },
+        {
+          "word": "then",
+          "start": 252.0,
+          "end": 252.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 252.24,
+          "end": 252.62,
+          "probability": 0.998
+        },
+        {
+          "word": "Bill's",
+          "start": 252.62,
+          "end": 252.98,
+          "probability": 0.8511
+        },
+        {
+          "word": "Quick",
+          "start": 252.98,
+          "end": 253.16,
+          "probability": 0.7363
+        },
+        {
+          "word": "Auto",
+          "start": 253.16,
+          "end": 253.4,
+          "probability": 0.8418
+        },
+        {
+          "word": "Repair.",
+          "start": 253.4,
+          "end": 253.9,
+          "probability": 0.9697
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 254.32,
+      "end": 256.24,
+      "start_formatted": "00:04:14.320",
+      "end_formatted": "00:04:16.240",
+      "text": "Andy notices two things.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 254.32,
+          "end": 254.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "notices",
+          "start": 254.94,
+          "end": 255.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 255.38,
+          "end": 255.76,
+          "probability": 0.957
+        },
+        {
+          "word": "things.",
+          "start": 255.76,
+          "end": 256.24,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 256.6,
+      "end": 260.42,
+      "start_formatted": "00:04:16.600",
+      "end_formatted": "00:04:20.420",
+      "text": "First, that the contact is linked to Address Book and is in Sync.",
+      "words": [
+        {
+          "word": "First,",
+          "start": 256.6,
+          "end": 257.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 257.28,
+          "end": 257.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 257.52,
+          "end": 257.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 257.64,
+          "end": 258.04,
+          "probability": 0.9673
+        },
+        {
+          "word": "is",
+          "start": 258.04,
+          "end": 258.36,
+          "probability": 1.0
+        },
+        {
+          "word": "linked",
+          "start": 258.36,
+          "end": 258.66,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 258.66,
+          "end": 258.84,
+          "probability": 1.0
+        },
+        {
+          "word": "Address",
+          "start": 258.84,
+          "end": 259.2,
+          "probability": 0.6724
+        },
+        {
+          "word": "Book",
+          "start": 259.2,
+          "end": 259.42,
+          "probability": 0.3247
+        },
+        {
+          "word": "and",
+          "start": 259.42,
+          "end": 259.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 259.62,
+          "end": 259.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 259.82,
+          "end": 260.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "Sync.",
+          "start": 260.02,
+          "end": 260.42,
+          "probability": 0.5044
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 260.42,
+      "end": 264.58,
+      "start_formatted": "00:04:20.420",
+      "end_formatted": "00:04:24.580",
+      "text": "Secondly, he sees that the location description is now Blank.",
+      "words": [
+        {
+          "word": "Secondly,",
+          "start": 260.42,
+          "end": 261.3,
+          "probability": 0.979
+        },
+        {
+          "word": "he",
+          "start": 261.72,
+          "end": 261.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "sees",
+          "start": 261.92,
+          "end": 262.22,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 262.22,
+          "end": 262.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 262.4,
+          "end": 262.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "location",
+          "start": 262.54,
+          "end": 262.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "description",
+          "start": 262.98,
+          "end": 263.48,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 263.48,
+          "end": 263.86,
+          "probability": 1.0
+        },
+        {
+          "word": "now",
+          "start": 263.86,
+          "end": 264.12,
+          "probability": 1.0
+        },
+        {
+          "word": "Blank.",
+          "start": 264.12,
+          "end": 264.58,
+          "probability": 0.4941
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 264.82,
+      "end": 271.3,
+      "start_formatted": "00:04:24.820",
+      "end_formatted": "00:04:31.300",
+      "text": "That's because Carla, the vendor manager for Succeed Insurance, removed the location description from the contact.",
+      "words": [
+        {
+          "word": "That's",
+          "start": 264.82,
+          "end": 265.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "because",
+          "start": 265.36,
+          "end": 265.66,
+          "probability": 0.9868
+        },
+        {
+          "word": "Carla,",
+          "start": 265.66,
+          "end": 266.06,
+          "probability": 0.8076
+        },
+        {
+          "word": "the",
+          "start": 266.32,
+          "end": 266.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "vendor",
+          "start": 266.56,
+          "end": 266.8,
+          "probability": 0.8022
+        },
+        {
+          "word": "manager",
+          "start": 266.8,
+          "end": 267.22,
+          "probability": 0.9609
+        },
+        {
+          "word": "for",
+          "start": 267.22,
+          "end": 267.5,
+          "probability": 0.999
+        },
+        {
+          "word": "Succeed",
+          "start": 267.5,
+          "end": 268.0,
+          "probability": 0.9668
+        },
+        {
+          "word": "Insurance,",
+          "start": 268.0,
+          "end": 268.52,
+          "probability": 0.957
+        },
+        {
+          "word": "removed",
+          "start": 268.76,
+          "end": 269.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 269.2,
+          "end": 269.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "location",
+          "start": 269.38,
+          "end": 269.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "description",
+          "start": 269.84,
+          "end": 270.34,
+          "probability": 0.998
+        },
+        {
+          "word": "from",
+          "start": 270.34,
+          "end": 270.7,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 270.7,
+          "end": 270.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact.",
+          "start": 270.82,
+          "end": 271.3,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 271.3,
+      "end": 275.14,
+      "start_formatted": "00:04:31.300",
+      "end_formatted": "00:04:35.140",
+      "text": "This ends the Adding Contacts in Claim Center demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 271.3,
+          "end": 272.46,
+          "probability": 0.7832
+        },
+        {
+          "word": "ends",
+          "start": 272.46,
+          "end": 272.72,
+          "probability": 0.9731
+        },
+        {
+          "word": "the",
+          "start": 272.72,
+          "end": 272.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "Adding",
+          "start": 272.92,
+          "end": 273.18,
+          "probability": 0.2659
+        },
+        {
+          "word": "Contacts",
+          "start": 273.18,
+          "end": 273.88,
+          "probability": 0.9277
+        },
+        {
+          "word": "in",
+          "start": 273.88,
+          "end": 274.16,
+          "probability": 0.9043
+        },
+        {
+          "word": "Claim",
+          "start": 274.16,
+          "end": 274.44,
+          "probability": 0.9883
+        },
+        {
+          "word": "Center",
+          "start": 274.44,
+          "end": 274.8,
+          "probability": 0.9404
+        },
+        {
+          "word": "demonstration.",
+          "start": 274.8,
+          "end": 275.14,
+          "probability": 0.9365
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 275.14,
+      "end": 275.44,
+      "start_formatted": "00:04:35.140",
+      "end_formatted": "00:04:35.440",
+      "text": "Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil",
+      "words": [
+        {
+          "word": "Fil",
+          "start": 275.14,
+          "end": 275.14,
+          "probability": 0.0
+        },
+        {
+          "word": "Fil",
+          "start": 275.14,
+          "end": 275.18,
+          "probability": 0.0
+        },
+        {
+          "word": "Fil",
+          "start": 275.18,
+          "end": 275.18,
+          "probability": 0.13
+        },
+        {
+          "word": "Fil",
+          "start": 275.18,
+          "end": 275.18,
+          "probability": 0.8755
+        },
+        {
+          "word": "Fil",
+          "start": 275.18,
+          "end": 275.18,
+          "probability": 0.9712
+        },
+        {
+          "word": "Fil",
+          "start": 275.18,
+          "end": 275.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "Fil",
+          "start": 275.18,
+          "end": 275.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "Fil",
+          "start": 275.18,
+          "end": 275.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.18,
+          "end": 275.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.2,
+          "end": 275.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.2,
+          "end": 275.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.2,
+          "end": 275.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.22,
+          "end": 275.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.24,
+          "end": 275.26,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.26,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.28,
+          "end": 275.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.3,
+          "end": 275.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.32,
+          "end": 275.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.32,
+          "end": 275.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.32,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.38,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 275.44,
+          "end": 275.44,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 275.42,
+      "end": 275.42,
+      "start_formatted": "00:04:35.420",
+      "end_formatted": "00:04:35.420",
+      "text": "",
+      "words": []
+    }
+  ]
+}

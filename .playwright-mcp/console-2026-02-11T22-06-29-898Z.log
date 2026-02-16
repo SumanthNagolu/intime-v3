@@ -1,0 +1,20 @@
+[     107ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/academy/portal:0
+[     240ms] [ERROR] %o
+
+%s Error: Failed prop type: The prop `href` expects a `string` or `object` in `<Link>`, but got `undefined` instead.
+Open your browser's console to view the Component stack trace.
+    at createPropError (http://localhost:3000/_next/static/chunks/node_modules__pnpm_8d9409df._.js:643:42)
+    at http://localhost:3000/_next/static/chunks/node_modules__pnpm_8d9409df._.js:657:27
+    at Array.forEach (<anonymous>)
+    at LinkComponent (http://localhost:3000/_next/static/chunks/node_modules__pnpm_8d9409df._.js:654:23)
+    at Object.react_stack_bottom_frame (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:14816:24)
+    at renderWithHooks (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:4645:24)
+    at updateFunctionComponent (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:6106:21)
+    at beginWork (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:6702:24)
+    at runWithFiberInDEV (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:959:74)
+    at performUnitOfWork (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9556:97)
+    at workLoopSync (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9450:40)
+    at renderRootSync (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9434:13)
+    at performWorkOnRoot (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9099:47)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:10224:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_bc8054be._.js:2647:64) The above error occurred in the <LinkComponent> component. It was handled by the <ErrorBoundaryHandler> error boundary. @ http://localhost:3000/_next/static/chunks/15ed4_next_dist_client_f2c7d901._.js:1294

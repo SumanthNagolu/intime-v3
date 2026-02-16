@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-02",
+    "slide_count": 31,
+    "slides_with_text": 27,
+    "total_words": 1033,
+    "avg_confidence": 84.93,
+    "processing_time_seconds": 11.08,
+    "extracted_at": "2026-02-13T12:21:42.856235"
+  },
+  "full_text": "Configuring Location Groups and Pages\n\nLesson\nobjectives\n\n¢ Describe the architecture of a location group\n¢ Configure existing location groups\n¢ Create and modify pages\n\ni Location groups G\n\nA location group is a collection of locations used to provide structure and navigation\nfor a group of related pages through menus or other interface elements\n\nAccount Summary: Ray Newton\n\ni Pages Gi\n\nA page is a location that contains a single screen in the main frame\n- Used exclusively within location groups\n\n- Menu link / location ref (in sidebar) pointing to a page\n\nBrccount RayNewton Account # COOLED\n\nAccount File Policy Transactions\n\nProduct h ‘Status ateCompleed > il\nBound onownis\nod cerzarzose\n\ni Architecture of a location group\n\neal\nGroup\n\nLocation Ref\n\nPage\n: = F Location\n: Location Ref\n\ni Location group and page configuration\n\nTwo levels of configuration\n+ LocationGroup-level\n+ Entry point and navigation to location group\n* MenuActions, TabBar, InfoBar\n+ Permissions to visit\n\n+ Location refs\n\n« Page-level\n+ Screen that a page renders\n+ Page logic (visibility, editability)\n\n+ Page labels\n\ni Information in location group PCF G&G\n\nAccountFile.pcf\n\nEntry Points\n\n‘Summary\nContacts\n\nLocations info |\n\nPolicy Transactions i\n‘Submission Manager\n\nLocation refs\n\n¢ Entry points and required objects\n\nDesktop ~ Account|~ Policy ~ Contact|~ Reinsurance |~ Search v\n\n@Saccount RayNewton Account # €000143542\n\ncreate\nNew Note\n\nNew Document\nNew Email\n\nNew Submission\n\nNew Activity\n\n¢ Location refs point to pages or child location groups\n\n¢ Attributes that point to separate files for tab bar, info bar and menu actions\n\ni Entry points for location group\n\n1. Define the entry point\n\n- EntryPointName(ObjectName: ObjectType)\n\n- Example: AccountFile(account:Account)\n2. Define each object used in entry point as a variable on Variables tab\n3. Navigate from a widget to a location group\n\n- Syntax for an action attribute in the navigation widget\nEntryPointOfLocation.go(objects ToPass)\n\ni Location group property: canVisit G&G\n\n¢ lf canVisit evaluates to true, the tab or link to a location group is visible and\nclickable\n\n¢ Editability for location group is controlled at the level of each page\n\ni Steps for creating a location group G&G\n\n1. Create new PCF of type Location Group\n2. Set essential information:\n- title\n- Entry point with matching variable (Entry Points tab)\n- Avariable for each object in entry point (Variables tab)\n= MenuActions, InfoBar and TabBar\n3. Add location references for all included pages and location groups\n4. Call the new location group in the action property of a navigation widget\n\n5. Deploy changes\n\ni Demonstration G\n\nLocation group information\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nPage configuration\n\ni Page PCFs Gi\n\n« Page PCF file shows references to all embedded content in Studio\n\n* Page content: Screens, Toolbars, PanelRefs, DetailsViews, ListViews and others\n\n« Menu links, Tab bars are also visible in the Page in Studio, but not part of physical page PCF\n¢ Pages are referenced by location refs in location groups\n\n* LocationPropertyOfLocationRef: EntryPointOfPage(objectsToPass)\n\ni Page properties G&G\n¢ Title label of a page in the user interface comes from page's title property\n¢ If canVisit evaluates to true, the link to a page is visible and clickable\n« Apage is either in read-only or edit mode\n\n+ If canEdit evaluates to true, the page has Edit/Update buttons\n+ If startInEditMode is true, then page renders in Edit mode\n\ni Steps for creating a page\n\n1. Create new PCF of type Page\n2. Set essential properties:\n- title\n- Entry point with matching variable (Entry Points tab)\n- Avariable for each object in entry point (Variables tab)\n3. Adda screen\n4. Include panels for viewable and/or editable content\n\ni Steps for creating a page - continued\n\n5. For editable pages:\n- Set canEdit property\n- Add Edit Buttons to the page's screen\n\n6. In the location group that will contain the page, add a locationref widget for\nnavigation to the page\n\ni Demonstration G\n\nPage information\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — When you navigate between locations in a location group:\n\n¢\noo a) What changes?\n\nb) What remains the same?\n\nSS oe ee oe oe oo\n\nAnswer\n\n,~ — When you navigate between locations in a location group:\n\n¢\noo a) What changes?\n\nb) What remains the same?\n\na) The contents of the screen area changes.\n\nb) The menu links, menu actions, and info bar remain the same.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — What two things can a location ref point to?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — What two things can a location ref point to?\n\n¢\n4\n¢\n\nAcchild location group or a page.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — What happens if a location group's canVisit attribute evaluates to false?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — What happens if a location group's canVisit attribute evaluates to false?\n\n¢\n4\n¢\n\nWhen a location group's canVisit attribute is false, the location group is not rendered in\nthe user interface. For example, if the location group appears on a tab, the tab is not\nrendered at all.\n\nSS Se ee eee eo\n\nQuestion G\n\n,7~ — When viewing a location group PCF file in Studio, which Studio tab\n¢ specifies how to navigate to a particular location group?\n\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — When viewing a location group PCF file in Studio, which Studio tab\noo specifies how to navigate to a particular location group?\n¢\n\nThe Entry Points tab. This identifies the \"navigation name\" of the location group as\nwell as any objects needed when navigating to it.\n\nSS Se ee eee eo\n\nLesson\nobjectives ¢ Describe the architecture of a location group\nreview ¢ Configure existing location groups\n\n¢ Create and modify pages\n\ni Student exercise\n\nLocation Groups and Pages",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Location Groups and Pages",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the architecture of a location group\n¢ Configure existing location groups\n¢ Create and modify pages",
+      "word_count": 20,
+      "avg_confidence": 84.65,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Location groups G\n\nA location group is a collection of locations used to provide structure and navigation\nfor a group of related pages through menus or other interface elements\n\nAccount Summary: Ray Newton",
+      "word_count": 34,
+      "avg_confidence": 92.61,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Pages Gi\n\nA page is a location that contains a single screen in the main frame\n- Used exclusively within location groups\n\n- Menu link / location ref (in sidebar) pointing to a page\n\nBrccount RayNewton Account # COOLED\n\nAccount File Policy Transactions\n\nProduct h ‘Status ateCompleed > il\nBound onownis\nod cerzarzose",
+      "word_count": 54,
+      "avg_confidence": 78.49,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Architecture of a location group\n\neal\nGroup\n\nLocation Ref\n\nPage\n: = F Location\n: Location Ref",
+      "word_count": 18,
+      "avg_confidence": 84.55,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Location group and page configuration\n\nTwo levels of configuration\n+ LocationGroup-level\n+ Entry point and navigation to location group\n* MenuActions, TabBar, InfoBar\n+ Permissions to visit\n\n+ Location refs\n\n« Page-level\n+ Screen that a page renders\n+ Page logic (visibility, editability)\n\n+ Page labels",
+      "word_count": 47,
+      "avg_confidence": 85.51,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Information in location group PCF G&G\n\nAccountFile.pcf\n\nEntry Points\n\n‘Summary\nContacts\n\nLocations info |\n\nPolicy Transactions i\n‘Submission Manager\n\nLocation refs\n\n¢ Entry points and required objects\n\nDesktop ~ Account|~ Policy ~ Contact|~ Reinsurance |~ Search v\n\n@Saccount RayNewton Account # €000143542\n\ncreate\nNew Note\n\nNew Document\nNew Email\n\nNew Submission\n\nNew Activity\n\n¢ Location refs point to pages or child location groups\n\n¢ Attributes that point to separate files for tab bar, info bar and menu actions",
+      "word_count": 79,
+      "avg_confidence": 85.51,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Entry points for location group\n\n1. Define the entry point\n\n- EntryPointName(ObjectName: ObjectType)\n\n- Example: AccountFile(account:Account)\n2. Define each object used in entry point as a variable on Variables tab\n3. Navigate from a widget to a location group\n\n- Syntax for an action attribute in the navigation widget\nEntryPointOfLocation.go(objects ToPass)",
+      "word_count": 52,
+      "avg_confidence": 92.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Location group property: canVisit G&G\n\n¢ lf canVisit evaluates to true, the tab or link to a location group is visible and\nclickable\n\n¢ Editability for location group is controlled at the level of each page",
+      "word_count": 37,
+      "avg_confidence": 87.89,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Steps for creating a location group G&G\n\n1. Create new PCF of type Location Group\n2. Set essential information:\n- title\n- Entry point with matching variable (Entry Points tab)\n- Avariable for each object in entry point (Variables tab)\n= MenuActions, InfoBar and TabBar\n3. Add location references for all included pages and location groups\n4. Call the new location group in the action property of a navigation widget\n\n5. Deploy changes",
+      "word_count": 74,
+      "avg_confidence": 92.41,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Demonstration G\n\nLocation group information\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.78,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Page configuration",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Page PCFs Gi\n\n« Page PCF file shows references to all embedded content in Studio\n\n* Page content: Screens, Toolbars, PanelRefs, DetailsViews, ListViews and others\n\n« Menu links, Tab bars are also visible in the Page in Studio, but not part of physical page PCF\n¢ Pages are referenced by location refs in location groups\n\n* LocationPropertyOfLocationRef: EntryPointOfPage(objectsToPass)",
+      "word_count": 59,
+      "avg_confidence": 86.9,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Page properties G&G\n¢ Title label of a page in the user interface comes from page's title property\n¢ If canVisit evaluates to true, the link to a page is visible and clickable\n« Apage is either in read-only or edit mode\n\n+ If canEdit evaluates to true, the page has Edit/Update buttons\n+ If startInEditMode is true, then page renders in Edit mode",
+      "word_count": 65,
+      "avg_confidence": 89.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Steps for creating a page\n\n1. Create new PCF of type Page\n2. Set essential properties:\n- title\n- Entry point with matching variable (Entry Points tab)\n- Avariable for each object in entry point (Variables tab)\n3. Adda screen\n4. Include panels for viewable and/or editable content",
+      "word_count": 49,
+      "avg_confidence": 89.9,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i Steps for creating a page - continued\n\n5. For editable pages:\n- Set canEdit property\n- Add Edit Buttons to the page's screen\n\n6. In the location group that will contain the page, add a locationref widget for\nnavigation to the page",
+      "word_count": 43,
+      "avg_confidence": 92.26,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Demonstration G\n\nPage information\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.71,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n,~ — When you navigate between locations in a location group:\n\n¢\noo a) What changes?\n\nb) What remains the same?\n\nSS oe ee oe oe oo",
+      "word_count": 29,
+      "avg_confidence": 68.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n,~ — When you navigate between locations in a location group:\n\n¢\noo a) What changes?\n\nb) What remains the same?\n\na) The contents of the screen area changes.\n\nb) The menu links, menu actions, and info bar remain the same.\n\nSS Se ee eee eo",
+      "word_count": 47,
+      "avg_confidence": 78.06,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question G\n\n,~ — What two things can a location ref point to?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 22,
+      "avg_confidence": 65.25,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer G\n\n,~ — What two things can a location ref point to?\n\n¢\n4\n¢\n\nAcchild location group or a page.\n\nSS Se ee eee eo",
+      "word_count": 27,
+      "avg_confidence": 73.66,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question G\n\n,~ — What happens if a location group's canVisit attribute evaluates to false?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 24,
+      "avg_confidence": 67.12,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer G\n\n,~ — What happens if a location group's canVisit attribute evaluates to false?\n\n¢\n4\n¢\n\nWhen a location group's canVisit attribute is false, the location group is not rendered in\nthe user interface. For example, if the location group appears on a tab, the tab is not\nrendered at all.\n\nSS Se ee eee eo",
+      "word_count": 58,
+      "avg_confidence": 84.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question G\n\n,7~ — When viewing a location group PCF file in Studio, which Studio tab\n¢ specifies how to navigate to a particular location group?\n\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 34,
+      "avg_confidence": 76.88,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer G\n\n,~ — When viewing a location group PCF file in Studio, which Studio tab\noo specifies how to navigate to a particular location group?\n¢\n\nThe Entry Points tab. This identifies the \"navigation name\" of the location group as\nwell as any objects needed when navigating to it.\n\nSS Se ee eee eo",
+      "word_count": 55,
+      "avg_confidence": 84.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Lesson\nobjectives ¢ Describe the architecture of a location group\nreview ¢ Configure existing location groups\n\n¢ Create and modify pages",
+      "word_count": 21,
+      "avg_confidence": 85.05,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "i Student exercise\n\nLocation Groups and Pages",
+      "word_count": 7,
+      "avg_confidence": 87.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

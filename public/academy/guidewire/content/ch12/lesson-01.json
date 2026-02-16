@@ -1,0 +1,580 @@
+{
+  "lessonId": "ch12-l01",
+  "chapterId": 12,
+  "chapterSlug": "ch12",
+  "lessonNumber": 1,
+  "title": "Advanced Product Designer Introduction",
+  "sourceFile": "Advanced Product Designer Introduction.docx",
+  "sourceFolder": null,
+  "totalSlides": 1,
+  "estimatedMinutes": 20,
+  "slides": [
+    {
+      "slideNumber": 1,
+      "title": "",
+      "bodyParagraphs": [
+        {
+          "text": "Advanced Product Designer Business Value",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Common pain points with designing product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "In a time of rapid change in consumer demands, insurers are faced with a need to create and launch more new products in less time.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The following are common pain points observed while creating a new product or LOB:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Proof of concept takes too long",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "There is no product in the base configuration that satisfies the requirements",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Jargon and confusing terminology",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Lack of clarity around product design best practices",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The collaboration between the business and technical teams is time consuming and expensive",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "To meet insurers needs and to address these common pain points, Guidewire has developed the Advanced Product Designer application.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Advanced Product Designer provides business value",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "The Advanced Product Designer (APD) provides business value in three important ways:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Empowering business:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "By providing non-technical design tools which captures product requirements in a structural format.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Providing instant feedback:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "By simulating the product within PolicyCenter, so that the customers can instantly observe what policy transactions would look like for their newly designed insurance product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Simplifying IT processes:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The Advanced Product Designer automatically generates code for common artifacts, including the data model and user interface, thereby reducing product launch times and standardizing the configuration.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Advance product.mp4",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Video: The Value of the Advanced Product Designer",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Benefits of externalizing Advanced Product Designer outside of PolicyCenter",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "By moving APD to a stand-alone, independent application on Guidewire Cloud there comes several benefits:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "1.Improved Configuration and Design Experience - Manage all your insurance products in one place on Guidewire Cloud Home with a more business friendly User Interface and without requiring a PolicyCenter deployment.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "2.Product Metadata APIs - users can create, update, and read product metadata via APIs",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "3.Product Editions and Variations - Ability to create jurisdiction-based product offerings and manage them independently (such as by state, country, or other locales, and effective date).",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "4.Improved lifecycle management -  Automated versioning and easy one-touch promotion across environments with no server restarts with a clear audit trail.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "What is Advanced Product Designer",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Advanced Product Designer is a business tool that helps insurers:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Gather business requirements to define and model an insurance product in a mind map, using the XMind tool",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Simulate policy transactions for that insurance product in Guidewire PolicyCenter™",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Auto-generate the insurance product artifacts for PolicyCenter such as:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Entity Model",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Product Model",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "User interface components such as Page Configuration Files (PCFs)",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Advanced Product Designer is used for creating new insurance products.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "With Advanced Product Designer, you can:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Quickly build out insurance products and launch them using PolicyCenter.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Facilitate a business level discussion with all stakeholders early in the project.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Phases of Product Design with APD",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "The process of creating a new insurance product follows three phases when using the APD:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "1.Conceptualization",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "2.Visualization",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "3.Finalization",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Product design when using the APD",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Click on the number to review the tasks for each phase of product design when using Advanced Product Designer.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Step 1",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Conceptualization of the Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Team members document the concepts and business requirements in a product map using the XMind tool.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The team shares the product map for review.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The map elements are annotated with Guidewire markers.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Step 2",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Visualization of the Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Import the annotated mind map to APD.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Make enhancements to the visualized product by adding rules, conditions, and default-minimum-maximum values.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Simulate policy transactions to visualize how the policy will work, thus eliminating the need to manually build a prototype.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Review, share, and further enhance the saved visualization templates.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Step 3",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Finalization of the Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Add metadata to generate the product code.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Generate product from the visualized product.\nThe product generation process creates the artifacts needed for PolicyCenter including:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Entity Model",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Product Model",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "User Interface components",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Project Team",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "The project team needs people with skills in the following roles, while developing the insurance product using Advanced Product D",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Advanced Product Designer versus Product Designer",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Advanced Product Designer is not just a product modeling tool.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Using Advanced Product Designer you can:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Define and model a new insurance product, including coverages, exclusions, conditions, risk details, and other attributes",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Define product model properties",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Availability of clauses (coverages, conditions, and exclusions) and fields",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Default, minimum, and maximum values",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Conditional existence of clauses (required, suggested, electable) and fields",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Auto-generate insurance product artifacts for PolicyCenter",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Entity model: All required entities and their attributes, typelists",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Product model: Product, Policy Line, Clauses, Clause terms",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Full set of Page Configuration Files (PCFs) to support all policy transactions",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "After you generate a new product using Advanced Product Designer, that product then displays in Product Designer.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "You can then further implement that product in Product Designer, using the following Product Designer capabilities:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Defining offerings",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Question sets",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Modifiers",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Accessing Advanced Product Designer in a Guidewire Virtual Machine",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "You should have access to a Guidewire virtual machine (VM) to complete this course. Contact Guidewire Education (edadmin@guidewire.com) if you do not have access to a Guidewire VM.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "After gaining access to a VM, follow these steps to start the PolicyCenter application and the XMind tool.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Steps to Access Advanced Product Designer for PolicyCenter in the VM",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Steps to Access XMind Tool in the VM",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Demonstration: Accessing Advanced.mp4",
+          "level": 0,
+          "bold": true
+        }
+      ],
+      "notes": "",
+      "hasTable": false,
+      "hasChart": false,
+      "hasImage": false,
+      "tableData": null,
+      "mediaReferences": []
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Accessing Advanced.mp4",
+      "path": "/academy/guidewire/videos/ch12/Accessing Advanced.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Adding pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Adding pricing.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Advance product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Advance product.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "Creating Editions.mp4",
+      "path": "/academy/guidewire/videos/ch12/Creating Editions.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "Demonstration Modeling Clauses and Clause Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Demonstration Modeling Clauses and Clause Terms.mp4"
+    },
+    {
+      "index": 6,
+      "filename": "Documenting General Information about the Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting General Information about the Product.mp4"
+    },
+    {
+      "index": 7,
+      "filename": "Documenting Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Pricing.mp4"
+    },
+    {
+      "index": 8,
+      "filename": "Documenting Risk Assessment Details.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Risk Assessment Details.mp4"
+    },
+    {
+      "index": 9,
+      "filename": "Enhancing Drop-down .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Drop-down .mp4"
+    },
+    {
+      "index": 10,
+      "filename": "Enhancing Product Model .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model .mp4"
+    },
+    {
+      "index": 11,
+      "filename": "Enhancing Product Model Properties .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model Properties .mp4"
+    },
+    {
+      "index": 12,
+      "filename": "Installed product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Installed product.mp4"
+    },
+    {
+      "index": 13,
+      "filename": "Modeling Attributes.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Attributes.mp4"
+    },
+    {
+      "index": 14,
+      "filename": "Modeling Clauses and Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Clauses and Terms.mp4"
+    },
+    {
+      "index": 15,
+      "filename": "Modeling Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Pricing.mp4"
+    },
+    {
+      "index": 16,
+      "filename": "Modeling Product, Product Line, and General Information Demo.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Product, Product Line, and General Information Demo.mp4"
+    },
+    {
+      "index": 17,
+      "filename": "Modeling Risk Objects and Exposures.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Risk Objects and Exposures.mp4"
+    },
+    {
+      "index": 18,
+      "filename": "Modeling Schedules.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Schedules.mp4"
+    },
+    {
+      "index": 19,
+      "filename": "Product Metadata Short Name.mp4",
+      "path": "/academy/guidewire/videos/ch12/Product Metadata Short Name.mp4"
+    },
+    {
+      "index": 20,
+      "filename": "Validate and Generate Product 2.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product 2.mp4"
+    },
+    {
+      "index": 21,
+      "filename": "Validate and Generate Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product.mp4"
+    },
+    {
+      "index": 22,
+      "filename": "Visualized Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Visualized Product.mp4"
+    }
+  ],
+  "hasNotes": false,
+  "hasTables": false,
+  "hasImages": false
+}

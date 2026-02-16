@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-16",
+    "slide_count": 43,
+    "slides_with_text": 41,
+    "total_words": 2696,
+    "avg_confidence": 82.64,
+    "processing_time_seconds": 18.64,
+    "extracted_at": "2026-02-15T18:22:26.879527"
+  },
+  "full_text": "Acknowledging Messages\n\nLesson\nobjectives\n\n¢ Describe messaging acknowledgement\n\nIdentify various messaging acknowledgement\nmechanisms\n\nDescribe how a messaging error is handled\nUse the administration screens to view the\nstatus of a message and manipulate it\nmanually\n\n| Use case\n\nThe bank account verification message\nmust be acknowledged synchronously\nby an external system\n\nGi\n\n1.\n\nConfigure synchronous message\nacknowledgment in the transport\nplugin\n\nDeploy changes\n\n| Guidewire servers and messaging transactions Gi\n\nH Application Context iJ Integration Context i\n\ni Event triggering & ; Sending message & H\n: (5) Message generation Payload Process synchronous : external\nA (event fired rules) Message transformation acknowledgment (transport :\ni (request plugin) plugin) : System\n\ncS :\nws transaction 2 transaction 3 &\n\n=\n= Process asynchronous\n. acknowledgement\n(reply plugin or API)\n\n« Message acknowledgement is the process in which Guidewire interprets a messaging response\nfrom an external system\n\n¢ Allactivity from acknowledging messages takes place in either transaction 3 or 4\n* Messaging occurs across multiple transactions\n\n* If. an exception is thrown, work in the current transaction is rolled back\n\nMessage acknowledgment\n\n| Plugins that acknowledge a\n\n>) P\ng m - ow\n\n&: rely via ia API =\n\n=) chro onous y\n{F Ys\nEy st liste! vcr oF poll ing\n\n| Interpreting the external system response Gi\n\nrete —\nms | {v) positive acknowledgement\n\n==\nerror External\nApplication (>) negative acknowledgment System\n\n. Sil duplicate message\nM4 seveeesseeensneeens (no response) sss\nG)\n\n* Guidewire interprets three response types\n¢ Positive acknowledgement, error, and duplicate response\n\n¢« Noresponse may also require handling\n\nMessage and MessageHistory a\n\n¢ Unsent messages that... * Positively acknowledged messages\n\n* Have yet to be sent ¢ Skipped messages\n\n* Failed send ¢ Retried messages\n\n¢ Sent messages that are...\n\n« Pending acknowledgement ACK'd History\n\nTE\n« Waiting to be retried\n. ipl\nErrored messages that... nome PSE\n« Require manual intervention\n\noomme—(XQ\n\n| Positive acknowledgements\nMessage Table Gi\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\nB~\nMsgiO__Creation Time > __ Triggering Enti Event Name 2 Destination 2 _SenderRefiD_ > _status Error Category Retries >\n1605 09/12/20189:28 PM MessageGenerator{108) _MessageGeneratorAdded 21 MegGeni2 Pending acknowledged 2) °\n\nMessageHistory Table\n\nWARNING: Production code should not modify the MessageHistory table directly.\n\nNumber of messages in table: 1\n\n1508 09/12/20189:28PM MessageGenerator(104)  MessageGeneratorAdded 21 MsgGen:12 ‘Acknowledged (10)\n\n¢ Apositive acknowledgment (ACK) is when the external system reports success\n+ Message was successfully received and processed\n* Guidewire application response to ACK\n\n+ Moves the message from Message to MessageHistory\n\ne Channec the ctatiic tn reflact acknnwladnqaemant\n\n| Messaging exceptions during send\n\nMessage Table\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\nE-\nMsgiD Creation Time  —Triggeringéntity Event Name Destination > SenderReflD > _ status Error Category > Retries\n1807 09/12/20189:34 PM BankAccount(204) _BankAccountChanged 13 ab:1807 Pending send (1) °\n\n¢ Initial send from Guidewire transport throws an exception\n* Guidewire application response\n\n« Message stays in Message table\n\n* Message status remains as Pending send (1)\n\n* Guidewire retries to send the message until reaching the maximum number of retries as\ndefined in the destination\n\n« At maximum retries, the Guidewire suspends the destination\n\nMessaging errors after send\n\nMessage Table\nWARNING: Production code should not modify the Message table directly\n\nNumber of messages in table: 1\n\n=:\nMegID ctetonTime = geingniy erent vome Destination ¢ senderefo > sats enor ategry ¢ Rete\na-\n\n1902 09/12/20189:59PM MessageGenerator(202) MessageGeneratoradded\n\n¢ Error from external system is\nknown as a Negative\nAcknowledgment (NACk)\n\n* Temporarily cannot process the\nsuccessfully received message\n\n¢ Reports error\n\n* Guidewire application response\n« Message stays in Message table\n« Message status of retryable error\n\n¢ Retry scenario\n\n* Manual retry from administrator or\nintegration code to resend message\n\n| Retrying an error\n\nMessage Table\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\nMsgiO Creation Time > Triggering Entity\n\n1902 08/12/20189:59 PM MessageGenerator(202) MessageGeneratorAdded\n\nsg. 10_Creation Time_\n\n¢ Acopy of the original\nmessage is created\nand sent\n* References the same\n\nevent and triggering\nentity\n\n1903 08/12/2018 10:00PM MessageGenerator(202) MessageGeneratorAdded\n\nEvent Name Destination >\n\nMessageHistory Table\n\n21 MsgGen:18-1\n\nSenderRefiD >\n21 MsgGen:18\n\nStatus\n\nError Category >\n\nRetryabe ero (4)\n\nending acknowledged (2)\n\nWARNING: Production code should not modify the MessageHistory table directly.\n\nNumber of messagesin table: 1\n\n« Uses a different SenderReflD\n\n* Incremented RetryCount field by 1\n\n(09/12/20189:59 PM MessageGenerator(202)  MessageGeneratorAdded\n\n21 MsgGen:i6\n\na-\nRetries > RetryTime >\n© 08/12/2018 10:00PM\n\n(09/12/2018 10:00 Pa\n\nError retried (12)\n\n* Original message is moved to\nMessageHistory table\n\nDuplicate messages\n\nMessageHistory Table\n\nWARNING: Production code should not modify the MessageHistory table directly.\n\nNumber of messages in table: 1\n\nMsgiD._ Creation Time\n1608 09/12/2018 10:28 PM MessageGenerator(205) MessageGeneratorAdded MsgGen:21\n\nMsgiD Creation Time > Triggering Entity Event Name SenderReflo.\n\n1608 09/12/2018 10:28 PM MessageGenerator(205) MessageGeneratorAdded MsgGen:21\n\n* Duplicate messages\n+ One message sent successfully\n+ Received by the external system\n\n+ External system processes the same message more than once\n\nTriggering Entity, Event Name Senderrefld.\n\nB-\n‘Status\n‘Acknowledged (10)\n\n‘Status\n‘Acknowledged (10)\n\n+ External systems responds with a positive acknowledgement (ACK) per each processed duplicate\n\n* Guidewire application response\n\n+ Increments the Duplicate Count (Dup. Count) in the Message History table\n\n| No response Gi\n\nMessage Table\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\na\nMsgiD Creation Time > Triggering Entity Event Name Destination S SenderRefiD > status Error Category > Retries\n1806 _09/12/20189:28PM MessageGenerator(104) MessageGeneratorAdded 21 MsgGen:i2 Pending acknowledged (2) °\n\n¢ Guidewire application sends message to external system\n*« No ACK or NACK from external system\n* Guidewire application response\n* Keeps the message in the Message table\n* Consider batch process to purge message table and avoid manual intervention\n\n* Apply logic for overdue messages\n\n| Contrasting retry scenarios\n\nInitial send error External system error Manual retry\n(Automatic retry during] (Automatic retry after\n\nWhat is the problem? Exception thrown in External System reports an Message needs manual\n\nbeforeSend or send error intervention\nmethods\niia cticmucecisems Internal Guidewire Integration code Administrator using Retry\nbehavior button\nShould each attempt use [RCS No Yes\nthe same SenderReflD\nWhat specifies the max Max Retries property Integration code n/a\nretry number? for messaging using plugin parameter or\ndestination script parameter\nWhat happens when the [MitateCodimies Integration code reports n/a\nCee §6suspended error with error category\n\nreached?\n\n| Reporting positive acknowledgement Gi\n\n—> aMessage.reportAck ()\n\n—> (aMessage.MessageRoot as BankAccount).IsVerified = VerificationStatus.7C VERIFIED\nbreak\n\ndefault:\n\n« In some cases, Guidewire applications use messaging to request data such as\nreports from external systems, such as:\n\n* A police report detailing an accident or burglary of insured items\n¢ A medical report detailing customary prices for given medical procedures\n¢ A fraud report detailing that a claim for a given loss has already been filed\n\n¢ In these cases, the external system responds with the report data and\nacknowledges the message\n\n| Reporting errors after send below max retries xampies) Gi\n\n* Code example 1\nstatic property get maxRetriesForRetryableMessage(): int (\n1 var value: int = 3\nif (ScriptParameters.MaxRetriesForRetryableMessage > 0) {\nvalue = ScriptParameters.MaxRetriesForRetryableMessage\n}\n\nreturn value\n\n—\n\n* Code example 2\n\n4 @Param(\"aMessage\", \"The message instance\")\nGParam(\"errorCategory\", \"a Typekey from the Error Category typelist\")\n2 static function reportExternalSystemError (aMessage: Message, errorCategory: ErrorCategory): String {\n2 var output = String. format (\"External System Error reported for message #s with error category of $s\", {aMessage.SenderRefI\n—p 22 if (aMessage.RetryCount < maxRetriesForRetryableMessage) {\n——> 25 var backOffMultiplier = aMessage.RetryCount + 1\nvar waitTime: int = backOffMultiplier * 30\n\n32 var retryTime = DateUtil.addSeconds(DateUtil.currentDate(), waitTime)\n\n—p 2: aMessage. reportError (retryTime)\n35 output += String. format(\"; retry attempt is: @s; the next retry attempt is at ts\", {( backOffultiplier), retryTime. form\n\n| Reporting errors after send at max retries Gi\n\n¢ Define typekeys in ErrorCategory typelist extension\n* ...config.extensions.typelist.ErrorCategory.ttx\n* message.reportError (errorCategory)\n\n* Call when retry maximum BB Erorcategoryat |\n\nretries limit reached ———S = =\n| typecode v VshowAlly| oe = = FE) ErorCategoytti Y | 2\n* Specify the error category Element Code Name Priori\nF reecenson|Erocaeen) _[Thetpecterortrmesegintoeiner ||\n* Application no longer tries typecode —_no_connection No Connection 1\nto resend the message typecode —_database_contention Database Contention 2\naoe typecode user_authentication User Authentication 3\n+ Alert an administrator typecode —_ unexpected_error Unexpected Error 4\ntypecode _permanent_error Permanent Error 5\ntypecode _payload_format Payload Format 6\n\n| Reporting errors after send at max retries (example) Gi\n\n“static function reportExternalSsystemError (aMessage: Message, errorCategory: ErrorCategory): String {\n\n} else ( c\nourpat += = sering. format (\"i + retry max reached ts\", (SixRSERissFoHistryableNsasaze))\n\n—> stesaage. seporttrror (errorceregory)\n—> alertadninaboutNessageError (aMeseage)\n}\n\nreturn output\n\n}\n\nThe code references a method found in the\ntrainingapp.demo.messageack.MessageAckutil class in TrainingApp\n\n| Reporting duplicates Gi\n\nGParam(\"senderRefID\", \"The SenderRefID of the message\")\nstatic function reportDuplicate(senderRefID: String): String {\nvar output: String\nYar ahessagellisuory = Query nake(Messageiistory) .compare (MessageHisrory#SenderRe(ID, Relop,Hzuels, senderRefTD) ,seLect() .AttostOneRiow\n\n=—\nAf (aMessageHistory != null) (\na al\n\nTransaction. Cur: dd (aMessagediistory)\n\naMessageliistory.reportDuplicate()\n\noutput = String. format(\"Duplicate reported for MessageHlistory with SenderRefID: ¢s with count #s\", {aMessageHistory.SenderRefID, aMessageilistory.D)\n} else (\n\noutput = String. format(\"There is no MessageHistory in the MessageHistory table for the message with SenderRefID\", {aMessageHistory.SenderRefID})\n1\nreturn output\n\n}\n\n¢ Duplicates can be reported only from MessageHistory instances\n\n¢ When an external system reports a duplicate, the integration code should find the\nrelated entry in the MessageHistory table and report the duplicate\n\n¢ The only effect this has is incrementing the MessageHistory entry's DuplicateCount integer\n\n| Reporting messages without responses\n\n* Check the Message table with:\n* Batch process, or\n* Database monitoring tool\n\n¢ Evaluate the cause and handle the\nresolution\n\n¢ Alert via email, activity, flag entry etc.\n\n© FagoverduetegotRepontsBatch gs\n\n16\nun\nae\n19\n20\na\n22\n23\nPy\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n\n39\n40\na\n\n‘class FlagQverdueLegalReporteBarch extends BatchProcessBase (\nconstruct) ( super (BatchProcessType. TC_FLAGOVERDUELEGALREPORTS) }\n\noverride function\n\n‘Transaction. rundithNevBundle(\\bundle -> {\nprint (\"Starting Flag Overdue Legal Reports batch process\")\n\nvar thresholdTine = DateUtil.addSeconds(DateUtil.currentDate(), -15)\n\nvar messageQuery = Query.nake (Message)\nmessageQuery.compare(\"SendTine\", LessThan0rEquals, thresholdTine)\nmessageQuery.compare(\"DestinationID\", Equals, 15)\n\nvar resultsbj = nessageQuery.select()\n\nge An resultedb3) (\n\nfor (currenties:\nvar relatedc?\n\n‘aBContact)\n\nAf (!relavedcontact.PlagBntries.hasMatch (\\currentEntry ->\ncurrentEntry.Reason == FlagEntryReason.1C OVERDUE LEGAL REPORT) {\n\nnew FlagEnery()\nnewEntry.Plagbate = gw.api-util.DaceUtil. currentDate()\nnewEntry.Reason = FlagEntryReason. TC _OVERDUE_LEGAL REPORT\nrelatedContact .addToFlagEntries (newEntry)\nnunberofContacteWithOverdueReportet+\n\nConfigure message acknowledgment\nmechanisms\n\n| Synchronous acknowledgement — Transport plugin Gi\n\n— var ackCode = bankAPI.verifyAccount (aMessage.SenderRefID, transformedPayload, accNumber)\n\nswitch (ackCode) {\ncase \"00!\n\n25 aMessage.reportAck()\n(aMessage.MessageRoot as BankAccount) .IsVerified = VerificationStatus.7C_INVALID\n\n=P so aMessage.reportError (ErrorCategory.7C_PAYLOAD_ FORMAT)\nbreak\ndefaul|\n\naMessage.reportAck()\n(aMessage.MessageRoot as BankAccount) .IsVerified = VerificationStatus.7C VERIFIED\nbreak\n\n}\n\nThe code can be found in the BankAccountVerificationTransport plugin send method\n\n| Asynchronous acknowledgement - Web service API Gi\n\n¢ External system replies\nusing a published web\nservice API\n\n« MessagingToolsAPI , or\n* CustomAPI\n\n« Provides a message\nacknowledgement\n\n* Positive acknowledgement\n* Report external error\n¢ Duplicate\n\n© MessagingToolsAPigs\n\nack v\nvs SOAPException\n\n@rhrows (WeiduthenticationException, \"if there are permission/authentication issues\")\n@throws (ILlegalArgumentException, “if ack is invalid\")\n\nFe ocessing was\nfunction ackMessage(ack : Acknowledgement) : boolean (\nAf (ack == mull || ack.MessageID <= 0) {\nthrow new IllegalArgunentExce|\n)\nreturn getDelegate() .ackMessage( ack )\n)\n\non (\"Acknowledgement paraneter is required\")\n\n| Asynchronous acknowledgement — Reply plugin (1) Gi\n\npackage trainingapp.deno.messaging\n\n* initTools method\n+ Executed during reply\n\notase implements MessageReply, MessageLi\nplugin instance startup, var finder: MessageFinder\nhelpful in processing var dest\n\nvar le 1 String\n\nasynchronous replies\n\nfort QueueReceiver = null\n\"entitychangereplies\"\n\n+ MessageFinder static final var _MESSA: \"REQUEST MESSAGE_OK”\nstatic final var _MESSA‘ “REQUEST_MESSAGE_DUPLICATE”\nstatic final var _MESSAGE_IV REQUEST _MESSAGE_INVALID\"\n\n+ Finds the message to be\nacknowledged based on lbackHandler, messagePinder: MessageFinder) {\nunique identifier\n\n* Typically SenderReflD and DestinationlD\n¢ PluginCallbackHandler\n+ Provides transactional context for:\n+ Acknowledging the message\n\n+ Any additional entity data changes\n\n| Asynchronous acknowledgement — Reply plugin (2)\n\no override function onMessage (jmsMessage: javax.jms.Message) {\nif (jmsMessage typeis TextMessage) (\ntry (\n\n_handler.execute(\\-> {\nvar aMessage = finder. findBySenderRefID(_senderRefID, _destinationID)\n\nif (aMessage == null || jmsMessage.getStringProperty(_MESSAGE_DUPLICATE) .HasContent || aMessage.AckCount > 0) {\nvar aMessageHistory = finder. findHistoryBySenderRefID(_senderRefID, _destination!D)\n\nnull) {\n\nvar currentTransaction = Transaction.getCurrent()\n\naMessageHistory = currentTransaction.add (aMessageHistory)\n\naMessageHistory.reportDuplicate()\n\nif (aMessageHistory\n\nFd\n\nAsynchronous acknowledgement — Reply plugin (3) Gi\nReply plugin — part three\n\nif (aMessage != null && aMessage.Ackcount == 0) {\nif (jmsMessage.getStringProperty(_MESSAGE_INVALID).MasContent) {\naMessage.reportError ()\n}\nif (jmsMessage.getStringProperty(_T7EMP_UNAVAILABLE).HasContent) {\naMessage.reportError (typekey.ErrorCategory.TC_NO_CONNECTION)\n}\nif (jmsMessage.getStringProperty (_MESSAGE_OK).MasContent) {\naMessage.reportAck ()\n}\n)\n»\n} catch (throwable : Exception) (\nthrowable.printStackTrace ()\n}\n—> jmsMessage. acknowledge ()\nU\n\nDeploy code changes\n\n¢ New reply plugin class\n¢ New or modified plugin registry\n\n¢« Newor modified destination\n\nGy Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\n186, Debug ‘Server’ Shift+F9\n¥E Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\n& Debug... Alt+Shift+F9\n\\m Attach to Local Process...\n\n[> Edit Configurations...\n\nBl import Test Results >\nI Stop ‘Server’ Ctrl+ F2\n\nGi\n\n¢ Modified reply plugin class\n\nBYE Tools VCS Window Help\nD> Run ‘Server’\n\nG& Debug ‘Server’\n\nW Run ‘Server’ with Coverage\nD Run...\n\n€ Debug...\n\n\\q Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results\n\nIl Stop ‘Server’\n\nEP show Running List\n\nStop Background\n\nChanged C\n\n| Demonstration G\nAsynchronous acknowledgment scenarios\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — What is a messaging acknowledgement from an external system?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see\n\nAnswer\n\nan What is a messaging acknowledgement from an external system?\n\n¢\n¢\n\nAmessaging acknowledgement is Guidewire's process for interpreting a messaging\nresponse from an external system.\n\nSoo eS eee soe ese ese\n\nQuestion\n\n_— — Whatare the possible ways Guidewire can interpret an external system's\n\na response to a message?\n\n¢\n\nSeo e Soe esses see see\n\nGi\n\nAnswer\n\n_- — Whatare the possible ways Guidewire can interpret an external system's\nY response to a message?\n¢\n\nGuidewire can interpret an external system's response, if one exists, as a positive\nacknowledgement (ACK), negative acknowledgment (NACK), or duplicate.\n\nSoo eS eee soe ese ese\n\nGi\n\nQuestion\n\n_— — Under what three circumstances is an entry added to the\n: MessageHistory table?\n\n¢\n¢\n\nSeo e Soe esses see see\n\nAnswer Gi\n\n_— — Under what three circumstances is an entry added to the\nPa MessageHistory table?\n¢\n\nAmessage is added to the message history table when a message is positively\nacknowledged, skipped, or retried. For the first two, the message is removed entirely\nfrom the Message table. For the third, a copy of the original message remains in the\nMessage table.\n\nSoo eS eee soe ese ese\n\nQuestion\n\n,— — Under what circumstances are acknowledgements processed:\n\n¢\no A) By the transport plugin?\n\nB) By the reply plugin?\n\nC) Without involvement from any plugin?\n\nSeo e Soe esses see see\n\nAnswer Gi\n\n,— — Under what circumstances are acknowledgements processed:\n\n7\n,\n¢ A\n\nB\nCc\n\nBy the transport plugin?\n\nBy the reply plugin?\n\nwv\n\nWithout involvement from any plugin?\n\nA) When the reply is received synchronously.\n\nB) When the reply is received asynchronously through a listener or polling\nmechanism.\n\nie)\n\nWhen the reply is received asynchronously by an external system call to an API.\n\nSoo eS eee soe ese ese\n\nQuestion\n\n_- — When should you use each of the following methods?\n¢\n\no A) aMessage.reportError(retryTime)?\n\nB) aMessage.reportError(errorCategory)?\n\nSeo e Soe esses see see\n\nAnswer Gi\n\n,- — When should you use each of the following methods?\n¢\n\n“ A\n\nB\n\naMessage.reportError(retryTime)?\n\naMessage.reportError(errorCategory)?\n\nA) When the message needs to be retried and the message has not reached its\nmaximum number of retries.\n\nB) When the message needs to be retried, but the message has reached its\nmaximum number of retries.\n\nSoo eS eee soe ese ese\n\nLesson\nobjectives\nreview\n\n¢ Describe messaging acknowledgement\n\nIdentify various messaging acknowledgement\nmechanisms\n\nDescribe how a messaging error is handled\nUse the administration screens to view the\nstatus of a message and manipulate it\nmanually\n\n| Student exercise\n\nConfigure synchronous acknowledgment",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Acknowledging Messages",
+      "word_count": 2,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe messaging acknowledgement\n\nIdentify various messaging acknowledgement\nmechanisms\n\nDescribe how a messaging error is handled\nUse the administration screens to view the\nstatus of a message and manipulate it\nmanually",
+      "word_count": 33,
+      "avg_confidence": 93.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Use case\n\nThe bank account verification message\nmust be acknowledged synchronously\nby an external system\n\nGi\n\n1.\n\nConfigure synchronous message\nacknowledgment in the transport\nplugin\n\nDeploy changes",
+      "word_count": 28,
+      "avg_confidence": 93.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Guidewire servers and messaging transactions Gi\n\nH Application Context iJ Integration Context i\n\ni Event triggering & ; Sending message & H\n: (5) Message generation Payload Process synchronous : external\nA (event fired rules) Message transformation acknowledgment (transport :\ni (request plugin) plugin) : System\n\ncS :\nws transaction 2 transaction 3 &\n\n=\n= Process asynchronous\n. acknowledgement\n(reply plugin or API)\n\n« Message acknowledgement is the process in which Guidewire interprets a messaging response\nfrom an external system\n\n¢ Allactivity from acknowledging messages takes place in either transaction 3 or 4\n* Messaging occurs across multiple transactions\n\n* If. an exception is thrown, work in the current transaction is rolled back",
+      "word_count": 115,
+      "avg_confidence": 82.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Message acknowledgment",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Plugins that acknowledge a\n\n>) P\ng m - ow\n\n&: rely via ia API =\n\n=) chro onous y\n{F Ys\nEy st liste! vcr oF poll ing",
+      "word_count": 30,
+      "avg_confidence": 55.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Interpreting the external system response Gi\n\nrete —\nms | {v) positive acknowledgement\n\n==\nerror External\nApplication (>) negative acknowledgment System\n\n. Sil duplicate message\nM4 seveeesseeensneeens (no response) sss\nG)\n\n* Guidewire interprets three response types\n¢ Positive acknowledgement, error, and duplicate response\n\n¢« Noresponse may also require handling",
+      "word_count": 51,
+      "avg_confidence": 76.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Message and MessageHistory a\n\n¢ Unsent messages that... * Positively acknowledged messages\n\n* Have yet to be sent ¢ Skipped messages\n\n* Failed send ¢ Retried messages\n\n¢ Sent messages that are...\n\n« Pending acknowledgement ACK'd History\n\nTE\n« Waiting to be retried\n. ipl\nErrored messages that... nome PSE\n« Require manual intervention\n\noomme—(XQ",
+      "word_count": 55,
+      "avg_confidence": 77.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Positive acknowledgements\nMessage Table Gi\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\nB~\nMsgiO__Creation Time > __ Triggering Enti Event Name 2 Destination 2 _SenderRefiD_ > _status Error Category Retries >\n1605 09/12/20189:28 PM MessageGenerator{108) _MessageGeneratorAdded 21 MegGeni2 Pending acknowledged 2) °\n\nMessageHistory Table\n\nWARNING: Production code should not modify the MessageHistory table directly.\n\nNumber of messages in table: 1\n\n1508 09/12/20189:28PM MessageGenerator(104)  MessageGeneratorAdded 21 MsgGen:12 ‘Acknowledged (10)\n\n¢ Apositive acknowledgment (ACK) is when the external system reports success\n+ Message was successfully received and processed\n* Guidewire application response to ACK\n\n+ Moves the message from Message to MessageHistory\n\ne Channec the ctatiic tn reflact acknnwladnqaemant",
+      "word_count": 117,
+      "avg_confidence": 72.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Messaging exceptions during send\n\nMessage Table\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\nE-\nMsgiD Creation Time  —Triggeringéntity Event Name Destination > SenderReflD > _ status Error Category > Retries\n1807 09/12/20189:34 PM BankAccount(204) _BankAccountChanged 13 ab:1807 Pending send (1) °\n\n¢ Initial send from Guidewire transport throws an exception\n* Guidewire application response\n\n« Message stays in Message table\n\n* Message status remains as Pending send (1)\n\n* Guidewire retries to send the message until reaching the maximum number of retries as\ndefined in the destination\n\n« At maximum retries, the Guidewire suspends the destination",
+      "word_count": 106,
+      "avg_confidence": 82.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Messaging errors after send\n\nMessage Table\nWARNING: Production code should not modify the Message table directly\n\nNumber of messages in table: 1\n\n=:\nMegID ctetonTime = geingniy erent vome Destination ¢ senderefo > sats enor ategry ¢ Rete\na-\n\n1902 09/12/20189:59PM MessageGenerator(202) MessageGeneratoradded\n\n¢ Error from external system is\nknown as a Negative\nAcknowledgment (NACk)\n\n* Temporarily cannot process the\nsuccessfully received message\n\n¢ Reports error\n\n* Guidewire application response\n« Message stays in Message table\n« Message status of retryable error\n\n¢ Retry scenario\n\n* Manual retry from administrator or\nintegration code to resend message",
+      "word_count": 96,
+      "avg_confidence": 77.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Retrying an error\n\nMessage Table\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\nMsgiO Creation Time > Triggering Entity\n\n1902 08/12/20189:59 PM MessageGenerator(202) MessageGeneratorAdded\n\nsg. 10_Creation Time_\n\n¢ Acopy of the original\nmessage is created\nand sent\n* References the same\n\nevent and triggering\nentity\n\n1903 08/12/2018 10:00PM MessageGenerator(202) MessageGeneratorAdded\n\nEvent Name Destination >\n\nMessageHistory Table\n\n21 MsgGen:18-1\n\nSenderRefiD >\n21 MsgGen:18\n\nStatus\n\nError Category >\n\nRetryabe ero (4)\n\nending acknowledged (2)\n\nWARNING: Production code should not modify the MessageHistory table directly.\n\nNumber of messagesin table: 1\n\n« Uses a different SenderReflD\n\n* Incremented RetryCount field by 1\n\n(09/12/20189:59 PM MessageGenerator(202)  MessageGeneratorAdded\n\n21 MsgGen:i6\n\na-\nRetries > RetryTime >\n© 08/12/2018 10:00PM\n\n(09/12/2018 10:00 Pa\n\nError retried (12)\n\n* Original message is moved to\nMessageHistory table",
+      "word_count": 135,
+      "avg_confidence": 73.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Duplicate messages\n\nMessageHistory Table\n\nWARNING: Production code should not modify the MessageHistory table directly.\n\nNumber of messages in table: 1\n\nMsgiD._ Creation Time\n1608 09/12/2018 10:28 PM MessageGenerator(205) MessageGeneratorAdded MsgGen:21\n\nMsgiD Creation Time > Triggering Entity Event Name SenderReflo.\n\n1608 09/12/2018 10:28 PM MessageGenerator(205) MessageGeneratorAdded MsgGen:21\n\n* Duplicate messages\n+ One message sent successfully\n+ Received by the external system\n\n+ External system processes the same message more than once\n\nTriggering Entity, Event Name Senderrefld.\n\nB-\n‘Status\n‘Acknowledged (10)\n\n‘Status\n‘Acknowledged (10)\n\n+ External systems responds with a positive acknowledgement (ACK) per each processed duplicate\n\n* Guidewire application response\n\n+ Increments the Duplicate Count (Dup. Count) in the Message History table",
+      "word_count": 111,
+      "avg_confidence": 79.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| No response Gi\n\nMessage Table\n\nWARNING: Production code should not modify the Message table directly.\n\nNumber of messages in table: 1\n\na\nMsgiD Creation Time > Triggering Entity Event Name Destination S SenderRefiD > status Error Category > Retries\n1806 _09/12/20189:28PM MessageGenerator(104) MessageGeneratorAdded 21 MsgGen:i2 Pending acknowledged (2) °\n\n¢ Guidewire application sends message to external system\n*« No ACK or NACK from external system\n* Guidewire application response\n* Keeps the message in the Message table\n* Consider batch process to purge message table and avoid manual intervention\n\n* Apply logic for overdue messages",
+      "word_count": 96,
+      "avg_confidence": 82.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Contrasting retry scenarios\n\nInitial send error External system error Manual retry\n(Automatic retry during] (Automatic retry after\n\nWhat is the problem? Exception thrown in External System reports an Message needs manual\n\nbeforeSend or send error intervention\nmethods\niia cticmucecisems Internal Guidewire Integration code Administrator using Retry\nbehavior button\nShould each attempt use [RCS No Yes\nthe same SenderReflD\nWhat specifies the max Max Retries property Integration code n/a\nretry number? for messaging using plugin parameter or\ndestination script parameter\nWhat happens when the [MitateCodimies Integration code reports n/a\nCee §6suspended error with error category\n\nreached?",
+      "word_count": 96,
+      "avg_confidence": 89.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Reporting positive acknowledgement Gi\n\n—> aMessage.reportAck ()\n\n—> (aMessage.MessageRoot as BankAccount).IsVerified = VerificationStatus.7C VERIFIED\nbreak\n\ndefault:\n\n« In some cases, Guidewire applications use messaging to request data such as\nreports from external systems, such as:\n\n* A police report detailing an accident or burglary of insured items\n¢ A medical report detailing customary prices for given medical procedures\n¢ A fraud report detailing that a claim for a given loss has already been filed\n\n¢ In these cases, the external system responds with the report data and\nacknowledges the message",
+      "word_count": 91,
+      "avg_confidence": 87.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Reporting errors after send below max retries xampies) Gi\n\n* Code example 1\nstatic property get maxRetriesForRetryableMessage(): int (\n1 var value: int = 3\nif (ScriptParameters.MaxRetriesForRetryableMessage > 0) {\nvalue = ScriptParameters.MaxRetriesForRetryableMessage\n}\n\nreturn value\n\n—\n\n* Code example 2\n\n4 @Param(\"aMessage\", \"The message instance\")\nGParam(\"errorCategory\", \"a Typekey from the Error Category typelist\")\n2 static function reportExternalSystemError (aMessage: Message, errorCategory: ErrorCategory): String {\n2 var output = String. format (\"External System Error reported for message #s with error category of $s\", {aMessage.SenderRefI\n—p 22 if (aMessage.RetryCount < maxRetriesForRetryableMessage) {\n——> 25 var backOffMultiplier = aMessage.RetryCount + 1\nvar waitTime: int = backOffMultiplier * 30\n\n32 var retryTime = DateUtil.addSeconds(DateUtil.currentDate(), waitTime)\n\n—p 2: aMessage. reportError (retryTime)\n35 output += String. format(\"; retry attempt is: @s; the next retry attempt is at ts\", {( backOffultiplier), retryTime. form",
+      "word_count": 137,
+      "avg_confidence": 81.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Reporting errors after send at max retries Gi\n\n¢ Define typekeys in ErrorCategory typelist extension\n* ...config.extensions.typelist.ErrorCategory.ttx\n* message.reportError (errorCategory)\n\n* Call when retry maximum BB Erorcategoryat |\n\nretries limit reached ———S = =\n| typecode v VshowAlly| oe = = FE) ErorCategoytti Y | 2\n* Specify the error category Element Code Name Priori\nF reecenson|Erocaeen) _[Thetpecterortrmesegintoeiner ||\n* Application no longer tries typecode —_no_connection No Connection 1\nto resend the message typecode —_database_contention Database Contention 2\naoe typecode user_authentication User Authentication 3\n+ Alert an administrator typecode —_ unexpected_error Unexpected Error 4\ntypecode _permanent_error Permanent Error 5\ntypecode _payload_format Payload Format 6",
+      "word_count": 105,
+      "avg_confidence": 76.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Reporting errors after send at max retries (example) Gi\n\n“static function reportExternalSsystemError (aMessage: Message, errorCategory: ErrorCategory): String {\n\n} else ( c\nourpat += = sering. format (\"i + retry max reached ts\", (SixRSERissFoHistryableNsasaze))\n\n—> stesaage. seporttrror (errorceregory)\n—> alertadninaboutNessageError (aMeseage)\n}\n\nreturn output\n\n}\n\nThe code references a method found in the\ntrainingapp.demo.messageack.MessageAckutil class in TrainingApp",
+      "word_count": 58,
+      "avg_confidence": 76.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Reporting duplicates Gi\n\nGParam(\"senderRefID\", \"The SenderRefID of the message\")\nstatic function reportDuplicate(senderRefID: String): String {\nvar output: String\nYar ahessagellisuory = Query nake(Messageiistory) .compare (MessageHisrory#SenderRe(ID, Relop,Hzuels, senderRefTD) ,seLect() .AttostOneRiow\n\n=—\nAf (aMessageHistory != null) (\na al\n\nTransaction. Cur: dd (aMessagediistory)\n\naMessageliistory.reportDuplicate()\n\noutput = String. format(\"Duplicate reported for MessageHlistory with SenderRefID: ¢s with count #s\", {aMessageHistory.SenderRefID, aMessageilistory.D)\n} else (\n\noutput = String. format(\"There is no MessageHistory in the MessageHistory table for the message with SenderRefID\", {aMessageHistory.SenderRefID})\n1\nreturn output\n\n}\n\n¢ Duplicates can be reported only from MessageHistory instances\n\n¢ When an external system reports a duplicate, the integration code should find the\nrelated entry in the MessageHistory table and report the duplicate\n\n¢ The only effect this has is incrementing the MessageHistory entry's DuplicateCount integer",
+      "word_count": 128,
+      "avg_confidence": 80.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Reporting messages without responses\n\n* Check the Message table with:\n* Batch process, or\n* Database monitoring tool\n\n¢ Evaluate the cause and handle the\nresolution\n\n¢ Alert via email, activity, flag entry etc.\n\n© FagoverduetegotRepontsBatch gs\n\n16\nun\nae\n19\n20\na\n22\n23\nPy\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n\n39\n40\na\n\n‘class FlagQverdueLegalReporteBarch extends BatchProcessBase (\nconstruct) ( super (BatchProcessType. TC_FLAGOVERDUELEGALREPORTS) }\n\noverride function\n\n‘Transaction. rundithNevBundle(\\bundle -> {\nprint (\"Starting Flag Overdue Legal Reports batch process\")\n\nvar thresholdTine = DateUtil.addSeconds(DateUtil.currentDate(), -15)\n\nvar messageQuery = Query.nake (Message)\nmessageQuery.compare(\"SendTine\", LessThan0rEquals, thresholdTine)\nmessageQuery.compare(\"DestinationID\", Equals, 15)\n\nvar resultsbj = nessageQuery.select()\n\nge An resultedb3) (\n\nfor (currenties:\nvar relatedc?\n\n‘aBContact)\n\nAf (!relavedcontact.PlagBntries.hasMatch (\\currentEntry ->\ncurrentEntry.Reason == FlagEntryReason.1C OVERDUE LEGAL REPORT) {\n\nnew FlagEnery()\nnewEntry.Plagbate = gw.api-util.DaceUtil. currentDate()\nnewEntry.Reason = FlagEntryReason. TC _OVERDUE_LEGAL REPORT\nrelatedContact .addToFlagEntries (newEntry)\nnunberofContacteWithOverdueReportet+",
+      "word_count": 144,
+      "avg_confidence": 72.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Configure message acknowledgment\nmechanisms",
+      "word_count": 4,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Synchronous acknowledgement — Transport plugin Gi\n\n— var ackCode = bankAPI.verifyAccount (aMessage.SenderRefID, transformedPayload, accNumber)\n\nswitch (ackCode) {\ncase \"00!\n\n25 aMessage.reportAck()\n(aMessage.MessageRoot as BankAccount) .IsVerified = VerificationStatus.7C_INVALID\n\n=P so aMessage.reportError (ErrorCategory.7C_PAYLOAD_ FORMAT)\nbreak\ndefaul|\n\naMessage.reportAck()\n(aMessage.MessageRoot as BankAccount) .IsVerified = VerificationStatus.7C VERIFIED\nbreak\n\n}\n\nThe code can be found in the BankAccountVerificationTransport plugin send method",
+      "word_count": 56,
+      "avg_confidence": 83.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Asynchronous acknowledgement - Web service API Gi\n\n¢ External system replies\nusing a published web\nservice API\n\n« MessagingToolsAPI , or\n* CustomAPI\n\n« Provides a message\nacknowledgement\n\n* Positive acknowledgement\n* Report external error\n¢ Duplicate\n\n© MessagingToolsAPigs\n\nack v\nvs SOAPException\n\n@rhrows (WeiduthenticationException, \"if there are permission/authentication issues\")\n@throws (ILlegalArgumentException, “if ack is invalid\")\n\nFe ocessing was\nfunction ackMessage(ack : Acknowledgement) : boolean (\nAf (ack == mull || ack.MessageID <= 0) {\nthrow new IllegalArgunentExce|\n)\nreturn getDelegate() .ackMessage( ack )\n)\n\non (\"Acknowledgement paraneter is required\")",
+      "word_count": 91,
+      "avg_confidence": 78.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Asynchronous acknowledgement — Reply plugin (1) Gi\n\npackage trainingapp.deno.messaging\n\n* initTools method\n+ Executed during reply\n\notase implements MessageReply, MessageLi\nplugin instance startup, var finder: MessageFinder\nhelpful in processing var dest\n\nvar le 1 String\n\nasynchronous replies\n\nfort QueueReceiver = null\n\"entitychangereplies\"\n\n+ MessageFinder static final var _MESSA: \"REQUEST MESSAGE_OK”\nstatic final var _MESSA‘ “REQUEST_MESSAGE_DUPLICATE”\nstatic final var _MESSAGE_IV REQUEST _MESSAGE_INVALID\"\n\n+ Finds the message to be\nacknowledged based on lbackHandler, messagePinder: MessageFinder) {\nunique identifier\n\n* Typically SenderReflD and DestinationlD\n¢ PluginCallbackHandler\n+ Provides transactional context for:\n+ Acknowledging the message\n\n+ Any additional entity data changes",
+      "word_count": 99,
+      "avg_confidence": 77.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Asynchronous acknowledgement — Reply plugin (2)\n\no override function onMessage (jmsMessage: javax.jms.Message) {\nif (jmsMessage typeis TextMessage) (\ntry (\n\n_handler.execute(\\-> {\nvar aMessage = finder. findBySenderRefID(_senderRefID, _destinationID)\n\nif (aMessage == null || jmsMessage.getStringProperty(_MESSAGE_DUPLICATE) .HasContent || aMessage.AckCount > 0) {\nvar aMessageHistory = finder. findHistoryBySenderRefID(_senderRefID, _destination!D)\n\nnull) {\n\nvar currentTransaction = Transaction.getCurrent()\n\naMessageHistory = currentTransaction.add (aMessageHistory)\n\naMessageHistory.reportDuplicate()\n\nif (aMessageHistory\n\nFd",
+      "word_count": 61,
+      "avg_confidence": 76.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Asynchronous acknowledgement — Reply plugin (3) Gi\nReply plugin — part three\n\nif (aMessage != null && aMessage.Ackcount == 0) {\nif (jmsMessage.getStringProperty(_MESSAGE_INVALID).MasContent) {\naMessage.reportError ()\n}\nif (jmsMessage.getStringProperty(_T7EMP_UNAVAILABLE).HasContent) {\naMessage.reportError (typekey.ErrorCategory.TC_NO_CONNECTION)\n}\nif (jmsMessage.getStringProperty (_MESSAGE_OK).MasContent) {\naMessage.reportAck ()\n}\n)\n»\n} catch (throwable : Exception) (\nthrowable.printStackTrace ()\n}\n—> jmsMessage. acknowledge ()\nU",
+      "word_count": 56,
+      "avg_confidence": 74.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Deploy code changes\n\n¢ New reply plugin class\n¢ New or modified plugin registry\n\n¢« Newor modified destination\n\nGy Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\n186, Debug ‘Server’ Shift+F9\n¥E Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\n& Debug... Alt+Shift+F9\n\\m Attach to Local Process...\n\n[> Edit Configurations...\n\nBl import Test Results >\nI Stop ‘Server’ Ctrl+ F2\n\nGi\n\n¢ Modified reply plugin class\n\nBYE Tools VCS Window Help\nD> Run ‘Server’\n\nG& Debug ‘Server’\n\nW Run ‘Server’ with Coverage\nD Run...\n\n€ Debug...\n\n\\q Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results\n\nIl Stop ‘Server’\n\nEP show Running List\n\nStop Background\n\nChanged C",
+      "word_count": 109,
+      "avg_confidence": 78.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Demonstration G\nAsynchronous acknowledgment scenarios\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n_- — What is a messaging acknowledgement from an external system?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see",
+      "word_count": 21,
+      "avg_confidence": 79.28,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\nan What is a messaging acknowledgement from an external system?\n\n¢\n¢\n\nAmessaging acknowledgement is Guidewire's process for interpreting a messaging\nresponse from an external system.\n\nSoo eS eee soe ese ese",
+      "word_count": 33,
+      "avg_confidence": 82.48,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question\n\n_— — Whatare the possible ways Guidewire can interpret an external system's\n\na response to a message?\n\n¢\n\nSeo e Soe esses see see\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 79.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer\n\n_- — Whatare the possible ways Guidewire can interpret an external system's\nY response to a message?\n¢\n\nGuidewire can interpret an external system's response, if one exists, as a positive\nacknowledgement (ACK), negative acknowledgment (NACK), or duplicate.\n\nSoo eS eee soe ese ese\n\nGi",
+      "word_count": 46,
+      "avg_confidence": 80.98,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question\n\n_— — Under what three circumstances is an entry added to the\n: MessageHistory table?\n\n¢\n¢\n\nSeo e Soe esses see see",
+      "word_count": 24,
+      "avg_confidence": 82.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer Gi\n\n_— — Under what three circumstances is an entry added to the\nPa MessageHistory table?\n¢\n\nAmessage is added to the message history table when a message is positively\nacknowledged, skipped, or retried. For the first two, the message is removed entirely\nfrom the Message table. For the third, a copy of the original message remains in the\nMessage table.\n\nSoo eS eee soe ese ese",
+      "word_count": 68,
+      "avg_confidence": 87.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question\n\n,— — Under what circumstances are acknowledgements processed:\n\n¢\no A) By the transport plugin?\n\nB) By the reply plugin?\n\nC) Without involvement from any plugin?\n\nSeo e Soe esses see see",
+      "word_count": 33,
+      "avg_confidence": 89.28,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer Gi\n\n,— — Under what circumstances are acknowledgements processed:\n\n7\n,\n¢ A\n\nB\nCc\n\nBy the transport plugin?\n\nBy the reply plugin?\n\nwv\n\nWithout involvement from any plugin?\n\nA) When the reply is received synchronously.\n\nB) When the reply is received asynchronously through a listener or polling\nmechanism.\n\nie)\n\nWhen the reply is received asynchronously by an external system call to an API.\n\nSoo eS eee soe ese ese",
+      "word_count": 71,
+      "avg_confidence": 84.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Question\n\n_- — When should you use each of the following methods?\n¢\n\no A) aMessage.reportError(retryTime)?\n\nB) aMessage.reportError(errorCategory)?\n\nSeo e Soe esses see see",
+      "word_count": 24,
+      "avg_confidence": 85.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Answer Gi\n\n,- — When should you use each of the following methods?\n¢\n\n“ A\n\nB\n\naMessage.reportError(retryTime)?\n\naMessage.reportError(errorCategory)?\n\nA) When the message needs to be retried and the message has not reached its\nmaximum number of retries.\n\nB) When the message needs to be retried, but the message has reached its\nmaximum number of retries.\n\nSoo eS eee soe ese ese",
+      "word_count": 62,
+      "avg_confidence": 86.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe messaging acknowledgement\n\nIdentify various messaging acknowledgement\nmechanisms\n\nDescribe how a messaging error is handled\nUse the administration screens to view the\nstatus of a message and manipulate it\nmanually",
+      "word_count": 34,
+      "avg_confidence": 93.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "| Student exercise\n\nConfigure synchronous acknowledgment",
+      "word_count": 6,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

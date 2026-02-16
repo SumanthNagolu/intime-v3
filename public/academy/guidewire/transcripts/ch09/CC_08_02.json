@@ -1,0 +1,2625 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_08_02.mp4",
+    "video_stem": "CC_08_02",
+    "duration_seconds": 240.87,
+    "duration_formatted": "00:04:00.870",
+    "segment_count": 29,
+    "word_count": 386,
+    "avg_confidence": 0.9347,
+    "transcription_time_seconds": 13.56,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:38:29.055490"
+  },
+  "full_text": "Succeed Insurance requires that any administrative law judge, or ALJ, associated with the matter should be displayed in the Hearing Details section of the Matter screen. This means that I need to add a Claim Contact widget to an existing view. The first step is to navigate to the matter I used in the last demonstration. Here is where to place the ALJ widget, at the bottom of the Hearing Details section. Now I'll type Alt Shift I to view the details of this page. The view I need to edit is the Matter Details detail view. Now I'll close this info page. So in Claim Center Studio, I navigate to the Matter Details DV. I'll add a Claim Contact Input widget. And place it at the bottom of the Hearing Details section. The widget must have a locally unique ID. The widget should be associated with the claim associated with the current matter. The widget should be associated with the claim associated with the current matter. Users should be able to edit the ALJ from this page. To avoid conflicts with existing matters, the ALJ field will not be required. I need a display key for the widget's label. Now I'll add the display key to the widget's label property. The value to be displayed in the widget is the ALJ associated with the matter. The range of possible values from which the ALJ can be chosen is the virtual list of all the adjudicators associated with the claim. The value type must be changed to the adjudicator. And the value type must be changed to adjudicator. Now I'll save my work so that I can test it in the user interface. Here I am logged in as Andy Applegate, and I have already reloaded the PCF files. I navigate to the parties involved page. Here I'll delete the existing administrative law judge. Now I'll navigate to the litigation page. Now I'll navigate to the litigation page. I'll edit the existing matter. There are no adjudicators available to fill the ALJ role. So I will create a new one. When I save the adjudicator. And the matter. The new ALJ is visible. The new ALJ should also appear on the parties involved list. And she does. This concludes the adding a claim contact widget demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.26,
+      "end": 18.64,
+      "start_formatted": "00:00:01.260",
+      "end_formatted": "00:00:18.640",
+      "text": "Succeed Insurance requires that any administrative law judge, or ALJ, associated with the matter should be displayed in the Hearing Details section of the Matter screen. This means that I need to add a Claim Contact widget to an existing view. The first step is to navigate to the matter I used in the last demonstration.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 1.26,
+          "end": 1.78,
+          "probability": 0.9487
+        },
+        {
+          "word": "Insurance",
+          "start": 1.78,
+          "end": 2.1,
+          "probability": 0.3025
+        },
+        {
+          "word": "requires",
+          "start": 2.1,
+          "end": 2.66,
+          "probability": 0.9878
+        },
+        {
+          "word": "that",
+          "start": 2.66,
+          "end": 2.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "any",
+          "start": 2.94,
+          "end": 3.18,
+          "probability": 0.9937
+        },
+        {
+          "word": "administrative",
+          "start": 3.18,
+          "end": 3.72,
+          "probability": 0.6196
+        },
+        {
+          "word": "law",
+          "start": 3.72,
+          "end": 4.12,
+          "probability": 0.9912
+        },
+        {
+          "word": "judge,",
+          "start": 4.12,
+          "end": 4.52,
+          "probability": 0.9927
+        },
+        {
+          "word": "or",
+          "start": 4.54,
+          "end": 4.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "ALJ,",
+          "start": 4.94,
+          "end": 5.56,
+          "probability": 0.9854
+        },
+        {
+          "word": "associated",
+          "start": 5.8,
+          "end": 6.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "with",
+          "start": 6.5,
+          "end": 6.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 6.74,
+          "end": 6.86,
+          "probability": 0.6104
+        },
+        {
+          "word": "matter",
+          "start": 6.86,
+          "end": 7.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "should",
+          "start": 7.12,
+          "end": 7.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 7.32,
+          "end": 7.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed",
+          "start": 7.48,
+          "end": 7.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 7.9,
+          "end": 8.08,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 8.08,
+          "end": 8.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "Hearing",
+          "start": 8.16,
+          "end": 8.44,
+          "probability": 0.7002
+        },
+        {
+          "word": "Details",
+          "start": 8.44,
+          "end": 8.94,
+          "probability": 0.981
+        },
+        {
+          "word": "section",
+          "start": 8.94,
+          "end": 9.4,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 9.4,
+          "end": 9.6,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 9.6,
+          "end": 9.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "Matter",
+          "start": 9.7,
+          "end": 9.9,
+          "probability": 0.856
+        },
+        {
+          "word": "screen.",
+          "start": 9.9,
+          "end": 10.32,
+          "probability": 0.9292
+        },
+        {
+          "word": "This",
+          "start": 10.62,
+          "end": 11.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "means",
+          "start": 11.06,
+          "end": 11.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 11.28,
+          "end": 11.48,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 11.48,
+          "end": 11.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "need",
+          "start": 11.58,
+          "end": 11.74,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 11.74,
+          "end": 11.88,
+          "probability": 0.998
+        },
+        {
+          "word": "add",
+          "start": 11.88,
+          "end": 12.04,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 12.04,
+          "end": 12.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "Claim",
+          "start": 12.2,
+          "end": 12.42,
+          "probability": 0.9204
+        },
+        {
+          "word": "Contact",
+          "start": 12.42,
+          "end": 12.84,
+          "probability": 0.9653
+        },
+        {
+          "word": "widget",
+          "start": 12.84,
+          "end": 13.22,
+          "probability": 0.9165
+        },
+        {
+          "word": "to",
+          "start": 13.22,
+          "end": 13.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 13.48,
+          "end": 13.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "existing",
+          "start": 13.62,
+          "end": 14.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "view.",
+          "start": 14.04,
+          "end": 14.42,
+          "probability": 0.9673
+        },
+        {
+          "word": "The",
+          "start": 14.72,
+          "end": 15.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "first",
+          "start": 15.06,
+          "end": 15.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "step",
+          "start": 15.32,
+          "end": 15.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 15.64,
+          "end": 15.78,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 15.78,
+          "end": 15.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigate",
+          "start": 15.92,
+          "end": 16.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 16.28,
+          "end": 16.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 16.52,
+          "end": 16.64,
+          "probability": 0.999
+        },
+        {
+          "word": "matter",
+          "start": 16.64,
+          "end": 16.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 16.92,
+          "end": 17.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "used",
+          "start": 17.12,
+          "end": 17.38,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 17.38,
+          "end": 17.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 17.52,
+          "end": 17.6,
+          "probability": 0.998
+        },
+        {
+          "word": "last",
+          "start": 17.6,
+          "end": 17.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration.",
+          "start": 17.88,
+          "end": 18.64,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 26.08,
+      "end": 44.3,
+      "start_formatted": "00:00:26.080",
+      "end_formatted": "00:00:44.300",
+      "text": "Here is where to place the ALJ widget, at the bottom of the Hearing Details section. Now I'll type Alt Shift I to view the details of this page. The view I need to edit is the Matter Details detail view. Now I'll close this info page. So in Claim Center Studio, I navigate to the Matter Details DV.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 26.08,
+          "end": 26.58,
+          "probability": 0.8618
+        },
+        {
+          "word": "is",
+          "start": 26.58,
+          "end": 26.7,
+          "probability": 0.9482
+        },
+        {
+          "word": "where",
+          "start": 26.7,
+          "end": 26.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 26.86,
+          "end": 27.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "place",
+          "start": 27.0,
+          "end": 27.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 27.24,
+          "end": 27.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "ALJ",
+          "start": 27.4,
+          "end": 27.94,
+          "probability": 0.96
+        },
+        {
+          "word": "widget,",
+          "start": 27.94,
+          "end": 28.32,
+          "probability": 0.9551
+        },
+        {
+          "word": "at",
+          "start": 28.5,
+          "end": 28.74,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 28.74,
+          "end": 28.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "bottom",
+          "start": 28.84,
+          "end": 29.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 29.12,
+          "end": 29.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 29.28,
+          "end": 29.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Hearing",
+          "start": 29.38,
+          "end": 29.62,
+          "probability": 0.3848
+        },
+        {
+          "word": "Details",
+          "start": 29.62,
+          "end": 30.16,
+          "probability": 0.9321
+        },
+        {
+          "word": "section.",
+          "start": 30.16,
+          "end": 30.66,
+          "probability": 0.9712
+        },
+        {
+          "word": "Now",
+          "start": 31.02,
+          "end": 31.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "I'll",
+          "start": 31.46,
+          "end": 31.64,
+          "probability": 0.9756
+        },
+        {
+          "word": "type",
+          "start": 31.64,
+          "end": 31.9,
+          "probability": 0.9727
+        },
+        {
+          "word": "Alt",
+          "start": 31.9,
+          "end": 32.12,
+          "probability": 0.6846
+        },
+        {
+          "word": "Shift",
+          "start": 32.12,
+          "end": 32.42,
+          "probability": 0.4041
+        },
+        {
+          "word": "I",
+          "start": 32.42,
+          "end": 32.58,
+          "probability": 0.9175
+        },
+        {
+          "word": "to",
+          "start": 32.58,
+          "end": 32.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "view",
+          "start": 32.68,
+          "end": 32.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 32.84,
+          "end": 33.0,
+          "probability": 0.9932
+        },
+        {
+          "word": "details",
+          "start": 33.0,
+          "end": 33.42,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 33.42,
+          "end": 33.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 33.62,
+          "end": 33.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "page.",
+          "start": 33.78,
+          "end": 34.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "The",
+          "start": 34.44,
+          "end": 34.84,
+          "probability": 0.9941
+        },
+        {
+          "word": "view",
+          "start": 34.84,
+          "end": 35.02,
+          "probability": 0.9497
+        },
+        {
+          "word": "I",
+          "start": 35.02,
+          "end": 35.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "need",
+          "start": 35.18,
+          "end": 35.36,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 35.36,
+          "end": 35.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "edit",
+          "start": 35.5,
+          "end": 35.8,
+          "probability": 0.874
+        },
+        {
+          "word": "is",
+          "start": 35.8,
+          "end": 36.0,
+          "probability": 0.9609
+        },
+        {
+          "word": "the",
+          "start": 36.0,
+          "end": 36.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "Matter",
+          "start": 36.12,
+          "end": 36.36,
+          "probability": 0.8989
+        },
+        {
+          "word": "Details",
+          "start": 36.36,
+          "end": 36.88,
+          "probability": 0.7598
+        },
+        {
+          "word": "detail",
+          "start": 36.88,
+          "end": 37.24,
+          "probability": 0.5278
+        },
+        {
+          "word": "view.",
+          "start": 37.24,
+          "end": 37.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "Now",
+          "start": 38.08,
+          "end": 38.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "I'll",
+          "start": 38.5,
+          "end": 38.68,
+          "probability": 0.9922
+        },
+        {
+          "word": "close",
+          "start": 38.68,
+          "end": 38.92,
+          "probability": 0.9863
+        },
+        {
+          "word": "this",
+          "start": 38.92,
+          "end": 39.14,
+          "probability": 0.9937
+        },
+        {
+          "word": "info",
+          "start": 39.14,
+          "end": 39.46,
+          "probability": 0.5576
+        },
+        {
+          "word": "page.",
+          "start": 39.46,
+          "end": 39.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "So",
+          "start": 40.16,
+          "end": 40.54,
+          "probability": 0.9834
+        },
+        {
+          "word": "in",
+          "start": 40.54,
+          "end": 40.72,
+          "probability": 0.9775
+        },
+        {
+          "word": "Claim",
+          "start": 40.72,
+          "end": 40.9,
+          "probability": 0.9502
+        },
+        {
+          "word": "Center",
+          "start": 40.9,
+          "end": 41.3,
+          "probability": 0.8975
+        },
+        {
+          "word": "Studio,",
+          "start": 41.3,
+          "end": 41.72,
+          "probability": 0.9487
+        },
+        {
+          "word": "I",
+          "start": 42.02,
+          "end": 42.38,
+          "probability": 0.998
+        },
+        {
+          "word": "navigate",
+          "start": 42.38,
+          "end": 42.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 42.76,
+          "end": 43.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 43.06,
+          "end": 43.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "Matter",
+          "start": 43.18,
+          "end": 43.44,
+          "probability": 0.9858
+        },
+        {
+          "word": "Details",
+          "start": 43.44,
+          "end": 43.96,
+          "probability": 0.9341
+        },
+        {
+          "word": "DV.",
+          "start": 43.96,
+          "end": 44.3,
+          "probability": 0.7378
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.06,
+      "end": 62.48,
+      "start_formatted": "00:01:00.060",
+      "end_formatted": "00:01:02.480",
+      "text": "I'll add a Claim Contact Input widget.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 60.06,
+          "end": 60.62,
+          "probability": 0.9858
+        },
+        {
+          "word": "add",
+          "start": 60.62,
+          "end": 60.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 60.82,
+          "end": 60.92,
+          "probability": 0.9932
+        },
+        {
+          "word": "Claim",
+          "start": 60.92,
+          "end": 61.18,
+          "probability": 0.7656
+        },
+        {
+          "word": "Contact",
+          "start": 61.18,
+          "end": 61.62,
+          "probability": 0.856
+        },
+        {
+          "word": "Input",
+          "start": 61.62,
+          "end": 62.18,
+          "probability": 0.8252
+        },
+        {
+          "word": "widget.",
+          "start": 62.18,
+          "end": 62.48,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 67.56,
+      "end": 73.72,
+      "start_formatted": "00:01:07.560",
+      "end_formatted": "00:01:13.720",
+      "text": "And place it at the bottom of the Hearing Details section. The widget must have a locally unique ID.",
+      "words": [
+        {
+          "word": "And",
+          "start": 67.56,
+          "end": 68.12,
+          "probability": 0.7886
+        },
+        {
+          "word": "place",
+          "start": 68.12,
+          "end": 68.4,
+          "probability": 0.9854
+        },
+        {
+          "word": "it",
+          "start": 68.4,
+          "end": 68.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "at",
+          "start": 68.52,
+          "end": 68.64,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 68.64,
+          "end": 68.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "bottom",
+          "start": 68.74,
+          "end": 68.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "of",
+          "start": 68.96,
+          "end": 69.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 69.12,
+          "end": 69.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "Hearing",
+          "start": 69.24,
+          "end": 69.48,
+          "probability": 0.6519
+        },
+        {
+          "word": "Details",
+          "start": 69.48,
+          "end": 69.94,
+          "probability": 0.8564
+        },
+        {
+          "word": "section.",
+          "start": 69.94,
+          "end": 70.48,
+          "probability": 0.9844
+        },
+        {
+          "word": "The",
+          "start": 71.36,
+          "end": 71.92,
+          "probability": 0.9912
+        },
+        {
+          "word": "widget",
+          "start": 71.92,
+          "end": 72.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "must",
+          "start": 72.16,
+          "end": 72.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "have",
+          "start": 72.4,
+          "end": 72.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 72.6,
+          "end": 72.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "locally",
+          "start": 72.7,
+          "end": 73.0,
+          "probability": 0.8765
+        },
+        {
+          "word": "unique",
+          "start": 73.0,
+          "end": 73.42,
+          "probability": 0.9771
+        },
+        {
+          "word": "ID.",
+          "start": 73.42,
+          "end": 73.72,
+          "probability": 0.9707
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 79.12,
+      "end": 83.14,
+      "start_formatted": "00:01:19.120",
+      "end_formatted": "00:01:23.140",
+      "text": "The widget should be associated with the claim associated with the current matter.",
+      "words": [
+        {
+          "word": "The",
+          "start": 79.12,
+          "end": 79.68,
+          "probability": 0.8896
+        },
+        {
+          "word": "widget",
+          "start": 79.68,
+          "end": 79.94,
+          "probability": 0.9761
+        },
+        {
+          "word": "should",
+          "start": 79.94,
+          "end": 80.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 80.16,
+          "end": 80.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "associated",
+          "start": 80.3,
+          "end": 80.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "with",
+          "start": 80.9,
+          "end": 81.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 81.16,
+          "end": 81.3,
+          "probability": 0.9775
+        },
+        {
+          "word": "claim",
+          "start": 81.3,
+          "end": 81.56,
+          "probability": 0.9761
+        },
+        {
+          "word": "associated",
+          "start": 81.56,
+          "end": 82.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "with",
+          "start": 82.16,
+          "end": 82.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 82.4,
+          "end": 82.52,
+          "probability": 0.9927
+        },
+        {
+          "word": "current",
+          "start": 82.52,
+          "end": 82.8,
+          "probability": 0.9883
+        },
+        {
+          "word": "matter.",
+          "start": 82.8,
+          "end": 83.14,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 86.1,
+      "end": 86.66,
+      "start_formatted": "00:01:26.100",
+      "end_formatted": "00:01:26.660",
+      "text": "The widget should be associated with the claim associated with the current matter.",
+      "words": [
+        {
+          "word": "The",
+          "start": 86.1,
+          "end": 86.66,
+          "probability": 0.0017
+        },
+        {
+          "word": "widget",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.0165
+        },
+        {
+          "word": "should",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9585
+        },
+        {
+          "word": "be",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9766
+        },
+        {
+          "word": "associated",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.0764
+        },
+        {
+          "word": "with",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9731
+        },
+        {
+          "word": "claim",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.7759
+        },
+        {
+          "word": "associated",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9551
+        },
+        {
+          "word": "with",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9614
+        },
+        {
+          "word": "current",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9868
+        },
+        {
+          "word": "matter.",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 86.66,
+      "end": 89.2,
+      "start_formatted": "00:01:26.660",
+      "end_formatted": "00:01:29.200",
+      "text": "Users should be able to edit the ALJ from this page.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 86.66,
+          "end": 86.66,
+          "probability": 0.9038
+        },
+        {
+          "word": "should",
+          "start": 86.66,
+          "end": 86.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 86.92,
+          "end": 87.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "able",
+          "start": 87.04,
+          "end": 87.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 87.22,
+          "end": 87.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "edit",
+          "start": 87.36,
+          "end": 87.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 87.68,
+          "end": 87.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "ALJ",
+          "start": 87.86,
+          "end": 88.4,
+          "probability": 0.9741
+        },
+        {
+          "word": "from",
+          "start": 88.4,
+          "end": 88.6,
+          "probability": 0.9741
+        },
+        {
+          "word": "this",
+          "start": 88.6,
+          "end": 88.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "page.",
+          "start": 88.8,
+          "end": 89.2,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 89.78,
+      "end": 94.78,
+      "start_formatted": "00:01:29.780",
+      "end_formatted": "00:01:34.780",
+      "text": "To avoid conflicts with existing matters, the ALJ field will not be required.",
+      "words": [
+        {
+          "word": "To",
+          "start": 89.78,
+          "end": 90.34,
+          "probability": 0.9834
+        },
+        {
+          "word": "avoid",
+          "start": 90.34,
+          "end": 90.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "conflicts",
+          "start": 90.66,
+          "end": 91.18,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 91.18,
+          "end": 91.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "existing",
+          "start": 91.44,
+          "end": 91.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "matters,",
+          "start": 91.92,
+          "end": 92.24,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 92.58,
+          "end": 92.8,
+          "probability": 0.9897
+        },
+        {
+          "word": "ALJ",
+          "start": 92.8,
+          "end": 93.34,
+          "probability": 0.9785
+        },
+        {
+          "word": "field",
+          "start": 93.34,
+          "end": 93.68,
+          "probability": 0.9771
+        },
+        {
+          "word": "will",
+          "start": 93.68,
+          "end": 93.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "not",
+          "start": 93.86,
+          "end": 94.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "be",
+          "start": 94.04,
+          "end": 94.24,
+          "probability": 0.998
+        },
+        {
+          "word": "required.",
+          "start": 94.24,
+          "end": 94.78,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 95.18,
+      "end": 97.68,
+      "start_formatted": "00:01:35.180",
+      "end_formatted": "00:01:37.680",
+      "text": "I need a display key for the widget's label.",
+      "words": [
+        {
+          "word": "I",
+          "start": 95.18,
+          "end": 95.68,
+          "probability": 0.9878
+        },
+        {
+          "word": "need",
+          "start": 95.68,
+          "end": 95.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 95.88,
+          "end": 95.98,
+          "probability": 0.9888
+        },
+        {
+          "word": "display",
+          "start": 95.98,
+          "end": 96.32,
+          "probability": 0.7964
+        },
+        {
+          "word": "key",
+          "start": 96.32,
+          "end": 96.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "for",
+          "start": 96.58,
+          "end": 96.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 96.76,
+          "end": 96.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "widget's",
+          "start": 96.88,
+          "end": 97.36,
+          "probability": 0.978
+        },
+        {
+          "word": "label.",
+          "start": 97.36,
+          "end": 97.68,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 122.6,
+      "end": 125.8,
+      "start_formatted": "00:02:02.600",
+      "end_formatted": "00:02:05.800",
+      "text": "Now I'll add the display key to the widget's label property.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 122.6,
+          "end": 123.2,
+          "probability": 0.9746
+        },
+        {
+          "word": "I'll",
+          "start": 123.2,
+          "end": 123.54,
+          "probability": 0.9746
+        },
+        {
+          "word": "add",
+          "start": 123.54,
+          "end": 123.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 123.64,
+          "end": 123.74,
+          "probability": 0.9922
+        },
+        {
+          "word": "display",
+          "start": 123.74,
+          "end": 124.08,
+          "probability": 0.8569
+        },
+        {
+          "word": "key",
+          "start": 124.08,
+          "end": 124.34,
+          "probability": 0.9849
+        },
+        {
+          "word": "to",
+          "start": 124.34,
+          "end": 124.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 124.48,
+          "end": 124.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "widget's",
+          "start": 124.58,
+          "end": 125.02,
+          "probability": 0.8291
+        },
+        {
+          "word": "label",
+          "start": 125.02,
+          "end": 125.28,
+          "probability": 0.8618
+        },
+        {
+          "word": "property.",
+          "start": 125.28,
+          "end": 125.8,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 138.0,
+      "end": 142.18,
+      "start_formatted": "00:02:18.000",
+      "end_formatted": "00:02:22.180",
+      "text": "The value to be displayed in the widget is the ALJ associated with the matter.",
+      "words": [
+        {
+          "word": "The",
+          "start": 138.0,
+          "end": 138.46,
+          "probability": 0.959
+        },
+        {
+          "word": "value",
+          "start": 138.46,
+          "end": 138.78,
+          "probability": 0.9702
+        },
+        {
+          "word": "to",
+          "start": 138.78,
+          "end": 138.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "be",
+          "start": 138.96,
+          "end": 139.08,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed",
+          "start": 139.08,
+          "end": 139.48,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 139.48,
+          "end": 139.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 139.64,
+          "end": 139.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "widget",
+          "start": 139.72,
+          "end": 139.96,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 139.96,
+          "end": 140.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 140.18,
+          "end": 140.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "ALJ",
+          "start": 140.32,
+          "end": 140.86,
+          "probability": 0.9551
+        },
+        {
+          "word": "associated",
+          "start": 140.86,
+          "end": 141.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "with",
+          "start": 141.54,
+          "end": 141.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 141.76,
+          "end": 141.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "matter.",
+          "start": 141.94,
+          "end": 142.18,
+          "probability": 0.9502
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 144.96,
+      "end": 152.76,
+      "start_formatted": "00:02:24.960",
+      "end_formatted": "00:02:32.760",
+      "text": "The range of possible values from which the ALJ can be chosen is the virtual list of all the adjudicators associated with the claim.",
+      "words": [
+        {
+          "word": "The",
+          "start": 144.96,
+          "end": 145.56,
+          "probability": 0.9463
+        },
+        {
+          "word": "range",
+          "start": 145.56,
+          "end": 145.86,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 145.86,
+          "end": 146.0,
+          "probability": 0.999
+        },
+        {
+          "word": "possible",
+          "start": 146.0,
+          "end": 146.46,
+          "probability": 0.9863
+        },
+        {
+          "word": "values",
+          "start": 146.46,
+          "end": 147.04,
+          "probability": 0.9912
+        },
+        {
+          "word": "from",
+          "start": 147.04,
+          "end": 147.44,
+          "probability": 0.6753
+        },
+        {
+          "word": "which",
+          "start": 147.44,
+          "end": 147.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 147.66,
+          "end": 147.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "ALJ",
+          "start": 147.82,
+          "end": 148.32,
+          "probability": 0.9648
+        },
+        {
+          "word": "can",
+          "start": 148.32,
+          "end": 148.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "be",
+          "start": 148.5,
+          "end": 148.66,
+          "probability": 0.999
+        },
+        {
+          "word": "chosen",
+          "start": 148.66,
+          "end": 149.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 149.04,
+          "end": 149.58,
+          "probability": 0.8247
+        },
+        {
+          "word": "the",
+          "start": 149.58,
+          "end": 149.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "virtual",
+          "start": 149.7,
+          "end": 150.02,
+          "probability": 0.9395
+        },
+        {
+          "word": "list",
+          "start": 150.02,
+          "end": 150.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 150.36,
+          "end": 150.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "all",
+          "start": 150.5,
+          "end": 150.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 150.64,
+          "end": 150.74,
+          "probability": 0.9863
+        },
+        {
+          "word": "adjudicators",
+          "start": 150.74,
+          "end": 151.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "associated",
+          "start": 151.46,
+          "end": 152.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "with",
+          "start": 152.08,
+          "end": 152.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 152.34,
+          "end": 152.46,
+          "probability": 0.9951
+        },
+        {
+          "word": "claim.",
+          "start": 152.46,
+          "end": 152.76,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 165.28,
+      "end": 168.54,
+      "start_formatted": "00:02:45.280",
+      "end_formatted": "00:02:48.540",
+      "text": "The value type must be changed to the adjudicator.",
+      "words": [
+        {
+          "word": "The",
+          "start": 165.28,
+          "end": 166.1,
+          "probability": 0.0108
+        },
+        {
+          "word": "value",
+          "start": 166.1,
+          "end": 166.42,
+          "probability": 0.7944
+        },
+        {
+          "word": "type",
+          "start": 166.42,
+          "end": 166.84,
+          "probability": 0.9771
+        },
+        {
+          "word": "must",
+          "start": 166.84,
+          "end": 167.3,
+          "probability": 0.4268
+        },
+        {
+          "word": "be",
+          "start": 167.3,
+          "end": 167.82,
+          "probability": 0.9858
+        },
+        {
+          "word": "changed",
+          "start": 167.82,
+          "end": 167.82,
+          "probability": 0.9756
+        },
+        {
+          "word": "to",
+          "start": 167.82,
+          "end": 167.94,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 167.94,
+          "end": 168.02,
+          "probability": 0.0032
+        },
+        {
+          "word": "adjudicator.",
+          "start": 168.02,
+          "end": 168.54,
+          "probability": 0.9292
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 168.54,
+      "end": 169.76,
+      "start_formatted": "00:02:48.540",
+      "end_formatted": "00:02:49.760",
+      "text": "And the value type must be changed to adjudicator.",
+      "words": [
+        {
+          "word": "And",
+          "start": 168.54,
+          "end": 168.54,
+          "probability": 0.0059
+        },
+        {
+          "word": "the",
+          "start": 168.54,
+          "end": 168.54,
+          "probability": 0.4788
+        },
+        {
+          "word": "value",
+          "start": 168.54,
+          "end": 168.54,
+          "probability": 0.9521
+        },
+        {
+          "word": "type",
+          "start": 168.54,
+          "end": 168.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "must",
+          "start": 168.54,
+          "end": 168.94,
+          "probability": 0.7261
+        },
+        {
+          "word": "be",
+          "start": 168.94,
+          "end": 169.14,
+          "probability": 0.9858
+        },
+        {
+          "word": "changed",
+          "start": 169.14,
+          "end": 169.44,
+          "probability": 0.981
+        },
+        {
+          "word": "to",
+          "start": 169.44,
+          "end": 169.64,
+          "probability": 0.978
+        },
+        {
+          "word": "adjudicator.",
+          "start": 169.64,
+          "end": 170.05,
+          "probability": 0.8848
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 173.13,
+      "end": 176.59,
+      "start_formatted": "00:02:53.130",
+      "end_formatted": "00:02:56.590",
+      "text": "Now I'll save my work so that I can test it in the user interface.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 173.13,
+          "end": 173.69,
+          "probability": 0.8604
+        },
+        {
+          "word": "I'll",
+          "start": 173.69,
+          "end": 173.91,
+          "probability": 0.9604
+        },
+        {
+          "word": "save",
+          "start": 173.91,
+          "end": 174.15,
+          "probability": 0.9751
+        },
+        {
+          "word": "my",
+          "start": 174.15,
+          "end": 174.35,
+          "probability": 0.998
+        },
+        {
+          "word": "work",
+          "start": 174.35,
+          "end": 174.57,
+          "probability": 0.9819
+        },
+        {
+          "word": "so",
+          "start": 174.57,
+          "end": 174.77,
+          "probability": 0.9878
+        },
+        {
+          "word": "that",
+          "start": 174.77,
+          "end": 174.93,
+          "probability": 0.9922
+        },
+        {
+          "word": "I",
+          "start": 174.93,
+          "end": 175.05,
+          "probability": 0.9902
+        },
+        {
+          "word": "can",
+          "start": 175.05,
+          "end": 175.19,
+          "probability": 0.9976
+        },
+        {
+          "word": "test",
+          "start": 175.19,
+          "end": 175.45,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 175.45,
+          "end": 175.59,
+          "probability": 0.9956
+        },
+        {
+          "word": "in",
+          "start": 175.59,
+          "end": 175.71,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 175.71,
+          "end": 175.79,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 175.79,
+          "end": 176.07,
+          "probability": 0.917
+        },
+        {
+          "word": "interface.",
+          "start": 176.07,
+          "end": 176.59,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 177.03,
+      "end": 181.97,
+      "start_formatted": "00:02:57.030",
+      "end_formatted": "00:03:01.970",
+      "text": "Here I am logged in as Andy Applegate, and I have already reloaded the PCF files.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 177.03,
+          "end": 177.53,
+          "probability": 0.9932
+        },
+        {
+          "word": "I",
+          "start": 177.53,
+          "end": 177.65,
+          "probability": 0.979
+        },
+        {
+          "word": "am",
+          "start": 177.65,
+          "end": 177.79,
+          "probability": 0.9058
+        },
+        {
+          "word": "logged",
+          "start": 177.79,
+          "end": 178.05,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 178.05,
+          "end": 178.23,
+          "probability": 0.9883
+        },
+        {
+          "word": "as",
+          "start": 178.23,
+          "end": 178.37,
+          "probability": 0.9907
+        },
+        {
+          "word": "Andy",
+          "start": 178.37,
+          "end": 178.69,
+          "probability": 0.9673
+        },
+        {
+          "word": "Applegate,",
+          "start": 178.69,
+          "end": 179.31,
+          "probability": 0.9834
+        },
+        {
+          "word": "and",
+          "start": 179.43,
+          "end": 179.65,
+          "probability": 0.9902
+        },
+        {
+          "word": "I",
+          "start": 179.65,
+          "end": 179.77,
+          "probability": 0.9922
+        },
+        {
+          "word": "have",
+          "start": 179.77,
+          "end": 179.89,
+          "probability": 0.9917
+        },
+        {
+          "word": "already",
+          "start": 179.89,
+          "end": 180.27,
+          "probability": 0.9985
+        },
+        {
+          "word": "reloaded",
+          "start": 180.27,
+          "end": 180.85,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 180.85,
+          "end": 180.95,
+          "probability": 0.998
+        },
+        {
+          "word": "PCF",
+          "start": 180.95,
+          "end": 181.57,
+          "probability": 0.9658
+        },
+        {
+          "word": "files.",
+          "start": 181.57,
+          "end": 181.97,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 182.27,
+      "end": 184.65,
+      "start_formatted": "00:03:02.270",
+      "end_formatted": "00:03:04.650",
+      "text": "I navigate to the parties involved page.",
+      "words": [
+        {
+          "word": "I",
+          "start": 182.27,
+          "end": 182.61,
+          "probability": 0.9932
+        },
+        {
+          "word": "navigate",
+          "start": 182.61,
+          "end": 182.99,
+          "probability": 0.9868
+        },
+        {
+          "word": "to",
+          "start": 182.99,
+          "end": 183.31,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 183.31,
+          "end": 183.41,
+          "probability": 0.9912
+        },
+        {
+          "word": "parties",
+          "start": 183.41,
+          "end": 183.77,
+          "probability": 0.4873
+        },
+        {
+          "word": "involved",
+          "start": 183.77,
+          "end": 184.15,
+          "probability": 0.9722
+        },
+        {
+          "word": "page.",
+          "start": 184.15,
+          "end": 184.65,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 185.23,
+      "end": 188.37,
+      "start_formatted": "00:03:05.230",
+      "end_formatted": "00:03:08.370",
+      "text": "Here I'll delete the existing administrative law judge.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 185.23,
+          "end": 185.79,
+          "probability": 0.9922
+        },
+        {
+          "word": "I'll",
+          "start": 185.79,
+          "end": 186.01,
+          "probability": 0.9873
+        },
+        {
+          "word": "delete",
+          "start": 186.01,
+          "end": 186.31,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 186.31,
+          "end": 186.51,
+          "probability": 0.999
+        },
+        {
+          "word": "existing",
+          "start": 186.51,
+          "end": 186.95,
+          "probability": 0.9971
+        },
+        {
+          "word": "administrative",
+          "start": 186.95,
+          "end": 187.57,
+          "probability": 0.9287
+        },
+        {
+          "word": "law",
+          "start": 187.57,
+          "end": 187.97,
+          "probability": 0.9824
+        },
+        {
+          "word": "judge.",
+          "start": 187.97,
+          "end": 188.37,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 192.39,
+      "end": 195.19,
+      "start_formatted": "00:03:12.390",
+      "end_formatted": "00:03:15.190",
+      "text": "Now I'll navigate to the litigation page.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 192.39,
+          "end": 193.15,
+          "probability": 0.9072
+        },
+        {
+          "word": "I'll",
+          "start": 193.15,
+          "end": 193.35,
+          "probability": 0.9658
+        },
+        {
+          "word": "navigate",
+          "start": 193.35,
+          "end": 193.75,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 193.75,
+          "end": 194.05,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 194.05,
+          "end": 194.17,
+          "probability": 0.9966
+        },
+        {
+          "word": "litigation",
+          "start": 194.17,
+          "end": 194.49,
+          "probability": 0.6445
+        },
+        {
+          "word": "page.",
+          "start": 194.49,
+          "end": 195.19,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 195.73,
+      "end": 198.29,
+      "start_formatted": "00:03:15.730",
+      "end_formatted": "00:03:18.290",
+      "text": "Now I'll navigate to the litigation page.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 195.73,
+          "end": 196.15,
+          "probability": 0.0005
+        },
+        {
+          "word": "I'll",
+          "start": 196.15,
+          "end": 198.29,
+          "probability": 0.9404
+        },
+        {
+          "word": "navigate",
+          "start": 198.29,
+          "end": 198.29,
+          "probability": 0.0249
+        },
+        {
+          "word": "to",
+          "start": 198.29,
+          "end": 198.29,
+          "probability": 0.9321
+        },
+        {
+          "word": "the",
+          "start": 198.29,
+          "end": 198.29,
+          "probability": 0.9688
+        },
+        {
+          "word": "litigation",
+          "start": 198.29,
+          "end": 198.29,
+          "probability": 0.9805
+        },
+        {
+          "word": "page.",
+          "start": 198.29,
+          "end": 198.29,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 199.91,
+      "end": 201.83,
+      "start_formatted": "00:03:19.910",
+      "end_formatted": "00:03:21.830",
+      "text": "I'll edit the existing matter.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 199.91,
+          "end": 200.67,
+          "probability": 0.9751
+        },
+        {
+          "word": "edit",
+          "start": 200.67,
+          "end": 200.81,
+          "probability": 0.9326
+        },
+        {
+          "word": "the",
+          "start": 200.81,
+          "end": 200.99,
+          "probability": 0.9976
+        },
+        {
+          "word": "existing",
+          "start": 200.99,
+          "end": 201.45,
+          "probability": 0.9941
+        },
+        {
+          "word": "matter.",
+          "start": 201.45,
+          "end": 201.83,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 203.63,
+      "end": 207.37,
+      "start_formatted": "00:03:23.630",
+      "end_formatted": "00:03:27.370",
+      "text": "There are no adjudicators available to fill the ALJ role.",
+      "words": [
+        {
+          "word": "There",
+          "start": 203.63,
+          "end": 204.39,
+          "probability": 0.9897
+        },
+        {
+          "word": "are",
+          "start": 204.39,
+          "end": 204.51,
+          "probability": 0.9985
+        },
+        {
+          "word": "no",
+          "start": 204.51,
+          "end": 204.67,
+          "probability": 0.9961
+        },
+        {
+          "word": "adjudicators",
+          "start": 204.67,
+          "end": 205.47,
+          "probability": 0.9966
+        },
+        {
+          "word": "available",
+          "start": 205.47,
+          "end": 205.87,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 205.87,
+          "end": 206.15,
+          "probability": 0.9966
+        },
+        {
+          "word": "fill",
+          "start": 206.15,
+          "end": 206.33,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 206.33,
+          "end": 206.49,
+          "probability": 0.9966
+        },
+        {
+          "word": "ALJ",
+          "start": 206.49,
+          "end": 207.03,
+          "probability": 0.9873
+        },
+        {
+          "word": "role.",
+          "start": 207.03,
+          "end": 207.37,
+          "probability": 0.8672
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 207.37,
+      "end": 209.39,
+      "start_formatted": "00:03:27.370",
+      "end_formatted": "00:03:29.390",
+      "text": "So I will create a new one.",
+      "words": [
+        {
+          "word": "So",
+          "start": 207.37,
+          "end": 208.17,
+          "probability": 0.8071
+        },
+        {
+          "word": "I",
+          "start": 208.17,
+          "end": 208.33,
+          "probability": 0.9434
+        },
+        {
+          "word": "will",
+          "start": 208.33,
+          "end": 208.49,
+          "probability": 0.9951
+        },
+        {
+          "word": "create",
+          "start": 208.49,
+          "end": 208.81,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 208.81,
+          "end": 208.99,
+          "probability": 0.9966
+        },
+        {
+          "word": "new",
+          "start": 208.99,
+          "end": 209.13,
+          "probability": 0.999
+        },
+        {
+          "word": "one.",
+          "start": 209.13,
+          "end": 209.39,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 222.55,
+      "end": 224.33,
+      "start_formatted": "00:03:42.550",
+      "end_formatted": "00:03:44.330",
+      "text": "When I save the adjudicator.",
+      "words": [
+        {
+          "word": "When",
+          "start": 222.55,
+          "end": 223.09,
+          "probability": 0.9619
+        },
+        {
+          "word": "I",
+          "start": 223.09,
+          "end": 223.19,
+          "probability": 0.998
+        },
+        {
+          "word": "save",
+          "start": 223.19,
+          "end": 223.49,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 223.49,
+          "end": 223.61,
+          "probability": 0.9946
+        },
+        {
+          "word": "adjudicator.",
+          "start": 223.61,
+          "end": 224.33,
+          "probability": 0.8682
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 226.27,
+      "end": 227.21,
+      "start_formatted": "00:03:46.270",
+      "end_formatted": "00:03:47.210",
+      "text": "And the matter.",
+      "words": [
+        {
+          "word": "And",
+          "start": 226.27,
+          "end": 226.81,
+          "probability": 0.9595
+        },
+        {
+          "word": "the",
+          "start": 226.81,
+          "end": 226.93,
+          "probability": 0.998
+        },
+        {
+          "word": "matter.",
+          "start": 226.93,
+          "end": 227.21,
+          "probability": 0.9692
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 229.99,
+      "end": 231.99,
+      "start_formatted": "00:03:49.990",
+      "end_formatted": "00:03:51.990",
+      "text": "The new ALJ is visible.",
+      "words": [
+        {
+          "word": "The",
+          "start": 229.99,
+          "end": 230.61,
+          "probability": 0.6626
+        },
+        {
+          "word": "new",
+          "start": 230.61,
+          "end": 230.81,
+          "probability": 0.9771
+        },
+        {
+          "word": "ALJ",
+          "start": 230.81,
+          "end": 231.41,
+          "probability": 0.9717
+        },
+        {
+          "word": "is",
+          "start": 231.41,
+          "end": 231.59,
+          "probability": 0.9829
+        },
+        {
+          "word": "visible.",
+          "start": 231.59,
+          "end": 231.99,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 232.25,
+      "end": 235.65,
+      "start_formatted": "00:03:52.250",
+      "end_formatted": "00:03:55.650",
+      "text": "The new ALJ should also appear on the parties involved list.",
+      "words": [
+        {
+          "word": "The",
+          "start": 232.25,
+          "end": 232.59,
+          "probability": 0.9854
+        },
+        {
+          "word": "new",
+          "start": 232.59,
+          "end": 232.75,
+          "probability": 0.9927
+        },
+        {
+          "word": "ALJ",
+          "start": 232.75,
+          "end": 233.33,
+          "probability": 0.9971
+        },
+        {
+          "word": "should",
+          "start": 233.33,
+          "end": 233.55,
+          "probability": 0.9956
+        },
+        {
+          "word": "also",
+          "start": 233.55,
+          "end": 233.93,
+          "probability": 0.9966
+        },
+        {
+          "word": "appear",
+          "start": 233.93,
+          "end": 234.23,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 234.23,
+          "end": 234.45,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 234.45,
+          "end": 234.55,
+          "probability": 0.9966
+        },
+        {
+          "word": "parties",
+          "start": 234.55,
+          "end": 234.87,
+          "probability": 0.6333
+        },
+        {
+          "word": "involved",
+          "start": 234.87,
+          "end": 235.25,
+          "probability": 0.9683
+        },
+        {
+          "word": "list.",
+          "start": 235.25,
+          "end": 235.65,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 235.93,
+      "end": 236.87,
+      "start_formatted": "00:03:55.930",
+      "end_formatted": "00:03:56.870",
+      "text": "And she does.",
+      "words": [
+        {
+          "word": "And",
+          "start": 235.93,
+          "end": 236.43,
+          "probability": 0.9331
+        },
+        {
+          "word": "she",
+          "start": 236.43,
+          "end": 236.59,
+          "probability": 0.9741
+        },
+        {
+          "word": "does.",
+          "start": 236.59,
+          "end": 236.87,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 237.51,
+      "end": 240.87,
+      "start_formatted": "00:03:57.510",
+      "end_formatted": "00:04:00.870",
+      "text": "This concludes the adding a claim contact widget demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 237.51,
+          "end": 238.13,
+          "probability": 0.9922
+        },
+        {
+          "word": "concludes",
+          "start": 238.13,
+          "end": 238.55,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 238.55,
+          "end": 238.75,
+          "probability": 0.9961
+        },
+        {
+          "word": "adding",
+          "start": 238.75,
+          "end": 238.97,
+          "probability": 0.623
+        },
+        {
+          "word": "a",
+          "start": 238.97,
+          "end": 239.17,
+          "probability": 0.9805
+        },
+        {
+          "word": "claim",
+          "start": 239.17,
+          "end": 239.35,
+          "probability": 0.8931
+        },
+        {
+          "word": "contact",
+          "start": 239.35,
+          "end": 239.89,
+          "probability": 0.937
+        },
+        {
+          "word": "widget",
+          "start": 239.89,
+          "end": 240.31,
+          "probability": 0.9893
+        },
+        {
+          "word": "demonstration.",
+          "start": 240.31,
+          "end": 240.87,
+          "probability": 0.9863
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6043 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_02_01.mp4",
+    "video_stem": "CC_02_01",
+    "duration_seconds": 351.54,
+    "duration_formatted": "00:05:51.540",
+    "segment_count": 84,
+    "word_count": 859,
+    "avg_confidence": 0.9599,
+    "transcription_time_seconds": 25.17,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:32:03.226092"
+  },
+  "full_text": "The ClaimCenter line of business model consists of six specialized type lists. The highest level of these type lists is loss type. The loss type ties together policies, coverages, and claims that deal with similar losses. In the base application, there are five loss types, auto, general liability, property, travel, and workers' compensation. Next is the LOB code, or line of business code, type list. This type list is more granular than loss type, and is mostly used for reporting purposes. It has a many to one relationship to loss type. That is, many LOB codes may refer to the same loss type. For example, the commercial property line and the homeowner's line both refer to the property loss type. The policy type type list refers to the same loss type. The coverage type type type list of specific products offered by an insurer. This has a many-to-many relationship to LOB code. That is, one policy type may refer to one or more LOB codes, and any given LOB code may refer back to one or more policy types. For example, the commercial package policy type. And the commercial property policy type both refer to the commercial property line of business. The commercial package policy type also refers to other lines of business. The coverage type type list. specifies something that a policy may indemnify. Again, this is in a many-to-many relationship with policy type. I'm going to skip to the sixth type list, exposure type, for a moment. Recall that an exposure is a pairing of a coverage and a claimant, which tracks potential payments for a claim. The exposure type in the LOB model determines the information to gather about each exposure. The coverage subtype is essentially a mapping between one coverage type and one exposure type. That is, it says this type of coverage can cover this type of exposure. The mapping need not be unique. The same coverage type and exposure type can be paired by more than one coverage subtype to handle different circumstances. Now, let's take a look at how the type lists of the line of business model work together in the data dictionary. Let's navigate down the list of type lists. To coverage type, which is a fairly typical example. Scrolling down, we can see a rather large collection of type codes. If we navigate to a typical type code, we see that each type code has a set of categories associated with it. These refer downward in the line of business model to the coverage subtype, and also upward to the policy type. Knowing whether a given category item refers upward or downward depends on familiarity with the line of business model. There is also a category for source system, the system from which the data about coverage types comes. This is typically a policy administration system. This appears on all the LOB types except loss type and exposure type. This is because loss type and exposure type are unique to claim center, while the other components of the LOB model are typically populated from an insurer's PAS, such as policy center. You can easily navigate from one level of the hierarchy to another by clicking on these categories. I'll navigate down to the coverage subtype, then back up to the coverage type, from there to a policy type. Commercial package has a lot of coverage types, but we'll continue on up to one of its associated LOB codes, and on up to a loss type. Now let's see how these lists are configured in Studio. If I expand a typical coverage type node, this one is accounts receivable for off-premises property. I see that it has three nodes beneath it, children, parents, and other categories. Expanding them. I see that these are the same categories I saw in the data dictionary. I'm currently looking at this in the line of business tab. If I switch to the type list tab, and expand a typical node. It just lists related type lists, without any division between the various types of category. Looking at the incoming categories tab, and expanding a node. I see that coverage subtype and policy type are not the only type lists that refer to coverage type. Cove term pattern, cost category, and line category all refer to this entry. While in the outgoing categories tab, we see that coverage subtypes, and policy types are visible here, but no others, because coverage type does not refer out or to any other type lists. Except, of course, for source system. This is not true for all line of business type lists. Policy type, for example, refers not only to lob code, coverage type, and source system, but to policy tab, but to policy tab, and internal policy type. Looking at loss type, it only has a children node, no parents or other categories nodes. Similarly, in the exposure type type code, there are parents and other categories nodes, but no children node. The other category here is an incident. An incident type is required for all exposure types. This concludes the exploring line of business type lists demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.92,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.920",
+      "text": "The ClaimCenter line of business model consists of six specialized type lists. The highest level of these type lists is loss type. The loss type ties together policies, coverages, and claims that deal with similar losses. In the base application, there are five loss types, auto, general liability, property, travel, and workers' compensation.",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.0,
+          "end": 0.78,
+          "probability": 0.9653
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 0.78,
+          "end": 1.42,
+          "probability": 0.6382
+        },
+        {
+          "word": "line",
+          "start": 1.42,
+          "end": 1.64,
+          "probability": 0.9072
+        },
+        {
+          "word": "of",
+          "start": 1.64,
+          "end": 1.8,
+          "probability": 0.8857
+        },
+        {
+          "word": "business",
+          "start": 1.8,
+          "end": 2.14,
+          "probability": 0.9307
+        },
+        {
+          "word": "model",
+          "start": 2.14,
+          "end": 2.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "consists",
+          "start": 2.5,
+          "end": 2.9,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 2.9,
+          "end": 3.12,
+          "probability": 0.999
+        },
+        {
+          "word": "six",
+          "start": 3.12,
+          "end": 3.36,
+          "probability": 0.7388
+        },
+        {
+          "word": "specialized",
+          "start": 3.36,
+          "end": 4.02,
+          "probability": 0.9888
+        },
+        {
+          "word": "type",
+          "start": 4.02,
+          "end": 4.32,
+          "probability": 0.9775
+        },
+        {
+          "word": "lists.",
+          "start": 4.32,
+          "end": 4.72,
+          "probability": 0.9785
+        },
+        {
+          "word": "The",
+          "start": 5.1,
+          "end": 5.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "highest",
+          "start": 5.48,
+          "end": 5.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "level",
+          "start": 5.78,
+          "end": 6.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 6.1,
+          "end": 6.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "these",
+          "start": 6.3,
+          "end": 6.52,
+          "probability": 0.998
+        },
+        {
+          "word": "type",
+          "start": 6.52,
+          "end": 6.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "lists",
+          "start": 6.84,
+          "end": 7.04,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 7.04,
+          "end": 7.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "loss",
+          "start": 7.28,
+          "end": 7.6,
+          "probability": 0.8403
+        },
+        {
+          "word": "type.",
+          "start": 7.6,
+          "end": 7.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "The",
+          "start": 8.24,
+          "end": 8.56,
+          "probability": 0.999
+        },
+        {
+          "word": "loss",
+          "start": 8.56,
+          "end": 8.84,
+          "probability": 0.9897
+        },
+        {
+          "word": "type",
+          "start": 8.84,
+          "end": 9.1,
+          "probability": 1.0
+        },
+        {
+          "word": "ties",
+          "start": 9.1,
+          "end": 9.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "together",
+          "start": 9.4,
+          "end": 9.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "policies,",
+          "start": 9.72,
+          "end": 10.4,
+          "probability": 0.999
+        },
+        {
+          "word": "coverages,",
+          "start": 10.78,
+          "end": 11.4,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 11.56,
+          "end": 11.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "claims",
+          "start": 11.82,
+          "end": 12.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 12.18,
+          "end": 12.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "deal",
+          "start": 12.36,
+          "end": 12.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 12.58,
+          "end": 12.76,
+          "probability": 1.0
+        },
+        {
+          "word": "similar",
+          "start": 12.76,
+          "end": 13.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "losses.",
+          "start": 13.1,
+          "end": 13.6,
+          "probability": 0.999
+        },
+        {
+          "word": "In",
+          "start": 15.32,
+          "end": 15.98,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 15.98,
+          "end": 16.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 16.1,
+          "end": 16.32,
+          "probability": 0.748
+        },
+        {
+          "word": "application,",
+          "start": 16.32,
+          "end": 17.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 17.36,
+          "end": 17.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 17.56,
+          "end": 17.72,
+          "probability": 1.0
+        },
+        {
+          "word": "five",
+          "start": 17.72,
+          "end": 17.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "loss",
+          "start": 17.94,
+          "end": 18.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "types,",
+          "start": 18.28,
+          "end": 18.68,
+          "probability": 1.0
+        },
+        {
+          "word": "auto,",
+          "start": 18.94,
+          "end": 19.28,
+          "probability": 0.6631
+        },
+        {
+          "word": "general",
+          "start": 19.66,
+          "end": 20.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "liability,",
+          "start": 20.34,
+          "end": 20.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "property,",
+          "start": 22.32,
+          "end": 23.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "travel,",
+          "start": 24.12,
+          "end": 26.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 26.68,
+          "end": 28.94,
+          "probability": 0.998
+        },
+        {
+          "word": "workers'",
+          "start": 28.94,
+          "end": 29.3,
+          "probability": 0.9336
+        },
+        {
+          "word": "compensation.",
+          "start": 29.48,
+          "end": 29.92,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 31.26,
+      "end": 59.9,
+      "start_formatted": "00:00:31.260",
+      "end_formatted": "00:00:59.900",
+      "text": "Next is the LOB code, or line of business code, type list. This type list is more granular than loss type, and is mostly used for reporting purposes. It has a many to one relationship to loss type. That is, many LOB codes may refer to the same loss type. For example, the commercial property line and the homeowner's line both refer to the property loss type. The policy type type list refers to the same loss type.",
+      "words": [
+        {
+          "word": "Next",
+          "start": 31.26,
+          "end": 31.86,
+          "probability": 0.8457
+        },
+        {
+          "word": "is",
+          "start": 31.86,
+          "end": 32.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 32.1,
+          "end": 32.24,
+          "probability": 0.9907
+        },
+        {
+          "word": "LOB",
+          "start": 32.24,
+          "end": 32.7,
+          "probability": 0.9507
+        },
+        {
+          "word": "code,",
+          "start": 32.7,
+          "end": 33.14,
+          "probability": 0.7349
+        },
+        {
+          "word": "or",
+          "start": 33.24,
+          "end": 33.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "line",
+          "start": 33.5,
+          "end": 33.76,
+          "probability": 0.7773
+        },
+        {
+          "word": "of",
+          "start": 33.76,
+          "end": 33.88,
+          "probability": 0.8989
+        },
+        {
+          "word": "business",
+          "start": 33.88,
+          "end": 34.22,
+          "probability": 0.9819
+        },
+        {
+          "word": "code,",
+          "start": 34.22,
+          "end": 34.68,
+          "probability": 0.998
+        },
+        {
+          "word": "type",
+          "start": 34.9,
+          "end": 35.16,
+          "probability": 0.9609
+        },
+        {
+          "word": "list.",
+          "start": 35.16,
+          "end": 35.5,
+          "probability": 0.9888
+        },
+        {
+          "word": "This",
+          "start": 36.72,
+          "end": 37.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "type",
+          "start": 37.32,
+          "end": 37.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "list",
+          "start": 37.62,
+          "end": 37.82,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 37.82,
+          "end": 38.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "more",
+          "start": 38.02,
+          "end": 38.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "granular",
+          "start": 38.22,
+          "end": 38.66,
+          "probability": 0.999
+        },
+        {
+          "word": "than",
+          "start": 38.66,
+          "end": 38.92,
+          "probability": 0.998
+        },
+        {
+          "word": "loss",
+          "start": 38.92,
+          "end": 39.22,
+          "probability": 0.8037
+        },
+        {
+          "word": "type,",
+          "start": 39.22,
+          "end": 39.56,
+          "probability": 0.9883
+        },
+        {
+          "word": "and",
+          "start": 39.74,
+          "end": 39.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 39.94,
+          "end": 40.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "mostly",
+          "start": 40.1,
+          "end": 40.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "used",
+          "start": 40.42,
+          "end": 40.74,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 40.74,
+          "end": 40.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "reporting",
+          "start": 40.94,
+          "end": 41.4,
+          "probability": 0.999
+        },
+        {
+          "word": "purposes.",
+          "start": 41.4,
+          "end": 41.92,
+          "probability": 1.0
+        },
+        {
+          "word": "It",
+          "start": 42.34,
+          "end": 42.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 42.68,
+          "end": 42.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 42.82,
+          "end": 42.92,
+          "probability": 0.998
+        },
+        {
+          "word": "many",
+          "start": 42.92,
+          "end": 43.12,
+          "probability": 0.9839
+        },
+        {
+          "word": "to",
+          "start": 43.12,
+          "end": 43.28,
+          "probability": 0.2595
+        },
+        {
+          "word": "one",
+          "start": 43.28,
+          "end": 43.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "relationship",
+          "start": 43.48,
+          "end": 44.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 44.12,
+          "end": 44.36,
+          "probability": 0.999
+        },
+        {
+          "word": "loss",
+          "start": 44.36,
+          "end": 44.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "type.",
+          "start": 44.62,
+          "end": 44.98,
+          "probability": 0.999
+        },
+        {
+          "word": "That",
+          "start": 45.28,
+          "end": 45.62,
+          "probability": 0.9897
+        },
+        {
+          "word": "is,",
+          "start": 45.62,
+          "end": 45.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "many",
+          "start": 46.06,
+          "end": 46.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "LOB",
+          "start": 46.36,
+          "end": 46.84,
+          "probability": 0.998
+        },
+        {
+          "word": "codes",
+          "start": 46.84,
+          "end": 47.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "may",
+          "start": 47.22,
+          "end": 47.4,
+          "probability": 0.999
+        },
+        {
+          "word": "refer",
+          "start": 47.4,
+          "end": 47.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 47.7,
+          "end": 47.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 47.94,
+          "end": 48.08,
+          "probability": 0.998
+        },
+        {
+          "word": "same",
+          "start": 48.08,
+          "end": 48.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "loss",
+          "start": 48.32,
+          "end": 48.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "type.",
+          "start": 48.64,
+          "end": 49.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 49.3,
+          "end": 49.68,
+          "probability": 0.998
+        },
+        {
+          "word": "example,",
+          "start": 49.68,
+          "end": 50.1,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 50.46,
+          "end": 50.66,
+          "probability": 0.998
+        },
+        {
+          "word": "commercial",
+          "start": 50.66,
+          "end": 51.0,
+          "probability": 0.9731
+        },
+        {
+          "word": "property",
+          "start": 51.0,
+          "end": 51.52,
+          "probability": 0.999
+        },
+        {
+          "word": "line",
+          "start": 51.52,
+          "end": 51.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 51.94,
+          "end": 52.74,
+          "probability": 0.2502
+        },
+        {
+          "word": "the",
+          "start": 52.74,
+          "end": 52.86,
+          "probability": 0.999
+        },
+        {
+          "word": "homeowner's",
+          "start": 52.86,
+          "end": 53.36,
+          "probability": 0.9092
+        },
+        {
+          "word": "line",
+          "start": 53.36,
+          "end": 53.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "both",
+          "start": 53.58,
+          "end": 53.84,
+          "probability": 0.9912
+        },
+        {
+          "word": "refer",
+          "start": 53.84,
+          "end": 54.2,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 54.2,
+          "end": 54.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 54.4,
+          "end": 54.56,
+          "probability": 0.999
+        },
+        {
+          "word": "property",
+          "start": 54.56,
+          "end": 54.98,
+          "probability": 0.999
+        },
+        {
+          "word": "loss",
+          "start": 54.98,
+          "end": 55.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "type.",
+          "start": 55.3,
+          "end": 55.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 55.92,
+          "end": 56.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "policy",
+          "start": 56.32,
+          "end": 56.76,
+          "probability": 0.9888
+        },
+        {
+          "word": "type",
+          "start": 56.76,
+          "end": 57.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "type",
+          "start": 57.06,
+          "end": 57.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "list",
+          "start": 57.32,
+          "end": 57.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "refers",
+          "start": 57.76,
+          "end": 59.6,
+          "probability": 0.5186
+        },
+        {
+          "word": "to",
+          "start": 59.6,
+          "end": 59.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 59.86,
+          "end": 59.9,
+          "probability": 0.231
+        },
+        {
+          "word": "same",
+          "start": 59.9,
+          "end": 59.9,
+          "probability": 0.2148
+        },
+        {
+          "word": "loss",
+          "start": 59.9,
+          "end": 59.9,
+          "probability": 0.2477
+        },
+        {
+          "word": "type.",
+          "start": 59.9,
+          "end": 59.9,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.9,
+      "end": 88.68,
+      "start_formatted": "00:00:59.900",
+      "end_formatted": "00:01:28.680",
+      "text": "The coverage type type type list of specific products offered by an insurer. This has a many-to-many relationship to LOB code. That is, one policy type may refer to one or more LOB codes, and any given LOB code may refer back to one or more policy types. For example, the commercial package policy type. And the commercial property policy type both refer to the commercial property line of business. The commercial package policy type also refers to other lines of business. The coverage type type list.",
+      "words": [
+        {
+          "word": "The",
+          "start": 59.9,
+          "end": 60.34,
+          "probability": 0.0005
+        },
+        {
+          "word": "coverage",
+          "start": 60.34,
+          "end": 60.34,
+          "probability": 0.1208
+        },
+        {
+          "word": "type",
+          "start": 60.34,
+          "end": 60.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "type",
+          "start": 60.34,
+          "end": 60.34,
+          "probability": 0.9878
+        },
+        {
+          "word": "type",
+          "start": 60.34,
+          "end": 60.34,
+          "probability": 0.0003
+        },
+        {
+          "word": "list",
+          "start": 60.34,
+          "end": 60.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 60.34,
+          "end": 60.34,
+          "probability": 0.0
+        },
+        {
+          "word": "specific",
+          "start": 60.34,
+          "end": 60.34,
+          "probability": 0.1803
+        },
+        {
+          "word": "products",
+          "start": 60.34,
+          "end": 60.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "offered",
+          "start": 60.78,
+          "end": 61.16,
+          "probability": 0.9907
+        },
+        {
+          "word": "by",
+          "start": 61.16,
+          "end": 61.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 61.34,
+          "end": 61.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "insurer.",
+          "start": 61.48,
+          "end": 61.88,
+          "probability": 0.998
+        },
+        {
+          "word": "This",
+          "start": 62.18,
+          "end": 62.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "has",
+          "start": 62.62,
+          "end": 62.76,
+          "probability": 0.8364
+        },
+        {
+          "word": "a",
+          "start": 62.76,
+          "end": 62.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "many",
+          "start": 62.9,
+          "end": 63.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "-to",
+          "start": 63.12,
+          "end": 63.3,
+          "probability": 0.9609
+        },
+        {
+          "word": "-many",
+          "start": 63.3,
+          "end": 63.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "relationship",
+          "start": 63.54,
+          "end": 64.18,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 64.18,
+          "end": 64.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "LOB",
+          "start": 64.44,
+          "end": 64.84,
+          "probability": 0.9785
+        },
+        {
+          "word": "code.",
+          "start": 64.84,
+          "end": 65.24,
+          "probability": 0.9775
+        },
+        {
+          "word": "That",
+          "start": 65.44,
+          "end": 65.88,
+          "probability": 0.998
+        },
+        {
+          "word": "is,",
+          "start": 65.88,
+          "end": 66.14,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 66.38,
+          "end": 66.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 66.62,
+          "end": 67.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 67.08,
+          "end": 67.38,
+          "probability": 1.0
+        },
+        {
+          "word": "may",
+          "start": 67.38,
+          "end": 67.56,
+          "probability": 1.0
+        },
+        {
+          "word": "refer",
+          "start": 67.56,
+          "end": 67.88,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 67.88,
+          "end": 68.06,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 68.06,
+          "end": 68.24,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 68.24,
+          "end": 68.38,
+          "probability": 1.0
+        },
+        {
+          "word": "more",
+          "start": 68.38,
+          "end": 68.58,
+          "probability": 1.0
+        },
+        {
+          "word": "LOB",
+          "start": 68.58,
+          "end": 69.04,
+          "probability": 0.999
+        },
+        {
+          "word": "codes,",
+          "start": 69.04,
+          "end": 69.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 69.68,
+          "end": 69.9,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 69.9,
+          "end": 70.1,
+          "probability": 1.0
+        },
+        {
+          "word": "given",
+          "start": 70.1,
+          "end": 70.32,
+          "probability": 1.0
+        },
+        {
+          "word": "LOB",
+          "start": 70.32,
+          "end": 70.82,
+          "probability": 0.999
+        },
+        {
+          "word": "code",
+          "start": 70.82,
+          "end": 71.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "may",
+          "start": 71.12,
+          "end": 71.3,
+          "probability": 1.0
+        },
+        {
+          "word": "refer",
+          "start": 71.3,
+          "end": 71.58,
+          "probability": 1.0
+        },
+        {
+          "word": "back",
+          "start": 71.58,
+          "end": 71.84,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 71.84,
+          "end": 72.0,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 72.0,
+          "end": 72.18,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 72.18,
+          "end": 72.3,
+          "probability": 1.0
+        },
+        {
+          "word": "more",
+          "start": 72.3,
+          "end": 72.52,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 72.52,
+          "end": 73.0,
+          "probability": 1.0
+        },
+        {
+          "word": "types.",
+          "start": 73.0,
+          "end": 73.4,
+          "probability": 1.0
+        },
+        {
+          "word": "For",
+          "start": 73.66,
+          "end": 74.1,
+          "probability": 1.0
+        },
+        {
+          "word": "example,",
+          "start": 74.1,
+          "end": 74.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 74.86,
+          "end": 75.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "commercial",
+          "start": 75.08,
+          "end": 75.42,
+          "probability": 0.9614
+        },
+        {
+          "word": "package",
+          "start": 75.42,
+          "end": 75.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 75.86,
+          "end": 76.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "type.",
+          "start": 76.44,
+          "end": 76.9,
+          "probability": 1.0
+        },
+        {
+          "word": "And",
+          "start": 77.08,
+          "end": 77.5,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 77.5,
+          "end": 77.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "commercial",
+          "start": 77.62,
+          "end": 78.0,
+          "probability": 1.0
+        },
+        {
+          "word": "property",
+          "start": 78.0,
+          "end": 78.54,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 78.54,
+          "end": 79.0,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 79.0,
+          "end": 79.38,
+          "probability": 1.0
+        },
+        {
+          "word": "both",
+          "start": 79.38,
+          "end": 79.66,
+          "probability": 0.998
+        },
+        {
+          "word": "refer",
+          "start": 79.66,
+          "end": 80.02,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 80.02,
+          "end": 80.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 80.22,
+          "end": 80.34,
+          "probability": 1.0
+        },
+        {
+          "word": "commercial",
+          "start": 80.34,
+          "end": 80.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "property",
+          "start": 80.7,
+          "end": 81.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "line",
+          "start": 81.2,
+          "end": 81.48,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 81.48,
+          "end": 81.62,
+          "probability": 1.0
+        },
+        {
+          "word": "business.",
+          "start": 81.62,
+          "end": 81.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 82.3,
+          "end": 82.66,
+          "probability": 1.0
+        },
+        {
+          "word": "commercial",
+          "start": 82.66,
+          "end": 83.02,
+          "probability": 1.0
+        },
+        {
+          "word": "package",
+          "start": 83.02,
+          "end": 83.48,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 83.48,
+          "end": 83.98,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 83.98,
+          "end": 84.34,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 84.34,
+          "end": 84.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "refers",
+          "start": 84.64,
+          "end": 85.06,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 85.06,
+          "end": 85.28,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 85.28,
+          "end": 85.5,
+          "probability": 1.0
+        },
+        {
+          "word": "lines",
+          "start": 85.5,
+          "end": 85.86,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 85.86,
+          "end": 86.0,
+          "probability": 1.0
+        },
+        {
+          "word": "business.",
+          "start": 86.0,
+          "end": 86.42,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 86.66,
+          "end": 87.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "coverage",
+          "start": 87.26,
+          "end": 87.64,
+          "probability": 0.9658
+        },
+        {
+          "word": "type",
+          "start": 87.64,
+          "end": 88.0,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 88.0,
+          "end": 88.24,
+          "probability": 0.999
+        },
+        {
+          "word": "list.",
+          "start": 88.24,
+          "end": 88.68,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 91.02,
+      "end": 93.62,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:33.620",
+      "text": "specifies something that a policy may indemnify.",
+      "words": [
+        {
+          "word": "specifies",
+          "start": 91.02,
+          "end": 91.6,
+          "probability": 0.7393
+        },
+        {
+          "word": "something",
+          "start": 91.6,
+          "end": 91.9,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 91.9,
+          "end": 92.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 92.12,
+          "end": 92.24,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 92.24,
+          "end": 92.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "may",
+          "start": 92.64,
+          "end": 92.88,
+          "probability": 0.999
+        },
+        {
+          "word": "indemnify.",
+          "start": 92.88,
+          "end": 93.62,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 93.92,
+      "end": 97.74,
+      "start_formatted": "00:01:33.920",
+      "end_formatted": "00:01:37.740",
+      "text": "Again, this is in a many-to-many relationship with policy type.",
+      "words": [
+        {
+          "word": "Again,",
+          "start": 93.92,
+          "end": 94.42,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 94.74,
+          "end": 95.04,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 95.04,
+          "end": 95.18,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 95.18,
+          "end": 95.34,
+          "probability": 0.6401
+        },
+        {
+          "word": "a",
+          "start": 95.34,
+          "end": 95.42,
+          "probability": 0.9453
+        },
+        {
+          "word": "many",
+          "start": 95.42,
+          "end": 95.62,
+          "probability": 0.9897
+        },
+        {
+          "word": "-to",
+          "start": 95.62,
+          "end": 95.82,
+          "probability": 0.9731
+        },
+        {
+          "word": "-many",
+          "start": 95.82,
+          "end": 96.06,
+          "probability": 0.999
+        },
+        {
+          "word": "relationship",
+          "start": 96.06,
+          "end": 96.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 96.7,
+          "end": 96.94,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 96.94,
+          "end": 97.42,
+          "probability": 0.9702
+        },
+        {
+          "word": "type.",
+          "start": 97.42,
+          "end": 97.74,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 98.04,
+      "end": 102.52,
+      "start_formatted": "00:01:38.040",
+      "end_formatted": "00:01:42.520",
+      "text": "I'm going to skip to the sixth type list, exposure type, for a moment.",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 98.04,
+          "end": 98.62,
+          "probability": 0.998
+        },
+        {
+          "word": "going",
+          "start": 98.62,
+          "end": 98.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 98.8,
+          "end": 98.94,
+          "probability": 1.0
+        },
+        {
+          "word": "skip",
+          "start": 98.94,
+          "end": 99.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 99.14,
+          "end": 99.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 99.32,
+          "end": 99.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "sixth",
+          "start": 99.46,
+          "end": 99.76,
+          "probability": 0.8594
+        },
+        {
+          "word": "type",
+          "start": 99.76,
+          "end": 100.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "list,",
+          "start": 100.08,
+          "end": 100.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 100.66,
+          "end": 101.22,
+          "probability": 0.7295
+        },
+        {
+          "word": "type,",
+          "start": 101.22,
+          "end": 101.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 101.82,
+          "end": 102.06,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 102.06,
+          "end": 102.22,
+          "probability": 1.0
+        },
+        {
+          "word": "moment.",
+          "start": 102.22,
+          "end": 102.52,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 102.84,
+      "end": 106.04,
+      "start_formatted": "00:01:42.840",
+      "end_formatted": "00:01:46.040",
+      "text": "Recall that an exposure is a pairing of a coverage and a claimant,",
+      "words": [
+        {
+          "word": "Recall",
+          "start": 102.84,
+          "end": 103.42,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 103.42,
+          "end": 103.56,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 103.56,
+          "end": 103.68,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 103.68,
+          "end": 104.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 104.12,
+          "end": 104.36,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 104.36,
+          "end": 104.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "pairing",
+          "start": 104.5,
+          "end": 104.66,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 104.66,
+          "end": 104.82,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 104.82,
+          "end": 104.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "coverage",
+          "start": 104.92,
+          "end": 105.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 105.3,
+          "end": 105.44,
+          "probability": 0.875
+        },
+        {
+          "word": "a",
+          "start": 105.44,
+          "end": 105.56,
+          "probability": 0.998
+        },
+        {
+          "word": "claimant,",
+          "start": 105.56,
+          "end": 106.04,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 106.2,
+      "end": 108.42,
+      "start_formatted": "00:01:46.200",
+      "end_formatted": "00:01:48.420",
+      "text": "which tracks potential payments for a claim.",
+      "words": [
+        {
+          "word": "which",
+          "start": 106.2,
+          "end": 106.44,
+          "probability": 1.0
+        },
+        {
+          "word": "tracks",
+          "start": 106.44,
+          "end": 106.84,
+          "probability": 0.999
+        },
+        {
+          "word": "potential",
+          "start": 106.84,
+          "end": 107.34,
+          "probability": 1.0
+        },
+        {
+          "word": "payments",
+          "start": 107.34,
+          "end": 107.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 107.78,
+          "end": 108.02,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 108.02,
+          "end": 108.16,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 108.16,
+          "end": 108.42,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 108.64,
+      "end": 113.64,
+      "start_formatted": "00:01:48.640",
+      "end_formatted": "00:01:53.640",
+      "text": "The exposure type in the LOB model determines the information to gather about each exposure.",
+      "words": [
+        {
+          "word": "The",
+          "start": 108.64,
+          "end": 109.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 109.02,
+          "end": 109.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 109.5,
+          "end": 109.84,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 109.84,
+          "end": 110.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 110.0,
+          "end": 110.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "LOB",
+          "start": 110.1,
+          "end": 110.54,
+          "probability": 0.9805
+        },
+        {
+          "word": "model",
+          "start": 110.54,
+          "end": 110.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "determines",
+          "start": 110.82,
+          "end": 111.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 111.26,
+          "end": 111.48,
+          "probability": 1.0
+        },
+        {
+          "word": "information",
+          "start": 111.48,
+          "end": 112.0,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 112.0,
+          "end": 112.26,
+          "probability": 0.9502
+        },
+        {
+          "word": "gather",
+          "start": 112.26,
+          "end": 112.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 112.46,
+          "end": 112.78,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 112.78,
+          "end": 113.08,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure.",
+          "start": 113.08,
+          "end": 113.64,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 114.0,
+      "end": 115.38,
+      "start_formatted": "00:01:54.000",
+      "end_formatted": "00:01:55.380",
+      "text": "The coverage subtype",
+      "words": [
+        {
+          "word": "The",
+          "start": 114.0,
+          "end": 114.46,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 114.46,
+          "end": 114.84,
+          "probability": 0.9873
+        },
+        {
+          "word": "subtype",
+          "start": 114.84,
+          "end": 115.38,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 116.78,
+      "end": 120.76,
+      "start_formatted": "00:01:56.780",
+      "end_formatted": "00:02:00.760",
+      "text": "is essentially a mapping between one coverage type and one exposure type.",
+      "words": [
+        {
+          "word": "is",
+          "start": 116.78,
+          "end": 117.26,
+          "probability": 0.8228
+        },
+        {
+          "word": "essentially",
+          "start": 117.26,
+          "end": 117.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 117.72,
+          "end": 117.92,
+          "probability": 0.998
+        },
+        {
+          "word": "mapping",
+          "start": 117.92,
+          "end": 118.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "between",
+          "start": 118.2,
+          "end": 118.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 118.5,
+          "end": 118.82,
+          "probability": 0.9868
+        },
+        {
+          "word": "coverage",
+          "start": 118.82,
+          "end": 119.28,
+          "probability": 0.9194
+        },
+        {
+          "word": "type",
+          "start": 119.28,
+          "end": 119.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 119.52,
+          "end": 119.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "one",
+          "start": 119.7,
+          "end": 119.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "exposure",
+          "start": 119.86,
+          "end": 120.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "type.",
+          "start": 120.34,
+          "end": 120.76,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 121.04,
+      "end": 124.86,
+      "start_formatted": "00:02:01.040",
+      "end_formatted": "00:02:04.860",
+      "text": "That is, it says this type of coverage can cover this type of exposure.",
+      "words": [
+        {
+          "word": "That",
+          "start": 121.04,
+          "end": 121.44,
+          "probability": 0.9863
+        },
+        {
+          "word": "is,",
+          "start": 121.44,
+          "end": 121.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 121.94,
+          "end": 122.16,
+          "probability": 0.9912
+        },
+        {
+          "word": "says",
+          "start": 122.16,
+          "end": 122.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 122.38,
+          "end": 122.58,
+          "probability": 0.9868
+        },
+        {
+          "word": "type",
+          "start": 122.58,
+          "end": 122.78,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 122.78,
+          "end": 122.94,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 122.94,
+          "end": 123.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 123.32,
+          "end": 123.54,
+          "probability": 0.998
+        },
+        {
+          "word": "cover",
+          "start": 123.54,
+          "end": 123.82,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 123.82,
+          "end": 124.04,
+          "probability": 0.999
+        },
+        {
+          "word": "type",
+          "start": 124.04,
+          "end": 124.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 124.26,
+          "end": 124.42,
+          "probability": 0.999
+        },
+        {
+          "word": "exposure.",
+          "start": 124.42,
+          "end": 124.86,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 125.24,
+      "end": 126.92,
+      "start_formatted": "00:02:05.240",
+      "end_formatted": "00:02:06.920",
+      "text": "The mapping need not be unique.",
+      "words": [
+        {
+          "word": "The",
+          "start": 125.24,
+          "end": 125.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "mapping",
+          "start": 125.56,
+          "end": 125.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "need",
+          "start": 125.88,
+          "end": 126.12,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 126.12,
+          "end": 126.32,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 126.32,
+          "end": 126.5,
+          "probability": 0.998
+        },
+        {
+          "word": "unique.",
+          "start": 126.5,
+          "end": 126.92,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 127.12,
+      "end": 131.62,
+      "start_formatted": "00:02:07.120",
+      "end_formatted": "00:02:11.620",
+      "text": "The same coverage type and exposure type can be paired by more than one coverage subtype",
+      "words": [
+        {
+          "word": "The",
+          "start": 127.12,
+          "end": 127.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "same",
+          "start": 127.3,
+          "end": 127.52,
+          "probability": 0.998
+        },
+        {
+          "word": "coverage",
+          "start": 127.52,
+          "end": 127.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "type",
+          "start": 127.98,
+          "end": 128.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 128.24,
+          "end": 128.4,
+          "probability": 0.9907
+        },
+        {
+          "word": "exposure",
+          "start": 128.4,
+          "end": 128.86,
+          "probability": 0.999
+        },
+        {
+          "word": "type",
+          "start": 128.86,
+          "end": 129.16,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 129.16,
+          "end": 129.4,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 129.4,
+          "end": 129.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "paired",
+          "start": 129.56,
+          "end": 129.8,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 129.8,
+          "end": 130.02,
+          "probability": 0.998
+        },
+        {
+          "word": "more",
+          "start": 130.02,
+          "end": 130.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "than",
+          "start": 130.22,
+          "end": 130.38,
+          "probability": 0.998
+        },
+        {
+          "word": "one",
+          "start": 130.38,
+          "end": 130.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "coverage",
+          "start": 130.6,
+          "end": 131.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "subtype",
+          "start": 131.06,
+          "end": 131.62,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 131.62,
+      "end": 133.4,
+      "start_formatted": "00:02:11.620",
+      "end_formatted": "00:02:13.400",
+      "text": "to handle different circumstances.",
+      "words": [
+        {
+          "word": "to",
+          "start": 131.62,
+          "end": 131.98,
+          "probability": 0.6084
+        },
+        {
+          "word": "handle",
+          "start": 131.98,
+          "end": 132.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "different",
+          "start": 132.28,
+          "end": 132.66,
+          "probability": 0.999
+        },
+        {
+          "word": "circumstances.",
+          "start": 132.66,
+          "end": 133.4,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 134.16,
+      "end": 139.58,
+      "start_formatted": "00:02:14.160",
+      "end_formatted": "00:02:19.580",
+      "text": "Now, let's take a look at how the type lists of the line of business model work together in the data dictionary.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 134.16,
+          "end": 134.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "let's",
+          "start": 134.84,
+          "end": 135.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "take",
+          "start": 135.2,
+          "end": 135.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 135.4,
+          "end": 135.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "look",
+          "start": 135.52,
+          "end": 135.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 135.68,
+          "end": 135.8,
+          "probability": 0.998
+        },
+        {
+          "word": "how",
+          "start": 135.8,
+          "end": 135.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 135.92,
+          "end": 136.08,
+          "probability": 0.999
+        },
+        {
+          "word": "type",
+          "start": 136.08,
+          "end": 136.34,
+          "probability": 0.9116
+        },
+        {
+          "word": "lists",
+          "start": 136.34,
+          "end": 136.56,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 136.56,
+          "end": 136.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 136.76,
+          "end": 136.84,
+          "probability": 0.9888
+        },
+        {
+          "word": "line",
+          "start": 136.84,
+          "end": 137.08,
+          "probability": 0.7896
+        },
+        {
+          "word": "of",
+          "start": 137.08,
+          "end": 137.2,
+          "probability": 0.7202
+        },
+        {
+          "word": "business",
+          "start": 137.2,
+          "end": 137.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "model",
+          "start": 137.54,
+          "end": 137.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "work",
+          "start": 137.94,
+          "end": 138.24,
+          "probability": 0.9829
+        },
+        {
+          "word": "together",
+          "start": 138.24,
+          "end": 138.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 138.58,
+          "end": 138.74,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 138.74,
+          "end": 138.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "data",
+          "start": 138.84,
+          "end": 139.08,
+          "probability": 0.8726
+        },
+        {
+          "word": "dictionary.",
+          "start": 139.08,
+          "end": 139.58,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 140.5,
+      "end": 142.96,
+      "start_formatted": "00:02:20.500",
+      "end_formatted": "00:02:22.960",
+      "text": "Let's navigate down the list of type lists.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 140.5,
+          "end": 140.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "navigate",
+          "start": 140.98,
+          "end": 141.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "down",
+          "start": 141.38,
+          "end": 141.7,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 141.7,
+          "end": 141.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "list",
+          "start": 141.86,
+          "end": 142.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 142.1,
+          "end": 142.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 142.24,
+          "end": 142.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "lists.",
+          "start": 142.52,
+          "end": 142.96,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 144.26,
+      "end": 147.58,
+      "start_formatted": "00:02:24.260",
+      "end_formatted": "00:02:27.580",
+      "text": "To coverage type, which is a fairly typical example.",
+      "words": [
+        {
+          "word": "To",
+          "start": 144.26,
+          "end": 144.78,
+          "probability": 0.1692
+        },
+        {
+          "word": "coverage",
+          "start": 144.78,
+          "end": 145.18,
+          "probability": 0.5708
+        },
+        {
+          "word": "type,",
+          "start": 145.18,
+          "end": 145.54,
+          "probability": 0.9888
+        },
+        {
+          "word": "which",
+          "start": 145.8,
+          "end": 146.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 146.06,
+          "end": 146.18,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 146.18,
+          "end": 146.28,
+          "probability": 0.998
+        },
+        {
+          "word": "fairly",
+          "start": 146.28,
+          "end": 146.56,
+          "probability": 0.998
+        },
+        {
+          "word": "typical",
+          "start": 146.56,
+          "end": 146.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "example.",
+          "start": 146.96,
+          "end": 147.58,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 148.46,
+      "end": 150.24,
+      "start_formatted": "00:02:28.460",
+      "end_formatted": "00:02:30.240",
+      "text": "Scrolling down, we can see",
+      "words": [
+        {
+          "word": "Scrolling",
+          "start": 148.46,
+          "end": 148.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "down,",
+          "start": 148.98,
+          "end": 149.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "we",
+          "start": 149.58,
+          "end": 149.78,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 149.78,
+          "end": 149.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 149.94,
+          "end": 150.24,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 152.22,
+      "end": 154.68,
+      "start_formatted": "00:02:32.220",
+      "end_formatted": "00:02:34.680",
+      "text": "a rather large collection of type codes.",
+      "words": [
+        {
+          "word": "a",
+          "start": 152.22,
+          "end": 152.74,
+          "probability": 0.519
+        },
+        {
+          "word": "rather",
+          "start": 152.74,
+          "end": 153.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "large",
+          "start": 153.0,
+          "end": 153.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "collection",
+          "start": 153.34,
+          "end": 153.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 153.82,
+          "end": 154.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 154.02,
+          "end": 154.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "codes.",
+          "start": 154.26,
+          "end": 154.68,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 156.22,
+      "end": 158.78,
+      "start_formatted": "00:02:36.220",
+      "end_formatted": "00:02:38.780",
+      "text": "If we navigate to a typical type code,",
+      "words": [
+        {
+          "word": "If",
+          "start": 156.22,
+          "end": 156.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 156.74,
+          "end": 156.86,
+          "probability": 1.0
+        },
+        {
+          "word": "navigate",
+          "start": 156.86,
+          "end": 157.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 157.26,
+          "end": 157.58,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 157.58,
+          "end": 157.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "typical",
+          "start": 157.72,
+          "end": 158.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "type",
+          "start": 158.08,
+          "end": 158.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "code,",
+          "start": 158.4,
+          "end": 158.78,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 160.26,
+      "end": 164.24,
+      "start_formatted": "00:02:40.260",
+      "end_formatted": "00:02:44.240",
+      "text": "we see that each type code has a set of categories associated with it.",
+      "words": [
+        {
+          "word": "we",
+          "start": 160.26,
+          "end": 160.78,
+          "probability": 0.9761
+        },
+        {
+          "word": "see",
+          "start": 160.78,
+          "end": 160.98,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 160.98,
+          "end": 161.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "each",
+          "start": 161.18,
+          "end": 161.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 161.42,
+          "end": 161.66,
+          "probability": 1.0
+        },
+        {
+          "word": "code",
+          "start": 161.66,
+          "end": 161.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 161.92,
+          "end": 162.12,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 162.12,
+          "end": 162.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "set",
+          "start": 162.24,
+          "end": 162.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 162.44,
+          "end": 162.56,
+          "probability": 1.0
+        },
+        {
+          "word": "categories",
+          "start": 162.56,
+          "end": 163.08,
+          "probability": 0.998
+        },
+        {
+          "word": "associated",
+          "start": 163.08,
+          "end": 163.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 163.74,
+          "end": 164.0,
+          "probability": 1.0
+        },
+        {
+          "word": "it.",
+          "start": 164.0,
+          "end": 164.24,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 164.46,
+      "end": 168.3,
+      "start_formatted": "00:02:44.460",
+      "end_formatted": "00:02:48.300",
+      "text": "These refer downward in the line of business model to the coverage subtype,",
+      "words": [
+        {
+          "word": "These",
+          "start": 164.46,
+          "end": 164.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "refer",
+          "start": 164.98,
+          "end": 165.3,
+          "probability": 1.0
+        },
+        {
+          "word": "downward",
+          "start": 165.3,
+          "end": 165.64,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 165.64,
+          "end": 165.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 165.88,
+          "end": 166.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "line",
+          "start": 166.0,
+          "end": 166.2,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 166.2,
+          "end": 166.3,
+          "probability": 0.9404
+        },
+        {
+          "word": "business",
+          "start": 166.3,
+          "end": 166.6,
+          "probability": 0.9834
+        },
+        {
+          "word": "model",
+          "start": 166.6,
+          "end": 167.02,
+          "probability": 0.9771
+        },
+        {
+          "word": "to",
+          "start": 167.02,
+          "end": 167.22,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 167.22,
+          "end": 167.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage",
+          "start": 167.34,
+          "end": 167.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "subtype,",
+          "start": 167.76,
+          "end": 168.3,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 168.3,
+      "end": 171.04,
+      "start_formatted": "00:02:48.300",
+      "end_formatted": "00:02:51.040",
+      "text": "and also upward to the policy type.",
+      "words": [
+        {
+          "word": "and",
+          "start": 168.3,
+          "end": 169.26,
+          "probability": 0.7524
+        },
+        {
+          "word": "also",
+          "start": 169.26,
+          "end": 169.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "upward",
+          "start": 169.66,
+          "end": 169.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 169.96,
+          "end": 170.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 170.14,
+          "end": 170.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 170.26,
+          "end": 170.66,
+          "probability": 0.9541
+        },
+        {
+          "word": "type.",
+          "start": 170.66,
+          "end": 171.04,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 171.38,
+      "end": 176.2,
+      "start_formatted": "00:02:51.380",
+      "end_formatted": "00:02:56.200",
+      "text": "Knowing whether a given category item refers upward or downward depends on familiarity with",
+      "words": [
+        {
+          "word": "Knowing",
+          "start": 171.38,
+          "end": 171.76,
+          "probability": 0.999
+        },
+        {
+          "word": "whether",
+          "start": 171.76,
+          "end": 172.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 172.08,
+          "end": 172.28,
+          "probability": 1.0
+        },
+        {
+          "word": "given",
+          "start": 172.28,
+          "end": 172.5,
+          "probability": 1.0
+        },
+        {
+          "word": "category",
+          "start": 172.5,
+          "end": 173.0,
+          "probability": 0.999
+        },
+        {
+          "word": "item",
+          "start": 173.0,
+          "end": 173.38,
+          "probability": 1.0
+        },
+        {
+          "word": "refers",
+          "start": 173.38,
+          "end": 173.8,
+          "probability": 1.0
+        },
+        {
+          "word": "upward",
+          "start": 173.8,
+          "end": 174.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 174.18,
+          "end": 174.36,
+          "probability": 1.0
+        },
+        {
+          "word": "downward",
+          "start": 174.36,
+          "end": 174.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "depends",
+          "start": 174.68,
+          "end": 175.12,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 175.12,
+          "end": 175.34,
+          "probability": 1.0
+        },
+        {
+          "word": "familiarity",
+          "start": 175.34,
+          "end": 175.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 175.82,
+          "end": 176.2,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 176.2,
+      "end": 177.38,
+      "start_formatted": "00:02:56.200",
+      "end_formatted": "00:02:57.380",
+      "text": "the line of business model.",
+      "words": [
+        {
+          "word": "the",
+          "start": 176.2,
+          "end": 176.3,
+          "probability": 0.999
+        },
+        {
+          "word": "line",
+          "start": 176.3,
+          "end": 176.5,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 176.5,
+          "end": 176.62,
+          "probability": 0.5581
+        },
+        {
+          "word": "business",
+          "start": 176.62,
+          "end": 176.98,
+          "probability": 1.0
+        },
+        {
+          "word": "model.",
+          "start": 176.98,
+          "end": 177.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 177.68,
+      "end": 182.92,
+      "start_formatted": "00:02:57.680",
+      "end_formatted": "00:03:02.920",
+      "text": "There is also a category for source system, the system from which the data about coverage",
+      "words": [
+        {
+          "word": "There",
+          "start": 177.68,
+          "end": 178.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 178.34,
+          "end": 178.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 178.48,
+          "end": 178.76,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 178.76,
+          "end": 178.94,
+          "probability": 1.0
+        },
+        {
+          "word": "category",
+          "start": 178.94,
+          "end": 179.36,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 179.36,
+          "end": 179.72,
+          "probability": 1.0
+        },
+        {
+          "word": "source",
+          "start": 179.72,
+          "end": 180.08,
+          "probability": 0.8711
+        },
+        {
+          "word": "system,",
+          "start": 180.08,
+          "end": 180.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 180.76,
+          "end": 180.98,
+          "probability": 1.0
+        },
+        {
+          "word": "system",
+          "start": 180.98,
+          "end": 181.32,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 181.32,
+          "end": 181.54,
+          "probability": 1.0
+        },
+        {
+          "word": "which",
+          "start": 181.54,
+          "end": 181.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 181.76,
+          "end": 181.92,
+          "probability": 1.0
+        },
+        {
+          "word": "data",
+          "start": 181.92,
+          "end": 182.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "about",
+          "start": 182.16,
+          "end": 182.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "coverage",
+          "start": 182.46,
+          "end": 182.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 182.92,
+      "end": 183.68,
+      "start_formatted": "00:03:02.920",
+      "end_formatted": "00:03:03.680",
+      "text": "types comes.",
+      "words": [
+        {
+          "word": "types",
+          "start": 182.92,
+          "end": 183.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "comes.",
+          "start": 183.26,
+          "end": 183.68,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 183.92,
+      "end": 186.8,
+      "start_formatted": "00:03:03.920",
+      "end_formatted": "00:03:06.800",
+      "text": "This is typically a policy administration system.",
+      "words": [
+        {
+          "word": "This",
+          "start": 183.92,
+          "end": 184.4,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 184.4,
+          "end": 184.54,
+          "probability": 1.0
+        },
+        {
+          "word": "typically",
+          "start": 184.54,
+          "end": 184.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 184.86,
+          "end": 185.1,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 185.1,
+          "end": 185.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "administration",
+          "start": 185.54,
+          "end": 186.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "system.",
+          "start": 186.12,
+          "end": 186.8,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 187.1,
+      "end": 191.04,
+      "start_formatted": "00:03:07.100",
+      "end_formatted": "00:03:11.040",
+      "text": "This appears on all the LOB types except loss type and exposure type.",
+      "words": [
+        {
+          "word": "This",
+          "start": 187.1,
+          "end": 187.54,
+          "probability": 1.0
+        },
+        {
+          "word": "appears",
+          "start": 187.54,
+          "end": 187.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 187.9,
+          "end": 188.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 188.12,
+          "end": 188.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 188.26,
+          "end": 188.4,
+          "probability": 0.998
+        },
+        {
+          "word": "LOB",
+          "start": 188.4,
+          "end": 188.78,
+          "probability": 0.9854
+        },
+        {
+          "word": "types",
+          "start": 188.78,
+          "end": 189.12,
+          "probability": 0.999
+        },
+        {
+          "word": "except",
+          "start": 189.12,
+          "end": 189.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "loss",
+          "start": 189.52,
+          "end": 189.82,
+          "probability": 0.9199
+        },
+        {
+          "word": "type",
+          "start": 189.82,
+          "end": 190.02,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 190.02,
+          "end": 190.2,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 190.2,
+          "end": 190.62,
+          "probability": 1.0
+        },
+        {
+          "word": "type.",
+          "start": 190.62,
+          "end": 191.04,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 191.04,
+      "end": 196.72,
+      "start_formatted": "00:03:11.040",
+      "end_formatted": "00:03:16.720",
+      "text": "This is because loss type and exposure type are unique to claim center, while the other components",
+      "words": [
+        {
+          "word": "This",
+          "start": 191.04,
+          "end": 191.96,
+          "probability": 0.9668
+        },
+        {
+          "word": "is",
+          "start": 191.96,
+          "end": 192.12,
+          "probability": 0.999
+        },
+        {
+          "word": "because",
+          "start": 192.12,
+          "end": 192.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "loss",
+          "start": 192.4,
+          "end": 192.7,
+          "probability": 0.6055
+        },
+        {
+          "word": "type",
+          "start": 192.7,
+          "end": 192.94,
+          "probability": 0.9697
+        },
+        {
+          "word": "and",
+          "start": 192.94,
+          "end": 193.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "exposure",
+          "start": 193.16,
+          "end": 193.62,
+          "probability": 0.9927
+        },
+        {
+          "word": "type",
+          "start": 193.62,
+          "end": 193.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 193.92,
+          "end": 194.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "unique",
+          "start": 194.14,
+          "end": 194.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 194.48,
+          "end": 194.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 194.7,
+          "end": 194.96,
+          "probability": 0.3262
+        },
+        {
+          "word": "center,",
+          "start": 194.96,
+          "end": 195.36,
+          "probability": 0.9292
+        },
+        {
+          "word": "while",
+          "start": 195.62,
+          "end": 195.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 195.88,
+          "end": 196.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "other",
+          "start": 196.02,
+          "end": 196.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "components",
+          "start": 196.2,
+          "end": 196.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 196.72,
+      "end": 202.06,
+      "start_formatted": "00:03:16.720",
+      "end_formatted": "00:03:22.060",
+      "text": "of the LOB model are typically populated from an insurer's PAS, such as policy center.",
+      "words": [
+        {
+          "word": "of",
+          "start": 196.72,
+          "end": 196.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 196.94,
+          "end": 197.06,
+          "probability": 0.999
+        },
+        {
+          "word": "LOB",
+          "start": 197.06,
+          "end": 197.48,
+          "probability": 0.9341
+        },
+        {
+          "word": "model",
+          "start": 197.48,
+          "end": 197.8,
+          "probability": 0.9868
+        },
+        {
+          "word": "are",
+          "start": 197.8,
+          "end": 198.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "typically",
+          "start": 198.02,
+          "end": 198.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "populated",
+          "start": 198.36,
+          "end": 199.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 199.04,
+          "end": 199.26,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 199.26,
+          "end": 199.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "insurer's",
+          "start": 199.42,
+          "end": 199.98,
+          "probability": 0.981
+        },
+        {
+          "word": "PAS,",
+          "start": 199.98,
+          "end": 200.56,
+          "probability": 0.9453
+        },
+        {
+          "word": "such",
+          "start": 200.74,
+          "end": 201.06,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 201.06,
+          "end": 201.2,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 201.2,
+          "end": 201.62,
+          "probability": 0.6772
+        },
+        {
+          "word": "center.",
+          "start": 201.62,
+          "end": 202.06,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 204.22,
+      "end": 209.36,
+      "start_formatted": "00:03:24.220",
+      "end_formatted": "00:03:29.360",
+      "text": "You can easily navigate from one level of the hierarchy to another by clicking on these categories.",
+      "words": [
+        {
+          "word": "You",
+          "start": 204.22,
+          "end": 204.78,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 204.78,
+          "end": 204.96,
+          "probability": 1.0
+        },
+        {
+          "word": "easily",
+          "start": 204.96,
+          "end": 205.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigate",
+          "start": 205.4,
+          "end": 205.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 205.86,
+          "end": 206.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 206.16,
+          "end": 206.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "level",
+          "start": 206.4,
+          "end": 206.68,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 206.68,
+          "end": 206.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 206.84,
+          "end": 206.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "hierarchy",
+          "start": 206.94,
+          "end": 207.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 207.4,
+          "end": 207.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "another",
+          "start": 207.66,
+          "end": 207.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 207.92,
+          "end": 208.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicking",
+          "start": 208.12,
+          "end": 208.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 208.42,
+          "end": 208.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "these",
+          "start": 208.6,
+          "end": 208.8,
+          "probability": 0.999
+        },
+        {
+          "word": "categories.",
+          "start": 208.8,
+          "end": 209.36,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 209.36,
+      "end": 212.22,
+      "start_formatted": "00:03:29.360",
+      "end_formatted": "00:03:32.220",
+      "text": "I'll navigate down to the coverage subtype,",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 209.36,
+          "end": 210.2,
+          "probability": 0.9185
+        },
+        {
+          "word": "navigate",
+          "start": 210.2,
+          "end": 210.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "down",
+          "start": 210.6,
+          "end": 210.98,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 210.98,
+          "end": 211.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 211.14,
+          "end": 211.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "coverage",
+          "start": 211.26,
+          "end": 211.66,
+          "probability": 0.4094
+        },
+        {
+          "word": "subtype,",
+          "start": 211.66,
+          "end": 212.22,
+          "probability": 0.9531
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 213.8,
+      "end": 215.7,
+      "start_formatted": "00:03:33.800",
+      "end_formatted": "00:03:35.700",
+      "text": "then back up to the coverage type,",
+      "words": [
+        {
+          "word": "then",
+          "start": 213.8,
+          "end": 214.32,
+          "probability": 0.917
+        },
+        {
+          "word": "back",
+          "start": 214.32,
+          "end": 214.58,
+          "probability": 0.9819
+        },
+        {
+          "word": "up",
+          "start": 214.58,
+          "end": 214.74,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 214.74,
+          "end": 214.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 214.86,
+          "end": 214.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "coverage",
+          "start": 214.98,
+          "end": 215.32,
+          "probability": 0.9688
+        },
+        {
+          "word": "type,",
+          "start": 215.32,
+          "end": 215.7,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 217.82,
+      "end": 219.6,
+      "start_formatted": "00:03:37.820",
+      "end_formatted": "00:03:39.600",
+      "text": "from there to a policy type.",
+      "words": [
+        {
+          "word": "from",
+          "start": 217.82,
+          "end": 218.34,
+          "probability": 0.9009
+        },
+        {
+          "word": "there",
+          "start": 218.34,
+          "end": 218.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 218.5,
+          "end": 218.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 218.64,
+          "end": 218.74,
+          "probability": 0.9912
+        },
+        {
+          "word": "policy",
+          "start": 218.74,
+          "end": 219.14,
+          "probability": 0.9692
+        },
+        {
+          "word": "type.",
+          "start": 219.14,
+          "end": 219.6,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 221.96,
+      "end": 224.48,
+      "start_formatted": "00:03:41.960",
+      "end_formatted": "00:03:44.480",
+      "text": "Commercial package has a lot of coverage types,",
+      "words": [
+        {
+          "word": "Commercial",
+          "start": 221.96,
+          "end": 222.48,
+          "probability": 0.916
+        },
+        {
+          "word": "package",
+          "start": 222.48,
+          "end": 222.92,
+          "probability": 0.6787
+        },
+        {
+          "word": "has",
+          "start": 222.92,
+          "end": 223.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 223.24,
+          "end": 223.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "lot",
+          "start": 223.36,
+          "end": 223.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 223.5,
+          "end": 223.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "coverage",
+          "start": 223.64,
+          "end": 224.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "types,",
+          "start": 224.04,
+          "end": 224.48,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 224.72,
+      "end": 228.16,
+      "start_formatted": "00:03:44.720",
+      "end_formatted": "00:03:48.160",
+      "text": "but we'll continue on up to one of its associated LOB codes,",
+      "words": [
+        {
+          "word": "but",
+          "start": 224.72,
+          "end": 224.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "we'll",
+          "start": 224.92,
+          "end": 225.16,
+          "probability": 0.9404
+        },
+        {
+          "word": "continue",
+          "start": 225.16,
+          "end": 225.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "on",
+          "start": 225.58,
+          "end": 225.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "up",
+          "start": 225.88,
+          "end": 226.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 226.02,
+          "end": 226.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "one",
+          "start": 226.14,
+          "end": 226.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 226.3,
+          "end": 226.42,
+          "probability": 0.998
+        },
+        {
+          "word": "its",
+          "start": 226.42,
+          "end": 226.58,
+          "probability": 0.9194
+        },
+        {
+          "word": "associated",
+          "start": 226.58,
+          "end": 227.18,
+          "probability": 0.9912
+        },
+        {
+          "word": "LOB",
+          "start": 227.18,
+          "end": 227.68,
+          "probability": 0.958
+        },
+        {
+          "word": "codes,",
+          "start": 227.68,
+          "end": 228.16,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 228.76,
+      "end": 230.44,
+      "start_formatted": "00:03:48.760",
+      "end_formatted": "00:03:50.440",
+      "text": "and on up to a loss type.",
+      "words": [
+        {
+          "word": "and",
+          "start": 228.76,
+          "end": 229.28,
+          "probability": 0.9893
+        },
+        {
+          "word": "on",
+          "start": 229.28,
+          "end": 229.42,
+          "probability": 0.9814
+        },
+        {
+          "word": "up",
+          "start": 229.42,
+          "end": 229.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 229.56,
+          "end": 229.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 229.72,
+          "end": 229.9,
+          "probability": 0.9907
+        },
+        {
+          "word": "loss",
+          "start": 229.9,
+          "end": 230.08,
+          "probability": 0.9082
+        },
+        {
+          "word": "type.",
+          "start": 230.08,
+          "end": 230.44,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 232.82,
+      "end": 235.74,
+      "start_formatted": "00:03:52.820",
+      "end_formatted": "00:03:55.740",
+      "text": "Now let's see how these lists are configured in Studio.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 232.82,
+          "end": 233.34,
+          "probability": 0.9932
+        },
+        {
+          "word": "let's",
+          "start": 233.34,
+          "end": 233.68,
+          "probability": 0.9829
+        },
+        {
+          "word": "see",
+          "start": 233.68,
+          "end": 233.84,
+          "probability": 0.998
+        },
+        {
+          "word": "how",
+          "start": 233.84,
+          "end": 234.04,
+          "probability": 0.999
+        },
+        {
+          "word": "these",
+          "start": 234.04,
+          "end": 234.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "lists",
+          "start": 234.24,
+          "end": 234.56,
+          "probability": 0.9814
+        },
+        {
+          "word": "are",
+          "start": 234.56,
+          "end": 234.72,
+          "probability": 0.999
+        },
+        {
+          "word": "configured",
+          "start": 234.72,
+          "end": 235.16,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 235.16,
+          "end": 235.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "Studio.",
+          "start": 235.42,
+          "end": 235.74,
+          "probability": 0.5591
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 237.18,
+      "end": 239.78,
+      "start_formatted": "00:03:57.180",
+      "end_formatted": "00:03:59.780",
+      "text": "If I expand a typical coverage type node,",
+      "words": [
+        {
+          "word": "If",
+          "start": 237.18,
+          "end": 237.68,
+          "probability": 0.9204
+        },
+        {
+          "word": "I",
+          "start": 237.68,
+          "end": 237.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "expand",
+          "start": 237.82,
+          "end": 238.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 238.22,
+          "end": 238.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "typical",
+          "start": 238.38,
+          "end": 238.68,
+          "probability": 0.8315
+        },
+        {
+          "word": "coverage",
+          "start": 238.68,
+          "end": 239.16,
+          "probability": 0.8032
+        },
+        {
+          "word": "type",
+          "start": 239.16,
+          "end": 239.46,
+          "probability": 0.9644
+        },
+        {
+          "word": "node,",
+          "start": 239.46,
+          "end": 239.78,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 240.02,
+      "end": 242.96,
+      "start_formatted": "00:04:00.020",
+      "end_formatted": "00:04:02.960",
+      "text": "this one is accounts receivable for off-premises property.",
+      "words": [
+        {
+          "word": "this",
+          "start": 240.02,
+          "end": 240.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "one",
+          "start": 240.3,
+          "end": 240.5,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 240.5,
+          "end": 240.64,
+          "probability": 0.9351
+        },
+        {
+          "word": "accounts",
+          "start": 240.64,
+          "end": 240.98,
+          "probability": 0.8818
+        },
+        {
+          "word": "receivable",
+          "start": 240.98,
+          "end": 241.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 241.52,
+          "end": 241.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "off",
+          "start": 241.78,
+          "end": 242.0,
+          "probability": 0.9307
+        },
+        {
+          "word": "-premises",
+          "start": 242.0,
+          "end": 242.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "property.",
+          "start": 242.44,
+          "end": 242.96,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 244.86,
+      "end": 247.18,
+      "start_formatted": "00:04:04.860",
+      "end_formatted": "00:04:07.180",
+      "text": "I see that it has three nodes beneath it,",
+      "words": [
+        {
+          "word": "I",
+          "start": 244.86,
+          "end": 245.36,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 245.36,
+          "end": 245.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 245.56,
+          "end": 245.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 245.76,
+          "end": 245.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 245.88,
+          "end": 246.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "three",
+          "start": 246.04,
+          "end": 246.26,
+          "probability": 0.8984
+        },
+        {
+          "word": "nodes",
+          "start": 246.26,
+          "end": 246.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "beneath",
+          "start": 246.54,
+          "end": 246.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "it,",
+          "start": 246.82,
+          "end": 247.18,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 247.38,
+      "end": 250.06,
+      "start_formatted": "00:04:07.380",
+      "end_formatted": "00:04:10.060",
+      "text": "children, parents, and other categories.",
+      "words": [
+        {
+          "word": "children,",
+          "start": 247.38,
+          "end": 247.8,
+          "probability": 0.9863
+        },
+        {
+          "word": "parents,",
+          "start": 248.26,
+          "end": 248.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 248.94,
+          "end": 249.16,
+          "probability": 0.999
+        },
+        {
+          "word": "other",
+          "start": 249.16,
+          "end": 249.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "categories.",
+          "start": 249.34,
+          "end": 250.06,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 251.32,
+      "end": 252.08,
+      "start_formatted": "00:04:11.320",
+      "end_formatted": "00:04:12.080",
+      "text": "Expanding them.",
+      "words": [
+        {
+          "word": "Expanding",
+          "start": 251.32,
+          "end": 251.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "them.",
+          "start": 251.82,
+          "end": 252.08,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 254.74,
+      "end": 258.26,
+      "start_formatted": "00:04:14.740",
+      "end_formatted": "00:04:18.260",
+      "text": "I see that these are the same categories I saw in the data dictionary.",
+      "words": [
+        {
+          "word": "I",
+          "start": 254.74,
+          "end": 255.24,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 255.24,
+          "end": 255.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 255.44,
+          "end": 255.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "these",
+          "start": 255.64,
+          "end": 255.86,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 255.86,
+          "end": 256.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 256.0,
+          "end": 256.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 256.12,
+          "end": 256.34,
+          "probability": 1.0
+        },
+        {
+          "word": "categories",
+          "start": 256.34,
+          "end": 256.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 256.92,
+          "end": 257.14,
+          "probability": 0.999
+        },
+        {
+          "word": "saw",
+          "start": 257.14,
+          "end": 257.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 257.34,
+          "end": 257.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 257.46,
+          "end": 257.56,
+          "probability": 1.0
+        },
+        {
+          "word": "data",
+          "start": 257.56,
+          "end": 257.8,
+          "probability": 0.9624
+        },
+        {
+          "word": "dictionary.",
+          "start": 257.8,
+          "end": 258.26,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 258.88,
+      "end": 261.72,
+      "start_formatted": "00:04:18.880",
+      "end_formatted": "00:04:21.720",
+      "text": "I'm currently looking at this in the line of business tab.",
+      "words": [
+        {
+          "word": "I'm",
+          "start": 258.88,
+          "end": 259.38,
+          "probability": 0.8086
+        },
+        {
+          "word": "currently",
+          "start": 259.38,
+          "end": 259.7,
+          "probability": 0.999
+        },
+        {
+          "word": "looking",
+          "start": 259.7,
+          "end": 260.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 260.02,
+          "end": 260.24,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 260.24,
+          "end": 260.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 260.4,
+          "end": 260.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 260.54,
+          "end": 260.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "line",
+          "start": 260.64,
+          "end": 260.84,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 260.84,
+          "end": 260.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "business",
+          "start": 260.98,
+          "end": 261.3,
+          "probability": 0.8906
+        },
+        {
+          "word": "tab.",
+          "start": 261.3,
+          "end": 261.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 261.94,
+      "end": 263.86,
+      "start_formatted": "00:04:21.940",
+      "end_formatted": "00:04:23.860",
+      "text": "If I switch to the type list tab,",
+      "words": [
+        {
+          "word": "If",
+          "start": 261.94,
+          "end": 262.34,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 262.34,
+          "end": 262.44,
+          "probability": 0.999
+        },
+        {
+          "word": "switch",
+          "start": 262.44,
+          "end": 262.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 262.72,
+          "end": 262.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 262.9,
+          "end": 263.02,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 263.02,
+          "end": 263.3,
+          "probability": 0.5488
+        },
+        {
+          "word": "list",
+          "start": 263.3,
+          "end": 263.48,
+          "probability": 0.9883
+        },
+        {
+          "word": "tab,",
+          "start": 263.48,
+          "end": 263.86,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 263.86,
+      "end": 266.1,
+      "start_formatted": "00:04:23.860",
+      "end_formatted": "00:04:26.100",
+      "text": "and expand a typical node.",
+      "words": [
+        {
+          "word": "and",
+          "start": 263.86,
+          "end": 264.82,
+          "probability": 0.5664
+        },
+        {
+          "word": "expand",
+          "start": 264.82,
+          "end": 265.2,
+          "probability": 0.9609
+        },
+        {
+          "word": "a",
+          "start": 265.2,
+          "end": 265.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "typical",
+          "start": 265.36,
+          "end": 265.68,
+          "probability": 0.9463
+        },
+        {
+          "word": "node.",
+          "start": 265.68,
+          "end": 266.1,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 268.24,
+      "end": 270.68,
+      "start_formatted": "00:04:28.240",
+      "end_formatted": "00:04:30.680",
+      "text": "It just lists related type lists,",
+      "words": [
+        {
+          "word": "It",
+          "start": 268.24,
+          "end": 268.92,
+          "probability": 0.9927
+        },
+        {
+          "word": "just",
+          "start": 268.92,
+          "end": 269.16,
+          "probability": 0.998
+        },
+        {
+          "word": "lists",
+          "start": 269.16,
+          "end": 269.5,
+          "probability": 0.999
+        },
+        {
+          "word": "related",
+          "start": 269.5,
+          "end": 269.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "type",
+          "start": 269.94,
+          "end": 270.28,
+          "probability": 0.9766
+        },
+        {
+          "word": "lists,",
+          "start": 270.28,
+          "end": 270.68,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 270.92,
+      "end": 273.7,
+      "start_formatted": "00:04:30.920",
+      "end_formatted": "00:04:33.700",
+      "text": "without any division between the various types of category.",
+      "words": [
+        {
+          "word": "without",
+          "start": 270.92,
+          "end": 271.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 271.18,
+          "end": 271.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "division",
+          "start": 271.46,
+          "end": 271.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "between",
+          "start": 271.88,
+          "end": 272.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 272.12,
+          "end": 272.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "various",
+          "start": 272.36,
+          "end": 272.68,
+          "probability": 0.999
+        },
+        {
+          "word": "types",
+          "start": 272.68,
+          "end": 273.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 273.0,
+          "end": 273.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "category.",
+          "start": 273.2,
+          "end": 273.7,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 274.02,
+      "end": 276.3,
+      "start_formatted": "00:04:34.020",
+      "end_formatted": "00:04:36.300",
+      "text": "Looking at the incoming categories tab,",
+      "words": [
+        {
+          "word": "Looking",
+          "start": 274.02,
+          "end": 274.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "at",
+          "start": 274.52,
+          "end": 274.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 274.7,
+          "end": 274.84,
+          "probability": 1.0
+        },
+        {
+          "word": "incoming",
+          "start": 274.84,
+          "end": 275.26,
+          "probability": 0.5601
+        },
+        {
+          "word": "categories",
+          "start": 275.26,
+          "end": 275.84,
+          "probability": 0.4805
+        },
+        {
+          "word": "tab,",
+          "start": 275.84,
+          "end": 276.3,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 277.86,
+      "end": 279.46,
+      "start_formatted": "00:04:37.860",
+      "end_formatted": "00:04:39.460",
+      "text": "and expanding a node.",
+      "words": [
+        {
+          "word": "and",
+          "start": 277.86,
+          "end": 278.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "expanding",
+          "start": 278.54,
+          "end": 279.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 279.0,
+          "end": 279.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "node.",
+          "start": 279.16,
+          "end": 279.46,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 281.9,
+      "end": 287.62,
+      "start_formatted": "00:04:41.900",
+      "end_formatted": "00:04:47.620",
+      "text": "I see that coverage subtype and policy type are not the only type lists that refer to coverage type.",
+      "words": [
+        {
+          "word": "I",
+          "start": 281.9,
+          "end": 282.58,
+          "probability": 0.9707
+        },
+        {
+          "word": "see",
+          "start": 282.58,
+          "end": 282.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 282.78,
+          "end": 283.0,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 283.0,
+          "end": 283.4,
+          "probability": 0.5078
+        },
+        {
+          "word": "subtype",
+          "start": 283.4,
+          "end": 283.9,
+          "probability": 0.9893
+        },
+        {
+          "word": "and",
+          "start": 283.9,
+          "end": 284.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "policy",
+          "start": 284.1,
+          "end": 284.56,
+          "probability": 0.9907
+        },
+        {
+          "word": "type",
+          "start": 284.56,
+          "end": 284.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "are",
+          "start": 284.78,
+          "end": 284.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "not",
+          "start": 284.98,
+          "end": 285.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 285.14,
+          "end": 285.3,
+          "probability": 0.998
+        },
+        {
+          "word": "only",
+          "start": 285.3,
+          "end": 285.5,
+          "probability": 0.999
+        },
+        {
+          "word": "type",
+          "start": 285.5,
+          "end": 285.82,
+          "probability": 0.9756
+        },
+        {
+          "word": "lists",
+          "start": 285.82,
+          "end": 286.04,
+          "probability": 0.9751
+        },
+        {
+          "word": "that",
+          "start": 286.04,
+          "end": 286.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "refer",
+          "start": 286.32,
+          "end": 286.62,
+          "probability": 0.9702
+        },
+        {
+          "word": "to",
+          "start": 286.62,
+          "end": 286.8,
+          "probability": 0.998
+        },
+        {
+          "word": "coverage",
+          "start": 286.8,
+          "end": 287.22,
+          "probability": 0.9683
+        },
+        {
+          "word": "type.",
+          "start": 287.22,
+          "end": 287.62,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 287.86,
+      "end": 289.0,
+      "start_formatted": "00:04:47.860",
+      "end_formatted": "00:04:49.000",
+      "text": "Cove term pattern,",
+      "words": [
+        {
+          "word": "Cove",
+          "start": 287.86,
+          "end": 288.3,
+          "probability": 0.7363
+        },
+        {
+          "word": "term",
+          "start": 288.3,
+          "end": 288.54,
+          "probability": 0.6562
+        },
+        {
+          "word": "pattern,",
+          "start": 288.54,
+          "end": 289.0,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 289.56,
+      "end": 290.86,
+      "start_formatted": "00:04:49.560",
+      "end_formatted": "00:04:50.860",
+      "text": "cost category,",
+      "words": [
+        {
+          "word": "cost",
+          "start": 289.56,
+          "end": 290.3,
+          "probability": 0.9893
+        },
+        {
+          "word": "category,",
+          "start": 290.3,
+          "end": 290.86,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 291.56,
+      "end": 294.5,
+      "start_formatted": "00:04:51.560",
+      "end_formatted": "00:04:54.500",
+      "text": "and line category all refer to this entry.",
+      "words": [
+        {
+          "word": "and",
+          "start": 291.56,
+          "end": 292.24,
+          "probability": 0.998
+        },
+        {
+          "word": "line",
+          "start": 292.24,
+          "end": 292.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "category",
+          "start": 292.48,
+          "end": 292.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 292.98,
+          "end": 293.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "refer",
+          "start": 293.32,
+          "end": 293.64,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 293.64,
+          "end": 293.88,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 293.88,
+          "end": 294.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "entry.",
+          "start": 294.1,
+          "end": 294.5,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 294.88,
+      "end": 297.0,
+      "start_formatted": "00:04:54.880",
+      "end_formatted": "00:04:57.000",
+      "text": "While in the outgoing categories tab,",
+      "words": [
+        {
+          "word": "While",
+          "start": 294.88,
+          "end": 295.36,
+          "probability": 0.9893
+        },
+        {
+          "word": "in",
+          "start": 295.36,
+          "end": 295.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 295.5,
+          "end": 295.6,
+          "probability": 1.0
+        },
+        {
+          "word": "outgoing",
+          "start": 295.6,
+          "end": 296.02,
+          "probability": 0.9849
+        },
+        {
+          "word": "categories",
+          "start": 296.02,
+          "end": 296.62,
+          "probability": 0.9292
+        },
+        {
+          "word": "tab,",
+          "start": 296.62,
+          "end": 297.0,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 298.78,
+      "end": 301.02,
+      "start_formatted": "00:04:58.780",
+      "end_formatted": "00:05:01.020",
+      "text": "we see that coverage subtypes,",
+      "words": [
+        {
+          "word": "we",
+          "start": 298.78,
+          "end": 299.46,
+          "probability": 0.9829
+        },
+        {
+          "word": "see",
+          "start": 299.46,
+          "end": 299.68,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 299.68,
+          "end": 299.88,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage",
+          "start": 299.88,
+          "end": 300.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "subtypes,",
+          "start": 300.32,
+          "end": 301.02,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 301.02,
+      "end": 303.44,
+      "start_formatted": "00:05:01.020",
+      "end_formatted": "00:05:03.440",
+      "text": "and policy types are visible here,",
+      "words": [
+        {
+          "word": "and",
+          "start": 301.02,
+          "end": 301.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "policy",
+          "start": 301.78,
+          "end": 302.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "types",
+          "start": 302.24,
+          "end": 302.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 302.56,
+          "end": 302.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "visible",
+          "start": 302.72,
+          "end": 303.08,
+          "probability": 0.999
+        },
+        {
+          "word": "here,",
+          "start": 303.08,
+          "end": 303.44,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 303.44,
+      "end": 304.4,
+      "start_formatted": "00:05:03.440",
+      "end_formatted": "00:05:04.400",
+      "text": "but no others,",
+      "words": [
+        {
+          "word": "but",
+          "start": 303.44,
+          "end": 303.84,
+          "probability": 0.9199
+        },
+        {
+          "word": "no",
+          "start": 303.84,
+          "end": 304.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "others,",
+          "start": 304.04,
+          "end": 304.4,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 304.6,
+      "end": 308.04,
+      "start_formatted": "00:05:04.600",
+      "end_formatted": "00:05:08.040",
+      "text": "because coverage type does not refer out or to any other type lists.",
+      "words": [
+        {
+          "word": "because",
+          "start": 304.6,
+          "end": 304.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage",
+          "start": 304.96,
+          "end": 305.38,
+          "probability": 0.6758
+        },
+        {
+          "word": "type",
+          "start": 305.38,
+          "end": 305.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "does",
+          "start": 305.66,
+          "end": 305.88,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 305.88,
+          "end": 306.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "refer",
+          "start": 306.1,
+          "end": 306.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 306.38,
+          "end": 306.62,
+          "probability": 0.9731
+        },
+        {
+          "word": "or",
+          "start": 306.62,
+          "end": 306.76,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 306.76,
+          "end": 306.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "any",
+          "start": 306.92,
+          "end": 307.12,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 307.12,
+          "end": 307.32,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 307.32,
+          "end": 307.64,
+          "probability": 0.98
+        },
+        {
+          "word": "lists.",
+          "start": 307.64,
+          "end": 308.04,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 309.02,
+      "end": 309.58,
+      "start_formatted": "00:05:09.020",
+      "end_formatted": "00:05:09.580",
+      "text": "Except,",
+      "words": [
+        {
+          "word": "Except,",
+          "start": 309.02,
+          "end": 309.58,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 309.94,
+      "end": 310.5,
+      "start_formatted": "00:05:09.940",
+      "end_formatted": "00:05:10.500",
+      "text": "of course,",
+      "words": [
+        {
+          "word": "of",
+          "start": 309.94,
+          "end": 310.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "course,",
+          "start": 310.2,
+          "end": 310.5,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 310.72,
+      "end": 311.74,
+      "start_formatted": "00:05:10.720",
+      "end_formatted": "00:05:11.740",
+      "text": "for source system.",
+      "words": [
+        {
+          "word": "for",
+          "start": 310.72,
+          "end": 310.98,
+          "probability": 0.999
+        },
+        {
+          "word": "source",
+          "start": 310.98,
+          "end": 311.28,
+          "probability": 0.9048
+        },
+        {
+          "word": "system.",
+          "start": 311.28,
+          "end": 311.74,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 312.12,
+      "end": 315.1,
+      "start_formatted": "00:05:12.120",
+      "end_formatted": "00:05:15.100",
+      "text": "This is not true for all line of business type lists.",
+      "words": [
+        {
+          "word": "This",
+          "start": 312.12,
+          "end": 312.62,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 312.62,
+          "end": 312.74,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 312.74,
+          "end": 312.96,
+          "probability": 1.0
+        },
+        {
+          "word": "true",
+          "start": 312.96,
+          "end": 313.2,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 313.2,
+          "end": 313.4,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 313.4,
+          "end": 313.66,
+          "probability": 0.9717
+        },
+        {
+          "word": "line",
+          "start": 313.66,
+          "end": 313.88,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 313.88,
+          "end": 314.0,
+          "probability": 0.8262
+        },
+        {
+          "word": "business",
+          "start": 314.0,
+          "end": 314.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 314.34,
+          "end": 314.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "lists.",
+          "start": 314.7,
+          "end": 315.1,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 315.56,
+      "end": 316.5,
+      "start_formatted": "00:05:15.560",
+      "end_formatted": "00:05:16.500",
+      "text": "Policy type,",
+      "words": [
+        {
+          "word": "Policy",
+          "start": 315.56,
+          "end": 316.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "type,",
+          "start": 316.12,
+          "end": 316.5,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 316.68,
+      "end": 317.36,
+      "start_formatted": "00:05:16.680",
+      "end_formatted": "00:05:17.360",
+      "text": "for example,",
+      "words": [
+        {
+          "word": "for",
+          "start": 316.68,
+          "end": 316.9,
+          "probability": 1.0
+        },
+        {
+          "word": "example,",
+          "start": 316.9,
+          "end": 317.36,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 318.14,
+      "end": 319.9,
+      "start_formatted": "00:05:18.140",
+      "end_formatted": "00:05:19.900",
+      "text": "refers not only to lob code,",
+      "words": [
+        {
+          "word": "refers",
+          "start": 318.14,
+          "end": 318.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 318.7,
+          "end": 318.96,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 318.96,
+          "end": 319.2,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 319.2,
+          "end": 319.34,
+          "probability": 1.0
+        },
+        {
+          "word": "lob",
+          "start": 319.34,
+          "end": 319.6,
+          "probability": 0.4438
+        },
+        {
+          "word": "code,",
+          "start": 319.6,
+          "end": 319.9,
+          "probability": 0.9214
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 320.22,
+      "end": 320.94,
+      "start_formatted": "00:05:20.220",
+      "end_formatted": "00:05:20.940",
+      "text": "coverage type,",
+      "words": [
+        {
+          "word": "coverage",
+          "start": 320.22,
+          "end": 320.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "type,",
+          "start": 320.56,
+          "end": 320.94,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 321.12,
+      "end": 322.14,
+      "start_formatted": "00:05:21.120",
+      "end_formatted": "00:05:22.140",
+      "text": "and source system,",
+      "words": [
+        {
+          "word": "and",
+          "start": 321.12,
+          "end": 321.36,
+          "probability": 1.0
+        },
+        {
+          "word": "source",
+          "start": 321.36,
+          "end": 321.66,
+          "probability": 1.0
+        },
+        {
+          "word": "system,",
+          "start": 321.66,
+          "end": 322.14,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 322.14,
+      "end": 323.5,
+      "start_formatted": "00:05:22.140",
+      "end_formatted": "00:05:23.500",
+      "text": "but to policy tab,",
+      "words": [
+        {
+          "word": "but",
+          "start": 322.14,
+          "end": 322.6,
+          "probability": 0.9307
+        },
+        {
+          "word": "to",
+          "start": 322.6,
+          "end": 322.78,
+          "probability": 0.9912
+        },
+        {
+          "word": "policy",
+          "start": 322.78,
+          "end": 323.18,
+          "probability": 0.3752
+        },
+        {
+          "word": "tab,",
+          "start": 323.18,
+          "end": 323.5,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "start": 323.64,
+      "end": 323.66,
+      "start_formatted": "00:05:23.640",
+      "end_formatted": "00:05:23.660",
+      "text": "but to policy tab,",
+      "words": [
+        {
+          "word": "but",
+          "start": 323.64,
+          "end": 323.66,
+          "probability": 0.0
+        },
+        {
+          "word": "to",
+          "start": 323.66,
+          "end": 323.66,
+          "probability": 0.5674
+        },
+        {
+          "word": "policy",
+          "start": 323.66,
+          "end": 323.66,
+          "probability": 0.541
+        },
+        {
+          "word": "tab,",
+          "start": 323.66,
+          "end": 323.66,
+          "probability": 0.8701
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "start": 323.66,
+      "end": 325.02,
+      "start_formatted": "00:05:23.660",
+      "end_formatted": "00:05:25.020",
+      "text": "and internal policy type.",
+      "words": [
+        {
+          "word": "and",
+          "start": 323.66,
+          "end": 323.66,
+          "probability": 0.2123
+        },
+        {
+          "word": "internal",
+          "start": 323.66,
+          "end": 324.02,
+          "probability": 0.9624
+        },
+        {
+          "word": "policy",
+          "start": 324.02,
+          "end": 324.58,
+          "probability": 0.9897
+        },
+        {
+          "word": "type.",
+          "start": 324.58,
+          "end": 325.02,
+          "probability": 0.9634
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 325.5,
+      "end": 326.88,
+      "start_formatted": "00:05:25.500",
+      "end_formatted": "00:05:26.880",
+      "text": "Looking at loss type,",
+      "words": [
+        {
+          "word": "Looking",
+          "start": 325.5,
+          "end": 326.08,
+          "probability": 0.9697
+        },
+        {
+          "word": "at",
+          "start": 326.08,
+          "end": 326.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "loss",
+          "start": 326.3,
+          "end": 326.6,
+          "probability": 0.6157
+        },
+        {
+          "word": "type,",
+          "start": 326.6,
+          "end": 326.88,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "start": 329.34,
+      "end": 331.3,
+      "start_formatted": "00:05:29.340",
+      "end_formatted": "00:05:31.300",
+      "text": "it only has a children node,",
+      "words": [
+        {
+          "word": "it",
+          "start": 329.34,
+          "end": 330.02,
+          "probability": 0.8223
+        },
+        {
+          "word": "only",
+          "start": 330.02,
+          "end": 330.24,
+          "probability": 0.9932
+        },
+        {
+          "word": "has",
+          "start": 330.24,
+          "end": 330.44,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 330.44,
+          "end": 330.56,
+          "probability": 0.9941
+        },
+        {
+          "word": "children",
+          "start": 330.56,
+          "end": 330.86,
+          "probability": 0.9609
+        },
+        {
+          "word": "node,",
+          "start": 330.86,
+          "end": 331.3,
+          "probability": 0.9761
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "start": 331.6,
+      "end": 333.48,
+      "start_formatted": "00:05:31.600",
+      "end_formatted": "00:05:33.480",
+      "text": "no parents or other categories nodes.",
+      "words": [
+        {
+          "word": "no",
+          "start": 331.6,
+          "end": 331.76,
+          "probability": 0.978
+        },
+        {
+          "word": "parents",
+          "start": 331.76,
+          "end": 332.1,
+          "probability": 0.981
+        },
+        {
+          "word": "or",
+          "start": 332.1,
+          "end": 332.3,
+          "probability": 0.9321
+        },
+        {
+          "word": "other",
+          "start": 332.3,
+          "end": 332.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "categories",
+          "start": 332.48,
+          "end": 333.1,
+          "probability": 0.9868
+        },
+        {
+          "word": "nodes.",
+          "start": 333.1,
+          "end": 333.48,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "start": 333.9,
+      "end": 334.58,
+      "start_formatted": "00:05:33.900",
+      "end_formatted": "00:05:34.580",
+      "text": "Similarly,",
+      "words": [
+        {
+          "word": "Similarly,",
+          "start": 333.9,
+          "end": 334.58,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "start": 335.02,
+      "end": 336.8,
+      "start_formatted": "00:05:35.020",
+      "end_formatted": "00:05:36.800",
+      "text": "in the exposure type type code,",
+      "words": [
+        {
+          "word": "in",
+          "start": 335.02,
+          "end": 335.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 335.24,
+          "end": 335.34,
+          "probability": 0.998
+        },
+        {
+          "word": "exposure",
+          "start": 335.34,
+          "end": 335.8,
+          "probability": 0.9268
+        },
+        {
+          "word": "type",
+          "start": 335.8,
+          "end": 336.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "type",
+          "start": 336.16,
+          "end": 336.38,
+          "probability": 0.9897
+        },
+        {
+          "word": "code,",
+          "start": 336.38,
+          "end": 336.8,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "start": 338.08,
+      "end": 340.68,
+      "start_formatted": "00:05:38.080",
+      "end_formatted": "00:05:40.680",
+      "text": "there are parents and other categories nodes,",
+      "words": [
+        {
+          "word": "there",
+          "start": 338.08,
+          "end": 338.76,
+          "probability": 0.9888
+        },
+        {
+          "word": "are",
+          "start": 338.76,
+          "end": 338.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "parents",
+          "start": 338.9,
+          "end": 339.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 339.3,
+          "end": 339.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "other",
+          "start": 339.48,
+          "end": 339.7,
+          "probability": 0.999
+        },
+        {
+          "word": "categories",
+          "start": 339.7,
+          "end": 340.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "nodes,",
+          "start": 340.3,
+          "end": 340.68,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "start": 340.96,
+      "end": 342.12,
+      "start_formatted": "00:05:40.960",
+      "end_formatted": "00:05:42.120",
+      "text": "but no children node.",
+      "words": [
+        {
+          "word": "but",
+          "start": 340.96,
+          "end": 341.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 341.16,
+          "end": 341.36,
+          "probability": 0.999
+        },
+        {
+          "word": "children",
+          "start": 341.36,
+          "end": 341.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "node.",
+          "start": 341.72,
+          "end": 342.12,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "start": 342.4,
+      "end": 344.42,
+      "start_formatted": "00:05:42.400",
+      "end_formatted": "00:05:44.420",
+      "text": "The other category here is an incident.",
+      "words": [
+        {
+          "word": "The",
+          "start": 342.4,
+          "end": 342.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "other",
+          "start": 342.76,
+          "end": 342.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "category",
+          "start": 342.96,
+          "end": 343.44,
+          "probability": 0.999
+        },
+        {
+          "word": "here",
+          "start": 343.44,
+          "end": 343.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 343.8,
+          "end": 343.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "an",
+          "start": 343.94,
+          "end": 344.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "incident.",
+          "start": 344.08,
+          "end": 344.42,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "start": 344.78,
+      "end": 347.74,
+      "start_formatted": "00:05:44.780",
+      "end_formatted": "00:05:47.740",
+      "text": "An incident type is required for all exposure types.",
+      "words": [
+        {
+          "word": "An",
+          "start": 344.78,
+          "end": 345.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "incident",
+          "start": 345.16,
+          "end": 345.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "type",
+          "start": 345.56,
+          "end": 345.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 345.84,
+          "end": 346.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "required",
+          "start": 346.02,
+          "end": 346.46,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 346.46,
+          "end": 346.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "all",
+          "start": 346.7,
+          "end": 346.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 346.92,
+          "end": 347.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "types.",
+          "start": 347.38,
+          "end": 347.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "start": 347.74,
+      "end": 351.54,
+      "start_formatted": "00:05:47.740",
+      "end_formatted": "00:05:51.540",
+      "text": "This concludes the exploring line of business type lists demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 347.74,
+          "end": 348.74,
+          "probability": 0.8896
+        },
+        {
+          "word": "concludes",
+          "start": 348.74,
+          "end": 349.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 349.18,
+          "end": 349.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "exploring",
+          "start": 349.38,
+          "end": 349.88,
+          "probability": 0.6021
+        },
+        {
+          "word": "line",
+          "start": 349.88,
+          "end": 350.16,
+          "probability": 0.9907
+        },
+        {
+          "word": "of",
+          "start": 350.16,
+          "end": 350.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "business",
+          "start": 350.3,
+          "end": 350.64,
+          "probability": 0.9209
+        },
+        {
+          "word": "type",
+          "start": 350.64,
+          "end": 351.0,
+          "probability": 0.8936
+        },
+        {
+          "word": "lists",
+          "start": 351.0,
+          "end": 351.26,
+          "probability": 0.9609
+        },
+        {
+          "word": "demonstration.",
+          "start": 351.26,
+          "end": 351.54,
+          "probability": 0.7881
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3433 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_13_01.mp4",
+    "video_stem": "In_Policy_13_01",
+    "duration_seconds": 273.02,
+    "duration_formatted": "00:04:33.020",
+    "segment_count": 20,
+    "word_count": 535,
+    "avg_confidence": 0.9062,
+    "transcription_time_seconds": 28.37,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:32:01.689454"
+  },
+  "full_text": "Log in as Superuser. Click Administration. The tree structure will always show the home organization of the user, either internal or external. Search for an organization using the links under Users & Security. Enter the search criteria. Click Search. The search results are displayed as links. Clicking on the links to the search criteria. Click Search. Click for Armstrong and Company to view the details. The Basics tab displays the organization info, such as, name, type, address, supervisor, etc. The Users tab lists users under that organization. The Producer Codes tab displays the list of producer codes with the description, status, branch and the preferred underwriter for each code. The Queues tab lists the queues used for activity assignment. The Regents tab lists the queues used for activity assignment. The Regents tab lists the regions that the system can use when making assignment decisions. A new organization can be created using the Actions menu. We will not go into details for this action. Next, we will look at how to manage Producer Codes. Click on the Producer Code link for Armstrong Premier. The Basics tab displays the code, description, organization, status and other information related to the Producer Code. The Roles tab lists the regions that the system can use when making assignment decisions. The Roles tab lists the roles added to the Producer Code. The Groups tab lists the groups that have this Producer Code, in View-only mode. The Users tab lists the users that have access to this Producer Code, in View-only mode. To search for a Producer Code, go to the Producer Codes page under Users & Security. Enter Search criteria and click Search. Create a new Producer Code from the Actions menu. Select New Producer Code. The Code field must be unique. The new code belongs to Armstrong and Company. Click the Search icon to find the organization. Enter the name. Click Search. Select Armstrong and Company. Enter a description. It is optional to select a preferred underwriter for underwriter assignment purpose. Go to the Roles tab. Add the Producer role. Click Update to save the new Producer Code. If multiple languages are turned on, a warning message about localization is displayed. Click Update again to save. The new Producer Code must be made available to the users in any group. Click on the Organization link. Go to the Producer Codes tab to review the codes for the organization. Go to the Group for Foster City Producers. Click the Producer Codes tab for the group. It displays all the Producer Codes from its parent, the organization. Click Edit. Set a Producer Code to be available for the current group by clicking the checkbox. Click Update to save the change. Go to the Users tab. Click the link for the user Mary Armstrong in the group. Go to the Access tab. Verify that the Producer Code is displayed under Producer Codes from group. Additional Producer Codes can be added by editing the user. Click Add in the Additional Producer Codes section. Search for the Producer Codes. Select the Producer Code to add to the user. Save the changes. This is the end of the demonstration for managing organizations and Producer Codes.  !",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "Log in as Superuser. Click Administration. The tree structure will always show the home organization of the user, either internal or external. Search for an organization using the links under Users & Security. Enter the search criteria. Click Search. The search results are displayed as links. Clicking on the links to the search criteria. Click Search.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.7271
+        },
+        {
+          "word": "in",
+          "start": 0.2,
+          "end": 0.4,
+          "probability": 0.8809
+        },
+        {
+          "word": "as",
+          "start": 0.4,
+          "end": 0.56,
+          "probability": 0.9893
+        },
+        {
+          "word": "Superuser.",
+          "start": 0.56,
+          "end": 1.2,
+          "probability": 0.3867
+        },
+        {
+          "word": "Click",
+          "start": 3.14,
+          "end": 3.88,
+          "probability": 0.9688
+        },
+        {
+          "word": "Administration.",
+          "start": 3.88,
+          "end": 4.36,
+          "probability": 0.6465
+        },
+        {
+          "word": "The",
+          "start": 7.2,
+          "end": 7.94,
+          "probability": 0.9785
+        },
+        {
+          "word": "tree",
+          "start": 7.94,
+          "end": 8.22,
+          "probability": 0.9321
+        },
+        {
+          "word": "structure",
+          "start": 8.22,
+          "end": 8.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 8.62,
+          "end": 8.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "always",
+          "start": 8.96,
+          "end": 9.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "show",
+          "start": 9.34,
+          "end": 9.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 9.62,
+          "end": 9.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "home",
+          "start": 9.82,
+          "end": 10.08,
+          "probability": 0.8511
+        },
+        {
+          "word": "organization",
+          "start": 10.08,
+          "end": 10.62,
+          "probability": 0.9663
+        },
+        {
+          "word": "of",
+          "start": 10.62,
+          "end": 11.04,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 11.04,
+          "end": 11.16,
+          "probability": 0.9927
+        },
+        {
+          "word": "user,",
+          "start": 11.16,
+          "end": 11.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "either",
+          "start": 11.76,
+          "end": 12.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "internal",
+          "start": 12.1,
+          "end": 12.56,
+          "probability": 0.9688
+        },
+        {
+          "word": "or",
+          "start": 12.56,
+          "end": 12.94,
+          "probability": 0.998
+        },
+        {
+          "word": "external.",
+          "start": 12.94,
+          "end": 13.5,
+          "probability": 0.999
+        },
+        {
+          "word": "Search",
+          "start": 13.9,
+          "end": 14.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "for",
+          "start": 14.38,
+          "end": 14.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 14.6,
+          "end": 14.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "organization",
+          "start": 14.72,
+          "end": 15.34,
+          "probability": 0.9844
+        },
+        {
+          "word": "using",
+          "start": 15.34,
+          "end": 15.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 15.88,
+          "end": 16.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "links",
+          "start": 16.1,
+          "end": 16.42,
+          "probability": 0.9785
+        },
+        {
+          "word": "under",
+          "start": 16.42,
+          "end": 16.74,
+          "probability": 0.9868
+        },
+        {
+          "word": "Users",
+          "start": 16.74,
+          "end": 17.16,
+          "probability": 0.9038
+        },
+        {
+          "word": "&",
+          "start": 17.16,
+          "end": 17.48,
+          "probability": 0.4246
+        },
+        {
+          "word": "Security.",
+          "start": 17.48,
+          "end": 18.04,
+          "probability": 0.9531
+        },
+        {
+          "word": "Enter",
+          "start": 18.5,
+          "end": 19.12,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 19.12,
+          "end": 19.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "search",
+          "start": 19.32,
+          "end": 19.58,
+          "probability": 0.8599
+        },
+        {
+          "word": "criteria.",
+          "start": 19.58,
+          "end": 20.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "Click",
+          "start": 21.72,
+          "end": 22.46,
+          "probability": 0.9932
+        },
+        {
+          "word": "Search.",
+          "start": 22.46,
+          "end": 22.76,
+          "probability": 0.8643
+        },
+        {
+          "word": "The",
+          "start": 25.8,
+          "end": 26.54,
+          "probability": 0.9702
+        },
+        {
+          "word": "search",
+          "start": 26.54,
+          "end": 26.82,
+          "probability": 0.9902
+        },
+        {
+          "word": "results",
+          "start": 26.82,
+          "end": 27.32,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 27.32,
+          "end": 27.52,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed",
+          "start": 27.52,
+          "end": 27.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 27.92,
+          "end": 28.2,
+          "probability": 0.999
+        },
+        {
+          "word": "links.",
+          "start": 28.2,
+          "end": 28.58,
+          "probability": 0.9214
+        },
+        {
+          "word": "Clicking",
+          "start": 28.86,
+          "end": 29.46,
+          "probability": 0.9658
+        },
+        {
+          "word": "on",
+          "start": 29.46,
+          "end": 29.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 29.6,
+          "end": 29.76,
+          "probability": 0.9888
+        },
+        {
+          "word": "links",
+          "start": 29.76,
+          "end": 29.98,
+          "probability": 0.7529
+        },
+        {
+          "word": "to",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1301
+        },
+        {
+          "word": "the",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2018
+        },
+        {
+          "word": "search",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.131
+        },
+        {
+          "word": "criteria.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.5625
+        },
+        {
+          "word": "Click",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.6074
+        },
+        {
+          "word": "Search.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.7803
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.96,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.960",
+      "text": "Click for Armstrong and Company to view the details. The Basics tab displays the organization info, such as, name, type, address, supervisor, etc. The Users tab lists users under that organization. The Producer Codes tab displays the list of producer codes with the description, status, branch and the preferred underwriter for each code. The Queues tab lists the queues used for activity assignment. The Regents tab lists the queues used for activity assignment.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 29.98,
+          "end": 30.02,
+          "probability": 0.0002
+        },
+        {
+          "word": "for",
+          "start": 30.02,
+          "end": 30.2,
+          "probability": 0.916
+        },
+        {
+          "word": "Armstrong",
+          "start": 30.2,
+          "end": 30.58,
+          "probability": 0.9106
+        },
+        {
+          "word": "and",
+          "start": 30.58,
+          "end": 30.98,
+          "probability": 0.8169
+        },
+        {
+          "word": "Company",
+          "start": 30.98,
+          "end": 31.32,
+          "probability": 0.4812
+        },
+        {
+          "word": "to",
+          "start": 31.32,
+          "end": 31.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "view",
+          "start": 31.58,
+          "end": 31.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 31.78,
+          "end": 31.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "details.",
+          "start": 31.96,
+          "end": 32.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 33.04,
+          "end": 33.62,
+          "probability": 0.978
+        },
+        {
+          "word": "Basics",
+          "start": 33.62,
+          "end": 34.04,
+          "probability": 0.8506
+        },
+        {
+          "word": "tab",
+          "start": 34.04,
+          "end": 34.3,
+          "probability": 0.959
+        },
+        {
+          "word": "displays",
+          "start": 34.3,
+          "end": 34.76,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 34.76,
+          "end": 34.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "organization",
+          "start": 34.98,
+          "end": 35.54,
+          "probability": 0.793
+        },
+        {
+          "word": "info,",
+          "start": 35.54,
+          "end": 36.16,
+          "probability": 0.9849
+        },
+        {
+          "word": "such",
+          "start": 36.16,
+          "end": 36.68,
+          "probability": 0.9883
+        },
+        {
+          "word": "as,",
+          "start": 36.68,
+          "end": 37.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "name,",
+          "start": 37.22,
+          "end": 37.7,
+          "probability": 0.8447
+        },
+        {
+          "word": "type,",
+          "start": 37.94,
+          "end": 38.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "address,",
+          "start": 38.62,
+          "end": 39.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "supervisor,",
+          "start": 39.34,
+          "end": 40.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "etc.",
+          "start": 40.4,
+          "end": 40.72,
+          "probability": 0.9897
+        },
+        {
+          "word": "The",
+          "start": 41.56,
+          "end": 42.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "Users",
+          "start": 42.1,
+          "end": 42.44,
+          "probability": 0.9819
+        },
+        {
+          "word": "tab",
+          "start": 42.44,
+          "end": 42.74,
+          "probability": 0.98
+        },
+        {
+          "word": "lists",
+          "start": 42.74,
+          "end": 43.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "users",
+          "start": 43.06,
+          "end": 43.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "under",
+          "start": 43.52,
+          "end": 43.82,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 43.82,
+          "end": 44.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "organization.",
+          "start": 44.12,
+          "end": 44.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 45.5,
+          "end": 46.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "Producer",
+          "start": 46.18,
+          "end": 46.58,
+          "probability": 0.9673
+        },
+        {
+          "word": "Codes",
+          "start": 46.58,
+          "end": 47.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "tab",
+          "start": 47.1,
+          "end": 47.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "displays",
+          "start": 47.36,
+          "end": 47.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 47.8,
+          "end": 48.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "list",
+          "start": 48.02,
+          "end": 48.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 48.28,
+          "end": 48.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "producer",
+          "start": 48.44,
+          "end": 48.86,
+          "probability": 0.8789
+        },
+        {
+          "word": "codes",
+          "start": 48.86,
+          "end": 49.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "with",
+          "start": 49.38,
+          "end": 49.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 49.58,
+          "end": 49.76,
+          "probability": 0.9824
+        },
+        {
+          "word": "description,",
+          "start": 49.76,
+          "end": 50.24,
+          "probability": 0.9561
+        },
+        {
+          "word": "status,",
+          "start": 50.58,
+          "end": 51.1,
+          "probability": 0.9893
+        },
+        {
+          "word": "branch",
+          "start": 51.4,
+          "end": 51.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 51.76,
+          "end": 51.96,
+          "probability": 0.9575
+        },
+        {
+          "word": "the",
+          "start": 51.96,
+          "end": 52.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "preferred",
+          "start": 52.12,
+          "end": 52.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "underwriter",
+          "start": 52.52,
+          "end": 53.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "for",
+          "start": 53.22,
+          "end": 53.48,
+          "probability": 0.999
+        },
+        {
+          "word": "each",
+          "start": 53.48,
+          "end": 53.74,
+          "probability": 1.0
+        },
+        {
+          "word": "code.",
+          "start": 53.74,
+          "end": 54.14,
+          "probability": 0.999
+        },
+        {
+          "word": "The",
+          "start": 54.7,
+          "end": 55.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "Queues",
+          "start": 55.18,
+          "end": 55.48,
+          "probability": 0.7432
+        },
+        {
+          "word": "tab",
+          "start": 55.48,
+          "end": 55.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "lists",
+          "start": 55.72,
+          "end": 56.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 56.06,
+          "end": 56.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "queues",
+          "start": 56.32,
+          "end": 56.58,
+          "probability": 0.833
+        },
+        {
+          "word": "used",
+          "start": 56.58,
+          "end": 56.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 56.84,
+          "end": 57.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "activity",
+          "start": 57.06,
+          "end": 57.54,
+          "probability": 0.9346
+        },
+        {
+          "word": "assignment.",
+          "start": 57.54,
+          "end": 58.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "The",
+          "start": 58.66,
+          "end": 59.34,
+          "probability": 0.9717
+        },
+        {
+          "word": "Regents",
+          "start": 59.34,
+          "end": 59.76,
+          "probability": 0.9404
+        },
+        {
+          "word": "tab",
+          "start": 59.76,
+          "end": 59.96,
+          "probability": 0.9897
+        },
+        {
+          "word": "lists",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.0597
+        },
+        {
+          "word": "the",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.8594
+        },
+        {
+          "word": "queues",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.6001
+        },
+        {
+          "word": "used",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.7295
+        },
+        {
+          "word": "for",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9746
+        },
+        {
+          "word": "activity",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9009
+        },
+        {
+          "word": "assignment.",
+          "start": 59.96,
+          "end": 59.96,
+          "probability": 0.9375
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.96,
+      "end": 89.94,
+      "start_formatted": "00:00:59.960",
+      "end_formatted": "00:01:29.940",
+      "text": "The Regents tab lists the regions that the system can use when making assignment decisions. A new organization can be created using the Actions menu. We will not go into details for this action. Next, we will look at how to manage Producer Codes. Click on the Producer Code link for Armstrong Premier. The Basics tab displays the code, description, organization, status and other information related to the Producer Code. The Roles tab lists the regions that the system can use when making assignment decisions.",
+      "words": [
+        {
+          "word": "The",
+          "start": 59.96,
+          "end": 60.12,
+          "probability": 0.4492
+        },
+        {
+          "word": "Regents",
+          "start": 60.12,
+          "end": 60.12,
+          "probability": 0.0253
+        },
+        {
+          "word": "tab",
+          "start": 60.12,
+          "end": 60.12,
+          "probability": 0.9756
+        },
+        {
+          "word": "lists",
+          "start": 60.12,
+          "end": 60.4,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 60.4,
+          "end": 60.68,
+          "probability": 0.998
+        },
+        {
+          "word": "regions",
+          "start": 60.68,
+          "end": 61.04,
+          "probability": 0.9077
+        },
+        {
+          "word": "that",
+          "start": 61.04,
+          "end": 61.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 61.3,
+          "end": 61.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "system",
+          "start": 61.44,
+          "end": 61.76,
+          "probability": 0.9478
+        },
+        {
+          "word": "can",
+          "start": 61.76,
+          "end": 61.98,
+          "probability": 0.999
+        },
+        {
+          "word": "use",
+          "start": 61.98,
+          "end": 62.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "when",
+          "start": 62.24,
+          "end": 62.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "making",
+          "start": 62.48,
+          "end": 62.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "assignment",
+          "start": 62.82,
+          "end": 63.34,
+          "probability": 0.9727
+        },
+        {
+          "word": "decisions.",
+          "start": 63.34,
+          "end": 64.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "A",
+          "start": 64.44,
+          "end": 64.8,
+          "probability": 0.9878
+        },
+        {
+          "word": "new",
+          "start": 64.8,
+          "end": 65.02,
+          "probability": 0.9692
+        },
+        {
+          "word": "organization",
+          "start": 65.02,
+          "end": 65.52,
+          "probability": 0.9141
+        },
+        {
+          "word": "can",
+          "start": 65.52,
+          "end": 66.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 66.02,
+          "end": 66.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "created",
+          "start": 66.18,
+          "end": 66.6,
+          "probability": 0.999
+        },
+        {
+          "word": "using",
+          "start": 66.6,
+          "end": 66.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 66.92,
+          "end": 67.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "Actions",
+          "start": 67.16,
+          "end": 67.7,
+          "probability": 0.9009
+        },
+        {
+          "word": "menu.",
+          "start": 67.7,
+          "end": 68.04,
+          "probability": 0.915
+        },
+        {
+          "word": "We",
+          "start": 68.52,
+          "end": 69.04,
+          "probability": 0.9746
+        },
+        {
+          "word": "will",
+          "start": 69.04,
+          "end": 69.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 69.2,
+          "end": 69.42,
+          "probability": 0.9771
+        },
+        {
+          "word": "go",
+          "start": 69.42,
+          "end": 69.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "into",
+          "start": 69.66,
+          "end": 69.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "details",
+          "start": 69.88,
+          "end": 70.4,
+          "probability": 0.9893
+        },
+        {
+          "word": "for",
+          "start": 70.4,
+          "end": 70.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 70.74,
+          "end": 71.0,
+          "probability": 0.999
+        },
+        {
+          "word": "action.",
+          "start": 71.0,
+          "end": 71.38,
+          "probability": 0.9204
+        },
+        {
+          "word": "Next,",
+          "start": 72.0,
+          "end": 72.68,
+          "probability": 0.9893
+        },
+        {
+          "word": "we",
+          "start": 72.9,
+          "end": 73.14,
+          "probability": 0.9741
+        },
+        {
+          "word": "will",
+          "start": 73.14,
+          "end": 73.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "look",
+          "start": 73.28,
+          "end": 73.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "at",
+          "start": 73.48,
+          "end": 73.64,
+          "probability": 0.999
+        },
+        {
+          "word": "how",
+          "start": 73.64,
+          "end": 73.78,
+          "probability": 0.8057
+        },
+        {
+          "word": "to",
+          "start": 73.78,
+          "end": 73.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "manage",
+          "start": 73.98,
+          "end": 74.28,
+          "probability": 0.8877
+        },
+        {
+          "word": "Producer",
+          "start": 74.28,
+          "end": 74.8,
+          "probability": 0.3188
+        },
+        {
+          "word": "Codes.",
+          "start": 74.8,
+          "end": 75.34,
+          "probability": 0.8691
+        },
+        {
+          "word": "Click",
+          "start": 76.0,
+          "end": 76.68,
+          "probability": 0.9751
+        },
+        {
+          "word": "on",
+          "start": 76.68,
+          "end": 76.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 76.84,
+          "end": 76.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "Producer",
+          "start": 76.98,
+          "end": 77.38,
+          "probability": 0.8999
+        },
+        {
+          "word": "Code",
+          "start": 77.38,
+          "end": 77.78,
+          "probability": 0.9038
+        },
+        {
+          "word": "link",
+          "start": 77.78,
+          "end": 78.0,
+          "probability": 0.9707
+        },
+        {
+          "word": "for",
+          "start": 78.0,
+          "end": 78.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "Armstrong",
+          "start": 78.24,
+          "end": 78.54,
+          "probability": 0.7603
+        },
+        {
+          "word": "Premier.",
+          "start": 78.54,
+          "end": 79.26,
+          "probability": 0.7412
+        },
+        {
+          "word": "The",
+          "start": 79.98,
+          "end": 80.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "Basics",
+          "start": 80.62,
+          "end": 81.06,
+          "probability": 0.9199
+        },
+        {
+          "word": "tab",
+          "start": 81.06,
+          "end": 81.32,
+          "probability": 0.9468
+        },
+        {
+          "word": "displays",
+          "start": 81.32,
+          "end": 81.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 81.76,
+          "end": 82.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "code,",
+          "start": 82.0,
+          "end": 82.36,
+          "probability": 0.5894
+        },
+        {
+          "word": "description,",
+          "start": 82.54,
+          "end": 83.1,
+          "probability": 0.9771
+        },
+        {
+          "word": "organization,",
+          "start": 83.5,
+          "end": 84.06,
+          "probability": 0.9658
+        },
+        {
+          "word": "status",
+          "start": 84.64,
+          "end": 85.04,
+          "probability": 0.9927
+        },
+        {
+          "word": "and",
+          "start": 85.04,
+          "end": 85.32,
+          "probability": 0.9443
+        },
+        {
+          "word": "other",
+          "start": 85.32,
+          "end": 85.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "information",
+          "start": 85.56,
+          "end": 86.18,
+          "probability": 0.998
+        },
+        {
+          "word": "related",
+          "start": 86.18,
+          "end": 86.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 86.62,
+          "end": 86.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 86.82,
+          "end": 86.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Producer",
+          "start": 86.96,
+          "end": 87.38,
+          "probability": 0.7192
+        },
+        {
+          "word": "Code.",
+          "start": 87.38,
+          "end": 87.82,
+          "probability": 0.9194
+        },
+        {
+          "word": "The",
+          "start": 88.16,
+          "end": 88.84,
+          "probability": 0.9536
+        },
+        {
+          "word": "Roles",
+          "start": 88.84,
+          "end": 89.18,
+          "probability": 0.9688
+        },
+        {
+          "word": "tab",
+          "start": 89.18,
+          "end": 89.42,
+          "probability": 0.9844
+        },
+        {
+          "word": "lists",
+          "start": 89.42,
+          "end": 89.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 89.78,
+          "end": 89.94,
+          "probability": 0.9595
+        },
+        {
+          "word": "regions",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.2686
+        },
+        {
+          "word": "that",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.8159
+        },
+        {
+          "word": "the",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.98
+        },
+        {
+          "word": "system",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.9775
+        },
+        {
+          "word": "can",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "use",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.9824
+        },
+        {
+          "word": "when",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.9531
+        },
+        {
+          "word": "making",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "assignment",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.9604
+        },
+        {
+          "word": "decisions.",
+          "start": 89.94,
+          "end": 89.94,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.94,
+      "end": 112.16,
+      "start_formatted": "00:01:29.940",
+      "end_formatted": "00:01:52.160",
+      "text": "The Roles tab lists the roles added to the Producer Code. The Groups tab lists the groups that have this Producer Code, in View-only mode. The Users tab lists the users that have access to this Producer Code, in View-only mode. To search for a Producer Code, go to the Producer Codes page under Users & Security. Enter Search criteria and click Search.",
+      "words": [
+        {
+          "word": "The",
+          "start": 89.94,
+          "end": 90.14,
+          "probability": 0.1925
+        },
+        {
+          "word": "Roles",
+          "start": 90.14,
+          "end": 90.36,
+          "probability": 0.5103
+        },
+        {
+          "word": "tab",
+          "start": 90.36,
+          "end": 90.6,
+          "probability": 0.002
+        },
+        {
+          "word": "lists",
+          "start": 90.6,
+          "end": 90.6,
+          "probability": 0.96
+        },
+        {
+          "word": "the",
+          "start": 90.6,
+          "end": 90.6,
+          "probability": 0.9878
+        },
+        {
+          "word": "roles",
+          "start": 90.6,
+          "end": 90.6,
+          "probability": 0.0
+        },
+        {
+          "word": "added",
+          "start": 90.6,
+          "end": 90.62,
+          "probability": 0.0889
+        },
+        {
+          "word": "to",
+          "start": 90.62,
+          "end": 90.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 90.82,
+          "end": 90.94,
+          "probability": 0.9897
+        },
+        {
+          "word": "Producer",
+          "start": 90.94,
+          "end": 91.38,
+          "probability": 0.5679
+        },
+        {
+          "word": "Code.",
+          "start": 91.38,
+          "end": 91.86,
+          "probability": 0.7866
+        },
+        {
+          "word": "The",
+          "start": 92.42,
+          "end": 93.0,
+          "probability": 0.9404
+        },
+        {
+          "word": "Groups",
+          "start": 93.0,
+          "end": 93.34,
+          "probability": 0.7852
+        },
+        {
+          "word": "tab",
+          "start": 93.34,
+          "end": 93.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "lists",
+          "start": 93.5,
+          "end": 93.78,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 93.78,
+          "end": 94.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "groups",
+          "start": 94.04,
+          "end": 94.3,
+          "probability": 0.8096
+        },
+        {
+          "word": "that",
+          "start": 94.3,
+          "end": 94.52,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 94.52,
+          "end": 94.74,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 94.74,
+          "end": 94.92,
+          "probability": 0.9878
+        },
+        {
+          "word": "Producer",
+          "start": 94.92,
+          "end": 95.34,
+          "probability": 0.8574
+        },
+        {
+          "word": "Code,",
+          "start": 95.34,
+          "end": 95.84,
+          "probability": 0.98
+        },
+        {
+          "word": "in",
+          "start": 95.92,
+          "end": 96.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "View",
+          "start": 96.26,
+          "end": 96.5,
+          "probability": 0.6743
+        },
+        {
+          "word": "-only",
+          "start": 96.5,
+          "end": 96.82,
+          "probability": 0.5479
+        },
+        {
+          "word": "mode.",
+          "start": 96.82,
+          "end": 97.14,
+          "probability": 0.8613
+        },
+        {
+          "word": "The",
+          "start": 97.64,
+          "end": 98.18,
+          "probability": 0.9761
+        },
+        {
+          "word": "Users",
+          "start": 98.18,
+          "end": 98.54,
+          "probability": 0.9629
+        },
+        {
+          "word": "tab",
+          "start": 98.54,
+          "end": 98.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "lists",
+          "start": 98.8,
+          "end": 99.12,
+          "probability": 0.9497
+        },
+        {
+          "word": "the",
+          "start": 99.12,
+          "end": 99.36,
+          "probability": 0.998
+        },
+        {
+          "word": "users",
+          "start": 99.36,
+          "end": 99.66,
+          "probability": 0.9131
+        },
+        {
+          "word": "that",
+          "start": 99.66,
+          "end": 99.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 99.92,
+          "end": 100.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 100.18,
+          "end": 100.52,
+          "probability": 0.9722
+        },
+        {
+          "word": "to",
+          "start": 100.52,
+          "end": 100.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 100.76,
+          "end": 101.0,
+          "probability": 0.9951
+        },
+        {
+          "word": "Producer",
+          "start": 101.0,
+          "end": 101.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "Code,",
+          "start": 101.38,
+          "end": 101.92,
+          "probability": 0.9912
+        },
+        {
+          "word": "in",
+          "start": 102.04,
+          "end": 102.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "View",
+          "start": 102.32,
+          "end": 102.58,
+          "probability": 0.9438
+        },
+        {
+          "word": "-only",
+          "start": 102.58,
+          "end": 102.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "mode.",
+          "start": 102.92,
+          "end": 103.24,
+          "probability": 0.9863
+        },
+        {
+          "word": "To",
+          "start": 103.5,
+          "end": 103.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "search",
+          "start": 103.82,
+          "end": 104.1,
+          "probability": 0.9595
+        },
+        {
+          "word": "for",
+          "start": 104.1,
+          "end": 104.36,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 104.36,
+          "end": 104.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "Producer",
+          "start": 104.56,
+          "end": 104.92,
+          "probability": 0.9395
+        },
+        {
+          "word": "Code,",
+          "start": 104.92,
+          "end": 105.4,
+          "probability": 0.9692
+        },
+        {
+          "word": "go",
+          "start": 105.54,
+          "end": 105.86,
+          "probability": 0.916
+        },
+        {
+          "word": "to",
+          "start": 105.86,
+          "end": 106.04,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 106.04,
+          "end": 106.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "Producer",
+          "start": 106.18,
+          "end": 106.62,
+          "probability": 0.9712
+        },
+        {
+          "word": "Codes",
+          "start": 106.62,
+          "end": 107.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "page",
+          "start": 107.18,
+          "end": 107.42,
+          "probability": 0.9419
+        },
+        {
+          "word": "under",
+          "start": 107.42,
+          "end": 107.74,
+          "probability": 0.9834
+        },
+        {
+          "word": "Users",
+          "start": 107.74,
+          "end": 108.14,
+          "probability": 0.9189
+        },
+        {
+          "word": "&",
+          "start": 108.14,
+          "end": 108.46,
+          "probability": 0.6426
+        },
+        {
+          "word": "Security.",
+          "start": 108.46,
+          "end": 109.06,
+          "probability": 0.9868
+        },
+        {
+          "word": "Enter",
+          "start": 109.62,
+          "end": 110.2,
+          "probability": 0.9888
+        },
+        {
+          "word": "Search",
+          "start": 110.2,
+          "end": 110.52,
+          "probability": 0.6377
+        },
+        {
+          "word": "criteria",
+          "start": 110.52,
+          "end": 111.04,
+          "probability": 0.2273
+        },
+        {
+          "word": "and",
+          "start": 111.04,
+          "end": 111.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "click",
+          "start": 111.56,
+          "end": 111.84,
+          "probability": 0.978
+        },
+        {
+          "word": "Search.",
+          "start": 111.84,
+          "end": 112.16,
+          "probability": 0.8765
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 113.72,
+      "end": 136.82,
+      "start_formatted": "00:01:53.720",
+      "end_formatted": "00:02:16.820",
+      "text": "Create a new Producer Code from the Actions menu. Select New Producer Code. The Code field must be unique. The new code belongs to Armstrong and Company. Click the Search icon to find the organization. Enter the name. Click Search.",
+      "words": [
+        {
+          "word": "Create",
+          "start": 113.72,
+          "end": 114.44,
+          "probability": 0.8311
+        },
+        {
+          "word": "a",
+          "start": 114.44,
+          "end": 114.68,
+          "probability": 0.9883
+        },
+        {
+          "word": "new",
+          "start": 114.68,
+          "end": 114.86,
+          "probability": 0.9414
+        },
+        {
+          "word": "Producer",
+          "start": 114.86,
+          "end": 115.34,
+          "probability": 0.1663
+        },
+        {
+          "word": "Code",
+          "start": 115.34,
+          "end": 115.72,
+          "probability": 0.6782
+        },
+        {
+          "word": "from",
+          "start": 115.72,
+          "end": 116.04,
+          "probability": 0.98
+        },
+        {
+          "word": "the",
+          "start": 116.04,
+          "end": 116.2,
+          "probability": 0.998
+        },
+        {
+          "word": "Actions",
+          "start": 116.2,
+          "end": 116.7,
+          "probability": 0.9243
+        },
+        {
+          "word": "menu.",
+          "start": 116.7,
+          "end": 117.08,
+          "probability": 0.8652
+        },
+        {
+          "word": "Select",
+          "start": 117.86,
+          "end": 118.58,
+          "probability": 0.9858
+        },
+        {
+          "word": "New",
+          "start": 118.58,
+          "end": 118.76,
+          "probability": 0.667
+        },
+        {
+          "word": "Producer",
+          "start": 118.76,
+          "end": 119.3,
+          "probability": 0.9551
+        },
+        {
+          "word": "Code.",
+          "start": 119.3,
+          "end": 119.78,
+          "probability": 0.9673
+        },
+        {
+          "word": "The",
+          "start": 121.72,
+          "end": 122.44,
+          "probability": 0.9907
+        },
+        {
+          "word": "Code",
+          "start": 122.44,
+          "end": 122.72,
+          "probability": 0.3716
+        },
+        {
+          "word": "field",
+          "start": 122.72,
+          "end": 123.04,
+          "probability": 0.833
+        },
+        {
+          "word": "must",
+          "start": 123.04,
+          "end": 123.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "be",
+          "start": 123.3,
+          "end": 123.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "unique.",
+          "start": 123.54,
+          "end": 123.9,
+          "probability": 0.8979
+        },
+        {
+          "word": "The",
+          "start": 126.0,
+          "end": 126.72,
+          "probability": 0.9756
+        },
+        {
+          "word": "new",
+          "start": 126.72,
+          "end": 126.9,
+          "probability": 0.9673
+        },
+        {
+          "word": "code",
+          "start": 126.9,
+          "end": 127.22,
+          "probability": 0.8457
+        },
+        {
+          "word": "belongs",
+          "start": 127.22,
+          "end": 127.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 127.72,
+          "end": 127.94,
+          "probability": 0.999
+        },
+        {
+          "word": "Armstrong",
+          "start": 127.94,
+          "end": 128.28,
+          "probability": 0.8423
+        },
+        {
+          "word": "and",
+          "start": 128.28,
+          "end": 128.76,
+          "probability": 0.5625
+        },
+        {
+          "word": "Company.",
+          "start": 128.76,
+          "end": 129.16,
+          "probability": 0.8477
+        },
+        {
+          "word": "Click",
+          "start": 129.48,
+          "end": 129.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 129.92,
+          "end": 130.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "Search",
+          "start": 130.12,
+          "end": 130.38,
+          "probability": 0.3999
+        },
+        {
+          "word": "icon",
+          "start": 130.38,
+          "end": 130.88,
+          "probability": 0.9829
+        },
+        {
+          "word": "to",
+          "start": 130.88,
+          "end": 131.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "find",
+          "start": 131.2,
+          "end": 131.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 131.5,
+          "end": 131.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "organization.",
+          "start": 131.68,
+          "end": 132.32,
+          "probability": 0.8726
+        },
+        {
+          "word": "Enter",
+          "start": 132.96,
+          "end": 133.58,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 133.58,
+          "end": 133.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "name.",
+          "start": 133.76,
+          "end": 134.06,
+          "probability": 0.8008
+        },
+        {
+          "word": "Click",
+          "start": 135.8,
+          "end": 136.52,
+          "probability": 0.9912
+        },
+        {
+          "word": "Search.",
+          "start": 136.52,
+          "end": 136.82,
+          "probability": 0.9028
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 139.96,
+      "end": 145.36,
+      "start_formatted": "00:02:19.960",
+      "end_formatted": "00:02:25.360",
+      "text": "Select Armstrong and Company. Enter a description.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 139.96,
+          "end": 140.76,
+          "probability": 0.7896
+        },
+        {
+          "word": "Armstrong",
+          "start": 140.76,
+          "end": 141.3,
+          "probability": 0.729
+        },
+        {
+          "word": "and",
+          "start": 141.3,
+          "end": 141.68,
+          "probability": 0.7168
+        },
+        {
+          "word": "Company.",
+          "start": 141.68,
+          "end": 142.1,
+          "probability": 0.7671
+        },
+        {
+          "word": "Enter",
+          "start": 143.94,
+          "end": 144.74,
+          "probability": 0.9893
+        },
+        {
+          "word": "a",
+          "start": 144.74,
+          "end": 144.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "description.",
+          "start": 144.9,
+          "end": 145.36,
+          "probability": 0.9341
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 153.82,
+      "end": 163.38,
+      "start_formatted": "00:02:33.820",
+      "end_formatted": "00:02:43.380",
+      "text": "It is optional to select a preferred underwriter for underwriter assignment purpose. Go to the Roles tab. Add the Producer role.",
+      "words": [
+        {
+          "word": "It",
+          "start": 153.82,
+          "end": 154.62,
+          "probability": 0.9624
+        },
+        {
+          "word": "is",
+          "start": 154.62,
+          "end": 154.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "optional",
+          "start": 154.78,
+          "end": 155.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 155.18,
+          "end": 155.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "select",
+          "start": 155.42,
+          "end": 155.78,
+          "probability": 0.9897
+        },
+        {
+          "word": "a",
+          "start": 155.78,
+          "end": 155.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "preferred",
+          "start": 155.94,
+          "end": 156.34,
+          "probability": 0.9673
+        },
+        {
+          "word": "underwriter",
+          "start": 156.34,
+          "end": 157.04,
+          "probability": 0.9624
+        },
+        {
+          "word": "for",
+          "start": 157.04,
+          "end": 157.32,
+          "probability": 0.9834
+        },
+        {
+          "word": "underwriter",
+          "start": 157.32,
+          "end": 157.9,
+          "probability": 0.916
+        },
+        {
+          "word": "assignment",
+          "start": 157.9,
+          "end": 158.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "purpose.",
+          "start": 158.4,
+          "end": 158.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "Go",
+          "start": 159.28,
+          "end": 159.78,
+          "probability": 0.9868
+        },
+        {
+          "word": "to",
+          "start": 159.78,
+          "end": 159.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 159.96,
+          "end": 160.14,
+          "probability": 0.9912
+        },
+        {
+          "word": "Roles",
+          "start": 160.14,
+          "end": 160.46,
+          "probability": 0.7236
+        },
+        {
+          "word": "tab.",
+          "start": 160.46,
+          "end": 160.76,
+          "probability": 0.9683
+        },
+        {
+          "word": "Add",
+          "start": 161.58,
+          "end": 162.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 162.38,
+          "end": 162.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "Producer",
+          "start": 162.54,
+          "end": 163.0,
+          "probability": 0.5503
+        },
+        {
+          "word": "role.",
+          "start": 163.0,
+          "end": 163.38,
+          "probability": 0.9111
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 173.0,
+      "end": 185.06,
+      "start_formatted": "00:02:53.000",
+      "end_formatted": "00:03:05.060",
+      "text": "Click Update to save the new Producer Code. If multiple languages are turned on, a warning message about localization is displayed. Click Update again to save.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 173.0,
+          "end": 173.7,
+          "probability": 0.7329
+        },
+        {
+          "word": "Update",
+          "start": 173.7,
+          "end": 174.08,
+          "probability": 0.644
+        },
+        {
+          "word": "to",
+          "start": 174.08,
+          "end": 174.34,
+          "probability": 0.9888
+        },
+        {
+          "word": "save",
+          "start": 174.34,
+          "end": 174.56,
+          "probability": 0.9263
+        },
+        {
+          "word": "the",
+          "start": 174.56,
+          "end": 174.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "new",
+          "start": 174.76,
+          "end": 174.98,
+          "probability": 0.9365
+        },
+        {
+          "word": "Producer",
+          "start": 174.98,
+          "end": 175.48,
+          "probability": 0.3828
+        },
+        {
+          "word": "Code.",
+          "start": 175.48,
+          "end": 175.96,
+          "probability": 0.6699
+        },
+        {
+          "word": "If",
+          "start": 177.2,
+          "end": 177.9,
+          "probability": 0.98
+        },
+        {
+          "word": "multiple",
+          "start": 177.9,
+          "end": 178.38,
+          "probability": 0.9644
+        },
+        {
+          "word": "languages",
+          "start": 178.38,
+          "end": 178.94,
+          "probability": 0.9741
+        },
+        {
+          "word": "are",
+          "start": 178.94,
+          "end": 179.22,
+          "probability": 0.999
+        },
+        {
+          "word": "turned",
+          "start": 179.22,
+          "end": 179.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "on,",
+          "start": 179.54,
+          "end": 179.9,
+          "probability": 0.9521
+        },
+        {
+          "word": "a",
+          "start": 180.08,
+          "end": 180.34,
+          "probability": 0.9932
+        },
+        {
+          "word": "warning",
+          "start": 180.34,
+          "end": 180.68,
+          "probability": 0.8716
+        },
+        {
+          "word": "message",
+          "start": 180.68,
+          "end": 181.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "about",
+          "start": 181.08,
+          "end": 181.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "localization",
+          "start": 181.44,
+          "end": 182.22,
+          "probability": 0.937
+        },
+        {
+          "word": "is",
+          "start": 182.22,
+          "end": 182.5,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed.",
+          "start": 182.5,
+          "end": 183.0,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 183.32,
+          "end": 183.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "Update",
+          "start": 183.8,
+          "end": 184.14,
+          "probability": 0.9707
+        },
+        {
+          "word": "again",
+          "start": 184.14,
+          "end": 184.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 184.5,
+          "end": 184.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "save.",
+          "start": 184.74,
+          "end": 185.06,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 187.4,
+      "end": 193.88,
+      "start_formatted": "00:03:07.400",
+      "end_formatted": "00:03:13.880",
+      "text": "The new Producer Code must be made available to the users in any group. Click on the Organization link.",
+      "words": [
+        {
+          "word": "The",
+          "start": 187.4,
+          "end": 187.92,
+          "probability": 0.7632
+        },
+        {
+          "word": "new",
+          "start": 187.92,
+          "end": 188.12,
+          "probability": 0.9375
+        },
+        {
+          "word": "Producer",
+          "start": 188.12,
+          "end": 188.54,
+          "probability": 0.3435
+        },
+        {
+          "word": "Code",
+          "start": 188.54,
+          "end": 188.92,
+          "probability": 0.8408
+        },
+        {
+          "word": "must",
+          "start": 188.92,
+          "end": 189.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "be",
+          "start": 189.24,
+          "end": 189.44,
+          "probability": 0.998
+        },
+        {
+          "word": "made",
+          "start": 189.44,
+          "end": 189.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "available",
+          "start": 189.68,
+          "end": 190.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 190.22,
+          "end": 190.46,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 190.46,
+          "end": 190.62,
+          "probability": 0.9834
+        },
+        {
+          "word": "users",
+          "start": 190.62,
+          "end": 190.94,
+          "probability": 0.9355
+        },
+        {
+          "word": "in",
+          "start": 190.94,
+          "end": 191.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "any",
+          "start": 191.2,
+          "end": 191.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "group.",
+          "start": 191.42,
+          "end": 191.76,
+          "probability": 0.8979
+        },
+        {
+          "word": "Click",
+          "start": 192.02,
+          "end": 192.46,
+          "probability": 0.9844
+        },
+        {
+          "word": "on",
+          "start": 192.46,
+          "end": 192.66,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 192.66,
+          "end": 192.8,
+          "probability": 0.9854
+        },
+        {
+          "word": "Organization",
+          "start": 192.8,
+          "end": 193.26,
+          "probability": 0.7427
+        },
+        {
+          "word": "link.",
+          "start": 193.26,
+          "end": 193.88,
+          "probability": 0.9355
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 194.66,
+      "end": 206.22,
+      "start_formatted": "00:03:14.660",
+      "end_formatted": "00:03:26.220",
+      "text": "Go to the Producer Codes tab to review the codes for the organization. Go to the Group for Foster City Producers. Click the Producer Codes tab for the group.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 194.66,
+          "end": 195.18,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 195.18,
+          "end": 195.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 195.36,
+          "end": 195.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "Producer",
+          "start": 195.52,
+          "end": 195.88,
+          "probability": 0.896
+        },
+        {
+          "word": "Codes",
+          "start": 195.88,
+          "end": 196.4,
+          "probability": 0.9893
+        },
+        {
+          "word": "tab",
+          "start": 196.4,
+          "end": 196.64,
+          "probability": 0.96
+        },
+        {
+          "word": "to",
+          "start": 196.64,
+          "end": 196.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "review",
+          "start": 196.88,
+          "end": 197.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 197.22,
+          "end": 197.42,
+          "probability": 0.999
+        },
+        {
+          "word": "codes",
+          "start": 197.42,
+          "end": 197.8,
+          "probability": 0.9751
+        },
+        {
+          "word": "for",
+          "start": 197.8,
+          "end": 198.02,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 198.02,
+          "end": 198.18,
+          "probability": 0.998
+        },
+        {
+          "word": "organization.",
+          "start": 198.18,
+          "end": 198.8,
+          "probability": 0.7852
+        },
+        {
+          "word": "Go",
+          "start": 199.56,
+          "end": 200.08,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 200.08,
+          "end": 200.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 200.26,
+          "end": 200.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "Group",
+          "start": 200.4,
+          "end": 200.58,
+          "probability": 0.6001
+        },
+        {
+          "word": "for",
+          "start": 200.58,
+          "end": 200.82,
+          "probability": 0.9722
+        },
+        {
+          "word": "Foster",
+          "start": 200.82,
+          "end": 201.24,
+          "probability": 0.9258
+        },
+        {
+          "word": "City",
+          "start": 201.24,
+          "end": 201.58,
+          "probability": 0.9316
+        },
+        {
+          "word": "Producers.",
+          "start": 201.58,
+          "end": 202.32,
+          "probability": 0.9717
+        },
+        {
+          "word": "Click",
+          "start": 203.78,
+          "end": 204.3,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 204.3,
+          "end": 204.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "Producer",
+          "start": 204.46,
+          "end": 204.88,
+          "probability": 0.9756
+        },
+        {
+          "word": "Codes",
+          "start": 204.88,
+          "end": 205.4,
+          "probability": 0.998
+        },
+        {
+          "word": "tab",
+          "start": 205.4,
+          "end": 205.66,
+          "probability": 0.981
+        },
+        {
+          "word": "for",
+          "start": 205.66,
+          "end": 205.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 205.86,
+          "end": 206.0,
+          "probability": 0.999
+        },
+        {
+          "word": "group.",
+          "start": 206.0,
+          "end": 206.22,
+          "probability": 0.9307
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 207.72,
+      "end": 213.14,
+      "start_formatted": "00:03:27.720",
+      "end_formatted": "00:03:33.140",
+      "text": "It displays all the Producer Codes from its parent, the organization. Click Edit.",
+      "words": [
+        {
+          "word": "It",
+          "start": 207.72,
+          "end": 208.36,
+          "probability": 0.8608
+        },
+        {
+          "word": "displays",
+          "start": 208.36,
+          "end": 208.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "all",
+          "start": 208.78,
+          "end": 209.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 209.04,
+          "end": 209.24,
+          "probability": 0.9849
+        },
+        {
+          "word": "Producer",
+          "start": 209.24,
+          "end": 209.64,
+          "probability": 0.1812
+        },
+        {
+          "word": "Codes",
+          "start": 209.64,
+          "end": 210.14,
+          "probability": 0.645
+        },
+        {
+          "word": "from",
+          "start": 210.14,
+          "end": 210.32,
+          "probability": 0.9868
+        },
+        {
+          "word": "its",
+          "start": 210.32,
+          "end": 210.52,
+          "probability": 0.9312
+        },
+        {
+          "word": "parent,",
+          "start": 210.52,
+          "end": 210.96,
+          "probability": 0.8799
+        },
+        {
+          "word": "the",
+          "start": 211.08,
+          "end": 211.34,
+          "probability": 0.9873
+        },
+        {
+          "word": "organization.",
+          "start": 211.34,
+          "end": 211.96,
+          "probability": 0.813
+        },
+        {
+          "word": "Click",
+          "start": 212.38,
+          "end": 212.88,
+          "probability": 0.9819
+        },
+        {
+          "word": "Edit.",
+          "start": 212.88,
+          "end": 213.14,
+          "probability": 0.6924
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 213.74,
+      "end": 221.24,
+      "start_formatted": "00:03:33.740",
+      "end_formatted": "00:03:41.240",
+      "text": "Set a Producer Code to be available for the current group by clicking the checkbox. Click Update to save the change.",
+      "words": [
+        {
+          "word": "Set",
+          "start": 213.74,
+          "end": 214.38,
+          "probability": 0.9902
+        },
+        {
+          "word": "a",
+          "start": 214.38,
+          "end": 214.54,
+          "probability": 0.9697
+        },
+        {
+          "word": "Producer",
+          "start": 214.54,
+          "end": 214.92,
+          "probability": 0.8662
+        },
+        {
+          "word": "Code",
+          "start": 214.92,
+          "end": 215.32,
+          "probability": 0.9175
+        },
+        {
+          "word": "to",
+          "start": 215.32,
+          "end": 215.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 215.54,
+          "end": 215.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "available",
+          "start": 215.64,
+          "end": 216.1,
+          "probability": 0.98
+        },
+        {
+          "word": "for",
+          "start": 216.1,
+          "end": 216.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 216.36,
+          "end": 216.52,
+          "probability": 0.998
+        },
+        {
+          "word": "current",
+          "start": 216.52,
+          "end": 216.8,
+          "probability": 0.896
+        },
+        {
+          "word": "group",
+          "start": 216.8,
+          "end": 217.06,
+          "probability": 0.897
+        },
+        {
+          "word": "by",
+          "start": 217.06,
+          "end": 217.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "clicking",
+          "start": 217.3,
+          "end": 217.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 217.66,
+          "end": 217.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "checkbox.",
+          "start": 217.9,
+          "end": 218.64,
+          "probability": 0.8062
+        },
+        {
+          "word": "Click",
+          "start": 219.14,
+          "end": 219.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "Update",
+          "start": 219.78,
+          "end": 220.1,
+          "probability": 0.9888
+        },
+        {
+          "word": "to",
+          "start": 220.1,
+          "end": 220.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "save",
+          "start": 220.38,
+          "end": 220.66,
+          "probability": 0.9722
+        },
+        {
+          "word": "the",
+          "start": 220.66,
+          "end": 220.84,
+          "probability": 0.998
+        },
+        {
+          "word": "change.",
+          "start": 220.84,
+          "end": 221.24,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 223.36,
+      "end": 224.92,
+      "start_formatted": "00:03:43.360",
+      "end_formatted": "00:03:44.920",
+      "text": "Go to the Users tab.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 223.36,
+          "end": 224.0,
+          "probability": 0.9829
+        },
+        {
+          "word": "to",
+          "start": 224.0,
+          "end": 224.18,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 224.18,
+          "end": 224.32,
+          "probability": 0.998
+        },
+        {
+          "word": "Users",
+          "start": 224.32,
+          "end": 224.64,
+          "probability": 0.9712
+        },
+        {
+          "word": "tab.",
+          "start": 224.64,
+          "end": 224.92,
+          "probability": 0.9326
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 228.34,
+      "end": 234.34,
+      "start_formatted": "00:03:48.340",
+      "end_formatted": "00:03:54.340",
+      "text": "Click the link for the user Mary Armstrong in the group. Go to the Access tab.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 228.34,
+          "end": 229.02,
+          "probability": 0.7358
+        },
+        {
+          "word": "the",
+          "start": 229.02,
+          "end": 229.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "link",
+          "start": 229.24,
+          "end": 229.48,
+          "probability": 0.9761
+        },
+        {
+          "word": "for",
+          "start": 229.48,
+          "end": 229.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 229.72,
+          "end": 229.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "user",
+          "start": 229.88,
+          "end": 230.22,
+          "probability": 0.896
+        },
+        {
+          "word": "Mary",
+          "start": 230.22,
+          "end": 230.54,
+          "probability": 0.4875
+        },
+        {
+          "word": "Armstrong",
+          "start": 230.54,
+          "end": 231.08,
+          "probability": 0.9399
+        },
+        {
+          "word": "in",
+          "start": 231.08,
+          "end": 231.52,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 231.52,
+          "end": 231.6,
+          "probability": 0.998
+        },
+        {
+          "word": "group.",
+          "start": 231.6,
+          "end": 231.82,
+          "probability": 0.8853
+        },
+        {
+          "word": "Go",
+          "start": 232.54,
+          "end": 233.2,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 233.2,
+          "end": 233.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 233.36,
+          "end": 233.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "Access",
+          "start": 233.56,
+          "end": 233.94,
+          "probability": 0.6875
+        },
+        {
+          "word": "tab.",
+          "start": 233.94,
+          "end": 234.34,
+          "probability": 0.9648
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 237.14,
+      "end": 248.94,
+      "start_formatted": "00:03:57.140",
+      "end_formatted": "00:04:08.940",
+      "text": "Verify that the Producer Code is displayed under Producer Codes from group. Additional Producer Codes can be added by editing the user. Click Add in the Additional Producer Codes section.",
+      "words": [
+        {
+          "word": "Verify",
+          "start": 237.14,
+          "end": 237.82,
+          "probability": 0.9902
+        },
+        {
+          "word": "that",
+          "start": 237.82,
+          "end": 238.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 238.0,
+          "end": 238.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "Producer",
+          "start": 238.14,
+          "end": 238.5,
+          "probability": 0.3618
+        },
+        {
+          "word": "Code",
+          "start": 238.5,
+          "end": 238.9,
+          "probability": 0.7217
+        },
+        {
+          "word": "is",
+          "start": 238.9,
+          "end": 239.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "displayed",
+          "start": 239.16,
+          "end": 239.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "under",
+          "start": 239.58,
+          "end": 239.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "Producer",
+          "start": 239.88,
+          "end": 240.36,
+          "probability": 0.8911
+        },
+        {
+          "word": "Codes",
+          "start": 240.36,
+          "end": 240.96,
+          "probability": 0.9766
+        },
+        {
+          "word": "from",
+          "start": 240.96,
+          "end": 241.16,
+          "probability": 0.8979
+        },
+        {
+          "word": "group.",
+          "start": 241.16,
+          "end": 241.44,
+          "probability": 0.3943
+        },
+        {
+          "word": "Additional",
+          "start": 241.82,
+          "end": 242.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "Producer",
+          "start": 242.5,
+          "end": 242.94,
+          "probability": 0.7842
+        },
+        {
+          "word": "Codes",
+          "start": 242.94,
+          "end": 243.46,
+          "probability": 0.9634
+        },
+        {
+          "word": "can",
+          "start": 243.46,
+          "end": 243.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 243.66,
+          "end": 243.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "added",
+          "start": 243.84,
+          "end": 244.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 244.1,
+          "end": 244.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "editing",
+          "start": 244.34,
+          "end": 244.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 244.74,
+          "end": 244.96,
+          "probability": 0.999
+        },
+        {
+          "word": "user.",
+          "start": 244.96,
+          "end": 245.3,
+          "probability": 0.9697
+        },
+        {
+          "word": "Click",
+          "start": 245.96,
+          "end": 246.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "Add",
+          "start": 246.58,
+          "end": 246.78,
+          "probability": 0.647
+        },
+        {
+          "word": "in",
+          "start": 246.78,
+          "end": 246.98,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 246.98,
+          "end": 247.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "Additional",
+          "start": 247.1,
+          "end": 247.44,
+          "probability": 0.874
+        },
+        {
+          "word": "Producer",
+          "start": 247.44,
+          "end": 247.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "Codes",
+          "start": 247.96,
+          "end": 248.48,
+          "probability": 0.9702
+        },
+        {
+          "word": "section.",
+          "start": 248.48,
+          "end": 248.94,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 249.94,
+      "end": 257.26,
+      "start_formatted": "00:04:09.940",
+      "end_formatted": "00:04:17.260",
+      "text": "Search for the Producer Codes. Select the Producer Code to add to the user.",
+      "words": [
+        {
+          "word": "Search",
+          "start": 249.94,
+          "end": 250.74,
+          "probability": 0.8623
+        },
+        {
+          "word": "for",
+          "start": 250.74,
+          "end": 250.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 250.98,
+          "end": 251.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "Producer",
+          "start": 251.14,
+          "end": 251.56,
+          "probability": 0.1986
+        },
+        {
+          "word": "Codes.",
+          "start": 251.56,
+          "end": 252.12,
+          "probability": 0.668
+        },
+        {
+          "word": "Select",
+          "start": 254.28,
+          "end": 255.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 255.08,
+          "end": 255.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "Producer",
+          "start": 255.28,
+          "end": 255.76,
+          "probability": 0.8584
+        },
+        {
+          "word": "Code",
+          "start": 255.76,
+          "end": 256.22,
+          "probability": 0.9634
+        },
+        {
+          "word": "to",
+          "start": 256.22,
+          "end": 256.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "add",
+          "start": 256.44,
+          "end": 256.62,
+          "probability": 0.9624
+        },
+        {
+          "word": "to",
+          "start": 256.62,
+          "end": 256.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 256.78,
+          "end": 256.9,
+          "probability": 0.998
+        },
+        {
+          "word": "user.",
+          "start": 256.9,
+          "end": 257.26,
+          "probability": 0.8892
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 258.42,
+      "end": 259.74,
+      "start_formatted": "00:04:18.420",
+      "end_formatted": "00:04:19.740",
+      "text": "Save the changes.",
+      "words": [
+        {
+          "word": "Save",
+          "start": 258.42,
+          "end": 259.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 259.22,
+          "end": 259.34,
+          "probability": 0.998
+        },
+        {
+          "word": "changes.",
+          "start": 259.34,
+          "end": 259.74,
+          "probability": 0.8857
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 262.58,
+      "end": 267.52,
+      "start_formatted": "00:04:22.580",
+      "end_formatted": "00:04:27.520",
+      "text": "This is the end of the demonstration for managing organizations and Producer Codes.",
+      "words": [
+        {
+          "word": "This",
+          "start": 262.58,
+          "end": 263.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "is",
+          "start": 263.38,
+          "end": 263.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 263.52,
+          "end": 263.66,
+          "probability": 0.999
+        },
+        {
+          "word": "end",
+          "start": 263.66,
+          "end": 263.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "of",
+          "start": 263.94,
+          "end": 264.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 264.08,
+          "end": 264.2,
+          "probability": 0.998
+        },
+        {
+          "word": "demonstration",
+          "start": 264.2,
+          "end": 264.74,
+          "probability": 0.9858
+        },
+        {
+          "word": "for",
+          "start": 264.74,
+          "end": 265.16,
+          "probability": 0.998
+        },
+        {
+          "word": "managing",
+          "start": 265.16,
+          "end": 265.58,
+          "probability": 0.731
+        },
+        {
+          "word": "organizations",
+          "start": 265.58,
+          "end": 266.44,
+          "probability": 0.6699
+        },
+        {
+          "word": "and",
+          "start": 266.44,
+          "end": 266.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "Producer",
+          "start": 266.86,
+          "end": 267.28,
+          "probability": 0.4146
+        },
+        {
+          "word": "Codes.",
+          "start": 267.28,
+          "end": 267.52,
+          "probability": 0.667
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 267.5,
+      "end": 267.5,
+      "start_formatted": "00:04:27.500",
+      "end_formatted": "00:04:27.500",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 19,
+      "start": 271.12,
+      "end": 273.02,
+      "start_formatted": "00:04:31.120",
+      "end_formatted": "00:04:33.020",
+      "text": "!",
+      "words": []
+    }
+  ]
+}

@@ -1,0 +1,7347 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_17_01.mp4",
+    "video_stem": "IS_Claim_17_01",
+    "duration_seconds": 462.08,
+    "duration_formatted": "00:07:42.080",
+    "segment_count": 65,
+    "word_count": 1108,
+    "avg_confidence": 0.9805,
+    "transcription_time_seconds": 31.02,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:58:13.572462"
+  },
+  "full_text": "In this demonstration, Betty Baker takes a call from Andrew Williams who is reporting an accident. During the call, Betty looks at the coverage details of Andrew Williams's policy. When she creates the claim, she also manually creates some exposures. The exposures help, illustrate the relationship of the line of business model to the user interface and business. Betty logs into ClaimCenter. Andrew Williams is calling in to report an accident and to open a claim. Betty selects Claim, New Claim. She enters the first part of Andrew's last name. And clicks Search. Betty wants to verify a few of the policy details with Andrew before she creates the claim. She clicks the policy number to see the details. She sees that the policy is personal, auto, and that it is in force. She also sees that there are two vehicles covered on the policy. Once she verifies those details with Andrew, she closes the policy details screen. Andrew told her that the accident was today, so she selects today as the law state. With the policy and law state selected, she clicks next to start the claim entry. Betty wants to look at some of the policy details now that she has started entering the claim. She clicks Policy. She clicks Policy Details to see the specific details and coverages. On the Policy Details screen, Betty sees a few more details about the vehicles covered on this policy. She can also drill down to see more details about either of these vehicles. She clicks the link on the first vehicle. This is the vehicle. This is the vehicle, information for the Ford XLT. It shows vehicle data, like make and model, year, VIN number, and license plate and state. At the bottom of the page, it shows the coverages for the vehicle. Notice the deductible, exposure limit and incident limits for each of the coverages. These values come from integration with a policy system. Now that Betty has looked at the vehicle details. Now that Betty has looked at the vehicle details, she returns to the policy. She is done with the policy, so Betty clicks, back, to return to the new claim wizard. Betty selects Andrew as the reporter for the claim. Andrew reported that the accident was in the 2013 XLT, so she selects it as the involved vehicle. When she selects the Ford XLT, details about its specific coverages display, including deductibles and limits for each coverage. For comparison, Betty selects the other vehicle. Notice that the liability bodily injury coverage for the Ford FX4, is $75,000 per incident, with a $300,000 limit. The same coverage for the Ford XLT, is $10,000 per incident, with a $30,000 limit. Also, the Ford FX4, has rental reimbursement coverage, whereas the Ford XLT, does not. The claim is for the Ford XLT, so Betty D selects the Ford FX4. Now that the basic information is complete, she clicks next. Loss cause is restricted by the loss type, such as, auto, or property. This is to make sure that the loss cause makes sense based on the type of loss. In this case, the policy type, personal, auto, is associated with the line of business, personal auto line, which in turn is associated with the auto loss type. Therefore, since the loss type is, auto, the causes are restricted to auto type causes such as collision while turning left, glass breakage, rollover, and so on. It would not make sense for an auto, claim to have a loss cause of burglary or mold. Andrew told her that he hit another vehicle, so she selects collision with motor vehicle as the loss cause. Because he told her that he hit the other vehicle, she also sets the fault rating to ensure it at fault. Betty enters the location of the loss. This is a new location. She clicks next to continue to the next step of the wizard. Betty selects towing, and asks Andrew if he needs that, service. She reminds Andrew, that he does have towing coverage and the limit is $400. Andrew says that he does not need towing, at least for now. The services shown here are not, coverages. These are services that may be arranged for the client during claim intake. However, these services will show no coverage behind the service if there is no coverage for the service on the policy. Notice the difference between the rental, and towing services. The rental service is available, but it does show that this is not covered on the policy. Since he doesn't need any other services, Betty clicks next. The last page of the new claim wizard shows that there is one exposure. This exposure was created by business rules during the new claim wizard. There was a passenger in Andrew's truck who was injured in the accident. This will be an additional exposure. Because the exposure is for bodily injury, Betty clicks New Exposure and selects the Ford XLT, a covered vehicle on the policy. Then she selects the coverage liability, bodily injury and property damage, and finally, the sub-coverage liability, bodily injury. This exposure is for a passenger who was injured in the accident, so Betty adds a new injury incident. The injured person is a new person. The injured person is Kayla Williams, so Betty enters the first and last name. Betty clicks Update, to create the person. She sets the loss party to third party liability. Next, Betty clicks OK to create the injury incident. Next, Betty selects Kayla, as the claimant. Then she sets the claimant type to, occupant of insured's vehicle. Finally, Betty clicks OK to create the exposure. In addition to creating an exposure for a specific coverage on the policy, Betty can also create an exposure by coverage type. These coverages may or may not be on the policy. In this case, Betty selects Uninsured Motorist, Bodily Injury, as the coverage. The new exposure screen is the same regardless of whether or not the coverage is on the policy. This simply allows the user to create exposures regardless of policy coverage. In this case, Betty does not need to create the extra exposure, so she clicks Cancel. The claim now has two exposures, one for the vehicle, and another for bodily injury. Betty clicks Finish to create the claim. Notice that the claim is automatically assigned to the Houston Claims Center and Joe Ramirez. That is because the accident occurred in the 77089 zip code. Betty is done for now, so she logs out of Claims Center. This ends the auto claim and the line of business demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 23.9,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:23.900",
+      "text": "In this demonstration, Betty Baker takes a call from Andrew Williams who is reporting an accident. During the call, Betty looks at the coverage details of Andrew Williams's policy. When she creates the claim, she also manually creates some exposures. The exposures help, illustrate the relationship of the line of business model to the user interface and business.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.9614
+        },
+        {
+          "word": "this",
+          "start": 0.8,
+          "end": 1.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "demonstration,",
+          "start": 1.02,
+          "end": 1.76,
+          "probability": 0.999
+        },
+        {
+          "word": "Betty",
+          "start": 2.3,
+          "end": 2.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "Baker",
+          "start": 2.44,
+          "end": 2.9,
+          "probability": 0.999
+        },
+        {
+          "word": "takes",
+          "start": 2.9,
+          "end": 3.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 3.3,
+          "end": 3.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "call",
+          "start": 3.46,
+          "end": 3.74,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 3.74,
+          "end": 4.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andrew",
+          "start": 4.0,
+          "end": 4.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Williams",
+          "start": 4.38,
+          "end": 4.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "who",
+          "start": 4.86,
+          "end": 5.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 5.06,
+          "end": 5.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "reporting",
+          "start": 5.24,
+          "end": 5.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 5.68,
+          "end": 5.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "accident.",
+          "start": 5.94,
+          "end": 6.44,
+          "probability": 0.998
+        },
+        {
+          "word": "During",
+          "start": 6.7,
+          "end": 7.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 7.22,
+          "end": 7.44,
+          "probability": 1.0
+        },
+        {
+          "word": "call,",
+          "start": 7.44,
+          "end": 7.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Betty",
+          "start": 8.02,
+          "end": 8.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "looks",
+          "start": 8.3,
+          "end": 8.68,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 8.68,
+          "end": 8.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 8.86,
+          "end": 9.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage",
+          "start": 9.0,
+          "end": 9.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "details",
+          "start": 9.38,
+          "end": 9.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 9.94,
+          "end": 10.22,
+          "probability": 1.0
+        },
+        {
+          "word": "Andrew",
+          "start": 10.22,
+          "end": 10.54,
+          "probability": 1.0
+        },
+        {
+          "word": "Williams's",
+          "start": 10.54,
+          "end": 11.3,
+          "probability": 0.7646
+        },
+        {
+          "word": "policy.",
+          "start": 11.3,
+          "end": 11.86,
+          "probability": 0.999
+        },
+        {
+          "word": "When",
+          "start": 12.16,
+          "end": 12.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 12.56,
+          "end": 12.72,
+          "probability": 1.0
+        },
+        {
+          "word": "creates",
+          "start": 12.72,
+          "end": 13.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 13.24,
+          "end": 13.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 13.4,
+          "end": 13.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "she",
+          "start": 14.0,
+          "end": 14.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 14.28,
+          "end": 14.66,
+          "probability": 1.0
+        },
+        {
+          "word": "manually",
+          "start": 14.66,
+          "end": 15.18,
+          "probability": 1.0
+        },
+        {
+          "word": "creates",
+          "start": 15.18,
+          "end": 15.78,
+          "probability": 1.0
+        },
+        {
+          "word": "some",
+          "start": 15.78,
+          "end": 16.06,
+          "probability": 1.0
+        },
+        {
+          "word": "exposures.",
+          "start": 16.06,
+          "end": 16.82,
+          "probability": 0.999
+        },
+        {
+          "word": "The",
+          "start": 17.14,
+          "end": 17.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposures",
+          "start": 17.46,
+          "end": 18.14,
+          "probability": 1.0
+        },
+        {
+          "word": "help,",
+          "start": 18.14,
+          "end": 18.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "illustrate",
+          "start": 18.62,
+          "end": 19.14,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 19.14,
+          "end": 19.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "relationship",
+          "start": 19.42,
+          "end": 20.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 20.0,
+          "end": 20.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 20.34,
+          "end": 20.46,
+          "probability": 0.999
+        },
+        {
+          "word": "line",
+          "start": 20.46,
+          "end": 20.78,
+          "probability": 0.9395
+        },
+        {
+          "word": "of",
+          "start": 20.78,
+          "end": 21.0,
+          "probability": 0.6074
+        },
+        {
+          "word": "business",
+          "start": 21.0,
+          "end": 21.4,
+          "probability": 0.999
+        },
+        {
+          "word": "model",
+          "start": 21.4,
+          "end": 21.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 21.8,
+          "end": 21.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 21.98,
+          "end": 22.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 22.12,
+          "end": 22.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "interface",
+          "start": 22.46,
+          "end": 23.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 23.12,
+          "end": 23.44,
+          "probability": 0.999
+        },
+        {
+          "word": "business.",
+          "start": 23.44,
+          "end": 23.9,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 24.98,
+      "end": 27.3,
+      "start_formatted": "00:00:24.980",
+      "end_formatted": "00:00:27.300",
+      "text": "Betty logs into ClaimCenter.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 24.98,
+          "end": 25.66,
+          "probability": 0.98
+        },
+        {
+          "word": "logs",
+          "start": 25.66,
+          "end": 26.18,
+          "probability": 0.813
+        },
+        {
+          "word": "into",
+          "start": 26.18,
+          "end": 26.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 26.5,
+          "end": 27.3,
+          "probability": 0.7202
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 27.3,
+      "end": 35.16,
+      "start_formatted": "00:00:27.300",
+      "end_formatted": "00:00:35.160",
+      "text": "Andrew Williams is calling in to report an accident and to open a claim. Betty selects Claim, New Claim.",
+      "words": [
+        {
+          "word": "Andrew",
+          "start": 27.3,
+          "end": 28.58,
+          "probability": 0.9727
+        },
+        {
+          "word": "Williams",
+          "start": 28.58,
+          "end": 29.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 29.06,
+          "end": 29.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "calling",
+          "start": 29.34,
+          "end": 29.7,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 29.7,
+          "end": 29.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 29.96,
+          "end": 30.02,
+          "probability": 1.0
+        },
+        {
+          "word": "report",
+          "start": 30.02,
+          "end": 30.46,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 30.46,
+          "end": 30.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "accident",
+          "start": 30.74,
+          "end": 31.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 31.16,
+          "end": 31.46,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 31.46,
+          "end": 31.62,
+          "probability": 1.0
+        },
+        {
+          "word": "open",
+          "start": 31.62,
+          "end": 31.96,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 31.96,
+          "end": 32.18,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 32.18,
+          "end": 32.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "Betty",
+          "start": 32.84,
+          "end": 33.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "selects",
+          "start": 33.28,
+          "end": 33.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Claim,",
+          "start": 33.92,
+          "end": 34.26,
+          "probability": 0.7319
+        },
+        {
+          "word": "New",
+          "start": 34.5,
+          "end": 34.76,
+          "probability": 0.9429
+        },
+        {
+          "word": "Claim.",
+          "start": 34.76,
+          "end": 35.16,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 35.76,
+      "end": 40.82,
+      "start_formatted": "00:00:35.760",
+      "end_formatted": "00:00:40.820",
+      "text": "She enters the first part of Andrew's last name. And clicks Search.",
+      "words": [
+        {
+          "word": "She",
+          "start": 35.76,
+          "end": 36.44,
+          "probability": 1.0
+        },
+        {
+          "word": "enters",
+          "start": 36.44,
+          "end": 36.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 36.8,
+          "end": 37.02,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 37.02,
+          "end": 37.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "part",
+          "start": 37.34,
+          "end": 37.62,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 37.62,
+          "end": 37.78,
+          "probability": 1.0
+        },
+        {
+          "word": "Andrew's",
+          "start": 37.78,
+          "end": 38.3,
+          "probability": 0.999
+        },
+        {
+          "word": "last",
+          "start": 38.3,
+          "end": 38.58,
+          "probability": 0.999
+        },
+        {
+          "word": "name.",
+          "start": 38.58,
+          "end": 39.02,
+          "probability": 1.0
+        },
+        {
+          "word": "And",
+          "start": 39.46,
+          "end": 40.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "clicks",
+          "start": 40.14,
+          "end": 40.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "Search.",
+          "start": 40.48,
+          "end": 40.82,
+          "probability": 0.8472
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 42.48,
+      "end": 51.48,
+      "start_formatted": "00:00:42.480",
+      "end_formatted": "00:00:51.480",
+      "text": "Betty wants to verify a few of the policy details with Andrew before she creates the claim. She clicks the policy number to see the details.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 42.48,
+          "end": 43.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "wants",
+          "start": 43.16,
+          "end": 43.54,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 43.54,
+          "end": 43.74,
+          "probability": 1.0
+        },
+        {
+          "word": "verify",
+          "start": 43.74,
+          "end": 44.16,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 44.16,
+          "end": 44.48,
+          "probability": 1.0
+        },
+        {
+          "word": "few",
+          "start": 44.48,
+          "end": 44.66,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 44.66,
+          "end": 44.82,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 44.82,
+          "end": 44.92,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 44.92,
+          "end": 45.38,
+          "probability": 0.999
+        },
+        {
+          "word": "details",
+          "start": 45.38,
+          "end": 45.9,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 45.9,
+          "end": 46.3,
+          "probability": 1.0
+        },
+        {
+          "word": "Andrew",
+          "start": 46.3,
+          "end": 46.7,
+          "probability": 1.0
+        },
+        {
+          "word": "before",
+          "start": 46.7,
+          "end": 47.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 47.06,
+          "end": 47.32,
+          "probability": 1.0
+        },
+        {
+          "word": "creates",
+          "start": 47.32,
+          "end": 47.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 47.76,
+          "end": 47.94,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 47.94,
+          "end": 48.26,
+          "probability": 0.999
+        },
+        {
+          "word": "She",
+          "start": 48.6,
+          "end": 49.0,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 49.0,
+          "end": 49.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 49.32,
+          "end": 49.54,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 49.54,
+          "end": 49.98,
+          "probability": 0.9883
+        },
+        {
+          "word": "number",
+          "start": 49.98,
+          "end": 50.3,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 50.3,
+          "end": 50.54,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 50.54,
+          "end": 50.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 50.74,
+          "end": 50.9,
+          "probability": 1.0
+        },
+        {
+          "word": "details.",
+          "start": 50.9,
+          "end": 51.48,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 52.36,
+      "end": 67.78,
+      "start_formatted": "00:00:52.360",
+      "end_formatted": "00:01:07.780",
+      "text": "She sees that the policy is personal, auto, and that it is in force. She also sees that there are two vehicles covered on the policy. Once she verifies those details with Andrew, she closes the policy details screen.",
+      "words": [
+        {
+          "word": "She",
+          "start": 52.36,
+          "end": 53.0,
+          "probability": 0.9575
+        },
+        {
+          "word": "sees",
+          "start": 53.0,
+          "end": 53.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 53.44,
+          "end": 53.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 53.64,
+          "end": 53.76,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 53.76,
+          "end": 54.2,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 54.2,
+          "end": 54.5,
+          "probability": 1.0
+        },
+        {
+          "word": "personal,",
+          "start": 54.5,
+          "end": 55.0,
+          "probability": 0.9424
+        },
+        {
+          "word": "auto,",
+          "start": 55.24,
+          "end": 55.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 55.8,
+          "end": 56.02,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 56.02,
+          "end": 56.18,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 56.18,
+          "end": 56.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 56.3,
+          "end": 56.48,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 56.48,
+          "end": 56.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "force.",
+          "start": 56.68,
+          "end": 57.06,
+          "probability": 0.9922
+        },
+        {
+          "word": "She",
+          "start": 57.32,
+          "end": 57.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 57.76,
+          "end": 58.14,
+          "probability": 1.0
+        },
+        {
+          "word": "sees",
+          "start": 58.14,
+          "end": 58.56,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 58.56,
+          "end": 58.82,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 58.82,
+          "end": 59.0,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 59.0,
+          "end": 59.2,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 59.2,
+          "end": 59.4,
+          "probability": 0.9678
+        },
+        {
+          "word": "vehicles",
+          "start": 59.4,
+          "end": 59.92,
+          "probability": 1.0
+        },
+        {
+          "word": "covered",
+          "start": 59.92,
+          "end": 60.34,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 60.34,
+          "end": 60.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 60.56,
+          "end": 60.7,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 60.7,
+          "end": 61.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Once",
+          "start": 61.86,
+          "end": 62.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 62.5,
+          "end": 62.76,
+          "probability": 1.0
+        },
+        {
+          "word": "verifies",
+          "start": 62.76,
+          "end": 63.38,
+          "probability": 1.0
+        },
+        {
+          "word": "those",
+          "start": 63.38,
+          "end": 63.62,
+          "probability": 1.0
+        },
+        {
+          "word": "details",
+          "start": 63.62,
+          "end": 64.16,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 64.16,
+          "end": 64.56,
+          "probability": 1.0
+        },
+        {
+          "word": "Andrew,",
+          "start": 64.56,
+          "end": 65.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 65.4,
+          "end": 65.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "closes",
+          "start": 65.66,
+          "end": 66.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 66.0,
+          "end": 66.28,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 66.28,
+          "end": 66.72,
+          "probability": 0.7676
+        },
+        {
+          "word": "details",
+          "start": 66.72,
+          "end": 67.3,
+          "probability": 0.9922
+        },
+        {
+          "word": "screen.",
+          "start": 67.3,
+          "end": 67.78,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 68.56,
+      "end": 87.14,
+      "start_formatted": "00:01:08.560",
+      "end_formatted": "00:01:27.140",
+      "text": "Andrew told her that the accident was today, so she selects today as the law state. With the policy and law state selected, she clicks next to start the claim entry. Betty wants to look at some of the policy details now that she has started entering the claim. She clicks Policy.",
+      "words": [
+        {
+          "word": "Andrew",
+          "start": 68.56,
+          "end": 69.16,
+          "probability": 0.8018
+        },
+        {
+          "word": "told",
+          "start": 69.16,
+          "end": 69.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "her",
+          "start": 69.46,
+          "end": 69.62,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 69.62,
+          "end": 69.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 69.8,
+          "end": 69.94,
+          "probability": 0.9863
+        },
+        {
+          "word": "accident",
+          "start": 69.94,
+          "end": 70.36,
+          "probability": 0.9907
+        },
+        {
+          "word": "was",
+          "start": 70.36,
+          "end": 70.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "today,",
+          "start": 70.68,
+          "end": 71.02,
+          "probability": 0.9312
+        },
+        {
+          "word": "so",
+          "start": 71.32,
+          "end": 71.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "she",
+          "start": 71.6,
+          "end": 71.82,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 71.82,
+          "end": 72.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "today",
+          "start": 72.26,
+          "end": 72.56,
+          "probability": 0.9346
+        },
+        {
+          "word": "as",
+          "start": 72.56,
+          "end": 73.0,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 73.0,
+          "end": 73.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "law",
+          "start": 73.14,
+          "end": 73.4,
+          "probability": 0.7798
+        },
+        {
+          "word": "state.",
+          "start": 73.4,
+          "end": 73.76,
+          "probability": 0.9736
+        },
+        {
+          "word": "With",
+          "start": 74.3,
+          "end": 74.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 74.9,
+          "end": 75.04,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 75.04,
+          "end": 75.5,
+          "probability": 0.9302
+        },
+        {
+          "word": "and",
+          "start": 75.5,
+          "end": 75.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "law",
+          "start": 75.86,
+          "end": 76.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "state",
+          "start": 76.16,
+          "end": 76.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "selected,",
+          "start": 76.5,
+          "end": 76.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 77.24,
+          "end": 77.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "clicks",
+          "start": 77.46,
+          "end": 77.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 77.82,
+          "end": 78.14,
+          "probability": 0.6772
+        },
+        {
+          "word": "to",
+          "start": 78.14,
+          "end": 78.44,
+          "probability": 1.0
+        },
+        {
+          "word": "start",
+          "start": 78.44,
+          "end": 78.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 78.74,
+          "end": 78.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 78.92,
+          "end": 79.24,
+          "probability": 0.9907
+        },
+        {
+          "word": "entry.",
+          "start": 79.24,
+          "end": 79.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "Betty",
+          "start": 80.34,
+          "end": 80.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "wants",
+          "start": 80.92,
+          "end": 81.3,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 81.3,
+          "end": 81.48,
+          "probability": 1.0
+        },
+        {
+          "word": "look",
+          "start": 81.48,
+          "end": 81.68,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 81.68,
+          "end": 81.82,
+          "probability": 1.0
+        },
+        {
+          "word": "some",
+          "start": 81.82,
+          "end": 82.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 82.02,
+          "end": 82.16,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 82.16,
+          "end": 82.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 82.28,
+          "end": 82.72,
+          "probability": 0.998
+        },
+        {
+          "word": "details",
+          "start": 82.72,
+          "end": 83.3,
+          "probability": 1.0
+        },
+        {
+          "word": "now",
+          "start": 83.3,
+          "end": 83.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 83.62,
+          "end": 83.86,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 83.86,
+          "end": 84.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 84.02,
+          "end": 84.22,
+          "probability": 1.0
+        },
+        {
+          "word": "started",
+          "start": 84.22,
+          "end": 84.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "entering",
+          "start": 84.62,
+          "end": 84.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 84.98,
+          "end": 85.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim.",
+          "start": 85.24,
+          "end": 85.62,
+          "probability": 0.998
+        },
+        {
+          "word": "She",
+          "start": 85.92,
+          "end": 86.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 86.3,
+          "end": 86.64,
+          "probability": 0.999
+        },
+        {
+          "word": "Policy.",
+          "start": 86.64,
+          "end": 87.14,
+          "probability": 0.2805
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 87.14,
+      "end": 107.98,
+      "start_formatted": "00:01:27.140",
+      "end_formatted": "00:01:47.980",
+      "text": "She clicks Policy Details to see the specific details and coverages. On the Policy Details screen, Betty sees a few more details about the vehicles covered on this policy. She can also drill down to see more details about either of these vehicles. She clicks the link on the first vehicle.",
+      "words": [
+        {
+          "word": "She",
+          "start": 87.14,
+          "end": 88.46,
+          "probability": 0.9814
+        },
+        {
+          "word": "clicks",
+          "start": 88.46,
+          "end": 88.82,
+          "probability": 0.999
+        },
+        {
+          "word": "Policy",
+          "start": 88.82,
+          "end": 89.32,
+          "probability": 0.6489
+        },
+        {
+          "word": "Details",
+          "start": 89.32,
+          "end": 89.76,
+          "probability": 0.9775
+        },
+        {
+          "word": "to",
+          "start": 89.76,
+          "end": 90.14,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 90.14,
+          "end": 90.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 90.32,
+          "end": 90.48,
+          "probability": 1.0
+        },
+        {
+          "word": "specific",
+          "start": 90.48,
+          "end": 90.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "details",
+          "start": 90.96,
+          "end": 91.58,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 91.58,
+          "end": 91.9,
+          "probability": 1.0
+        },
+        {
+          "word": "coverages.",
+          "start": 91.9,
+          "end": 92.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "On",
+          "start": 92.98,
+          "end": 93.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 93.66,
+          "end": 93.78,
+          "probability": 1.0
+        },
+        {
+          "word": "Policy",
+          "start": 93.78,
+          "end": 94.24,
+          "probability": 0.9224
+        },
+        {
+          "word": "Details",
+          "start": 94.24,
+          "end": 94.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "screen,",
+          "start": 94.82,
+          "end": 95.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "Betty",
+          "start": 95.78,
+          "end": 96.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "sees",
+          "start": 96.06,
+          "end": 96.46,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 96.46,
+          "end": 96.62,
+          "probability": 1.0
+        },
+        {
+          "word": "few",
+          "start": 96.62,
+          "end": 96.78,
+          "probability": 1.0
+        },
+        {
+          "word": "more",
+          "start": 96.78,
+          "end": 97.08,
+          "probability": 1.0
+        },
+        {
+          "word": "details",
+          "start": 97.08,
+          "end": 97.62,
+          "probability": 1.0
+        },
+        {
+          "word": "about",
+          "start": 97.62,
+          "end": 97.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 97.96,
+          "end": 98.18,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicles",
+          "start": 98.18,
+          "end": 98.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "covered",
+          "start": 98.66,
+          "end": 99.08,
+          "probability": 0.9741
+        },
+        {
+          "word": "on",
+          "start": 99.08,
+          "end": 99.3,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 99.3,
+          "end": 99.5,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 99.5,
+          "end": 99.98,
+          "probability": 0.9824
+        },
+        {
+          "word": "She",
+          "start": 100.4,
+          "end": 101.08,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 101.08,
+          "end": 101.26,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 101.26,
+          "end": 101.64,
+          "probability": 1.0
+        },
+        {
+          "word": "drill",
+          "start": 101.64,
+          "end": 101.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "down",
+          "start": 101.96,
+          "end": 102.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 102.32,
+          "end": 102.56,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 102.56,
+          "end": 102.8,
+          "probability": 1.0
+        },
+        {
+          "word": "more",
+          "start": 102.8,
+          "end": 103.1,
+          "probability": 1.0
+        },
+        {
+          "word": "details",
+          "start": 103.1,
+          "end": 103.6,
+          "probability": 1.0
+        },
+        {
+          "word": "about",
+          "start": 103.6,
+          "end": 103.96,
+          "probability": 1.0
+        },
+        {
+          "word": "either",
+          "start": 103.96,
+          "end": 104.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 104.28,
+          "end": 104.48,
+          "probability": 1.0
+        },
+        {
+          "word": "these",
+          "start": 104.48,
+          "end": 104.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "vehicles.",
+          "start": 104.76,
+          "end": 105.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "She",
+          "start": 105.6,
+          "end": 106.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 106.0,
+          "end": 106.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 106.34,
+          "end": 106.52,
+          "probability": 1.0
+        },
+        {
+          "word": "link",
+          "start": 106.52,
+          "end": 106.8,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 106.8,
+          "end": 107.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 107.02,
+          "end": 107.16,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 107.16,
+          "end": 107.46,
+          "probability": 0.9932
+        },
+        {
+          "word": "vehicle.",
+          "start": 107.46,
+          "end": 107.98,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 107.98,
+      "end": 133.5,
+      "start_formatted": "00:01:47.980",
+      "end_formatted": "00:02:13.500",
+      "text": "This is the vehicle. This is the vehicle, information for the Ford XLT. It shows vehicle data, like make and model, year, VIN number, and license plate and state. At the bottom of the page, it shows the coverages for the vehicle. Notice the deductible, exposure limit and incident limits for each of the coverages. These values come from integration with a policy system.",
+      "words": [
+        {
+          "word": "This",
+          "start": 107.98,
+          "end": 109.24,
+          "probability": 0.9624
+        },
+        {
+          "word": "is",
+          "start": 109.24,
+          "end": 109.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 109.46,
+          "end": 109.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "vehicle.",
+          "start": 109.6,
+          "end": 110.04,
+          "probability": 0.9878
+        },
+        {
+          "word": "This",
+          "start": 110.28,
+          "end": 110.62,
+          "probability": 0.002
+        },
+        {
+          "word": "is",
+          "start": 110.62,
+          "end": 110.62,
+          "probability": 0.6602
+        },
+        {
+          "word": "the",
+          "start": 110.62,
+          "end": 110.62,
+          "probability": 0.7349
+        },
+        {
+          "word": "vehicle,",
+          "start": 110.62,
+          "end": 110.62,
+          "probability": 0.9385
+        },
+        {
+          "word": "information",
+          "start": 110.62,
+          "end": 110.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "for",
+          "start": 110.8,
+          "end": 111.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 111.32,
+          "end": 111.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ford",
+          "start": 111.46,
+          "end": 111.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "XLT.",
+          "start": 111.78,
+          "end": 112.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "It",
+          "start": 113.04,
+          "end": 113.54,
+          "probability": 0.998
+        },
+        {
+          "word": "shows",
+          "start": 113.54,
+          "end": 113.84,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle",
+          "start": 113.84,
+          "end": 114.26,
+          "probability": 1.0
+        },
+        {
+          "word": "data,",
+          "start": 114.26,
+          "end": 114.62,
+          "probability": 1.0
+        },
+        {
+          "word": "like",
+          "start": 114.82,
+          "end": 115.18,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 115.18,
+          "end": 115.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "and",
+          "start": 115.44,
+          "end": 115.66,
+          "probability": 0.999
+        },
+        {
+          "word": "model,",
+          "start": 115.66,
+          "end": 116.04,
+          "probability": 1.0
+        },
+        {
+          "word": "year,",
+          "start": 116.32,
+          "end": 116.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "VIN",
+          "start": 116.96,
+          "end": 117.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "number,",
+          "start": 117.28,
+          "end": 117.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 117.84,
+          "end": 118.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "license",
+          "start": 118.08,
+          "end": 118.54,
+          "probability": 0.999
+        },
+        {
+          "word": "plate",
+          "start": 118.54,
+          "end": 118.96,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 118.96,
+          "end": 119.24,
+          "probability": 1.0
+        },
+        {
+          "word": "state.",
+          "start": 119.24,
+          "end": 119.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "At",
+          "start": 119.98,
+          "end": 120.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 120.48,
+          "end": 120.6,
+          "probability": 1.0
+        },
+        {
+          "word": "bottom",
+          "start": 120.6,
+          "end": 120.88,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 120.88,
+          "end": 121.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 121.12,
+          "end": 121.22,
+          "probability": 1.0
+        },
+        {
+          "word": "page,",
+          "start": 121.22,
+          "end": 121.72,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 121.9,
+          "end": 122.16,
+          "probability": 1.0
+        },
+        {
+          "word": "shows",
+          "start": 122.16,
+          "end": 122.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 122.46,
+          "end": 122.7,
+          "probability": 1.0
+        },
+        {
+          "word": "coverages",
+          "start": 122.7,
+          "end": 123.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "for",
+          "start": 123.22,
+          "end": 123.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 123.54,
+          "end": 123.7,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle.",
+          "start": 123.7,
+          "end": 124.14,
+          "probability": 1.0
+        },
+        {
+          "word": "Notice",
+          "start": 124.54,
+          "end": 124.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 124.98,
+          "end": 125.2,
+          "probability": 1.0
+        },
+        {
+          "word": "deductible,",
+          "start": 125.2,
+          "end": 125.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 126.04,
+          "end": 126.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "limit",
+          "start": 126.64,
+          "end": 127.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 127.02,
+          "end": 127.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "incident",
+          "start": 127.32,
+          "end": 127.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "limits",
+          "start": 127.78,
+          "end": 128.28,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 128.28,
+          "end": 128.5,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 128.5,
+          "end": 128.76,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 128.76,
+          "end": 128.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 128.94,
+          "end": 129.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "coverages.",
+          "start": 129.06,
+          "end": 129.72,
+          "probability": 0.999
+        },
+        {
+          "word": "These",
+          "start": 129.92,
+          "end": 130.46,
+          "probability": 0.999
+        },
+        {
+          "word": "values",
+          "start": 130.46,
+          "end": 130.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "come",
+          "start": 130.94,
+          "end": 131.26,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 131.26,
+          "end": 131.48,
+          "probability": 1.0
+        },
+        {
+          "word": "integration",
+          "start": 131.48,
+          "end": 132.0,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 132.0,
+          "end": 132.44,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 132.44,
+          "end": 132.56,
+          "probability": 0.978
+        },
+        {
+          "word": "policy",
+          "start": 132.56,
+          "end": 133.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "system.",
+          "start": 133.0,
+          "end": 133.5,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 134.36,
+      "end": 139.08,
+      "start_formatted": "00:02:14.360",
+      "end_formatted": "00:02:19.080",
+      "text": "Now that Betty has looked at the vehicle details. Now that Betty has looked at the vehicle details, she returns to the policy.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 134.36,
+          "end": 134.92,
+          "probability": 0.9775
+        },
+        {
+          "word": "that",
+          "start": 134.92,
+          "end": 135.22,
+          "probability": 1.0
+        },
+        {
+          "word": "Betty",
+          "start": 135.22,
+          "end": 135.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "has",
+          "start": 135.44,
+          "end": 135.7,
+          "probability": 1.0
+        },
+        {
+          "word": "looked",
+          "start": 135.7,
+          "end": 135.96,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 135.96,
+          "end": 136.16,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 136.16,
+          "end": 136.28,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle",
+          "start": 136.28,
+          "end": 136.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "details.",
+          "start": 136.66,
+          "end": 137.08,
+          "probability": 1.0
+        },
+        {
+          "word": "Now",
+          "start": 137.08,
+          "end": 137.36,
+          "probability": 0.0
+        },
+        {
+          "word": "that",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.812
+        },
+        {
+          "word": "Betty",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.9385
+        },
+        {
+          "word": "has",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.8779
+        },
+        {
+          "word": "looked",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.9121
+        },
+        {
+          "word": "at",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.9839
+        },
+        {
+          "word": "vehicle",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.9282
+        },
+        {
+          "word": "details,",
+          "start": 137.36,
+          "end": 137.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "she",
+          "start": 137.52,
+          "end": 137.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "returns",
+          "start": 137.78,
+          "end": 138.22,
+          "probability": 0.9893
+        },
+        {
+          "word": "to",
+          "start": 138.22,
+          "end": 138.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 138.5,
+          "end": 138.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy.",
+          "start": 138.6,
+          "end": 139.08,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 140.0,
+      "end": 149.66,
+      "start_formatted": "00:02:20.000",
+      "end_formatted": "00:02:29.660",
+      "text": "She is done with the policy, so Betty clicks, back, to return to the new claim wizard. Betty selects Andrew as the reporter for the claim.",
+      "words": [
+        {
+          "word": "She",
+          "start": 140.0,
+          "end": 140.56,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 140.56,
+          "end": 140.74,
+          "probability": 0.998
+        },
+        {
+          "word": "done",
+          "start": 140.74,
+          "end": 140.94,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 140.94,
+          "end": 141.22,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 141.22,
+          "end": 141.36,
+          "probability": 0.999
+        },
+        {
+          "word": "policy,",
+          "start": 141.36,
+          "end": 141.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "so",
+          "start": 142.1,
+          "end": 142.4,
+          "probability": 0.9917
+        },
+        {
+          "word": "Betty",
+          "start": 142.4,
+          "end": 142.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "clicks,",
+          "start": 142.7,
+          "end": 143.26,
+          "probability": 0.978
+        },
+        {
+          "word": "back,",
+          "start": 143.44,
+          "end": 143.88,
+          "probability": 0.8535
+        },
+        {
+          "word": "to",
+          "start": 144.04,
+          "end": 144.3,
+          "probability": 0.999
+        },
+        {
+          "word": "return",
+          "start": 144.3,
+          "end": 144.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 144.66,
+          "end": 144.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 144.92,
+          "end": 145.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 145.06,
+          "end": 145.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "claim",
+          "start": 145.28,
+          "end": 145.66,
+          "probability": 0.9053
+        },
+        {
+          "word": "wizard.",
+          "start": 145.66,
+          "end": 146.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "Betty",
+          "start": 146.72,
+          "end": 147.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "selects",
+          "start": 147.28,
+          "end": 147.82,
+          "probability": 0.9868
+        },
+        {
+          "word": "Andrew",
+          "start": 147.82,
+          "end": 148.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 148.14,
+          "end": 148.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 148.34,
+          "end": 148.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "reporter",
+          "start": 148.46,
+          "end": 148.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 148.86,
+          "end": 149.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 149.14,
+          "end": 149.28,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 149.28,
+          "end": 149.66,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 150.66,
+      "end": 157.62,
+      "start_formatted": "00:02:30.660",
+      "end_formatted": "00:02:37.620",
+      "text": "Andrew reported that the accident was in the 2013 XLT, so she selects it as the involved vehicle.",
+      "words": [
+        {
+          "word": "Andrew",
+          "start": 150.66,
+          "end": 151.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "reported",
+          "start": 151.22,
+          "end": 151.72,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 151.72,
+          "end": 151.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 151.96,
+          "end": 152.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "accident",
+          "start": 152.12,
+          "end": 152.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 152.52,
+          "end": 152.84,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 152.84,
+          "end": 153.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.0,
+          "end": 153.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "2013",
+          "start": 153.12,
+          "end": 153.84,
+          "probability": 0.999
+        },
+        {
+          "word": "XLT,",
+          "start": 153.84,
+          "end": 154.82,
+          "probability": 0.9736
+        },
+        {
+          "word": "so",
+          "start": 155.14,
+          "end": 155.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "she",
+          "start": 155.44,
+          "end": 155.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "selects",
+          "start": 155.66,
+          "end": 156.14,
+          "probability": 0.998
+        },
+        {
+          "word": "it",
+          "start": 156.14,
+          "end": 156.26,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 156.26,
+          "end": 156.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 156.5,
+          "end": 156.66,
+          "probability": 0.999
+        },
+        {
+          "word": "involved",
+          "start": 156.66,
+          "end": 157.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "vehicle.",
+          "start": 157.1,
+          "end": 157.62,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 157.62,
+      "end": 167.4,
+      "start_formatted": "00:02:37.620",
+      "end_formatted": "00:02:47.400",
+      "text": "When she selects the Ford XLT, details about its specific coverages display, including deductibles and limits for each coverage.",
+      "words": [
+        {
+          "word": "When",
+          "start": 157.62,
+          "end": 158.84,
+          "probability": 0.9644
+        },
+        {
+          "word": "she",
+          "start": 158.84,
+          "end": 159.02,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 159.02,
+          "end": 159.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 159.5,
+          "end": 159.64,
+          "probability": 1.0
+        },
+        {
+          "word": "Ford",
+          "start": 159.64,
+          "end": 159.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "XLT,",
+          "start": 159.96,
+          "end": 160.78,
+          "probability": 0.9912
+        },
+        {
+          "word": "details",
+          "start": 161.02,
+          "end": 161.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "about",
+          "start": 161.48,
+          "end": 161.94,
+          "probability": 1.0
+        },
+        {
+          "word": "its",
+          "start": 161.94,
+          "end": 162.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "specific",
+          "start": 162.2,
+          "end": 162.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverages",
+          "start": 162.7,
+          "end": 163.52,
+          "probability": 0.7852
+        },
+        {
+          "word": "display,",
+          "start": 163.52,
+          "end": 164.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "including",
+          "start": 164.48,
+          "end": 165.0,
+          "probability": 1.0
+        },
+        {
+          "word": "deductibles",
+          "start": 165.0,
+          "end": 165.74,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 165.74,
+          "end": 165.98,
+          "probability": 1.0
+        },
+        {
+          "word": "limits",
+          "start": 165.98,
+          "end": 166.34,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 166.34,
+          "end": 166.56,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 166.56,
+          "end": 166.84,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage.",
+          "start": 166.84,
+          "end": 167.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 167.96,
+      "end": 171.22,
+      "start_formatted": "00:02:47.960",
+      "end_formatted": "00:02:51.220",
+      "text": "For comparison, Betty selects the other vehicle.",
+      "words": [
+        {
+          "word": "For",
+          "start": 167.96,
+          "end": 168.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "comparison,",
+          "start": 168.48,
+          "end": 169.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Betty",
+          "start": 169.52,
+          "end": 169.74,
+          "probability": 0.9927
+        },
+        {
+          "word": "selects",
+          "start": 169.74,
+          "end": 170.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 170.3,
+          "end": 170.44,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 170.44,
+          "end": 170.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "vehicle.",
+          "start": 170.7,
+          "end": 171.22,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 171.22,
+      "end": 181.9,
+      "start_formatted": "00:02:51.220",
+      "end_formatted": "00:03:01.900",
+      "text": "Notice that the liability bodily injury coverage for the Ford FX4, is $75,000 per incident, with a $300,000 limit.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 171.22,
+          "end": 172.44,
+          "probability": 0.8853
+        },
+        {
+          "word": "that",
+          "start": 172.44,
+          "end": 172.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 172.7,
+          "end": 172.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "liability",
+          "start": 172.84,
+          "end": 173.38,
+          "probability": 0.9741
+        },
+        {
+          "word": "bodily",
+          "start": 173.38,
+          "end": 173.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "injury",
+          "start": 173.86,
+          "end": 174.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage",
+          "start": 174.4,
+          "end": 174.88,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 174.88,
+          "end": 175.16,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 175.16,
+          "end": 175.34,
+          "probability": 1.0
+        },
+        {
+          "word": "Ford",
+          "start": 175.34,
+          "end": 175.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "FX4,",
+          "start": 175.64,
+          "end": 176.56,
+          "probability": 0.9497
+        },
+        {
+          "word": "is",
+          "start": 176.78,
+          "end": 177.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "$75",
+          "start": 177.08,
+          "end": 177.7,
+          "probability": 0.9956
+        },
+        {
+          "word": ",000",
+          "start": 177.7,
+          "end": 178.56,
+          "probability": 0.999
+        },
+        {
+          "word": "per",
+          "start": 178.56,
+          "end": 179.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "incident,",
+          "start": 179.12,
+          "end": 179.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 179.8,
+          "end": 180.06,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 180.06,
+          "end": 180.18,
+          "probability": 1.0
+        },
+        {
+          "word": "$300",
+          "start": 180.18,
+          "end": 180.74,
+          "probability": 1.0
+        },
+        {
+          "word": ",000",
+          "start": 180.74,
+          "end": 181.3,
+          "probability": 1.0
+        },
+        {
+          "word": "limit.",
+          "start": 181.3,
+          "end": 181.9,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 182.24,
+      "end": 189.76,
+      "start_formatted": "00:03:02.240",
+      "end_formatted": "00:03:09.760",
+      "text": "The same coverage for the Ford XLT, is $10,000 per incident, with a $30,000 limit.",
+      "words": [
+        {
+          "word": "The",
+          "start": 182.24,
+          "end": 182.6,
+          "probability": 0.999
+        },
+        {
+          "word": "same",
+          "start": 182.6,
+          "end": 182.88,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage",
+          "start": 182.88,
+          "end": 183.28,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 183.28,
+          "end": 183.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 183.54,
+          "end": 183.68,
+          "probability": 1.0
+        },
+        {
+          "word": "Ford",
+          "start": 183.68,
+          "end": 184.2,
+          "probability": 1.0
+        },
+        {
+          "word": "XLT,",
+          "start": 184.2,
+          "end": 185.18,
+          "probability": 0.7246
+        },
+        {
+          "word": "is",
+          "start": 185.42,
+          "end": 185.72,
+          "probability": 1.0
+        },
+        {
+          "word": "$10",
+          "start": 185.72,
+          "end": 186.06,
+          "probability": 1.0
+        },
+        {
+          "word": ",000",
+          "start": 186.06,
+          "end": 186.6,
+          "probability": 1.0
+        },
+        {
+          "word": "per",
+          "start": 186.6,
+          "end": 187.2,
+          "probability": 1.0
+        },
+        {
+          "word": "incident,",
+          "start": 187.2,
+          "end": 187.64,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 187.88,
+          "end": 188.12,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 188.12,
+          "end": 188.22,
+          "probability": 1.0
+        },
+        {
+          "word": "$30",
+          "start": 188.22,
+          "end": 188.52,
+          "probability": 1.0
+        },
+        {
+          "word": ",000",
+          "start": 188.52,
+          "end": 189.06,
+          "probability": 1.0
+        },
+        {
+          "word": "limit.",
+          "start": 189.06,
+          "end": 189.76,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 190.56,
+      "end": 198.36,
+      "start_formatted": "00:03:10.560",
+      "end_formatted": "00:03:18.360",
+      "text": "Also, the Ford FX4, has rental reimbursement coverage, whereas the Ford XLT, does not.",
+      "words": [
+        {
+          "word": "Also,",
+          "start": 190.56,
+          "end": 191.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 191.64,
+          "end": 191.88,
+          "probability": 1.0
+        },
+        {
+          "word": "Ford",
+          "start": 191.88,
+          "end": 192.2,
+          "probability": 1.0
+        },
+        {
+          "word": "FX4,",
+          "start": 192.2,
+          "end": 193.14,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 193.3,
+          "end": 193.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "rental",
+          "start": 193.66,
+          "end": 194.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "reimbursement",
+          "start": 194.04,
+          "end": 194.9,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage,",
+          "start": 194.9,
+          "end": 195.34,
+          "probability": 1.0
+        },
+        {
+          "word": "whereas",
+          "start": 195.68,
+          "end": 195.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 195.98,
+          "end": 196.28,
+          "probability": 1.0
+        },
+        {
+          "word": "Ford",
+          "start": 196.28,
+          "end": 196.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "XLT,",
+          "start": 196.6,
+          "end": 197.42,
+          "probability": 0.999
+        },
+        {
+          "word": "does",
+          "start": 197.62,
+          "end": 198.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "not.",
+          "start": 198.02,
+          "end": 198.36,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 198.36,
+      "end": 204.32,
+      "start_formatted": "00:03:18.360",
+      "end_formatted": "00:03:24.320",
+      "text": "The claim is for the Ford XLT, so Betty D selects the Ford FX4.",
+      "words": [
+        {
+          "word": "The",
+          "start": 198.36,
+          "end": 199.42,
+          "probability": 0.9595
+        },
+        {
+          "word": "claim",
+          "start": 199.42,
+          "end": 199.74,
+          "probability": 0.9902
+        },
+        {
+          "word": "is",
+          "start": 199.74,
+          "end": 200.0,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 200.0,
+          "end": 200.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 200.2,
+          "end": 200.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ford",
+          "start": 200.36,
+          "end": 200.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "XLT,",
+          "start": 200.66,
+          "end": 201.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "so",
+          "start": 201.72,
+          "end": 202.06,
+          "probability": 0.999
+        },
+        {
+          "word": "Betty",
+          "start": 202.06,
+          "end": 202.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "D",
+          "start": 202.36,
+          "end": 202.52,
+          "probability": 0.7759
+        },
+        {
+          "word": "selects",
+          "start": 202.52,
+          "end": 203.0,
+          "probability": 0.6816
+        },
+        {
+          "word": "the",
+          "start": 203.0,
+          "end": 203.14,
+          "probability": 1.0
+        },
+        {
+          "word": "Ford",
+          "start": 203.14,
+          "end": 203.42,
+          "probability": 0.999
+        },
+        {
+          "word": "FX4.",
+          "start": 203.42,
+          "end": 204.32,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 204.86,
+      "end": 208.94,
+      "start_formatted": "00:03:24.860",
+      "end_formatted": "00:03:28.940",
+      "text": "Now that the basic information is complete, she clicks next.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 204.86,
+          "end": 205.5,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 205.5,
+          "end": 205.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 205.74,
+          "end": 205.88,
+          "probability": 1.0
+        },
+        {
+          "word": "basic",
+          "start": 205.88,
+          "end": 206.24,
+          "probability": 0.999
+        },
+        {
+          "word": "information",
+          "start": 206.24,
+          "end": 206.86,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 206.86,
+          "end": 207.24,
+          "probability": 1.0
+        },
+        {
+          "word": "complete,",
+          "start": 207.24,
+          "end": 207.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 208.02,
+          "end": 208.28,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 208.28,
+          "end": 208.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "next.",
+          "start": 208.62,
+          "end": 208.94,
+          "probability": 0.376
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 209.68,
+      "end": 214.76,
+      "start_formatted": "00:03:29.680",
+      "end_formatted": "00:03:34.760",
+      "text": "Loss cause is restricted by the loss type, such as, auto, or property.",
+      "words": [
+        {
+          "word": "Loss",
+          "start": 209.68,
+          "end": 210.32,
+          "probability": 0.9429
+        },
+        {
+          "word": "cause",
+          "start": 210.32,
+          "end": 210.68,
+          "probability": 0.5713
+        },
+        {
+          "word": "is",
+          "start": 210.68,
+          "end": 210.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "restricted",
+          "start": 210.88,
+          "end": 211.32,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 211.32,
+          "end": 211.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 211.64,
+          "end": 211.8,
+          "probability": 1.0
+        },
+        {
+          "word": "loss",
+          "start": 211.8,
+          "end": 212.12,
+          "probability": 0.9863
+        },
+        {
+          "word": "type,",
+          "start": 212.12,
+          "end": 212.5,
+          "probability": 1.0
+        },
+        {
+          "word": "such",
+          "start": 212.72,
+          "end": 213.02,
+          "probability": 1.0
+        },
+        {
+          "word": "as,",
+          "start": 213.02,
+          "end": 213.38,
+          "probability": 1.0
+        },
+        {
+          "word": "auto,",
+          "start": 213.48,
+          "end": 213.84,
+          "probability": 0.9106
+        },
+        {
+          "word": "or",
+          "start": 214.06,
+          "end": 214.34,
+          "probability": 1.0
+        },
+        {
+          "word": "property.",
+          "start": 214.34,
+          "end": 214.76,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 214.76,
+      "end": 219.9,
+      "start_formatted": "00:03:34.760",
+      "end_formatted": "00:03:39.900",
+      "text": "This is to make sure that the loss cause makes sense based on the type of loss.",
+      "words": [
+        {
+          "word": "This",
+          "start": 214.76,
+          "end": 215.76,
+          "probability": 0.9126
+        },
+        {
+          "word": "is",
+          "start": 215.76,
+          "end": 215.98,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 215.98,
+          "end": 216.12,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 216.12,
+          "end": 216.34,
+          "probability": 1.0
+        },
+        {
+          "word": "sure",
+          "start": 216.34,
+          "end": 216.58,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 216.58,
+          "end": 216.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 216.76,
+          "end": 216.9,
+          "probability": 1.0
+        },
+        {
+          "word": "loss",
+          "start": 216.9,
+          "end": 217.24,
+          "probability": 0.9678
+        },
+        {
+          "word": "cause",
+          "start": 217.24,
+          "end": 217.54,
+          "probability": 0.9902
+        },
+        {
+          "word": "makes",
+          "start": 217.54,
+          "end": 217.9,
+          "probability": 0.999
+        },
+        {
+          "word": "sense",
+          "start": 217.9,
+          "end": 218.32,
+          "probability": 1.0
+        },
+        {
+          "word": "based",
+          "start": 218.32,
+          "end": 218.66,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 218.66,
+          "end": 218.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 218.9,
+          "end": 219.06,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 219.06,
+          "end": 219.32,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 219.32,
+          "end": 219.48,
+          "probability": 1.0
+        },
+        {
+          "word": "loss.",
+          "start": 219.48,
+          "end": 219.9,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 220.28,
+      "end": 231.14,
+      "start_formatted": "00:03:40.280",
+      "end_formatted": "00:03:51.140",
+      "text": "In this case, the policy type, personal, auto, is associated with the line of business, personal auto line, which in turn is associated with the auto loss type.",
+      "words": [
+        {
+          "word": "In",
+          "start": 220.28,
+          "end": 220.76,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 220.76,
+          "end": 221.0,
+          "probability": 1.0
+        },
+        {
+          "word": "case,",
+          "start": 221.0,
+          "end": 221.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 221.56,
+          "end": 221.76,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 221.76,
+          "end": 222.22,
+          "probability": 0.9912
+        },
+        {
+          "word": "type,",
+          "start": 222.22,
+          "end": 222.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "personal,",
+          "start": 222.84,
+          "end": 223.36,
+          "probability": 0.8101
+        },
+        {
+          "word": "auto,",
+          "start": 223.58,
+          "end": 223.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 224.16,
+          "end": 224.44,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 224.44,
+          "end": 225.02,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 225.02,
+          "end": 225.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 225.32,
+          "end": 225.44,
+          "probability": 1.0
+        },
+        {
+          "word": "line",
+          "start": 225.44,
+          "end": 225.72,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 225.72,
+          "end": 225.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "business,",
+          "start": 225.92,
+          "end": 226.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "personal",
+          "start": 226.58,
+          "end": 227.04,
+          "probability": 0.998
+        },
+        {
+          "word": "auto",
+          "start": 227.04,
+          "end": 227.36,
+          "probability": 0.9805
+        },
+        {
+          "word": "line,",
+          "start": 227.36,
+          "end": 227.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "which",
+          "start": 228.06,
+          "end": 228.36,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 228.36,
+          "end": 228.56,
+          "probability": 1.0
+        },
+        {
+          "word": "turn",
+          "start": 228.56,
+          "end": 228.78,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 228.78,
+          "end": 229.06,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 229.06,
+          "end": 229.7,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 229.7,
+          "end": 229.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 229.96,
+          "end": 230.12,
+          "probability": 1.0
+        },
+        {
+          "word": "auto",
+          "start": 230.12,
+          "end": 230.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "loss",
+          "start": 230.44,
+          "end": 230.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "type.",
+          "start": 230.78,
+          "end": 231.14,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 231.14,
+      "end": 243.02,
+      "start_formatted": "00:03:51.140",
+      "end_formatted": "00:04:03.020",
+      "text": "Therefore, since the loss type is, auto, the causes are restricted to auto type causes such as collision while turning left, glass breakage, rollover, and so on.",
+      "words": [
+        {
+          "word": "Therefore,",
+          "start": 231.14,
+          "end": 232.18,
+          "probability": 0.7798
+        },
+        {
+          "word": "since",
+          "start": 232.66,
+          "end": 232.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 232.98,
+          "end": 233.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "loss",
+          "start": 233.18,
+          "end": 233.42,
+          "probability": 0.6519
+        },
+        {
+          "word": "type",
+          "start": 233.42,
+          "end": 233.72,
+          "probability": 0.9468
+        },
+        {
+          "word": "is,",
+          "start": 233.72,
+          "end": 234.18,
+          "probability": 0.999
+        },
+        {
+          "word": "auto,",
+          "start": 234.3,
+          "end": 234.68,
+          "probability": 0.8174
+        },
+        {
+          "word": "the",
+          "start": 234.94,
+          "end": 235.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "causes",
+          "start": 235.18,
+          "end": 235.52,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 235.52,
+          "end": 235.78,
+          "probability": 1.0
+        },
+        {
+          "word": "restricted",
+          "start": 235.78,
+          "end": 236.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 236.24,
+          "end": 236.5,
+          "probability": 1.0
+        },
+        {
+          "word": "auto",
+          "start": 236.5,
+          "end": 236.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "type",
+          "start": 236.82,
+          "end": 237.16,
+          "probability": 0.833
+        },
+        {
+          "word": "causes",
+          "start": 237.16,
+          "end": 237.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "such",
+          "start": 237.56,
+          "end": 237.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 237.92,
+          "end": 238.22,
+          "probability": 1.0
+        },
+        {
+          "word": "collision",
+          "start": 238.22,
+          "end": 238.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "while",
+          "start": 238.64,
+          "end": 239.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "turning",
+          "start": 239.0,
+          "end": 239.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "left,",
+          "start": 239.4,
+          "end": 239.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "glass",
+          "start": 240.1,
+          "end": 240.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "breakage,",
+          "start": 240.5,
+          "end": 241.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "rollover,",
+          "start": 241.4,
+          "end": 242.06,
+          "probability": 0.9839
+        },
+        {
+          "word": "and",
+          "start": 242.2,
+          "end": 242.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 242.5,
+          "end": 242.76,
+          "probability": 1.0
+        },
+        {
+          "word": "on.",
+          "start": 242.76,
+          "end": 243.02,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 243.28,
+      "end": 248.56,
+      "start_formatted": "00:04:03.280",
+      "end_formatted": "00:04:08.560",
+      "text": "It would not make sense for an auto, claim to have a loss cause of burglary or mold.",
+      "words": [
+        {
+          "word": "It",
+          "start": 243.28,
+          "end": 243.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "would",
+          "start": 243.58,
+          "end": 243.72,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 243.72,
+          "end": 243.96,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 243.96,
+          "end": 244.26,
+          "probability": 1.0
+        },
+        {
+          "word": "sense",
+          "start": 244.26,
+          "end": 244.64,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 244.64,
+          "end": 244.88,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 244.88,
+          "end": 245.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "auto,",
+          "start": 245.08,
+          "end": 245.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 245.58,
+          "end": 245.96,
+          "probability": 0.7798
+        },
+        {
+          "word": "to",
+          "start": 245.96,
+          "end": 246.14,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 246.14,
+          "end": 246.38,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 246.38,
+          "end": 246.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "loss",
+          "start": 246.5,
+          "end": 246.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "cause",
+          "start": 246.82,
+          "end": 247.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 247.14,
+          "end": 247.32,
+          "probability": 0.999
+        },
+        {
+          "word": "burglary",
+          "start": 247.32,
+          "end": 247.8,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 247.8,
+          "end": 248.06,
+          "probability": 1.0
+        },
+        {
+          "word": "mold.",
+          "start": 248.06,
+          "end": 248.56,
+          "probability": 0.9209
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 249.54,
+      "end": 255.88,
+      "start_formatted": "00:04:09.540",
+      "end_formatted": "00:04:15.880",
+      "text": "Andrew told her that he hit another vehicle, so she selects collision with motor vehicle as the loss cause.",
+      "words": [
+        {
+          "word": "Andrew",
+          "start": 249.54,
+          "end": 250.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "told",
+          "start": 250.1,
+          "end": 250.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "her",
+          "start": 250.38,
+          "end": 250.54,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 250.54,
+          "end": 250.72,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 250.72,
+          "end": 250.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "hit",
+          "start": 250.84,
+          "end": 251.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "another",
+          "start": 251.06,
+          "end": 251.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "vehicle,",
+          "start": 251.42,
+          "end": 251.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 252.16,
+          "end": 252.44,
+          "probability": 0.999
+        },
+        {
+          "word": "she",
+          "start": 252.44,
+          "end": 252.64,
+          "probability": 1.0
+        },
+        {
+          "word": "selects",
+          "start": 252.64,
+          "end": 253.18,
+          "probability": 1.0
+        },
+        {
+          "word": "collision",
+          "start": 253.18,
+          "end": 253.46,
+          "probability": 0.8999
+        },
+        {
+          "word": "with",
+          "start": 253.46,
+          "end": 253.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "motor",
+          "start": 253.8,
+          "end": 254.08,
+          "probability": 0.9868
+        },
+        {
+          "word": "vehicle",
+          "start": 254.08,
+          "end": 254.54,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 254.54,
+          "end": 254.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 254.92,
+          "end": 255.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "loss",
+          "start": 255.06,
+          "end": 255.38,
+          "probability": 0.98
+        },
+        {
+          "word": "cause.",
+          "start": 255.38,
+          "end": 255.88,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 257.26,
+      "end": 263.38,
+      "start_formatted": "00:04:17.260",
+      "end_formatted": "00:04:23.380",
+      "text": "Because he told her that he hit the other vehicle, she also sets the fault rating to ensure it at fault.",
+      "words": [
+        {
+          "word": "Because",
+          "start": 257.26,
+          "end": 257.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "he",
+          "start": 257.82,
+          "end": 258.1,
+          "probability": 1.0
+        },
+        {
+          "word": "told",
+          "start": 258.1,
+          "end": 258.34,
+          "probability": 1.0
+        },
+        {
+          "word": "her",
+          "start": 258.34,
+          "end": 258.52,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 258.52,
+          "end": 258.68,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 258.68,
+          "end": 258.8,
+          "probability": 1.0
+        },
+        {
+          "word": "hit",
+          "start": 258.8,
+          "end": 259.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 259.04,
+          "end": 259.18,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 259.18,
+          "end": 259.44,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle,",
+          "start": 259.44,
+          "end": 259.96,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 260.2,
+          "end": 260.46,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 260.46,
+          "end": 260.84,
+          "probability": 1.0
+        },
+        {
+          "word": "sets",
+          "start": 260.84,
+          "end": 261.28,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 261.28,
+          "end": 261.5,
+          "probability": 1.0
+        },
+        {
+          "word": "fault",
+          "start": 261.5,
+          "end": 261.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "rating",
+          "start": 261.78,
+          "end": 262.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 262.14,
+          "end": 262.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "ensure",
+          "start": 262.34,
+          "end": 262.76,
+          "probability": 0.9419
+        },
+        {
+          "word": "it",
+          "start": 262.76,
+          "end": 262.9,
+          "probability": 0.4583
+        },
+        {
+          "word": "at",
+          "start": 262.9,
+          "end": 263.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "fault.",
+          "start": 263.06,
+          "end": 263.38,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 263.38,
+      "end": 266.62,
+      "start_formatted": "00:04:23.380",
+      "end_formatted": "00:04:26.620",
+      "text": "Betty enters the location of the loss.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 263.38,
+          "end": 264.54,
+          "probability": 0.9746
+        },
+        {
+          "word": "enters",
+          "start": 264.54,
+          "end": 265.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 265.04,
+          "end": 265.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "location",
+          "start": 265.24,
+          "end": 265.74,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 265.74,
+          "end": 266.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 266.12,
+          "end": 266.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "loss.",
+          "start": 266.22,
+          "end": 266.62,
+          "probability": 0.9658
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 266.88,
+      "end": 268.28,
+      "start_formatted": "00:04:26.880",
+      "end_formatted": "00:04:28.280",
+      "text": "This is a new location.",
+      "words": [
+        {
+          "word": "This",
+          "start": 266.88,
+          "end": 267.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 267.32,
+          "end": 267.48,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 267.48,
+          "end": 267.6,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 267.6,
+          "end": 267.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "location.",
+          "start": 267.76,
+          "end": 268.28,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 268.76,
+      "end": 272.42,
+      "start_formatted": "00:04:28.760",
+      "end_formatted": "00:04:32.420",
+      "text": "She clicks next to continue to the next step of the wizard.",
+      "words": [
+        {
+          "word": "She",
+          "start": 268.76,
+          "end": 269.36,
+          "probability": 0.999
+        },
+        {
+          "word": "clicks",
+          "start": 269.36,
+          "end": 269.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 269.74,
+          "end": 270.04,
+          "probability": 0.6021
+        },
+        {
+          "word": "to",
+          "start": 270.04,
+          "end": 270.32,
+          "probability": 1.0
+        },
+        {
+          "word": "continue",
+          "start": 270.32,
+          "end": 270.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 270.74,
+          "end": 271.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 271.02,
+          "end": 271.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 271.14,
+          "end": 271.4,
+          "probability": 0.999
+        },
+        {
+          "word": "step",
+          "start": 271.4,
+          "end": 271.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 271.78,
+          "end": 271.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 271.94,
+          "end": 272.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "wizard.",
+          "start": 272.06,
+          "end": 272.42,
+          "probability": 0.8306
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 273.08,
+      "end": 277.46,
+      "start_formatted": "00:04:33.080",
+      "end_formatted": "00:04:37.460",
+      "text": "Betty selects towing, and asks Andrew if he needs that, service.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 273.08,
+          "end": 273.68,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 273.68,
+          "end": 274.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "towing,",
+          "start": 274.28,
+          "end": 274.58,
+          "probability": 0.9785
+        },
+        {
+          "word": "and",
+          "start": 274.72,
+          "end": 275.0,
+          "probability": 1.0
+        },
+        {
+          "word": "asks",
+          "start": 275.0,
+          "end": 275.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andrew",
+          "start": 275.44,
+          "end": 275.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 275.84,
+          "end": 276.08,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 276.08,
+          "end": 276.18,
+          "probability": 1.0
+        },
+        {
+          "word": "needs",
+          "start": 276.18,
+          "end": 276.56,
+          "probability": 1.0
+        },
+        {
+          "word": "that,",
+          "start": 276.56,
+          "end": 276.9,
+          "probability": 0.999
+        },
+        {
+          "word": "service.",
+          "start": 277.02,
+          "end": 277.46,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 278.16,
+      "end": 283.36,
+      "start_formatted": "00:04:38.160",
+      "end_formatted": "00:04:43.360",
+      "text": "She reminds Andrew, that he does have towing coverage and the limit is $400.",
+      "words": [
+        {
+          "word": "She",
+          "start": 278.16,
+          "end": 278.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "reminds",
+          "start": 278.7,
+          "end": 279.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andrew,",
+          "start": 279.22,
+          "end": 279.78,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 280.02,
+          "end": 280.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 280.32,
+          "end": 280.44,
+          "probability": 1.0
+        },
+        {
+          "word": "does",
+          "start": 280.44,
+          "end": 280.64,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 280.64,
+          "end": 280.88,
+          "probability": 1.0
+        },
+        {
+          "word": "towing",
+          "start": 280.88,
+          "end": 281.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "coverage",
+          "start": 281.24,
+          "end": 281.7,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 281.7,
+          "end": 281.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 281.98,
+          "end": 282.1,
+          "probability": 1.0
+        },
+        {
+          "word": "limit",
+          "start": 282.1,
+          "end": 282.36,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 282.36,
+          "end": 282.62,
+          "probability": 1.0
+        },
+        {
+          "word": "$400.",
+          "start": 282.62,
+          "end": 283.36,
+          "probability": 0.96
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 284.54,
+      "end": 288.16,
+      "start_formatted": "00:04:44.540",
+      "end_formatted": "00:04:48.160",
+      "text": "Andrew says that he does not need towing, at least for now.",
+      "words": [
+        {
+          "word": "Andrew",
+          "start": 284.54,
+          "end": 285.14,
+          "probability": 0.998
+        },
+        {
+          "word": "says",
+          "start": 285.14,
+          "end": 285.46,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 285.46,
+          "end": 285.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 285.68,
+          "end": 285.82,
+          "probability": 1.0
+        },
+        {
+          "word": "does",
+          "start": 285.82,
+          "end": 285.98,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 285.98,
+          "end": 286.24,
+          "probability": 1.0
+        },
+        {
+          "word": "need",
+          "start": 286.24,
+          "end": 286.52,
+          "probability": 1.0
+        },
+        {
+          "word": "towing,",
+          "start": 286.52,
+          "end": 286.92,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 287.1,
+          "end": 287.38,
+          "probability": 1.0
+        },
+        {
+          "word": "least",
+          "start": 287.38,
+          "end": 287.6,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 287.6,
+          "end": 287.84,
+          "probability": 1.0
+        },
+        {
+          "word": "now.",
+          "start": 287.84,
+          "end": 288.16,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 289.0,
+      "end": 292.4,
+      "start_formatted": "00:04:49.000",
+      "end_formatted": "00:04:52.400",
+      "text": "The services shown here are not, coverages.",
+      "words": [
+        {
+          "word": "The",
+          "start": 289.0,
+          "end": 289.62,
+          "probability": 0.7803
+        },
+        {
+          "word": "services",
+          "start": 289.62,
+          "end": 290.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "shown",
+          "start": 290.06,
+          "end": 290.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "here",
+          "start": 290.54,
+          "end": 290.86,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 290.86,
+          "end": 291.08,
+          "probability": 1.0
+        },
+        {
+          "word": "not,",
+          "start": 291.08,
+          "end": 291.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "coverages.",
+          "start": 291.6,
+          "end": 292.4,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 292.62,
+      "end": 296.9,
+      "start_formatted": "00:04:52.620",
+      "end_formatted": "00:04:56.900",
+      "text": "These are services that may be arranged for the client during claim intake.",
+      "words": [
+        {
+          "word": "These",
+          "start": 292.62,
+          "end": 293.12,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 293.12,
+          "end": 293.32,
+          "probability": 1.0
+        },
+        {
+          "word": "services",
+          "start": 293.32,
+          "end": 293.8,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 293.8,
+          "end": 294.16,
+          "probability": 1.0
+        },
+        {
+          "word": "may",
+          "start": 294.16,
+          "end": 294.34,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 294.34,
+          "end": 294.52,
+          "probability": 1.0
+        },
+        {
+          "word": "arranged",
+          "start": 294.52,
+          "end": 295.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 295.02,
+          "end": 295.24,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 295.24,
+          "end": 295.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "client",
+          "start": 295.38,
+          "end": 295.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "during",
+          "start": 295.72,
+          "end": 296.02,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 296.02,
+          "end": 296.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "intake.",
+          "start": 296.44,
+          "end": 296.9,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 297.28,
+      "end": 304.26,
+      "start_formatted": "00:04:57.280",
+      "end_formatted": "00:05:04.260",
+      "text": "However, these services will show no coverage behind the service if there is no coverage for the service on the policy.",
+      "words": [
+        {
+          "word": "However,",
+          "start": 297.28,
+          "end": 297.8,
+          "probability": 1.0
+        },
+        {
+          "word": "these",
+          "start": 298.12,
+          "end": 298.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "services",
+          "start": 298.48,
+          "end": 298.98,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 298.98,
+          "end": 299.34,
+          "probability": 1.0
+        },
+        {
+          "word": "show",
+          "start": 299.34,
+          "end": 299.58,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 299.58,
+          "end": 299.8,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage",
+          "start": 299.8,
+          "end": 300.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "behind",
+          "start": 300.24,
+          "end": 300.6,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 300.6,
+          "end": 300.9,
+          "probability": 0.9326
+        },
+        {
+          "word": "service",
+          "start": 300.9,
+          "end": 301.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 301.26,
+          "end": 301.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 301.56,
+          "end": 301.7,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 301.7,
+          "end": 301.92,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 301.92,
+          "end": 302.12,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 302.12,
+          "end": 302.52,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 302.52,
+          "end": 302.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 302.76,
+          "end": 302.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "service",
+          "start": 302.9,
+          "end": 303.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 303.36,
+          "end": 303.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 303.64,
+          "end": 303.76,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 303.76,
+          "end": 304.26,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 304.9,
+      "end": 308.52,
+      "start_formatted": "00:05:04.900",
+      "end_formatted": "00:05:08.520",
+      "text": "Notice the difference between the rental, and towing services.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 304.9,
+          "end": 305.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 305.52,
+          "end": 305.76,
+          "probability": 1.0
+        },
+        {
+          "word": "difference",
+          "start": 305.76,
+          "end": 306.12,
+          "probability": 1.0
+        },
+        {
+          "word": "between",
+          "start": 306.12,
+          "end": 306.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 306.54,
+          "end": 306.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "rental,",
+          "start": 306.76,
+          "end": 307.1,
+          "probability": 0.9863
+        },
+        {
+          "word": "and",
+          "start": 307.34,
+          "end": 307.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "towing",
+          "start": 307.64,
+          "end": 307.98,
+          "probability": 0.9897
+        },
+        {
+          "word": "services.",
+          "start": 307.98,
+          "end": 308.52,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 308.92,
+      "end": 313.96,
+      "start_formatted": "00:05:08.920",
+      "end_formatted": "00:05:13.960",
+      "text": "The rental service is available, but it does show that this is not covered on the policy.",
+      "words": [
+        {
+          "word": "The",
+          "start": 308.92,
+          "end": 309.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "rental",
+          "start": 309.26,
+          "end": 309.54,
+          "probability": 0.998
+        },
+        {
+          "word": "service",
+          "start": 309.54,
+          "end": 310.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 310.0,
+          "end": 310.26,
+          "probability": 1.0
+        },
+        {
+          "word": "available,",
+          "start": 310.26,
+          "end": 310.68,
+          "probability": 1.0
+        },
+        {
+          "word": "but",
+          "start": 310.94,
+          "end": 311.2,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 311.2,
+          "end": 311.36,
+          "probability": 1.0
+        },
+        {
+          "word": "does",
+          "start": 311.36,
+          "end": 311.58,
+          "probability": 1.0
+        },
+        {
+          "word": "show",
+          "start": 311.58,
+          "end": 311.88,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 311.88,
+          "end": 312.12,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 312.12,
+          "end": 312.36,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 312.36,
+          "end": 312.5,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 312.5,
+          "end": 312.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "covered",
+          "start": 312.72,
+          "end": 313.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 313.06,
+          "end": 313.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 313.3,
+          "end": 313.44,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 313.44,
+          "end": 313.96,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 314.74,
+      "end": 318.68,
+      "start_formatted": "00:05:14.740",
+      "end_formatted": "00:05:18.680",
+      "text": "Since he doesn't need any other services, Betty clicks next.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 314.74,
+          "end": 315.38,
+          "probability": 0.9834
+        },
+        {
+          "word": "he",
+          "start": 315.38,
+          "end": 315.58,
+          "probability": 0.999
+        },
+        {
+          "word": "doesn't",
+          "start": 315.58,
+          "end": 315.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "need",
+          "start": 315.92,
+          "end": 316.18,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 316.18,
+          "end": 316.42,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 316.42,
+          "end": 316.7,
+          "probability": 1.0
+        },
+        {
+          "word": "services,",
+          "start": 316.7,
+          "end": 317.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "Betty",
+          "start": 317.74,
+          "end": 317.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "clicks",
+          "start": 317.94,
+          "end": 318.32,
+          "probability": 0.9595
+        },
+        {
+          "word": "next.",
+          "start": 318.32,
+          "end": 318.68,
+          "probability": 0.9072
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 319.32,
+      "end": 323.48,
+      "start_formatted": "00:05:19.320",
+      "end_formatted": "00:05:23.480",
+      "text": "The last page of the new claim wizard shows that there is one exposure.",
+      "words": [
+        {
+          "word": "The",
+          "start": 319.32,
+          "end": 319.96,
+          "probability": 0.9404
+        },
+        {
+          "word": "last",
+          "start": 319.96,
+          "end": 320.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "page",
+          "start": 320.26,
+          "end": 320.6,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 320.6,
+          "end": 320.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 320.74,
+          "end": 320.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 320.86,
+          "end": 321.04,
+          "probability": 0.7788
+        },
+        {
+          "word": "claim",
+          "start": 321.04,
+          "end": 321.34,
+          "probability": 0.7676
+        },
+        {
+          "word": "wizard",
+          "start": 321.34,
+          "end": 321.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "shows",
+          "start": 321.64,
+          "end": 322.12,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 322.12,
+          "end": 322.38,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 322.38,
+          "end": 322.58,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 322.58,
+          "end": 322.76,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 322.76,
+          "end": 322.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "exposure.",
+          "start": 322.94,
+          "end": 323.48,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 323.9,
+      "end": 328.24,
+      "start_formatted": "00:05:23.900",
+      "end_formatted": "00:05:28.240",
+      "text": "This exposure was created by business rules during the new claim wizard.",
+      "words": [
+        {
+          "word": "This",
+          "start": 323.9,
+          "end": 324.34,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 324.34,
+          "end": 324.84,
+          "probability": 1.0
+        },
+        {
+          "word": "was",
+          "start": 324.84,
+          "end": 325.2,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 325.2,
+          "end": 325.6,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 325.6,
+          "end": 325.92,
+          "probability": 1.0
+        },
+        {
+          "word": "business",
+          "start": 325.92,
+          "end": 326.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "rules",
+          "start": 326.3,
+          "end": 326.8,
+          "probability": 1.0
+        },
+        {
+          "word": "during",
+          "start": 326.8,
+          "end": 327.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 327.12,
+          "end": 327.34,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 327.34,
+          "end": 327.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 327.54,
+          "end": 327.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "wizard.",
+          "start": 327.86,
+          "end": 328.24,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 328.62,
+      "end": 332.26,
+      "start_formatted": "00:05:28.620",
+      "end_formatted": "00:05:32.260",
+      "text": "There was a passenger in Andrew's truck who was injured in the accident.",
+      "words": [
+        {
+          "word": "There",
+          "start": 328.62,
+          "end": 328.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 328.96,
+          "end": 329.14,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 329.14,
+          "end": 329.24,
+          "probability": 1.0
+        },
+        {
+          "word": "passenger",
+          "start": 329.24,
+          "end": 329.74,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 329.74,
+          "end": 330.0,
+          "probability": 1.0
+        },
+        {
+          "word": "Andrew's",
+          "start": 330.0,
+          "end": 330.5,
+          "probability": 0.9561
+        },
+        {
+          "word": "truck",
+          "start": 330.5,
+          "end": 330.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "who",
+          "start": 330.7,
+          "end": 330.86,
+          "probability": 1.0
+        },
+        {
+          "word": "was",
+          "start": 330.86,
+          "end": 331.02,
+          "probability": 1.0
+        },
+        {
+          "word": "injured",
+          "start": 331.02,
+          "end": 331.4,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 331.4,
+          "end": 331.66,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 331.66,
+          "end": 331.8,
+          "probability": 1.0
+        },
+        {
+          "word": "accident.",
+          "start": 331.8,
+          "end": 332.26,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 332.66,
+      "end": 334.52,
+      "start_formatted": "00:05:32.660",
+      "end_formatted": "00:05:34.520",
+      "text": "This will be an additional exposure.",
+      "words": [
+        {
+          "word": "This",
+          "start": 332.66,
+          "end": 333.0,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 333.0,
+          "end": 333.14,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 333.14,
+          "end": 333.28,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 333.28,
+          "end": 333.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "additional",
+          "start": 333.44,
+          "end": 333.86,
+          "probability": 0.999
+        },
+        {
+          "word": "exposure.",
+          "start": 333.86,
+          "end": 334.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 334.52,
+      "end": 342.72,
+      "start_formatted": "00:05:34.520",
+      "end_formatted": "00:05:42.720",
+      "text": "Because the exposure is for bodily injury, Betty clicks New Exposure and selects the Ford XLT, a covered vehicle on the policy.",
+      "words": [
+        {
+          "word": "Because",
+          "start": 334.52,
+          "end": 335.68,
+          "probability": 0.9297
+        },
+        {
+          "word": "the",
+          "start": 335.68,
+          "end": 335.88,
+          "probability": 0.998
+        },
+        {
+          "word": "exposure",
+          "start": 335.88,
+          "end": 336.36,
+          "probability": 0.9502
+        },
+        {
+          "word": "is",
+          "start": 336.36,
+          "end": 336.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 336.62,
+          "end": 336.76,
+          "probability": 0.999
+        },
+        {
+          "word": "bodily",
+          "start": 336.76,
+          "end": 337.1,
+          "probability": 0.9531
+        },
+        {
+          "word": "injury,",
+          "start": 337.1,
+          "end": 337.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Betty",
+          "start": 337.92,
+          "end": 338.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "clicks",
+          "start": 338.12,
+          "end": 338.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "New",
+          "start": 338.46,
+          "end": 338.62,
+          "probability": 0.6685
+        },
+        {
+          "word": "Exposure",
+          "start": 338.62,
+          "end": 339.18,
+          "probability": 0.9619
+        },
+        {
+          "word": "and",
+          "start": 339.18,
+          "end": 339.38,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 339.38,
+          "end": 339.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 339.82,
+          "end": 339.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ford",
+          "start": 339.92,
+          "end": 340.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "XLT,",
+          "start": 340.18,
+          "end": 340.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 341.04,
+          "end": 341.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "covered",
+          "start": 341.26,
+          "end": 341.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "vehicle",
+          "start": 341.56,
+          "end": 341.96,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 341.96,
+          "end": 342.16,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 342.16,
+          "end": 342.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy.",
+          "start": 342.26,
+          "end": 342.72,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 343.02,
+      "end": 351.1,
+      "start_formatted": "00:05:43.020",
+      "end_formatted": "00:05:51.100",
+      "text": "Then she selects the coverage liability, bodily injury and property damage, and finally, the sub-coverage liability, bodily injury.",
+      "words": [
+        {
+          "word": "Then",
+          "start": 343.02,
+          "end": 343.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 343.42,
+          "end": 343.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "selects",
+          "start": 343.58,
+          "end": 344.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 344.06,
+          "end": 344.16,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 344.16,
+          "end": 344.48,
+          "probability": 0.5938
+        },
+        {
+          "word": "liability,",
+          "start": 344.48,
+          "end": 345.12,
+          "probability": 0.998
+        },
+        {
+          "word": "bodily",
+          "start": 345.46,
+          "end": 345.86,
+          "probability": 1.0
+        },
+        {
+          "word": "injury",
+          "start": 345.86,
+          "end": 346.26,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 346.26,
+          "end": 346.48,
+          "probability": 0.998
+        },
+        {
+          "word": "property",
+          "start": 346.48,
+          "end": 346.88,
+          "probability": 1.0
+        },
+        {
+          "word": "damage,",
+          "start": 346.88,
+          "end": 347.3,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 347.56,
+          "end": 347.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "finally,",
+          "start": 347.8,
+          "end": 348.24,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 348.48,
+          "end": 348.72,
+          "probability": 1.0
+        },
+        {
+          "word": "sub",
+          "start": 348.72,
+          "end": 348.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "-coverage",
+          "start": 348.96,
+          "end": 349.3,
+          "probability": 0.916
+        },
+        {
+          "word": "liability,",
+          "start": 349.3,
+          "end": 349.92,
+          "probability": 1.0
+        },
+        {
+          "word": "bodily",
+          "start": 350.28,
+          "end": 350.66,
+          "probability": 1.0
+        },
+        {
+          "word": "injury.",
+          "start": 350.66,
+          "end": 351.1,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 354.72,
+      "end": 361.34,
+      "start_formatted": "00:05:54.720",
+      "end_formatted": "00:06:01.340",
+      "text": "This exposure is for a passenger who was injured in the accident, so Betty adds a new injury incident.",
+      "words": [
+        {
+          "word": "This",
+          "start": 354.72,
+          "end": 355.4,
+          "probability": 0.7769
+        },
+        {
+          "word": "exposure",
+          "start": 355.4,
+          "end": 355.96,
+          "probability": 0.9844
+        },
+        {
+          "word": "is",
+          "start": 355.96,
+          "end": 356.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 356.28,
+          "end": 356.48,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 356.48,
+          "end": 356.62,
+          "probability": 0.999
+        },
+        {
+          "word": "passenger",
+          "start": 356.62,
+          "end": 357.06,
+          "probability": 0.9888
+        },
+        {
+          "word": "who",
+          "start": 357.06,
+          "end": 357.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 357.32,
+          "end": 357.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "injured",
+          "start": 357.52,
+          "end": 357.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 357.88,
+          "end": 358.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 358.14,
+          "end": 358.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "accident,",
+          "start": 358.28,
+          "end": 358.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "so",
+          "start": 359.04,
+          "end": 359.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "Betty",
+          "start": 359.34,
+          "end": 359.62,
+          "probability": 0.9893
+        },
+        {
+          "word": "adds",
+          "start": 359.62,
+          "end": 360.02,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 360.02,
+          "end": 360.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 360.18,
+          "end": 360.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "injury",
+          "start": 360.38,
+          "end": 360.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "incident.",
+          "start": 360.84,
+          "end": 361.34,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 361.72,
+      "end": 364.16,
+      "start_formatted": "00:06:01.720",
+      "end_formatted": "00:06:04.160",
+      "text": "The injured person is a new person.",
+      "words": [
+        {
+          "word": "The",
+          "start": 361.72,
+          "end": 362.4,
+          "probability": 0.998
+        },
+        {
+          "word": "injured",
+          "start": 362.4,
+          "end": 362.74,
+          "probability": 0.998
+        },
+        {
+          "word": "person",
+          "start": 362.74,
+          "end": 363.18,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 363.18,
+          "end": 363.44,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 363.44,
+          "end": 363.54,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 363.54,
+          "end": 363.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "person.",
+          "start": 363.72,
+          "end": 364.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 364.6,
+      "end": 370.2,
+      "start_formatted": "00:06:04.600",
+      "end_formatted": "00:06:10.200",
+      "text": "The injured person is Kayla Williams, so Betty enters the first and last name.",
+      "words": [
+        {
+          "word": "The",
+          "start": 364.6,
+          "end": 365.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "injured",
+          "start": 365.28,
+          "end": 365.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "person",
+          "start": 365.62,
+          "end": 366.04,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 366.04,
+          "end": 366.32,
+          "probability": 1.0
+        },
+        {
+          "word": "Kayla",
+          "start": 366.32,
+          "end": 366.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "Williams,",
+          "start": 366.64,
+          "end": 367.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "so",
+          "start": 367.54,
+          "end": 367.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "Betty",
+          "start": 367.86,
+          "end": 368.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "enters",
+          "start": 368.14,
+          "end": 368.58,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 368.58,
+          "end": 368.78,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 368.78,
+          "end": 369.1,
+          "probability": 0.9849
+        },
+        {
+          "word": "and",
+          "start": 369.1,
+          "end": 369.38,
+          "probability": 0.999
+        },
+        {
+          "word": "last",
+          "start": 369.38,
+          "end": 369.76,
+          "probability": 1.0
+        },
+        {
+          "word": "name.",
+          "start": 369.76,
+          "end": 370.2,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 370.7,
+      "end": 373.52,
+      "start_formatted": "00:06:10.700",
+      "end_formatted": "00:06:13.520",
+      "text": "Betty clicks Update, to create the person.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 370.7,
+          "end": 371.38,
+          "probability": 0.998
+        },
+        {
+          "word": "clicks",
+          "start": 371.38,
+          "end": 371.76,
+          "probability": 0.998
+        },
+        {
+          "word": "Update,",
+          "start": 371.76,
+          "end": 372.1,
+          "probability": 0.8887
+        },
+        {
+          "word": "to",
+          "start": 372.38,
+          "end": 372.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 372.6,
+          "end": 372.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 372.96,
+          "end": 373.18,
+          "probability": 1.0
+        },
+        {
+          "word": "person.",
+          "start": 373.18,
+          "end": 373.52,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 374.24,
+      "end": 377.1,
+      "start_formatted": "00:06:14.240",
+      "end_formatted": "00:06:17.100",
+      "text": "She sets the loss party to third party liability.",
+      "words": [
+        {
+          "word": "She",
+          "start": 374.24,
+          "end": 374.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "sets",
+          "start": 374.92,
+          "end": 375.22,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 375.22,
+          "end": 375.4,
+          "probability": 0.998
+        },
+        {
+          "word": "loss",
+          "start": 375.4,
+          "end": 375.74,
+          "probability": 0.855
+        },
+        {
+          "word": "party",
+          "start": 375.74,
+          "end": 376.14,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 376.14,
+          "end": 376.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "third",
+          "start": 376.34,
+          "end": 376.6,
+          "probability": 0.8345
+        },
+        {
+          "word": "party",
+          "start": 376.6,
+          "end": 377.08,
+          "probability": 0.5732
+        },
+        {
+          "word": "liability.",
+          "start": 377.08,
+          "end": 377.42,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 378.28,
+      "end": 382.2,
+      "start_formatted": "00:06:18.280",
+      "end_formatted": "00:06:22.200",
+      "text": "Next, Betty clicks OK to create the injury incident.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 378.28,
+          "end": 379.0,
+          "probability": 0.5405
+        },
+        {
+          "word": "Betty",
+          "start": 379.46,
+          "end": 379.68,
+          "probability": 0.9849
+        },
+        {
+          "word": "clicks",
+          "start": 379.68,
+          "end": 380.12,
+          "probability": 0.9404
+        },
+        {
+          "word": "OK",
+          "start": 380.12,
+          "end": 380.38,
+          "probability": 0.77
+        },
+        {
+          "word": "to",
+          "start": 380.38,
+          "end": 380.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "create",
+          "start": 380.72,
+          "end": 381.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 381.08,
+          "end": 381.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "injury",
+          "start": 381.3,
+          "end": 381.66,
+          "probability": 0.8672
+        },
+        {
+          "word": "incident.",
+          "start": 381.66,
+          "end": 382.2,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 383.04,
+      "end": 386.52,
+      "start_formatted": "00:06:23.040",
+      "end_formatted": "00:06:26.520",
+      "text": "Next, Betty selects Kayla, as the claimant.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 383.04,
+          "end": 383.76,
+          "probability": 0.9712
+        },
+        {
+          "word": "Betty",
+          "start": 384.08,
+          "end": 384.38,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 384.38,
+          "end": 385.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "Kayla,",
+          "start": 385.0,
+          "end": 385.22,
+          "probability": 0.9141
+        },
+        {
+          "word": "as",
+          "start": 385.44,
+          "end": 385.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 385.78,
+          "end": 385.88,
+          "probability": 0.9717
+        },
+        {
+          "word": "claimant.",
+          "start": 385.88,
+          "end": 386.52,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 386.88,
+      "end": 391.12,
+      "start_formatted": "00:06:26.880",
+      "end_formatted": "00:06:31.120",
+      "text": "Then she sets the claimant type to, occupant of insured's vehicle.",
+      "words": [
+        {
+          "word": "Then",
+          "start": 386.88,
+          "end": 387.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "she",
+          "start": 387.42,
+          "end": 387.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "sets",
+          "start": 387.64,
+          "end": 388.0,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 388.0,
+          "end": 388.2,
+          "probability": 0.999
+        },
+        {
+          "word": "claimant",
+          "start": 388.2,
+          "end": 388.68,
+          "probability": 0.9746
+        },
+        {
+          "word": "type",
+          "start": 388.68,
+          "end": 388.88,
+          "probability": 0.9717
+        },
+        {
+          "word": "to,",
+          "start": 388.88,
+          "end": 389.28,
+          "probability": 0.9746
+        },
+        {
+          "word": "occupant",
+          "start": 389.42,
+          "end": 390.0,
+          "probability": 0.7168
+        },
+        {
+          "word": "of",
+          "start": 390.0,
+          "end": 390.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "insured's",
+          "start": 390.12,
+          "end": 390.68,
+          "probability": 0.9487
+        },
+        {
+          "word": "vehicle.",
+          "start": 390.68,
+          "end": 391.12,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 391.6,
+      "end": 395.1,
+      "start_formatted": "00:06:31.600",
+      "end_formatted": "00:06:35.100",
+      "text": "Finally, Betty clicks OK to create the exposure.",
+      "words": [
+        {
+          "word": "Finally,",
+          "start": 391.6,
+          "end": 392.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "Betty",
+          "start": 392.66,
+          "end": 392.96,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 392.96,
+          "end": 393.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "OK",
+          "start": 393.36,
+          "end": 393.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 393.64,
+          "end": 393.98,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 393.98,
+          "end": 394.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 394.32,
+          "end": 394.58,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure.",
+          "start": 394.58,
+          "end": 395.1,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 396.1,
+      "end": 404.48,
+      "start_formatted": "00:06:36.100",
+      "end_formatted": "00:06:44.480",
+      "text": "In addition to creating an exposure for a specific coverage on the policy, Betty can also create an exposure by coverage type.",
+      "words": [
+        {
+          "word": "In",
+          "start": 396.1,
+          "end": 396.74,
+          "probability": 0.9395
+        },
+        {
+          "word": "addition",
+          "start": 396.74,
+          "end": 397.1,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 397.1,
+          "end": 397.42,
+          "probability": 1.0
+        },
+        {
+          "word": "creating",
+          "start": 397.42,
+          "end": 397.82,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 397.82,
+          "end": 398.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 398.06,
+          "end": 398.54,
+          "probability": 0.9858
+        },
+        {
+          "word": "for",
+          "start": 398.54,
+          "end": 398.82,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 398.82,
+          "end": 399.0,
+          "probability": 1.0
+        },
+        {
+          "word": "specific",
+          "start": 399.0,
+          "end": 399.46,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage",
+          "start": 399.46,
+          "end": 399.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 399.96,
+          "end": 400.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 400.34,
+          "end": 400.48,
+          "probability": 1.0
+        },
+        {
+          "word": "policy,",
+          "start": 400.48,
+          "end": 401.0,
+          "probability": 0.9854
+        },
+        {
+          "word": "Betty",
+          "start": 401.4,
+          "end": 401.58,
+          "probability": 0.9448
+        },
+        {
+          "word": "can",
+          "start": 401.58,
+          "end": 401.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 401.82,
+          "end": 402.14,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 402.14,
+          "end": 402.56,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 402.56,
+          "end": 402.84,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 402.84,
+          "end": 403.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "by",
+          "start": 403.32,
+          "end": 403.66,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 403.66,
+          "end": 404.06,
+          "probability": 0.9849
+        },
+        {
+          "word": "type.",
+          "start": 404.06,
+          "end": 404.48,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 404.72,
+      "end": 408.04,
+      "start_formatted": "00:06:44.720",
+      "end_formatted": "00:06:48.040",
+      "text": "These coverages may or may not be on the policy.",
+      "words": [
+        {
+          "word": "These",
+          "start": 404.72,
+          "end": 405.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverages",
+          "start": 405.22,
+          "end": 405.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "may",
+          "start": 405.82,
+          "end": 406.22,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 406.22,
+          "end": 406.44,
+          "probability": 1.0
+        },
+        {
+          "word": "may",
+          "start": 406.44,
+          "end": 406.68,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 406.68,
+          "end": 406.96,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 406.96,
+          "end": 407.16,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 407.16,
+          "end": 407.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 407.4,
+          "end": 407.54,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 407.54,
+          "end": 408.04,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 408.48,
+      "end": 414.4,
+      "start_formatted": "00:06:48.480",
+      "end_formatted": "00:06:54.400",
+      "text": "In this case, Betty selects Uninsured Motorist, Bodily Injury, as the coverage.",
+      "words": [
+        {
+          "word": "In",
+          "start": 408.48,
+          "end": 409.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 409.12,
+          "end": 409.34,
+          "probability": 1.0
+        },
+        {
+          "word": "case,",
+          "start": 409.34,
+          "end": 409.7,
+          "probability": 1.0
+        },
+        {
+          "word": "Betty",
+          "start": 409.96,
+          "end": 410.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "selects",
+          "start": 410.28,
+          "end": 410.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "Uninsured",
+          "start": 410.84,
+          "end": 411.48,
+          "probability": 0.8467
+        },
+        {
+          "word": "Motorist,",
+          "start": 411.48,
+          "end": 412.14,
+          "probability": 0.9824
+        },
+        {
+          "word": "Bodily",
+          "start": 412.26,
+          "end": 412.8,
+          "probability": 0.9648
+        },
+        {
+          "word": "Injury,",
+          "start": 412.8,
+          "end": 413.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "as",
+          "start": 413.5,
+          "end": 413.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 413.8,
+          "end": 413.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage.",
+          "start": 413.94,
+          "end": 414.4,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 415.2,
+      "end": 420.94,
+      "start_formatted": "00:06:55.200",
+      "end_formatted": "00:07:00.940",
+      "text": "The new exposure screen is the same regardless of whether or not the coverage is on the policy.",
+      "words": [
+        {
+          "word": "The",
+          "start": 415.2,
+          "end": 415.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 415.74,
+          "end": 415.92,
+          "probability": 0.9351
+        },
+        {
+          "word": "exposure",
+          "start": 415.92,
+          "end": 416.48,
+          "probability": 0.7998
+        },
+        {
+          "word": "screen",
+          "start": 416.48,
+          "end": 416.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 416.98,
+          "end": 417.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 417.3,
+          "end": 417.44,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 417.44,
+          "end": 417.74,
+          "probability": 1.0
+        },
+        {
+          "word": "regardless",
+          "start": 417.74,
+          "end": 418.24,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 418.24,
+          "end": 418.54,
+          "probability": 1.0
+        },
+        {
+          "word": "whether",
+          "start": 418.54,
+          "end": 418.78,
+          "probability": 0.999
+        },
+        {
+          "word": "or",
+          "start": 418.78,
+          "end": 419.1,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 419.1,
+          "end": 419.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 419.42,
+          "end": 419.56,
+          "probability": 1.0
+        },
+        {
+          "word": "coverage",
+          "start": 419.56,
+          "end": 419.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 419.92,
+          "end": 420.18,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 420.18,
+          "end": 420.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 420.34,
+          "end": 420.42,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 420.42,
+          "end": 420.94,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 420.94,
+      "end": 426.1,
+      "start_formatted": "00:07:00.940",
+      "end_formatted": "00:07:06.100",
+      "text": "This simply allows the user to create exposures regardless of policy coverage.",
+      "words": [
+        {
+          "word": "This",
+          "start": 420.94,
+          "end": 421.66,
+          "probability": 0.9463
+        },
+        {
+          "word": "simply",
+          "start": 421.66,
+          "end": 422.04,
+          "probability": 1.0
+        },
+        {
+          "word": "allows",
+          "start": 422.04,
+          "end": 422.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 422.42,
+          "end": 422.62,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 422.62,
+          "end": 422.94,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 422.94,
+          "end": 423.14,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 423.14,
+          "end": 423.48,
+          "probability": 1.0
+        },
+        {
+          "word": "exposures",
+          "start": 423.48,
+          "end": 424.18,
+          "probability": 1.0
+        },
+        {
+          "word": "regardless",
+          "start": 424.18,
+          "end": 424.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 424.64,
+          "end": 425.04,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 425.04,
+          "end": 425.52,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage.",
+          "start": 425.52,
+          "end": 426.1,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 426.6,
+      "end": 432.86,
+      "start_formatted": "00:07:06.600",
+      "end_formatted": "00:07:12.860",
+      "text": "In this case, Betty does not need to create the extra exposure, so she clicks Cancel.",
+      "words": [
+        {
+          "word": "In",
+          "start": 426.6,
+          "end": 427.26,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 427.26,
+          "end": 427.48,
+          "probability": 1.0
+        },
+        {
+          "word": "case,",
+          "start": 427.48,
+          "end": 427.86,
+          "probability": 1.0
+        },
+        {
+          "word": "Betty",
+          "start": 428.2,
+          "end": 428.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "does",
+          "start": 428.38,
+          "end": 428.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 428.68,
+          "end": 428.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "need",
+          "start": 428.96,
+          "end": 429.28,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 429.28,
+          "end": 429.48,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 429.48,
+          "end": 429.82,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 429.82,
+          "end": 430.06,
+          "probability": 1.0
+        },
+        {
+          "word": "extra",
+          "start": 430.06,
+          "end": 430.52,
+          "probability": 0.999
+        },
+        {
+          "word": "exposure,",
+          "start": 430.52,
+          "end": 431.2,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 431.48,
+          "end": 431.82,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 431.82,
+          "end": 432.02,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 432.02,
+          "end": 432.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Cancel.",
+          "start": 432.36,
+          "end": 432.86,
+          "probability": 0.8682
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 433.38,
+      "end": 439.14,
+      "start_formatted": "00:07:13.380",
+      "end_formatted": "00:07:19.140",
+      "text": "The claim now has two exposures, one for the vehicle, and another for bodily injury.",
+      "words": [
+        {
+          "word": "The",
+          "start": 433.38,
+          "end": 433.94,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 433.94,
+          "end": 434.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "now",
+          "start": 434.3,
+          "end": 434.54,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 434.54,
+          "end": 434.82,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 434.82,
+          "end": 435.08,
+          "probability": 0.9736
+        },
+        {
+          "word": "exposures,",
+          "start": 435.08,
+          "end": 435.96,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 436.2,
+          "end": 436.5,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 436.5,
+          "end": 436.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 436.68,
+          "end": 436.82,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle,",
+          "start": 436.82,
+          "end": 437.26,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 437.44,
+          "end": 437.72,
+          "probability": 1.0
+        },
+        {
+          "word": "another",
+          "start": 437.72,
+          "end": 438.02,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 438.02,
+          "end": 438.28,
+          "probability": 1.0
+        },
+        {
+          "word": "bodily",
+          "start": 438.28,
+          "end": 438.66,
+          "probability": 0.8584
+        },
+        {
+          "word": "injury.",
+          "start": 438.66,
+          "end": 439.14,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 439.78,
+      "end": 442.2,
+      "start_formatted": "00:07:19.780",
+      "end_formatted": "00:07:22.200",
+      "text": "Betty clicks Finish to create the claim.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 439.78,
+          "end": 440.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 440.32,
+          "end": 440.72,
+          "probability": 0.999
+        },
+        {
+          "word": "Finish",
+          "start": 440.72,
+          "end": 440.98,
+          "probability": 0.9917
+        },
+        {
+          "word": "to",
+          "start": 440.98,
+          "end": 441.24,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 441.24,
+          "end": 441.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 441.6,
+          "end": 441.8,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 441.8,
+          "end": 442.2,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 442.66,
+      "end": 448.04,
+      "start_formatted": "00:07:22.660",
+      "end_formatted": "00:07:28.040",
+      "text": "Notice that the claim is automatically assigned to the Houston Claims Center and Joe Ramirez.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 442.66,
+          "end": 443.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 443.34,
+          "end": 443.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 443.58,
+          "end": 443.72,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 443.72,
+          "end": 444.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 444.08,
+          "end": 444.28,
+          "probability": 1.0
+        },
+        {
+          "word": "automatically",
+          "start": 444.28,
+          "end": 444.76,
+          "probability": 1.0
+        },
+        {
+          "word": "assigned",
+          "start": 444.76,
+          "end": 445.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 445.4,
+          "end": 445.6,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 445.6,
+          "end": 445.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "Houston",
+          "start": 445.7,
+          "end": 446.1,
+          "probability": 0.9922
+        },
+        {
+          "word": "Claims",
+          "start": 446.1,
+          "end": 446.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "Center",
+          "start": 446.7,
+          "end": 447.0,
+          "probability": 0.9761
+        },
+        {
+          "word": "and",
+          "start": 447.0,
+          "end": 447.26,
+          "probability": 0.999
+        },
+        {
+          "word": "Joe",
+          "start": 447.26,
+          "end": 447.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "Ramirez.",
+          "start": 447.46,
+          "end": 448.04,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 448.04,
+      "end": 453.54,
+      "start_formatted": "00:07:28.040",
+      "end_formatted": "00:07:33.540",
+      "text": "That is because the accident occurred in the 77089 zip code.",
+      "words": [
+        {
+          "word": "That",
+          "start": 448.04,
+          "end": 448.82,
+          "probability": 0.9004
+        },
+        {
+          "word": "is",
+          "start": 448.82,
+          "end": 448.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "because",
+          "start": 448.96,
+          "end": 449.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 449.24,
+          "end": 449.46,
+          "probability": 0.998
+        },
+        {
+          "word": "accident",
+          "start": 449.46,
+          "end": 449.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "occurred",
+          "start": 449.86,
+          "end": 450.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "in",
+          "start": 450.24,
+          "end": 450.44,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 450.44,
+          "end": 450.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "77089",
+          "start": 450.54,
+          "end": 452.46,
+          "probability": 0.9878
+        },
+        {
+          "word": "zip",
+          "start": 452.46,
+          "end": 453.06,
+          "probability": 0.8813
+        },
+        {
+          "word": "code.",
+          "start": 453.06,
+          "end": 453.54,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 454.08,
+      "end": 458.16,
+      "start_formatted": "00:07:34.080",
+      "end_formatted": "00:07:38.160",
+      "text": "Betty is done for now, so she logs out of Claims Center.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 454.08,
+          "end": 454.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 454.64,
+          "end": 454.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "done",
+          "start": 454.98,
+          "end": 455.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 455.16,
+          "end": 455.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "now,",
+          "start": 455.42,
+          "end": 455.74,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 455.94,
+          "end": 456.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "she",
+          "start": 456.22,
+          "end": 456.42,
+          "probability": 1.0
+        },
+        {
+          "word": "logs",
+          "start": 456.42,
+          "end": 456.84,
+          "probability": 0.999
+        },
+        {
+          "word": "out",
+          "start": 456.84,
+          "end": 457.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 457.12,
+          "end": 457.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "Claims",
+          "start": 457.34,
+          "end": 457.9,
+          "probability": 0.489
+        },
+        {
+          "word": "Center.",
+          "start": 457.9,
+          "end": 458.16,
+          "probability": 0.9702
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 458.76,
+      "end": 462.08,
+      "start_formatted": "00:07:38.760",
+      "end_formatted": "00:07:42.080",
+      "text": "This ends the auto claim and the line of business demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 458.76,
+          "end": 459.32,
+          "probability": 0.999
+        },
+        {
+          "word": "ends",
+          "start": 459.32,
+          "end": 459.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 459.64,
+          "end": 459.84,
+          "probability": 0.999
+        },
+        {
+          "word": "auto",
+          "start": 459.84,
+          "end": 460.12,
+          "probability": 0.8262
+        },
+        {
+          "word": "claim",
+          "start": 460.12,
+          "end": 460.48,
+          "probability": 0.7568
+        },
+        {
+          "word": "and",
+          "start": 460.48,
+          "end": 460.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 460.76,
+          "end": 460.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "line",
+          "start": 460.86,
+          "end": 461.14,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 461.14,
+          "end": 461.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "business",
+          "start": 461.38,
+          "end": 461.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "demonstration.",
+          "start": 461.78,
+          "end": 462.08,
+          "probability": 0.8433
+        }
+      ]
+    }
+  ]
+}

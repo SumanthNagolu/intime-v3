@@ -1,0 +1,104 @@
+{
+  "version": 2,
+  "title": "Guidewire Unified RAG Knowledge Base",
+  "description": "Comprehensive knowledge base from videos, guides, slides, PPTs, and interview prep",
+  "generated_at": "2026-02-13T15:39:17.653126",
+  "stats": {
+    "total_chunks": 66908,
+    "total_words": 5837928,
+    "embedded_chunks": 66908,
+    "sources": {
+      "videos": {
+        "chunks": 5635,
+        "words": 299576
+      },
+      "guides": {
+        "chunks": 84802,
+        "words": 8365823
+      },
+      "slides": {
+        "chunks": 451,
+        "words": 161729
+      },
+      "ppt": {
+        "chunks": 720,
+        "words": 236847
+      },
+      "interview": {
+        "chunks": 444,
+        "words": 29224
+      }
+    }
+  },
+  "embedding_model": "text-embedding-3-small",
+  "embedding_dimensions": 1536,
+  "source_types": {
+    "video_transcript": 4841,
+    "official_guide": 60460,
+    "slide_ocr": 451,
+    "ppt_content": 717,
+    "interview_prep": 439
+  },
+  "topic_index": {
+    "cloud": 65,
+    "architecture": 65,
+    "deployment": 65,
+    "surepath": 57,
+    "studio": 57,
+    "development": 57,
+    "policycenter": 11837,
+    "policy": 11837,
+    "accounts": 11837,
+    "underwriting": 11837,
+    "product-model": 1045,
+    "claimcenter": 15325,
+    "claims": 14282,
+    "fnol": 14282,
+    "financials": 14282,
+    "exposures": 1281,
+    "billingcenter": 12585,
+    "billing": 12585,
+    "invoicing": 12585,
+    "payments": 12585,
+    "gosu": 6222,
+    "data-model": 6222,
+    "pcf": 6222,
+    "entities": 1032,
+    "typelists": 1032,
+    "coverages": 266,
+    "clauses": 266,
+    "rating": 461,
+    "configuration": 6353,
+    "rules": 6233,
+    "workflows": 1043,
+    "integration": 19695,
+    "rest-api": 19695,
+    "messaging": 19695,
+    "plugins": 500,
+    "cloud-api": 19695,
+    "apd": 12,
+    "product-designer": 12,
+    "rate-routines": 75,
+    "rate-tables": 75,
+    "premium": 75,
+    "rate-books": 120,
+    "guidewire": 210,
+    "platform": 210,
+    "webhooks": 19195,
+    "interview-prep": 439
+  },
+  "chapter_index": {
+    "ch01": 65,
+    "ch02": 57,
+    "ch04": 767,
+    "ch05": 1281,
+    "ch06": 791,
+    "ch07": 1032,
+    "ch08": 266,
+    "ch09": 1043,
+    "ch11": 500,
+    "ch12": 12,
+    "ch13": 75,
+    "ch14": 120
+  }
+}

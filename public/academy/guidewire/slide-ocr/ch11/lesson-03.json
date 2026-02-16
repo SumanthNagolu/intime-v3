@@ -1,0 +1,467 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-03",
+    "slide_count": 41,
+    "slides_with_text": 39,
+    "total_words": 2031,
+    "avg_confidence": 85.9,
+    "processing_time_seconds": 15.39,
+    "extracted_at": "2026-02-15T18:19:30.301808"
+  },
+  "full_text": "Gosu Queries\n\nLesson\nobjectives\n\n¢ Describe a query object\n\n¢ Identify various types of query restrictions\n\n¢ Write Gosu queries to retrieve objects from a\nGuidewire application\n\n¢ lIterate through the results of query\n\nQuery basics\n\n| Query objects G\n« AGosu query specifies the entity and criteria associated with the entity to retrieve\nfrom the Guidewire application\n« Use Gosu queries to retrieve one or more objects\n+ Referenced by foreign key relationships\n+ NOT in an array relationship <>\n* Query object specifies the query criteria al Ses)\n« Which entity to query\n« What restrictions to apply\n\nab_abcontact\n¢ Results object is a set of entity instances fetched from te = 1 ot\nGuidewire application\n\ny\n* How many? 0)\n\n« How to order?\n\n| Steps to execute a basic query\n\n1. Create the query object using the make method\n2. Create the results object using the select method\n\n3. Process the results of the query as needed\n\n| Step 1: Create the query object\n\n1 uses gw.api.database.Query\n2\n3 var output =\"\n—> 4 var queryObj = Query.make(entity.ABContact)\n\n* Query is a class in the gw.api.database package\n\n* make (EntityName) is a method that requires a named entity type\n\n| Step 2: Create the results object Gi\n\n1 uses gw.api.database.Query\n\n2\n\n3 var output = \"\"\n\n4 var queryObj = Query.make(entity.ABContact)\n— 5 var resultsObj = query0bj.select ()\n\n¢ Create the result object with select method\n\n* However, results are not fetched until they are referenced\n\n| Step 3: Process results\n\nuses gw.api.database.Query\n\nvar output = \"\"\nvar queryObj = Query.make(entity.ABContact)\nvar resultsObj = queryObj.select()\n\nfor(anABContact in resultsObj) {\n\noutput += anABContact.DisplayName + \"\\n\"\n}\nprint (output)\n\nwODInnswne\n\ni\n\n¢ Use a for loop to iterate through the result set\n\nStan Newton\n\nBo Simpson\n\nBo Simpson\nWilliam Weeks\nWilliam Andy\nWilliam William\n\n¢ DisplayName property improves the readability of the console output\n\n| Viewing approximation of SQL query Gi\n\n* toString approach\n\nOutput from console\noO\n\nuses gw.api.database.Query\n\nvar output = \"\"\n\nvar queryObj = Query.nake(entity.ABContact)\noutput += queryObj.tostring()\n\nvar resultsOb} = queryObj. select ()\n\nprint (output)\n\nSELECT /* ab:T:Gosu clase redefiner; */ FROM ab_abcontact gRoot WHERE gRoot.Retired = 0\n\n* withLogSQL approach\n\nOutput from log\n\n2028-05.\nFROM ab abcontact gRoot WHERE gRoot Retired = 0 [\n\nuses gw.api.database. Query\n\nvar output = \"\"\n\nvar queryObj = Query.make (entity. ABContact) .withLogSQL (true)\nvar resultsObj = query0b}. select ()\n\nfor(anaBContact in resultsOb3) {\noutput += anABContact.DisplayName + \"\\n\"\n\nv\n\nprint (output)\n\n18:48:37,836 INFO Executing sql = SELECT /* KeyTable:ab_abcontact; */ gRoot.ID col0, gRoot.Subtype colt\n\nQuery restrictions\n\n| compare method Gi\n\n* Comparison predicates are columns in SQL Where clause\n* queryObj.compare (type#Feature, operator, value)\n¢ When applied to string fields, the values in the field must match exactly the\ncomparison value\n\n* compare method is overloaded, meaning it has one or more method signatures\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar queryOb; ery. make (entity.ABPerson)\n\n(ABPersonéLastName, Relop.Zquals, \"Andy\")\n\nrsonélumDependents, Relop. Great:\n\nqueryOb3 (ABPersonéPreferred, Relop.Equals, true)\n\nvar myDate = '01/01/2018' .toDate()\nqueryOb}. compare (ABPersonéCreateTime, Relop. Gre:\n\nrhanOrEquals, myDate)\n\n—P 15 queryOb}.compare (ABPerson#TaxStatus, Relop.£quel\n\n| null values for query restrictions a\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\n\n1\n\n2\n\n3\n\n4 var queryNull = Query.make(entity.ABPerson)\n\n5 var queryNotNull = Query.make(entity.ABPerson)\n6\n\n7\n\n8\n\n// ABE IS NULL\n—> queryNull.compare (ABPerson#Score, Relop.Equals, null)\n9\n10 // ABPerson where Score IS NOT NULL\n\n—==—11 queryNotNull.compare (ABPerson#Score, Relop.NotEquals, null)\n\n¢ Entities can have elements that allow for null values\n\n¢ If there is no value, the database leaves the field as null unless the element\nspecifies a default value\n\n¢ Restriction queries can compare for null or not null values\n\ngw.api.database.Query ANS! SQL\ncompare(entity.Property, Equals, null) where table.columnName IS NULL\ncompare(entity.Property, NotEquals, null) where table.columnName IS NOT NULL\n\n| Multiple restrictions ANDed together\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar output =\"\n\nvar queryObj = Query.make(ABPerson)\n\n// Last name\n\nqueryObj.compare (ABPerson#LastName, Relop.Equals,\n// £\nqueryObj. compare (ABPerson#FirstName, Relop.Equals,\n\nOIHHFwWN HE\n\ntt\n\nRestrictions are inherently ANDed together\n\n| Multiple restrictions ORed together Gi\n\n1 uses gw.api.database.Query\n\n2 uses gw.api.database.Relop\n\n3\n\n4 var output = \"\"\n\n5 var queryObj = Query.make(ABPerson)\n\n6 // Last na or First e\n\n7 queryObj.or(\\ criteria -> {\n\n8 criteria.compare (ABPerson#LastName, Relop.Equals, \"Andy\")\n\n9 criteria.compare (ABPerson#FirstName, Relop.Equals, \"William\")\n10 )\n\nor method requires block that specifies criteria to OR together\n\nAdditional restriction options Gi\n\n¢ See the Predicate\nMethods Reference in\nthe Gosu Reference\nGuide:\n\n®\nGuidewire ClaimCenter\n\n* between Gosu Reference Guide\n\n* compareIgnore\n\n* contains\n* subselect\n* startsWith\n\nGicuipewire\nAdapt and succeed\n\nCounting results Gi\n\n1 uses gw.api.database.Query\nZ Result count: 116\n3) var output = \"\"\n4 var queryObj = Query.make(ABPerson)\n5 var resultsOb}j = queryObj.select ()\n—> 6 var count = resultsObj.Count\n7 output += \"Result count: \" + count\n8 print (output)\n\n¢ Other methods:\n* resultsObj.HasElements (uses Count under the covers)\n\n* resulstsObj.iterator.hasNext (performs very poorly)\n\n* Depending on the requirement, there may be better performing alternatives...\n\n| Taking a peek without retrieving any data a\n\n* .Count is often used to answer questions such as:\n¢ Will this query return anything?\n¢ Will this query return too much?\n* These methods perform better and are more reliable than .count :\n* isEmpty does fast check to see if query has any results\n* getCountLimitedBy (x) returns number if results if less than x, otherwise x\n\n¢ Peeking is a waste of time and cycles if you intend to process the entire result set\n\n| Querying for one result G\n\n1 uses gw.api.database.Query\n\n2 uses gw.api.database.Relop\n\n3\n\n4 var output = \"\"\n\n5 var queryObj = Query.make(ABCompany)\n\n6 queryObj.compare (ABCompany#Name, Relop.Equals, “Albertson's\")\n— 7 var resultsObj = queryObj.select () .AtMostOneRow\n\n8 output += resultsObj.EmailAddress1\n\n9 print (output)\n\nAtMostOneRow is a property that...\n\ninfo@Albertsons.com\n\n+ Ifa single item exists, returns that single row\n* If no item exists, returns null\n\nIf multiple items exist, throws an exception\n\n| Sorting results\n\n¢ Ordering methods all take an object that implements the IquerySelectColumns\ninterface in the package as their one argument\n\nGi\n\n* The Paths .make method yields an object access path from the primary entity to a simple,\nforeign key, database-backed property\n\n« Access path cannot include virtual properties, methods, or calculations\n\nuses gw.api.database.Query\nuses gw.api.database.QuerySelectColumns\nuses gw.api.path. Paths\n\nvar queryObj = Query.make(ABPerson)\nvar resultsObj = queryObj.select()\n\nresultsObj.orderBy (QuerySelectColumns.path(Paths.make(ABPerson#PrimaryAddress, Address#State) ))\n\nresultsOb}. thenBy (QuerySelectColumns. path (Paths.make (ABPersonéLastName) ))\nresultsObj. thenBy (QuerySelectColumns.path (Paths .make (ABPerson#FirstName) ) )\nfor(anPerson in resultsObj) {\n\nprint (anPerson.PrimaryAddress.State +\": \" + anPerson.DisplayName)\n}\n\n2 Marc Lauria\n: Adelle Lynn\n\n2 Lorine Mccallion\n\n1: Alexa Purves\n\n: James Andersen\n\n: Samantha Andrews\n\n3 Eric Andy\nWilliam Andy\n\n1: Stefani Arrowsmith\n: Domonique Dames\n\n: John Dan\n\n: William Dan\nHarper David\n\n: William David\n\n| Demonstration G\n\nQueries with restrictions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Filter entities on database\n\nReturn only what you need\n\nEntities can use up memory and processing time\n\nRequest the database only for entities that are essential to the current action\n* Perform filtering at the database rather than in memory\n* Avoid where() method\n¢ Avoid first(), last(), firstWhere(), and lastWhere() methods\n\nUse dot notation carefully\n\n| Filter at the database rather than in memory Gi\n\nAnti-Pattern\n\nBest Practice\n\nwor], H®\n\n10\nai\n12\n43\n\nvar targetPoli Policy\n// Performance suffers because\n// the query loads all s\n\nvar claimQuery = Query.make(Claim)\nfor (claim in claimQuery.select()) (\nif (claim.Policy == targetPolicy) {\n\nvar targetPolicy : Policy\n\nvar claimQuery = Query.make(Claim)\n\nclaimQuery.compare (Claim#Policy, Equals, targetPolicy)\nfor (claim in claimQuery.select()) {\n\n| Avoid where()\n\nAnti-Pattern\n\nBest Practice\n\n5 var resultContainer = Query.make(Address)\n\n6 «select () .toCollection() .where(\n\n7 \\ elt -> elt.Postalcode == \"90292-6043\" )\n\n10 var queryObject = Query.make (Address)\n\n11 // Apply qualifying where clause\n\n12 queryObject. compare (Address#PostalCode, Equals, \"90292-6043\")\n13 var selectObject = queryObject.select ()\n\n14 var resultIterator = selectObject.iterator()\n\nis for (address in resultIterator) {\n\n16 // do something with each address\n\n17\n\n| Avoid first(), last(), firstWhere(), and lastWhere() [Fj\n\nvar queryAddresses = Query.make (Address)\n\nvar selectAddressesList = queryAddresses.select () .toList ()\n\n. selectAddressesList.sortBy(\\ addr -> addr.PostalCode)\n¢ Anti-Pattern\n\nss = selectAddressesList.firstWhere(\\ addr -> addr.City\n\n\"Chicago\"\n\nFOR lastWh\n\nQ: Sort by Postal Code in ndi\n\nselectAddressesList .sortByDescending(\\ addr -> addr.PostalCode)\n\n1 vax lasta\n\nselectAddressesList.lastwhere(\\ addr -> addr.City\n\nQuery for addre.\n\nvar queryAddresses = Query.make (Address)\nqueryAddresses.compare ( Address#CityDenerm, Equals, \"Chicago\")\nvar selectAddressesList = queryAddresses.select() .toList ()\n\n¢ Anti-Pattern\n\nselectAddressesList.sortBy( \\ addr -> addr. PostalCode)\n\nss = selectAddressesList. first ()\n\nselectAddressesList.sortByDescending(\\ addr -> addr.PostalCode)\n\nAvoid first(), last(), firstWhere(), and Gi\nlastWhere() (continued)\n\nuses gw.api.database.Query\nuses gw.api.database.QuerySelectColumns\nuses gw.api.path. Paths\n\n¢ Best Practice var queryAddresses = Query.make (Address)\nqueryAddresses.compare( Address#CityDenexzm, Equals, \"Chicago\")\nvar selectAddresses = queryAddresses.select ()\n\nvar fix selectAddresses.orderBy (QuerySelectColumns. path (\nPaths.make(Address#PostalCode) )) .FirstResult\nvar la = selectAddresses.orderByDescending (QuerySelectColumns. path (\n\nPaths.make (Address#PostalCode) )) .FirstResult\n\n| Count entities on database\n\n¢ Let the database count entities\n* Avoid countWhere()\n¢ Avoid toCollection()\n\n« Avoid iteration over entities from database to count\n\n| Avoid countWhere() Fi\n\n4 var claim : Claim\n5\n¢ Anti-Pattern 6 claim.Activities.countWhere(\\ a ->\n7 a.ActivityPattern.Code \"notification\"\n8 && a.Status == ActivityStatus.7C_OPEN)\nai var claim : Claim\n12 var actPattern : ActivityPattern\n13\n. 14 var count = Query.make(Activity)\n¢ Best Practice 1s . compare (Activity#ActivityPattern, Equals, actPattern)\n16 .compare (Activity#Status, Equals, ActivityStatus.TC_OPEN)\n17 «join (Activity#Claim)\n18 -compare (Claim#ClaimNumber, Equals, claim.ClaimNumber)\n\n19 -select () .Count\n\n| Avoid toCollection()\n\n¢ Anti-Pattern 6 var count = Query.make(Claim) .select () .toList () .count\n\ne Best Practice 4 var count = Query.make(Claim) .select() .Count\n\n| Avoid iteration over entities from database to [,\n\ncount\n\n¢ Anti-Pattern\n\nBOw mI V Ho\n\na\n\n¢ Best Practice 4\n\nvar results = Query.make(Claim) .select ()\nvar nCount: int = 0\n\nfor (c in results.iterator()) {\nnCount = nCount + 1\n\n}\n\nreturn nCount\n\nvar count = Query.make(Claim) .select() .Count\n\nQuestion\n\n_ _ Which approach is used to record a more specific version of the SQL for\nOo” a query?\n“ 1\n\n. queryObj.toString\n2. queryObj.withLogSQL (true)\n\nSeo e Soe esses see see\n\nGi\n\nAnswer\n\n__ Which approach is used to record a more specific version of the SQL for\n7 a query?\n, A. queryObj.toString\n\nB. queryObj.withLogSQL\n\nThe correct answer is B. queryObj.withLogSQL (true)\n\nSoo eS eee soe ese ese\n\nGi\n\nQuestion\n\n_— — Whatis the difference between a query object and results object?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see\n\nAnswer fa\n\n_- — Whatis the difference between a query object and results object?\n\n¢\n¢\n¢\n\nA) Aquery object specifies the entity and the query criteria.\n\nB) Aresults object is a set of one or more entity instances fetched from the\nGuidewire application.\n\nC) This distinction is helpful for understanding the concept of a query and of set of\nresults. In practice, query results are fetched from the Guidewire application when\nthey are counted, iterated over, or when one object is retrieved.\n\nSoo eS eee soe ese ese\n\nQuestion\n\n,- — Which query restriction uses a block of compare methods?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see\n\nAnswer fa\n\n,- — Which query restriction uses a block of compare methods?\n\n¢\n¢\n¢\n\nThe OR restriction uses the or method with a block of compare methods such as:\nvar queryObj = Query.make(ABCompany).withLogSQL (true)\nqueryObj.or(\\ criteria -> {\ncriteria.compare(ABCompany#Score, Relop.LessThan, 50 )\n\ncriteria.compare(ABCompany#InspectionRequired, Relop.Equals, true)\n\nSoo eS eee soe ese ese\n\n7)\n\nQuestion\n\n_ _ What happens if you use the AtMostOneRow property in a query, and the\nOo” query returns more than one object?\n¢\n\nSeo e Soe esses see see\n\nGi\n\nAnswer\n\nWhat happens if you use the AtMostOneRow property in a query, and the\n~ query returns more than one object?\n\n4\n¢\n¢\n¢\n\nAn exception is thrown when a query that uses the AtMostOneRow property, returns\nmore than one object.\n\nSoo eS eee soe ese ese\n\nGi\n\nLesson\n\nobjectives ¢ Describe a query object\nreview ¢ Identify various types of query restrictions\n\n¢ Write Gosu queries to retrieve objects from a\nGuidewire application\n¢ lIterate through the results of query\n\n| Student exercise\n\nQuery the assigned user contact",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Gosu Queries",
+      "word_count": 2,
+      "avg_confidence": 94.5,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe a query object\n\n¢ Identify various types of query restrictions\n\n¢ Write Gosu queries to retrieve objects from a\nGuidewire application\n\n¢ lIterate through the results of query",
+      "word_count": 32,
+      "avg_confidence": 86.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Query basics",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Query objects G\n« AGosu query specifies the entity and criteria associated with the entity to retrieve\nfrom the Guidewire application\n« Use Gosu queries to retrieve one or more objects\n+ Referenced by foreign key relationships\n+ NOT in an array relationship <>\n* Query object specifies the query criteria al Ses)\n« Which entity to query\n« What restrictions to apply\n\nab_abcontact\n¢ Results object is a set of entity instances fetched from te = 1 ot\nGuidewire application\n\ny\n* How many? 0)\n\n« How to order?",
+      "word_count": 91,
+      "avg_confidence": 85.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Steps to execute a basic query\n\n1. Create the query object using the make method\n2. Create the results object using the select method\n\n3. Process the results of the query as needed",
+      "word_count": 34,
+      "avg_confidence": 95.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Step 1: Create the query object\n\n1 uses gw.api.database.Query\n2\n3 var output =\"\n—> 4 var queryObj = Query.make(entity.ABContact)\n\n* Query is a class in the gw.api.database package\n\n* make (EntityName) is a method that requires a named entity type",
+      "word_count": 42,
+      "avg_confidence": 85.43,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Step 2: Create the results object Gi\n\n1 uses gw.api.database.Query\n\n2\n\n3 var output = \"\"\n\n4 var queryObj = Query.make(entity.ABContact)\n— 5 var resultsObj = query0bj.select ()\n\n¢ Create the result object with select method\n\n* However, results are not fetched until they are referenced",
+      "word_count": 47,
+      "avg_confidence": 86.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Step 3: Process results\n\nuses gw.api.database.Query\n\nvar output = \"\"\nvar queryObj = Query.make(entity.ABContact)\nvar resultsObj = queryObj.select()\n\nfor(anABContact in resultsObj) {\n\noutput += anABContact.DisplayName + \"\\n\"\n}\nprint (output)\n\nwODInnswne\n\ni\n\n¢ Use a for loop to iterate through the result set\n\nStan Newton\n\nBo Simpson\n\nBo Simpson\nWilliam Weeks\nWilliam Andy\nWilliam William\n\n¢ DisplayName property improves the readability of the console output",
+      "word_count": 66,
+      "avg_confidence": 88.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Viewing approximation of SQL query Gi\n\n* toString approach\n\nOutput from console\noO\n\nuses gw.api.database.Query\n\nvar output = \"\"\n\nvar queryObj = Query.nake(entity.ABContact)\noutput += queryObj.tostring()\n\nvar resultsOb} = queryObj. select ()\n\nprint (output)\n\nSELECT /* ab:T:Gosu clase redefiner; */ FROM ab_abcontact gRoot WHERE gRoot.Retired = 0\n\n* withLogSQL approach\n\nOutput from log\n\n2028-05.\nFROM ab abcontact gRoot WHERE gRoot Retired = 0 [\n\nuses gw.api.database. Query\n\nvar output = \"\"\n\nvar queryObj = Query.make (entity. ABContact) .withLogSQL (true)\nvar resultsObj = query0b}. select ()\n\nfor(anaBContact in resultsOb3) {\noutput += anABContact.DisplayName + \"\\n\"\n\nv\n\nprint (output)\n\n18:48:37,836 INFO Executing sql = SELECT /* KeyTable:ab_abcontact; */ gRoot.ID col0, gRoot.Subtype colt",
+      "word_count": 111,
+      "avg_confidence": 77.23,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Query restrictions",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| compare method Gi\n\n* Comparison predicates are columns in SQL Where clause\n* queryObj.compare (type#Feature, operator, value)\n¢ When applied to string fields, the values in the field must match exactly the\ncomparison value\n\n* compare method is overloaded, meaning it has one or more method signatures\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar queryOb; ery. make (entity.ABPerson)\n\n(ABPersonéLastName, Relop.Zquals, \"Andy\")\n\nrsonélumDependents, Relop. Great:\n\nqueryOb3 (ABPersonéPreferred, Relop.Equals, true)\n\nvar myDate = '01/01/2018' .toDate()\nqueryOb}. compare (ABPersonéCreateTime, Relop. Gre:\n\nrhanOrEquals, myDate)\n\n—P 15 queryOb}.compare (ABPerson#TaxStatus, Relop.£quel",
+      "word_count": 84,
+      "avg_confidence": 80.99,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| null values for query restrictions a\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\n\n1\n\n2\n\n3\n\n4 var queryNull = Query.make(entity.ABPerson)\n\n5 var queryNotNull = Query.make(entity.ABPerson)\n6\n\n7\n\n8\n\n// ABE IS NULL\n—> queryNull.compare (ABPerson#Score, Relop.Equals, null)\n9\n10 // ABPerson where Score IS NOT NULL\n\n—==—11 queryNotNull.compare (ABPerson#Score, Relop.NotEquals, null)\n\n¢ Entities can have elements that allow for null values\n\n¢ If there is no value, the database leaves the field as null unless the element\nspecifies a default value\n\n¢ Restriction queries can compare for null or not null values\n\ngw.api.database.Query ANS! SQL\ncompare(entity.Property, Equals, null) where table.columnName IS NULL\ncompare(entity.Property, NotEquals, null) where table.columnName IS NOT NULL",
+      "word_count": 109,
+      "avg_confidence": 85.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Multiple restrictions ANDed together\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar output =\"\n\nvar queryObj = Query.make(ABPerson)\n\n// Last name\n\nqueryObj.compare (ABPerson#LastName, Relop.Equals,\n// £\nqueryObj. compare (ABPerson#FirstName, Relop.Equals,\n\nOIHHFwWN HE\n\ntt\n\nRestrictions are inherently ANDed together",
+      "word_count": 36,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Multiple restrictions ORed together Gi\n\n1 uses gw.api.database.Query\n\n2 uses gw.api.database.Relop\n\n3\n\n4 var output = \"\"\n\n5 var queryObj = Query.make(ABPerson)\n\n6 // Last na or First e\n\n7 queryObj.or(\\ criteria -> {\n\n8 criteria.compare (ABPerson#LastName, Relop.Equals, \"Andy\")\n\n9 criteria.compare (ABPerson#FirstName, Relop.Equals, \"William\")\n10 )\n\nor method requires block that specifies criteria to OR together",
+      "word_count": 57,
+      "avg_confidence": 89.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Additional restriction options Gi\n\n¢ See the Predicate\nMethods Reference in\nthe Gosu Reference\nGuide:\n\n®\nGuidewire ClaimCenter\n\n* between Gosu Reference Guide\n\n* compareIgnore\n\n* contains\n* subselect\n* startsWith\n\nGicuipewire\nAdapt and succeed",
+      "word_count": 35,
+      "avg_confidence": 86.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Counting results Gi\n\n1 uses gw.api.database.Query\nZ Result count: 116\n3) var output = \"\"\n4 var queryObj = Query.make(ABPerson)\n5 var resultsOb}j = queryObj.select ()\n—> 6 var count = resultsObj.Count\n7 output += \"Result count: \" + count\n8 print (output)\n\n¢ Other methods:\n* resultsObj.HasElements (uses Count under the covers)\n\n* resulstsObj.iterator.hasNext (performs very poorly)\n\n* Depending on the requirement, there may be better performing alternatives...",
+      "word_count": 69,
+      "avg_confidence": 86.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Taking a peek without retrieving any data a\n\n* .Count is often used to answer questions such as:\n¢ Will this query return anything?\n¢ Will this query return too much?\n* These methods perform better and are more reliable than .count :\n* isEmpty does fast check to see if query has any results\n* getCountLimitedBy (x) returns number if results if less than x, otherwise x\n\n¢ Peeking is a waste of time and cycles if you intend to process the entire result set",
+      "word_count": 87,
+      "avg_confidence": 91.48,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Querying for one result G\n\n1 uses gw.api.database.Query\n\n2 uses gw.api.database.Relop\n\n3\n\n4 var output = \"\"\n\n5 var queryObj = Query.make(ABCompany)\n\n6 queryObj.compare (ABCompany#Name, Relop.Equals, “Albertson's\")\n— 7 var resultsObj = queryObj.select () .AtMostOneRow\n\n8 output += resultsObj.EmailAddress1\n\n9 print (output)\n\nAtMostOneRow is a property that...\n\ninfo@Albertsons.com\n\n+ Ifa single item exists, returns that single row\n* If no item exists, returns null\n\nIf multiple items exist, throws an exception",
+      "word_count": 72,
+      "avg_confidence": 85.53,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Sorting results\n\n¢ Ordering methods all take an object that implements the IquerySelectColumns\ninterface in the package as their one argument\n\nGi\n\n* The Paths .make method yields an object access path from the primary entity to a simple,\nforeign key, database-backed property\n\n« Access path cannot include virtual properties, methods, or calculations\n\nuses gw.api.database.Query\nuses gw.api.database.QuerySelectColumns\nuses gw.api.path. Paths\n\nvar queryObj = Query.make(ABPerson)\nvar resultsObj = queryObj.select()\n\nresultsObj.orderBy (QuerySelectColumns.path(Paths.make(ABPerson#PrimaryAddress, Address#State) ))\n\nresultsOb}. thenBy (QuerySelectColumns. path (Paths.make (ABPersonéLastName) ))\nresultsObj. thenBy (QuerySelectColumns.path (Paths .make (ABPerson#FirstName) ) )\nfor(anPerson in resultsObj) {\n\nprint (anPerson.PrimaryAddress.State +\": \" + anPerson.DisplayName)\n}\n\n2 Marc Lauria\n: Adelle Lynn\n\n2 Lorine Mccallion\n\n1: Alexa Purves\n\n: James Andersen\n\n: Samantha Andrews\n\n3 Eric Andy\nWilliam Andy\n\n1: Stefani Arrowsmith\n: Domonique Dames\n\n: John Dan\n\n: William Dan\nHarper David\n\n: William David",
+      "word_count": 139,
+      "avg_confidence": 76.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Demonstration G\n\nQueries with restrictions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.47,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Filter entities on database\n\nReturn only what you need\n\nEntities can use up memory and processing time\n\nRequest the database only for entities that are essential to the current action\n* Perform filtering at the database rather than in memory\n* Avoid where() method\n¢ Avoid first(), last(), firstWhere(), and lastWhere() methods\n\nUse dot notation carefully",
+      "word_count": 57,
+      "avg_confidence": 92.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Filter at the database rather than in memory Gi\n\nAnti-Pattern\n\nBest Practice\n\nwor], H®\n\n10\nai\n12\n43\n\nvar targetPoli Policy\n// Performance suffers because\n// the query loads all s\n\nvar claimQuery = Query.make(Claim)\nfor (claim in claimQuery.select()) (\nif (claim.Policy == targetPolicy) {\n\nvar targetPolicy : Policy\n\nvar claimQuery = Query.make(Claim)\n\nclaimQuery.compare (Claim#Policy, Equals, targetPolicy)\nfor (claim in claimQuery.select()) {",
+      "word_count": 63,
+      "avg_confidence": 89.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Avoid where()\n\nAnti-Pattern\n\nBest Practice\n\n5 var resultContainer = Query.make(Address)\n\n6 «select () .toCollection() .where(\n\n7 \\ elt -> elt.Postalcode == \"90292-6043\" )\n\n10 var queryObject = Query.make (Address)\n\n11 // Apply qualifying where clause\n\n12 queryObject. compare (Address#PostalCode, Equals, \"90292-6043\")\n13 var selectObject = queryObject.select ()\n\n14 var resultIterator = selectObject.iterator()\n\nis for (address in resultIterator) {\n\n16 // do something with each address\n\n17",
+      "word_count": 67,
+      "avg_confidence": 86.46,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Avoid first(), last(), firstWhere(), and lastWhere() [Fj\n\nvar queryAddresses = Query.make (Address)\n\nvar selectAddressesList = queryAddresses.select () .toList ()\n\n. selectAddressesList.sortBy(\\ addr -> addr.PostalCode)\n¢ Anti-Pattern\n\nss = selectAddressesList.firstWhere(\\ addr -> addr.City\n\n\"Chicago\"\n\nFOR lastWh\n\nQ: Sort by Postal Code in ndi\n\nselectAddressesList .sortByDescending(\\ addr -> addr.PostalCode)\n\n1 vax lasta\n\nselectAddressesList.lastwhere(\\ addr -> addr.City\n\nQuery for addre.\n\nvar queryAddresses = Query.make (Address)\nqueryAddresses.compare ( Address#CityDenerm, Equals, \"Chicago\")\nvar selectAddressesList = queryAddresses.select() .toList ()\n\n¢ Anti-Pattern\n\nselectAddressesList.sortBy( \\ addr -> addr. PostalCode)\n\nss = selectAddressesList. first ()\n\nselectAddressesList.sortByDescending(\\ addr -> addr.PostalCode)",
+      "word_count": 91,
+      "avg_confidence": 79.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Avoid first(), last(), firstWhere(), and Gi\nlastWhere() (continued)\n\nuses gw.api.database.Query\nuses gw.api.database.QuerySelectColumns\nuses gw.api.path. Paths\n\n¢ Best Practice var queryAddresses = Query.make (Address)\nqueryAddresses.compare( Address#CityDenexzm, Equals, \"Chicago\")\nvar selectAddresses = queryAddresses.select ()\n\nvar fix selectAddresses.orderBy (QuerySelectColumns. path (\nPaths.make(Address#PostalCode) )) .FirstResult\nvar la = selectAddresses.orderByDescending (QuerySelectColumns. path (\n\nPaths.make (Address#PostalCode) )) .FirstResult",
+      "word_count": 52,
+      "avg_confidence": 78.8,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Count entities on database\n\n¢ Let the database count entities\n* Avoid countWhere()\n¢ Avoid toCollection()\n\n« Avoid iteration over entities from database to count",
+      "word_count": 26,
+      "avg_confidence": 86.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Avoid countWhere() Fi\n\n4 var claim : Claim\n5\n¢ Anti-Pattern 6 claim.Activities.countWhere(\\ a ->\n7 a.ActivityPattern.Code \"notification\"\n8 && a.Status == ActivityStatus.7C_OPEN)\nai var claim : Claim\n12 var actPattern : ActivityPattern\n13\n. 14 var count = Query.make(Activity)\n¢ Best Practice 1s . compare (Activity#ActivityPattern, Equals, actPattern)\n16 .compare (Activity#Status, Equals, ActivityStatus.TC_OPEN)\n17 «join (Activity#Claim)\n18 -compare (Claim#ClaimNumber, Equals, claim.ClaimNumber)\n\n19 -select () .Count",
+      "word_count": 67,
+      "avg_confidence": 81.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Avoid toCollection()\n\n¢ Anti-Pattern 6 var count = Query.make(Claim) .select () .toList () .count\n\ne Best Practice 4 var count = Query.make(Claim) .select() .Count",
+      "word_count": 25,
+      "avg_confidence": 79.4,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Avoid iteration over entities from database to [,\n\ncount\n\n¢ Anti-Pattern\n\nBOw mI V Ho\n\na\n\n¢ Best Practice 4\n\nvar results = Query.make(Claim) .select ()\nvar nCount: int = 0\n\nfor (c in results.iterator()) {\nnCount = nCount + 1\n\n}\n\nreturn nCount\n\nvar count = Query.make(Claim) .select() .Count",
+      "word_count": 51,
+      "avg_confidence": 81.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n_ _ Which approach is used to record a more specific version of the SQL for\nOo” a query?\n“ 1\n\n. queryObj.toString\n2. queryObj.withLogSQL (true)\n\nSeo e Soe esses see see\n\nGi",
+      "word_count": 34,
+      "avg_confidence": 79.93,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\n__ Which approach is used to record a more specific version of the SQL for\n7 a query?\n, A. queryObj.toString\n\nB. queryObj.withLogSQL\n\nThe correct answer is B. queryObj.withLogSQL (true)\n\nSoo eS eee soe ese ese\n\nGi",
+      "word_count": 38,
+      "avg_confidence": 79.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question\n\n_— — Whatis the difference between a query object and results object?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see",
+      "word_count": 22,
+      "avg_confidence": 82.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer fa\n\n_- — Whatis the difference between a query object and results object?\n\n¢\n¢\n¢\n\nA) Aquery object specifies the entity and the query criteria.\n\nB) Aresults object is a set of one or more entity instances fetched from the\nGuidewire application.\n\nC) This distinction is helpful for understanding the concept of a query and of set of\nresults. In practice, query results are fetched from the Guidewire application when\nthey are counted, iterated over, or when one object is retrieved.\n\nSoo eS eee soe ese ese",
+      "word_count": 89,
+      "avg_confidence": 89.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question\n\n,- — Which query restriction uses a block of compare methods?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see",
+      "word_count": 21,
+      "avg_confidence": 81.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer fa\n\n,- — Which query restriction uses a block of compare methods?\n\n¢\n¢\n¢\n\nThe OR restriction uses the or method with a block of compare methods such as:\nvar queryObj = Query.make(ABCompany).withLogSQL (true)\nqueryObj.or(\\ criteria -> {\ncriteria.compare(ABCompany#Score, Relop.LessThan, 50 )\n\ncriteria.compare(ABCompany#InspectionRequired, Relop.Equals, true)\n\nSoo eS eee soe ese ese\n\n7)",
+      "word_count": 54,
+      "avg_confidence": 80.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question\n\n_ _ What happens if you use the AtMostOneRow property in a query, and the\nOo” query returns more than one object?\n¢\n\nSeo e Soe esses see see\n\nGi",
+      "word_count": 31,
+      "avg_confidence": 85.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer\n\nWhat happens if you use the AtMostOneRow property in a query, and the\n~ query returns more than one object?\n\n4\n¢\n¢\n¢\n\nAn exception is thrown when a query that uses the AtMostOneRow property, returns\nmore than one object.\n\nSoo eS eee soe ese ese\n\nGi",
+      "word_count": 49,
+      "avg_confidence": 84.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Lesson\n\nobjectives ¢ Describe a query object\nreview ¢ Identify various types of query restrictions\n\n¢ Write Gosu queries to retrieve objects from a\nGuidewire application\n¢ lIterate through the results of query",
+      "word_count": 33,
+      "avg_confidence": 86.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "| Student exercise\n\nQuery the assigned user contact",
+      "word_count": 8,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

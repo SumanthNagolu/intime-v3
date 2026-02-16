@@ -1,0 +1,3576 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_02_01.mp4",
+    "video_stem": "In_02_01",
+    "duration_seconds": 182.26,
+    "duration_formatted": "00:03:02.260",
+    "segment_count": 12,
+    "word_count": 571,
+    "avg_confidence": 0.9405,
+    "transcription_time_seconds": 20.95,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:46:32.413447"
+  },
+  "full_text": "This demonstration will illustrate different aspects of Gosu code used for integration. This demonstration will 1. Create a utility class called Rectangle. 2. Enable logging. 3. Throw a displayable exception. 4. Create a method that calculates the area of a rectangle. 5. Create a method that enlarges the area of a rectangle and recalculates the area. This demonstration requires that you use Training App in Guidewire Studio. Click the Debug Server icon to start the server. Create a new package for the utility class using Guidewire's recommended naming convention. For all demo labs, use Demo as the company code and TA as the product code. Right-click on GSRC Package. Select New and then Package. Type the new package name. GoSoo. Click OK to save the new package. Right-click on the new package to create a new Gosu class in the utility package. Select New and then Gosu class. Type the name of the new Gosu class. Click OK to save the new Gosu class. The shell of the new Gosu class is created. Enter code to implement the requirements. Examine the code. Lines 12 to 15. The constructor is used to initialize the width and height variables. Line 17. A logger variable is created. Lines 18 to 20. Private variables are created using shorthand notation. Lines 22 to 24. Method comment is added. Lines 34 to 37. Method annotations are added. Since a new class was created, the server must be restarted. Click the Stop Server button. Click the Debug Server button to start the server. In order to test the rectangle class, open Gosu Scratchpad. Click Tools and then select Gosu Scratchpad. Enter code to test the new rectangle class. Examine the code. Line 3. Code instantiates a new rectangle object, whose width equals 2 and height equals 3. Line 4. Code calls the Calculate Area method. Line 5. The system will display the enlarged rectangle value. Execute the code by clicking the Run and Debug Process icon. Note, this icon is enabled since the server is started in debug mode. The output is in the console. The area of the rectangle increased from 6 to 54. Uncomment the code at line 6. Click the Run and Debug Process icon to execute the code and Gosu Scratchpad. A displayable exception is thrown in the output. The enlarged method will throw a displayable exception if an argument less than or equal to 0 is passed to the method. See line 39 in the rectangle class code. This ends the create a custom class demonstration. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 25.52,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:25.520",
+      "text": "This demonstration will illustrate different aspects of Gosu code used for integration. This demonstration will 1. Create a utility class called Rectangle. 2. Enable logging. 3. Throw a displayable exception. 4. Create a method that calculates the area of a rectangle. 5. Create a method that enlarges the area of a rectangle and recalculates the area.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 1.22,
+          "probability": 0.9629
+        },
+        {
+          "word": "demonstration",
+          "start": 1.22,
+          "end": 1.82,
+          "probability": 0.9858
+        },
+        {
+          "word": "will",
+          "start": 1.82,
+          "end": 2.16,
+          "probability": 0.999
+        },
+        {
+          "word": "illustrate",
+          "start": 2.16,
+          "end": 2.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "different",
+          "start": 2.6,
+          "end": 2.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "aspects",
+          "start": 2.92,
+          "end": 3.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 3.46,
+          "end": 3.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "Gosu",
+          "start": 3.68,
+          "end": 4.12,
+          "probability": 0.3105
+        },
+        {
+          "word": "code",
+          "start": 4.12,
+          "end": 4.36,
+          "probability": 0.834
+        },
+        {
+          "word": "used",
+          "start": 4.36,
+          "end": 4.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 4.6,
+          "end": 4.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "integration.",
+          "start": 4.82,
+          "end": 5.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "This",
+          "start": 5.82,
+          "end": 6.24,
+          "probability": 0.9897
+        },
+        {
+          "word": "demonstration",
+          "start": 6.24,
+          "end": 6.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 6.84,
+          "end": 7.32,
+          "probability": 0.999
+        },
+        {
+          "word": "1.",
+          "start": 7.32,
+          "end": 7.84,
+          "probability": 0.6636
+        },
+        {
+          "word": "Create",
+          "start": 8.32,
+          "end": 8.84,
+          "probability": 0.8984
+        },
+        {
+          "word": "a",
+          "start": 8.84,
+          "end": 8.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "utility",
+          "start": 8.96,
+          "end": 9.34,
+          "probability": 0.9702
+        },
+        {
+          "word": "class",
+          "start": 9.34,
+          "end": 9.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "called",
+          "start": 9.78,
+          "end": 10.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "Rectangle.",
+          "start": 10.14,
+          "end": 10.84,
+          "probability": 0.9375
+        },
+        {
+          "word": "2.",
+          "start": 11.16,
+          "end": 11.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "Enable",
+          "start": 12.08,
+          "end": 12.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "logging.",
+          "start": 12.5,
+          "end": 12.8,
+          "probability": 0.5894
+        },
+        {
+          "word": "3.",
+          "start": 13.32,
+          "end": 13.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "Throw",
+          "start": 14.32,
+          "end": 14.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 14.5,
+          "end": 14.68,
+          "probability": 1.0
+        },
+        {
+          "word": "displayable",
+          "start": 14.68,
+          "end": 15.3,
+          "probability": 0.9883
+        },
+        {
+          "word": "exception.",
+          "start": 15.3,
+          "end": 15.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "4.",
+          "start": 16.28,
+          "end": 16.68,
+          "probability": 0.999
+        },
+        {
+          "word": "Create",
+          "start": 17.14,
+          "end": 17.54,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 17.54,
+          "end": 17.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "method",
+          "start": 17.66,
+          "end": 17.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 17.9,
+          "end": 18.14,
+          "probability": 1.0
+        },
+        {
+          "word": "calculates",
+          "start": 18.14,
+          "end": 18.72,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 18.72,
+          "end": 18.88,
+          "probability": 1.0
+        },
+        {
+          "word": "area",
+          "start": 18.88,
+          "end": 19.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 19.18,
+          "end": 19.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 19.36,
+          "end": 19.42,
+          "probability": 0.9229
+        },
+        {
+          "word": "rectangle.",
+          "start": 19.42,
+          "end": 19.94,
+          "probability": 0.9785
+        },
+        {
+          "word": "5.",
+          "start": 20.42,
+          "end": 20.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Create",
+          "start": 21.34,
+          "end": 21.76,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 21.76,
+          "end": 21.88,
+          "probability": 1.0
+        },
+        {
+          "word": "method",
+          "start": 21.88,
+          "end": 22.14,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 22.14,
+          "end": 22.36,
+          "probability": 1.0
+        },
+        {
+          "word": "enlarges",
+          "start": 22.36,
+          "end": 22.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 22.84,
+          "end": 23.02,
+          "probability": 1.0
+        },
+        {
+          "word": "area",
+          "start": 23.02,
+          "end": 23.34,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 23.34,
+          "end": 23.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 23.5,
+          "end": 23.58,
+          "probability": 0.9741
+        },
+        {
+          "word": "rectangle",
+          "start": 23.58,
+          "end": 24.04,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 24.04,
+          "end": 24.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "recalculates",
+          "start": 24.28,
+          "end": 25.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 25.04,
+          "end": 25.2,
+          "probability": 1.0
+        },
+        {
+          "word": "area.",
+          "start": 25.2,
+          "end": 25.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 25.52,
+      "end": 53.12,
+      "start_formatted": "00:00:25.520",
+      "end_formatted": "00:00:53.120",
+      "text": "This demonstration requires that you use Training App in Guidewire Studio. Click the Debug Server icon to start the server. Create a new package for the utility class using Guidewire's recommended naming convention. For all demo labs, use Demo as the company code and TA as the product code. Right-click on GSRC Package. Select New and then Package. Type the new package name.",
+      "words": [
+        {
+          "word": "This",
+          "start": 25.52,
+          "end": 26.52,
+          "probability": 0.9399
+        },
+        {
+          "word": "demonstration",
+          "start": 26.52,
+          "end": 27.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "requires",
+          "start": 27.16,
+          "end": 27.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 27.7,
+          "end": 27.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "you",
+          "start": 27.96,
+          "end": 28.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "use",
+          "start": 28.1,
+          "end": 28.3,
+          "probability": 0.9941
+        },
+        {
+          "word": "Training",
+          "start": 28.3,
+          "end": 28.56,
+          "probability": 0.5835
+        },
+        {
+          "word": "App",
+          "start": 28.56,
+          "end": 28.9,
+          "probability": 0.7524
+        },
+        {
+          "word": "in",
+          "start": 28.9,
+          "end": 29.02,
+          "probability": 0.8882
+        },
+        {
+          "word": "Guidewire",
+          "start": 29.02,
+          "end": 29.56,
+          "probability": 0.9756
+        },
+        {
+          "word": "Studio.",
+          "start": 29.56,
+          "end": 29.96,
+          "probability": 0.9385
+        },
+        {
+          "word": "Click",
+          "start": 30.8,
+          "end": 31.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 31.48,
+          "end": 31.64,
+          "probability": 0.9932
+        },
+        {
+          "word": "Debug",
+          "start": 31.64,
+          "end": 32.04,
+          "probability": 0.6968
+        },
+        {
+          "word": "Server",
+          "start": 32.04,
+          "end": 32.34,
+          "probability": 0.6538
+        },
+        {
+          "word": "icon",
+          "start": 32.34,
+          "end": 32.74,
+          "probability": 0.9731
+        },
+        {
+          "word": "to",
+          "start": 32.74,
+          "end": 33.06,
+          "probability": 0.998
+        },
+        {
+          "word": "start",
+          "start": 33.06,
+          "end": 33.3,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 33.3,
+          "end": 33.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "server.",
+          "start": 33.46,
+          "end": 33.78,
+          "probability": 0.9692
+        },
+        {
+          "word": "Create",
+          "start": 34.44,
+          "end": 35.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 35.12,
+          "end": 35.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "new",
+          "start": 35.24,
+          "end": 35.42,
+          "probability": 0.9648
+        },
+        {
+          "word": "package",
+          "start": 35.42,
+          "end": 35.78,
+          "probability": 0.9287
+        },
+        {
+          "word": "for",
+          "start": 35.78,
+          "end": 36.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 36.04,
+          "end": 36.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "utility",
+          "start": 36.14,
+          "end": 36.54,
+          "probability": 0.7407
+        },
+        {
+          "word": "class",
+          "start": 36.54,
+          "end": 36.92,
+          "probability": 0.998
+        },
+        {
+          "word": "using",
+          "start": 36.92,
+          "end": 37.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "Guidewire's",
+          "start": 37.22,
+          "end": 37.94,
+          "probability": 0.9888
+        },
+        {
+          "word": "recommended",
+          "start": 37.94,
+          "end": 38.46,
+          "probability": 0.895
+        },
+        {
+          "word": "naming",
+          "start": 38.46,
+          "end": 38.8,
+          "probability": 0.9878
+        },
+        {
+          "word": "convention.",
+          "start": 38.8,
+          "end": 39.42,
+          "probability": 0.998
+        },
+        {
+          "word": "For",
+          "start": 39.8,
+          "end": 40.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "all",
+          "start": 40.2,
+          "end": 40.4,
+          "probability": 0.9883
+        },
+        {
+          "word": "demo",
+          "start": 40.4,
+          "end": 40.66,
+          "probability": 0.4463
+        },
+        {
+          "word": "labs,",
+          "start": 40.66,
+          "end": 41.18,
+          "probability": 0.9736
+        },
+        {
+          "word": "use",
+          "start": 41.42,
+          "end": 41.76,
+          "probability": 0.9736
+        },
+        {
+          "word": "Demo",
+          "start": 41.76,
+          "end": 42.1,
+          "probability": 0.7422
+        },
+        {
+          "word": "as",
+          "start": 42.1,
+          "end": 42.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 42.24,
+          "end": 42.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "company",
+          "start": 42.36,
+          "end": 42.68,
+          "probability": 0.8579
+        },
+        {
+          "word": "code",
+          "start": 42.68,
+          "end": 43.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "and",
+          "start": 43.06,
+          "end": 43.24,
+          "probability": 0.9893
+        },
+        {
+          "word": "TA",
+          "start": 43.24,
+          "end": 43.48,
+          "probability": 0.9165
+        },
+        {
+          "word": "as",
+          "start": 43.48,
+          "end": 43.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 43.68,
+          "end": 43.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "product",
+          "start": 43.8,
+          "end": 44.12,
+          "probability": 0.9907
+        },
+        {
+          "word": "code.",
+          "start": 44.12,
+          "end": 44.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "Right",
+          "start": 44.96,
+          "end": 45.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "-click",
+          "start": 45.54,
+          "end": 45.74,
+          "probability": 0.9097
+        },
+        {
+          "word": "on",
+          "start": 45.74,
+          "end": 45.96,
+          "probability": 0.999
+        },
+        {
+          "word": "GSRC",
+          "start": 45.96,
+          "end": 46.74,
+          "probability": 0.8911
+        },
+        {
+          "word": "Package.",
+          "start": 46.74,
+          "end": 47.32,
+          "probability": 0.8262
+        },
+        {
+          "word": "Select",
+          "start": 48.06,
+          "end": 48.74,
+          "probability": 0.9883
+        },
+        {
+          "word": "New",
+          "start": 48.74,
+          "end": 48.92,
+          "probability": 0.918
+        },
+        {
+          "word": "and",
+          "start": 48.92,
+          "end": 49.1,
+          "probability": 0.9849
+        },
+        {
+          "word": "then",
+          "start": 49.1,
+          "end": 49.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "Package.",
+          "start": 49.26,
+          "end": 49.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "Type",
+          "start": 51.32,
+          "end": 52.0,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 52.0,
+          "end": 52.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 52.18,
+          "end": 52.34,
+          "probability": 0.9761
+        },
+        {
+          "word": "package",
+          "start": 52.34,
+          "end": 52.74,
+          "probability": 0.9829
+        },
+        {
+          "word": "name.",
+          "start": 52.74,
+          "end": 53.12,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.94,
+      "end": 78.12,
+      "start_formatted": "00:00:59.940",
+      "end_formatted": "00:01:18.120",
+      "text": "GoSoo. Click OK to save the new package. Right-click on the new package to create a new Gosu class in the utility package. Select New and then Gosu class. Type the name of the new Gosu class. Click OK to save the new Gosu class.",
+      "words": [
+        {
+          "word": "GoSoo.",
+          "start": 59.94,
+          "end": 60.44,
+          "probability": 0.0084
+        },
+        {
+          "word": "Click",
+          "start": 60.44,
+          "end": 60.44,
+          "probability": 0.3652
+        },
+        {
+          "word": "OK",
+          "start": 60.44,
+          "end": 60.72,
+          "probability": 0.6929
+        },
+        {
+          "word": "to",
+          "start": 60.72,
+          "end": 60.94,
+          "probability": 0.9824
+        },
+        {
+          "word": "save",
+          "start": 60.94,
+          "end": 61.14,
+          "probability": 0.9644
+        },
+        {
+          "word": "the",
+          "start": 61.14,
+          "end": 61.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "new",
+          "start": 61.28,
+          "end": 61.44,
+          "probability": 0.9717
+        },
+        {
+          "word": "package.",
+          "start": 61.44,
+          "end": 61.82,
+          "probability": 0.9819
+        },
+        {
+          "word": "Right",
+          "start": 63.42,
+          "end": 63.92,
+          "probability": 0.9844
+        },
+        {
+          "word": "-click",
+          "start": 63.92,
+          "end": 64.14,
+          "probability": 0.8633
+        },
+        {
+          "word": "on",
+          "start": 64.14,
+          "end": 64.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 64.38,
+          "end": 64.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "new",
+          "start": 64.48,
+          "end": 64.64,
+          "probability": 0.915
+        },
+        {
+          "word": "package",
+          "start": 64.64,
+          "end": 65.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 65.0,
+          "end": 65.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "create",
+          "start": 65.22,
+          "end": 65.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 65.5,
+          "end": 65.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "new",
+          "start": 65.66,
+          "end": 65.82,
+          "probability": 0.9854
+        },
+        {
+          "word": "Gosu",
+          "start": 65.82,
+          "end": 66.18,
+          "probability": 0.1793
+        },
+        {
+          "word": "class",
+          "start": 66.18,
+          "end": 66.46,
+          "probability": 0.9458
+        },
+        {
+          "word": "in",
+          "start": 66.46,
+          "end": 66.68,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 66.68,
+          "end": 66.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "utility",
+          "start": 66.76,
+          "end": 67.18,
+          "probability": 0.8091
+        },
+        {
+          "word": "package.",
+          "start": 67.18,
+          "end": 67.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "Select",
+          "start": 68.4,
+          "end": 68.9,
+          "probability": 0.9829
+        },
+        {
+          "word": "New",
+          "start": 68.9,
+          "end": 69.04,
+          "probability": 0.6514
+        },
+        {
+          "word": "and",
+          "start": 69.04,
+          "end": 69.22,
+          "probability": 0.9629
+        },
+        {
+          "word": "then",
+          "start": 69.22,
+          "end": 69.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "Gosu",
+          "start": 69.38,
+          "end": 69.74,
+          "probability": 0.9717
+        },
+        {
+          "word": "class.",
+          "start": 69.74,
+          "end": 70.12,
+          "probability": 0.8174
+        },
+        {
+          "word": "Type",
+          "start": 71.66,
+          "end": 72.16,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 72.16,
+          "end": 72.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "name",
+          "start": 72.32,
+          "end": 72.52,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 72.52,
+          "end": 72.64,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 72.64,
+          "end": 72.74,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 72.74,
+          "end": 72.9,
+          "probability": 0.9893
+        },
+        {
+          "word": "Gosu",
+          "start": 72.9,
+          "end": 73.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "class.",
+          "start": 73.24,
+          "end": 73.64,
+          "probability": 0.9873
+        },
+        {
+          "word": "Click",
+          "start": 75.9,
+          "end": 76.4,
+          "probability": 0.9829
+        },
+        {
+          "word": "OK",
+          "start": 76.4,
+          "end": 76.66,
+          "probability": 0.9668
+        },
+        {
+          "word": "to",
+          "start": 76.66,
+          "end": 76.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "save",
+          "start": 76.86,
+          "end": 77.06,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 77.06,
+          "end": 77.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 77.2,
+          "end": 77.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "Gosu",
+          "start": 77.36,
+          "end": 77.72,
+          "probability": 0.998
+        },
+        {
+          "word": "class.",
+          "start": 77.72,
+          "end": 78.12,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 79.04,
+      "end": 91.22,
+      "start_formatted": "00:01:19.040",
+      "end_formatted": "00:01:31.220",
+      "text": "The shell of the new Gosu class is created. Enter code to implement the requirements. Examine the code. Lines 12 to 15. The constructor is used to initialize the width and height variables.",
+      "words": [
+        {
+          "word": "The",
+          "start": 79.04,
+          "end": 79.72,
+          "probability": 0.9614
+        },
+        {
+          "word": "shell",
+          "start": 79.72,
+          "end": 79.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 79.94,
+          "end": 80.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 80.06,
+          "end": 80.12,
+          "probability": 0.6221
+        },
+        {
+          "word": "new",
+          "start": 80.12,
+          "end": 80.28,
+          "probability": 0.9785
+        },
+        {
+          "word": "Gosu",
+          "start": 80.28,
+          "end": 80.62,
+          "probability": 0.2014
+        },
+        {
+          "word": "class",
+          "start": 80.62,
+          "end": 80.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 80.96,
+          "end": 81.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "created.",
+          "start": 81.16,
+          "end": 81.6,
+          "probability": 1.0
+        },
+        {
+          "word": "Enter",
+          "start": 81.98,
+          "end": 82.36,
+          "probability": 0.999
+        },
+        {
+          "word": "code",
+          "start": 82.36,
+          "end": 82.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 82.62,
+          "end": 82.8,
+          "probability": 1.0
+        },
+        {
+          "word": "implement",
+          "start": 82.8,
+          "end": 83.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 83.2,
+          "end": 83.4,
+          "probability": 1.0
+        },
+        {
+          "word": "requirements.",
+          "start": 83.4,
+          "end": 84.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "Examine",
+          "start": 84.6,
+          "end": 85.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 85.28,
+          "end": 85.42,
+          "probability": 1.0
+        },
+        {
+          "word": "code.",
+          "start": 85.42,
+          "end": 85.76,
+          "probability": 0.999
+        },
+        {
+          "word": "Lines",
+          "start": 86.2,
+          "end": 86.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "12",
+          "start": 86.82,
+          "end": 87.16,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 87.16,
+          "end": 87.34,
+          "probability": 0.7563
+        },
+        {
+          "word": "15.",
+          "start": 87.34,
+          "end": 87.72,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 87.72,
+          "end": 88.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "constructor",
+          "start": 88.2,
+          "end": 88.66,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 88.66,
+          "end": 88.94,
+          "probability": 1.0
+        },
+        {
+          "word": "used",
+          "start": 88.94,
+          "end": 89.18,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 89.18,
+          "end": 89.34,
+          "probability": 1.0
+        },
+        {
+          "word": "initialize",
+          "start": 89.34,
+          "end": 89.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 89.92,
+          "end": 90.08,
+          "probability": 1.0
+        },
+        {
+          "word": "width",
+          "start": 90.08,
+          "end": 90.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 90.28,
+          "end": 90.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "height",
+          "start": 90.44,
+          "end": 90.66,
+          "probability": 1.0
+        },
+        {
+          "word": "variables.",
+          "start": 90.66,
+          "end": 91.22,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 91.22,
+      "end": 117.78,
+      "start_formatted": "00:01:31.220",
+      "end_formatted": "00:01:57.780",
+      "text": "Line 17. A logger variable is created. Lines 18 to 20. Private variables are created using shorthand notation. Lines 22 to 24. Method comment is added. Lines 34 to 37. Method annotations are added. Since a new class was created, the server must be restarted. Click the Stop Server button. Click the Debug Server button to start the server.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 91.22,
+          "end": 92.42,
+          "probability": 0.5659
+        },
+        {
+          "word": "17.",
+          "start": 92.42,
+          "end": 92.9,
+          "probability": 0.9834
+        },
+        {
+          "word": "A",
+          "start": 93.22,
+          "end": 93.4,
+          "probability": 0.9834
+        },
+        {
+          "word": "logger",
+          "start": 93.4,
+          "end": 93.74,
+          "probability": 0.9473
+        },
+        {
+          "word": "variable",
+          "start": 93.74,
+          "end": 94.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 94.16,
+          "end": 94.44,
+          "probability": 0.999
+        },
+        {
+          "word": "created.",
+          "start": 94.44,
+          "end": 94.86,
+          "probability": 0.999
+        },
+        {
+          "word": "Lines",
+          "start": 95.36,
+          "end": 95.94,
+          "probability": 0.9648
+        },
+        {
+          "word": "18",
+          "start": 95.94,
+          "end": 96.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 96.36,
+          "end": 96.54,
+          "probability": 0.6807
+        },
+        {
+          "word": "20.",
+          "start": 96.54,
+          "end": 96.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Private",
+          "start": 97.18,
+          "end": 97.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "variables",
+          "start": 97.48,
+          "end": 98.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "are",
+          "start": 98.04,
+          "end": 98.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "created",
+          "start": 98.26,
+          "end": 98.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "using",
+          "start": 98.66,
+          "end": 98.98,
+          "probability": 0.999
+        },
+        {
+          "word": "shorthand",
+          "start": 98.98,
+          "end": 99.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "notation.",
+          "start": 99.56,
+          "end": 99.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "Lines",
+          "start": 100.62,
+          "end": 101.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "22",
+          "start": 101.3,
+          "end": 101.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 101.76,
+          "end": 101.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "24.",
+          "start": 101.96,
+          "end": 102.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "Method",
+          "start": 102.86,
+          "end": 103.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "comment",
+          "start": 103.12,
+          "end": 103.5,
+          "probability": 0.9663
+        },
+        {
+          "word": "is",
+          "start": 103.5,
+          "end": 103.76,
+          "probability": 0.999
+        },
+        {
+          "word": "added.",
+          "start": 103.76,
+          "end": 104.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "Lines",
+          "start": 104.58,
+          "end": 105.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "34",
+          "start": 105.14,
+          "end": 105.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 105.64,
+          "end": 105.86,
+          "probability": 0.999
+        },
+        {
+          "word": "37.",
+          "start": 105.86,
+          "end": 106.46,
+          "probability": 0.999
+        },
+        {
+          "word": "Method",
+          "start": 106.8,
+          "end": 107.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "annotations",
+          "start": 107.06,
+          "end": 107.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 107.76,
+          "end": 107.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "added.",
+          "start": 107.92,
+          "end": 108.18,
+          "probability": 1.0
+        },
+        {
+          "word": "Since",
+          "start": 108.64,
+          "end": 109.12,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 109.12,
+          "end": 109.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 109.26,
+          "end": 109.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "class",
+          "start": 109.4,
+          "end": 109.74,
+          "probability": 0.999
+        },
+        {
+          "word": "was",
+          "start": 109.74,
+          "end": 109.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "created,",
+          "start": 109.98,
+          "end": 110.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 110.72,
+          "end": 110.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "server",
+          "start": 110.92,
+          "end": 111.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "must",
+          "start": 111.2,
+          "end": 111.46,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 111.46,
+          "end": 111.62,
+          "probability": 1.0
+        },
+        {
+          "word": "restarted.",
+          "start": 111.62,
+          "end": 112.32,
+          "probability": 0.998
+        },
+        {
+          "word": "Click",
+          "start": 112.7,
+          "end": 113.22,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 113.22,
+          "end": 113.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "Stop",
+          "start": 113.4,
+          "end": 113.66,
+          "probability": 0.6509
+        },
+        {
+          "word": "Server",
+          "start": 113.66,
+          "end": 114.02,
+          "probability": 0.7188
+        },
+        {
+          "word": "button.",
+          "start": 114.02,
+          "end": 114.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "Click",
+          "start": 115.0,
+          "end": 115.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 115.68,
+          "end": 115.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "Debug",
+          "start": 115.84,
+          "end": 116.24,
+          "probability": 0.9805
+        },
+        {
+          "word": "Server",
+          "start": 116.24,
+          "end": 116.52,
+          "probability": 0.8965
+        },
+        {
+          "word": "button",
+          "start": 116.52,
+          "end": 116.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 116.88,
+          "end": 117.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "start",
+          "start": 117.08,
+          "end": 117.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 117.3,
+          "end": 117.46,
+          "probability": 1.0
+        },
+        {
+          "word": "server.",
+          "start": 117.46,
+          "end": 117.78,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 117.78,
+      "end": 130.54,
+      "start_formatted": "00:01:57.780",
+      "end_formatted": "00:02:10.540",
+      "text": "In order to test the rectangle class, open Gosu Scratchpad. Click Tools and then select Gosu Scratchpad. Enter code to test the new rectangle class. Examine the code.",
+      "words": [
+        {
+          "word": "In",
+          "start": 117.78,
+          "end": 119.08,
+          "probability": 0.96
+        },
+        {
+          "word": "order",
+          "start": 119.08,
+          "end": 119.28,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 119.28,
+          "end": 119.46,
+          "probability": 1.0
+        },
+        {
+          "word": "test",
+          "start": 119.46,
+          "end": 119.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 119.7,
+          "end": 119.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "rectangle",
+          "start": 119.86,
+          "end": 120.32,
+          "probability": 0.7251
+        },
+        {
+          "word": "class,",
+          "start": 120.32,
+          "end": 120.86,
+          "probability": 0.999
+        },
+        {
+          "word": "open",
+          "start": 121.04,
+          "end": 121.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "Gosu",
+          "start": 121.38,
+          "end": 121.74,
+          "probability": 0.073
+        },
+        {
+          "word": "Scratchpad.",
+          "start": 121.74,
+          "end": 122.46,
+          "probability": 0.874
+        },
+        {
+          "word": "Click",
+          "start": 122.84,
+          "end": 123.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "Tools",
+          "start": 123.44,
+          "end": 123.72,
+          "probability": 0.9116
+        },
+        {
+          "word": "and",
+          "start": 123.72,
+          "end": 123.96,
+          "probability": 0.998
+        },
+        {
+          "word": "then",
+          "start": 123.96,
+          "end": 124.12,
+          "probability": 0.999
+        },
+        {
+          "word": "select",
+          "start": 124.12,
+          "end": 124.5,
+          "probability": 0.9868
+        },
+        {
+          "word": "Gosu",
+          "start": 124.5,
+          "end": 124.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "Scratchpad.",
+          "start": 124.98,
+          "end": 125.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "Enter",
+          "start": 126.16,
+          "end": 126.88,
+          "probability": 0.999
+        },
+        {
+          "word": "code",
+          "start": 126.88,
+          "end": 127.12,
+          "probability": 0.9609
+        },
+        {
+          "word": "to",
+          "start": 127.12,
+          "end": 127.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "test",
+          "start": 127.3,
+          "end": 127.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 127.52,
+          "end": 127.68,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 127.68,
+          "end": 127.84,
+          "probability": 0.999
+        },
+        {
+          "word": "rectangle",
+          "start": 127.84,
+          "end": 128.34,
+          "probability": 0.9854
+        },
+        {
+          "word": "class.",
+          "start": 128.34,
+          "end": 128.94,
+          "probability": 1.0
+        },
+        {
+          "word": "Examine",
+          "start": 129.36,
+          "end": 130.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 130.08,
+          "end": 130.2,
+          "probability": 1.0
+        },
+        {
+          "word": "code.",
+          "start": 130.2,
+          "end": 130.54,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 130.54,
+      "end": 148.76,
+      "start_formatted": "00:02:10.540",
+      "end_formatted": "00:02:28.760",
+      "text": "Line 3. Code instantiates a new rectangle object, whose width equals 2 and height equals 3. Line 4. Code calls the Calculate Area method. Line 5. The system will display the enlarged rectangle value. Execute the code by clicking the Run and Debug Process icon.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 130.54,
+          "end": 131.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "3.",
+          "start": 131.5,
+          "end": 131.8,
+          "probability": 0.9722
+        },
+        {
+          "word": "Code",
+          "start": 132.04,
+          "end": 132.32,
+          "probability": 0.9893
+        },
+        {
+          "word": "instantiates",
+          "start": 132.32,
+          "end": 133.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 133.24,
+          "end": 133.36,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 133.36,
+          "end": 133.5,
+          "probability": 1.0
+        },
+        {
+          "word": "rectangle",
+          "start": 133.5,
+          "end": 134.0,
+          "probability": 0.9775
+        },
+        {
+          "word": "object,",
+          "start": 134.0,
+          "end": 134.6,
+          "probability": 1.0
+        },
+        {
+          "word": "whose",
+          "start": 134.78,
+          "end": 135.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "width",
+          "start": 135.06,
+          "end": 135.3,
+          "probability": 0.9834
+        },
+        {
+          "word": "equals",
+          "start": 135.3,
+          "end": 135.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "2",
+          "start": 135.58,
+          "end": 135.88,
+          "probability": 0.9658
+        },
+        {
+          "word": "and",
+          "start": 135.88,
+          "end": 136.04,
+          "probability": 1.0
+        },
+        {
+          "word": "height",
+          "start": 136.04,
+          "end": 136.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "equals",
+          "start": 136.24,
+          "end": 136.62,
+          "probability": 1.0
+        },
+        {
+          "word": "3.",
+          "start": 136.62,
+          "end": 136.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Line",
+          "start": 137.42,
+          "end": 137.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "4.",
+          "start": 137.94,
+          "end": 138.26,
+          "probability": 1.0
+        },
+        {
+          "word": "Code",
+          "start": 138.48,
+          "end": 138.72,
+          "probability": 0.999
+        },
+        {
+          "word": "calls",
+          "start": 138.72,
+          "end": 139.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 139.06,
+          "end": 139.2,
+          "probability": 1.0
+        },
+        {
+          "word": "Calculate",
+          "start": 139.2,
+          "end": 139.76,
+          "probability": 0.7871
+        },
+        {
+          "word": "Area",
+          "start": 139.76,
+          "end": 140.0,
+          "probability": 0.6177
+        },
+        {
+          "word": "method.",
+          "start": 140.0,
+          "end": 140.42,
+          "probability": 0.9438
+        },
+        {
+          "word": "Line",
+          "start": 140.9,
+          "end": 141.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "5.",
+          "start": 141.42,
+          "end": 141.82,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 142.02,
+          "end": 142.2,
+          "probability": 0.999
+        },
+        {
+          "word": "system",
+          "start": 142.2,
+          "end": 142.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 142.52,
+          "end": 142.74,
+          "probability": 1.0
+        },
+        {
+          "word": "display",
+          "start": 142.74,
+          "end": 143.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 143.12,
+          "end": 143.34,
+          "probability": 1.0
+        },
+        {
+          "word": "enlarged",
+          "start": 143.34,
+          "end": 143.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "rectangle",
+          "start": 143.82,
+          "end": 144.28,
+          "probability": 0.9863
+        },
+        {
+          "word": "value.",
+          "start": 144.28,
+          "end": 144.76,
+          "probability": 1.0
+        },
+        {
+          "word": "Execute",
+          "start": 145.5,
+          "end": 146.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 146.1,
+          "end": 146.22,
+          "probability": 1.0
+        },
+        {
+          "word": "code",
+          "start": 146.22,
+          "end": 146.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 146.48,
+          "end": 146.68,
+          "probability": 1.0
+        },
+        {
+          "word": "clicking",
+          "start": 146.68,
+          "end": 146.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 146.98,
+          "end": 147.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "Run",
+          "start": 147.12,
+          "end": 147.28,
+          "probability": 0.9414
+        },
+        {
+          "word": "and",
+          "start": 147.28,
+          "end": 147.42,
+          "probability": 0.8242
+        },
+        {
+          "word": "Debug",
+          "start": 147.42,
+          "end": 147.76,
+          "probability": 0.9727
+        },
+        {
+          "word": "Process",
+          "start": 147.76,
+          "end": 148.16,
+          "probability": 0.6357
+        },
+        {
+          "word": "icon.",
+          "start": 148.16,
+          "end": 148.76,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 148.76,
+      "end": 166.68,
+      "start_formatted": "00:02:28.760",
+      "end_formatted": "00:02:46.680",
+      "text": "Note, this icon is enabled since the server is started in debug mode. The output is in the console. The area of the rectangle increased from 6 to 54. Uncomment the code at line 6. Click the Run and Debug Process icon to execute the code and Gosu Scratchpad.",
+      "words": [
+        {
+          "word": "Note,",
+          "start": 148.76,
+          "end": 149.84,
+          "probability": 0.7534
+        },
+        {
+          "word": "this",
+          "start": 150.08,
+          "end": 150.36,
+          "probability": 0.9863
+        },
+        {
+          "word": "icon",
+          "start": 150.36,
+          "end": 150.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 150.72,
+          "end": 150.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "enabled",
+          "start": 150.94,
+          "end": 151.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "since",
+          "start": 151.26,
+          "end": 151.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 151.54,
+          "end": 151.74,
+          "probability": 0.999
+        },
+        {
+          "word": "server",
+          "start": 151.74,
+          "end": 152.06,
+          "probability": 0.9927
+        },
+        {
+          "word": "is",
+          "start": 152.06,
+          "end": 152.24,
+          "probability": 0.8799
+        },
+        {
+          "word": "started",
+          "start": 152.24,
+          "end": 152.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 152.54,
+          "end": 152.78,
+          "probability": 0.999
+        },
+        {
+          "word": "debug",
+          "start": 152.78,
+          "end": 153.0,
+          "probability": 0.9019
+        },
+        {
+          "word": "mode.",
+          "start": 153.0,
+          "end": 153.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 153.88,
+          "end": 154.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "output",
+          "start": 154.44,
+          "end": 154.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 154.82,
+          "end": 155.06,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 155.06,
+          "end": 155.2,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 155.2,
+          "end": 155.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "console.",
+          "start": 155.28,
+          "end": 155.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 156.06,
+          "end": 156.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "area",
+          "start": 156.42,
+          "end": 156.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 156.74,
+          "end": 156.92,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 156.92,
+          "end": 156.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "rectangle",
+          "start": 156.98,
+          "end": 157.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "increased",
+          "start": 157.46,
+          "end": 157.96,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 157.96,
+          "end": 158.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "6",
+          "start": 158.18,
+          "end": 158.46,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 158.46,
+          "end": 158.62,
+          "probability": 0.9893
+        },
+        {
+          "word": "54.",
+          "start": 158.62,
+          "end": 159.12,
+          "probability": 0.999
+        },
+        {
+          "word": "Uncomment",
+          "start": 160.02,
+          "end": 160.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 160.58,
+          "end": 160.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "code",
+          "start": 160.7,
+          "end": 160.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "at",
+          "start": 160.9,
+          "end": 161.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "line",
+          "start": 161.04,
+          "end": 161.22,
+          "probability": 0.9316
+        },
+        {
+          "word": "6.",
+          "start": 161.22,
+          "end": 161.62,
+          "probability": 0.9878
+        },
+        {
+          "word": "Click",
+          "start": 162.08,
+          "end": 162.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 162.64,
+          "end": 162.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Run",
+          "start": 162.8,
+          "end": 162.96,
+          "probability": 0.645
+        },
+        {
+          "word": "and",
+          "start": 162.96,
+          "end": 163.14,
+          "probability": 0.3335
+        },
+        {
+          "word": "Debug",
+          "start": 163.14,
+          "end": 163.46,
+          "probability": 0.9375
+        },
+        {
+          "word": "Process",
+          "start": 163.46,
+          "end": 163.88,
+          "probability": 0.7207
+        },
+        {
+          "word": "icon",
+          "start": 163.88,
+          "end": 164.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 164.38,
+          "end": 164.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "execute",
+          "start": 164.6,
+          "end": 165.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 165.08,
+          "end": 165.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "code",
+          "start": 165.3,
+          "end": 165.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 165.56,
+          "end": 165.66,
+          "probability": 0.9575
+        },
+        {
+          "word": "Gosu",
+          "start": 165.66,
+          "end": 166.02,
+          "probability": 0.0527
+        },
+        {
+          "word": "Scratchpad.",
+          "start": 166.02,
+          "end": 166.68,
+          "probability": 0.7773
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 166.68,
+      "end": 179.28,
+      "start_formatted": "00:02:46.680",
+      "end_formatted": "00:02:59.280",
+      "text": "A displayable exception is thrown in the output. The enlarged method will throw a displayable exception if an argument less than or equal to 0 is passed to the method. See line 39 in the rectangle class code.",
+      "words": [
+        {
+          "word": "A",
+          "start": 166.68,
+          "end": 167.5,
+          "probability": 0.8218
+        },
+        {
+          "word": "displayable",
+          "start": 167.5,
+          "end": 168.16,
+          "probability": 0.9136
+        },
+        {
+          "word": "exception",
+          "start": 168.16,
+          "end": 168.56,
+          "probability": 0.9136
+        },
+        {
+          "word": "is",
+          "start": 168.56,
+          "end": 168.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "thrown",
+          "start": 168.88,
+          "end": 169.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 169.12,
+          "end": 169.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 169.3,
+          "end": 169.4,
+          "probability": 0.999
+        },
+        {
+          "word": "output.",
+          "start": 169.4,
+          "end": 169.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "The",
+          "start": 170.16,
+          "end": 170.52,
+          "probability": 0.9849
+        },
+        {
+          "word": "enlarged",
+          "start": 170.52,
+          "end": 170.94,
+          "probability": 0.6753
+        },
+        {
+          "word": "method",
+          "start": 170.94,
+          "end": 171.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 171.2,
+          "end": 171.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "throw",
+          "start": 171.42,
+          "end": 171.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 171.6,
+          "end": 171.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "displayable",
+          "start": 171.76,
+          "end": 172.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "exception",
+          "start": 172.36,
+          "end": 172.72,
+          "probability": 0.998
+        },
+        {
+          "word": "if",
+          "start": 172.72,
+          "end": 172.98,
+          "probability": 0.9819
+        },
+        {
+          "word": "an",
+          "start": 172.98,
+          "end": 173.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "argument",
+          "start": 173.1,
+          "end": 173.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "less",
+          "start": 173.5,
+          "end": 173.78,
+          "probability": 0.9634
+        },
+        {
+          "word": "than",
+          "start": 173.78,
+          "end": 173.98,
+          "probability": 0.9863
+        },
+        {
+          "word": "or",
+          "start": 173.98,
+          "end": 174.16,
+          "probability": 0.9849
+        },
+        {
+          "word": "equal",
+          "start": 174.16,
+          "end": 174.42,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 174.42,
+          "end": 174.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "0",
+          "start": 174.62,
+          "end": 174.9,
+          "probability": 0.3938
+        },
+        {
+          "word": "is",
+          "start": 174.9,
+          "end": 175.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "passed",
+          "start": 175.16,
+          "end": 175.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 175.44,
+          "end": 175.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 175.6,
+          "end": 175.7,
+          "probability": 0.998
+        },
+        {
+          "word": "method.",
+          "start": 175.7,
+          "end": 176.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "See",
+          "start": 176.36,
+          "end": 176.74,
+          "probability": 0.9556
+        },
+        {
+          "word": "line",
+          "start": 176.74,
+          "end": 177.08,
+          "probability": 0.9058
+        },
+        {
+          "word": "39",
+          "start": 177.08,
+          "end": 177.46,
+          "probability": 0.9697
+        },
+        {
+          "word": "in",
+          "start": 177.46,
+          "end": 177.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 177.82,
+          "end": 177.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "rectangle",
+          "start": 177.92,
+          "end": 178.36,
+          "probability": 0.8853
+        },
+        {
+          "word": "class",
+          "start": 178.36,
+          "end": 178.8,
+          "probability": 0.9932
+        },
+        {
+          "word": "code.",
+          "start": 178.8,
+          "end": 179.28,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 179.66,
+      "end": 181.96,
+      "start_formatted": "00:02:59.660",
+      "end_formatted": "00:03:01.960",
+      "text": "This ends the create a custom class demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 179.66,
+          "end": 180.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "ends",
+          "start": 180.22,
+          "end": 180.44,
+          "probability": 0.8989
+        },
+        {
+          "word": "the",
+          "start": 180.44,
+          "end": 180.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "create",
+          "start": 180.6,
+          "end": 180.92,
+          "probability": 0.7544
+        },
+        {
+          "word": "a",
+          "start": 180.92,
+          "end": 181.04,
+          "probability": 0.8604
+        },
+        {
+          "word": "custom",
+          "start": 181.04,
+          "end": 181.36,
+          "probability": 0.9775
+        },
+        {
+          "word": "class",
+          "start": 181.36,
+          "end": 181.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "demonstration.",
+          "start": 181.72,
+          "end": 181.96,
+          "probability": 0.4385
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 181.96,
+      "end": 182.28,
+      "start_formatted": "00:03:01.960",
+      "end_formatted": "00:03:02.280",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 181.96,
+          "end": 182.28,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.1327
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.3726
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.4319
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.4744
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.5527
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.5137
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.6758
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.6079
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.7607
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.7158
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.8149
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.8027
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.8481
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.8511
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.8789
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.8838
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.8931
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.915
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9067
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9243
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9189
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.939
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9248
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9272
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9536
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9316
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.957
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.937
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9595
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.939
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9629
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9404
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9648
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9438
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9668
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9443
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9678
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9448
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9458
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9702
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9712
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9448
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9438
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9458
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9731
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9741
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9458
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9771
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9458
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9482
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9497
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9492
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9526
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9526
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9541
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9551
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9585
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9639
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9639
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9639
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9658
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9673
+        },
+        {
+          "word": "Filogy",
+          "start": 182.28,
+          "end": 182.28,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 182.26,
+      "end": 182.26,
+      "start_formatted": "00:03:02.260",
+      "end_formatted": "00:03:02.260",
+      "text": "",
+      "words": []
+    }
+  ]
+}

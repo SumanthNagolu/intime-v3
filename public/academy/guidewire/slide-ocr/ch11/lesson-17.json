@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-17",
+    "slide_count": 27,
+    "slides_with_text": 25,
+    "total_words": 1392,
+    "avg_confidence": 85.69,
+    "processing_time_seconds": 11.35,
+    "extracted_at": "2026-02-15T18:22:38.232699"
+  },
+  "full_text": "Authentication\n\nLesson\nobjectives ¢ Describe the process for Guidewire user,\n\nwebservice, and database authentication\n* Create plugins for Guidewire user,\nwebservice, and database authentication\n\n| Authentication scenarios Gi\n\n45 &\n\n—_— User\n\n== —\n\nGuidewire Guidewire & External\nSystem\n\nBe\n\nDatabase Application\n\nSOAP Web Service\n\n¢ User Authentication ve\n\n¢ User logs into a Guidewire application via login page\n* SOAP Web Service API Authentication\n\n« External system user via web service API\n* Database Authentication\n\n* Database connection requires username and password\n\nUser authentication\n\n| Default user authentication flow G\n\nExternal\nWeb browser Application Server Directory\n\nDefaultAuthentication\n\nAuthentication SourceCreatorPlugin\n\nGuidewire Source object\n\nApplication External service\n| e Server requests authentication verifies credentials\n\nHie or gl —0\n\nDatab: ifi dential:\natabase verifies credentials Li\n\nDefaultAuthentication\nServicePlugin\n\nGuidewire\ndatabase\n\n| Authentication Source Creator plugin Gi\n\nGuidewire TrainingApp Key value ey ys\na are L tte NS8\n— S33 NNNGF\n\nNYP Ya\n\nWeb Form Login Authentication Source Authentication Source\nCreator plugin\n* Receives user authentication * Converts user credential\ninformation information to an Authentication\n\n* Single sign-on credential (SSO) Source object\n\n* Client certificate + A structured credential used by the\nAuthentication Service plugin\n+ Username and Password key value pair . ; oo\n¢ All Guidewire applications use the\nAuthentication source creator\n\npluain by default\n\n+ Example: Web Form Login\n\n| Authentication Service plugin\n\nGi\n\n2, ay\nSoS\nRS\nNr ay @g—oo— “é£\nS307 Lg, _——\ne\nAuthentication Source Authentication Guidewire\nService plugin Application\n\n¢ Determines whether to permit a user to log in\n* Typically validates a user credentials using\n« An external system such as MS Active Directory or LDAP\n\n* Guidewire database\n¢ Other data store, internal or external, for user credentials\n\nUse case G\n\n¢ User logs into a Guidewire 1. Create custom Authentication Source\napplication via login page Creator plugin\n\n¢ Authenticate users based on 2. Create custom Authentication\nusername and password provided Service plugin\n\n* Create custom plugins for user 3. Register the plugins\nauthentication\n\n4. Deploy the changes\n\n| Create custom AuthenticationSourceCreatorPlugin [Fj\n\n1 package trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.AuthenticationSource\n4 uses gw.plugin.security.AuthenticationSourceCreatorPlugin\nuses gw.plugin. security.UserNamePasswordAuthenticationSource\nuses javax.servlet.http.HttpServletRequest\n\nclass CustomAuthenticationSourceCreatorPlugin implements AuthenticationSourceCreatorPlugin {\n\na a\n\n—pP io ef override function createSourceFromHTTPRequest (request : HttpServletRequest) : AuthenticationSource {\nCG 11 var username = request.getAttribute (\"username\") as String\n—_\n\n12 var password = request.getAttribute (\"password\") as String\n1 return new UserNamePasswordAuthenticationSource (username, password)\n\n| Create custom AuthenticationServicePlugin Gi\n\n1 package trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.*\n4 uses javax.security.auth. login. FailedLoginException\n\nclass CustomAuthenticationServicePlugin implements AuthenticationServicePlugin {\n\nprivate var handler : AuthenticationServicePluginCallbackHandler = null\n\n'\n=\n\noverride function authenticate (source : AuthenticationSource) : String {\n/R e edentials cation S\n\nif (!(source typeis UserNamePasswordAuthenticationSource)) {\nthrow new IllegalArgumentException (\"Invalid Authentication Source type\")\n\n-\n\nvar castSource = source as UserNamePasswordAuthenticationSource\n7 var username = castSource.Username\nvar password = castSource. Password\n\nc\n\n1rd\n\n| Create custom AuthenticationServicePlugin (conimey [Fj\n\nif (this. handler ull) {\nthrow new AuthenticationException(\"Callback handler not set\")\n}\nvar userPublicID = this._handler. findUser (username)\nif (userPublicID == null) {\nthrow new FailedLoginException(\"Bad user name: \" + username)\n}\nvar returnCode = this. handler.verifyInternalCredential(userPublicID, password)\nif (returnCode == CredentialVerificationResult.5AD USERID) {\nthrow new FailedLoginException(\"Bad user name: \" + username)\n} else if (returnCode == CredentialVerificationResult.#AIT_TO_RETRY) {\nthrow new MustWaitToRetryException(\"Still within the login retry delay period\")\n} else if (returnCode == CredentialVerificationResult.CREDENTIAL_LOCKED) {\nthrow new LockedCredentialException(\"The specified user has been locked\")\n} else if (returnCode CredentialVerificationResult. PASSWORD MISMATCH) {\nthrow new FailedLoginException(\"Bad password for user: \" + username)\n} else {\nreturn userPublicID\n\noverride property set Callback (callbacktiandler : AuthenticationServicePluginCallbacktiandler) {\n_handler = callbackHandler\n}\n\n| Register the plugins Gi\n\nProject : ~ I+ | dp AuthenticationServicePlugin.gwp\nYM configuration C:\\GW10\\TrainingApp\\mod mfiguretiOAName: —_AuthenticationServicePlugin\nv Cheong\n> (Déntity Names Interface:\nCY Bttensions += Gosu Class: _trn.ta.plugin.userauthentication.CustomAuthentici\n9 Localizations\nP Messaging\n[9 Metadata Server:\n(B Page Configuration\nPlugins\nY Dibregistry\n1 AuthenticationServicePlugin.gup S\n& AuthenticationSourceCreatorPlugin.gwp\n\nEEN environment:\n\ncvvvve\n\nCO Disabled\n\nParameters: Name Value | Environment| _Server_| 4\n\n* The plugin registry exists under\n* config.Plugins.registry\n¢ Pre-defined plugins will already have a plugin registry entry\n+ Double click an existing entry to edit it\n+ For other types of plugins, such as messaging plugins, you may need to create a new registry entry\n\n+ Right click on the registry node and select New > Plugin if you need to create a new registry entry\n\n| Deploy the plugin and code\n\n¢ New Gosu plugin class\n\nGi\n\n¢ Modified Gosu plugin class\n¢« Newor modified plugin registry file\n\n[ER foots vcs Window Help\n\n3 D Run ‘Server’\nEYE Tools VCS Window Help 8 Debug ‘Server’\niD Run ‘Server’ Shift+F10 ¥ Run ‘Server’ with Coverage\n86 Debug ‘Server’ Shift+F9 D Run...\nWE Run ‘Server’ with Coverage WE Debus...\nD Run... Alt+Shift+F10 7 Attach to Local Process...\nWE Debug... Alt+ Shift+F9\n\n[> Edit Configurations...\nAy Attach to Local Process... B] Import Test Results\n[> Edit Configurations... Il Stop ‘Server’\n\n2] Import Test Results > EF show Running List\n\nSto\n\nSOAP Web service API\nauthentication\n\n| Default SOAP web service API authentication flow [5\n\nExternal\n\nApplication Server Directory\n\nDefaultWebservices\nAuthenticationPlugin\nISOAP Web Service ey\n\nL934\n\nExternal\nSystem\n\n—\n\noa\n6 Li\nDefaultAuthentication\nGuidewire ServicePlugin\n\nDatabase\n\n| SOAP Webservices Authentication plugin Gi\n\n&,—__—f3_-\n\naf eS\nWeb Service Webservices Authentication\nAuthentication plugin Service plugin\n\n¢ For web services that require permissions\n* Handle the name/password authentication for a user connecting to SOAP web services\n\n* Calls the registered implementation of the Authentication ServicePlugin\n\n+ Never call a Guidewire web service from within the Authentication Service plugin — it will create an\nendless loop\n\n¢ Aregistered and enabled version of the plugin is required otherwise web services\nare unable to authenticate\n\n| Custom We\n\nset\n\not\n\nbservicesAuthenticationServicePlugin [5\n\npackage trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.*\nuses gw.util.Pair\nuses gw.xsd.guidewire.soapheaders.Authentication\n\nclass CustomiebservicesAuthenticationPlugin implements WebservicesAuthenticationPlugin {\noverride function authenticate(context : WebservicesAuthenticationContext) : User {\n\nvar user : User = null\nvar authMethods = new ArrayList<AuthenticationMethod>()\n\nvar headersFromEnvelope = context .RequestSoapHeaders\nif (headersFromEnvelope != null) {\nfinal var auth = headersFromEnvelope.get$Child (Authentication)\nif (auth != null ce fauth.issNil()) {\nauthMethods.add (new UsernamePasswordAuthenticationMethod() {\nprotected override property get UsernamePassword() : Pair<String, String> {\nreturn new Pair<String, String>(auth.Username, auth. Password)\n\nAf (JauthMethods.isEmpty()) {\nuser = authMethods.get (0) .getUser()\n}\n\nreturn user\n\n| Database Authentication plugin Gi\n\n== LL.\nGuidewire Database Enterprise Database\napplication Authentication plugin\n\n¢ Enterprise database connection requires a database username and password as\npart of jdbcURL\n\n* database-config.xml in <dbcp-connection-pool /> element\n+ Password file\n¢ Plugin can supply database authentication credentials for Guidewire database\n\n* Guidewire application requires connection to Guidewire Database\n\nDatabase Authentication plugin example Gi\n\n1 package trn.ta.plugin.dbauthentication\n\nuses gw.plugin.dbauth.DBAuthenticationPlugin\nuses gw.plugin.dbauth.UsernamePasswordPair\nuses javax.naming.Context\n\nuses javax.naming.InitialContext\n\n—p> 6 class Jr gin implements DBAuthenticationPlugin {\n\n—pP 10 of override function retrieveUsernameAndPassword(dbName : String) : UsernamePasswordPair {\n11 var initCtx = new InitialContext()\n12 var envCtx = initCtx.lookup(\"java:comp/env\") as Context\n13 var username = envCtx.lookup(\"jdbc/\" + dbName + \"/username\") as String\n\nvar password = envCtx.lookup(\"jdbc/\" + dbName + \"/password\") as String\n\nreturn new UsernamePasswordPair(username, password)\n\n| Deploy code changes\nRestart Server\n\n¢ New authentication plugin class\n\n¢« Newor modified plugin registry file\n\nGt Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nYE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+Shift+F9\n\\y Attach to Local Process...\n\n[PP Edit Configurations...\n\nBl import Test Results >\nI Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified authentication plugin class\n\nTools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD Run...\n\nW Debus...\n\n2m Attach to Local Process...\n\n[> Edit Configurations...\n\n] Import Test Results\n\nI Stop ‘Server’\n\nEY Show Running List\n\nSto\n\n| Demonstration G\n\nUser Authentication Flow\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n__ The user, API, and database authentication mechanisms reference which\n7’ plugin(s)?\now A) AuthenticationSourceCreatorPlugin\nB) AuthenticationServicePlugin\nC) WebservicesAuthenticationPlugin\n\nD) DBAuthenticationPlugin\n\nSe Soe Se sees esse ese\n\nGi\n\nAnswer\n\n__ The user, API, and database authentication mechanisms reference which\n7’ Plugin(s)?\n\n“ A\nB\nC)\nD\n\nz=\n\ngY\n\nCc)\nD\n\nz=\n\nSS ee eee ee eae\n\nAuthenticationSourceCreatorPlugin\nAuthenticationServicePlugin\nWebservicesAuthenticationPlugin\n\nDBAuthenticationPlugin\n\nUser\n\nUser and API\nAPI\nDatabase\n\nGi\n\nLesson\nobjectives ¢ Describe the process for Guidewire user,\n\nreview webservice, and database authentication\n* Create plugins for Guidewire user,\nwebservice, and database authentication\n\ni Student exercise\n\nConfigure external authentication\nservice",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Authentication",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe the process for Guidewire user,\n\nwebservice, and database authentication\n* Create plugins for Guidewire user,\nwebservice, and database authentication",
+      "word_count": 23,
+      "avg_confidence": 90.48,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Authentication scenarios Gi\n\n45 &\n\n—_— User\n\n== —\n\nGuidewire Guidewire & External\nSystem\n\nBe\n\nDatabase Application\n\nSOAP Web Service\n\n¢ User Authentication ve\n\n¢ User logs into a Guidewire application via login page\n* SOAP Web Service API Authentication\n\n« External system user via web service API\n* Database Authentication\n\n* Database connection requires username and password",
+      "word_count": 59,
+      "avg_confidence": 82.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "User authentication",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Default user authentication flow G\n\nExternal\nWeb browser Application Server Directory\n\nDefaultAuthentication\n\nAuthentication SourceCreatorPlugin\n\nGuidewire Source object\n\nApplication External service\n| e Server requests authentication verifies credentials\n\nHie or gl —0\n\nDatab: ifi dential:\natabase verifies credentials Li\n\nDefaultAuthentication\nServicePlugin\n\nGuidewire\ndatabase",
+      "word_count": 43,
+      "avg_confidence": 87.98,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Authentication Source Creator plugin Gi\n\nGuidewire TrainingApp Key value ey ys\na are L tte NS8\n— S33 NNNGF\n\nNYP Ya\n\nWeb Form Login Authentication Source Authentication Source\nCreator plugin\n* Receives user authentication * Converts user credential\ninformation information to an Authentication\n\n* Single sign-on credential (SSO) Source object\n\n* Client certificate + A structured credential used by the\nAuthentication Service plugin\n+ Username and Password key value pair . ; oo\n¢ All Guidewire applications use the\nAuthentication source creator\n\npluain by default\n\n+ Example: Web Form Login",
+      "word_count": 91,
+      "avg_confidence": 83.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Authentication Service plugin\n\nGi\n\n2, ay\nSoS\nRS\nNr ay @g—oo— “é£\nS307 Lg, _——\ne\nAuthentication Source Authentication Guidewire\nService plugin Application\n\n¢ Determines whether to permit a user to log in\n* Typically validates a user credentials using\n« An external system such as MS Active Directory or LDAP\n\n* Guidewire database\n¢ Other data store, internal or external, for user credentials",
+      "word_count": 65,
+      "avg_confidence": 79.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Use case G\n\n¢ User logs into a Guidewire 1. Create custom Authentication Source\napplication via login page Creator plugin\n\n¢ Authenticate users based on 2. Create custom Authentication\nusername and password provided Service plugin\n\n* Create custom plugins for user 3. Register the plugins\nauthentication\n\n4. Deploy the changes",
+      "word_count": 50,
+      "avg_confidence": 91.76,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Create custom AuthenticationSourceCreatorPlugin [Fj\n\n1 package trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.AuthenticationSource\n4 uses gw.plugin.security.AuthenticationSourceCreatorPlugin\nuses gw.plugin. security.UserNamePasswordAuthenticationSource\nuses javax.servlet.http.HttpServletRequest\n\nclass CustomAuthenticationSourceCreatorPlugin implements AuthenticationSourceCreatorPlugin {\n\na a\n\n—pP io ef override function createSourceFromHTTPRequest (request : HttpServletRequest) : AuthenticationSource {\nCG 11 var username = request.getAttribute (\"username\") as String\n—_\n\n12 var password = request.getAttribute (\"password\") as String\n1 return new UserNamePasswordAuthenticationSource (username, password)",
+      "word_count": 61,
+      "avg_confidence": 76.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Create custom AuthenticationServicePlugin Gi\n\n1 package trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.*\n4 uses javax.security.auth. login. FailedLoginException\n\nclass CustomAuthenticationServicePlugin implements AuthenticationServicePlugin {\n\nprivate var handler : AuthenticationServicePluginCallbackHandler = null\n\n'\n=\n\noverride function authenticate (source : AuthenticationSource) : String {\n/R e edentials cation S\n\nif (!(source typeis UserNamePasswordAuthenticationSource)) {\nthrow new IllegalArgumentException (\"Invalid Authentication Source type\")\n\n-\n\nvar castSource = source as UserNamePasswordAuthenticationSource\n7 var username = castSource.Username\nvar password = castSource. Password\n\nc\n\n1rd",
+      "word_count": 74,
+      "avg_confidence": 85.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Create custom AuthenticationServicePlugin (conimey [Fj\n\nif (this. handler ull) {\nthrow new AuthenticationException(\"Callback handler not set\")\n}\nvar userPublicID = this._handler. findUser (username)\nif (userPublicID == null) {\nthrow new FailedLoginException(\"Bad user name: \" + username)\n}\nvar returnCode = this. handler.verifyInternalCredential(userPublicID, password)\nif (returnCode == CredentialVerificationResult.5AD USERID) {\nthrow new FailedLoginException(\"Bad user name: \" + username)\n} else if (returnCode == CredentialVerificationResult.#AIT_TO_RETRY) {\nthrow new MustWaitToRetryException(\"Still within the login retry delay period\")\n} else if (returnCode == CredentialVerificationResult.CREDENTIAL_LOCKED) {\nthrow new LockedCredentialException(\"The specified user has been locked\")\n} else if (returnCode CredentialVerificationResult. PASSWORD MISMATCH) {\nthrow new FailedLoginException(\"Bad password for user: \" + username)\n} else {\nreturn userPublicID\n\noverride property set Callback (callbacktiandler : AuthenticationServicePluginCallbacktiandler) {\n_handler = callbackHandler\n}",
+      "word_count": 123,
+      "avg_confidence": 83.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Register the plugins Gi\n\nProject : ~ I+ | dp AuthenticationServicePlugin.gwp\nYM configuration C:\\GW10\\TrainingApp\\mod mfiguretiOAName: —_AuthenticationServicePlugin\nv Cheong\n> (Déntity Names Interface:\nCY Bttensions += Gosu Class: _trn.ta.plugin.userauthentication.CustomAuthentici\n9 Localizations\nP Messaging\n[9 Metadata Server:\n(B Page Configuration\nPlugins\nY Dibregistry\n1 AuthenticationServicePlugin.gup S\n& AuthenticationSourceCreatorPlugin.gwp\n\nEEN environment:\n\ncvvvve\n\nCO Disabled\n\nParameters: Name Value | Environment| _Server_| 4\n\n* The plugin registry exists under\n* config.Plugins.registry\n¢ Pre-defined plugins will already have a plugin registry entry\n+ Double click an existing entry to edit it\n+ For other types of plugins, such as messaging plugins, you may need to create a new registry entry\n\n+ Right click on the registry node and select New > Plugin if you need to create a new registry entry",
+      "word_count": 126,
+      "avg_confidence": 76.47,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Deploy the plugin and code\n\n¢ New Gosu plugin class\n\nGi\n\n¢ Modified Gosu plugin class\n¢« Newor modified plugin registry file\n\n[ER foots vcs Window Help\n\n3 D Run ‘Server’\nEYE Tools VCS Window Help 8 Debug ‘Server’\niD Run ‘Server’ Shift+F10 ¥ Run ‘Server’ with Coverage\n86 Debug ‘Server’ Shift+F9 D Run...\nWE Run ‘Server’ with Coverage WE Debus...\nD Run... Alt+Shift+F10 7 Attach to Local Process...\nWE Debug... Alt+ Shift+F9\n\n[> Edit Configurations...\nAy Attach to Local Process... B] Import Test Results\n[> Edit Configurations... Il Stop ‘Server’\n\n2] Import Test Results > EF show Running List\n\nSto",
+      "word_count": 102,
+      "avg_confidence": 77.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "SOAP Web service API\nauthentication",
+      "word_count": 5,
+      "avg_confidence": 95.4,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Default SOAP web service API authentication flow [5\n\nExternal\n\nApplication Server Directory\n\nDefaultWebservices\nAuthenticationPlugin\nISOAP Web Service ey\n\nL934\n\nExternal\nSystem\n\n—\n\noa\n6 Li\nDefaultAuthentication\nGuidewire ServicePlugin\n\nDatabase",
+      "word_count": 30,
+      "avg_confidence": 85.47,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| SOAP Webservices Authentication plugin Gi\n\n&,—__—f3_-\n\naf eS\nWeb Service Webservices Authentication\nAuthentication plugin Service plugin\n\n¢ For web services that require permissions\n* Handle the name/password authentication for a user connecting to SOAP web services\n\n* Calls the registered implementation of the Authentication ServicePlugin\n\n+ Never call a Guidewire web service from within the Authentication Service plugin — it will create an\nendless loop\n\n¢ Aregistered and enabled version of the plugin is required otherwise web services\nare unable to authenticate",
+      "word_count": 83,
+      "avg_confidence": 90.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Custom We\n\nset\n\not\n\nbservicesAuthenticationServicePlugin [5\n\npackage trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.*\nuses gw.util.Pair\nuses gw.xsd.guidewire.soapheaders.Authentication\n\nclass CustomiebservicesAuthenticationPlugin implements WebservicesAuthenticationPlugin {\noverride function authenticate(context : WebservicesAuthenticationContext) : User {\n\nvar user : User = null\nvar authMethods = new ArrayList<AuthenticationMethod>()\n\nvar headersFromEnvelope = context .RequestSoapHeaders\nif (headersFromEnvelope != null) {\nfinal var auth = headersFromEnvelope.get$Child (Authentication)\nif (auth != null ce fauth.issNil()) {\nauthMethods.add (new UsernamePasswordAuthenticationMethod() {\nprotected override property get UsernamePassword() : Pair<String, String> {\nreturn new Pair<String, String>(auth.Username, auth. Password)\n\nAf (JauthMethods.isEmpty()) {\nuser = authMethods.get (0) .getUser()\n}\n\nreturn user",
+      "word_count": 92,
+      "avg_confidence": 81.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Database Authentication plugin Gi\n\n== LL.\nGuidewire Database Enterprise Database\napplication Authentication plugin\n\n¢ Enterprise database connection requires a database username and password as\npart of jdbcURL\n\n* database-config.xml in <dbcp-connection-pool /> element\n+ Password file\n¢ Plugin can supply database authentication credentials for Guidewire database\n\n* Guidewire application requires connection to Guidewire Database",
+      "word_count": 55,
+      "avg_confidence": 85.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Database Authentication plugin example Gi\n\n1 package trn.ta.plugin.dbauthentication\n\nuses gw.plugin.dbauth.DBAuthenticationPlugin\nuses gw.plugin.dbauth.UsernamePasswordPair\nuses javax.naming.Context\n\nuses javax.naming.InitialContext\n\n—p> 6 class Jr gin implements DBAuthenticationPlugin {\n\n—pP 10 of override function retrieveUsernameAndPassword(dbName : String) : UsernamePasswordPair {\n11 var initCtx = new InitialContext()\n12 var envCtx = initCtx.lookup(\"java:comp/env\") as Context\n13 var username = envCtx.lookup(\"jdbc/\" + dbName + \"/username\") as String\n\nvar password = envCtx.lookup(\"jdbc/\" + dbName + \"/password\") as String\n\nreturn new UsernamePasswordPair(username, password)",
+      "word_count": 73,
+      "avg_confidence": 88.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Deploy code changes\nRestart Server\n\n¢ New authentication plugin class\n\n¢« Newor modified plugin registry file\n\nGt Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nYE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+Shift+F9\n\\y Attach to Local Process...\n\n[PP Edit Configurations...\n\nBl import Test Results >\nI Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified authentication plugin class\n\nTools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD Run...\n\nW Debus...\n\n2m Attach to Local Process...\n\n[> Edit Configurations...\n\n] Import Test Results\n\nI Stop ‘Server’\n\nEY Show Running List\n\nSto",
+      "word_count": 99,
+      "avg_confidence": 78.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Demonstration G\n\nUser Authentication Flow\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n__ The user, API, and database authentication mechanisms reference which\n7’ plugin(s)?\now A) AuthenticationSourceCreatorPlugin\nB) AuthenticationServicePlugin\nC) WebservicesAuthenticationPlugin\n\nD) DBAuthenticationPlugin\n\nSe Soe Se sees esse ese\n\nGi",
+      "word_count": 29,
+      "avg_confidence": 79.52,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n__ The user, API, and database authentication mechanisms reference which\n7’ Plugin(s)?\n\n“ A\nB\nC)\nD\n\nz=\n\ngY\n\nCc)\nD\n\nz=\n\nSS ee eee ee eae\n\nAuthenticationSourceCreatorPlugin\nAuthenticationServicePlugin\nWebservicesAuthenticationPlugin\n\nDBAuthenticationPlugin\n\nUser\n\nUser and API\nAPI\nDatabase\n\nGi",
+      "word_count": 39,
+      "avg_confidence": 77.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Lesson\nobjectives ¢ Describe the process for Guidewire user,\n\nreview webservice, and database authentication\n* Create plugins for Guidewire user,\nwebservice, and database authentication",
+      "word_count": 24,
+      "avg_confidence": 90.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "i Student exercise\n\nConfigure external authentication\nservice",
+      "word_count": 7,
+      "avg_confidence": 88.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

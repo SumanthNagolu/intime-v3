@@ -1,0 +1,324 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-11",
+    "slide_count": 28,
+    "slides_with_text": 27,
+    "total_words": 1835,
+    "avg_confidence": 85.66,
+    "processing_time_seconds": 12.54,
+    "extracted_at": "2026-02-15T18:21:23.403829"
+  },
+  "full_text": "Messaging Architecture\n\nLesson\nobjectives\n\n¢ Understand the concept of Guidewire\n\nmessaging\n\nIdentify the basic components of Guidewire\nmessaging\n\nDescribe the basic stages of Guidewire\nmessaging\n\nUnderstand how to use message\nadministration screens\n\nMessaging stages\n\n| What is Guidewire messaging Gl\n\ni Triggering -M# i\n\ni [= eSEaGe sesue| | > message payloai ;\n\n: Acknowledging :\n\nH (1T] ———*sssouesaina y 1- i +\n\n! Guidewire Guidewire \\v] i\n\n! Application Database : System\n\n* Guidewire messaging is an asynchronous integration mechanism:\n+ Event Based model\n+ Predefined and custom events raised by new or changed business data\n+ Part of the User transaction\n\n+ Events are evaluated and processed in the Event Fired ruleset\n\n+ Message is created and persisted in the Guidewire database\n\n+ Messages are sent from a Guidewire application to an External system\n\n+ An External system acknowledges receipt and processing of the message (either positively or negatively)\n\n| The messaging stages\n\n2) Creating a message\nand payload\n\n1. Triggering a message\n\n+ Newly created or modified entity\ntriggers message creation\n\n2. Creating a message and payload\n\n+ Application creates message and the\npayload and stores in message table\n\n3. Transform the payload\n* Optional\n\n() payload (3 iy to an external system\nGY = |\n\n3) Transform the 4) Sending the payload\n\n5) Processing Sa\nacknowledgment (y) H\n4. Sending the payload to an external\nsystem\n\n+ Application checks message table for\nmessages to process and sends payload\n\n5. Processing acknowledgment\n\n+ External system acknowledges success\nor reports an error\n\n+ Application processes the received\nresponse\n\n| Use case — Bank account verification\n\nPersoninfo | Phone&Addresses | Bank Accounts\na:\nBankName > Routing Number Account Number © Account Type > Verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Checking Pending) 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending —_| 08/22/2018\n=:\nBankName Routing Number 2 Account Number S Account Type verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Savings Verified 08/22/2018\nSucceed Credit Union 123-456 0987654321 Checking Verified 08/22/2018\n\n« Messaging process verifies bank account details\n\n* Bank name, routing number, and account number\n\n« New and modified accounts\n\n¢ Verified? field shows messaging acknowledgment status\n\ne Pending. Verified or Invalid\n\n| Use case — Bank account verification\n\nPersoninfo | Phone&Addresses | Bank Accounts\na:\nBankName > Routing Number Account Number © Account Type > Verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Checking Pending) 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending —_| 08/22/2018\n=:\nBankName Routing Number 2 Account Number S Account Type verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Savings Verified 08/22/2018\nSucceed Credit Union 123-456 0987654321 Checking Verified 08/22/2018\n\n« Messaging process verifies bank account details\n\n* Bank name, routing number, and account number\n\n« New and modified accounts\n\n¢ Verified? field shows messaging acknowledgment status\n\ne Pending. Verified or Invalid\n\n| Use case — Bank account verification\n\nPersoninfo | Phone&Addresses | Bank Accounts\na:\nBankName > Routing Number Account Number © Account Type > Verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Checking Pending) 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending —_| 08/22/2018\n=:\nBankName Routing Number 2 Account Number S Account Type verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Savings Verified 08/22/2018\nSucceed Credit Union 123-456 0987654321 Checking Verified 08/22/2018\n\n« Messaging process verifies bank account details\n\n* Bank name, routing number, and account number\n\n« New and modified accounts\n\n¢ Verified? field shows messaging acknowledgment status\n\ne Pending. Verified or Invalid\n\nStage 1 — Triggering a message\n\n(Continued)\n\n| Person Info | Phone & Addresses | Bank Accounts\n\n«\n\nid\n\nEntity event\nFatty event\n\nEventAware\nEntity\n\na) Gi\n\nDestination\n\no\nBankName © RoutingNumber © AccountNumber  AccountType © Verified? © CreatedOn >\nSucceed Credit Union 123-456 1234567890 ‘Checking Pending 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending 08/22/2018\n\n* Console output details\n* Messaging Destination ID is 13\n« EventAware entity is BankAccount\n¢ Event is BankAccountChanged\n\n*** Stage 1 -- Triggering the message ***\nEvent Fired rule set: BAEF1000 - Bank Account Verification\nMessaging Destination ID is 13\nEvent Fired rules: BAEF1100 - Bank Account\nEventAware entity is BankAccount\nEvent Fired rules: BAEF1110 - Added Changed\nEvent is BankAccountChanged\n\n| Stage 2 — Creating a message and payload Gl\nEvent Fired Message Payload\n\n* Event Fired rule set Rules\n\n* Called for each destination-subscribed 4 ,\nmessaging event\n\n* Generates a new message and payload\n\n*** Stage 2 -- Creating the message ***\nEvent Fired rules: BAEF1111 - Field Changed\n* Message payload Sending payload to console:\n\ncontact, ab: 20625\n\n« Formatted string, such as text, XML or JSON banillane, Succeed Savings and Loan\n\nroutingNumber, 123-456\n* Message database table tcoometype eavinge,\n\nage0iMessage, <@@ageOfMessageInSeconds@@>\n\n* Hub of messaging infrastructure that provides persistent\nstorage for messages with the following status:\n\n+ Unsent (new)\n+ Sent and awaiting acknowledgement (pending)\n\n« Retryable Error (errored)\n\n| Stage 3 — Transform the payload Gi\n\n¢ Destination-specific messaging plugins\n\nprocess the outbound request Transformed :\n\npayload i\nmessages >) AG 7 PA.\n« Request plugin ¥ E onal\n. . estination\n* Optional payload transformation Request System\nPlugin\n*#* Stage 3 -- Optionally transform the message payload *** ean aeeneanensceneassnsceeanscssenssnsosasasenscese® .\n\nRequest plugin: BankAccountVerificationRequest -- beforeSend()\nSending transformed payload to console:\n\ncontact, ab: 20685\n\nbankilame, Succeed Savings and Loan\n\nroutingNumber, 123-456\n\naccountNumber, 45671234\n\naccountType, savings\n\nageOfMessage, 13\n\nsenderRefID, ab:1203\n\n| Stage 4 -— Sending message to an external system\n\n¢ Destination-specific messaging plugins .\nprocess the outbound request\nmessages\n\n* Transport plugin\n\n+ Sends the payload to the external system\n\n*#* Stage 4 -- Sending the message ***\nTransport plugin: BankAccountVerificationTransport -- send()\nThe Request Plugin transformed the payload\nSending transformed payload to console:\n\ncontact, ab: 20685\n\nbankllame, Succeed Savings and Loan\n\nroutinglunber, 123-456\n\naccountifumber, 45671234\n\naccount Type, savings\n\nageOiMessage, 4\n\nsenderRefID, ab:1207\n\nPayload\n\n+ Either original payload or transformed payload : i\n\nrrancport\nPlugin\n\nSystem\n\n| Stage 5 — Processing acknowledgement Gi\n\n+ External system Fa : *\n+ Receives sent message : (i i\nResponse! Le H\n* Sends back a response M i 1 fugin :\n: : ; i >) ransport Plugin H\n* Guidewire application receives — > ¥ :\na reply message eli i Destination (p) H\n+ Processed by Transport plugin (synchronous) H l i\ni Reply Plugin :\n\n+ Processed by Reply plugin or API (asynchronous %, epiymugin\n\n*** Stage S -- Message acknowledgement ***\n\nTransport plugin: BankAccountVerificationTransport -- send()\nMessage acknowledged synchronously\n\nVerification status for IsVerified field is Verified\n\n* Response determines the\n\nVerified? field value o—ieeniee eee tose swing vot\n. Verified or Invalid Ser a ce eS Cea\n\n| Guidewire servers and messaging transactions Gi\nA\n\ni Application Context )) Integration Context\n\nEvent triggering & : Sending message &\nPy ») Message generation . Payload Process synchronous\n(event fired rules) Message transformation acknowledgment (transport\n(request plugin) plugin)\n\nG transaction 2 transaction 3 c\n=\n\nProcess asynchronous\nacknowledgement\n(reply plugin or API)\n\n* Messaging is managed in multiple contexts\n\n+ The application context processes message creation (on server(s) with the “ui” role)\n+ All other work is done in the integration context (on server(s) with the “messaging” role)\n\n¢ Messaging occurs across multiple transactions\n\ngg in than npiirrant trancantinn te rnllind hanb\n\n| Message plugin interfaces\n\npackage gw.plugin.messaging; A\n\nil\n\npublic interface MessagePlugin extends InternalPlugin {\nlvoid shutdown ();\n\nvoid suspend ();\n\nvoid resume() throws InitializationException;\n\nvoid setDestinationID(int varl);\n\ngi oi\nString beforeSend(Message varl) throws Exception;\n\ng:\n\nlic interface MessageAfterSend extends MessagePlugin {\nvoid afterSend (Message varl) throws Exception;\n\npublic interface MessageRequest extends MessageAfterSend, MessageBeforeSend {\n}\npublic interface MessageTransport extends MessagePlugin {\n\nvoid send(Message varl, String var2) throws Exception;\n\n}\n\npublic interface MessageReply extends MessagePlugin {\nvoid initTools(PluginCallbackHandler varl, MessageFinder var2) ;\n\nMessage administration\n\n| Training: Messaging\n\n* Available only in the TrainingApp application Training: Messaging\n¢ Administration tab > Training: Messaging © Message Table\n* Message Table © MessageHistory Table\n\n* Shows pending send (unsent), pending acknowledgement © Message Generator\n(sent), and Retryable error (errored messages)\n\n¢ MessagehHistory Table\n\n© Safe Ordering\n\n* Shows acknowledged, duplicate, or errored messages\n\n© Message Acknowledgement\n\n« Message Administration © Message Administration\n\n« Acopy of the Message Queues screen found in all\nInsuranceSuite applications\n\n| Training: Messaging — Demo screens Gi\n\n* Each demo screen has a Display\ninstructions link\n\nMessage Generator\n\nDisplay instructions\n\n* Message Generator\n\n* Creates a new message for a given\nmessage reference ID\n\nNew Message Generator\n\nName | MsgGen:25\n\nCreate and Send Only\nCreate, Send, and Acknowledge\n\n* Message Exception\n\n+ Throws an exception for a given\nmessage reference ID\n\n* Message Acknowledgment\n+ Simulates message acknowledgment from an external system for a given message reference ID\n\nSafe Ordering\n\n+ Lets you send multiple messages for the same entity for safe-order and non-safe-order entity\n\n| Message Queues\n\n¢ Aseries of drilldown\nscreens for message\nadministration\n\n¢ Administration tab\n\n« Monitoring > Message\nQueues, or\n« Training: Messaging >\nMessage Administration\n* Suspend, resume, and\nview messages for each\ndestination\n\nUtilities\n\nTraining: Plugins\n\nTraining: M\n\nTable\n\nHistory Table\n\nMessage Queues\n\nDestination\n\nBank Account Verification\nVendor Recommendation\n\nLegal Case Report\n\nSafe Ordering Demo\n\nMessage Generator\n\nFraud Check\n\nEmail\n\nPolicyCenter Contact Broadcast\nClaimCenter Contact Broadcast\n\nBillingCenter Contact Broadcast\n\nGi\n\nRestart Messaging Engine [iM:=]d\n\nStatus\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\n\n| Demonstration G\nMessage administration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Whatare the five stages of Guidewire messaging?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see\n\nAnswer Gi\n\n_- — Whatare the five stages of Guidewire messaging?\n\n¢\n¢\n¢\n\nTriggering a message.\nCreating a message and payload.\nOptionally transform the payload.\n\nSending the message to an external system.\n\nSoo eS eee soe ese ese\n\naro N >\n\nProcessing message acknowledgment.\n\nQuestion\n\n_- — Whatare the three possible statuses for messages that are in the\n\nPa message table?\n¢\n\nSeo e Soe esses see see\n\nAnswer\n\n_— — Whatare the three possible statuses for messages that are in the\n\nPa message table?\n¢\n\n1. Pending send.\n2. Pending acknowledged (sent but no acknowledgement received).\n\n3. Retryable error (sent and an error reported by external system, a negative\nacknowledgement or NACk).\n\nSoo eS eee soe ese ese\n\nQuestion\n\n_~ — Fora Guidewire implementation using clustering, what two server roles\nPa execute the work for messaging? What work is done by each server\n: role?\n\nSeo e Soe esses see see\n\nGi\n\nAnswer\n\n_- — Fora Guidewire implementation using clustering, what two server roles\nPa execute the work for messaging? What work is done by each server\n: role?\n\nThe two clustering server roles are: the ui role and the messaging role.\n\nSoo eS eee soe ese ese\n\nGi\n\nLesson\nobjectives\nreview\n\n¢ Understand the concept of Guidewire\n\nmessaging\n\nIdentify the basic components of Guidewire\nmessaging\n\nDescribe the basic stages of Guidewire\nmessaging\n\nUnderstand how to use message\nadministration screens",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Messaging Architecture",
+      "word_count": 2,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Understand the concept of Guidewire\n\nmessaging\n\nIdentify the basic components of Guidewire\nmessaging\n\nDescribe the basic stages of Guidewire\nmessaging\n\nUnderstand how to use message\nadministration screens",
+      "word_count": 30,
+      "avg_confidence": 93.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Messaging stages",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| What is Guidewire messaging Gl\n\ni Triggering -M# i\n\ni [= eSEaGe sesue| | > message payloai ;\n\n: Acknowledging :\n\nH (1T] ———*sssouesaina y 1- i +\n\n! Guidewire Guidewire \\v] i\n\n! Application Database : System\n\n* Guidewire messaging is an asynchronous integration mechanism:\n+ Event Based model\n+ Predefined and custom events raised by new or changed business data\n+ Part of the User transaction\n\n+ Events are evaluated and processed in the Event Fired ruleset\n\n+ Message is created and persisted in the Guidewire database\n\n+ Messages are sent from a Guidewire application to an External system\n\n+ An External system acknowledges receipt and processing of the message (either positively or negatively)",
+      "word_count": 117,
+      "avg_confidence": 84.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| The messaging stages\n\n2) Creating a message\nand payload\n\n1. Triggering a message\n\n+ Newly created or modified entity\ntriggers message creation\n\n2. Creating a message and payload\n\n+ Application creates message and the\npayload and stores in message table\n\n3. Transform the payload\n* Optional\n\n() payload (3 iy to an external system\nGY = |\n\n3) Transform the 4) Sending the payload\n\n5) Processing Sa\nacknowledgment (y) H\n4. Sending the payload to an external\nsystem\n\n+ Application checks message table for\nmessages to process and sends payload\n\n5. Processing acknowledgment\n\n+ External system acknowledges success\nor reports an error\n\n+ Application processes the received\nresponse",
+      "word_count": 109,
+      "avg_confidence": 90.01,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Use case — Bank account verification\n\nPersoninfo | Phone&Addresses | Bank Accounts\na:\nBankName > Routing Number Account Number © Account Type > Verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Checking Pending) 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending —_| 08/22/2018\n=:\nBankName Routing Number 2 Account Number S Account Type verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Savings Verified 08/22/2018\nSucceed Credit Union 123-456 0987654321 Checking Verified 08/22/2018\n\n« Messaging process verifies bank account details\n\n* Bank name, routing number, and account number\n\n« New and modified accounts\n\n¢ Verified? field shows messaging acknowledgment status\n\ne Pending. Verified or Invalid",
+      "word_count": 107,
+      "avg_confidence": 75.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Use case — Bank account verification\n\nPersoninfo | Phone&Addresses | Bank Accounts\na:\nBankName > Routing Number Account Number © Account Type > Verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Checking Pending) 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending —_| 08/22/2018\n=:\nBankName Routing Number 2 Account Number S Account Type verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Savings Verified 08/22/2018\nSucceed Credit Union 123-456 0987654321 Checking Verified 08/22/2018\n\n« Messaging process verifies bank account details\n\n* Bank name, routing number, and account number\n\n« New and modified accounts\n\n¢ Verified? field shows messaging acknowledgment status\n\ne Pending. Verified or Invalid",
+      "word_count": 107,
+      "avg_confidence": 75.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Use case — Bank account verification\n\nPersoninfo | Phone&Addresses | Bank Accounts\na:\nBankName > Routing Number Account Number © Account Type > Verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Checking Pending) 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending —_| 08/22/2018\n=:\nBankName Routing Number 2 Account Number S Account Type verified? > Createdon >\nSucceed Credit Union 123-456 1234567890 Savings Verified 08/22/2018\nSucceed Credit Union 123-456 0987654321 Checking Verified 08/22/2018\n\n« Messaging process verifies bank account details\n\n* Bank name, routing number, and account number\n\n« New and modified accounts\n\n¢ Verified? field shows messaging acknowledgment status\n\ne Pending. Verified or Invalid",
+      "word_count": 107,
+      "avg_confidence": 75.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Stage 1 — Triggering a message\n\n(Continued)\n\n| Person Info | Phone & Addresses | Bank Accounts\n\n«\n\nid\n\nEntity event\nFatty event\n\nEventAware\nEntity\n\na) Gi\n\nDestination\n\no\nBankName © RoutingNumber © AccountNumber  AccountType © Verified? © CreatedOn >\nSucceed Credit Union 123-456 1234567890 ‘Checking Pending 08/22/2018\nSucceed Credit Union 123-456 0987654321 Savings Pending 08/22/2018\n\n* Console output details\n* Messaging Destination ID is 13\n« EventAware entity is BankAccount\n¢ Event is BankAccountChanged\n\n*** Stage 1 -- Triggering the message ***\nEvent Fired rule set: BAEF1000 - Bank Account Verification\nMessaging Destination ID is 13\nEvent Fired rules: BAEF1100 - Bank Account\nEventAware entity is BankAccount\nEvent Fired rules: BAEF1110 - Added Changed\nEvent is BankAccountChanged",
+      "word_count": 118,
+      "avg_confidence": 83.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Stage 2 — Creating a message and payload Gl\nEvent Fired Message Payload\n\n* Event Fired rule set Rules\n\n* Called for each destination-subscribed 4 ,\nmessaging event\n\n* Generates a new message and payload\n\n*** Stage 2 -- Creating the message ***\nEvent Fired rules: BAEF1111 - Field Changed\n* Message payload Sending payload to console:\n\ncontact, ab: 20625\n\n« Formatted string, such as text, XML or JSON banillane, Succeed Savings and Loan\n\nroutingNumber, 123-456\n* Message database table tcoometype eavinge,\n\nage0iMessage, <@@ageOfMessageInSeconds@@>\n\n* Hub of messaging infrastructure that provides persistent\nstorage for messages with the following status:\n\n+ Unsent (new)\n+ Sent and awaiting acknowledgement (pending)\n\n« Retryable Error (errored)",
+      "word_count": 113,
+      "avg_confidence": 84.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Stage 3 — Transform the payload Gi\n\n¢ Destination-specific messaging plugins\n\nprocess the outbound request Transformed :\n\npayload i\nmessages >) AG 7 PA.\n« Request plugin ¥ E onal\n. . estination\n* Optional payload transformation Request System\nPlugin\n*#* Stage 3 -- Optionally transform the message payload *** ean aeeneanensceneassnsceeanscssenssnsosasasenscese® .\n\nRequest plugin: BankAccountVerificationRequest -- beforeSend()\nSending transformed payload to console:\n\ncontact, ab: 20685\n\nbankilame, Succeed Savings and Loan\n\nroutingNumber, 123-456\n\naccountNumber, 45671234\n\naccountType, savings\n\nageOfMessage, 13\n\nsenderRefID, ab:1203",
+      "word_count": 82,
+      "avg_confidence": 78.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Stage 4 -— Sending message to an external system\n\n¢ Destination-specific messaging plugins .\nprocess the outbound request\nmessages\n\n* Transport plugin\n\n+ Sends the payload to the external system\n\n*#* Stage 4 -- Sending the message ***\nTransport plugin: BankAccountVerificationTransport -- send()\nThe Request Plugin transformed the payload\nSending transformed payload to console:\n\ncontact, ab: 20685\n\nbankllame, Succeed Savings and Loan\n\nroutinglunber, 123-456\n\naccountifumber, 45671234\n\naccount Type, savings\n\nageOiMessage, 4\n\nsenderRefID, ab:1207\n\nPayload\n\n+ Either original payload or transformed payload : i\n\nrrancport\nPlugin\n\nSystem",
+      "word_count": 87,
+      "avg_confidence": 85.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Stage 5 — Processing acknowledgement Gi\n\n+ External system Fa : *\n+ Receives sent message : (i i\nResponse! Le H\n* Sends back a response M i 1 fugin :\n: : ; i >) ransport Plugin H\n* Guidewire application receives — > ¥ :\na reply message eli i Destination (p) H\n+ Processed by Transport plugin (synchronous) H l i\ni Reply Plugin :\n\n+ Processed by Reply plugin or API (asynchronous %, epiymugin\n\n*** Stage S -- Message acknowledgement ***\n\nTransport plugin: BankAccountVerificationTransport -- send()\nMessage acknowledged synchronously\n\nVerification status for IsVerified field is Verified\n\n* Response determines the\n\nVerified? field value o—ieeniee eee tose swing vot\n. Verified or Invalid Ser a ce eS Cea",
+      "word_count": 123,
+      "avg_confidence": 72.15,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Guidewire servers and messaging transactions Gi\nA\n\ni Application Context )) Integration Context\n\nEvent triggering & : Sending message &\nPy ») Message generation . Payload Process synchronous\n(event fired rules) Message transformation acknowledgment (transport\n(request plugin) plugin)\n\nG transaction 2 transaction 3 c\n=\n\nProcess asynchronous\nacknowledgement\n(reply plugin or API)\n\n* Messaging is managed in multiple contexts\n\n+ The application context processes message creation (on server(s) with the “ui” role)\n+ All other work is done in the integration context (on server(s) with the “messaging” role)\n\n¢ Messaging occurs across multiple transactions\n\ngg in than npiirrant trancantinn te rnllind hanb",
+      "word_count": 103,
+      "avg_confidence": 85.01,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Message plugin interfaces\n\npackage gw.plugin.messaging; A\n\nil\n\npublic interface MessagePlugin extends InternalPlugin {\nlvoid shutdown ();\n\nvoid suspend ();\n\nvoid resume() throws InitializationException;\n\nvoid setDestinationID(int varl);\n\ngi oi\nString beforeSend(Message varl) throws Exception;\n\ng:\n\nlic interface MessageAfterSend extends MessagePlugin {\nvoid afterSend (Message varl) throws Exception;\n\npublic interface MessageRequest extends MessageAfterSend, MessageBeforeSend {\n}\npublic interface MessageTransport extends MessagePlugin {\n\nvoid send(Message varl, String var2) throws Exception;\n\n}\n\npublic interface MessageReply extends MessagePlugin {\nvoid initTools(PluginCallbackHandler varl, MessageFinder var2) ;",
+      "word_count": 81,
+      "avg_confidence": 85.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Message administration",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Training: Messaging\n\n* Available only in the TrainingApp application Training: Messaging\n¢ Administration tab > Training: Messaging © Message Table\n* Message Table © MessageHistory Table\n\n* Shows pending send (unsent), pending acknowledgement © Message Generator\n(sent), and Retryable error (errored messages)\n\n¢ MessagehHistory Table\n\n© Safe Ordering\n\n* Shows acknowledged, duplicate, or errored messages\n\n© Message Acknowledgement\n\n« Message Administration © Message Administration\n\n« Acopy of the Message Queues screen found in all\nInsuranceSuite applications",
+      "word_count": 77,
+      "avg_confidence": 85.73,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Training: Messaging — Demo screens Gi\n\n* Each demo screen has a Display\ninstructions link\n\nMessage Generator\n\nDisplay instructions\n\n* Message Generator\n\n* Creates a new message for a given\nmessage reference ID\n\nNew Message Generator\n\nName | MsgGen:25\n\nCreate and Send Only\nCreate, Send, and Acknowledge\n\n* Message Exception\n\n+ Throws an exception for a given\nmessage reference ID\n\n* Message Acknowledgment\n+ Simulates message acknowledgment from an external system for a given message reference ID\n\nSafe Ordering\n\n+ Lets you send multiple messages for the same entity for safe-order and non-safe-order entity",
+      "word_count": 95,
+      "avg_confidence": 90.34,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Message Queues\n\n¢ Aseries of drilldown\nscreens for message\nadministration\n\n¢ Administration tab\n\n« Monitoring > Message\nQueues, or\n« Training: Messaging >\nMessage Administration\n* Suspend, resume, and\nview messages for each\ndestination\n\nUtilities\n\nTraining: Plugins\n\nTraining: M\n\nTable\n\nHistory Table\n\nMessage Queues\n\nDestination\n\nBank Account Verification\nVendor Recommendation\n\nLegal Case Report\n\nSafe Ordering Demo\n\nMessage Generator\n\nFraud Check\n\nEmail\n\nPolicyCenter Contact Broadcast\nClaimCenter Contact Broadcast\n\nBillingCenter Contact Broadcast\n\nGi\n\nRestart Messaging Engine [iM:=]d\n\nStatus\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted\nStarted",
+      "word_count": 87,
+      "avg_confidence": 90.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Demonstration G\nMessage administration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_- — Whatare the five stages of Guidewire messaging?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see",
+      "word_count": 19,
+      "avg_confidence": 79.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\n_- — Whatare the five stages of Guidewire messaging?\n\n¢\n¢\n¢\n\nTriggering a message.\nCreating a message and payload.\nOptionally transform the payload.\n\nSending the message to an external system.\n\nSoo eS eee soe ese ese\n\naro N >\n\nProcessing message acknowledgment.",
+      "word_count": 45,
+      "avg_confidence": 83.16,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n_- — Whatare the three possible statuses for messages that are in the\n\nPa message table?\n¢\n\nSeo e Soe esses see see",
+      "word_count": 24,
+      "avg_confidence": 84.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n_— — Whatare the three possible statuses for messages that are in the\n\nPa message table?\n¢\n\n1. Pending send.\n2. Pending acknowledged (sent but no acknowledgement received).\n\n3. Retryable error (sent and an error reported by external system, a negative\nacknowledgement or NACk).\n\nSoo eS eee soe ese ese",
+      "word_count": 51,
+      "avg_confidence": 83.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n_~ — Fora Guidewire implementation using clustering, what two server roles\nPa execute the work for messaging? What work is done by each server\n: role?\n\nSeo e Soe esses see see\n\nGi",
+      "word_count": 34,
+      "avg_confidence": 86.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n_- — Fora Guidewire implementation using clustering, what two server roles\nPa execute the work for messaging? What work is done by each server\n: role?\n\nThe two clustering server roles are: the ui role and the messaging role.\n\nSoo eS eee soe ese ese\n\nGi",
+      "word_count": 47,
+      "avg_confidence": 83.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Understand the concept of Guidewire\n\nmessaging\n\nIdentify the basic components of Guidewire\nmessaging\n\nDescribe the basic stages of Guidewire\nmessaging\n\nUnderstand how to use message\nadministration screens",
+      "word_count": 31,
+      "avg_confidence": 93.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

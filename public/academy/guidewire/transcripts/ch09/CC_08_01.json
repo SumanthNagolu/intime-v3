@@ -1,0 +1,4712 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_08_01.mp4",
+    "video_stem": "CC_08_01",
+    "duration_seconds": 311.34,
+    "duration_formatted": "00:05:11.340",
+    "segment_count": 44,
+    "word_count": 708,
+    "avg_confidence": 0.8946,
+    "transcription_time_seconds": 25.21,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:38:15.493159"
+  },
+  "full_text": "In some circumstances, a legal matter becomes a hearing before an administrative law judge, or ALJ. The ALJ role must be added to ClaimCenter, and to matters. There can only be one ALJ for a given matter. I begin by adding the role to the Contact Role Type List, which specifies the possible roles for a contact. I add a new type code. I give it a short code, using the suffix underscore SI, for succeed insurance. Both the name and description properties will be Administrative Law Judge. I add a new type code. The contact role category type list categorizes contact types for filtering purposes. Administrative Law Judge should be categorized under litigation. The litigation type code is already selected, so I click Next. The Contact Role Category Type List is selected, but I need the Contact Role Type List, so I click the up key. In the Category List, I select ALJ underscore SI. And click Finish. Entity role constraints define what kind of contacts can have what kind of roles. To configure entity role constraints for the ALJ, I navigate to the Entity role constraints config.xml file. I type left bracket, C and select Contact Role Type Constraint. When I select Contact Role Type Cone Tron, two properties appear. For the Contact Role Code property, I enter ALJ underscore SI. And for the Contact Subtype property, I enter Adjudicator, remembering to close the tag with a backslash. Now I have to add the code to the Matter entity, so I scroll down to find it. Again, I will preserve alphabetical order by placing the ALJ at the top. I add a new Role Ref tag, using ALJ underscore SI as the code. Now I type left bracket R and select Role Constraint. For the Constraint Type, I enter Exclusive, indicating that only one contact may have this role. I end the tag with a backslash. To test my work, I start the Claim Center server in debug mode. When the server is started, I log into Claim Center as Andy Applegate. I navigate to a claim. And on its litigation page, I see that there is an existing matter. Now I navigate to the contacts list. I will create a new contact as an adjudicator. I want to assign a new contact the role of Administrative Law Judge. But I can't. The Administrative Law Judge role does not appear on this list. This is because I am trying to relate it to the claim, and the ALJ role can only be related to a matter. If I change the Related to field so that the role will be related to the matter. The Administrative Law Judge role is available. I select it. I fill in the one required field, the last name. And click Update. Now I'll try adding another ALJ. Once again, I will give the new contact the Administrative Law Judge role, related to the matter. A last name is required. Now, when I click Update. An error message indicates that there can only be one ALJ associated with a given matter. This is because of the exclusive constraint I placed on ALJ. I will be able to add a new contact. So I'll just cancel the new contact. This concludes the Adding a Claim Contact role demonstration. Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.68,
+      "end": 20.14,
+      "start_formatted": "00:00:00.680",
+      "end_formatted": "00:00:20.140",
+      "text": "In some circumstances, a legal matter becomes a hearing before an administrative law judge, or ALJ. The ALJ role must be added to ClaimCenter, and to matters. There can only be one ALJ for a given matter. I begin by adding the role to the Contact Role Type List, which specifies the possible roles for a contact.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.68,
+          "end": 1.2,
+          "probability": 0.9404
+        },
+        {
+          "word": "some",
+          "start": 1.2,
+          "end": 1.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "circumstances,",
+          "start": 1.46,
+          "end": 2.18,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 2.58,
+          "end": 2.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "legal",
+          "start": 2.74,
+          "end": 3.0,
+          "probability": 0.9834
+        },
+        {
+          "word": "matter",
+          "start": 3.0,
+          "end": 3.3,
+          "probability": 0.998
+        },
+        {
+          "word": "becomes",
+          "start": 3.3,
+          "end": 3.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 3.7,
+          "end": 3.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "hearing",
+          "start": 3.88,
+          "end": 4.1,
+          "probability": 0.9873
+        },
+        {
+          "word": "before",
+          "start": 4.1,
+          "end": 4.42,
+          "probability": 0.998
+        },
+        {
+          "word": "an",
+          "start": 4.42,
+          "end": 4.62,
+          "probability": 0.998
+        },
+        {
+          "word": "administrative",
+          "start": 4.62,
+          "end": 5.1,
+          "probability": 0.6606
+        },
+        {
+          "word": "law",
+          "start": 5.1,
+          "end": 5.5,
+          "probability": 0.9912
+        },
+        {
+          "word": "judge,",
+          "start": 5.5,
+          "end": 5.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "or",
+          "start": 6.08,
+          "end": 6.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "ALJ.",
+          "start": 6.32,
+          "end": 6.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "The",
+          "start": 7.32,
+          "end": 7.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "ALJ",
+          "start": 7.68,
+          "end": 8.26,
+          "probability": 0.998
+        },
+        {
+          "word": "role",
+          "start": 8.26,
+          "end": 8.52,
+          "probability": 0.8433
+        },
+        {
+          "word": "must",
+          "start": 8.52,
+          "end": 8.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 8.76,
+          "end": 8.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "added",
+          "start": 8.92,
+          "end": 9.2,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 9.2,
+          "end": 9.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "ClaimCenter,",
+          "start": 9.4,
+          "end": 10.12,
+          "probability": 0.6504
+        },
+        {
+          "word": "and",
+          "start": 10.3,
+          "end": 10.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 10.56,
+          "end": 10.7,
+          "probability": 0.9868
+        },
+        {
+          "word": "matters.",
+          "start": 10.7,
+          "end": 11.02,
+          "probability": 0.9146
+        },
+        {
+          "word": "There",
+          "start": 11.42,
+          "end": 11.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "can",
+          "start": 11.78,
+          "end": 11.94,
+          "probability": 0.999
+        },
+        {
+          "word": "only",
+          "start": 11.94,
+          "end": 12.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 12.22,
+          "end": 12.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "one",
+          "start": 12.38,
+          "end": 12.58,
+          "probability": 0.9575
+        },
+        {
+          "word": "ALJ",
+          "start": 12.58,
+          "end": 13.1,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 13.1,
+          "end": 13.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 13.3,
+          "end": 13.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "given",
+          "start": 13.46,
+          "end": 13.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "matter.",
+          "start": 13.64,
+          "end": 14.02,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 14.28,
+          "end": 14.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "begin",
+          "start": 14.58,
+          "end": 14.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "by",
+          "start": 14.86,
+          "end": 15.04,
+          "probability": 0.999
+        },
+        {
+          "word": "adding",
+          "start": 15.04,
+          "end": 15.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 15.36,
+          "end": 15.48,
+          "probability": 0.999
+        },
+        {
+          "word": "role",
+          "start": 15.48,
+          "end": 15.7,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 15.7,
+          "end": 15.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 15.88,
+          "end": 16.0,
+          "probability": 0.998
+        },
+        {
+          "word": "Contact",
+          "start": 16.0,
+          "end": 16.4,
+          "probability": 0.5991
+        },
+        {
+          "word": "Role",
+          "start": 16.4,
+          "end": 16.78,
+          "probability": 0.7559
+        },
+        {
+          "word": "Type",
+          "start": 16.78,
+          "end": 17.0,
+          "probability": 0.6689
+        },
+        {
+          "word": "List,",
+          "start": 17.0,
+          "end": 17.36,
+          "probability": 0.5132
+        },
+        {
+          "word": "which",
+          "start": 17.56,
+          "end": 17.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "specifies",
+          "start": 17.82,
+          "end": 18.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 18.4,
+          "end": 18.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "possible",
+          "start": 18.56,
+          "end": 19.0,
+          "probability": 0.998
+        },
+        {
+          "word": "roles",
+          "start": 19.0,
+          "end": 19.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 19.38,
+          "end": 19.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 19.6,
+          "end": 19.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact.",
+          "start": 19.78,
+          "end": 20.14,
+          "probability": 0.9043
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 35.66,
+      "end": 49.94,
+      "start_formatted": "00:00:35.660",
+      "end_formatted": "00:00:49.940",
+      "text": "I add a new type code. I give it a short code, using the suffix underscore SI, for succeed insurance. Both the name and description properties will be Administrative Law Judge.",
+      "words": [
+        {
+          "word": "I",
+          "start": 35.66,
+          "end": 36.22,
+          "probability": 0.9756
+        },
+        {
+          "word": "add",
+          "start": 36.22,
+          "end": 36.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "a",
+          "start": 36.42,
+          "end": 36.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "new",
+          "start": 36.54,
+          "end": 36.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "type",
+          "start": 36.68,
+          "end": 36.94,
+          "probability": 0.9707
+        },
+        {
+          "word": "code.",
+          "start": 36.94,
+          "end": 37.32,
+          "probability": 0.9082
+        },
+        {
+          "word": "I",
+          "start": 39.24,
+          "end": 39.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "give",
+          "start": 39.8,
+          "end": 39.96,
+          "probability": 0.9863
+        },
+        {
+          "word": "it",
+          "start": 39.96,
+          "end": 40.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 40.08,
+          "end": 40.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "short",
+          "start": 40.18,
+          "end": 40.4,
+          "probability": 0.9746
+        },
+        {
+          "word": "code,",
+          "start": 40.4,
+          "end": 40.84,
+          "probability": 0.9854
+        },
+        {
+          "word": "using",
+          "start": 40.92,
+          "end": 41.3,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 41.3,
+          "end": 41.5,
+          "probability": 0.9849
+        },
+        {
+          "word": "suffix",
+          "start": 41.5,
+          "end": 41.94,
+          "probability": 0.9482
+        },
+        {
+          "word": "underscore",
+          "start": 41.94,
+          "end": 42.28,
+          "probability": 0.1052
+        },
+        {
+          "word": "SI,",
+          "start": 42.28,
+          "end": 42.98,
+          "probability": 0.3738
+        },
+        {
+          "word": "for",
+          "start": 43.24,
+          "end": 43.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "succeed",
+          "start": 43.48,
+          "end": 43.82,
+          "probability": 0.6221
+        },
+        {
+          "word": "insurance.",
+          "start": 43.82,
+          "end": 44.36,
+          "probability": 0.9565
+        },
+        {
+          "word": "Both",
+          "start": 46.2,
+          "end": 46.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 46.76,
+          "end": 46.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "name",
+          "start": 46.92,
+          "end": 47.12,
+          "probability": 0.96
+        },
+        {
+          "word": "and",
+          "start": 47.12,
+          "end": 47.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "description",
+          "start": 47.26,
+          "end": 47.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "properties",
+          "start": 47.66,
+          "end": 48.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 48.3,
+          "end": 48.56,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 48.56,
+          "end": 48.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "Administrative",
+          "start": 48.72,
+          "end": 49.44,
+          "probability": 0.7158
+        },
+        {
+          "word": "Law",
+          "start": 49.44,
+          "end": 49.64,
+          "probability": 0.9663
+        },
+        {
+          "word": "Judge.",
+          "start": 49.64,
+          "end": 49.94,
+          "probability": 0.9683
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 66.08,
+      "end": 75.76,
+      "start_formatted": "00:01:06.080",
+      "end_formatted": "00:01:15.760",
+      "text": "I add a new type code. The contact role category type list categorizes contact types for filtering purposes. Administrative Law Judge should be categorized under litigation.",
+      "words": [
+        {
+          "word": "I",
+          "start": 66.08,
+          "end": 66.88,
+          "probability": 0.0008
+        },
+        {
+          "word": "add",
+          "start": 66.88,
+          "end": 66.88,
+          "probability": 0.001
+        },
+        {
+          "word": "a",
+          "start": 66.88,
+          "end": 66.88,
+          "probability": 0.1525
+        },
+        {
+          "word": "new",
+          "start": 66.88,
+          "end": 66.88,
+          "probability": 0.0607
+        },
+        {
+          "word": "type",
+          "start": 66.88,
+          "end": 66.88,
+          "probability": 0.0178
+        },
+        {
+          "word": "code.",
+          "start": 66.88,
+          "end": 66.88,
+          "probability": 0.1173
+        },
+        {
+          "word": "The",
+          "start": 66.88,
+          "end": 66.88,
+          "probability": 0.645
+        },
+        {
+          "word": "contact",
+          "start": 66.88,
+          "end": 67.28,
+          "probability": 0.4038
+        },
+        {
+          "word": "role",
+          "start": 67.28,
+          "end": 67.6,
+          "probability": 0.9307
+        },
+        {
+          "word": "category",
+          "start": 67.6,
+          "end": 68.1,
+          "probability": 0.978
+        },
+        {
+          "word": "type",
+          "start": 68.1,
+          "end": 68.54,
+          "probability": 0.9312
+        },
+        {
+          "word": "list",
+          "start": 68.54,
+          "end": 68.76,
+          "probability": 0.979
+        },
+        {
+          "word": "categorizes",
+          "start": 68.76,
+          "end": 69.48,
+          "probability": 0.9795
+        },
+        {
+          "word": "contact",
+          "start": 69.48,
+          "end": 69.96,
+          "probability": 0.9888
+        },
+        {
+          "word": "types",
+          "start": 69.96,
+          "end": 70.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "for",
+          "start": 70.4,
+          "end": 70.62,
+          "probability": 0.9893
+        },
+        {
+          "word": "filtering",
+          "start": 70.62,
+          "end": 71.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "purposes.",
+          "start": 71.02,
+          "end": 71.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "Administrative",
+          "start": 72.8,
+          "end": 73.6,
+          "probability": 0.8867
+        },
+        {
+          "word": "Law",
+          "start": 73.6,
+          "end": 73.8,
+          "probability": 0.3066
+        },
+        {
+          "word": "Judge",
+          "start": 73.8,
+          "end": 74.06,
+          "probability": 0.8682
+        },
+        {
+          "word": "should",
+          "start": 74.06,
+          "end": 74.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "be",
+          "start": 74.32,
+          "end": 74.46,
+          "probability": 0.999
+        },
+        {
+          "word": "categorized",
+          "start": 74.46,
+          "end": 75.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "under",
+          "start": 75.2,
+          "end": 75.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "litigation.",
+          "start": 75.44,
+          "end": 75.76,
+          "probability": 0.6846
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 83.0,
+      "end": 87.36,
+      "start_formatted": "00:01:23.000",
+      "end_formatted": "00:01:27.360",
+      "text": "The litigation type code is already selected, so I click Next.",
+      "words": [
+        {
+          "word": "The",
+          "start": 83.0,
+          "end": 83.8,
+          "probability": 0.9673
+        },
+        {
+          "word": "litigation",
+          "start": 83.8,
+          "end": 84.2,
+          "probability": 0.9243
+        },
+        {
+          "word": "type",
+          "start": 84.2,
+          "end": 84.62,
+          "probability": 0.998
+        },
+        {
+          "word": "code",
+          "start": 84.62,
+          "end": 84.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 84.92,
+          "end": 85.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "already",
+          "start": 85.08,
+          "end": 85.48,
+          "probability": 0.9834
+        },
+        {
+          "word": "selected,",
+          "start": 85.48,
+          "end": 86.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "so",
+          "start": 86.36,
+          "end": 86.62,
+          "probability": 0.9907
+        },
+        {
+          "word": "I",
+          "start": 86.62,
+          "end": 86.8,
+          "probability": 0.9888
+        },
+        {
+          "word": "click",
+          "start": 86.8,
+          "end": 87.08,
+          "probability": 0.9834
+        },
+        {
+          "word": "Next.",
+          "start": 87.08,
+          "end": 87.36,
+          "probability": 0.373
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 88.44,
+      "end": 99.34,
+      "start_formatted": "00:01:28.440",
+      "end_formatted": "00:01:39.340",
+      "text": "The Contact Role Category Type List is selected, but I need the Contact Role Type List, so I click the up key. In the Category List, I select ALJ underscore SI.",
+      "words": [
+        {
+          "word": "The",
+          "start": 88.44,
+          "end": 89.04,
+          "probability": 0.9043
+        },
+        {
+          "word": "Contact",
+          "start": 89.04,
+          "end": 89.5,
+          "probability": 0.6582
+        },
+        {
+          "word": "Role",
+          "start": 89.5,
+          "end": 89.82,
+          "probability": 0.792
+        },
+        {
+          "word": "Category",
+          "start": 89.82,
+          "end": 90.3,
+          "probability": 0.8394
+        },
+        {
+          "word": "Type",
+          "start": 90.3,
+          "end": 90.68,
+          "probability": 0.6719
+        },
+        {
+          "word": "List",
+          "start": 90.68,
+          "end": 90.88,
+          "probability": 0.3687
+        },
+        {
+          "word": "is",
+          "start": 90.88,
+          "end": 91.06,
+          "probability": 0.998
+        },
+        {
+          "word": "selected,",
+          "start": 91.06,
+          "end": 91.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "but",
+          "start": 91.8,
+          "end": 92.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "I",
+          "start": 92.0,
+          "end": 92.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "need",
+          "start": 92.12,
+          "end": 92.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 92.32,
+          "end": 92.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Contact",
+          "start": 92.44,
+          "end": 92.86,
+          "probability": 0.8882
+        },
+        {
+          "word": "Role",
+          "start": 92.86,
+          "end": 93.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "Type",
+          "start": 93.3,
+          "end": 93.52,
+          "probability": 0.9551
+        },
+        {
+          "word": "List,",
+          "start": 93.52,
+          "end": 93.9,
+          "probability": 0.9502
+        },
+        {
+          "word": "so",
+          "start": 94.08,
+          "end": 94.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "I",
+          "start": 94.34,
+          "end": 94.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "click",
+          "start": 94.46,
+          "end": 94.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 94.68,
+          "end": 94.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "up",
+          "start": 94.82,
+          "end": 95.0,
+          "probability": 0.6338
+        },
+        {
+          "word": "key.",
+          "start": 95.0,
+          "end": 95.22,
+          "probability": 0.9443
+        },
+        {
+          "word": "In",
+          "start": 95.5,
+          "end": 95.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 95.84,
+          "end": 95.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Category",
+          "start": 95.94,
+          "end": 96.42,
+          "probability": 0.8271
+        },
+        {
+          "word": "List,",
+          "start": 96.42,
+          "end": 96.82,
+          "probability": 0.7769
+        },
+        {
+          "word": "I",
+          "start": 97.02,
+          "end": 97.24,
+          "probability": 0.998
+        },
+        {
+          "word": "select",
+          "start": 97.24,
+          "end": 97.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "ALJ",
+          "start": 97.66,
+          "end": 98.26,
+          "probability": 0.8584
+        },
+        {
+          "word": "underscore",
+          "start": 98.26,
+          "end": 98.54,
+          "probability": 0.0325
+        },
+        {
+          "word": "SI.",
+          "start": 98.54,
+          "end": 99.34,
+          "probability": 0.8369
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 100.5,
+      "end": 101.66,
+      "start_formatted": "00:01:40.500",
+      "end_formatted": "00:01:41.660",
+      "text": "And click Finish.",
+      "words": [
+        {
+          "word": "And",
+          "start": 100.5,
+          "end": 101.1,
+          "probability": 0.9404
+        },
+        {
+          "word": "click",
+          "start": 101.1,
+          "end": 101.36,
+          "probability": 0.9683
+        },
+        {
+          "word": "Finish.",
+          "start": 101.36,
+          "end": 101.66,
+          "probability": 0.8633
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 104.5,
+      "end": 108.44,
+      "start_formatted": "00:01:44.500",
+      "end_formatted": "00:01:48.440",
+      "text": "Entity role constraints define what kind of contacts can have what kind of roles.",
+      "words": [
+        {
+          "word": "Entity",
+          "start": 104.5,
+          "end": 105.1,
+          "probability": 0.9922
+        },
+        {
+          "word": "role",
+          "start": 105.1,
+          "end": 105.26,
+          "probability": 0.3281
+        },
+        {
+          "word": "constraints",
+          "start": 105.26,
+          "end": 105.74,
+          "probability": 0.9639
+        },
+        {
+          "word": "define",
+          "start": 105.74,
+          "end": 106.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "what",
+          "start": 106.1,
+          "end": 106.4,
+          "probability": 0.998
+        },
+        {
+          "word": "kind",
+          "start": 106.4,
+          "end": 106.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 106.58,
+          "end": 106.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "contacts",
+          "start": 106.7,
+          "end": 107.14,
+          "probability": 0.938
+        },
+        {
+          "word": "can",
+          "start": 107.14,
+          "end": 107.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 107.42,
+          "end": 107.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "what",
+          "start": 107.62,
+          "end": 107.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "kind",
+          "start": 107.82,
+          "end": 108.02,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 108.02,
+          "end": 108.16,
+          "probability": 0.999
+        },
+        {
+          "word": "roles.",
+          "start": 108.16,
+          "end": 108.44,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 109.46,
+      "end": 116.4,
+      "start_formatted": "00:01:49.460",
+      "end_formatted": "00:01:56.400",
+      "text": "To configure entity role constraints for the ALJ, I navigate to the Entity role constraints config.xml file.",
+      "words": [
+        {
+          "word": "To",
+          "start": 109.46,
+          "end": 110.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "configure",
+          "start": 110.06,
+          "end": 110.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "entity",
+          "start": 110.5,
+          "end": 110.86,
+          "probability": 0.5791
+        },
+        {
+          "word": "role",
+          "start": 110.86,
+          "end": 111.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "constraints",
+          "start": 111.18,
+          "end": 111.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 111.6,
+          "end": 111.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 111.88,
+          "end": 111.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "ALJ,",
+          "start": 111.98,
+          "end": 112.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 112.88,
+          "end": 113.1,
+          "probability": 0.998
+        },
+        {
+          "word": "navigate",
+          "start": 113.1,
+          "end": 113.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 113.48,
+          "end": 113.72,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 113.72,
+          "end": 113.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "Entity",
+          "start": 113.84,
+          "end": 114.2,
+          "probability": 0.8442
+        },
+        {
+          "word": "role",
+          "start": 114.2,
+          "end": 114.42,
+          "probability": 0.6406
+        },
+        {
+          "word": "constraints",
+          "start": 114.42,
+          "end": 114.94,
+          "probability": 0.6172
+        },
+        {
+          "word": "config",
+          "start": 114.94,
+          "end": 115.3,
+          "probability": 0.8076
+        },
+        {
+          "word": ".xml",
+          "start": 115.3,
+          "end": 115.98,
+          "probability": 0.8696
+        },
+        {
+          "word": "file.",
+          "start": 115.98,
+          "end": 116.4,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 124.78,
+      "end": 129.38,
+      "start_formatted": "00:02:04.780",
+      "end_formatted": "00:02:09.380",
+      "text": "I type left bracket, C and select Contact Role Type Constraint.",
+      "words": [
+        {
+          "word": "I",
+          "start": 124.78,
+          "end": 125.46,
+          "probability": 0.9585
+        },
+        {
+          "word": "type",
+          "start": 125.46,
+          "end": 125.74,
+          "probability": 0.9878
+        },
+        {
+          "word": "left",
+          "start": 125.74,
+          "end": 126.0,
+          "probability": 0.4988
+        },
+        {
+          "word": "bracket,",
+          "start": 126.0,
+          "end": 126.44,
+          "probability": 0.9282
+        },
+        {
+          "word": "C",
+          "start": 126.7,
+          "end": 127.0,
+          "probability": 0.4009
+        },
+        {
+          "word": "and",
+          "start": 127.0,
+          "end": 127.2,
+          "probability": 0.9229
+        },
+        {
+          "word": "select",
+          "start": 127.2,
+          "end": 127.56,
+          "probability": 0.9858
+        },
+        {
+          "word": "Contact",
+          "start": 127.56,
+          "end": 128.0,
+          "probability": 0.5073
+        },
+        {
+          "word": "Role",
+          "start": 128.0,
+          "end": 128.44,
+          "probability": 0.666
+        },
+        {
+          "word": "Type",
+          "start": 128.44,
+          "end": 128.66,
+          "probability": 0.437
+        },
+        {
+          "word": "Constraint.",
+          "start": 128.66,
+          "end": 129.38,
+          "probability": 0.8481
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 129.66,
+      "end": 133.88,
+      "start_formatted": "00:02:09.660",
+      "end_formatted": "00:02:13.880",
+      "text": "When I select Contact Role Type Cone Tron, two properties appear.",
+      "words": [
+        {
+          "word": "When",
+          "start": 129.66,
+          "end": 130.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 130.24,
+          "end": 130.34,
+          "probability": 0.998
+        },
+        {
+          "word": "select",
+          "start": 130.34,
+          "end": 130.72,
+          "probability": 0.9854
+        },
+        {
+          "word": "Contact",
+          "start": 130.72,
+          "end": 131.16,
+          "probability": 0.9385
+        },
+        {
+          "word": "Role",
+          "start": 131.16,
+          "end": 131.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "Type",
+          "start": 131.54,
+          "end": 131.8,
+          "probability": 0.9497
+        },
+        {
+          "word": "Cone",
+          "start": 131.8,
+          "end": 132.08,
+          "probability": 0.3403
+        },
+        {
+          "word": "Tron,",
+          "start": 132.08,
+          "end": 132.48,
+          "probability": 0.7285
+        },
+        {
+          "word": "two",
+          "start": 132.66,
+          "end": 132.92,
+          "probability": 0.9214
+        },
+        {
+          "word": "properties",
+          "start": 132.92,
+          "end": 133.42,
+          "probability": 0.9907
+        },
+        {
+          "word": "appear.",
+          "start": 133.42,
+          "end": 133.88,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 134.14,
+      "end": 138.5,
+      "start_formatted": "00:02:14.140",
+      "end_formatted": "00:02:18.500",
+      "text": "For the Contact Role Code property, I enter ALJ underscore SI.",
+      "words": [
+        {
+          "word": "For",
+          "start": 134.14,
+          "end": 134.5,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 134.5,
+          "end": 134.62,
+          "probability": 0.998
+        },
+        {
+          "word": "Contact",
+          "start": 134.62,
+          "end": 135.02,
+          "probability": 0.9302
+        },
+        {
+          "word": "Role",
+          "start": 135.02,
+          "end": 135.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "Code",
+          "start": 135.36,
+          "end": 135.64,
+          "probability": 0.9185
+        },
+        {
+          "word": "property,",
+          "start": 135.64,
+          "end": 136.18,
+          "probability": 0.9302
+        },
+        {
+          "word": "I",
+          "start": 136.42,
+          "end": 136.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "enter",
+          "start": 136.66,
+          "end": 136.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "ALJ",
+          "start": 136.94,
+          "end": 137.48,
+          "probability": 0.7939
+        },
+        {
+          "word": "underscore",
+          "start": 137.48,
+          "end": 137.86,
+          "probability": 0.0237
+        },
+        {
+          "word": "SI.",
+          "start": 137.86,
+          "end": 138.5,
+          "probability": 0.9082
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 140.3,
+      "end": 145.5,
+      "start_formatted": "00:02:20.300",
+      "end_formatted": "00:02:25.500",
+      "text": "And for the Contact Subtype property, I enter Adjudicator, remembering to close the tag with a backslash.",
+      "words": [
+        {
+          "word": "And",
+          "start": 140.3,
+          "end": 140.78,
+          "probability": 0.8462
+        },
+        {
+          "word": "for",
+          "start": 140.78,
+          "end": 140.92,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 140.92,
+          "end": 141.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "Contact",
+          "start": 141.04,
+          "end": 141.44,
+          "probability": 0.3979
+        },
+        {
+          "word": "Subtype",
+          "start": 141.44,
+          "end": 142.0,
+          "probability": 0.7212
+        },
+        {
+          "word": "property,",
+          "start": 142.0,
+          "end": 142.46,
+          "probability": 0.9736
+        },
+        {
+          "word": "I",
+          "start": 142.66,
+          "end": 142.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "enter",
+          "start": 142.72,
+          "end": 142.98,
+          "probability": 0.9902
+        },
+        {
+          "word": "Adjudicator,",
+          "start": 142.98,
+          "end": 143.7,
+          "probability": 0.9326
+        },
+        {
+          "word": "remembering",
+          "start": 143.86,
+          "end": 144.36,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 144.36,
+          "end": 144.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "close",
+          "start": 144.56,
+          "end": 144.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 144.82,
+          "end": 145.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "tag",
+          "start": 145.0,
+          "end": 145.24,
+          "probability": 0.979
+        },
+        {
+          "word": "with",
+          "start": 145.24,
+          "end": 145.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 145.4,
+          "end": 145.48,
+          "probability": 0.9883
+        },
+        {
+          "word": "backslash.",
+          "start": 145.48,
+          "end": 145.72,
+          "probability": 0.9629
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 150.02,
+      "end": 154.52,
+      "start_formatted": "00:02:30.020",
+      "end_formatted": "00:02:34.520",
+      "text": "Now I have to add the code to the Matter entity, so I scroll down to find it.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 150.02,
+          "end": 150.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "I",
+          "start": 150.5,
+          "end": 150.68,
+          "probability": 0.9253
+        },
+        {
+          "word": "have",
+          "start": 150.68,
+          "end": 150.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 150.86,
+          "end": 151.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "add",
+          "start": 151.0,
+          "end": 151.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 151.2,
+          "end": 151.32,
+          "probability": 0.9897
+        },
+        {
+          "word": "code",
+          "start": 151.32,
+          "end": 151.54,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 151.54,
+          "end": 151.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 151.7,
+          "end": 151.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "Matter",
+          "start": 151.82,
+          "end": 152.08,
+          "probability": 0.6235
+        },
+        {
+          "word": "entity,",
+          "start": 152.08,
+          "end": 152.5,
+          "probability": 0.7671
+        },
+        {
+          "word": "so",
+          "start": 152.8,
+          "end": 153.06,
+          "probability": 0.9946
+        },
+        {
+          "word": "I",
+          "start": 153.06,
+          "end": 153.22,
+          "probability": 0.9878
+        },
+        {
+          "word": "scroll",
+          "start": 153.22,
+          "end": 153.56,
+          "probability": 0.9878
+        },
+        {
+          "word": "down",
+          "start": 153.56,
+          "end": 153.84,
+          "probability": 0.9897
+        },
+        {
+          "word": "to",
+          "start": 153.84,
+          "end": 154.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "find",
+          "start": 154.04,
+          "end": 154.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "it.",
+          "start": 154.28,
+          "end": 154.52,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 157.52,
+      "end": 162.08,
+      "start_formatted": "00:02:37.520",
+      "end_formatted": "00:02:42.080",
+      "text": "Again, I will preserve alphabetical order by placing the ALJ at the top.",
+      "words": [
+        {
+          "word": "Again,",
+          "start": 157.52,
+          "end": 158.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 158.28,
+          "end": 158.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 158.56,
+          "end": 158.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "preserve",
+          "start": 158.74,
+          "end": 159.14,
+          "probability": 0.9883
+        },
+        {
+          "word": "alphabetical",
+          "start": 159.14,
+          "end": 159.92,
+          "probability": 0.9658
+        },
+        {
+          "word": "order",
+          "start": 159.92,
+          "end": 160.16,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 160.16,
+          "end": 160.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "placing",
+          "start": 160.38,
+          "end": 160.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 160.78,
+          "end": 160.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "ALJ",
+          "start": 160.96,
+          "end": 161.52,
+          "probability": 0.7935
+        },
+        {
+          "word": "at",
+          "start": 161.52,
+          "end": 161.7,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 161.7,
+          "end": 161.84,
+          "probability": 0.999
+        },
+        {
+          "word": "top.",
+          "start": 161.84,
+          "end": 162.08,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 162.08,
+      "end": 166.72,
+      "start_formatted": "00:02:42.080",
+      "end_formatted": "00:02:46.720",
+      "text": "I add a new Role Ref tag, using ALJ underscore SI as the code.",
+      "words": [
+        {
+          "word": "I",
+          "start": 162.08,
+          "end": 162.62,
+          "probability": 0.9507
+        },
+        {
+          "word": "add",
+          "start": 162.62,
+          "end": 162.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "a",
+          "start": 162.82,
+          "end": 162.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "new",
+          "start": 162.94,
+          "end": 163.06,
+          "probability": 0.9927
+        },
+        {
+          "word": "Role",
+          "start": 163.06,
+          "end": 163.32,
+          "probability": 0.5195
+        },
+        {
+          "word": "Ref",
+          "start": 163.32,
+          "end": 163.56,
+          "probability": 0.1069
+        },
+        {
+          "word": "tag,",
+          "start": 163.56,
+          "end": 163.88,
+          "probability": 0.708
+        },
+        {
+          "word": "using",
+          "start": 164.12,
+          "end": 164.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "ALJ",
+          "start": 164.5,
+          "end": 165.14,
+          "probability": 0.6919
+        },
+        {
+          "word": "underscore",
+          "start": 165.14,
+          "end": 165.42,
+          "probability": 0.0393
+        },
+        {
+          "word": "SI",
+          "start": 165.42,
+          "end": 166.08,
+          "probability": 0.8037
+        },
+        {
+          "word": "as",
+          "start": 166.08,
+          "end": 166.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 166.3,
+          "end": 166.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "code.",
+          "start": 166.4,
+          "end": 166.72,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 175.02,
+      "end": 178.34,
+      "start_formatted": "00:02:55.020",
+      "end_formatted": "00:02:58.340",
+      "text": "Now I type left bracket R and select Role Constraint.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 175.02,
+          "end": 175.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "I",
+          "start": 175.58,
+          "end": 175.76,
+          "probability": 0.9873
+        },
+        {
+          "word": "type",
+          "start": 175.76,
+          "end": 176.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "left",
+          "start": 176.04,
+          "end": 176.3,
+          "probability": 0.6846
+        },
+        {
+          "word": "bracket",
+          "start": 176.3,
+          "end": 176.72,
+          "probability": 0.9683
+        },
+        {
+          "word": "R",
+          "start": 176.72,
+          "end": 176.98,
+          "probability": 0.7715
+        },
+        {
+          "word": "and",
+          "start": 176.98,
+          "end": 177.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "select",
+          "start": 177.14,
+          "end": 177.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "Role",
+          "start": 177.44,
+          "end": 177.72,
+          "probability": 0.9321
+        },
+        {
+          "word": "Constraint.",
+          "start": 177.72,
+          "end": 178.34,
+          "probability": 0.9023
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 178.6,
+      "end": 184.1,
+      "start_formatted": "00:02:58.600",
+      "end_formatted": "00:03:04.100",
+      "text": "For the Constraint Type, I enter Exclusive, indicating that only one contact may have this role.",
+      "words": [
+        {
+          "word": "For",
+          "start": 178.6,
+          "end": 178.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 178.98,
+          "end": 179.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "Constraint",
+          "start": 179.1,
+          "end": 179.62,
+          "probability": 0.7524
+        },
+        {
+          "word": "Type,",
+          "start": 179.62,
+          "end": 179.88,
+          "probability": 0.1304
+        },
+        {
+          "word": "I",
+          "start": 180.12,
+          "end": 180.34,
+          "probability": 0.998
+        },
+        {
+          "word": "enter",
+          "start": 180.34,
+          "end": 180.62,
+          "probability": 0.9834
+        },
+        {
+          "word": "Exclusive,",
+          "start": 180.62,
+          "end": 181.28,
+          "probability": 0.8325
+        },
+        {
+          "word": "indicating",
+          "start": 181.46,
+          "end": 181.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 181.96,
+          "end": 182.24,
+          "probability": 0.999
+        },
+        {
+          "word": "only",
+          "start": 182.24,
+          "end": 182.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "one",
+          "start": 182.46,
+          "end": 182.74,
+          "probability": 0.9585
+        },
+        {
+          "word": "contact",
+          "start": 182.74,
+          "end": 183.2,
+          "probability": 0.9268
+        },
+        {
+          "word": "may",
+          "start": 183.2,
+          "end": 183.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "have",
+          "start": 183.52,
+          "end": 183.7,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 183.7,
+          "end": 183.9,
+          "probability": 0.998
+        },
+        {
+          "word": "role.",
+          "start": 183.9,
+          "end": 184.1,
+          "probability": 0.6665
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 184.1,
+      "end": 186.2,
+      "start_formatted": "00:03:04.100",
+      "end_formatted": "00:03:06.200",
+      "text": "I end the tag with a backslash.",
+      "words": [
+        {
+          "word": "I",
+          "start": 184.1,
+          "end": 184.7,
+          "probability": 0.8687
+        },
+        {
+          "word": "end",
+          "start": 184.7,
+          "end": 184.88,
+          "probability": 0.9775
+        },
+        {
+          "word": "the",
+          "start": 184.88,
+          "end": 185.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "tag",
+          "start": 185.02,
+          "end": 185.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "with",
+          "start": 185.24,
+          "end": 185.38,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 185.38,
+          "end": 185.46,
+          "probability": 0.9946
+        },
+        {
+          "word": "backslash.",
+          "start": 185.46,
+          "end": 186.2,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 187.48,
+      "end": 191.48,
+      "start_formatted": "00:03:07.480",
+      "end_formatted": "00:03:11.480",
+      "text": "To test my work, I start the Claim Center server in debug mode.",
+      "words": [
+        {
+          "word": "To",
+          "start": 187.48,
+          "end": 188.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "test",
+          "start": 188.02,
+          "end": 188.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "my",
+          "start": 188.26,
+          "end": 188.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "work,",
+          "start": 188.46,
+          "end": 188.82,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 189.0,
+          "end": 189.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "start",
+          "start": 189.2,
+          "end": 189.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 189.52,
+          "end": 189.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "Claim",
+          "start": 189.66,
+          "end": 189.92,
+          "probability": 0.9492
+        },
+        {
+          "word": "Center",
+          "start": 189.92,
+          "end": 190.26,
+          "probability": 0.9302
+        },
+        {
+          "word": "server",
+          "start": 190.26,
+          "end": 190.64,
+          "probability": 0.936
+        },
+        {
+          "word": "in",
+          "start": 190.64,
+          "end": 190.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "debug",
+          "start": 190.88,
+          "end": 191.12,
+          "probability": 0.9185
+        },
+        {
+          "word": "mode.",
+          "start": 191.12,
+          "end": 191.48,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 195.28,
+      "end": 199.52,
+      "start_formatted": "00:03:15.280",
+      "end_formatted": "00:03:19.520",
+      "text": "When the server is started, I log into Claim Center as Andy Applegate.",
+      "words": [
+        {
+          "word": "When",
+          "start": 195.28,
+          "end": 195.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 195.82,
+          "end": 195.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "server",
+          "start": 195.92,
+          "end": 196.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 196.2,
+          "end": 196.4,
+          "probability": 0.9878
+        },
+        {
+          "word": "started,",
+          "start": 196.4,
+          "end": 196.74,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 197.0,
+          "end": 197.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "log",
+          "start": 197.22,
+          "end": 197.5,
+          "probability": 0.8989
+        },
+        {
+          "word": "into",
+          "start": 197.5,
+          "end": 197.72,
+          "probability": 0.585
+        },
+        {
+          "word": "Claim",
+          "start": 197.72,
+          "end": 198.02,
+          "probability": 0.9854
+        },
+        {
+          "word": "Center",
+          "start": 198.02,
+          "end": 198.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "as",
+          "start": 198.36,
+          "end": 198.52,
+          "probability": 0.8965
+        },
+        {
+          "word": "Andy",
+          "start": 198.52,
+          "end": 198.88,
+          "probability": 0.9517
+        },
+        {
+          "word": "Applegate.",
+          "start": 198.88,
+          "end": 199.52,
+          "probability": 0.9575
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 207.92,
+      "end": 209.72,
+      "start_formatted": "00:03:27.920",
+      "end_formatted": "00:03:29.720",
+      "text": "I navigate to a claim.",
+      "words": [
+        {
+          "word": "I",
+          "start": 207.92,
+          "end": 208.56,
+          "probability": 0.9556
+        },
+        {
+          "word": "navigate",
+          "start": 208.56,
+          "end": 208.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 208.96,
+          "end": 209.26,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 209.26,
+          "end": 209.4,
+          "probability": 0.96
+        },
+        {
+          "word": "claim.",
+          "start": 209.4,
+          "end": 209.72,
+          "probability": 0.96
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 211.2,
+      "end": 216.62,
+      "start_formatted": "00:03:31.200",
+      "end_formatted": "00:03:36.620",
+      "text": "And on its litigation page, I see that there is an existing matter.",
+      "words": [
+        {
+          "word": "And",
+          "start": 211.2,
+          "end": 211.84,
+          "probability": 0.9844
+        },
+        {
+          "word": "on",
+          "start": 211.84,
+          "end": 212.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "its",
+          "start": 212.0,
+          "end": 212.16,
+          "probability": 0.98
+        },
+        {
+          "word": "litigation",
+          "start": 212.16,
+          "end": 212.54,
+          "probability": 0.9854
+        },
+        {
+          "word": "page,",
+          "start": 212.54,
+          "end": 213.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 213.38,
+          "end": 215.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "see",
+          "start": 215.06,
+          "end": 215.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 215.26,
+          "end": 215.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 215.42,
+          "end": 215.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 215.6,
+          "end": 215.74,
+          "probability": 0.998
+        },
+        {
+          "word": "an",
+          "start": 215.74,
+          "end": 215.84,
+          "probability": 0.999
+        },
+        {
+          "word": "existing",
+          "start": 215.84,
+          "end": 216.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "matter.",
+          "start": 216.26,
+          "end": 216.62,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 217.08,
+      "end": 219.58,
+      "start_formatted": "00:03:37.080",
+      "end_formatted": "00:03:39.580",
+      "text": "Now I navigate to the contacts list.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 217.08,
+          "end": 217.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 217.64,
+          "end": 217.82,
+          "probability": 0.9854
+        },
+        {
+          "word": "navigate",
+          "start": 217.82,
+          "end": 218.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 218.22,
+          "end": 218.48,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 218.48,
+          "end": 218.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "contacts",
+          "start": 218.6,
+          "end": 219.12,
+          "probability": 0.9668
+        },
+        {
+          "word": "list.",
+          "start": 219.12,
+          "end": 219.58,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 221.74,
+      "end": 224.82,
+      "start_formatted": "00:03:41.740",
+      "end_formatted": "00:03:44.820",
+      "text": "I will create a new contact as an adjudicator.",
+      "words": [
+        {
+          "word": "I",
+          "start": 221.74,
+          "end": 222.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 222.38,
+          "end": 222.54,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 222.54,
+          "end": 222.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 222.88,
+          "end": 223.06,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 223.06,
+          "end": 223.22,
+          "probability": 1.0
+        },
+        {
+          "word": "contact",
+          "start": 223.22,
+          "end": 223.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "as",
+          "start": 223.68,
+          "end": 224.0,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 224.0,
+          "end": 224.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "adjudicator.",
+          "start": 224.12,
+          "end": 224.82,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 232.72,
+      "end": 236.26,
+      "start_formatted": "00:03:52.720",
+      "end_formatted": "00:03:56.260",
+      "text": "I want to assign a new contact the role of Administrative Law Judge.",
+      "words": [
+        {
+          "word": "I",
+          "start": 232.72,
+          "end": 233.16,
+          "probability": 0.874
+        },
+        {
+          "word": "want",
+          "start": 233.16,
+          "end": 233.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 233.36,
+          "end": 233.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "assign",
+          "start": 233.52,
+          "end": 233.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 233.84,
+          "end": 233.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 233.98,
+          "end": 234.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "contact",
+          "start": 234.12,
+          "end": 234.54,
+          "probability": 0.9741
+        },
+        {
+          "word": "the",
+          "start": 234.54,
+          "end": 234.8,
+          "probability": 0.9927
+        },
+        {
+          "word": "role",
+          "start": 234.8,
+          "end": 234.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 234.98,
+          "end": 235.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "Administrative",
+          "start": 235.14,
+          "end": 235.8,
+          "probability": 0.6621
+        },
+        {
+          "word": "Law",
+          "start": 235.8,
+          "end": 236.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "Judge.",
+          "start": 236.02,
+          "end": 236.26,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 236.64,
+      "end": 237.66,
+      "start_formatted": "00:03:56.640",
+      "end_formatted": "00:03:57.660",
+      "text": "But I can't.",
+      "words": [
+        {
+          "word": "But",
+          "start": 236.64,
+          "end": 237.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 237.08,
+          "end": 237.22,
+          "probability": 0.9917
+        },
+        {
+          "word": "can't.",
+          "start": 237.22,
+          "end": 237.66,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 237.9,
+      "end": 241.14,
+      "start_formatted": "00:03:57.900",
+      "end_formatted": "00:04:01.140",
+      "text": "The Administrative Law Judge role does not appear on this list.",
+      "words": [
+        {
+          "word": "The",
+          "start": 237.9,
+          "end": 238.24,
+          "probability": 0.999
+        },
+        {
+          "word": "Administrative",
+          "start": 238.24,
+          "end": 238.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Law",
+          "start": 238.96,
+          "end": 239.18,
+          "probability": 1.0
+        },
+        {
+          "word": "Judge",
+          "start": 239.18,
+          "end": 239.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "role",
+          "start": 239.48,
+          "end": 239.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "does",
+          "start": 239.7,
+          "end": 239.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 239.92,
+          "end": 240.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "appear",
+          "start": 240.14,
+          "end": 240.42,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 240.42,
+          "end": 240.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 240.6,
+          "end": 240.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "list.",
+          "start": 240.76,
+          "end": 241.14,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 241.38,
+      "end": 246.76,
+      "start_formatted": "00:04:01.380",
+      "end_formatted": "00:04:06.760",
+      "text": "This is because I am trying to relate it to the claim, and the ALJ role can only be related to a matter.",
+      "words": [
+        {
+          "word": "This",
+          "start": 241.38,
+          "end": 241.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 241.82,
+          "end": 241.96,
+          "probability": 1.0
+        },
+        {
+          "word": "because",
+          "start": 241.96,
+          "end": 242.2,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 242.2,
+          "end": 242.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "am",
+          "start": 242.38,
+          "end": 242.46,
+          "probability": 0.4607
+        },
+        {
+          "word": "trying",
+          "start": 242.46,
+          "end": 242.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 242.66,
+          "end": 242.82,
+          "probability": 1.0
+        },
+        {
+          "word": "relate",
+          "start": 242.82,
+          "end": 243.08,
+          "probability": 0.9888
+        },
+        {
+          "word": "it",
+          "start": 243.08,
+          "end": 243.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 243.2,
+          "end": 243.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 243.34,
+          "end": 243.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 243.46,
+          "end": 243.8,
+          "probability": 0.9883
+        },
+        {
+          "word": "and",
+          "start": 243.96,
+          "end": 244.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 244.18,
+          "end": 244.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "ALJ",
+          "start": 244.32,
+          "end": 244.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "role",
+          "start": 244.88,
+          "end": 245.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "can",
+          "start": 245.16,
+          "end": 245.36,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 245.36,
+          "end": 245.62,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 245.62,
+          "end": 245.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "related",
+          "start": 245.8,
+          "end": 246.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 246.14,
+          "end": 246.32,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 246.32,
+          "end": 246.48,
+          "probability": 0.999
+        },
+        {
+          "word": "matter.",
+          "start": 246.48,
+          "end": 246.76,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 247.04,
+      "end": 250.86,
+      "start_formatted": "00:04:07.040",
+      "end_formatted": "00:04:10.860",
+      "text": "If I change the Related to field so that the role will be related to the matter.",
+      "words": [
+        {
+          "word": "If",
+          "start": 247.04,
+          "end": 247.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 247.46,
+          "end": 247.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "change",
+          "start": 247.56,
+          "end": 247.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 247.92,
+          "end": 248.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "Related",
+          "start": 248.08,
+          "end": 248.48,
+          "probability": 0.8711
+        },
+        {
+          "word": "to",
+          "start": 248.48,
+          "end": 248.64,
+          "probability": 0.9302
+        },
+        {
+          "word": "field",
+          "start": 248.64,
+          "end": 248.92,
+          "probability": 0.9878
+        },
+        {
+          "word": "so",
+          "start": 248.92,
+          "end": 249.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 249.14,
+          "end": 249.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 249.28,
+          "end": 249.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "role",
+          "start": 249.38,
+          "end": 249.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 249.6,
+          "end": 249.78,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 249.78,
+          "end": 249.9,
+          "probability": 1.0
+        },
+        {
+          "word": "related",
+          "start": 249.9,
+          "end": 250.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 250.24,
+          "end": 250.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 250.44,
+          "end": 250.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "matter.",
+          "start": 250.56,
+          "end": 250.86,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 251.3,
+      "end": 253.86,
+      "start_formatted": "00:04:11.300",
+      "end_formatted": "00:04:13.860",
+      "text": "The Administrative Law Judge role is available.",
+      "words": [
+        {
+          "word": "The",
+          "start": 251.3,
+          "end": 251.74,
+          "probability": 0.998
+        },
+        {
+          "word": "Administrative",
+          "start": 251.74,
+          "end": 252.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "Law",
+          "start": 252.46,
+          "end": 252.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "Judge",
+          "start": 252.68,
+          "end": 252.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "role",
+          "start": 252.98,
+          "end": 253.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 253.22,
+          "end": 253.42,
+          "probability": 1.0
+        },
+        {
+          "word": "available.",
+          "start": 253.42,
+          "end": 253.86,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 253.86,
+      "end": 255.2,
+      "start_formatted": "00:04:13.860",
+      "end_formatted": "00:04:15.200",
+      "text": "I select it.",
+      "words": [
+        {
+          "word": "I",
+          "start": 253.86,
+          "end": 254.52,
+          "probability": 0.9233
+        },
+        {
+          "word": "select",
+          "start": 254.52,
+          "end": 254.86,
+          "probability": 0.9502
+        },
+        {
+          "word": "it.",
+          "start": 254.86,
+          "end": 255.2,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 255.68,
+      "end": 259.02,
+      "start_formatted": "00:04:15.680",
+      "end_formatted": "00:04:19.020",
+      "text": "I fill in the one required field, the last name.",
+      "words": [
+        {
+          "word": "I",
+          "start": 255.68,
+          "end": 256.36,
+          "probability": 0.9927
+        },
+        {
+          "word": "fill",
+          "start": 256.36,
+          "end": 256.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "in",
+          "start": 256.6,
+          "end": 256.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 256.7,
+          "end": 256.8,
+          "probability": 0.998
+        },
+        {
+          "word": "one",
+          "start": 256.8,
+          "end": 256.98,
+          "probability": 0.875
+        },
+        {
+          "word": "required",
+          "start": 256.98,
+          "end": 257.44,
+          "probability": 0.9692
+        },
+        {
+          "word": "field,",
+          "start": 257.44,
+          "end": 257.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 258.1,
+          "end": 258.32,
+          "probability": 0.9878
+        },
+        {
+          "word": "last",
+          "start": 258.32,
+          "end": 258.64,
+          "probability": 0.9272
+        },
+        {
+          "word": "name.",
+          "start": 258.64,
+          "end": 259.02,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 259.84,
+      "end": 261.06,
+      "start_formatted": "00:04:19.840",
+      "end_formatted": "00:04:21.060",
+      "text": "And click Update.",
+      "words": [
+        {
+          "word": "And",
+          "start": 259.84,
+          "end": 260.52,
+          "probability": 0.8765
+        },
+        {
+          "word": "click",
+          "start": 260.52,
+          "end": 260.78,
+          "probability": 0.98
+        },
+        {
+          "word": "Update.",
+          "start": 260.78,
+          "end": 261.06,
+          "probability": 0.385
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 263.58,
+      "end": 265.96,
+      "start_formatted": "00:04:23.580",
+      "end_formatted": "00:04:25.960",
+      "text": "Now I'll try adding another ALJ.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 263.58,
+          "end": 264.26,
+          "probability": 0.9937
+        },
+        {
+          "word": "I'll",
+          "start": 264.26,
+          "end": 264.48,
+          "probability": 0.9795
+        },
+        {
+          "word": "try",
+          "start": 264.48,
+          "end": 264.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "adding",
+          "start": 264.64,
+          "end": 265.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "another",
+          "start": 265.02,
+          "end": 265.36,
+          "probability": 0.998
+        },
+        {
+          "word": "ALJ.",
+          "start": 265.36,
+          "end": 265.96,
+          "probability": 0.9609
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 274.8,
+      "end": 280.26,
+      "start_formatted": "00:04:34.800",
+      "end_formatted": "00:04:40.260",
+      "text": "Once again, I will give the new contact the Administrative Law Judge role, related to the matter.",
+      "words": [
+        {
+          "word": "Once",
+          "start": 274.8,
+          "end": 275.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "again,",
+          "start": 275.3,
+          "end": 275.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 275.88,
+          "end": 276.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "will",
+          "start": 276.1,
+          "end": 276.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "give",
+          "start": 276.26,
+          "end": 276.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 276.42,
+          "end": 276.54,
+          "probability": 0.9829
+        },
+        {
+          "word": "new",
+          "start": 276.54,
+          "end": 276.68,
+          "probability": 0.9111
+        },
+        {
+          "word": "contact",
+          "start": 276.68,
+          "end": 277.14,
+          "probability": 0.8613
+        },
+        {
+          "word": "the",
+          "start": 277.14,
+          "end": 277.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "Administrative",
+          "start": 277.4,
+          "end": 278.1,
+          "probability": 0.7656
+        },
+        {
+          "word": "Law",
+          "start": 278.1,
+          "end": 278.3,
+          "probability": 0.9834
+        },
+        {
+          "word": "Judge",
+          "start": 278.3,
+          "end": 278.56,
+          "probability": 0.9214
+        },
+        {
+          "word": "role,",
+          "start": 278.56,
+          "end": 278.94,
+          "probability": 0.9048
+        },
+        {
+          "word": "related",
+          "start": 279.12,
+          "end": 279.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 279.6,
+          "end": 279.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 279.82,
+          "end": 279.94,
+          "probability": 0.999
+        },
+        {
+          "word": "matter.",
+          "start": 279.94,
+          "end": 280.26,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 287.48,
+      "end": 289.24,
+      "start_formatted": "00:04:47.480",
+      "end_formatted": "00:04:49.240",
+      "text": "A last name is required.",
+      "words": [
+        {
+          "word": "A",
+          "start": 287.48,
+          "end": 288.02,
+          "probability": 0.8721
+        },
+        {
+          "word": "last",
+          "start": 288.02,
+          "end": 288.3,
+          "probability": 0.9385
+        },
+        {
+          "word": "name",
+          "start": 288.3,
+          "end": 288.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 288.54,
+          "end": 288.72,
+          "probability": 0.999
+        },
+        {
+          "word": "required.",
+          "start": 288.72,
+          "end": 289.24,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 291.78,
+      "end": 293.4,
+      "start_formatted": "00:04:51.780",
+      "end_formatted": "00:04:53.400",
+      "text": "Now, when I click Update.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 291.78,
+          "end": 292.32,
+          "probability": 0.9858
+        },
+        {
+          "word": "when",
+          "start": 292.5,
+          "end": 292.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 292.74,
+          "end": 292.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 292.86,
+          "end": 293.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "Update.",
+          "start": 293.1,
+          "end": 293.4,
+          "probability": 0.5913
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 295.44,
+      "end": 300.46,
+      "start_formatted": "00:04:55.440",
+      "end_formatted": "00:05:00.460",
+      "text": "An error message indicates that there can only be one ALJ associated with a given matter.",
+      "words": [
+        {
+          "word": "An",
+          "start": 295.44,
+          "end": 295.98,
+          "probability": 0.9741
+        },
+        {
+          "word": "error",
+          "start": 295.98,
+          "end": 296.24,
+          "probability": 0.9736
+        },
+        {
+          "word": "message",
+          "start": 296.24,
+          "end": 296.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "indicates",
+          "start": 296.62,
+          "end": 297.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 297.04,
+          "end": 297.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "there",
+          "start": 297.36,
+          "end": 297.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "can",
+          "start": 297.56,
+          "end": 297.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "only",
+          "start": 297.72,
+          "end": 297.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "be",
+          "start": 297.98,
+          "end": 298.14,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 298.14,
+          "end": 298.4,
+          "probability": 0.9287
+        },
+        {
+          "word": "ALJ",
+          "start": 298.4,
+          "end": 298.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "associated",
+          "start": 298.92,
+          "end": 299.58,
+          "probability": 0.9917
+        },
+        {
+          "word": "with",
+          "start": 299.58,
+          "end": 299.8,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 299.8,
+          "end": 299.92,
+          "probability": 0.9668
+        },
+        {
+          "word": "given",
+          "start": 299.92,
+          "end": 300.14,
+          "probability": 0.999
+        },
+        {
+          "word": "matter.",
+          "start": 300.14,
+          "end": 300.46,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 300.74,
+      "end": 304.12,
+      "start_formatted": "00:05:00.740",
+      "end_formatted": "00:05:04.120",
+      "text": "This is because of the exclusive constraint I placed on ALJ.",
+      "words": [
+        {
+          "word": "This",
+          "start": 300.74,
+          "end": 301.18,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 301.18,
+          "end": 301.28,
+          "probability": 0.999
+        },
+        {
+          "word": "because",
+          "start": 301.28,
+          "end": 301.52,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 301.52,
+          "end": 301.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 301.7,
+          "end": 301.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "exclusive",
+          "start": 301.82,
+          "end": 302.26,
+          "probability": 0.9756
+        },
+        {
+          "word": "constraint",
+          "start": 302.26,
+          "end": 302.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 302.82,
+          "end": 303.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "placed",
+          "start": 303.04,
+          "end": 303.36,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 303.36,
+          "end": 303.52,
+          "probability": 0.999
+        },
+        {
+          "word": "ALJ.",
+          "start": 303.52,
+          "end": 304.12,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 304.12,
+      "end": 304.88,
+      "start_formatted": "00:05:04.120",
+      "end_formatted": "00:05:04.880",
+      "text": "I will be able to add a new contact.",
+      "words": [
+        {
+          "word": "I",
+          "start": 304.12,
+          "end": 304.88,
+          "probability": 0.0177
+        },
+        {
+          "word": "will",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.0574
+        },
+        {
+          "word": "be",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.0059
+        },
+        {
+          "word": "able",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.3176
+        },
+        {
+          "word": "to",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "add",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.0026
+        },
+        {
+          "word": "a",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.406
+        },
+        {
+          "word": "new",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.4241
+        },
+        {
+          "word": "contact.",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.772
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 304.88,
+      "end": 306.46,
+      "start_formatted": "00:05:04.880",
+      "end_formatted": "00:05:06.460",
+      "text": "So I'll just cancel the new contact.",
+      "words": [
+        {
+          "word": "So",
+          "start": 304.88,
+          "end": 304.88,
+          "probability": 0.056
+        },
+        {
+          "word": "I'll",
+          "start": 304.88,
+          "end": 305.06,
+          "probability": 0.6309
+        },
+        {
+          "word": "just",
+          "start": 305.06,
+          "end": 305.3,
+          "probability": 0.9619
+        },
+        {
+          "word": "cancel",
+          "start": 305.3,
+          "end": 305.68,
+          "probability": 0.9766
+        },
+        {
+          "word": "the",
+          "start": 305.68,
+          "end": 305.9,
+          "probability": 0.9551
+        },
+        {
+          "word": "new",
+          "start": 305.9,
+          "end": 306.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "contact.",
+          "start": 306.04,
+          "end": 306.46,
+          "probability": 0.8989
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 308.1,
+      "end": 310.98,
+      "start_formatted": "00:05:08.100",
+      "end_formatted": "00:05:10.980",
+      "text": "This concludes the Adding a Claim Contact role demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 308.1,
+          "end": 308.58,
+          "probability": 0.9585
+        },
+        {
+          "word": "concludes",
+          "start": 308.58,
+          "end": 309.02,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 309.02,
+          "end": 309.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "Adding",
+          "start": 309.22,
+          "end": 309.42,
+          "probability": 0.2278
+        },
+        {
+          "word": "a",
+          "start": 309.42,
+          "end": 309.62,
+          "probability": 0.9014
+        },
+        {
+          "word": "Claim",
+          "start": 309.62,
+          "end": 309.86,
+          "probability": 0.9492
+        },
+        {
+          "word": "Contact",
+          "start": 309.86,
+          "end": 310.3,
+          "probability": 0.8262
+        },
+        {
+          "word": "role",
+          "start": 310.3,
+          "end": 310.74,
+          "probability": 0.5259
+        },
+        {
+          "word": "demonstration.",
+          "start": 310.74,
+          "end": 310.98,
+          "probability": 0.9414
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 310.98,
+      "end": 311.36,
+      "start_formatted": "00:05:10.980",
+      "end_formatted": "00:05:11.360",
+      "text": "Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.2571
+        },
+        {
+          "word": "the",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.1895
+        },
+        {
+          "word": "Filogy",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.377
+        },
+        {
+          "word": "of",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.6816
+        },
+        {
+          "word": "the",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.4412
+        },
+        {
+          "word": "Filogy",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.4612
+        },
+        {
+          "word": "of",
+          "start": 310.98,
+          "end": 310.98,
+          "probability": 0.7417
+        },
+        {
+          "word": "the",
+          "start": 310.98,
+          "end": 311.02,
+          "probability": 0.5806
+        },
+        {
+          "word": "Filogy",
+          "start": 311.02,
+          "end": 311.16,
+          "probability": 0.488
+        },
+        {
+          "word": "of",
+          "start": 311.16,
+          "end": 311.18,
+          "probability": 0.7925
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.6758
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.5098
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8179
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.7422
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.5337
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8374
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.7905
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.5728
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8545
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8306
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.6172
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8784
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8618
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.6851
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8862
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8799
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.7334
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9004
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9038
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.7832
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9023
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9077
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8218
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9141
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9229
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8555
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9165
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9297
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.8862
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9268
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.938
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9082
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9253
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9448
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9277
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9336
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9375
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9316
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9541
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9434
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9351
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9565
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9473
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9355
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9556
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.939
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.958
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9434
+        },
+        {
+          "word": "the",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.9634
+        },
+        {
+          "word": "Filogy",
+          "start": 311.18,
+          "end": 311.18,
+          "probability": 0.96
+        },
+        {
+          "word": "of",
+          "start": 311.18,
+          "end": 311.2,
+          "probability": 0.9409
+        },
+        {
+          "word": "the",
+          "start": 311.2,
+          "end": 311.22,
+          "probability": 0.9658
+        },
+        {
+          "word": "Filogy",
+          "start": 311.22,
+          "end": 311.28,
+          "probability": 0.9653
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9434
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.4961
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8809
+        },
+        {
+          "word": "the",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9678
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9419
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.4968
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8892
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.4966
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8662
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.4983
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8701
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.501
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8691
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.5044
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.877
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.5146
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8818
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.5249
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8906
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.5439
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.897
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.5591
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9048
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.5908
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9121
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.6162
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9155
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.6572
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9175
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.6953
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9185
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.7383
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9229
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.7817
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9248
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.7939
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9287
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.835
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9312
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8579
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9312
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8691
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9351
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8823
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.937
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.8999
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.939
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9023
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.939
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9248
+        },
+        {
+          "word": "of",
+          "start": 311.28,
+          "end": 311.28,
+          "probability": 0.9385
+        },
+        {
+          "word": "Filogy",
+          "start": 311.28,
+          "end": 311.36,
+          "probability": 0.9219
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9414
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9312
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9448
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9365
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9434
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9424
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9482
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9512
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9551
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9502
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9575
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9507
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9609
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9629
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9541
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9668
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9561
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9541
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9683
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9585
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9585
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9731
+        },
+        {
+          "word": "of",
+          "start": 311.36,
+          "end": 311.36,
+          "probability": 0.9614
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 311.34,
+      "end": 311.34,
+      "start_formatted": "00:05:11.340",
+      "end_formatted": "00:05:11.340",
+      "text": "",
+      "words": []
+    }
+  ]
+}

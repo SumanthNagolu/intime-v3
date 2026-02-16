@@ -1,0 +1,236 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-14",
+    "slide_count": 20,
+    "slides_with_text": 19,
+    "total_words": 984,
+    "avg_confidence": 87.34,
+    "processing_time_seconds": 8.14,
+    "extracted_at": "2026-02-13T12:19:50.913583"
+  },
+  "full_text": "Editable List Views\n\nLesson\nobjectives\n\n* Configure a List View to be editable\n¢ Configure a List View so that rows can be\nadded to and removed from it\n\nUser Story — Editable List Views Gi\n\n“TrainingApp users have to be :\nable to manually add and remove [ro\npolicy summaries. When the user\nclicks the Add button, TrainingApp\nshould create an empty row and\nallow the user to specify the\ndetails. The checkboxes should\nbe visible only when the List View\nis in edit mode.”\n\n- Insurance company\nbusiness analysts\n\nConfiguring the Add and Remove\nbuttons\n\nI Iterator Buttons widget\n\n¢ Iterator Buttons widget contains two buttons: Add and Remove\n\n¢ It provides functionality\n\n* To add new rows with the Add iterator button\n\n* To remove existing rows with the Remove iterator button\n\n¢ The buttons already have the appropriate visibility and availability logic\n\na\n\nPerson: William Andy\n\nDetails\n\n0)\n\nPersoninfo | Phone &Addresses | Bank Accounts\n\nBankName >\n‘ACME Credit Union\n\nNational Bank\n\nRouting Number\n123.987\n745-222,\n\n‘Account Number >\n\n345678900\n232323566\n\nPerson: William Andy\n\nDetails\n\nPersoninfo | Phone& Addresses | Bank Accounts\n\n9 Bankwame > Routing Number”\n‘ACME Credit Union 123-987\nNational Bank 745-222,\n\n‘Account Number*\n\n345676900\n\n232323566\n\nI Toolbars Gi\n\n* There is more than one place that a toolbar could go\n¢ Best place for Edit Buttons is the screen level toolbar\n* Edit Buttons control the screen transaction\n¢ Best place for Iterator Buttons is the toolbar closest to the List View\n* This is typically the toolbar associated with the List View to display the paginator\n* Depending on the complexity of the screen there could be only one toolbar containing both\n\nwidgets —— ro.) ra meniey a\n\nDetails Details\n\nPerson nfo | Phone &Addresses | wank Accounts\n\nBank wame~ Routing Number*\n\nPerson info | Phone saddresses | dank Accounts\n\nRouting Number > Account Number Account Number™\n\n123-987 345678900 ‘ACME Credit Union 123.987 345676500\n\nNational Bank 745-222 232328566\nok 145-222 232323566\n\nI Iterator buttons and row iterators Gi\n\n* Properties of Row Iterator govern functionality of Iterator buttons (Add/Remove)\n\n* toAdd - action to take when Add is clicked\n* toRemove - action to take when Remove is clicked\n\nPontes = Properties\nRow Iterator\nPerson: Willam Andy\n\nBasic properties\n\neditable* Details\n\nclementName* Person info | Phone &Addresses | Bank Accounts\n\nid\n\ntoCreateAndAdd 11 Bankwar Routing Number* ‘Account Number* >\ntoRemove jit Union 123-987 345678900\n\nNational Bank 745-222 232323566\n\nI Iterator buttons and row iterators Gi\n\nTypical configuration\n\n¢ The typical method for the Add button is shown here, which is used when the List\nView displays all the fields that need to be initialized\n¢ The user clicks the Update button, which puts the screen in edit mode\n\n¢ The user clicks the Add button, and a new empty row is inserted in the List View.\nThe user can initialize the row by simply editing the cells.\n\nPersone Willom Andy (a .0) Persone Wiliam Andy V4\n\nDetails Details\nPerson info | Phone &Addresses Bank Accounts Person info | Phone &Addresses | Bank Accounts\n\nRouting Number > Account Number 1) Bank wame* Routing Number” ‘Account Number*\n\njon 123-987 345678900 ‘ACME Credit Union 123-987 345676900\n\nNational Bank 745-222 232323566\nNational Bank 745-222, 232323566\n\n| Editable hierarchy G\n\nDetails\n\nPersoninfo | Phone Addresses | Bank Accounts\n\ne:\n\n= = List View panel is editable\nRouting Number =\n\nRow Iterator is editable\n\nRJ | ACME Credit Union 123-987 Checking ~~ Pending ~=—=—(06/19/2018\nRow is editable\n\nCell is editable\n\nNational Bank 745-222 232323566 Checking Pending 06/19/2018\n\n¢ For acell to be editable, only the row iterator needs to be explicitly set to editable\n¢ List View Panel and Row can inherit editable from parent\n\n¢ List view panels can include editable cells and non-editable cells\n« Routing Number is editable\n\n* Created On is read-only\n\nI Demonstration G\n\nEditable List Views\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nReview Questions\n\nQuestion\n\n_- — Fora cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?\n\nSS eee ese ees SeeseseS\n\nGi\n\nAnswer Gi\n\n_- — Fora cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?\n\nThe List View Panel’s Row Iterator Editable property must be set to true.\n\nen\n\nQuestion\n\n,- — When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?\n\nSS eee ese ees SeeseseS\n\nGi\n\nAnswer\n\n,- — When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?\n\nTwo: Add and Remove\n\nen\n\nGi\n\nQuestion\n\n,- — Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.\n\nSS eee ese ees SeeseseS\n\nAnswer\n\n,- — Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.\n\nThere are four errors:\n1. The object is anABContact, not ABContact.\n2. The method name starts with \"addTo...\", not \"toAdd...\".\n\n3. The name of the array is missing from the end of the method name. (The method should\nbe addToAddresses.)\n\n4. The argument must reference the row iterator's element name, which is currentAddress.\n\nen\n\nLesson\nobjectives * Configure a List View to be editable\n\nreview ¢ Configure a List View so that rows can be\nadded to and removed from it\n\nI Student exercise\n\nEditable List Views\n\n=A",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Editable List Views",
+      "word_count": 3,
+      "avg_confidence": 95.2,
+      "image_size": {
+        "width": 1280,
+        "height": 552
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Configure a List View to be editable\n¢ Configure a List View so that rows can be\nadded to and removed from it",
+      "word_count": 26,
+      "avg_confidence": 90.46,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "User Story — Editable List Views Gi\n\n“TrainingApp users have to be :\nable to manually add and remove [ro\npolicy summaries. When the user\nclicks the Add button, TrainingApp\nshould create an empty row and\nallow the user to specify the\ndetails. The checkboxes should\nbe visible only when the List View\nis in edit mode.”\n\n- Insurance company\nbusiness analysts",
+      "word_count": 62,
+      "avg_confidence": 93.53,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Configuring the Add and Remove\nbuttons",
+      "word_count": 6,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "I Iterator Buttons widget\n\n¢ Iterator Buttons widget contains two buttons: Add and Remove\n\n¢ It provides functionality\n\n* To add new rows with the Add iterator button\n\n* To remove existing rows with the Remove iterator button\n\n¢ The buttons already have the appropriate visibility and availability logic\n\na\n\nPerson: William Andy\n\nDetails\n\n0)\n\nPersoninfo | Phone &Addresses | Bank Accounts\n\nBankName >\n‘ACME Credit Union\n\nNational Bank\n\nRouting Number\n123.987\n745-222,\n\n‘Account Number >\n\n345678900\n232323566\n\nPerson: William Andy\n\nDetails\n\nPersoninfo | Phone& Addresses | Bank Accounts\n\n9 Bankwame > Routing Number”\n‘ACME Credit Union 123-987\nNational Bank 745-222,\n\n‘Account Number*\n\n345676900\n\n232323566",
+      "word_count": 105,
+      "avg_confidence": 82.72,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "I Toolbars Gi\n\n* There is more than one place that a toolbar could go\n¢ Best place for Edit Buttons is the screen level toolbar\n* Edit Buttons control the screen transaction\n¢ Best place for Iterator Buttons is the toolbar closest to the List View\n* This is typically the toolbar associated with the List View to display the paginator\n* Depending on the complexity of the screen there could be only one toolbar containing both\n\nwidgets —— ro.) ra meniey a\n\nDetails Details\n\nPerson nfo | Phone &Addresses | wank Accounts\n\nBank wame~ Routing Number*\n\nPerson info | Phone saddresses | dank Accounts\n\nRouting Number > Account Number Account Number™\n\n123-987 345678900 ‘ACME Credit Union 123.987 345676500\n\nNational Bank 745-222 232328566\nok 145-222 232323566",
+      "word_count": 127,
+      "avg_confidence": 80.66,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "I Iterator buttons and row iterators Gi\n\n* Properties of Row Iterator govern functionality of Iterator buttons (Add/Remove)\n\n* toAdd - action to take when Add is clicked\n* toRemove - action to take when Remove is clicked\n\nPontes = Properties\nRow Iterator\nPerson: Willam Andy\n\nBasic properties\n\neditable* Details\n\nclementName* Person info | Phone &Addresses | Bank Accounts\n\nid\n\ntoCreateAndAdd 11 Bankwar Routing Number* ‘Account Number* >\ntoRemove jit Union 123-987 345678900\n\nNational Bank 745-222 232323566",
+      "word_count": 77,
+      "avg_confidence": 77.19,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "I Iterator buttons and row iterators Gi\n\nTypical configuration\n\n¢ The typical method for the Add button is shown here, which is used when the List\nView displays all the fields that need to be initialized\n¢ The user clicks the Update button, which puts the screen in edit mode\n\n¢ The user clicks the Add button, and a new empty row is inserted in the List View.\nThe user can initialize the row by simply editing the cells.\n\nPersone Willom Andy (a .0) Persone Wiliam Andy V4\n\nDetails Details\nPerson info | Phone &Addresses Bank Accounts Person info | Phone &Addresses | Bank Accounts\n\nRouting Number > Account Number 1) Bank wame* Routing Number” ‘Account Number*\n\njon 123-987 345678900 ‘ACME Credit Union 123-987 345676900\n\nNational Bank 745-222 232323566\nNational Bank 745-222, 232323566",
+      "word_count": 133,
+      "avg_confidence": 82.65,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Editable hierarchy G\n\nDetails\n\nPersoninfo | Phone Addresses | Bank Accounts\n\ne:\n\n= = List View panel is editable\nRouting Number =\n\nRow Iterator is editable\n\nRJ | ACME Credit Union 123-987 Checking ~~ Pending ~=—=—(06/19/2018\nRow is editable\n\nCell is editable\n\nNational Bank 745-222 232323566 Checking Pending 06/19/2018\n\n¢ For acell to be editable, only the row iterator needs to be explicitly set to editable\n¢ List View Panel and Row can inherit editable from parent\n\n¢ List view panels can include editable cells and non-editable cells\n« Routing Number is editable\n\n* Created On is read-only",
+      "word_count": 99,
+      "avg_confidence": 82.95,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "I Demonstration G\n\nEditable List Views\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.92,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Review Questions",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Question\n\n_- — Fora cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?\n\nSS eee ese ees SeeseseS\n\nGi",
+      "word_count": 42,
+      "avg_confidence": 83.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Answer Gi\n\n_- — Fora cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?\n\nThe List View Panel’s Row Iterator Editable property must be set to true.\n\nen",
+      "word_count": 51,
+      "avg_confidence": 88.47,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question\n\n,- — When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?\n\nSS eee ese ees SeeseseS\n\nGi",
+      "word_count": 25,
+      "avg_confidence": 79.25,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer\n\n,- — When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?\n\nTwo: Add and Remove\n\nen\n\nGi",
+      "word_count": 25,
+      "avg_confidence": 84.26,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Question\n\n,- — Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.\n\nSS eee ese ees SeeseseS",
+      "word_count": 41,
+      "avg_confidence": 87.07,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Answer\n\n,- — Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.\n\nThere are four errors:\n1. The object is anABContact, not ABContact.\n2. The method name starts with \"addTo...\", not \"toAdd...\".\n\n3. The name of the array is missing from the end of the method name. (The method should\nbe addToAddresses.)\n\n4. The argument must reference the row iterator's element name, which is currentAddress.\n\nen",
+      "word_count": 90,
+      "avg_confidence": 91.42,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Lesson\nobjectives * Configure a List View to be editable\n\nreview ¢ Configure a List View so that rows can be\nadded to and removed from it",
+      "word_count": 27,
+      "avg_confidence": 91.96,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "I Student exercise\n\nEditable List Views\n\n=A",
+      "word_count": 7,
+      "avg_confidence": 82.62,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

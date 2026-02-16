@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-14",
+    "slide_count": 22,
+    "slides_with_text": 21,
+    "total_words": 805,
+    "avg_confidence": 83.99,
+    "processing_time_seconds": 8.5,
+    "extracted_at": "2026-02-13T12:05:51.947169"
+  },
+  "full_text": "Introduction to Underwriting Authority\n\nLesson\nobjectives\n\n¢ Explain the concepts of Underwriting Authority\n* Describe Underwriting Issues\n\nDarren\nInsurance\nProduct Manager\n\nUnderwriting is a very important aspect of our\nbusiness. Most people in our industry need to\nunderstand the basics around underwriting authority\nin the application. How does it work?\n\n| Underwriting process fa\n\nAgent requests UW approves UW releases\nUW review @ issue(s) policy back to\nagent\n\n@\n(wa [eee and quotes\n—— ao”\n\nPolicy has Under UW Review Agent cannot Agent can view\nunderwriting issues edit policy or see quote, edit, bind\nAgent cannot edit the quote and issue policy\n\nAgent cannot policy\n\napprove\n\n| Underwriting authority Gi\n\n¢ Provides underwriting rules and an underwriting infrastructure to manage\nunderwriting issues\n\n¢ Major components\n« Underwriting Issue — A specific occurrence on a policy transaction where an underwriting\ncondition was true.\n\n« Underwriting Rule — Describes how the policy transaction is affected by underwriting issues\nand how issues can be approved. The rules include the conditions which will raise an\nunderwriting issue.\n\n¢ Authority Grant — The ability to approve underwriting issues and to what degree.\n\n¢ Authority Profile — A group of authorities that can be given to a user, allowing the user to\napprove underwriting issues.\n\nUnderwriting issues i\n\nyN\n©).\n\n* Created when a condition gives undesirable results\nbased on data on the policy or account such as:\n\n* a level of coverage or price of a coverable or\n* a jurisdiction or\n* more complex issue such as drivers in urban areas\n\n* Can stop jobs unless approved\n\n| Creating underwriting issues\n\n« Raised automatically based on policy choices\n\n« UWrules trigger UW issues\n+ Rule conditions can be created in the UW rule user interfaces\n\n+ More complex conditions can be written in Gosu code\n« Automatically removed when the condition is resolved\n* Can be added manually on the UW Issues screen\n\n* Manual issues are not removed automatically\n\n| Checking set\n\n¢« Achecking set represents a point in a job where issues can be raised\n* pre-quote\n* bind\n* pre-issuance, etc.\n\n¢ Used to specify when to check if an issue exists\n\n| Blocking point\n\n¢ Ablocking point stops progress of the job until an issue is approved\n\n@ @ Underwriter @\nQuote “s-» approves issues\n> >\nia —\nAgent creates UW issues blocking Policy can be quoted,\nsubmission quote, bind or issue bound and issued\n\n* Specific issue types can be configured as informational (non-blocking)\n\n* Agent can progress further in job\n\nInformational\n\nDiver under 25 2s\n\n* Do not need underwriter approval\n\n| Demonstration G\n\nUnderwriting authority overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_~ — When is an undermnriting issue raised?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer a\n\n_~ — When is an undermnriting issue raised?\n\n¢\n¢\n¢\n\nUnderwriting issues are raised when policy choices meet the conditions defined in the\nunderwriting rules or Gosu code. In certain situations, underwriters can add issues\nmanually depending on their permissions.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n,~ — Where are the underwriting issues displayed?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n,~ — Where are the underwriting issues displayed?\n\n¢\n¢\n¢\n\nUnderwriting issues are displayed on the Risk Analysis page under the tab - UW\nIssues.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n_~ — What decides when an underrriting issues is raised, checking set or\nx blocking point?\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi\n\nAnswer\n\n_~ — What decides when an undermiting issues is raised, checking set or\nx blocking point?\n\nChecking set decides at which point an underwriting issue should be raised. For\nexample, whether an issue should be raised at pre-quote, bind or issue.\n\nSooo ooo ooo Oooo oOoD\n\nGi\n\nQuestion G\n\n_~ — Who can approve or reject underwriting issues? How is this decided?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer a\n\n,~ — Who can approve or reject underwriting issues? How is this decided?\n\n¢\n¢\n¢\n\nAuser, normally an underwriter or an agent, can approve or reject underwriting issues\ndepending on their authority grants.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n,— — Answer true or false:\n\n4\no A. An approved UW issue cannot be reopened?\n\nB. An agent can reject an UW issue?\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n,~ — Answer true or false:\n\n¢\no A. An approved UW issue cannot be reopened?\n\nB. An agent can reject an UW issue?\n\nCorrect answers:\nA. False\n\nB. True\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobj ectives * Explain the concepts of Underwriting Authority\nreview ¢ Describe Underwriting Issues",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to Underwriting Authority",
+      "word_count": 4,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Explain the concepts of Underwriting Authority\n* Describe Underwriting Issues",
+      "word_count": 13,
+      "avg_confidence": 83.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Darren\nInsurance\nProduct Manager\n\nUnderwriting is a very important aspect of our\nbusiness. Most people in our industry need to\nunderstand the basics around underwriting authority\nin the application. How does it work?",
+      "word_count": 33,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Underwriting process fa\n\nAgent requests UW approves UW releases\nUW review @ issue(s) policy back to\nagent\n\n@\n(wa [eee and quotes\n—— ao”\n\nPolicy has Under UW Review Agent cannot Agent can view\nunderwriting issues edit policy or see quote, edit, bind\nAgent cannot edit the quote and issue policy\n\nAgent cannot policy\n\napprove",
+      "word_count": 56,
+      "avg_confidence": 89.49,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Underwriting authority Gi\n\n¢ Provides underwriting rules and an underwriting infrastructure to manage\nunderwriting issues\n\n¢ Major components\n« Underwriting Issue — A specific occurrence on a policy transaction where an underwriting\ncondition was true.\n\n« Underwriting Rule — Describes how the policy transaction is affected by underwriting issues\nand how issues can be approved. The rules include the conditions which will raise an\nunderwriting issue.\n\n¢ Authority Grant — The ability to approve underwriting issues and to what degree.\n\n¢ Authority Profile — A group of authorities that can be given to a user, allowing the user to\napprove underwriting issues.",
+      "word_count": 103,
+      "avg_confidence": 91.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Underwriting issues i\n\nyN\n©).\n\n* Created when a condition gives undesirable results\nbased on data on the policy or account such as:\n\n* a level of coverage or price of a coverable or\n* a jurisdiction or\n* more complex issue such as drivers in urban areas\n\n* Can stop jobs unless approved",
+      "word_count": 54,
+      "avg_confidence": 84.85,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Creating underwriting issues\n\n« Raised automatically based on policy choices\n\n« UWrules trigger UW issues\n+ Rule conditions can be created in the UW rule user interfaces\n\n+ More complex conditions can be written in Gosu code\n« Automatically removed when the condition is resolved\n* Can be added manually on the UW Issues screen\n\n* Manual issues are not removed automatically",
+      "word_count": 63,
+      "avg_confidence": 88.73,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Checking set\n\n¢« Achecking set represents a point in a job where issues can be raised\n* pre-quote\n* bind\n* pre-issuance, etc.\n\n¢ Used to specify when to check if an issue exists",
+      "word_count": 35,
+      "avg_confidence": 90.77,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Blocking point\n\n¢ Ablocking point stops progress of the job until an issue is approved\n\n@ @ Underwriter @\nQuote “s-» approves issues\n> >\nia —\nAgent creates UW issues blocking Policy can be quoted,\nsubmission quote, bind or issue bound and issued\n\n* Specific issue types can be configured as informational (non-blocking)\n\n* Agent can progress further in job\n\nInformational\n\nDiver under 25 2s\n\n* Do not need underwriter approval",
+      "word_count": 73,
+      "avg_confidence": 86.56,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Demonstration G\n\nUnderwriting authority overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.39,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Question\n\n_~ — When is an undermnriting issue raised?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 18,
+      "avg_confidence": 62.87,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Answer a\n\n_~ — When is an undermnriting issue raised?\n\n¢\n¢\n¢\n\nUnderwriting issues are raised when policy choices meet the conditions defined in the\nunderwriting rules or Gosu code. In certain situations, underwriters can add issues\nmanually depending on their permissions.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 48,
+      "avg_confidence": 86.04,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Question\n\n,~ — Where are the underwriting issues displayed?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 18,
+      "avg_confidence": 63.87,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Answer\n\n,~ — Where are the underwriting issues displayed?\n\n¢\n¢\n¢\n\nUnderwriting issues are displayed on the Risk Analysis page under the tab - UW\nIssues.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 32,
+      "avg_confidence": 81.76,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Question\n\n_~ — What decides when an underrriting issues is raised, checking set or\nx blocking point?\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 78.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Answer\n\n_~ — What decides when an undermiting issues is raised, checking set or\nx blocking point?\n\nChecking set decides at which point an underwriting issue should be raised. For\nexample, whether an issue should be raised at pre-quote, bind or issue.\n\nSooo ooo ooo Oooo oOoD\n\nGi",
+      "word_count": 48,
+      "avg_confidence": 88.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question G\n\n_~ — Who can approve or reject underwriting issues? How is this decided?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 24,
+      "avg_confidence": 74.57,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer a\n\n,~ — Who can approve or reject underwriting issues? How is this decided?\n\n¢\n¢\n¢\n\nAuser, normally an underwriter or an agent, can approve or reject underwriting issues\ndepending on their authority grants.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 41,
+      "avg_confidence": 85.42,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n,— — Answer true or false:\n\n4\no A. An approved UW issue cannot be reopened?\n\nB. An agent can reject an UW issue?\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 31,
+      "avg_confidence": 73.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\n,~ — Answer true or false:\n\n¢\no A. An approved UW issue cannot be reopened?\n\nB. An agent can reject an UW issue?\n\nCorrect answers:\nA. False\n\nB. True\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 36,
+      "avg_confidence": 80.93,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Lesson\nobj ectives * Explain the concepts of Underwriting Authority\nreview ¢ Describe Underwriting Issues",
+      "word_count": 15,
+      "avg_confidence": 86.07,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

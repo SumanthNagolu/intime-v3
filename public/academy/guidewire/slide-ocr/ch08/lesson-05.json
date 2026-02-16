@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-05",
+    "slide_count": 35,
+    "slides_with_text": 31,
+    "total_words": 1856,
+    "avg_confidence": 86.66,
+    "processing_time_seconds": 15.98,
+    "extracted_at": "2026-02-13T12:22:27.352380"
+  },
+  "full_text": "Concepts of Revisioning\n\nLesson\nobjectives\n\n¢ Describe policy revisioning and EffDated\nentities\n\n¢ Describe window mode and slice mode\n\n« Access a policy in window and slice mode\nusing Gosu\n\ni EffDated entities\n\nAre created to track the state of an entity over effective time\n\n* Have EffectiveDate and ExpirationDate columns\n\n« Are members of an effective dated graph, rooted at an effdatedbranch entity.\n\nPersonalVehicle (pc_personalvehicle) (delegates to Modifiable, Coverable,\n\n> Description\nFields\n\nEffectiveDate datetime (wis\n\nEffective date of this row or FNULL in the database if equal to the period start\n\nExpirationDate «\nExpired date of this row: or of NULL Ms inthe ‘database if equal to the period end\n\ni PolicyPeriod entity G\n\n¢ PolicyPeriod entity is:\n\n* the root of all EffDated entities on a policy graph\n\n+ not EffDated, but type of effDatedBranch\n¢ Set relationship between an EffDated entity and PolicyPeriod\n\n* effDatedBranchType=\"PolicyPeriod\" in the eti file\n\n(=) PersonalVehicle.eti\n?xml version=\"1.0\"?>\n\n<entity\n\nxmlins=\"http: //guidewire.com/datamodel\"\ndesc=\"Personal Vehicle\"\n\ndisplayName=\"Personal Vehicle\"\n\nleffDatedBranchType=\"PolicyPeriod\"|\n\nentity=\"PersonalVehicle\"\n\n2\n3\n4\n6\n\ni EffDated entity columns\n\nEffectiveDate and ExpirationDate\n\n* null value means this entity has same effective and expiration dates as its root (i.e.\nPolicyPeriod.PeriodStart and PolicyPeriod.PeriodEnd)\n\nFixedid — a unique identifier that PolicyCenter generates when a new object is\ncreated\n\n* Cannot be null\n* Stays same for all version of the object\nBranch -— link to the associated PolicyPeriod\n* Cannot be null\nBasedOn — a pointer back to prior version of this entity\n¢ If this is the first version, BasedOn is null\n* Column on EffDated entity as well as the PolicyPeriod\n\ni Creating an EffDated entity Ga\n\n¢ First, identify the root entity of type EffDatedBranch, such as PolicyPeriod\n« Next, create the EffDated entity\n\n* Set the entity attributes\n+ type=\"EffDated”\n+ effDatedBranchType=\"PolicyPeriod*\n\n¢ Follow other rules relevant to the entity (e.g., PolicyLine or Coverage entities have their own\nspecific rules)\n\n¢ Refer to the existing EffDated entities as examples\n\n« For example, PersonalVehicle.eti, PersonalAutoCov.eti, BOPBuilding.eti, etc.\n\ni BasedOn example Gi\n\nDriver and PersonalVehicle EffDated entities have BasedOn properties\n\nMar Dec\nSubmission on Mar 1 (Eff Mar 1 — Dec 31) 1\npolicy with 1 car and 1 driver i |__|\nDriverV1.BasedOn = null id\nPersonalVehicleV1.BasedOn = null CG)\n2\nPolicy Change 1 on Mar 2 (Eff Apr 1 - Dec 31) es\nchange car 1, no change in driver ns\nDriverV2.BasedOn = DriverV1 CG)\nPersonalVehicleV2.BasedOn = PersonalVehicleV1\n3\nPolicy Change 2 on Mar 3 — (Eff May 1 - Dec 31) |\n\nchange car 1, no change in driver\nDriverV3.BasedOn = DriverV2\n\nid\nPersonalVehicleV3.BasedOn = PersonalVehicleV2 | Historical PolicyPeriod\nEnforced PolicyPeriod\n\nStructure of revisioning across effective\ntime\n\ni PolicyPeriod G\n\nA PolicyPeriod is one \"version\" of the policy\n\n* Has effective and expiration dates (PeriodStart and PeriodEnd) which define the actual term of\n\nthe policy\n¢ Has an EditEffectiveDate, which is the date at which changes from a job are applied\npolicy second teen driver renewal\ncreated auto added added (premium changed)\n04/20/08 07/20/08 10/20/08 04/20/09\nJ $270 { $450 J $920 J $990\n\n= Ss= 3e=_2)\n1 2 3\n\n3 PolicyPeriods and 1 PolicyPeriod and\n1 PolicyTerm: 1 PolicyTerm:\n04/20/08 — 04/20/09 04/20/09 — 04/20/10\n\ni Model time and effective time Gi\nTo track policy changes over time, a policy must be considered in two different time\ndimensions:\n\n¢ Model time is the actual real-world time when policies are created or jobs are\nbound\n\n* Effective time is the time dimension of the policy itself within the policy period\n\ni Example\n\nEffective time\n\n—-\n\nJan1\n\nModel time\n\nEnforced PolicyPeriod\n\nMar\n\nDec 31\n\nMar 1 — policy with 1 car\neffective Apr 1 - Dec 31\nModel date: Mar 1\nEffective date: Apr 1\n\nMar 2 - add car 2\neffective May 1 - Dec 31\nModel date: Mar 2\nEffective date: May 1\n\nMar 3 — Remove car 2\neffective May 1 - Dec 31\nModel date: Mar 3\nEffective date: May 1\n\ni Sub-objects across effective time (1) Ga\n\n¢ Every policy revision is the root of a complex graph of sub-objects such as drivers,\nvehicles, coverages, and so on\n\n* If one of these objects changes then that object has its own effective and expiration date\n\n* Consider an example, where a personal auto submission is created with one\n\nvehicle\nub-object: Vehicle,\nMar 1 Dec 31 PersonalVehicle\nColor: RED\n\n9} = EffectiveDate: null\n\nExpirationDate: null\nFixedld: 12345\n\nSubmission\n\ni Sub-objects across effective time (2) Ga\n\n* On Sep 1, the customer calls and says the car was painted blue today\n\n« Anew policy revision is created by cloning a new row in the database differing in\neffective date and expiration date\n\n¢ Expiration date of first row is the effective date of second row\n¢ Arowis effective at a date specified if:\n\n¢ Effective date <= specified date < expiration date\n\ni Sub-objects across effective time (3)\n\nub-object: Vehicle\nColor: RED\nEffectiveDate: null\nMar 1 Dec 31 /{ ExpirationDate: null\na ——s Fixedld: 12345\n\nSubmission\n\nPersonalVehicle\n\nColor: RED\n| EffectiveDate: null\nxpirationDate: Sept 1\nFixedld: 12345\n\nMar1 Sept1 Dec 31\n\nub-object: Vehicle, f\nPolicy Change \\ Kub-object: =|\n\nColor: BLUE\n\n\\| EffectiveDate: Sep 1\nExpirationDate: null\nFixedld: 12345\n\nWindow mode and slice mode overview\n\ni Two modes to access a branch’s objects Gi\n\n¢ Usually, jobs change policy data across effective time\n* Slice mode is viewing policy data as of a specific date in effective time\n\n« When you request objects on the policy in slice mode, PolicyCenter automatically gets the\ncorrect version of each object as of the slice date\n\n¢ Window mode is viewing all versions of policy data across all dates in effective\ntime\n* For example, you want to get all the costs for a vehicle within a policy term (cost may vary if\ncoverages have changed)\n\n* Or you want to list all the drivers ever assigned to a vehicle (a driver may only be assigned for\nshort period)\n\nI Example\n\nEffective time\n\n+\n\nJan1 Apr MayJune Dec 31\n\n04/01: Submission\ncreates policy\nwith 1 red car\n\nModel time\n\n05/01: Change\nadd a blue car 2\n\n06/01: Change\nremove car 2\n\nEnforced PolicyPeriod\n\nI Slice mode view as of: G\n\nEffective time\n\nJan1 Apr MayJune Dec 31\nModel time 1\nApr 30? —— Policy has one red car\n2\n\nMay 30? © © | Mmmm §=Policy has two cars\n= MEE §=(one red, one blue)\n3\n\nNov 25? © 0 |\n\nxs ——— Policy has one red car\n\nOn any date, you might not see all cars that exist at some point in that policy period\n\ni Window mode view Gi\n\nEffective time\n\nJan1 Apr MayJune Dec 31\n1 2 3\nPage a\neS” S32\n\n* Lists all cars that existed on the policy for any period of time with the effective dates\n+ First, get a list of all cars that were ever on the policy\n+ Next, for each car, you want to iterate across all changes to that car across effective time\n* Obtained by using the VersionList property on a policy period\n¢ There are two cars in VersionList but there are three versions of the policy\n+ Submission, Policy Change 1, Policy Change 2\n\ni Demonstration G\n\nSlice Mode\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Slice mode API: getSlice(sliceDate)\n\n¢ Access a slice from a PolicyPeriod\n\n* Syntax: slicedPolicyPeriod = aBranch.getSlice(sliceDate)\n+ Return value is in slice mode\n« Returns sliced PolicyPeriod\n* Displays view of PolicyPeriod as of slice date\n\nExample: getSlice using Gosu Tester and verified using date Gi\nselector in the Ul\n\n®)Gosu Scratchpad\n\n>& ¥ 8\nuses java.text.SimpleDateFormat\nvar branch = Job. finder. findJobByJobNumber (\"47586734721\") .LatestPeriod\nvar dateFormat = new SimpleDateFormat (\"M/dd/yyyy\")\n\nvar i=;\n\nfor (v in sliceView.PersonalAutoLine.Vehicles) {\nprint (\"Vehicle \"+i +\"\n\n\" + v.DisplayName)\n\n[eppolicy File @> Personal auto Ray Newton )\n. Debug \"= server\nVehicles G | Debugger] Eel console =\nVehicle Details Vehicle 1: 2001 Acura RSX in California\nWehicle 2: 2002 Toyota Avalon in California\nVehicle # Vehicle Type Modelvear |/aake =” Model > | Body Type\n\n2 Passenger/Light Truck 2002 Toyota Avalon\n\nVehicle Details | Additional interest\n\nBasic Vehicle Information\n\nfehicle = 1\n\ni Window mode API: VersionList Gi\n\n¢ Version list represents all versions of an object in a policy period across effective\ntime\n« Use any object’s VersionList property to get a version list\n* versionList.AllVersions property gets all versions of this object\n* Sorted on effective date for each version\n\n* versionList.AsOf(date) method gets the one version of this object on that date, or\nnull if none were effective on that date\n\ni Version list examples Gi\n\n¢ Get all versions of a particular car in a policy period across effective time :\n* var val = vehicleVL.AllVersions\n\n+ Ifthe car was added and then removed in a subsequent change transaction (as discussed previously),\nthe car would still be listed\n\n+ It existed on the policy period at some point\n* Get the car version that is effective on ‘date’\n* var vehOnDate = vehicleVL.AsOf(date)\n« Returns\n+ Single car object in window mode\n\n+ Null if no version of the car is effective at that date\n\ni VersionList examples: Get vehicles on a policy\n\n¢ All versions of all vehicles that ever existed on the Policy\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921”). LatestPeriod\nbranch. PersonalautoLine.VersionList.Vehicles.flatMap(A vl + vl.AllVersions).each(A v > print(v))\n\nRuntime Output\n\n¢ All vehicles as of specific date\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921” ). LatestPeriod\nbranch. PersonalAutoLine. VersionList. VehiclesAs0f (\"2012-06-02\").each(A v + print(v))\n\nRuntime Output\n\nVersionList examples: Get costs on a policy\n\nAll costs on a personal auto policy\n\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921”). LatestPeriod\nbranch. PersonalautoLine.VersionList. PACosts.flatMap(A cl > cl.AllVersions).each(A c + print(c})\n\nRuntime Output\n\nurban in Calif\n\nJ in California\n\nin California\n\nburban in ¢\n\n¢ All costs on a vehicle at a specific date\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921” ). LatestPeriod\nbranch. PersonalAutoLine. VersionList. PACostsAs0f (\"2012-04-02\").each({ Ac > print(c))\n\nQuestion G\n\n,~ — What are EffDated entities?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,- — What are EffDated entities?\n\n¢\n4\n¢\n\nEffDated entities are created to track the state of an entity over effective time.\nThey have an effective date and an expiration date.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — What is the difference between effective time and model time?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n_~ — What is the difference between effective time and model time?\n¢\n4\n4\n\nModel time is the actual real-world time when policies are created or jobs are bound.\nEffective time is the time dimension of the policy itself within the policy period.\n\nSS Se ee eee eo\n\nLesson\nobjectives ¢ Describe policy revisioning and EffDated\nreview entities\n\n« Describe window mode and slice mode\n« Access a policy in window and slice mode\nusing Gosu",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Concepts of Revisioning",
+      "word_count": 3,
+      "avg_confidence": 94.0,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe policy revisioning and EffDated\nentities\n\n¢ Describe window mode and slice mode\n\n« Access a policy in window and slice mode\nusing Gosu",
+      "word_count": 27,
+      "avg_confidence": 87.19,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i EffDated entities\n\nAre created to track the state of an entity over effective time\n\n* Have EffectiveDate and ExpirationDate columns\n\n« Are members of an effective dated graph, rooted at an effdatedbranch entity.\n\nPersonalVehicle (pc_personalvehicle) (delegates to Modifiable, Coverable,\n\n> Description\nFields\n\nEffectiveDate datetime (wis\n\nEffective date of this row or FNULL in the database if equal to the period start\n\nExpirationDate «\nExpired date of this row: or of NULL Ms inthe ‘database if equal to the period end",
+      "word_count": 81,
+      "avg_confidence": 87.49,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i PolicyPeriod entity G\n\n¢ PolicyPeriod entity is:\n\n* the root of all EffDated entities on a policy graph\n\n+ not EffDated, but type of effDatedBranch\n¢ Set relationship between an EffDated entity and PolicyPeriod\n\n* effDatedBranchType=\"PolicyPeriod\" in the eti file\n\n(=) PersonalVehicle.eti\n?xml version=\"1.0\"?>\n\n<entity\n\nxmlins=\"http: //guidewire.com/datamodel\"\ndesc=\"Personal Vehicle\"\n\ndisplayName=\"Personal Vehicle\"\n\nleffDatedBranchType=\"PolicyPeriod\"|\n\nentity=\"PersonalVehicle\"\n\n2\n3\n4\n6",
+      "word_count": 58,
+      "avg_confidence": 82.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i EffDated entity columns\n\nEffectiveDate and ExpirationDate\n\n* null value means this entity has same effective and expiration dates as its root (i.e.\nPolicyPeriod.PeriodStart and PolicyPeriod.PeriodEnd)\n\nFixedid — a unique identifier that PolicyCenter generates when a new object is\ncreated\n\n* Cannot be null\n* Stays same for all version of the object\nBranch -— link to the associated PolicyPeriod\n* Cannot be null\nBasedOn — a pointer back to prior version of this entity\n¢ If this is the first version, BasedOn is null\n* Column on EffDated entity as well as the PolicyPeriod",
+      "word_count": 95,
+      "avg_confidence": 90.65,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Creating an EffDated entity Ga\n\n¢ First, identify the root entity of type EffDatedBranch, such as PolicyPeriod\n« Next, create the EffDated entity\n\n* Set the entity attributes\n+ type=\"EffDated”\n+ effDatedBranchType=\"PolicyPeriod*\n\n¢ Follow other rules relevant to the entity (e.g., PolicyLine or Coverage entities have their own\nspecific rules)\n\n¢ Refer to the existing EffDated entities as examples\n\n« For example, PersonalVehicle.eti, PersonalAutoCov.eti, BOPBuilding.eti, etc.",
+      "word_count": 67,
+      "avg_confidence": 85.3,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i BasedOn example Gi\n\nDriver and PersonalVehicle EffDated entities have BasedOn properties\n\nMar Dec\nSubmission on Mar 1 (Eff Mar 1 — Dec 31) 1\npolicy with 1 car and 1 driver i |__|\nDriverV1.BasedOn = null id\nPersonalVehicleV1.BasedOn = null CG)\n2\nPolicy Change 1 on Mar 2 (Eff Apr 1 - Dec 31) es\nchange car 1, no change in driver ns\nDriverV2.BasedOn = DriverV1 CG)\nPersonalVehicleV2.BasedOn = PersonalVehicleV1\n3\nPolicy Change 2 on Mar 3 — (Eff May 1 - Dec 31) |\n\nchange car 1, no change in driver\nDriverV3.BasedOn = DriverV2\n\nid\nPersonalVehicleV3.BasedOn = PersonalVehicleV2 | Historical PolicyPeriod\nEnforced PolicyPeriod",
+      "word_count": 105,
+      "avg_confidence": 86.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Structure of revisioning across effective\ntime",
+      "word_count": 6,
+      "avg_confidence": 94.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i PolicyPeriod G\n\nA PolicyPeriod is one \"version\" of the policy\n\n* Has effective and expiration dates (PeriodStart and PeriodEnd) which define the actual term of\n\nthe policy\n¢ Has an EditEffectiveDate, which is the date at which changes from a job are applied\npolicy second teen driver renewal\ncreated auto added added (premium changed)\n04/20/08 07/20/08 10/20/08 04/20/09\nJ $270 { $450 J $920 J $990\n\n= Ss= 3e=_2)\n1 2 3\n\n3 PolicyPeriods and 1 PolicyPeriod and\n1 PolicyTerm: 1 PolicyTerm:\n04/20/08 — 04/20/09 04/20/09 — 04/20/10",
+      "word_count": 89,
+      "avg_confidence": 88.4,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Model time and effective time Gi\nTo track policy changes over time, a policy must be considered in two different time\ndimensions:\n\n¢ Model time is the actual real-world time when policies are created or jobs are\nbound\n\n* Effective time is the time dimension of the policy itself within the policy period",
+      "word_count": 54,
+      "avg_confidence": 91.69,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Example\n\nEffective time\n\n—-\n\nJan1\n\nModel time\n\nEnforced PolicyPeriod\n\nMar\n\nDec 31\n\nMar 1 — policy with 1 car\neffective Apr 1 - Dec 31\nModel date: Mar 1\nEffective date: Apr 1\n\nMar 2 - add car 2\neffective May 1 - Dec 31\nModel date: Mar 2\nEffective date: May 1\n\nMar 3 — Remove car 2\neffective May 1 - Dec 31\nModel date: Mar 3\nEffective date: May 1",
+      "word_count": 74,
+      "avg_confidence": 91.05,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Sub-objects across effective time (1) Ga\n\n¢ Every policy revision is the root of a complex graph of sub-objects such as drivers,\nvehicles, coverages, and so on\n\n* If one of these objects changes then that object has its own effective and expiration date\n\n* Consider an example, where a personal auto submission is created with one\n\nvehicle\nub-object: Vehicle,\nMar 1 Dec 31 PersonalVehicle\nColor: RED\n\n9} = EffectiveDate: null\n\nExpirationDate: null\nFixedld: 12345\n\nSubmission",
+      "word_count": 77,
+      "avg_confidence": 89.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Sub-objects across effective time (2) Ga\n\n* On Sep 1, the customer calls and says the car was painted blue today\n\n« Anew policy revision is created by cloning a new row in the database differing in\neffective date and expiration date\n\n¢ Expiration date of first row is the effective date of second row\n¢ Arowis effective at a date specified if:\n\n¢ Effective date <= specified date < expiration date",
+      "word_count": 73,
+      "avg_confidence": 88.92,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Sub-objects across effective time (3)\n\nub-object: Vehicle\nColor: RED\nEffectiveDate: null\nMar 1 Dec 31 /{ ExpirationDate: null\na ——s Fixedld: 12345\n\nSubmission\n\nPersonalVehicle\n\nColor: RED\n| EffectiveDate: null\nxpirationDate: Sept 1\nFixedld: 12345\n\nMar1 Sept1 Dec 31\n\nub-object: Vehicle, f\nPolicy Change \\ Kub-object: =|\n\nColor: BLUE\n\n\\| EffectiveDate: Sep 1\nExpirationDate: null\nFixedld: 12345",
+      "word_count": 57,
+      "avg_confidence": 83.06,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Window mode and slice mode overview",
+      "word_count": 6,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Two modes to access a branch’s objects Gi\n\n¢ Usually, jobs change policy data across effective time\n* Slice mode is viewing policy data as of a specific date in effective time\n\n« When you request objects on the policy in slice mode, PolicyCenter automatically gets the\ncorrect version of each object as of the slice date\n\n¢ Window mode is viewing all versions of policy data across all dates in effective\ntime\n* For example, you want to get all the costs for a vehicle within a policy term (cost may vary if\ncoverages have changed)\n\n* Or you want to list all the drivers ever assigned to a vehicle (a driver may only be assigned for\nshort period)",
+      "word_count": 121,
+      "avg_confidence": 92.1,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "I Example\n\nEffective time\n\n+\n\nJan1 Apr MayJune Dec 31\n\n04/01: Submission\ncreates policy\nwith 1 red car\n\nModel time\n\n05/01: Change\nadd a blue car 2\n\n06/01: Change\nremove car 2\n\nEnforced PolicyPeriod",
+      "word_count": 34,
+      "avg_confidence": 91.49,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "I Slice mode view as of: G\n\nEffective time\n\nJan1 Apr MayJune Dec 31\nModel time 1\nApr 30? —— Policy has one red car\n2\n\nMay 30? © © | Mmmm §=Policy has two cars\n= MEE §=(one red, one blue)\n3\n\nNov 25? © 0 |\n\nxs ——— Policy has one red car\n\nOn any date, you might not see all cars that exist at some point in that policy period",
+      "word_count": 73,
+      "avg_confidence": 84.03,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Window mode view Gi\n\nEffective time\n\nJan1 Apr MayJune Dec 31\n1 2 3\nPage a\neS” S32\n\n* Lists all cars that existed on the policy for any period of time with the effective dates\n+ First, get a list of all cars that were ever on the policy\n+ Next, for each car, you want to iterate across all changes to that car across effective time\n* Obtained by using the VersionList property on a policy period\n¢ There are two cars in VersionList but there are three versions of the policy\n+ Submission, Policy Change 1, Policy Change 2",
+      "word_count": 103,
+      "avg_confidence": 89.69,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Demonstration G\n\nSlice Mode\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.51,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i Slice mode API: getSlice(sliceDate)\n\n¢ Access a slice from a PolicyPeriod\n\n* Syntax: slicedPolicyPeriod = aBranch.getSlice(sliceDate)\n+ Return value is in slice mode\n« Returns sliced PolicyPeriod\n* Displays view of PolicyPeriod as of slice date",
+      "word_count": 37,
+      "avg_confidence": 86.03,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Example: getSlice using Gosu Tester and verified using date Gi\nselector in the Ul\n\n®)Gosu Scratchpad\n\n>& ¥ 8\nuses java.text.SimpleDateFormat\nvar branch = Job. finder. findJobByJobNumber (\"47586734721\") .LatestPeriod\nvar dateFormat = new SimpleDateFormat (\"M/dd/yyyy\")\n\nvar i=;\n\nfor (v in sliceView.PersonalAutoLine.Vehicles) {\nprint (\"Vehicle \"+i +\"\n\n\" + v.DisplayName)\n\n[eppolicy File @> Personal auto Ray Newton )\n. Debug \"= server\nVehicles G | Debugger] Eel console =\nVehicle Details Vehicle 1: 2001 Acura RSX in California\nWehicle 2: 2002 Toyota Avalon in California\nVehicle # Vehicle Type Modelvear |/aake =” Model > | Body Type\n\n2 Passenger/Light Truck 2002 Toyota Avalon\n\nVehicle Details | Additional interest\n\nBasic Vehicle Information\n\nfehicle = 1",
+      "word_count": 113,
+      "avg_confidence": 75.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "i Window mode API: VersionList Gi\n\n¢ Version list represents all versions of an object in a policy period across effective\ntime\n« Use any object’s VersionList property to get a version list\n* versionList.AllVersions property gets all versions of this object\n* Sorted on effective date for each version\n\n* versionList.AsOf(date) method gets the one version of this object on that date, or\nnull if none were effective on that date",
+      "word_count": 72,
+      "avg_confidence": 90.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "i Version list examples Gi\n\n¢ Get all versions of a particular car in a policy period across effective time :\n* var val = vehicleVL.AllVersions\n\n+ Ifthe car was added and then removed in a subsequent change transaction (as discussed previously),\nthe car would still be listed\n\n+ It existed on the policy period at some point\n* Get the car version that is effective on ‘date’\n* var vehOnDate = vehicleVL.AsOf(date)\n« Returns\n+ Single car object in window mode\n\n+ Null if no version of the car is effective at that date",
+      "word_count": 95,
+      "avg_confidence": 88.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "i VersionList examples: Get vehicles on a policy\n\n¢ All versions of all vehicles that ever existed on the Policy\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921”). LatestPeriod\nbranch. PersonalautoLine.VersionList.Vehicles.flatMap(A vl + vl.AllVersions).each(A v > print(v))\n\nRuntime Output\n\n¢ All vehicles as of specific date\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921” ). LatestPeriod\nbranch. PersonalAutoLine. VersionList. VehiclesAs0f (\"2012-06-02\").each(A v + print(v))\n\nRuntime Output",
+      "word_count": 68,
+      "avg_confidence": 84.14,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "VersionList examples: Get costs on a policy\n\nAll costs on a personal auto policy\n\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921”). LatestPeriod\nbranch. PersonalautoLine.VersionList. PACosts.flatMap(A cl > cl.AllVersions).each(A c + print(c})\n\nRuntime Output\n\nurban in Calif\n\nJ in California\n\nin California\n\nburban in ¢\n\n¢ All costs on a vehicle at a specific date\nGosu Source\n\nvar branch = Job. finder. findJobByJobNumber (“206921” ). LatestPeriod\nbranch. PersonalAutoLine. VersionList. PACostsAs0f (\"2012-04-02\").each({ Ac > print(c))",
+      "word_count": 75,
+      "avg_confidence": 82.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question G\n\n,~ — What are EffDated entities?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 17,
+      "avg_confidence": 56.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer Gi\n\n,- — What are EffDated entities?\n\n¢\n4\n¢\n\nEffDated entities are created to track the state of an entity over effective time.\nThey have an effective date and an expiration date.\n\nSS Se ee eee eo",
+      "word_count": 39,
+      "avg_confidence": 78.9,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question G\n\n,~ — What is the difference between effective time and model time?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 23,
+      "avg_confidence": 64.04,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer Gi\n\n_~ — What is the difference between effective time and model time?\n¢\n4\n4\n\nModel time is the actual real-world time when policies are created or jobs are bound.\nEffective time is the time dimension of the policy itself within the policy period.\n\nSS Se ee eee eo",
+      "word_count": 51,
+      "avg_confidence": 79.55,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Lesson\nobjectives ¢ Describe policy revisioning and EffDated\nreview entities\n\n« Describe window mode and slice mode\n« Access a policy in window and slice mode\nusing Gosu",
+      "word_count": 28,
+      "avg_confidence": 86.82,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

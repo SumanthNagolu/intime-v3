@@ -1,0 +1,4273 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_07_01.mp4",
+    "video_stem": "CC_07_01",
+    "duration_seconds": 365.26,
+    "duration_formatted": "00:06:05.260",
+    "segment_count": 74,
+    "word_count": 579,
+    "avg_confidence": 0.8792,
+    "transcription_time_seconds": 36.25,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:37:33.064254"
+  },
+  "full_text": "Succeed Insurance has determined that there is a higher incidence of problems with claims from the assigned risk pool. For this reason, Succeed wants to flag all such claims. To accomplish this, I will create a claim pre-setup rule that flags these claims. I'll give the rule a descriptive name. To accomplish this, I will create a claim. The rule will create text, so the best practice is to use a display key. The rules should be triggered by Auto-Claims.  The rules should be triggered by Auto-Claims. Where the policyholder comes from the Assigned-Risk Pool. Assigned-Risk is a Boolean property on policy. The rule must set the claim's flag type key to is underscore flagged. It is also best practice to indicate the reason for the flag. There is an existing display key that will do the job. Now I will save my work. And start the claim center server to test the rule. When the server is fully started, I log on to claim center as Andy Applegate. I'll create a new auto claim. I will make it an unverified policy so I can set the terms myself. I'll give it a policy number that matches Succeed Insurance's standard format. The type of policy is personal auto. I'll set the loss date to today. I'll set the policy number.  Before I set any other terms, I will make this an assigned risk policy. I need to create a policy holder. I'll give the policy holder a name. I'll give the policy number. I'll give the policy an effective date at the beginning of last month. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates.  I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates. I'll give the policy number one of those dates.  So I'll give the policy number one of those dates.     Now I will add a vehicle. I will give the vehicle a make and model and provide a model year. Now I'll add a coverage so there's something for the policy to do. The natural choice for a single coverage is collision. I'll give an exposure limit of $50,000 and the same for the incident limit. Now I'll save the vehicle and proceed with creating the claim. The policyholder is the reporter and their only vehicle is involved. I'll add a quick description of the accident. I'll add a loss cause and select a loss cause that matches the description. I'll provide an address where the accident happened. I'll set the fault rating. And the weather. That's all the required info, so I'll quickly finish out the claim. As Andy Applegate, I'll assign the claim to myself. And I save the claim. If I now view the claim, I see that it is flagged. Hovering over the flag I can see that the reason for the flag is that the policy is assigned risk. This concludes the pre-setup rules demonstration. This concludes the pre-setup rules demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.62,
+      "end": 9.84,
+      "start_formatted": "00:00:00.620",
+      "end_formatted": "00:00:09.840",
+      "text": "Succeed Insurance has determined that there is a higher incidence of problems with claims from the assigned risk pool. For this reason, Succeed wants to flag all such claims.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 0.62,
+          "end": 1.14,
+          "probability": 0.9746
+        },
+        {
+          "word": "Insurance",
+          "start": 1.14,
+          "end": 1.5,
+          "probability": 0.5952
+        },
+        {
+          "word": "has",
+          "start": 1.5,
+          "end": 1.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "determined",
+          "start": 1.8,
+          "end": 2.22,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 2.22,
+          "end": 2.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "there",
+          "start": 2.46,
+          "end": 2.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 2.62,
+          "end": 2.74,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 2.74,
+          "end": 2.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "higher",
+          "start": 2.84,
+          "end": 3.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "incidence",
+          "start": 3.06,
+          "end": 3.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 3.5,
+          "end": 3.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "problems",
+          "start": 3.76,
+          "end": 4.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "with",
+          "start": 4.18,
+          "end": 4.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "claims",
+          "start": 4.42,
+          "end": 4.74,
+          "probability": 0.9858
+        },
+        {
+          "word": "from",
+          "start": 4.74,
+          "end": 4.96,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 4.96,
+          "end": 5.1,
+          "probability": 0.999
+        },
+        {
+          "word": "assigned",
+          "start": 5.1,
+          "end": 5.44,
+          "probability": 0.8862
+        },
+        {
+          "word": "risk",
+          "start": 5.44,
+          "end": 5.7,
+          "probability": 0.9312
+        },
+        {
+          "word": "pool.",
+          "start": 5.7,
+          "end": 6.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "For",
+          "start": 6.34,
+          "end": 6.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 6.7,
+          "end": 6.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "reason,",
+          "start": 6.94,
+          "end": 7.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "Succeed",
+          "start": 7.78,
+          "end": 8.18,
+          "probability": 0.9722
+        },
+        {
+          "word": "wants",
+          "start": 8.18,
+          "end": 8.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 8.44,
+          "end": 8.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "flag",
+          "start": 8.6,
+          "end": 8.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "all",
+          "start": 8.86,
+          "end": 9.1,
+          "probability": 0.999
+        },
+        {
+          "word": "such",
+          "start": 9.1,
+          "end": 9.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "claims.",
+          "start": 9.36,
+          "end": 9.84,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 15.2,
+      "end": 19.94,
+      "start_formatted": "00:00:15.200",
+      "end_formatted": "00:00:19.940",
+      "text": "To accomplish this, I will create a claim pre-setup rule that flags these claims.",
+      "words": [
+        {
+          "word": "To",
+          "start": 15.2,
+          "end": 15.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "accomplish",
+          "start": 15.72,
+          "end": 16.14,
+          "probability": 0.998
+        },
+        {
+          "word": "this,",
+          "start": 16.14,
+          "end": 16.56,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 16.76,
+          "end": 16.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 16.98,
+          "end": 17.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "create",
+          "start": 17.16,
+          "end": 17.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 17.48,
+          "end": 17.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 17.64,
+          "end": 17.9,
+          "probability": 0.7202
+        },
+        {
+          "word": "pre",
+          "start": 17.9,
+          "end": 18.12,
+          "probability": 0.728
+        },
+        {
+          "word": "-setup",
+          "start": 18.12,
+          "end": 18.48,
+          "probability": 0.9351
+        },
+        {
+          "word": "rule",
+          "start": 18.48,
+          "end": 18.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 18.66,
+          "end": 18.88,
+          "probability": 0.998
+        },
+        {
+          "word": "flags",
+          "start": 18.88,
+          "end": 19.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "these",
+          "start": 19.28,
+          "end": 19.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "claims.",
+          "start": 19.5,
+          "end": 19.94,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 27.92,
+      "end": 29.78,
+      "start_formatted": "00:00:27.920",
+      "end_formatted": "00:00:29.780",
+      "text": "I'll give the rule a descriptive name.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 27.92,
+          "end": 28.4,
+          "probability": 0.9731
+        },
+        {
+          "word": "give",
+          "start": 28.4,
+          "end": 28.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 28.52,
+          "end": 28.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "rule",
+          "start": 28.66,
+          "end": 28.82,
+          "probability": 0.9839
+        },
+        {
+          "word": "a",
+          "start": 28.82,
+          "end": 28.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "descriptive",
+          "start": 28.96,
+          "end": 29.34,
+          "probability": 0.9858
+        },
+        {
+          "word": "name.",
+          "start": 29.34,
+          "end": 29.78,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 30.76,
+      "end": 44.46,
+      "start_formatted": "00:00:30.760",
+      "end_formatted": "00:00:44.460",
+      "text": "To accomplish this, I will create a claim.",
+      "words": [
+        {
+          "word": "To",
+          "start": 30.76,
+          "end": 31.28,
+          "probability": 0.0012
+        },
+        {
+          "word": "accomplish",
+          "start": 31.28,
+          "end": 31.6,
+          "probability": 0.0
+        },
+        {
+          "word": "this,",
+          "start": 31.6,
+          "end": 32.1,
+          "probability": 0.167
+        },
+        {
+          "word": "I",
+          "start": 44.42,
+          "end": 44.42,
+          "probability": 0.0261
+        },
+        {
+          "word": "will",
+          "start": 44.42,
+          "end": 44.46,
+          "probability": 0.2339
+        },
+        {
+          "word": "create",
+          "start": 44.46,
+          "end": 44.46,
+          "probability": 0.0809
+        },
+        {
+          "word": "a",
+          "start": 44.46,
+          "end": 44.46,
+          "probability": 0.282
+        },
+        {
+          "word": "claim.",
+          "start": 44.46,
+          "end": 44.46,
+          "probability": 0.0025
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 46.5,
+      "end": 50.98,
+      "start_formatted": "00:00:46.500",
+      "end_formatted": "00:00:50.980",
+      "text": "The rule will create text, so the best practice is to use a display key.",
+      "words": [
+        {
+          "word": "The",
+          "start": 46.5,
+          "end": 47.02,
+          "probability": 0.8452
+        },
+        {
+          "word": "rule",
+          "start": 47.02,
+          "end": 47.24,
+          "probability": 0.9492
+        },
+        {
+          "word": "will",
+          "start": 47.24,
+          "end": 47.46,
+          "probability": 0.8491
+        },
+        {
+          "word": "create",
+          "start": 47.46,
+          "end": 47.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "text,",
+          "start": 47.78,
+          "end": 48.32,
+          "probability": 0.9858
+        },
+        {
+          "word": "so",
+          "start": 48.5,
+          "end": 48.76,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 48.76,
+          "end": 48.92,
+          "probability": 0.9888
+        },
+        {
+          "word": "best",
+          "start": 48.92,
+          "end": 49.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "practice",
+          "start": 49.16,
+          "end": 49.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 49.6,
+          "end": 49.86,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 49.86,
+          "end": 49.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "use",
+          "start": 49.96,
+          "end": 50.18,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 50.18,
+          "end": 50.28,
+          "probability": 0.8374
+        },
+        {
+          "word": "display",
+          "start": 50.28,
+          "end": 50.62,
+          "probability": 0.8774
+        },
+        {
+          "word": "key.",
+          "start": 50.62,
+          "end": 50.98,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 57.02,
+      "end": 60.48,
+      "start_formatted": "00:00:57.020",
+      "end_formatted": "00:01:00.480",
+      "text": "The rules should be triggered by Auto-Claims.",
+      "words": [
+        {
+          "word": "The",
+          "start": 57.02,
+          "end": 57.66,
+          "probability": 0.9155
+        },
+        {
+          "word": "rules",
+          "start": 57.66,
+          "end": 57.9,
+          "probability": 0.4299
+        },
+        {
+          "word": "should",
+          "start": 57.9,
+          "end": 58.1,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 58.1,
+          "end": 58.24,
+          "probability": 0.999
+        },
+        {
+          "word": "triggered",
+          "start": 58.24,
+          "end": 58.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "by",
+          "start": 58.56,
+          "end": 58.84,
+          "probability": 0.999
+        },
+        {
+          "word": "Auto",
+          "start": 58.84,
+          "end": 59.2,
+          "probability": 0.12
+        },
+        {
+          "word": "-Claims.",
+          "start": 59.2,
+          "end": 60.48,
+          "probability": 0.5889
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 60.48,
+      "end": 60.48,
+      "start_formatted": "00:01:00.480",
+      "end_formatted": "00:01:00.480",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 7,
+      "start": 60.98,
+      "end": 68.7,
+      "start_formatted": "00:01:00.980",
+      "end_formatted": "00:01:08.700",
+      "text": "The rules should be triggered by Auto-Claims.",
+      "words": [
+        {
+          "word": "The",
+          "start": 60.98,
+          "end": 61.62,
+          "probability": 0.0662
+        },
+        {
+          "word": "rules",
+          "start": 61.62,
+          "end": 61.62,
+          "probability": 0.0993
+        },
+        {
+          "word": "should",
+          "start": 61.62,
+          "end": 66.0,
+          "probability": 0.9453
+        },
+        {
+          "word": "be",
+          "start": 66.0,
+          "end": 66.0,
+          "probability": 0.9863
+        },
+        {
+          "word": "triggered",
+          "start": 66.0,
+          "end": 66.0,
+          "probability": 0.9878
+        },
+        {
+          "word": "by",
+          "start": 66.0,
+          "end": 68.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "Auto",
+          "start": 68.66,
+          "end": 68.66,
+          "probability": 0.9854
+        },
+        {
+          "word": "-Claims.",
+          "start": 68.66,
+          "end": 68.7,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 69.86,
+      "end": 73.04,
+      "start_formatted": "00:01:09.860",
+      "end_formatted": "00:01:13.040",
+      "text": "Where the policyholder comes from the Assigned-Risk Pool.",
+      "words": [
+        {
+          "word": "Where",
+          "start": 69.86,
+          "end": 70.5,
+          "probability": 0.75
+        },
+        {
+          "word": "the",
+          "start": 70.5,
+          "end": 70.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "policyholder",
+          "start": 70.64,
+          "end": 71.4,
+          "probability": 0.751
+        },
+        {
+          "word": "comes",
+          "start": 71.4,
+          "end": 71.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "from",
+          "start": 71.72,
+          "end": 71.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 71.94,
+          "end": 72.08,
+          "probability": 0.9146
+        },
+        {
+          "word": "Assigned",
+          "start": 72.08,
+          "end": 72.44,
+          "probability": 0.8496
+        },
+        {
+          "word": "-Risk",
+          "start": 72.44,
+          "end": 72.72,
+          "probability": 0.6636
+        },
+        {
+          "word": "Pool.",
+          "start": 72.72,
+          "end": 73.04,
+          "probability": 0.2461
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 73.32,
+      "end": 76.02,
+      "start_formatted": "00:01:13.320",
+      "end_formatted": "00:01:16.020",
+      "text": "Assigned-Risk is a Boolean property on policy.",
+      "words": [
+        {
+          "word": "Assigned",
+          "start": 73.32,
+          "end": 73.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "-Risk",
+          "start": 73.96,
+          "end": 74.16,
+          "probability": 0.9189
+        },
+        {
+          "word": "is",
+          "start": 74.16,
+          "end": 74.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 74.32,
+          "end": 74.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "Boolean",
+          "start": 74.48,
+          "end": 74.8,
+          "probability": 0.96
+        },
+        {
+          "word": "property",
+          "start": 74.8,
+          "end": 75.3,
+          "probability": 0.9736
+        },
+        {
+          "word": "on",
+          "start": 75.3,
+          "end": 75.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy.",
+          "start": 75.48,
+          "end": 76.02,
+          "probability": 0.814
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 83.82,
+      "end": 87.66,
+      "start_formatted": "00:01:23.820",
+      "end_formatted": "00:01:27.660",
+      "text": "The rule must set the claim's flag type key to is underscore flagged.",
+      "words": [
+        {
+          "word": "The",
+          "start": 83.82,
+          "end": 84.34,
+          "probability": 0.936
+        },
+        {
+          "word": "rule",
+          "start": 84.34,
+          "end": 84.56,
+          "probability": 0.9922
+        },
+        {
+          "word": "must",
+          "start": 84.56,
+          "end": 84.8,
+          "probability": 0.998
+        },
+        {
+          "word": "set",
+          "start": 84.8,
+          "end": 85.0,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 85.0,
+          "end": 85.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim's",
+          "start": 85.14,
+          "end": 85.54,
+          "probability": 0.73
+        },
+        {
+          "word": "flag",
+          "start": 85.54,
+          "end": 85.8,
+          "probability": 0.9775
+        },
+        {
+          "word": "type",
+          "start": 85.8,
+          "end": 85.98,
+          "probability": 0.8423
+        },
+        {
+          "word": "key",
+          "start": 85.98,
+          "end": 86.22,
+          "probability": 0.9512
+        },
+        {
+          "word": "to",
+          "start": 86.22,
+          "end": 86.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 86.4,
+          "end": 86.56,
+          "probability": 0.6753
+        },
+        {
+          "word": "underscore",
+          "start": 86.56,
+          "end": 86.9,
+          "probability": 0.8516
+        },
+        {
+          "word": "flagged.",
+          "start": 86.9,
+          "end": 87.66,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 98.56,
+      "end": 102.3,
+      "start_formatted": "00:01:38.560",
+      "end_formatted": "00:01:42.300",
+      "text": "It is also best practice to indicate the reason for the flag.",
+      "words": [
+        {
+          "word": "It",
+          "start": 98.56,
+          "end": 99.08,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 99.08,
+          "end": 99.24,
+          "probability": 0.999
+        },
+        {
+          "word": "also",
+          "start": 99.24,
+          "end": 99.58,
+          "probability": 0.999
+        },
+        {
+          "word": "best",
+          "start": 99.58,
+          "end": 99.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "practice",
+          "start": 99.88,
+          "end": 100.36,
+          "probability": 0.9702
+        },
+        {
+          "word": "to",
+          "start": 100.36,
+          "end": 100.64,
+          "probability": 1.0
+        },
+        {
+          "word": "indicate",
+          "start": 100.64,
+          "end": 101.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 101.02,
+          "end": 101.26,
+          "probability": 1.0
+        },
+        {
+          "word": "reason",
+          "start": 101.26,
+          "end": 101.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 101.58,
+          "end": 101.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 101.76,
+          "end": 101.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "flag.",
+          "start": 101.9,
+          "end": 102.3,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 102.56,
+      "end": 105.22,
+      "start_formatted": "00:01:42.560",
+      "end_formatted": "00:01:45.220",
+      "text": "There is an existing display key that will do the job.",
+      "words": [
+        {
+          "word": "There",
+          "start": 102.56,
+          "end": 102.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 102.96,
+          "end": 103.12,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 103.12,
+          "end": 103.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "existing",
+          "start": 103.22,
+          "end": 103.64,
+          "probability": 1.0
+        },
+        {
+          "word": "display",
+          "start": 103.64,
+          "end": 104.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "key",
+          "start": 104.04,
+          "end": 104.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 104.28,
+          "end": 104.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 104.44,
+          "end": 104.58,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 104.58,
+          "end": 104.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 104.74,
+          "end": 104.86,
+          "probability": 1.0
+        },
+        {
+          "word": "job.",
+          "start": 104.86,
+          "end": 105.22,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 123.78,
+      "end": 125.5,
+      "start_formatted": "00:02:03.780",
+      "end_formatted": "00:02:05.500",
+      "text": "Now I will save my work.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 123.78,
+          "end": 124.26,
+          "probability": 0.9189
+        },
+        {
+          "word": "I",
+          "start": 124.26,
+          "end": 124.42,
+          "probability": 0.9727
+        },
+        {
+          "word": "will",
+          "start": 124.42,
+          "end": 124.58,
+          "probability": 0.9922
+        },
+        {
+          "word": "save",
+          "start": 124.58,
+          "end": 124.84,
+          "probability": 0.9819
+        },
+        {
+          "word": "my",
+          "start": 124.84,
+          "end": 125.04,
+          "probability": 0.998
+        },
+        {
+          "word": "work.",
+          "start": 125.04,
+          "end": 125.5,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 130.92,
+      "end": 133.66,
+      "start_formatted": "00:02:10.920",
+      "end_formatted": "00:02:13.660",
+      "text": "And start the claim center server to test the rule.",
+      "words": [
+        {
+          "word": "And",
+          "start": 130.92,
+          "end": 131.4,
+          "probability": 0.8672
+        },
+        {
+          "word": "start",
+          "start": 131.4,
+          "end": 131.68,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 131.68,
+          "end": 131.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim",
+          "start": 131.86,
+          "end": 132.1,
+          "probability": 0.301
+        },
+        {
+          "word": "center",
+          "start": 132.1,
+          "end": 132.48,
+          "probability": 0.9409
+        },
+        {
+          "word": "server",
+          "start": 132.48,
+          "end": 132.82,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 132.82,
+          "end": 133.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "test",
+          "start": 133.04,
+          "end": 133.26,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 133.26,
+          "end": 133.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "rule.",
+          "start": 133.42,
+          "end": 133.66,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 134.56,
+      "end": 139.34,
+      "start_formatted": "00:02:14.560",
+      "end_formatted": "00:02:19.340",
+      "text": "When the server is fully started, I log on to claim center as Andy Applegate.",
+      "words": [
+        {
+          "word": "When",
+          "start": 134.56,
+          "end": 135.12,
+          "probability": 0.9497
+        },
+        {
+          "word": "the",
+          "start": 135.12,
+          "end": 135.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "server",
+          "start": 135.24,
+          "end": 135.54,
+          "probability": 0.9731
+        },
+        {
+          "word": "is",
+          "start": 135.54,
+          "end": 135.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "fully",
+          "start": 135.72,
+          "end": 135.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "started,",
+          "start": 135.98,
+          "end": 136.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 136.7,
+          "end": 136.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "log",
+          "start": 136.9,
+          "end": 137.14,
+          "probability": 0.9888
+        },
+        {
+          "word": "on",
+          "start": 137.14,
+          "end": 137.36,
+          "probability": 0.8657
+        },
+        {
+          "word": "to",
+          "start": 137.36,
+          "end": 137.52,
+          "probability": 0.998
+        },
+        {
+          "word": "claim",
+          "start": 137.52,
+          "end": 137.78,
+          "probability": 0.5703
+        },
+        {
+          "word": "center",
+          "start": 137.78,
+          "end": 138.18,
+          "probability": 0.2661
+        },
+        {
+          "word": "as",
+          "start": 138.18,
+          "end": 138.34,
+          "probability": 0.6709
+        },
+        {
+          "word": "Andy",
+          "start": 138.34,
+          "end": 138.68,
+          "probability": 0.9297
+        },
+        {
+          "word": "Applegate.",
+          "start": 138.68,
+          "end": 139.34,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 147.36,
+      "end": 149.04,
+      "start_formatted": "00:02:27.360",
+      "end_formatted": "00:02:29.040",
+      "text": "I'll create a new auto claim.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 147.36,
+          "end": 147.92,
+          "probability": 0.9907
+        },
+        {
+          "word": "create",
+          "start": 147.92,
+          "end": 148.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 148.22,
+          "end": 148.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 148.38,
+          "end": 148.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "auto",
+          "start": 148.54,
+          "end": 148.7,
+          "probability": 0.5981
+        },
+        {
+          "word": "claim.",
+          "start": 148.7,
+          "end": 149.04,
+          "probability": 0.4788
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 154.5,
+      "end": 158.56,
+      "start_formatted": "00:02:34.500",
+      "end_formatted": "00:02:38.560",
+      "text": "I will make it an unverified policy so I can set the terms myself.",
+      "words": [
+        {
+          "word": "I",
+          "start": 154.5,
+          "end": 155.1,
+          "probability": 0.8701
+        },
+        {
+          "word": "will",
+          "start": 155.1,
+          "end": 155.28,
+          "probability": 0.9702
+        },
+        {
+          "word": "make",
+          "start": 155.28,
+          "end": 155.5,
+          "probability": 0.9912
+        },
+        {
+          "word": "it",
+          "start": 155.5,
+          "end": 155.62,
+          "probability": 0.9917
+        },
+        {
+          "word": "an",
+          "start": 155.62,
+          "end": 155.72,
+          "probability": 0.9868
+        },
+        {
+          "word": "unverified",
+          "start": 155.72,
+          "end": 156.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "policy",
+          "start": 156.4,
+          "end": 156.88,
+          "probability": 0.9912
+        },
+        {
+          "word": "so",
+          "start": 156.88,
+          "end": 157.14,
+          "probability": 0.9712
+        },
+        {
+          "word": "I",
+          "start": 157.14,
+          "end": 157.28,
+          "probability": 0.9741
+        },
+        {
+          "word": "can",
+          "start": 157.28,
+          "end": 157.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "set",
+          "start": 157.42,
+          "end": 157.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 157.62,
+          "end": 157.78,
+          "probability": 0.998
+        },
+        {
+          "word": "terms",
+          "start": 157.78,
+          "end": 158.08,
+          "probability": 0.9922
+        },
+        {
+          "word": "myself.",
+          "start": 158.08,
+          "end": 158.56,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 158.88,
+      "end": 162.92,
+      "start_formatted": "00:02:38.880",
+      "end_formatted": "00:02:42.920",
+      "text": "I'll give it a policy number that matches Succeed Insurance's standard format.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 158.88,
+          "end": 159.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "give",
+          "start": 159.2,
+          "end": 159.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 159.34,
+          "end": 159.48,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 159.48,
+          "end": 159.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 159.56,
+          "end": 159.96,
+          "probability": 0.9907
+        },
+        {
+          "word": "number",
+          "start": 159.96,
+          "end": 160.3,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 160.3,
+          "end": 160.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "matches",
+          "start": 160.52,
+          "end": 160.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Succeed",
+          "start": 160.92,
+          "end": 161.38,
+          "probability": 0.917
+        },
+        {
+          "word": "Insurance's",
+          "start": 161.38,
+          "end": 162.06,
+          "probability": 0.9395
+        },
+        {
+          "word": "standard",
+          "start": 162.06,
+          "end": 162.36,
+          "probability": 0.9775
+        },
+        {
+          "word": "format.",
+          "start": 162.36,
+          "end": 162.92,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 165.44,
+      "end": 167.72,
+      "start_formatted": "00:02:45.440",
+      "end_formatted": "00:02:47.720",
+      "text": "The type of policy is personal auto.",
+      "words": [
+        {
+          "word": "The",
+          "start": 165.44,
+          "end": 166.02,
+          "probability": 0.9526
+        },
+        {
+          "word": "type",
+          "start": 166.02,
+          "end": 166.24,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 166.24,
+          "end": 166.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 166.38,
+          "end": 166.78,
+          "probability": 0.9824
+        },
+        {
+          "word": "is",
+          "start": 166.78,
+          "end": 167.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "personal",
+          "start": 167.0,
+          "end": 167.42,
+          "probability": 0.4226
+        },
+        {
+          "word": "auto.",
+          "start": 167.42,
+          "end": 167.72,
+          "probability": 0.8887
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 169.22,
+      "end": 171.12,
+      "start_formatted": "00:02:49.220",
+      "end_formatted": "00:02:51.120",
+      "text": "I'll set the loss date to today.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 169.22,
+          "end": 169.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "set",
+          "start": 169.8,
+          "end": 169.98,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 169.98,
+          "end": 170.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "loss",
+          "start": 170.12,
+          "end": 170.42,
+          "probability": 0.6968
+        },
+        {
+          "word": "date",
+          "start": 170.42,
+          "end": 170.64,
+          "probability": 0.9893
+        },
+        {
+          "word": "to",
+          "start": 170.64,
+          "end": 170.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "today.",
+          "start": 170.84,
+          "end": 171.12,
+          "probability": 0.9385
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 176.8,
+      "end": 177.3,
+      "start_formatted": "00:02:56.800",
+      "end_formatted": "00:02:57.300",
+      "text": "I'll set the policy number.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 176.8,
+          "end": 177.3,
+          "probability": 0.2396
+        },
+        {
+          "word": "set",
+          "start": 177.3,
+          "end": 177.3,
+          "probability": 0.1186
+        },
+        {
+          "word": "the",
+          "start": 177.3,
+          "end": 177.3,
+          "probability": 0.1805
+        },
+        {
+          "word": "policy",
+          "start": 177.3,
+          "end": 177.3,
+          "probability": 0.2415
+        },
+        {
+          "word": "number.",
+          "start": 177.3,
+          "end": 177.3,
+          "probability": 0.009
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 177.3,
+      "end": 177.3,
+      "start_formatted": "00:02:57.300",
+      "end_formatted": "00:02:57.300",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 177.3,
+      "end": 180.66,
+      "start_formatted": "00:02:57.300",
+      "end_formatted": "00:03:00.660",
+      "text": "Before I set any other terms, I will make this an assigned risk policy.",
+      "words": [
+        {
+          "word": "Before",
+          "start": 177.3,
+          "end": 177.3,
+          "probability": 0.3535
+        },
+        {
+          "word": "I",
+          "start": 177.3,
+          "end": 177.44,
+          "probability": 0.9829
+        },
+        {
+          "word": "set",
+          "start": 177.44,
+          "end": 177.66,
+          "probability": 0.9858
+        },
+        {
+          "word": "any",
+          "start": 177.66,
+          "end": 177.88,
+          "probability": 0.9756
+        },
+        {
+          "word": "other",
+          "start": 177.88,
+          "end": 178.08,
+          "probability": 0.9585
+        },
+        {
+          "word": "terms,",
+          "start": 178.08,
+          "end": 178.46,
+          "probability": 0.9878
+        },
+        {
+          "word": "I",
+          "start": 178.74,
+          "end": 178.92,
+          "probability": 0.9873
+        },
+        {
+          "word": "will",
+          "start": 178.92,
+          "end": 179.06,
+          "probability": 0.9033
+        },
+        {
+          "word": "make",
+          "start": 179.06,
+          "end": 179.24,
+          "probability": 0.9424
+        },
+        {
+          "word": "this",
+          "start": 179.24,
+          "end": 179.44,
+          "probability": 0.9883
+        },
+        {
+          "word": "an",
+          "start": 179.44,
+          "end": 179.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "assigned",
+          "start": 179.56,
+          "end": 179.88,
+          "probability": 0.7783
+        },
+        {
+          "word": "risk",
+          "start": 179.88,
+          "end": 180.16,
+          "probability": 0.9478
+        },
+        {
+          "word": "policy.",
+          "start": 180.16,
+          "end": 180.66,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 180.98,
+      "end": 182.84,
+      "start_formatted": "00:03:00.980",
+      "end_formatted": "00:03:02.840",
+      "text": "I need to create a policy holder.",
+      "words": [
+        {
+          "word": "I",
+          "start": 180.98,
+          "end": 181.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "need",
+          "start": 181.38,
+          "end": 181.56,
+          "probability": 0.8423
+        },
+        {
+          "word": "to",
+          "start": 181.56,
+          "end": 181.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "create",
+          "start": 181.68,
+          "end": 181.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 181.92,
+          "end": 182.08,
+          "probability": 0.9932
+        },
+        {
+          "word": "policy",
+          "start": 182.08,
+          "end": 182.46,
+          "probability": 0.9873
+        },
+        {
+          "word": "holder.",
+          "start": 182.46,
+          "end": 182.84,
+          "probability": 0.4321
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 188.26,
+      "end": 190.18,
+      "start_formatted": "00:03:08.260",
+      "end_formatted": "00:03:10.180",
+      "text": "I'll give the policy holder a name.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 188.26,
+          "end": 188.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "give",
+          "start": 188.76,
+          "end": 188.88,
+          "probability": 0.9751
+        },
+        {
+          "word": "the",
+          "start": 188.88,
+          "end": 189.02,
+          "probability": 0.9873
+        },
+        {
+          "word": "policy",
+          "start": 189.02,
+          "end": 189.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "holder",
+          "start": 189.44,
+          "end": 189.76,
+          "probability": 0.7485
+        },
+        {
+          "word": "a",
+          "start": 189.76,
+          "end": 189.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "name.",
+          "start": 189.92,
+          "end": 190.18,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 196.72,
+      "end": 197.58,
+      "start_formatted": "00:03:16.720",
+      "end_formatted": "00:03:17.580",
+      "text": "I'll give the policy number.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 196.72,
+          "end": 197.14,
+          "probability": 0.4517
+        },
+        {
+          "word": "give",
+          "start": 197.14,
+          "end": 197.26,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 197.26,
+          "end": 197.36,
+          "probability": 0.9736
+        },
+        {
+          "word": "policy",
+          "start": 197.36,
+          "end": 197.58,
+          "probability": 0.9927
+        },
+        {
+          "word": "number.",
+          "start": 197.58,
+          "end": 197.58,
+          "probability": 0.0
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 205.96,
+      "end": 209.36,
+      "start_formatted": "00:03:25.960",
+      "end_formatted": "00:03:29.360",
+      "text": "I'll give the policy an effective date at the beginning of last month.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 205.96,
+          "end": 206.38,
+          "probability": 0.7715
+        },
+        {
+          "word": "give",
+          "start": 206.38,
+          "end": 206.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 206.5,
+          "end": 206.66,
+          "probability": 0.9609
+        },
+        {
+          "word": "policy",
+          "start": 206.66,
+          "end": 207.04,
+          "probability": 0.9512
+        },
+        {
+          "word": "an",
+          "start": 207.04,
+          "end": 207.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "effective",
+          "start": 207.24,
+          "end": 207.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "date",
+          "start": 207.56,
+          "end": 207.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "at",
+          "start": 207.86,
+          "end": 208.02,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 208.02,
+          "end": 208.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "beginning",
+          "start": 208.1,
+          "end": 208.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 208.4,
+          "end": 208.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "last",
+          "start": 208.6,
+          "end": 208.94,
+          "probability": 0.9858
+        },
+        {
+          "word": "month.",
+          "start": 208.94,
+          "end": 209.36,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 216.28,
+      "end": 216.62,
+      "start_formatted": "00:03:36.280",
+      "end_formatted": "00:03:36.620",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 216.28,
+          "end": 216.62,
+          "probability": 0.0199
+        },
+        {
+          "word": "give",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.0232
+        },
+        {
+          "word": "the",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.0502
+        },
+        {
+          "word": "policy",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.0291
+        },
+        {
+          "word": "number",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.0014
+        },
+        {
+          "word": "one",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.1498
+        },
+        {
+          "word": "of",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.0138
+        },
+        {
+          "word": "those",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.0418
+        },
+        {
+          "word": "dates.",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.0068
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 216.62,
+      "end": 216.86,
+      "start_formatted": "00:03:36.620",
+      "end_formatted": "00:03:36.860",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 216.62,
+          "end": 216.62,
+          "probability": 0.3374
+        },
+        {
+          "word": "give",
+          "start": 216.62,
+          "end": 216.8,
+          "probability": 0.8848
+        },
+        {
+          "word": "the",
+          "start": 216.8,
+          "end": 216.86,
+          "probability": 0.6357
+        },
+        {
+          "word": "policy",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.7769
+        },
+        {
+          "word": "number",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.5029
+        },
+        {
+          "word": "one",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.5918
+        },
+        {
+          "word": "of",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.0685
+        },
+        {
+          "word": "those",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.772
+        },
+        {
+          "word": "dates.",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.957
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 216.86,
+      "end": 218.84,
+      "start_formatted": "00:03:36.860",
+      "end_formatted": "00:03:38.840",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.4683
+        },
+        {
+          "word": "give",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.9404
+        },
+        {
+          "word": "the",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.8081
+        },
+        {
+          "word": "policy",
+          "start": 216.86,
+          "end": 216.86,
+          "probability": 0.8994
+        },
+        {
+          "word": "number",
+          "start": 216.86,
+          "end": 217.3,
+          "probability": 0.8828
+        },
+        {
+          "word": "one",
+          "start": 217.3,
+          "end": 217.32,
+          "probability": 0.709
+        },
+        {
+          "word": "of",
+          "start": 217.32,
+          "end": 217.32,
+          "probability": 0.1252
+        },
+        {
+          "word": "those",
+          "start": 217.32,
+          "end": 217.42,
+          "probability": 0.8711
+        },
+        {
+          "word": "dates.",
+          "start": 217.42,
+          "end": 218.84,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 219.1,
+      "end": 219.1,
+      "start_formatted": "00:03:39.100",
+      "end_formatted": "00:03:39.100",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 219.28,
+      "end": 231.42,
+      "start_formatted": "00:03:39.280",
+      "end_formatted": "00:03:51.420",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 219.28,
+          "end": 219.62,
+          "probability": 0.603
+        },
+        {
+          "word": "give",
+          "start": 219.62,
+          "end": 221.24,
+          "probability": 0.9585
+        },
+        {
+          "word": "the",
+          "start": 221.24,
+          "end": 221.24,
+          "probability": 0.8545
+        },
+        {
+          "word": "policy",
+          "start": 221.24,
+          "end": 221.24,
+          "probability": 0.9434
+        },
+        {
+          "word": "number",
+          "start": 221.24,
+          "end": 221.24,
+          "probability": 0.9404
+        },
+        {
+          "word": "one",
+          "start": 221.24,
+          "end": 222.64,
+          "probability": 0.7778
+        },
+        {
+          "word": "of",
+          "start": 222.64,
+          "end": 222.7,
+          "probability": 0.2651
+        },
+        {
+          "word": "those",
+          "start": 222.7,
+          "end": 222.7,
+          "probability": 0.8994
+        },
+        {
+          "word": "dates.",
+          "start": 222.7,
+          "end": 231.42,
+          "probability": 0.9849
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 231.42,
+      "end": 233.2,
+      "start_formatted": "00:03:51.420",
+      "end_formatted": "00:03:53.200",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 231.42,
+          "end": 231.42,
+          "probability": 0.6489
+        },
+        {
+          "word": "give",
+          "start": 231.42,
+          "end": 232.66,
+          "probability": 0.9624
+        },
+        {
+          "word": "the",
+          "start": 232.66,
+          "end": 232.68,
+          "probability": 0.856
+        },
+        {
+          "word": "policy",
+          "start": 232.68,
+          "end": 232.76,
+          "probability": 0.9541
+        },
+        {
+          "word": "number",
+          "start": 232.76,
+          "end": 232.92,
+          "probability": 0.9512
+        },
+        {
+          "word": "one",
+          "start": 232.92,
+          "end": 233.06,
+          "probability": 0.8008
+        },
+        {
+          "word": "of",
+          "start": 233.06,
+          "end": 233.2,
+          "probability": 0.3796
+        },
+        {
+          "word": "those",
+          "start": 233.2,
+          "end": 233.2,
+          "probability": 0.9067
+        },
+        {
+          "word": "dates.",
+          "start": 233.2,
+          "end": 233.2,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 233.2,
+      "end": 234.72,
+      "start_formatted": "00:03:53.200",
+      "end_formatted": "00:03:54.720",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 233.2,
+          "end": 233.2,
+          "probability": 0.6846
+        },
+        {
+          "word": "give",
+          "start": 233.2,
+          "end": 233.2,
+          "probability": 0.9653
+        },
+        {
+          "word": "the",
+          "start": 233.2,
+          "end": 233.2,
+          "probability": 0.8652
+        },
+        {
+          "word": "policy",
+          "start": 233.2,
+          "end": 233.2,
+          "probability": 0.9595
+        },
+        {
+          "word": "number",
+          "start": 233.2,
+          "end": 233.36,
+          "probability": 0.9565
+        },
+        {
+          "word": "one",
+          "start": 233.36,
+          "end": 234.4,
+          "probability": 0.8242
+        },
+        {
+          "word": "of",
+          "start": 234.4,
+          "end": 234.72,
+          "probability": 0.4675
+        },
+        {
+          "word": "those",
+          "start": 234.72,
+          "end": 234.72,
+          "probability": 0.9141
+        },
+        {
+          "word": "dates.",
+          "start": 234.72,
+          "end": 234.72,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 234.72,
+      "end": 235.32,
+      "start_formatted": "00:03:54.720",
+      "end_formatted": "00:03:55.320",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 234.72,
+          "end": 234.72,
+          "probability": 0.7085
+        },
+        {
+          "word": "give",
+          "start": 234.72,
+          "end": 234.72,
+          "probability": 0.9658
+        },
+        {
+          "word": "the",
+          "start": 234.72,
+          "end": 234.72,
+          "probability": 0.875
+        },
+        {
+          "word": "policy",
+          "start": 234.72,
+          "end": 234.72,
+          "probability": 0.959
+        },
+        {
+          "word": "number",
+          "start": 234.72,
+          "end": 234.72,
+          "probability": 0.9644
+        },
+        {
+          "word": "one",
+          "start": 234.72,
+          "end": 235.32,
+          "probability": 0.8315
+        },
+        {
+          "word": "of",
+          "start": 235.32,
+          "end": 235.32,
+          "probability": 0.5771
+        },
+        {
+          "word": "those",
+          "start": 235.32,
+          "end": 235.32,
+          "probability": 0.9302
+        },
+        {
+          "word": "dates.",
+          "start": 235.32,
+          "end": 235.32,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 235.4,
+      "end": 235.58,
+      "start_formatted": "00:03:55.400",
+      "end_formatted": "00:03:55.580",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 235.4,
+          "end": 235.58,
+          "probability": 0.7285
+        },
+        {
+          "word": "give",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.9668
+        },
+        {
+          "word": "the",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.8779
+        },
+        {
+          "word": "policy",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.9595
+        },
+        {
+          "word": "number",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.9697
+        },
+        {
+          "word": "one",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.8354
+        },
+        {
+          "word": "of",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.6509
+        },
+        {
+          "word": "those",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.9248
+        },
+        {
+          "word": "dates.",
+          "start": 235.58,
+          "end": 235.58,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 235.58,
+      "end": 235.86,
+      "start_formatted": "00:03:55.580",
+      "end_formatted": "00:03:55.860",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 235.58,
+          "end": 235.86,
+          "probability": 0.7422
+        },
+        {
+          "word": "give",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.9668
+        },
+        {
+          "word": "the",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.8809
+        },
+        {
+          "word": "policy",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.9575
+        },
+        {
+          "word": "number",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.9722
+        },
+        {
+          "word": "one",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.833
+        },
+        {
+          "word": "of",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.7266
+        },
+        {
+          "word": "those",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.9336
+        },
+        {
+          "word": "dates.",
+          "start": 235.86,
+          "end": 235.86,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 235.86,
+      "end": 236.18,
+      "start_formatted": "00:03:55.860",
+      "end_formatted": "00:03:56.180",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 235.86,
+          "end": 236.1,
+          "probability": 0.7471
+        },
+        {
+          "word": "give",
+          "start": 236.1,
+          "end": 236.14,
+          "probability": 0.9658
+        },
+        {
+          "word": "the",
+          "start": 236.14,
+          "end": 236.14,
+          "probability": 0.8828
+        },
+        {
+          "word": "policy",
+          "start": 236.14,
+          "end": 236.14,
+          "probability": 0.9561
+        },
+        {
+          "word": "number",
+          "start": 236.14,
+          "end": 236.18,
+          "probability": 0.9727
+        },
+        {
+          "word": "one",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.8276
+        },
+        {
+          "word": "of",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.7632
+        },
+        {
+          "word": "those",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.9341
+        },
+        {
+          "word": "dates.",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 236.18,
+      "end": 236.24,
+      "start_formatted": "00:03:56.180",
+      "end_formatted": "00:03:56.240",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.7476
+        },
+        {
+          "word": "give",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.9644
+        },
+        {
+          "word": "the",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.8794
+        },
+        {
+          "word": "policy",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.9551
+        },
+        {
+          "word": "number",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.9736
+        },
+        {
+          "word": "one",
+          "start": 236.18,
+          "end": 236.18,
+          "probability": 0.8145
+        },
+        {
+          "word": "of",
+          "start": 236.18,
+          "end": 236.24,
+          "probability": 0.7896
+        },
+        {
+          "word": "those",
+          "start": 236.24,
+          "end": 236.24,
+          "probability": 0.9272
+        },
+        {
+          "word": "dates.",
+          "start": 236.24,
+          "end": 236.24,
+          "probability": 0.9771
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 236.32,
+      "end": 237.36,
+      "start_formatted": "00:03:56.320",
+      "end_formatted": "00:03:57.360",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 236.32,
+          "end": 236.66,
+          "probability": 0.7422
+        },
+        {
+          "word": "give",
+          "start": 236.66,
+          "end": 236.66,
+          "probability": 0.9634
+        },
+        {
+          "word": "the",
+          "start": 236.66,
+          "end": 236.66,
+          "probability": 0.8813
+        },
+        {
+          "word": "policy",
+          "start": 236.66,
+          "end": 237.06,
+          "probability": 0.9517
+        },
+        {
+          "word": "number",
+          "start": 237.06,
+          "end": 237.36,
+          "probability": 0.9741
+        },
+        {
+          "word": "one",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.8076
+        },
+        {
+          "word": "of",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.7998
+        },
+        {
+          "word": "those",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.9248
+        },
+        {
+          "word": "dates.",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 237.36,
+      "end": 237.48,
+      "start_formatted": "00:03:57.360",
+      "end_formatted": "00:03:57.480",
+      "text": "I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.7407
+        },
+        {
+          "word": "give",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.9629
+        },
+        {
+          "word": "the",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.8862
+        },
+        {
+          "word": "policy",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.9473
+        },
+        {
+          "word": "number",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.9731
+        },
+        {
+          "word": "one",
+          "start": 237.36,
+          "end": 237.36,
+          "probability": 0.7954
+        },
+        {
+          "word": "of",
+          "start": 237.36,
+          "end": 237.48,
+          "probability": 0.834
+        },
+        {
+          "word": "those",
+          "start": 237.48,
+          "end": 237.48,
+          "probability": 0.9209
+        },
+        {
+          "word": "dates.",
+          "start": 237.48,
+          "end": 237.48,
+          "probability": 0.9673
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 237.52,
+      "end": 237.52,
+      "start_formatted": "00:03:57.520",
+      "end_formatted": "00:03:57.520",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 43,
+      "start": 237.62,
+      "end": 238.58,
+      "start_formatted": "00:03:57.620",
+      "end_formatted": "00:03:58.580",
+      "text": "So I'll give the policy number one of those dates.",
+      "words": [
+        {
+          "word": "So",
+          "start": 237.62,
+          "end": 237.62,
+          "probability": 0.0094
+        },
+        {
+          "word": "I'll",
+          "start": 237.62,
+          "end": 237.66,
+          "probability": 0.5459
+        },
+        {
+          "word": "give",
+          "start": 237.66,
+          "end": 237.66,
+          "probability": 0.957
+        },
+        {
+          "word": "the",
+          "start": 237.66,
+          "end": 237.66,
+          "probability": 0.8799
+        },
+        {
+          "word": "policy",
+          "start": 237.66,
+          "end": 237.8,
+          "probability": 0.9326
+        },
+        {
+          "word": "number",
+          "start": 237.8,
+          "end": 237.8,
+          "probability": 0.9673
+        },
+        {
+          "word": "one",
+          "start": 237.8,
+          "end": 237.8,
+          "probability": 0.7769
+        },
+        {
+          "word": "of",
+          "start": 237.8,
+          "end": 238.0,
+          "probability": 0.8501
+        },
+        {
+          "word": "those",
+          "start": 238.0,
+          "end": 238.24,
+          "probability": 0.8843
+        },
+        {
+          "word": "dates.!!!!",
+          "start": 238.24,
+          "end": 238.58,
+          "probability": 0.9575
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 219.84,
+      "end": 219.84,
+      "start_formatted": "00:03:39.840",
+      "end_formatted": "00:03:39.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 45,
+      "start": 219.84,
+      "end": 219.84,
+      "start_formatted": "00:03:39.840",
+      "end_formatted": "00:03:39.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 46,
+      "start": 219.84,
+      "end": 219.84,
+      "start_formatted": "00:03:39.840",
+      "end_formatted": "00:03:39.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 47,
+      "start": 219.84,
+      "end": 219.84,
+      "start_formatted": "00:03:39.840",
+      "end_formatted": "00:03:39.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 48,
+      "start": 239.8,
+      "end": 241.28,
+      "start_formatted": "00:03:59.800",
+      "end_formatted": "00:04:01.280",
+      "text": "Now I will add a vehicle.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 239.8,
+          "end": 240.32,
+          "probability": 0.8921
+        },
+        {
+          "word": "I",
+          "start": 240.32,
+          "end": 240.5,
+          "probability": 0.9629
+        },
+        {
+          "word": "will",
+          "start": 240.5,
+          "end": 240.62,
+          "probability": 0.9727
+        },
+        {
+          "word": "add",
+          "start": 240.62,
+          "end": 240.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 240.8,
+          "end": 240.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "vehicle.",
+          "start": 240.88,
+          "end": 241.28,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 243.54,
+      "end": 245.28,
+      "start_formatted": "00:04:03.540",
+      "end_formatted": "00:04:05.280",
+      "text": "I will give the vehicle a make",
+      "words": [
+        {
+          "word": "I",
+          "start": 243.54,
+          "end": 244.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "will",
+          "start": 244.06,
+          "end": 244.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "give",
+          "start": 244.22,
+          "end": 244.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 244.38,
+          "end": 244.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "vehicle",
+          "start": 244.52,
+          "end": 244.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 244.84,
+          "end": 245.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "make",
+          "start": 245.04,
+          "end": 245.28,
+          "probability": 0.8965
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 247.72,
+      "end": 248.58,
+      "start_formatted": "00:04:07.720",
+      "end_formatted": "00:04:08.580",
+      "text": "and model",
+      "words": [
+        {
+          "word": "and",
+          "start": 247.72,
+          "end": 248.24,
+          "probability": 0.397
+        },
+        {
+          "word": "model",
+          "start": 248.24,
+          "end": 248.58,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 252.18,
+      "end": 253.68,
+      "start_formatted": "00:04:12.180",
+      "end_formatted": "00:04:13.680",
+      "text": "and provide a model year.",
+      "words": [
+        {
+          "word": "and",
+          "start": 252.18,
+          "end": 252.7,
+          "probability": 0.7886
+        },
+        {
+          "word": "provide",
+          "start": 252.7,
+          "end": 252.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 252.98,
+          "end": 253.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "model",
+          "start": 253.14,
+          "end": 253.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "year.",
+          "start": 253.38,
+          "end": 253.68,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 256.12,
+      "end": 259.34,
+      "start_formatted": "00:04:16.120",
+      "end_formatted": "00:04:19.340",
+      "text": "Now I'll add a coverage so there's something for the policy to do.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 256.12,
+          "end": 256.64,
+          "probability": 0.9854
+        },
+        {
+          "word": "I'll",
+          "start": 256.64,
+          "end": 256.88,
+          "probability": 0.9863
+        },
+        {
+          "word": "add",
+          "start": 256.88,
+          "end": 257.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 257.02,
+          "end": 257.1,
+          "probability": 0.9907
+        },
+        {
+          "word": "coverage",
+          "start": 257.1,
+          "end": 257.48,
+          "probability": 0.9858
+        },
+        {
+          "word": "so",
+          "start": 257.48,
+          "end": 257.68,
+          "probability": 0.9634
+        },
+        {
+          "word": "there's",
+          "start": 257.68,
+          "end": 257.9,
+          "probability": 0.9888
+        },
+        {
+          "word": "something",
+          "start": 257.9,
+          "end": 258.16,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 258.16,
+          "end": 258.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 258.36,
+          "end": 258.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 258.48,
+          "end": 258.9,
+          "probability": 0.9893
+        },
+        {
+          "word": "to",
+          "start": 258.9,
+          "end": 259.1,
+          "probability": 0.999
+        },
+        {
+          "word": "do.",
+          "start": 259.1,
+          "end": 259.34,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 259.78,
+      "end": 262.68,
+      "start_formatted": "00:04:19.780",
+      "end_formatted": "00:04:22.680",
+      "text": "The natural choice for a single coverage is collision.",
+      "words": [
+        {
+          "word": "The",
+          "start": 259.78,
+          "end": 260.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "natural",
+          "start": 260.3,
+          "end": 260.64,
+          "probability": 0.999
+        },
+        {
+          "word": "choice",
+          "start": 260.64,
+          "end": 261.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 261.04,
+          "end": 261.24,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 261.24,
+          "end": 261.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "single",
+          "start": 261.36,
+          "end": 261.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "coverage",
+          "start": 261.62,
+          "end": 262.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 262.06,
+          "end": 262.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "collision.",
+          "start": 262.28,
+          "end": 262.68,
+          "probability": 0.9102
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 263.56,
+      "end": 266.12,
+      "start_formatted": "00:04:23.560",
+      "end_formatted": "00:04:26.120",
+      "text": "I'll give an exposure limit of $50,000",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 263.56,
+          "end": 264.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "give",
+          "start": 264.08,
+          "end": 264.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 264.24,
+          "end": 264.36,
+          "probability": 0.9927
+        },
+        {
+          "word": "exposure",
+          "start": 264.36,
+          "end": 264.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "limit",
+          "start": 264.82,
+          "end": 265.2,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 265.2,
+          "end": 265.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "$50",
+          "start": 265.34,
+          "end": 265.64,
+          "probability": 0.9478
+        },
+        {
+          "word": ",000",
+          "start": 265.64,
+          "end": 266.12,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 267.46,
+      "end": 269.6,
+      "start_formatted": "00:04:27.460",
+      "end_formatted": "00:04:29.600",
+      "text": "and the same for the incident limit.",
+      "words": [
+        {
+          "word": "and",
+          "start": 267.46,
+          "end": 268.18,
+          "probability": 0.2164
+        },
+        {
+          "word": "the",
+          "start": 268.18,
+          "end": 268.28,
+          "probability": 0.998
+        },
+        {
+          "word": "same",
+          "start": 268.28,
+          "end": 268.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 268.5,
+          "end": 268.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 268.7,
+          "end": 268.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "incident",
+          "start": 268.84,
+          "end": 269.22,
+          "probability": 0.978
+        },
+        {
+          "word": "limit.",
+          "start": 269.22,
+          "end": 269.6,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 271.7,
+      "end": 273.42,
+      "start_formatted": "00:04:31.700",
+      "end_formatted": "00:04:33.420",
+      "text": "Now I'll save the vehicle",
+      "words": [
+        {
+          "word": "Now",
+          "start": 271.7,
+          "end": 272.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "I'll",
+          "start": 272.42,
+          "end": 272.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "save",
+          "start": 272.62,
+          "end": 272.84,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 272.84,
+          "end": 273.0,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle",
+          "start": 273.0,
+          "end": 273.42,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 275.42,
+      "end": 277.68,
+      "start_formatted": "00:04:35.420",
+      "end_formatted": "00:04:37.680",
+      "text": "and proceed with creating the claim.",
+      "words": [
+        {
+          "word": "and",
+          "start": 275.42,
+          "end": 276.14,
+          "probability": 0.8296
+        },
+        {
+          "word": "proceed",
+          "start": 276.14,
+          "end": 276.5,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 276.5,
+          "end": 276.72,
+          "probability": 1.0
+        },
+        {
+          "word": "creating",
+          "start": 276.72,
+          "end": 277.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 277.14,
+          "end": 277.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim.",
+          "start": 277.34,
+          "end": 277.68,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 279.08,
+      "end": 281.28,
+      "start_formatted": "00:04:39.080",
+      "end_formatted": "00:04:41.280",
+      "text": "The policyholder is the reporter",
+      "words": [
+        {
+          "word": "The",
+          "start": 279.08,
+          "end": 279.8,
+          "probability": 0.999
+        },
+        {
+          "word": "policyholder",
+          "start": 279.8,
+          "end": 280.5,
+          "probability": 0.9004
+        },
+        {
+          "word": "is",
+          "start": 280.5,
+          "end": 280.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 280.74,
+          "end": 280.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "reporter",
+          "start": 280.86,
+          "end": 281.28,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 282.84,
+      "end": 284.98,
+      "start_formatted": "00:04:42.840",
+      "end_formatted": "00:04:44.980",
+      "text": "and their only vehicle is involved.",
+      "words": [
+        {
+          "word": "and",
+          "start": 282.84,
+          "end": 283.56,
+          "probability": 0.8101
+        },
+        {
+          "word": "their",
+          "start": 283.56,
+          "end": 283.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "only",
+          "start": 283.7,
+          "end": 283.92,
+          "probability": 0.999
+        },
+        {
+          "word": "vehicle",
+          "start": 283.92,
+          "end": 284.3,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 284.3,
+          "end": 284.54,
+          "probability": 1.0
+        },
+        {
+          "word": "involved.",
+          "start": 284.54,
+          "end": 284.98,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 290.26,
+      "end": 292.7,
+      "start_formatted": "00:04:50.260",
+      "end_formatted": "00:04:52.700",
+      "text": "I'll add a quick description of the accident.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 290.26,
+          "end": 290.98,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 290.98,
+          "end": 291.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 291.14,
+          "end": 291.24,
+          "probability": 1.0
+        },
+        {
+          "word": "quick",
+          "start": 291.24,
+          "end": 291.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "description",
+          "start": 291.42,
+          "end": 291.9,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 291.9,
+          "end": 292.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 292.14,
+          "end": 292.26,
+          "probability": 1.0
+        },
+        {
+          "word": "accident.",
+          "start": 292.26,
+          "end": 292.7,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 301.48,
+      "end": 302.16,
+      "start_formatted": "00:05:01.480",
+      "end_formatted": "00:05:02.160",
+      "text": "I'll add a loss cause",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 301.48,
+          "end": 302.16,
+          "probability": 0.4231
+        },
+        {
+          "word": "add",
+          "start": 302.16,
+          "end": 302.16,
+          "probability": 0.0263
+        },
+        {
+          "word": "a",
+          "start": 302.16,
+          "end": 302.16,
+          "probability": 0.2974
+        },
+        {
+          "word": "loss",
+          "start": 302.16,
+          "end": 302.16,
+          "probability": 0.2286
+        },
+        {
+          "word": "cause",
+          "start": 302.16,
+          "end": 302.16,
+          "probability": 0.3533
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 302.16,
+      "end": 304.22,
+      "start_formatted": "00:05:02.160",
+      "end_formatted": "00:05:04.220",
+      "text": "and select a loss cause that matches the description.",
+      "words": [
+        {
+          "word": "and",
+          "start": 302.16,
+          "end": 302.16,
+          "probability": 0.0761
+        },
+        {
+          "word": "select",
+          "start": 302.16,
+          "end": 302.32,
+          "probability": 0.5586
+        },
+        {
+          "word": "a",
+          "start": 302.32,
+          "end": 302.54,
+          "probability": 0.644
+        },
+        {
+          "word": "loss",
+          "start": 302.54,
+          "end": 302.74,
+          "probability": 0.8252
+        },
+        {
+          "word": "cause",
+          "start": 302.74,
+          "end": 303.08,
+          "probability": 0.8047
+        },
+        {
+          "word": "that",
+          "start": 303.08,
+          "end": 303.24,
+          "probability": 0.9536
+        },
+        {
+          "word": "matches",
+          "start": 303.24,
+          "end": 303.58,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 303.58,
+          "end": 303.78,
+          "probability": 0.9819
+        },
+        {
+          "word": "description.",
+          "start": 303.78,
+          "end": 304.22,
+          "probability": 0.9556
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 305.1,
+      "end": 307.88,
+      "start_formatted": "00:05:05.100",
+      "end_formatted": "00:05:07.880",
+      "text": "I'll provide an address where the accident happened.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 305.1,
+          "end": 305.78,
+          "probability": 0.9814
+        },
+        {
+          "word": "provide",
+          "start": 305.78,
+          "end": 306.04,
+          "probability": 0.9443
+        },
+        {
+          "word": "an",
+          "start": 306.04,
+          "end": 306.24,
+          "probability": 0.9717
+        },
+        {
+          "word": "address",
+          "start": 306.24,
+          "end": 306.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "where",
+          "start": 306.58,
+          "end": 306.86,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 306.86,
+          "end": 307.0,
+          "probability": 0.9897
+        },
+        {
+          "word": "accident",
+          "start": 307.0,
+          "end": 307.38,
+          "probability": 0.9888
+        },
+        {
+          "word": "happened.",
+          "start": 307.38,
+          "end": 307.88,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 325.52,
+      "end": 327.02,
+      "start_formatted": "00:05:25.520",
+      "end_formatted": "00:05:27.020",
+      "text": "I'll set the fault rating.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 325.52,
+          "end": 326.08,
+          "probability": 0.98
+        },
+        {
+          "word": "set",
+          "start": 326.08,
+          "end": 326.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 326.26,
+          "end": 326.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "fault",
+          "start": 326.4,
+          "end": 326.66,
+          "probability": 0.8921
+        },
+        {
+          "word": "rating.",
+          "start": 326.66,
+          "end": 327.02,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 329.04,
+      "end": 330.02,
+      "start_formatted": "00:05:29.040",
+      "end_formatted": "00:05:30.020",
+      "text": "And the weather.",
+      "words": [
+        {
+          "word": "And",
+          "start": 329.04,
+          "end": 329.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 329.6,
+          "end": 329.72,
+          "probability": 0.999
+        },
+        {
+          "word": "weather.",
+          "start": 329.72,
+          "end": 330.02,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 333.04,
+      "end": 336.66,
+      "start_formatted": "00:05:33.040",
+      "end_formatted": "00:05:36.660",
+      "text": "That's all the required info, so I'll quickly finish out the claim.",
+      "words": [
+        {
+          "word": "That's",
+          "start": 333.04,
+          "end": 333.6,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 333.6,
+          "end": 333.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 333.72,
+          "end": 333.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "required",
+          "start": 333.86,
+          "end": 334.3,
+          "probability": 1.0
+        },
+        {
+          "word": "info,",
+          "start": 334.3,
+          "end": 334.72,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 334.92,
+          "end": 335.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "I'll",
+          "start": 335.2,
+          "end": 335.36,
+          "probability": 1.0
+        },
+        {
+          "word": "quickly",
+          "start": 335.36,
+          "end": 335.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "finish",
+          "start": 335.66,
+          "end": 335.98,
+          "probability": 1.0
+        },
+        {
+          "word": "out",
+          "start": 335.98,
+          "end": 336.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 336.24,
+          "end": 336.38,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 336.38,
+          "end": 336.66,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 344.42,
+      "end": 347.66,
+      "start_formatted": "00:05:44.420",
+      "end_formatted": "00:05:47.660",
+      "text": "As Andy Applegate, I'll assign the claim to myself.",
+      "words": [
+        {
+          "word": "As",
+          "start": 344.42,
+          "end": 344.96,
+          "probability": 0.8936
+        },
+        {
+          "word": "Andy",
+          "start": 344.96,
+          "end": 345.28,
+          "probability": 0.979
+        },
+        {
+          "word": "Applegate,",
+          "start": 345.28,
+          "end": 345.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "I'll",
+          "start": 346.1,
+          "end": 346.34,
+          "probability": 0.9902
+        },
+        {
+          "word": "assign",
+          "start": 346.34,
+          "end": 346.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 346.62,
+          "end": 346.76,
+          "probability": 0.998
+        },
+        {
+          "word": "claim",
+          "start": 346.76,
+          "end": 347.0,
+          "probability": 0.9746
+        },
+        {
+          "word": "to",
+          "start": 347.0,
+          "end": 347.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "myself.",
+          "start": 347.16,
+          "end": 347.66,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 348.16,
+      "end": 349.54,
+      "start_formatted": "00:05:48.160",
+      "end_formatted": "00:05:49.540",
+      "text": "And I save the claim.",
+      "words": [
+        {
+          "word": "And",
+          "start": 348.16,
+          "end": 348.7,
+          "probability": 0.9736
+        },
+        {
+          "word": "I",
+          "start": 348.7,
+          "end": 348.82,
+          "probability": 0.9893
+        },
+        {
+          "word": "save",
+          "start": 348.82,
+          "end": 349.1,
+          "probability": 0.9639
+        },
+        {
+          "word": "the",
+          "start": 349.1,
+          "end": 349.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim.",
+          "start": 349.24,
+          "end": 349.54,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 352.02,
+      "end": 353.56,
+      "start_formatted": "00:05:52.020",
+      "end_formatted": "00:05:53.560",
+      "text": "If I now view the claim,",
+      "words": [
+        {
+          "word": "If",
+          "start": 352.02,
+          "end": 352.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 352.56,
+          "end": 352.68,
+          "probability": 0.9946
+        },
+        {
+          "word": "now",
+          "start": 352.68,
+          "end": 352.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "view",
+          "start": 352.88,
+          "end": 353.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 353.08,
+          "end": 353.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 353.22,
+          "end": 353.56,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 355.96,
+      "end": 357.6,
+      "start_formatted": "00:05:55.960",
+      "end_formatted": "00:05:57.600",
+      "text": "I see that it is flagged.",
+      "words": [
+        {
+          "word": "I",
+          "start": 355.96,
+          "end": 356.36,
+          "probability": 0.938
+        },
+        {
+          "word": "see",
+          "start": 356.36,
+          "end": 356.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "that",
+          "start": 356.58,
+          "end": 356.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 356.78,
+          "end": 356.9,
+          "probability": 0.9795
+        },
+        {
+          "word": "is",
+          "start": 356.9,
+          "end": 357.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "flagged.",
+          "start": 357.04,
+          "end": 357.6,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 358.0,
+      "end": 362.38,
+      "start_formatted": "00:05:58.000",
+      "end_formatted": "00:06:02.380",
+      "text": "Hovering over the flag I can see that the reason for the flag is that the policy is assigned risk.",
+      "words": [
+        {
+          "word": "Hovering",
+          "start": 358.0,
+          "end": 358.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "over",
+          "start": 358.4,
+          "end": 358.58,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 358.58,
+          "end": 358.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "flag",
+          "start": 358.72,
+          "end": 359.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 359.02,
+          "end": 359.18,
+          "probability": 0.9092
+        },
+        {
+          "word": "can",
+          "start": 359.18,
+          "end": 359.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "see",
+          "start": 359.34,
+          "end": 359.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 359.56,
+          "end": 359.72,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 359.72,
+          "end": 359.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "reason",
+          "start": 359.82,
+          "end": 360.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 360.12,
+          "end": 360.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 360.3,
+          "end": 360.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "flag",
+          "start": 360.4,
+          "end": 360.66,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 360.66,
+          "end": 360.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 360.82,
+          "end": 360.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 360.96,
+          "end": 361.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "policy",
+          "start": 361.08,
+          "end": 361.5,
+          "probability": 0.9873
+        },
+        {
+          "word": "is",
+          "start": 361.5,
+          "end": 361.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "assigned",
+          "start": 361.7,
+          "end": 362.02,
+          "probability": 0.7207
+        },
+        {
+          "word": "risk.",
+          "start": 362.02,
+          "end": 362.38,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "start": 362.38,
+      "end": 364.78,
+      "start_formatted": "00:06:02.380",
+      "end_formatted": "00:06:04.780",
+      "text": "This concludes the pre-setup rules demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 362.38,
+          "end": 363.02,
+          "probability": 0.873
+        },
+        {
+          "word": "concludes",
+          "start": 363.02,
+          "end": 363.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 363.44,
+          "end": 363.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "pre",
+          "start": 363.68,
+          "end": 363.94,
+          "probability": 0.6782
+        },
+        {
+          "word": "-setup",
+          "start": 363.94,
+          "end": 364.26,
+          "probability": 0.9434
+        },
+        {
+          "word": "rules",
+          "start": 364.26,
+          "end": 364.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "demonstration.",
+          "start": 364.52,
+          "end": 364.78,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "start": 364.78,
+      "end": 365.26,
+      "start_formatted": "00:06:04.780",
+      "end_formatted": "00:06:05.260",
+      "text": "This concludes the pre-setup rules demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 364.78,
+          "end": 365.26,
+          "probability": 0.0253
+        },
+        {
+          "word": "concludes",
+          "start": 365.26,
+          "end": 365.26,
+          "probability": 0.8325
+        },
+        {
+          "word": "the",
+          "start": 365.26,
+          "end": 365.26,
+          "probability": 0.9771
+        },
+        {
+          "word": "pre",
+          "start": 365.26,
+          "end": 365.26,
+          "probability": 0.8555
+        },
+        {
+          "word": "-setup",
+          "start": 365.26,
+          "end": 365.26,
+          "probability": 0.9927
+        },
+        {
+          "word": "rules",
+          "start": 365.26,
+          "end": 365.26,
+          "probability": 0.9731
+        },
+        {
+          "word": "demonstration.",
+          "start": 365.26,
+          "end": 365.26,
+          "probability": 0.9307
+        }
+      ]
+    }
+  ]
+}

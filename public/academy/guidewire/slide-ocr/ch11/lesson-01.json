@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-01",
+    "slide_count": 25,
+    "slides_with_text": 23,
+    "total_words": 1364,
+    "avg_confidence": 86.33,
+    "processing_time_seconds": 12.9,
+    "extracted_at": "2026-02-13T12:24:57.233494"
+  },
+  "full_text": "Introduction to Integration\n\nLesson\nobjectives ¢ Identify common Integration Mechanisms\n\nused in InsuranceSuite\n\n¢ Describe integration mechanisms commonly\nused by technical consultants\n\n¢ List resources available to technical\nconsultants\n\ni InsuranceSuite integration mechanisms: Overview [Fj\n\n¢ InsuranceSuite implementations use\na wide variety of industry-standard yay cient /\nmechanisms to share information Web Browser\nwith external systems, including:\n\nJava EE\nApplication Server\n\n* Batch processes*\n« Database tables\n\n+ Web Services*\n\nExternal\nSystems\n—_\n\nGuidewire\n\n. i ia\nMessaging Database\n\n« Plugins*\n\n* Details provided in a separate lesson\n\ni Integration mechanism: Batch processes Gi\n\nG BK &\n\n=\nExchange Rate System\n\nExchange Rate\n\n¢« Abatch process is a background process that performs a periodic task\nindependent of a user\n\n« Example: Exchange Rate batch process queries an external system for exchange rates on a\nschedule\n\n¢ May execute logic entirely within InsuranceSuite or interact with other systems\n\n¢ Anexternal system calling an InsuranceSuite API may trigger a batch process to\nrun\n\ni Integration Mechanism: Integration tables\n\nGF —f—a\n\n—\nGuidewire Database External\nApplication Tables System\n\nAn integration table is a database table that both systems can access\n* Query for near real-time\n* Batch process for delayed and/or scheduled\n¢ Data access technologies -JDBC, Spring, Hibernate\n\ni Integration Tables for file-based exchange\n\n=\n> > Sal\n\n[= Le externa\nSystem\n\ni\n\nGuidewire\n\nApplication Integration File\n\nTable\n\nIntegration table for file-based exchange:\n¢ For file-based data exchange, write data to the integration table first\n* Then, generate the file from the integration table, for example, with a batch process, later\n\ni Integration Mechanism: Web services Gi\n\n¢ Web services are information\nexchange systems that use the\nInternet for direct application-to-\napplication interaction\n\n* Typically, exchange of information is\nsynchronous and blocking\n\n+ The process calling the API halts any\nfurther action until the API has responded\nto the request\n\n* Guidewire supports two types:\n\n+ RESTful (Representational State\nTransfer)\n\n+ SOAP (Simple Object Access Protocol)\n\n* InsuranceSuite applications can\n\nboth publish and/or consume web\nservices\n\n¢ Publish example below:\n\n+ lAccountAPI web service with doesexist\nmethod\n\nlAccountAPI External\nWeb Service System\n\nDoes Account 4713 exist?\n\n=\n\nfalse\n\ni Integration Mechanism: Messaging Gi\n\nMessage Message Queue\nGY —_&\n————\n\nResponse me\n\nGuidewire External\nApplication System\n\n* One system sends a message to another system, which is placed in a queue, and\nat a later point in time, the other system processes the message\n\n* Typically, the target system provides an asynchronous, unequivocal acknowledgement when it\nreceives or processes the message\n\n* Common messaging technologies:\n« JMS\n« MQSeries\n\ni Messaging in InsuranceSuite: An example\n\nio\n\n« Asynchronous messaging with an event-based model.\n\nCheck data\n\nMi\n\nyw &\n\nReply with check number Check Printing\nSystem\n\n* Subscription model to guarantee at-least-once delivery of all messages\n\ni Integration Mechanism: Startable plugins\n\nStartable Plugin\n\noe a=\n\nSystem\n\n¢ Astartable plugin is a mechanism that listens for requests from an external\nsystem that communicates with InsuranceSuite via a technology such as:\n\n« JMS Messaging\n\n¢ Triggered by an incoming external request and typically processes the message\nasynchronously\n\n« Example: BillingCenter accepting payment information from external systems\n\ni Integration Mechanism: Predefined plugins Gi\n\nSucceedAuthentication\nServicePlugin\n\nGuidewire TrainingApp Authenticate 8\n“aapplegate\" Fa authenticate\nUsername | sapplegate —==\"_ —<—<$<<—$—>p\nPassword |v mn\nKeep me loggedin\n\n¢ Apredefined plugin is a Gosu class which implements a set of methods called by\ninternal code and related to fundamental application behavior\n\n« For example, the authentication plugin implements methods that define how authentication is\nexecuted\n\n¢ Predefined plugins may or may not interact with other systems\n\n« When predefined plugins interact with other systems, they are typically outbound and\nsynchronous\n\ni Summary of integration mechanisms Gi\n\nMechanism Triggered by Example\n\nGetting exchange rates from an external\nexchange rate system\n\nBatch processes\n\nDatabase tables Data exchange between systems\n\nExternal application checks to see if a given\naccount exists in Guidewire\n\nWeb services External application call\n\nSending check information to check\nChanges to business data printing system and receiving check\nnumber in response\n\nReceiving payment information from an\nexternal financial system\n\nStartable plugins Receipt of incoming request\n\nInternal code related to \" 9\nPredefined plugins iF) fundamental application [einem Cin alle her i, ELSON iS CED\nbehavior\n\nin LDAP system\n\ni Contrasting integration mechanisms Ga\n\noo\n&\nE\na\n\nvo\n\nLT)\n\nJ\n\n©\n—\n\no\n\nx\nwi\n\n©\npe)\n\n©\na\n\nAsynchronous\n\nScheduled\n\nData Exchange Direction\nOutbound Inbound\n\nWeb Services a Web Services &\n\nPredefined\nPlugins*\n\nMessaging Startable (g 7)\nPlugins Vie\nDatabase Tables Database Tables Cnt\n\nBatch\nProcesses**\n\ni The training environment\n\n¢ This course make the following assumptions:\n* You are working in development mode\n« EnablelnternalDebugTools parameter in config.xml has been set to true\n« You are using the Dynamic Code Evolution Virtual Machine (DCEVM)\n¢ All Guidewire applications are located in the C:\\GW directory\n¢ The training environment also provides the following resources:\n* TrainingApp\n« ExternalApp\n\ni TrainingApp for integration students Gi\n\nDetails A\nLawsuits\n\nPerson Info | Phone & Addresses Bank Accounts —_ Analysis\n\nName Lawsuits Date Plaintiff\nFullName Rebecca Stevens\nPrefix\n\nFirstName Rebecca\n\nDate Plaintiff\n\nMiddle Name\n\n* TrainingApp is a modified version of ContactManager\n+ Not sold as a genuine Guidewire product\n+ Used exclusively by Guidewire Education\n*  TrainingApp has resources for integration students, including:\n+ Example integration points\n+ Admin screens that display data relevant to integration\n\n+ Admin screens that demo internal integration functionality\n\ni ExternalApp for integration students\n\n+ | Bteraltpp\n\n[ webapps on9/i6\n\nDi gnbbee\n\nGB jnve-campessip 5\nLW projectverionproperties 1078/16826°\nGi reavmene roni9n2:\n\n« ExternalApp is a modifi ied version of ContactManager that simulates a variety of\nexternal systems\n\n298M Shortcut\n\n* Not sold as a genuine Guidewire product\n« Used exclusively by Guidewire Education\n\n¢ You will not configure ExternalApp\n\n* You'll simply start it, stop it, and build integration points to it\n\ni Guidewire integration documentation Gi\n\n¢ Guidewire Integration Guide * Guidewire Configuration Guide\n\n¢ For questions specific to integration * Occasionally needed for some\nmechanisms integration steps\n* Guidewire Gosu Reference * Also documents functionality of every\n| Studio editor (including some that are\n\n¢ For questions specific to Gosu exclusive to integration)\n\n* Guidewire Rules Guide * Generated documentation\n+ Useful for integration points that require + Data and security dictionaries\n\nrules, especially messaging\n* GosuDocs\n\n« Javadocs\n\ni Deploying integration resources Ga\n\nResource Name New\nRESTART RESTART\nRESTART RESTART\nRESTART RESTART\nALT + SHIFT +L ALT + SHIFT +L\nALT + SHIFT +L / RELOAD ALT + SHIFT + L/ RELOAD\nRESTART RELOAD\nRESTART RELOAD\n\nGosu Enhancement RESTART RELOAD\n\n* Inadevelopment environment, resources require different actions to be deployed\n+ ALT + SHIFT + L: reloads PCF and displaykey changes without restarting the Server\n\n+ RELOAD: In Studio, Run> Reload Changed Classes\n\n+ Deploying Gosu changes in a local development environment only works if DCEVM is installed on your\ndevelopment machine\n\n* Restarting the server always deploys all changed resources\n\nQuestion\n\n_ _ Information exchange between systems that use the Internet for direct\n¢\n\n; application-to-application interactions are known as:\n\n“ A) Messaging\n\nB) Batch Processes\nC) Web Services\n\nSS eee eee ee eee estes\n\nGi\n\nAnswer\n\nInformation exchange between systems that use the Internet for direct\n¢~ ~ application-to-application interactions are known as:\n\n? A) Messaging\nB) Batch Processes\nC) Web Services\n\nThe correct answer is C) Web Services.\n\nSS eee ene ee soe Sse\n\nGi\n\nQuestion\n\nFor each of the InsuranceSuite integration mechanisms, identify its\ntypical “timing” (synchronous, asynchronous, or scheduled) and initial\n,’ direction (outbound or inbound):\n\n¢\n4\n\nPredefined plugins\nWeb services\nMessaging\n\nStartable plugins\n\nmoom>\n\nBatch processes\n\nSS eee eee ee eee estes\n\nAnswer Gi\n\n_— — For each of the InsuranceSuite integration mechanisms, identify its\nPa typical \"timing\" (synchronous, asynchronous, or scheduled) and initial\ndirection (outbound or inbound):\n\nPredefined plugins — Synchronous and outbound\nWeb services — Synchronous and inbound\nMessaging — Asynchronous and outbound\n\nStartable plugins — Asynchronous and inbound\n\nSS eee ene ee soe Sse\n\nmoo >\n\nBatch processes — Scheduled and outbound\n\nLesson\nobjectives ¢ Identify common technologies and strategies\nreview used for integration\n\n¢ Describe mechanisms commonly used by\ntechnical consultants\n\n¢ List resources available to technical\nconsultants",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to Integration",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Identify common Integration Mechanisms\n\nused in InsuranceSuite\n\n¢ Describe integration mechanisms commonly\nused by technical consultants\n\n¢ List resources available to technical\nconsultants",
+      "word_count": 26,
+      "avg_confidence": 90.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i InsuranceSuite integration mechanisms: Overview [Fj\n\n¢ InsuranceSuite implementations use\na wide variety of industry-standard yay cient /\nmechanisms to share information Web Browser\nwith external systems, including:\n\nJava EE\nApplication Server\n\n* Batch processes*\n« Database tables\n\n+ Web Services*\n\nExternal\nSystems\n—_\n\nGuidewire\n\n. i ia\nMessaging Database\n\n« Plugins*\n\n* Details provided in a separate lesson",
+      "word_count": 59,
+      "avg_confidence": 84.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Integration mechanism: Batch processes Gi\n\nG BK &\n\n=\nExchange Rate System\n\nExchange Rate\n\n¢« Abatch process is a background process that performs a periodic task\nindependent of a user\n\n« Example: Exchange Rate batch process queries an external system for exchange rates on a\nschedule\n\n¢ May execute logic entirely within InsuranceSuite or interact with other systems\n\n¢ Anexternal system calling an InsuranceSuite API may trigger a batch process to\nrun",
+      "word_count": 73,
+      "avg_confidence": 89.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Integration Mechanism: Integration tables\n\nGF —f—a\n\n—\nGuidewire Database External\nApplication Tables System\n\nAn integration table is a database table that both systems can access\n* Query for near real-time\n* Batch process for delayed and/or scheduled\n¢ Data access technologies -JDBC, Spring, Hibernate",
+      "word_count": 45,
+      "avg_confidence": 88.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Integration Tables for file-based exchange\n\n=\n> > Sal\n\n[= Le externa\nSystem\n\ni\n\nGuidewire\n\nApplication Integration File\n\nTable\n\nIntegration table for file-based exchange:\n¢ For file-based data exchange, write data to the integration table first\n* Then, generate the file from the integration table, for example, with a batch process, later",
+      "word_count": 53,
+      "avg_confidence": 86.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Integration Mechanism: Web services Gi\n\n¢ Web services are information\nexchange systems that use the\nInternet for direct application-to-\napplication interaction\n\n* Typically, exchange of information is\nsynchronous and blocking\n\n+ The process calling the API halts any\nfurther action until the API has responded\nto the request\n\n* Guidewire supports two types:\n\n+ RESTful (Representational State\nTransfer)\n\n+ SOAP (Simple Object Access Protocol)\n\n* InsuranceSuite applications can\n\nboth publish and/or consume web\nservices\n\n¢ Publish example below:\n\n+ lAccountAPI web service with doesexist\nmethod\n\nlAccountAPI External\nWeb Service System\n\nDoes Account 4713 exist?\n\n=\n\nfalse",
+      "word_count": 97,
+      "avg_confidence": 88.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Integration Mechanism: Messaging Gi\n\nMessage Message Queue\nGY —_&\n————\n\nResponse me\n\nGuidewire External\nApplication System\n\n* One system sends a message to another system, which is placed in a queue, and\nat a later point in time, the other system processes the message\n\n* Typically, the target system provides an asynchronous, unequivocal acknowledgement when it\nreceives or processes the message\n\n* Common messaging technologies:\n« JMS\n« MQSeries",
+      "word_count": 70,
+      "avg_confidence": 87.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Messaging in InsuranceSuite: An example\n\nio\n\n« Asynchronous messaging with an event-based model.\n\nCheck data\n\nMi\n\nyw &\n\nReply with check number Check Printing\nSystem\n\n* Subscription model to guarantee at-least-once delivery of all messages",
+      "word_count": 36,
+      "avg_confidence": 87.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Integration Mechanism: Startable plugins\n\nStartable Plugin\n\noe a=\n\nSystem\n\n¢ Astartable plugin is a mechanism that listens for requests from an external\nsystem that communicates with InsuranceSuite via a technology such as:\n\n« JMS Messaging\n\n¢ Triggered by an incoming external request and typically processes the message\nasynchronously\n\n« Example: BillingCenter accepting payment information from external systems",
+      "word_count": 58,
+      "avg_confidence": 87.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Integration Mechanism: Predefined plugins Gi\n\nSucceedAuthentication\nServicePlugin\n\nGuidewire TrainingApp Authenticate 8\n“aapplegate\" Fa authenticate\nUsername | sapplegate —==\"_ —<—<$<<—$—>p\nPassword |v mn\nKeep me loggedin\n\n¢ Apredefined plugin is a Gosu class which implements a set of methods called by\ninternal code and related to fundamental application behavior\n\n« For example, the authentication plugin implements methods that define how authentication is\nexecuted\n\n¢ Predefined plugins may or may not interact with other systems\n\n« When predefined plugins interact with other systems, they are typically outbound and\nsynchronous",
+      "word_count": 88,
+      "avg_confidence": 85.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Summary of integration mechanisms Gi\n\nMechanism Triggered by Example\n\nGetting exchange rates from an external\nexchange rate system\n\nBatch processes\n\nDatabase tables Data exchange between systems\n\nExternal application checks to see if a given\naccount exists in Guidewire\n\nWeb services External application call\n\nSending check information to check\nChanges to business data printing system and receiving check\nnumber in response\n\nReceiving payment information from an\nexternal financial system\n\nStartable plugins Receipt of incoming request\n\nInternal code related to \" 9\nPredefined plugins iF) fundamental application [einem Cin alle her i, ELSON iS CED\nbehavior\n\nin LDAP system",
+      "word_count": 98,
+      "avg_confidence": 90.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Contrasting integration mechanisms Ga\n\noo\n&\nE\na\n\nvo\n\nLT)\n\nJ\n\n©\n—\n\no\n\nx\nwi\n\n©\npe)\n\n©\na\n\nAsynchronous\n\nScheduled\n\nData Exchange Direction\nOutbound Inbound\n\nWeb Services a Web Services &\n\nPredefined\nPlugins*\n\nMessaging Startable (g 7)\nPlugins Vie\nDatabase Tables Database Tables Cnt\n\nBatch\nProcesses**",
+      "word_count": 49,
+      "avg_confidence": 72.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i The training environment\n\n¢ This course make the following assumptions:\n* You are working in development mode\n« EnablelnternalDebugTools parameter in config.xml has been set to true\n« You are using the Dynamic Code Evolution Virtual Machine (DCEVM)\n¢ All Guidewire applications are located in the C:\\GW directory\n¢ The training environment also provides the following resources:\n* TrainingApp\n« ExternalApp",
+      "word_count": 62,
+      "avg_confidence": 85.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i TrainingApp for integration students Gi\n\nDetails A\nLawsuits\n\nPerson Info | Phone & Addresses Bank Accounts —_ Analysis\n\nName Lawsuits Date Plaintiff\nFullName Rebecca Stevens\nPrefix\n\nFirstName Rebecca\n\nDate Plaintiff\n\nMiddle Name\n\n* TrainingApp is a modified version of ContactManager\n+ Not sold as a genuine Guidewire product\n+ Used exclusively by Guidewire Education\n*  TrainingApp has resources for integration students, including:\n+ Example integration points\n+ Admin screens that display data relevant to integration\n\n+ Admin screens that demo internal integration functionality",
+      "word_count": 84,
+      "avg_confidence": 82.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i ExternalApp for integration students\n\n+ | Bteraltpp\n\n[ webapps on9/i6\n\nDi gnbbee\n\nGB jnve-campessip 5\nLW projectverionproperties 1078/16826°\nGi reavmene roni9n2:\n\n« ExternalApp is a modifi ied version of ContactManager that simulates a variety of\nexternal systems\n\n298M Shortcut\n\n* Not sold as a genuine Guidewire product\n« Used exclusively by Guidewire Education\n\n¢ You will not configure ExternalApp\n\n* You'll simply start it, stop it, and build integration points to it",
+      "word_count": 73,
+      "avg_confidence": 81.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i Guidewire integration documentation Gi\n\n¢ Guidewire Integration Guide * Guidewire Configuration Guide\n\n¢ For questions specific to integration * Occasionally needed for some\nmechanisms integration steps\n* Guidewire Gosu Reference * Also documents functionality of every\n| Studio editor (including some that are\n\n¢ For questions specific to Gosu exclusive to integration)\n\n* Guidewire Rules Guide * Generated documentation\n+ Useful for integration points that require + Data and security dictionaries\n\nrules, especially messaging\n* GosuDocs\n\n« Javadocs",
+      "word_count": 79,
+      "avg_confidence": 85.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Deploying integration resources Ga\n\nResource Name New\nRESTART RESTART\nRESTART RESTART\nRESTART RESTART\nALT + SHIFT +L ALT + SHIFT +L\nALT + SHIFT +L / RELOAD ALT + SHIFT + L/ RELOAD\nRESTART RELOAD\nRESTART RELOAD\n\nGosu Enhancement RESTART RELOAD\n\n* Inadevelopment environment, resources require different actions to be deployed\n+ ALT + SHIFT + L: reloads PCF and displaykey changes without restarting the Server\n\n+ RELOAD: In Studio, Run> Reload Changed Classes\n\n+ Deploying Gosu changes in a local development environment only works if DCEVM is installed on your\ndevelopment machine\n\n* Restarting the server always deploys all changed resources",
+      "word_count": 103,
+      "avg_confidence": 88.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question\n\n_ _ Information exchange between systems that use the Internet for direct\n¢\n\n; application-to-application interactions are known as:\n\n“ A) Messaging\n\nB) Batch Processes\nC) Web Services\n\nSS eee eee ee eee estes\n\nGi",
+      "word_count": 36,
+      "avg_confidence": 82.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\nInformation exchange between systems that use the Internet for direct\n¢~ ~ application-to-application interactions are known as:\n\n? A) Messaging\nB) Batch Processes\nC) Web Services\n\nThe correct answer is C) Web Services.\n\nSS eee ene ee soe Sse\n\nGi",
+      "word_count": 41,
+      "avg_confidence": 86.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\nFor each of the InsuranceSuite integration mechanisms, identify its\ntypical “timing” (synchronous, asynchronous, or scheduled) and initial\n,’ direction (outbound or inbound):\n\n¢\n4\n\nPredefined plugins\nWeb services\nMessaging\n\nStartable plugins\n\nmoom>\n\nBatch processes\n\nSS eee eee ee eee estes",
+      "word_count": 41,
+      "avg_confidence": 84.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer Gi\n\n_— — For each of the InsuranceSuite integration mechanisms, identify its\nPa typical \"timing\" (synchronous, asynchronous, or scheduled) and initial\ndirection (outbound or inbound):\n\nPredefined plugins — Synchronous and outbound\nWeb services — Synchronous and inbound\nMessaging — Asynchronous and outbound\n\nStartable plugins — Asynchronous and inbound\n\nSS eee ene ee soe Sse\n\nmoo >\n\nBatch processes — Scheduled and outbound",
+      "word_count": 63,
+      "avg_confidence": 84.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Lesson\nobjectives ¢ Identify common technologies and strategies\nreview used for integration\n\n¢ Describe mechanisms commonly used by\ntechnical consultants\n\n¢ List resources available to technical\nconsultants",
+      "word_count": 27,
+      "avg_confidence": 89.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

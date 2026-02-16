@@ -1,0 +1,3428 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_02_01.mp4",
+    "video_stem": "IS_Claim_02_01",
+    "duration_seconds": 207.1,
+    "duration_formatted": "00:03:27.100",
+    "segment_count": 43,
+    "word_count": 499,
+    "avg_confidence": 0.9574,
+    "transcription_time_seconds": 20.43,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:45:55.410531"
+  },
+  "full_text": "In this demonstration, Ida Belt, a customer service representative, receives calls from a vendor and two clients asking her to check on something specific about a claim in which they have an interest. Ida uses the advanced claim search capability in ClaimCenter to find the claims that are of interest to the callers. As usual, Ida logs into ClaimCenter. She takes a call from AB Garage. Mr. Smith at the garage needs to know which adjuster is assigned to the callers. He doesn't have the claim number, but has the car license plate number, and remembers that the claimant's first name is Ray. She accesses the search menu. She selects Advanced Search. She enters Ray as the first name. She also enters the license plate number for the search. She clicks Search. She scrolls down the page to see the search results. Ida sees the claim she is looking for. And that the adjuster is Andy Applegate. After reviewing the results, she scrolls back up to the top of the page. Next, Ida gets a call from Mr. Albertson. He is looking for information on his claim, but the only thing he knows is that he received a check for $1,500. Ida clicks Checks in the Search Tab's sidebar. She enters part of Mr. Albertson's name. The check search criteria uses a range of values for the amount. She enters $1,500 as the from amount, because that was the amount of the check. She enters the same amount for the to amount. She doesn't know when the check was issued or created, so she chooses any for the creation date. She clicks Search. The results return Mr. Albertson's claim. She opens the claim to see the details. Ida tells Mr. Albertson his claim number, and that the adjuster is William Dufresne. Next, Ida gets a call from Mr. Farley. He hasn't heard from his adjuster and needs to talk to him urgently. Ida starts another search. She selects Advanced Search in the Search Tab's sidebar. Ida uses the first few characters of Mr. Farley's last name for the search. She clicks Search. The search returns one claim from Mr. Farley, so Ida opens it. Ida verifies the claims lost date with Mr. Farley, and tells him that the adjuster is Andy Applegate. Mr. Farley is upset that he has not heard from the adjuster, so Ida uses the Actions menu to create a new general reminder activity for Andy to call Mr. Farley. She enters a new subject, ensure it needs a call back. She sets the due date as today. She sets the escalation date as today. Ida also sets the priority to urgent. Then she saves the new activity. Ida verifies that the new urgent activity is created. She tells Mr. Farley that Mr. Applegate should be calling him soon. Ida is done for the day, so she logs out of Claim Center. This ends the claim search and ad activity demonstration. DEMONSTRATION   DEMONSTRATION        DEMONSTRATION               DEMONSTRATION    DEMONSTRATION ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "In this demonstration, Ida Belt, a customer service representative, receives calls from a vendor and two clients asking her to check on something specific about a claim in which they have an interest. Ida uses the advanced claim search capability in ClaimCenter to find the claims that are of interest to the callers. As usual, Ida logs into ClaimCenter. She takes a call from AB Garage. Mr. Smith at the garage needs to know which adjuster is assigned to the callers.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.58,
+          "probability": 0.9829
+        },
+        {
+          "word": "this",
+          "start": 0.58,
+          "end": 0.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration,",
+          "start": 0.8,
+          "end": 1.48,
+          "probability": 1.0
+        },
+        {
+          "word": "Ida",
+          "start": 1.98,
+          "end": 2.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "Belt,",
+          "start": 2.16,
+          "end": 2.38,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 2.6,
+          "end": 2.88,
+          "probability": 1.0
+        },
+        {
+          "word": "customer",
+          "start": 2.88,
+          "end": 3.22,
+          "probability": 0.9883
+        },
+        {
+          "word": "service",
+          "start": 3.22,
+          "end": 3.78,
+          "probability": 0.999
+        },
+        {
+          "word": "representative,",
+          "start": 3.78,
+          "end": 4.5,
+          "probability": 1.0
+        },
+        {
+          "word": "receives",
+          "start": 4.88,
+          "end": 5.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "calls",
+          "start": 5.36,
+          "end": 5.82,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 5.82,
+          "end": 6.1,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 6.1,
+          "end": 6.26,
+          "probability": 1.0
+        },
+        {
+          "word": "vendor",
+          "start": 6.26,
+          "end": 6.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 6.5,
+          "end": 6.76,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 6.76,
+          "end": 6.96,
+          "probability": 0.9902
+        },
+        {
+          "word": "clients",
+          "start": 6.96,
+          "end": 7.42,
+          "probability": 1.0
+        },
+        {
+          "word": "asking",
+          "start": 7.42,
+          "end": 7.86,
+          "probability": 1.0
+        },
+        {
+          "word": "her",
+          "start": 7.86,
+          "end": 8.06,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 8.06,
+          "end": 8.22,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 8.22,
+          "end": 8.44,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 8.44,
+          "end": 8.68,
+          "probability": 1.0
+        },
+        {
+          "word": "something",
+          "start": 8.68,
+          "end": 9.12,
+          "probability": 1.0
+        },
+        {
+          "word": "specific",
+          "start": 9.12,
+          "end": 9.68,
+          "probability": 1.0
+        },
+        {
+          "word": "about",
+          "start": 9.68,
+          "end": 10.02,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 10.02,
+          "end": 10.18,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 10.18,
+          "end": 10.48,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 10.48,
+          "end": 10.68,
+          "probability": 1.0
+        },
+        {
+          "word": "which",
+          "start": 10.68,
+          "end": 10.92,
+          "probability": 1.0
+        },
+        {
+          "word": "they",
+          "start": 10.92,
+          "end": 11.1,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 11.1,
+          "end": 11.4,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 11.4,
+          "end": 11.52,
+          "probability": 1.0
+        },
+        {
+          "word": "interest.",
+          "start": 11.52,
+          "end": 12.0,
+          "probability": 1.0
+        },
+        {
+          "word": "Ida",
+          "start": 12.22,
+          "end": 12.72,
+          "probability": 0.999
+        },
+        {
+          "word": "uses",
+          "start": 12.72,
+          "end": 13.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 13.06,
+          "end": 13.3,
+          "probability": 1.0
+        },
+        {
+          "word": "advanced",
+          "start": 13.3,
+          "end": 13.7,
+          "probability": 0.8774
+        },
+        {
+          "word": "claim",
+          "start": 13.7,
+          "end": 14.08,
+          "probability": 0.9746
+        },
+        {
+          "word": "search",
+          "start": 14.08,
+          "end": 14.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "capability",
+          "start": 14.4,
+          "end": 15.14,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 15.14,
+          "end": 15.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 15.44,
+          "end": 16.12,
+          "probability": 0.751
+        },
+        {
+          "word": "to",
+          "start": 16.12,
+          "end": 16.36,
+          "probability": 1.0
+        },
+        {
+          "word": "find",
+          "start": 16.36,
+          "end": 16.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 16.7,
+          "end": 16.9,
+          "probability": 1.0
+        },
+        {
+          "word": "claims",
+          "start": 16.9,
+          "end": 17.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 17.28,
+          "end": 17.52,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 17.52,
+          "end": 17.72,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 17.72,
+          "end": 17.88,
+          "probability": 1.0
+        },
+        {
+          "word": "interest",
+          "start": 17.88,
+          "end": 18.28,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 18.28,
+          "end": 18.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 18.5,
+          "end": 18.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "callers.",
+          "start": 18.6,
+          "end": 19.14,
+          "probability": 1.0
+        },
+        {
+          "word": "As",
+          "start": 19.64,
+          "end": 20.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "usual,",
+          "start": 20.24,
+          "end": 20.62,
+          "probability": 1.0
+        },
+        {
+          "word": "Ida",
+          "start": 21.04,
+          "end": 21.24,
+          "probability": 1.0
+        },
+        {
+          "word": "logs",
+          "start": 21.24,
+          "end": 21.64,
+          "probability": 0.999
+        },
+        {
+          "word": "into",
+          "start": 21.64,
+          "end": 21.92,
+          "probability": 0.9731
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 21.92,
+          "end": 22.78,
+          "probability": 0.999
+        },
+        {
+          "word": "She",
+          "start": 23.16,
+          "end": 23.76,
+          "probability": 0.999
+        },
+        {
+          "word": "takes",
+          "start": 23.76,
+          "end": 24.08,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 24.08,
+          "end": 24.28,
+          "probability": 1.0
+        },
+        {
+          "word": "call",
+          "start": 24.28,
+          "end": 24.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 24.58,
+          "end": 24.84,
+          "probability": 1.0
+        },
+        {
+          "word": "AB",
+          "start": 24.84,
+          "end": 25.16,
+          "probability": 0.4417
+        },
+        {
+          "word": "Garage.",
+          "start": 25.16,
+          "end": 25.7,
+          "probability": 0.9614
+        },
+        {
+          "word": "Mr.",
+          "start": 26.3,
+          "end": 26.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "Smith",
+          "start": 26.88,
+          "end": 27.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "at",
+          "start": 27.08,
+          "end": 27.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 27.32,
+          "end": 27.44,
+          "probability": 0.9888
+        },
+        {
+          "word": "garage",
+          "start": 27.44,
+          "end": 27.8,
+          "probability": 0.9136
+        },
+        {
+          "word": "needs",
+          "start": 27.8,
+          "end": 28.26,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 28.26,
+          "end": 28.44,
+          "probability": 1.0
+        },
+        {
+          "word": "know",
+          "start": 28.44,
+          "end": 28.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 28.7,
+          "end": 28.94,
+          "probability": 0.998
+        },
+        {
+          "word": "adjuster",
+          "start": 28.94,
+          "end": 29.44,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 29.44,
+          "end": 29.64,
+          "probability": 0.999
+        },
+        {
+          "word": "assigned",
+          "start": 29.64,
+          "end": 29.94,
+          "probability": 0.979
+        },
+        {
+          "word": "to",
+          "start": 29.94,
+          "end": 29.98,
+          "probability": 0.1305
+        },
+        {
+          "word": "the",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.3054
+        },
+        {
+          "word": "callers.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2754
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.7,
+      "end": 59.96,
+      "start_formatted": "00:00:30.700",
+      "end_formatted": "00:00:59.960",
+      "text": "He doesn't have the claim number, but has the car license plate number, and remembers that the claimant's first name is Ray. She accesses the search menu. She selects Advanced Search. She enters Ray as the first name. She also enters the license plate number for the search. She clicks Search. She scrolls down the page to see the search results. Ida sees the claim she is looking for.",
+      "words": [
+        {
+          "word": "He",
+          "start": 30.7,
+          "end": 31.34,
+          "probability": 0.1415
+        },
+        {
+          "word": "doesn't",
+          "start": 31.34,
+          "end": 31.8,
+          "probability": 0.8569
+        },
+        {
+          "word": "have",
+          "start": 31.8,
+          "end": 31.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 31.96,
+          "end": 32.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "claim",
+          "start": 32.12,
+          "end": 32.42,
+          "probability": 0.9126
+        },
+        {
+          "word": "number,",
+          "start": 32.42,
+          "end": 32.86,
+          "probability": 0.9897
+        },
+        {
+          "word": "but",
+          "start": 33.06,
+          "end": 33.32,
+          "probability": 0.9927
+        },
+        {
+          "word": "has",
+          "start": 33.32,
+          "end": 33.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 33.5,
+          "end": 33.64,
+          "probability": 0.9863
+        },
+        {
+          "word": "car",
+          "start": 33.64,
+          "end": 33.9,
+          "probability": 0.9375
+        },
+        {
+          "word": "license",
+          "start": 33.9,
+          "end": 34.32,
+          "probability": 0.9629
+        },
+        {
+          "word": "plate",
+          "start": 34.32,
+          "end": 34.74,
+          "probability": 0.998
+        },
+        {
+          "word": "number,",
+          "start": 34.74,
+          "end": 35.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "and",
+          "start": 35.42,
+          "end": 35.66,
+          "probability": 0.9922
+        },
+        {
+          "word": "remembers",
+          "start": 35.66,
+          "end": 36.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "that",
+          "start": 36.06,
+          "end": 36.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 36.34,
+          "end": 36.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "claimant's",
+          "start": 36.48,
+          "end": 37.02,
+          "probability": 0.9712
+        },
+        {
+          "word": "first",
+          "start": 37.02,
+          "end": 37.32,
+          "probability": 0.9902
+        },
+        {
+          "word": "name",
+          "start": 37.32,
+          "end": 37.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 37.64,
+          "end": 37.96,
+          "probability": 0.999
+        },
+        {
+          "word": "Ray.",
+          "start": 37.96,
+          "end": 38.16,
+          "probability": 0.6978
+        },
+        {
+          "word": "She",
+          "start": 38.68,
+          "end": 39.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "accesses",
+          "start": 39.18,
+          "end": 39.94,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 39.94,
+          "end": 40.1,
+          "probability": 0.998
+        },
+        {
+          "word": "search",
+          "start": 40.1,
+          "end": 40.4,
+          "probability": 0.8662
+        },
+        {
+          "word": "menu.",
+          "start": 40.4,
+          "end": 40.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "She",
+          "start": 41.74,
+          "end": 42.38,
+          "probability": 0.9912
+        },
+        {
+          "word": "selects",
+          "start": 42.38,
+          "end": 42.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "Advanced",
+          "start": 42.92,
+          "end": 43.18,
+          "probability": 0.4709
+        },
+        {
+          "word": "Search.",
+          "start": 43.18,
+          "end": 43.74,
+          "probability": 0.8125
+        },
+        {
+          "word": "She",
+          "start": 44.34,
+          "end": 44.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "enters",
+          "start": 44.96,
+          "end": 45.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "Ray",
+          "start": 45.3,
+          "end": 45.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "as",
+          "start": 45.62,
+          "end": 45.96,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 45.96,
+          "end": 46.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "first",
+          "start": 46.12,
+          "end": 46.42,
+          "probability": 0.98
+        },
+        {
+          "word": "name.",
+          "start": 46.42,
+          "end": 46.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "She",
+          "start": 47.16,
+          "end": 47.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "also",
+          "start": 47.74,
+          "end": 48.12,
+          "probability": 0.999
+        },
+        {
+          "word": "enters",
+          "start": 48.12,
+          "end": 48.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 48.58,
+          "end": 48.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "license",
+          "start": 48.9,
+          "end": 49.3,
+          "probability": 0.9902
+        },
+        {
+          "word": "plate",
+          "start": 49.3,
+          "end": 49.7,
+          "probability": 0.999
+        },
+        {
+          "word": "number",
+          "start": 49.7,
+          "end": 50.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 50.08,
+          "end": 50.32,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 50.32,
+          "end": 50.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "search.",
+          "start": 50.44,
+          "end": 50.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "She",
+          "start": 51.56,
+          "end": 52.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "clicks",
+          "start": 52.2,
+          "end": 52.58,
+          "probability": 0.9893
+        },
+        {
+          "word": "Search.",
+          "start": 52.58,
+          "end": 53.0,
+          "probability": 0.7329
+        },
+        {
+          "word": "She",
+          "start": 54.14,
+          "end": 54.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "scrolls",
+          "start": 54.78,
+          "end": 55.42,
+          "probability": 0.9844
+        },
+        {
+          "word": "down",
+          "start": 55.42,
+          "end": 55.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 55.6,
+          "end": 55.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "page",
+          "start": 55.78,
+          "end": 56.08,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 56.08,
+          "end": 56.38,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 56.38,
+          "end": 56.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 56.56,
+          "end": 56.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "search",
+          "start": 56.74,
+          "end": 57.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "results.",
+          "start": 57.0,
+          "end": 57.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "Ida",
+          "start": 57.98,
+          "end": 58.34,
+          "probability": 0.8545
+        },
+        {
+          "word": "sees",
+          "start": 58.34,
+          "end": 58.58,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 58.58,
+          "end": 58.76,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 58.76,
+          "end": 59.02,
+          "probability": 0.9863
+        },
+        {
+          "word": "she",
+          "start": 59.02,
+          "end": 59.34,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 59.34,
+          "end": 59.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "looking",
+          "start": 59.5,
+          "end": 59.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "for.",
+          "start": 59.76,
+          "end": 59.96,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.96,
+      "end": 86.64,
+      "start_formatted": "00:00:59.960",
+      "end_formatted": "00:01:26.640",
+      "text": "And that the adjuster is Andy Applegate. After reviewing the results, she scrolls back up to the top of the page. Next, Ida gets a call from Mr. Albertson. He is looking for information on his claim, but the only thing he knows is that he received a check for $1,500. Ida clicks Checks in the Search Tab's sidebar. She enters part of Mr. Albertson's name.",
+      "words": [
+        {
+          "word": "And",
+          "start": 59.96,
+          "end": 60.6,
+          "probability": 0.0484
+        },
+        {
+          "word": "that",
+          "start": 60.6,
+          "end": 60.76,
+          "probability": 0.9697
+        },
+        {
+          "word": "the",
+          "start": 60.76,
+          "end": 60.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "adjuster",
+          "start": 60.88,
+          "end": 61.36,
+          "probability": 0.9858
+        },
+        {
+          "word": "is",
+          "start": 61.36,
+          "end": 61.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "Andy",
+          "start": 61.56,
+          "end": 61.9,
+          "probability": 0.9668
+        },
+        {
+          "word": "Applegate.",
+          "start": 61.9,
+          "end": 62.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "After",
+          "start": 62.94,
+          "end": 63.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "reviewing",
+          "start": 63.54,
+          "end": 64.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 64.06,
+          "end": 64.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "results,",
+          "start": 64.32,
+          "end": 64.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 65.08,
+          "end": 65.36,
+          "probability": 0.9453
+        },
+        {
+          "word": "scrolls",
+          "start": 65.36,
+          "end": 66.0,
+          "probability": 0.9912
+        },
+        {
+          "word": "back",
+          "start": 66.0,
+          "end": 66.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "up",
+          "start": 66.22,
+          "end": 66.54,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 66.54,
+          "end": 66.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 66.7,
+          "end": 66.82,
+          "probability": 0.999
+        },
+        {
+          "word": "top",
+          "start": 66.82,
+          "end": 67.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 67.04,
+          "end": 67.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 67.2,
+          "end": 67.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "page.",
+          "start": 67.32,
+          "end": 67.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Next,",
+          "start": 68.44,
+          "end": 68.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "Ida",
+          "start": 69.34,
+          "end": 69.48,
+          "probability": 0.9536
+        },
+        {
+          "word": "gets",
+          "start": 69.48,
+          "end": 69.82,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 69.82,
+          "end": 70.02,
+          "probability": 1.0
+        },
+        {
+          "word": "call",
+          "start": 70.02,
+          "end": 70.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 70.3,
+          "end": 70.6,
+          "probability": 1.0
+        },
+        {
+          "word": "Mr.",
+          "start": 70.6,
+          "end": 70.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "Albertson.",
+          "start": 71.1,
+          "end": 71.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "He",
+          "start": 71.86,
+          "end": 72.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 72.2,
+          "end": 72.36,
+          "probability": 1.0
+        },
+        {
+          "word": "looking",
+          "start": 72.36,
+          "end": 72.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 72.6,
+          "end": 72.88,
+          "probability": 1.0
+        },
+        {
+          "word": "information",
+          "start": 72.88,
+          "end": 73.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 73.44,
+          "end": 73.76,
+          "probability": 1.0
+        },
+        {
+          "word": "his",
+          "start": 73.76,
+          "end": 73.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 73.94,
+          "end": 74.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "but",
+          "start": 74.54,
+          "end": 74.8,
+          "probability": 0.9683
+        },
+        {
+          "word": "the",
+          "start": 74.8,
+          "end": 74.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 74.96,
+          "end": 75.28,
+          "probability": 1.0
+        },
+        {
+          "word": "thing",
+          "start": 75.28,
+          "end": 75.6,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 75.6,
+          "end": 75.8,
+          "probability": 1.0
+        },
+        {
+          "word": "knows",
+          "start": 75.8,
+          "end": 76.1,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 76.1,
+          "end": 76.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 76.32,
+          "end": 76.5,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 76.5,
+          "end": 76.64,
+          "probability": 1.0
+        },
+        {
+          "word": "received",
+          "start": 76.64,
+          "end": 77.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 77.08,
+          "end": 77.22,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 77.22,
+          "end": 77.4,
+          "probability": 0.9824
+        },
+        {
+          "word": "for",
+          "start": 77.4,
+          "end": 77.66,
+          "probability": 1.0
+        },
+        {
+          "word": "$1",
+          "start": 77.66,
+          "end": 78.12,
+          "probability": 0.9746
+        },
+        {
+          "word": ",500.",
+          "start": 78.12,
+          "end": 79.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ida",
+          "start": 80.1,
+          "end": 80.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "clicks",
+          "start": 80.64,
+          "end": 80.94,
+          "probability": 0.999
+        },
+        {
+          "word": "Checks",
+          "start": 80.94,
+          "end": 81.28,
+          "probability": 0.6382
+        },
+        {
+          "word": "in",
+          "start": 81.28,
+          "end": 81.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 81.5,
+          "end": 81.6,
+          "probability": 1.0
+        },
+        {
+          "word": "Search",
+          "start": 81.6,
+          "end": 81.9,
+          "probability": 0.5127
+        },
+        {
+          "word": "Tab's",
+          "start": 81.9,
+          "end": 82.44,
+          "probability": 0.4441
+        },
+        {
+          "word": "sidebar.",
+          "start": 82.44,
+          "end": 82.96,
+          "probability": 0.998
+        },
+        {
+          "word": "She",
+          "start": 83.64,
+          "end": 84.24,
+          "probability": 0.999
+        },
+        {
+          "word": "enters",
+          "start": 84.24,
+          "end": 84.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "part",
+          "start": 84.58,
+          "end": 84.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 84.96,
+          "end": 85.16,
+          "probability": 1.0
+        },
+        {
+          "word": "Mr.",
+          "start": 85.16,
+          "end": 85.48,
+          "probability": 1.0
+        },
+        {
+          "word": "Albertson's",
+          "start": 85.68,
+          "end": 86.28,
+          "probability": 1.0
+        },
+        {
+          "word": "name.",
+          "start": 86.28,
+          "end": 86.64,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 87.3,
+      "end": 110.1,
+      "start_formatted": "00:01:27.300",
+      "end_formatted": "00:01:50.100",
+      "text": "The check search criteria uses a range of values for the amount. She enters $1,500 as the from amount, because that was the amount of the check. She enters the same amount for the to amount. She doesn't know when the check was issued or created, so she chooses any for the creation date. She clicks Search.",
+      "words": [
+        {
+          "word": "The",
+          "start": 87.3,
+          "end": 87.94,
+          "probability": 0.9312
+        },
+        {
+          "word": "check",
+          "start": 87.94,
+          "end": 88.18,
+          "probability": 0.9028
+        },
+        {
+          "word": "search",
+          "start": 88.18,
+          "end": 88.52,
+          "probability": 0.9902
+        },
+        {
+          "word": "criteria",
+          "start": 88.52,
+          "end": 89.18,
+          "probability": 0.999
+        },
+        {
+          "word": "uses",
+          "start": 89.18,
+          "end": 89.7,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 89.7,
+          "end": 89.98,
+          "probability": 1.0
+        },
+        {
+          "word": "range",
+          "start": 89.98,
+          "end": 90.24,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 90.24,
+          "end": 90.4,
+          "probability": 1.0
+        },
+        {
+          "word": "values",
+          "start": 90.4,
+          "end": 90.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 90.86,
+          "end": 91.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 91.1,
+          "end": 91.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "amount.",
+          "start": 91.24,
+          "end": 91.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "She",
+          "start": 91.94,
+          "end": 92.34,
+          "probability": 0.999
+        },
+        {
+          "word": "enters",
+          "start": 92.34,
+          "end": 92.74,
+          "probability": 1.0
+        },
+        {
+          "word": "$1",
+          "start": 92.74,
+          "end": 93.2,
+          "probability": 0.9424
+        },
+        {
+          "word": ",500",
+          "start": 93.2,
+          "end": 94.28,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 94.28,
+          "end": 95.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 95.12,
+          "end": 95.3,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 95.3,
+          "end": 95.5,
+          "probability": 0.9258
+        },
+        {
+          "word": "amount,",
+          "start": 95.5,
+          "end": 95.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 96.12,
+          "end": 96.48,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 96.48,
+          "end": 96.76,
+          "probability": 1.0
+        },
+        {
+          "word": "was",
+          "start": 96.76,
+          "end": 96.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 96.98,
+          "end": 97.16,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 97.16,
+          "end": 97.48,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 97.48,
+          "end": 97.66,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 97.66,
+          "end": 97.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "check.",
+          "start": 97.76,
+          "end": 98.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "She",
+          "start": 98.6,
+          "end": 99.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "enters",
+          "start": 99.24,
+          "end": 99.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 99.6,
+          "end": 99.82,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 99.82,
+          "end": 100.06,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 100.06,
+          "end": 100.48,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 100.48,
+          "end": 100.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 100.72,
+          "end": 100.86,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 100.86,
+          "end": 101.14,
+          "probability": 0.9102
+        },
+        {
+          "word": "amount.",
+          "start": 101.14,
+          "end": 101.8,
+          "probability": 0.4836
+        },
+        {
+          "word": "She",
+          "start": 102.36,
+          "end": 102.84,
+          "probability": 0.999
+        },
+        {
+          "word": "doesn't",
+          "start": 102.84,
+          "end": 103.14,
+          "probability": 0.999
+        },
+        {
+          "word": "know",
+          "start": 103.14,
+          "end": 103.32,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 103.32,
+          "end": 103.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 103.52,
+          "end": 103.66,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 103.66,
+          "end": 103.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 103.88,
+          "end": 104.08,
+          "probability": 1.0
+        },
+        {
+          "word": "issued",
+          "start": 104.08,
+          "end": 104.42,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 104.42,
+          "end": 104.7,
+          "probability": 1.0
+        },
+        {
+          "word": "created,",
+          "start": 104.7,
+          "end": 105.2,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 105.48,
+          "end": 105.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 105.78,
+          "end": 106.02,
+          "probability": 1.0
+        },
+        {
+          "word": "chooses",
+          "start": 106.02,
+          "end": 106.48,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 106.48,
+          "end": 107.12,
+          "probability": 0.5312
+        },
+        {
+          "word": "for",
+          "start": 107.12,
+          "end": 107.62,
+          "probability": 0.9102
+        },
+        {
+          "word": "the",
+          "start": 107.62,
+          "end": 107.78,
+          "probability": 1.0
+        },
+        {
+          "word": "creation",
+          "start": 107.78,
+          "end": 108.26,
+          "probability": 0.999
+        },
+        {
+          "word": "date.",
+          "start": 108.26,
+          "end": 108.64,
+          "probability": 1.0
+        },
+        {
+          "word": "She",
+          "start": 108.9,
+          "end": 109.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 109.24,
+          "end": 109.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "Search.",
+          "start": 109.64,
+          "end": 110.1,
+          "probability": 0.089
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 111.08,
+      "end": 116.98,
+      "start_formatted": "00:01:51.080",
+      "end_formatted": "00:01:56.980",
+      "text": "The results return Mr. Albertson's claim. She opens the claim to see the details.",
+      "words": [
+        {
+          "word": "The",
+          "start": 111.08,
+          "end": 111.72,
+          "probability": 0.6421
+        },
+        {
+          "word": "results",
+          "start": 111.72,
+          "end": 112.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "return",
+          "start": 112.14,
+          "end": 112.58,
+          "probability": 0.9399
+        },
+        {
+          "word": "Mr.",
+          "start": 112.58,
+          "end": 112.98,
+          "probability": 0.9663
+        },
+        {
+          "word": "Albertson's",
+          "start": 113.16,
+          "end": 113.76,
+          "probability": 0.9844
+        },
+        {
+          "word": "claim.",
+          "start": 113.76,
+          "end": 114.04,
+          "probability": 0.9819
+        },
+        {
+          "word": "She",
+          "start": 114.48,
+          "end": 114.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "opens",
+          "start": 114.84,
+          "end": 115.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 115.3,
+          "end": 115.48,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 115.48,
+          "end": 115.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 115.78,
+          "end": 116.02,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 116.02,
+          "end": 116.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 116.24,
+          "end": 116.38,
+          "probability": 0.999
+        },
+        {
+          "word": "details.",
+          "start": 116.38,
+          "end": 116.98,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 117.88,
+      "end": 133.14,
+      "start_formatted": "00:01:57.880",
+      "end_formatted": "00:02:13.140",
+      "text": "Ida tells Mr. Albertson his claim number, and that the adjuster is William Dufresne. Next, Ida gets a call from Mr. Farley. He hasn't heard from his adjuster and needs to talk to him urgently. Ida starts another search.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 117.88,
+          "end": 118.52,
+          "probability": 0.9443
+        },
+        {
+          "word": "tells",
+          "start": 118.52,
+          "end": 118.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "Mr.",
+          "start": 118.82,
+          "end": 119.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "Albertson",
+          "start": 119.38,
+          "end": 119.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 119.88,
+          "end": 120.08,
+          "probability": 0.9932
+        },
+        {
+          "word": "claim",
+          "start": 120.08,
+          "end": 120.44,
+          "probability": 0.9917
+        },
+        {
+          "word": "number,",
+          "start": 120.44,
+          "end": 120.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 121.04,
+          "end": 121.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 121.28,
+          "end": 121.42,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 121.42,
+          "end": 121.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "adjuster",
+          "start": 121.56,
+          "end": 122.06,
+          "probability": 0.9619
+        },
+        {
+          "word": "is",
+          "start": 122.06,
+          "end": 122.28,
+          "probability": 0.999
+        },
+        {
+          "word": "William",
+          "start": 122.28,
+          "end": 122.7,
+          "probability": 0.9756
+        },
+        {
+          "word": "Dufresne.",
+          "start": 122.7,
+          "end": 123.46,
+          "probability": 0.9883
+        },
+        {
+          "word": "Next,",
+          "start": 123.96,
+          "end": 124.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "Ida",
+          "start": 124.86,
+          "end": 125.1,
+          "probability": 0.998
+        },
+        {
+          "word": "gets",
+          "start": 125.1,
+          "end": 125.42,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 125.42,
+          "end": 125.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "call",
+          "start": 125.66,
+          "end": 125.86,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 125.86,
+          "end": 126.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "Mr.",
+          "start": 126.08,
+          "end": 126.4,
+          "probability": 0.999
+        },
+        {
+          "word": "Farley.",
+          "start": 126.54,
+          "end": 126.92,
+          "probability": 0.9932
+        },
+        {
+          "word": "He",
+          "start": 127.14,
+          "end": 127.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "hasn't",
+          "start": 127.5,
+          "end": 127.84,
+          "probability": 0.999
+        },
+        {
+          "word": "heard",
+          "start": 127.84,
+          "end": 128.08,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 128.08,
+          "end": 128.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 128.34,
+          "end": 128.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "adjuster",
+          "start": 128.52,
+          "end": 129.06,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 129.06,
+          "end": 129.28,
+          "probability": 0.999
+        },
+        {
+          "word": "needs",
+          "start": 129.28,
+          "end": 129.7,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 129.7,
+          "end": 129.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "talk",
+          "start": 129.9,
+          "end": 130.16,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 130.16,
+          "end": 130.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "him",
+          "start": 130.32,
+          "end": 130.54,
+          "probability": 0.999
+        },
+        {
+          "word": "urgently.",
+          "start": 130.54,
+          "end": 131.02,
+          "probability": 0.998
+        },
+        {
+          "word": "Ida",
+          "start": 131.4,
+          "end": 131.78,
+          "probability": 0.999
+        },
+        {
+          "word": "starts",
+          "start": 131.78,
+          "end": 132.22,
+          "probability": 0.999
+        },
+        {
+          "word": "another",
+          "start": 132.22,
+          "end": 132.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "search.",
+          "start": 132.58,
+          "end": 133.14,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 133.14,
+      "end": 144.42,
+      "start_formatted": "00:02:13.140",
+      "end_formatted": "00:02:24.420",
+      "text": "She selects Advanced Search in the Search Tab's sidebar. Ida uses the first few characters of Mr. Farley's last name for the search. She clicks Search.",
+      "words": [
+        {
+          "word": "She",
+          "start": 133.14,
+          "end": 134.12,
+          "probability": 0.8286
+        },
+        {
+          "word": "selects",
+          "start": 134.12,
+          "end": 134.7,
+          "probability": 0.9893
+        },
+        {
+          "word": "Advanced",
+          "start": 134.7,
+          "end": 134.96,
+          "probability": 0.489
+        },
+        {
+          "word": "Search",
+          "start": 134.96,
+          "end": 135.48,
+          "probability": 0.8462
+        },
+        {
+          "word": "in",
+          "start": 135.48,
+          "end": 135.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 135.74,
+          "end": 135.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "Search",
+          "start": 135.9,
+          "end": 136.22,
+          "probability": 0.5024
+        },
+        {
+          "word": "Tab's",
+          "start": 136.22,
+          "end": 136.72,
+          "probability": 0.4609
+        },
+        {
+          "word": "sidebar.",
+          "start": 136.72,
+          "end": 137.22,
+          "probability": 0.9551
+        },
+        {
+          "word": "Ida",
+          "start": 137.64,
+          "end": 138.08,
+          "probability": 0.8809
+        },
+        {
+          "word": "uses",
+          "start": 138.08,
+          "end": 138.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 138.42,
+          "end": 138.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "first",
+          "start": 138.66,
+          "end": 138.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "few",
+          "start": 138.94,
+          "end": 139.24,
+          "probability": 0.999
+        },
+        {
+          "word": "characters",
+          "start": 139.24,
+          "end": 139.76,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 139.76,
+          "end": 140.12,
+          "probability": 0.999
+        },
+        {
+          "word": "Mr.",
+          "start": 140.12,
+          "end": 140.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "Farley's",
+          "start": 140.58,
+          "end": 141.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "last",
+          "start": 141.12,
+          "end": 141.46,
+          "probability": 0.981
+        },
+        {
+          "word": "name",
+          "start": 141.46,
+          "end": 141.8,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 141.8,
+          "end": 142.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 142.02,
+          "end": 142.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "search.",
+          "start": 142.16,
+          "end": 142.58,
+          "probability": 0.9712
+        },
+        {
+          "word": "She",
+          "start": 143.02,
+          "end": 143.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "clicks",
+          "start": 143.62,
+          "end": 144.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "Search.",
+          "start": 144.04,
+          "end": 144.42,
+          "probability": 0.9043
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 145.6,
+      "end": 168.32,
+      "start_formatted": "00:02:25.600",
+      "end_formatted": "00:02:48.320",
+      "text": "The search returns one claim from Mr. Farley, so Ida opens it. Ida verifies the claims lost date with Mr. Farley, and tells him that the adjuster is Andy Applegate. Mr. Farley is upset that he has not heard from the adjuster, so Ida uses the Actions menu to create a new general reminder activity for Andy to call Mr. Farley.",
+      "words": [
+        {
+          "word": "The",
+          "start": 145.6,
+          "end": 146.2,
+          "probability": 0.7056
+        },
+        {
+          "word": "search",
+          "start": 146.2,
+          "end": 146.48,
+          "probability": 0.894
+        },
+        {
+          "word": "returns",
+          "start": 146.48,
+          "end": 147.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "one",
+          "start": 147.02,
+          "end": 147.3,
+          "probability": 0.9546
+        },
+        {
+          "word": "claim",
+          "start": 147.3,
+          "end": 147.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "from",
+          "start": 147.68,
+          "end": 147.98,
+          "probability": 0.5869
+        },
+        {
+          "word": "Mr.",
+          "start": 147.98,
+          "end": 148.32,
+          "probability": 0.9521
+        },
+        {
+          "word": "Farley,",
+          "start": 148.56,
+          "end": 148.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "so",
+          "start": 149.18,
+          "end": 149.48,
+          "probability": 0.9829
+        },
+        {
+          "word": "Ida",
+          "start": 149.48,
+          "end": 149.72,
+          "probability": 0.9385
+        },
+        {
+          "word": "opens",
+          "start": 149.72,
+          "end": 150.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "it.",
+          "start": 150.14,
+          "end": 150.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "Ida",
+          "start": 150.78,
+          "end": 151.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "verifies",
+          "start": 151.3,
+          "end": 151.92,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 151.92,
+          "end": 152.1,
+          "probability": 0.999
+        },
+        {
+          "word": "claims",
+          "start": 152.1,
+          "end": 152.48,
+          "probability": 0.6006
+        },
+        {
+          "word": "lost",
+          "start": 152.48,
+          "end": 152.84,
+          "probability": 0.5737
+        },
+        {
+          "word": "date",
+          "start": 152.84,
+          "end": 153.16,
+          "probability": 0.9463
+        },
+        {
+          "word": "with",
+          "start": 153.16,
+          "end": 153.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Mr.",
+          "start": 153.38,
+          "end": 153.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "Farley,",
+          "start": 153.92,
+          "end": 154.32,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 154.52,
+          "end": 154.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "tells",
+          "start": 154.82,
+          "end": 155.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "him",
+          "start": 155.1,
+          "end": 155.3,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 155.3,
+          "end": 155.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 155.54,
+          "end": 155.68,
+          "probability": 0.9897
+        },
+        {
+          "word": "adjuster",
+          "start": 155.68,
+          "end": 156.14,
+          "probability": 0.9531
+        },
+        {
+          "word": "is",
+          "start": 156.14,
+          "end": 156.34,
+          "probability": 0.999
+        },
+        {
+          "word": "Andy",
+          "start": 156.34,
+          "end": 156.66,
+          "probability": 0.9561
+        },
+        {
+          "word": "Applegate.",
+          "start": 156.66,
+          "end": 157.34,
+          "probability": 0.9917
+        },
+        {
+          "word": "Mr.",
+          "start": 157.74,
+          "end": 158.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "Farley",
+          "start": 158.5,
+          "end": 158.8,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 158.8,
+          "end": 159.04,
+          "probability": 0.999
+        },
+        {
+          "word": "upset",
+          "start": 159.04,
+          "end": 159.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 159.42,
+          "end": 159.74,
+          "probability": 0.999
+        },
+        {
+          "word": "he",
+          "start": 159.74,
+          "end": 159.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 159.94,
+          "end": 160.14,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 160.14,
+          "end": 160.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "heard",
+          "start": 160.36,
+          "end": 160.66,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 160.66,
+          "end": 160.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 160.92,
+          "end": 161.06,
+          "probability": 0.999
+        },
+        {
+          "word": "adjuster,",
+          "start": 161.06,
+          "end": 161.56,
+          "probability": 0.998
+        },
+        {
+          "word": "so",
+          "start": 161.76,
+          "end": 162.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "Ida",
+          "start": 162.1,
+          "end": 162.34,
+          "probability": 0.998
+        },
+        {
+          "word": "uses",
+          "start": 162.34,
+          "end": 162.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 162.68,
+          "end": 162.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "Actions",
+          "start": 162.96,
+          "end": 163.52,
+          "probability": 0.6792
+        },
+        {
+          "word": "menu",
+          "start": 163.52,
+          "end": 163.84,
+          "probability": 0.9585
+        },
+        {
+          "word": "to",
+          "start": 163.84,
+          "end": 164.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 164.04,
+          "end": 164.36,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 164.36,
+          "end": 164.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 164.58,
+          "end": 164.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "general",
+          "start": 164.78,
+          "end": 165.18,
+          "probability": 0.7192
+        },
+        {
+          "word": "reminder",
+          "start": 165.18,
+          "end": 165.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "activity",
+          "start": 165.7,
+          "end": 166.24,
+          "probability": 0.9922
+        },
+        {
+          "word": "for",
+          "start": 166.24,
+          "end": 166.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy",
+          "start": 166.54,
+          "end": 166.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 166.84,
+          "end": 167.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "call",
+          "start": 167.14,
+          "end": 167.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "Mr.",
+          "start": 167.46,
+          "end": 167.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "Farley.",
+          "start": 167.96,
+          "end": 168.32,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 168.32,
+      "end": 172.86,
+      "start_formatted": "00:02:48.320",
+      "end_formatted": "00:02:52.860",
+      "text": "She enters a new subject, ensure it needs a call back.",
+      "words": [
+        {
+          "word": "She",
+          "start": 168.32,
+          "end": 169.48,
+          "probability": 0.9375
+        },
+        {
+          "word": "enters",
+          "start": 169.48,
+          "end": 169.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 169.82,
+          "end": 170.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 170.12,
+          "end": 170.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "subject,",
+          "start": 170.28,
+          "end": 170.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "ensure",
+          "start": 171.06,
+          "end": 171.58,
+          "probability": 0.0571
+        },
+        {
+          "word": "it",
+          "start": 171.58,
+          "end": 171.74,
+          "probability": 0.96
+        },
+        {
+          "word": "needs",
+          "start": 171.74,
+          "end": 172.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 172.08,
+          "end": 172.18,
+          "probability": 1.0
+        },
+        {
+          "word": "call",
+          "start": 172.18,
+          "end": 172.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "back.",
+          "start": 172.48,
+          "end": 172.86,
+          "probability": 0.6855
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 178.08,
+      "end": 198.3,
+      "start_formatted": "00:02:58.080",
+      "end_formatted": "00:03:18.300",
+      "text": "She sets the due date as today. She sets the escalation date as today. Ida also sets the priority to urgent. Then she saves the new activity. Ida verifies that the new urgent activity is created. She tells Mr. Farley that Mr. Applegate should be calling him soon.",
+      "words": [
+        {
+          "word": "She",
+          "start": 178.08,
+          "end": 178.76,
+          "probability": 0.978
+        },
+        {
+          "word": "sets",
+          "start": 178.76,
+          "end": 179.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 179.14,
+          "end": 179.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "due",
+          "start": 179.32,
+          "end": 179.5,
+          "probability": 0.9878
+        },
+        {
+          "word": "date",
+          "start": 179.5,
+          "end": 179.8,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 179.8,
+          "end": 180.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "today.",
+          "start": 180.0,
+          "end": 180.34,
+          "probability": 0.9663
+        },
+        {
+          "word": "She",
+          "start": 180.8,
+          "end": 181.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "sets",
+          "start": 181.36,
+          "end": 181.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 181.68,
+          "end": 181.86,
+          "probability": 1.0
+        },
+        {
+          "word": "escalation",
+          "start": 181.86,
+          "end": 182.56,
+          "probability": 0.999
+        },
+        {
+          "word": "date",
+          "start": 182.56,
+          "end": 182.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 182.82,
+          "end": 183.12,
+          "probability": 1.0
+        },
+        {
+          "word": "today.",
+          "start": 183.12,
+          "end": 183.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ida",
+          "start": 184.32,
+          "end": 184.84,
+          "probability": 0.9644
+        },
+        {
+          "word": "also",
+          "start": 184.84,
+          "end": 185.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "sets",
+          "start": 185.18,
+          "end": 185.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 185.58,
+          "end": 185.76,
+          "probability": 1.0
+        },
+        {
+          "word": "priority",
+          "start": 185.76,
+          "end": 186.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "to",
+          "start": 186.28,
+          "end": 186.62,
+          "probability": 1.0
+        },
+        {
+          "word": "urgent.",
+          "start": 186.62,
+          "end": 186.96,
+          "probability": 0.9468
+        },
+        {
+          "word": "Then",
+          "start": 187.6,
+          "end": 188.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 188.28,
+          "end": 188.5,
+          "probability": 0.999
+        },
+        {
+          "word": "saves",
+          "start": 188.5,
+          "end": 188.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 188.94,
+          "end": 189.1,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 189.1,
+          "end": 189.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "activity.",
+          "start": 189.28,
+          "end": 189.8,
+          "probability": 0.999
+        },
+        {
+          "word": "Ida",
+          "start": 190.3,
+          "end": 190.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "verifies",
+          "start": 190.94,
+          "end": 191.5,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 191.5,
+          "end": 191.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 191.76,
+          "end": 191.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 191.92,
+          "end": 192.14,
+          "probability": 0.999
+        },
+        {
+          "word": "urgent",
+          "start": 192.14,
+          "end": 192.6,
+          "probability": 0.998
+        },
+        {
+          "word": "activity",
+          "start": 192.6,
+          "end": 193.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 193.18,
+          "end": 193.52,
+          "probability": 1.0
+        },
+        {
+          "word": "created.",
+          "start": 193.52,
+          "end": 193.98,
+          "probability": 1.0
+        },
+        {
+          "word": "She",
+          "start": 194.32,
+          "end": 194.72,
+          "probability": 0.998
+        },
+        {
+          "word": "tells",
+          "start": 194.72,
+          "end": 195.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "Mr.",
+          "start": 195.02,
+          "end": 195.32,
+          "probability": 0.998
+        },
+        {
+          "word": "Farley",
+          "start": 195.48,
+          "end": 195.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 195.8,
+          "end": 196.06,
+          "probability": 0.999
+        },
+        {
+          "word": "Mr.",
+          "start": 196.06,
+          "end": 196.46,
+          "probability": 1.0
+        },
+        {
+          "word": "Applegate",
+          "start": 196.64,
+          "end": 197.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "should",
+          "start": 197.18,
+          "end": 197.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 197.38,
+          "end": 197.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "calling",
+          "start": 197.56,
+          "end": 197.88,
+          "probability": 0.999
+        },
+        {
+          "word": "him",
+          "start": 197.88,
+          "end": 198.16,
+          "probability": 0.8281
+        },
+        {
+          "word": "soon.",
+          "start": 198.16,
+          "end": 198.3,
+          "probability": 0.7207
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 199.06,
+      "end": 206.3,
+      "start_formatted": "00:03:19.060",
+      "end_formatted": "00:03:26.300",
+      "text": "Ida is done for the day, so she logs out of Claim Center. This ends the claim search and ad activity demonstration.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 199.06,
+          "end": 199.62,
+          "probability": 0.6538
+        },
+        {
+          "word": "is",
+          "start": 199.62,
+          "end": 199.84,
+          "probability": 0.9888
+        },
+        {
+          "word": "done",
+          "start": 199.84,
+          "end": 200.04,
+          "probability": 0.9888
+        },
+        {
+          "word": "for",
+          "start": 200.04,
+          "end": 200.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 200.28,
+          "end": 200.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "day,",
+          "start": 200.44,
+          "end": 200.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "so",
+          "start": 201.16,
+          "end": 201.24,
+          "probability": 0.9678
+        },
+        {
+          "word": "she",
+          "start": 201.24,
+          "end": 201.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "logs",
+          "start": 201.5,
+          "end": 201.86,
+          "probability": 0.9839
+        },
+        {
+          "word": "out",
+          "start": 201.86,
+          "end": 202.08,
+          "probability": 0.9907
+        },
+        {
+          "word": "of",
+          "start": 202.08,
+          "end": 202.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "Claim",
+          "start": 202.24,
+          "end": 202.56,
+          "probability": 0.751
+        },
+        {
+          "word": "Center.",
+          "start": 202.56,
+          "end": 202.94,
+          "probability": 0.9194
+        },
+        {
+          "word": "This",
+          "start": 203.66,
+          "end": 204.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "ends",
+          "start": 204.22,
+          "end": 204.46,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 204.46,
+          "end": 204.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "claim",
+          "start": 204.64,
+          "end": 204.92,
+          "probability": 0.4749
+        },
+        {
+          "word": "search",
+          "start": 204.92,
+          "end": 205.3,
+          "probability": 0.9829
+        },
+        {
+          "word": "and",
+          "start": 205.3,
+          "end": 205.62,
+          "probability": 0.9683
+        },
+        {
+          "word": "ad",
+          "start": 205.62,
+          "end": 205.88,
+          "probability": 0.7627
+        },
+        {
+          "word": "activity",
+          "start": 205.88,
+          "end": 206.26,
+          "probability": 0.9907
+        },
+        {
+          "word": "demonstration.",
+          "start": 206.26,
+          "end": 206.54,
+          "probability": 0.9702
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 206.54,
+      "end": 206.66,
+      "start_formatted": "00:03:26.540",
+      "end_formatted": "00:03:26.660",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 206.54,
+          "end": 206.66,
+          "probability": 0.7646
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 206.66,
+      "end": 206.66,
+      "start_formatted": "00:03:26.660",
+      "end_formatted": "00:03:26.660",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 13,
+      "start": 206.66,
+      "end": 206.66,
+      "start_formatted": "00:03:26.660",
+      "end_formatted": "00:03:26.660",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 14,
+      "start": 206.66,
+      "end": 206.84,
+      "start_formatted": "00:03:26.660",
+      "end_formatted": "00:03:26.840",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 206.66,
+          "end": 206.84,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 206.84,
+      "end": 206.84,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 16,
+      "start": 206.84,
+      "end": 206.84,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 17,
+      "start": 206.84,
+      "end": 206.84,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 18,
+      "start": 206.84,
+      "end": 206.84,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 19,
+      "start": 206.84,
+      "end": 206.84,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 206.84,
+      "end": 206.84,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 206.84,
+      "end": 206.84,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.840",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 206.84,
+      "end": 206.92,
+      "start_formatted": "00:03:26.840",
+      "end_formatted": "00:03:26.920",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 206.84,
+          "end": 206.92,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 33,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 206.92,
+      "end": 206.92,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.920",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 206.92,
+      "end": 206.96,
+      "start_formatted": "00:03:26.920",
+      "end_formatted": "00:03:26.960",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 206.92,
+          "end": 206.96,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 206.96,
+      "end": 206.96,
+      "start_formatted": "00:03:26.960",
+      "end_formatted": "00:03:26.960",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 206.96,
+      "end": 206.96,
+      "start_formatted": "00:03:26.960",
+      "end_formatted": "00:03:26.960",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 206.96,
+      "end": 206.96,
+      "start_formatted": "00:03:26.960",
+      "end_formatted": "00:03:26.960",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 206.96,
+      "end": 207.12,
+      "start_formatted": "00:03:26.960",
+      "end_formatted": "00:03:27.120",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 206.96,
+          "end": 207.12,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 207.1,
+      "end": 207.1,
+      "start_formatted": "00:03:27.100",
+      "end_formatted": "00:03:27.100",
+      "text": "",
+      "words": []
+    }
+  ]
+}

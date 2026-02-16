@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-03",
+    "slide_count": 32,
+    "slides_with_text": 27,
+    "total_words": 1341,
+    "avg_confidence": 83.78,
+    "processing_time_seconds": 9.84,
+    "extracted_at": "2026-02-15T18:15:49.810021"
+  },
+  "full_text": "Configuring Claim Intake\n\nLesson\nobjectives\n\n¢ Configure the behavior of the FNOL Wizard\n\ni Wizards Gi\n\nSequences of steps (screens) that accomplish a complex task\n\nOi rele ow | som\nStep 1 of 5: Search or Create Policy J cont I vce J\n© Feary see\nStep 2 of 5: Basic information ok\n© | meet | mbeytene | ouotie | one\nmt Step 3 of 5: Add claim information Boor\nor |\n0 aun 4 © | acer | nesta | oamovine | sont\n| Step 4 of 5: Services ooc\nce | anon | meme | nem | a\nnenrarnatannnasannted stor 5 of 5: Save and Assign Claim wos\n| armenian =)\n——_—\n_\n\ni Comparing wizards to location groups Ga\n\nBoth wizards and location groups have a shared info bar, actions menu,\nand side bar listing pages or steps\n\nof 5: Add claim infc\n\n‘rb one + ae, ng Ot\n\nLOCATION\nGROUP\n\n‘ype © sn snes * Aide © Wetton etonOuner © fede © Sens © Wend? Qu\n\ni Contrasting wizards to location groups\n\n¢ Wizards have...\n\n| Sequential steps\n\nStep 3 of 5: Add claim information\n\nAbility to make step availability\ndepend on where the user is in\nthe wizard\n\ncm pag\n\noil]\n\nToolbar for navigating the\nwizard’s steps\n\n¢ Unlike location groups,\nwizards declare steps\ndirectly, not through pages\n\nI Wizard and Wizard Step Structure Gi\n\n¢ Two levels of configuration:\n\nic Wizard\n+ Wizard level\n+ Entry point and navigation to wizard\n+ Permissions to visit and edit ar n> —> screen]\n: Wizara: Step\n+ Wizard step level sD —> screen\n* Screen that a step renders i Wizard Step\n+ Step logic (visibility, editability, next step)\n> El\n* Step order Wizard Step\n\nIndependent steps\n\nI Wizard Step Sets Gi\n\n¢ Wizard steps may be grouped together\n\nooo ooo eee ssssssecccccccccsccssssssssees\ninto wizard step sets ==\n= =\n* Wizard step sets let developers specify i lhe\nlogic which is identical for multiple Wizard Step\nsteps\n\n¢ Aseries of wizard steps may be relevant\nonly for property claims\n* These steps may be grouped into a wizard i Wizard Step\nstep set which had a visibility condition of :\n\"visible if the claim's loss type i 7 : one\nype is property’ Se — screen]\n: Wizard Step\n\n| Wizard Entry Points G\n\n¢ Provide name and signature for navigation widgets to call the location\nProperties: [= Properties (x) Variables BB code |\n| +E]t ¥ [vocation Entry Point This signature\n\nFNOLWizard0. signature*  FNOLWizard(Claim: Claim) <== _ requires a Claim\nFNOLWizard(policyTy variable called Claim\n\nFNOLWizard(searchC\n\n¢ Each object expected in the signature of each entry point must be declared on the\nVariables tab Properties: | Hs Propeies @) entry pois | code\n\n+= hi Variable\njv Treaturecategory.Featurecategory Basic!\nname* Claim\n\nclaim\nlV \\FeatureCategory.FeatureCategory Advanced! Defines the Claim variable\n\ninitialvValue wizardinfo.createclain()\n\ni Navigating to a wizard G\n\nCalling the wizard, for example from a tab bar, uses the Wizard’s “go” method.\n\n* Syntax:\nEntryPointOfLocation.go(variablesToPass)\n\nBravsarpct\n\nDesktop | ClaimTab ( || Search || Address Book Dashboard Menu Item\n1 v IFeatureCat\n\nlew (TermClaim Proper) ‘action\nrey ia”\n4 label\n\n—_—\n\nGicuipewire Desktop | ~ Clim | + | Search| ~ — Addres\n\nNew Claim\nAct ciaime: Q\n\n(000-00-001303 Brittany Turner\n\nActions\n\ni Demonstration G\n\nWizard Structure\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nConfiguring wizards\n\nI Variant Steps Gi\n\nSome steps appear in more than one form\n\nLoss Details Screen - Auto Loss Details Screen — Worker’s Compensation\n\n© | ares | isceotonting | Cntlemiaabne | oxtenaeans | soa\n\nStep 3 of 5: Add claim information Step 3 of 4: Add claim information\n\n‘rb one + ae, ng Ot wnthappna int\nw ON\n\nthet\n‘Sopaina pele\n\nOm\ncoon\n\n+(eaaae\n\n+ [eens tame oo\n\ni Mode property Ga\n\n¢ Some PCFs have modes\n\nFNOLWizard_NewLossDetailsScreer\n\ndefault\n‘NOLWizard_NewLossDetailsScreer] PR\n‘NOLWizard_NewLossDetailsScreem Trav.\n5] FNOLWizard_NewLossDetailsScree, WC.\n\n¢ Different “versions” of the “same” object\n\n¢ Differentiated by a suffix added to the object\nname after a dot\n\n¢ PCF modes are specified by the mode “2°**\n\nY IReatureCategory.FeatureCategory Basic!\n\nproperty in the parent object ig Ciasiclossdetas\n\n‘gv.config.LOBAbstraction. ForClaim. ForLoasType.getUiMode (Claim)\n\n+ Must be a text value that matches one of —_ —\n\nthe Panel Ref\nsuffixes for that object V tFeatureCategory FeatureCategory.Basic!\net rNoLwizardPindPolicyPanelset (Claim, Wizard)\n\n* Often implemented using a typekey property\nof the parent’s root object\n\nWizard.PageNode? \"search\" : \"Create\"\n\ni Shared Section Mode Gi\n\nWhen a panel set or an input set has modes, any ref that displays it will always have\na Shared Section Mode widget at the top.\n* This widget cannot be added manually\n\n* This widget cannot be moved\n\n{Term PoticyNumber...newPolicy UnverifiedPolicyNumber]\n\nSa NN PS STR Ce Pac no\n\nSSNorTaxID —[PolicySearch]\nrowtehet\n\n{TermypeProper)* [newPolicy UnverifedPolicyType ¥\n\nType of (TermClaim— ©s Os\n\n{TermossDateProp..[/./— {i}\n\nTime 7 {=}\n\ni Demonstration G\n\nModular PCF Basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nI Order of wizard steps\n\nDetermined by order in which they appear in the wizard PCF file.\n\n1\nNot used in GL\n\nNO 1 BON\n\nFNOLWizard.pcf\n\nGrnowvizardpct\n\nFind Policy: FNOLWizard FindPolicyScreen(Claim, wizardinfo)\n\n‘wizardinfo SelectRiskUnitsLabel: FNOLWizard_PickPolicyRiskUnitsScreen( Claim, wizardinfo )\n\n“OLD * + DisplayKey.get(‘Wizard.NewClaimWizard NewClaimMainContacts Label”): NewClaimWizard_MainContactsScreen(Claim, wizardinfo)\n{Term.LossDetails Proper): NewClaimWizard_LossDetailsScreen(Claim, wizardinfo)\n\n(Term Exposures Proper): NewClaimWizard_ExposuresScreen(Claim, wizardinfo)\n\nParties Involved: NewClaimWizard_PartiesinvolvedScreen(Claim, wizardinfo)\n\nDocuments: NewClaimWizard_DocumentsScreen(Claim, wizardinfo)\n\n‘Save & Assign (Term.Claim.Proper): NewClaimWizard_AssignScreen(Claim, wizardinfo)\n\nGi\n\nGeneral Liability steps\n\nNew Claim Wizard\n\nAy\n\nI Steps in the wizard\n\nRepresent screens\n\nrvicesScreen(Claim, wizardinfo)\n\nWizard Step\nY IFeatureCategory.FeatureCategory Basic!\n\niat Services\n\nmode gw. config. LOBAbstraction. ForClain. ForLossType.getUIMode (Claim)\n\nscreen” FNOLWizard_ServicesScreen(Claim, wizardInfo)\n\ntitle\" DisplayRey.get (\"Wizard.NewClainiizard.NewClainservices.Step\", wizardinfo.CurrentstepNunber, wizardInfo.TotalNumberofsteps)\n\\ IFeatureCategory.FeatureCategory Advanced!\n\nallowFinish true\n\nallowNext\n\navailable wizardInfo. TsServicesstepavailable\n\n@ | evPotss4-123456 | Ins:RayNewton | Dol:03/26/2018 | St:Draft\n\nStep 4 of 5: Services\n\nnl\n\nStep sets in the Wizard G\n\nStep sets are represented in a wizard-by-Wizard Step Set objects.\n\nGB rnowizardpct Properties B=\n| Wizard Step Set\nDocuments: NewClaimWizard_DocumentsScreen(Claim, wizardinfo)\nV tFeatureCategory.FeatureCategory Basic!\nie” FullWizardStepSet\n\n‘Save & Assign (Term.Claim.Proper): NewClaimWizard_AssignScreen(Claim, wizardinfo)\nV IFeatureCategory.FeatureCategory Advanced!\n\nSave (Term Claim Proper: NewClaimWizard.SummaryScreen\\Claim, wizardino) avilable wizardinfo.tetossTypeset\nmode\nVisible _‘wizardinfo.useolawizardstep()\n\nBasic Info: FNOLWizard_BasicInfoScreen(Claim, wizardinfo)\n\n(Term.LossDetails Proper}: FNOLWizard_NewLossDetailsScreen(Claim, wizardinfo)\n\nServices: FNOLWizard_ServicesScreen(Claim, wizardinfo)\n\nSave & Assign (Term.Claim.Proper): FNOLWizard_AssignSaveScreen(Claim, wizardinfo)\n\ni Demonstration G\n\nConfiguring the FNOL Wizard\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — Whatis the structure of a wizard?\n\n¢\n7\n¢\n\nee\n\nAnswer\n\n_— — Whatis the structure of a wizard?\n\n¢\n\n¢\n¢ The correct answer is it is a list of sequential (and optionally non-sequential) steps,\nthat together perform some complex task in a logical order, as a logical unit of work.\n\nSe see aS SSeS\n\nnl\n\nQuestion\n\n_- — How does a wizard reference a screen, and howis this different from\n\nKs how a location group references a screen?\n¢\n\nee\n\nGi\n\nAnswer G\n\n,- — How does a wizard reference a screen, and howis this different from\nKa how a location group references a screen?\n¢\nThe correct answer is a wizard directly references a screen via a wizard step, as\nopposed to a location group which references a screen via a page.\n\nSe see aS SSeS\n\nQuestion\n\n_— — What happens when a screen’s mode property does not match any of\nKs the defined modes?\n\nee\n\nGi\n\nAnswer\n\n_— — What happens when a screen’s mode property does not match any of\nKa the defined modes?\n\nThe correct answer is if there is a default mode defined, that mode of the screen is\ndisplayed; otherwise, a runtime error occurs.\n\nSe see aS SSeS\n\nGi\n\ni Student exercise G\n\nConfiguring the FNOL Wizard\n\nPlease complete the lab called Configuring the FNOL Wizard\nin the Student Workbook.\n\nLesson\nobjectives\nreview\n\n¢ Configure the behavior of the FNOL Wizard",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Claim Intake",
+      "word_count": 3,
+      "avg_confidence": 95.25,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Configure the behavior of the FNOL Wizard",
+      "word_count": 10,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Wizards Gi\n\nSequences of steps (screens) that accomplish a complex task\n\nOi rele ow | som\nStep 1 of 5: Search or Create Policy J cont I vce J\n© Feary see\nStep 2 of 5: Basic information ok\n© | meet | mbeytene | ouotie | one\nmt Step 3 of 5: Add claim information Boor\nor |\n0 aun 4 © | acer | nesta | oamovine | sont\n| Step 4 of 5: Services ooc\nce | anon | meme | nem | a\nnenrarnatannnasannted stor 5 of 5: Save and Assign Claim wos\n| armenian =)\n——_—\n_",
+      "word_count": 103,
+      "avg_confidence": 69.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Comparing wizards to location groups Ga\n\nBoth wizards and location groups have a shared info bar, actions menu,\nand side bar listing pages or steps\n\nof 5: Add claim infc\n\n‘rb one + ae, ng Ot\n\nLOCATION\nGROUP\n\n‘ype © sn snes * Aide © Wetton etonOuner © fede © Sens © Wend? Qu",
+      "word_count": 55,
+      "avg_confidence": 73.98,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Contrasting wizards to location groups\n\n¢ Wizards have...\n\n| Sequential steps\n\nStep 3 of 5: Add claim information\n\nAbility to make step availability\ndepend on where the user is in\nthe wizard\n\ncm pag\n\noil]\n\nToolbar for navigating the\nwizard’s steps\n\n¢ Unlike location groups,\nwizards declare steps\ndirectly, not through pages",
+      "word_count": 53,
+      "avg_confidence": 89.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "I Wizard and Wizard Step Structure Gi\n\n¢ Two levels of configuration:\n\nic Wizard\n+ Wizard level\n+ Entry point and navigation to wizard\n+ Permissions to visit and edit ar n> —> screen]\n: Wizara: Step\n+ Wizard step level sD —> screen\n* Screen that a step renders i Wizard Step\n+ Step logic (visibility, editability, next step)\n> El\n* Step order Wizard Step\n\nIndependent steps",
+      "word_count": 69,
+      "avg_confidence": 83.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "I Wizard Step Sets Gi\n\n¢ Wizard steps may be grouped together\n\nooo ooo eee ssssssecccccccccsccssssssssees\ninto wizard step sets ==\n= =\n* Wizard step sets let developers specify i lhe\nlogic which is identical for multiple Wizard Step\nsteps\n\n¢ Aseries of wizard steps may be relevant\nonly for property claims\n* These steps may be grouped into a wizard i Wizard Step\nstep set which had a visibility condition of :\n\"visible if the claim's loss type i 7 : one\nype is property’ Se — screen]\n: Wizard Step",
+      "word_count": 93,
+      "avg_confidence": 84.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Wizard Entry Points G\n\n¢ Provide name and signature for navigation widgets to call the location\nProperties: [= Properties (x) Variables BB code |\n| +E]t ¥ [vocation Entry Point This signature\n\nFNOLWizard0. signature*  FNOLWizard(Claim: Claim) <== _ requires a Claim\nFNOLWizard(policyTy variable called Claim\n\nFNOLWizard(searchC\n\n¢ Each object expected in the signature of each entry point must be declared on the\nVariables tab Properties: | Hs Propeies @) entry pois | code\n\n+= hi Variable\njv Treaturecategory.Featurecategory Basic!\nname* Claim\n\nclaim\nlV \\FeatureCategory.FeatureCategory Advanced! Defines the Claim variable\n\ninitialvValue wizardinfo.createclain()",
+      "word_count": 92,
+      "avg_confidence": 75.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Navigating to a wizard G\n\nCalling the wizard, for example from a tab bar, uses the Wizard’s “go” method.\n\n* Syntax:\nEntryPointOfLocation.go(variablesToPass)\n\nBravsarpct\n\nDesktop | ClaimTab ( || Search || Address Book Dashboard Menu Item\n1 v IFeatureCat\n\nlew (TermClaim Proper) ‘action\nrey ia”\n4 label\n\n—_—\n\nGicuipewire Desktop | ~ Clim | + | Search| ~ — Addres\n\nNew Claim\nAct ciaime: Q\n\n(000-00-001303 Brittany Turner\n\nActions",
+      "word_count": 69,
+      "avg_confidence": 74.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Demonstration G\n\nWizard Structure\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.51,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Configuring wizards",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "I Variant Steps Gi\n\nSome steps appear in more than one form\n\nLoss Details Screen - Auto Loss Details Screen — Worker’s Compensation\n\n© | ares | isceotonting | Cntlemiaabne | oxtenaeans | soa\n\nStep 3 of 5: Add claim information Step 3 of 4: Add claim information\n\n‘rb one + ae, ng Ot wnthappna int\nw ON\n\nthet\n‘Sopaina pele\n\nOm\ncoon\n\n+(eaaae\n\n+ [eens tame oo",
+      "word_count": 68,
+      "avg_confidence": 75.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Mode property Ga\n\n¢ Some PCFs have modes\n\nFNOLWizard_NewLossDetailsScreer\n\ndefault\n‘NOLWizard_NewLossDetailsScreer] PR\n‘NOLWizard_NewLossDetailsScreem Trav.\n5] FNOLWizard_NewLossDetailsScree, WC.\n\n¢ Different “versions” of the “same” object\n\n¢ Differentiated by a suffix added to the object\nname after a dot\n\n¢ PCF modes are specified by the mode “2°**\n\nY IReatureCategory.FeatureCategory Basic!\n\nproperty in the parent object ig Ciasiclossdetas\n\n‘gv.config.LOBAbstraction. ForClaim. ForLoasType.getUiMode (Claim)\n\n+ Must be a text value that matches one of —_ —\n\nthe Panel Ref\nsuffixes for that object V tFeatureCategory FeatureCategory.Basic!\net rNoLwizardPindPolicyPanelset (Claim, Wizard)\n\n* Often implemented using a typekey property\nof the parent’s root object\n\nWizard.PageNode? \"search\" : \"Create\"",
+      "word_count": 103,
+      "avg_confidence": 82.09,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Shared Section Mode Gi\n\nWhen a panel set or an input set has modes, any ref that displays it will always have\na Shared Section Mode widget at the top.\n* This widget cannot be added manually\n\n* This widget cannot be moved\n\n{Term PoticyNumber...newPolicy UnverifiedPolicyNumber]\n\nSa NN PS STR Ce Pac no\n\nSSNorTaxID —[PolicySearch]\nrowtehet\n\n{TermypeProper)* [newPolicy UnverifedPolicyType ¥\n\nType of (TermClaim— ©s Os\n\n{TermossDateProp..[/./— {i}\n\nTime 7 {=}",
+      "word_count": 71,
+      "avg_confidence": 80.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Demonstration G\n\nModular PCF Basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "I Order of wizard steps\n\nDetermined by order in which they appear in the wizard PCF file.\n\n1\nNot used in GL\n\nNO 1 BON\n\nFNOLWizard.pcf\n\nGrnowvizardpct\n\nFind Policy: FNOLWizard FindPolicyScreen(Claim, wizardinfo)\n\n‘wizardinfo SelectRiskUnitsLabel: FNOLWizard_PickPolicyRiskUnitsScreen( Claim, wizardinfo )\n\n“OLD * + DisplayKey.get(‘Wizard.NewClaimWizard NewClaimMainContacts Label”): NewClaimWizard_MainContactsScreen(Claim, wizardinfo)\n{Term.LossDetails Proper): NewClaimWizard_LossDetailsScreen(Claim, wizardinfo)\n\n(Term Exposures Proper): NewClaimWizard_ExposuresScreen(Claim, wizardinfo)\n\nParties Involved: NewClaimWizard_PartiesinvolvedScreen(Claim, wizardinfo)\n\nDocuments: NewClaimWizard_DocumentsScreen(Claim, wizardinfo)\n\n‘Save & Assign (Term.Claim.Proper): NewClaimWizard_AssignScreen(Claim, wizardinfo)\n\nGi\n\nGeneral Liability steps\n\nNew Claim Wizard\n\nAy",
+      "word_count": 76,
+      "avg_confidence": 76.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "I Steps in the wizard\n\nRepresent screens\n\nrvicesScreen(Claim, wizardinfo)\n\nWizard Step\nY IFeatureCategory.FeatureCategory Basic!\n\niat Services\n\nmode gw. config. LOBAbstraction. ForClain. ForLossType.getUIMode (Claim)\n\nscreen” FNOLWizard_ServicesScreen(Claim, wizardInfo)\n\ntitle\" DisplayRey.get (\"Wizard.NewClainiizard.NewClainservices.Step\", wizardinfo.CurrentstepNunber, wizardInfo.TotalNumberofsteps)\n\\ IFeatureCategory.FeatureCategory Advanced!\n\nallowFinish true\n\nallowNext\n\navailable wizardInfo. TsServicesstepavailable\n\n@ | evPotss4-123456 | Ins:RayNewton | Dol:03/26/2018 | St:Draft\n\nStep 4 of 5: Services\n\nnl",
+      "word_count": 55,
+      "avg_confidence": 66.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Step sets in the Wizard G\n\nStep sets are represented in a wizard-by-Wizard Step Set objects.\n\nGB rnowizardpct Properties B=\n| Wizard Step Set\nDocuments: NewClaimWizard_DocumentsScreen(Claim, wizardinfo)\nV tFeatureCategory.FeatureCategory Basic!\nie” FullWizardStepSet\n\n‘Save & Assign (Term.Claim.Proper): NewClaimWizard_AssignScreen(Claim, wizardinfo)\nV IFeatureCategory.FeatureCategory Advanced!\n\nSave (Term Claim Proper: NewClaimWizard.SummaryScreen\\Claim, wizardino) avilable wizardinfo.tetossTypeset\nmode\nVisible _‘wizardinfo.useolawizardstep()\n\nBasic Info: FNOLWizard_BasicInfoScreen(Claim, wizardinfo)\n\n(Term.LossDetails Proper}: FNOLWizard_NewLossDetailsScreen(Claim, wizardinfo)\n\nServices: FNOLWizard_ServicesScreen(Claim, wizardinfo)\n\nSave & Assign (Term.Claim.Proper): FNOLWizard_AssignSaveScreen(Claim, wizardinfo)",
+      "word_count": 69,
+      "avg_confidence": 74.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Demonstration G\n\nConfiguring the FNOL Wizard\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question\n\n_— — Whatis the structure of a wizard?\n\n¢\n7\n¢\n\nee",
+      "word_count": 13,
+      "avg_confidence": 81.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer\n\n_— — Whatis the structure of a wizard?\n\n¢\n\n¢\n¢ The correct answer is it is a list of sequential (and optionally non-sequential) steps,\nthat together perform some complex task in a logical order, as a logical unit of work.\n\nSe see aS SSeS\n\nnl",
+      "word_count": 47,
+      "avg_confidence": 84.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n_- — How does a wizard reference a screen, and howis this different from\n\nKs how a location group references a screen?\n¢\n\nee\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 78.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer G\n\n,- — How does a wizard reference a screen, and howis this different from\nKa how a location group references a screen?\n¢\nThe correct answer is a wizard directly references a screen via a wizard step, as\nopposed to a location group which references a screen via a page.\n\nSe see aS SSeS",
+      "word_count": 56,
+      "avg_confidence": 82.98,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question\n\n_— — What happens when a screen’s mode property does not match any of\nKs the defined modes?\n\nee\n\nGi",
+      "word_count": 21,
+      "avg_confidence": 84.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer\n\n_— — What happens when a screen’s mode property does not match any of\nKa the defined modes?\n\nThe correct answer is if there is a default mode defined, that mode of the screen is\ndisplayed; otherwise, a runtime error occurs.\n\nSe see aS SSeS\n\nGi",
+      "word_count": 47,
+      "avg_confidence": 86.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "i Student exercise G\n\nConfiguring the FNOL Wizard\n\nPlease complete the lab called Configuring the FNOL Wizard\nin the Student Workbook.",
+      "word_count": 21,
+      "avg_confidence": 91.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Configure the behavior of the FNOL Wizard",
+      "word_count": 11,
+      "avg_confidence": 90.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

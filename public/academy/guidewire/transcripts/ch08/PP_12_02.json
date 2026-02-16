@@ -1,0 +1,1493 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_12_02.mp4",
+    "video_stem": "PP_12_02",
+    "duration_seconds": 116.82,
+    "duration_formatted": "00:01:56.820",
+    "segment_count": 12,
+    "word_count": 223,
+    "avg_confidence": 0.9323,
+    "transcription_time_seconds": 14.66,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:30:47.797991"
+  },
+  "full_text": "Let's create a new activity to get credit reports and assign it to the producer, when a new submission is created for a business owner's line. In Studio, go to Configuration, GSRC, right-click and create a new package. Enter the package name. Click OK. Right-click the new package. Create a new Gosu enhancement. The name is Job Enhancement. It is an enhancement on the job entity. Search for it. Double-click to select it. Add a new function to create the activity to get credit reports and assign it to the producer. Press Alt plus Enter to create a display key for the description. This is the final code. Find the activity pattern by code credit underscore reports. Call Create Role Activity, which is defined in Job Assignment Enhancement. It creates and assigns the activity. Open submission process and invoke the new function at the end of the start method. Restart the server. Login to Policy Center as Alice Applegate. Open Account Ray Newton. Create a new submission. Select Business Owners. Go to Tools, Work Plan. The activity Get Credit Reports is created and assigned to the producer of the submission, Archie Armstrong. To check the producer on the job, go to Tools, Participants. The producer is Archie Armstrong. This is the end of demonstration for assigning activities. Filogy of the Filogy of the  ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 8.22,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:08.220",
+      "text": "Let's create a new activity to get credit reports and assign it to the producer, when a new submission is created for a business owner's line.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 0.0,
+          "end": 0.5,
+          "probability": 0.9658
+        },
+        {
+          "word": "create",
+          "start": 0.5,
+          "end": 0.82,
+          "probability": 0.9771
+        },
+        {
+          "word": "a",
+          "start": 0.82,
+          "end": 1.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "new",
+          "start": 1.06,
+          "end": 1.22,
+          "probability": 0.9893
+        },
+        {
+          "word": "activity",
+          "start": 1.22,
+          "end": 1.74,
+          "probability": 0.8672
+        },
+        {
+          "word": "to",
+          "start": 1.74,
+          "end": 2.04,
+          "probability": 0.998
+        },
+        {
+          "word": "get",
+          "start": 2.04,
+          "end": 2.22,
+          "probability": 0.9741
+        },
+        {
+          "word": "credit",
+          "start": 2.22,
+          "end": 2.52,
+          "probability": 0.9629
+        },
+        {
+          "word": "reports",
+          "start": 2.52,
+          "end": 3.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 3.1,
+          "end": 3.34,
+          "probability": 0.9937
+        },
+        {
+          "word": "assign",
+          "start": 3.34,
+          "end": 3.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "it",
+          "start": 3.66,
+          "end": 3.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 3.84,
+          "end": 4.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 4.0,
+          "end": 4.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "producer,",
+          "start": 4.14,
+          "end": 4.62,
+          "probability": 0.833
+        },
+        {
+          "word": "when",
+          "start": 4.88,
+          "end": 5.1,
+          "probability": 0.9829
+        },
+        {
+          "word": "a",
+          "start": 5.1,
+          "end": 5.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 5.22,
+          "end": 5.38,
+          "probability": 0.998
+        },
+        {
+          "word": "submission",
+          "start": 5.38,
+          "end": 5.86,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 5.86,
+          "end": 6.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "created",
+          "start": 6.16,
+          "end": 6.6,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 6.6,
+          "end": 6.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 6.84,
+          "end": 7.0,
+          "probability": 0.9922
+        },
+        {
+          "word": "business",
+          "start": 7.0,
+          "end": 7.32,
+          "probability": 0.8618
+        },
+        {
+          "word": "owner's",
+          "start": 7.32,
+          "end": 7.9,
+          "probability": 0.8115
+        },
+        {
+          "word": "line.",
+          "start": 7.9,
+          "end": 8.22,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 8.72,
+      "end": 26.6,
+      "start_formatted": "00:00:08.720",
+      "end_formatted": "00:00:26.600",
+      "text": "In Studio, go to Configuration, GSRC, right-click and create a new package. Enter the package name. Click OK.",
+      "words": [
+        {
+          "word": "In",
+          "start": 8.72,
+          "end": 9.36,
+          "probability": 0.9736
+        },
+        {
+          "word": "Studio,",
+          "start": 9.36,
+          "end": 9.74,
+          "probability": 0.7744
+        },
+        {
+          "word": "go",
+          "start": 10.06,
+          "end": 10.34,
+          "probability": 0.856
+        },
+        {
+          "word": "to",
+          "start": 10.34,
+          "end": 10.54,
+          "probability": 0.999
+        },
+        {
+          "word": "Configuration,",
+          "start": 10.54,
+          "end": 11.42,
+          "probability": 0.8711
+        },
+        {
+          "word": "GSRC,",
+          "start": 11.56,
+          "end": 12.48,
+          "probability": 0.9224
+        },
+        {
+          "word": "right",
+          "start": 12.76,
+          "end": 13.16,
+          "probability": 0.8745
+        },
+        {
+          "word": "-click",
+          "start": 13.16,
+          "end": 13.44,
+          "probability": 0.8408
+        },
+        {
+          "word": "and",
+          "start": 13.44,
+          "end": 13.74,
+          "probability": 0.9912
+        },
+        {
+          "word": "create",
+          "start": 13.74,
+          "end": 14.0,
+          "probability": 0.8955
+        },
+        {
+          "word": "a",
+          "start": 14.0,
+          "end": 14.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 14.2,
+          "end": 14.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "package.",
+          "start": 14.34,
+          "end": 14.8,
+          "probability": 0.9653
+        },
+        {
+          "word": "Enter",
+          "start": 15.2,
+          "end": 15.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 15.68,
+          "end": 15.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "package",
+          "start": 15.84,
+          "end": 16.24,
+          "probability": 0.9326
+        },
+        {
+          "word": "name.",
+          "start": 16.24,
+          "end": 16.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "Click",
+          "start": 25.62,
+          "end": 26.26,
+          "probability": 0.9834
+        },
+        {
+          "word": "OK.",
+          "start": 26.26,
+          "end": 26.6,
+          "probability": 0.8828
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 30.0,
+      "end": 50.24,
+      "start_formatted": "00:00:30.000",
+      "end_formatted": "00:00:50.240",
+      "text": "Right-click the new package. Create a new Gosu enhancement. The name is Job Enhancement. It is an enhancement on the job entity. Search for it. Double-click to select it.",
+      "words": [
+        {
+          "word": "Right",
+          "start": 30.0,
+          "end": 30.2,
+          "probability": 0.9067
+        },
+        {
+          "word": "-click",
+          "start": 30.2,
+          "end": 30.46,
+          "probability": 0.8164
+        },
+        {
+          "word": "the",
+          "start": 30.46,
+          "end": 30.7,
+          "probability": 0.9946
+        },
+        {
+          "word": "new",
+          "start": 30.7,
+          "end": 30.86,
+          "probability": 0.9287
+        },
+        {
+          "word": "package.",
+          "start": 30.86,
+          "end": 31.32,
+          "probability": 0.9683
+        },
+        {
+          "word": "Create",
+          "start": 33.58,
+          "end": 34.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "a",
+          "start": 34.22,
+          "end": 34.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "new",
+          "start": 34.4,
+          "end": 34.54,
+          "probability": 0.9888
+        },
+        {
+          "word": "Gosu",
+          "start": 34.54,
+          "end": 34.94,
+          "probability": 0.6484
+        },
+        {
+          "word": "enhancement.",
+          "start": 34.94,
+          "end": 35.54,
+          "probability": 0.769
+        },
+        {
+          "word": "The",
+          "start": 37.08,
+          "end": 37.72,
+          "probability": 0.9819
+        },
+        {
+          "word": "name",
+          "start": 37.72,
+          "end": 38.0,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 38.0,
+          "end": 38.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Job",
+          "start": 38.24,
+          "end": 38.5,
+          "probability": 0.4553
+        },
+        {
+          "word": "Enhancement.",
+          "start": 38.5,
+          "end": 39.36,
+          "probability": 0.9482
+        },
+        {
+          "word": "It",
+          "start": 44.22,
+          "end": 44.86,
+          "probability": 0.9751
+        },
+        {
+          "word": "is",
+          "start": 44.86,
+          "end": 45.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "an",
+          "start": 45.0,
+          "end": 45.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "enhancement",
+          "start": 45.12,
+          "end": 45.7,
+          "probability": 0.9497
+        },
+        {
+          "word": "on",
+          "start": 45.7,
+          "end": 46.04,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 46.04,
+          "end": 46.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "job",
+          "start": 46.16,
+          "end": 46.46,
+          "probability": 0.8018
+        },
+        {
+          "word": "entity.",
+          "start": 46.46,
+          "end": 46.92,
+          "probability": 0.9902
+        },
+        {
+          "word": "Search",
+          "start": 47.24,
+          "end": 47.7,
+          "probability": 0.9863
+        },
+        {
+          "word": "for",
+          "start": 47.7,
+          "end": 47.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "it.",
+          "start": 47.94,
+          "end": 48.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "Double",
+          "start": 48.56,
+          "end": 49.0,
+          "probability": 0.9951
+        },
+        {
+          "word": "-click",
+          "start": 49.0,
+          "end": 49.28,
+          "probability": 0.937
+        },
+        {
+          "word": "to",
+          "start": 49.28,
+          "end": 49.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "select",
+          "start": 49.56,
+          "end": 49.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "it.",
+          "start": 49.9,
+          "end": 50.24,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 52.14,
+      "end": 79.64,
+      "start_formatted": "00:00:52.140",
+      "end_formatted": "00:01:19.640",
+      "text": "Add a new function to create the activity to get credit reports and assign it to the producer. Press Alt plus Enter to create a display key for the description. This is the final code. Find the activity pattern by code credit underscore reports. Call Create Role Activity, which is defined in Job Assignment Enhancement. It creates and assigns the activity. Open submission process and invoke the new function at the end of the start method.",
+      "words": [
+        {
+          "word": "Add",
+          "start": 52.14,
+          "end": 52.74,
+          "probability": 0.9453
+        },
+        {
+          "word": "a",
+          "start": 52.74,
+          "end": 52.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "new",
+          "start": 52.86,
+          "end": 53.04,
+          "probability": 0.9751
+        },
+        {
+          "word": "function",
+          "start": 53.04,
+          "end": 53.42,
+          "probability": 0.9849
+        },
+        {
+          "word": "to",
+          "start": 53.42,
+          "end": 53.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "create",
+          "start": 53.68,
+          "end": 54.04,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 54.04,
+          "end": 54.24,
+          "probability": 0.999
+        },
+        {
+          "word": "activity",
+          "start": 54.24,
+          "end": 54.68,
+          "probability": 0.9419
+        },
+        {
+          "word": "to",
+          "start": 54.68,
+          "end": 54.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "get",
+          "start": 54.96,
+          "end": 55.16,
+          "probability": 0.9214
+        },
+        {
+          "word": "credit",
+          "start": 55.16,
+          "end": 55.46,
+          "probability": 0.9702
+        },
+        {
+          "word": "reports",
+          "start": 55.46,
+          "end": 56.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 56.0,
+          "end": 56.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "assign",
+          "start": 56.28,
+          "end": 56.58,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 56.58,
+          "end": 56.74,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 56.74,
+          "end": 56.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 56.88,
+          "end": 57.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "producer.",
+          "start": 57.0,
+          "end": 57.4,
+          "probability": 0.897
+        },
+        {
+          "word": "Press",
+          "start": 57.86,
+          "end": 58.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "Alt",
+          "start": 58.46,
+          "end": 58.66,
+          "probability": 0.8965
+        },
+        {
+          "word": "plus",
+          "start": 58.66,
+          "end": 58.96,
+          "probability": 0.2422
+        },
+        {
+          "word": "Enter",
+          "start": 58.96,
+          "end": 59.28,
+          "probability": 0.9258
+        },
+        {
+          "word": "to",
+          "start": 59.28,
+          "end": 59.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 59.5,
+          "end": 59.8,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 59.8,
+          "end": 60.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "display",
+          "start": 60.0,
+          "end": 60.32,
+          "probability": 0.9077
+        },
+        {
+          "word": "key",
+          "start": 60.32,
+          "end": 60.58,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 60.58,
+          "end": 60.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 60.82,
+          "end": 60.94,
+          "probability": 0.999
+        },
+        {
+          "word": "description.",
+          "start": 60.94,
+          "end": 61.38,
+          "probability": 0.9878
+        },
+        {
+          "word": "This",
+          "start": 61.82,
+          "end": 62.38,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 62.38,
+          "end": 62.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 62.54,
+          "end": 62.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "final",
+          "start": 62.68,
+          "end": 62.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "code.",
+          "start": 62.98,
+          "end": 63.4,
+          "probability": 0.998
+        },
+        {
+          "word": "Find",
+          "start": 63.66,
+          "end": 64.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 64.06,
+          "end": 64.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "activity",
+          "start": 64.22,
+          "end": 64.68,
+          "probability": 0.9761
+        },
+        {
+          "word": "pattern",
+          "start": 64.68,
+          "end": 65.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 65.1,
+          "end": 65.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "code",
+          "start": 65.34,
+          "end": 65.6,
+          "probability": 0.8384
+        },
+        {
+          "word": "credit",
+          "start": 65.6,
+          "end": 65.9,
+          "probability": 0.6064
+        },
+        {
+          "word": "underscore",
+          "start": 65.9,
+          "end": 66.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "reports.",
+          "start": 66.28,
+          "end": 67.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "Call",
+          "start": 67.44,
+          "end": 68.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "Create",
+          "start": 68.02,
+          "end": 68.42,
+          "probability": 0.3669
+        },
+        {
+          "word": "Role",
+          "start": 68.42,
+          "end": 68.66,
+          "probability": 0.7222
+        },
+        {
+          "word": "Activity,",
+          "start": 68.66,
+          "end": 69.18,
+          "probability": 0.9321
+        },
+        {
+          "word": "which",
+          "start": 69.36,
+          "end": 69.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 69.7,
+          "end": 69.88,
+          "probability": 1.0
+        },
+        {
+          "word": "defined",
+          "start": 69.88,
+          "end": 70.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 70.3,
+          "end": 70.52,
+          "probability": 1.0
+        },
+        {
+          "word": "Job",
+          "start": 70.52,
+          "end": 70.78,
+          "probability": 0.8774
+        },
+        {
+          "word": "Assignment",
+          "start": 70.78,
+          "end": 71.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "Enhancement.",
+          "start": 71.38,
+          "end": 72.16,
+          "probability": 0.9912
+        },
+        {
+          "word": "It",
+          "start": 72.38,
+          "end": 72.76,
+          "probability": 0.999
+        },
+        {
+          "word": "creates",
+          "start": 72.76,
+          "end": 73.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 73.2,
+          "end": 73.38,
+          "probability": 1.0
+        },
+        {
+          "word": "assigns",
+          "start": 73.38,
+          "end": 73.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 73.92,
+          "end": 74.06,
+          "probability": 1.0
+        },
+        {
+          "word": "activity.",
+          "start": 74.06,
+          "end": 74.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "Open",
+          "start": 75.2,
+          "end": 75.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "submission",
+          "start": 75.8,
+          "end": 76.26,
+          "probability": 0.2961
+        },
+        {
+          "word": "process",
+          "start": 76.26,
+          "end": 76.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 76.76,
+          "end": 77.1,
+          "probability": 1.0
+        },
+        {
+          "word": "invoke",
+          "start": 77.1,
+          "end": 77.42,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 77.42,
+          "end": 77.58,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 77.58,
+          "end": 77.74,
+          "probability": 1.0
+        },
+        {
+          "word": "function",
+          "start": 77.74,
+          "end": 78.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 78.12,
+          "end": 78.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 78.42,
+          "end": 78.54,
+          "probability": 1.0
+        },
+        {
+          "word": "end",
+          "start": 78.54,
+          "end": 78.76,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 78.76,
+          "end": 78.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 78.86,
+          "end": 79.0,
+          "probability": 1.0
+        },
+        {
+          "word": "start",
+          "start": 79.0,
+          "end": 79.28,
+          "probability": 0.8296
+        },
+        {
+          "word": "method.",
+          "start": 79.28,
+          "end": 79.64,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 79.64,
+      "end": 81.16,
+      "start_formatted": "00:01:19.640",
+      "end_formatted": "00:01:21.160",
+      "text": "Restart the server.",
+      "words": [
+        {
+          "word": "Restart",
+          "start": 79.64,
+          "end": 80.66,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 80.66,
+          "end": 80.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "server.",
+          "start": 80.82,
+          "end": 81.16,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 83.66,
+      "end": 90.1,
+      "start_formatted": "00:01:23.660",
+      "end_formatted": "00:01:30.100",
+      "text": "Login to Policy Center as Alice Applegate. Open Account Ray Newton. Create a new submission.",
+      "words": [
+        {
+          "word": "Login",
+          "start": 83.66,
+          "end": 84.48,
+          "probability": 0.7148
+        },
+        {
+          "word": "to",
+          "start": 84.48,
+          "end": 84.62,
+          "probability": 0.999
+        },
+        {
+          "word": "Policy",
+          "start": 84.62,
+          "end": 85.02,
+          "probability": 0.9907
+        },
+        {
+          "word": "Center",
+          "start": 85.02,
+          "end": 85.44,
+          "probability": 0.9258
+        },
+        {
+          "word": "as",
+          "start": 85.44,
+          "end": 85.72,
+          "probability": 0.9888
+        },
+        {
+          "word": "Alice",
+          "start": 85.72,
+          "end": 86.1,
+          "probability": 0.9844
+        },
+        {
+          "word": "Applegate.",
+          "start": 86.1,
+          "end": 86.7,
+          "probability": 0.9922
+        },
+        {
+          "word": "Open",
+          "start": 86.92,
+          "end": 87.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Account",
+          "start": 87.36,
+          "end": 87.8,
+          "probability": 0.366
+        },
+        {
+          "word": "Ray",
+          "start": 87.8,
+          "end": 88.06,
+          "probability": 0.8057
+        },
+        {
+          "word": "Newton.",
+          "start": 88.06,
+          "end": 88.38,
+          "probability": 0.959
+        },
+        {
+          "word": "Create",
+          "start": 88.72,
+          "end": 89.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 89.3,
+          "end": 89.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 89.5,
+          "end": 89.62,
+          "probability": 0.9487
+        },
+        {
+          "word": "submission.",
+          "start": 89.62,
+          "end": 90.1,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 92.44,
+      "end": 94.16,
+      "start_formatted": "00:01:32.440",
+      "end_formatted": "00:01:34.160",
+      "text": "Select Business Owners.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 92.44,
+          "end": 93.26,
+          "probability": 0.999
+        },
+        {
+          "word": "Business",
+          "start": 93.26,
+          "end": 93.64,
+          "probability": 0.9727
+        },
+        {
+          "word": "Owners.",
+          "start": 93.64,
+          "end": 94.16,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 96.3,
+      "end": 98.48,
+      "start_formatted": "00:01:36.300",
+      "end_formatted": "00:01:38.480",
+      "text": "Go to Tools, Work Plan.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 96.3,
+          "end": 96.98,
+          "probability": 0.9673
+        },
+        {
+          "word": "to",
+          "start": 96.98,
+          "end": 97.22,
+          "probability": 0.999
+        },
+        {
+          "word": "Tools,",
+          "start": 97.22,
+          "end": 97.66,
+          "probability": 0.9189
+        },
+        {
+          "word": "Work",
+          "start": 97.9,
+          "end": 98.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "Plan.",
+          "start": 98.24,
+          "end": 98.48,
+          "probability": 0.3486
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 100.24,
+      "end": 116.78,
+      "start_formatted": "00:01:40.240",
+      "end_formatted": "00:01:56.780",
+      "text": "The activity Get Credit Reports is created and assigned to the producer of the submission, Archie Armstrong. To check the producer on the job, go to Tools, Participants. The producer is Archie Armstrong. This is the end of demonstration for assigning activities.",
+      "words": [
+        {
+          "word": "The",
+          "start": 100.24,
+          "end": 100.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "activity",
+          "start": 100.92,
+          "end": 101.48,
+          "probability": 0.8896
+        },
+        {
+          "word": "Get",
+          "start": 101.48,
+          "end": 101.74,
+          "probability": 0.9556
+        },
+        {
+          "word": "Credit",
+          "start": 101.74,
+          "end": 102.06,
+          "probability": 0.9844
+        },
+        {
+          "word": "Reports",
+          "start": 102.06,
+          "end": 102.58,
+          "probability": 0.9722
+        },
+        {
+          "word": "is",
+          "start": 102.58,
+          "end": 102.86,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 102.86,
+          "end": 103.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 103.28,
+          "end": 103.54,
+          "probability": 1.0
+        },
+        {
+          "word": "assigned",
+          "start": 103.54,
+          "end": 103.9,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 103.9,
+          "end": 104.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 104.06,
+          "end": 104.18,
+          "probability": 1.0
+        },
+        {
+          "word": "producer",
+          "start": 104.18,
+          "end": 104.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 104.62,
+          "end": 104.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 104.92,
+          "end": 105.02,
+          "probability": 0.8394
+        },
+        {
+          "word": "submission,",
+          "start": 105.02,
+          "end": 105.56,
+          "probability": 0.999
+        },
+        {
+          "word": "Archie",
+          "start": 105.78,
+          "end": 106.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Armstrong.",
+          "start": 106.28,
+          "end": 106.74,
+          "probability": 0.999
+        },
+        {
+          "word": "To",
+          "start": 107.16,
+          "end": 107.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "check",
+          "start": 107.5,
+          "end": 107.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 107.72,
+          "end": 107.88,
+          "probability": 1.0
+        },
+        {
+          "word": "producer",
+          "start": 107.88,
+          "end": 108.28,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 108.28,
+          "end": 108.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 108.58,
+          "end": 108.7,
+          "probability": 1.0
+        },
+        {
+          "word": "job,",
+          "start": 108.7,
+          "end": 109.08,
+          "probability": 1.0
+        },
+        {
+          "word": "go",
+          "start": 109.26,
+          "end": 109.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 109.5,
+          "end": 109.74,
+          "probability": 1.0
+        },
+        {
+          "word": "Tools,",
+          "start": 109.74,
+          "end": 110.06,
+          "probability": 0.998
+        },
+        {
+          "word": "Participants.",
+          "start": 110.46,
+          "end": 111.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 111.46,
+          "end": 111.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "producer",
+          "start": 111.8,
+          "end": 112.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 112.22,
+          "end": 112.46,
+          "probability": 1.0
+        },
+        {
+          "word": "Archie",
+          "start": 112.46,
+          "end": 112.92,
+          "probability": 1.0
+        },
+        {
+          "word": "Armstrong.",
+          "start": 112.92,
+          "end": 113.44,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 113.8,
+          "end": 114.26,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 114.26,
+          "end": 114.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 114.42,
+          "end": 114.58,
+          "probability": 1.0
+        },
+        {
+          "word": "end",
+          "start": 114.58,
+          "end": 114.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 114.86,
+          "end": 115.0,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 115.0,
+          "end": 115.56,
+          "probability": 0.9937
+        },
+        {
+          "word": "for",
+          "start": 115.56,
+          "end": 115.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "assigning",
+          "start": 115.98,
+          "end": 116.4,
+          "probability": 0.9917
+        },
+        {
+          "word": "activities.",
+          "start": 116.4,
+          "end": 116.78,
+          "probability": 0.3701
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 116.78,
+      "end": 116.84,
+      "start_formatted": "00:01:56.780",
+      "end_formatted": "00:01:56.840",
+      "text": "Filogy of the Filogy of the",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 116.78,
+          "end": 116.78,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 116.78,
+          "end": 116.78,
+          "probability": 0.0485
+        },
+        {
+          "word": "the",
+          "start": 116.78,
+          "end": 116.8,
+          "probability": 0.1926
+        },
+        {
+          "word": "Filogy",
+          "start": 116.8,
+          "end": 116.8,
+          "probability": 0.46
+        },
+        {
+          "word": "of",
+          "start": 116.8,
+          "end": 116.82,
+          "probability": 0.7007
+        },
+        {
+          "word": "the!",
+          "start": 116.82,
+          "end": 116.84,
+          "probability": 0.7231
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 127.26,
+      "end": 127.26,
+      "start_formatted": "00:02:07.260",
+      "end_formatted": "00:02:07.260",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 11,
+      "start": 116.82,
+      "end": 116.82,
+      "start_formatted": "00:01:56.820",
+      "end_formatted": "00:01:56.820",
+      "text": "",
+      "words": []
+    }
+  ]
+}

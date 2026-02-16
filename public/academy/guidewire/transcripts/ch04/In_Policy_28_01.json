@@ -1,0 +1,3095 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_28_01.mp4",
+    "video_stem": "In_Policy_28_01",
+    "duration_seconds": 178.02,
+    "duration_formatted": "00:02:58.020",
+    "segment_count": 22,
+    "word_count": 476,
+    "avg_confidence": 0.9458,
+    "transcription_time_seconds": 14.47,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:38:49.521863"
+  },
+  "full_text": "Roles and permissions control user access to user interface components and functionality in PolicyCenter. We will log into PolicyCenter as several users with different permissions, to see how permissions influence access to PolicyCenter and the ability to see and do things. First, login is Rick Ralston, who has the underwriting supervisor role. On the desktop, there are many menu links on the left navigation menu. There is also a team tab on the tab bar. Logout. Logout. Login is Alice Applegate, who has the underwriter and reinsurance manager role. Notice the team tab is not displayed, since the underwriter role does not have the view team permission. Logout. Login as external admin, who has the user admin role. It only has the My Activities link on the left menu. It does not have the account tab on the tab tab. Logout. Logout. Login as superuser to manage the roles and permissions. The roles are managed on the Administration page. Select Users and Security, roles. A role is a name collection of permissions, and typically maps to a job title or a job function. Let's create a new role. Type in the name. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy Select the desired permission. Determine what the actions that the users with this role can perform, such as view, edit, etc. and those permissions to the role. A permission can also be removed from the role. Here are just some examples. Click Update to save the role. Open the Producer role. The role can be edited. Go to the Users tab. Policy Center lists the users, whom have this role assigned to them. You must go to the user to assign roles to the user. Go to the Roles tab. Edit the user. You can add a new role to the user. Or select a role. The Remove button is available now. Let's cancel the edit. A user has all the permissions of the roles assigned, cumulatively. This is the end of demonstration for roles and permissions.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 28.72,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:28.720",
+      "text": "Roles and permissions control user access to user interface components and functionality in PolicyCenter. We will log into PolicyCenter as several users with different permissions, to see how permissions influence access to PolicyCenter and the ability to see and do things. First, login is Rick Ralston, who has the underwriting supervisor role. On the desktop, there are many menu links on the left navigation menu. There is also a team tab on the tab bar.",
+      "words": [
+        {
+          "word": "Roles",
+          "start": 0.0,
+          "end": 0.84,
+          "probability": 0.9395
+        },
+        {
+          "word": "and",
+          "start": 0.84,
+          "end": 1.0,
+          "probability": 0.9395
+        },
+        {
+          "word": "permissions",
+          "start": 1.0,
+          "end": 1.42,
+          "probability": 0.9004
+        },
+        {
+          "word": "control",
+          "start": 1.42,
+          "end": 1.86,
+          "probability": 0.9922
+        },
+        {
+          "word": "user",
+          "start": 1.86,
+          "end": 2.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "access",
+          "start": 2.28,
+          "end": 2.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 2.78,
+          "end": 3.04,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 3.04,
+          "end": 3.28,
+          "probability": 0.9341
+        },
+        {
+          "word": "interface",
+          "start": 3.28,
+          "end": 3.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "components",
+          "start": 3.76,
+          "end": 4.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 4.3,
+          "end": 4.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "functionality",
+          "start": 4.62,
+          "end": 5.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 5.26,
+          "end": 5.52,
+          "probability": 0.9854
+        },
+        {
+          "word": "PolicyCenter.",
+          "start": 5.52,
+          "end": 6.4,
+          "probability": 0.7148
+        },
+        {
+          "word": "We",
+          "start": 6.74,
+          "end": 7.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 7.3,
+          "end": 7.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "log",
+          "start": 7.46,
+          "end": 7.72,
+          "probability": 0.9058
+        },
+        {
+          "word": "into",
+          "start": 7.72,
+          "end": 7.9,
+          "probability": 0.7178
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 7.9,
+          "end": 8.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 8.76,
+          "end": 8.9,
+          "probability": 0.9888
+        },
+        {
+          "word": "several",
+          "start": 8.9,
+          "end": 9.2,
+          "probability": 0.999
+        },
+        {
+          "word": "users",
+          "start": 9.2,
+          "end": 9.58,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 9.58,
+          "end": 9.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "different",
+          "start": 9.82,
+          "end": 10.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "permissions,",
+          "start": 10.14,
+          "end": 10.72,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 11.0,
+          "end": 11.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "see",
+          "start": 11.22,
+          "end": 11.4,
+          "probability": 1.0
+        },
+        {
+          "word": "how",
+          "start": 11.4,
+          "end": 11.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "permissions",
+          "start": 11.58,
+          "end": 12.06,
+          "probability": 0.999
+        },
+        {
+          "word": "influence",
+          "start": 12.06,
+          "end": 12.64,
+          "probability": 0.999
+        },
+        {
+          "word": "access",
+          "start": 12.64,
+          "end": 13.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 13.12,
+          "end": 13.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 13.36,
+          "end": 14.2,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 14.2,
+          "end": 14.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 14.34,
+          "end": 14.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "ability",
+          "start": 14.44,
+          "end": 14.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 14.82,
+          "end": 15.06,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 15.06,
+          "end": 15.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 15.28,
+          "end": 15.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "do",
+          "start": 15.46,
+          "end": 15.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "things.",
+          "start": 15.6,
+          "end": 16.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "First,",
+          "start": 16.64,
+          "end": 17.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "login",
+          "start": 17.48,
+          "end": 17.9,
+          "probability": 0.4226
+        },
+        {
+          "word": "is",
+          "start": 17.9,
+          "end": 18.14,
+          "probability": 0.9814
+        },
+        {
+          "word": "Rick",
+          "start": 18.14,
+          "end": 18.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "Ralston,",
+          "start": 18.34,
+          "end": 18.86,
+          "probability": 0.9355
+        },
+        {
+          "word": "who",
+          "start": 19.08,
+          "end": 19.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 19.3,
+          "end": 19.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 19.46,
+          "end": 19.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "underwriting",
+          "start": 19.6,
+          "end": 20.16,
+          "probability": 0.8677
+        },
+        {
+          "word": "supervisor",
+          "start": 20.16,
+          "end": 20.64,
+          "probability": 0.9341
+        },
+        {
+          "word": "role.",
+          "start": 20.64,
+          "end": 21.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "On",
+          "start": 21.8,
+          "end": 22.36,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 22.36,
+          "end": 22.48,
+          "probability": 1.0
+        },
+        {
+          "word": "desktop,",
+          "start": 22.48,
+          "end": 22.84,
+          "probability": 0.9736
+        },
+        {
+          "word": "there",
+          "start": 23.28,
+          "end": 23.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 23.48,
+          "end": 23.6,
+          "probability": 1.0
+        },
+        {
+          "word": "many",
+          "start": 23.6,
+          "end": 23.82,
+          "probability": 0.999
+        },
+        {
+          "word": "menu",
+          "start": 23.82,
+          "end": 24.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "links",
+          "start": 24.12,
+          "end": 24.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 24.44,
+          "end": 24.6,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 24.6,
+          "end": 24.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "left",
+          "start": 24.68,
+          "end": 24.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "navigation",
+          "start": 24.92,
+          "end": 25.5,
+          "probability": 0.998
+        },
+        {
+          "word": "menu.",
+          "start": 25.5,
+          "end": 25.98,
+          "probability": 1.0
+        },
+        {
+          "word": "There",
+          "start": 26.4,
+          "end": 26.72,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 26.72,
+          "end": 26.88,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 26.88,
+          "end": 27.18,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 27.18,
+          "end": 27.36,
+          "probability": 1.0
+        },
+        {
+          "word": "team",
+          "start": 27.36,
+          "end": 27.58,
+          "probability": 0.8359
+        },
+        {
+          "word": "tab",
+          "start": 27.58,
+          "end": 27.86,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 27.86,
+          "end": 28.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 28.04,
+          "end": 28.14,
+          "probability": 1.0
+        },
+        {
+          "word": "tab",
+          "start": 28.14,
+          "end": 28.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "bar.",
+          "start": 28.38,
+          "end": 28.72,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.72,
+      "end": 58.7,
+      "start_formatted": "00:00:30.720",
+      "end_formatted": "00:00:58.700",
+      "text": "Logout. Logout. Login is Alice Applegate, who has the underwriter and reinsurance manager role. Notice the team tab is not displayed, since the underwriter role does not have the view team permission. Logout. Login as external admin, who has the user admin role. It only has the My Activities link on the left menu. It does not have the account tab on the tab tab.",
+      "words": [
+        {
+          "word": "Logout.",
+          "start": 30.72,
+          "end": 31.26,
+          "probability": 0.688
+        },
+        {
+          "word": "Logout.",
+          "start": 31.26,
+          "end": 31.8,
+          "probability": 0.5
+        },
+        {
+          "word": "Login",
+          "start": 34.2,
+          "end": 34.74,
+          "probability": 0.9814
+        },
+        {
+          "word": "is",
+          "start": 34.74,
+          "end": 34.88,
+          "probability": 0.3796
+        },
+        {
+          "word": "Alice",
+          "start": 34.88,
+          "end": 35.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "Applegate,",
+          "start": 35.2,
+          "end": 35.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "who",
+          "start": 36.04,
+          "end": 36.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 36.24,
+          "end": 36.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 36.4,
+          "end": 36.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "underwriter",
+          "start": 36.54,
+          "end": 37.06,
+          "probability": 0.6162
+        },
+        {
+          "word": "and",
+          "start": 37.06,
+          "end": 37.28,
+          "probability": 0.772
+        },
+        {
+          "word": "reinsurance",
+          "start": 37.28,
+          "end": 37.94,
+          "probability": 0.9722
+        },
+        {
+          "word": "manager",
+          "start": 37.94,
+          "end": 38.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "role.",
+          "start": 38.36,
+          "end": 38.66,
+          "probability": 0.999
+        },
+        {
+          "word": "Notice",
+          "start": 39.32,
+          "end": 39.86,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 39.86,
+          "end": 40.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "team",
+          "start": 40.06,
+          "end": 40.28,
+          "probability": 0.8184
+        },
+        {
+          "word": "tab",
+          "start": 40.28,
+          "end": 40.56,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 40.56,
+          "end": 40.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 40.76,
+          "end": 40.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed,",
+          "start": 40.98,
+          "end": 41.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "since",
+          "start": 41.8,
+          "end": 42.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 42.1,
+          "end": 42.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "underwriter",
+          "start": 42.28,
+          "end": 42.82,
+          "probability": 0.999
+        },
+        {
+          "word": "role",
+          "start": 42.82,
+          "end": 43.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "does",
+          "start": 43.06,
+          "end": 43.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 43.3,
+          "end": 43.5,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 43.5,
+          "end": 43.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 43.68,
+          "end": 43.8,
+          "probability": 0.9546
+        },
+        {
+          "word": "view",
+          "start": 43.8,
+          "end": 43.96,
+          "probability": 0.9438
+        },
+        {
+          "word": "team",
+          "start": 43.96,
+          "end": 44.2,
+          "probability": 0.999
+        },
+        {
+          "word": "permission.",
+          "start": 44.2,
+          "end": 44.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "Logout.",
+          "start": 45.26,
+          "end": 45.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "Login",
+          "start": 49.34,
+          "end": 49.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "as",
+          "start": 49.88,
+          "end": 50.04,
+          "probability": 0.8379
+        },
+        {
+          "word": "external",
+          "start": 50.04,
+          "end": 50.48,
+          "probability": 0.959
+        },
+        {
+          "word": "admin,",
+          "start": 50.48,
+          "end": 50.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "who",
+          "start": 51.22,
+          "end": 51.44,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 51.44,
+          "end": 51.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 51.64,
+          "end": 51.78,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 51.78,
+          "end": 52.06,
+          "probability": 0.999
+        },
+        {
+          "word": "admin",
+          "start": 52.06,
+          "end": 52.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "role.",
+          "start": 52.38,
+          "end": 52.72,
+          "probability": 0.999
+        },
+        {
+          "word": "It",
+          "start": 53.28,
+          "end": 53.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "only",
+          "start": 53.82,
+          "end": 54.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 54.02,
+          "end": 54.28,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 54.28,
+          "end": 54.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "My",
+          "start": 54.4,
+          "end": 54.58,
+          "probability": 0.6304
+        },
+        {
+          "word": "Activities",
+          "start": 54.58,
+          "end": 55.16,
+          "probability": 0.9678
+        },
+        {
+          "word": "link",
+          "start": 55.16,
+          "end": 55.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 55.42,
+          "end": 55.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 55.6,
+          "end": 55.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "left",
+          "start": 55.7,
+          "end": 55.94,
+          "probability": 0.999
+        },
+        {
+          "word": "menu.",
+          "start": 55.94,
+          "end": 56.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "It",
+          "start": 56.64,
+          "end": 57.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "does",
+          "start": 57.04,
+          "end": 57.22,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 57.22,
+          "end": 57.42,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 57.42,
+          "end": 57.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 57.58,
+          "end": 57.7,
+          "probability": 1.0
+        },
+        {
+          "word": "account",
+          "start": 57.7,
+          "end": 58.0,
+          "probability": 0.9326
+        },
+        {
+          "word": "tab",
+          "start": 58.0,
+          "end": 58.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 58.3,
+          "end": 58.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 58.46,
+          "end": 58.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "tab",
+          "start": 58.56,
+          "end": 58.7,
+          "probability": 0.874
+        },
+        {
+          "word": "tab.",
+          "start": 58.7,
+          "end": 58.7,
+          "probability": 0.0109
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 62.98,
+      "end": 84.64,
+      "start_formatted": "00:01:02.980",
+      "end_formatted": "00:01:24.640",
+      "text": "Logout. Logout. Login as superuser to manage the roles and permissions. The roles are managed on the Administration page. Select Users and Security, roles. A role is a name collection of permissions, and typically maps to a job title or a job function. Let's create a new role. Type in the name.",
+      "words": [
+        {
+          "word": "Logout.",
+          "start": 62.98,
+          "end": 63.58,
+          "probability": 0.1418
+        },
+        {
+          "word": "Logout.",
+          "start": 63.58,
+          "end": 64.18,
+          "probability": 0.4932
+        },
+        {
+          "word": "Login",
+          "start": 64.18,
+          "end": 64.2,
+          "probability": 0.9248
+        },
+        {
+          "word": "as",
+          "start": 64.2,
+          "end": 64.34,
+          "probability": 0.9478
+        },
+        {
+          "word": "superuser",
+          "start": 64.34,
+          "end": 64.94,
+          "probability": 0.2588
+        },
+        {
+          "word": "to",
+          "start": 64.94,
+          "end": 65.16,
+          "probability": 0.9805
+        },
+        {
+          "word": "manage",
+          "start": 65.16,
+          "end": 65.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 65.48,
+          "end": 65.68,
+          "probability": 0.9878
+        },
+        {
+          "word": "roles",
+          "start": 65.68,
+          "end": 65.92,
+          "probability": 0.9722
+        },
+        {
+          "word": "and",
+          "start": 65.92,
+          "end": 66.14,
+          "probability": 0.9858
+        },
+        {
+          "word": "permissions.",
+          "start": 66.14,
+          "end": 66.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "The",
+          "start": 67.42,
+          "end": 68.02,
+          "probability": 0.9858
+        },
+        {
+          "word": "roles",
+          "start": 68.02,
+          "end": 68.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "are",
+          "start": 68.28,
+          "end": 68.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "managed",
+          "start": 68.5,
+          "end": 68.86,
+          "probability": 0.9907
+        },
+        {
+          "word": "on",
+          "start": 68.86,
+          "end": 69.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 69.08,
+          "end": 69.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "Administration",
+          "start": 69.2,
+          "end": 69.72,
+          "probability": 0.4541
+        },
+        {
+          "word": "page.",
+          "start": 69.72,
+          "end": 70.24,
+          "probability": 0.937
+        },
+        {
+          "word": "Select",
+          "start": 71.9,
+          "end": 72.5,
+          "probability": 0.9888
+        },
+        {
+          "word": "Users",
+          "start": 72.5,
+          "end": 72.84,
+          "probability": 0.7524
+        },
+        {
+          "word": "and",
+          "start": 72.84,
+          "end": 73.12,
+          "probability": 0.6562
+        },
+        {
+          "word": "Security,",
+          "start": 73.12,
+          "end": 73.62,
+          "probability": 0.8857
+        },
+        {
+          "word": "roles.",
+          "start": 73.9,
+          "end": 74.3,
+          "probability": 0.2456
+        },
+        {
+          "word": "A",
+          "start": 75.78,
+          "end": 76.38,
+          "probability": 0.9844
+        },
+        {
+          "word": "role",
+          "start": 76.38,
+          "end": 76.58,
+          "probability": 0.959
+        },
+        {
+          "word": "is",
+          "start": 76.58,
+          "end": 76.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "a",
+          "start": 76.76,
+          "end": 76.86,
+          "probability": 0.9839
+        },
+        {
+          "word": "name",
+          "start": 76.86,
+          "end": 77.06,
+          "probability": 0.7124
+        },
+        {
+          "word": "collection",
+          "start": 77.06,
+          "end": 77.5,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 77.5,
+          "end": 77.72,
+          "probability": 0.998
+        },
+        {
+          "word": "permissions,",
+          "start": 77.72,
+          "end": 78.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 78.56,
+          "end": 78.82,
+          "probability": 0.979
+        },
+        {
+          "word": "typically",
+          "start": 78.82,
+          "end": 79.12,
+          "probability": 0.9922
+        },
+        {
+          "word": "maps",
+          "start": 79.12,
+          "end": 79.48,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 79.48,
+          "end": 79.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 79.66,
+          "end": 79.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "job",
+          "start": 79.8,
+          "end": 79.98,
+          "probability": 0.9399
+        },
+        {
+          "word": "title",
+          "start": 79.98,
+          "end": 80.34,
+          "probability": 0.9937
+        },
+        {
+          "word": "or",
+          "start": 80.34,
+          "end": 80.6,
+          "probability": 0.9902
+        },
+        {
+          "word": "a",
+          "start": 80.6,
+          "end": 80.72,
+          "probability": 0.8921
+        },
+        {
+          "word": "job",
+          "start": 80.72,
+          "end": 80.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "function.",
+          "start": 80.92,
+          "end": 81.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "Let's",
+          "start": 81.78,
+          "end": 82.24,
+          "probability": 0.9893
+        },
+        {
+          "word": "create",
+          "start": 82.24,
+          "end": 82.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 82.48,
+          "end": 82.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 82.66,
+          "end": 82.8,
+          "probability": 0.998
+        },
+        {
+          "word": "role.",
+          "start": 82.8,
+          "end": 83.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "Type",
+          "start": 83.52,
+          "end": 84.12,
+          "probability": 0.9907
+        },
+        {
+          "word": "in",
+          "start": 84.12,
+          "end": 84.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 84.26,
+          "end": 84.36,
+          "probability": 0.9814
+        },
+        {
+          "word": "name.",
+          "start": 84.36,
+          "end": 84.64,
+          "probability": 0.9751
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 85.96,
+      "end": 113.26,
+      "start_formatted": "00:01:25.960",
+      "end_formatted": "00:01:53.260",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 85.96,
+          "end": 86.52,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.0699
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.3801
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.4314
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.5171
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.4675
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.7139
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.5391
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.8789
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.6196
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9326
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.6968
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9561
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.7339
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9629
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.7646
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9668
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.7974
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.8135
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.8403
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.8462
+        },
+        {
+          "word": "Filogy",
+          "start": 86.52,
+          "end": 86.52,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 86.52,
+          "end": 86.74,
+          "probability": 0.853
+        },
+        {
+          "word": "Filogy",
+          "start": 86.74,
+          "end": 86.8,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 86.8,
+          "end": 88.26,
+          "probability": 0.8638
+        },
+        {
+          "word": "Filogy",
+          "start": 88.26,
+          "end": 88.26,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 88.26,
+          "end": 89.02,
+          "probability": 0.8789
+        },
+        {
+          "word": "Filogy",
+          "start": 89.02,
+          "end": 89.02,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 89.02,
+          "end": 89.04,
+          "probability": 0.8813
+        },
+        {
+          "word": "Filogy",
+          "start": 89.04,
+          "end": 89.04,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 89.04,
+          "end": 99.88,
+          "probability": 0.8823
+        },
+        {
+          "word": "Filogy",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.8955
+        },
+        {
+          "word": "Filogy",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.8999
+        },
+        {
+          "word": "Filogy",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9053
+        },
+        {
+          "word": "Filogy",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9106
+        },
+        {
+          "word": "Filogy",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9146
+        },
+        {
+          "word": "Filogy",
+          "start": 99.88,
+          "end": 99.88,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 99.88,
+          "end": 100.46,
+          "probability": 0.9121
+        },
+        {
+          "word": "Filogy",
+          "start": 100.46,
+          "end": 100.56,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 100.56,
+          "end": 100.76,
+          "probability": 0.9121
+        },
+        {
+          "word": "Filogy",
+          "start": 100.76,
+          "end": 100.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 100.82,
+          "end": 100.82,
+          "probability": 0.915
+        },
+        {
+          "word": "Filogy",
+          "start": 100.82,
+          "end": 100.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 100.82,
+          "end": 100.82,
+          "probability": 0.9229
+        },
+        {
+          "word": "Filogy",
+          "start": 100.82,
+          "end": 100.84,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 100.84,
+          "end": 100.84,
+          "probability": 0.9214
+        },
+        {
+          "word": "Filogy",
+          "start": 100.84,
+          "end": 100.84,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 100.84,
+          "end": 100.84,
+          "probability": 0.9243
+        },
+        {
+          "word": "Filogy",
+          "start": 100.84,
+          "end": 100.84,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 100.84,
+          "end": 100.84,
+          "probability": 0.9258
+        },
+        {
+          "word": "Filogy",
+          "start": 100.84,
+          "end": 101.0,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 101.0,
+          "end": 101.0,
+          "probability": 0.9268
+        },
+        {
+          "word": "Filogy",
+          "start": 101.0,
+          "end": 101.0,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 101.0,
+          "end": 101.06,
+          "probability": 0.9282
+        },
+        {
+          "word": "Filogy",
+          "start": 101.06,
+          "end": 101.12,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 101.12,
+          "end": 101.12,
+          "probability": 0.9321
+        },
+        {
+          "word": "Filogy",
+          "start": 101.12,
+          "end": 101.2,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 101.2,
+          "end": 101.94,
+          "probability": 0.9302
+        },
+        {
+          "word": "Filogy",
+          "start": 101.94,
+          "end": 102.38,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 102.38,
+          "end": 102.94,
+          "probability": 0.9321
+        },
+        {
+          "word": "Filogy",
+          "start": 102.94,
+          "end": 102.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 102.94,
+          "end": 102.94,
+          "probability": 0.9326
+        },
+        {
+          "word": "Filogy",
+          "start": 102.94,
+          "end": 102.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 102.94,
+          "end": 102.94,
+          "probability": 0.9341
+        },
+        {
+          "word": "Filogy",
+          "start": 102.94,
+          "end": 102.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 102.94,
+          "end": 102.94,
+          "probability": 0.9312
+        },
+        {
+          "word": "Filogy",
+          "start": 102.94,
+          "end": 102.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 102.94,
+          "end": 103.72,
+          "probability": 0.9336
+        },
+        {
+          "word": "Filogy",
+          "start": 103.72,
+          "end": 103.78,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 103.78,
+          "end": 103.78,
+          "probability": 0.9331
+        },
+        {
+          "word": "Filogy",
+          "start": 103.78,
+          "end": 104.0,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 104.0,
+          "end": 104.0,
+          "probability": 0.936
+        },
+        {
+          "word": "Filogy",
+          "start": 104.0,
+          "end": 104.08,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9375
+        },
+        {
+          "word": "Filogy",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9385
+        },
+        {
+          "word": "Filogy",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9399
+        },
+        {
+          "word": "Filogy",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9414
+        },
+        {
+          "word": "Filogy",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.08,
+          "end": 104.08,
+          "probability": 0.9399
+        },
+        {
+          "word": "Filogy",
+          "start": 104.08,
+          "end": 104.1,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.1,
+          "end": 104.1,
+          "probability": 0.9429
+        },
+        {
+          "word": "Filogy",
+          "start": 104.1,
+          "end": 104.1,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.1,
+          "end": 104.1,
+          "probability": 0.9448
+        },
+        {
+          "word": "Filogy",
+          "start": 104.1,
+          "end": 104.1,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.1,
+          "end": 104.66,
+          "probability": 0.9458
+        },
+        {
+          "word": "Filogy",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 104.66,
+          "end": 104.66,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 104.66,
+          "end": 105.22,
+          "probability": 0.9492
+        },
+        {
+          "word": "Filogy",
+          "start": 105.22,
+          "end": 105.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9502
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9521
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9526
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9546
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9551
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9546
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9609
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.42,
+          "end": 105.42,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 105.42,
+          "end": 105.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.44,
+          "end": 105.64,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 105.64,
+          "end": 105.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.92,
+          "end": 105.94,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 105.94,
+          "end": 105.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 105.94,
+          "end": 107.22,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 107.22,
+          "end": 107.96,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 107.96,
+          "end": 108.38,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 108.38,
+          "end": 108.82,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 108.82,
+          "end": 110.44,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 110.44,
+          "end": 111.0,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 111.0,
+          "end": 111.14,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 111.14,
+          "end": 111.56,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 111.56,
+          "end": 112.54,
+          "probability": 0.9639
+        },
+        {
+          "word": "Filogy",
+          "start": 112.54,
+          "end": 113.26,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 116.32,
+      "end": 118.0,
+      "start_formatted": "00:01:56.320",
+      "end_formatted": "00:01:58.000",
+      "text": "Select the desired permission.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 116.32,
+          "end": 116.88,
+          "probability": 0.915
+        },
+        {
+          "word": "the",
+          "start": 116.88,
+          "end": 117.08,
+          "probability": 0.998
+        },
+        {
+          "word": "desired",
+          "start": 117.08,
+          "end": 117.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "permission.",
+          "start": 117.48,
+          "end": 118.0,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 120.6,
+      "end": 127.74,
+      "start_formatted": "00:02:00.600",
+      "end_formatted": "00:02:07.740",
+      "text": "Determine what the actions that the users with this role can perform, such as view, edit, etc. and those permissions to the role.",
+      "words": [
+        {
+          "word": "Determine",
+          "start": 120.6,
+          "end": 121.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "what",
+          "start": 121.16,
+          "end": 121.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 121.32,
+          "end": 121.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "actions",
+          "start": 121.48,
+          "end": 121.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "that",
+          "start": 121.88,
+          "end": 122.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 122.14,
+          "end": 122.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "users",
+          "start": 122.28,
+          "end": 122.62,
+          "probability": 0.9902
+        },
+        {
+          "word": "with",
+          "start": 122.62,
+          "end": 122.84,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 122.84,
+          "end": 123.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "role",
+          "start": 123.02,
+          "end": 123.18,
+          "probability": 0.9731
+        },
+        {
+          "word": "can",
+          "start": 123.18,
+          "end": 123.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "perform,",
+          "start": 123.36,
+          "end": 123.82,
+          "probability": 0.999
+        },
+        {
+          "word": "such",
+          "start": 124.04,
+          "end": 124.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 124.34,
+          "end": 124.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "view,",
+          "start": 124.54,
+          "end": 124.86,
+          "probability": 0.6646
+        },
+        {
+          "word": "edit,",
+          "start": 125.18,
+          "end": 125.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "etc.",
+          "start": 125.7,
+          "end": 126.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "and",
+          "start": 126.3,
+          "end": 126.42,
+          "probability": 0.5918
+        },
+        {
+          "word": "those",
+          "start": 126.42,
+          "end": 126.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "permissions",
+          "start": 126.64,
+          "end": 127.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 127.1,
+          "end": 127.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 127.38,
+          "end": 127.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "role.",
+          "start": 127.48,
+          "end": 127.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 128.02,
+      "end": 130.52,
+      "start_formatted": "00:02:08.020",
+      "end_formatted": "00:02:10.520",
+      "text": "A permission can also be removed from the role.",
+      "words": [
+        {
+          "word": "A",
+          "start": 128.02,
+          "end": 128.36,
+          "probability": 0.999
+        },
+        {
+          "word": "permission",
+          "start": 128.36,
+          "end": 128.72,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 128.72,
+          "end": 128.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 128.96,
+          "end": 129.28,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 129.28,
+          "end": 129.48,
+          "probability": 1.0
+        },
+        {
+          "word": "removed",
+          "start": 129.48,
+          "end": 129.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 129.84,
+          "end": 130.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 130.12,
+          "end": 130.24,
+          "probability": 1.0
+        },
+        {
+          "word": "role.",
+          "start": 130.24,
+          "end": 130.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 130.8,
+      "end": 132.3,
+      "start_formatted": "00:02:10.800",
+      "end_formatted": "00:02:12.300",
+      "text": "Here are just some examples.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 130.8,
+          "end": 131.18,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 131.18,
+          "end": 131.34,
+          "probability": 1.0
+        },
+        {
+          "word": "just",
+          "start": 131.34,
+          "end": 131.54,
+          "probability": 1.0
+        },
+        {
+          "word": "some",
+          "start": 131.54,
+          "end": 131.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "examples.",
+          "start": 131.72,
+          "end": 132.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 132.68,
+      "end": 134.28,
+      "start_formatted": "00:02:12.680",
+      "end_formatted": "00:02:14.280",
+      "text": "Click Update to save the role.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 132.68,
+          "end": 133.12,
+          "probability": 0.998
+        },
+        {
+          "word": "Update",
+          "start": 133.12,
+          "end": 133.38,
+          "probability": 0.6758
+        },
+        {
+          "word": "to",
+          "start": 133.38,
+          "end": 133.6,
+          "probability": 0.999
+        },
+        {
+          "word": "save",
+          "start": 133.6,
+          "end": 133.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 133.84,
+          "end": 133.98,
+          "probability": 1.0
+        },
+        {
+          "word": "role.",
+          "start": 133.98,
+          "end": 134.28,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 138.42,
+      "end": 139.9,
+      "start_formatted": "00:02:18.420",
+      "end_formatted": "00:02:19.900",
+      "text": "Open the Producer role.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 138.42,
+          "end": 138.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 138.98,
+          "end": 139.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "Producer",
+          "start": 139.12,
+          "end": 139.5,
+          "probability": 0.7373
+        },
+        {
+          "word": "role.",
+          "start": 139.5,
+          "end": 139.9,
+          "probability": 0.9614
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 142.68,
+      "end": 144.04,
+      "start_formatted": "00:02:22.680",
+      "end_formatted": "00:02:24.040",
+      "text": "The role can be edited.",
+      "words": [
+        {
+          "word": "The",
+          "start": 142.68,
+          "end": 143.16,
+          "probability": 0.9551
+        },
+        {
+          "word": "role",
+          "start": 143.16,
+          "end": 143.38,
+          "probability": 0.9507
+        },
+        {
+          "word": "can",
+          "start": 143.38,
+          "end": 143.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 143.56,
+          "end": 143.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "edited.",
+          "start": 143.72,
+          "end": 144.04,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 144.4,
+      "end": 145.64,
+      "start_formatted": "00:02:24.400",
+      "end_formatted": "00:02:25.640",
+      "text": "Go to the Users tab.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 144.4,
+          "end": 144.76,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 144.76,
+          "end": 144.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 144.9,
+          "end": 145.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "Users",
+          "start": 145.04,
+          "end": 145.34,
+          "probability": 0.897
+        },
+        {
+          "word": "tab.",
+          "start": 145.34,
+          "end": 145.64,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 147.1,
+      "end": 150.76,
+      "start_formatted": "00:02:27.100",
+      "end_formatted": "00:02:30.760",
+      "text": "Policy Center lists the users, whom have this role assigned to them.",
+      "words": [
+        {
+          "word": "Policy",
+          "start": 147.1,
+          "end": 147.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "Center",
+          "start": 147.58,
+          "end": 147.98,
+          "probability": 0.9116
+        },
+        {
+          "word": "lists",
+          "start": 147.98,
+          "end": 148.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 148.28,
+          "end": 148.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "users,",
+          "start": 148.44,
+          "end": 148.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "whom",
+          "start": 149.16,
+          "end": 149.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "have",
+          "start": 149.4,
+          "end": 149.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 149.62,
+          "end": 149.8,
+          "probability": 0.999
+        },
+        {
+          "word": "role",
+          "start": 149.8,
+          "end": 149.96,
+          "probability": 0.998
+        },
+        {
+          "word": "assigned",
+          "start": 149.96,
+          "end": 150.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 150.34,
+          "end": 150.52,
+          "probability": 1.0
+        },
+        {
+          "word": "them.",
+          "start": 150.52,
+          "end": 150.76,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 151.0,
+      "end": 153.84,
+      "start_formatted": "00:02:31.000",
+      "end_formatted": "00:02:33.840",
+      "text": "You must go to the user to assign roles to the user.",
+      "words": [
+        {
+          "word": "You",
+          "start": 151.0,
+          "end": 151.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "must",
+          "start": 151.34,
+          "end": 151.56,
+          "probability": 1.0
+        },
+        {
+          "word": "go",
+          "start": 151.56,
+          "end": 151.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 151.72,
+          "end": 151.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 151.88,
+          "end": 152.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 152.02,
+          "end": 152.28,
+          "probability": 0.8828
+        },
+        {
+          "word": "to",
+          "start": 152.28,
+          "end": 152.52,
+          "probability": 0.999
+        },
+        {
+          "word": "assign",
+          "start": 152.52,
+          "end": 152.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "roles",
+          "start": 152.88,
+          "end": 153.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 153.22,
+          "end": 153.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.42,
+          "end": 153.52,
+          "probability": 1.0
+        },
+        {
+          "word": "user.",
+          "start": 153.52,
+          "end": 153.84,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 154.44,
+      "end": 155.94,
+      "start_formatted": "00:02:34.440",
+      "end_formatted": "00:02:35.940",
+      "text": "Go to the Roles tab.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 154.44,
+          "end": 154.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 154.92,
+          "end": 155.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 155.1,
+          "end": 155.24,
+          "probability": 1.0
+        },
+        {
+          "word": "Roles",
+          "start": 155.24,
+          "end": 155.58,
+          "probability": 0.9902
+        },
+        {
+          "word": "tab.",
+          "start": 155.58,
+          "end": 155.94,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 158.6,
+      "end": 159.6,
+      "start_formatted": "00:02:38.600",
+      "end_formatted": "00:02:39.600",
+      "text": "Edit the user.",
+      "words": [
+        {
+          "word": "Edit",
+          "start": 158.6,
+          "end": 159.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 159.08,
+          "end": 159.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "user.",
+          "start": 159.28,
+          "end": 159.6,
+          "probability": 0.9712
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 162.76,
+      "end": 164.74,
+      "start_formatted": "00:02:42.760",
+      "end_formatted": "00:02:44.740",
+      "text": "You can add a new role to the user.",
+      "words": [
+        {
+          "word": "You",
+          "start": 162.76,
+          "end": 163.24,
+          "probability": 0.9922
+        },
+        {
+          "word": "can",
+          "start": 163.24,
+          "end": 163.42,
+          "probability": 1.0
+        },
+        {
+          "word": "add",
+          "start": 163.42,
+          "end": 163.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 163.6,
+          "end": 163.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 163.68,
+          "end": 163.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "role",
+          "start": 163.84,
+          "end": 164.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 164.04,
+          "end": 164.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 164.22,
+          "end": 164.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "user.",
+          "start": 164.36,
+          "end": 164.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 164.94,
+      "end": 166.06,
+      "start_formatted": "00:02:44.940",
+      "end_formatted": "00:02:46.060",
+      "text": "Or select a role.",
+      "words": [
+        {
+          "word": "Or",
+          "start": 164.94,
+          "end": 165.32,
+          "probability": 0.9902
+        },
+        {
+          "word": "select",
+          "start": 165.32,
+          "end": 165.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 165.68,
+          "end": 165.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "role.",
+          "start": 165.86,
+          "end": 166.06,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 166.86,
+      "end": 169.0,
+      "start_formatted": "00:02:46.860",
+      "end_formatted": "00:02:49.000",
+      "text": "The Remove button is available now.",
+      "words": [
+        {
+          "word": "The",
+          "start": 166.86,
+          "end": 167.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "Remove",
+          "start": 167.34,
+          "end": 167.64,
+          "probability": 0.9541
+        },
+        {
+          "word": "button",
+          "start": 167.64,
+          "end": 167.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 167.94,
+          "end": 168.16,
+          "probability": 1.0
+        },
+        {
+          "word": "available",
+          "start": 168.16,
+          "end": 168.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "now.",
+          "start": 168.58,
+          "end": 169.0,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 169.0,
+      "end": 170.58,
+      "start_formatted": "00:02:49.000",
+      "end_formatted": "00:02:50.580",
+      "text": "Let's cancel the edit.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 169.0,
+          "end": 169.8,
+          "probability": 0.9434
+        },
+        {
+          "word": "cancel",
+          "start": 169.8,
+          "end": 170.1,
+          "probability": 0.9814
+        },
+        {
+          "word": "the",
+          "start": 170.1,
+          "end": 170.32,
+          "probability": 0.998
+        },
+        {
+          "word": "edit.",
+          "start": 170.32,
+          "end": 170.58,
+          "probability": 0.9443
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 171.02,
+      "end": 174.92,
+      "start_formatted": "00:02:51.020",
+      "end_formatted": "00:02:54.920",
+      "text": "A user has all the permissions of the roles assigned, cumulatively.",
+      "words": [
+        {
+          "word": "A",
+          "start": 171.02,
+          "end": 171.54,
+          "probability": 0.9902
+        },
+        {
+          "word": "user",
+          "start": 171.54,
+          "end": 171.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "has",
+          "start": 171.82,
+          "end": 172.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 172.08,
+          "end": 172.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 172.28,
+          "end": 172.4,
+          "probability": 0.999
+        },
+        {
+          "word": "permissions",
+          "start": 172.4,
+          "end": 172.8,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 172.8,
+          "end": 173.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 173.06,
+          "end": 173.16,
+          "probability": 0.999
+        },
+        {
+          "word": "roles",
+          "start": 173.16,
+          "end": 173.4,
+          "probability": 0.9888
+        },
+        {
+          "word": "assigned,",
+          "start": 173.4,
+          "end": 173.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "cumulatively.",
+          "start": 174.18,
+          "end": 174.92,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 175.28,
+      "end": 178.02,
+      "start_formatted": "00:02:55.280",
+      "end_formatted": "00:02:58.020",
+      "text": "This is the end of demonstration for roles and permissions.",
+      "words": [
+        {
+          "word": "This",
+          "start": 175.28,
+          "end": 175.7,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 175.7,
+          "end": 175.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 175.8,
+          "end": 175.92,
+          "probability": 0.998
+        },
+        {
+          "word": "end",
+          "start": 175.92,
+          "end": 176.12,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 176.12,
+          "end": 176.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 176.24,
+          "end": 176.72,
+          "probability": 0.9839
+        },
+        {
+          "word": "for",
+          "start": 176.72,
+          "end": 177.1,
+          "probability": 0.998
+        },
+        {
+          "word": "roles",
+          "start": 177.1,
+          "end": 177.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "and",
+          "start": 177.42,
+          "end": 177.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "permissions.",
+          "start": 177.62,
+          "end": 178.02,
+          "probability": 0.998
+        }
+      ]
+    }
+  ]
+}

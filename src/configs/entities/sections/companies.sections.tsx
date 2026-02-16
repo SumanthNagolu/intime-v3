@@ -10,6 +10,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatDistanceToNow } from 'date-fns'
+import { formatPhone } from '@/lib/formatters'
 import {
   Building2,
   MapPin,
@@ -218,7 +219,7 @@ export function CompanyOverviewSectionPCF({ entityId: _entityId, entity }: PCFSe
                   <span className="text-sm text-charcoal-500">Phone</span>
                   <p className="flex items-center gap-1">
                     <Phone className="w-4 h-4 text-charcoal-400" />
-                    {company.phone}
+                    {formatPhone(company.phone)}
                   </p>
                 </div>
               )}

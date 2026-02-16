@@ -1,0 +1,1851 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_14_03.mp4",
+    "video_stem": "Billing_14_03",
+    "duration_seconds": 142.82,
+    "duration_formatted": "00:02:22.820",
+    "segment_count": 10,
+    "word_count": 285,
+    "avg_confidence": 0.9378,
+    "transcription_time_seconds": 16.0,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:06:02.230004"
+  },
+  "full_text": "In this demonstration, I'll test the commission subplan we created in the previous demo. To test the conditional subplan, I'll add another personal auto policy to the Myra Hammond account. I click the Actions menu button. I select Add Policy to open the Policy Issuance Wizard. First, I type in the policy number. The product is Personal Auto. I select Personal Auto from the list of products. Next, I'll select our Full Pay Payment Plan. I select PP01. Next, we need to add the primary producer. I start by clicking the Lookup button. StevensGrey is already in the search results from a previous search, so I click Select. Notice the code field is automatically populated with Steven Grey's producer code. This is because StevensGrey has only one producer code. Now we can move on to Step 2. I click Add to add a premium charge. The charge type defaults to premium. I simply need to type in the amount. The charge amount is $3,600. Next, I want to add a taxes charge. I click Add. I click in the Type field. And I select Taxes. The amount for taxes is $400. Now that I've entered both charges, I click Finish. Let's go to the producer to confirm the commission was calculated correctly according to the conditional subplan. I click the arrow icon on the Producer tab. StevensGrey is listed in the drop-down list of recently used producers. Notice that we now have $540 in the Total Commission Reserve field. This confirms that our conditional subplan was used to calculate commission because 15% of $3,600 is $540. We have met the requirement for Personal Auto Policy Commission. This concludes our demonstration on testing a commission subplan.  ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.12,
+      "end": 26.82,
+      "start_formatted": "00:00:01.120",
+      "end_formatted": "00:00:26.820",
+      "text": "In this demonstration, I'll test the commission subplan we created in the previous demo. To test the conditional subplan, I'll add another personal auto policy to the Myra Hammond account. I click the Actions menu button. I select Add Policy to open the Policy Issuance Wizard. First, I type in the policy number. The product is Personal Auto.",
+      "words": [
+        {
+          "word": "In",
+          "start": 1.12,
+          "end": 1.76,
+          "probability": 0.9561
+        },
+        {
+          "word": "this",
+          "start": 1.76,
+          "end": 1.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "demonstration,",
+          "start": 1.92,
+          "end": 2.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "I'll",
+          "start": 2.82,
+          "end": 3.04,
+          "probability": 0.9854
+        },
+        {
+          "word": "test",
+          "start": 3.04,
+          "end": 3.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 3.28,
+          "end": 3.44,
+          "probability": 0.998
+        },
+        {
+          "word": "commission",
+          "start": 3.44,
+          "end": 3.74,
+          "probability": 0.4043
+        },
+        {
+          "word": "subplan",
+          "start": 3.74,
+          "end": 4.3,
+          "probability": 0.7192
+        },
+        {
+          "word": "we",
+          "start": 4.3,
+          "end": 4.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "created",
+          "start": 4.5,
+          "end": 4.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 4.84,
+          "end": 5.02,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 5.02,
+          "end": 5.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "previous",
+          "start": 5.1,
+          "end": 5.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "demo.",
+          "start": 5.46,
+          "end": 5.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "To",
+          "start": 6.32,
+          "end": 6.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "test",
+          "start": 6.96,
+          "end": 7.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 7.2,
+          "end": 7.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "conditional",
+          "start": 7.36,
+          "end": 7.76,
+          "probability": 0.9482
+        },
+        {
+          "word": "subplan,",
+          "start": 7.76,
+          "end": 8.38,
+          "probability": 0.9678
+        },
+        {
+          "word": "I'll",
+          "start": 8.62,
+          "end": 8.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "add",
+          "start": 8.9,
+          "end": 9.06,
+          "probability": 0.998
+        },
+        {
+          "word": "another",
+          "start": 9.06,
+          "end": 9.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "personal",
+          "start": 9.32,
+          "end": 9.68,
+          "probability": 0.6807
+        },
+        {
+          "word": "auto",
+          "start": 9.68,
+          "end": 9.92,
+          "probability": 0.9028
+        },
+        {
+          "word": "policy",
+          "start": 9.92,
+          "end": 10.36,
+          "probability": 0.9761
+        },
+        {
+          "word": "to",
+          "start": 10.36,
+          "end": 10.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 10.58,
+          "end": 10.68,
+          "probability": 0.9946
+        },
+        {
+          "word": "Myra",
+          "start": 10.68,
+          "end": 10.96,
+          "probability": 0.894
+        },
+        {
+          "word": "Hammond",
+          "start": 10.96,
+          "end": 11.28,
+          "probability": 0.981
+        },
+        {
+          "word": "account.",
+          "start": 11.28,
+          "end": 11.6,
+          "probability": 0.9722
+        },
+        {
+          "word": "I",
+          "start": 11.94,
+          "end": 12.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "click",
+          "start": 12.28,
+          "end": 12.52,
+          "probability": 0.8745
+        },
+        {
+          "word": "the",
+          "start": 12.52,
+          "end": 12.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "Actions",
+          "start": 12.68,
+          "end": 13.1,
+          "probability": 0.8604
+        },
+        {
+          "word": "menu",
+          "start": 13.1,
+          "end": 13.36,
+          "probability": 0.8726
+        },
+        {
+          "word": "button.",
+          "start": 13.36,
+          "end": 13.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 14.22,
+          "end": 14.74,
+          "probability": 0.998
+        },
+        {
+          "word": "select",
+          "start": 14.74,
+          "end": 15.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "Add",
+          "start": 15.14,
+          "end": 15.32,
+          "probability": 0.9185
+        },
+        {
+          "word": "Policy",
+          "start": 15.32,
+          "end": 15.74,
+          "probability": 0.5825
+        },
+        {
+          "word": "to",
+          "start": 15.74,
+          "end": 15.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "open",
+          "start": 15.94,
+          "end": 16.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 16.2,
+          "end": 16.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "Policy",
+          "start": 16.36,
+          "end": 16.78,
+          "probability": 0.4976
+        },
+        {
+          "word": "Issuance",
+          "start": 16.78,
+          "end": 17.22,
+          "probability": 0.8428
+        },
+        {
+          "word": "Wizard.",
+          "start": 17.22,
+          "end": 17.54,
+          "probability": 0.7671
+        },
+        {
+          "word": "First,",
+          "start": 18.46,
+          "end": 19.1,
+          "probability": 0.9912
+        },
+        {
+          "word": "I",
+          "start": 19.32,
+          "end": 19.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "type",
+          "start": 19.54,
+          "end": 19.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 19.82,
+          "end": 19.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 19.94,
+          "end": 20.06,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 20.06,
+          "end": 20.44,
+          "probability": 0.8652
+        },
+        {
+          "word": "number.",
+          "start": 20.44,
+          "end": 20.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "The",
+          "start": 25.0,
+          "end": 25.64,
+          "probability": 0.9912
+        },
+        {
+          "word": "product",
+          "start": 25.64,
+          "end": 25.96,
+          "probability": 0.9702
+        },
+        {
+          "word": "is",
+          "start": 25.96,
+          "end": 26.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "Personal",
+          "start": 26.14,
+          "end": 26.52,
+          "probability": 0.4163
+        },
+        {
+          "word": "Auto.",
+          "start": 26.52,
+          "end": 26.82,
+          "probability": 0.6255
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 28.96,
+      "end": 46.22,
+      "start_formatted": "00:00:28.960",
+      "end_formatted": "00:00:46.220",
+      "text": "I select Personal Auto from the list of products. Next, I'll select our Full Pay Payment Plan. I select PP01. Next, we need to add the primary producer. I start by clicking the Lookup button.",
+      "words": [
+        {
+          "word": "I",
+          "start": 28.96,
+          "end": 29.58,
+          "probability": 0.9697
+        },
+        {
+          "word": "select",
+          "start": 29.58,
+          "end": 29.98,
+          "probability": 0.9897
+        },
+        {
+          "word": "Personal",
+          "start": 29.98,
+          "end": 30.38,
+          "probability": 0.5142
+        },
+        {
+          "word": "Auto",
+          "start": 30.38,
+          "end": 30.64,
+          "probability": 0.75
+        },
+        {
+          "word": "from",
+          "start": 30.64,
+          "end": 30.86,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 30.86,
+          "end": 31.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "list",
+          "start": 31.0,
+          "end": 31.2,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 31.2,
+          "end": 31.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "products.",
+          "start": 31.36,
+          "end": 31.78,
+          "probability": 0.938
+        },
+        {
+          "word": "Next,",
+          "start": 33.26,
+          "end": 33.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "I'll",
+          "start": 34.12,
+          "end": 34.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "select",
+          "start": 34.38,
+          "end": 34.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "our",
+          "start": 34.7,
+          "end": 34.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "Full",
+          "start": 34.84,
+          "end": 35.08,
+          "probability": 0.406
+        },
+        {
+          "word": "Pay",
+          "start": 35.08,
+          "end": 35.28,
+          "probability": 0.918
+        },
+        {
+          "word": "Payment",
+          "start": 35.28,
+          "end": 35.64,
+          "probability": 0.8945
+        },
+        {
+          "word": "Plan.",
+          "start": 35.64,
+          "end": 35.9,
+          "probability": 0.4048
+        },
+        {
+          "word": "I",
+          "start": 37.06,
+          "end": 37.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "select",
+          "start": 37.68,
+          "end": 38.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "PP01.",
+          "start": 38.08,
+          "end": 38.96,
+          "probability": 0.666
+        },
+        {
+          "word": "Next,",
+          "start": 41.38,
+          "end": 42.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 42.24,
+          "end": 42.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "need",
+          "start": 42.48,
+          "end": 42.6,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 42.6,
+          "end": 42.72,
+          "probability": 1.0
+        },
+        {
+          "word": "add",
+          "start": 42.72,
+          "end": 42.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 42.94,
+          "end": 43.08,
+          "probability": 0.999
+        },
+        {
+          "word": "primary",
+          "start": 43.08,
+          "end": 43.48,
+          "probability": 0.668
+        },
+        {
+          "word": "producer.",
+          "start": 43.48,
+          "end": 43.94,
+          "probability": 0.9839
+        },
+        {
+          "word": "I",
+          "start": 44.32,
+          "end": 44.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "start",
+          "start": 44.66,
+          "end": 44.94,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 44.94,
+          "end": 45.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicking",
+          "start": 45.12,
+          "end": 45.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 45.42,
+          "end": 45.58,
+          "probability": 0.999
+        },
+        {
+          "word": "Lookup",
+          "start": 45.58,
+          "end": 45.9,
+          "probability": 0.7773
+        },
+        {
+          "word": "button.",
+          "start": 45.9,
+          "end": 46.22,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 47.32,
+      "end": 62.24,
+      "start_formatted": "00:00:47.320",
+      "end_formatted": "00:01:02.240",
+      "text": "StevensGrey is already in the search results from a previous search, so I click Select. Notice the code field is automatically populated with Steven Grey's producer code. This is because StevensGrey has only one producer code. Now we can move on to Step 2.",
+      "words": [
+        {
+          "word": "StevensGrey",
+          "start": 47.32,
+          "end": 47.84,
+          "probability": 0.5605
+        },
+        {
+          "word": "is",
+          "start": 47.84,
+          "end": 48.04,
+          "probability": 0.9927
+        },
+        {
+          "word": "already",
+          "start": 48.04,
+          "end": 48.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "in",
+          "start": 48.36,
+          "end": 48.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 48.54,
+          "end": 48.62,
+          "probability": 0.9902
+        },
+        {
+          "word": "search",
+          "start": 48.62,
+          "end": 48.86,
+          "probability": 0.9858
+        },
+        {
+          "word": "results",
+          "start": 48.86,
+          "end": 49.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "from",
+          "start": 49.26,
+          "end": 49.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 49.48,
+          "end": 49.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "previous",
+          "start": 49.58,
+          "end": 49.92,
+          "probability": 0.999
+        },
+        {
+          "word": "search,",
+          "start": 49.92,
+          "end": 50.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "so",
+          "start": 50.56,
+          "end": 50.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "I",
+          "start": 50.82,
+          "end": 50.92,
+          "probability": 0.9839
+        },
+        {
+          "word": "click",
+          "start": 50.92,
+          "end": 51.16,
+          "probability": 0.9912
+        },
+        {
+          "word": "Select.",
+          "start": 51.16,
+          "end": 51.46,
+          "probability": 0.4497
+        },
+        {
+          "word": "Notice",
+          "start": 52.56,
+          "end": 53.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 53.08,
+          "end": 53.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "code",
+          "start": 53.26,
+          "end": 53.48,
+          "probability": 0.8711
+        },
+        {
+          "word": "field",
+          "start": 53.48,
+          "end": 53.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 53.82,
+          "end": 54.0,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 54.0,
+          "end": 54.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "populated",
+          "start": 54.46,
+          "end": 55.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 55.14,
+          "end": 55.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "Steven",
+          "start": 55.34,
+          "end": 55.64,
+          "probability": 0.627
+        },
+        {
+          "word": "Grey's",
+          "start": 55.64,
+          "end": 56.12,
+          "probability": 0.6562
+        },
+        {
+          "word": "producer",
+          "start": 56.12,
+          "end": 56.4,
+          "probability": 0.8916
+        },
+        {
+          "word": "code.",
+          "start": 56.4,
+          "end": 56.92,
+          "probability": 0.998
+        },
+        {
+          "word": "This",
+          "start": 57.16,
+          "end": 57.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 57.58,
+          "end": 57.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 57.74,
+          "end": 58.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "StevensGrey",
+          "start": 58.0,
+          "end": 58.68,
+          "probability": 0.9727
+        },
+        {
+          "word": "has",
+          "start": 58.68,
+          "end": 58.88,
+          "probability": 0.998
+        },
+        {
+          "word": "only",
+          "start": 58.88,
+          "end": 59.14,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 59.14,
+          "end": 59.4,
+          "probability": 0.8931
+        },
+        {
+          "word": "producer",
+          "start": 59.4,
+          "end": 59.78,
+          "probability": 0.9873
+        },
+        {
+          "word": "code.",
+          "start": 59.78,
+          "end": 60.26,
+          "probability": 0.999
+        },
+        {
+          "word": "Now",
+          "start": 60.5,
+          "end": 60.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "we",
+          "start": 60.92,
+          "end": 61.08,
+          "probability": 0.9927
+        },
+        {
+          "word": "can",
+          "start": 61.08,
+          "end": 61.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "move",
+          "start": 61.22,
+          "end": 61.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 61.44,
+          "end": 61.58,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 61.58,
+          "end": 61.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "Step",
+          "start": 61.72,
+          "end": 61.9,
+          "probability": 0.3069
+        },
+        {
+          "word": "2.",
+          "start": 61.9,
+          "end": 62.24,
+          "probability": 0.9688
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 63.14,
+      "end": 82.46,
+      "start_formatted": "00:01:03.140",
+      "end_formatted": "00:01:22.460",
+      "text": "I click Add to add a premium charge. The charge type defaults to premium. I simply need to type in the amount. The charge amount is $3,600. Next, I want to add a taxes charge. I click Add. I click in the Type field.",
+      "words": [
+        {
+          "word": "I",
+          "start": 63.14,
+          "end": 63.66,
+          "probability": 0.9844
+        },
+        {
+          "word": "click",
+          "start": 63.66,
+          "end": 63.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "Add",
+          "start": 63.92,
+          "end": 64.1,
+          "probability": 0.4946
+        },
+        {
+          "word": "to",
+          "start": 64.1,
+          "end": 64.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "add",
+          "start": 64.24,
+          "end": 64.44,
+          "probability": 0.9849
+        },
+        {
+          "word": "a",
+          "start": 64.44,
+          "end": 64.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "premium",
+          "start": 64.54,
+          "end": 64.8,
+          "probability": 0.918
+        },
+        {
+          "word": "charge.",
+          "start": 64.8,
+          "end": 65.26,
+          "probability": 0.998
+        },
+        {
+          "word": "The",
+          "start": 67.22,
+          "end": 67.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "charge",
+          "start": 67.74,
+          "end": 68.06,
+          "probability": 0.9878
+        },
+        {
+          "word": "type",
+          "start": 68.06,
+          "end": 68.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "defaults",
+          "start": 68.28,
+          "end": 68.82,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 68.82,
+          "end": 68.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "premium.",
+          "start": 68.98,
+          "end": 69.24,
+          "probability": 0.8174
+        },
+        {
+          "word": "I",
+          "start": 69.74,
+          "end": 70.08,
+          "probability": 0.999
+        },
+        {
+          "word": "simply",
+          "start": 70.08,
+          "end": 70.38,
+          "probability": 0.999
+        },
+        {
+          "word": "need",
+          "start": 70.38,
+          "end": 70.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 70.62,
+          "end": 70.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 70.76,
+          "end": 71.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 71.0,
+          "end": 71.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 71.18,
+          "end": 71.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "amount.",
+          "start": 71.28,
+          "end": 71.62,
+          "probability": 0.9888
+        },
+        {
+          "word": "The",
+          "start": 72.08,
+          "end": 72.52,
+          "probability": 0.998
+        },
+        {
+          "word": "charge",
+          "start": 72.52,
+          "end": 72.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "amount",
+          "start": 72.84,
+          "end": 73.06,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 73.06,
+          "end": 73.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "$3",
+          "start": 73.26,
+          "end": 73.5,
+          "probability": 0.9033
+        },
+        {
+          "word": ",600.",
+          "start": 73.5,
+          "end": 74.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "Next,",
+          "start": 76.56,
+          "end": 77.08,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 77.3,
+          "end": 77.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "want",
+          "start": 77.5,
+          "end": 77.64,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 77.64,
+          "end": 77.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 77.72,
+          "end": 77.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 77.92,
+          "end": 78.04,
+          "probability": 1.0
+        },
+        {
+          "word": "taxes",
+          "start": 78.04,
+          "end": 78.38,
+          "probability": 0.979
+        },
+        {
+          "word": "charge.",
+          "start": 78.38,
+          "end": 78.92,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 79.24,
+          "end": 79.58,
+          "probability": 1.0
+        },
+        {
+          "word": "click",
+          "start": 79.58,
+          "end": 79.84,
+          "probability": 0.999
+        },
+        {
+          "word": "Add.",
+          "start": 79.84,
+          "end": 80.1,
+          "probability": 0.9849
+        },
+        {
+          "word": "I",
+          "start": 80.78,
+          "end": 81.3,
+          "probability": 1.0
+        },
+        {
+          "word": "click",
+          "start": 81.3,
+          "end": 81.54,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 81.54,
+          "end": 81.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 81.7,
+          "end": 81.84,
+          "probability": 1.0
+        },
+        {
+          "word": "Type",
+          "start": 81.84,
+          "end": 82.02,
+          "probability": 0.6597
+        },
+        {
+          "word": "field.",
+          "start": 82.02,
+          "end": 82.46,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 83.86,
+      "end": 98.14,
+      "start_formatted": "00:01:23.860",
+      "end_formatted": "00:01:38.140",
+      "text": "And I select Taxes. The amount for taxes is $400. Now that I've entered both charges, I click Finish.",
+      "words": [
+        {
+          "word": "And",
+          "start": 83.86,
+          "end": 84.42,
+          "probability": 0.6851
+        },
+        {
+          "word": "I",
+          "start": 84.42,
+          "end": 84.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "select",
+          "start": 84.54,
+          "end": 84.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "Taxes.",
+          "start": 84.88,
+          "end": 85.42,
+          "probability": 0.6997
+        },
+        {
+          "word": "The",
+          "start": 87.8,
+          "end": 88.36,
+          "probability": 0.999
+        },
+        {
+          "word": "amount",
+          "start": 88.36,
+          "end": 88.62,
+          "probability": 0.9907
+        },
+        {
+          "word": "for",
+          "start": 88.62,
+          "end": 88.84,
+          "probability": 0.999
+        },
+        {
+          "word": "taxes",
+          "start": 88.84,
+          "end": 89.2,
+          "probability": 0.9712
+        },
+        {
+          "word": "is",
+          "start": 89.2,
+          "end": 89.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "$400.",
+          "start": 89.44,
+          "end": 89.98,
+          "probability": 0.9917
+        },
+        {
+          "word": "Now",
+          "start": 95.34,
+          "end": 95.9,
+          "probability": 0.9912
+        },
+        {
+          "word": "that",
+          "start": 95.9,
+          "end": 96.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "I've",
+          "start": 96.08,
+          "end": 96.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "entered",
+          "start": 96.26,
+          "end": 96.42,
+          "probability": 1.0
+        },
+        {
+          "word": "both",
+          "start": 96.42,
+          "end": 96.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "charges,",
+          "start": 96.7,
+          "end": 97.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 97.4,
+          "end": 97.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 97.6,
+          "end": 97.86,
+          "probability": 0.999
+        },
+        {
+          "word": "Finish.",
+          "start": 97.86,
+          "end": 98.14,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 99.26,
+      "end": 107.36,
+      "start_formatted": "00:01:39.260",
+      "end_formatted": "00:01:47.360",
+      "text": "Let's go to the producer to confirm the commission was calculated correctly according to the conditional subplan. I click the arrow icon on the Producer tab.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 99.26,
+          "end": 99.84,
+          "probability": 0.9531
+        },
+        {
+          "word": "go",
+          "start": 99.84,
+          "end": 99.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 99.96,
+          "end": 100.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 100.1,
+          "end": 100.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "producer",
+          "start": 100.24,
+          "end": 100.56,
+          "probability": 0.7734
+        },
+        {
+          "word": "to",
+          "start": 100.56,
+          "end": 100.78,
+          "probability": 0.999
+        },
+        {
+          "word": "confirm",
+          "start": 100.78,
+          "end": 101.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 101.12,
+          "end": 101.3,
+          "probability": 0.9902
+        },
+        {
+          "word": "commission",
+          "start": 101.3,
+          "end": 101.6,
+          "probability": 0.9048
+        },
+        {
+          "word": "was",
+          "start": 101.6,
+          "end": 101.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "calculated",
+          "start": 101.9,
+          "end": 102.44,
+          "probability": 0.999
+        },
+        {
+          "word": "correctly",
+          "start": 102.44,
+          "end": 102.96,
+          "probability": 0.999
+        },
+        {
+          "word": "according",
+          "start": 102.96,
+          "end": 103.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 103.32,
+          "end": 103.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 103.54,
+          "end": 103.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "conditional",
+          "start": 103.68,
+          "end": 104.1,
+          "probability": 0.9614
+        },
+        {
+          "word": "subplan.",
+          "start": 104.1,
+          "end": 104.68,
+          "probability": 0.7383
+        },
+        {
+          "word": "I",
+          "start": 105.08,
+          "end": 105.4,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 105.4,
+          "end": 105.64,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 105.64,
+          "end": 105.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "arrow",
+          "start": 105.8,
+          "end": 106.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "icon",
+          "start": 106.0,
+          "end": 106.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 106.32,
+          "end": 106.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 106.52,
+          "end": 106.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "Producer",
+          "start": 106.62,
+          "end": 106.96,
+          "probability": 0.1204
+        },
+        {
+          "word": "tab.",
+          "start": 106.96,
+          "end": 107.36,
+          "probability": 0.9702
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 108.28,
+      "end": 116.64,
+      "start_formatted": "00:01:48.280",
+      "end_formatted": "00:01:56.640",
+      "text": "StevensGrey is listed in the drop-down list of recently used producers. Notice that we now have $540 in the Total Commission Reserve field.",
+      "words": [
+        {
+          "word": "StevensGrey",
+          "start": 108.28,
+          "end": 108.86,
+          "probability": 0.437
+        },
+        {
+          "word": "is",
+          "start": 108.86,
+          "end": 109.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "listed",
+          "start": 109.08,
+          "end": 109.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 109.36,
+          "end": 109.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 109.52,
+          "end": 109.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "drop",
+          "start": 109.62,
+          "end": 109.84,
+          "probability": 0.9053
+        },
+        {
+          "word": "-down",
+          "start": 109.84,
+          "end": 110.1,
+          "probability": 0.918
+        },
+        {
+          "word": "list",
+          "start": 110.1,
+          "end": 110.32,
+          "probability": 0.9722
+        },
+        {
+          "word": "of",
+          "start": 110.32,
+          "end": 110.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "recently",
+          "start": 110.5,
+          "end": 110.82,
+          "probability": 0.8125
+        },
+        {
+          "word": "used",
+          "start": 110.82,
+          "end": 111.22,
+          "probability": 0.9814
+        },
+        {
+          "word": "producers.",
+          "start": 111.22,
+          "end": 111.72,
+          "probability": 0.9434
+        },
+        {
+          "word": "Notice",
+          "start": 112.46,
+          "end": 113.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "that",
+          "start": 113.04,
+          "end": 113.24,
+          "probability": 0.999
+        },
+        {
+          "word": "we",
+          "start": 113.24,
+          "end": 113.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "now",
+          "start": 113.36,
+          "end": 113.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "have",
+          "start": 113.56,
+          "end": 113.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "$540",
+          "start": 113.78,
+          "end": 114.66,
+          "probability": 0.9761
+        },
+        {
+          "word": "in",
+          "start": 114.66,
+          "end": 115.12,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 115.12,
+          "end": 115.22,
+          "probability": 0.998
+        },
+        {
+          "word": "Total",
+          "start": 115.22,
+          "end": 115.44,
+          "probability": 0.3635
+        },
+        {
+          "word": "Commission",
+          "start": 115.44,
+          "end": 115.8,
+          "probability": 0.9771
+        },
+        {
+          "word": "Reserve",
+          "start": 115.8,
+          "end": 116.2,
+          "probability": 0.832
+        },
+        {
+          "word": "field.",
+          "start": 116.2,
+          "end": 116.64,
+          "probability": 0.9072
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 116.64,
+      "end": 132.34,
+      "start_formatted": "00:01:56.640",
+      "end_formatted": "00:02:12.340",
+      "text": "This confirms that our conditional subplan was used to calculate commission because 15% of $3,600 is $540. We have met the requirement for Personal Auto Policy Commission. This concludes our demonstration on testing a commission subplan.",
+      "words": [
+        {
+          "word": "This",
+          "start": 116.64,
+          "end": 117.5,
+          "probability": 0.9497
+        },
+        {
+          "word": "confirms",
+          "start": 117.5,
+          "end": 117.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 117.96,
+          "end": 118.2,
+          "probability": 1.0
+        },
+        {
+          "word": "our",
+          "start": 118.2,
+          "end": 118.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "conditional",
+          "start": 118.34,
+          "end": 118.76,
+          "probability": 0.9507
+        },
+        {
+          "word": "subplan",
+          "start": 118.76,
+          "end": 119.34,
+          "probability": 0.7891
+        },
+        {
+          "word": "was",
+          "start": 119.34,
+          "end": 119.6,
+          "probability": 1.0
+        },
+        {
+          "word": "used",
+          "start": 119.6,
+          "end": 119.86,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 119.86,
+          "end": 120.0,
+          "probability": 1.0
+        },
+        {
+          "word": "calculate",
+          "start": 120.0,
+          "end": 120.46,
+          "probability": 1.0
+        },
+        {
+          "word": "commission",
+          "start": 120.46,
+          "end": 120.88,
+          "probability": 0.9355
+        },
+        {
+          "word": "because",
+          "start": 120.88,
+          "end": 121.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "15",
+          "start": 121.26,
+          "end": 121.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "%",
+          "start": 121.7,
+          "end": 122.02,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 122.02,
+          "end": 122.24,
+          "probability": 1.0
+        },
+        {
+          "word": "$3",
+          "start": 122.24,
+          "end": 122.46,
+          "probability": 0.9766
+        },
+        {
+          "word": ",600",
+          "start": 122.46,
+          "end": 123.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 123.3,
+          "end": 124.0,
+          "probability": 0.999
+        },
+        {
+          "word": "$540.",
+          "start": 124.0,
+          "end": 124.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "We",
+          "start": 125.52,
+          "end": 125.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "have",
+          "start": 125.96,
+          "end": 126.12,
+          "probability": 1.0
+        },
+        {
+          "word": "met",
+          "start": 126.12,
+          "end": 126.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 126.32,
+          "end": 126.46,
+          "probability": 1.0
+        },
+        {
+          "word": "requirement",
+          "start": 126.46,
+          "end": 126.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 126.92,
+          "end": 127.16,
+          "probability": 1.0
+        },
+        {
+          "word": "Personal",
+          "start": 127.16,
+          "end": 127.5,
+          "probability": 0.1205
+        },
+        {
+          "word": "Auto",
+          "start": 127.5,
+          "end": 127.74,
+          "probability": 0.9614
+        },
+        {
+          "word": "Policy",
+          "start": 127.74,
+          "end": 128.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "Commission.",
+          "start": 128.22,
+          "end": 128.6,
+          "probability": 0.9692
+        },
+        {
+          "word": "This",
+          "start": 129.02,
+          "end": 129.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "concludes",
+          "start": 129.46,
+          "end": 129.84,
+          "probability": 1.0
+        },
+        {
+          "word": "our",
+          "start": 129.84,
+          "end": 130.02,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 130.02,
+          "end": 130.52,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 130.52,
+          "end": 130.88,
+          "probability": 1.0
+        },
+        {
+          "word": "testing",
+          "start": 130.88,
+          "end": 131.22,
+          "probability": 0.9805
+        },
+        {
+          "word": "a",
+          "start": 131.22,
+          "end": 131.4,
+          "probability": 1.0
+        },
+        {
+          "word": "commission",
+          "start": 131.4,
+          "end": 131.76,
+          "probability": 0.9731
+        },
+        {
+          "word": "subplan.",
+          "start": 131.76,
+          "end": 132.34,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 132.34,
+      "end": 132.34,
+      "start_formatted": "00:02:12.340",
+      "end_formatted": "00:02:12.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 9,
+      "start": 142.82,
+      "end": 142.82,
+      "start_formatted": "00:02:22.820",
+      "end_formatted": "00:02:22.820",
+      "text": "",
+      "words": []
+    }
+  ]
+}

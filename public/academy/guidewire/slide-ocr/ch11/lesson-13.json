@@ -1,0 +1,236 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-13",
+    "slide_count": 20,
+    "slides_with_text": 19,
+    "total_words": 1312,
+    "avg_confidence": 84.84,
+    "processing_time_seconds": 8.7,
+    "extracted_at": "2026-02-15T18:21:43.383095"
+  },
+  "full_text": "Creating Messages\n\nLesson\nobjectives\n\n¢ Create messages in Event Fired rules\n¢ Describe the role that message payloads play\nin messaging\n\nUse case\n\n* Create a message when a bank\naccount is added or modified\n\n¢ Ifthe bank account type is savings,\nthe string message payload must\nhave a placeholder field called\nageOfMessagelnSeconds that will\nbe calculated and replaced later\n\n* Generate XML message payload for\nother bank account types\n\nGi\nDesign approach\n\n1. Create Event Fired rules\n2. Create payload mechanism\n\n3. Deploy changes\n\n| Guidewire servers and messaging transactions\n\njotneeaneneeneeeeeeseeeeeseseeseeeseeeeeeseeeeseseeeeees prteeeeeeeeneenseeeeeeeeeseesseeeeessesessesseeeeeeseesesseeseseesers\nH Application Context > Integration Context\n: Event triggering & ¥ Sending message &\nMessage generation . Payload Process synchronous\ne ») (event fired rules) Message Transformation acknowledgment (transport\n(request plugin) plugin)\n\nG transaction 2 transaction 3\n\nProcess asynchronous\nacknowledgement\n(reply plugin or API)\n\n¢ All activity from message generation takes place in transaction 1\n¢ Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back\n\n: External\n\n: System\n\n—\n\nEvent Fired rules\n\n| Guidewire business rules Gi\n\n¢ Abusiness rule written in Gosu accomplishes some task for a Melbolest : Onsale\ngiven entity Vee senees\nwe we > CO eEntity Names\n* Three base types of rule set categories in TrainingApp > EY Bitensions\n\n> [2 Localizations\n\n> Messaging\n\n> DY Metadata\n\n> [&lPage Configuration\n> PW Plugin:\n\n+ EventMessage\n\n+ One rule set called EventFired\n\n+ Root entity is MessageContext\n\n+ Rules execute when an integration event is triggered\n\n‘#) EventFired\n‘VD Preupdate\n« Preupdate #8) aBcontactContactPreupdate\n#) ABContactPreupdate\n+ Four rule sets #) AddressPreupdate\n*#) PendingContactChangePreupdate\n+ Rules execute when an update has occurred on a root entity ¥ Voldston oS\nwage @) ABContactValidationRules\n\n+ Validation ) ContactValidationRules\n\n+ Fourrule sets @) PersonValidationRules\n\n#) RegionValidationRules\n+ Rules check for missing information or invalid data on a root entity\n\n| Rule set execution Gi\n\n: TE Project = + © | H- It | €) EventFired.\n* Rule execution follows ee Tt\n. . . “configuration C:\\GW10\\Trainin J ad Event Fired)\nthe order listed in Studio v Creonfig > @) © ABEF1000 - Vendor Recommendation\n> (QD Entity Names & @) D aser2000 - Fraud Check\n¢ Per node, rules execute > DY Extensions v @) © BAEF1000 - Bank Account Verification\nina hierarchy > [YP Localizations Sore BAEF1100 - Bank Account\n> > Messagi ~~ @) H Bacr1110 - Added Changed\n* Rule condition code > Ease Se ee falc anaes\n> (page Configuration a a LREF1000 - Legal Case Report\nresolves to true or false > pW Plugins G , 3 z a MesageGeenter\n+ When condition is true © CB Rate Sets > BS Poticycenter\nf Sti di i\" vil EventMessage > BA ciaimcenter\nrule action code executes, > B) D Billingcenter\n\nand\n* Child rules execute (if any)\n\n| Rule set editor\n\nRule Hierarchy\n\nlv CF Event Fired\n> @) © ABer1000 - Vendor Recommendation|\n‘ABEF2000 - Fraud Check\n\n© BAEFII10 - Added Changed\n\n®) © Baeriitt - Field Changed|\nREFI000 - Legal Case Report\n\\GEF1000 - MessageGenerator\n\n¢ Rule Hierarchy\n* Context menu\n* Activate/Deactivate checkbox\n¢ Drag-and-drop ordering\n\nRule Editor\n\nACTION (messageContext : entity.MessageContext, actions : gv.rules.Action) :\nprint(\"\\n### Stage 1 -- Triggering the message ***\")\n\"-Bvent Pired rule set: \" + actions.Rule.Displaytiame )\n\nDestination ID is \" + messageContext.DestID)\n\n¢ Rule Editor\n\n* Overlays segment Uses, Condition, and\nAction\n\n« IMPORTANT\n\n* Do NOT delete the return keyword in\nrule condition\n\n| Event Fired rule set Gi\n\nCreates message and payload\nThe payload typically:\n* Contains static and/or dynamically generated data\n\n+ Is formatted based on the needs of the e:\n\nray H Event :\n\\ i Fired :\nF vesination Rules i\nMessage H\ntuent payload :\nEvent rN »), —\n\no ¢ B\n\nEventAware MessageContext Message\nEntity Entitv Entitv.\n\n| Common options for generating message payloads [5\n\nES\n\nMessage\npayload\n\n¢ Gosu template\n¢ Formatted strings with entity data\n\n* XML modeler\n* Strongly typed XML with XSD validation\n* Supports object graph\n\na ad\n\n¢ Integration View Seheee\n+ JSON s\n\n* Strongly typed XML with XSD validation External\n\nView\n\n| Late binding in the payload G\n\nTEI Console | Debugger | | |S |\n***k Stage 3(a) -- Transforming the message payload with\nlate binding ***\n\n. co. . Message\nRequest plugin: BankAccountVerificationRequest —\n\npayload\nbeforeSend()\n\nMes 630\nReplaced token <@@ageOfMessageInSeconds@@> with value 3\n\nReturning payload string\n\nra i\n\nA late binding value is a message payload value that cannot be determined until\nright before the message is sent\n\n« Use placeholders (tokens) during payload generation in the Event Fired business rules action\nlogic (event-time)\n\nMessage Request plugin (send-time) may search for and replace such late binding\ntokens with the data values immediately before the message is sent out\n\n| Event Fired rule set hierarchy structure Gi\n\nvo\n\n>a\n\n>\n\na\n\nEver\n\n- CONDITION (nes:\nnt Fired coun\n\nABEF1000 - Vendor Recommendation return messageContext.DestID ==\n‘ABEF2000 - Fraud Check\n\nCONDITION (messageContext : entity.MessageContext):\n\niseeee8\n\nA\n@\nei\nyj\nA\n\n@) © Baerit10 - Added ‘Changed . -\n4) EZ] Baeri111- Field Changed = ____._,_.__\n\nLREF1000 - Legal Case Report nessageContext.Eventllane == \"BankAccountChanged”\n\nMGEF1000 - MessageGenerator\n\nSafe Ordering Demo CONDITION (messageContext : entity.MessageContext) :\n\nPolicyCenter return (messageContext.Root as BankAccount) .isFieldChanged(\"BankName\") or\n(meszageContext.Root as BankAccount) .ieFieldChanged (\"Routingtiumber\") oF\n(messageContext.Root as BankRccount) .isFieldChanged (\"Accountthmber\") oF\n\n(messageContext.Root as BankAccount) .isFieldChanged(\"AccountType\")\n\n* Create a rule hierarchy to filter MessageContext objects\n\n+ First, by destination ID...\n\n* Then, by root entity type...\n\n* Then, by event name...\n\n« Finally, by any other relevant logic, such as fields of interest changed\n\n| Creating a message from MessageContext Gi\n\nACTION (messageContext entity .MessageContext, actions : gw.rules.Action):\n\nmessageContext.Root as BankAccount\n\n—>: var aBankAccount\nvar msg : Message\n\nif (aBankAccount.AccountType == BankAccountType.TC_ SAVINGS) {\nvar payload = BankAccountDataTemplate. renderToString(aBankAccount.ABContact.PublicID, aBankAccount)\n\n—P2s\n—> msg = messageContext.createMessage (payload)\n\n¢ Be extremely careful about modifying entity data in Event Fired rules and\nmessaging plugin implementations\n« Entity changes in these code locations do not cause the application to run or re-run validation\nor preupdate rules\n¢ Use rules to perform only the minimal data changes necessary for integration code\n* Only change fields that are not modifiable from the user interface\n\n+ For example, you might set custom data model extension flags only used by messaging code\n\n| Deploy code changes Gi\n_—RestartServer Reload Changed Classes\n\n¢ Create a rule hierarchy (parent rule ¢ Newly created and modified event\nand then children rules) fired rules\n\nTools VCS Window Help\nD Run ‘Server’\n\nEYE Tools VCS Window Help W Debug ‘Server’\n\nD> Run ‘Server’ Shift+F10 fe aeuneSesveeguath Coveraae)\n\nbe Run ‘Server’ with Coverage WE Debus...\n\nD Run... Alt+Shift+F10 yy Attach to Local Process...\n\nWE Debug... Alt+Shift+F9 [> Edit Configurations...\n\nAy Attach to Local Process... 2B] Import Test Results\n\n[> Edit Configurations... Il Stop ‘Server’\n\n] Import Test Results > EF Show Running List\n| Stop ‘Server’ Ctrl+ F2 Stop B P\n\n| Demonstration G\n\nExamine event fired rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_- — Why must an Event Fired rule cast the MessageContext Root object?\n\n7\n¢\n4\n\nSe Soe Se sees esse ese\n\nAnswer Gi\n\n_- — Why must an Event Fired rule cast the MessageContext Root object?\n¢\n\n¢\n4\n\nMessageContext.Root is of type Object, but message payloads typically need to work\nwith the MessageContext.Root as the type of entity that triggered the message event.\nTherefore, the MessageContext.Root entity must be cast to be of that type.\n\nSoo eS oe ese Sse ese\n\nLesson\nobjectives ¢ Create messages in Event Fired rules\n\nreview ¢ Describe the role that message payloads play\nin messaging\n\n| Student exercise\n\nConfigure event fired rules",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Creating Messages",
+      "word_count": 2,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Create messages in Event Fired rules\n¢ Describe the role that message payloads play\nin messaging",
+      "word_count": 19,
+      "avg_confidence": 90.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Use case\n\n* Create a message when a bank\naccount is added or modified\n\n¢ Ifthe bank account type is savings,\nthe string message payload must\nhave a placeholder field called\nageOfMessagelnSeconds that will\nbe calculated and replaced later\n\n* Generate XML message payload for\nother bank account types\n\nGi\nDesign approach\n\n1. Create Event Fired rules\n2. Create payload mechanism\n\n3. Deploy changes",
+      "word_count": 64,
+      "avg_confidence": 89.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Guidewire servers and messaging transactions\n\njotneeaneneeneeeeeeseeeeeseseeseeeseeeeeeseeeeseseeeeees prteeeeeeeeneenseeeeeeeeeseesseeeeessesessesseeeeeeseesesseeseseesers\nH Application Context > Integration Context\n: Event triggering & ¥ Sending message &\nMessage generation . Payload Process synchronous\ne ») (event fired rules) Message Transformation acknowledgment (transport\n(request plugin) plugin)\n\nG transaction 2 transaction 3\n\nProcess asynchronous\nacknowledgement\n(reply plugin or API)\n\n¢ All activity from message generation takes place in transaction 1\n¢ Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back\n\n: External\n\n: System\n\n—",
+      "word_count": 88,
+      "avg_confidence": 85.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Event Fired rules",
+      "word_count": 3,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Guidewire business rules Gi\n\n¢ Abusiness rule written in Gosu accomplishes some task for a Melbolest : Onsale\ngiven entity Vee senees\nwe we > CO eEntity Names\n* Three base types of rule set categories in TrainingApp > EY Bitensions\n\n> [2 Localizations\n\n> Messaging\n\n> DY Metadata\n\n> [&lPage Configuration\n> PW Plugin:\n\n+ EventMessage\n\n+ One rule set called EventFired\n\n+ Root entity is MessageContext\n\n+ Rules execute when an integration event is triggered\n\n‘#) EventFired\n‘VD Preupdate\n« Preupdate #8) aBcontactContactPreupdate\n#) ABContactPreupdate\n+ Four rule sets #) AddressPreupdate\n*#) PendingContactChangePreupdate\n+ Rules execute when an update has occurred on a root entity ¥ Voldston oS\nwage @) ABContactValidationRules\n\n+ Validation ) ContactValidationRules\n\n+ Fourrule sets @) PersonValidationRules\n\n#) RegionValidationRules\n+ Rules check for missing information or invalid data on a root entity",
+      "word_count": 138,
+      "avg_confidence": 75.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Rule set execution Gi\n\n: TE Project = + © | H- It | €) EventFired.\n* Rule execution follows ee Tt\n. . . “configuration C:\\GW10\\Trainin J ad Event Fired)\nthe order listed in Studio v Creonfig > @) © ABEF1000 - Vendor Recommendation\n> (QD Entity Names & @) D aser2000 - Fraud Check\n¢ Per node, rules execute > DY Extensions v @) © BAEF1000 - Bank Account Verification\nina hierarchy > [YP Localizations Sore BAEF1100 - Bank Account\n> > Messagi ~~ @) H Bacr1110 - Added Changed\n* Rule condition code > Ease Se ee falc anaes\n> (page Configuration a a LREF1000 - Legal Case Report\nresolves to true or false > pW Plugins G , 3 z a MesageGeenter\n+ When condition is true © CB Rate Sets > BS Poticycenter\nf Sti di i\" vil EventMessage > BA ciaimcenter\nrule action code executes, > B) D Billingcenter\n\nand\n* Child rules execute (if any)",
+      "word_count": 163,
+      "avg_confidence": 70.4,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Rule set editor\n\nRule Hierarchy\n\nlv CF Event Fired\n> @) © ABer1000 - Vendor Recommendation|\n‘ABEF2000 - Fraud Check\n\n© BAEFII10 - Added Changed\n\n®) © Baeriitt - Field Changed|\nREFI000 - Legal Case Report\n\\GEF1000 - MessageGenerator\n\n¢ Rule Hierarchy\n* Context menu\n* Activate/Deactivate checkbox\n¢ Drag-and-drop ordering\n\nRule Editor\n\nACTION (messageContext : entity.MessageContext, actions : gv.rules.Action) :\nprint(\"\\n### Stage 1 -- Triggering the message ***\")\n\"-Bvent Pired rule set: \" + actions.Rule.Displaytiame )\n\nDestination ID is \" + messageContext.DestID)\n\n¢ Rule Editor\n\n* Overlays segment Uses, Condition, and\nAction\n\n« IMPORTANT\n\n* Do NOT delete the return keyword in\nrule condition",
+      "word_count": 106,
+      "avg_confidence": 80.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Event Fired rule set Gi\n\nCreates message and payload\nThe payload typically:\n* Contains static and/or dynamically generated data\n\n+ Is formatted based on the needs of the e:\n\nray H Event :\n\\ i Fired :\nF vesination Rules i\nMessage H\ntuent payload :\nEvent rN »), —\n\no ¢ B\n\nEventAware MessageContext Message\nEntity Entitv Entitv.",
+      "word_count": 60,
+      "avg_confidence": 76.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Common options for generating message payloads [5\n\nES\n\nMessage\npayload\n\n¢ Gosu template\n¢ Formatted strings with entity data\n\n* XML modeler\n* Strongly typed XML with XSD validation\n* Supports object graph\n\na ad\n\n¢ Integration View Seheee\n+ JSON s\n\n* Strongly typed XML with XSD validation External\n\nView",
+      "word_count": 52,
+      "avg_confidence": 81.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Late binding in the payload G\n\nTEI Console | Debugger | | |S |\n***k Stage 3(a) -- Transforming the message payload with\nlate binding ***\n\n. co. . Message\nRequest plugin: BankAccountVerificationRequest —\n\npayload\nbeforeSend()\n\nMes 630\nReplaced token <@@ageOfMessageInSeconds@@> with value 3\n\nReturning payload string\n\nra i\n\nA late binding value is a message payload value that cannot be determined until\nright before the message is sent\n\n« Use placeholders (tokens) during payload generation in the Event Fired business rules action\nlogic (event-time)\n\nMessage Request plugin (send-time) may search for and replace such late binding\ntokens with the data values immediately before the message is sent out",
+      "word_count": 110,
+      "avg_confidence": 87.03,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Event Fired rule set hierarchy structure Gi\n\nvo\n\n>a\n\n>\n\na\n\nEver\n\n- CONDITION (nes:\nnt Fired coun\n\nABEF1000 - Vendor Recommendation return messageContext.DestID ==\n‘ABEF2000 - Fraud Check\n\nCONDITION (messageContext : entity.MessageContext):\n\niseeee8\n\nA\n@\nei\nyj\nA\n\n@) © Baerit10 - Added ‘Changed . -\n4) EZ] Baeri111- Field Changed = ____._,_.__\n\nLREF1000 - Legal Case Report nessageContext.Eventllane == \"BankAccountChanged”\n\nMGEF1000 - MessageGenerator\n\nSafe Ordering Demo CONDITION (messageContext : entity.MessageContext) :\n\nPolicyCenter return (messageContext.Root as BankAccount) .isFieldChanged(\"BankName\") or\n(meszageContext.Root as BankAccount) .ieFieldChanged (\"Routingtiumber\") oF\n(messageContext.Root as BankRccount) .isFieldChanged (\"Accountthmber\") oF\n\n(messageContext.Root as BankAccount) .isFieldChanged(\"AccountType\")\n\n* Create a rule hierarchy to filter MessageContext objects\n\n+ First, by destination ID...\n\n* Then, by root entity type...\n\n* Then, by event name...\n\n« Finally, by any other relevant logic, such as fields of interest changed",
+      "word_count": 135,
+      "avg_confidence": 79.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Creating a message from MessageContext Gi\n\nACTION (messageContext entity .MessageContext, actions : gw.rules.Action):\n\nmessageContext.Root as BankAccount\n\n—>: var aBankAccount\nvar msg : Message\n\nif (aBankAccount.AccountType == BankAccountType.TC_ SAVINGS) {\nvar payload = BankAccountDataTemplate. renderToString(aBankAccount.ABContact.PublicID, aBankAccount)\n\n—P2s\n—> msg = messageContext.createMessage (payload)\n\n¢ Be extremely careful about modifying entity data in Event Fired rules and\nmessaging plugin implementations\n« Entity changes in these code locations do not cause the application to run or re-run validation\nor preupdate rules\n¢ Use rules to perform only the minimal data changes necessary for integration code\n* Only change fields that are not modifiable from the user interface\n\n+ For example, you might set custom data model extension flags only used by messaging code",
+      "word_count": 120,
+      "avg_confidence": 88.73,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Deploy code changes Gi\n_—RestartServer Reload Changed Classes\n\n¢ Create a rule hierarchy (parent rule ¢ Newly created and modified event\nand then children rules) fired rules\n\nTools VCS Window Help\nD Run ‘Server’\n\nEYE Tools VCS Window Help W Debug ‘Server’\n\nD> Run ‘Server’ Shift+F10 fe aeuneSesveeguath Coveraae)\n\nbe Run ‘Server’ with Coverage WE Debus...\n\nD Run... Alt+Shift+F10 yy Attach to Local Process...\n\nWE Debug... Alt+Shift+F9 [> Edit Configurations...\n\nAy Attach to Local Process... 2B] Import Test Results\n\n[> Edit Configurations... Il Stop ‘Server’\n\n] Import Test Results > EF Show Running List\n| Stop ‘Server’ Ctrl+ F2 Stop B P",
+      "word_count": 103,
+      "avg_confidence": 79.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Demonstration G\n\nExamine event fired rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Question G\n\n_- — Why must an Event Fired rule cast the MessageContext Root object?\n\n7\n¢\n4\n\nSe Soe Se sees esse ese",
+      "word_count": 24,
+      "avg_confidence": 69.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Answer Gi\n\n_- — Why must an Event Fired rule cast the MessageContext Root object?\n¢\n\n¢\n4\n\nMessageContext.Root is of type Object, but message payloads typically need to work\nwith the MessageContext.Root as the type of entity that triggered the message event.\nTherefore, the MessageContext.Root entity must be cast to be of that type.\n\nSoo eS oe ese Sse ese",
+      "word_count": 61,
+      "avg_confidence": 84.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Lesson\nobjectives ¢ Create messages in Event Fired rules\n\nreview ¢ Describe the role that message payloads play\nin messaging",
+      "word_count": 20,
+      "avg_confidence": 90.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Student exercise\n\nConfigure event fired rules",
+      "word_count": 7,
+      "avg_confidence": 95.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

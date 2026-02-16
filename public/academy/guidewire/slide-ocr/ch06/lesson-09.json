@@ -1,0 +1,467 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-09",
+    "slide_count": 41,
+    "slides_with_text": 35,
+    "total_words": 1851,
+    "avg_confidence": 83.54,
+    "processing_time_seconds": 17.24,
+    "extracted_at": "2026-02-13T12:13:57.775414"
+  },
+  "full_text": "Receiving Direct Bill Payments\n\nLesson\nobjectives\n\n¢ Describe the payment lifecycle for both\nautomatic and responsive payments\n\n¢ Enter multiple direct bill payments into\nBillingCenter\n\n¢ Enter a single direct bill payment into\nBillingCenter\n\nPayment lifecycle\n\nMarcus\n\nBusiness\nAnalyst\n\n(\n\nk\nI\n\nAt this point, I’m ready to learn\nabout the payment lifecycle.\n\nGood idea! We'll take a\nlook at both automatic\npayments and\nresponsive payments.\n\nZhang 4\nBilling Clerk\n\nPayments can be automatic or “responsive” G\n\nPayment instrument on invoice stream determines payment method\n\n« Apayment instrument specifies how a policyholder intends to submit payments\nto BillingCenter\n\n« Automatic payment instruments can include » ~\n: : : =\nelectronic and credit card payments: ES or Es\nACH/EFT credit card\n\n« Responsive means the insured will be billed and is required to respond by paying the bill\n¢ All automatic payment instruments require integration work to implement\n¢ Every account has a default payment instrument\n\n* You can override the default payment instrument on the invoice stream\n\nAutomatic payment overview (1 of 4)\n\nInvoice batch\nJ. Op process\n\nro?\n\na.\n[@. payment\nrequest\nfinancial\ninstitution\n\nBillingCenter\n\nAutomatic payment overview (2 of 4)\n\nInvoice batch\nOp process\n\nro9— |G»\n\npayment\n\n]\n\ntet f\n——\nfinancial\n\ninstitution\n\nrequest\n\nPayment Request\nbatch process\n\nBillingCenter\n\nAutomatic payment overview (3 of 4)\n\n® Invoice batch\nAP process\nPayment Request\nbatch process\n\nro9— |G»\n\nfinancial\ninstitution\n\npayment\nrequest\n\nunapplied fund\n\nBillingCenter\n\nAutomatic payment overview (4 of 4)\n\nInvoice batch\nOp process\nPayment Request\n[@) ayment\nTequest\nfinancial [s)\ninstitution\n\nBillingCenter\n\n@<= Gp}\n\nayment\npay! batch\nunapplied fund (any of: 2)\n\ninvoices\n\nResponsive payment overview (1 of 3) G\n\nas\n\nInvoice batch\nr ] invoice Process\nnd\n\npolicyholder\n\nBillingCenter\n\nResponsive payment overview (2 of 3) G\n\nf & is Invoice batch\neo process\n$<\n\npayment G\n\n—\n\nBillingCenter\n\nResponsive payment overview (3 of 3) G\n\nInvoice batch\n@ invoice process —__ ff\n\npolicyholder (e)\n= a> =\n\"men @) ec\n\nunapplied (any of 4) invoices\nfund\n\nBillingCenter\n\nAll payments pass through an unapplied fund G\n\nExample: A single unapplied fund for the account Policy A\n\nPolicy B\n\npayment Default\nUnapplied\n\nAccount ABC\n\nPolicy C\n\nAll payments pass through an unapplied fund G\n\nExample: Each policy has its own unapplied fund\n\nf 200 Billing Level Settings | > |\nBilling Level Policy-Level Billing\nPolicy X\n\nCash Separation Enabled\n\n|\n[pr\n\nAccount XYZ\n\nDesignated Unapplied (Policy X)\neee\nDesignated Unapplied (Policy Y) Policy Y\n\nDesignated Unapplied (Policy Z) Sy Policy Z\n\nQuestion G\n\nae How does the unallocated money get distributed?\n¢\n¢\n\n= SS SS SSS ee\n\nAnswer G\n\n_- — How does the unallocated money get distributed?\n\n¢\n: “ There are four batch processes that allocate money sitting in unapplied funds.\n\n-S S SSeS Se ee\n\nQuick tour of payments: new policy (1 of 4) =\n\nfA) [BR Policy Hoor-8WEBER Accounts DEMO0S70 Aug?23,2018\n\nPolicy Summary [ staredetinqvency Poets |\n\nNotes\n\norn © There are no noteson this policy\nered Coreaey wso\n\nPolicy itetine 1 Year (Aug23 2008) ting Method Direct it\n\nEtective Dates ceras018-oe2sr2019 Send invoices By ws\n\nCancelation Status open Default Payment Method Responsive\n\nDetinguencies 12 months Payment Pan pea\n\n‘UW Compa\n\nFinancials\n\nCurrent PaymentExpected = Equity\n\nPast Due ‘ms Unbilled: $3,298.00 Policy Equity :\nmm Paid: $0.00\n\nate Fee - ity Percen\n\nwe 1m Witten Off: $0.00 Eqoky Percent one\n\nNext Invoice Due $598.00 = Billed: $0.00 Paid Through 0/23/2018\n\n(on Thursday, September 13,\n2018) 1m Past Due: $0.00\n\nNo Payments Received Unapplied Fund\n\nPolicy Value: 3,298.00 Designated Unapplied\n\nTotal Unapplied\n\n| Quick tour: due date arrives (2 of 4)\n\nfA FB Policy Hoor-8WeEBER1 Account# DENO0S70 Aug 23,2018\n\nPolicy Summary\n\n=P | { Tris potcy wit become detingventf the expected payments not received by 09/13/2018.\n\nOverview\nInsured\n\nPoticy Lifetime\nEffective Dates\nCancellation Status\nDetinguencies\n\nUW Company\n\nFinancials\n\nCurrent Payment Expected\nPast Due\n\nLate Fee\n\nNext invoice Due\n\n(on Thursday, September 13,\n2018)\n\nNo Payments Received\n\n1 Year (Aug 23,2018)\n\n(08/23/2018 -08/23/2019 Send Invoices By\nOpen Default Payment Method\n\nin 12 months Payment Plan\n\n$598.00\n\n$598.00\n\n$3,298.00\n\n| Unbilted: $2,700.00\nsm Paid: $0.00\n\n1m Written Of: $0.00\nled: $598.00\n1m Past Due: $0.00,\n\ni =\n\nNotes ®\n© There are no notes on this policy.\n\nEquity\nPolicy Equity (5172.60)\nEquity Percent 5.75%\n\nPaid Through 08/23/2018\n\nUnapplied Fund\n\nDesignated Unapy\n\nTotal Unapplied\n\nQuick tour: expected payment received (3 of 4) =\n\nfA FB Policy Hoor-8WeEBER1 Account# DENO0S70 Aug 23,2018\n\nPolicy Summary i =\n_L\\ This policy will become delinquent if the expected payment is not received by 09/13/2018.\n\nOverview\n\nFinancials\n\nCurrent Payment Expected $598.00 Equity\n\nPast Due : i Untied: $2,700.00 Poticy Equity (172.60)\n= Paid: $0.00\n\nateFee : ity Percent 83\n\n“ 1m Written OF: $0.00 feulgy STs\n\nNext Invoice Due $598.00\n(on Thursday, September 13,\n2018)\n\nled: $598.00 Paid Through 08/23/2018\n1m Past Due: $0.00,\n\nNo Payments Received\n\nUnapplied Fund\n\nPolicy Value: $3,298.00 Designated Unapy\n\nTotal Unapplied\n\nEZ fa DR Poticye H1001-8WEBER-1 Accounte DEMOOSTO Aug23, 2018\n\nPolicy Summary\n\nOverview\nInsured\n\nPolicy Lifetime 1 Year (Aug 23,2018)\nEffective Dates (08/23/2018 -08/23/2019\n\nCancel\n\nStatus Open\nDelinquencies in 12 months\n\n‘UW Company\n\nFinancials\n\nCurrent Payment Expected\nPast Due\n\nLateFee\n\nNext Invoice Due $300.00\n(on Sunday, October 14,\n2018)\n\nt Received $598.00\nJay, September 13,\n\nCurrency uso\nBilling Method Direct Bit\nSend invoices By Mait\nDefault Payment Met Responsive\nPayment Plan P02\n\nPoticy Value:\n\n‘me Unbilted: $2,700.00\nme Paid: $598.00\nsmn Written OFF $0.00\n\n$3,298.00\n\nQuick tour: batch process applies payment (40f4) [5\n\ni 3\n\nNotes ©\n© There are no notes on this policy\n\nEquity\n\nPolicy Equity siz7a0\nEquity Percent 4.25%\n\nPaid 09/29/2018,\n\nUnapplied Fund\n\nDesignated Unapplied\n\nTotal Unapplied\n\n| Multiple Payment Entry wizard G\n\nStep 1 provides a full page of empty lines for quick entry of several payments\nDesktop > Actions > New Payment > Multiple Payment Entry\n\nMultiple Payment Entry Wizard - Enter Payment Information Step (3 [next |\nPolicy Producer re Date* Check (=a\novaeaoie |) | Check + (ea1zeaso 5 ein\n(3) 07/18/2018 e Check + 99-21-5473 $ 134\nHOOL-PNEFFER1 = © | 07/18/2018 | [=] | | Check | 31-22-9081 s 2,319\n(ca) (a i] [2] [Payment © | (o7/ssy2o1e |) | Check So s\n(3) i) ( [2] [Payment + | [orienoi | | Check - s\n() (a) (i [2] [Payment » | [oriezoxe | (| | check 7 A\n(3) s) ( (2) [Payment +) (o7isezor |) | Check . s\nTotal s3orasz\n\nStep 2 lets user confirm the payments\n\nDemonstration G\n\nEnter multiple payments\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nPayment for an unknown target G\n\nMa\nBu:\n\nWhat happens when you\nreceive a payment for a policy\nor account that BillingCenter\ndoesn’t know about yet?\n\nsiness\n\nZhang \\=)34\n\nBilling Clerk\n\nBillingCenter classifies\na payment for an\nunknown target as a\nsuspense payment.\n\nHandling payment with unknown destination (1 of 2) [5\n\nSuspense Payment funds\n\n« Asuspense payment is a payment in which the target is unknown, for example:\n« Account is new and BillingCenter does not know about it yet, or\n* Policy is new and not yet bound\n\n« When the target of a payment is unknown:\n\n1. Payment is receipted into an unapplied fund of type SuspensePayment\n\n+ Each suspense payment is placed in its own unapplied fund\n\na) Policy A is unknown ©\n\nPayment for Policy A SuspensePayment Unapplied (Policy A)\n\nHandling payment with unknown destination (2 of 2) [5\n\nSuspense Payment funds\n\n« Asuspense payment is a payment in which the target is unknown, for example:\n« Account is new and BillingCenter does not know about it yet, or\n* Policy is new and not yet bound\n« When the target of a payment is unknown:\n1. Payment is receipted into an unapplied fund of type SuspensePayment\n+ Each suspense payment is placed in its own unapplied fund\n\n2. When destination becomes known, payment is moved to correct unapplied fund by a batch\nprocess or BillingCenter user\nPolicy A is unknown\nfo) —taasnaneet—- @ ——____\nPayment for Policy A SuspensePayment Unapplied (Policy A) Designated Unapplied (Policy A)\n\nQuestion G\n\n,— — What do you do when entering a batch of multiple payments, and the\nKa account number you have been given as a reference for a payment is not\n4 known by BillingCenter?\n\n= SS SS SSS ee\n\nAnswer G\n\n,— — What do you do when entering a batch of multiple payments, and the\nY account number you have been given as a reference for a payment is not\n: known by BillingCenter?\n\nSelect Suspense instead of Payment as the Type on the Multiple Payment Entry\nscreen.\n\n-S S SSeS Se ee\n\nQuestion G\n\nae Where is unallocated money held?\n¢\n¢\n\n= SS SS SSS ee\n\nAnswer G\n\nwot Where is unallocated money held?\n: “ In an unapplied fund, which can be Default Unapplied (if the account does not use\ncash separation), Designated Unapplied (if the account uses cash separation), or a\n\nSuspensePayment unapplied fund if the destination of the payment is unknown.\n\n-S S SSeS Se ee\n\nApplying a payment immediately\nausiness What if a policyholder sends in\na late payment? Can you\nimmediately apply it to her past\n‘ due invoice?\n\nZ\n\nThe Direct Bill Payment\nscreen allows me to do\nexactly that.\n\nZhang WZ y\nBilling Clerk\n\nEntering a single payment G\nDirect Bill Payment screen\n\nAccount tab > Actions > New Payment > New Direct Bill Payment\nDirect Bill Payment\n\ncount This Payment\n+c > abe\noisibted\nPent Insspense\nfected te wosous cetitet . payment\nscot +(5] 000\n\nRemsinine\n\n. «—_ Select applicable unapplied fund\nif account uses cash separation\n\napplied Fund | Hoor-trnneZ\n\nse Unappied Fund\n‘eseunt (50.0),\n\nPreview Distribution\n\n= | Aesreeate[Byitem = | SortBy|ImvoieDate > | | Goto\n\nml | c~ |\n\nallocation\nPolicyPetiod® im ImvokeBl ite mck Dest = mere Amoumt_——npAmeunt Amount TA\nIni # 1000001 Dvn 0/1208 Unpaid Balance $02.09\nreverent evoszenaies) ——ounsaie oowoxts vemos S00 2200\noon tovotnot evoszenaes) ——ounsai8 oewwoies vemos 0000\n\n$300.00\n\n20200 302.00\n\nQuestion G\n\nL== When making a single payment on the Direct Bill Payment screen, why is\n2 it important to select the correct unapplied fund?\n\n¢\n¢\n\n= SS SS SSS ee\n\nAnswer G\n\nL== When making a single payment on the Direct Bill Payment screen, why is\nY it important to select the correct unapplied fund?\n¢\n\nOnly those invoice items that are payable from the selected unapplied fund are\ndisplayed in the Distribution tab. (In the next lesson, you will learn how to add other\nitems to the distribution.)\n\n-S S SSeS Se ee\n\nDemonstration G\n\nEnter a single payment\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nLesson\nobj ectives ¢ Describe the payment lifecycle for both\nreview automatic and responsive payment\n\n¢ Enter multiple direct bill payments into\nBillingCenter\n\n¢ Enter a single direct bill payment into\nBillingCenter\n\nStudent exercise\n\nEnter new payments",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Receiving Direct Bill Payments",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the payment lifecycle for both\nautomatic and responsive payments\n\n¢ Enter multiple direct bill payments into\nBillingCenter\n\n¢ Enter a single direct bill payment into\nBillingCenter",
+      "word_count": 30,
+      "avg_confidence": 90.37,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Payment lifecycle\n\nMarcus\n\nBusiness\nAnalyst\n\n(\n\nk\nI\n\nAt this point, I’m ready to learn\nabout the payment lifecycle.\n\nGood idea! We'll take a\nlook at both automatic\npayments and\nresponsive payments.\n\nZhang 4\nBilling Clerk",
+      "word_count": 36,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Payments can be automatic or “responsive” G\n\nPayment instrument on invoice stream determines payment method\n\n« Apayment instrument specifies how a policyholder intends to submit payments\nto BillingCenter\n\n« Automatic payment instruments can include » ~\n: : : =\nelectronic and credit card payments: ES or Es\nACH/EFT credit card\n\n« Responsive means the insured will be billed and is required to respond by paying the bill\n¢ All automatic payment instruments require integration work to implement\n¢ Every account has a default payment instrument\n\n* You can override the default payment instrument on the invoice stream",
+      "word_count": 98,
+      "avg_confidence": 88.12,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Automatic payment overview (1 of 4)\n\nInvoice batch\nJ. Op process\n\nro?\n\na.\n[@. payment\nrequest\nfinancial\ninstitution\n\nBillingCenter",
+      "word_count": 19,
+      "avg_confidence": 88.95,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Automatic payment overview (2 of 4)\n\nInvoice batch\nOp process\n\nro9— |G»\n\npayment\n\n]\n\ntet f\n——\nfinancial\n\ninstitution\n\nrequest\n\nPayment Request\nbatch process\n\nBillingCenter",
+      "word_count": 25,
+      "avg_confidence": 83.63,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Automatic payment overview (3 of 4)\n\n® Invoice batch\nAP process\nPayment Request\nbatch process\n\nro9— |G»\n\nfinancial\ninstitution\n\npayment\nrequest\n\nunapplied fund\n\nBillingCenter",
+      "word_count": 24,
+      "avg_confidence": 88.27,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Automatic payment overview (4 of 4)\n\nInvoice batch\nOp process\nPayment Request\n[@) ayment\nTequest\nfinancial [s)\ninstitution\n\nBillingCenter\n\n@<= Gp}\n\nayment\npay! batch\nunapplied fund (any of: 2)\n\ninvoices",
+      "word_count": 30,
+      "avg_confidence": 84.5,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Responsive payment overview (1 of 3) G\n\nas\n\nInvoice batch\nr ] invoice Process\nnd\n\npolicyholder\n\nBillingCenter",
+      "word_count": 17,
+      "avg_confidence": 77.11,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Responsive payment overview (2 of 3) G\n\nf & is Invoice batch\neo process\n$<\n\npayment G\n\n—\n\nBillingCenter",
+      "word_count": 19,
+      "avg_confidence": 75.84,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Responsive payment overview (3 of 3) G\n\nInvoice batch\n@ invoice process —__ ff\n\npolicyholder (e)\n= a> =\n\"men @) ec\n\nunapplied (any of 4) invoices\nfund\n\nBillingCenter",
+      "word_count": 29,
+      "avg_confidence": 75.77,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "All payments pass through an unapplied fund G\n\nExample: A single unapplied fund for the account Policy A\n\nPolicy B\n\npayment Default\nUnapplied\n\nAccount ABC\n\nPolicy C",
+      "word_count": 27,
+      "avg_confidence": 93.38,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "All payments pass through an unapplied fund G\n\nExample: Each policy has its own unapplied fund\n\nf 200 Billing Level Settings | > |\nBilling Level Policy-Level Billing\nPolicy X\n\nCash Separation Enabled\n\n|\n[pr\n\nAccount XYZ\n\nDesignated Unapplied (Policy X)\neee\nDesignated Unapplied (Policy Y) Policy Y\n\nDesignated Unapplied (Policy Z) Sy Policy Z",
+      "word_count": 55,
+      "avg_confidence": 86.46,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question G\n\nae How does the unallocated money get distributed?\n¢\n¢\n\n= SS SS SSS ee",
+      "word_count": 17,
+      "avg_confidence": 65.29,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer G\n\n_- — How does the unallocated money get distributed?\n\n¢\n: “ There are four batch processes that allocate money sitting in unapplied funds.\n\n-S S SSeS Se ee",
+      "word_count": 31,
+      "avg_confidence": 79.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Quick tour of payments: new policy (1 of 4) =\n\nfA) [BR Policy Hoor-8WEBER Accounts DEMO0S70 Aug?23,2018\n\nPolicy Summary [ staredetinqvency Poets |\n\nNotes\n\norn © There are no noteson this policy\nered Coreaey wso\n\nPolicy itetine 1 Year (Aug23 2008) ting Method Direct it\n\nEtective Dates ceras018-oe2sr2019 Send invoices By ws\n\nCancelation Status open Default Payment Method Responsive\n\nDetinguencies 12 months Payment Pan pea\n\n‘UW Compa\n\nFinancials\n\nCurrent PaymentExpected = Equity\n\nPast Due ‘ms Unbilled: $3,298.00 Policy Equity :\nmm Paid: $0.00\n\nate Fee - ity Percen\n\nwe 1m Witten Off: $0.00 Eqoky Percent one\n\nNext Invoice Due $598.00 = Billed: $0.00 Paid Through 0/23/2018\n\n(on Thursday, September 13,\n2018) 1m Past Due: $0.00\n\nNo Payments Received Unapplied Fund\n\nPolicy Value: 3,298.00 Designated Unapplied\n\nTotal Unapplied",
+      "word_count": 127,
+      "avg_confidence": 65.21,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Quick tour: due date arrives (2 of 4)\n\nfA FB Policy Hoor-8WeEBER1 Account# DENO0S70 Aug 23,2018\n\nPolicy Summary\n\n=P | { Tris potcy wit become detingventf the expected payments not received by 09/13/2018.\n\nOverview\nInsured\n\nPoticy Lifetime\nEffective Dates\nCancellation Status\nDetinguencies\n\nUW Company\n\nFinancials\n\nCurrent Payment Expected\nPast Due\n\nLate Fee\n\nNext invoice Due\n\n(on Thursday, September 13,\n2018)\n\nNo Payments Received\n\n1 Year (Aug 23,2018)\n\n(08/23/2018 -08/23/2019 Send Invoices By\nOpen Default Payment Method\n\nin 12 months Payment Plan\n\n$598.00\n\n$598.00\n\n$3,298.00\n\n| Unbilted: $2,700.00\nsm Paid: $0.00\n\n1m Written Of: $0.00\nled: $598.00\n1m Past Due: $0.00,\n\ni =\n\nNotes ®\n© There are no notes on this policy.\n\nEquity\nPolicy Equity (5172.60)\nEquity Percent 5.75%\n\nPaid Through 08/23/2018\n\nUnapplied Fund\n\nDesignated Unapy\n\nTotal Unapplied",
+      "word_count": 129,
+      "avg_confidence": 73.84,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Quick tour: expected payment received (3 of 4) =\n\nfA FB Policy Hoor-8WeEBER1 Account# DENO0S70 Aug 23,2018\n\nPolicy Summary i =\n_L\\ This policy will become delinquent if the expected payment is not received by 09/13/2018.\n\nOverview\n\nFinancials\n\nCurrent Payment Expected $598.00 Equity\n\nPast Due : i Untied: $2,700.00 Poticy Equity (172.60)\n= Paid: $0.00\n\nateFee : ity Percent 83\n\n“ 1m Written OF: $0.00 feulgy STs\n\nNext Invoice Due $598.00\n(on Thursday, September 13,\n2018)\n\nled: $598.00 Paid Through 08/23/2018\n1m Past Due: $0.00,\n\nNo Payments Received\n\nUnapplied Fund\n\nPolicy Value: $3,298.00 Designated Unapy\n\nTotal Unapplied",
+      "word_count": 97,
+      "avg_confidence": 77.67,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "EZ fa DR Poticye H1001-8WEBER-1 Accounte DEMOOSTO Aug23, 2018\n\nPolicy Summary\n\nOverview\nInsured\n\nPolicy Lifetime 1 Year (Aug 23,2018)\nEffective Dates (08/23/2018 -08/23/2019\n\nCancel\n\nStatus Open\nDelinquencies in 12 months\n\n‘UW Company\n\nFinancials\n\nCurrent Payment Expected\nPast Due\n\nLateFee\n\nNext Invoice Due $300.00\n(on Sunday, October 14,\n2018)\n\nt Received $598.00\nJay, September 13,\n\nCurrency uso\nBilling Method Direct Bit\nSend invoices By Mait\nDefault Payment Met Responsive\nPayment Plan P02\n\nPoticy Value:\n\n‘me Unbilted: $2,700.00\nme Paid: $598.00\nsmn Written OFF $0.00\n\n$3,298.00\n\nQuick tour: batch process applies payment (40f4) [5\n\ni 3\n\nNotes ©\n© There are no notes on this policy\n\nEquity\n\nPolicy Equity siz7a0\nEquity Percent 4.25%\n\nPaid 09/29/2018,\n\nUnapplied Fund\n\nDesignated Unapplied\n\nTotal Unapplied",
+      "word_count": 119,
+      "avg_confidence": 73.92,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Multiple Payment Entry wizard G\n\nStep 1 provides a full page of empty lines for quick entry of several payments\nDesktop > Actions > New Payment > Multiple Payment Entry\n\nMultiple Payment Entry Wizard - Enter Payment Information Step (3 [next |\nPolicy Producer re Date* Check (=a\novaeaoie |) | Check + (ea1zeaso 5 ein\n(3) 07/18/2018 e Check + 99-21-5473 $ 134\nHOOL-PNEFFER1 = © | 07/18/2018 | [=] | | Check | 31-22-9081 s 2,319\n(ca) (a i] [2] [Payment © | (o7/ssy2o1e |) | Check So s\n(3) i) ( [2] [Payment + | [orienoi | | Check - s\n() (a) (i [2] [Payment » | [oriezoxe | (| | check 7 A\n(3) s) ( (2) [Payment +) (o7isezor |) | Check . s\nTotal s3orasz\n\nStep 2 lets user confirm the payments",
+      "word_count": 140,
+      "avg_confidence": 69.29,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Demonstration G\n\nEnter multiple payments\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.51,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Payment for an unknown target G\n\nMa\nBu:\n\nWhat happens when you\nreceive a payment for a policy\nor account that BillingCenter\ndoesn’t know about yet?\n\nsiness\n\nZhang \\=)34\n\nBilling Clerk\n\nBillingCenter classifies\na payment for an\nunknown target as a\nsuspense payment.",
+      "word_count": 43,
+      "avg_confidence": 91.36,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Handling payment with unknown destination (1 of 2) [5\n\nSuspense Payment funds\n\n« Asuspense payment is a payment in which the target is unknown, for example:\n« Account is new and BillingCenter does not know about it yet, or\n* Policy is new and not yet bound\n\n« When the target of a payment is unknown:\n\n1. Payment is receipted into an unapplied fund of type SuspensePayment\n\n+ Each suspense payment is placed in its own unapplied fund\n\na) Policy A is unknown ©\n\nPayment for Policy A SuspensePayment Unapplied (Policy A)",
+      "word_count": 92,
+      "avg_confidence": 90.07,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Handling payment with unknown destination (2 of 2) [5\n\nSuspense Payment funds\n\n« Asuspense payment is a payment in which the target is unknown, for example:\n« Account is new and BillingCenter does not know about it yet, or\n* Policy is new and not yet bound\n« When the target of a payment is unknown:\n1. Payment is receipted into an unapplied fund of type SuspensePayment\n+ Each suspense payment is placed in its own unapplied fund\n\n2. When destination becomes known, payment is moved to correct unapplied fund by a batch\nprocess or BillingCenter user\nPolicy A is unknown\nfo) —taasnaneet—- @ ——____\nPayment for Policy A SuspensePayment Unapplied (Policy A) Designated Unapplied (Policy A)",
+      "word_count": 117,
+      "avg_confidence": 90.52,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question G\n\n,— — What do you do when entering a batch of multiple payments, and the\nKa account number you have been given as a reference for a payment is not\n4 known by BillingCenter?\n\n= SS SS SSS ee",
+      "word_count": 41,
+      "avg_confidence": 80.66,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer G\n\n,— — What do you do when entering a batch of multiple payments, and the\nY account number you have been given as a reference for a payment is not\n: known by BillingCenter?\n\nSelect Suspense instead of Payment as the Type on the Multiple Payment Entry\nscreen.\n\n-S S SSeS Se ee",
+      "word_count": 55,
+      "avg_confidence": 89.45,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question G\n\nae Where is unallocated money held?\n¢\n¢\n\n= SS SS SSS ee",
+      "word_count": 15,
+      "avg_confidence": 61.27,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer G\n\nwot Where is unallocated money held?\n: “ In an unapplied fund, which can be Default Unapplied (if the account does not use\ncash separation), Designated Unapplied (if the account uses cash separation), or a\n\nSuspensePayment unapplied fund if the destination of the payment is unknown.\n\n-S S SSeS Se ee",
+      "word_count": 53,
+      "avg_confidence": 86.4,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Applying a payment immediately\nausiness What if a policyholder sends in\na late payment? Can you\nimmediately apply it to her past\n‘ due invoice?\n\nZ\n\nThe Direct Bill Payment\nscreen allows me to do\nexactly that.\n\nZhang WZ y\nBilling Clerk",
+      "word_count": 42,
+      "avg_confidence": 91.39,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Entering a single payment G\nDirect Bill Payment screen\n\nAccount tab > Actions > New Payment > New Direct Bill Payment\nDirect Bill Payment\n\ncount This Payment\n+c > abe\noisibted\nPent Insspense\nfected te wosous cetitet . payment\nscot +(5] 000\n\nRemsinine\n\n. «—_ Select applicable unapplied fund\nif account uses cash separation\n\napplied Fund | Hoor-trnneZ\n\nse Unappied Fund\n‘eseunt (50.0),\n\nPreview Distribution\n\n= | Aesreeate[Byitem = | SortBy|ImvoieDate > | | Goto\n\nml | c~ |\n\nallocation\nPolicyPetiod® im ImvokeBl ite mck Dest = mere Amoumt_——npAmeunt Amount TA\nIni # 1000001 Dvn 0/1208 Unpaid Balance $02.09\nreverent evoszenaies) ——ounsaie oowoxts vemos S00 2200\noon tovotnot evoszenaes) ——ounsai8 oewwoies vemos 0000\n\n$300.00\n\n20200 302.00",
+      "word_count": 116,
+      "avg_confidence": 64.18,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Question G\n\nL== When making a single payment on the Direct Bill Payment screen, why is\n2 it important to select the correct unapplied fund?\n\n¢\n¢\n\n= SS SS SSS ee",
+      "word_count": 32,
+      "avg_confidence": 78.12,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Answer G\n\nL== When making a single payment on the Direct Bill Payment screen, why is\nY it important to select the correct unapplied fund?\n¢\n\nOnly those invoice items that are payable from the selected unapplied fund are\ndisplayed in the Distribution tab. (In the next lesson, you will learn how to add other\nitems to the distribution.)\n\n-S S SSeS Se ee",
+      "word_count": 64,
+      "avg_confidence": 89.41,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Demonstration G\n\nEnter a single payment\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Lesson\nobj ectives ¢ Describe the payment lifecycle for both\nreview automatic and responsive payment\n\n¢ Enter multiple direct bill payments into\nBillingCenter\n\n¢ Enter a single direct bill payment into\nBillingCenter",
+      "word_count": 32,
+      "avg_confidence": 90.53,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Student exercise\n\nEnter new payments",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

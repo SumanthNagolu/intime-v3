@@ -35,8 +35,14 @@ export const contactFormSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().optional(),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
-  phone: z.string().optional(),
-  mobile: z.string().optional(),
+  phone: z.union([
+    z.string(),
+    z.object({ countryCode: z.string(), number: z.string() }),
+  ]).optional(),
+  mobile: z.union([
+    z.string(),
+    z.object({ countryCode: z.string(), number: z.string() }),
+  ]).optional(),
   title: z.string().optional(),
   department: z.string().optional(),
   linkedinUrl: z.string().url('Invalid LinkedIn URL').optional().or(z.literal('')),

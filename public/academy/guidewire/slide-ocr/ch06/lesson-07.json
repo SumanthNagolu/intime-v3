@@ -1,0 +1,423 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-07",
+    "slide_count": 37,
+    "slides_with_text": 34,
+    "total_words": 1540,
+    "avg_confidence": 83.25,
+    "processing_time_seconds": 15.36,
+    "extracted_at": "2026-02-13T12:13:40.531755"
+  },
+  "full_text": "Sending Invoices\n\nLesson\nobjectives\n\n¢ Identify the phases in the invoice lifecycle\n¢ Add a processing fee to invoices\n¢ Describe the payment request lifecycle\n\nInvoicing lifecycle\n\n| Setting the context G\n\nBusiness\nAnalyst\n\nNow that I understand how\ncharges are sliced into invoice\nitems, | would like to know\nabout the invoicing lifecycle.\n\nMarci\nConfiguration\n\nSure! | will also show you Developer,\nhow you can use\nBillingCenter tools to test\nthe lifecycle.\n\nBilling can be automatic or “responsive” G\n\na.\nIpi automatic\nc 6? bank\n\n. payment\noo request\n\nBillingCenter (al\n\ninvoice @ responsive\n\ninsured f @ @ @laccount\n\n¢« Payment Instrument field on the account specifies\nwhether account will be billed automatically or Send Invoices By Email\nresponsively Payment Instrument Responsive\n\n| Basic invoice lifecycle (1 of 2) G\nUUUU\n\nOn invoice hood\nbill date: [: an |\n\nInvoice batch process\n\n& Planned> Billed &\n\ninvoice planned invoice billed\n\n| Basic invoice lifecycle (2 of 2) G\n\nUUUU UUUU\n\nOn invoice Pr a On invoice | mam\n\nbill date: [zi2*] due date +1 EEE\"\nInvoice batch process Invoice Due batch process\n\nBilled> Due §\n\ninvoice planned invoice billed invoice due\n\n| Tools for invoice lifecycle testing G\n\n¢ Advance the testing clock\n\n« As SU, use a Run command\nRun Clock withDayls 30\n\nor\n\n« Use Internal Tools\nAlt + Shift + T>\nInternal Tools >\nTesting System Clock\n\n« Runa batch process from\nServer Tools\nAlt + Shift + T >\nBatch Process Info > Run\n\naddDays ye\naddWeeks\naddMonths v/\n\nwithDefault\nwithBeginOfMonth (C)\nwithEndOfMonth AP\n\nwithOneMoreMonth\nwithOneMoreDay\nwithOneMoreWeek\nwithDayls_15\nwithDayls\n\nEx BillingConter Server Tools|~ Internal Tools | ~\nBatch Process Info\nProcesses EEN EIN EEE oem\n\nBatch Process > Description Action,\n\nActivity Escalation\n\nAdvance Expiration\n\n| Demonstration G\n\nTest the invoice lifecycle\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — Whats the status of every invoice initially after it is created?\n¢\n\n¢\n¢4\n\n~ SSS SS SHH\n\nAnswer G&G\n\n_— — Whats the status of every invoice initially after it is created?\n¢\n\nox Anew invoice has a status of Planned.\n\n~ SSS SS HH\n\nQuestion G\n\n,— — When and how does BillingCenter make an invoice billed?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH\n\nAnswer G&G\n\n,— — When and how does BillingCenter make an invoice billed?\n\n¢\no” On the invoice bill date, the Invoice batch process changes the invoice status to\n\nBilled.\n\n~ SSS SS HH\n\nQuestion G\n\n,— — When and how does BillingCenter make an invoice due?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH\n\nAnswer G&G\n\n,— — When and how does BillingCenter make an invoice due?\n¢\no” One day after the invoice due date, the Invoice Due batch process changes the\n\ninvoice status to Due.\n\n~ SSS SS HH\n\n| How does BillingCenter handle fees? G\n\nmeiness Suppose | need to add a\nAnalyst\n\nprocessing fee. How would | do\nthat?\n\neonnetracan '\nIt depends on the type of fee. Developer _.\n\nYou can specify an invoice\nprocessing fee in the billing\nplan. I'll show you.\n\nInvoice processing fees G\n\nbilling plan Invoice batch process\n\nIf specified in the billing plan, an\ninvoice fee is added when the Invoice\nbatch process makes the invoice billed\n\nFee Handling\n\nInvoice Fee\n\nInvoice (06/08/2019)\n\nInvoice Information\nvoice Informatio Amounts (as of bill date)\n\nBill. 06/08/2019\n\nwhe va Amount Due on Previous\n\nDue Date 06/18/2019 | Invoice\n\nStatus Billed Total Charges $207.66\n\nmass No Total Amount Due $1,320.34\n\nInvoice Items ViewLineItems By Invoiceltems\n\nInstaliment# $ Policy Category $ Description $ Amount +\n5 GLO1-SSINGH-1__Premium Installment $205.66,\n\nAccount Charge Invoi\n\nTotal ‘$207.66\n\n| Demonstration G\n\nAdd an invoice processing fee\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,— — When does BillingCenter add an invoice fee to an invoice?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH\n\nAnswer Gi\n\n,— — When does BillingCenter add an invoice fee to an invoice?\n\n¢\nox The invoice fee is added when an invoice is billed.\n\n~ SSS SS HH\n\nQuestion G\n\n,— — Where do you specify the amount of an invoice fee?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH\n\nAnswer Gi\n\n,— — Where do you specify the amount of an invoice fee?\n\n4\no” The billing plan\n\n~ SSS SS HH\n\n| Ways to handle low balance invoices G\n\nMarcus\nBusines Suppose a policyholder owes\n\nonly $2. Will BillingCenter send\nan invoice for such a trivial\namount?\n\nMarci\nConfiguration\n\nGood question! BillingCenter Developer,\nprovides two choices for\nhandling low balance invoices:\ncarry forward and write off.\n\n| Carry forward example\n\nbilling plan Lowsatance invoices\n\nSuppress Low Balance Yes.\nInvoices\n\nLow Balance Threshold $25.00\n\nGi\n\nInvoice batch process\n\nIf the invoice amount is below the\nThreshold amount, the Invoice\nbatch process carries any charges\n\nOp\n\nLow Balance Handling Carry Forward forward to next planned invoice\nInvoices\n09/29/2019 10/20/2019 1000000337 No\nInvoice (10/29/2019)\nInstallment #1 Invoice Items View Line Items By Invoice Items aa\ncarried forward . rare mall cae are ane A\n. Installment # Placement Date > Policy Category > Billing Instruction + Description Amount +\nfrom previous 2 10/29/2019 HO10-CFWO-1 Premium PolicyIssuance Installment $20.00\ninvoice ——————>. 09/29/2019 HO10-CFWD-1 Premium Policy Issuance Installment $20.00\nTotal $40.00\n\n| Write off example G\n\nbilling plan Low Balance invoices Invoice batch process\njuppressLow Balance Yes If the invoice amount is below the\nThreshold amount, the Invoice\nLow Balai Threshold 10.00 *\n‘ow warance ime 8 Op batch process writes off the amount\nLow Balance Handling Write Off\nInvoices\n10/05/2019 10/26/2019 1000000309 No Planned $98.18 $98.18\nInvoice (10/29/2019)\nInvoice Items View Line Items By Invoice Items +\nInstallment # 5 Placement Date > Policy Category > Billing Instruction | Description > Amount >\n3 09/05/2019 COTVRK29-1 Premium Policy Issuance Installment $9.00\n\nTotal $9.00\n\n| Invoice lifecycle revisited L=\n\nInvoice batch process\n\n§\n\nInvoice Due A= =1\nbatch process a\n\nPlanned > Billed Billed > Due\n\n&\n\ninvoice A invoice A\n—————EEE =\n& Planned > Carry Forward @o\ninvoice A invoice A invoice B\nPlanned > Written Off &\n\ninvoice A\n\n| Automated billing\n\nMarcus\nBusiness\nAnalyst\n\nMost of our customers never see a\n\nbill. Instead, they are automatically\n(billed. The payment is automatic, too.\n\nSen\n\nFor automated billing,\nBillingCenter sends a payment\n\nrequest to the credit card\n\ncompany or other financial\ninstitution. Let’s take a look.\n\nMarci\nConfiguration\n\nDeveloper.\n\n| Payment requests G\nO\n\"E89\n\n« Apayment request is used to bill an account that uses a\nnonresponsive payment instrument\n1. Invoice batch process starts a payment request process on the invoice bill date\n\n2. Payment Request batch process advances the status of the payment request and initiates\nappropriate processing\n\n* Payment requests are scheduled according to:\n« Due date on an invoice and settings on the account's billing plan\n\n« When BillingCenter receives an electronic payment, money is allocated\nautomatically in the same way as other direct bill payments\n\n¢ All forms of electronic payment require integration\n\n« Accounting for payment requests requires configuration\n\n| Payment request cycle: example\n\nBill Date\n\nDue Date\n\nInvoice Number $ Status >\n\nAmount ¢\n\n¢ Apicture of the payment request over time:\n\ninvoice\n\npayment\nrequest\n\nCar |\n\nCreated\n\nCreated\n\nPayment Request Status\n\nRequested: # of Days After\n\nGi\n\nOn invoice bill date\n\n1\n\nbilling plan fixet:*oFbaysBefore a\n\nDrafted\n\nDrafted: # of DaysBefore 1\n\nClosed\n\nClosed On invoice due date\n\nFix Draft Date On Exact Day\nPayment Requests\nRequest Sent Last30days ~ All 7\nStatus > Invoice Bill Date > Request Date > FixDate > DraftDate S Close Date Invoice > Amount >\nCreated 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nRequested 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nFixed 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00,\nDrafted 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nClosed 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\n\n| Payment request statuses and dates G\n\nEi BillingCenter* Desktop |» Account ¥ Policy » Producer ~ Search» Administration | ¥\n\nQName SukiFreeman Account# LAB00085 Jan 7,2020\n\nActions\noa ~ Payment Requests\n© Seenmnery Request Sent Last30days ~ | All 7 fae\nOr Status Invoice Bill Date Request Date Fix Date Draft Date Close Date Invoice Amount\na Closed 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nTotal $500.00\n\n© Payments\n\nit Distributions\n\nDirect debit cannot be stopped after\nthis date\n\nrsements\n\nTransactions\n\nCollateral\n\nQuestion G\n\n_— — Consider the following invoice details and billing plan settings. What is\nY the deadline for changing the payment request?\n\n| 02/0/2020 02/11/2020 1000000345 No Planned $1,232.40\n\n~ SSS SS SHH\n\nAnswer G&G\n\n,— — Consider the following invoice details and billing plan settings. What is\nY the deadline for changing the payment request?\n\n3/07/2018 because the Draft Date is three days before the Due Date and the\npayment request is fixed one day before the Draft Date.\n\n~ SSS SS HH\n\nLesson\nobjectives ¢ Identify the phases in the invoice lifecycle\nreview * Adda processing fee to invoices\n\n¢ Describe the payment request lifecycle\n\n| Student exercise\n\nBill an invoice",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Sending Invoices",
+      "word_count": 2,
+      "avg_confidence": 95.25,
+      "image_size": {
+        "width": 1280,
+        "height": 549
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Identify the phases in the invoice lifecycle\n¢ Add a processing fee to invoices\n¢ Describe the payment request lifecycle",
+      "word_count": 23,
+      "avg_confidence": 86.78,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Invoicing lifecycle",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Setting the context G\n\nBusiness\nAnalyst\n\nNow that I understand how\ncharges are sliced into invoice\nitems, | would like to know\nabout the invoicing lifecycle.\n\nMarci\nConfiguration\n\nSure! | will also show you Developer,\nhow you can use\nBillingCenter tools to test\nthe lifecycle.",
+      "word_count": 46,
+      "avg_confidence": 94.55,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Billing can be automatic or “responsive” G\n\na.\nIpi automatic\nc 6? bank\n\n. payment\noo request\n\nBillingCenter (al\n\ninvoice @ responsive\n\ninsured f @ @ @laccount\n\n¢« Payment Instrument field on the account specifies\nwhether account will be billed automatically or Send Invoices By Email\nresponsively Payment Instrument Responsive",
+      "word_count": 50,
+      "avg_confidence": 80.06,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Basic invoice lifecycle (1 of 2) G\nUUUU\n\nOn invoice hood\nbill date: [: an |\n\nInvoice batch process\n\n& Planned> Billed &\n\ninvoice planned invoice billed",
+      "word_count": 28,
+      "avg_confidence": 83.14,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Basic invoice lifecycle (2 of 2) G\n\nUUUU UUUU\n\nOn invoice Pr a On invoice | mam\n\nbill date: [zi2*] due date +1 EEE\"\nInvoice batch process Invoice Due batch process\n\nBilled> Due §\n\ninvoice planned invoice billed invoice due",
+      "word_count": 41,
+      "avg_confidence": 86.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Tools for invoice lifecycle testing G\n\n¢ Advance the testing clock\n\n« As SU, use a Run command\nRun Clock withDayls 30\n\nor\n\n« Use Internal Tools\nAlt + Shift + T>\nInternal Tools >\nTesting System Clock\n\n« Runa batch process from\nServer Tools\nAlt + Shift + T >\nBatch Process Info > Run\n\naddDays ye\naddWeeks\naddMonths v/\n\nwithDefault\nwithBeginOfMonth (C)\nwithEndOfMonth AP\n\nwithOneMoreMonth\nwithOneMoreDay\nwithOneMoreWeek\nwithDayls_15\nwithDayls\n\nEx BillingConter Server Tools|~ Internal Tools | ~\nBatch Process Info\nProcesses EEN EIN EEE oem\n\nBatch Process > Description Action,\n\nActivity Escalation\n\nAdvance Expiration",
+      "word_count": 97,
+      "avg_confidence": 79.21,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Demonstration G\n\nTest the invoice lifecycle\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Question G\n\n_— — Whats the status of every invoice initially after it is created?\n¢\n\n¢\n¢4\n\n~ SSS SS SHH",
+      "word_count": 22,
+      "avg_confidence": 69.77,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Answer G&G\n\n_— — Whats the status of every invoice initially after it is created?\n¢\n\nox Anew invoice has a status of Planned.\n\n~ SSS SS HH",
+      "word_count": 28,
+      "avg_confidence": 74.14,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Question G\n\n,— — When and how does BillingCenter make an invoice billed?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH",
+      "word_count": 20,
+      "avg_confidence": 69.85,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Answer G&G\n\n,— — When and how does BillingCenter make an invoice billed?\n\n¢\no” On the invoice bill date, the Invoice batch process changes the invoice status to\n\nBilled.\n\n~ SSS SS HH",
+      "word_count": 34,
+      "avg_confidence": 80.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question G\n\n,— — When and how does BillingCenter make an invoice due?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH",
+      "word_count": 20,
+      "avg_confidence": 70.25,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer G&G\n\n,— — When and how does BillingCenter make an invoice due?\n¢\no” One day after the invoice due date, the Invoice Due batch process changes the\n\ninvoice status to Due.\n\n~ SSS SS HH",
+      "word_count": 37,
+      "avg_confidence": 81.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| How does BillingCenter handle fees? G\n\nmeiness Suppose | need to add a\nAnalyst\n\nprocessing fee. How would | do\nthat?\n\neonnetracan '\nIt depends on the type of fee. Developer _.\n\nYou can specify an invoice\nprocessing fee in the billing\nplan. I'll show you.",
+      "word_count": 47,
+      "avg_confidence": 89.09,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Invoice processing fees G\n\nbilling plan Invoice batch process\n\nIf specified in the billing plan, an\ninvoice fee is added when the Invoice\nbatch process makes the invoice billed\n\nFee Handling\n\nInvoice Fee\n\nInvoice (06/08/2019)\n\nInvoice Information\nvoice Informatio Amounts (as of bill date)\n\nBill. 06/08/2019\n\nwhe va Amount Due on Previous\n\nDue Date 06/18/2019 | Invoice\n\nStatus Billed Total Charges $207.66\n\nmass No Total Amount Due $1,320.34\n\nInvoice Items ViewLineItems By Invoiceltems\n\nInstaliment# $ Policy Category $ Description $ Amount +\n5 GLO1-SSINGH-1__Premium Installment $205.66,\n\nAccount Charge Invoi\n\nTotal ‘$207.66",
+      "word_count": 91,
+      "avg_confidence": 83.25,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Demonstration G\n\nAdd an invoice processing fee\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.39,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n,— — When does BillingCenter add an invoice fee to an invoice?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH",
+      "word_count": 21,
+      "avg_confidence": 72.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer Gi\n\n,— — When does BillingCenter add an invoice fee to an invoice?\n\n¢\nox The invoice fee is added when an invoice is billed.\n\n~ SSS SS HH",
+      "word_count": 30,
+      "avg_confidence": 77.8,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question G\n\n,— — Where do you specify the amount of an invoice fee?\n\n¢\n¢\n¢4\n\n~ SSS SS SHH",
+      "word_count": 21,
+      "avg_confidence": 70.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer Gi\n\n,— — Where do you specify the amount of an invoice fee?\n\n4\no” The billing plan\n\n~ SSS SS HH",
+      "word_count": 23,
+      "avg_confidence": 69.48,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Ways to handle low balance invoices G\n\nMarcus\nBusines Suppose a policyholder owes\n\nonly $2. Will BillingCenter send\nan invoice for such a trivial\namount?\n\nMarci\nConfiguration\n\nGood question! BillingCenter Developer,\nprovides two choices for\nhandling low balance invoices:\ncarry forward and write off.",
+      "word_count": 45,
+      "avg_confidence": 93.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Carry forward example\n\nbilling plan Lowsatance invoices\n\nSuppress Low Balance Yes.\nInvoices\n\nLow Balance Threshold $25.00\n\nGi\n\nInvoice batch process\n\nIf the invoice amount is below the\nThreshold amount, the Invoice\nbatch process carries any charges\n\nOp\n\nLow Balance Handling Carry Forward forward to next planned invoice\nInvoices\n09/29/2019 10/20/2019 1000000337 No\nInvoice (10/29/2019)\nInstallment #1 Invoice Items View Line Items By Invoice Items aa\ncarried forward . rare mall cae are ane A\n. Installment # Placement Date > Policy Category > Billing Instruction + Description Amount +\nfrom previous 2 10/29/2019 HO10-CFWO-1 Premium PolicyIssuance Installment $20.00\ninvoice ——————>. 09/29/2019 HO10-CFWD-1 Premium Policy Issuance Installment $20.00\nTotal $40.00",
+      "word_count": 110,
+      "avg_confidence": 75.5,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Write off example G\n\nbilling plan Low Balance invoices Invoice batch process\njuppressLow Balance Yes If the invoice amount is below the\nThreshold amount, the Invoice\nLow Balai Threshold 10.00 *\n‘ow warance ime 8 Op batch process writes off the amount\nLow Balance Handling Write Off\nInvoices\n10/05/2019 10/26/2019 1000000309 No Planned $98.18 $98.18\nInvoice (10/29/2019)\nInvoice Items View Line Items By Invoice Items +\nInstallment # 5 Placement Date > Policy Category > Billing Instruction | Description > Amount >\n3 09/05/2019 COTVRK29-1 Premium Policy Issuance Installment $9.00\n\nTotal $9.00",
+      "word_count": 93,
+      "avg_confidence": 78.45,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Invoice lifecycle revisited L=\n\nInvoice batch process\n\n§\n\nInvoice Due A= =1\nbatch process a\n\nPlanned > Billed Billed > Due\n\n&\n\ninvoice A invoice A\n—————EEE =\n& Planned > Carry Forward @o\ninvoice A invoice A invoice B\nPlanned > Written Off &\n\ninvoice A",
+      "word_count": 48,
+      "avg_confidence": 87.43,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Automated billing\n\nMarcus\nBusiness\nAnalyst\n\nMost of our customers never see a\n\nbill. Instead, they are automatically\n(billed. The payment is automatic, too.\n\nSen\n\nFor automated billing,\nBillingCenter sends a payment\n\nrequest to the credit card\n\ncompany or other financial\ninstitution. Let’s take a look.\n\nMarci\nConfiguration\n\nDeveloper.",
+      "word_count": 49,
+      "avg_confidence": 91.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Payment requests G\nO\n\"E89\n\n« Apayment request is used to bill an account that uses a\nnonresponsive payment instrument\n1. Invoice batch process starts a payment request process on the invoice bill date\n\n2. Payment Request batch process advances the status of the payment request and initiates\nappropriate processing\n\n* Payment requests are scheduled according to:\n« Due date on an invoice and settings on the account's billing plan\n\n« When BillingCenter receives an electronic payment, money is allocated\nautomatically in the same way as other direct bill payments\n\n¢ All forms of electronic payment require integration\n\n« Accounting for payment requests requires configuration",
+      "word_count": 106,
+      "avg_confidence": 89.75,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Payment request cycle: example\n\nBill Date\n\nDue Date\n\nInvoice Number $ Status >\n\nAmount ¢\n\n¢ Apicture of the payment request over time:\n\ninvoice\n\npayment\nrequest\n\nCar |\n\nCreated\n\nCreated\n\nPayment Request Status\n\nRequested: # of Days After\n\nGi\n\nOn invoice bill date\n\n1\n\nbilling plan fixet:*oFbaysBefore a\n\nDrafted\n\nDrafted: # of DaysBefore 1\n\nClosed\n\nClosed On invoice due date\n\nFix Draft Date On Exact Day\nPayment Requests\nRequest Sent Last30days ~ All 7\nStatus > Invoice Bill Date > Request Date > FixDate > DraftDate S Close Date Invoice > Amount >\nCreated 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nRequested 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nFixed 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00,\nDrafted 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nClosed 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00",
+      "word_count": 134,
+      "avg_confidence": 81.01,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "| Payment request statuses and dates G\n\nEi BillingCenter* Desktop |» Account ¥ Policy » Producer ~ Search» Administration | ¥\n\nQName SukiFreeman Account# LAB00085 Jan 7,2020\n\nActions\noa ~ Payment Requests\n© Seenmnery Request Sent Last30days ~ | All 7 fae\nOr Status Invoice Bill Date Request Date Fix Date Draft Date Close Date Invoice Amount\na Closed 12/28/2019 12/29/2019 01/05/2020 01/06/2020 01/07/2020 1000000344 $500.00\nTotal $500.00\n\n© Payments\n\nit Distributions\n\nDirect debit cannot be stopped after\nthis date\n\nrsements\n\nTransactions\n\nCollateral",
+      "word_count": 83,
+      "avg_confidence": 74.18,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question G\n\n_— — Consider the following invoice details and billing plan settings. What is\nY the deadline for changing the payment request?\n\n| 02/0/2020 02/11/2020 1000000345 No Planned $1,232.40\n\n~ SSS SS SHH",
+      "word_count": 34,
+      "avg_confidence": 79.32,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer G&G\n\n,— — Consider the following invoice details and billing plan settings. What is\nY the deadline for changing the payment request?\n\n3/07/2018 because the Draft Date is three days before the Due Date and the\npayment request is fixed one day before the Draft Date.\n\n~ SSS SS HH",
+      "word_count": 51,
+      "avg_confidence": 86.15,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Lesson\nobjectives ¢ Identify the phases in the invoice lifecycle\nreview * Adda processing fee to invoices\n\n¢ Describe the payment request lifecycle",
+      "word_count": 23,
+      "avg_confidence": 86.74,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Student exercise\n\nBill an invoice",
+      "word_count": 6,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

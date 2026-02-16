@@ -1,0 +1,423 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-03",
+    "slide_count": 37,
+    "slides_with_text": 31,
+    "total_words": 1319,
+    "avg_confidence": 87.28,
+    "processing_time_seconds": 14.23,
+    "extracted_at": "2026-02-13T12:17:20.251141"
+  },
+  "full_text": "Extending the Data Model\n\nLesson\nobjectives\n\n* Distinguish between platform, application,\nand customer entities\n\nDistinguish between platform, application,\nand customer typelists\n\n* Create and edit an entity extension\n\n* Create and edit a typelist extension\n\n| Entity\n\nobject entity\n\n¢ An entity is a definition of a business object used by the application, such as\nPolicy, User, ABContact, Producer, etc.\n\n¢ Entities are defined in entity definition files (ETI) eti\n* The ETI file describes the entity in XML format |\n¢ There are two main types of entities:\n\n* Base application entities\n* Custom entities\n\n| Base application entities Gi\n\n¢ Abase application entity is an entity created by Guidewire and shipped as part of\nthe out-of-the-box configuration\n\n* Guidewire creates base application entities on the application or the platform level\n\n¢ Application entities are specific to\napplication\n\n¢ Platform entities are common to all\nGuidewire applications\n\nActivity\n\n| Custom entities Gi\n\neti\n\n¢ Acustom entity is an entity\ncreated by the customer\n\neti\nEI\n\nMedCase Ext LE « Acustom entity can be created\n\nonly on the application level and\nit will be local inside that\napplication\n\n| Entity extension G\n\nBase application entities are read-only to prevent any conflicts during upgrade to\nthe next version of the Guidewire application\n\nThe concepts of an Entity extension allows customers to safely add new fields to\nbase application entities or to override certain attributes of existing base\napplication entity fields\n\nThe entity extension is defined in an ETX file\n\netx\nTo keep the maintenance of entities simple a base application entity E|\ncan have at most one ETX file\n\nFor fields that are added to a base application entity, Guidewire recommends that\nthe field name should end with _Ext\n\nExtending base application entities\na) » The ETX file can be\ncreated on the\n\neti — etx —_ . .\n=| application level and it\nMedCase_Ext Activity is local inside that\napplication\neti — eti —\nClaim Policy\n\netx _—\n\nti = ti =\nS| |\n\nInternal Entity Extension\n\neti etx\n\nMedCase_Ext Activity\n\n¢ An Internal Entity\nExtension is created\nby Guidewire to add\napplication specific\nfunctionality to a\nplatform level entity\n\nti — ti\noe oti\n\nClaim Policy\n\n« An EIX file is local in\nthe application and\nread-only\n\n| Entity extensions and Java classes G\n\nDatabase\n\nApplication Server\ngenerated Java class\nABContact\n\nID\nName\n\nABContact\n\neti al TL.\nABContact.eti\nFaxPhone\n\n_f WebAddress_Ext\n~ EI\n\nFaxPhone\nWebAddress_Ext\n\n‘\n\nABContact.etx\n\nab_abcontact\n\nsave to database variable\n\nread from database B, instance of Java class\n——_ SZ in anABContact\n\n| Typelist G\n\n¢ ATypelist is a fixed, Personinfo | Phone wAddresses | sank accounts\npredefined list of values rr\n(Typecodes) BankName”¢ RoutingNumber* > Account Number\" Account Type\" ¢\n+ Values cannot be dynamically ‘ACME Credit Union 123-987 345678900 Checking = ¥\nNational Bank 745-222 232323566\n\nadded or removed during\nruntime\n\nChecking\n\n[i BankAccountType.tti x |\n\n¢ Defined value often used\nto constrain user input\n\n« When rendered in Ul, Y_typelist BankAccountType\ntypically appears as a typecode checking\ndropdown list typecode savings\n\ntypecode other\n\n| Typelist extension G\n\nBase application Typelists are read-only to prevent any conflicts during upgrade to\nthe next version of the Guidewire application\n\nThe concepts of a Typelist extension allows customers to safely add new\nTypecodes to base application Typelists\n\nThe Typelist extension is defined in a TTX file\n\nTo keep the maintenance of Typelists simple a base application Typelist can have\nat most one TTX file\n\nFor Typecodes that are added to a base application Typelist, Guidewire\nrecommends that the code should end with _Ext\n\nttx\n\nOD\n\n| Typelists in the data model (1 of 2) Gi\n\nttx\n\n¢ Follow similar principles as\nentities\n¢ Defined as XML files\n¢ TTI, TIX and TTX files\n\n* ...\\Metadata\\Typelist folder\nread-only and contains\nplatform and base application\nTypelists\n\nD\n\nValidationLevel BuildingCode_Ext\n\nls te\n\nValidationLevel ValidationLevel\n\n¢ ...\\Extension\\Typelist folder\ncontains everything customer\nspecific\n\nActivityStatus\n\n| Typelists in the data model (2 of 2) Gi\nB & =\n\nttx\n\n¢ Kinds of Typelists:\n\ntti + ValidationLevel is extendable\n\ni) iw)\n\nValidationLevel BuildingCode_Ext * ActivityStatus is internal\n\n* BuildingCode_Ext is custom\n\n¢ Virtual Typelists don’t exist\nas .tti files in Studio\n\nls te\n\nValidationLevel ValidationLevel\n\n« Java code is generated\n\n« A table is populated on the\ndatabase\n\n¢ Virtual typelists behave like\nother typelists\n\nValidationLevel  ActivityStatus\n\n| Scenario G\nSocial media (part A)\n\nAn insurance company wants to implement a social media functionality to provide a\n\nmore personalized experience to customers.\nABContact\n\nTaxID : ssn\nEmailAddress1 : varchar(60)\nEnrolledinSocialMedia_Ext : bit\n\nFriendbook_Ext : varchar(100)\nChirp_E: rarchar(100)\nAverageActivi xt : decimal(4,1)\nLastSocialActi ;_Ext : datetime\n\nPexson: Wiliam Andy\n\nSummary\n\novens sna Configure the tab to collect more\ninformation about the contact\n\nJul 12,2021 1200 8\n\n| Demonstration G\nSocial media (part A) - Analysis\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nSocial media (part A) — Entity Editor\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\nSocial media (part A) — Implementation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,— — How many ETX files can a given entity have?\n\n¢\n¢\n¢\n\nee\n\nAnswer G&G\n\n,~ — How many ETX files can a given entity have?\n\n¢\n¢\n¢\n\nOne ETX file per entity in most cases.\n\na\n\nQuestion\n\n_~ — What datatype do you enter for fields that will store....\n\n¢\no A) String values?\n\nB) Boolean values?\n\nC) Numbers with decimal values?\n\nee\n\nAnswer\n\n¢\n¢\n¢\n\na\n\n_— — What datatype do you enter for fields that will store....\n\nA) String values?\nB) Boolean values?\n\nc) Numbers with decimal values?\n\nThe correct responses are:\nA) varchar\n\nB) Bit\n\nc) decimal\n\nQuestion G\n\n_— — Which datatypes require columnParam subelements?\n\n¢\n¢\n¢\n\nee\n\nAnswer G&G\n\n_~ — Which datatypes require columnParam subelements?\n\n¢\n¢\n¢\n\nvarchar requires size and decimal which requires precision and scale\n\na\n\nQuestion G\n\n,— — Under what circumstances would you want to regenerate the Data\nPa Dictionary?\n\nee\n\nAnswer G&G\n\n,~ — Under what circumstances would you want to regenerate the Data\nPa Dictionary?\n\nYou would want to regenerate the Data Dictionary whenever you extend the data\nmodel and are concerned with data model validation beyond schema validation in the\nEntity Editor. Regenerating the Data Dictionary also updates the dictionary files to\ninclude the new fields (or entities) that you have created.\n\na\n\nQuestion G\n\n,~ — When does a Guidewire application actually modify the physical\nPa structure of the database?\n\nee\n\nAnswer G&G\n\n,~ — When does a Guidewire application actually modify the physical\nPa structure of the database?\n\nThe physical structure of the database is modified only during start-up.\n\na\n\nQuestion G\n\n_- — Describe some of the differences between the files in the\n\nKA ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders.\n7\n\nee\n\nAnswer G&G\n\n_~ — Describe some of the differences between the files in the\n¢ ..\\Metadata\\Typelist\\ and ..\\Extensions\\Typelist\\ folders.\n\nFiles under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT]) files.\n\nLesson\nobjectives * Distinguish between platform, application,\nreview and customer entities\n\n+ Distinguish between platform, application,\nand customer typelists\n\n* Create and edit an entity extension\n\n* Create and edit a typelist extension\n\n| Student exercise\n\nExtending the Data Model",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Extending the Data Model",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Distinguish between platform, application,\nand customer entities\n\nDistinguish between platform, application,\nand customer typelists\n\n* Create and edit an entity extension\n\n* Create and edit a typelist extension",
+      "word_count": 31,
+      "avg_confidence": 90.45,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Entity\n\nobject entity\n\n¢ An entity is a definition of a business object used by the application, such as\nPolicy, User, ABContact, Producer, etc.\n\n¢ Entities are defined in entity definition files (ETI) eti\n* The ETI file describes the entity in XML format |\n¢ There are two main types of entities:\n\n* Base application entities\n* Custom entities",
+      "word_count": 61,
+      "avg_confidence": 87.26,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Base application entities Gi\n\n¢ Abase application entity is an entity created by Guidewire and shipped as part of\nthe out-of-the-box configuration\n\n* Guidewire creates base application entities on the application or the platform level\n\n¢ Application entities are specific to\napplication\n\n¢ Platform entities are common to all\nGuidewire applications\n\nActivity",
+      "word_count": 53,
+      "avg_confidence": 90.22,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Custom entities Gi\n\neti\n\n¢ Acustom entity is an entity\ncreated by the customer\n\neti\nEI\n\nMedCase Ext LE « Acustom entity can be created\n\nonly on the application level and\nit will be local inside that\napplication",
+      "word_count": 39,
+      "avg_confidence": 86.76,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Entity extension G\n\nBase application entities are read-only to prevent any conflicts during upgrade to\nthe next version of the Guidewire application\n\nThe concepts of an Entity extension allows customers to safely add new fields to\nbase application entities or to override certain attributes of existing base\napplication entity fields\n\nThe entity extension is defined in an ETX file\n\netx\nTo keep the maintenance of entities simple a base application entity E|\ncan have at most one ETX file\n\nFor fields that are added to a base application entity, Guidewire recommends that\nthe field name should end with _Ext",
+      "word_count": 100,
+      "avg_confidence": 94.57,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Extending base application entities\na) » The ETX file can be\ncreated on the\n\neti — etx —_ . .\n=| application level and it\nMedCase_Ext Activity is local inside that\napplication\neti — eti —\nClaim Policy\n\netx _—\n\nti = ti =\nS| |",
+      "word_count": 46,
+      "avg_confidence": 82.72,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Internal Entity Extension\n\neti etx\n\nMedCase_Ext Activity\n\n¢ An Internal Entity\nExtension is created\nby Guidewire to add\napplication specific\nfunctionality to a\nplatform level entity\n\nti — ti\noe oti\n\nClaim Policy\n\n« An EIX file is local in\nthe application and\nread-only",
+      "word_count": 44,
+      "avg_confidence": 85.76,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Entity extensions and Java classes G\n\nDatabase\n\nApplication Server\ngenerated Java class\nABContact\n\nID\nName\n\nABContact\n\neti al TL.\nABContact.eti\nFaxPhone\n\n_f WebAddress_Ext\n~ EI\n\nFaxPhone\nWebAddress_Ext\n\n‘\n\nABContact.etx\n\nab_abcontact\n\nsave to database variable\n\nread from database B, instance of Java class\n——_ SZ in anABContact",
+      "word_count": 47,
+      "avg_confidence": 87.71,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Typelist G\n\n¢ ATypelist is a fixed, Personinfo | Phone wAddresses | sank accounts\npredefined list of values rr\n(Typecodes) BankName”¢ RoutingNumber* > Account Number\" Account Type\" ¢\n+ Values cannot be dynamically ‘ACME Credit Union 123-987 345678900 Checking = ¥\nNational Bank 745-222 232323566\n\nadded or removed during\nruntime\n\nChecking\n\n[i BankAccountType.tti x |\n\n¢ Defined value often used\nto constrain user input\n\n« When rendered in Ul, Y_typelist BankAccountType\ntypically appears as a typecode checking\ndropdown list typecode savings\n\ntypecode other",
+      "word_count": 84,
+      "avg_confidence": 81.8,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Typelist extension G\n\nBase application Typelists are read-only to prevent any conflicts during upgrade to\nthe next version of the Guidewire application\n\nThe concepts of a Typelist extension allows customers to safely add new\nTypecodes to base application Typelists\n\nThe Typelist extension is defined in a TTX file\n\nTo keep the maintenance of Typelists simple a base application Typelist can have\nat most one TTX file\n\nFor Typecodes that are added to a base application Typelist, Guidewire\nrecommends that the code should end with _Ext\n\nttx\n\nOD",
+      "word_count": 88,
+      "avg_confidence": 93.42,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Typelists in the data model (1 of 2) Gi\n\nttx\n\n¢ Follow similar principles as\nentities\n¢ Defined as XML files\n¢ TTI, TIX and TTX files\n\n* ...\\Metadata\\Typelist folder\nread-only and contains\nplatform and base application\nTypelists\n\nD\n\nValidationLevel BuildingCode_Ext\n\nls te\n\nValidationLevel ValidationLevel\n\n¢ ...\\Extension\\Typelist folder\ncontains everything customer\nspecific\n\nActivityStatus",
+      "word_count": 54,
+      "avg_confidence": 88.66,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Typelists in the data model (2 of 2) Gi\nB & =\n\nttx\n\n¢ Kinds of Typelists:\n\ntti + ValidationLevel is extendable\n\ni) iw)\n\nValidationLevel BuildingCode_Ext * ActivityStatus is internal\n\n* BuildingCode_Ext is custom\n\n¢ Virtual Typelists don’t exist\nas .tti files in Studio\n\nls te\n\nValidationLevel ValidationLevel\n\n« Java code is generated\n\n« A table is populated on the\ndatabase\n\n¢ Virtual typelists behave like\nother typelists\n\nValidationLevel  ActivityStatus",
+      "word_count": 71,
+      "avg_confidence": 81.98,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Scenario G\nSocial media (part A)\n\nAn insurance company wants to implement a social media functionality to provide a\n\nmore personalized experience to customers.\nABContact\n\nTaxID : ssn\nEmailAddress1 : varchar(60)\nEnrolledinSocialMedia_Ext : bit\n\nFriendbook_Ext : varchar(100)\nChirp_E: rarchar(100)\nAverageActivi xt : decimal(4,1)\nLastSocialActi ;_Ext : datetime\n\nPexson: Wiliam Andy\n\nSummary\n\novens sna Configure the tab to collect more\ninformation about the contact\n\nJul 12,2021 1200 8",
+      "word_count": 68,
+      "avg_confidence": 86.72,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\nSocial media (part A) - Analysis\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 94.79,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Demonstration G\n\nSocial media (part A) — Entity Editor\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 40,
+      "avg_confidence": 94.65,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Demonstration G\nSocial media (part A) — Implementation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 94.54,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question G\n\n,— — How many ETX files can a given entity have?\n\n¢\n¢\n¢\n\nee",
+      "word_count": 17,
+      "avg_confidence": 73.61,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer G&G\n\n,~ — How many ETX files can a given entity have?\n\n¢\n¢\n¢\n\nOne ETX file per entity in most cases.\n\na",
+      "word_count": 25,
+      "avg_confidence": 80.04,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n_~ — What datatype do you enter for fields that will store....\n\n¢\no A) String values?\n\nB) Boolean values?\n\nC) Numbers with decimal values?\n\nee",
+      "word_count": 27,
+      "avg_confidence": 87.19,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n¢\n¢\n¢\n\na\n\n_— — What datatype do you enter for fields that will store....\n\nA) String values?\nB) Boolean values?\n\nc) Numbers with decimal values?\n\nThe correct responses are:\nA) varchar\n\nB) Bit\n\nc) decimal",
+      "word_count": 38,
+      "avg_confidence": 86.87,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question G\n\n_— — Which datatypes require columnParam subelements?\n\n¢\n¢\n¢\n\nee",
+      "word_count": 13,
+      "avg_confidence": 76.07,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer G&G\n\n_~ — Which datatypes require columnParam subelements?\n\n¢\n¢\n¢\n\nvarchar requires size and decimal which requires precision and scale\n\na",
+      "word_count": 23,
+      "avg_confidence": 81.12,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n,— — Under what circumstances would you want to regenerate the Data\nPa Dictionary?\n\nee",
+      "word_count": 17,
+      "avg_confidence": 81.67,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer G&G\n\n,~ — Under what circumstances would you want to regenerate the Data\nPa Dictionary?\n\nYou would want to regenerate the Data Dictionary whenever you extend the data\nmodel and are concerned with data model validation beyond schema validation in the\nEntity Editor. Regenerating the Data Dictionary also updates the dictionary files to\ninclude the new fields (or entities) that you have created.\n\na",
+      "word_count": 65,
+      "avg_confidence": 91.29,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n,~ — When does a Guidewire application actually modify the physical\nPa structure of the database?\n\nee",
+      "word_count": 19,
+      "avg_confidence": 81.35,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer G&G\n\n,~ — When does a Guidewire application actually modify the physical\nPa structure of the database?\n\nThe physical structure of the database is modified only during start-up.\n\na",
+      "word_count": 30,
+      "avg_confidence": 85.87,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question G\n\n_- — Describe some of the differences between the files in the\n\nKA ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders.\n7\n\nee",
+      "word_count": 20,
+      "avg_confidence": 78.76,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer G&G\n\n_~ — Describe some of the differences between the files in the\n¢ ..\\Metadata\\Typelist\\ and ..\\Extensions\\Typelist\\ folders.\n\nFiles under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT]) files.",
+      "word_count": 77,
+      "avg_confidence": 92.06,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Lesson\nobjectives * Distinguish between platform, application,\nreview and customer entities\n\n+ Distinguish between platform, application,\nand customer typelists\n\n* Create and edit an entity extension\n\n* Create and edit a typelist extension",
+      "word_count": 33,
+      "avg_confidence": 90.82,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Student exercise\n\nExtending the Data Model",
+      "word_count": 7,
+      "avg_confidence": 93.5,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

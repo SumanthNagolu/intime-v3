@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-21",
+    "slide_count": 24,
+    "slides_with_text": 22,
+    "total_words": 1068,
+    "avg_confidence": 85.25,
+    "processing_time_seconds": 10.07,
+    "extracted_at": "2026-02-13T12:21:07.246069"
+  },
+  "full_text": "Modes\n\nLesson\nobjectives\n\n¢ Describe how modes are used to create\ndifferent versions of a single container\n¢ Implement modal PCFs\n\n| Widgets that need to vary Gi\n\n+ In some cases, widgets need to vary Hcontact Is.2 person\nLicense Info\n\nsignificantly based on business scenario Driver's License 1213145\n. . State Alaska\n* How could the requirement be implemented? “\nif contact is an adjudicator\n\nLicense Info\nDetails\nAdjudicator License 21-11-14141313\nTeme | ers a woe\nee frre if contact is an attorney\noe vane - we irconta\n; — - Law License FH1-HG2-113924\n\nif contact is a doctor\nMedical Specialty\nCategory Surgery\n\nSpecialty Hospitalist\n\n| Addressing all scenarios within one PCF I\n\nDetails\n\nPerson info\n\nPhone & Addresses | |BBAKAGSDUNE\n\nName\n\nFull Name\n\nPrefix\n\nFirst Name\n\nLast Name\n\nSuffix\n\nwilliam Andy\nMe\n\nWiliam\n\n* Set visible attribute of\nwidgets or containers\n\n* All fields in one container\nEmployment info makes container difficult\nccupaton anager to maintain\n\nEmployer Albertson's\n\nif contact is attorney,\n\nLicense Info adjudicator, or person\n\nDriver's License 3 . :\nState Alaska if contact is person\n\n21-11-14141313 3 <, . - a\nAdjudicator License if contact is adjudicator\n\nDomain Federal\nLaw License FH1-HG2-113924 7 -\n\nif contact is attorney\nSpecialty General Liability\n\nSurge . .\nSateen) “ if contact is doctor\nSpecial Hospitalist\n\n| Addressing scenarios with multiple PCFs a\n\nDetails\n\nsuffix\n\nBank Accounts\n\nGet Input Set for\n<contact's subtype>\n\n¢« Sometimes, best approach is to use a series of\nseparate PCFs, each for a specific scenario\n\n* The application can reference the PCF appropriate to a given\n\nscenario\n\n¢ Application can dynamically select and include the\nappropriate PCF file from the set\n\nInput Set for ABPerson\nLicense Info\n\nDriver's License 1213145\nState Alaska\n\nInput Set for ABAdjudicator\n\nLicense Info\n\nAdjudicator License 21-11-14141313\nDomain Federal\nInput Set for ABAttorney\nLicense Info\n\nLaw License FH1-HG2-113924\nSpecialty General Liability\nInput Set for ABDoctor\nMedical Specialty\n\nCategory Surgery\n\nSpecialty Hospitalist\n\n| Modes G&G\n\n¢ Mode is a property used for PCFs appropriate for a given business scenario\n+ Mode identifies which scenario(s) the PCF is for\n\n+ Modal PCFs always come in sets\nSubtypelnfolnputSet SubtypelnfolnputSet\nmode = ABPerson, ABPolicyPerson mode = ABAttorney\n¢ Every PCF must have: ui\nicense Info\n\n« Same ID Driver's License 2WED458\n\nLicense Info\nLaw License JX3-AK7-309921\n\nState Washington Specialty Workers' Compensation\n* Same number, type, and order\nof required variables SubtypelnfolnputSet SubtypelnfolnputSet\n+ One or more unique modes mode = ABAdjudicator mode = ABDoctor\n(runtime error occurs if License Info Medical Specialty\nreferenced mode belongs to Adjudicator License 23-44-231223 Category General Care\n\nmultiple PCFs in same set) Domain Municipal Specialty Internal Medicine\n\n| Defautt mode\n\nGi\n\n¢ Modal PCF sets include one PCF with mode of \"default\", which is used when\n\nsomething references a mode that doesn't otherwise exist\n\n¢ \"default\" must be lower case\n\n« Runtime error occurs if unknown mode is called and no \"default\" widget exists\n\nSubtypelnfolnputSet\nmode = default\n\nSubtypelnfolnputSet\n\nmode = ABPerson, ABPolicyPerson\n\nLicense Info\nDriver's License 2WED458\nState Washington\n\nSubtypelnfolnputSet\nmode = ABAdjudicator\n\nLicense Info\nAdjudicator License 23-44-231223\nDomain Municipal\n\nSubtypelnfolnputSet\nmode = ABAttorney\n\nLicense Info\nLaw License JX3-AK7-309921\nSpecialty Workers' Compensation\n\nSubtypelnfolnputSet\nmode = ABDoctor\n\nMedical Specialty\n\nCategory General Care\nSpecialty _ Internal Medicine\n\n| Common uses of modal PCFs\n\nModes can be used with:\n* Detail view panels\n\n* Card view panels\n\n* Input sets\n\n* List view panels\n\n+ Info bars\n\n* Screens\n\n* ...and more (refer to documentation)\n\nModes are often used to accommodate variations in:\n\n* Contact type (individuals, companies, and so on)\n\n« Line of business (auto, workers' comp, property, and so on)\n\n| Modes and subtypes\n\n¢ Mode property recognizes explicitly specified subtypes\n« Not aware of a subtype's hierarchy\n\n+ Unspecified subtypes will not render\n\n¢ In this example, the default mode will be selected for\nABPersonVendor and ABDoctor\n\nSubtypelnfolnputSet\n\nSubtypelnfolnputSet\nmode = default\n\nmode = ABAttorney\n\nLicense Info\n\nLaw License JX3-AK7-309921\nSpecialty Workers' Compensation\n\nSubtypelnfolnputSet\n\nmode = ABPerson | ABPolicyPerson\n\nLicense Info\n\nDriver's License 2WED458\n\nState Washington\n\nABContact\n\n| Demonstration G\n\nDisplay policy subtype details\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_~ — Name two business situations in which it might be useful to use modal\n¢ PCFs.\n\n¢\n¢\n\nee ee a\n\nAnswer [a\n\n_~ — Name two business situations in which it might be useful to use modal\n¢ PCFs.\n\n¢\n¢\n\nPossible answers: Different types of contacts (individual vs. business); different lines\nof business (auto vs. property).\n\nSOOO ODD DOOD DODO DOOD\n\nQuestion G\n\n_- — Foragiven set of modal PCFs, what two things must all of the PCFs have\n\nie in common?\n7\n\nee ee a\n\nAnswer [a\n\n_- — Foragiven set of modal PCFs, what two things must all of the PCFs have\nA in common?\n¢\n\nAll of the files must have the same required variables (identical in number, order, and\ntype), as well as the same ID.\n\nSOOO ODD DOOD DODO DOOD\n\nQuestion G\n\n,- — Cana PCF have more than one mode?\n\n4\n¢\n¢\n\nee ee a\n\nAnswer\n\n,- — Cana PCF have more than one mode?\n\n4\n¢\n¢\n\nYes.\n\nSOOO ODD DOOD DODO DOOD\n\nQuestion G\n\n,— — Can the same mode be used by more than one PCF within the same\n¢ modal set?\n\n¢\n¢\n\nee ee a\n\nAnswer [a\n\n,— — Can the same mode be used by more than one PCF within the same\n¢ modal set?\n\n¢\n¢\n\nNo. If the same mode is used in multiple PCFs in the same set, then the application\ncannot determine which file to use and a runtime error occurs.\n\nSOOO ODD DOOD DODO DOOD\n\nQuestion G\n\n_— — What happens if a reference identifies a mode, but there is no PCF with\n¢ that mode in the set?\n\n¢\n¢\n\nee ee a\n\nAnswer [a\n\n_— — What happens if a reference identifies a mode, but there is no PCF with\n¢ that mode in the set?\n\n¢\n¢\n\nIf a PCF with a mode of \"default\" exists, then that default is used. Otherwise, a runtime\nerror occurs.\n\nSOOO ODD DOOD DODO DOOD\n\nLesson\nobjectives ¢ Describe how modes are used to create\nreview different versions of a single container\n\n¢ Implement modal PCFs\n\n| Student exercise\n\nModes",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Modes",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe how modes are used to create\ndifferent versions of a single container\n¢ Implement modal PCFs",
+      "word_count": 20,
+      "avg_confidence": 89.35,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Widgets that need to vary Gi\n\n+ In some cases, widgets need to vary Hcontact Is.2 person\nLicense Info\n\nsignificantly based on business scenario Driver's License 1213145\n. . State Alaska\n* How could the requirement be implemented? “\nif contact is an adjudicator\n\nLicense Info\nDetails\nAdjudicator License 21-11-14141313\nTeme | ers a woe\nee frre if contact is an attorney\noe vane - we irconta\n; — - Law License FH1-HG2-113924\n\nif contact is a doctor\nMedical Specialty\nCategory Surgery\n\nSpecialty Hospitalist",
+      "word_count": 85,
+      "avg_confidence": 78.06,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Addressing all scenarios within one PCF I\n\nDetails\n\nPerson info\n\nPhone & Addresses | |BBAKAGSDUNE\n\nName\n\nFull Name\n\nPrefix\n\nFirst Name\n\nLast Name\n\nSuffix\n\nwilliam Andy\nMe\n\nWiliam\n\n* Set visible attribute of\nwidgets or containers\n\n* All fields in one container\nEmployment info makes container difficult\nccupaton anager to maintain\n\nEmployer Albertson's\n\nif contact is attorney,\n\nLicense Info adjudicator, or person\n\nDriver's License 3 . :\nState Alaska if contact is person\n\n21-11-14141313 3 <, . - a\nAdjudicator License if contact is adjudicator\n\nDomain Federal\nLaw License FH1-HG2-113924 7 -\n\nif contact is attorney\nSpecialty General Liability\n\nSurge . .\nSateen) “ if contact is doctor\nSpecial Hospitalist",
+      "word_count": 111,
+      "avg_confidence": 81.59,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Addressing scenarios with multiple PCFs a\n\nDetails\n\nsuffix\n\nBank Accounts\n\nGet Input Set for\n<contact's subtype>\n\n¢« Sometimes, best approach is to use a series of\nseparate PCFs, each for a specific scenario\n\n* The application can reference the PCF appropriate to a given\n\nscenario\n\n¢ Application can dynamically select and include the\nappropriate PCF file from the set\n\nInput Set for ABPerson\nLicense Info\n\nDriver's License 1213145\nState Alaska\n\nInput Set for ABAdjudicator\n\nLicense Info\n\nAdjudicator License 21-11-14141313\nDomain Federal\nInput Set for ABAttorney\nLicense Info\n\nLaw License FH1-HG2-113924\nSpecialty General Liability\nInput Set for ABDoctor\nMedical Specialty\n\nCategory Surgery\n\nSpecialty Hospitalist",
+      "word_count": 104,
+      "avg_confidence": 91.68,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Modes G&G\n\n¢ Mode is a property used for PCFs appropriate for a given business scenario\n+ Mode identifies which scenario(s) the PCF is for\n\n+ Modal PCFs always come in sets\nSubtypelnfolnputSet SubtypelnfolnputSet\nmode = ABPerson, ABPolicyPerson mode = ABAttorney\n¢ Every PCF must have: ui\nicense Info\n\n« Same ID Driver's License 2WED458\n\nLicense Info\nLaw License JX3-AK7-309921\n\nState Washington Specialty Workers' Compensation\n* Same number, type, and order\nof required variables SubtypelnfolnputSet SubtypelnfolnputSet\n+ One or more unique modes mode = ABAdjudicator mode = ABDoctor\n(runtime error occurs if License Info Medical Specialty\nreferenced mode belongs to Adjudicator License 23-44-231223 Category General Care\n\nmultiple PCFs in same set) Domain Municipal Specialty Internal Medicine",
+      "word_count": 117,
+      "avg_confidence": 88.49,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Defautt mode\n\nGi\n\n¢ Modal PCF sets include one PCF with mode of \"default\", which is used when\n\nsomething references a mode that doesn't otherwise exist\n\n¢ \"default\" must be lower case\n\n« Runtime error occurs if unknown mode is called and no \"default\" widget exists\n\nSubtypelnfolnputSet\nmode = default\n\nSubtypelnfolnputSet\n\nmode = ABPerson, ABPolicyPerson\n\nLicense Info\nDriver's License 2WED458\nState Washington\n\nSubtypelnfolnputSet\nmode = ABAdjudicator\n\nLicense Info\nAdjudicator License 23-44-231223\nDomain Municipal\n\nSubtypelnfolnputSet\nmode = ABAttorney\n\nLicense Info\nLaw License JX3-AK7-309921\nSpecialty Workers' Compensation\n\nSubtypelnfolnputSet\nmode = ABDoctor\n\nMedical Specialty\n\nCategory General Care\nSpecialty _ Internal Medicine",
+      "word_count": 99,
+      "avg_confidence": 86.9,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Common uses of modal PCFs\n\nModes can be used with:\n* Detail view panels\n\n* Card view panels\n\n* Input sets\n\n* List view panels\n\n+ Info bars\n\n* Screens\n\n* ...and more (refer to documentation)\n\nModes are often used to accommodate variations in:\n\n* Contact type (individuals, companies, and so on)\n\n« Line of business (auto, workers' comp, property, and so on)",
+      "word_count": 64,
+      "avg_confidence": 89.38,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Modes and subtypes\n\n¢ Mode property recognizes explicitly specified subtypes\n« Not aware of a subtype's hierarchy\n\n+ Unspecified subtypes will not render\n\n¢ In this example, the default mode will be selected for\nABPersonVendor and ABDoctor\n\nSubtypelnfolnputSet\n\nSubtypelnfolnputSet\nmode = default\n\nmode = ABAttorney\n\nLicense Info\n\nLaw License JX3-AK7-309921\nSpecialty Workers' Compensation\n\nSubtypelnfolnputSet\n\nmode = ABPerson | ABPolicyPerson\n\nLicense Info\n\nDriver's License 2WED458\n\nState Washington\n\nABContact",
+      "word_count": 68,
+      "avg_confidence": 85.56,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Demonstration G\n\nDisplay policy subtype details\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.51,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Question G\n\n_~ — Name two business situations in which it might be useful to use modal\n¢ PCFs.\n\n¢\n¢\n\nee ee a",
+      "word_count": 24,
+      "avg_confidence": 78.87,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Answer [a\n\n_~ — Name two business situations in which it might be useful to use modal\n¢ PCFs.\n\n¢\n¢\n\nPossible answers: Different types of contacts (individual vs. business); different lines\nof business (auto vs. property).\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 42,
+      "avg_confidence": 87.68,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question G\n\n_- — Foragiven set of modal PCFs, what two things must all of the PCFs have\n\nie in common?\n7\n\nee ee a",
+      "word_count": 25,
+      "avg_confidence": 76.8,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer [a\n\n_- — Foragiven set of modal PCFs, what two things must all of the PCFs have\nA in common?\n¢\n\nAll of the files must have the same required variables (identical in number, order, and\ntype), as well as the same ID.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 49,
+      "avg_confidence": 88.24,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Question G\n\n,- — Cana PCF have more than one mode?\n\n4\n¢\n¢\n\nee ee a",
+      "word_count": 17,
+      "avg_confidence": 65.93,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Answer\n\n,- — Cana PCF have more than one mode?\n\n4\n¢\n¢\n\nYes.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 19,
+      "avg_confidence": 65.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question G\n\n,— — Can the same mode be used by more than one PCF within the same\n¢ modal set?\n\n¢\n¢\n\nee ee a",
+      "word_count": 26,
+      "avg_confidence": 79.92,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer [a\n\n,— — Can the same mode be used by more than one PCF within the same\n¢ modal set?\n\n¢\n¢\n\nNo. If the same mode is used in multiple PCFs in the same set, then the application\ncannot determine which file to use and a runtime error occurs.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 56,
+      "avg_confidence": 89.59,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n_— — What happens if a reference identifies a mode, but there is no PCF with\n¢ that mode in the set?\n\n¢\n¢\n\nee ee a",
+      "word_count": 29,
+      "avg_confidence": 80.14,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer [a\n\n_— — What happens if a reference identifies a mode, but there is no PCF with\n¢ that mode in the set?\n\n¢\n¢\n\nIf a PCF with a mode of \"default\" exists, then that default is used. Otherwise, a runtime\nerror occurs.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 50,
+      "avg_confidence": 86.33,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Lesson\nobjectives ¢ Describe how modes are used to create\nreview different versions of a single container\n\n¢ Implement modal PCFs",
+      "word_count": 21,
+      "avg_confidence": 89.62,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Student exercise\n\nModes",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

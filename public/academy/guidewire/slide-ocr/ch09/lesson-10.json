@@ -1,0 +1,588 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-10",
+    "slide_count": 52,
+    "slides_with_text": 46,
+    "total_words": 2481,
+    "avg_confidence": 85.65,
+    "processing_time_seconds": 18.36,
+    "extracted_at": "2026-02-15T18:17:22.341267"
+  },
+  "full_text": "Configuring ClaimCenter Financials\n\nPart 3: Transaction Approvals\n\nLesson\nobjectives ¢ Describe how transactions are approved\n\n¢ Write transaction approval rules that\ndetermine whether approval is required\n¢ Write approval routing rules\n\n| Demonstration G\n\nTransaction approval\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Approval Gosu rules Gi\n\nPre-Setup ¢ Determine whether transactions/checks require approval\n\n¢ Route approval activities to the person(s) whose approval\n\nTransaction Approval . .\nuu is required\n\nApproval Routing\n\nCreate and\nroute\napproval\nactivity\n\nClaim Pre-update Set status\n\nto Pending\nApproval\n\nRequires\n\nA 1?\nTransaction Post-setup pproval\n\nTransaction\n\nTransaction Pre-update Set\n\nSet status to\nClaim Validation\n\nSubmission\n\nTransaction Validation\n\n| Transaction approval Gi\n¢ Transaction is usually submitted by a user who may or may not have configured\nauthority limits\n« May also be submitted by Initial Reserve Gosu rules as part of exposure setup\n\n¢ Each transaction in the set may be tested against some authority limit, a Gosu\nrule, or both\n\n¢ Approval always occurs at the TransactionSet level\n\n¢ Either all transactions in set are approved or none are approved\n\n(Og\nRequires\n<> Approval?\n& <>\n\nSubmitting User\n\n| Determining whether approval is required\n\n¢« Two mechanisms identify transactions that require approval\n¢ Authority limits\n* Transaction approval rules\n\n* Configure to use either or both mechanisms\n\nCreate and\nroute\napproval\nactivity\n\nSet status\nto Pending\nApproval\n\n9\nSubmission\n\n| If no approval is required\n\n¢ For reserve transactions, reserve lines are created or modified\n\n¢ For payment transactions, checks are put into \"awaiting submission\" status\n\nCreate and\nroute\napproval\nactivity\n\nSet status\nto Pending\nApproval\n\nRequires\nApproval?\n\n| If approval is required G\n\n¢ The TransactionSet and all its transactions are set to \"pending approval“ status\n\n« An approval activity is created and routed according to approval routing rules\n\nRequires\nApproval?\n\nSet status to\nSubmitting\nor Awaiting\nSubmission\n\n| If a transaction set is rejected if\n\nTransaction set remains in the system, but no further action is taken.\n\nSet status\nto Rejected\n\nSet status Create and\n\nRequires route\n\nto Pending\n\n1?\nApproval? eel\n\napproval\nactivity\n\n| If a transaction set is approved\n\nWhen a transaction set is\napproved, approval rules\nare re-executed using\npermissions of last\napproving user.\n\n* This enables multi-stage\napproval\n\nSet status\nto Pending\n\nApproval\n\nTransaction\nset\napproved?\n\nSet status\nto Pending\nApproval\n\nCreate and\nroute\napproval\nactivity\n\n| Transaction set approval methods Gi\n\n¢ Transaction Set approval\n* transactionSet.requiresApproval()\n+ When executed, transaction set is flagged as needing approval\n¢ Approval routing rules\n* transactionSet.approveByGroupSupervisor()\n+ Approval activity routed to supervisor of owning group\n\n* transactionSet.setApprovingUser()\n\n« Approval activity routed to specified user and group\n\n<> Set status Creatand\n\nroute\napproval\nactivity\n\nto Pending\nApproval\n\nQuestion\n\n,~ — At what transactional hierarchy level does approval happen?\n\n¢\n4\n¢\n\nSS oe ooo ee oe ooo ooOD\n\nAnswer\n\n,~ — At what transactional hierarchy level does approval happen?\n\n¢\n4\n¢\n\nThe correct answer is at the level of the TransactionSet\n\nSS See eo ee oo ooo SoD\n\nQuestion\n\n,~ — What happens after a transaction set is approved? Why?\n\n¢\n4\n¢\n\nSS oe ooo ee oe ooo ooOD\n\nAnswer\n\nae What happens after a transaction set is approved? Why?\n4\n¢\nThe correct answer is approval rules are re-executed using the permissions of the last\n\napproving user. This enables multi-stage approvals.\n\nSS See eo ee oo ooo SoD\n\nQuestion\n\n,~ — What are two mechanisms for identifying transactions that need\n\noo approval?\n¢\n\nSS oe ooo ee oe ooo ooOD\n\nAnswer\n\n,~ — What are two mechanisms for identifying transactions that need\n\noo approval?\n¢\n\nThe correct answers are:\n¢ Authority Limits\n¢ Transaction Approval Rules\n\nSS See eo ee oo ooo SoD\n\nAuthority limits\n\n| Authority limits\n\nGi\n\n¢ Are rules which limit the transactions an adjuster can create without approval\n\n¢ An authority limit consists of (at a minimum):\n\n« A limit type (such as \"total payments for the entire claim\")\n« An amount (such as $15,000)\n\n$0K\n\n$0K\n\n$10K  $20K\n\n$10K © $20K\n\nExposure Reserves:\n$10,000\n\nTotal Claim Payments:\n$15,000\n\n| Components of an authority limit Gi\n\nInspector\n\nName Inspector\nDescription Ability to approve payments on-site for immediate checkissuance\n‘Authority Limits Limit Type > PolicyType Coverage Type > Cost Type > Amount >\nPayment amount Personal Auto Claim Cost $10,000.00\nPayment amount PersonalAuto Liability - Bodily Injury and Property Damage Claim Cost $15,000.00\nClaim payments to date Businessowners Collision Unspecified Cost Type\n. . Claim total reserves Commercial Auto Collision - Limited Coverage Claim Cost\n° Criteria: Exposure available reserves Commercial Package ‘Comprehensive Expense -A&O\n* Exposure payments to date Commercial Property Death & Disability Benefit Expense - D&CC\nExposure total reserves Farmowners Electronic Equipment\n© Limi ired General Uabitty\nLimit type (required) == Homeowners Medial Payments\n. . Reserve change Inland Marine Mexico Coverage Limited\n* Policy type (optional) IP- Arkansas\nPersonal Travel PiP- Delaware\n. Personal Umbrella PIP - District of Columbia\n* Coverage type (optional) Professional Liability PIP -Florida\nWorkers’ Compensation PIP-Hawal\n. ji PIP - Kansas\nCost type (optional) ne cnenchy\n. PiP-Maryiand\n« Amount (required) BP Massachusets\n\nPi\n\nMinnesota\n\n| Authority limit profiles G\n\nAn authority limit profile is a collection of authority limits assigned to one or more\nusers.\n\n* Can be pre-defined (created once and shared across multiple users)\n\n* Can be custom (created for a single user)\n\n@ @ Adjuster Profile\n\n—>> '\ne& Exposure Reserves:\n“i $10,000\nAndy Applegate $OK $10K $20K\n\na) > : Total Payments:\naye : $15,000\n\nDana Evans $OK $10K $20K\n\n| Editing and creating pre-defined profiles Gi\n\nAuthority Limit Profile\n\nDescription > fe}\n‘Adjuster default authority\n\nClaims supervisor default authority\n\nRegional Supe Regional supervisor default authority\n\nAdjuster (ieeanterarumerate\n\nAuthority Limits Limit Type Policy Type 2 Coverage Type > Cost Type ‘Amount\nClaim payments to date 515,000.00\nClaim total reserves 515,000.00\n\nNew Authority Limit Profile (eeaoiytimierrotte\n\n*(l\n\n¢ Attributes Name\n\nDescription\n\nAuthority Limits\n\nimit Type  PolicyType Coverage Type Cost Type > Amount\nNo data to display\n\n| Assigning a pre-defined profile to a user Gi\n\nEach user can have at most one authority profile.\n* Profile is assigned through the User screen\n\nAndy Applegate\n\nBasics | Profile | Authority Limits | Attributes | Regions | Details\n\nAuthority Limit Profile Adjuster\nDescription Adjuster default authority\nAndy Applegate Authority Limits\n] Limit Type + Policy Type 2 _@Overage Type 2 Cost Type > Amount.\nBasics | Profile | Authority Limits | Attributes | Regions | Details Claim payments to date $15,000.00\nClaim total reserves. $15,000.00\n‘Adjuster + ,\nDescription snone>\nCustom\neoahoaey Een) Claims Supervisor\nLimit Type > Regional Supervisor ype = Amount\nClaim payments to date $15,000.00\n\nClaim total reserves $15,000.00\n\n| Assigning a custom profile to a user\n\n« Auser can also have a custom profile\n\n* Select “Custom” from the Authority Limit Profile dropdown\n\n¢ Specifies a set of authority limits not shared with other users\n\nAndy Applegate\n\nBasics | Profile | Authority Limits | Attributes | Regions\n\nDetails\n\nAuthority Limit Profile\n\nCustom’\n\nDescription\nAuthority Limits\nLimit Type\" >\n\nClaim payments to date\nClaim payments to date\n\nClaim total reserves\n\nCustom Profile\n\nPolicy Type >\n| | <none>\n+ | | Personal Auto\n~ | | none\n\nCoverage Type\n<none>\n<none>\n\n<none>\n\nCost Type +\n<none>\n\n<none>\n\n<none>\n\nGi\n\n‘Amount *\n15,000.00\n25,000.00\n\n50,000.00\n\n| Limiting by policy, coverage, and cost type Gi\n\nLimiting by coverage or cost type will generate an error to prevent any transaction\nthat does not match the coverage or cost type.\n\n‘Authority Limits\nLimitType + PolicyType > CoverageType + CostType + Amount\nClaim paymentsto date 15,000.00\n\nClair total reserves $15,000.00\n\nEdit Reserves\n\nErrors:\n\n© Youdon'thave the authority to submit this item for approval\n\n© Youdon't have the authority to submit this item for approval\n\nAllline items added or changed below will be submitted as a group. Any line item with no change will not be saved. Any line item with Pending Approval reserves that has its New Available Reserves set to equal its Cu\nPending Approval reserves deleted. Comments are saved only when another field on the line has changed.\n\nCurrently Pending\nExposure > Coverage > Cost Type” > CostCategory” > Available Approval New Available Reserves *\na) Ast Party Vehicle - Stan Beemish Com ive Expense-A5O Vehicle inspection $500.00 8 500.00\n\naaron santosh = [ pi, J cincon =) (nee E . ac or)\n\n$500.00 : 181,500.00\n\n| Evaluation of authority limits by Gosu rules Gi\n¢ Itis possible to use Gosu rules, rather than the built-in checker, to evaluate\nauthority limits\n¢ To do this:\n\n1. Disable authority limit checking for transactions by setting CheckAuthorityLimits to false in\nconfig.xml\n\n<param name=\"CheckAuthorityLimits\" value='\n\n2. Write selective rules that check users’ authority limits and reject or require approval\naccordingly\n\n3. Write validation rules that check against limits for all other transactions\n\n| Demonstration G\n\nAuthority limits\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,- — lfauser has a $15000 approval limit for Comprehensive coverage, what\noo effect does that have on their approval limit for Collision coverage?\n\nSS oe ooo ee oe ooo ooOD\n\nGi\n\nAnswer a\n\n,- — lfauser has a $15000 approval limit for Comprehensive coverage, what\noo effect does that have on their approval limit for Collision coverage?\n\nThe correct answer is unless they have another limit line that enables Collision\ncoverage, they cannot approve Collision transactions at all.\n\nSS See eo ee oo ooo SoD\n\n| Student exercise\n\nAuthority limits\n\n| Transaction approval and approval routing Gi\n\n¢ Transaction approval rules implement logic for approval requirements that cannot\nbe captured in an authority limit, such as\n\n* Logic beyond the given limit types\n¢ Logic tied to attributes other than coverage and cost type\n* Logic that cannot easily be associated to given users\n\n¢ Approval routing rules assign approval ownership\n\n| Transaction approval rules Gi\n\n¢ Typically, all (relevant) rules are executed\n* The cause for additional approvals will be added to the approval activity\n¢ Atransaction set either requires or does not require approval\n* There may be additional causes that the approving supervisor should know about\n\n¢ By executing all rules, the approval activity will contain a list of all limits that have been\nexceeded\n\n#) TransactionApprovalRules.grs |\n\nv ims Transaction Approval Rules\n#) Y TAPo1000 - PIP\n\niv} TAP04000 - Claim And Exposures Should Be At Ability To Pay\n=} |\\¥} TAPOS000 - Optionally Check For Duplicate Checks\n\n| The requireApproval() method Gi\n\n¢ Syntax: transactionSet.requireApproval(\"reason\").\n« Method only on available the TransactionSet object (not Transaction or Check)\n\nUSES:\nuses gw.api.locale.DisplayKey\nCONDITION (transactionSet : entity.TransactionSet):\n\nreturn transactionSet.Subtype == TC_CHECKSET\nACTION (transactionSet ‘ransactionSet, actions : gw.rules.Action):\n\nvar totalIncurredAmt = util. financials.CustomCales.MyTotalIncurredNet.getAmount (transactionSet.Claim)\nvar exceedAmount = new gw.api.financials.CurrencyAmount (20000, totalIncurredAmt.Currency)\n\ntransactionSet. requireApproval (\nDisplayXey.get(\"Total Incurred on the claim exceeds {0}\",\n\ngw.api.util.CurrencyUtil. renderAsCurrency(exceedAmount) ) )\n\n| Approval routing rules Gi\n\n¢ Approval routing is similar to assignment, but for approval activities\n\n* Become active when an approval activity is created\n\n¢ One set of rules for transaction set approval routing, and one for bulk invoice\napproval routing\n\n* Typically, not all relevant rules are executed\n\n« As soon as one rule makes assignment, execution exits out of rule set\n\nY DF Rule Sets\nY_ Bil ApprovalRouting\n\n#) ApprovaiRules\n| #) BulkinvoiceApprovalAssignmentRules a\n®) ApprovalRules.grs &) BulkinvoiceApprovalAssignmentRules.grs\n\nv BF — Approval Rules | GF — Bulkinvoice Approval Assignment Rules\n) © ARR01000 - Western Regional Auto Supervisors\n\n4 €) J ARB01000 - Western Regional Auto Supervisors\n#) © ARR02000 - Try to assign to group supervisor #) 1 ARB02000 - Try to assign to group supervisor\n©) HZ ARR03000 - Default rule #€) Z AR803000 - Default rule\n\n| Default configuration approval routing rules Gi\n\nIn the default configuration, the two rule sets are nearly identical.\n\n#) ApprovalRules.grs\n\nv &} \\ Approval Rules\n\n=) MY] ARRO1000 - Western Regional Auto Supervisors\n©] [V] ARRO2000 - Try to assign to group supervisor\n©] [V] ARRO3000 - Default rule\n\n| #) BulkinvoiceApprovalAssignmentRules.grs\n\nv BulkInvoice Approval Assignment Rules\n\n#) ] ARB01000 - Western Regional Auto Supervisors\n©) |v] ARB02000 - Try to assign to group supervisor\n©] |v] ARBO3000 - Default rule\n\n| Approval routing methods:\napproveByUserSupervisor\nSyntax: transactionSet.approveByUserSupervisor().\n« No parameters\n+ Assigns to group supervisor based on the user who submitted the transaction\n\n+ If submitting user is in multiple groups, goes to the supervisor of the owning group\n\nCONDITION (transactionSet entity .TransactionSet) :\n\nreturn /* This action vill\n\ntransactionSet.approveByUserSup\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\nactions.exit()\n\nEND\n\n| Approval routing methods: Gi\napproveByGroupSupervisor\nSyntax: transactionSet.approveByGroupSupervisor().\n« No parameters; routed to supervisor of owning group\n\n¢ Returns false if user needing approval is group supervisor\n\nentity .TransactionSet) :\n5 nt if\n\ntransactionSet.approveByGroupSupervisor ()\n\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\nactions.exit()\n\nEND\n\n| Approval routing methods: setApprovingUser Gi\n\nSyntax: transactionSet.setApprovingUser(user, group).\n* Routed to specified user and specified group\n\n« Use Queries and/or findUserByUserName() to retrieve users and groups\n\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\n\nr croup sl or.\n\ntransactionSet.setApprovingUser (util.RuleGroups. instance.getHeadquartersSupervisor(),\nutil.RuleGroups. instance.getHeadquarters ())\n\n| Exiting from approval routing rules Gi\n\n¢ After object is successfully assigned, you typically want no other rules to be\nexecuted\n\n¢ Approval routing methods are Boolean — return true if the assignment was successful\n* Otherwise, fall through to a default assignment rule\n¢ Use actions.exit() as with assignment rules\n\nCONDITION (transactionSet : entity.TransactionSet):\n\nreturn /* I ¥\n\nthe request is not the\ntransactionSet.approveByGroupSupervisor ()\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\n\nactions.exit()\n\nEND\n\n| Demonstration G\n\nTransaction approval rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nAppendix: Straight-Through Invoice Gi\nProcessing (STIP)\n« Automates the approval and payment of many routine invoices\n\n« Payments can be made against Reserve Lines, at either the Claim or the\nExposure level\n\n¢ For information about configuring STIP, see the on “Configuring Vendor Services”\n\nQuestion\n\n,~ — What do transaction approval rules and approval routing rules,\n\noo respectively, do?\n\nSS oe ooo ee oe ooo ooOD\n\nAnswer\n\n,~ — What do transaction approval rules and approval routing rules,\n\noo respectively, do?\n\n¢\n\nThe correct answer is:\n\nTransaction approval rules implement approval requirement logic that cannot be\ncaptured in an authority limit.\n\nApproval routing rules assign approval ownership.\n\nSS See eo ee oo ooo SoD\n\nLesson\nobjectives ¢ Describe how transactions are approved\nreview ¢ Write transaction approval rules that\n\ndetermine whether approval is required\n¢ Write approval routing rules\n\n| Student exercise\n\nApproval for reserves\nwhere fault rating is unknown\n\n| Student exercise\n\nRequire regional supervisor approval",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring ClaimCenter Financials\n\nPart 3: Transaction Approvals",
+      "word_count": 7,
+      "avg_confidence": 94.5,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe how transactions are approved\n\n¢ Write transaction approval rules that\ndetermine whether approval is required\n¢ Write approval routing rules",
+      "word_count": 24,
+      "avg_confidence": 89.17,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Demonstration G\n\nTransaction approval\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Approval Gosu rules Gi\n\nPre-Setup ¢ Determine whether transactions/checks require approval\n\n¢ Route approval activities to the person(s) whose approval\n\nTransaction Approval . .\nuu is required\n\nApproval Routing\n\nCreate and\nroute\napproval\nactivity\n\nClaim Pre-update Set status\n\nto Pending\nApproval\n\nRequires\n\nA 1?\nTransaction Post-setup pproval\n\nTransaction\n\nTransaction Pre-update Set\n\nSet status to\nClaim Validation\n\nSubmission\n\nTransaction Validation",
+      "word_count": 60,
+      "avg_confidence": 89.49,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Transaction approval Gi\n¢ Transaction is usually submitted by a user who may or may not have configured\nauthority limits\n« May also be submitted by Initial Reserve Gosu rules as part of exposure setup\n\n¢ Each transaction in the set may be tested against some authority limit, a Gosu\nrule, or both\n\n¢ Approval always occurs at the TransactionSet level\n\n¢ Either all transactions in set are approved or none are approved\n\n(Og\nRequires\n<> Approval?\n& <>\n\nSubmitting User",
+      "word_count": 82,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Determining whether approval is required\n\n¢« Two mechanisms identify transactions that require approval\n¢ Authority limits\n* Transaction approval rules\n\n* Configure to use either or both mechanisms\n\nCreate and\nroute\napproval\nactivity\n\nSet status\nto Pending\nApproval\n\n9\nSubmission",
+      "word_count": 41,
+      "avg_confidence": 89.15,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| If no approval is required\n\n¢ For reserve transactions, reserve lines are created or modified\n\n¢ For payment transactions, checks are put into \"awaiting submission\" status\n\nCreate and\nroute\napproval\nactivity\n\nSet status\nto Pending\nApproval\n\nRequires\nApproval?",
+      "word_count": 39,
+      "avg_confidence": 93.35,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| If approval is required G\n\n¢ The TransactionSet and all its transactions are set to \"pending approval“ status\n\n« An approval activity is created and routed according to approval routing rules\n\nRequires\nApproval?\n\nSet status to\nSubmitting\nor Awaiting\nSubmission",
+      "word_count": 41,
+      "avg_confidence": 90.62,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| If a transaction set is rejected if\n\nTransaction set remains in the system, but no further action is taken.\n\nSet status\nto Rejected\n\nSet status Create and\n\nRequires route\n\nto Pending\n\n1?\nApproval? eel\n\napproval\nactivity",
+      "word_count": 37,
+      "avg_confidence": 89.97,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| If a transaction set is approved\n\nWhen a transaction set is\napproved, approval rules\nare re-executed using\npermissions of last\napproving user.\n\n* This enables multi-stage\napproval\n\nSet status\nto Pending\n\nApproval\n\nTransaction\nset\napproved?\n\nSet status\nto Pending\nApproval\n\nCreate and\nroute\napproval\nactivity",
+      "word_count": 46,
+      "avg_confidence": 94.61,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Transaction set approval methods Gi\n\n¢ Transaction Set approval\n* transactionSet.requiresApproval()\n+ When executed, transaction set is flagged as needing approval\n¢ Approval routing rules\n* transactionSet.approveByGroupSupervisor()\n+ Approval activity routed to supervisor of owning group\n\n* transactionSet.setApprovingUser()\n\n« Approval activity routed to specified user and group\n\n<> Set status Creatand\n\nroute\napproval\nactivity\n\nto Pending\nApproval",
+      "word_count": 58,
+      "avg_confidence": 88.53,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Question\n\n,~ — At what transactional hierarchy level does approval happen?\n\n¢\n4\n¢\n\nSS oe ooo ee oe ooo ooOD",
+      "word_count": 21,
+      "avg_confidence": 65.11,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Answer\n\n,~ — At what transactional hierarchy level does approval happen?\n\n¢\n4\n¢\n\nThe correct answer is at the level of the TransactionSet\n\nSS See eo ee oo ooo SoD",
+      "word_count": 31,
+      "avg_confidence": 72.5,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Question\n\n,~ — What happens after a transaction set is approved? Why?\n\n¢\n4\n¢\n\nSS oe ooo ee oe ooo ooOD",
+      "word_count": 22,
+      "avg_confidence": 68.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Answer\n\nae What happens after a transaction set is approved? Why?\n4\n¢\nThe correct answer is approval rules are re-executed using the permissions of the last\n\napproving user. This enables multi-stage approvals.\n\nSS See eo ee oo ooo SoD",
+      "word_count": 40,
+      "avg_confidence": 81.31,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n,~ — What are two mechanisms for identifying transactions that need\n\noo approval?\n¢\n\nSS oe ooo ee oe ooo ooOD",
+      "word_count": 22,
+      "avg_confidence": 68.45,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n,~ — What are two mechanisms for identifying transactions that need\n\noo approval?\n¢\n\nThe correct answers are:\n¢ Authority Limits\n¢ Transaction Approval Rules\n\nSS See eo ee oo ooo SoD",
+      "word_count": 33,
+      "avg_confidence": 71.97,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Authority limits",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Authority limits\n\nGi\n\n¢ Are rules which limit the transactions an adjuster can create without approval\n\n¢ An authority limit consists of (at a minimum):\n\n« A limit type (such as \"total payments for the entire claim\")\n« An amount (such as $15,000)\n\n$0K\n\n$0K\n\n$10K  $20K\n\n$10K © $20K\n\nExposure Reserves:\n$10,000\n\nTotal Claim Payments:\n$15,000",
+      "word_count": 58,
+      "avg_confidence": 83.84,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Components of an authority limit Gi\n\nInspector\n\nName Inspector\nDescription Ability to approve payments on-site for immediate checkissuance\n‘Authority Limits Limit Type > PolicyType Coverage Type > Cost Type > Amount >\nPayment amount Personal Auto Claim Cost $10,000.00\nPayment amount PersonalAuto Liability - Bodily Injury and Property Damage Claim Cost $15,000.00\nClaim payments to date Businessowners Collision Unspecified Cost Type\n. . Claim total reserves Commercial Auto Collision - Limited Coverage Claim Cost\n° Criteria: Exposure available reserves Commercial Package ‘Comprehensive Expense -A&O\n* Exposure payments to date Commercial Property Death & Disability Benefit Expense - D&CC\nExposure total reserves Farmowners Electronic Equipment\n© Limi ired General Uabitty\nLimit type (required) == Homeowners Medial Payments\n. . Reserve change Inland Marine Mexico Coverage Limited\n* Policy type (optional) IP- Arkansas\nPersonal Travel PiP- Delaware\n. Personal Umbrella PIP - District of Columbia\n* Coverage type (optional) Professional Liability PIP -Florida\nWorkers’ Compensation PIP-Hawal\n. ji PIP - Kansas\nCost type (optional) ne cnenchy\n. PiP-Maryiand\n« Amount (required) BP Massachusets\n\nPi\n\nMinnesota",
+      "word_count": 174,
+      "avg_confidence": 75.43,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Authority limit profiles G\n\nAn authority limit profile is a collection of authority limits assigned to one or more\nusers.\n\n* Can be pre-defined (created once and shared across multiple users)\n\n* Can be custom (created for a single user)\n\n@ @ Adjuster Profile\n\n—>> '\ne& Exposure Reserves:\n“i $10,000\nAndy Applegate $OK $10K $20K\n\na) > : Total Payments:\naye : $15,000\n\nDana Evans $OK $10K $20K",
+      "word_count": 70,
+      "avg_confidence": 84.09,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Editing and creating pre-defined profiles Gi\n\nAuthority Limit Profile\n\nDescription > fe}\n‘Adjuster default authority\n\nClaims supervisor default authority\n\nRegional Supe Regional supervisor default authority\n\nAdjuster (ieeanterarumerate\n\nAuthority Limits Limit Type Policy Type 2 Coverage Type > Cost Type ‘Amount\nClaim payments to date 515,000.00\nClaim total reserves 515,000.00\n\nNew Authority Limit Profile (eeaoiytimierrotte\n\n*(l\n\n¢ Attributes Name\n\nDescription\n\nAuthority Limits\n\nimit Type  PolicyType Coverage Type Cost Type > Amount\nNo data to display",
+      "word_count": 75,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Assigning a pre-defined profile to a user Gi\n\nEach user can have at most one authority profile.\n* Profile is assigned through the User screen\n\nAndy Applegate\n\nBasics | Profile | Authority Limits | Attributes | Regions | Details\n\nAuthority Limit Profile Adjuster\nDescription Adjuster default authority\nAndy Applegate Authority Limits\n] Limit Type + Policy Type 2 _@Overage Type 2 Cost Type > Amount.\nBasics | Profile | Authority Limits | Attributes | Regions | Details Claim payments to date $15,000.00\nClaim total reserves. $15,000.00\n‘Adjuster + ,\nDescription snone>\nCustom\neoahoaey Een) Claims Supervisor\nLimit Type > Regional Supervisor ype = Amount\nClaim payments to date $15,000.00\n\nClaim total reserves $15,000.00",
+      "word_count": 114,
+      "avg_confidence": 84.98,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Assigning a custom profile to a user\n\n« Auser can also have a custom profile\n\n* Select “Custom” from the Authority Limit Profile dropdown\n\n¢ Specifies a set of authority limits not shared with other users\n\nAndy Applegate\n\nBasics | Profile | Authority Limits | Attributes | Regions\n\nDetails\n\nAuthority Limit Profile\n\nCustom’\n\nDescription\nAuthority Limits\nLimit Type\" >\n\nClaim payments to date\nClaim payments to date\n\nClaim total reserves\n\nCustom Profile\n\nPolicy Type >\n| | <none>\n+ | | Personal Auto\n~ | | none\n\nCoverage Type\n<none>\n<none>\n\n<none>\n\nCost Type +\n<none>\n\n<none>\n\n<none>\n\nGi\n\n‘Amount *\n15,000.00\n25,000.00\n\n50,000.00",
+      "word_count": 105,
+      "avg_confidence": 82.17,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Limiting by policy, coverage, and cost type Gi\n\nLimiting by coverage or cost type will generate an error to prevent any transaction\nthat does not match the coverage or cost type.\n\n‘Authority Limits\nLimitType + PolicyType > CoverageType + CostType + Amount\nClaim paymentsto date 15,000.00\n\nClair total reserves $15,000.00\n\nEdit Reserves\n\nErrors:\n\n© Youdon'thave the authority to submit this item for approval\n\n© Youdon't have the authority to submit this item for approval\n\nAllline items added or changed below will be submitted as a group. Any line item with no change will not be saved. Any line item with Pending Approval reserves that has its New Available Reserves set to equal its Cu\nPending Approval reserves deleted. Comments are saved only when another field on the line has changed.\n\nCurrently Pending\nExposure > Coverage > Cost Type” > CostCategory” > Available Approval New Available Reserves *\na) Ast Party Vehicle - Stan Beemish Com ive Expense-A5O Vehicle inspection $500.00 8 500.00\n\naaron santosh = [ pi, J cincon =) (nee E . ac or)\n\n$500.00 : 181,500.00",
+      "word_count": 179,
+      "avg_confidence": 76.09,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Evaluation of authority limits by Gosu rules Gi\n¢ Itis possible to use Gosu rules, rather than the built-in checker, to evaluate\nauthority limits\n¢ To do this:\n\n1. Disable authority limit checking for transactions by setting CheckAuthorityLimits to false in\nconfig.xml\n\n<param name=\"CheckAuthorityLimits\" value='\n\n2. Write selective rules that check users’ authority limits and reject or require approval\naccordingly\n\n3. Write validation rules that check against limits for all other transactions",
+      "word_count": 73,
+      "avg_confidence": 91.41,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Demonstration G\n\nAuthority limits\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question\n\n,- — lfauser has a $15000 approval limit for Comprehensive coverage, what\noo effect does that have on their approval limit for Collision coverage?\n\nSS oe ooo ee oe ooo ooOD\n\nGi",
+      "word_count": 33,
+      "avg_confidence": 76.03,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer a\n\n,- — lfauser has a $15000 approval limit for Comprehensive coverage, what\noo effect does that have on their approval limit for Collision coverage?\n\nThe correct answer is unless they have another limit line that enables Collision\ncoverage, they cannot approve Collision transactions at all.\n\nSS See eo ee oo ooo SoD",
+      "word_count": 54,
+      "avg_confidence": 82.72,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "| Student exercise\n\nAuthority limits",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Transaction approval and approval routing Gi\n\n¢ Transaction approval rules implement logic for approval requirements that cannot\nbe captured in an authority limit, such as\n\n* Logic beyond the given limit types\n¢ Logic tied to attributes other than coverage and cost type\n* Logic that cannot easily be associated to given users\n\n¢ Approval routing rules assign approval ownership",
+      "word_count": 61,
+      "avg_confidence": 90.03,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "| Transaction approval rules Gi\n\n¢ Typically, all (relevant) rules are executed\n* The cause for additional approvals will be added to the approval activity\n¢ Atransaction set either requires or does not require approval\n* There may be additional causes that the approving supervisor should know about\n\n¢ By executing all rules, the approval activity will contain a list of all limits that have been\nexceeded\n\n#) TransactionApprovalRules.grs |\n\nv ims Transaction Approval Rules\n#) Y TAPo1000 - PIP\n\niv} TAP04000 - Claim And Exposures Should Be At Ability To Pay\n=} |\\¥} TAPOS000 - Optionally Check For Duplicate Checks",
+      "word_count": 101,
+      "avg_confidence": 86.79,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| The requireApproval() method Gi\n\n¢ Syntax: transactionSet.requireApproval(\"reason\").\n« Method only on available the TransactionSet object (not Transaction or Check)\n\nUSES:\nuses gw.api.locale.DisplayKey\nCONDITION (transactionSet : entity.TransactionSet):\n\nreturn transactionSet.Subtype == TC_CHECKSET\nACTION (transactionSet ‘ransactionSet, actions : gw.rules.Action):\n\nvar totalIncurredAmt = util. financials.CustomCales.MyTotalIncurredNet.getAmount (transactionSet.Claim)\nvar exceedAmount = new gw.api.financials.CurrencyAmount (20000, totalIncurredAmt.Currency)\n\ntransactionSet. requireApproval (\nDisplayXey.get(\"Total Incurred on the claim exceeds {0}\",\n\ngw.api.util.CurrencyUtil. renderAsCurrency(exceedAmount) ) )",
+      "word_count": 64,
+      "avg_confidence": 80.89,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "| Approval routing rules Gi\n\n¢ Approval routing is similar to assignment, but for approval activities\n\n* Become active when an approval activity is created\n\n¢ One set of rules for transaction set approval routing, and one for bulk invoice\napproval routing\n\n* Typically, not all relevant rules are executed\n\n« As soon as one rule makes assignment, execution exits out of rule set\n\nY DF Rule Sets\nY_ Bil ApprovalRouting\n\n#) ApprovaiRules\n| #) BulkinvoiceApprovalAssignmentRules a\n®) ApprovalRules.grs &) BulkinvoiceApprovalAssignmentRules.grs\n\nv BF — Approval Rules | GF — Bulkinvoice Approval Assignment Rules\n) © ARR01000 - Western Regional Auto Supervisors\n\n4 €) J ARB01000 - Western Regional Auto Supervisors\n#) © ARR02000 - Try to assign to group supervisor #) 1 ARB02000 - Try to assign to group supervisor\n©) HZ ARR03000 - Default rule #€) Z AR803000 - Default rule",
+      "word_count": 142,
+      "avg_confidence": 81.25,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "| Default configuration approval routing rules Gi\n\nIn the default configuration, the two rule sets are nearly identical.\n\n#) ApprovalRules.grs\n\nv &} \\ Approval Rules\n\n=) MY] ARRO1000 - Western Regional Auto Supervisors\n©] [V] ARRO2000 - Try to assign to group supervisor\n©] [V] ARRO3000 - Default rule\n\n| #) BulkinvoiceApprovalAssignmentRules.grs\n\nv BulkInvoice Approval Assignment Rules\n\n#) ] ARB01000 - Western Regional Auto Supervisors\n©) |v] ARB02000 - Try to assign to group supervisor\n©] |v] ARBO3000 - Default rule",
+      "word_count": 81,
+      "avg_confidence": 82.66,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "| Approval routing methods:\napproveByUserSupervisor\nSyntax: transactionSet.approveByUserSupervisor().\n« No parameters\n+ Assigns to group supervisor based on the user who submitted the transaction\n\n+ If submitting user is in multiple groups, goes to the supervisor of the owning group\n\nCONDITION (transactionSet entity .TransactionSet) :\n\nreturn /* This action vill\n\ntransactionSet.approveByUserSup\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\nactions.exit()\n\nEND",
+      "word_count": 59,
+      "avg_confidence": 90.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "| Approval routing methods: Gi\napproveByGroupSupervisor\nSyntax: transactionSet.approveByGroupSupervisor().\n« No parameters; routed to supervisor of owning group\n\n¢ Returns false if user needing approval is group supervisor\n\nentity .TransactionSet) :\n5 nt if\n\ntransactionSet.approveByGroupSupervisor ()\n\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\nactions.exit()\n\nEND",
+      "word_count": 44,
+      "avg_confidence": 87.22,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "| Approval routing methods: setApprovingUser Gi\n\nSyntax: transactionSet.setApprovingUser(user, group).\n* Routed to specified user and specified group\n\n« Use Queries and/or findUserByUserName() to retrieve users and groups\n\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\n\nr croup sl or.\n\ntransactionSet.setApprovingUser (util.RuleGroups. instance.getHeadquartersSupervisor(),\nutil.RuleGroups. instance.getHeadquarters ())",
+      "word_count": 44,
+      "avg_confidence": 83.13,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "| Exiting from approval routing rules Gi\n\n¢ After object is successfully assigned, you typically want no other rules to be\nexecuted\n\n¢ Approval routing methods are Boolean — return true if the assignment was successful\n* Otherwise, fall through to a default assignment rule\n¢ Use actions.exit() as with assignment rules\n\nCONDITION (transactionSet : entity.TransactionSet):\n\nreturn /* I ¥\n\nthe request is not the\ntransactionSet.approveByGroupSupervisor ()\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action):\n\nactions.exit()\n\nEND",
+      "word_count": 76,
+      "avg_confidence": 90.02,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "| Demonstration G\n\nTransaction approval rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-46.png",
+      "slide_number": 46,
+      "text": "Appendix: Straight-Through Invoice Gi\nProcessing (STIP)\n« Automates the approval and payment of many routine invoices\n\n« Payments can be made against Reserve Lines, at either the Claim or the\nExposure level\n\n¢ For information about configuring STIP, see the on “Configuring Vendor Services”",
+      "word_count": 44,
+      "avg_confidence": 90.02,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-47.png",
+      "slide_number": 47,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-48.png",
+      "slide_number": 48,
+      "text": "Question\n\n,~ — What do transaction approval rules and approval routing rules,\n\noo respectively, do?\n\nSS oe ooo ee oe ooo ooOD",
+      "word_count": 22,
+      "avg_confidence": 71.25,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-49.png",
+      "slide_number": 49,
+      "text": "Answer\n\n,~ — What do transaction approval rules and approval routing rules,\n\noo respectively, do?\n\n¢\n\nThe correct answer is:\n\nTransaction approval rules implement approval requirement logic that cannot be\ncaptured in an authority limit.\n\nApproval routing rules assign approval ownership.\n\nSS See eo ee oo ooo SoD",
+      "word_count": 48,
+      "avg_confidence": 82.09,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-50.png",
+      "slide_number": 50,
+      "text": "Lesson\nobjectives ¢ Describe how transactions are approved\nreview ¢ Write transaction approval rules that\n\ndetermine whether approval is required\n¢ Write approval routing rules",
+      "word_count": 25,
+      "avg_confidence": 90.04,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-51.png",
+      "slide_number": 51,
+      "text": "| Student exercise\n\nApproval for reserves\nwhere fault rating is unknown",
+      "word_count": 11,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-52.png",
+      "slide_number": 52,
+      "text": "| Student exercise\n\nRequire regional supervisor approval",
+      "word_count": 7,
+      "avg_confidence": 95.88,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

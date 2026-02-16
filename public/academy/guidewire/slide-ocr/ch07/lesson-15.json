@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-15",
+    "slide_count": 27,
+    "slides_with_text": 25,
+    "total_words": 1081,
+    "avg_confidence": 84.88,
+    "processing_time_seconds": 11.18,
+    "extracted_at": "2026-02-13T12:20:02.098128"
+  },
+  "full_text": "Typelists\n\nLesson\nobjectives\n\nDescribe the functionality of a Typelist\nCreate a Typelist and a Typelist extension\nCreate a Typekey field\n\nCreate a Typekey field that references a\nTypelist filter\n\nGi\n\nUser Story: Invoicing Method Gi\n\n“After further analysis, we decided that the invoicing method of each policy also has\nto be stored in TrainingApp. The invoicing method specifies how the premium will be\ncollected for the policy. An insurance company allows only the following 3 invoicing\nmethods:\n\n« 10% down payment and 11 installments\n« 30% down payment and 4 installments\n« 50% down payment and 2 installments\n\nWe are still working on the UI requirements, so please configure the Data Model\nonly for now.”\n\n- Insurance Company Business Analysts\n\nGi\n\ni Typelist G\nDetails\n¢ ATypelist is a fixed, predefined list of\n\nvalues (Typecodes)\n\nPerson Info | Phone &Addresses | Bank Accounts\n\nAdd\n\n¢ Values cannot be dynamically added or\nremoved during runtime\n\nBankName” > RoutingNumber* > — [Jaccount Type” >\n\nNational Bank 745-222 ‘Checking ~\n¢ Defined value often used to constrain\nuser input oe\n« When rendered in Ul, [Ei] BankAccountType.tti x\n\ntypically appears\n\nas a dropdown list ldblomecode =) W — [Wshowax]\n\nElement Code Name\nBankAccountType __ The type...\ntypecode checking\ntypecode savings\ntypecode other\n\ni Typelists and Typekey fields\n\n¢ ATypekey field is an entity field associated with a specific Typelist\n¢ Referenced Typelist contains the list of possible values for the Typekey field\n\n* The Typekey field can point to one of these Typecodes\n\nBankAccount\n\nBankName\nRoutingNumber\n\nAccountNumber\n\nTypekey field\n\nTypelist\n\nBankAccountType\n\nChecking\nSavings\nOther\n\nTypecodes\n\ni Kinds of Typelists G\n\n¢ Internal base application * Created by customers as ¢ Base application\nlogic part of custom * Customers can modify the\n* Cannot be modified 9 Typelist or create Typelist\nor extended extension\n\n« Read-only\n\n* Some virtual\n\nSee examples on next slide\n\ni Typelists in the data model G\n\n¢ Follow similar\nprinciples as entities\n\n* Defined as XML files\n* TTI, TIX and TTX files\n\n« ...\\Metadata\\Typelist\nfolder read-only and\ncontains platform and\nbase application\nTypelists\n\n« ...\\Extensions\\Typelist\nfolder contains\neverything customer\nspecific\n\nValidationLevel ActivityStatus\n\ni Typelists in the data model (continued) Ga\n\ni) * Kinds of Typelists:\n\n* ValidationLevel is\nextendable\n\n¢ ActivityStatus is internal\n* BuildingCode_Ext is\ncustom\n¢ Virtual typelists don’t\nphysically exist in the\ndata model\n\nValidationLevel InvoiceStatus\n\nValidationLevel ActivityStatus\n\ni Typelists and Typekey fields in the database\n\nTypelists are stored as database tables\n\nTypecodes are stored as rows in the table\n\nTypekeys are stored as foreign key\n\ncolumns in the entity table\n\nID TYPECODE |NAME RETIRED\n\n10001 | checking Checking|FALSE\n\n40002/savings Savings |FALSE\nother Other FALSE\n\nACCOUNTNUMBER\n\nBANKNAME ROUTINGNUMBER\n\nACME Credit Union| 123-987 345678900\n\nNational Bank 745-222 232323566 10001\nACME Credit Union| 123-999 112233445 10001\nACME Credit Union| 225-999 §54433221 10002\n\ni Typelists and Typekeys in the object model Gi\n\n* Code generators generate Java classes from Typelists\n* Typecodes become static final variables in the class\n\nCaconfiguration ) [7 generated) typekey ) © BankAccountType\n\ngz © BankAccountTypejava *\nE73 “ejavax.annotation. Generated (value = *oom.guidewire.pl.metadata.codegen.Codegen\", coments = \"BankAcod\nml 4 /deprecation thecked/\nbl s @gw.internal.gosu.parser.ExtendedType\ngE) pense clase paniaccounetype inplenents gy-encity.typerey (\ngo :\nEos\nas\nVi. _\n11 | public static finan cypekey.SRBEAGESISERS 1¢_cmrcxne = new typekey.SEREAEESUREEYES (“ohecking*)\n2\n3B\ni\n15\n16\n17 public static final typekey.BankAccountype NC OMUER = now typekey.BankAccountType (\"other\")\n\nCaconfiguration » [i generated » © entity » © BankAccount\n© BankAccountjava *\n\nFla Project\n\nQegw. internal. gosu.parser.ExtendedProperty\n\npublic typekey.BankAccountType yp\nreturn (typekey.BankAccountType)__getInternalinterface() .getFieldvalue (ACCOUNTTYPE_PROP.get ()) +\n\n>\n\nGi\n\ni Typefilters G\n¢ ATypelist filter causes the Typelist to display only a subset of the Typecodes for\nthat Typelist\n¢ Multiple Typefilters can be defined in a Typelist\n\n¢ ATypekey field can reference at most one Typefilter from the associated Typelist\n\nti) YesNo.tti * Collateral Info\nib|categoy ~)[) &¥% — (Wshowaly] e = Collateral Required? “\nElement Code Name Priority Collateral Amount\nv typelist YesNo Yes, No, or Un... i | Verified?\ntypecode yes Yes 10 Collateral Verified? knone> bd\ntypecode no No °\ntypecode unknown Unknown Yes\n¥ typefilter| YesNoOnly | Only display Y. a N\ninclud yes ©\n\ninclud no\n\ni Demonstration G\nInvoicing Method\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — What are some of the differences between the files in the\n\n..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\n4\n\nSe Sess e ese ssc esaeK\n\nAnswer\n\n_- — What are some of the differences between the files in the\n\n¢\n¢\n\nSS Se SSeS sess e eases\n\n: ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\n\nFiles under Metadata are read-only and are specific to the base configuration.\n\nYou cannot create Typelist files in the Metadata directory but can create Typelist\nfiles in the Extensions directory.\n\nOnly internal Typelist extension files (TIX) are in the Metadata directory.\nOnly external Typelist files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT1) files.\n\nQuestion G\n\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\n\n4\no A) RedDye#1\n\nB) YellowDye40\nC) OrangeDye:10\n\nSe Sess e ese ssc esaeK\n\nAnswer\n\n7\n¢\n¢\n\nSS Se SSeS sess e eases\n\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\n\nA) RedDye#1\nB) YellowDye40\nC) OrangeDye:10\n\nA) Not valid\nB) Valid\nC) Not valid\n\nGi\n\nQuestion\n\n,- — Which Typecode attribute determines the order in which Typecodes are\nPa listed in the user interface?\n\nSe Sess e ese ssc esaeK\n\nGi\n\nAnswer\n\n,- — Which Typecode attribute determines the order in which Typecodes are\nPa listed in the user interface?\n“ The priority attribute determines the sort order in the User Interface for a Typelist. After\n\npriority, the name (not code) determines the sort order. Entries with priority -1 appear\nat the end of the list.\n\nSS Se SSeS sess e eases\n\nGi\n\nQuestion\n\n,— — What does a Typefilter do?\n\n¢\n¢\n4\n\nSe Sess e ese ssc esaeK\n\nAnswer\n\na What does a Typefilter do?\n\n¢\n¢\n\nDefines a named subset of the Typecodes that could be used as value for the\nassociated Typekey field that references this Typelist.\n\nSS Se SSeS sess e eases\n\nLesson\nobjectives\nreview\n\nDescribe the functionality of a Typelist\nCreate a Typelist and a Typelist extension\nCreate a Typekey field\n\nCreate a Typekey field that references a\nTypelist filter\n\ni Student exercise\n\nTypelists",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Typelists",
+      "word_count": 1,
+      "avg_confidence": 94.0,
+      "image_size": {
+        "width": 1280,
+        "height": 542
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nDescribe the functionality of a Typelist\nCreate a Typelist and a Typelist extension\nCreate a Typekey field\n\nCreate a Typekey field that references a\nTypelist filter",
+      "word_count": 28,
+      "avg_confidence": 94.43,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Gi",
+      "word_count": 1,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "User Story: Invoicing Method Gi\n\n“After further analysis, we decided that the invoicing method of each policy also has\nto be stored in TrainingApp. The invoicing method specifies how the premium will be\ncollected for the policy. An insurance company allows only the following 3 invoicing\nmethods:\n\n« 10% down payment and 11 installments\n« 30% down payment and 4 installments\n« 50% down payment and 2 installments\n\nWe are still working on the UI requirements, so please configure the Data Model\nonly for now.”\n\n- Insurance Company Business Analysts",
+      "word_count": 90,
+      "avg_confidence": 92.36,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Gi",
+      "word_count": 1,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Typelist G\nDetails\n¢ ATypelist is a fixed, predefined list of\n\nvalues (Typecodes)\n\nPerson Info | Phone &Addresses | Bank Accounts\n\nAdd\n\n¢ Values cannot be dynamically added or\nremoved during runtime\n\nBankName” > RoutingNumber* > — [Jaccount Type” >\n\nNational Bank 745-222 ‘Checking ~\n¢ Defined value often used to constrain\nuser input oe\n« When rendered in Ul, [Ei] BankAccountType.tti x\n\ntypically appears\n\nas a dropdown list ldblomecode =) W — [Wshowax]\n\nElement Code Name\nBankAccountType __ The type...\ntypecode checking\ntypecode savings\ntypecode other",
+      "word_count": 88,
+      "avg_confidence": 83.21,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Typelists and Typekey fields\n\n¢ ATypekey field is an entity field associated with a specific Typelist\n¢ Referenced Typelist contains the list of possible values for the Typekey field\n\n* The Typekey field can point to one of these Typecodes\n\nBankAccount\n\nBankName\nRoutingNumber\n\nAccountNumber\n\nTypekey field\n\nTypelist\n\nBankAccountType\n\nChecking\nSavings\nOther\n\nTypecodes",
+      "word_count": 53,
+      "avg_confidence": 89.42,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Kinds of Typelists G\n\n¢ Internal base application * Created by customers as ¢ Base application\nlogic part of custom * Customers can modify the\n* Cannot be modified 9 Typelist or create Typelist\nor extended extension\n\n« Read-only\n\n* Some virtual\n\nSee examples on next slide",
+      "word_count": 48,
+      "avg_confidence": 86.31,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Typelists in the data model G\n\n¢ Follow similar\nprinciples as entities\n\n* Defined as XML files\n* TTI, TIX and TTX files\n\n« ...\\Metadata\\Typelist\nfolder read-only and\ncontains platform and\nbase application\nTypelists\n\n« ...\\Extensions\\Typelist\nfolder contains\neverything customer\nspecific\n\nValidationLevel ActivityStatus",
+      "word_count": 44,
+      "avg_confidence": 85.5,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Typelists in the data model (continued) Ga\n\ni) * Kinds of Typelists:\n\n* ValidationLevel is\nextendable\n\n¢ ActivityStatus is internal\n* BuildingCode_Ext is\ncustom\n¢ Virtual typelists don’t\nphysically exist in the\ndata model\n\nValidationLevel InvoiceStatus\n\nValidationLevel ActivityStatus",
+      "word_count": 39,
+      "avg_confidence": 82.51,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Typelists and Typekey fields in the database\n\nTypelists are stored as database tables\n\nTypecodes are stored as rows in the table\n\nTypekeys are stored as foreign key\n\ncolumns in the entity table\n\nID TYPECODE |NAME RETIRED\n\n10001 | checking Checking|FALSE\n\n40002/savings Savings |FALSE\nother Other FALSE\n\nACCOUNTNUMBER\n\nBANKNAME ROUTINGNUMBER\n\nACME Credit Union| 123-987 345678900\n\nNational Bank 745-222 232323566 10001\nACME Credit Union| 123-999 112233445 10001\nACME Credit Union| 225-999 §54433221 10002",
+      "word_count": 72,
+      "avg_confidence": 88.82,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Typelists and Typekeys in the object model Gi\n\n* Code generators generate Java classes from Typelists\n* Typecodes become static final variables in the class\n\nCaconfiguration ) [7 generated) typekey ) © BankAccountType\n\ngz © BankAccountTypejava *\nE73 “ejavax.annotation. Generated (value = *oom.guidewire.pl.metadata.codegen.Codegen\", coments = \"BankAcod\nml 4 /deprecation thecked/\nbl s @gw.internal.gosu.parser.ExtendedType\ngE) pense clase paniaccounetype inplenents gy-encity.typerey (\ngo :\nEos\nas\nVi. _\n11 | public static finan cypekey.SRBEAGESISERS 1¢_cmrcxne = new typekey.SEREAEESUREEYES (“ohecking*)\n2\n3B\ni\n15\n16\n17 public static final typekey.BankAccountype NC OMUER = now typekey.BankAccountType (\"other\")\n\nCaconfiguration » [i generated » © entity » © BankAccount\n© BankAccountjava *\n\nFla Project\n\nQegw. internal. gosu.parser.ExtendedProperty\n\npublic typekey.BankAccountType yp\nreturn (typekey.BankAccountType)__getInternalinterface() .getFieldvalue (ACCOUNTTYPE_PROP.get ()) +\n\n>",
+      "word_count": 122,
+      "avg_confidence": 64.23,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Gi",
+      "word_count": 1,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Typefilters G\n¢ ATypelist filter causes the Typelist to display only a subset of the Typecodes for\nthat Typelist\n¢ Multiple Typefilters can be defined in a Typelist\n\n¢ ATypekey field can reference at most one Typefilter from the associated Typelist\n\nti) YesNo.tti * Collateral Info\nib|categoy ~)[) &¥% — (Wshowaly] e = Collateral Required? “\nElement Code Name Priority Collateral Amount\nv typelist YesNo Yes, No, or Un... i | Verified?\ntypecode yes Yes 10 Collateral Verified? knone> bd\ntypecode no No °\ntypecode unknown Unknown Yes\n¥ typefilter| YesNoOnly | Only display Y. a N\ninclud yes ©\n\ninclud no",
+      "word_count": 103,
+      "avg_confidence": 84.53,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Demonstration G\nInvoicing Method\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.89,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n_- — What are some of the differences between the files in the\n\n..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\n4\n\nSe Sess e ese ssc esaeK",
+      "word_count": 24,
+      "avg_confidence": 76.27,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n_- — What are some of the differences between the files in the\n\n¢\n¢\n\nSS Se SSeS sess e eases\n\n: ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\n\nFiles under Metadata are read-only and are specific to the base configuration.\n\nYou cannot create Typelist files in the Metadata directory but can create Typelist\nfiles in the Extensions directory.\n\nOnly internal Typelist extension files (TIX) are in the Metadata directory.\nOnly external Typelist files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT1) files.",
+      "word_count": 83,
+      "avg_confidence": 86.98,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question G\n\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\n\n4\no A) RedDye#1\n\nB) YellowDye40\nC) OrangeDye:10\n\nSe Sess e ese ssc esaeK",
+      "word_count": 32,
+      "avg_confidence": 82.72,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\n7\n¢\n¢\n\nSS Se SSeS sess e eases\n\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\n\nA) RedDye#1\nB) YellowDye40\nC) OrangeDye:10\n\nA) Not valid\nB) Valid\nC) Not valid\n\nGi",
+      "word_count": 41,
+      "avg_confidence": 78.57,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n,- — Which Typecode attribute determines the order in which Typecodes are\nPa listed in the user interface?\n\nSe Sess e ese ssc esaeK\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 83.25,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n,- — Which Typecode attribute determines the order in which Typecodes are\nPa listed in the user interface?\n“ The priority attribute determines the sort order in the User Interface for a Typelist. After\n\npriority, the name (not code) determines the sort order. Entries with priority -1 appear\nat the end of the list.\n\nSS Se SSeS sess e eases\n\nGi",
+      "word_count": 62,
+      "avg_confidence": 86.44,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n,— — What does a Typefilter do?\n\n¢\n¢\n4\n\nSe Sess e ese ssc esaeK",
+      "word_count": 17,
+      "avg_confidence": 73.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\na What does a Typefilter do?\n\n¢\n¢\n\nDefines a named subset of the Typecodes that could be used as value for the\nassociated Typekey field that references this Typelist.\n\nSS Se SSeS sess e eases",
+      "word_count": 37,
+      "avg_confidence": 84.21,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Lesson\nobjectives\nreview\n\nDescribe the functionality of a Typelist\nCreate a Typelist and a Typelist extension\nCreate a Typekey field\n\nCreate a Typekey field that references a\nTypelist filter",
+      "word_count": 29,
+      "avg_confidence": 94.48,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "i Student exercise\n\nTypelists",
+      "word_count": 4,
+      "avg_confidence": 83.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

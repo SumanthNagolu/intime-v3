@@ -224,6 +224,14 @@ export const hrRouter = router({
               avatar_url,
               phone
             ),
+            manager:employees!employees_manager_id_fkey(
+              id,
+              user:user_profiles!employees_user_id_fkey(
+                id,
+                full_name,
+                avatar_url
+              )
+            ),
             profile:employee_profiles(*)
           `
           )
@@ -276,14 +284,23 @@ export const hrRouter = router({
           firstName: z.string().min(1, 'First name is required'),
           lastName: z.string().min(1, 'Last name is required'),
           email: z.string().email('Valid email is required'),
-          phone: z.string().optional(),
+          phone: z.string().max(20).regex(/^[\d\s+\-()]*$/, 'Invalid phone number format').optional(),
           jobTitle: z.string().min(1, 'Job title is required'),
           department: z.string().min(1, 'Department is required'),
           employmentType: z.enum(['fte', 'contractor', 'intern', 'part_time']),
           managerId: z.string().uuid().optional(),
           hireDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format'),
           location: z.string().optional(),
-          workMode: z.enum(['onsite', 'remote', 'hybrid']).optional(),
+          workMode: z.enum(['on_site', 'remote', 'hybrid']).optional(),
+          address: z.object({
+            addressLine1: z.string().optional(),
+            addressLine2: z.string().optional(),
+            city: z.string().optional(),
+            stateProvince: z.string().optional(),
+            postalCode: z.string().optional(),
+            countryCode: z.string().default('US'),
+            county: z.string().optional(),
+          }).optional(),
         })
       )
       .mutation(async ({ ctx, input }) => {
@@ -373,6 +390,33 @@ export const hrRouter = router({
           })
         }
 
+        // Save address to addresses table if provided
+        if (input.address && (input.address.addressLine1 || input.address.city)) {
+          const { error: addressError } = await adminClient
+            .from('addresses')
+            .insert({
+              org_id: orgId,
+              entity_type: 'employee',
+              entity_id: employee.id,
+              address_type: 'current',
+              address_line_1: input.address.addressLine1 || null,
+              address_line_2: input.address.addressLine2 || null,
+              city: input.address.city || null,
+              state_province: input.address.stateProvince || null,
+              postal_code: input.address.postalCode || null,
+              country_code: input.address.countryCode || 'US',
+              county: input.address.county || null,
+              is_primary: true,
+              created_by: currentUserProfileId,
+              updated_by: currentUserProfileId,
+            })
+
+          if (addressError) {
+            console.error('Failed to save employee address:', addressError)
+            // Non-fatal: employee was created, address save failed
+          }
+        }
+
         return {
           id: employee.id,
           userId: employee.user_id,
@@ -387,6 +431,117 @@ export const hrRouter = router({
           user: employee.user,
           createdAt: employee.created_at,
         }
+      }),
+
+    // ============================================
+    // UPDATE EMPLOYEE
+    // ============================================
+    update: orgProtectedProcedure
+      .input(
+        z.object({
+          id: z.string().uuid(),
+          firstName: z.string().min(1).optional(),
+          lastName: z.string().min(1).optional(),
+          phone: z.string().max(20).regex(/^[\d\s+\-()]*$/, 'Invalid phone number format').optional().nullable(),
+          jobTitle: z.string().min(1).optional(),
+          department: z.string().min(1).optional(),
+          employmentType: z.enum(['fte', 'contractor', 'intern', 'part_time']).optional(),
+          status: z.enum(['onboarding', 'active', 'on_leave', 'terminated']).optional(),
+          managerId: z.string().uuid().optional().nullable(),
+          hireDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').optional(),
+          location: z.string().optional().nullable(),
+          workMode: z.enum(['on_site', 'remote', 'hybrid']).optional().nullable(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, profileId: currentUserProfileId } = ctx
+        const adminClient = getAdminClient()
+        const { id, firstName, lastName, phone, ...employeeUpdates } = input
+
+        // Verify employee exists and belongs to org
+        const { data: existing, error: fetchError } = await adminClient
+          .from('employees')
+          .select('id, user_id')
+          .eq('id', id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (fetchError || !existing) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Employee not found',
+          })
+        }
+
+        // Update user profile if name or phone changed
+        if (firstName !== undefined || lastName !== undefined || phone !== undefined) {
+          const profileUpdates: Record<string, unknown> = {}
+          if (firstName !== undefined || lastName !== undefined) {
+            // Need to fetch current name to merge partial updates
+            const { data: currentProfile } = await adminClient
+              .from('user_profiles')
+              .select('full_name')
+              .eq('id', existing.user_id)
+              .single()
+
+            const currentParts = (currentProfile?.full_name ?? '').split(' ')
+            const newFirst = firstName ?? currentParts[0] ?? ''
+            const newLast = lastName ?? currentParts.slice(1).join(' ') ?? ''
+            profileUpdates.full_name = `${newFirst} ${newLast}`.trim()
+          }
+          if (phone !== undefined) {
+            profileUpdates.phone = phone
+          }
+
+          await adminClient
+            .from('user_profiles')
+            .update(profileUpdates)
+            .eq('id', existing.user_id)
+        }
+
+        // Build employee update object
+        const updateData: Record<string, unknown> = {
+          updated_by: currentUserProfileId,
+        }
+        if (employeeUpdates.jobTitle !== undefined) updateData.job_title = employeeUpdates.jobTitle
+        if (employeeUpdates.department !== undefined) updateData.department = employeeUpdates.department
+        if (employeeUpdates.employmentType !== undefined) updateData.employment_type = employeeUpdates.employmentType
+        if (employeeUpdates.status !== undefined) updateData.status = employeeUpdates.status
+        if (employeeUpdates.managerId !== undefined) updateData.manager_id = employeeUpdates.managerId
+        if (employeeUpdates.hireDate !== undefined) updateData.hire_date = employeeUpdates.hireDate
+        if (employeeUpdates.location !== undefined) updateData.location = employeeUpdates.location
+        if (employeeUpdates.workMode !== undefined) updateData.work_mode = employeeUpdates.workMode
+
+        const { data: employee, error: updateError } = await adminClient
+          .from('employees')
+          .update(updateData)
+          .eq('id', id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .select(
+            `
+            *,
+            user:user_profiles!employees_user_id_fkey(
+              id,
+              full_name,
+              email,
+              avatar_url,
+              phone
+            )
+          `
+          )
+          .single()
+
+        if (updateError || !employee) {
+          console.error('Failed to update employee:', updateError)
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to update employee',
+          })
+        }
+
+        return employee
       }),
 
     // ============================================

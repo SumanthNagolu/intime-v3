@@ -1,0 +1,500 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-19",
+    "slide_count": 44,
+    "slides_with_text": 42,
+    "total_words": 2468,
+    "avg_confidence": 85.96,
+    "processing_time_seconds": 21.17,
+    "extracted_at": "2026-02-13T12:16:34.623408"
+  },
+  "full_text": "Controlling Access\n\nLesson\nobjectives\n\nIdentify the main entities that control user\ncapabilities within BillingCenter\n\n¢ Explain how monetary limits restrict a user’s\nability to execute a transaction without\napproval\n\n¢ Describe group approval structures\n\n¢ Navigate around the Security Dictionary\n\nManaging security Gi\n\nMarcus\n\niret ~ How does BillingCenter control\n\naccess to all the financial information\n\nit contains? Whitney\nChief\n\nInformation\nTechnology\n\nOfficer\n\nSecurity in BillingCenter is managed\nthrough users, roles, system\npermissions, and security zones.\nLet’s start by talking about\npermissions.\n\nControlling and granting access Gi\n\n¢ Access is the ability to see and do things in BillingCenter based on your user\n\nidentity\n¢ Access can control: eX\n« What you can create and delete\n\n¢ What you can own\n« What you can view and navigate to\n« What you can do with an object (for example, modify a payment)\n\n* Access is granted and managed with system permissions\n\n+ Your ability to do something @ r ] r ]\n\nis based on permissions =\ni e oy a)\n* Your set of permissions depends customer service __ billing manager billing clerk\n\non your job representative\n\nSystem permissions Gi\n\n¢« Asystem permission is a granular ability to see or do something within\nBillingCenter\n\nObject Group Ul\n\nPermissions influence access Gi\n\n¢ Each user has certain permissions that determine what they can:\n« View/navigate to\n* Create, edit, and/or delete\n* Own\n* Acton\n\n¢ Your job determines your set of permissions\n\nyd Jane Sweeny — Edward Lee Christine Craft\n@& lean &\n\ncustomer service\n\nai billing clerk\nrepresentative billing manager\n\n| View/navigate to permissions\n\nC=\n\n=)\n\nChristine\nCraft\n\n@\na\n\nEdward Lee\n\n@~\n\nView Commission Plans\n\n© Billing Pla\n\nch\n\n| Edit object permissions\n\n@ Contacts\nr—_\\ C= Tmo reo\nChristine\n\nCraft\n\n@~-\nContacts\n\nEdward Lee Edit Account Contact cen |amea&\n\n| Own “e permissions G\nTrouble Ticket Wizard - Step 5 of 5\n\n2 _O=\n\nClick Finish to Create the Trouble Ticket\n\nJudith Wiley\n\nAssignment\n\nAssigned To * Judith Wiley (Operations) . Q\n\nTrouble Ticket Wizard - Step 5 of 5\n\nClick Finish to Create the Trouble Ticket\n\nAssignment\n@~ Assigned To + [Edward Commerciattines)» |[ ©]\nOwn Trouble elee's desktop\nEdward Lee Ticket My Trouble Tickets\n[ cw a\nBS Tekete Opened 2 | Owe ® Priority status $\n\n1000000000 04/34/2018, High Open\n\nAct on permissions Gi\n\na2 o-\n\n4,2021\nNewPayment >\n\nNew Transaction > — Transfer\n\nae Preferences:\nChristine\nCraft\nSy\nNew Payment >\nNew Transaction: » Disbursement\n\nNew Assigned Activity > Transfer\n\nMy Trouble Tickets Preferences Negative Write-Of\n> | z ki ‘Subrogation\nMy Delinquencies w 2,\ne 06, Charge Reversal\nCreate Writeoff Como e Fel write on Reversat\nEdward Lee on Account sumpense & Of Negative Wite-Of Reversal\n\nTransfer Funds Reversal\n\nMy Agency Items\n\nGeneral\n\nUser permissions are determined during login\n\nAuthenticated?\nWhat permissions?\nusername .\nand password - {imas] Which start page?\n——_—_—_—_—= _— -- —_—_—_\n—_—————_ BilingCertte\nDesktop: Activities\nYes!\nView account,... be data\n\n(e32333} Desktop: Activities\n\nQuestion G\n\n_-~ — Kashmira has been asked to issue a commission advance to a producer,\nPa but she doesn’t see a menu item for paying a commission advance.\n: What is the problem?\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gi\n\n_- — Kashmira has been asked to issue a commission advance to a producer,\nPa but she doesn’t see a menu item for paying a commission advance.\n: What is the problem?\n\nKashmira does not have a role that includes the permission to give a commission\nadvance.\n\n~- SSS 5S 555555 5-5 =--=\n\nQuestion G\n\n,— — When does BillingCenter determine which permissions a given user\n\n“ has?\n’\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gi\n\n,— — When does BillingCenter determine which permissions a given user\n¢ has?\n¢\n4\n\nBillingCenter determines the permissions for a user when that user logs in.\n\n~- SSS 5S 555555 5-5 =--=\n\nAssigning permissions\n\nSS\nAnalyst\n\nNo. We assign\npermissions using roles,\nwhich are groups of\npermissions.\n\nWhitney\nChief\n\nInformation\nTechnology\nOfficer\n\n| Roles Gi\n\n¢ Arole is a named set of permissions used to simplify the assignment of\npermissions to users\n\n* Typically, a role maps to a job title or a job function\n\nBilling Clerical Billing Manager\n=) View Accounts tab ‘) View Accounts tab\n< (7) > View confidential notes\n4 View activity ¢ View activity\nEk Create activity KE Create activity\nOwn activity Own activity\n> Edit account\n\nEdit activity Edit activity\n\nMapping roles to users Gi\n\n¢ Each user is given one or more roles\n¢ Auser has all the permissions of the given roles\nPatty Doe Christine Craft Edward Lee\n\n& & &\n\nCommissions Admin Billing Clerical Billing Manager Plan Admin\n\nQuestion G\n\n,- — Howmany roles can a given user have?\n\n¢\n¢\n4\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gi\n\n,- — Howmany roles can a given user have?\n\n¢\n¢\n4\n\nTheoretically, a user can have any number of roles from zero to many. Every user\nmust have at least one role in order to be able to do something in BillingCenter. A user\nwith broader responsibility than another user can be given additional roles so that they\nare able to accomplish these responsibilities.\n\n~- SSS 5S 555555 5-5 =--=\n\nSetting monetary limits\n\nWhitney\nChief\nInformation\nTechnology\n\nOfficer\n\nNext, we should talk about authority\nlimits, which set monetary restrictions\non the amount a user can specify for\na given transaction.\n\nAuthority limits Gi\n\n¢ An authority limit is a monetary limit specified for a transaction type\n\n* Transactions for amounts less than or equal to the limit\namount do not require approval ss\n\no>}\n\n¢ Transactions that exceed the limit amount require approval\n¢ Authority limits are assigned to a user through an authority limit profile\n\n+ Auser can have only one authority limit profile Administration tab > Users & Security\n> Authority Limit Profile\n\n+ Auser with no authority limit profile requires . co.\napproval for every transaction Authority Limit Profile\n\nAdd Authority Limit Profile Be\n\nName > Description >\nGeneral General default authority\nLow Low default authority\n\nSuperuser  Superuser default authority\n\n| Authority limit profile examples\n\nGi\n\nSuperuser ( Up to Authority Limit Profile T ecit |\n\nLOW [Geto Authority Profile } [ aie |\n\nName Superuser\nSuperuser default authority\n\nme >>)\n\nLimit Amount >\n\nLimit Type >\n‘Advance Commission\n‘Agency Bill Negative Writeoff From Producer Unapplied\n\nAgency Bill Writeoff From Producer Unapplied\n\nApprove Disbursement\n\nBonus Commission\n\nName Low\nDescription Low default authority\nLimits\n\nSaeed >|»)\n\nLimit Type $ Limit Amount\n\n‘Advance Commission\n‘Agency Bill Negative Writeoff From Producer Unapplied\nAgency Bill Writeoff From Producer Unapplied\n\nApprove Disbursement\n\nBonus Commission\n\n| Exceeding an authority limit Ga\n\nAdvance Commission Payment Wizard - Step 2 of 2\n\nZA Alert: Completing this change will not immediately execute the action because it requires approval. An activity wil be created to handle the approval process. See the activity section below.\n\nAdvance Details\n\ninom $2,000,000.00 Amount of commission advance exceeds user's\nMaintain Until 31/04/2021 authority limit, so an approval activity is created\nPayment and assigned to user’s group supervisor\n\nPay Immediately\nActivity for Approval\nYou do not have sufficient authority to execute this action. Approval must come from a user\n\nwith appropriate authority. Click \"Finish\" to send the following activity to your supervisor for\napproval, then view the My Approvals page to track the status of your request.\n\nSubject\n\nPartners\n\nDescription ‘Aaron Applegate attempted to perform this action but lacked sufficient\nauthority. This action requires Super Visor's approval to be executed.\n\nPriority Normal\n\n1)\n\nTarget Date 11/05/2021 =\nEscalation Date 14/05/2021 Approval activity\n\nAssigned To Super Visor (Group 2)\n\n| Exceeding an authority limit: supervisor response Gi\n\n<>-m G\n‘Approves 2\n\n¢ Supervisors approve or reject approval activity\n\nApproval\n% Fending activity <-> &\n& a0\n\n¢ Ifthe supervisor does not have the authority, the approval moves up a level in the\norganization structure\n\nSupervisors and groups Gi\n\nMarcus . :\nBusiness > You mentioned supervisors, who\nAnalyst can approve or reject approval\nactivities. Are these group\nsupervisors?\nWhitney\nChief\nYes, they are group {Information\nsupervisors. Users typically oO Ofice, R\n\nbelong to at least one group.\nLet’s talk more about\ngroups.\n\nGroups Ga\n\nAgroup is a work-related unit that contains any number of members ee\ni Fi XY\nEvery group belongs to the same tree hierarchy Operations nna OSS\nEach group: Porent Headquarters ad\n* Has a single parent except for the (top-level) root group, Supervisor Je Pav\nwhich has no parent Security Zone Default Security Zone\n* Can have any number of members and child groups =~ —_— Stotus\njarc Billing it worl\n¢ Has one supervisor, who can also be a member of Chris Clark At work\nthe group Drake Clark At work\nPatty Doe At work\nGroups influence trouble ticket and activity William James At work\n. Jeff Park ‘At work\nassignment and the approval process hut Meek\nLisa Smith ‘At work\n\n* Group hierarchy supports tiered approvals\n\nJane Sweeny At work\n\nGroups are organized in a single tree structure\n\n9\n\ns\n\n-2\n\nTiered approvals example Gi\n\n¢ Eric can create a bonus commission eed\nup to $1,000 without approval @O@ 64s 030\n. . wae HQ SupervisorBonus Commission:\nIf Eric creates a bonus commission of Gel Chris $1,000,000\n$5,000, an approval activity is\nassigned to his group supervisor, Betty, I @ os g §\nwho can approve the transaction ee blo]\n. so supensortonus com Commission:\n+ If Eric creates a bonus commission of Betty $10,000\n$50,000, an approval activity is\nassigned to Betty @ €\n; (=) =o '0\n¢ Betty cannot approve the transaction Member Bonus Commission:\n* Original activity is marked approved —> Eric $1,000\n\n« New approval activity assigned to Chris,\nwshn can annrnve the trancarctinn\n\nSecurity zones\n\n¢ Asecurity zone restricts access to an\naccount, policy, or producer\nHQ Special\n¢ For an entity in a given zone, only users in\nthat zone can access that entity\n\n¢ For an entity that is not in a zone, access is ) e e@ e@\n\nunrestricted\n\n*« Membership in a zone is through a\n\ngroup @ @\n¢ Auser can be in multiple groups, so a user é \\ 4\nza)\n\ncan be in more than 1 zone\n* 0 or more groups can be in a zone\n« Agroup can be in a maximum of 1 zone\n\nSecurity zones restrict access to entities ina zone Gi\n\n¢ By default, accounts, policies, and\nproducers have no security zone\n\n¢ If an entity has a security zone, only\nusers belonging to a group in the same\n\nzone can access the entity\n\n¢ Exception: Superuser role has permissions\n\nto ignore security zones\n* Security zones can be used to:\n\n¢ Allow divisions or legal entities within a\ncompany to operate independently\n\n« Restrict access to sensitive accounts, such\nas those belonging to celebrities, officials, or\n\nemployees\n\nAB policy\n\nSpecial\n\naS)\nS\n\n@@ { BU\n\nZT\neo 8 ~@\n@® @® @\nSally ill Igor\n\nQuestion G\n\n_— — Kevin wants to update the address details for the Inna Starr account, but\n\nPa he cannot find the account. What is the problem?\n\n4\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gi\n\n_— — Kevin wants to update the address details for the Inna Starr account, but\nPa he cannot find the account. What is the problem?\n¢\nMost likely, the Irma Starr account is in a security zone that Kevin does not belong to.\n\nLess likely is that Kevin’s assigned role or roles lack permission to view an account.\n\n~- SSS 5S 555555 5-5 =--=\n\nDemonstration G\n\nView security information in the Ul\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nBest source of security information Gi\n\nMarcus\nBusiness\n\nnals What is the best source of security information? |\n: would like to see what roles exist and what\n{ permissions belong to each role.\n\n&\n\nWhitney s\nBillingCenter has a Security — aaetoy ¥\nDictionary that provides a Guitest\n\nconvenient way to view security- y\nrelated information.\n\n| Security Dictionary\n\nGi\n\nSecurity Dictionary is a series of HTML pages that document the permissions and\nroles in your application\n\n4 types of\ninformation\n\ndictionary\n\na“\n\n<server directory>\\build\\dictionary\\security\\index.html\n\nApplication Permission Keys\nPages\n\nSys\nRoles\n\nSummary,\n\nAccount acctignoresecurityzone\nAccount acctpleytx\nAccount chrecmsnrateoverride\nAccount close\nAccount collateraldisburse\n\ndow.\nAccount collateralregedit\nAccount create\nAccount edit\nAccount invecreate\nAccount invedateedit\nAccount inveremove\n\ni\nAccount investrmedit\n\nAccount\n\nName Object Based\n\nacctignoresecurityzone false\nacctpleyns false\nchrgcmsnrateoverride false\nclose false\ncollateraldisburse false\n\nuwdows false\n\ncollateralregedit false\n\ncreate false\nedit false\ninvecreate false\n\nwedateedit false\ninvcremove false\ninveresend false\ninvestrmedit false\n\nDescription\nPermission to view an account regardless of the security zone it is in\nPermission to transfer a policy to a different account\nPermission to override commission rates at the charge level\nPermission to close an account\nPermission to disburse collateral requirement\nPermission to drawdown collateral requirement\nPermission to edit a collateral requirement\nPermission to create an account\nPermission to edit an existing account's details\nPermission to create an invoice\nPermission to change invoice dates\nPermission to remove an invoice\nPermission to resend an invoice to an insured / account contact\nPermission to change invoice stream defaults\n\nViewing information in the Security Dictionary Ga\n\n1. Click one of the four\ninformation types to list\nall entries of that type\n\n2. Click an entry to view\n\nthe details\n\nabcreate\nabcreatepref\n\nabview\nabviewsearch\n\nacctbillall\n\nacctbillplanedit\nacctchargesview\n\nacctelose ——\n\nacctentdelete\nacctentedit\nacctcollview\nacctcontview\nacctcreate\n\nacctdelview\nacctdetedit\nacctdisbview\n\nacctdocview\n\nacctclose (static) - Close account\n> Description\n\nData.Role.Name.All_P¢\n‘AdminData Role Description All_ Permissions\n\nAdminData.Role.Name.Billing Manager\n‘AdminData Role Description Billing_Manager\n\nAdminData.Role.Name.General_Admin\nAdminData Role. Description.General_Admin\n\nRelated Application Permission Keys\n\nPermission to close an account\n\nRelated Elements\n\nClose Account (ToolbarButton) available attribute via Account close\nAccountDetailSummaryScreen (AccountDetailSummaryScreen.pef)\n\nClose Account (ToolbarButton) available attribute via Account close\nAccountSummaryScreen (AccountSummaryScreen. pcf)\n\nQuestion G\n\n,~ — Howcan you determine the number of roles that enable users to create\nPa trouble tickets?\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gi\n\n,~ — Howcan you determine the number of roles that enable users to create\nx trouble tickets?\n¢\n\nGo to the Security Dictionary and view the\ncreate trouble ticket permission to see\nwhich roles the permission has been added to.\n\n~- SSS 5S 555555 5-5 =--=\n\nDemonstration G\n\nView security information in the Security\n—_ Dictionary\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nLesson\nobj ectives Identify the main entities that control user\nreview capabilities within BillingCenter\n\nExplain how monetary limits restrict a user’s\nability to execute a transaction without\napproval\n\n¢ Describe group approval structures\n\n¢ Navigate around the Security Dictionary\n\nStudent exercise\n\nExplore BillingCenter security",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Controlling Access",
+      "word_count": 2,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nIdentify the main entities that control user\ncapabilities within BillingCenter\n\n¢ Explain how monetary limits restrict a user’s\nability to execute a transaction without\napproval\n\n¢ Describe group approval structures\n\n¢ Navigate around the Security Dictionary",
+      "word_count": 38,
+      "avg_confidence": 91.71,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Managing security Gi\n\nMarcus\n\niret ~ How does BillingCenter control\n\naccess to all the financial information\n\nit contains? Whitney\nChief\n\nInformation\nTechnology\n\nOfficer\n\nSecurity in BillingCenter is managed\nthrough users, roles, system\npermissions, and security zones.\nLet’s start by talking about\npermissions.",
+      "word_count": 42,
+      "avg_confidence": 90.98,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Controlling and granting access Gi\n\n¢ Access is the ability to see and do things in BillingCenter based on your user\n\nidentity\n¢ Access can control: eX\n« What you can create and delete\n\n¢ What you can own\n« What you can view and navigate to\n« What you can do with an object (for example, modify a payment)\n\n* Access is granted and managed with system permissions\n\n+ Your ability to do something @ r ] r ]\n\nis based on permissions =\ni e oy a)\n* Your set of permissions depends customer service __ billing manager billing clerk\n\non your job representative",
+      "word_count": 106,
+      "avg_confidence": 83.57,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "System permissions Gi\n\n¢« Asystem permission is a granular ability to see or do something within\nBillingCenter\n\nObject Group Ul",
+      "word_count": 20,
+      "avg_confidence": 87.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Permissions influence access Gi\n\n¢ Each user has certain permissions that determine what they can:\n« View/navigate to\n* Create, edit, and/or delete\n* Own\n* Acton\n\n¢ Your job determines your set of permissions\n\nyd Jane Sweeny — Edward Lee Christine Craft\n@& lean &\n\ncustomer service\n\nai billing clerk\nrepresentative billing manager",
+      "word_count": 54,
+      "avg_confidence": 82.26,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| View/navigate to permissions\n\nC=\n\n=)\n\nChristine\nCraft\n\n@\na\n\nEdward Lee\n\n@~\n\nView Commission Plans\n\n© Billing Pla\n\nch",
+      "word_count": 20,
+      "avg_confidence": 78.17,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Edit object permissions\n\n@ Contacts\nr—_\\ C= Tmo reo\nChristine\n\nCraft\n\n@~-\nContacts\n\nEdward Lee Edit Account Contact cen |amea&",
+      "word_count": 21,
+      "avg_confidence": 81.38,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Own “e permissions G\nTrouble Ticket Wizard - Step 5 of 5\n\n2 _O=\n\nClick Finish to Create the Trouble Ticket\n\nJudith Wiley\n\nAssignment\n\nAssigned To * Judith Wiley (Operations) . Q\n\nTrouble Ticket Wizard - Step 5 of 5\n\nClick Finish to Create the Trouble Ticket\n\nAssignment\n@~ Assigned To + [Edward Commerciattines)» |[ ©]\nOwn Trouble elee's desktop\nEdward Lee Ticket My Trouble Tickets\n[ cw a\nBS Tekete Opened 2 | Owe ® Priority status $\n\n1000000000 04/34/2018, High Open",
+      "word_count": 84,
+      "avg_confidence": 78.76,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Act on permissions Gi\n\na2 o-\n\n4,2021\nNewPayment >\n\nNew Transaction > — Transfer\n\nae Preferences:\nChristine\nCraft\nSy\nNew Payment >\nNew Transaction: » Disbursement\n\nNew Assigned Activity > Transfer\n\nMy Trouble Tickets Preferences Negative Write-Of\n> | z ki ‘Subrogation\nMy Delinquencies w 2,\ne 06, Charge Reversal\nCreate Writeoff Como e Fel write on Reversat\nEdward Lee on Account sumpense & Of Negative Wite-Of Reversal\n\nTransfer Funds Reversal\n\nMy Agency Items\n\nGeneral",
+      "word_count": 75,
+      "avg_confidence": 72.51,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "User permissions are determined during login\n\nAuthenticated?\nWhat permissions?\nusername .\nand password - {imas] Which start page?\n——_—_—_—_—= _— -- —_—_—_\n—_—————_ BilingCertte\nDesktop: Activities\nYes!\nView account,... be data\n\n(e32333} Desktop: Activities",
+      "word_count": 34,
+      "avg_confidence": 84.79,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Question G\n\n_-~ — Kashmira has been asked to issue a commission advance to a producer,\nPa but she doesn’t see a menu item for paying a commission advance.\n: What is the problem?\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 38,
+      "avg_confidence": 88.69,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Answer Gi\n\n_- — Kashmira has been asked to issue a commission advance to a producer,\nPa but she doesn’t see a menu item for paying a commission advance.\n: What is the problem?\n\nKashmira does not have a role that includes the permission to give a commission\nadvance.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 55,
+      "avg_confidence": 86.94,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Question G\n\n,— — When does BillingCenter determine which permissions a given user\n\n“ has?\n’\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 20,
+      "avg_confidence": 76.67,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Answer Gi\n\n,— — When does BillingCenter determine which permissions a given user\n¢ has?\n¢\n4\n\nBillingCenter determines the permissions for a user when that user logs in.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 35,
+      "avg_confidence": 81.09,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Assigning permissions\n\nSS\nAnalyst\n\nNo. We assign\npermissions using roles,\nwhich are groups of\npermissions.\n\nWhitney\nChief\n\nInformation\nTechnology\nOfficer",
+      "word_count": 20,
+      "avg_confidence": 93.96,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Roles Gi\n\n¢ Arole is a named set of permissions used to simplify the assignment of\npermissions to users\n\n* Typically, a role maps to a job title or a job function\n\nBilling Clerical Billing Manager\n=) View Accounts tab ‘) View Accounts tab\n< (7) > View confidential notes\n4 View activity ¢ View activity\nEk Create activity KE Create activity\nOwn activity Own activity\n> Edit account\n\nEdit activity Edit activity",
+      "word_count": 74,
+      "avg_confidence": 87.51,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Mapping roles to users Gi\n\n¢ Each user is given one or more roles\n¢ Auser has all the permissions of the given roles\nPatty Doe Christine Craft Edward Lee\n\n& & &\n\nCommissions Admin Billing Clerical Billing Manager Plan Admin",
+      "word_count": 41,
+      "avg_confidence": 88.02,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question G\n\n,- — Howmany roles can a given user have?\n\n¢\n¢\n4\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 18,
+      "avg_confidence": 74.38,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer Gi\n\n,- — Howmany roles can a given user have?\n\n¢\n¢\n4\n\nTheoretically, a user can have any number of roles from zero to many. Every user\nmust have at least one role in order to be able to do something in BillingCenter. A user\nwith broader responsibility than another user can be given additional roles so that they\nare able to accomplish these responsibilities.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 73,
+      "avg_confidence": 87.97,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Setting monetary limits\n\nWhitney\nChief\nInformation\nTechnology\n\nOfficer\n\nNext, we should talk about authority\nlimits, which set monetary restrictions\non the amount a user can specify for\na given transaction.",
+      "word_count": 30,
+      "avg_confidence": 95.06,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Authority limits Gi\n\n¢ An authority limit is a monetary limit specified for a transaction type\n\n* Transactions for amounts less than or equal to the limit\namount do not require approval ss\n\no>}\n\n¢ Transactions that exceed the limit amount require approval\n¢ Authority limits are assigned to a user through an authority limit profile\n\n+ Auser can have only one authority limit profile Administration tab > Users & Security\n> Authority Limit Profile\n\n+ Auser with no authority limit profile requires . co.\napproval for every transaction Authority Limit Profile\n\nAdd Authority Limit Profile Be\n\nName > Description >\nGeneral General default authority\nLow Low default authority\n\nSuperuser  Superuser default authority",
+      "word_count": 113,
+      "avg_confidence": 88.16,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Authority limit profile examples\n\nGi\n\nSuperuser ( Up to Authority Limit Profile T ecit |\n\nLOW [Geto Authority Profile } [ aie |\n\nName Superuser\nSuperuser default authority\n\nme >>)\n\nLimit Amount >\n\nLimit Type >\n‘Advance Commission\n‘Agency Bill Negative Writeoff From Producer Unapplied\n\nAgency Bill Writeoff From Producer Unapplied\n\nApprove Disbursement\n\nBonus Commission\n\nName Low\nDescription Low default authority\nLimits\n\nSaeed >|»)\n\nLimit Type $ Limit Amount\n\n‘Advance Commission\n‘Agency Bill Negative Writeoff From Producer Unapplied\nAgency Bill Writeoff From Producer Unapplied\n\nApprove Disbursement\n\nBonus Commission",
+      "word_count": 89,
+      "avg_confidence": 83.18,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Exceeding an authority limit Ga\n\nAdvance Commission Payment Wizard - Step 2 of 2\n\nZA Alert: Completing this change will not immediately execute the action because it requires approval. An activity wil be created to handle the approval process. See the activity section below.\n\nAdvance Details\n\ninom $2,000,000.00 Amount of commission advance exceeds user's\nMaintain Until 31/04/2021 authority limit, so an approval activity is created\nPayment and assigned to user’s group supervisor\n\nPay Immediately\nActivity for Approval\nYou do not have sufficient authority to execute this action. Approval must come from a user\n\nwith appropriate authority. Click \"Finish\" to send the following activity to your supervisor for\napproval, then view the My Approvals page to track the status of your request.\n\nSubject\n\nPartners\n\nDescription ‘Aaron Applegate attempted to perform this action but lacked sufficient\nauthority. This action requires Super Visor's approval to be executed.\n\nPriority Normal\n\n1)\n\nTarget Date 11/05/2021 =\nEscalation Date 14/05/2021 Approval activity\n\nAssigned To Super Visor (Group 2)",
+      "word_count": 163,
+      "avg_confidence": 86.58,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Exceeding an authority limit: supervisor response Gi\n\n<>-m G\n‘Approves 2\n\n¢ Supervisors approve or reject approval activity\n\nApproval\n% Fending activity <-> &\n& a0\n\n¢ Ifthe supervisor does not have the authority, the approval moves up a level in the\norganization structure",
+      "word_count": 45,
+      "avg_confidence": 81.19,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Supervisors and groups Gi\n\nMarcus . :\nBusiness > You mentioned supervisors, who\nAnalyst can approve or reject approval\nactivities. Are these group\nsupervisors?\nWhitney\nChief\nYes, they are group {Information\nsupervisors. Users typically oO Ofice, R\n\nbelong to at least one group.\nLet’s talk more about\ngroups.",
+      "word_count": 48,
+      "avg_confidence": 90.82,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Groups Ga\n\nAgroup is a work-related unit that contains any number of members ee\ni Fi XY\nEvery group belongs to the same tree hierarchy Operations nna OSS\nEach group: Porent Headquarters ad\n* Has a single parent except for the (top-level) root group, Supervisor Je Pav\nwhich has no parent Security Zone Default Security Zone\n* Can have any number of members and child groups =~ —_— Stotus\njarc Billing it worl\n¢ Has one supervisor, who can also be a member of Chris Clark At work\nthe group Drake Clark At work\nPatty Doe At work\nGroups influence trouble ticket and activity William James At work\n. Jeff Park ‘At work\nassignment and the approval process hut Meek\nLisa Smith ‘At work\n\n* Group hierarchy supports tiered approvals\n\nJane Sweeny At work",
+      "word_count": 134,
+      "avg_confidence": 82.65,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Groups are organized in a single tree structure\n\n9\n\ns\n\n-2",
+      "word_count": 11,
+      "avg_confidence": 83.92,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Tiered approvals example Gi\n\n¢ Eric can create a bonus commission eed\nup to $1,000 without approval @O@ 64s 030\n. . wae HQ SupervisorBonus Commission:\nIf Eric creates a bonus commission of Gel Chris $1,000,000\n$5,000, an approval activity is\nassigned to his group supervisor, Betty, I @ os g §\nwho can approve the transaction ee blo]\n. so supensortonus com Commission:\n+ If Eric creates a bonus commission of Betty $10,000\n$50,000, an approval activity is\nassigned to Betty @ €\n; (=) =o '0\n¢ Betty cannot approve the transaction Member Bonus Commission:\n* Original activity is marked approved —> Eric $1,000\n\n« New approval activity assigned to Chris,\nwshn can annrnve the trancarctinn",
+      "word_count": 118,
+      "avg_confidence": 81.96,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Security zones\n\n¢ Asecurity zone restricts access to an\naccount, policy, or producer\nHQ Special\n¢ For an entity in a given zone, only users in\nthat zone can access that entity\n\n¢ For an entity that is not in a zone, access is ) e e@ e@\n\nunrestricted\n\n*« Membership in a zone is through a\n\ngroup @ @\n¢ Auser can be in multiple groups, so a user é \\ 4\nza)\n\ncan be in more than 1 zone\n* 0 or more groups can be in a zone\n« Agroup can be in a maximum of 1 zone",
+      "word_count": 101,
+      "avg_confidence": 86.55,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Security zones restrict access to entities ina zone Gi\n\n¢ By default, accounts, policies, and\nproducers have no security zone\n\n¢ If an entity has a security zone, only\nusers belonging to a group in the same\n\nzone can access the entity\n\n¢ Exception: Superuser role has permissions\n\nto ignore security zones\n* Security zones can be used to:\n\n¢ Allow divisions or legal entities within a\ncompany to operate independently\n\n« Restrict access to sensitive accounts, such\nas those belonging to celebrities, officials, or\n\nemployees\n\nAB policy\n\nSpecial\n\naS)\nS\n\n@@ { BU\n\nZT\neo 8 ~@\n@® @® @\nSally ill Igor",
+      "word_count": 104,
+      "avg_confidence": 85.7,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n_— — Kevin wants to update the address details for the Inna Starr account, but\n\nPa he cannot find the account. What is the problem?\n\n4\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 32,
+      "avg_confidence": 82.81,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer Gi\n\n_— — Kevin wants to update the address details for the Inna Starr account, but\nPa he cannot find the account. What is the problem?\n¢\nMost likely, the Irma Starr account is in a security zone that Kevin does not belong to.\n\nLess likely is that Kevin’s assigned role or roles lack permission to view an account.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 66,
+      "avg_confidence": 87.81,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Demonstration G\n\nView security information in the Ul\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 94.61,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Best source of security information Gi\n\nMarcus\nBusiness\n\nnals What is the best source of security information? |\n: would like to see what roles exist and what\n{ permissions belong to each role.\n\n&\n\nWhitney s\nBillingCenter has a Security — aaetoy ¥\nDictionary that provides a Guitest\n\nconvenient way to view security- y\nrelated information.",
+      "word_count": 57,
+      "avg_confidence": 86.21,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Security Dictionary\n\nGi\n\nSecurity Dictionary is a series of HTML pages that document the permissions and\nroles in your application\n\n4 types of\ninformation\n\ndictionary\n\na“\n\n<server directory>\\build\\dictionary\\security\\index.html\n\nApplication Permission Keys\nPages\n\nSys\nRoles\n\nSummary,\n\nAccount acctignoresecurityzone\nAccount acctpleytx\nAccount chrecmsnrateoverride\nAccount close\nAccount collateraldisburse\n\ndow.\nAccount collateralregedit\nAccount create\nAccount edit\nAccount invecreate\nAccount invedateedit\nAccount inveremove\n\ni\nAccount investrmedit\n\nAccount\n\nName Object Based\n\nacctignoresecurityzone false\nacctpleyns false\nchrgcmsnrateoverride false\nclose false\ncollateraldisburse false\n\nuwdows false\n\ncollateralregedit false\n\ncreate false\nedit false\ninvecreate false\n\nwedateedit false\ninvcremove false\ninveresend false\ninvestrmedit false\n\nDescription\nPermission to view an account regardless of the security zone it is in\nPermission to transfer a policy to a different account\nPermission to override commission rates at the charge level\nPermission to close an account\nPermission to disburse collateral requirement\nPermission to drawdown collateral requirement\nPermission to edit a collateral requirement\nPermission to create an account\nPermission to edit an existing account's details\nPermission to create an invoice\nPermission to change invoice dates\nPermission to remove an invoice\nPermission to resend an invoice to an insured / account contact\nPermission to change invoice stream defaults",
+      "word_count": 191,
+      "avg_confidence": 89.92,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Viewing information in the Security Dictionary Ga\n\n1. Click one of the four\ninformation types to list\nall entries of that type\n\n2. Click an entry to view\n\nthe details\n\nabcreate\nabcreatepref\n\nabview\nabviewsearch\n\nacctbillall\n\nacctbillplanedit\nacctchargesview\n\nacctelose ——\n\nacctentdelete\nacctentedit\nacctcollview\nacctcontview\nacctcreate\n\nacctdelview\nacctdetedit\nacctdisbview\n\nacctdocview\n\nacctclose (static) - Close account\n> Description\n\nData.Role.Name.All_P¢\n‘AdminData Role Description All_ Permissions\n\nAdminData.Role.Name.Billing Manager\n‘AdminData Role Description Billing_Manager\n\nAdminData.Role.Name.General_Admin\nAdminData Role. Description.General_Admin\n\nRelated Application Permission Keys\n\nPermission to close an account\n\nRelated Elements\n\nClose Account (ToolbarButton) available attribute via Account close\nAccountDetailSummaryScreen (AccountDetailSummaryScreen.pef)\n\nClose Account (ToolbarButton) available attribute via Account close\nAccountSummaryScreen (AccountSummaryScreen. pcf)",
+      "word_count": 103,
+      "avg_confidence": 81.92,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Question G\n\n,~ — Howcan you determine the number of roles that enable users to create\nPa trouble tickets?\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 23,
+      "avg_confidence": 81.82,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Answer Gi\n\n,~ — Howcan you determine the number of roles that enable users to create\nx trouble tickets?\n¢\n\nGo to the Security Dictionary and view the\ncreate trouble ticket permission to see\nwhich roles the permission has been added to.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 48,
+      "avg_confidence": 85.72,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Demonstration G\n\nView security information in the Security\n—_ Dictionary\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 40,
+      "avg_confidence": 93.92,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Lesson\nobj ectives Identify the main entities that control user\nreview capabilities within BillingCenter\n\nExplain how monetary limits restrict a user’s\nability to execute a transaction without\napproval\n\n¢ Describe group approval structures\n\n¢ Navigate around the Security Dictionary",
+      "word_count": 39,
+      "avg_confidence": 93.21,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "Student exercise\n\nExplore BillingCenter security",
+      "word_count": 5,
+      "avg_confidence": 94.5,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    }
+  ]
+}

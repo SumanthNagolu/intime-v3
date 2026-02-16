@@ -495,7 +495,7 @@ export function ConvertLeadToCandidateDialog({ lead, open, onOpenChange, onSucce
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="onsite">Onsite Only</SelectItem>
+                          <SelectItem value="on_site">On-Site</SelectItem>
                           <SelectItem value="hybrid">Hybrid</SelectItem>
                           <SelectItem value="remote">Remote Only</SelectItem>
                           <SelectItem value="flexible">Flexible</SelectItem>

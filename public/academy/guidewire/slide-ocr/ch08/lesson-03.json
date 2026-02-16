@@ -1,0 +1,412 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-03",
+    "slide_count": 36,
+    "slides_with_text": 32,
+    "total_words": 1381,
+    "avg_confidence": 84.6,
+    "processing_time_seconds": 13.83,
+    "extracted_at": "2026-02-13T12:21:56.682666"
+  },
+  "full_text": "Configuring Job Wizards\n\nLesson\nobjectives\n\n¢ Describe the architecture of job wizards\n* Configure existing job wizard\n* Create and modify job wizard steps\n\nJob wizard basics\n\ni Job wizards Gi\n\nA job wizard is a location with one or more screens in order, in which only one screen is\nactive at a time\n\nTab bar\nActions |= : Info bar\nmenu Sea Tool bar\nDependent\nsteps\nScreen\n\nIndependent .\nsteps\n\ni Comparing job wizards and location groups G&G\n\n¢ Both are assigned to a single tab\n¢ Both reference multiple screens\n¢ Both can have a set of screens that have no inherent order\n\n¢ Both have a shared tab bar, info bar, actions menu, and side bar\n\ni Contrasting job wizards and location groups G&G\n\n¢ Wizards have a toolbar specifically for navigating through the screens\n¢ Wizards access screens directly (as opposed to using pages)\n« Wizards have a set of screens which have an inherent order\n\n¢ Wizard screen availability can be tied to where you are in the wizard\n\ni Job wizards in the base application\n\nSubmission Wizard\nRenewal Wizard\nReinstatement Wizard\nPolicy Change Wizard\nAudit Wizard\nCancellation Wizard\nRewrite Wizard\n\nIssuance Wizard\n\ni Job wizard architecture Gi\n\nSteps vary _.\nbased on LOB\n\nWizardStepGroup\n: i | JobWizardStep | s Bcreer\nFirst and last }\n\nstep(s) are i :  |WizardStepSetRef / WizardStepSet |----------\"\"-\"\"\" :\n\nlines\n\nsame for all : i : JobWizardStep\n| JobWizardStep | =e\n\nJobWizardStep\n\ni Job wizard configuration levels Gi\n\n« JobWizard Job wizard\n\n¢ Entry point and navigation to wizard +—\n\n* Permissions to visit and edit A Lee —Feo]\n* WizardStepGroup i\n* Group label if applicable io: [vobwizarastep |—+ kcreer\n\n« WizardStepSet level\nP os a\n+ Visibility and mode for grouping T —o—\n\n¢ JobWizardStep level\n* Screen that a step renders\n* Step logic (visibility, editability, next step)\n* Step order :\n* Independent steps\n\n| information in job wizard PCF Gi\n\n[Fi PolicyContom Desitop|> Account|> Policy|» Consact|» Reinsurance |» Search|»\n\n[Bh sutmision(oat) CoPeronat Auto 1.08/2472018 RayWewton Account CO00143542 _Underwter Ale Applegate\n\nQualification é\nPolicy Contract H\nPolicy Info J Coton\nDrivers : Account File\nVehicles i\nPA Coverages i Sub Manager\nGroup >\ncreate\n\nNew Note\n\n. Entry points and required objects Newoecament\n\nNew Activity >\n\n¢ Steps which point to screens Copy Submission\n\n¢ Properties that point to separate files for tab bar, info bar, tool bar, and menu actions\n\ni Job wizard properties: countsAsWork G&G\n\n¢ Allows a user to resume working in a wizard after leaving the wizard without\nsaving\n\n¢ If set to true and user navigates away before finishing a wizard, wizard step is\nlisted as Unsaved Work in the same session\n\ni Job wizard properties: canVisit and canEdit G&G\n\n¢ lf canEdit evaluates to true, the job wizard is editable when in edit mode\n* Some conditions include: edit permission, job state\n\n¢ lf canVisit evaluates to true, the users can view the job wizard\n* Some conditions include: view permission\n\n* Examples:\n¢ Users without edit permission cannot edit submissions in draft mode\n\n« A bound (completed) submission is not editable, but may be viewable\n\ni Job wizard entry points and variables tabs\n\n¢ Entry point definition\n* Syntax: EntryPointName(objectName1 : ObjectType1, objectName2 : ObjectType2 ... )\n« Examples:\n\n+ SubmissionWizard(submission : Submission, policyPeriod : PolicyPeriod)\n\n+ SubmissionWizard(submission : Submission, policyPeriod : PolicyPeriod, wizardStep : String)\n¢ Variables tab: Each object expected in all entry points must be declared here\n¢ Navigating to a job wizard\n\n* Syntax: EntryPointName.go(objectsToPass)\n\n« Example: JobForward.pcf > SubmissionWizard.go(job as Submission, policyPeriod,\nwizardStep)\n\ni Demonstration G\n\nJob wizard configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni WizardStepGroup\n\nA WizardStepGroup is a set of wizard steps which:\n\n* are indented\n« have a single parent label\n* Example:\nSubmissionWizard -> Policy Contract group\n\ni WizardStepSet and WizardStepSetRef G&G\n\n¢« AWizardStepSet is a set of wizard steps which have shared logic (visible,\navailable, mode) and can be inserted into a wizard directly or into a wizard group\n\n« AWizardStepSetRef is a reference to the PCF where the step set is stored\n\ni Independent job wizard steps\n\n¢ To make a step independent, set its independent attribute to true\n¢ The independent steps title and title icon are set in the job wizard widget\n« Example\n\n* SubmissionWizard -> Tools section\n\ni Order of job wizard steps\n\nIs determined by order in which they appear in PCF\n* Job wizard displays all visible steps in order declared\n« Dependent steps are always in top box\n* Independent steps are always in bottom box\n\n* Child steps of a job wizard step group are indented\n\ni Screens PCFs\n\nScreens are referenced by job wizard steps\n¢ ScreenPropertyOfJobWizardStep = EntryPointOfScreen(objects ToPass)\nAscreen PCF contains references to all embedded content\nScreen related labels\n* Title determines the text displayed in the title bar of a screen\n« Label determines the text displayed in the sidebar\nButtons on screen\n« Wizard button (previous / next) behavior is handled automatically\n\n* Toolbar buttons are displayed based on job type and status\n\ni Demonstration G\n\nJobWizardStep configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — Name three things that are true of a job wizard that are not true ofa\n\no location group.\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — Name three things that are true of a job wizard that are not true ofa\noo location group.\n\nPossible answers:\n* job wizard screens are ordered.\n* job wizards have toolbars used to navigate through the ordered screens.\n\n* job wizard screens can have conditional availability tied to where you are at in the\njob wizard.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Why would you want to put job wizard steps into a step group? A step\n\n¢ set?\n4\n\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\nae my would you want to put job wizard steps into a step group? A step\n’ ?\n¢\n\nYou might put steps into a step set when you want to control the visibility or availability\nof multiple steps with a single condition. You might put steps into a step group when\nyou want the steps to be indented with a single label displayed over all of them.\n\nSS Se ee eee eo\n\nQuestion G\n\n_~ — What attribute controls the order of appearance of job wizard steps in the\no user interface?\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — What attribute controls the order of appearance of job wizard steps in the\noo user interface?\n\nThere is no attribute that controls the order of appearance. Order of appearance is\nbased on the order in which the wizard steps are listed in the PCF file.\n\nSS Se ee eee eo\n\nQuestion G\n\nae ee does a step behave differently if you set its independent attribute to\n, ?\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\nae tae does a step behave differently if you set its independent attribute to\n’ ?\n¢\n\nSetting a step’s independent attribute to true will list it at the bottom of the sidebar, and\nit cannot be navigated to using the Back/Next toolbar buttons.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — What is a job wizard's entry point? What other elements of the user\n¢ interface reference a job wizard's entry point?\n\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — What is a job wizard's entry point? What other elements of the user\noo interface reference a job wizard's entry point?\n¢\n\nAjob wizard's entry point is the internal name for the job wizard. It is used by\nnavigation widgets which navigate to the job wizard when clicked.\n\nSS Se ee eee eo\n\nLesson\nobj ectives ¢ Describe the architecture of job wizards\nreview * Configure existing job wizard\n\n* Create and modify job wizard steps\n\ni Student exercise\n\nJob Wizards",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Job Wizards",
+      "word_count": 3,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the architecture of job wizards\n* Configure existing job wizard\n* Create and modify job wizard steps",
+      "word_count": 21,
+      "avg_confidence": 86.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Job wizard basics",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Job wizards Gi\n\nA job wizard is a location with one or more screens in order, in which only one screen is\nactive at a time\n\nTab bar\nActions |= : Info bar\nmenu Sea Tool bar\nDependent\nsteps\nScreen\n\nIndependent .\nsteps",
+      "word_count": 44,
+      "avg_confidence": 87.33,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Comparing job wizards and location groups G&G\n\n¢ Both are assigned to a single tab\n¢ Both reference multiple screens\n¢ Both can have a set of screens that have no inherent order\n\n¢ Both have a shared tab bar, info bar, actions menu, and side bar",
+      "word_count": 48,
+      "avg_confidence": 88.77,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Contrasting job wizards and location groups G&G\n\n¢ Wizards have a toolbar specifically for navigating through the screens\n¢ Wizards access screens directly (as opposed to using pages)\n« Wizards have a set of screens which have an inherent order\n\n¢ Wizard screen availability can be tied to where you are in the wizard",
+      "word_count": 55,
+      "avg_confidence": 88.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Job wizards in the base application\n\nSubmission Wizard\nRenewal Wizard\nReinstatement Wizard\nPolicy Change Wizard\nAudit Wizard\nCancellation Wizard\nRewrite Wizard\n\nIssuance Wizard",
+      "word_count": 24,
+      "avg_confidence": 93.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Job wizard architecture Gi\n\nSteps vary _.\nbased on LOB\n\nWizardStepGroup\n: i | JobWizardStep | s Bcreer\nFirst and last }\n\nstep(s) are i :  |WizardStepSetRef / WizardStepSet |----------\"\"-\"\"\" :\n\nlines\n\nsame for all : i : JobWizardStep\n| JobWizardStep | =e\n\nJobWizardStep",
+      "word_count": 45,
+      "avg_confidence": 76.1,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Job wizard configuration levels Gi\n\n« JobWizard Job wizard\n\n¢ Entry point and navigation to wizard +—\n\n* Permissions to visit and edit A Lee —Feo]\n* WizardStepGroup i\n* Group label if applicable io: [vobwizarastep |—+ kcreer\n\n« WizardStepSet level\nP os a\n+ Visibility and mode for grouping T —o—\n\n¢ JobWizardStep level\n* Screen that a step renders\n* Step logic (visibility, editability, next step)\n* Step order :\n* Independent steps",
+      "word_count": 76,
+      "avg_confidence": 78.61,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| information in job wizard PCF Gi\n\n[Fi PolicyContom Desitop|> Account|> Policy|» Consact|» Reinsurance |» Search|»\n\n[Bh sutmision(oat) CoPeronat Auto 1.08/2472018 RayWewton Account CO00143542 _Underwter Ale Applegate\n\nQualification é\nPolicy Contract H\nPolicy Info J Coton\nDrivers : Account File\nVehicles i\nPA Coverages i Sub Manager\nGroup >\ncreate\n\nNew Note\n\n. Entry points and required objects Newoecament\n\nNew Activity >\n\n¢ Steps which point to screens Copy Submission\n\n¢ Properties that point to separate files for tab bar, info bar, tool bar, and menu actions",
+      "word_count": 87,
+      "avg_confidence": 75.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Job wizard properties: countsAsWork G&G\n\n¢ Allows a user to resume working in a wizard after leaving the wizard without\nsaving\n\n¢ If set to true and user navigates away before finishing a wizard, wizard step is\nlisted as Unsaved Work in the same session",
+      "word_count": 46,
+      "avg_confidence": 86.26,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Job wizard properties: canVisit and canEdit G&G\n\n¢ lf canEdit evaluates to true, the job wizard is editable when in edit mode\n* Some conditions include: edit permission, job state\n\n¢ lf canVisit evaluates to true, the users can view the job wizard\n* Some conditions include: view permission\n\n* Examples:\n¢ Users without edit permission cannot edit submissions in draft mode\n\n« A bound (completed) submission is not editable, but may be viewable",
+      "word_count": 75,
+      "avg_confidence": 87.43,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Job wizard entry points and variables tabs\n\n¢ Entry point definition\n* Syntax: EntryPointName(objectName1 : ObjectType1, objectName2 : ObjectType2 ... )\n« Examples:\n\n+ SubmissionWizard(submission : Submission, policyPeriod : PolicyPeriod)\n\n+ SubmissionWizard(submission : Submission, policyPeriod : PolicyPeriod, wizardStep : String)\n¢ Variables tab: Each object expected in all entry points must be declared here\n¢ Navigating to a job wizard\n\n* Syntax: EntryPointName.go(objectsToPass)\n\n« Example: JobForward.pcf > SubmissionWizard.go(job as Submission, policyPeriod,\nwizardStep)",
+      "word_count": 73,
+      "avg_confidence": 84.12,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Demonstration G\n\nJob wizard configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.78,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i WizardStepGroup\n\nA WizardStepGroup is a set of wizard steps which:\n\n* are indented\n« have a single parent label\n* Example:\nSubmissionWizard -> Policy Contract group",
+      "word_count": 27,
+      "avg_confidence": 88.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i WizardStepSet and WizardStepSetRef G&G\n\n¢« AWizardStepSet is a set of wizard steps which have shared logic (visible,\navailable, mode) and can be inserted into a wizard directly or into a wizard group\n\n« AWizardStepSetRef is a reference to the PCF where the step set is stored",
+      "word_count": 47,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Independent job wizard steps\n\n¢ To make a step independent, set its independent attribute to true\n¢ The independent steps title and title icon are set in the job wizard widget\n« Example\n\n* SubmissionWizard -> Tools section",
+      "word_count": 39,
+      "avg_confidence": 86.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Order of job wizard steps\n\nIs determined by order in which they appear in PCF\n* Job wizard displays all visible steps in order declared\n« Dependent steps are always in top box\n* Independent steps are always in bottom box\n\n* Child steps of a job wizard step group are indented",
+      "word_count": 53,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Screens PCFs\n\nScreens are referenced by job wizard steps\n¢ ScreenPropertyOfJobWizardStep = EntryPointOfScreen(objects ToPass)\nAscreen PCF contains references to all embedded content\nScreen related labels\n* Title determines the text displayed in the title bar of a screen\n« Label determines the text displayed in the sidebar\nButtons on screen\n« Wizard button (previous / next) behavior is handled automatically\n\n* Toolbar buttons are displayed based on job type and status",
+      "word_count": 72,
+      "avg_confidence": 89.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Demonstration G\n\nJobWizardStep configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question G\n\n,~ — Name three things that are true of a job wizard that are not true ofa\n\no location group.\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 29,
+      "avg_confidence": 75.17,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer G\n\n,~ — Name three things that are true of a job wizard that are not true ofa\noo location group.\n\nPossible answers:\n* job wizard screens are ordered.\n* job wizards have toolbars used to navigate through the ordered screens.\n\n* job wizard screens can have conditional availability tied to where you are at in the\njob wizard.\n\nSS Se ee eee eo",
+      "word_count": 65,
+      "avg_confidence": 83.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question G\n\n,~ — Why would you want to put job wizard steps into a step group? A step\n\n¢ set?\n4\n\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 29,
+      "avg_confidence": 72.67,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer G\n\nae my would you want to put job wizard steps into a step group? A step\n’ ?\n¢\n\nYou might put steps into a step set when you want to control the visibility or availability\nof multiple steps with a single condition. You might put steps into a step group when\nyou want the steps to be indented with a single label displayed over all of them.\n\nSS Se ee eee eo",
+      "word_count": 75,
+      "avg_confidence": 88.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question G\n\n_~ — What attribute controls the order of appearance of job wizard steps in the\no user interface?\n\nSS oe ee oe oe oo",
+      "word_count": 26,
+      "avg_confidence": 69.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer G\n\n,~ — What attribute controls the order of appearance of job wizard steps in the\noo user interface?\n\nThere is no attribute that controls the order of appearance. Order of appearance is\nbased on the order in which the wizard steps are listed in the PCF file.\n\nSS Se ee eee eo",
+      "word_count": 54,
+      "avg_confidence": 83.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question G\n\nae ee does a step behave differently if you set its independent attribute to\n, ?\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 25,
+      "avg_confidence": 70.73,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer G\n\nae tae does a step behave differently if you set its independent attribute to\n’ ?\n¢\n\nSetting a step’s independent attribute to true will list it at the bottom of the sidebar, and\nit cannot be navigated to using the Back/Next toolbar buttons.\n\nSS Se ee eee eo",
+      "word_count": 51,
+      "avg_confidence": 84.4,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question G\n\n,~ — What is a job wizard's entry point? What other elements of the user\n¢ interface reference a job wizard's entry point?\n\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 33,
+      "avg_confidence": 71.91,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer G\n\n,~ — What is a job wizard's entry point? What other elements of the user\noo interface reference a job wizard's entry point?\n¢\n\nAjob wizard's entry point is the internal name for the job wizard. It is used by\nnavigation widgets which navigate to the job wizard when clicked.\n\nSS Se ee eee eo",
+      "word_count": 57,
+      "avg_confidence": 80.78,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Lesson\nobj ectives ¢ Describe the architecture of job wizards\nreview * Configure existing job wizard\n\n* Create and modify job wizard steps",
+      "word_count": 23,
+      "avg_confidence": 86.13,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "i Student exercise\n\nJob Wizards",
+      "word_count": 5,
+      "avg_confidence": 84.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

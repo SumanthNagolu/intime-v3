@@ -1,0 +1,302 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-16",
+    "slide_count": 26,
+    "slides_with_text": 24,
+    "total_words": 937,
+    "avg_confidence": 88.39,
+    "processing_time_seconds": 10.31,
+    "extracted_at": "2026-02-13T12:06:10.065986"
+  },
+  "full_text": "Product Model: Products and Policy Lines\n\nLesson\nobjectives * Define what a “product” is in terms of\n\nPolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n¢ List three important questions to ask when\ndesigning a product\n\nDarren\nInsurance\nProduct Manager\n\n\"q\n|\n\n| need to know how to build our\nproducts using PolicyCenter to\nensure speed to market. How are\nproducts organized in PolicyCenter?\n\n| Review: the product model Gi\n\n¢ The product model provides the framework to define products in PolicyCenter\n¢ The product model is where risk is defined for the business\n¢ The product model includes the lines of business, coverages, and coverage terms\n\n¢ The product model is easy to configure using the Product Designer tool\n\n| Review: the product model Gi\n\n\"Ai Product Question Sets\n\nPolicy Line\n\nModifiers\n\n. coverages,\noo? exclusions,\nconditions\n\n| Focus: Products and the Policy Line Gi\n\nQuestion Sets\n\nPolicy Line\n\nModifiers\n\n. coverages,\noo? exclusions,\nconditions\n\n| Product and PolicyLine pattern relationship Gi\n\nWorkers’ Comp Commercial General +\nme,\n\n+ ~\n\nLS\nOe,\n\nWorkers’ Comp General Commercial Inland General\nLiability Property Marine Liability\n\n| Flexibility and reuse\n\n¢ Asingle policy line can\nbe used in different\nproducts\n\n¢ This gives you flexibility\nwhen you create new\n\nproducts in the product\nmodel\n\nPolicy Lines\n\nA\n\nGeneral\nLiability\n\nCommercial\nPackage\n\nv\n\nCommercial\nProperty\n\nInland\nMarine\n\nGeneral Liability\n\n4\n\nGeneral\nLiability\n\n| Policy Lines G\n\n¢ A Policy Line includes is a set of \"legal and\nbinding\" information about the product.\nExamples include:\n\n* Information about what exposures can be\ncovered on the policy\n\n* Information about what coverages are available\non the policy\n\n¢ Products must have an associated Policy\nLine\n\n| PolicyLine subtypes Gi\n\nBusinessAutoLine BicycleLine\nPolicyLine\nsubtype\n\n| Details for policy lines Gi\n\nLine name\n\nLine coverables\n\nThe name you enter appears on the\npolicy line tab\n\nThe assets, or exposure to risk, that are CPBlanket\nbeing covered CPBuilding\n\nCommercial Property Line\n\n| Products Gi\n\n¢ In PolicyCenter, the product captures\nmarketing information about the product\n\n* Questions to consider when creating a\nproduct include:\n* The overall business value/value proposition\n\nv * Is the product relevant to individuals,\ncompanies, or both?\n\n+ What specific items disqualify applicants from\nbeing able to purchase products?\n\n« Where is a product available?\n* What policy line(s) are included in a product?\n\n| Demonstration G\nThe Product Model and PolicyCenter\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Designing your product — what is required\n\nProduct Feature [Description = fexampte\n\nProduct type\nProduct name\n\nLine of business\n\nProduct account types\nAvailable jurisdictions\n\nPolicy terms\n\nDefault policy term\n\nDefines the business product type\n\nRefers to the label a user sees in the user\ninterface\n\nWhat is the policy line that this product includes.\n\nA package could include more than one line.\nWho can buy this product?\nIn which jurisdiction(s) is this product available?\n\nWhat are the possible terms for this product?\n\nWhat is the most common policy term for this\nproduct?\n\nGi\n\nCommercial\nCommercial Property\n\nCommercial Property Line\n\nAnyone\nIL, NV, CA, HI\n\nAnnual, Other\n\nAnnual\n\n| Demonstration G\nProducts and Policy Lines\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,~ — Aset of \"legal and binding\" information about the product is described\n\nx where?\n7\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi\n\nAnswer\n\n,~ — Aset of \"legal and binding\" information about the product is described\nx where?\n¢\n\nIn the policy line (the PolicyLine pattern).\n\nSooo ooo ooo Oooo oOoD\n\nGi\n\nQuestion\n\n,~ — Although products are the first level of hierarchy in the product model,\nx what should you set up before you set up products?\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi\n\nAnswer Gi\n\n,~ — Although products are the first level of hierarchy in the product model,\nx what should you set up before you set up products?\n\nAlthough products are at the top of the hierarchy, products must be associated with at\nleast one policy line and therefore policy lines must be configured before you configure\na product for the product model.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n,~ — Cana single product having multiple policy line patterns exist? Give an\n\nx example.\n\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi\n\nAnswer Gi\n\n,~ — Cana single product having multiple policy line patterns exist? Give an\nx example.\n¢\n\nA package can have a single product that includes multiple policy line patterns.\nThe base configuration includes a Commercial Package product that includes three\npolicy lines: General Liability, Commercial Property, and Inland Marine.\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobjectives * Define what a “product” is in terms of\nreview PolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n¢ List three important questions to ask when\ndesigning a product\n\n| Virtual Machine Instructions Gi\n\nA) If you have access to a VM, start the PolicyCenter application in the VM now.\n4\n\nStart PolicyCenter\n— — 7 mel ***** PolicyCenter Ready ***\n\nOpen the PolicyCenter Before starting Allow the startup Look out for the message\nShortcuts folder on exercises, Start process to run. indicating that the |\nthe Desktop. PolicyCenter application server is ready.\n\nSeal 'ttp://localhost:8180/pc/PolicyCenter.do Tima\n\nConnect to the application URL. After finishing\nexercises, Stop\nPolicyCenter\n\n| Student exercise\n\nProducts and Policy Lines",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Product Model: Products and Policy Lines",
+      "word_count": 6,
+      "avg_confidence": 95.62,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives * Define what a “product” is in terms of\n\nPolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n¢ List three important questions to ask when\ndesigning a product",
+      "word_count": 38,
+      "avg_confidence": 89.53,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Darren\nInsurance\nProduct Manager\n\n\"q\n|\n\n| need to know how to build our\nproducts using PolicyCenter to\nensure speed to market. How are\nproducts organized in PolicyCenter?",
+      "word_count": 28,
+      "avg_confidence": 90.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Review: the product model Gi\n\n¢ The product model provides the framework to define products in PolicyCenter\n¢ The product model is where risk is defined for the business\n¢ The product model includes the lines of business, coverages, and coverage terms\n\n¢ The product model is easy to configure using the Product Designer tool",
+      "word_count": 56,
+      "avg_confidence": 90.04,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Review: the product model Gi\n\n\"Ai Product Question Sets\n\nPolicy Line\n\nModifiers\n\n. coverages,\noo? exclusions,\nconditions",
+      "word_count": 18,
+      "avg_confidence": 86.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Focus: Products and the Policy Line Gi\n\nQuestion Sets\n\nPolicy Line\n\nModifiers\n\n. coverages,\noo? exclusions,\nconditions",
+      "word_count": 18,
+      "avg_confidence": 88.31,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Product and PolicyLine pattern relationship Gi\n\nWorkers’ Comp Commercial General +\nme,\n\n+ ~\n\nLS\nOe,\n\nWorkers’ Comp General Commercial Inland General\nLiability Property Marine Liability",
+      "word_count": 27,
+      "avg_confidence": 83.54,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Flexibility and reuse\n\n¢ Asingle policy line can\nbe used in different\nproducts\n\n¢ This gives you flexibility\nwhen you create new\n\nproducts in the product\nmodel\n\nPolicy Lines\n\nA\n\nGeneral\nLiability\n\nCommercial\nPackage\n\nv\n\nCommercial\nProperty\n\nInland\nMarine\n\nGeneral Liability\n\n4\n\nGeneral\nLiability",
+      "word_count": 45,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Policy Lines G\n\n¢ A Policy Line includes is a set of \"legal and\nbinding\" information about the product.\nExamples include:\n\n* Information about what exposures can be\ncovered on the policy\n\n* Information about what coverages are available\non the policy\n\n¢ Products must have an associated Policy\nLine",
+      "word_count": 51,
+      "avg_confidence": 90.72,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| PolicyLine subtypes Gi\n\nBusinessAutoLine BicycleLine\nPolicyLine\nsubtype",
+      "word_count": 8,
+      "avg_confidence": 86.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Details for policy lines Gi\n\nLine name\n\nLine coverables\n\nThe name you enter appears on the\npolicy line tab\n\nThe assets, or exposure to risk, that are CPBlanket\nbeing covered CPBuilding\n\nCommercial Property Line",
+      "word_count": 35,
+      "avg_confidence": 92.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Products Gi\n\n¢ In PolicyCenter, the product captures\nmarketing information about the product\n\n* Questions to consider when creating a\nproduct include:\n* The overall business value/value proposition\n\nv * Is the product relevant to individuals,\ncompanies, or both?\n\n+ What specific items disqualify applicants from\nbeing able to purchase products?\n\n« Where is a product available?\n* What policy line(s) are included in a product?",
+      "word_count": 67,
+      "avg_confidence": 87.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Demonstration G\nThe Product Model and PolicyCenter\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.32,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Designing your product — what is required\n\nProduct Feature [Description = fexampte\n\nProduct type\nProduct name\n\nLine of business\n\nProduct account types\nAvailable jurisdictions\n\nPolicy terms\n\nDefault policy term\n\nDefines the business product type\n\nRefers to the label a user sees in the user\ninterface\n\nWhat is the policy line that this product includes.\n\nA package could include more than one line.\nWho can buy this product?\nIn which jurisdiction(s) is this product available?\n\nWhat are the possible terms for this product?\n\nWhat is the most common policy term for this\nproduct?\n\nGi\n\nCommercial\nCommercial Property\n\nCommercial Property Line\n\nAnyone\nIL, NV, CA, HI\n\nAnnual, Other\n\nAnnual",
+      "word_count": 108,
+      "avg_confidence": 94.04,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Demonstration G\nProducts and Policy Lines\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.54,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n,~ — Aset of \"legal and binding\" information about the product is described\n\nx where?\n7\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 74.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n,~ — Aset of \"legal and binding\" information about the product is described\nx where?\n¢\n\nIn the policy line (the PolicyLine pattern).\n\nSooo ooo ooo Oooo oOoD\n\nGi",
+      "word_count": 30,
+      "avg_confidence": 82.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n,~ — Although products are the first level of hierarchy in the product model,\nx what should you set up before you set up products?\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "word_count": 33,
+      "avg_confidence": 83.2,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer Gi\n\n,~ — Although products are the first level of hierarchy in the product model,\nx what should you set up before you set up products?\n\nAlthough products are at the top of the hierarchy, products must be associated with at\nleast one policy line and therefore policy lines must be configured before you configure\na product for the product model.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 67,
+      "avg_confidence": 92.16,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n,~ — Cana single product having multiple policy line patterns exist? Give an\n\nx example.\n\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 75.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\n,~ — Cana single product having multiple policy line patterns exist? Give an\nx example.\n¢\n\nA package can have a single product that includes multiple policy line patterns.\nThe base configuration includes a Commercial Package product that includes three\npolicy lines: General Liability, Commercial Property, and Inland Marine.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 56,
+      "avg_confidence": 85.47,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Lesson\nobjectives * Define what a “product” is in terms of\nreview PolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n¢ List three important questions to ask when\ndesigning a product",
+      "word_count": 39,
+      "avg_confidence": 89.69,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Virtual Machine Instructions Gi\n\nA) If you have access to a VM, start the PolicyCenter application in the VM now.\n4\n\nStart PolicyCenter\n— — 7 mel ***** PolicyCenter Ready ***\n\nOpen the PolicyCenter Before starting Allow the startup Look out for the message\nShortcuts folder on exercises, Start process to run. indicating that the |\nthe Desktop. PolicyCenter application server is ready.\n\nSeal 'ttp://localhost:8180/pc/PolicyCenter.do Tima\n\nConnect to the application URL. After finishing\nexercises, Stop\nPolicyCenter",
+      "word_count": 77,
+      "avg_confidence": 86.31,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Student exercise\n\nProducts and Policy Lines",
+      "word_count": 7,
+      "avg_confidence": 95.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

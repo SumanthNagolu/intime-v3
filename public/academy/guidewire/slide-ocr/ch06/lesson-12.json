@@ -1,0 +1,423 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-12",
+    "slide_count": 37,
+    "slides_with_text": 35,
+    "total_words": 2202,
+    "avg_confidence": 79.67,
+    "processing_time_seconds": 17.36,
+    "extracted_at": "2026-02-13T12:14:35.907642"
+  },
+  "full_text": "Processing a Delinquency\n\nLesson\nobjectives ¢ Describe the delinquency lifecycle for a Past\n\nDue delinquency\n\n¢ Explain the role of delinquency reasons in\ndelinquency processing\n\n* Track a delinquency using delinquency\nevents\n\n¢ Interpret delinquency plans\n\n¢ Test delinquency processing\n\ni Past due delinquency Gi\n\nMarcus\nBusiness\nAnalyst\n\nSometimes policyholders miss a\npayment. How does BillingCenter\nhandle the situation of an\noverdue payment?\n\nMarci (jy\nConfiguration ‘ss\n\nDeveloper\n\nAn overdue payment\nautomatically initiates a\nPastDue delinquency in\nBillingCenter.\n\ni Delinquency Gi\n\n¢ Delinquency is a process that launches and coordinates the steps necessary to\nhandle an unexpected occurrence such as an overdue payment\n\n¢ Policy is at risk for cancellation because of some inaction\n« Aim is to get client back into compliance\n¢ Most delinquencies are triggered automatically\n\n* For example, a Past Due delinquency is triggered by the Invoice Due batch process when an\ninvoice is one day overdue\n\n¢ Only accounts and policies can become delinquent\nlt»\n\nFE QName Belen Weber Account# DEM00S7O Oct 18, 2018 fr) [Policy Hoor-8WEBER-1 Accounts DEMO0S70 Oct18, 2018\n\nAccount Summary Policy Summary\n\n‘A\\ This account has one oF more active delinquencies: Past Due. {A\\ This policy has one or more active delinquencies: Past Due.\n\ni Delinquency handling resources: workflow Gi\n\n¢ Aworkflow is a multistep process designed\n\nto manage complex business processes\nworkflow events\n\n¢ Workflows are well suited for delinquency\n\nprocessing because they: Dunning Letter 1\n« Encapsulate all logic for a business process in one\nplace Dunning Letter 2\n\n* Define flows of logic with conditional branching workflow ABC Intent to Cancel\n\n* Can execute steps immediately, wait for a time\nperiod to pass, and/or wait for an external event to\noccur\n\n¢ BillingCenter users track the progress of a\ndelinquency processing by means of\nworkflow events\n\ni Delinquency handling resources: delinquency plan [5\n\n¢ Adelinquency behaves\naccording to the active\ndelinquency plan\n\n¢ Every account has a\ndelinquency plan\n\n¢ Apolicy may have a\ndelinquency plan\n\n* Policy delinquency plan\ntakes precedence over\naccount delinquency\nplan\n\ndelinquency S] => Late Fee: 50\nplan @ \\( ) Delinquency Reason & Workflow Type:\n= \\ YT Past Due > Workflow ABC\n\ni Lifecycle of a past due “standard” delinquency Ga\n\nUUUU\nq Alert warns of impending delinquency\n\ndue dat UUUU . ‘ A\nNe Cate awed Delinquency is active\n\n| e | dunning letter 1 sent, late fee charged\n\ndue date+1 gage\nDunning letter 2 sent, cancellation approval activity\n\ndue date+8 9088\nq Notice of intent to cancel sent to PAS\n\ndue date+15 49\n\nDelinquency referred to collection agency\n\ne\ndue date + 46\n\nillingCenter receives payment for the ov je amount, delinquency is automatically closed.\n\ni Moving the delinquency forward Gi\n\neu Many workflow events are date/time driven.\nH The inception date is the date on which delinquency processing starts.\n\n* Invoice Due launches a past due\ndelinquency.\n> ° Workflow Writer “wakes” up a workflow\n\nbatch that is waiting on a date or elapsed\nprocesses time.\n\nsystem date\n\nWorkflows generate activities.\n\n<< , ¢ An Approval activity blocks workflow processing until an\nG authorized user approves or rejects the activity.\n\nactivity . \\ Notification activity is for information only.\n\nTest a delinquency\n\ni Simulating a delinquency G\n\nMarcus Now that | understand more\n\nBusiness\n\nNg about delinquency processing,\nI'd like to see a delinquency in\naction so | know how to test a\n\nra delinquency.\n\nMarci\nConfiguration\nDeveloper\n\nGood idea!\nLet’s get started.\n\ni Demonstration G\n\nTest delinquency processing\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — What purpose does the Workflow Writer batch process serve?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nAnswer Gi\n\n_— — What purpose does the Workflow Writer batch process serve?\n\n¢\na The Workflow Writer batch process checks for active workflows that are suspended\n\nuntil a date has been reached or an amount of time has elapsed.\n\nSoe ee ee eee Soo eSeoe Ss\n\nQuestion\n\n_- — How does BillingCenter know which workflow to use to process a given\n\noo delinquency?\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nGi\n\nAnswer\n\n_~ — How does BillingCenter know which workflow to use to process a given\nPa delinquency?\n¢\n\nThe delinquency plan associates each delinquency reason with the appropriate\nworkflow.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi\n\nQuestion\n\n_- — How does a Billing Clerk know that a policy is in delinquency?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nAnswer Gi\n\na How does a Billing Clerk know that a policy is in delinquency?\nTe Alert bars on the Account Summary and Policy Summary screens inform users of\nan active delinquency. Also, delinquencies are listed on the My Delinquencies screen\n\non the Desktop.\n\nSoe ee ee eee Soo eSeoe Ss\n\nQuestion\n\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nGi\n\n,— — Given the delinquency shown below, what needs to happen to move the\n\noo delinquency forward?\n\nT] Q) Name ‘Account#\nDelinquencies\n\nEvents ‘Complete Target Date\n\nYes 09/25/2019\n\nYes 09/25/2019\n\n——— 10/02/2019\n\n10/09/2019\n\n11/09/2019\n\n01/23/2020\n\nOct 2, 2019\n\nCompletion Date\n09/25/2019\n09/25/2019\n\nDescription\n\nDunning Letter 1\n\nLate Fee\n\nDunning Letter 2\n\nSend Notice of Intent To Cancel\nCollections\n\nWriteoff\n\nTrigger\nInception Date\n\nInception Date\n\nInception Date +7 days\nInception Date + 14 days\nInception Date + 45 days\nInception Date + 120 days\n\nAnswer Gi\n\n¢\n\nSoe ee ee eee Soo eSeoe Ss\n\n,— — Given the delinquency shown below, what needs to happen to move the\n¢ delinquency forward?\n\n¢\nFQ Name Account oct2,2018\nDelinquencies\nEvents Complete > Target Date Completion Date Description Trigger\nYes 09/25/2019 09/25/2019 Dunning Letter 1 Inception Date\nYes 09/25/2019 09/25/2019 Late Fee Inception Date\n—__, 10/02/2018 Dunning Letter2 Inception Date +7 days\n10/08/2019 Send Notice of Intent To Cancel Inception Date + 14 days\n11/09/2019 Collections Inception Date +45 days\n01/23/2020 Writeoff Inception Date + 120 days\n\nThe Workflow Writer batch process needs to be run to “wake up” the workflow, which\nis waiting on a date.\n\nQuestion\n\n_- — How does an approval activity influence workflow?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nAnswer Gi\n\n,- — How does an approval activity influence workflow?\n¢\no An approval activity blocks workflow processing until it is either approved or rejected.\nTypically, the workflow performs different processing depending on the outcome of an\napproval activity.\n\nSoe ee ee eee Soo eSeoe Ss\n\nQuick review of a delinquency: invoice due date =\n\n1 of 9\nPolicy Summary sertdeingency J oes\n\nA, Thispoliy will become detinguent ifthe expected payment isnot eceved by 1001/2018, °\noverview Notes ob\n© There areno notes onthis policy.\ntnsured currency uso\nPolicy tfetime aveerbene.2018 Bilin Method ieee it\nEffective Dates 2/30/2018-04/302019 Send invoices By ait\nCancelation statu oven DetoltPayment Method Responsive\nPayment tan pena\nUW company\nFinancials\nEquity\na—— Policy Eauity suas\n. sm Unbied: $10,038.40\naa sm Paid: 2,508.60 Equity Percent 278%\nLate Fee : sm iten of: $0.09\ni ieeasas Paid Through ayazoie\nNext invoice Ove $1,258.30 sm Past Ove\n(on saturday, December 0, Past Ove $0.00\n218)\nLast PaymentReceived 2,510.60 Policy Value 312583. ‘Unapoted Fund\n{@nwonday, october 01,\n218) Designated Unopplied\n\nTotal Unapplied\n\nQuick review: invoice due date + 1\n\n20f9\nPolicy Summary\n\n‘A. This policy has one or more active delinquencies: Pa\n\nOverview.\nInsured\n\nobey tiene Year (Aug 30,2018)\nEffective Dates (08/30/2018 08/30/2019\nCancellationstatus Open\n\nDue.\n\nUW company\nFinancials\n\nCurrent Payment Expected _ $1,254.30\n\n© s125430\n\n‘Next invoice Due\n(on Saturday, December 0,\n2018)\n\n$1,308.30\n\nLast Payment Received\n(on Monday, October 02,\n2018)\n\n$210.60\n\nPolicy Value\n\nCurrency\nBilling Method\n\nSend invoices By\nDefault Payment Method\n\nPayment Plan\n\n‘mt Unbilled: $8,830.10\nsm Paid: $2,508.60\n1m riten Off: $0.00\n= Billed: $0.00\n\n°\nNotes\n\nuso * ;\n© There arenonoteson this policy.\n\nDirect ill,\n\nait\n\nResponsive\n\npe\n\nauity\nPolicy Evity 330828\nEquity Percent 2am\nPaid Th ayo\n\nsm Past Due: $1,254.30\n\n512,593.00 nsepted Pend\nDesignated Unapplied\n\nTotal Unapplied\n\ni Quick review: same day, Delinquencies screen Gi\n3 of 9\n\nDelinquencies\n\nEvents\n\nTenner\nvee s/on/2018 21022018 te\n\nTowne\n\nnamie oll +45 days\nosion/2019 Weteot Inception ate + 120 days\nRexcinReinstte {Good Standing\n\ni Quick review: same day, late fee charged Gi\n4 of 9\n\nCharges\n\nome = Aout 2 tPoer = charges cate > chageGrup 2 ldState > Anant Pinay Proce ©\nTE -- - vet som\nPEE crac: crtems prem aetace wale ss.00\n\nInert > Plcement® wie BiDate > kOe > Contat =e = Ant = Pidanant = imoke Sve 2\n\noustoie——ANNODOLBPmed sae ene onetime ‘S00 ~ aoe en\n\nTotal $50.00\n\nQuick review: invoice due date + 8 =\n5 of 9\nPolicy Summary focus |\n\n{A.THispatcy has one or more active delinquencies Past Ove °\n‘oventew\nNotes\nInsured urenc\ny uso © _ There are nonnotes on this policy.\nsolo etine 1 Year (08,2018) Bilin Method Direct it\ntect Dates: n072018- 08/20/2019 Sendinwoces ai\nCancliation Status _Open DefaltPaymentMethod Responsive\nLW company\nFinanc\nawity\ncoment PaymentExpected 5125820\nseas\n1 nbited: 8230.0 Pig Eauity\nPastoue — om Paid 2502.60\n= Eauity Percent sal\nsm Writen of 50.00\nLate Fee ssooo\n= Billed: 50.00 sid Toush nuswioie\nen ince Ove 120820 sm Past ove 54,254.30\n(on setudey, December on,\nSa\nLastPaymentReceived 52510. Policy Vl: 12,593.00 nap Fund\n{ennonday, tober,\nSe\n\nDesignated Unapplied\n\n‘otal Unapplied\n\nDelinquencies\n\nay |\n\nQuick review: same day, Delinquencies screen\n6 of 9\n\nStatus ¢ CreateDate > Type > Approved > Subject > Mandatory >\nome Details Open 11/09/2018\nDetails Open\n\n‘Sent Dunning Letter\n11/09/2018\n\nApprove Cancellation\nEvents\n\nComplete = Target Date > Completion Date = Description = Tigger >\nYer nlo2i2018 suvo2/2o1e Dunning Letter 2\nYes suo22018 suo22018\n\nInception Date\nLate Fee\n\nInception Date\nTinea\nmario\n\nCollections\n‘osjonz019\n\nreption Date\nInception Date + 45 days\nWriteott\n\ntnception Date +120 days\nRexcind/Reinstate Good standing\natte v\n\nQuick review: same day, approve cancellation\n\n7 of 9\n\nDelinquencies\n\narent Event Dunning etter?\n\nNext vent Send Notice of nent To Cancel\n\nciv:\n\nStatus ¢ CreateDate $ Type > Approved > Subject\n\nGeile Open ——:10/087018 General Sent Ounning eter\nf) pen 51082018 Approval Aomrove Cah Activites\n\nEvents\n\nSubject\nDescription\nPriority\n\nDue Date\nEscalation Date\n\nAssigned to\n\nDetails\n\nApprove Cancellation\n‘Approve Cancellation\n\nNormal\n\nau/is2018\n\nau/is?2018\n\nUse automated assignment\n\nMandatory\n\nStatus > CreateDate > Type >\n\nOpen 11/09/2018 General\n\nGi\n\nApproved > Subject > Mandatory >\n\n‘Sent DunningLetter No\n\na Details Complete 11/09/2018 Approval Yes | Approve Cancellation Yes.\nsetivity -\nE\n\nQuick review: one week later\n\n8 of 9\n\nDelinquencies\nCoretnet———_—Sendtto cane\n\nDeal Oem\n\noxen\n\nvents\n\ncrmteoate 5 pe\n\nTresone ©\n\nst apment\n\nstPoymectimcent 35300\n\nsetjet =\n\nseen aceon\n\nConscsonoue\n\npecans ina 25 os\n\ntngeny te\nween Status  CreateDate $ Type > Approved > Subject > Mandatory >\nDetails __Open 11/16/2018 _General Cancellation Notification for GLO1-CK-1___No\nDetails Open. 11/09/2018 General ‘Sent Dunning Letter No\nDetails Complete 11/09/2018 Approval Yes Approve Cancellation Yes\nondtory\nwe Events\nComplete Target Oate Completion Date = Desrition Wieser\nve enor sono. Dunning Letter Inception Date\nYes swjono18 syornoe LateFee Inception Date\n22 soso,\ne201 162018\nTaare “allections Trception Ose 45 days\noxenr2019 Write Inception Date +120 days\nRescind Reinstte Good Standing\n\nQuick review: policy pending cancellation =\n\n9 of 9\nPolicy Summary =3c3\n\nA. This policy has one or more active delinquencies: Past Ove. °\noverdo ve ot\n@ _ There are no notes on this policy.\nPolicy Lifetime 1 Veor (Aug 30, 2038) Billing Method Direct Bill\nwconsny\nFnac\nfesty\n\nPast Due © 51,258.30 tm Paid: $2,508.60 Y « J\n\n1 steno 0.00 testy Pernt sans\nLaer soo sie s000\n\npote suas patted susunow\ner oan,\n\net ae samme\n\nDesignated Unapplied\n\nTotal Unappled\n\ni Delinquency plan\n\nAnalyst\n\nNow that I’m clear on the\ndelinquency lifecycle, |\nneed to know more about\ndelinquency plans.\n\nA delinquency plan is the\nlink between a billing\nissue such as an\noverdue invoice and the\nlogic to handle the issue.\n\nMarci\nConfiguration\nDeveloper\n\ni Delinquency plan: General tab\n\n¢ Settings on General tab apply to all delinquencies handled by the plan\n\nGeneral_| Workflow\n\nDetinquency Plan\nName poz\nEffective Date o1jor/2011,\nExpiration Date\n\nCurrency usp\n\nCancellation Target\n\nCancellation Target Delinquent Policy Only\nHold Invoicing on Targeted No.\nPolicies\n\nExpressed in Calendar Days\n\nFees\n\nLate Fee $50.04\n\nReinstatement Fee $100.00\n\n‘Amount Thresholds\nWrite-Off Threshold\n\nEnter Delinquency\nThreshold (Account)\n\nEnter Delinquency\nThreshold (Policy)\n\nCancel Policy\nExit Delinquency\nAvailability\n\nApplicable Segments\n\nGi\n\n$5.00\n\n$10.00\n$10.00\n\n$11.00\n\n$5.00\n\nalt\n\ni Delinquency plan: Workflow tab\n¢ The Workflow tab lists one or more reasons that will initiate delinquency\nprocessing\n« Associates a workflow with each reason\n\n* Specifies the timing of each workflow event\n\nDPO2 (isos ha) cs |\n=\n=\n\nDelinquency Reason > Workflow Type > Events >\n\nNot Taken Cancel immediately Notice of intent To Cancel\n\nTrigger > Offset > Relative Order > Automatic >\nInception Date Yes\n\nInception Date Yes\n\nInception Date Yes\n\nYes\n\nYes\n\nYes\n\nYes\n\nLesson\nobjectives « Describe the delinquency lifecycle for a Past\nreview ; Due delinquency\n\nExplain the role of delinquency reasons in\ndelinquency processing\n\n* Track a delinquency using delinquency\nevents\n\n¢ Interpret delinquency plans\n\n¢ Test delinquency processing\n\ni Student exercise\n\n(1) Explore a delinquency plan\n\n(2) Test delinquency processing",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Processing a Delinquency",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe the delinquency lifecycle for a Past\n\nDue delinquency\n\n¢ Explain the role of delinquency reasons in\ndelinquency processing\n\n* Track a delinquency using delinquency\nevents\n\n¢ Interpret delinquency plans\n\n¢ Test delinquency processing",
+      "word_count": 37,
+      "avg_confidence": 88.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Past due delinquency Gi\n\nMarcus\nBusiness\nAnalyst\n\nSometimes policyholders miss a\npayment. How does BillingCenter\nhandle the situation of an\noverdue payment?\n\nMarci (jy\nConfiguration ‘ss\n\nDeveloper\n\nAn overdue payment\nautomatically initiates a\nPastDue delinquency in\nBillingCenter.",
+      "word_count": 38,
+      "avg_confidence": 88.25,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Delinquency Gi\n\n¢ Delinquency is a process that launches and coordinates the steps necessary to\nhandle an unexpected occurrence such as an overdue payment\n\n¢ Policy is at risk for cancellation because of some inaction\n« Aim is to get client back into compliance\n¢ Most delinquencies are triggered automatically\n\n* For example, a Past Due delinquency is triggered by the Invoice Due batch process when an\ninvoice is one day overdue\n\n¢ Only accounts and policies can become delinquent\nlt»\n\nFE QName Belen Weber Account# DEM00S7O Oct 18, 2018 fr) [Policy Hoor-8WEBER-1 Accounts DEMO0S70 Oct18, 2018\n\nAccount Summary Policy Summary\n\n‘A\\ This account has one oF more active delinquencies: Past Due. {A\\ This policy has one or more active delinquencies: Past Due.",
+      "word_count": 124,
+      "avg_confidence": 84.45,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Delinquency handling resources: workflow Gi\n\n¢ Aworkflow is a multistep process designed\n\nto manage complex business processes\nworkflow events\n\n¢ Workflows are well suited for delinquency\n\nprocessing because they: Dunning Letter 1\n« Encapsulate all logic for a business process in one\nplace Dunning Letter 2\n\n* Define flows of logic with conditional branching workflow ABC Intent to Cancel\n\n* Can execute steps immediately, wait for a time\nperiod to pass, and/or wait for an external event to\noccur\n\n¢ BillingCenter users track the progress of a\ndelinquency processing by means of\nworkflow events",
+      "word_count": 95,
+      "avg_confidence": 90.42,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Delinquency handling resources: delinquency plan [5\n\n¢ Adelinquency behaves\naccording to the active\ndelinquency plan\n\n¢ Every account has a\ndelinquency plan\n\n¢ Apolicy may have a\ndelinquency plan\n\n* Policy delinquency plan\ntakes precedence over\naccount delinquency\nplan\n\ndelinquency S] => Late Fee: 50\nplan @ \\( ) Delinquency Reason & Workflow Type:\n= \\ YT Past Due > Workflow ABC",
+      "word_count": 63,
+      "avg_confidence": 84.94,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Lifecycle of a past due “standard” delinquency Ga\n\nUUUU\nq Alert warns of impending delinquency\n\ndue dat UUUU . ‘ A\nNe Cate awed Delinquency is active\n\n| e | dunning letter 1 sent, late fee charged\n\ndue date+1 gage\nDunning letter 2 sent, cancellation approval activity\n\ndue date+8 9088\nq Notice of intent to cancel sent to PAS\n\ndue date+15 49\n\nDelinquency referred to collection agency\n\ne\ndue date + 46\n\nillingCenter receives payment for the ov je amount, delinquency is automatically closed.",
+      "word_count": 85,
+      "avg_confidence": 84.85,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Moving the delinquency forward Gi\n\neu Many workflow events are date/time driven.\nH The inception date is the date on which delinquency processing starts.\n\n* Invoice Due launches a past due\ndelinquency.\n> ° Workflow Writer “wakes” up a workflow\n\nbatch that is waiting on a date or elapsed\nprocesses time.\n\nsystem date\n\nWorkflows generate activities.\n\n<< , ¢ An Approval activity blocks workflow processing until an\nG authorized user approves or rejects the activity.\n\nactivity . \\ Notification activity is for information only.",
+      "word_count": 85,
+      "avg_confidence": 88.87,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Test a delinquency",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Simulating a delinquency G\n\nMarcus Now that | understand more\n\nBusiness\n\nNg about delinquency processing,\nI'd like to see a delinquency in\naction so | know how to test a\n\nra delinquency.\n\nMarci\nConfiguration\nDeveloper\n\nGood idea!\nLet’s get started.",
+      "word_count": 41,
+      "avg_confidence": 89.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Demonstration G\n\nTest delinquency processing\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.78,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Question\n\n_- — What purpose does the Workflow Writer batch process serve?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe",
+      "word_count": 22,
+      "avg_confidence": 75.77,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Answer Gi\n\n_— — What purpose does the Workflow Writer batch process serve?\n\n¢\na The Workflow Writer batch process checks for active workflows that are suspended\n\nuntil a date has been reached or an amount of time has elapsed.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "word_count": 47,
+      "avg_confidence": 84.65,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Question\n\n_- — How does BillingCenter know which workflow to use to process a given\n\noo delinquency?\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 76.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Answer\n\n_~ — How does BillingCenter know which workflow to use to process a given\nPa delinquency?\n¢\n\nThe delinquency plan associates each delinquency reason with the appropriate\nworkflow.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi",
+      "word_count": 37,
+      "avg_confidence": 80.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n_- — How does a Billing Clerk know that a policy is in delinquency?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe",
+      "word_count": 25,
+      "avg_confidence": 75.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer Gi\n\na How does a Billing Clerk know that a policy is in delinquency?\nTe Alert bars on the Account Summary and Policy Summary screens inform users of\nan active delinquency. Also, delinquencies are listed on the My Delinquencies screen\n\non the Desktop.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "word_count": 51,
+      "avg_confidence": 86.04,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nGi\n\n,— — Given the delinquency shown below, what needs to happen to move the\n\noo delinquency forward?\n\nT] Q) Name ‘Account#\nDelinquencies\n\nEvents ‘Complete Target Date\n\nYes 09/25/2019\n\nYes 09/25/2019\n\n——— 10/02/2019\n\n10/09/2019\n\n11/09/2019\n\n01/23/2020\n\nOct 2, 2019\n\nCompletion Date\n09/25/2019\n09/25/2019\n\nDescription\n\nDunning Letter 1\n\nLate Fee\n\nDunning Letter 2\n\nSend Notice of Intent To Cancel\nCollections\n\nWriteoff\n\nTrigger\nInception Date\n\nInception Date\n\nInception Date +7 days\nInception Date + 14 days\nInception Date + 45 days\nInception Date + 120 days",
+      "word_count": 93,
+      "avg_confidence": 83.99,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer Gi\n\n¢\n\nSoe ee ee eee Soo eSeoe Ss\n\n,— — Given the delinquency shown below, what needs to happen to move the\n¢ delinquency forward?\n\n¢\nFQ Name Account oct2,2018\nDelinquencies\nEvents Complete > Target Date Completion Date Description Trigger\nYes 09/25/2019 09/25/2019 Dunning Letter 1 Inception Date\nYes 09/25/2019 09/25/2019 Late Fee Inception Date\n—__, 10/02/2018 Dunning Letter2 Inception Date +7 days\n10/08/2019 Send Notice of Intent To Cancel Inception Date + 14 days\n11/09/2019 Collections Inception Date +45 days\n01/23/2020 Writeoff Inception Date + 120 days\n\nThe Workflow Writer batch process needs to be run to “wake up” the workflow, which\nis waiting on a date.",
+      "word_count": 110,
+      "avg_confidence": 84.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_- — How does an approval activity influence workflow?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe",
+      "word_count": 20,
+      "avg_confidence": 69.5,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\n,- — How does an approval activity influence workflow?\n¢\no An approval activity blocks workflow processing until it is either approved or rejected.\nTypically, the workflow performs different processing depending on the outcome of an\napproval activity.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "word_count": 47,
+      "avg_confidence": 84.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Quick review of a delinquency: invoice due date =\n\n1 of 9\nPolicy Summary sertdeingency J oes\n\nA, Thispoliy will become detinguent ifthe expected payment isnot eceved by 1001/2018, °\noverview Notes ob\n© There areno notes onthis policy.\ntnsured currency uso\nPolicy tfetime aveerbene.2018 Bilin Method ieee it\nEffective Dates 2/30/2018-04/302019 Send invoices By ait\nCancelation statu oven DetoltPayment Method Responsive\nPayment tan pena\nUW company\nFinancials\nEquity\na—— Policy Eauity suas\n. sm Unbied: $10,038.40\naa sm Paid: 2,508.60 Equity Percent 278%\nLate Fee : sm iten of: $0.09\ni ieeasas Paid Through ayazoie\nNext invoice Ove $1,258.30 sm Past Ove\n(on saturday, December 0, Past Ove $0.00\n218)\nLast PaymentReceived 2,510.60 Policy Value 312583. ‘Unapoted Fund\n{@nwonday, october 01,\n218) Designated Unopplied\n\nTotal Unapplied",
+      "word_count": 127,
+      "avg_confidence": 53.52,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Quick review: invoice due date + 1\n\n20f9\nPolicy Summary\n\n‘A. This policy has one or more active delinquencies: Pa\n\nOverview.\nInsured\n\nobey tiene Year (Aug 30,2018)\nEffective Dates (08/30/2018 08/30/2019\nCancellationstatus Open\n\nDue.\n\nUW company\nFinancials\n\nCurrent Payment Expected _ $1,254.30\n\n© s125430\n\n‘Next invoice Due\n(on Saturday, December 0,\n2018)\n\n$1,308.30\n\nLast Payment Received\n(on Monday, October 02,\n2018)\n\n$210.60\n\nPolicy Value\n\nCurrency\nBilling Method\n\nSend invoices By\nDefault Payment Method\n\nPayment Plan\n\n‘mt Unbilled: $8,830.10\nsm Paid: $2,508.60\n1m riten Off: $0.00\n= Billed: $0.00\n\n°\nNotes\n\nuso * ;\n© There arenonoteson this policy.\n\nDirect ill,\n\nait\n\nResponsive\n\npe\n\nauity\nPolicy Evity 330828\nEquity Percent 2am\nPaid Th ayo\n\nsm Past Due: $1,254.30\n\n512,593.00 nsepted Pend\nDesignated Unapplied\n\nTotal Unapplied",
+      "word_count": 124,
+      "avg_confidence": 66.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "i Quick review: same day, Delinquencies screen Gi\n3 of 9\n\nDelinquencies\n\nEvents\n\nTenner\nvee s/on/2018 21022018 te\n\nTowne\n\nnamie oll +45 days\nosion/2019 Weteot Inception ate + 120 days\nRexcinReinstte {Good Standing",
+      "word_count": 33,
+      "avg_confidence": 74.03,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "i Quick review: same day, late fee charged Gi\n4 of 9\n\nCharges\n\nome = Aout 2 tPoer = charges cate > chageGrup 2 ldState > Anant Pinay Proce ©\nTE -- - vet som\nPEE crac: crtems prem aetace wale ss.00\n\nInert > Plcement® wie BiDate > kOe > Contat =e = Ant = Pidanant = imoke Sve 2\n\noustoie——ANNODOLBPmed sae ene onetime ‘S00 ~ aoe en\n\nTotal $50.00",
+      "word_count": 70,
+      "avg_confidence": 48.4,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Quick review: invoice due date + 8 =\n5 of 9\nPolicy Summary focus |\n\n{A.THispatcy has one or more active delinquencies Past Ove °\n‘oventew\nNotes\nInsured urenc\ny uso © _ There are nonnotes on this policy.\nsolo etine 1 Year (08,2018) Bilin Method Direct it\ntect Dates: n072018- 08/20/2019 Sendinwoces ai\nCancliation Status _Open DefaltPaymentMethod Responsive\nLW company\nFinanc\nawity\ncoment PaymentExpected 5125820\nseas\n1 nbited: 8230.0 Pig Eauity\nPastoue — om Paid 2502.60\n= Eauity Percent sal\nsm Writen of 50.00\nLate Fee ssooo\n= Billed: 50.00 sid Toush nuswioie\nen ince Ove 120820 sm Past ove 54,254.30\n(on setudey, December on,\nSa\nLastPaymentReceived 52510. Policy Vl: 12,593.00 nap Fund\n{ennonday, tober,\nSe\n\nDesignated Unapplied\n\n‘otal Unapplied",
+      "word_count": 121,
+      "avg_confidence": 56.13,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Delinquencies\n\nay |\n\nQuick review: same day, Delinquencies screen\n6 of 9\n\nStatus ¢ CreateDate > Type > Approved > Subject > Mandatory >\nome Details Open 11/09/2018\nDetails Open\n\n‘Sent Dunning Letter\n11/09/2018\n\nApprove Cancellation\nEvents\n\nComplete = Target Date > Completion Date = Description = Tigger >\nYer nlo2i2018 suvo2/2o1e Dunning Letter 2\nYes suo22018 suo22018\n\nInception Date\nLate Fee\n\nInception Date\nTinea\nmario\n\nCollections\n‘osjonz019\n\nreption Date\nInception Date + 45 days\nWriteott\n\ntnception Date +120 days\nRexcind/Reinstate Good standing\natte v",
+      "word_count": 85,
+      "avg_confidence": 74.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Quick review: same day, approve cancellation\n\n7 of 9\n\nDelinquencies\n\narent Event Dunning etter?\n\nNext vent Send Notice of nent To Cancel\n\nciv:\n\nStatus ¢ CreateDate $ Type > Approved > Subject\n\nGeile Open ——:10/087018 General Sent Ounning eter\nf) pen 51082018 Approval Aomrove Cah Activites\n\nEvents\n\nSubject\nDescription\nPriority\n\nDue Date\nEscalation Date\n\nAssigned to\n\nDetails\n\nApprove Cancellation\n‘Approve Cancellation\n\nNormal\n\nau/is2018\n\nau/is?2018\n\nUse automated assignment\n\nMandatory\n\nStatus > CreateDate > Type >\n\nOpen 11/09/2018 General\n\nGi\n\nApproved > Subject > Mandatory >\n\n‘Sent DunningLetter No\n\na Details Complete 11/09/2018 Approval Yes | Approve Cancellation Yes.\nsetivity -\nE",
+      "word_count": 100,
+      "avg_confidence": 66.1,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Quick review: one week later\n\n8 of 9\n\nDelinquencies\nCoretnet———_—Sendtto cane\n\nDeal Oem\n\noxen\n\nvents\n\ncrmteoate 5 pe\n\nTresone ©\n\nst apment\n\nstPoymectimcent 35300\n\nsetjet =\n\nseen aceon\n\nConscsonoue\n\npecans ina 25 os\n\ntngeny te\nween Status  CreateDate $ Type > Approved > Subject > Mandatory >\nDetails __Open 11/16/2018 _General Cancellation Notification for GLO1-CK-1___No\nDetails Open. 11/09/2018 General ‘Sent Dunning Letter No\nDetails Complete 11/09/2018 Approval Yes Approve Cancellation Yes\nondtory\nwe Events\nComplete Target Oate Completion Date = Desrition Wieser\nve enor sono. Dunning Letter Inception Date\nYes swjono18 syornoe LateFee Inception Date\n22 soso,\ne201 162018\nTaare “allections Trception Ose 45 days\noxenr2019 Write Inception Date +120 days\nRescind Reinstte Good Standing",
+      "word_count": 115,
+      "avg_confidence": 59.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Quick review: policy pending cancellation =\n\n9 of 9\nPolicy Summary =3c3\n\nA. This policy has one or more active delinquencies: Past Ove. °\noverdo ve ot\n@ _ There are no notes on this policy.\nPolicy Lifetime 1 Veor (Aug 30, 2038) Billing Method Direct Bill\nwconsny\nFnac\nfesty\n\nPast Due © 51,258.30 tm Paid: $2,508.60 Y « J\n\n1 steno 0.00 testy Pernt sans\nLaer soo sie s000\n\npote suas patted susunow\ner oan,\n\net ae samme\n\nDesignated Unapplied\n\nTotal Unappled",
+      "word_count": 83,
+      "avg_confidence": 66.42,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "i Delinquency plan\n\nAnalyst\n\nNow that I’m clear on the\ndelinquency lifecycle, |\nneed to know more about\ndelinquency plans.\n\nA delinquency plan is the\nlink between a billing\nissue such as an\noverdue invoice and the\nlogic to handle the issue.\n\nMarci\nConfiguration\nDeveloper",
+      "word_count": 45,
+      "avg_confidence": 94.32,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "i Delinquency plan: General tab\n\n¢ Settings on General tab apply to all delinquencies handled by the plan\n\nGeneral_| Workflow\n\nDetinquency Plan\nName poz\nEffective Date o1jor/2011,\nExpiration Date\n\nCurrency usp\n\nCancellation Target\n\nCancellation Target Delinquent Policy Only\nHold Invoicing on Targeted No.\nPolicies\n\nExpressed in Calendar Days\n\nFees\n\nLate Fee $50.04\n\nReinstatement Fee $100.00\n\n‘Amount Thresholds\nWrite-Off Threshold\n\nEnter Delinquency\nThreshold (Account)\n\nEnter Delinquency\nThreshold (Policy)\n\nCancel Policy\nExit Delinquency\nAvailability\n\nApplicable Segments\n\nGi\n\n$5.00\n\n$10.00\n$10.00\n\n$11.00\n\n$5.00\n\nalt",
+      "word_count": 81,
+      "avg_confidence": 84.52,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "i Delinquency plan: Workflow tab\n¢ The Workflow tab lists one or more reasons that will initiate delinquency\nprocessing\n« Associates a workflow with each reason\n\n* Specifies the timing of each workflow event\n\nDPO2 (isos ha) cs |\n=\n=\n\nDelinquency Reason > Workflow Type > Events >\n\nNot Taken Cancel immediately Notice of intent To Cancel\n\nTrigger > Offset > Relative Order > Automatic >\nInception Date Yes\n\nInception Date Yes\n\nInception Date Yes\n\nYes\n\nYes\n\nYes\n\nYes",
+      "word_count": 80,
+      "avg_confidence": 79.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Lesson\nobjectives « Describe the delinquency lifecycle for a Past\nreview ; Due delinquency\n\nExplain the role of delinquency reasons in\ndelinquency processing\n\n* Track a delinquency using delinquency\nevents\n\n¢ Interpret delinquency plans\n\n¢ Test delinquency processing",
+      "word_count": 38,
+      "avg_confidence": 87.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "i Student exercise\n\n(1) Explore a delinquency plan\n\n(2) Test delinquency processing",
+      "word_count": 12,
+      "avg_confidence": 91.31,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

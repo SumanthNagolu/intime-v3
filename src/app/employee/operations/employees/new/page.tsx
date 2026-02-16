@@ -2,12 +2,14 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, User, Building2, Calendar, Mail, Phone, MapPin, Loader2 } from 'lucide-react'
+import { ArrowLeft, User, Building2, Calendar, Mail, MapPin, Loader2 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { PhoneInput, formatPhoneValue, type PhoneInputValue } from '@/components/ui/phone-input'
+import { AddressForm, type AddressFormData } from '@/components/addresses'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
 
@@ -15,14 +17,13 @@ interface FormData {
   firstName: string
   lastName: string
   email: string
-  phone: string
-  address: string
+  phone: PhoneInputValue
+  address: Partial<AddressFormData>
   jobTitle: string
   department: string
   employmentType: string
   managerId: string
   hireDate: string
-  location: string
   workMode: string
 }
 
@@ -33,27 +34,49 @@ export default function NewEmployeePage() {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
-    address: '',
+    phone: { countryCode: 'US', number: '' },
+    address: { countryCode: 'US' },
     jobTitle: '',
     department: '',
     employmentType: '',
     managerId: '',
     hireDate: '',
-    location: '',
     workMode: '',
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const createEmployee = trpc.hr.employees.create.useMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Create address record if address data was provided
+      if (formData.address.addressLine1 || formData.address.city) {
+        createAddress.mutate({
+          entityType: 'employee',
+          entityId: data.id,
+          addressType: 'current',
+          addressLine1: formData.address.addressLine1 || undefined,
+          addressLine2: formData.address.addressLine2 || undefined,
+          city: formData.address.city || undefined,
+          stateProvince: formData.address.stateProvince || undefined,
+          postalCode: formData.address.postalCode || undefined,
+          countryCode: formData.address.countryCode || 'US',
+          county: formData.address.county || undefined,
+          isPrimary: true,
+        })
+      }
       toast.success('Employee created successfully')
       router.push('/employee/operations/employees')
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to create employee')
       setIsSubmitting(false)
+    },
+  })
+
+  const createAddress = trpc.addresses.create.useMutation({
+    onError: (error) => {
+      console.error('Failed to create address:', error)
+      // Don't block employee creation - address is supplementary
     },
   })
 
@@ -92,19 +115,37 @@ export default function NewEmployeePage() {
       return
     }
 
+    // Format phone for API (converts PhoneInputValue to string like "+15551234567")
+    const phoneString = formatPhoneValue(formData.phone)
+
+    // Build location string from address for the employee record
+    const locationParts = [formData.address.city, formData.address.stateProvince].filter(Boolean)
+    const locationString = locationParts.length > 0
+      ? locationParts.join(', ')
+      : formData.address.addressLine1 || ''
+
     setIsSubmitting(true)
     createEmployee.mutate({
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
-      phone: formData.phone || undefined,
+      phone: phoneString || undefined,
       jobTitle: formData.jobTitle,
       department: formData.department,
       employmentType: formData.employmentType as 'fte' | 'contractor' | 'intern' | 'part_time',
       managerId: formData.managerId || undefined,
       hireDate: formData.hireDate,
-      location: formData.location || undefined,
-      workMode: formData.workMode ? (formData.workMode as 'onsite' | 'remote' | 'hybrid') : undefined,
+      location: locationString || undefined,
+      workMode: formData.workMode ? (formData.workMode as 'on_site' | 'remote' | 'hybrid') : undefined,
+      address: (formData.address.addressLine1 || formData.address.city) ? {
+        addressLine1: formData.address.addressLine1,
+        addressLine2: formData.address.addressLine2,
+        city: formData.address.city,
+        stateProvince: formData.address.stateProvince,
+        postalCode: formData.address.postalCode,
+        countryCode: formData.address.countryCode || 'US',
+        county: formData.address.county,
+      } : undefined,
     })
   }
 
@@ -132,8 +173,8 @@ export default function NewEmployeePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                  <User className="h-5 w-5 text-blue-600" />
+                <div className="h-10 w-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+                  <User className="h-5 w-5 text-charcoal-600" />
                 </div>
                 <CardTitle className="text-lg font-heading font-semibold">Personal Information</CardTitle>
               </div>
@@ -175,31 +216,31 @@ export default function NewEmployeePage() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
-                    <Input
-                      id="phone"
-                      placeholder="+1 (555) 000-0000"
-                      className="pl-10"
-                      value={formData.phone}
-                      onChange={(e) => handleChange('phone', e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
-                  <Input
-                    id="address"
-                    placeholder="Street address, city, state, zip"
-                    className="pl-10"
-                    value={formData.address}
-                    onChange={(e) => handleChange('address', e.target.value)}
+                  <PhoneInput
+                    label="Phone"
+                    value={formData.phone}
+                    onChange={(value) => setFormData((prev) => ({ ...prev, phone: value }))}
                   />
                 </div>
+              </div>
+
+              {/* Structured Address */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-charcoal-400" />
+                  <Label>Address</Label>
+                </div>
+                <AddressForm
+                  value={formData.address}
+                  onChange={(data) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      address: { ...prev.address, ...data },
+                    }))
+                  }
+                  showCounty
+                  showAddressLine2
+                />
               </div>
             </CardContent>
           </Card>
@@ -208,8 +249,8 @@ export default function NewEmployeePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
-                  <Building2 className="h-5 w-5 text-green-600" />
+                <div className="h-10 w-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+                  <Building2 className="h-5 w-5 text-charcoal-600" />
                 </div>
                 <CardTitle className="text-lg font-heading font-semibold">Employment Details</CardTitle>
               </div>
@@ -302,7 +343,7 @@ export default function NewEmployeePage() {
                       <SelectValue placeholder="Select location" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="onsite">Headquarters</SelectItem>
+                      <SelectItem value="on_site">Headquarters</SelectItem>
                       <SelectItem value="remote">Remote</SelectItem>
                       <SelectItem value="hybrid">Hybrid</SelectItem>
                     </SelectContent>

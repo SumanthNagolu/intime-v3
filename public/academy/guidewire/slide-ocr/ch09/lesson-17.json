@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-17",
+    "slide_count": 27,
+    "slides_with_text": 24,
+    "total_words": 1609,
+    "avg_confidence": 85.22,
+    "processing_time_seconds": 9.88,
+    "extracted_at": "2026-02-15T18:18:47.713321"
+  },
+  "full_text": "Business Rules — Exposures and Reserves\n\nLesson\nobjectives\n\n¢ Write business rules to create exposures for\nspecific cases\n\n« Write business rules to create reserves for\nspecific cases\n\n| Business rules Gi\n\n¢ Manage the automated creation of\n\n* Activities\n« Exposures\n\n« Reserves\n\nEnable response to changing business\nneeds without coding\n\na2 =\n¢ Are managed in the ClaimCenter D,\n9\nadministration Ul | 4} SP cox\n* Can be designed, tested, and =\n\ndeployed without production server\ndowntime\n\n| Exposures — review G\n\n) \\ ¢ An exposure is a set of data used to\nb (e) @ track a potential payment from one\ncoverage to one claimant\n\nIt is defined by the specific coverage,\nclaimant, and incident\n\nReserve lines are optional when the\nexposure is created\n\n| Exposures — review G\n\n) \\ ¢ An exposure is a set of data used to\nb (e) @ track a potential payment from one\ncoverage to one claimant\n\nIt is defined by the specific coverage,\nclaimant, and incident\n\nReserve lines are optional when the\nexposure is created\n\n| Exposure rule user interface G\n\nNavigate to Administration > Business Settings > Business Rules > Exposure\nRules.\n\n* Can filter to show specific rules\n\n* Can add, clone, export and import rules\n\nExposu re Rules Add de Filte 11 rules, 0 invalid due to errors\n\nName/Description Policy Type Any +\nStatus * | All + Incident Type Any +\nAvailability any =) | toss party type Any ~\nJurisdiction Any .\n\nRun Status Name > Status S Version valid TriggerEntity 2 Trigger Action S Policy Type\n\n£C01000 - Personal Auto Collision Staged oF v__ Incident Creation Personal Auto\n\n- £C02000 - Commercial Auto Collision Staged oF vy Incident Creation ‘Commercial Auto\n\n| Exposure rule definition: Basics\n\nEvery rule has a:\nName (required)\nDescription (optional)\nTriggering entity\nTriggering action\n\nTriggering entity is\n\nalways Incident\n\nTriggering action is\n\nalways creation\n\nRules may be enabled\nor disabled\n\nRule: ECO1000 - Personal Auto Collision ravi\n\nVersion:\n\nLast Edited by admin on 08/03/2018.\n\nName\n\nDescription\n\nTrigger Entity\n\nTrigger Action\n\nEnabled\n\n% | £C01000 - Personal Auto Collision\n\nCreate a personal auto collision exposure\n\nIncident\nRule executes for an Incident. Available Symbols: incident\nCreation\n\n* @ Yes No\n\nRule will run in this environment.\n\n| Exposure rule definition: Applies To G\n\n¢ Selections in this section restrict when the rule is executed\n\n¢ Rules can apply to all situations or to selected situations\n* Click the Selected radio button to see and select a valid value\n\nApplies To\nPolicy Type °* | Personal Auto ~ Loss Party Type Insured's loss .\nIncident Type * | Vehicleincident Ad Loss Type All ad\nLoss Cause All @) Selected Claim Jurisdiction @ all Selected\n\nAnimal ~| | collision while turning left\nDamage in loading or unloading [> | Collision with bicycle\n\nFalling or moving object Collision with fixed object\nFire ~ Collision with motor vehicle |\n\n| Exposure rule definition: Rule Variables and Condition\n\nRule condition:\n¢ Additional condition(s) which must be met\n\n« None selected means the rule actions are\nrun for all candidates\n\n* Conditions can be joined by AND, OR, or\nsome combination\n\n« Expressions have direct access to the\nIncident entity\n\nRule variable:\n\n* Variable(s) created to make the rule\ncondition(s) easier to read\n\n* Has access to the same data as\nconditions\n\nGi\n\nRule Variables\n\nName Description Expression Type\niQ Is coverage in question for | | incident.Claim.Coveragelr [iJ eoolean\nRule Condition\nDisplay Rule Conditions @ ves Ono\n\n+ © None\n\n(© Allof the following criteria must be true (AND)\nAtleast one of the following criteria must be true (OR)\n‘The following combination of criteria must evaluate to true (AND/OR)\n\nLeft Expression Operation Right Expression\ncig GB snotequaito | | false | |\n\nIs Not Equal To:\n\n| Exposure rule definition: Actions\n\n¢ The only action available is Create Exposure\n\n¢ Exposure rules may create multiple exposures\n\n¢ Exposures can be assigned any valid combination of Coverage Type and\nCoverage Subtype Fetions\n\nExposures will only be created when the coverages exist on the policy\n\nSequence > ActionType > Description >\n\nParameters\nAction Type Create Exposure\nCoverage Type » | Collision\n\nCoverage Subtype * | Collision ha\n\n| Demonstration G\nExposure creation business rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Reserve lines — review G\n\n\\ = Coverage: Collision\n\nye Claimant: Jim Means\n@\n\nCOX\n\n¢ Areserve line is an amount of money set aside for expected payments related to a\ngiven exposure\n\nReserve Line 1 (vehicle damage)\nCost type: Claim Cost\nCost category: Auto body\n\nReserve Line 2 (auto inspection)\nCost type: Expense\nCost category: Vehicle Inspection\n\n« Payments cannot be made without reserve lines\n\n¢ Reserve lines are uniquely defined by exposure, cost type, and cost category\n\n| Business rules for reserve lines G\n\n¢ Business rules can automatically create reserve lines\n¢ Business rule definitions control when and what reserve lines are created\n\n¢ Administrators create the rules and require only limited knowledge of the\nGuidewire data model\n\nReserve Rules\n\n(1) Run status Name > Status > Version valid\nIRRO1110-Auto Vehicle Damage Minor Staged + v\nIRRO1120 -Auto Vehicle Damage Medium Staged OF y,\nIRROL130-Auto Vehicle Damage High Staged OF v\n= IRRO1140- Travel Multicurrency Staged 0+ Y\n\n=. IRRO1150-Multi-Region Baggage Reserve Staged OF v\n\n| Reserve rules user interface G\n\nNavigate to Administration > Business Settings > Business Rules > Reserve\nRules.\n\n* Can filter to show specific rules\n\n* Can add, clone, export and import rules\n\nReserve Rules [sues ~ |\n\nSrules,Oinvalid due to errors\n\n1RROL130-Auto Vehicle Damage High Staged OF v Bxposure creation auto all all Vehicle ‘Auto high complexity\n\n| Reserve rule definition: Basics G\n\n+ Every rule has a: Rule: IRRO1110 - Auto Vehicle Damage Minor\n\n« Name (required) Last Edited by admin on 08/03/2018.\nwo . Name o& | IRRO1110- Auto Vehicle Damage Minor\n\n° Description (optional) Description Create initial reserve for vehicle damage exposure with low\n\n* Triggering entity -\n\n* Triggering action\n¢ Triggering entity is always Exposure jrte eracetes or an Exposure Avaliable Spots: cia, exposore\n¢ Triggering action is always creation a .\n.\n\nRules may be enabled or disabled Rule illrun in this environment.\n\n| Reserve rule definition: Applies To G\n\n¢ Selections in the section restrict when the rule is executed\n\n¢ Selecting a value limits what the rule is applied to\n\n¢ Can apply by Applies To\nu + [ato =] | exposure Type All © selected\n* Loss Type Al @ Selectes Bodily injury =| (Vehicle\nGeneral >\n* Policy Type CommercialAuto | [Personal Auto\n[>] Loss of Use [< |\n¢ Jurisdiction\nExposure Segment All @ selected\n« Exposure Type Surisdicton @ al © selected auto laze ‘Ato- low complesty\nAuto - high complexty\n« Exposure Segment Auto-midcomplexty |\n\n* Select the\nSelected radio button to see and select a valid value\n\n| Reserve rule definition: Rule Condition G\n\nRule Variables\n¢ Rule condition\n\nAdd\n\n+ Additional conditions which must be = pecans Se ue\nmet AirbagsDeployed i exposureVehicleincident. |} Boolean\n\n+ None selected means the rules actions *Ule Condition\n\nare run for all candidates Display Rule Conditions @ ves Ono\n* Conditions can be joined by AND, OR, * , “°\n\n© Allof the following criteria must be true (AND)\nor some combination At least one of the following criteria must be true (OR)\n\nThe following combination of criteria must evaluate to true (AND/OR)\n\n« Expressions have direct access to the\n\nExposure and Claim entities ea\nLeft Expression Operation Right Expression\n* Rule variable: exposureNehicleincident.airbagsD |{—) | IstTue =\n+ Variables created to make the rule ident AirbagsDeployed is Tue\n\nconditions easier to read\n\n* Has access to the same data as conditions\n\n| Reserve rule definition: Actions\n\nActions\nae\nsequence ¢ ActlonType $ Description =\n¢ The only action available is Create Reserve\nParameters\n¢ Reserve rules may create multiple reserves ;\nAction Type Create Reserve\n¢ Reserves can be assigned any valid combination of\nCost Type | Claim Cost ~\nCost Type and Cost Category Cost Category + { Auto body E\n¢ Automatic reserve creation respects Financial Holds — respectrinanciattioiss —@ Yes.) No\n\n* Reserve amounts can be\n¢ Fixed amount or\n\n¢ Script parameters\n\nAmount (x)\nCurrency (Sx)\n\nComments ({x)\n\nUtiL InitialReserveForAutoMajo\n\nUtil. DefaultApplicationCurrency\n\n| Demonstration G\nReserve creation business rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,— — Under what conditions are exposure rules triggered?\n\n¢\n4\n¢\n\nen\n\nAnswer\n\n_— — Under what conditions are exposure rules triggered?\n, ¢\n¢\nThe correct answer is when an incident is created, each exposure rule compares the\nincident to its Applies To section and any Rule Conditions; if the incident matches, the\nrule is triggered.\n\nSS See See ease angen ses\n\nQuestion\n\n~~ — lfabusiness rule condition access the property\n¢\n\nyn exposure .VehicleIncident .AirbagsDeployed,\n‘ what kind(s) of business rule can this be?\n\nen\n\nAnswer Gi\n\n_— — lfabusiness rule condition access the property\nx exposure .VehicleIncident .AirbagsDeployed,\n: what kind(s) of business rule can this be?\n\nThe correct answers are either a Reserve business rule or an Activity business rule.\nExposure creation rules can only directly access the triggering incident.\n\nSS See See ease angen ses\n\nLesson\nobj ectives * Write business rules to create exposures for\nreview specific cases\n\n« Write business rules to create reserves for\nspecific cases",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Business Rules — Exposures and Reserves",
+      "word_count": 6,
+      "avg_confidence": 93.86,
+      "image_size": {
+        "width": 1280,
+        "height": 549
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Write business rules to create exposures for\nspecific cases\n\n« Write business rules to create reserves for\nspecific cases",
+      "word_count": 22,
+      "avg_confidence": 88.82,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Business rules Gi\n\n¢ Manage the automated creation of\n\n* Activities\n« Exposures\n\n« Reserves\n\nEnable response to changing business\nneeds without coding\n\na2 =\n¢ Are managed in the ClaimCenter D,\n9\nadministration Ul | 4} SP cox\n* Can be designed, tested, and =\n\ndeployed without production server\ndowntime",
+      "word_count": 52,
+      "avg_confidence": 78.37,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Exposures — review G\n\n) \\ ¢ An exposure is a set of data used to\nb (e) @ track a potential payment from one\ncoverage to one claimant\n\nIt is defined by the specific coverage,\nclaimant, and incident\n\nReserve lines are optional when the\nexposure is created",
+      "word_count": 49,
+      "avg_confidence": 87.35,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Exposures — review G\n\n) \\ ¢ An exposure is a set of data used to\nb (e) @ track a potential payment from one\ncoverage to one claimant\n\nIt is defined by the specific coverage,\nclaimant, and incident\n\nReserve lines are optional when the\nexposure is created",
+      "word_count": 49,
+      "avg_confidence": 87.35,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Exposure rule user interface G\n\nNavigate to Administration > Business Settings > Business Rules > Exposure\nRules.\n\n* Can filter to show specific rules\n\n* Can add, clone, export and import rules\n\nExposu re Rules Add de Filte 11 rules, 0 invalid due to errors\n\nName/Description Policy Type Any +\nStatus * | All + Incident Type Any +\nAvailability any =) | toss party type Any ~\nJurisdiction Any .\n\nRun Status Name > Status S Version valid TriggerEntity 2 Trigger Action S Policy Type\n\n£C01000 - Personal Auto Collision Staged oF v__ Incident Creation Personal Auto\n\n- £C02000 - Commercial Auto Collision Staged oF vy Incident Creation ‘Commercial Auto",
+      "word_count": 112,
+      "avg_confidence": 80.39,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Exposure rule definition: Basics\n\nEvery rule has a:\nName (required)\nDescription (optional)\nTriggering entity\nTriggering action\n\nTriggering entity is\n\nalways Incident\n\nTriggering action is\n\nalways creation\n\nRules may be enabled\nor disabled\n\nRule: ECO1000 - Personal Auto Collision ravi\n\nVersion:\n\nLast Edited by admin on 08/03/2018.\n\nName\n\nDescription\n\nTrigger Entity\n\nTrigger Action\n\nEnabled\n\n% | £C01000 - Personal Auto Collision\n\nCreate a personal auto collision exposure\n\nIncident\nRule executes for an Incident. Available Symbols: incident\nCreation\n\n* @ Yes No\n\nRule will run in this environment.",
+      "word_count": 87,
+      "avg_confidence": 90.36,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Exposure rule definition: Applies To G\n\n¢ Selections in this section restrict when the rule is executed\n\n¢ Rules can apply to all situations or to selected situations\n* Click the Selected radio button to see and select a valid value\n\nApplies To\nPolicy Type °* | Personal Auto ~ Loss Party Type Insured's loss .\nIncident Type * | Vehicleincident Ad Loss Type All ad\nLoss Cause All @) Selected Claim Jurisdiction @ all Selected\n\nAnimal ~| | collision while turning left\nDamage in loading or unloading [> | Collision with bicycle\n\nFalling or moving object Collision with fixed object\nFire ~ Collision with motor vehicle |",
+      "word_count": 109,
+      "avg_confidence": 83.97,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Exposure rule definition: Rule Variables and Condition\n\nRule condition:\n¢ Additional condition(s) which must be met\n\n« None selected means the rule actions are\nrun for all candidates\n\n* Conditions can be joined by AND, OR, or\nsome combination\n\n« Expressions have direct access to the\nIncident entity\n\nRule variable:\n\n* Variable(s) created to make the rule\ncondition(s) easier to read\n\n* Has access to the same data as\nconditions\n\nGi\n\nRule Variables\n\nName Description Expression Type\niQ Is coverage in question for | | incident.Claim.Coveragelr [iJ eoolean\nRule Condition\nDisplay Rule Conditions @ ves Ono\n\n+ © None\n\n(© Allof the following criteria must be true (AND)\nAtleast one of the following criteria must be true (OR)\n‘The following combination of criteria must evaluate to true (AND/OR)\n\nLeft Expression Operation Right Expression\ncig GB snotequaito | | false | |\n\nIs Not Equal To:",
+      "word_count": 146,
+      "avg_confidence": 85.16,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Exposure rule definition: Actions\n\n¢ The only action available is Create Exposure\n\n¢ Exposure rules may create multiple exposures\n\n¢ Exposures can be assigned any valid combination of Coverage Type and\nCoverage Subtype Fetions\n\nExposures will only be created when the coverages exist on the policy\n\nSequence > ActionType > Description >\n\nParameters\nAction Type Create Exposure\nCoverage Type » | Collision\n\nCoverage Subtype * | Collision ha",
+      "word_count": 69,
+      "avg_confidence": 87.79,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Demonstration G\nExposure creation business rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 94.65,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Reserve lines — review G\n\n\\ = Coverage: Collision\n\nye Claimant: Jim Means\n@\n\nCOX\n\n¢ Areserve line is an amount of money set aside for expected payments related to a\ngiven exposure\n\nReserve Line 1 (vehicle damage)\nCost type: Claim Cost\nCost category: Auto body\n\nReserve Line 2 (auto inspection)\nCost type: Expense\nCost category: Vehicle Inspection\n\n« Payments cannot be made without reserve lines\n\n¢ Reserve lines are uniquely defined by exposure, cost type, and cost category",
+      "word_count": 80,
+      "avg_confidence": 89.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Business rules for reserve lines G\n\n¢ Business rules can automatically create reserve lines\n¢ Business rule definitions control when and what reserve lines are created\n\n¢ Administrators create the rules and require only limited knowledge of the\nGuidewire data model\n\nReserve Rules\n\n(1) Run status Name > Status > Version valid\nIRRO1110-Auto Vehicle Damage Minor Staged + v\nIRRO1120 -Auto Vehicle Damage Medium Staged OF y,\nIRROL130-Auto Vehicle Damage High Staged OF v\n= IRRO1140- Travel Multicurrency Staged 0+ Y\n\n=. IRRO1150-Multi-Region Baggage Reserve Staged OF v",
+      "word_count": 89,
+      "avg_confidence": 75.38,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Reserve rules user interface G\n\nNavigate to Administration > Business Settings > Business Rules > Reserve\nRules.\n\n* Can filter to show specific rules\n\n* Can add, clone, export and import rules\n\nReserve Rules [sues ~ |\n\nSrules,Oinvalid due to errors\n\n1RROL130-Auto Vehicle Damage High Staged OF v Bxposure creation auto all all Vehicle ‘Auto high complexity",
+      "word_count": 58,
+      "avg_confidence": 79.62,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Reserve rule definition: Basics G\n\n+ Every rule has a: Rule: IRRO1110 - Auto Vehicle Damage Minor\n\n« Name (required) Last Edited by admin on 08/03/2018.\nwo . Name o& | IRRO1110- Auto Vehicle Damage Minor\n\n° Description (optional) Description Create initial reserve for vehicle damage exposure with low\n\n* Triggering entity -\n\n* Triggering action\n¢ Triggering entity is always Exposure jrte eracetes or an Exposure Avaliable Spots: cia, exposore\n¢ Triggering action is always creation a .\n.\n\nRules may be enabled or disabled Rule illrun in this environment.",
+      "word_count": 92,
+      "avg_confidence": 77.72,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Reserve rule definition: Applies To G\n\n¢ Selections in the section restrict when the rule is executed\n\n¢ Selecting a value limits what the rule is applied to\n\n¢ Can apply by Applies To\nu + [ato =] | exposure Type All © selected\n* Loss Type Al @ Selectes Bodily injury =| (Vehicle\nGeneral >\n* Policy Type CommercialAuto | [Personal Auto\n[>] Loss of Use [< |\n¢ Jurisdiction\nExposure Segment All @ selected\n« Exposure Type Surisdicton @ al © selected auto laze ‘Ato- low complesty\nAuto - high complexty\n« Exposure Segment Auto-midcomplexty |\n\n* Select the\nSelected radio button to see and select a valid value",
+      "word_count": 112,
+      "avg_confidence": 74.66,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Reserve rule definition: Rule Condition G\n\nRule Variables\n¢ Rule condition\n\nAdd\n\n+ Additional conditions which must be = pecans Se ue\nmet AirbagsDeployed i exposureVehicleincident. |} Boolean\n\n+ None selected means the rules actions *Ule Condition\n\nare run for all candidates Display Rule Conditions @ ves Ono\n* Conditions can be joined by AND, OR, * , “°\n\n© Allof the following criteria must be true (AND)\nor some combination At least one of the following criteria must be true (OR)\n\nThe following combination of criteria must evaluate to true (AND/OR)\n\n« Expressions have direct access to the\n\nExposure and Claim entities ea\nLeft Expression Operation Right Expression\n* Rule variable: exposureNehicleincident.airbagsD |{—) | IstTue =\n+ Variables created to make the rule ident AirbagsDeployed is Tue\n\nconditions easier to read\n\n* Has access to the same data as conditions",
+      "word_count": 142,
+      "avg_confidence": 83.18,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Reserve rule definition: Actions\n\nActions\nae\nsequence ¢ ActlonType $ Description =\n¢ The only action available is Create Reserve\nParameters\n¢ Reserve rules may create multiple reserves ;\nAction Type Create Reserve\n¢ Reserves can be assigned any valid combination of\nCost Type | Claim Cost ~\nCost Type and Cost Category Cost Category + { Auto body E\n¢ Automatic reserve creation respects Financial Holds — respectrinanciattioiss —@ Yes.) No\n\n* Reserve amounts can be\n¢ Fixed amount or\n\n¢ Script parameters\n\nAmount (x)\nCurrency (Sx)\n\nComments ({x)\n\nUtiL InitialReserveForAutoMajo\n\nUtil. DefaultApplicationCurrency",
+      "word_count": 95,
+      "avg_confidence": 78.78,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Demonstration G\nReserve creation business rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 94.41,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\n,— — Under what conditions are exposure rules triggered?\n\n¢\n4\n¢\n\nen",
+      "word_count": 14,
+      "avg_confidence": 78.5,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer\n\n_— — Under what conditions are exposure rules triggered?\n, ¢\n¢\nThe correct answer is when an incident is created, each exposure rule compares the\nincident to its Applies To section and any Rule Conditions; if the incident matches, the\nrule is triggered.\n\nSS See See ease angen ses",
+      "word_count": 51,
+      "avg_confidence": 90.58,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question\n\n~~ — lfabusiness rule condition access the property\n¢\n\nyn exposure .VehicleIncident .AirbagsDeployed,\n‘ what kind(s) of business rule can this be?\n\nen",
+      "word_count": 24,
+      "avg_confidence": 77.42,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer Gi\n\n_— — lfabusiness rule condition access the property\nx exposure .VehicleIncident .AirbagsDeployed,\n: what kind(s) of business rule can this be?\n\nThe correct answers are either a Reserve business rule or an Activity business rule.\nExposure creation rules can only directly access the triggering incident.\n\nSS See See ease angen ses",
+      "word_count": 53,
+      "avg_confidence": 87.4,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Lesson\nobj ectives * Write business rules to create exposures for\nreview specific cases\n\n« Write business rules to create reserves for\nspecific cases",
+      "word_count": 24,
+      "avg_confidence": 90.88,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

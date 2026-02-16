@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-09",
+    "slide_count": 35,
+    "slides_with_text": 33,
+    "total_words": 2998,
+    "avg_confidence": 82.69,
+    "processing_time_seconds": 19.14,
+    "extracted_at": "2026-02-13T12:18:52.995461"
+  },
+  "full_text": "Gosu Rules\n\nLesson\nobjectives « Explain the functionality of Gosu Rules\n\n* Describe the Gosu techniques unique to\nGosu Rules\n« Write Gosu Rules\n\nGosu Rules\n\n| Gosu rules i\n\n« ARule is a Gosu class with the file extension .gr\n\n« ARule is a single decision in the following form:\nIf {some conditions} 42\nThen {take some actions} Se\n\n¢« Example:\n\n+ If ABPerson doesn’t have an email address, then create a Flag Entry to notify the TrainingApp\nusers\n\n¢« When an Event happens to an Entity, different set of Rules might be executed by\nthe Guidewire application\n\n« Example: when ABContact is saved the system runs\n* The ABContactPreupdate Rules and\n* The ABContactValidation Rules\n\n| Examples in Guidewire applications G\n\n¢ Activity escalation ¢ Claim assignment ¢ Account validation\nrules rules rules\n* Escalate activity that is « Assign given claim to a * Verify that account is\nopen for too long group and user valid before committing\n* Triggered when activity * Triggered when claim is it to database\nis open past its created or needs * Triggered when account\n\nescalation date reassignment is created or modified\n\n| Gosu rule anatomy\n* Root entity\n\n+ Input parameter for the rule\n\n¢ Name\n+ Unique and follows naming convention\n\n+ Example: ABPU1010 — Contact Created is an\nexample of a naming convention for Gosu Rules\ndecided on by the development team if true, | execute action\n\n* Condition\n+ Expression that evaluates to true or false\n* Action\n\n+ If condition is true, the Guidewire application\nexecutes the action\n\n« If condition is false, nothing happens\n\n| Gosu rule hierarchy G\n\nhd Rule set\ncategory\n\n[3 Rule set\n\n| Hierarchy: Rule Set Category (1 of 2) Gi\n\n« ARule Set Category is a collection of\n\n. e GiProjet v OF | Ie\n\nRule Sets that have the following 2 eyo fon © cudeu re Taningieg neu cont ou\nthings in common: BY ents\n\n=| v Gt Rule Sets\n* High-level business purpose a 2 EventMessage\n\n. € #€) © EventFired\n\n* Trigger (Event) & vy Ey Preupdate\n\npe) €) > ABContactContactPreupdate\n\n€) & ABContactPreupdate\n\n#)  AddressPreupdate\n\n€) © PendingContactChangePreupdate\nvy E) Validation\n\n#) & ABContactValidationRules\n\n#€) © ContactValidationRules\n\n#) & PersonValidationRules\n\n#€) & RegionValidationRules\n\n| Hierarchy: Rule Set Category (2 of 2) Gi\n\n$B Project | @ % | He Ir « Examples:\nSY Crconfig + EventMessage\n& (3 Rule Sets 9\n. + Performs event processing and generates\ng 8) Eventfired messages about events that have occurred\ni\na €) > ABContactContactPreupdate + Triggered during save\nv €) © ABContactPreupdate\n\n€)& AddressPreupdate * Preupdate\n\n#2 ling\n\ncae ctChangePreupdste + Performs domain logic or validation that\n\nE) b ABContactValidationRules must come before committing entity\n\n#)& ContactValidationRules i jl\n\n4% PersonValidationRules Triggered during save\n\n€) & RegionValidationRules « Validation\nIn Project View, the top-level node is + Performs validation that must come before\nRule Sets, a misnomer. The physical committing entity that ensures data is valid\n\nfolder is ...\\config\\rules\\. «Triggered during save\n\nHierarchy: Rule Sets i\n\ny Diprojet © % | #- be | #8) ascontactPreupdategrs\n\n& vy Di Rule sets (3% Gh ABContact Preupdate\n\ne y Ex EventMessage ¥ @) EJ ABPUIOOD - Subtype ABConte, ABContact Preupdate (Active)\n\n2 vy ©) Preupdate ©) © AsPut020 - Assigned use: | Description\n\n€ #) & ABContactContactPreupdate 8 ABPUL030 - Flag invalid a: | This is the ABContact Preupdate rule set to permit modification of\n& 72% ABContactPreupdate 7 ) © ABPULO4O - Unverify char | the contact and related entities. Exceptions will cause the\n\nSl #)& AddressPreupdate @) EG AsPu2000 - subtype ABPerso | hounding database transaction to roll back, effectively vetoing the\nv 4) © Aspuz010 - Flag lack of | update.\n\n}#) & PendingContactChangePreupdate ©) a Subtyre AB-Ver!\n\nao -\n#)& ABContactValidationRules 3 Ed aaruene Sth Aer Root Entity <>\n2) > ContactVatidationRules > @) EA Name Updated History Event | entity ABContact\n\n|) © PersonValidationRules ) © Primary Phone Type Changec\n\n}) © RegionValidationRules 4) Ed Home Phone Changed Histor\n\n« ARule Set combines many individual rules into a useful set to consider as a group\n¢ ARule Set defines the root entity type\n\n« All the Rules in the set will be attached to same the triggering entity gy\n\n(root entity)\n* Only the Rule Set Editor exposes individual rules.\n\n| Hierarchy: Rules\n\n) ABContactPreupdate.grs x\n\nv © BW ascontact Preupdate\nvy @) © Aspui000 - Subtype ABContact\n) © Asputoto - Contact created\n) © ABPUL020 - Assigned user changed\n) © ABPUL030 - Flag invalid address\n#) ABPU1040 - Unverify changed bank accounts\nvy @) © ABPu2000 - Subtype ABPerson\n©) © ABPu2010 - Flag lack of email address\n#) &@ ABPU3000 - Subtype AB--Vendor\n) &@ AsPuso00 - Subtype ABLawFirm\n\nGi\nA Gosu Rule consists of a root\nentity, an expression that resolves\nto true or false, and an action that\nis executed if the condition is true\n\nRules can have child rules\n\nIf parent condition is true,\nGuidewire executes action and\nthen executes all child rules\n\n| Rule execution: execute all (1 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact rule set\n(@) — #) & AsPui010 - Contact created + Executed in order of hierarchy\n(6) =) & asput020 - Assigned user changed\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n(d) — ) © Aspu0so - Unverify changed bank accounts action executed first, then child rules\n\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n) &@ Aspuso00 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (2 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact [v] rule set\n(@) — #) E& aspuroio - Contact created + Executed in order of hierarchy\n(b) #) ABPU1020 - Assigned user changed\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n) ©) & AsPui040 - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (3 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact [v] rule set\n(@) — #) E& aspuroio - Contact created ° + Executed in order of hierarchy\n(b) #) ABPU1020 - Assigned user changed\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n) ©) & AsPui040 - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (4 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv) rule set\n(a) ) © Aspui0i0 - Contact created [v) E F A\n« Executed in order of hierarch\n(6) =) & asput020 - Assigned user changed x} y\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n(d) — ) © Aspu0so - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (5 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv)\n(a) H panera - comect created 7 4 + Executed in order of hierarchy\n(b) - Assigned user chang\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\n(d) — ) © Aspu0so - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n) &@ Aspuso00 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (6 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\n\nfC BB Ascontact Preupdate\n@) © ABPui000 - Subtype ABContact fv)\n€ - . |\n(@) — #) E& aspuroio - Contact created ° + Executed in order of hierarchy\n(6) =) & asput020 - Assigned user changed x}\n(Cc) #) © ABPU1030 - Flag invalid address iv}\n(x)\n\n(d) *) ABPU1040 - Unverify changed bank accounts\n\n* If parent rule condition is true, parent\naction executed first, then child rules\n\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (7 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv)\n(a) ) © Aspui0i0 - Contact created [v) E F A\n« Executed in order of hierarch\n(6) =) & asput020 - Assigned user changed x} y\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\nCd) — #) © Aspui04o - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson rx) executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (8 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\n\nfC BB Ascontact Preupdate\n@) © Aspui000 - Subtype ABContact\n(2)  #) © Asputoio - Contact created\n(b) #) © asput020 - Assigned user changed\n(c) &) ABPU1030 - Flag invalid address\n(d) *) ABPU1040 - Unverify changed bank accounts\n\n« Executed in order of hierarchy\n\n* If parent rule condition is true, parent\naction executed first, then child rules\n\n8660600\n\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n*) ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n) &@ Aspuso00 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (9 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\nfC BB Ascontact Preupdate\n\n® @) © ABPui000 - Subtype ABContact [v]\n) ©&@ ABPULO10 - Contact created fv) . F A\n(5) #1 &y aput020 - Assigned user changed ° Executed in order of hierarchy\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\n) — #) & asPui040 - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson x) executed\n©) © ABPu2010 - Flag lack of email address 30)\n¥) © ABPU3000 - Subtype AB--Vendor @  °* Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: execute all (10 of 10) fa\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv)\n(a) ) © Aspui0i0 - Contact created [v) E F A\n« Executed in order of hierarch\n(B)  €) © A8PUL020 - Assigned user changed tx) y\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\nCd) — #) © Aspui04o - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson rx) executed\n©) © ABPu2010 - Flag lack of email address 30)\n¥) © ABPU3000 - Subtype AB--Vendor @  °* Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm (v) drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked\n\n| Rule execution: exit after first action i\n\n€) ClaimSegmentationRules.grs * ¢ When triggering occurs, Guidewire\n4 executes rules in rule set until exit\n\n‘@) F C5G01000 - Auto ())\n\n. % CSG01100 - Auto + .\n\n&) MA cscoi200 Auto detaut «=O Exit « Executed in order of hierarchy\n@ | Csc02000 - Property\n\nPA CSG02100 - Property + If parent rule condition is true, parent\n®) [4 CSG02200 - Property Default i i\nwe 5603000. WC action executed first, then child rules\nPJ CSG03100 - WC executed\n&) E4 cSG03200 - WC Default ;\nae €S604000 - GL * See syntax on next slide\n4 CSG04100 - GL\n\n*) E24 CSG04200 - GL Default\nwe C3G05000 - Travel\nM4 CSG05100 - Travel\n$4 CSG05200 - Travel Default\n\n¢« Example: Claim Segmentation Rules in ClaimCenter\n\n* Segment the claim in the manner of the exposure and then exit rule set\n\n| Exiting a rule set i\n\n¢ Exit after first action rules\n¢ Syntax: actions.exit()\n¢« Example of ClaimCenter Claim Segmentation rule set rules\n\n€) ClaimSegmentationRules.grs\n\nYE Bl Claim Seqmentation Rules USES:\n\nCSG01000 - Auto\nB4 CSG01100 - Auto\n£4 CSG01200 - Auto Default\n\nuses gw.api.locale.DisplayKey\n\ny @) &% csG02000 - Property uses gw.api.util.Logger\n£4 CSG02100 - Property\n£4 CSG02200 - Property Default CONDITION (claim entity.Claim):\nya Bn oo we return claim.Segment == null\nFa c5003100 ut ACTION (claim entity.Claim, actions : gw.rules.Action) :\ny B® & cscoso00 - ct claim.Segment = TC_AUTO_LOW\nfo cscnznce ct bogger.tegbebug (\"##### This is the Claim Segmentation rule {act.\n£4 CSG04200 - GL Default bogger.iegbebug (\"Claim is segmented to {claim.Segment}\")\n¥ @ & csc05000 - Travel actions.exit ()\n\nCSGO5100 - Travel\n£4 CSG05200 - Travel Default\n\nEND\n\nDemonstration\n\n| Demonstration G\n\nAutomatically assign flagged contacts\n\na=\n=” “Every new contact with 1 or more flag entries should be assigned to the\ncreator (logged in user) of the contact for further processing, and a note\n— explaining the contact has been automatically assigned - should also\nbe associated to the contact.”\nclick here — Insurance company business analysts\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — Whatis the significance of a rule set's root entity?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD\n\nAnswer a\n\n_— — Whatis the significance of a rule set's root entity?\n¢\noY” Every rule set is tied to an entity, known as the root entity. This determines which class\nof objects the rule set is tied to. It also determines the object available to the rules in\n\nthe rule set when the rule set is triggered.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n_- — Whatis the difference between an \"execute all\" rule set and an “exit after\nYo first action\" rule set?\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD\n\nAnswer a\n\n_— — Whatis the difference between an \"execute all\" rule set and an “exit after\na first action\" rule set?\n? In an “execute all\" rule set, all rules are executed. For example, validation rule sets are\nexecute all. All validation conditions are checked, regardless of how many are true. In\nan \"exit after first action\" rule set, you do not typically execute all rules. When the first\ntrue condition is found, the action associated with that condition is taken and the rule\nset is exited. For example, assignment rule sets are exit after first action. Once an\n\nassignment is made, the rule set exits so that later code doesn't reassign the object.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n_— — Whatis the effect of deactivating a rule?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD\n\nAnswer a\n\n_- — Whatis the effect of deactivating a rule?\n\n¢\noY” The rule is not executed by the rules engine, which is useful in development for turning\n\nrules \"on\" and \"off\".\n\nSOOO ODDDSDoOODDODOoOoS\n\nLesson\nobjectives « Explain the functionality of Gosu Rules\nreview * Describe the Gosu techniques unique to\n\nGosu Rules\n¢ Write Gosu Rules\n\n| Student exercise\n\nGosu Rules",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Gosu Rules",
+      "word_count": 2,
+      "avg_confidence": 94.75,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives « Explain the functionality of Gosu Rules\n\n* Describe the Gosu techniques unique to\nGosu Rules\n« Write Gosu Rules",
+      "word_count": 22,
+      "avg_confidence": 84.41,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Gosu Rules",
+      "word_count": 2,
+      "avg_confidence": 94.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Gosu rules i\n\n« ARule is a Gosu class with the file extension .gr\n\n« ARule is a single decision in the following form:\nIf {some conditions} 42\nThen {take some actions} Se\n\n¢« Example:\n\n+ If ABPerson doesn’t have an email address, then create a Flag Entry to notify the TrainingApp\nusers\n\n¢« When an Event happens to an Entity, different set of Rules might be executed by\nthe Guidewire application\n\n« Example: when ABContact is saved the system runs\n* The ABContactPreupdate Rules and\n* The ABContactValidation Rules",
+      "word_count": 91,
+      "avg_confidence": 86.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Examples in Guidewire applications G\n\n¢ Activity escalation ¢ Claim assignment ¢ Account validation\nrules rules rules\n* Escalate activity that is « Assign given claim to a * Verify that account is\nopen for too long group and user valid before committing\n* Triggered when activity * Triggered when claim is it to database\nis open past its created or needs * Triggered when account\n\nescalation date reassignment is created or modified",
+      "word_count": 74,
+      "avg_confidence": 87.78,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Gosu rule anatomy\n* Root entity\n\n+ Input parameter for the rule\n\n¢ Name\n+ Unique and follows naming convention\n\n+ Example: ABPU1010 — Contact Created is an\nexample of a naming convention for Gosu Rules\ndecided on by the development team if true, | execute action\n\n* Condition\n+ Expression that evaluates to true or false\n* Action\n\n+ If condition is true, the Guidewire application\nexecutes the action\n\n« If condition is false, nothing happens",
+      "word_count": 78,
+      "avg_confidence": 89.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Gosu rule hierarchy G\n\nhd Rule set\ncategory\n\n[3 Rule set",
+      "word_count": 12,
+      "avg_confidence": 88.47,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Hierarchy: Rule Set Category (1 of 2) Gi\n\n« ARule Set Category is a collection of\n\n. e GiProjet v OF | Ie\n\nRule Sets that have the following 2 eyo fon © cudeu re Taningieg neu cont ou\nthings in common: BY ents\n\n=| v Gt Rule Sets\n* High-level business purpose a 2 EventMessage\n\n. € #€) © EventFired\n\n* Trigger (Event) & vy Ey Preupdate\n\npe) €) > ABContactContactPreupdate\n\n€) & ABContactPreupdate\n\n#)  AddressPreupdate\n\n€) © PendingContactChangePreupdate\nvy E) Validation\n\n#) & ABContactValidationRules\n\n#€) © ContactValidationRules\n\n#) & PersonValidationRules\n\n#€) & RegionValidationRules",
+      "word_count": 96,
+      "avg_confidence": 66.77,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Hierarchy: Rule Set Category (2 of 2) Gi\n\n$B Project | @ % | He Ir « Examples:\nSY Crconfig + EventMessage\n& (3 Rule Sets 9\n. + Performs event processing and generates\ng 8) Eventfired messages about events that have occurred\ni\na €) > ABContactContactPreupdate + Triggered during save\nv €) © ABContactPreupdate\n\n€)& AddressPreupdate * Preupdate\n\n#2 ling\n\ncae ctChangePreupdste + Performs domain logic or validation that\n\nE) b ABContactValidationRules must come before committing entity\n\n#)& ContactValidationRules i jl\n\n4% PersonValidationRules Triggered during save\n\n€) & RegionValidationRules « Validation\nIn Project View, the top-level node is + Performs validation that must come before\nRule Sets, a misnomer. The physical committing entity that ensures data is valid\n\nfolder is ...\\config\\rules\\. «Triggered during save",
+      "word_count": 127,
+      "avg_confidence": 76.45,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Hierarchy: Rule Sets i\n\ny Diprojet © % | #- be | #8) ascontactPreupdategrs\n\n& vy Di Rule sets (3% Gh ABContact Preupdate\n\ne y Ex EventMessage ¥ @) EJ ABPUIOOD - Subtype ABConte, ABContact Preupdate (Active)\n\n2 vy ©) Preupdate ©) © AsPut020 - Assigned use: | Description\n\n€ #) & ABContactContactPreupdate 8 ABPUL030 - Flag invalid a: | This is the ABContact Preupdate rule set to permit modification of\n& 72% ABContactPreupdate 7 ) © ABPULO4O - Unverify char | the contact and related entities. Exceptions will cause the\n\nSl #)& AddressPreupdate @) EG AsPu2000 - subtype ABPerso | hounding database transaction to roll back, effectively vetoing the\nv 4) © Aspuz010 - Flag lack of | update.\n\n}#) & PendingContactChangePreupdate ©) a Subtyre AB-Ver!\n\nao -\n#)& ABContactValidationRules 3 Ed aaruene Sth Aer Root Entity <>\n2) > ContactVatidationRules > @) EA Name Updated History Event | entity ABContact\n\n|) © PersonValidationRules ) © Primary Phone Type Changec\n\n}) © RegionValidationRules 4) Ed Home Phone Changed Histor\n\n« ARule Set combines many individual rules into a useful set to consider as a group\n¢ ARule Set defines the root entity type\n\n« All the Rules in the set will be attached to same the triggering entity gy\n\n(root entity)\n* Only the Rule Set Editor exposes individual rules.",
+      "word_count": 221,
+      "avg_confidence": 72.2,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Hierarchy: Rules\n\n) ABContactPreupdate.grs x\n\nv © BW ascontact Preupdate\nvy @) © Aspui000 - Subtype ABContact\n) © Asputoto - Contact created\n) © ABPUL020 - Assigned user changed\n) © ABPUL030 - Flag invalid address\n#) ABPU1040 - Unverify changed bank accounts\nvy @) © ABPu2000 - Subtype ABPerson\n©) © ABPu2010 - Flag lack of email address\n#) &@ ABPU3000 - Subtype AB--Vendor\n) &@ AsPuso00 - Subtype ABLawFirm\n\nGi\nA Gosu Rule consists of a root\nentity, an expression that resolves\nto true or false, and an action that\nis executed if the condition is true\n\nRules can have child rules\n\nIf parent condition is true,\nGuidewire executes action and\nthen executes all child rules",
+      "word_count": 120,
+      "avg_confidence": 79.86,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Rule execution: execute all (1 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact rule set\n(@) — #) & AsPui010 - Contact created + Executed in order of hierarchy\n(6) =) & asput020 - Assigned user changed\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n(d) — ) © Aspu0so - Unverify changed bank accounts action executed first, then child rules\n\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n) &@ Aspuso00 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 146,
+      "avg_confidence": 75.07,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Rule execution: execute all (2 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact [v] rule set\n(@) — #) E& aspuroio - Contact created + Executed in order of hierarchy\n(b) #) ABPU1020 - Assigned user changed\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n) ©) & AsPui040 - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 145,
+      "avg_confidence": 76.51,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Rule execution: execute all (3 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact [v] rule set\n(@) — #) E& aspuroio - Contact created ° + Executed in order of hierarchy\n(b) #) ABPU1020 - Assigned user changed\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n) ©) & AsPui040 - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 146,
+      "avg_confidence": 76.16,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Rule execution: execute all (4 of 10) Gi\n\n¢ When triggering occurs,\n\n#) ABContactPreupdate.grs . . .\nGuidewire executes ALL rules in\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv) rule set\n(a) ) © Aspui0i0 - Contact created [v) E F A\n« Executed in order of hierarch\n(6) =) & asput020 - Assigned user changed x} y\n(Cc) #) © ABPU1030 - Flag invalid address * If parent rule condition is true, parent\n(d) — ) © Aspu0so - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 152,
+      "avg_confidence": 74.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Rule execution: execute all (5 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\n\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv)\n(a) H panera - comect created 7 4 + Executed in order of hierarchy\n(b) - Assigned user chang\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\n(d) — ) © Aspu0so - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n) &@ Aspuso00 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 143,
+      "avg_confidence": 75.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Rule execution: execute all (6 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\n\nfC BB Ascontact Preupdate\n@) © ABPui000 - Subtype ABContact fv)\n€ - . |\n(@) — #) E& aspuroio - Contact created ° + Executed in order of hierarchy\n(6) =) & asput020 - Assigned user changed x}\n(Cc) #) © ABPU1030 - Flag invalid address iv}\n(x)\n\n(d) *) ABPU1040 - Unverify changed bank accounts\n\n* If parent rule condition is true, parent\naction executed first, then child rules\n\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 151,
+      "avg_confidence": 74.07,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Rule execution: execute all (7 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv)\n(a) ) © Aspui0i0 - Contact created [v) E F A\n« Executed in order of hierarch\n(6) =) & asput020 - Assigned user changed x} y\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\nCd) — #) © Aspui04o - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson rx) executed\n©) © ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 152,
+      "avg_confidence": 74.03,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Rule execution: execute all (8 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\n\nfC BB Ascontact Preupdate\n@) © Aspui000 - Subtype ABContact\n(2)  #) © Asputoio - Contact created\n(b) #) © asput020 - Assigned user changed\n(c) &) ABPU1030 - Flag invalid address\n(d) *) ABPU1040 - Unverify changed bank accounts\n\n« Executed in order of hierarchy\n\n* If parent rule condition is true, parent\naction executed first, then child rules\n\n8660600\n\n@¥ @ @ A8Pu2000 - Subtype ABPerson executed\n*) ABPU2010 - Flag lack of email address\n¥) © ABPU3000 - Subtype AB--Vendor * Order can be changed by drag &\n) &@ Aspuso00 - Subtype ABLawFirm drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 140,
+      "avg_confidence": 79.88,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Rule execution: execute all (9 of 10) Gi\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\nfC BB Ascontact Preupdate\n\n® @) © ABPui000 - Subtype ABContact [v]\n) ©&@ ABPULO10 - Contact created fv) . F A\n(5) #1 &y aput020 - Assigned user changed ° Executed in order of hierarchy\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\n) — #) & asPui040 - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson x) executed\n©) © ABPu2010 - Flag lack of email address 30)\n¥) © ABPU3000 - Subtype AB--Vendor @  °* Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm drop\n\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 152,
+      "avg_confidence": 72.95,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Rule execution: execute all (10 of 10) fa\n\n¢ When triggering occurs,\nGuidewire executes ALL rules in\nrule set\n\n) ABContactPreupdate.grs x\nfC BB Ascontact Preupdate\n\n@) © ABPui000 - Subtype ABContact fv)\n(a) ) © Aspui0i0 - Contact created [v) E F A\n« Executed in order of hierarch\n(B)  €) © A8PUL020 - Assigned user changed tx) y\n(Cc) #) © ABPU1030 - Flag invalid address fv) * If parent rule condition is true, parent\nCd) — #) © Aspui04o - Unverify changed bank accounts action executed first, then child rules\n@¥ @ @ A8Pu2000 - Subtype ABPerson rx) executed\n©) © ABPu2010 - Flag lack of email address 30)\n¥) © ABPU3000 - Subtype AB--Vendor @  °* Order can be changed by drag &\n©) © ABPUs000 - Subtype ABLawFirm (v) drop\nUnchecking the checkbox\n\n¢ Example: Validation Rules in ContactManager ” deactivates the rule\n\n+ All validation conditions are checked",
+      "word_count": 155,
+      "avg_confidence": 72.62,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Rule execution: exit after first action i\n\n€) ClaimSegmentationRules.grs * ¢ When triggering occurs, Guidewire\n4 executes rules in rule set until exit\n\n‘@) F C5G01000 - Auto ())\n\n. % CSG01100 - Auto + .\n\n&) MA cscoi200 Auto detaut «=O Exit « Executed in order of hierarchy\n@ | Csc02000 - Property\n\nPA CSG02100 - Property + If parent rule condition is true, parent\n®) [4 CSG02200 - Property Default i i\nwe 5603000. WC action executed first, then child rules\nPJ CSG03100 - WC executed\n&) E4 cSG03200 - WC Default ;\nae €S604000 - GL * See syntax on next slide\n4 CSG04100 - GL\n\n*) E24 CSG04200 - GL Default\nwe C3G05000 - Travel\nM4 CSG05100 - Travel\n$4 CSG05200 - Travel Default\n\n¢« Example: Claim Segmentation Rules in ClaimCenter\n\n* Segment the claim in the manner of the exposure and then exit rule set",
+      "word_count": 151,
+      "avg_confidence": 78.27,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Exiting a rule set i\n\n¢ Exit after first action rules\n¢ Syntax: actions.exit()\n¢« Example of ClaimCenter Claim Segmentation rule set rules\n\n€) ClaimSegmentationRules.grs\n\nYE Bl Claim Seqmentation Rules USES:\n\nCSG01000 - Auto\nB4 CSG01100 - Auto\n£4 CSG01200 - Auto Default\n\nuses gw.api.locale.DisplayKey\n\ny @) &% csG02000 - Property uses gw.api.util.Logger\n£4 CSG02100 - Property\n£4 CSG02200 - Property Default CONDITION (claim entity.Claim):\nya Bn oo we return claim.Segment == null\nFa c5003100 ut ACTION (claim entity.Claim, actions : gw.rules.Action) :\ny B® & cscoso00 - ct claim.Segment = TC_AUTO_LOW\nfo cscnznce ct bogger.tegbebug (\"##### This is the Claim Segmentation rule {act.\n£4 CSG04200 - GL Default bogger.iegbebug (\"Claim is segmented to {claim.Segment}\")\n¥ @ & csc05000 - Travel actions.exit ()\n\nCSGO5100 - Travel\n£4 CSG05200 - Travel Default\n\nEND",
+      "word_count": 133,
+      "avg_confidence": 72.41,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Demonstration",
+      "word_count": 1,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Demonstration G\n\nAutomatically assign flagged contacts\n\na=\n=” “Every new contact with 1 or more flag entries should be assigned to the\ncreator (logged in user) of the contact for further processing, and a note\n— explaining the contact has been automatically assigned - should also\nbe associated to the contact.”\nclick here — Insurance company business analysts\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 87,
+      "avg_confidence": 94.71,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question G\n\n_— — Whatis the significance of a rule set's root entity?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "word_count": 18,
+      "avg_confidence": 81.06,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer a\n\n_— — Whatis the significance of a rule set's root entity?\n¢\noY” Every rule set is tied to an entity, known as the root entity. This determines which class\nof objects the rule set is tied to. It also determines the object available to the rules in\n\nthe rule set when the rule set is triggered.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 61,
+      "avg_confidence": 92.02,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n_- — Whatis the difference between an \"execute all\" rule set and an “exit after\nYo first action\" rule set?\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "word_count": 24,
+      "avg_confidence": 88.09,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer a\n\n_— — Whatis the difference between an \"execute all\" rule set and an “exit after\na first action\" rule set?\n? In an “execute all\" rule set, all rules are executed. For example, validation rule sets are\nexecute all. All validation conditions are checked, regardless of how many are true. In\nan \"exit after first action\" rule set, you do not typically execute all rules. When the first\ntrue condition is found, the action associated with that condition is taken and the rule\nset is exited. For example, assignment rule sets are exit after first action. Once an\n\nassignment is made, the rule set exits so that later code doesn't reassign the object.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 117,
+      "avg_confidence": 93.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n_— — Whatis the effect of deactivating a rule?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "word_count": 16,
+      "avg_confidence": 80.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer a\n\n_- — Whatis the effect of deactivating a rule?\n\n¢\noY” The rule is not executed by the rules engine, which is useful in development for turning\n\nrules \"on\" and \"off\".\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 35,
+      "avg_confidence": 88.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Lesson\nobjectives « Explain the functionality of Gosu Rules\nreview * Describe the Gosu techniques unique to\n\nGosu Rules\n¢ Write Gosu Rules",
+      "word_count": 23,
+      "avg_confidence": 84.22,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Student exercise\n\nGosu Rules",
+      "word_count": 5,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

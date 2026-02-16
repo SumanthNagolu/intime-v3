@@ -1,0 +1,3794 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_13_03.mp4",
+    "video_stem": "In_Policy_13_03",
+    "duration_seconds": 202.96,
+    "duration_formatted": "00:03:22.960",
+    "segment_count": 31,
+    "word_count": 578,
+    "avg_confidence": 0.9405,
+    "transcription_time_seconds": 20.74,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:32:52.129527"
+  },
+  "full_text": "UserAccess can be configured to allow external users to be assigned to groups and producer codes from other organizations. For training purpose, the configuration parameter ExternalUserAccess it is set to ProtectInternal, which allows external users to be assigned to groups and producer codes in any external organizations, but not the internal organization. After logging in a superuser, find an external user. For example, Peyton Armstrong. Select the user. Click Edit. Go to the Access tab. Because the external user access level is set to ProtectInternal, you can add groups by searching within other external organizations. Click Search and select a group. Click the Organization Search icon. Find the Organization for Builders Risk Brokers. Click Search. Click Search. Select the External Organization Builders Risk Brokers. Click Search again on the Search Groups page. Select the Producer's group. Users inherit producer codes from their assigned groups. Try to add groups within an internal organization. Click Search and select a group. Click the Organization Search icon. Find the internal organization, Enigma Fire and Casualty. Click Search. Select the Internal Organization. On the Search Groups page. Click Search again. On the Search Groups page, make sure to click Search again. Select a group from the internal organization. An error message is displayed, stating that the user does not have access to the group. Note that it can be configured to assign the external user to groups in the internal organization. You can add additional producer codes by clicking Add. Select the external organization. First, find the external organization, All Risk Insurance. Enter the name. Click Search. Select the external organization. On the Producer Codes page, click Search again. Select the Producer Code. Click Update to save the changes. You can also add users to a group by going to the group. Go to the Users tab. Click Edit. Add a user from an external organization, Commercial Insurers. Click the Search icon for Organization. Enter the name. Click Search. Select the Organization. Enter the name.   On the Search Users page, click Search again. Select the user to be added. Save the changes. This is the end of demonstration for External User Access. Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 28.6,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:28.600",
+      "text": "UserAccess can be configured to allow external users to be assigned to groups and producer codes from other organizations. For training purpose, the configuration parameter ExternalUserAccess it is set to ProtectInternal, which allows external users to be assigned to groups and producer codes in any external organizations, but not the internal organization. After logging in a superuser, find an external user. For example, Peyton Armstrong. Select the user.",
+      "words": [
+        {
+          "word": "UserAccess",
+          "start": 0.0,
+          "end": 0.74,
+          "probability": 0.4788
+        },
+        {
+          "word": "can",
+          "start": 0.74,
+          "end": 0.92,
+          "probability": 0.9854
+        },
+        {
+          "word": "be",
+          "start": 0.92,
+          "end": 1.06,
+          "probability": 0.999
+        },
+        {
+          "word": "configured",
+          "start": 1.06,
+          "end": 1.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 1.54,
+          "end": 1.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "allow",
+          "start": 1.76,
+          "end": 2.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "external",
+          "start": 2.0,
+          "end": 2.48,
+          "probability": 0.916
+        },
+        {
+          "word": "users",
+          "start": 2.48,
+          "end": 2.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 2.86,
+          "end": 3.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "be",
+          "start": 3.08,
+          "end": 3.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "assigned",
+          "start": 3.2,
+          "end": 3.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 3.54,
+          "end": 3.68,
+          "probability": 0.9839
+        },
+        {
+          "word": "groups",
+          "start": 3.68,
+          "end": 3.9,
+          "probability": 0.9229
+        },
+        {
+          "word": "and",
+          "start": 3.9,
+          "end": 4.1,
+          "probability": 0.9819
+        },
+        {
+          "word": "producer",
+          "start": 4.1,
+          "end": 4.48,
+          "probability": 0.9795
+        },
+        {
+          "word": "codes",
+          "start": 4.48,
+          "end": 4.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "from",
+          "start": 4.88,
+          "end": 5.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "other",
+          "start": 5.12,
+          "end": 5.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "organizations.",
+          "start": 5.32,
+          "end": 6.04,
+          "probability": 0.9517
+        },
+        {
+          "word": "For",
+          "start": 6.44,
+          "end": 6.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "training",
+          "start": 6.88,
+          "end": 7.22,
+          "probability": 0.9116
+        },
+        {
+          "word": "purpose,",
+          "start": 7.22,
+          "end": 7.68,
+          "probability": 0.9492
+        },
+        {
+          "word": "the",
+          "start": 8.0,
+          "end": 8.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "configuration",
+          "start": 8.18,
+          "end": 8.66,
+          "probability": 0.9487
+        },
+        {
+          "word": "parameter",
+          "start": 8.66,
+          "end": 9.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "ExternalUserAccess",
+          "start": 9.42,
+          "end": 10.88,
+          "probability": 0.877
+        },
+        {
+          "word": "it",
+          "start": 10.88,
+          "end": 11.02,
+          "probability": 0.8193
+        },
+        {
+          "word": "is",
+          "start": 11.02,
+          "end": 11.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "set",
+          "start": 11.14,
+          "end": 11.32,
+          "probability": 0.9766
+        },
+        {
+          "word": "to",
+          "start": 11.32,
+          "end": 11.48,
+          "probability": 0.998
+        },
+        {
+          "word": "ProtectInternal,",
+          "start": 11.48,
+          "end": 12.3,
+          "probability": 0.6626
+        },
+        {
+          "word": "which",
+          "start": 12.54,
+          "end": 12.8,
+          "probability": 0.9897
+        },
+        {
+          "word": "allows",
+          "start": 12.8,
+          "end": 13.12,
+          "probability": 0.998
+        },
+        {
+          "word": "external",
+          "start": 13.12,
+          "end": 13.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "users",
+          "start": 13.58,
+          "end": 13.96,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 13.96,
+          "end": 14.2,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 14.2,
+          "end": 14.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "assigned",
+          "start": 14.32,
+          "end": 14.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 14.62,
+          "end": 14.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "groups",
+          "start": 14.78,
+          "end": 15.0,
+          "probability": 0.9873
+        },
+        {
+          "word": "and",
+          "start": 15.0,
+          "end": 15.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "producer",
+          "start": 15.2,
+          "end": 15.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "codes",
+          "start": 15.58,
+          "end": 16.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 16.0,
+          "end": 16.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "any",
+          "start": 16.16,
+          "end": 16.38,
+          "probability": 0.999
+        },
+        {
+          "word": "external",
+          "start": 16.38,
+          "end": 16.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "organizations,",
+          "start": 16.82,
+          "end": 17.62,
+          "probability": 0.9907
+        },
+        {
+          "word": "but",
+          "start": 17.94,
+          "end": 18.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "not",
+          "start": 18.18,
+          "end": 18.36,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 18.36,
+          "end": 18.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "internal",
+          "start": 18.52,
+          "end": 18.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "organization.",
+          "start": 18.86,
+          "end": 19.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "After",
+          "start": 20.04,
+          "end": 20.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "logging",
+          "start": 20.48,
+          "end": 20.82,
+          "probability": 0.9927
+        },
+        {
+          "word": "in",
+          "start": 20.82,
+          "end": 20.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 20.98,
+          "end": 21.08,
+          "probability": 0.9922
+        },
+        {
+          "word": "superuser,",
+          "start": 21.08,
+          "end": 21.6,
+          "probability": 0.6206
+        },
+        {
+          "word": "find",
+          "start": 22.0,
+          "end": 22.2,
+          "probability": 0.998
+        },
+        {
+          "word": "an",
+          "start": 22.2,
+          "end": 22.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "external",
+          "start": 22.34,
+          "end": 22.72,
+          "probability": 0.9888
+        },
+        {
+          "word": "user.",
+          "start": 22.72,
+          "end": 23.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "For",
+          "start": 23.48,
+          "end": 23.84,
+          "probability": 0.9863
+        },
+        {
+          "word": "example,",
+          "start": 23.84,
+          "end": 24.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "Peyton",
+          "start": 24.72,
+          "end": 25.04,
+          "probability": 0.8159
+        },
+        {
+          "word": "Armstrong.",
+          "start": 25.04,
+          "end": 25.5,
+          "probability": 0.5273
+        },
+        {
+          "word": "Select",
+          "start": 27.48,
+          "end": 28.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 28.12,
+          "end": 28.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "user.",
+          "start": 28.28,
+          "end": 28.6,
+          "probability": 0.9404
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 31.38,
+      "end": 37.24,
+      "start_formatted": "00:00:31.380",
+      "end_formatted": "00:00:37.240",
+      "text": "Click Edit. Go to the Access tab.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 31.38,
+          "end": 32.12,
+          "probability": 0.9624
+        },
+        {
+          "word": "Edit.",
+          "start": 32.12,
+          "end": 32.4,
+          "probability": 0.7539
+        },
+        {
+          "word": "Go",
+          "start": 35.46,
+          "end": 36.2,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 36.2,
+          "end": 36.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 36.34,
+          "end": 36.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "Access",
+          "start": 36.48,
+          "end": 36.86,
+          "probability": 0.9531
+        },
+        {
+          "word": "tab.",
+          "start": 36.86,
+          "end": 37.24,
+          "probability": 0.9663
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 39.84,
+      "end": 59.4,
+      "start_formatted": "00:00:39.840",
+      "end_formatted": "00:00:59.400",
+      "text": "Because the external user access level is set to ProtectInternal, you can add groups by searching within other external organizations. Click Search and select a group. Click the Organization Search icon. Find the Organization for Builders Risk Brokers.",
+      "words": [
+        {
+          "word": "Because",
+          "start": 39.84,
+          "end": 40.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 40.58,
+          "end": 40.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "external",
+          "start": 40.76,
+          "end": 41.18,
+          "probability": 0.6279
+        },
+        {
+          "word": "user",
+          "start": 41.18,
+          "end": 41.56,
+          "probability": 0.9507
+        },
+        {
+          "word": "access",
+          "start": 41.56,
+          "end": 42.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "level",
+          "start": 42.04,
+          "end": 42.46,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 42.46,
+          "end": 42.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "set",
+          "start": 42.66,
+          "end": 42.82,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 42.82,
+          "end": 42.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "ProtectInternal,",
+          "start": 42.96,
+          "end": 43.78,
+          "probability": 0.3723
+        },
+        {
+          "word": "you",
+          "start": 44.04,
+          "end": 44.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "can",
+          "start": 44.28,
+          "end": 44.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 44.42,
+          "end": 44.6,
+          "probability": 0.9878
+        },
+        {
+          "word": "groups",
+          "start": 44.6,
+          "end": 44.88,
+          "probability": 0.9526
+        },
+        {
+          "word": "by",
+          "start": 44.88,
+          "end": 45.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "searching",
+          "start": 45.1,
+          "end": 45.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "within",
+          "start": 45.46,
+          "end": 45.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "other",
+          "start": 45.72,
+          "end": 46.0,
+          "probability": 0.9507
+        },
+        {
+          "word": "external",
+          "start": 46.0,
+          "end": 46.52,
+          "probability": 0.9912
+        },
+        {
+          "word": "organizations.",
+          "start": 46.52,
+          "end": 47.22,
+          "probability": 0.9736
+        },
+        {
+          "word": "Click",
+          "start": 47.92,
+          "end": 48.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "Search",
+          "start": 48.66,
+          "end": 48.92,
+          "probability": 0.9629
+        },
+        {
+          "word": "and",
+          "start": 48.92,
+          "end": 49.1,
+          "probability": 0.9839
+        },
+        {
+          "word": "select",
+          "start": 49.1,
+          "end": 49.42,
+          "probability": 0.936
+        },
+        {
+          "word": "a",
+          "start": 49.42,
+          "end": 49.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "group.",
+          "start": 49.58,
+          "end": 49.86,
+          "probability": 0.9385
+        },
+        {
+          "word": "Click",
+          "start": 52.02,
+          "end": 52.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 52.76,
+          "end": 52.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "Organization",
+          "start": 52.92,
+          "end": 53.62,
+          "probability": 0.8237
+        },
+        {
+          "word": "Search",
+          "start": 53.62,
+          "end": 53.98,
+          "probability": 0.5513
+        },
+        {
+          "word": "icon.",
+          "start": 53.98,
+          "end": 54.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "Find",
+          "start": 56.3,
+          "end": 57.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 57.04,
+          "end": 57.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "Organization",
+          "start": 57.2,
+          "end": 57.64,
+          "probability": 0.8081
+        },
+        {
+          "word": "for",
+          "start": 57.64,
+          "end": 58.16,
+          "probability": 0.9932
+        },
+        {
+          "word": "Builders",
+          "start": 58.16,
+          "end": 58.6,
+          "probability": 0.8921
+        },
+        {
+          "word": "Risk",
+          "start": 58.6,
+          "end": 58.88,
+          "probability": 0.7788
+        },
+        {
+          "word": "Brokers.",
+          "start": 58.88,
+          "end": 59.4,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 59.4,
+      "end": 74.08,
+      "start_formatted": "00:00:59.400",
+      "end_formatted": "00:01:14.080",
+      "text": "Click Search. Click Search. Select the External Organization Builders Risk Brokers. Click Search again on the Search Groups page. Select the Producer's group.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 59.4,
+          "end": 60.44,
+          "probability": 0.9619
+        },
+        {
+          "word": "Search.",
+          "start": 60.44,
+          "end": 60.78,
+          "probability": 0.8081
+        },
+        {
+          "word": "Click",
+          "start": 63.98,
+          "end": 64.82,
+          "probability": 0.001
+        },
+        {
+          "word": "Search.",
+          "start": 64.82,
+          "end": 64.82,
+          "probability": 0.2593
+        },
+        {
+          "word": "Select",
+          "start": 64.82,
+          "end": 64.82,
+          "probability": 0.9136
+        },
+        {
+          "word": "the",
+          "start": 64.82,
+          "end": 65.0,
+          "probability": 0.9829
+        },
+        {
+          "word": "External",
+          "start": 65.0,
+          "end": 65.36,
+          "probability": 0.6528
+        },
+        {
+          "word": "Organization",
+          "start": 65.36,
+          "end": 65.9,
+          "probability": 0.9668
+        },
+        {
+          "word": "Builders",
+          "start": 65.9,
+          "end": 66.66,
+          "probability": 0.8643
+        },
+        {
+          "word": "Risk",
+          "start": 66.66,
+          "end": 66.96,
+          "probability": 0.8262
+        },
+        {
+          "word": "Brokers.",
+          "start": 66.96,
+          "end": 67.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "Click",
+          "start": 68.0,
+          "end": 68.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "Search",
+          "start": 68.78,
+          "end": 69.04,
+          "probability": 0.9829
+        },
+        {
+          "word": "again",
+          "start": 69.04,
+          "end": 69.3,
+          "probability": 0.9766
+        },
+        {
+          "word": "on",
+          "start": 69.3,
+          "end": 69.52,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 69.52,
+          "end": 69.62,
+          "probability": 0.998
+        },
+        {
+          "word": "Search",
+          "start": 69.62,
+          "end": 69.9,
+          "probability": 0.9512
+        },
+        {
+          "word": "Groups",
+          "start": 69.9,
+          "end": 70.32,
+          "probability": 0.9756
+        },
+        {
+          "word": "page.",
+          "start": 70.32,
+          "end": 70.62,
+          "probability": 0.981
+        },
+        {
+          "word": "Select",
+          "start": 72.16,
+          "end": 73.0,
+          "probability": 0.9746
+        },
+        {
+          "word": "the",
+          "start": 73.0,
+          "end": 73.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "Producer's",
+          "start": 73.2,
+          "end": 73.78,
+          "probability": 0.5107
+        },
+        {
+          "word": "group.",
+          "start": 73.78,
+          "end": 74.08,
+          "probability": 0.4812
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 76.5,
+      "end": 101.72,
+      "start_formatted": "00:01:16.500",
+      "end_formatted": "00:01:41.720",
+      "text": "Users inherit producer codes from their assigned groups. Try to add groups within an internal organization. Click Search and select a group. Click the Organization Search icon. Find the internal organization, Enigma Fire and Casualty. Click Search. Select the Internal Organization.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 76.5,
+          "end": 77.26,
+          "probability": 0.9214
+        },
+        {
+          "word": "inherit",
+          "start": 77.26,
+          "end": 77.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "producer",
+          "start": 77.74,
+          "end": 78.14,
+          "probability": 0.9092
+        },
+        {
+          "word": "codes",
+          "start": 78.14,
+          "end": 78.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "from",
+          "start": 78.58,
+          "end": 78.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "their",
+          "start": 78.78,
+          "end": 78.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "assigned",
+          "start": 78.94,
+          "end": 79.32,
+          "probability": 0.9907
+        },
+        {
+          "word": "groups.",
+          "start": 79.32,
+          "end": 79.76,
+          "probability": 0.9795
+        },
+        {
+          "word": "Try",
+          "start": 80.0,
+          "end": 80.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 80.44,
+          "end": 80.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "add",
+          "start": 80.6,
+          "end": 80.82,
+          "probability": 0.9912
+        },
+        {
+          "word": "groups",
+          "start": 80.82,
+          "end": 81.16,
+          "probability": 0.978
+        },
+        {
+          "word": "within",
+          "start": 81.16,
+          "end": 81.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "an",
+          "start": 81.44,
+          "end": 81.6,
+          "probability": 0.999
+        },
+        {
+          "word": "internal",
+          "start": 81.6,
+          "end": 81.92,
+          "probability": 0.9844
+        },
+        {
+          "word": "organization.",
+          "start": 81.92,
+          "end": 82.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "Click",
+          "start": 83.1,
+          "end": 83.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "Search",
+          "start": 83.64,
+          "end": 83.9,
+          "probability": 0.6431
+        },
+        {
+          "word": "and",
+          "start": 83.9,
+          "end": 84.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "select",
+          "start": 84.1,
+          "end": 84.4,
+          "probability": 0.9287
+        },
+        {
+          "word": "a",
+          "start": 84.4,
+          "end": 84.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "group.",
+          "start": 84.58,
+          "end": 84.86,
+          "probability": 0.9639
+        },
+        {
+          "word": "Click",
+          "start": 87.06,
+          "end": 87.82,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 87.82,
+          "end": 88.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "Organization",
+          "start": 88.0,
+          "end": 88.7,
+          "probability": 0.7705
+        },
+        {
+          "word": "Search",
+          "start": 88.7,
+          "end": 89.1,
+          "probability": 0.3848
+        },
+        {
+          "word": "icon.",
+          "start": 89.1,
+          "end": 89.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "Find",
+          "start": 91.3,
+          "end": 92.06,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 92.06,
+          "end": 92.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "internal",
+          "start": 92.2,
+          "end": 92.54,
+          "probability": 0.8716
+        },
+        {
+          "word": "organization,",
+          "start": 92.54,
+          "end": 93.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "Enigma",
+          "start": 93.74,
+          "end": 94.26,
+          "probability": 0.9419
+        },
+        {
+          "word": "Fire",
+          "start": 94.26,
+          "end": 94.52,
+          "probability": 0.8008
+        },
+        {
+          "word": "and",
+          "start": 94.52,
+          "end": 94.74,
+          "probability": 0.8271
+        },
+        {
+          "word": "Casualty.",
+          "start": 94.74,
+          "end": 95.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "Click",
+          "start": 95.58,
+          "end": 96.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "Search.",
+          "start": 96.12,
+          "end": 96.44,
+          "probability": 0.9873
+        },
+        {
+          "word": "Select",
+          "start": 99.66,
+          "end": 100.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 100.42,
+          "end": 100.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "Internal",
+          "start": 100.62,
+          "end": 100.94,
+          "probability": 0.0565
+        },
+        {
+          "word": "Organization.",
+          "start": 100.94,
+          "end": 101.72,
+          "probability": 0.9546
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 103.76,
+      "end": 105.9,
+      "start_formatted": "00:01:43.760",
+      "end_formatted": "00:01:45.900",
+      "text": "On the Search Groups page. Click Search again.",
+      "words": [
+        {
+          "word": "On",
+          "start": 103.76,
+          "end": 104.32,
+          "probability": 0.9639
+        },
+        {
+          "word": "the",
+          "start": 104.32,
+          "end": 104.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "Search",
+          "start": 104.44,
+          "end": 104.68,
+          "probability": 0.6191
+        },
+        {
+          "word": "Groups",
+          "start": 104.68,
+          "end": 105.04,
+          "probability": 0.917
+        },
+        {
+          "word": "page.",
+          "start": 105.04,
+          "end": 105.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "Click",
+          "start": 105.62,
+          "end": 105.9,
+          "probability": 0.0018
+        },
+        {
+          "word": "Search",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.6221
+        },
+        {
+          "word": "again.",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.7993
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 105.9,
+      "end": 110.5,
+      "start_formatted": "00:01:45.900",
+      "end_formatted": "00:01:50.500",
+      "text": "On the Search Groups page, make sure to click Search again. Select a group from the internal organization.",
+      "words": [
+        {
+          "word": "On",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.0009
+        },
+        {
+          "word": "the",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.874
+        },
+        {
+          "word": "Search",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.7114
+        },
+        {
+          "word": "Groups",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.9697
+        },
+        {
+          "word": "page,",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.981
+        },
+        {
+          "word": "make",
+          "start": 105.9,
+          "end": 105.9,
+          "probability": 0.4739
+        },
+        {
+          "word": "sure",
+          "start": 105.9,
+          "end": 106.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 106.12,
+          "end": 106.3,
+          "probability": 0.9814
+        },
+        {
+          "word": "click",
+          "start": 106.3,
+          "end": 106.52,
+          "probability": 0.9531
+        },
+        {
+          "word": "Search",
+          "start": 106.52,
+          "end": 106.82,
+          "probability": 0.9043
+        },
+        {
+          "word": "again.",
+          "start": 106.82,
+          "end": 107.26,
+          "probability": 0.9292
+        },
+        {
+          "word": "Select",
+          "start": 108.18,
+          "end": 108.74,
+          "probability": 0.96
+        },
+        {
+          "word": "a",
+          "start": 108.74,
+          "end": 108.9,
+          "probability": 0.9717
+        },
+        {
+          "word": "group",
+          "start": 108.9,
+          "end": 109.08,
+          "probability": 0.7974
+        },
+        {
+          "word": "from",
+          "start": 109.08,
+          "end": 109.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 109.3,
+          "end": 109.42,
+          "probability": 0.9878
+        },
+        {
+          "word": "internal",
+          "start": 109.42,
+          "end": 109.76,
+          "probability": 0.748
+        },
+        {
+          "word": "organization.",
+          "start": 109.76,
+          "end": 110.5,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 112.38,
+      "end": 117.26,
+      "start_formatted": "00:01:52.380",
+      "end_formatted": "00:01:57.260",
+      "text": "An error message is displayed, stating that the user does not have access to the group.",
+      "words": [
+        {
+          "word": "An",
+          "start": 112.38,
+          "end": 112.9,
+          "probability": 0.9785
+        },
+        {
+          "word": "error",
+          "start": 112.9,
+          "end": 113.16,
+          "probability": 0.9878
+        },
+        {
+          "word": "message",
+          "start": 113.16,
+          "end": 113.56,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 113.56,
+          "end": 113.72,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed,",
+          "start": 113.72,
+          "end": 114.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "stating",
+          "start": 114.48,
+          "end": 114.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 114.94,
+          "end": 115.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 115.18,
+          "end": 115.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "user",
+          "start": 115.32,
+          "end": 115.6,
+          "probability": 0.9873
+        },
+        {
+          "word": "does",
+          "start": 115.6,
+          "end": 115.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "not",
+          "start": 115.84,
+          "end": 116.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "have",
+          "start": 116.04,
+          "end": 116.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 116.24,
+          "end": 116.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 116.58,
+          "end": 116.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 116.82,
+          "end": 116.96,
+          "probability": 0.999
+        },
+        {
+          "word": "group.",
+          "start": 116.96,
+          "end": 117.26,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 117.52,
+      "end": 122.16,
+      "start_formatted": "00:01:57.520",
+      "end_formatted": "00:02:02.160",
+      "text": "Note that it can be configured to assign the external user to groups in the internal organization.",
+      "words": [
+        {
+          "word": "Note",
+          "start": 117.52,
+          "end": 117.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 117.92,
+          "end": 118.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 118.08,
+          "end": 118.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 118.2,
+          "end": 118.34,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 118.34,
+          "end": 118.48,
+          "probability": 0.999
+        },
+        {
+          "word": "configured",
+          "start": 118.48,
+          "end": 118.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 118.94,
+          "end": 119.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "assign",
+          "start": 119.18,
+          "end": 119.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 119.52,
+          "end": 119.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "external",
+          "start": 119.68,
+          "end": 120.1,
+          "probability": 0.978
+        },
+        {
+          "word": "user",
+          "start": 120.1,
+          "end": 120.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 120.46,
+          "end": 120.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "groups",
+          "start": 120.64,
+          "end": 120.9,
+          "probability": 0.9917
+        },
+        {
+          "word": "in",
+          "start": 120.9,
+          "end": 121.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 121.06,
+          "end": 121.16,
+          "probability": 0.999
+        },
+        {
+          "word": "internal",
+          "start": 121.16,
+          "end": 121.5,
+          "probability": 0.9775
+        },
+        {
+          "word": "organization.",
+          "start": 121.5,
+          "end": 122.16,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 122.64,
+      "end": 125.56,
+      "start_formatted": "00:02:02.640",
+      "end_formatted": "00:02:05.560",
+      "text": "You can add additional producer codes by clicking Add.",
+      "words": [
+        {
+          "word": "You",
+          "start": 122.64,
+          "end": 123.0,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 123.0,
+          "end": 123.18,
+          "probability": 1.0
+        },
+        {
+          "word": "add",
+          "start": 123.18,
+          "end": 123.36,
+          "probability": 0.999
+        },
+        {
+          "word": "additional",
+          "start": 123.36,
+          "end": 123.84,
+          "probability": 0.999
+        },
+        {
+          "word": "producer",
+          "start": 123.84,
+          "end": 124.24,
+          "probability": 0.9507
+        },
+        {
+          "word": "codes",
+          "start": 124.24,
+          "end": 124.7,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 124.7,
+          "end": 124.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicking",
+          "start": 124.9,
+          "end": 125.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "Add.",
+          "start": 125.24,
+          "end": 125.56,
+          "probability": 0.177
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 125.56,
+      "end": 126.84,
+      "start_formatted": "00:02:05.560",
+      "end_formatted": "00:02:06.840",
+      "text": "Select the external organization.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 125.56,
+          "end": 126.84,
+          "probability": 0.003
+        },
+        {
+          "word": "the",
+          "start": 126.84,
+          "end": 126.84,
+          "probability": 0.7339
+        },
+        {
+          "word": "external",
+          "start": 126.84,
+          "end": 126.84,
+          "probability": 0.4915
+        },
+        {
+          "word": "organization.",
+          "start": 126.84,
+          "end": 126.84,
+          "probability": 0.9644
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 126.84,
+      "end": 134.6,
+      "start_formatted": "00:02:06.840",
+      "end_formatted": "00:02:14.600",
+      "text": "First, find the external organization, All Risk Insurance. Enter the name. Click Search.",
+      "words": [
+        {
+          "word": "First,",
+          "start": 126.84,
+          "end": 126.84,
+          "probability": 0.0008
+        },
+        {
+          "word": "find",
+          "start": 127.08,
+          "end": 127.4,
+          "probability": 0.8833
+        },
+        {
+          "word": "the",
+          "start": 127.4,
+          "end": 127.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "external",
+          "start": 127.56,
+          "end": 127.96,
+          "probability": 0.8647
+        },
+        {
+          "word": "organization,",
+          "start": 127.96,
+          "end": 128.86,
+          "probability": 0.9824
+        },
+        {
+          "word": "All",
+          "start": 128.92,
+          "end": 129.36,
+          "probability": 0.5825
+        },
+        {
+          "word": "Risk",
+          "start": 129.36,
+          "end": 129.56,
+          "probability": 0.8623
+        },
+        {
+          "word": "Insurance.",
+          "start": 129.56,
+          "end": 130.04,
+          "probability": 0.9902
+        },
+        {
+          "word": "Enter",
+          "start": 130.56,
+          "end": 131.3,
+          "probability": 0.959
+        },
+        {
+          "word": "the",
+          "start": 131.3,
+          "end": 131.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "name.",
+          "start": 131.46,
+          "end": 131.74,
+          "probability": 0.9561
+        },
+        {
+          "word": "Click",
+          "start": 133.46,
+          "end": 134.28,
+          "probability": 0.9702
+        },
+        {
+          "word": "Search.",
+          "start": 134.28,
+          "end": 134.6,
+          "probability": 0.7739
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 138.56,
+      "end": 147.82,
+      "start_formatted": "00:02:18.560",
+      "end_formatted": "00:02:27.820",
+      "text": "Select the external organization. On the Producer Codes page, click Search again. Select the Producer Code.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 138.17,
+          "end": 138.58,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 138.58,
+          "end": 138.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "external",
+          "start": 138.8,
+          "end": 139.18,
+          "probability": 0.8838
+        },
+        {
+          "word": "organization.",
+          "start": 139.18,
+          "end": 139.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "On",
+          "start": 141.66,
+          "end": 142.48,
+          "probability": 0.9717
+        },
+        {
+          "word": "the",
+          "start": 142.48,
+          "end": 142.58,
+          "probability": 0.998
+        },
+        {
+          "word": "Producer",
+          "start": 142.58,
+          "end": 142.96,
+          "probability": 0.6763
+        },
+        {
+          "word": "Codes",
+          "start": 142.96,
+          "end": 143.42,
+          "probability": 0.9717
+        },
+        {
+          "word": "page,",
+          "start": 143.42,
+          "end": 143.82,
+          "probability": 0.9688
+        },
+        {
+          "word": "click",
+          "start": 144.06,
+          "end": 144.36,
+          "probability": 0.9351
+        },
+        {
+          "word": "Search",
+          "start": 144.36,
+          "end": 144.62,
+          "probability": 0.9448
+        },
+        {
+          "word": "again.",
+          "start": 144.62,
+          "end": 145.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "Select",
+          "start": 146.04,
+          "end": 146.86,
+          "probability": 0.9741
+        },
+        {
+          "word": "the",
+          "start": 146.86,
+          "end": 147.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "Producer",
+          "start": 147.06,
+          "end": 147.36,
+          "probability": 0.4736
+        },
+        {
+          "word": "Code.",
+          "start": 147.36,
+          "end": 147.82,
+          "probability": 0.9595
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 150.34,
+      "end": 152.2,
+      "start_formatted": "00:02:30.340",
+      "end_formatted": "00:02:32.200",
+      "text": "Click Update to save the changes.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 150.34,
+          "end": 150.92,
+          "probability": 0.9858
+        },
+        {
+          "word": "Update",
+          "start": 150.92,
+          "end": 151.24,
+          "probability": 0.8926
+        },
+        {
+          "word": "to",
+          "start": 151.24,
+          "end": 151.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "save",
+          "start": 151.46,
+          "end": 151.66,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 151.66,
+          "end": 151.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "changes.",
+          "start": 151.78,
+          "end": 152.2,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 154.58,
+      "end": 157.64,
+      "start_formatted": "00:02:34.580",
+      "end_formatted": "00:02:37.640",
+      "text": "You can also add users to a group by going to the group.",
+      "words": [
+        {
+          "word": "You",
+          "start": 154.58,
+          "end": 155.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 155.16,
+          "end": 155.32,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 155.32,
+          "end": 155.6,
+          "probability": 0.998
+        },
+        {
+          "word": "add",
+          "start": 155.6,
+          "end": 155.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "users",
+          "start": 155.82,
+          "end": 156.12,
+          "probability": 0.98
+        },
+        {
+          "word": "to",
+          "start": 156.12,
+          "end": 156.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 156.32,
+          "end": 156.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "group",
+          "start": 156.42,
+          "end": 156.62,
+          "probability": 0.9731
+        },
+        {
+          "word": "by",
+          "start": 156.62,
+          "end": 156.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "going",
+          "start": 156.82,
+          "end": 157.04,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 157.04,
+          "end": 157.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 157.2,
+          "end": 157.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "group.",
+          "start": 157.32,
+          "end": 157.64,
+          "probability": 0.7231
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 159.1,
+      "end": 160.6,
+      "start_formatted": "00:02:39.100",
+      "end_formatted": "00:02:40.600",
+      "text": "Go to the Users tab.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 159.1,
+          "end": 159.68,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 159.68,
+          "end": 159.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 159.84,
+          "end": 159.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "Users",
+          "start": 159.98,
+          "end": 160.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "tab.",
+          "start": 160.3,
+          "end": 160.6,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 163.28,
+      "end": 164.06,
+      "start_formatted": "00:02:43.280",
+      "end_formatted": "00:02:44.060",
+      "text": "Click Edit.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 163.28,
+          "end": 163.86,
+          "probability": 0.999
+        },
+        {
+          "word": "Edit.",
+          "start": 163.86,
+          "end": 164.06,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 167.32,
+      "end": 171.2,
+      "start_formatted": "00:02:47.320",
+      "end_formatted": "00:02:51.200",
+      "text": "Add a user from an external organization, Commercial Insurers.",
+      "words": [
+        {
+          "word": "Add",
+          "start": 167.32,
+          "end": 167.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 167.9,
+          "end": 168.02,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 168.02,
+          "end": 168.3,
+          "probability": 0.9766
+        },
+        {
+          "word": "from",
+          "start": 168.3,
+          "end": 168.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 168.52,
+          "end": 168.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "external",
+          "start": 168.64,
+          "end": 169.06,
+          "probability": 0.981
+        },
+        {
+          "word": "organization,",
+          "start": 169.06,
+          "end": 169.86,
+          "probability": 0.9834
+        },
+        {
+          "word": "Commercial",
+          "start": 170.14,
+          "end": 170.6,
+          "probability": 0.8491
+        },
+        {
+          "word": "Insurers.",
+          "start": 170.6,
+          "end": 171.2,
+          "probability": 0.958
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 171.8,
+      "end": 174.18,
+      "start_formatted": "00:02:51.800",
+      "end_formatted": "00:02:54.180",
+      "text": "Click the Search icon for Organization.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 171.8,
+          "end": 172.38,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 172.38,
+          "end": 172.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Search",
+          "start": 172.54,
+          "end": 172.8,
+          "probability": 0.3875
+        },
+        {
+          "word": "icon",
+          "start": 172.8,
+          "end": 173.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 173.28,
+          "end": 173.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "Organization.",
+          "start": 173.5,
+          "end": 174.18,
+          "probability": 0.9526
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 175.54,
+      "end": 176.72,
+      "start_formatted": "00:02:55.540",
+      "end_formatted": "00:02:56.720",
+      "text": "Enter the name.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 175.54,
+          "end": 176.26,
+          "probability": 0.9736
+        },
+        {
+          "word": "the",
+          "start": 176.26,
+          "end": 176.42,
+          "probability": 0.998
+        },
+        {
+          "word": "name.",
+          "start": 176.42,
+          "end": 176.72,
+          "probability": 0.9077
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 178.54,
+      "end": 179.58,
+      "start_formatted": "00:02:58.540",
+      "end_formatted": "00:02:59.580",
+      "text": "Click Search.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 178.54,
+          "end": 179.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "Search.",
+          "start": 179.26,
+          "end": 179.58,
+          "probability": 0.7896
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 182.86,
+      "end": 184.3,
+      "start_formatted": "00:03:02.860",
+      "end_formatted": "00:03:04.300",
+      "text": "Select the Organization.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 182.86,
+          "end": 183.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 183.58,
+          "end": 183.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "Organization.",
+          "start": 183.8,
+          "end": 184.3,
+          "probability": 0.4058
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 186.82,
+      "end": 187.54,
+      "start_formatted": "00:03:06.820",
+      "end_formatted": "00:03:07.540",
+      "text": "Enter the name.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 186.82,
+          "end": 187.54,
+          "probability": 0.0
+        },
+        {
+          "word": "the",
+          "start": 187.54,
+          "end": 187.54,
+          "probability": 0.8315
+        },
+        {
+          "word": "name.",
+          "start": 187.54,
+          "end": 187.54,
+          "probability": 0.182
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 187.54,
+      "end": 187.54,
+      "start_formatted": "00:03:07.540",
+      "end_formatted": "00:03:07.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 187.54,
+      "end": 187.54,
+      "start_formatted": "00:03:07.540",
+      "end_formatted": "00:03:07.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 187.54,
+      "end": 189.86,
+      "start_formatted": "00:03:07.540",
+      "end_formatted": "00:03:09.860",
+      "text": "On the Search Users page, click Search again.",
+      "words": [
+        {
+          "word": "On",
+          "start": 187.54,
+          "end": 187.54,
+          "probability": 0.9243
+        },
+        {
+          "word": "the",
+          "start": 187.54,
+          "end": 187.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "Search",
+          "start": 187.66,
+          "end": 187.88,
+          "probability": 0.9185
+        },
+        {
+          "word": "Users",
+          "start": 187.88,
+          "end": 188.24,
+          "probability": 0.8721
+        },
+        {
+          "word": "page,",
+          "start": 188.24,
+          "end": 188.58,
+          "probability": 0.9917
+        },
+        {
+          "word": "click",
+          "start": 188.94,
+          "end": 189.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "Search",
+          "start": 189.22,
+          "end": 189.48,
+          "probability": 0.98
+        },
+        {
+          "word": "again.",
+          "start": 189.48,
+          "end": 189.86,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 191.32,
+      "end": 193.18,
+      "start_formatted": "00:03:11.320",
+      "end_formatted": "00:03:13.180",
+      "text": "Select the user to be added.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 191.32,
+          "end": 192.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 192.04,
+          "end": 192.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "user",
+          "start": 192.26,
+          "end": 192.54,
+          "probability": 0.5537
+        },
+        {
+          "word": "to",
+          "start": 192.54,
+          "end": 192.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 192.74,
+          "end": 192.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "added.",
+          "start": 192.9,
+          "end": 193.18,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 195.42,
+      "end": 196.66,
+      "start_formatted": "00:03:15.420",
+      "end_formatted": "00:03:16.660",
+      "text": "Save the changes.",
+      "words": [
+        {
+          "word": "Save",
+          "start": 195.42,
+          "end": 196.14,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 196.14,
+          "end": 196.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "changes.",
+          "start": 196.28,
+          "end": 196.66,
+          "probability": 0.7993
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 199.52,
+      "end": 202.9,
+      "start_formatted": "00:03:19.520",
+      "end_formatted": "00:03:22.900",
+      "text": "This is the end of demonstration for External User Access.",
+      "words": [
+        {
+          "word": "This",
+          "start": 199.52,
+          "end": 200.24,
+          "probability": 0.9863
+        },
+        {
+          "word": "is",
+          "start": 200.24,
+          "end": 200.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 200.38,
+          "end": 200.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "end",
+          "start": 200.5,
+          "end": 200.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 200.68,
+          "end": 200.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 200.8,
+          "end": 201.32,
+          "probability": 0.8599
+        },
+        {
+          "word": "for",
+          "start": 201.32,
+          "end": 201.7,
+          "probability": 0.999
+        },
+        {
+          "word": "External",
+          "start": 201.7,
+          "end": 202.08,
+          "probability": 0.4565
+        },
+        {
+          "word": "User",
+          "start": 202.08,
+          "end": 202.5,
+          "probability": 0.9619
+        },
+        {
+          "word": "Access.",
+          "start": 202.5,
+          "end": 202.9,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 202.9,
+      "end": 202.96,
+      "start_formatted": "00:03:22.900",
+      "end_formatted": "00:03:22.960",
+      "text": "Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil Fil",
+      "words": [
+        {
+          "word": "Fil",
+          "start": 202.9,
+          "end": 202.9,
+          "probability": 0.0
+        },
+        {
+          "word": "Fil",
+          "start": 202.9,
+          "end": 202.92,
+          "probability": 0.0001
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.1888
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.8784
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9697
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9863
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.92,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.94,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Fil",
+          "start": 202.96,
+          "end": 202.96,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 202.96,
+      "end": 202.96,
+      "start_formatted": "00:03:22.960",
+      "end_formatted": "00:03:22.960",
+      "text": "",
+      "words": []
+    }
+  ]
+}

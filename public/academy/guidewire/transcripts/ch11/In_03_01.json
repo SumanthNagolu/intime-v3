@@ -1,0 +1,2563 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_03_01.mp4",
+    "video_stem": "In_03_01",
+    "duration_seconds": 106.5,
+    "duration_formatted": "00:01:46.500",
+    "segment_count": 6,
+    "word_count": 414,
+    "avg_confidence": 0.9399,
+    "transcription_time_seconds": 14.02,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:46:46.436666"
+  },
+  "full_text": "This demonstration will illustrate two query examples that retrieve contact information based on different criteria. This demonstration requires that you use Training App in Guidewire Studio. Click the Debug Server icon to start the server. In Goza Scratchpad, add code that will query for all AB persons whose last name is Smith. Examine the code. Line 4. Create a query object variable that will query the AB person table. Line 5. Restrict the query using the compare method. The query will search for all AB persons whose last name equals Smith. Line 6. Create a result object variable that will execute the query. Lines 8 to 10. Loop through result object to output each display name. Click the Run and Debug Process icon to execute the query and review the result. The console displays the results of the query. Enter, a query to return all AB persons whose last name is Andy or whose first name is William. Examine the code. Lines 5 to 8. Restrict the query so that it will search for all AB persons whose last name equals Andy or whose first name equals William. Click the Run and Debug Process icon to run the query and review the result. The console output displays the results of the query. A few things to keep in mind. Unrestricted queries should be avoided. Compares accumulate and can impact performance. Rows are read into memory the first time the result set is referenced, not on the select. For large queries, use paging to chunk up the results. This, ends the queries with restrictions demonstration. Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Fil Thank you.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "This demonstration will illustrate two query examples that retrieve contact information based on different criteria. This demonstration requires that you use Training App in Guidewire Studio. Click the Debug Server icon to start the server. In Goza Scratchpad, add code that will query for all AB persons whose last name is Smith. Examine the code. Line 4. Create a query object variable that will query the AB person table.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 1.3,
+          "probability": 0.915
+        },
+        {
+          "word": "demonstration",
+          "start": 1.3,
+          "end": 1.94,
+          "probability": 0.9814
+        },
+        {
+          "word": "will",
+          "start": 1.94,
+          "end": 2.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "illustrate",
+          "start": 2.3,
+          "end": 2.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "two",
+          "start": 2.82,
+          "end": 3.08,
+          "probability": 0.9165
+        },
+        {
+          "word": "query",
+          "start": 3.08,
+          "end": 3.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "examples",
+          "start": 3.46,
+          "end": 3.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "that",
+          "start": 3.92,
+          "end": 4.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "retrieve",
+          "start": 4.28,
+          "end": 4.68,
+          "probability": 0.9854
+        },
+        {
+          "word": "contact",
+          "start": 4.68,
+          "end": 5.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "information",
+          "start": 5.16,
+          "end": 5.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "based",
+          "start": 5.86,
+          "end": 6.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 6.28,
+          "end": 6.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "different",
+          "start": 6.64,
+          "end": 7.0,
+          "probability": 0.998
+        },
+        {
+          "word": "criteria.",
+          "start": 7.0,
+          "end": 7.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "This",
+          "start": 8.08,
+          "end": 8.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "demonstration",
+          "start": 8.7,
+          "end": 9.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "requires",
+          "start": 9.32,
+          "end": 9.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 9.92,
+          "end": 10.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 10.2,
+          "end": 10.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "use",
+          "start": 10.34,
+          "end": 10.6,
+          "probability": 0.9932
+        },
+        {
+          "word": "Training",
+          "start": 10.6,
+          "end": 10.92,
+          "probability": 0.6455
+        },
+        {
+          "word": "App",
+          "start": 10.92,
+          "end": 11.32,
+          "probability": 0.7866
+        },
+        {
+          "word": "in",
+          "start": 11.32,
+          "end": 11.5,
+          "probability": 0.5625
+        },
+        {
+          "word": "Guidewire",
+          "start": 11.5,
+          "end": 12.1,
+          "probability": 0.959
+        },
+        {
+          "word": "Studio.",
+          "start": 12.1,
+          "end": 12.54,
+          "probability": 0.8813
+        },
+        {
+          "word": "Click",
+          "start": 13.22,
+          "end": 13.88,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 13.88,
+          "end": 14.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "Debug",
+          "start": 14.04,
+          "end": 14.44,
+          "probability": 0.6846
+        },
+        {
+          "word": "Server",
+          "start": 14.44,
+          "end": 14.76,
+          "probability": 0.7456
+        },
+        {
+          "word": "icon",
+          "start": 14.76,
+          "end": 15.16,
+          "probability": 0.9561
+        },
+        {
+          "word": "to",
+          "start": 15.16,
+          "end": 15.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "start",
+          "start": 15.46,
+          "end": 15.74,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 15.74,
+          "end": 15.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "server.",
+          "start": 15.94,
+          "end": 16.3,
+          "probability": 0.9688
+        },
+        {
+          "word": "In",
+          "start": 16.98,
+          "end": 17.5,
+          "probability": 0.9614
+        },
+        {
+          "word": "Goza",
+          "start": 17.5,
+          "end": 17.86,
+          "probability": 0.3511
+        },
+        {
+          "word": "Scratchpad,",
+          "start": 17.86,
+          "end": 18.7,
+          "probability": 0.8281
+        },
+        {
+          "word": "add",
+          "start": 18.84,
+          "end": 19.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "code",
+          "start": 19.2,
+          "end": 19.52,
+          "probability": 0.9834
+        },
+        {
+          "word": "that",
+          "start": 19.52,
+          "end": 19.76,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 19.76,
+          "end": 19.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "query",
+          "start": 19.92,
+          "end": 20.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 20.28,
+          "end": 20.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "all",
+          "start": 20.5,
+          "end": 20.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "AB",
+          "start": 20.76,
+          "end": 21.04,
+          "probability": 0.5615
+        },
+        {
+          "word": "persons",
+          "start": 21.04,
+          "end": 21.54,
+          "probability": 0.4575
+        },
+        {
+          "word": "whose",
+          "start": 21.54,
+          "end": 21.84,
+          "probability": 0.9902
+        },
+        {
+          "word": "last",
+          "start": 21.84,
+          "end": 22.12,
+          "probability": 0.981
+        },
+        {
+          "word": "name",
+          "start": 22.12,
+          "end": 22.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 22.38,
+          "end": 22.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "Smith.",
+          "start": 22.6,
+          "end": 22.86,
+          "probability": 0.9277
+        },
+        {
+          "word": "Examine",
+          "start": 23.56,
+          "end": 24.28,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 24.28,
+          "end": 24.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "code.",
+          "start": 24.38,
+          "end": 24.74,
+          "probability": 0.8921
+        },
+        {
+          "word": "Line",
+          "start": 25.0,
+          "end": 25.72,
+          "probability": 0.9624
+        },
+        {
+          "word": "4.",
+          "start": 25.72,
+          "end": 26.1,
+          "probability": 0.9077
+        },
+        {
+          "word": "Create",
+          "start": 26.3,
+          "end": 26.64,
+          "probability": 0.9736
+        },
+        {
+          "word": "a",
+          "start": 26.64,
+          "end": 26.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "query",
+          "start": 26.78,
+          "end": 27.06,
+          "probability": 0.7891
+        },
+        {
+          "word": "object",
+          "start": 27.06,
+          "end": 27.44,
+          "probability": 0.9824
+        },
+        {
+          "word": "variable",
+          "start": 27.44,
+          "end": 27.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 27.94,
+          "end": 28.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 28.3,
+          "end": 28.48,
+          "probability": 0.999
+        },
+        {
+          "word": "query",
+          "start": 28.48,
+          "end": 28.8,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 28.8,
+          "end": 29.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "AB",
+          "start": 29.0,
+          "end": 29.28,
+          "probability": 0.9619
+        },
+        {
+          "word": "person",
+          "start": 29.28,
+          "end": 29.76,
+          "probability": 0.9614
+        },
+        {
+          "word": "table.",
+          "start": 29.76,
+          "end": 29.98,
+          "probability": 0.425
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.68,
+      "end": 59.94,
+      "start_formatted": "00:00:30.680",
+      "end_formatted": "00:00:59.940",
+      "text": "Line 5. Restrict the query using the compare method. The query will search for all AB persons whose last name equals Smith. Line 6. Create a result object variable that will execute the query. Lines 8 to 10. Loop through result object to output each display name. Click the Run and Debug Process icon to execute the query and review the result. The console displays the results of the query. Enter, a",
+      "words": [
+        {
+          "word": "Line",
+          "start": 30.68,
+          "end": 31.34,
+          "probability": 0.709
+        },
+        {
+          "word": "5.",
+          "start": 31.34,
+          "end": 31.74,
+          "probability": 0.8999
+        },
+        {
+          "word": "Restrict",
+          "start": 32.04,
+          "end": 32.48,
+          "probability": 0.9766
+        },
+        {
+          "word": "the",
+          "start": 32.48,
+          "end": 32.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "query",
+          "start": 32.6,
+          "end": 32.94,
+          "probability": 0.9771
+        },
+        {
+          "word": "using",
+          "start": 32.94,
+          "end": 33.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 33.34,
+          "end": 33.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "compare",
+          "start": 33.58,
+          "end": 33.9,
+          "probability": 0.6001
+        },
+        {
+          "word": "method.",
+          "start": 33.9,
+          "end": 34.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 34.66,
+          "end": 35.14,
+          "probability": 0.9834
+        },
+        {
+          "word": "query",
+          "start": 35.14,
+          "end": 35.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 35.46,
+          "end": 35.68,
+          "probability": 0.998
+        },
+        {
+          "word": "search",
+          "start": 35.68,
+          "end": 35.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 35.96,
+          "end": 36.22,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 36.22,
+          "end": 36.46,
+          "probability": 0.9844
+        },
+        {
+          "word": "AB",
+          "start": 36.46,
+          "end": 36.74,
+          "probability": 0.5088
+        },
+        {
+          "word": "persons",
+          "start": 36.74,
+          "end": 37.24,
+          "probability": 0.7695
+        },
+        {
+          "word": "whose",
+          "start": 37.24,
+          "end": 37.52,
+          "probability": 0.9893
+        },
+        {
+          "word": "last",
+          "start": 37.52,
+          "end": 37.82,
+          "probability": 0.9722
+        },
+        {
+          "word": "name",
+          "start": 37.82,
+          "end": 38.06,
+          "probability": 0.9766
+        },
+        {
+          "word": "equals",
+          "start": 38.06,
+          "end": 38.5,
+          "probability": 0.9067
+        },
+        {
+          "word": "Smith.",
+          "start": 38.5,
+          "end": 38.9,
+          "probability": 0.8467
+        },
+        {
+          "word": "Line",
+          "start": 39.56,
+          "end": 40.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "6.",
+          "start": 40.2,
+          "end": 40.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "Create",
+          "start": 40.88,
+          "end": 41.2,
+          "probability": 0.9863
+        },
+        {
+          "word": "a",
+          "start": 41.2,
+          "end": 41.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "result",
+          "start": 41.34,
+          "end": 41.64,
+          "probability": 0.8481
+        },
+        {
+          "word": "object",
+          "start": 41.64,
+          "end": 42.14,
+          "probability": 0.9595
+        },
+        {
+          "word": "variable",
+          "start": 42.14,
+          "end": 42.66,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 42.66,
+          "end": 42.98,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 42.98,
+          "end": 43.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "execute",
+          "start": 43.18,
+          "end": 43.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 43.6,
+          "end": 43.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "query.",
+          "start": 43.86,
+          "end": 44.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Lines",
+          "start": 44.82,
+          "end": 45.48,
+          "probability": 0.9756
+        },
+        {
+          "word": "8",
+          "start": 45.48,
+          "end": 45.68,
+          "probability": 0.9868
+        },
+        {
+          "word": "to",
+          "start": 45.68,
+          "end": 45.84,
+          "probability": 0.8921
+        },
+        {
+          "word": "10.",
+          "start": 45.84,
+          "end": 46.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "Loop",
+          "start": 46.36,
+          "end": 46.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "through",
+          "start": 46.56,
+          "end": 46.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "result",
+          "start": 46.76,
+          "end": 47.1,
+          "probability": 0.9702
+        },
+        {
+          "word": "object",
+          "start": 47.1,
+          "end": 47.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 47.56,
+          "end": 47.82,
+          "probability": 0.999
+        },
+        {
+          "word": "output",
+          "start": 47.82,
+          "end": 48.18,
+          "probability": 0.999
+        },
+        {
+          "word": "each",
+          "start": 48.18,
+          "end": 48.56,
+          "probability": 0.999
+        },
+        {
+          "word": "display",
+          "start": 48.56,
+          "end": 48.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "name.",
+          "start": 48.96,
+          "end": 49.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "Click",
+          "start": 49.86,
+          "end": 50.46,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 50.46,
+          "end": 50.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "Run",
+          "start": 50.66,
+          "end": 50.86,
+          "probability": 0.5469
+        },
+        {
+          "word": "and",
+          "start": 50.86,
+          "end": 51.1,
+          "probability": 0.4199
+        },
+        {
+          "word": "Debug",
+          "start": 51.1,
+          "end": 51.46,
+          "probability": 0.875
+        },
+        {
+          "word": "Process",
+          "start": 51.46,
+          "end": 51.88,
+          "probability": 0.5005
+        },
+        {
+          "word": "icon",
+          "start": 51.88,
+          "end": 52.32,
+          "probability": 0.9888
+        },
+        {
+          "word": "to",
+          "start": 52.32,
+          "end": 52.54,
+          "probability": 0.999
+        },
+        {
+          "word": "execute",
+          "start": 52.54,
+          "end": 53.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 53.0,
+          "end": 53.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "query",
+          "start": 53.28,
+          "end": 53.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 53.58,
+          "end": 53.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "review",
+          "start": 53.84,
+          "end": 54.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 54.18,
+          "end": 54.38,
+          "probability": 0.999
+        },
+        {
+          "word": "result.",
+          "start": 54.38,
+          "end": 54.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "The",
+          "start": 55.56,
+          "end": 56.1,
+          "probability": 0.9873
+        },
+        {
+          "word": "console",
+          "start": 56.1,
+          "end": 56.5,
+          "probability": 0.9609
+        },
+        {
+          "word": "displays",
+          "start": 56.5,
+          "end": 57.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 57.04,
+          "end": 57.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "results",
+          "start": 57.3,
+          "end": 57.74,
+          "probability": 0.9336
+        },
+        {
+          "word": "of",
+          "start": 57.74,
+          "end": 57.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 57.96,
+          "end": 58.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "query.",
+          "start": 58.06,
+          "end": 58.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "Enter,",
+          "start": 58.98,
+          "end": 59.52,
+          "probability": 0.8384
+        },
+        {
+          "word": "a",
+          "start": 59.72,
+          "end": 59.94,
+          "probability": 0.8843
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.98,
+      "end": 89.36,
+      "start_formatted": "00:00:59.980",
+      "end_formatted": "00:01:29.360",
+      "text": "query to return all AB persons whose last name is Andy or whose first name is William. Examine the code. Lines 5 to 8. Restrict the query so that it will search for all AB persons whose last name equals Andy or whose first name equals William. Click the Run and Debug Process icon to run the query and review the result. The console output displays the results of the query. A few things to keep in mind. Unrestricted queries should be avoided.",
+      "words": [
+        {
+          "word": "query",
+          "start": 59.98,
+          "end": 60.3,
+          "probability": 0.583
+        },
+        {
+          "word": "to",
+          "start": 60.3,
+          "end": 60.5,
+          "probability": 0.998
+        },
+        {
+          "word": "return",
+          "start": 60.5,
+          "end": 60.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "all",
+          "start": 60.88,
+          "end": 61.2,
+          "probability": 0.9912
+        },
+        {
+          "word": "AB",
+          "start": 61.2,
+          "end": 61.46,
+          "probability": 0.6548
+        },
+        {
+          "word": "persons",
+          "start": 61.46,
+          "end": 61.96,
+          "probability": 0.7949
+        },
+        {
+          "word": "whose",
+          "start": 61.96,
+          "end": 62.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "last",
+          "start": 62.26,
+          "end": 62.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "name",
+          "start": 62.54,
+          "end": 62.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 62.8,
+          "end": 62.98,
+          "probability": 0.999
+        },
+        {
+          "word": "Andy",
+          "start": 62.98,
+          "end": 63.26,
+          "probability": 0.9653
+        },
+        {
+          "word": "or",
+          "start": 63.26,
+          "end": 63.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "whose",
+          "start": 63.5,
+          "end": 63.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "first",
+          "start": 63.74,
+          "end": 64.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "name",
+          "start": 64.02,
+          "end": 64.3,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 64.3,
+          "end": 64.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "William.",
+          "start": 64.56,
+          "end": 65.0,
+          "probability": 0.9863
+        },
+        {
+          "word": "Examine",
+          "start": 65.78,
+          "end": 66.38,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 66.38,
+          "end": 66.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "code.",
+          "start": 66.5,
+          "end": 66.86,
+          "probability": 0.9399
+        },
+        {
+          "word": "Lines",
+          "start": 67.34,
+          "end": 67.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "5",
+          "start": 67.94,
+          "end": 68.3,
+          "probability": 0.9292
+        },
+        {
+          "word": "to",
+          "start": 68.3,
+          "end": 68.56,
+          "probability": 0.8862
+        },
+        {
+          "word": "8.",
+          "start": 68.56,
+          "end": 68.92,
+          "probability": 0.999
+        },
+        {
+          "word": "Restrict",
+          "start": 69.02,
+          "end": 69.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 69.48,
+          "end": 69.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "query",
+          "start": 69.6,
+          "end": 69.92,
+          "probability": 0.998
+        },
+        {
+          "word": "so",
+          "start": 69.92,
+          "end": 70.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 70.16,
+          "end": 70.3,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 70.3,
+          "end": 70.42,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 70.42,
+          "end": 70.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "search",
+          "start": 70.56,
+          "end": 70.86,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 70.86,
+          "end": 71.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 71.14,
+          "end": 71.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "AB",
+          "start": 71.4,
+          "end": 71.7,
+          "probability": 0.9888
+        },
+        {
+          "word": "persons",
+          "start": 71.7,
+          "end": 72.24,
+          "probability": 0.9912
+        },
+        {
+          "word": "whose",
+          "start": 72.24,
+          "end": 72.48,
+          "probability": 0.999
+        },
+        {
+          "word": "last",
+          "start": 72.48,
+          "end": 72.8,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 72.8,
+          "end": 73.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "equals",
+          "start": 73.06,
+          "end": 73.42,
+          "probability": 0.9844
+        },
+        {
+          "word": "Andy",
+          "start": 73.42,
+          "end": 73.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "or",
+          "start": 73.9,
+          "end": 74.12,
+          "probability": 0.999
+        },
+        {
+          "word": "whose",
+          "start": 74.12,
+          "end": 74.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "first",
+          "start": 74.38,
+          "end": 74.68,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 74.68,
+          "end": 74.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "equals",
+          "start": 74.94,
+          "end": 75.36,
+          "probability": 0.999
+        },
+        {
+          "word": "William.",
+          "start": 75.36,
+          "end": 75.82,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 76.42,
+          "end": 77.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 77.02,
+          "end": 77.18,
+          "probability": 0.999
+        },
+        {
+          "word": "Run",
+          "start": 77.18,
+          "end": 77.38,
+          "probability": 0.6807
+        },
+        {
+          "word": "and",
+          "start": 77.38,
+          "end": 77.62,
+          "probability": 0.6797
+        },
+        {
+          "word": "Debug",
+          "start": 77.62,
+          "end": 77.96,
+          "probability": 0.9512
+        },
+        {
+          "word": "Process",
+          "start": 77.96,
+          "end": 78.34,
+          "probability": 0.7017
+        },
+        {
+          "word": "icon",
+          "start": 78.34,
+          "end": 78.78,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 78.78,
+          "end": 79.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "run",
+          "start": 79.06,
+          "end": 79.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 79.26,
+          "end": 79.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "query",
+          "start": 79.42,
+          "end": 79.78,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 79.78,
+          "end": 80.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "review",
+          "start": 80.04,
+          "end": 80.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 80.38,
+          "end": 80.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "result.",
+          "start": 80.6,
+          "end": 81.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 81.6,
+          "end": 82.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "console",
+          "start": 82.0,
+          "end": 82.4,
+          "probability": 0.9229
+        },
+        {
+          "word": "output",
+          "start": 82.4,
+          "end": 82.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "displays",
+          "start": 82.8,
+          "end": 83.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 83.3,
+          "end": 83.56,
+          "probability": 1.0
+        },
+        {
+          "word": "results",
+          "start": 83.56,
+          "end": 83.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 83.94,
+          "end": 84.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 84.16,
+          "end": 84.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "query.",
+          "start": 84.26,
+          "end": 84.6,
+          "probability": 0.999
+        },
+        {
+          "word": "A",
+          "start": 84.98,
+          "end": 85.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "few",
+          "start": 85.42,
+          "end": 85.64,
+          "probability": 0.998
+        },
+        {
+          "word": "things",
+          "start": 85.64,
+          "end": 86.0,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 86.0,
+          "end": 86.18,
+          "probability": 1.0
+        },
+        {
+          "word": "keep",
+          "start": 86.18,
+          "end": 86.42,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 86.42,
+          "end": 86.62,
+          "probability": 1.0
+        },
+        {
+          "word": "mind.",
+          "start": 86.62,
+          "end": 87.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "Unrestricted",
+          "start": 87.38,
+          "end": 87.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "queries",
+          "start": 87.98,
+          "end": 88.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "should",
+          "start": 88.38,
+          "end": 88.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 88.74,
+          "end": 88.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "avoided.",
+          "start": 88.94,
+          "end": 89.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.98,
+      "end": 106.2,
+      "start_formatted": "00:01:29.980",
+      "end_formatted": "00:01:46.200",
+      "text": "Compares accumulate and can impact performance. Rows are read into memory the first time the result set is referenced, not on the select. For large queries, use paging to chunk up the results. This, ends the queries with restrictions demonstration.",
+      "words": [
+        {
+          "word": "Compares",
+          "start": 89.98,
+          "end": 90.6,
+          "probability": 0.7319
+        },
+        {
+          "word": "accumulate",
+          "start": 90.6,
+          "end": 91.02,
+          "probability": 0.8638
+        },
+        {
+          "word": "and",
+          "start": 91.02,
+          "end": 91.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "can",
+          "start": 91.42,
+          "end": 91.64,
+          "probability": 0.9897
+        },
+        {
+          "word": "impact",
+          "start": 91.64,
+          "end": 92.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "performance.",
+          "start": 92.02,
+          "end": 92.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "Rows",
+          "start": 93.14,
+          "end": 93.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "are",
+          "start": 93.82,
+          "end": 93.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "read",
+          "start": 93.96,
+          "end": 94.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "into",
+          "start": 94.14,
+          "end": 94.4,
+          "probability": 0.9878
+        },
+        {
+          "word": "memory",
+          "start": 94.4,
+          "end": 94.8,
+          "probability": 0.9839
+        },
+        {
+          "word": "the",
+          "start": 94.8,
+          "end": 95.04,
+          "probability": 0.9839
+        },
+        {
+          "word": "first",
+          "start": 95.04,
+          "end": 95.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "time",
+          "start": 95.34,
+          "end": 95.6,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 95.6,
+          "end": 95.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "result",
+          "start": 95.78,
+          "end": 96.14,
+          "probability": 0.9331
+        },
+        {
+          "word": "set",
+          "start": 96.14,
+          "end": 96.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 96.42,
+          "end": 96.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "referenced,",
+          "start": 96.6,
+          "end": 97.08,
+          "probability": 0.9932
+        },
+        {
+          "word": "not",
+          "start": 97.36,
+          "end": 97.66,
+          "probability": 0.98
+        },
+        {
+          "word": "on",
+          "start": 97.66,
+          "end": 97.84,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 97.84,
+          "end": 97.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "select.",
+          "start": 97.94,
+          "end": 98.36,
+          "probability": 0.5405
+        },
+        {
+          "word": "For",
+          "start": 98.74,
+          "end": 99.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "large",
+          "start": 99.32,
+          "end": 99.66,
+          "probability": 0.9478
+        },
+        {
+          "word": "queries,",
+          "start": 99.66,
+          "end": 100.2,
+          "probability": 0.9932
+        },
+        {
+          "word": "use",
+          "start": 100.5,
+          "end": 100.9,
+          "probability": 0.9629
+        },
+        {
+          "word": "paging",
+          "start": 100.9,
+          "end": 101.28,
+          "probability": 0.8643
+        },
+        {
+          "word": "to",
+          "start": 101.28,
+          "end": 101.44,
+          "probability": 0.999
+        },
+        {
+          "word": "chunk",
+          "start": 101.44,
+          "end": 101.76,
+          "probability": 0.9907
+        },
+        {
+          "word": "up",
+          "start": 101.76,
+          "end": 101.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 101.94,
+          "end": 102.08,
+          "probability": 0.999
+        },
+        {
+          "word": "results.",
+          "start": 102.08,
+          "end": 102.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "This,",
+          "start": 103.16,
+          "end": 103.84,
+          "probability": 0.9854
+        },
+        {
+          "word": "ends",
+          "start": 103.98,
+          "end": 104.32,
+          "probability": 0.9663
+        },
+        {
+          "word": "the",
+          "start": 104.32,
+          "end": 104.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "queries",
+          "start": 104.5,
+          "end": 104.9,
+          "probability": 0.9736
+        },
+        {
+          "word": "with",
+          "start": 104.9,
+          "end": 105.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "restrictions",
+          "start": 105.12,
+          "end": 105.68,
+          "probability": 0.9561
+        },
+        {
+          "word": "demonstration.",
+          "start": 105.68,
+          "end": 106.2,
+          "probability": 0.7954
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 106.2,
+      "end": 106.38,
+      "start_formatted": "00:01:46.200",
+      "end_formatted": "00:01:46.380",
+      "text": "Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Fil",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 106.2,
+          "end": 106.22,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 106.22,
+          "end": 106.22,
+          "probability": 0.3857
+        },
+        {
+          "word": "the",
+          "start": 106.22,
+          "end": 106.22,
+          "probability": 0.3042
+        },
+        {
+          "word": "Filogy",
+          "start": 106.22,
+          "end": 106.22,
+          "probability": 0.418
+        },
+        {
+          "word": "of",
+          "start": 106.22,
+          "end": 106.22,
+          "probability": 0.8594
+        },
+        {
+          "word": "Filogy",
+          "start": 106.22,
+          "end": 106.22,
+          "probability": 0.4475
+        },
+        {
+          "word": "of",
+          "start": 106.22,
+          "end": 106.22,
+          "probability": 0.7729
+        },
+        {
+          "word": "Filogy",
+          "start": 106.22,
+          "end": 106.28,
+          "probability": 0.4836
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.7993
+        },
+        {
+          "word": "Filogy",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.5029
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.8379
+        },
+        {
+          "word": "Filogy",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.5635
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.8555
+        },
+        {
+          "word": "Filogy",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.6699
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.8774
+        },
+        {
+          "word": "Filogy",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.7803
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.9014
+        },
+        {
+          "word": "Filogy",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.8584
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.9175
+        },
+        {
+          "word": "Filogy",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.9014
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.28,
+          "probability": 0.9292
+        },
+        {
+          "word": "Filogy",
+          "start": 106.28,
+          "end": 106.32,
+          "probability": 0.9258
+        },
+        {
+          "word": "of",
+          "start": 106.32,
+          "end": 106.32,
+          "probability": 0.9336
+        },
+        {
+          "word": "Filogy",
+          "start": 106.32,
+          "end": 106.36,
+          "probability": 0.9434
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9424
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9561
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9619
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9497
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9668
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9526
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9575
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9609
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9648
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9658
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9658
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9668
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9668
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9678
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9688
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9688
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9707
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9712
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 106.36,
+          "end": 106.36,
+          "probability": 0.9707
+        },
+        {
+          "word": "Filogy",
+          "start": 106.36,
+          "end": 106.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9722
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9717
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9717
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9727
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9736
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9731
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9741
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9746
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9741
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9751
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9756
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9761
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9761
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9771
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9761
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9771
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9775
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9775
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9785
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9785
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9819
+        },
+        {
+          "word": "Fil",
+          "start": 106.38,
+          "end": 106.38,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 106.38,
+      "end": 106.5,
+      "start_formatted": "00:01:46.380",
+      "end_formatted": "00:01:46.500",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 106.38,
+          "end": 106.48,
+          "probability": 0.1472
+        },
+        {
+          "word": "you.",
+          "start": 106.48,
+          "end": 106.5,
+          "probability": 0.9985
+        }
+      ]
+    }
+  ]
+}

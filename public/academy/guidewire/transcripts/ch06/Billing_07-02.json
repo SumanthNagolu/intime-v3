@@ -1,0 +1,2571 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_07-02.mp4",
+    "video_stem": "Billing_07-02",
+    "duration_seconds": 170.1,
+    "duration_formatted": "00:02:50.100",
+    "segment_count": 8,
+    "word_count": 410,
+    "avg_confidence": 0.95,
+    "transcription_time_seconds": 9.34,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:00:49.832711"
+  },
+  "full_text": "In this demonstration, I'll show how BillingCenter charges an invoice fee according to the Accounts Billing Plan. Here is the Account Summary screen for the Lauren Ramirez account. To find the Accounts Billing Plan, we'll go to the Account Details. I'll click BP02 to go to the plan. Notice the plan specifies a $2 invoice fee. Let's return to the Account Details screen. Next, I'll go to the Invoices tab. I can see the first invoice is for $410. The bill date is today, so no need to advance the clock. Let's switch to Super User to run the invoice batch process. Here's the invoice batch process. I click Run. Now let's return to Jeff Park. To refresh the screen, I click on the Next Invoice. Notice the first invoice is now billed. Let's look at the invoice items for the first invoice. Here's the one-time fee in the amount of $2. The invoice fee charge was added by the invoice batch process. Let's look at the first planned invoice. This invoice only has a premium item of $123 and no invoice fee item. Why is there no invoice fee on the planned invoice? The answer is, invoice fees are created by the invoice batch process only when it changes the invoice status from plan to build. Now let's look at the payment requests screen. I click the menu icon for payments in the sidebar. Now I click Payment Requests. As we know, this account has a non-responsive payment instrument. Here's the payment request. The invoice batch process created the payment request on the invoice bill date. Notice the status is created and the request date is tomorrow. Let's return to Super User to advance the clock by a day and run a batch process. We first go to Internal Tools. Here's the testing system clock menu item. I click Add Day. The clock has been advanced by a day. Now we'll go to Server Tools. Here's the payment request batch process, which I'll run now. Let's return to Jeff Park to see what's happened to our payment request. First, I refresh the screen by clicking to another screen. And now I return to Payment Requests. Notice the status of the payment request has changed to Requested. As time advances and the other payment request dates are reached, the payment request batch process will update the payment request statuses accordingly. This concludes our demonstration on invoice fees and payment requests.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.4,
+      "end": 29.98,
+      "start_formatted": "00:00:01.400",
+      "end_formatted": "00:00:29.980",
+      "text": "In this demonstration, I'll show how BillingCenter charges an invoice fee according to the Accounts Billing Plan. Here is the Account Summary screen for the Lauren Ramirez account. To find the Accounts Billing Plan, we'll go to the Account Details. I'll click BP02 to go to the plan. Notice the plan specifies a $2 invoice fee. Let's return to the Account Details screen. Next, I'll go to the Invoices tab.",
+      "words": [
+        {
+          "word": "In",
+          "start": 1.4,
+          "end": 1.94,
+          "probability": 0.9395
+        },
+        {
+          "word": "this",
+          "start": 1.94,
+          "end": 2.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "demonstration,",
+          "start": 2.1,
+          "end": 2.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "I'll",
+          "start": 3.0,
+          "end": 3.24,
+          "probability": 0.9912
+        },
+        {
+          "word": "show",
+          "start": 3.24,
+          "end": 3.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "how",
+          "start": 3.4,
+          "end": 3.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "BillingCenter",
+          "start": 3.6,
+          "end": 4.24,
+          "probability": 0.75
+        },
+        {
+          "word": "charges",
+          "start": 4.24,
+          "end": 4.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "an",
+          "start": 4.62,
+          "end": 4.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "invoice",
+          "start": 4.86,
+          "end": 5.2,
+          "probability": 0.9839
+        },
+        {
+          "word": "fee",
+          "start": 5.2,
+          "end": 5.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "according",
+          "start": 5.44,
+          "end": 5.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 5.78,
+          "end": 5.98,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 5.98,
+          "end": 6.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "Accounts",
+          "start": 6.12,
+          "end": 6.54,
+          "probability": 0.7803
+        },
+        {
+          "word": "Billing",
+          "start": 6.54,
+          "end": 6.8,
+          "probability": 0.9414
+        },
+        {
+          "word": "Plan.",
+          "start": 6.8,
+          "end": 7.06,
+          "probability": 0.7642
+        },
+        {
+          "word": "Here",
+          "start": 7.36,
+          "end": 7.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "is",
+          "start": 7.86,
+          "end": 8.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 8.0,
+          "end": 8.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "Account",
+          "start": 8.14,
+          "end": 8.42,
+          "probability": 0.7178
+        },
+        {
+          "word": "Summary",
+          "start": 8.42,
+          "end": 8.88,
+          "probability": 0.9717
+        },
+        {
+          "word": "screen",
+          "start": 8.88,
+          "end": 9.16,
+          "probability": 0.9399
+        },
+        {
+          "word": "for",
+          "start": 9.16,
+          "end": 9.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 9.46,
+          "end": 9.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "Lauren",
+          "start": 9.58,
+          "end": 9.86,
+          "probability": 0.3162
+        },
+        {
+          "word": "Ramirez",
+          "start": 9.86,
+          "end": 10.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "account.",
+          "start": 10.38,
+          "end": 10.78,
+          "probability": 0.8647
+        },
+        {
+          "word": "To",
+          "start": 11.22,
+          "end": 11.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "find",
+          "start": 11.76,
+          "end": 12.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 12.0,
+          "end": 12.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "Accounts",
+          "start": 12.14,
+          "end": 12.58,
+          "probability": 0.9814
+        },
+        {
+          "word": "Billing",
+          "start": 12.58,
+          "end": 12.82,
+          "probability": 0.9927
+        },
+        {
+          "word": "Plan,",
+          "start": 12.82,
+          "end": 13.12,
+          "probability": 0.9429
+        },
+        {
+          "word": "we'll",
+          "start": 13.38,
+          "end": 13.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "go",
+          "start": 13.68,
+          "end": 13.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 13.8,
+          "end": 13.94,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 13.94,
+          "end": 14.06,
+          "probability": 0.9775
+        },
+        {
+          "word": "Account",
+          "start": 14.06,
+          "end": 14.32,
+          "probability": 0.8438
+        },
+        {
+          "word": "Details.",
+          "start": 14.32,
+          "end": 14.76,
+          "probability": 0.9624
+        },
+        {
+          "word": "I'll",
+          "start": 16.78,
+          "end": 17.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 17.32,
+          "end": 17.56,
+          "probability": 0.9873
+        },
+        {
+          "word": "BP02",
+          "start": 17.56,
+          "end": 18.16,
+          "probability": 0.7734
+        },
+        {
+          "word": "to",
+          "start": 18.16,
+          "end": 18.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "go",
+          "start": 18.36,
+          "end": 18.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 18.48,
+          "end": 18.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 18.6,
+          "end": 18.7,
+          "probability": 0.998
+        },
+        {
+          "word": "plan.",
+          "start": 18.7,
+          "end": 19.02,
+          "probability": 0.8569
+        },
+        {
+          "word": "Notice",
+          "start": 20.48,
+          "end": 21.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 21.02,
+          "end": 21.2,
+          "probability": 0.9927
+        },
+        {
+          "word": "plan",
+          "start": 21.2,
+          "end": 21.44,
+          "probability": 0.9854
+        },
+        {
+          "word": "specifies",
+          "start": 21.44,
+          "end": 22.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 22.08,
+          "end": 22.26,
+          "probability": 0.998
+        },
+        {
+          "word": "$2",
+          "start": 22.26,
+          "end": 22.44,
+          "probability": 0.9741
+        },
+        {
+          "word": "invoice",
+          "start": 22.44,
+          "end": 23.0,
+          "probability": 0.9346
+        },
+        {
+          "word": "fee.",
+          "start": 23.0,
+          "end": 23.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "Let's",
+          "start": 23.98,
+          "end": 24.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "return",
+          "start": 24.52,
+          "end": 24.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 24.78,
+          "end": 24.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 24.96,
+          "end": 25.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "Account",
+          "start": 25.08,
+          "end": 25.34,
+          "probability": 0.9399
+        },
+        {
+          "word": "Details",
+          "start": 25.34,
+          "end": 25.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "screen.",
+          "start": 25.88,
+          "end": 26.26,
+          "probability": 0.9902
+        },
+        {
+          "word": "Next,",
+          "start": 28.06,
+          "end": 28.6,
+          "probability": 0.9893
+        },
+        {
+          "word": "I'll",
+          "start": 28.82,
+          "end": 29.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "go",
+          "start": 29.08,
+          "end": 29.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 29.22,
+          "end": 29.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 29.36,
+          "end": 29.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "Invoices",
+          "start": 29.48,
+          "end": 29.98,
+          "probability": 0.8696
+        },
+        {
+          "word": "tab.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1451
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 31.52,
+      "end": 59.9,
+      "start_formatted": "00:00:31.520",
+      "end_formatted": "00:00:59.900",
+      "text": "I can see the first invoice is for $410. The bill date is today, so no need to advance the clock. Let's switch to Super User to run the invoice batch process. Here's the invoice batch process. I click Run. Now let's return to Jeff Park. To refresh the screen, I click on the Next Invoice. Notice the first invoice is now billed. Let's look at the invoice items for the first invoice.",
+      "words": [
+        {
+          "word": "I",
+          "start": 31.52,
+          "end": 32.08,
+          "probability": 0.1439
+        },
+        {
+          "word": "can",
+          "start": 32.08,
+          "end": 32.64,
+          "probability": 0.9673
+        },
+        {
+          "word": "see",
+          "start": 32.64,
+          "end": 32.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 32.84,
+          "end": 32.98,
+          "probability": 0.9829
+        },
+        {
+          "word": "first",
+          "start": 32.98,
+          "end": 33.22,
+          "probability": 0.9619
+        },
+        {
+          "word": "invoice",
+          "start": 33.22,
+          "end": 33.64,
+          "probability": 0.916
+        },
+        {
+          "word": "is",
+          "start": 33.64,
+          "end": 33.9,
+          "probability": 0.9854
+        },
+        {
+          "word": "for",
+          "start": 33.9,
+          "end": 34.06,
+          "probability": 0.9873
+        },
+        {
+          "word": "$410.",
+          "start": 34.06,
+          "end": 34.8,
+          "probability": 0.9106
+        },
+        {
+          "word": "The",
+          "start": 35.46,
+          "end": 35.94,
+          "probability": 0.9487
+        },
+        {
+          "word": "bill",
+          "start": 35.94,
+          "end": 36.12,
+          "probability": 0.8486
+        },
+        {
+          "word": "date",
+          "start": 36.12,
+          "end": 36.28,
+          "probability": 0.918
+        },
+        {
+          "word": "is",
+          "start": 36.28,
+          "end": 36.46,
+          "probability": 0.998
+        },
+        {
+          "word": "today,",
+          "start": 36.46,
+          "end": 36.76,
+          "probability": 0.9824
+        },
+        {
+          "word": "so",
+          "start": 37.06,
+          "end": 37.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "no",
+          "start": 37.28,
+          "end": 37.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "need",
+          "start": 37.46,
+          "end": 37.7,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 37.7,
+          "end": 37.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "advance",
+          "start": 37.84,
+          "end": 38.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 38.14,
+          "end": 38.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "clock.",
+          "start": 38.4,
+          "end": 38.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "Let's",
+          "start": 39.0,
+          "end": 39.48,
+          "probability": 0.9854
+        },
+        {
+          "word": "switch",
+          "start": 39.48,
+          "end": 39.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 39.64,
+          "end": 39.84,
+          "probability": 0.998
+        },
+        {
+          "word": "Super",
+          "start": 39.84,
+          "end": 40.12,
+          "probability": 0.6294
+        },
+        {
+          "word": "User",
+          "start": 40.12,
+          "end": 40.44,
+          "probability": 0.4619
+        },
+        {
+          "word": "to",
+          "start": 40.44,
+          "end": 40.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "run",
+          "start": 40.64,
+          "end": 40.82,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 40.82,
+          "end": 40.96,
+          "probability": 0.998
+        },
+        {
+          "word": "invoice",
+          "start": 40.96,
+          "end": 41.38,
+          "probability": 0.9365
+        },
+        {
+          "word": "batch",
+          "start": 41.38,
+          "end": 41.68,
+          "probability": 0.9604
+        },
+        {
+          "word": "process.",
+          "start": 41.68,
+          "end": 42.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Here's",
+          "start": 43.62,
+          "end": 44.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 44.18,
+          "end": 44.28,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice",
+          "start": 44.28,
+          "end": 44.7,
+          "probability": 0.9868
+        },
+        {
+          "word": "batch",
+          "start": 44.7,
+          "end": 44.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "process.",
+          "start": 44.98,
+          "end": 45.58,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 45.86,
+          "end": 46.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "click",
+          "start": 46.18,
+          "end": 46.46,
+          "probability": 0.9932
+        },
+        {
+          "word": "Run.",
+          "start": 46.46,
+          "end": 46.72,
+          "probability": 0.459
+        },
+        {
+          "word": "Now",
+          "start": 47.76,
+          "end": 48.32,
+          "probability": 0.9893
+        },
+        {
+          "word": "let's",
+          "start": 48.32,
+          "end": 48.64,
+          "probability": 0.9814
+        },
+        {
+          "word": "return",
+          "start": 48.64,
+          "end": 48.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 48.9,
+          "end": 49.1,
+          "probability": 0.999
+        },
+        {
+          "word": "Jeff",
+          "start": 49.1,
+          "end": 49.28,
+          "probability": 0.938
+        },
+        {
+          "word": "Park.",
+          "start": 49.28,
+          "end": 49.64,
+          "probability": 0.9282
+        },
+        {
+          "word": "To",
+          "start": 50.08,
+          "end": 50.6,
+          "probability": 0.9927
+        },
+        {
+          "word": "refresh",
+          "start": 50.6,
+          "end": 50.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 50.94,
+          "end": 51.14,
+          "probability": 0.998
+        },
+        {
+          "word": "screen,",
+          "start": 51.14,
+          "end": 51.46,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 51.7,
+          "end": 51.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "click",
+          "start": 51.92,
+          "end": 52.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "on",
+          "start": 52.14,
+          "end": 52.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 52.3,
+          "end": 52.38,
+          "probability": 0.9653
+        },
+        {
+          "word": "Next",
+          "start": 52.38,
+          "end": 52.6,
+          "probability": 0.5234
+        },
+        {
+          "word": "Invoice.",
+          "start": 52.6,
+          "end": 53.08,
+          "probability": 0.9404
+        },
+        {
+          "word": "Notice",
+          "start": 54.8,
+          "end": 55.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 55.36,
+          "end": 55.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "first",
+          "start": 55.54,
+          "end": 55.78,
+          "probability": 0.9678
+        },
+        {
+          "word": "invoice",
+          "start": 55.78,
+          "end": 56.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 56.14,
+          "end": 56.44,
+          "probability": 0.999
+        },
+        {
+          "word": "now",
+          "start": 56.44,
+          "end": 56.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "billed.",
+          "start": 56.64,
+          "end": 57.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "Let's",
+          "start": 57.4,
+          "end": 57.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "look",
+          "start": 57.96,
+          "end": 58.1,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 58.1,
+          "end": 58.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 58.24,
+          "end": 58.36,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice",
+          "start": 58.36,
+          "end": 58.72,
+          "probability": 0.9893
+        },
+        {
+          "word": "items",
+          "start": 58.72,
+          "end": 59.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 59.08,
+          "end": 59.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 59.26,
+          "end": 59.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "first",
+          "start": 59.38,
+          "end": 59.62,
+          "probability": 0.9897
+        },
+        {
+          "word": "invoice.",
+          "start": 59.62,
+          "end": 59.9,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 61.46,
+      "end": 70.26,
+      "start_formatted": "00:01:01.460",
+      "end_formatted": "00:01:10.260",
+      "text": "Here's the one-time fee in the amount of $2. The invoice fee charge was added by the invoice batch process. Let's look at the first planned invoice.",
+      "words": [
+        {
+          "word": "Here's",
+          "start": 61.46,
+          "end": 61.98,
+          "probability": 0.8511
+        },
+        {
+          "word": "the",
+          "start": 61.98,
+          "end": 62.1,
+          "probability": 0.9702
+        },
+        {
+          "word": "one",
+          "start": 62.1,
+          "end": 62.36,
+          "probability": 0.4202
+        },
+        {
+          "word": "-time",
+          "start": 62.36,
+          "end": 62.64,
+          "probability": 0.8545
+        },
+        {
+          "word": "fee",
+          "start": 62.64,
+          "end": 62.88,
+          "probability": 0.9795
+        },
+        {
+          "word": "in",
+          "start": 62.88,
+          "end": 63.02,
+          "probability": 0.8193
+        },
+        {
+          "word": "the",
+          "start": 63.02,
+          "end": 63.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "amount",
+          "start": 63.1,
+          "end": 63.34,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 63.34,
+          "end": 63.52,
+          "probability": 0.998
+        },
+        {
+          "word": "$2.",
+          "start": 63.52,
+          "end": 63.78,
+          "probability": 0.917
+        },
+        {
+          "word": "The",
+          "start": 64.3,
+          "end": 64.76,
+          "probability": 0.9238
+        },
+        {
+          "word": "invoice",
+          "start": 64.76,
+          "end": 65.2,
+          "probability": 0.9302
+        },
+        {
+          "word": "fee",
+          "start": 65.2,
+          "end": 65.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "charge",
+          "start": 65.42,
+          "end": 65.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "was",
+          "start": 65.72,
+          "end": 65.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "added",
+          "start": 65.94,
+          "end": 66.16,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 66.16,
+          "end": 66.36,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 66.36,
+          "end": 66.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "invoice",
+          "start": 66.5,
+          "end": 66.86,
+          "probability": 0.9258
+        },
+        {
+          "word": "batch",
+          "start": 66.86,
+          "end": 67.16,
+          "probability": 0.9243
+        },
+        {
+          "word": "process.",
+          "start": 67.16,
+          "end": 67.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "Let's",
+          "start": 68.34,
+          "end": 68.86,
+          "probability": 0.9893
+        },
+        {
+          "word": "look",
+          "start": 68.86,
+          "end": 69.02,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 69.02,
+          "end": 69.16,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 69.16,
+          "end": 69.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "first",
+          "start": 69.26,
+          "end": 69.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "planned",
+          "start": 69.5,
+          "end": 69.84,
+          "probability": 0.9482
+        },
+        {
+          "word": "invoice.",
+          "start": 69.84,
+          "end": 70.26,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 72.2,
+      "end": 87.34,
+      "start_formatted": "00:01:12.200",
+      "end_formatted": "00:01:27.340",
+      "text": "This invoice only has a premium item of $123 and no invoice fee item. Why is there no invoice fee on the planned invoice? The answer is, invoice fees are created by the invoice batch process only when it changes the invoice status from plan to build.",
+      "words": [
+        {
+          "word": "This",
+          "start": 72.2,
+          "end": 72.8,
+          "probability": 0.918
+        },
+        {
+          "word": "invoice",
+          "start": 72.8,
+          "end": 73.2,
+          "probability": 0.9795
+        },
+        {
+          "word": "only",
+          "start": 73.2,
+          "end": 73.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "has",
+          "start": 73.48,
+          "end": 73.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 73.66,
+          "end": 73.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "premium",
+          "start": 73.78,
+          "end": 74.12,
+          "probability": 0.9536
+        },
+        {
+          "word": "item",
+          "start": 74.12,
+          "end": 74.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 74.42,
+          "end": 74.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "$123",
+          "start": 74.62,
+          "end": 75.6,
+          "probability": 0.958
+        },
+        {
+          "word": "and",
+          "start": 75.6,
+          "end": 76.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "no",
+          "start": 76.18,
+          "end": 76.36,
+          "probability": 0.978
+        },
+        {
+          "word": "invoice",
+          "start": 76.36,
+          "end": 76.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "fee",
+          "start": 76.78,
+          "end": 76.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "item.",
+          "start": 76.98,
+          "end": 77.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Why",
+          "start": 77.6,
+          "end": 78.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 78.0,
+          "end": 78.16,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 78.16,
+          "end": 78.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "no",
+          "start": 78.26,
+          "end": 78.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "invoice",
+          "start": 78.44,
+          "end": 78.86,
+          "probability": 0.999
+        },
+        {
+          "word": "fee",
+          "start": 78.86,
+          "end": 79.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 79.08,
+          "end": 79.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 79.3,
+          "end": 79.42,
+          "probability": 0.998
+        },
+        {
+          "word": "planned",
+          "start": 79.42,
+          "end": 79.74,
+          "probability": 0.9321
+        },
+        {
+          "word": "invoice?",
+          "start": 79.74,
+          "end": 80.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 80.44,
+          "end": 80.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "answer",
+          "start": 80.82,
+          "end": 81.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "is,",
+          "start": 81.12,
+          "end": 81.44,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 81.66,
+          "end": 82.1,
+          "probability": 0.9897
+        },
+        {
+          "word": "fees",
+          "start": 82.1,
+          "end": 82.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 82.34,
+          "end": 82.54,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 82.54,
+          "end": 82.88,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 82.88,
+          "end": 83.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 83.08,
+          "end": 83.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 83.22,
+          "end": 83.6,
+          "probability": 0.9897
+        },
+        {
+          "word": "batch",
+          "start": 83.6,
+          "end": 83.88,
+          "probability": 0.9468
+        },
+        {
+          "word": "process",
+          "start": 83.88,
+          "end": 84.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 84.36,
+          "end": 84.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "when",
+          "start": 84.64,
+          "end": 84.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 84.84,
+          "end": 84.96,
+          "probability": 1.0
+        },
+        {
+          "word": "changes",
+          "start": 84.96,
+          "end": 85.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 85.34,
+          "end": 85.56,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 85.56,
+          "end": 85.92,
+          "probability": 0.999
+        },
+        {
+          "word": "status",
+          "start": 85.92,
+          "end": 86.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 86.3,
+          "end": 86.6,
+          "probability": 0.999
+        },
+        {
+          "word": "plan",
+          "start": 86.6,
+          "end": 86.86,
+          "probability": 0.6704
+        },
+        {
+          "word": "to",
+          "start": 86.86,
+          "end": 87.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "build.",
+          "start": 87.04,
+          "end": 87.34,
+          "probability": 0.938
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 88.84,
+      "end": 94.64,
+      "start_formatted": "00:01:28.840",
+      "end_formatted": "00:01:34.640",
+      "text": "Now let's look at the payment requests screen. I click the menu icon for payments in the sidebar.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 88.84,
+          "end": 89.42,
+          "probability": 0.9033
+        },
+        {
+          "word": "let's",
+          "start": 89.42,
+          "end": 89.74,
+          "probability": 0.9658
+        },
+        {
+          "word": "look",
+          "start": 89.74,
+          "end": 89.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "at",
+          "start": 89.92,
+          "end": 90.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 90.06,
+          "end": 90.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "payment",
+          "start": 90.16,
+          "end": 90.46,
+          "probability": 0.5645
+        },
+        {
+          "word": "requests",
+          "start": 90.46,
+          "end": 90.92,
+          "probability": 0.6016
+        },
+        {
+          "word": "screen.",
+          "start": 90.92,
+          "end": 91.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 91.66,
+          "end": 92.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "click",
+          "start": 92.06,
+          "end": 92.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 92.3,
+          "end": 92.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "menu",
+          "start": 92.46,
+          "end": 92.68,
+          "probability": 0.9795
+        },
+        {
+          "word": "icon",
+          "start": 92.68,
+          "end": 93.08,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 93.08,
+          "end": 93.36,
+          "probability": 0.998
+        },
+        {
+          "word": "payments",
+          "start": 93.36,
+          "end": 93.72,
+          "probability": 0.8926
+        },
+        {
+          "word": "in",
+          "start": 93.72,
+          "end": 93.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 93.94,
+          "end": 94.04,
+          "probability": 0.999
+        },
+        {
+          "word": "sidebar.",
+          "start": 94.04,
+          "end": 94.64,
+          "probability": 0.9082
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 96.4,
+      "end": 117.22,
+      "start_formatted": "00:01:36.400",
+      "end_formatted": "00:01:57.220",
+      "text": "Now I click Payment Requests. As we know, this account has a non-responsive payment instrument. Here's the payment request. The invoice batch process created the payment request on the invoice bill date. Notice the status is created and the request date is tomorrow. Let's return to Super User to advance the clock by",
+      "words": [
+        {
+          "word": "Now",
+          "start": 96.4,
+          "end": 96.98,
+          "probability": 0.9917
+        },
+        {
+          "word": "I",
+          "start": 96.98,
+          "end": 97.14,
+          "probability": 0.9785
+        },
+        {
+          "word": "click",
+          "start": 97.14,
+          "end": 97.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "Payment",
+          "start": 97.36,
+          "end": 97.72,
+          "probability": 0.5957
+        },
+        {
+          "word": "Requests.",
+          "start": 97.72,
+          "end": 98.32,
+          "probability": 0.9658
+        },
+        {
+          "word": "As",
+          "start": 100.5,
+          "end": 101.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "we",
+          "start": 101.08,
+          "end": 101.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "know,",
+          "start": 101.22,
+          "end": 101.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 101.72,
+          "end": 101.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "account",
+          "start": 101.98,
+          "end": 102.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "has",
+          "start": 102.24,
+          "end": 102.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 102.48,
+          "end": 102.6,
+          "probability": 0.999
+        },
+        {
+          "word": "non",
+          "start": 102.6,
+          "end": 102.78,
+          "probability": 0.9502
+        },
+        {
+          "word": "-responsive",
+          "start": 102.78,
+          "end": 103.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "payment",
+          "start": 103.44,
+          "end": 103.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "instrument.",
+          "start": 103.72,
+          "end": 104.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "Here's",
+          "start": 104.58,
+          "end": 105.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 105.06,
+          "end": 105.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 105.18,
+          "end": 105.46,
+          "probability": 0.9814
+        },
+        {
+          "word": "request.",
+          "start": 105.46,
+          "end": 106.02,
+          "probability": 0.999
+        },
+        {
+          "word": "The",
+          "start": 106.36,
+          "end": 106.72,
+          "probability": 0.9893
+        },
+        {
+          "word": "invoice",
+          "start": 106.72,
+          "end": 107.14,
+          "probability": 0.9092
+        },
+        {
+          "word": "batch",
+          "start": 107.14,
+          "end": 107.42,
+          "probability": 0.9385
+        },
+        {
+          "word": "process",
+          "start": 107.42,
+          "end": 107.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "created",
+          "start": 107.86,
+          "end": 108.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 108.3,
+          "end": 108.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 108.46,
+          "end": 108.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "request",
+          "start": 108.76,
+          "end": 109.22,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 109.22,
+          "end": 109.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 109.4,
+          "end": 109.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 109.5,
+          "end": 109.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "bill",
+          "start": 109.92,
+          "end": 110.22,
+          "probability": 0.9136
+        },
+        {
+          "word": "date.",
+          "start": 110.22,
+          "end": 110.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "Notice",
+          "start": 110.82,
+          "end": 111.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 111.32,
+          "end": 111.52,
+          "probability": 0.998
+        },
+        {
+          "word": "status",
+          "start": 111.52,
+          "end": 111.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 111.84,
+          "end": 112.04,
+          "probability": 0.9912
+        },
+        {
+          "word": "created",
+          "start": 112.04,
+          "end": 112.44,
+          "probability": 0.9937
+        },
+        {
+          "word": "and",
+          "start": 112.44,
+          "end": 112.6,
+          "probability": 0.9688
+        },
+        {
+          "word": "the",
+          "start": 112.6,
+          "end": 112.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "request",
+          "start": 112.72,
+          "end": 113.2,
+          "probability": 0.9131
+        },
+        {
+          "word": "date",
+          "start": 113.2,
+          "end": 113.42,
+          "probability": 0.7534
+        },
+        {
+          "word": "is",
+          "start": 113.42,
+          "end": 113.68,
+          "probability": 0.998
+        },
+        {
+          "word": "tomorrow.",
+          "start": 113.68,
+          "end": 113.98,
+          "probability": 0.9639
+        },
+        {
+          "word": "Let's",
+          "start": 114.48,
+          "end": 114.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "return",
+          "start": 114.94,
+          "end": 115.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 115.2,
+          "end": 115.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Super",
+          "start": 115.38,
+          "end": 115.66,
+          "probability": 0.4495
+        },
+        {
+          "word": "User",
+          "start": 115.66,
+          "end": 115.98,
+          "probability": 0.22
+        },
+        {
+          "word": "to",
+          "start": 115.98,
+          "end": 116.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "advance",
+          "start": 116.18,
+          "end": 116.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 116.56,
+          "end": 116.78,
+          "probability": 0.999
+        },
+        {
+          "word": "clock",
+          "start": 116.78,
+          "end": 117.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "by",
+          "start": 117.02,
+          "end": 117.22,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 117.22,
+      "end": 146.22,
+      "start_formatted": "00:01:57.220",
+      "end_formatted": "00:02:26.220",
+      "text": "a day and run a batch process. We first go to Internal Tools. Here's the testing system clock menu item. I click Add Day. The clock has been advanced by a day. Now we'll go to Server Tools. Here's the payment request batch process, which I'll run now. Let's return to Jeff Park to see what's happened to our payment request.",
+      "words": [
+        {
+          "word": "a",
+          "start": 117.22,
+          "end": 117.32,
+          "probability": 0.2522
+        },
+        {
+          "word": "day",
+          "start": 117.32,
+          "end": 117.46,
+          "probability": 0.979
+        },
+        {
+          "word": "and",
+          "start": 117.46,
+          "end": 117.62,
+          "probability": 0.9785
+        },
+        {
+          "word": "run",
+          "start": 117.62,
+          "end": 117.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 117.76,
+          "end": 117.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "batch",
+          "start": 117.88,
+          "end": 118.1,
+          "probability": 0.9897
+        },
+        {
+          "word": "process.",
+          "start": 118.1,
+          "end": 118.64,
+          "probability": 0.999
+        },
+        {
+          "word": "We",
+          "start": 120.26,
+          "end": 120.78,
+          "probability": 0.9536
+        },
+        {
+          "word": "first",
+          "start": 120.78,
+          "end": 121.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "go",
+          "start": 121.08,
+          "end": 121.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 121.28,
+          "end": 121.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "Internal",
+          "start": 121.4,
+          "end": 121.72,
+          "probability": 0.2456
+        },
+        {
+          "word": "Tools.",
+          "start": 121.72,
+          "end": 122.06,
+          "probability": 0.6538
+        },
+        {
+          "word": "Here's",
+          "start": 124.42,
+          "end": 124.94,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 124.94,
+          "end": 125.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "testing",
+          "start": 125.04,
+          "end": 125.34,
+          "probability": 0.5771
+        },
+        {
+          "word": "system",
+          "start": 125.34,
+          "end": 125.8,
+          "probability": 0.9922
+        },
+        {
+          "word": "clock",
+          "start": 125.8,
+          "end": 126.08,
+          "probability": 0.9526
+        },
+        {
+          "word": "menu",
+          "start": 126.08,
+          "end": 126.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "item.",
+          "start": 126.46,
+          "end": 126.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 128.42,
+          "end": 128.94,
+          "probability": 0.9917
+        },
+        {
+          "word": "click",
+          "start": 128.94,
+          "end": 129.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "Add",
+          "start": 129.2,
+          "end": 129.38,
+          "probability": 0.6929
+        },
+        {
+          "word": "Day.",
+          "start": 129.38,
+          "end": 129.66,
+          "probability": 0.7524
+        },
+        {
+          "word": "The",
+          "start": 132.58,
+          "end": 133.1,
+          "probability": 0.9849
+        },
+        {
+          "word": "clock",
+          "start": 133.1,
+          "end": 133.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "has",
+          "start": 133.36,
+          "end": 133.56,
+          "probability": 0.998
+        },
+        {
+          "word": "been",
+          "start": 133.56,
+          "end": 133.74,
+          "probability": 0.998
+        },
+        {
+          "word": "advanced",
+          "start": 133.74,
+          "end": 134.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "by",
+          "start": 134.14,
+          "end": 134.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 134.38,
+          "end": 134.5,
+          "probability": 0.9873
+        },
+        {
+          "word": "day.",
+          "start": 134.5,
+          "end": 134.72,
+          "probability": 0.998
+        },
+        {
+          "word": "Now",
+          "start": 135.02,
+          "end": 135.42,
+          "probability": 0.9932
+        },
+        {
+          "word": "we'll",
+          "start": 135.42,
+          "end": 135.64,
+          "probability": 0.9287
+        },
+        {
+          "word": "go",
+          "start": 135.64,
+          "end": 135.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 135.74,
+          "end": 135.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "Server",
+          "start": 135.88,
+          "end": 136.12,
+          "probability": 0.873
+        },
+        {
+          "word": "Tools.",
+          "start": 136.12,
+          "end": 136.42,
+          "probability": 0.9575
+        },
+        {
+          "word": "Here's",
+          "start": 138.12,
+          "end": 138.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 138.64,
+          "end": 138.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "payment",
+          "start": 138.76,
+          "end": 139.02,
+          "probability": 0.6782
+        },
+        {
+          "word": "request",
+          "start": 139.02,
+          "end": 139.52,
+          "probability": 0.9897
+        },
+        {
+          "word": "batch",
+          "start": 139.52,
+          "end": 139.78,
+          "probability": 0.9849
+        },
+        {
+          "word": "process,",
+          "start": 139.78,
+          "end": 140.34,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 140.54,
+          "end": 140.8,
+          "probability": 0.998
+        },
+        {
+          "word": "I'll",
+          "start": 140.8,
+          "end": 141.04,
+          "probability": 0.9912
+        },
+        {
+          "word": "run",
+          "start": 141.04,
+          "end": 141.22,
+          "probability": 0.998
+        },
+        {
+          "word": "now.",
+          "start": 141.22,
+          "end": 141.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "Let's",
+          "start": 142.58,
+          "end": 143.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "return",
+          "start": 143.1,
+          "end": 143.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 143.38,
+          "end": 143.6,
+          "probability": 0.999
+        },
+        {
+          "word": "Jeff",
+          "start": 143.6,
+          "end": 143.82,
+          "probability": 0.9204
+        },
+        {
+          "word": "Park",
+          "start": 143.82,
+          "end": 144.06,
+          "probability": 0.7969
+        },
+        {
+          "word": "to",
+          "start": 144.06,
+          "end": 144.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "see",
+          "start": 144.24,
+          "end": 144.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "what's",
+          "start": 144.44,
+          "end": 144.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "happened",
+          "start": 144.84,
+          "end": 145.1,
+          "probability": 0.9849
+        },
+        {
+          "word": "to",
+          "start": 145.1,
+          "end": 145.26,
+          "probability": 0.999
+        },
+        {
+          "word": "our",
+          "start": 145.26,
+          "end": 145.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "payment",
+          "start": 145.42,
+          "end": 145.66,
+          "probability": 0.9888
+        },
+        {
+          "word": "request.",
+          "start": 145.66,
+          "end": 146.22,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 146.22,
+      "end": 170.1,
+      "start_formatted": "00:02:26.220",
+      "end_formatted": "00:02:50.100",
+      "text": "First, I refresh the screen by clicking to another screen. And now I return to Payment Requests. Notice the status of the payment request has changed to Requested. As time advances and the other payment request dates are reached, the payment request batch process will update the payment request statuses accordingly. This concludes our demonstration on invoice fees and payment requests.",
+      "words": [
+        {
+          "word": "First,",
+          "start": 146.22,
+          "end": 147.32,
+          "probability": 0.9087
+        },
+        {
+          "word": "I",
+          "start": 147.6,
+          "end": 147.82,
+          "probability": 0.9878
+        },
+        {
+          "word": "refresh",
+          "start": 147.82,
+          "end": 148.12,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 148.12,
+          "end": 148.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "screen",
+          "start": 148.32,
+          "end": 148.64,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 148.64,
+          "end": 148.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "clicking",
+          "start": 148.86,
+          "end": 149.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 149.18,
+          "end": 149.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "another",
+          "start": 149.36,
+          "end": 149.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "screen.",
+          "start": 149.6,
+          "end": 150.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "And",
+          "start": 150.62,
+          "end": 151.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "now",
+          "start": 151.22,
+          "end": 151.4,
+          "probability": 0.9917
+        },
+        {
+          "word": "I",
+          "start": 151.4,
+          "end": 151.6,
+          "probability": 0.9609
+        },
+        {
+          "word": "return",
+          "start": 151.6,
+          "end": 152.0,
+          "probability": 0.9795
+        },
+        {
+          "word": "to",
+          "start": 152.0,
+          "end": 152.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "Payment",
+          "start": 152.18,
+          "end": 152.54,
+          "probability": 0.7656
+        },
+        {
+          "word": "Requests.",
+          "start": 152.54,
+          "end": 153.16,
+          "probability": 0.9551
+        },
+        {
+          "word": "Notice",
+          "start": 154.82,
+          "end": 155.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 155.42,
+          "end": 155.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "status",
+          "start": 155.62,
+          "end": 155.92,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 155.92,
+          "end": 156.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 156.1,
+          "end": 156.2,
+          "probability": 0.998
+        },
+        {
+          "word": "payment",
+          "start": 156.2,
+          "end": 156.48,
+          "probability": 0.3066
+        },
+        {
+          "word": "request",
+          "start": 156.48,
+          "end": 156.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 156.92,
+          "end": 157.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "changed",
+          "start": 157.16,
+          "end": 157.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 157.48,
+          "end": 157.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "Requested.",
+          "start": 157.62,
+          "end": 158.18,
+          "probability": 0.8794
+        },
+        {
+          "word": "As",
+          "start": 158.4,
+          "end": 158.82,
+          "probability": 0.998
+        },
+        {
+          "word": "time",
+          "start": 158.82,
+          "end": 159.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "advances",
+          "start": 159.06,
+          "end": 159.54,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 159.54,
+          "end": 159.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 159.8,
+          "end": 159.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "other",
+          "start": 159.88,
+          "end": 160.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "payment",
+          "start": 160.08,
+          "end": 160.42,
+          "probability": 0.9634
+        },
+        {
+          "word": "request",
+          "start": 160.42,
+          "end": 160.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "dates",
+          "start": 160.86,
+          "end": 161.1,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 161.1,
+          "end": 161.3,
+          "probability": 1.0
+        },
+        {
+          "word": "reached,",
+          "start": 161.3,
+          "end": 161.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 161.94,
+          "end": 162.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "payment",
+          "start": 162.18,
+          "end": 162.46,
+          "probability": 0.5415
+        },
+        {
+          "word": "request",
+          "start": 162.46,
+          "end": 162.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "batch",
+          "start": 162.96,
+          "end": 163.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "process",
+          "start": 163.22,
+          "end": 163.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 163.66,
+          "end": 163.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "update",
+          "start": 163.88,
+          "end": 164.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 164.18,
+          "end": 164.36,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 164.36,
+          "end": 164.66,
+          "probability": 0.9922
+        },
+        {
+          "word": "request",
+          "start": 164.66,
+          "end": 165.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "statuses",
+          "start": 165.14,
+          "end": 165.68,
+          "probability": 0.981
+        },
+        {
+          "word": "accordingly.",
+          "start": 165.68,
+          "end": 166.12,
+          "probability": 0.999
+        },
+        {
+          "word": "This",
+          "start": 166.5,
+          "end": 166.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "concludes",
+          "start": 166.98,
+          "end": 167.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "our",
+          "start": 167.36,
+          "end": 167.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 167.54,
+          "end": 168.02,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 168.02,
+          "end": 168.36,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice",
+          "start": 168.36,
+          "end": 168.7,
+          "probability": 0.7788
+        },
+        {
+          "word": "fees",
+          "start": 168.7,
+          "end": 169.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 169.0,
+          "end": 169.2,
+          "probability": 0.998
+        },
+        {
+          "word": "payment",
+          "start": 169.2,
+          "end": 169.5,
+          "probability": 0.998
+        },
+        {
+          "word": "requests.",
+          "start": 169.5,
+          "end": 170.1,
+          "probability": 0.9995
+        }
+      ]
+    }
+  ]
+}

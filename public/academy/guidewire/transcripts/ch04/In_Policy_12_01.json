@@ -1,0 +1,5360 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_12_01.mp4",
+    "video_stem": "In_Policy_12_01",
+    "duration_seconds": 376.54,
+    "duration_formatted": "00:06:16.540",
+    "segment_count": 175,
+    "word_count": 616,
+    "avg_confidence": 0.9325,
+    "transcription_time_seconds": 52.46,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:31:33.316789"
+  },
+  "full_text": "Users with the user admin privileges can manage users and groups. Log in as SuperUser. Click the Administration tab. Select Users and Security. The internal organization Enigma Fire and Casualty is always displayed by default. Organizations have groups and subgroups. Click a group, for example, Eastern Region. Group information. Group information is located on different tabs. The Basics tab contains the group name, parent group, organization information, security zone, etc. The Users tab lists the users belonging to this group. Users can be added and removed through this tab. The Producer Codes tab lists all producer codes available to the parent group which can be made available in the current group by setting it to Yes in the Available column. The Queues tab lists the queues used for activity assignment assignment. The Regions tab. The Regions tab lists the regions that the system uses for making assignment decisions. To search for a group, go to the Groups page under Users and Security in the left menu. For example, let's find the group for Los Angeles producers in the Armstrong organization. You can enter any free text or a partial word. Click Search. Click the desired group to view the details. Clicking the organization's link on the Basic tab takes you to the organization's detail page. After examining the organization's groups, the user admin decides to add a new group for foster city producers. Click Actions. Select New Group. Enter the group name. The new group belongs to the organization Armstrong and Company. Click the search icon. Enter the search criteria. Click Search. Select the right organization. Set producer as the type of the new group. The security zone applies restriction on internal users when they are searching for other users, groups, producer codes, or organizations. The internal user must have the same security zone as on the group to access the group. Select Western Region. Select localization. Click Update to save the new group. Openountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount The search word is pretext. Click Search. Click the user link in the result list. The basic step lists information about the user regarding internal or external, user type, etc. The Attributes tab can be used to associate custom attributes with the user for assignment purpose. Some examples of user attributes are expertise, language, line of business. The Access tab lists the groups the user belongs to, and producer codes if user producer code security is set to yes. Manage the roles of the user on the Roles tab. In this example, Alice Applegate has two roles, Underwriter and Reinsurance Manager. The Profiles tab displays the basic information about the user. The Regions tab is used to add the geographic area for the user. The UW Authority tab lists the underwriting authority profiles used to approve underwriting issues. Let's add a new user to the group created earlier. Click Actions. Select New User. Enter the user's information. Enter the user's information. Enter name. To set a user as an external user, set External to Yes. The user belongs to Armstrong and Company. Click the search icon. Enter name. Click Search. Select the organization. Set the user type to be Producer. Enter a phone number. Click Update to save the new user. The warning messages are displayed about non-matching roles and group. Go to the Roles tab. Add the Producer role. Enter the producer role. Go to the Access tab. In the Groups section, click Add. Select User Group. Select Foster City Producers, the group created earlier. Note that the User Producer Code security is set to Yes. Users inherit Producer codes from their group, and can have additional codes added. Click Update again. The user has been created successfully. Click Update.                                                                                                               ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 27.62,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:27.620",
+      "text": "Users with the user admin privileges can manage users and groups. Log in as SuperUser. Click the Administration tab. Select Users and Security. The internal organization Enigma Fire and Casualty is always displayed by default. Organizations have groups and subgroups. Click a group, for example, Eastern Region.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 0.0,
+          "end": 1.16,
+          "probability": 0.9609
+        },
+        {
+          "word": "with",
+          "start": 1.16,
+          "end": 1.4,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 1.4,
+          "end": 1.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "user",
+          "start": 1.54,
+          "end": 1.84,
+          "probability": 0.7676
+        },
+        {
+          "word": "admin",
+          "start": 1.84,
+          "end": 2.16,
+          "probability": 0.8838
+        },
+        {
+          "word": "privileges",
+          "start": 2.16,
+          "end": 2.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "can",
+          "start": 2.76,
+          "end": 3.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "manage",
+          "start": 3.04,
+          "end": 3.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "users",
+          "start": 3.4,
+          "end": 3.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 3.76,
+          "end": 3.96,
+          "probability": 0.8652
+        },
+        {
+          "word": "groups.",
+          "start": 3.96,
+          "end": 4.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "Log",
+          "start": 4.66,
+          "end": 5.16,
+          "probability": 0.9844
+        },
+        {
+          "word": "in",
+          "start": 5.16,
+          "end": 5.34,
+          "probability": 0.8613
+        },
+        {
+          "word": "as",
+          "start": 5.34,
+          "end": 5.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "SuperUser.",
+          "start": 5.48,
+          "end": 6.22,
+          "probability": 0.582
+        },
+        {
+          "word": "Click",
+          "start": 7.98,
+          "end": 8.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 8.68,
+          "end": 8.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "Administration",
+          "start": 8.84,
+          "end": 9.48,
+          "probability": 0.7896
+        },
+        {
+          "word": "tab.",
+          "start": 9.48,
+          "end": 9.9,
+          "probability": 0.9824
+        },
+        {
+          "word": "Select",
+          "start": 12.26,
+          "end": 12.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "Users",
+          "start": 12.96,
+          "end": 13.3,
+          "probability": 0.9146
+        },
+        {
+          "word": "and",
+          "start": 13.3,
+          "end": 13.58,
+          "probability": 0.645
+        },
+        {
+          "word": "Security.",
+          "start": 13.58,
+          "end": 14.1,
+          "probability": 0.9023
+        },
+        {
+          "word": "The",
+          "start": 16.7,
+          "end": 17.4,
+          "probability": 0.9902
+        },
+        {
+          "word": "internal",
+          "start": 17.4,
+          "end": 17.76,
+          "probability": 0.9419
+        },
+        {
+          "word": "organization",
+          "start": 17.76,
+          "end": 18.56,
+          "probability": 0.9717
+        },
+        {
+          "word": "Enigma",
+          "start": 18.56,
+          "end": 19.06,
+          "probability": 0.978
+        },
+        {
+          "word": "Fire",
+          "start": 19.06,
+          "end": 19.4,
+          "probability": 0.6924
+        },
+        {
+          "word": "and",
+          "start": 19.4,
+          "end": 19.58,
+          "probability": 0.3564
+        },
+        {
+          "word": "Casualty",
+          "start": 19.58,
+          "end": 20.2,
+          "probability": 0.9844
+        },
+        {
+          "word": "is",
+          "start": 20.2,
+          "end": 20.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "always",
+          "start": 20.38,
+          "end": 20.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "displayed",
+          "start": 20.72,
+          "end": 21.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 21.24,
+          "end": 21.44,
+          "probability": 0.999
+        },
+        {
+          "word": "default.",
+          "start": 21.44,
+          "end": 21.9,
+          "probability": 0.999
+        },
+        {
+          "word": "Organizations",
+          "start": 22.42,
+          "end": 23.12,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 23.12,
+          "end": 23.4,
+          "probability": 0.999
+        },
+        {
+          "word": "groups",
+          "start": 23.4,
+          "end": 23.66,
+          "probability": 0.8921
+        },
+        {
+          "word": "and",
+          "start": 23.66,
+          "end": 23.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "subgroups.",
+          "start": 23.84,
+          "end": 24.58,
+          "probability": 0.9873
+        },
+        {
+          "word": "Click",
+          "start": 24.78,
+          "end": 25.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 25.22,
+          "end": 25.34,
+          "probability": 0.9844
+        },
+        {
+          "word": "group,",
+          "start": 25.34,
+          "end": 25.66,
+          "probability": 0.9087
+        },
+        {
+          "word": "for",
+          "start": 25.84,
+          "end": 26.06,
+          "probability": 0.8916
+        },
+        {
+          "word": "example,",
+          "start": 26.06,
+          "end": 26.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "Eastern",
+          "start": 26.88,
+          "end": 27.16,
+          "probability": 0.8716
+        },
+        {
+          "word": "Region.",
+          "start": 27.16,
+          "end": 27.62,
+          "probability": 0.9019
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 28.24,
+      "end": 57.48,
+      "start_formatted": "00:00:28.240",
+      "end_formatted": "00:00:57.480",
+      "text": "Group information. Group information is located on different tabs. The Basics tab contains the group name, parent group, organization information, security zone, etc. The Users tab lists the users belonging to this group. Users can be added and removed through this tab. The Producer Codes tab lists all producer codes available to the parent group which can be made available in the current group by setting it to Yes in the Available column. The Queues tab lists the queues used for activity",
+      "words": [
+        {
+          "word": "Group",
+          "start": 28.24,
+          "end": 28.84,
+          "probability": 0.9834
+        },
+        {
+          "word": "information.",
+          "start": 28.84,
+          "end": 29.06,
+          "probability": 0.8833
+        },
+        {
+          "word": "Group",
+          "start": 29.06,
+          "end": 29.06,
+          "probability": 0.8354
+        },
+        {
+          "word": "information",
+          "start": 29.06,
+          "end": 29.42,
+          "probability": 0.9883
+        },
+        {
+          "word": "is",
+          "start": 29.42,
+          "end": 29.68,
+          "probability": 0.9854
+        },
+        {
+          "word": "located",
+          "start": 29.68,
+          "end": 30.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 30.14,
+          "end": 30.36,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 30.36,
+          "end": 30.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "tabs.",
+          "start": 30.68,
+          "end": 31.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "The",
+          "start": 31.38,
+          "end": 31.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "Basics",
+          "start": 31.72,
+          "end": 32.12,
+          "probability": 0.7886
+        },
+        {
+          "word": "tab",
+          "start": 32.12,
+          "end": 32.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "contains",
+          "start": 32.36,
+          "end": 32.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 32.84,
+          "end": 33.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "group",
+          "start": 33.04,
+          "end": 33.22,
+          "probability": 0.8857
+        },
+        {
+          "word": "name,",
+          "start": 33.22,
+          "end": 33.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "parent",
+          "start": 33.86,
+          "end": 34.16,
+          "probability": 0.981
+        },
+        {
+          "word": "group,",
+          "start": 34.16,
+          "end": 34.52,
+          "probability": 0.999
+        },
+        {
+          "word": "organization",
+          "start": 34.84,
+          "end": 35.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "information,",
+          "start": 35.38,
+          "end": 36.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "security",
+          "start": 36.54,
+          "end": 37.04,
+          "probability": 0.999
+        },
+        {
+          "word": "zone,",
+          "start": 37.04,
+          "end": 37.52,
+          "probability": 1.0
+        },
+        {
+          "word": "etc.",
+          "start": 37.8,
+          "end": 38.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "The",
+          "start": 38.82,
+          "end": 39.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "Users",
+          "start": 39.4,
+          "end": 39.74,
+          "probability": 0.9751
+        },
+        {
+          "word": "tab",
+          "start": 39.74,
+          "end": 40.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "lists",
+          "start": 40.02,
+          "end": 40.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 40.36,
+          "end": 40.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "users",
+          "start": 40.54,
+          "end": 40.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "belonging",
+          "start": 40.9,
+          "end": 41.32,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 41.32,
+          "end": 41.56,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 41.56,
+          "end": 41.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "group.",
+          "start": 41.76,
+          "end": 42.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Users",
+          "start": 42.4,
+          "end": 42.82,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 42.82,
+          "end": 43.04,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 43.04,
+          "end": 43.2,
+          "probability": 1.0
+        },
+        {
+          "word": "added",
+          "start": 43.2,
+          "end": 43.44,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 43.44,
+          "end": 43.66,
+          "probability": 0.999
+        },
+        {
+          "word": "removed",
+          "start": 43.66,
+          "end": 44.04,
+          "probability": 1.0
+        },
+        {
+          "word": "through",
+          "start": 44.04,
+          "end": 44.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 44.24,
+          "end": 44.46,
+          "probability": 1.0
+        },
+        {
+          "word": "tab.",
+          "start": 44.46,
+          "end": 44.76,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 45.54,
+          "end": 46.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "Producer",
+          "start": 46.14,
+          "end": 46.54,
+          "probability": 0.9717
+        },
+        {
+          "word": "Codes",
+          "start": 46.54,
+          "end": 46.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "tab",
+          "start": 46.94,
+          "end": 47.22,
+          "probability": 0.998
+        },
+        {
+          "word": "lists",
+          "start": 47.22,
+          "end": 47.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "all",
+          "start": 47.52,
+          "end": 47.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "producer",
+          "start": 47.8,
+          "end": 48.24,
+          "probability": 0.9863
+        },
+        {
+          "word": "codes",
+          "start": 48.24,
+          "end": 48.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 48.62,
+          "end": 49.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 49.04,
+          "end": 49.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 49.3,
+          "end": 49.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "parent",
+          "start": 49.46,
+          "end": 49.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "group",
+          "start": 49.74,
+          "end": 50.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 50.04,
+          "end": 50.24,
+          "probability": 0.9673
+        },
+        {
+          "word": "can",
+          "start": 50.24,
+          "end": 50.4,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 50.4,
+          "end": 50.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "made",
+          "start": 50.54,
+          "end": 50.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 50.74,
+          "end": 51.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 51.14,
+          "end": 51.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 51.34,
+          "end": 51.44,
+          "probability": 1.0
+        },
+        {
+          "word": "current",
+          "start": 51.44,
+          "end": 51.68,
+          "probability": 0.9839
+        },
+        {
+          "word": "group",
+          "start": 51.68,
+          "end": 51.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 51.98,
+          "end": 52.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "setting",
+          "start": 52.2,
+          "end": 52.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 52.5,
+          "end": 52.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 52.68,
+          "end": 52.78,
+          "probability": 0.999
+        },
+        {
+          "word": "Yes",
+          "start": 52.78,
+          "end": 52.98,
+          "probability": 0.8667
+        },
+        {
+          "word": "in",
+          "start": 52.98,
+          "end": 53.16,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 53.16,
+          "end": 53.26,
+          "probability": 1.0
+        },
+        {
+          "word": "Available",
+          "start": 53.26,
+          "end": 53.72,
+          "probability": 0.8809
+        },
+        {
+          "word": "column.",
+          "start": 53.72,
+          "end": 54.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "The",
+          "start": 54.82,
+          "end": 55.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "Queues",
+          "start": 55.32,
+          "end": 55.56,
+          "probability": 0.8076
+        },
+        {
+          "word": "tab",
+          "start": 55.56,
+          "end": 55.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "lists",
+          "start": 55.8,
+          "end": 56.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 56.14,
+          "end": 56.3,
+          "probability": 0.998
+        },
+        {
+          "word": "queues",
+          "start": 56.3,
+          "end": 56.62,
+          "probability": 0.8013
+        },
+        {
+          "word": "used",
+          "start": 56.62,
+          "end": 56.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 56.86,
+          "end": 57.04,
+          "probability": 0.999
+        },
+        {
+          "word": "activity",
+          "start": 57.04,
+          "end": 57.48,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 57.48,
+      "end": 68.78,
+      "start_formatted": "00:00:57.480",
+      "end_formatted": "00:01:08.780",
+      "text": "assignment assignment. The Regions tab. The Regions tab lists the regions that the system uses for making assignment decisions. To search for a group, go to the Groups page under Users and Security in the left menu.",
+      "words": [
+        {
+          "word": "assignment",
+          "start": 57.48,
+          "end": 57.98,
+          "probability": 0.5508
+        },
+        {
+          "word": "assignment.",
+          "start": 57.98,
+          "end": 58.52,
+          "probability": 0.0
+        },
+        {
+          "word": "The",
+          "start": 58.9,
+          "end": 59.44,
+          "probability": 0.9673
+        },
+        {
+          "word": "Regions",
+          "start": 59.44,
+          "end": 59.86,
+          "probability": 0.7441
+        },
+        {
+          "word": "tab.",
+          "start": 59.86,
+          "end": 60.1,
+          "probability": 0.981
+        },
+        {
+          "word": "The",
+          "start": 60.42,
+          "end": 60.42,
+          "probability": 0.0039
+        },
+        {
+          "word": "Regions",
+          "start": 60.42,
+          "end": 60.42,
+          "probability": 0.7866
+        },
+        {
+          "word": "tab",
+          "start": 60.42,
+          "end": 60.42,
+          "probability": 0.8579
+        },
+        {
+          "word": "lists",
+          "start": 60.42,
+          "end": 60.44,
+          "probability": 0.8022
+        },
+        {
+          "word": "the",
+          "start": 60.44,
+          "end": 60.62,
+          "probability": 0.9907
+        },
+        {
+          "word": "regions",
+          "start": 60.62,
+          "end": 60.96,
+          "probability": 0.8169
+        },
+        {
+          "word": "that",
+          "start": 60.96,
+          "end": 61.2,
+          "probability": 0.9775
+        },
+        {
+          "word": "the",
+          "start": 61.2,
+          "end": 61.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "system",
+          "start": 61.34,
+          "end": 61.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "uses",
+          "start": 61.64,
+          "end": 61.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "for",
+          "start": 61.96,
+          "end": 62.22,
+          "probability": 0.9888
+        },
+        {
+          "word": "making",
+          "start": 62.22,
+          "end": 62.5,
+          "probability": 0.9937
+        },
+        {
+          "word": "assignment",
+          "start": 62.5,
+          "end": 62.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "decisions.",
+          "start": 62.98,
+          "end": 63.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "To",
+          "start": 63.98,
+          "end": 64.36,
+          "probability": 0.9858
+        },
+        {
+          "word": "search",
+          "start": 64.36,
+          "end": 64.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "for",
+          "start": 64.6,
+          "end": 64.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 64.82,
+          "end": 64.98,
+          "probability": 0.9668
+        },
+        {
+          "word": "group,",
+          "start": 64.98,
+          "end": 65.2,
+          "probability": 0.9546
+        },
+        {
+          "word": "go",
+          "start": 65.38,
+          "end": 65.64,
+          "probability": 0.9829
+        },
+        {
+          "word": "to",
+          "start": 65.64,
+          "end": 65.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 65.78,
+          "end": 65.9,
+          "probability": 0.9927
+        },
+        {
+          "word": "Groups",
+          "start": 65.9,
+          "end": 66.22,
+          "probability": 0.5742
+        },
+        {
+          "word": "page",
+          "start": 66.22,
+          "end": 66.42,
+          "probability": 0.9609
+        },
+        {
+          "word": "under",
+          "start": 66.42,
+          "end": 66.76,
+          "probability": 0.98
+        },
+        {
+          "word": "Users",
+          "start": 66.76,
+          "end": 67.14,
+          "probability": 0.8501
+        },
+        {
+          "word": "and",
+          "start": 67.14,
+          "end": 67.4,
+          "probability": 0.6001
+        },
+        {
+          "word": "Security",
+          "start": 67.4,
+          "end": 67.78,
+          "probability": 0.8999
+        },
+        {
+          "word": "in",
+          "start": 67.78,
+          "end": 68.02,
+          "probability": 0.978
+        },
+        {
+          "word": "the",
+          "start": 68.02,
+          "end": 68.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "left",
+          "start": 68.12,
+          "end": 68.36,
+          "probability": 0.9375
+        },
+        {
+          "word": "menu.",
+          "start": 68.36,
+          "end": 68.78,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 68.78,
+      "end": 74.52,
+      "start_formatted": "00:01:08.780",
+      "end_formatted": "00:01:14.520",
+      "text": "For example, let's find the group for Los Angeles producers in the Armstrong organization.",
+      "words": [
+        {
+          "word": "For",
+          "start": 68.78,
+          "end": 69.86,
+          "probability": 0.9326
+        },
+        {
+          "word": "example,",
+          "start": 69.86,
+          "end": 70.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "let's",
+          "start": 70.7,
+          "end": 71.02,
+          "probability": 0.9727
+        },
+        {
+          "word": "find",
+          "start": 71.02,
+          "end": 71.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 71.2,
+          "end": 71.32,
+          "probability": 0.9868
+        },
+        {
+          "word": "group",
+          "start": 71.32,
+          "end": 71.52,
+          "probability": 0.8887
+        },
+        {
+          "word": "for",
+          "start": 71.52,
+          "end": 71.7,
+          "probability": 0.9927
+        },
+        {
+          "word": "Los",
+          "start": 71.7,
+          "end": 71.96,
+          "probability": 0.959
+        },
+        {
+          "word": "Angeles",
+          "start": 71.96,
+          "end": 72.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "producers",
+          "start": 72.38,
+          "end": 72.88,
+          "probability": 0.7329
+        },
+        {
+          "word": "in",
+          "start": 72.88,
+          "end": 73.16,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 73.16,
+          "end": 73.24,
+          "probability": 0.9341
+        },
+        {
+          "word": "Armstrong",
+          "start": 73.24,
+          "end": 73.72,
+          "probability": 0.9443
+        },
+        {
+          "word": "organization.",
+          "start": 73.72,
+          "end": 74.52,
+          "probability": 0.5459
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 75.24,
+      "end": 78.06,
+      "start_formatted": "00:01:15.240",
+      "end_formatted": "00:01:18.060",
+      "text": "You can enter any free text or a partial word.",
+      "words": [
+        {
+          "word": "You",
+          "start": 75.24,
+          "end": 75.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "can",
+          "start": 75.86,
+          "end": 76.04,
+          "probability": 1.0
+        },
+        {
+          "word": "enter",
+          "start": 76.04,
+          "end": 76.3,
+          "probability": 0.998
+        },
+        {
+          "word": "any",
+          "start": 76.3,
+          "end": 76.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "free",
+          "start": 76.5,
+          "end": 76.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "text",
+          "start": 76.72,
+          "end": 77.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "or",
+          "start": 77.06,
+          "end": 77.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 77.22,
+          "end": 77.38,
+          "probability": 0.9907
+        },
+        {
+          "word": "partial",
+          "start": 77.38,
+          "end": 77.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "word.",
+          "start": 77.62,
+          "end": 78.06,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 81.72,
+      "end": 82.68,
+      "start_formatted": "00:01:21.720",
+      "end_formatted": "00:01:22.680",
+      "text": "Click Search.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 81.72,
+          "end": 82.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "Search.",
+          "start": 82.36,
+          "end": 82.68,
+          "probability": 0.6035
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 86.06,
+      "end": 88.5,
+      "start_formatted": "00:01:26.060",
+      "end_formatted": "00:01:28.500",
+      "text": "Click the desired group to view the details.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 86.06,
+          "end": 86.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 86.7,
+          "end": 86.88,
+          "probability": 0.998
+        },
+        {
+          "word": "desired",
+          "start": 86.88,
+          "end": 87.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "group",
+          "start": 87.2,
+          "end": 87.48,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 87.48,
+          "end": 87.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "view",
+          "start": 87.68,
+          "end": 87.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 87.88,
+          "end": 88.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "details.",
+          "start": 88.04,
+          "end": 88.5,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 90.34,
+      "end": 95.66,
+      "start_formatted": "00:01:30.340",
+      "end_formatted": "00:01:35.660",
+      "text": "Clicking the organization's link on the Basic tab takes you to the organization's detail page.",
+      "words": [
+        {
+          "word": "Clicking",
+          "start": 90.34,
+          "end": 90.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 90.98,
+          "end": 91.12,
+          "probability": 0.998
+        },
+        {
+          "word": "organization's",
+          "start": 91.12,
+          "end": 92.0,
+          "probability": 0.6084
+        },
+        {
+          "word": "link",
+          "start": 92.0,
+          "end": 92.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 92.2,
+          "end": 92.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 92.34,
+          "end": 92.44,
+          "probability": 1.0
+        },
+        {
+          "word": "Basic",
+          "start": 92.44,
+          "end": 92.78,
+          "probability": 0.5918
+        },
+        {
+          "word": "tab",
+          "start": 92.78,
+          "end": 93.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "takes",
+          "start": 93.1,
+          "end": 93.4,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 93.4,
+          "end": 93.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 93.6,
+          "end": 93.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 93.74,
+          "end": 93.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "organization's",
+          "start": 93.88,
+          "end": 94.78,
+          "probability": 0.9863
+        },
+        {
+          "word": "detail",
+          "start": 94.78,
+          "end": 95.1,
+          "probability": 0.9224
+        },
+        {
+          "word": "page.",
+          "start": 95.1,
+          "end": 95.66,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 95.66,
+      "end": 102.66,
+      "start_formatted": "00:01:35.660",
+      "end_formatted": "00:01:42.660",
+      "text": "After examining the organization's groups, the user admin decides to add a new group for foster city producers.",
+      "words": [
+        {
+          "word": "After",
+          "start": 95.66,
+          "end": 96.88,
+          "probability": 0.9673
+        },
+        {
+          "word": "examining",
+          "start": 96.88,
+          "end": 97.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 97.38,
+          "end": 97.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "organization's",
+          "start": 97.6,
+          "end": 98.5,
+          "probability": 0.9902
+        },
+        {
+          "word": "groups,",
+          "start": 98.5,
+          "end": 98.82,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 99.18,
+          "end": 99.32,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 99.32,
+          "end": 99.6,
+          "probability": 0.9351
+        },
+        {
+          "word": "admin",
+          "start": 99.6,
+          "end": 99.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "decides",
+          "start": 99.82,
+          "end": 100.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 100.3,
+          "end": 100.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 100.52,
+          "end": 100.72,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 100.72,
+          "end": 100.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 100.82,
+          "end": 100.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "group",
+          "start": 100.96,
+          "end": 101.22,
+          "probability": 0.9893
+        },
+        {
+          "word": "for",
+          "start": 101.22,
+          "end": 101.42,
+          "probability": 0.999
+        },
+        {
+          "word": "foster",
+          "start": 101.42,
+          "end": 101.76,
+          "probability": 0.502
+        },
+        {
+          "word": "city",
+          "start": 101.76,
+          "end": 102.12,
+          "probability": 0.9844
+        },
+        {
+          "word": "producers.",
+          "start": 102.12,
+          "end": 102.66,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 103.02,
+      "end": 104.14,
+      "start_formatted": "00:01:43.020",
+      "end_formatted": "00:01:44.140",
+      "text": "Click Actions.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 103.02,
+          "end": 103.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "Actions.",
+          "start": 103.5,
+          "end": 104.14,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 104.96,
+      "end": 106.24,
+      "start_formatted": "00:01:44.960",
+      "end_formatted": "00:01:46.240",
+      "text": "Select New Group.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 104.96,
+          "end": 105.68,
+          "probability": 0.999
+        },
+        {
+          "word": "New",
+          "start": 105.68,
+          "end": 105.88,
+          "probability": 0.9717
+        },
+        {
+          "word": "Group.",
+          "start": 105.88,
+          "end": 106.24,
+          "probability": 0.9712
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 109.06,
+      "end": 110.56,
+      "start_formatted": "00:01:49.060",
+      "end_formatted": "00:01:50.560",
+      "text": "Enter the group name.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 109.06,
+          "end": 109.78,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 109.78,
+          "end": 109.98,
+          "probability": 1.0
+        },
+        {
+          "word": "group",
+          "start": 109.98,
+          "end": 110.24,
+          "probability": 0.9565
+        },
+        {
+          "word": "name.",
+          "start": 110.24,
+          "end": 110.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 118.96,
+      "end": 122.2,
+      "start_formatted": "00:01:58.960",
+      "end_formatted": "00:02:02.200",
+      "text": "The new group belongs to the organization Armstrong and Company.",
+      "words": [
+        {
+          "word": "The",
+          "start": 118.68,
+          "end": 119.04,
+          "probability": 0.9849
+        },
+        {
+          "word": "new",
+          "start": 119.04,
+          "end": 119.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "group",
+          "start": 119.22,
+          "end": 119.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "belongs",
+          "start": 119.46,
+          "end": 119.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 119.88,
+          "end": 120.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 120.08,
+          "end": 120.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "organization",
+          "start": 120.2,
+          "end": 120.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Armstrong",
+          "start": 120.88,
+          "end": 121.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "and",
+          "start": 121.32,
+          "end": 121.82,
+          "probability": 0.4448
+        },
+        {
+          "word": "Company.",
+          "start": 121.82,
+          "end": 122.2,
+          "probability": 0.9771
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 122.54,
+      "end": 123.9,
+      "start_formatted": "00:02:02.540",
+      "end_formatted": "00:02:03.900",
+      "text": "Click the search icon.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 122.54,
+          "end": 122.98,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 122.98,
+          "end": 123.14,
+          "probability": 1.0
+        },
+        {
+          "word": "search",
+          "start": 123.14,
+          "end": 123.4,
+          "probability": 0.8569
+        },
+        {
+          "word": "icon.",
+          "start": 123.4,
+          "end": 123.9,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 123.9,
+      "end": 126.2,
+      "start_formatted": "00:02:03.900",
+      "end_formatted": "00:02:06.200",
+      "text": "Enter the search criteria.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 123.9,
+          "end": 125.08,
+          "probability": 0.9561
+        },
+        {
+          "word": "the",
+          "start": 125.08,
+          "end": 125.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "search",
+          "start": 125.26,
+          "end": 125.52,
+          "probability": 0.9009
+        },
+        {
+          "word": "criteria.",
+          "start": 125.52,
+          "end": 126.2,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 127.34,
+      "end": 128.36,
+      "start_formatted": "00:02:07.340",
+      "end_formatted": "00:02:08.360",
+      "text": "Click Search.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 127.34,
+          "end": 128.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "Search.",
+          "start": 128.06,
+          "end": 128.36,
+          "probability": 0.7573
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 131.56,
+      "end": 133.34,
+      "start_formatted": "00:02:11.560",
+      "end_formatted": "00:02:13.340",
+      "text": "Select the right organization.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 131.56,
+          "end": 132.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 132.28,
+          "end": 132.46,
+          "probability": 0.999
+        },
+        {
+          "word": "right",
+          "start": 132.46,
+          "end": 132.64,
+          "probability": 0.9746
+        },
+        {
+          "word": "organization.",
+          "start": 132.64,
+          "end": 133.34,
+          "probability": 0.9722
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 135.84,
+      "end": 138.24,
+      "start_formatted": "00:02:15.840",
+      "end_formatted": "00:02:18.240",
+      "text": "Set producer as the type of the new group.",
+      "words": [
+        {
+          "word": "Set",
+          "start": 135.84,
+          "end": 136.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "producer",
+          "start": 136.56,
+          "end": 136.92,
+          "probability": 0.6597
+        },
+        {
+          "word": "as",
+          "start": 136.92,
+          "end": 137.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 137.2,
+          "end": 137.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "type",
+          "start": 137.3,
+          "end": 137.5,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 137.5,
+          "end": 137.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 137.64,
+          "end": 137.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 137.74,
+          "end": 137.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "group.",
+          "start": 137.88,
+          "end": 138.24,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 143.62,
+      "end": 151.6,
+      "start_formatted": "00:02:23.620",
+      "end_formatted": "00:02:31.600",
+      "text": "The security zone applies restriction on internal users when they are searching for other users, groups, producer codes, or organizations.",
+      "words": [
+        {
+          "word": "The",
+          "start": 143.62,
+          "end": 144.26,
+          "probability": 0.8867
+        },
+        {
+          "word": "security",
+          "start": 144.26,
+          "end": 144.66,
+          "probability": 0.6226
+        },
+        {
+          "word": "zone",
+          "start": 144.66,
+          "end": 144.96,
+          "probability": 1.0
+        },
+        {
+          "word": "applies",
+          "start": 144.96,
+          "end": 145.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "restriction",
+          "start": 145.34,
+          "end": 145.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 145.92,
+          "end": 146.16,
+          "probability": 1.0
+        },
+        {
+          "word": "internal",
+          "start": 146.16,
+          "end": 146.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "users",
+          "start": 146.46,
+          "end": 146.86,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 146.86,
+          "end": 147.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "they",
+          "start": 147.1,
+          "end": 147.22,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 147.22,
+          "end": 147.36,
+          "probability": 1.0
+        },
+        {
+          "word": "searching",
+          "start": 147.36,
+          "end": 147.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 147.68,
+          "end": 147.9,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 147.9,
+          "end": 148.1,
+          "probability": 0.999
+        },
+        {
+          "word": "users,",
+          "start": 148.1,
+          "end": 148.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "groups,",
+          "start": 148.82,
+          "end": 149.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "producer",
+          "start": 149.54,
+          "end": 149.9,
+          "probability": 0.999
+        },
+        {
+          "word": "codes,",
+          "start": 149.9,
+          "end": 150.38,
+          "probability": 0.999
+        },
+        {
+          "word": "or",
+          "start": 150.58,
+          "end": 150.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "organizations.",
+          "start": 150.84,
+          "end": 151.6,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 152.12,
+      "end": 156.58,
+      "start_formatted": "00:02:32.120",
+      "end_formatted": "00:02:36.580",
+      "text": "The internal user must have the same security zone as on the group to access the group.",
+      "words": [
+        {
+          "word": "The",
+          "start": 152.12,
+          "end": 152.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "internal",
+          "start": 152.5,
+          "end": 152.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 152.84,
+          "end": 153.24,
+          "probability": 1.0
+        },
+        {
+          "word": "must",
+          "start": 153.24,
+          "end": 153.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 153.5,
+          "end": 153.66,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 153.66,
+          "end": 153.8,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 153.8,
+          "end": 154.02,
+          "probability": 1.0
+        },
+        {
+          "word": "security",
+          "start": 154.02,
+          "end": 154.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "zone",
+          "start": 154.54,
+          "end": 154.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "as",
+          "start": 154.88,
+          "end": 155.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 155.04,
+          "end": 155.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 155.16,
+          "end": 155.26,
+          "probability": 1.0
+        },
+        {
+          "word": "group",
+          "start": 155.26,
+          "end": 155.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 155.48,
+          "end": 155.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 155.64,
+          "end": 156.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 156.04,
+          "end": 156.26,
+          "probability": 1.0
+        },
+        {
+          "word": "group.",
+          "start": 156.26,
+          "end": 156.58,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 157.24,
+      "end": 158.72,
+      "start_formatted": "00:02:37.240",
+      "end_formatted": "00:02:38.720",
+      "text": "Select Western Region.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 157.24,
+          "end": 157.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "Western",
+          "start": 157.88,
+          "end": 158.24,
+          "probability": 0.959
+        },
+        {
+          "word": "Region.",
+          "start": 158.24,
+          "end": 158.72,
+          "probability": 0.96
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 161.4,
+      "end": 161.9,
+      "start_formatted": "00:02:41.400",
+      "end_formatted": "00:02:41.900",
+      "text": "Select localization.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 161.4,
+          "end": 161.9,
+          "probability": 0.0044
+        },
+        {
+          "word": "localization.",
+          "start": 161.9,
+          "end": 161.9,
+          "probability": 0.4993
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 161.9,
+      "end": 163.32,
+      "start_formatted": "00:02:41.900",
+      "end_formatted": "00:02:43.320",
+      "text": "Click Update to save the new group.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 161.9,
+          "end": 161.9,
+          "probability": 0.9185
+        },
+        {
+          "word": "Update",
+          "start": 161.9,
+          "end": 162.2,
+          "probability": 0.6201
+        },
+        {
+          "word": "to",
+          "start": 162.2,
+          "end": 162.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "save",
+          "start": 162.4,
+          "end": 162.66,
+          "probability": 0.9746
+        },
+        {
+          "word": "the",
+          "start": 162.66,
+          "end": 162.8,
+          "probability": 0.9902
+        },
+        {
+          "word": "new",
+          "start": 162.8,
+          "end": 162.96,
+          "probability": 0.978
+        },
+        {
+          "word": "group.",
+          "start": 162.96,
+          "end": 163.32,
+          "probability": 0.9692
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 185.56,
+      "end": 186.96,
+      "start_formatted": "00:03:05.560",
+      "end_formatted": "00:03:06.960",
+      "text": "Openountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "Openountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 185.56,
+          "end": 186.96,
+          "probability": 0.9263
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 186.96,
+      "end": 188.92,
+      "start_formatted": "00:03:06.960",
+      "end_formatted": "00:03:08.920",
+      "text": "The search word is pretext.",
+      "words": [
+        {
+          "word": "The",
+          "start": 186.96,
+          "end": 187.6,
+          "probability": 0.9526
+        },
+        {
+          "word": "search",
+          "start": 187.6,
+          "end": 187.9,
+          "probability": 0.9399
+        },
+        {
+          "word": "word",
+          "start": 187.9,
+          "end": 188.16,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 188.16,
+          "end": 188.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "pretext.",
+          "start": 188.34,
+          "end": 188.92,
+          "probability": 0.7178
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 191.28,
+      "end": 192.22,
+      "start_formatted": "00:03:11.280",
+      "end_formatted": "00:03:12.220",
+      "text": "Click Search.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 191.28,
+          "end": 191.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "Search.",
+          "start": 191.92,
+          "end": 192.22,
+          "probability": 0.6587
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 195.82,
+      "end": 198.14,
+      "start_formatted": "00:03:15.820",
+      "end_formatted": "00:03:18.140",
+      "text": "Click the user link in the result list.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 195.82,
+          "end": 196.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 196.46,
+          "end": 196.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "user",
+          "start": 196.62,
+          "end": 196.9,
+          "probability": 0.8315
+        },
+        {
+          "word": "link",
+          "start": 196.9,
+          "end": 197.12,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 197.12,
+          "end": 197.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 197.28,
+          "end": 197.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "result",
+          "start": 197.36,
+          "end": 197.72,
+          "probability": 0.939
+        },
+        {
+          "word": "list.",
+          "start": 197.72,
+          "end": 198.14,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 199.88,
+      "end": 205.96,
+      "start_formatted": "00:03:19.880",
+      "end_formatted": "00:03:25.960",
+      "text": "The basic step lists information about the user regarding internal or external, user type, etc.",
+      "words": [
+        {
+          "word": "The",
+          "start": 199.88,
+          "end": 200.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "basic",
+          "start": 200.52,
+          "end": 200.84,
+          "probability": 0.4795
+        },
+        {
+          "word": "step",
+          "start": 200.84,
+          "end": 201.1,
+          "probability": 0.4536
+        },
+        {
+          "word": "lists",
+          "start": 201.1,
+          "end": 201.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "information",
+          "start": 201.48,
+          "end": 202.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "about",
+          "start": 202.06,
+          "end": 202.36,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 202.36,
+          "end": 202.54,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 202.54,
+          "end": 202.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "regarding",
+          "start": 202.8,
+          "end": 203.26,
+          "probability": 0.999
+        },
+        {
+          "word": "internal",
+          "start": 203.26,
+          "end": 203.66,
+          "probability": 0.9639
+        },
+        {
+          "word": "or",
+          "start": 203.66,
+          "end": 203.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "external,",
+          "start": 203.92,
+          "end": 204.4,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 204.66,
+          "end": 205.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "type,",
+          "start": 205.02,
+          "end": 205.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "etc.",
+          "start": 205.68,
+          "end": 205.96,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 206.72,
+      "end": 212.44,
+      "start_formatted": "00:03:26.720",
+      "end_formatted": "00:03:32.440",
+      "text": "The Attributes tab can be used to associate custom attributes with the user for assignment purpose.",
+      "words": [
+        {
+          "word": "The",
+          "start": 206.72,
+          "end": 207.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "Attributes",
+          "start": 207.36,
+          "end": 207.98,
+          "probability": 0.9307
+        },
+        {
+          "word": "tab",
+          "start": 207.98,
+          "end": 208.22,
+          "probability": 0.9834
+        },
+        {
+          "word": "can",
+          "start": 208.22,
+          "end": 208.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 208.42,
+          "end": 208.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "used",
+          "start": 208.56,
+          "end": 208.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 208.82,
+          "end": 208.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "associate",
+          "start": 208.98,
+          "end": 209.52,
+          "probability": 0.998
+        },
+        {
+          "word": "custom",
+          "start": 209.52,
+          "end": 210.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "attributes",
+          "start": 210.04,
+          "end": 210.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 210.5,
+          "end": 210.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 210.82,
+          "end": 210.96,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 210.96,
+          "end": 211.26,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 211.26,
+          "end": 211.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "assignment",
+          "start": 211.44,
+          "end": 211.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "purpose.",
+          "start": 211.9,
+          "end": 212.44,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 212.44,
+      "end": 217.68,
+      "start_formatted": "00:03:32.440",
+      "end_formatted": "00:03:37.680",
+      "text": "Some examples of user attributes are expertise, language, line of business.",
+      "words": [
+        {
+          "word": "Some",
+          "start": 212.44,
+          "end": 213.28,
+          "probability": 0.9014
+        },
+        {
+          "word": "examples",
+          "start": 213.28,
+          "end": 213.78,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 213.78,
+          "end": 214.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 214.02,
+          "end": 214.34,
+          "probability": 0.9741
+        },
+        {
+          "word": "attributes",
+          "start": 214.34,
+          "end": 214.8,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 214.8,
+          "end": 215.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "expertise,",
+          "start": 215.08,
+          "end": 215.56,
+          "probability": 0.8379
+        },
+        {
+          "word": "language,",
+          "start": 216.0,
+          "end": 216.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "line",
+          "start": 216.82,
+          "end": 217.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 217.08,
+          "end": 217.26,
+          "probability": 0.9707
+        },
+        {
+          "word": "business.",
+          "start": 217.26,
+          "end": 217.68,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 219.0,
+      "end": 225.7,
+      "start_formatted": "00:03:39.000",
+      "end_formatted": "00:03:45.700",
+      "text": "The Access tab lists the groups the user belongs to, and producer codes if user producer code security is set to yes.",
+      "words": [
+        {
+          "word": "The",
+          "start": 218.76,
+          "end": 219.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "Access",
+          "start": 219.08,
+          "end": 219.5,
+          "probability": 0.7251
+        },
+        {
+          "word": "tab",
+          "start": 219.5,
+          "end": 219.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "lists",
+          "start": 219.82,
+          "end": 220.16,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 220.16,
+          "end": 220.32,
+          "probability": 1.0
+        },
+        {
+          "word": "groups",
+          "start": 220.32,
+          "end": 220.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 220.58,
+          "end": 220.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 220.76,
+          "end": 221.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "belongs",
+          "start": 221.08,
+          "end": 221.54,
+          "probability": 1.0
+        },
+        {
+          "word": "to,",
+          "start": 221.54,
+          "end": 221.86,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 222.08,
+          "end": 222.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "producer",
+          "start": 222.32,
+          "end": 222.68,
+          "probability": 0.8716
+        },
+        {
+          "word": "codes",
+          "start": 222.68,
+          "end": 223.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "if",
+          "start": 223.02,
+          "end": 223.18,
+          "probability": 0.9492
+        },
+        {
+          "word": "user",
+          "start": 223.18,
+          "end": 223.5,
+          "probability": 0.8921
+        },
+        {
+          "word": "producer",
+          "start": 223.5,
+          "end": 223.9,
+          "probability": 0.5747
+        },
+        {
+          "word": "code",
+          "start": 223.9,
+          "end": 224.28,
+          "probability": 0.978
+        },
+        {
+          "word": "security",
+          "start": 224.28,
+          "end": 224.78,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 224.78,
+          "end": 225.04,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 225.04,
+          "end": 225.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 225.24,
+          "end": 225.4,
+          "probability": 1.0
+        },
+        {
+          "word": "yes.",
+          "start": 225.4,
+          "end": 225.7,
+          "probability": 0.4844
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 226.46,
+      "end": 228.94,
+      "start_formatted": "00:03:46.460",
+      "end_formatted": "00:03:48.940",
+      "text": "Manage the roles of the user on the Roles tab.",
+      "words": [
+        {
+          "word": "Manage",
+          "start": 226.46,
+          "end": 227.1,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 227.1,
+          "end": 227.22,
+          "probability": 0.999
+        },
+        {
+          "word": "roles",
+          "start": 227.22,
+          "end": 227.52,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 227.52,
+          "end": 227.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 227.74,
+          "end": 227.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 227.84,
+          "end": 228.12,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 228.12,
+          "end": 228.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 228.28,
+          "end": 228.38,
+          "probability": 1.0
+        },
+        {
+          "word": "Roles",
+          "start": 228.38,
+          "end": 228.64,
+          "probability": 0.9053
+        },
+        {
+          "word": "tab.",
+          "start": 228.64,
+          "end": 228.94,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 229.22,
+      "end": 234.44,
+      "start_formatted": "00:03:49.220",
+      "end_formatted": "00:03:54.440",
+      "text": "In this example, Alice Applegate has two roles, Underwriter and Reinsurance Manager.",
+      "words": [
+        {
+          "word": "In",
+          "start": 229.22,
+          "end": 229.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 229.58,
+          "end": 229.76,
+          "probability": 1.0
+        },
+        {
+          "word": "example,",
+          "start": 229.76,
+          "end": 230.24,
+          "probability": 1.0
+        },
+        {
+          "word": "Alice",
+          "start": 230.68,
+          "end": 230.92,
+          "probability": 0.999
+        },
+        {
+          "word": "Applegate",
+          "start": 230.92,
+          "end": 231.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 231.48,
+          "end": 231.7,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 231.7,
+          "end": 231.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "roles,",
+          "start": 231.94,
+          "end": 232.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "Underwriter",
+          "start": 232.7,
+          "end": 233.12,
+          "probability": 0.9658
+        },
+        {
+          "word": "and",
+          "start": 233.12,
+          "end": 233.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "Reinsurance",
+          "start": 233.32,
+          "end": 234.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "Manager.",
+          "start": 234.0,
+          "end": 234.44,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 235.18,
+      "end": 239.04,
+      "start_formatted": "00:03:55.180",
+      "end_formatted": "00:03:59.040",
+      "text": "The Profiles tab displays the basic information about the user.",
+      "words": [
+        {
+          "word": "The",
+          "start": 235.18,
+          "end": 235.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "Profiles",
+          "start": 235.64,
+          "end": 236.26,
+          "probability": 0.998
+        },
+        {
+          "word": "tab",
+          "start": 236.26,
+          "end": 236.54,
+          "probability": 1.0
+        },
+        {
+          "word": "displays",
+          "start": 236.54,
+          "end": 237.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 237.02,
+          "end": 237.28,
+          "probability": 1.0
+        },
+        {
+          "word": "basic",
+          "start": 237.28,
+          "end": 237.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "information",
+          "start": 237.62,
+          "end": 238.18,
+          "probability": 1.0
+        },
+        {
+          "word": "about",
+          "start": 238.18,
+          "end": 238.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 238.52,
+          "end": 238.7,
+          "probability": 1.0
+        },
+        {
+          "word": "user.",
+          "start": 238.7,
+          "end": 239.04,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 239.04,
+      "end": 243.14,
+      "start_formatted": "00:03:59.040",
+      "end_formatted": "00:04:03.140",
+      "text": "The Regions tab is used to add the geographic area for the user.",
+      "words": [
+        {
+          "word": "The",
+          "start": 239.04,
+          "end": 239.96,
+          "probability": 0.9131
+        },
+        {
+          "word": "Regions",
+          "start": 239.96,
+          "end": 240.42,
+          "probability": 0.8965
+        },
+        {
+          "word": "tab",
+          "start": 240.42,
+          "end": 240.66,
+          "probability": 0.9795
+        },
+        {
+          "word": "is",
+          "start": 240.66,
+          "end": 240.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 240.88,
+          "end": 241.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 241.14,
+          "end": 241.28,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 241.28,
+          "end": 241.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 241.44,
+          "end": 241.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "geographic",
+          "start": 241.58,
+          "end": 242.06,
+          "probability": 0.9214
+        },
+        {
+          "word": "area",
+          "start": 242.06,
+          "end": 242.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 242.44,
+          "end": 242.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 242.7,
+          "end": 242.84,
+          "probability": 0.999
+        },
+        {
+          "word": "user.",
+          "start": 242.84,
+          "end": 243.14,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 243.66,
+      "end": 249.36,
+      "start_formatted": "00:04:03.660",
+      "end_formatted": "00:04:09.360",
+      "text": "The UW Authority tab lists the underwriting authority profiles used to approve underwriting issues.",
+      "words": [
+        {
+          "word": "The",
+          "start": 243.66,
+          "end": 244.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "UW",
+          "start": 244.22,
+          "end": 244.58,
+          "probability": 0.9819
+        },
+        {
+          "word": "Authority",
+          "start": 244.58,
+          "end": 245.16,
+          "probability": 0.9106
+        },
+        {
+          "word": "tab",
+          "start": 245.16,
+          "end": 245.52,
+          "probability": 0.9854
+        },
+        {
+          "word": "lists",
+          "start": 245.52,
+          "end": 245.8,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 245.8,
+          "end": 245.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "underwriting",
+          "start": 245.96,
+          "end": 246.48,
+          "probability": 0.9116
+        },
+        {
+          "word": "authority",
+          "start": 246.48,
+          "end": 246.9,
+          "probability": 0.9414
+        },
+        {
+          "word": "profiles",
+          "start": 246.9,
+          "end": 247.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "used",
+          "start": 247.58,
+          "end": 247.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 247.9,
+          "end": 248.06,
+          "probability": 0.999
+        },
+        {
+          "word": "approve",
+          "start": 248.06,
+          "end": 248.42,
+          "probability": 0.9839
+        },
+        {
+          "word": "underwriting",
+          "start": 248.42,
+          "end": 248.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "issues.",
+          "start": 248.9,
+          "end": 249.36,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 249.7,
+      "end": 252.32,
+      "start_formatted": "00:04:09.700",
+      "end_formatted": "00:04:12.320",
+      "text": "Let's add a new user to the group created earlier.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 249.7,
+          "end": 250.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "add",
+          "start": 250.18,
+          "end": 250.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "a",
+          "start": 250.34,
+          "end": 250.44,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 250.44,
+          "end": 250.56,
+          "probability": 0.9878
+        },
+        {
+          "word": "user",
+          "start": 250.56,
+          "end": 250.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 250.84,
+          "end": 251.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 251.02,
+          "end": 251.14,
+          "probability": 0.999
+        },
+        {
+          "word": "group",
+          "start": 251.14,
+          "end": 251.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "created",
+          "start": 251.4,
+          "end": 251.84,
+          "probability": 0.999
+        },
+        {
+          "word": "earlier.",
+          "start": 251.84,
+          "end": 252.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 252.6,
+      "end": 253.7,
+      "start_formatted": "00:04:12.600",
+      "end_formatted": "00:04:13.700",
+      "text": "Click Actions.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 252.6,
+          "end": 253.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "Actions.",
+          "start": 253.06,
+          "end": 253.7,
+          "probability": 0.9727
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 254.5,
+      "end": 255.76,
+      "start_formatted": "00:04:14.500",
+      "end_formatted": "00:04:15.760",
+      "text": "Select New User.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 254.5,
+          "end": 255.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "New",
+          "start": 255.22,
+          "end": 255.42,
+          "probability": 0.9087
+        },
+        {
+          "word": "User.",
+          "start": 255.42,
+          "end": 255.76,
+          "probability": 0.9009
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 258.42,
+      "end": 260.4,
+      "start_formatted": "00:04:18.420",
+      "end_formatted": "00:04:20.400",
+      "text": "Enter the user's information.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 258.42,
+          "end": 259.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 259.14,
+          "end": 259.3,
+          "probability": 0.999
+        },
+        {
+          "word": "user's",
+          "start": 259.3,
+          "end": 259.76,
+          "probability": 0.9834
+        },
+        {
+          "word": "information.",
+          "start": 259.76,
+          "end": 260.4,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 261.5,
+      "end": 268.96,
+      "start_formatted": "00:04:21.500",
+      "end_formatted": "00:04:28.960",
+      "text": "Enter the user's information.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 261.5,
+          "end": 261.54,
+          "probability": 0.2852
+        },
+        {
+          "word": "the",
+          "start": 261.54,
+          "end": 266.64,
+          "probability": 0.7627
+        },
+        {
+          "word": "user's",
+          "start": 266.64,
+          "end": 268.96,
+          "probability": 0.9219
+        },
+        {
+          "word": "information.",
+          "start": 268.96,
+          "end": 268.96,
+          "probability": 0.9062
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 281.2,
+      "end": 281.88,
+      "start_formatted": "00:04:41.200",
+      "end_formatted": "00:04:41.880",
+      "text": "Enter name.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 281.2,
+          "end": 281.88,
+          "probability": 0.0008
+        },
+        {
+          "word": "name.",
+          "start": 281.88,
+          "end": 281.88,
+          "probability": 0.1437
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 281.88,
+      "end": 285.42,
+      "start_formatted": "00:04:41.880",
+      "end_formatted": "00:04:45.420",
+      "text": "To set a user as an external user, set External to Yes.",
+      "words": [
+        {
+          "word": "To",
+          "start": 281.88,
+          "end": 281.88,
+          "probability": 0.0401
+        },
+        {
+          "word": "set",
+          "start": 281.88,
+          "end": 282.08,
+          "probability": 0.9585
+        },
+        {
+          "word": "a",
+          "start": 282.08,
+          "end": 282.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "user",
+          "start": 282.22,
+          "end": 282.54,
+          "probability": 0.9492
+        },
+        {
+          "word": "as",
+          "start": 282.54,
+          "end": 282.74,
+          "probability": 0.9883
+        },
+        {
+          "word": "an",
+          "start": 282.74,
+          "end": 282.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "external",
+          "start": 282.86,
+          "end": 283.26,
+          "probability": 0.8569
+        },
+        {
+          "word": "user,",
+          "start": 283.26,
+          "end": 283.78,
+          "probability": 0.9883
+        },
+        {
+          "word": "set",
+          "start": 284.04,
+          "end": 284.38,
+          "probability": 0.9399
+        },
+        {
+          "word": "External",
+          "start": 284.38,
+          "end": 284.84,
+          "probability": 0.3994
+        },
+        {
+          "word": "to",
+          "start": 284.84,
+          "end": 285.08,
+          "probability": 0.9873
+        },
+        {
+          "word": "Yes.",
+          "start": 285.08,
+          "end": 285.42,
+          "probability": 0.7373
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 285.88,
+      "end": 288.54,
+      "start_formatted": "00:04:45.880",
+      "end_formatted": "00:04:48.540",
+      "text": "The user belongs to Armstrong and Company.",
+      "words": [
+        {
+          "word": "The",
+          "start": 285.88,
+          "end": 286.44,
+          "probability": 0.959
+        },
+        {
+          "word": "user",
+          "start": 286.44,
+          "end": 286.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "belongs",
+          "start": 286.72,
+          "end": 287.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 287.12,
+          "end": 287.34,
+          "probability": 0.999
+        },
+        {
+          "word": "Armstrong",
+          "start": 287.34,
+          "end": 287.82,
+          "probability": 0.9419
+        },
+        {
+          "word": "and",
+          "start": 287.82,
+          "end": 288.2,
+          "probability": 0.7803
+        },
+        {
+          "word": "Company.",
+          "start": 288.2,
+          "end": 288.54,
+          "probability": 0.771
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 288.86,
+      "end": 290.26,
+      "start_formatted": "00:04:48.860",
+      "end_formatted": "00:04:50.260",
+      "text": "Click the search icon.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 288.86,
+          "end": 289.32,
+          "probability": 0.9771
+        },
+        {
+          "word": "the",
+          "start": 289.32,
+          "end": 289.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "search",
+          "start": 289.48,
+          "end": 289.74,
+          "probability": 0.6733
+        },
+        {
+          "word": "icon.",
+          "start": 289.74,
+          "end": 290.26,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 290.72,
+      "end": 291.66,
+      "start_formatted": "00:04:50.720",
+      "end_formatted": "00:04:51.660",
+      "text": "Enter name.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 290.72,
+          "end": 291.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "name.",
+          "start": 291.38,
+          "end": 291.66,
+          "probability": 0.9399
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 293.74,
+      "end": 294.72,
+      "start_formatted": "00:04:53.740",
+      "end_formatted": "00:04:54.720",
+      "text": "Click Search.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 293.74,
+          "end": 294.42,
+          "probability": 0.9824
+        },
+        {
+          "word": "Search.",
+          "start": 294.42,
+          "end": 294.72,
+          "probability": 0.7046
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 297.9,
+      "end": 299.6,
+      "start_formatted": "00:04:57.900",
+      "end_formatted": "00:04:59.600",
+      "text": "Select the organization.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 297.9,
+          "end": 298.66,
+          "probability": 0.8965
+        },
+        {
+          "word": "the",
+          "start": 298.66,
+          "end": 298.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "organization.",
+          "start": 298.88,
+          "end": 299.6,
+          "probability": 0.7358
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 302.0,
+      "end": 304.16,
+      "start_formatted": "00:05:02.000",
+      "end_formatted": "00:05:04.160",
+      "text": "Set the user type to be Producer.",
+      "words": [
+        {
+          "word": "Set",
+          "start": 302.0,
+          "end": 302.76,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 302.76,
+          "end": 302.92,
+          "probability": 0.9932
+        },
+        {
+          "word": "user",
+          "start": 302.92,
+          "end": 303.2,
+          "probability": 0.876
+        },
+        {
+          "word": "type",
+          "start": 303.2,
+          "end": 303.48,
+          "probability": 0.978
+        },
+        {
+          "word": "to",
+          "start": 303.48,
+          "end": 303.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "be",
+          "start": 303.64,
+          "end": 303.76,
+          "probability": 0.9849
+        },
+        {
+          "word": "Producer.",
+          "start": 303.76,
+          "end": 304.16,
+          "probability": 0.2825
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 309.8,
+      "end": 311.3,
+      "start_formatted": "00:05:09.800",
+      "end_formatted": "00:05:11.300",
+      "text": "Enter a phone number.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 309.8,
+          "end": 310.56,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 310.56,
+          "end": 310.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "phone",
+          "start": 310.72,
+          "end": 310.92,
+          "probability": 0.9648
+        },
+        {
+          "word": "number.",
+          "start": 310.92,
+          "end": 311.3,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 323.36,
+      "end": 325.4,
+      "start_formatted": "00:05:23.360",
+      "end_formatted": "00:05:25.400",
+      "text": "Click Update to save the new user.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 323.36,
+          "end": 324.02,
+          "probability": 0.936
+        },
+        {
+          "word": "Update",
+          "start": 324.02,
+          "end": 324.36,
+          "probability": 0.7168
+        },
+        {
+          "word": "to",
+          "start": 324.36,
+          "end": 324.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "save",
+          "start": 324.56,
+          "end": 324.82,
+          "probability": 0.9727
+        },
+        {
+          "word": "the",
+          "start": 324.82,
+          "end": 324.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 324.96,
+          "end": 325.1,
+          "probability": 0.9839
+        },
+        {
+          "word": "user.",
+          "start": 325.1,
+          "end": 325.4,
+          "probability": 0.9717
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 327.5,
+      "end": 331.34,
+      "start_formatted": "00:05:27.500",
+      "end_formatted": "00:05:31.340",
+      "text": "The warning messages are displayed about non-matching roles and group.",
+      "words": [
+        {
+          "word": "The",
+          "start": 327.5,
+          "end": 328.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "warning",
+          "start": 328.16,
+          "end": 328.48,
+          "probability": 0.8945
+        },
+        {
+          "word": "messages",
+          "start": 328.48,
+          "end": 328.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 328.92,
+          "end": 329.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed",
+          "start": 329.16,
+          "end": 329.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 329.58,
+          "end": 329.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "non",
+          "start": 329.84,
+          "end": 330.08,
+          "probability": 0.9424
+        },
+        {
+          "word": "-matching",
+          "start": 330.08,
+          "end": 330.44,
+          "probability": 0.9839
+        },
+        {
+          "word": "roles",
+          "start": 330.44,
+          "end": 330.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "and",
+          "start": 330.82,
+          "end": 331.04,
+          "probability": 0.8809
+        },
+        {
+          "word": "group.",
+          "start": 331.04,
+          "end": 331.34,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 331.6,
+      "end": 332.94,
+      "start_formatted": "00:05:31.600",
+      "end_formatted": "00:05:32.940",
+      "text": "Go to the Roles tab.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 331.6,
+          "end": 331.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 331.98,
+          "end": 332.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 332.14,
+          "end": 332.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Roles",
+          "start": 332.28,
+          "end": 332.62,
+          "probability": 0.937
+        },
+        {
+          "word": "tab.",
+          "start": 332.62,
+          "end": 332.94,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 333.42,
+      "end": 334.84,
+      "start_formatted": "00:05:33.420",
+      "end_formatted": "00:05:34.840",
+      "text": "Add the Producer role.",
+      "words": [
+        {
+          "word": "Add",
+          "start": 333.42,
+          "end": 333.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 333.96,
+          "end": 334.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "Producer",
+          "start": 334.1,
+          "end": 334.48,
+          "probability": 0.8394
+        },
+        {
+          "word": "role.",
+          "start": 334.48,
+          "end": 334.84,
+          "probability": 0.9526
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 339.8,
+      "end": 341.26,
+      "start_formatted": "00:05:39.800",
+      "end_formatted": "00:05:41.260",
+      "text": "Enter the producer role.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 339.8,
+          "end": 340.46,
+          "probability": 0.0028
+        },
+        {
+          "word": "the",
+          "start": 340.46,
+          "end": 341.12,
+          "probability": 0.5752
+        },
+        {
+          "word": "producer",
+          "start": 341.12,
+          "end": 341.12,
+          "probability": 0.0699
+        },
+        {
+          "word": "role.",
+          "start": 341.12,
+          "end": 341.26,
+          "probability": 0.5557
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 344.48,
+      "end": 346.32,
+      "start_formatted": "00:05:44.480",
+      "end_formatted": "00:05:46.320",
+      "text": "Go to the Access tab.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 344.48,
+          "end": 345.24,
+          "probability": 0.9644
+        },
+        {
+          "word": "to",
+          "start": 345.24,
+          "end": 345.4,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 345.4,
+          "end": 345.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "Access",
+          "start": 345.52,
+          "end": 345.9,
+          "probability": 0.7554
+        },
+        {
+          "word": "tab.",
+          "start": 345.9,
+          "end": 346.32,
+          "probability": 0.9624
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 348.7,
+      "end": 351.2,
+      "start_formatted": "00:05:48.700",
+      "end_formatted": "00:05:51.200",
+      "text": "In the Groups section, click Add.",
+      "words": [
+        {
+          "word": "In",
+          "start": 348.7,
+          "end": 349.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 349.46,
+          "end": 349.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "Groups",
+          "start": 349.56,
+          "end": 349.94,
+          "probability": 0.8916
+        },
+        {
+          "word": "section,",
+          "start": 349.94,
+          "end": 350.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 350.6,
+          "end": 350.9,
+          "probability": 0.9858
+        },
+        {
+          "word": "Add.",
+          "start": 350.9,
+          "end": 351.2,
+          "probability": 0.8618
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 353.18,
+      "end": 354.64,
+      "start_formatted": "00:05:53.180",
+      "end_formatted": "00:05:54.640",
+      "text": "Select User Group.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 353.18,
+          "end": 353.94,
+          "probability": 0.998
+        },
+        {
+          "word": "User",
+          "start": 353.94,
+          "end": 354.24,
+          "probability": 0.8442
+        },
+        {
+          "word": "Group.",
+          "start": 354.24,
+          "end": 354.64,
+          "probability": 0.9229
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 357.28,
+      "end": 360.92,
+      "start_formatted": "00:05:57.280",
+      "end_formatted": "00:06:00.920",
+      "text": "Select Foster City Producers, the group created earlier.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 357.28,
+          "end": 358.04,
+          "probability": 0.998
+        },
+        {
+          "word": "Foster",
+          "start": 358.04,
+          "end": 358.38,
+          "probability": 0.9922
+        },
+        {
+          "word": "City",
+          "start": 358.38,
+          "end": 358.72,
+          "probability": 0.8774
+        },
+        {
+          "word": "Producers,",
+          "start": 358.72,
+          "end": 359.46,
+          "probability": 0.9526
+        },
+        {
+          "word": "the",
+          "start": 359.6,
+          "end": 359.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "group",
+          "start": 359.84,
+          "end": 360.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "created",
+          "start": 360.04,
+          "end": 360.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "earlier.",
+          "start": 360.46,
+          "end": 360.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 360.92,
+      "end": 364.86,
+      "start_formatted": "00:06:00.920",
+      "end_formatted": "00:06:04.860",
+      "text": "Note that the User Producer Code security is set to Yes.",
+      "words": [
+        {
+          "word": "Note",
+          "start": 360.92,
+          "end": 362.1,
+          "probability": 0.8672
+        },
+        {
+          "word": "that",
+          "start": 362.1,
+          "end": 362.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 362.28,
+          "end": 362.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "User",
+          "start": 362.4,
+          "end": 362.68,
+          "probability": 0.4312
+        },
+        {
+          "word": "Producer",
+          "start": 362.68,
+          "end": 363.08,
+          "probability": 0.6982
+        },
+        {
+          "word": "Code",
+          "start": 363.08,
+          "end": 363.46,
+          "probability": 0.7607
+        },
+        {
+          "word": "security",
+          "start": 363.46,
+          "end": 363.92,
+          "probability": 0.7524
+        },
+        {
+          "word": "is",
+          "start": 363.92,
+          "end": 364.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "set",
+          "start": 364.22,
+          "end": 364.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 364.42,
+          "end": 364.56,
+          "probability": 0.9443
+        },
+        {
+          "word": "Yes.",
+          "start": 364.56,
+          "end": 364.86,
+          "probability": 0.3118
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 365.18,
+      "end": 369.54,
+      "start_formatted": "00:06:05.180",
+      "end_formatted": "00:06:09.540",
+      "text": "Users inherit Producer codes from their group, and can have additional codes added.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 365.18,
+          "end": 365.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "inherit",
+          "start": 365.66,
+          "end": 366.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "Producer",
+          "start": 366.12,
+          "end": 366.52,
+          "probability": 0.2546
+        },
+        {
+          "word": "codes",
+          "start": 366.52,
+          "end": 366.94,
+          "probability": 0.4175
+        },
+        {
+          "word": "from",
+          "start": 366.94,
+          "end": 367.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "their",
+          "start": 367.14,
+          "end": 367.28,
+          "probability": 0.998
+        },
+        {
+          "word": "group,",
+          "start": 367.28,
+          "end": 367.64,
+          "probability": 0.9424
+        },
+        {
+          "word": "and",
+          "start": 367.78,
+          "end": 368.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 368.02,
+          "end": 368.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "have",
+          "start": 368.18,
+          "end": 368.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "additional",
+          "start": 368.38,
+          "end": 368.78,
+          "probability": 0.9917
+        },
+        {
+          "word": "codes",
+          "start": 368.78,
+          "end": 369.2,
+          "probability": 0.9868
+        },
+        {
+          "word": "added.",
+          "start": 369.2,
+          "end": 369.54,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 369.86,
+      "end": 371.02,
+      "start_formatted": "00:06:09.860",
+      "end_formatted": "00:06:11.020",
+      "text": "Click Update again.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 369.86,
+          "end": 370.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "Update",
+          "start": 370.28,
+          "end": 370.56,
+          "probability": 0.8369
+        },
+        {
+          "word": "again.",
+          "start": 370.56,
+          "end": 371.02,
+          "probability": 0.894
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 374.02,
+      "end": 376.4,
+      "start_formatted": "00:06:14.020",
+      "end_formatted": "00:06:16.400",
+      "text": "The user has been created successfully.",
+      "words": [
+        {
+          "word": "The",
+          "start": 374.02,
+          "end": 374.66,
+          "probability": 0.981
+        },
+        {
+          "word": "user",
+          "start": 374.66,
+          "end": 374.94,
+          "probability": 0.9072
+        },
+        {
+          "word": "has",
+          "start": 374.94,
+          "end": 375.16,
+          "probability": 0.999
+        },
+        {
+          "word": "been",
+          "start": 375.16,
+          "end": 375.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "created",
+          "start": 375.32,
+          "end": 375.76,
+          "probability": 0.999
+        },
+        {
+          "word": "successfully.",
+          "start": 375.76,
+          "end": 376.4,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 376.4,
+      "end": 376.56,
+      "start_formatted": "00:06:16.400",
+      "end_formatted": "00:06:16.560",
+      "text": "Click Update.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 376.4,
+          "end": 376.56,
+          "probability": 0.0002
+        },
+        {
+          "word": "Update.",
+          "start": 376.56,
+          "end": 376.56,
+          "probability": 0.0001
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 65,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 66,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 67,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 68,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 69,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 70,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 71,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 72,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 73,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 74,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 75,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 76,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 77,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 78,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 79,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 80,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 81,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 82,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 83,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 84,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 85,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 86,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 87,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 88,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 89,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 90,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 91,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 92,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 93,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 94,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 95,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 96,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 97,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 98,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 99,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 100,
+      "start": 376.56,
+      "end": 376.56,
+      "start_formatted": "00:06:16.560",
+      "end_formatted": "00:06:16.560",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 101,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 102,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 103,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 104,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 105,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 106,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 107,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 108,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 109,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 110,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 111,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 112,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 113,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 114,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 115,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 116,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 117,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 118,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 119,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 120,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 121,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 122,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 123,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 124,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 125,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 126,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 127,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 128,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 129,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 130,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 131,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 132,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 133,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 134,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 135,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 136,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 137,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 138,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 139,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 140,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 141,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 142,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 143,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 144,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 145,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 146,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 147,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 148,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 149,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 150,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 151,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 152,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 153,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 154,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 155,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 156,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 157,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 158,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 159,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 160,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 161,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 162,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 163,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 164,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 165,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 166,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 167,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 168,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 169,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 170,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 171,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 172,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 173,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 174,
+      "start": 376.54,
+      "end": 376.54,
+      "start_formatted": "00:06:16.540",
+      "end_formatted": "00:06:16.540",
+      "text": "",
+      "words": []
+    }
+  ]
+}

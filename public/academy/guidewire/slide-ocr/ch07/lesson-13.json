@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-13",
+    "slide_count": 27,
+    "slides_with_text": 25,
+    "total_words": 1400,
+    "avg_confidence": 87.95,
+    "processing_time_seconds": 12.42,
+    "extracted_at": "2026-02-13T12:19:42.772900"
+  },
+  "full_text": "List Views\n\nLesson\nobjectives ¢ Describe the functionality of List View panels\n\n* Create a new List View\n\n¢ Create and modify row iterator, row and cell\nwidgets\n\n¢ Reference a List View from a parent container\n\n| List View Panels G&G\n\n66 :.\n\nBankName > RoutingNumber AccountNumber > Account Type > Verified? >  CreatedOn >\nACME Credit Union 123-999 112233445 Checking Pending 06/19/2018 X)\nACME Credit Union 225-999 554433221 Savings Pending 06/19/2018\n(1 BankName* > Routing Number* > ‘Account Number* = > Account Type\" > Verified? S CreatedOn >\nACME Credit Union 123-999 112233445 ‘Checking Ad Pending 06/19/2018\nACME Credit Union (225-999 554433221 Savings a4 Pending. 06/19/2018\n\n¢ AList View Panel is a container widget that allows the user to view information\nabout multiple objects at the same time\n\n¢ Often referred to as \"List View“\n\n¢ Incertain cases, users can also edit the data displayed in the List View\n\n| Typical List View Panel structure G\n\n+ List View Panel typically takes single root object that has an array of\n\nABContact as root object entities to p s\n\n+ Row Iterator processes the related array and produces a row for each\nNA ContactNotes array entity instance\n\n<i Row contains one or more Cell widgets\n\nSw\n\nCell displays an individual field of an entity\n\nGeneral William Andy has questions\n\n2018-06-19: William Andy has anew phonenumber Update Contact Data New phone number\n\n2018-06-19: William Andy has more questions... General William Andy has an inquiry\n2018-06-19: William Andy sent in his new lic. License / Certification William Andy has a new licence\n\n2018-06-19: William Andy has discovered ase... Problem William Andy reported an issue\n\nContact Note Contact Note Type Subject\n(Text Cell) (Typekey Cell) (Text Cell)\n\n| Row Iterator G&G\n\n« An Iterator is a widget that takes a set of items and performs the same set of\nactions for each member\n\n« ARow lterator takes a set of objects (array or query results) and renders each\nobject as one row of cells\n\nContactNote\nRS Contact Note > Contact Note Type 2 Subject >\nwe ContactNote\n\n<7 ContactNote\nContact Note\nCell\n\npr]\nco}\nFl\n\nContact Note\nTypeCell\n\n| Row iterator: no objects processed G\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries — the set of elements to process\n* valueType: HistoryEntry[] — the type of the set of elements\n« elementName: currentHistoryEntry — points to the object in the array associated with the row\n+ editable: false — whether the cells can be edited or not\n\nContactNote\nmy ContactNote Contact Note > Contact Note Type > Subject >\n\na 9 ContactNote\n\n| Row iterator: first object processed G\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries\n« valueType: HistoryEntry[]\n+ elementName: currentHistoryEntry — points to the first object in the array\n+ editable: false\n\nBS, Contact Note > Contact NoteType > Subject >\nwear, ContactNote 2oib ois: Valet Andyhaneacty eile Coma Willam Andy has questions\nop ContactNote\n\nRow\n(~) —> TextCell peKeyCell]| TextCell\n\n| Row iterator: second object processed\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries\n« valueType: HistoryEntry[]\n+ elementName: currentHistoryEntry — points to the Second object in the array\n+ editable: false\n\nContact Note > Contact Note Type S Subject >\n\n© 2018-06-19: William Andy has many general qu... General\nContactNote 2018-06-19: William Andy has anew phone number Update Contact Data\n\n&)\n\nTextCell TypeKeyCell TextCell\n\n| Row iterator: final object processed\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries\n« valueType: HistoryEntry[]\n+ elementName: currentHistoryEntry — points to the third object in the array\n\n¢ editable: false\n\nContact Note >\n\n2018-06-19: William Andy has many general qu...\n2018-06-19: William Andy has a new phone number\n2018-06-19: William Andy has more questions ...\n\nContact Note Type >\nGeneral\nUpdate Contact Data\n\nGeneral\n\nSubject +\nWilliam Andy has questions\nNew phone number\n\nWilliam Andy has an inquiry\n\n| inline widget vs. PCF file G\n— ListViewPCrFile List ViewWidget\n\n¢ Differences: ¢ Differences:\n\n« Reusable ¢ Not reusable\n\n* Takes a root object ¢ Inherits parent root object\n\n* Created as separate PCF file and * Created as a List View widget in the\nfilename ends with LV parent container’s PCF file\n\n¢ Similarities: ¢ Similarities:\n\n« It can exercise control over all elements * It can exercise control over all elements\n\nIf the container is likely to be needed in multiple places, create a reusable PCF file\n\n| Inline widget vs. PCF file example G\n\nABContactHistoryScreen.pcf ABContactHistoryScreen.pcf\n\nanABContact : ABContact anABContact : ABContact\n\nPanelRef\n\nABContactHistoryLV.pcf\n\nanABContact : ABContact\n\nRow Iterator Row Iterator\n\n| ListViewinput vs. PanelRef\n\nABContactHistoryDV.pcf\n\nABContactHistoryScreen.pcf\n\nanABContact : ABContact anABContact : ABContact\n\nList View Input Panel Ref\n\nABContactHistoryLV.pcf ABContactHistoryLV.pcf\n\nanABContact : ABContact\n\nanABContact : ABContact\n\nRow Iterator Row Iterator\n\nCells\n\n| Toolbar and pagination\n\n¢ A toolbar is a horizontal bar containing buttons and other useful widgets\n\n¢ Itcan be directly added to a Screen, Panel Ref or List View Input\n\n¢ Every List View Panel must have an associated toolbar\n\n* If needed, the application automatically displays buttons to support pagination\n\nHistory\n\nDate\n\n09/21/2018\n09/20/2018\n09/20/2018\n\nEvent Type <\nViewed\nViewed\n\nViewed\n\nOD &-\n\nDescription >\nAlice Applegate viewed this contact.\n\nAlice Applegate viewed this contact.\nAlice Applegate viewed this contact.\n\nGi\n\n| Demonstration G\n\nCreating a new List View\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nReview Questions\n\nQuestion\n\n_- — InaList View:\n4\n\nOo A) What type of widget displays individual fields of data?\n\nB) What type of widget organizes the individual fields of data?\n\n~SS S e e H\n\nAnswer\n\n,- — InaList View:\n\n¢\noY A) What type of widget displays individual fields of data?\n\nB) What type of widget organizes the individual fields of data?\n\nA) Cell widgets\n\nB) Rowwidgets\n\n-SS SS e  e e H\n\nQuestion G\n\n_-— — Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\n7\n\nA) What would the row iterator's \"value\" property be set to?\nB) What would the row iterator's \"element name\" be set to?\nC) What other widgets would make use of the element name?\n\n~SS S e e H\n\nAnswer G\n\n_— — Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\n4\n\nA\nB\n\nC) What other widgets would make use of the element name?\n\nWhat would the row iterator's \"value\" property be set to?\nWhat would the row iterator's \"element name\" be set to?\n\nA) anABContact.Addresses (assuming that the name of the addresses array is\n\"Addresses\")\n\nB) The value is arbitrary, but it would probably be set to something like\n\"currentAddress\".\n\nCc) The cell widgets inside the row iterator's row. For example, a cell displaying the\nstreet would have a value of \"currentAddress. Street\".\n\n-SS SS e  e e H\n\nQuestion G\n\n_— — Allist view typically needs a toolbar, even if it is read-only. Why?\n¢\n\n¢\n7\n\n~SS S e e H\n\nAnswer G\n\n_— — Alist view typically needs a toolbar, even if it is read-only. Why?\n¢\no” The toolbar is needed for the paging controls. These controls are used to view each\n\npage of rows if the number of rows is greater than what can be displayed at one time.\n\n-SS SS e  e e H\n\nQuestion G\n\n_- — Inwhat way is embedding a List View Panel in a detail view panel\n¢ different from embedding a list view panel in a screen?\n\n¢\n7\n\n~SS S e e H\n\nAnswer\n\n_- — Inwhat way is embedding a List View Panel in a detail view panel\nY different from embedding a list view panel in a screen?\n4\nTo embed a list view panel in a detail view panel , use a List View Input widget. To\nembed a list view panel in a screen (or card view panel or List Detail Panel , you use a\n\nPanel Ref widget.\n\n-SS SS e  e e H\n\nLesson\n\nobjectives ¢ Describe the functionality of List View panels\n* Create a new List View\n\nreview ¢ Create and modify Row Iterator, Row and Cell\n\nwidgets\n¢ Reference a List View from a parent container\n\n| Student exercise\n\nList Views",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "List Views",
+      "word_count": 2,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe the functionality of List View panels\n\n* Create a new List View\n\n¢ Create and modify row iterator, row and cell\nwidgets\n\n¢ Reference a List View from a parent container",
+      "word_count": 35,
+      "avg_confidence": 87.51,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| List View Panels G&G\n\n66 :.\n\nBankName > RoutingNumber AccountNumber > Account Type > Verified? >  CreatedOn >\nACME Credit Union 123-999 112233445 Checking Pending 06/19/2018 X)\nACME Credit Union 225-999 554433221 Savings Pending 06/19/2018\n(1 BankName* > Routing Number* > ‘Account Number* = > Account Type\" > Verified? S CreatedOn >\nACME Credit Union 123-999 112233445 ‘Checking Ad Pending 06/19/2018\nACME Credit Union (225-999 554433221 Savings a4 Pending. 06/19/2018\n\n¢ AList View Panel is a container widget that allows the user to view information\nabout multiple objects at the same time\n\n¢ Often referred to as \"List View“\n\n¢ Incertain cases, users can also edit the data displayed in the List View",
+      "word_count": 114,
+      "avg_confidence": 77.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Typical List View Panel structure G\n\n+ List View Panel typically takes single root object that has an array of\n\nABContact as root object entities to p s\n\n+ Row Iterator processes the related array and produces a row for each\nNA ContactNotes array entity instance\n\n<i Row contains one or more Cell widgets\n\nSw\n\nCell displays an individual field of an entity\n\nGeneral William Andy has questions\n\n2018-06-19: William Andy has anew phonenumber Update Contact Data New phone number\n\n2018-06-19: William Andy has more questions... General William Andy has an inquiry\n2018-06-19: William Andy sent in his new lic. License / Certification William Andy has a new licence\n\n2018-06-19: William Andy has discovered ase... Problem William Andy reported an issue\n\nContact Note Contact Note Type Subject\n(Text Cell) (Typekey Cell) (Text Cell)",
+      "word_count": 134,
+      "avg_confidence": 87.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Row Iterator G&G\n\n« An Iterator is a widget that takes a set of items and performs the same set of\nactions for each member\n\n« ARow lterator takes a set of objects (array or query results) and renders each\nobject as one row of cells\n\nContactNote\nRS Contact Note > Contact Note Type 2 Subject >\nwe ContactNote\n\n<7 ContactNote\nContact Note\nCell\n\npr]\nco}\nFl\n\nContact Note\nTypeCell",
+      "word_count": 71,
+      "avg_confidence": 83.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Row iterator: no objects processed G\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries — the set of elements to process\n* valueType: HistoryEntry[] — the type of the set of elements\n« elementName: currentHistoryEntry — points to the object in the array associated with the row\n+ editable: false — whether the cells can be edited or not\n\nContactNote\nmy ContactNote Contact Note > Contact Note Type > Subject >\n\na 9 ContactNote",
+      "word_count": 77,
+      "avg_confidence": 86.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Row iterator: first object processed G\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries\n« valueType: HistoryEntry[]\n+ elementName: currentHistoryEntry — points to the first object in the array\n+ editable: false\n\nBS, Contact Note > Contact NoteType > Subject >\nwear, ContactNote 2oib ois: Valet Andyhaneacty eile Coma Willam Andy has questions\nop ContactNote\n\nRow\n(~) —> TextCell peKeyCell]| TextCell",
+      "word_count": 64,
+      "avg_confidence": 78.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Row iterator: second object processed\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries\n« valueType: HistoryEntry[]\n+ elementName: currentHistoryEntry — points to the Second object in the array\n+ editable: false\n\nContact Note > Contact Note Type S Subject >\n\n© 2018-06-19: William Andy has many general qu... General\nContactNote 2018-06-19: William Andy has anew phone number Update Contact Data\n\n&)\n\nTextCell TypeKeyCell TextCell",
+      "word_count": 67,
+      "avg_confidence": 78.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Row iterator: final object processed\n\n¢ Row Iterator has 4 required properties:\n« value: anABContact.HistoryEntries\n« valueType: HistoryEntry[]\n+ elementName: currentHistoryEntry — points to the third object in the array\n\n¢ editable: false\n\nContact Note >\n\n2018-06-19: William Andy has many general qu...\n2018-06-19: William Andy has a new phone number\n2018-06-19: William Andy has more questions ...\n\nContact Note Type >\nGeneral\nUpdate Contact Data\n\nGeneral\n\nSubject +\nWilliam Andy has questions\nNew phone number\n\nWilliam Andy has an inquiry",
+      "word_count": 82,
+      "avg_confidence": 89.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| inline widget vs. PCF file G\n— ListViewPCrFile List ViewWidget\n\n¢ Differences: ¢ Differences:\n\n« Reusable ¢ Not reusable\n\n* Takes a root object ¢ Inherits parent root object\n\n* Created as separate PCF file and * Created as a List View widget in the\nfilename ends with LV parent container’s PCF file\n\n¢ Similarities: ¢ Similarities:\n\n« It can exercise control over all elements * It can exercise control over all elements\n\nIf the container is likely to be needed in multiple places, create a reusable PCF file",
+      "word_count": 90,
+      "avg_confidence": 87.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Inline widget vs. PCF file example G\n\nABContactHistoryScreen.pcf ABContactHistoryScreen.pcf\n\nanABContact : ABContact anABContact : ABContact\n\nPanelRef\n\nABContactHistoryLV.pcf\n\nanABContact : ABContact\n\nRow Iterator Row Iterator",
+      "word_count": 25,
+      "avg_confidence": 92.72,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| ListViewinput vs. PanelRef\n\nABContactHistoryDV.pcf\n\nABContactHistoryScreen.pcf\n\nanABContact : ABContact anABContact : ABContact\n\nList View Input Panel Ref\n\nABContactHistoryLV.pcf ABContactHistoryLV.pcf\n\nanABContact : ABContact\n\nanABContact : ABContact\n\nRow Iterator Row Iterator\n\nCells",
+      "word_count": 30,
+      "avg_confidence": 90.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Toolbar and pagination\n\n¢ A toolbar is a horizontal bar containing buttons and other useful widgets\n\n¢ Itcan be directly added to a Screen, Panel Ref or List View Input\n\n¢ Every List View Panel must have an associated toolbar\n\n* If needed, the application automatically displays buttons to support pagination\n\nHistory\n\nDate\n\n09/21/2018\n09/20/2018\n09/20/2018\n\nEvent Type <\nViewed\nViewed\n\nViewed\n\nOD &-\n\nDescription >\nAlice Applegate viewed this contact.\n\nAlice Applegate viewed this contact.\nAlice Applegate viewed this contact.\n\nGi",
+      "word_count": 83,
+      "avg_confidence": 87.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Demonstration G\n\nCreating a new List View\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Review Questions",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n_- — InaList View:\n4\n\nOo A) What type of widget displays individual fields of data?\n\nB) What type of widget organizes the individual fields of data?\n\n~SS S e e H",
+      "word_count": 33,
+      "avg_confidence": 86.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n,- — InaList View:\n\n¢\noY A) What type of widget displays individual fields of data?\n\nB) What type of widget organizes the individual fields of data?\n\nA) Cell widgets\n\nB) Rowwidgets\n\n-SS SS e  e e H",
+      "word_count": 39,
+      "avg_confidence": 85.35,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question G\n\n_-— — Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\n7\n\nA) What would the row iterator's \"value\" property be set to?\nB) What would the row iterator's \"element name\" be set to?\nC) What other widgets would make use of the element name?\n\n~SS S e e H",
+      "word_count": 65,
+      "avg_confidence": 89.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer G\n\n_— — Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\n4\n\nA\nB\n\nC) What other widgets would make use of the element name?\n\nWhat would the row iterator's \"value\" property be set to?\nWhat would the row iterator's \"element name\" be set to?\n\nA) anABContact.Addresses (assuming that the name of the addresses array is\n\"Addresses\")\n\nB) The value is arbitrary, but it would probably be set to something like\n\"currentAddress\".\n\nCc) The cell widgets inside the row iterator's row. For example, a cell displaying the\nstreet would have a value of \"currentAddress. Street\".\n\n-SS SS e  e e H",
+      "word_count": 116,
+      "avg_confidence": 89.73,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n_— — Allist view typically needs a toolbar, even if it is read-only. Why?\n¢\n\n¢\n7\n\n~SS S e e H",
+      "word_count": 24,
+      "avg_confidence": 82.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer G\n\n_— — Alist view typically needs a toolbar, even if it is read-only. Why?\n¢\no” The toolbar is needed for the paging controls. These controls are used to view each\n\npage of rows if the number of rows is greater than what can be displayed at one time.\n\n-SS SS e  e e H",
+      "word_count": 57,
+      "avg_confidence": 88.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question G\n\n_- — Inwhat way is embedding a List View Panel in a detail view panel\n¢ different from embedding a list view panel in a screen?\n\n¢\n7\n\n~SS S e e H",
+      "word_count": 35,
+      "avg_confidence": 88.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n_- — Inwhat way is embedding a List View Panel in a detail view panel\nY different from embedding a list view panel in a screen?\n4\nTo embed a list view panel in a detail view panel , use a List View Input widget. To\nembed a list view panel in a screen (or card view panel or List Detail Panel , you use a\n\nPanel Ref widget.\n\n-SS SS e  e e H",
+      "word_count": 76,
+      "avg_confidence": 90.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Lesson\n\nobjectives ¢ Describe the functionality of List View panels\n* Create a new List View\n\nreview ¢ Create and modify Row Iterator, Row and Cell\n\nwidgets\n¢ Reference a List View from a parent container",
+      "word_count": 36,
+      "avg_confidence": 88.03,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Student exercise\n\nList Views",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

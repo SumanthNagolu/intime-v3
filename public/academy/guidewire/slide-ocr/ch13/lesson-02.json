@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "chapter": "ch13",
+    "chapter_title": "Rating Introduction",
+    "lesson": "lesson-02",
+    "slide_count": 38,
+    "slides_with_text": 36,
+    "total_words": 2231,
+    "avg_confidence": 87.53,
+    "processing_time_seconds": 15.1,
+    "extracted_at": "2026-02-15T18:23:56.184157"
+  },
+  "full_text": "Costs and Financial Transactions\n\nLesson\nobjectives ¢ Describe what happens in rating when\n\nfinancial transactions occur in PolicyCenter\n« View costs on the quote screen\n¢ View differences in cost between financial\ntransactions\n\n| When a policy transaction is quoted fa\n\nKalani\nRating Analyst\n\nWhat happens when a policy\ntransaction is quoted in PolicyCenter?\n\nThe rating takes the tle\n. : mplementation We\npolicy details, such as Architect\n\ncoverages and\ncoverage terms, and\n\nWw\ndetermines the costs for\nthat transaction.\n\n| Review: Rating results in a set of costs i\n\nane -\n\nCECE CECE CREE\nRating is the process of determining the costs for a policy transaction\n\neekeketekekekelekeg 2\nRating Engine Set of costs\n\n¢ Input: Details of rating inputs\n« Anything that has a price: coverages, coverage terms, covered employees, etc.\n« Additional policy data: modifiers, jurisdiction, underwriting company, etc.\n\n¢ Output: Costs that represent the price for the various portions of the policies\n\n| What is a cost? i\n\nWe've talked about how\n\nJulia\n\nTyla the policy details are\nused to determine the\n= .\ny costs for a policy\n| transaction. Are there rectiraf 3 T:\nany questions? Rating Analyst \\=\n\nWhat is a cost?\n\n| Costs\n\nGi\n\nAcost is a discrete unit which cannot\nbe broken up into smaller units.\n\nCosts attach directly to anything with\na price\nExamples:\n\n* Commercial vehicle coverable\n\n* Commercial property\n\n¢ Business owner /ine coverage\n\n* Personal vehicle coverable\n\n* Personal auto line coverage\n\n| Handling costs in PolicyCenter\n\nKalani &\nRating Analyst ¥\n\nHow are costs handled in\nPolicyCenter?\n\nCosts store details related to\nrating a policy. I'll show you.\n\nJulia\nImplementation We\nArchitect\n\ni\n\n| How are costs handled in PolicyCenter? i\n\n¢ The cost is an entity in PolicyCenter\n\n¢ The cost stores several details\nrelated to rating a policy\n\n+ Base Rate (BaseRate)\n\n« Adjusted Rate(AdjRate)\n\n* Basis(Basis)\n\n« Pro rata Factor(ProrataFactor)\n* Term Amount(TermAmount)\n\n« Amount(Amount)\n\n| Costs _ i\n\n[ Te\neon\ntotal cost: $615 costs\n\n ] collision coverage for entire policy term (auto 1)\n\nQ\n€@\nYd] Gpmprehensive coverage for entire policy term (auto @ ] $7\n\nYd] liability coverage\n\n: suneeeeeeenne (rate from auto 1) @ | $317\neee eeeeaeeeeaeeeseeeeseueees (rate from auto 2) eg $233\n\n| Rate scalable examples i\n\n‘LOB Action fet\nPersonal Auto _ For a personal auto policy Split and prorate to price each slice or\n\neffective on July 1 with a six- coverage effective dates.\n\nmonth coverage term: the\n\ninsured increases the Term amount * pro rata factor\n\ndeductible midterm. Effective days (180)/rate for 180 days\n\nArate scalable object is one that is priced by determining a term amount from base\nand adjusted rates and then prorating that amount based on the amount of time the\ncost applies to the policy.\n\n| Example: Personal Auto coverage submission fa\n‘Component = Value. = escription\n\nCoverage term\nEffective date\nExpiration date\n\nProrata\nBasis\n\nBase rate\nRate factor 1\nRate factor 2\nAdjusted rate\nTerm amount\nAmount\nTransaction\n\n6 months\n\n7/1/2019\n\n12/31/2019\n\n1 180 coverage effective dates / 180 days in period\n1 1 vehicle\n\n30 Rate table lookup, rating engine saves to the cost\n1.93 The rating routine looks up the rate factor\n\n0.85 Table lookup\n\n$49.215 Base rate * Rate Factor 1* Rate factor 2\n\n$49.00 Adjusted rate * Basis rounded to nearest round figure\n$49.00 Term amount * Pro rata\n\n$49.00\n\n| Basis scalable and the term amount i\neS a\n\nBase rate The rate for a particular coverable or The rating engine looks up the base\ncoverage according to a rate table. rate and saves it to the cost\nThe rate is commonly found in a\n\nlookup table\n\nAdjusted rate 2.10 Base rate adjusted to represent Calculate adjusted rate based on table\ndetails of the risk and policy lookups\n\nBasis $500 Estimate of the value being insured _ Estimated gross sales revenue for the\nfor the policy term policy term\n\nTerm amount $1,050 Term amount= adjusted rate * basis The basis can vary on certain\nexposures. We use it to vary the rate\n\n¢« Aterm amount is the adjusted rate multiplied by the basis\n¢ Basis-rated coverages — premium calculated from rate and basis amount\n¢ Pro rata factor doesn’t apply to basis rated coverages\n\n« The basis amount represents the value at risk during the policy term\n\n| General Liability exposure and coverage submission [5\n‘Component = GLI. GL Nts\n\nCode 0012 0012 Galleries from non-profit\n\nCoverage Term 12 months 6 months Policy term\n\nEffective Date 1/1/2018 7/1/2018\n\nExpiration Date 12/31/2018 12/31/2018\n\nBasis $500,000 $250,000 Estimated $ of sales over policy term\nBase rate 2 2 Table lookup for Code 0012\nAdjusted rate 2.1 241 Table lookup\n\nTerm amount $1,050 $525 Adjusted rate * Basis / $1,000\nAmount $1,050 $525 Same as term amount\n\nTransaction $1,050 $525\n\n| General Liability: example in PolicyCenter\n\nExposure Premium\n\nLoc. Code Description\n\nArt Galleries -\n\n1 0012 Not-For-\n\nProfit only\n\nArt Galleries -\n\n1 0012 _Not-For-\n\nProfit only\nSubtotal\n\nSubline split\n\nPremises |CSL\n\nProducts CSL\n\nBasis | Rate\n\n500,000.00 | 1.135\n\n500,000.00 | 0.7566\n\nTerm Premium Eff Date\n\n$568.00 09/21/2018\n\n$378.00 09/21/2018\n\nExp Date Proration Amount\n09/21/2019 1.0000 $568.00\n09/21/2019 1.0000 $378.00\n\n$946.00\n\n¢ Actual GL example has a Subline field for two cost rows: premises and products\n\n¢ Different rates for these two different cost rows\n\n¢ This example is specific to GL — see the product documentation for other\n\nexamples\n\n| Cost calculation with the pro ratafactorincluded [5\n\nBaseRate\n\nBasis % AdjustedRate\n\nTermAmount 9¢ ProRataFactor = Amount\n¢ To calculate a rate scalable cost, multiply the term amount and the pro rata factor\n\n* Pro rata factor = length of time of effective coverage/days in standard rating\nperiod\n\n¢ Most costs (not all) are prorated.\n\n| How are these values determined? i\nBaseRate > Look up the base rate\n\nv\nAdjustedRate - Look up the factors to adjust the rate\n\n. . Adjusted rate = base rate * factors\nBasis % AdjustedRate\n\nTermAmount 9% ProRataFactor = Amount\n\n| Demonstration G\n\nCosts\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Review: Cost terminology G\nTerm = Deseription\n\nBase rate\n\nAdjusted rate\n\nbasis scalable *\n\nrate scalable\n\nTerm amount\n\nPro rata factor\n\nActual Amount\n\nThe base rate is the rate for a particular coverable or coverage according to a rate\ntable. The base rate is commonly found in a lookup table\n\nThe base rate adjusted according to selected coverage terms such as deductibles\nand limits\n\nSomething priced according to a term amount of the value being insured. The basis\nis scaled to represent the term length\n\nrate scalable means that something is priced by calculating a term amount from\nbase and adjusted rates and then prorating that amount based on the amount of\ntime the cost applies to the policy. (Most insurable items are rate scalable)\n\nThe premium or cost used for a standard term length. The basis multiplied by the\nadjusted rate\n\nThe length of time for which a rate-scalable coverage is effective, divided by the total\nnumber of days in a rating period. For basis-scalable costs this factor is 1.0\n\nThe term amount multiplied by the pro rata factor\n\n| Costs in PolicyCenter\n\nKalani &\nRating Analyst\n\nWhere do costs get\ncalculated, and where are\nthey shown in the\nPolicyCenter?\n\nCosts are calculated in the\nRating Engine and then they\nare shown on the quote\nscreen.\n\nJulia\nImplementation We\nArchitect\n\n!\n\n| Where are costs calculated, where are they shown? [5\n\n¢ The costs are calculated in the rating\nengine\n\n¢ In PolicyCenter, the costs for new\npolicies appear in the “Quote” screen\n\n* Ifa policy has costs that do not apply\nto the entire term, then the amounts\nand pro rate factors are in the\nPolicyCenter display\n\n| Quote contains cost total\n\nQuote\n\nSubmission Number\nPolicy Period\nPrimary Named Insured\n\nAddress\n\nCounty\nAddress Type\nAddress Description\n\nUnderwriting Company\n\n0000002605 Total Premium\n09/21/2018 - 09/21/2019 Taxes & Surcharges\nGregory 0000 House 0000 Total Cost\n\n0000 Bridgepointe Parkway\n\nFloor 0000\n\nDeveloper Unit Habitation Cube #0000\n‘San Mateo, CA 94404-0000\n\n‘San Mateo\nHome\nCreated by the Address Builder with code 0\n\nAcme Low Hazard Insurance\n\n$946.00\n\n$69.00\n\n$1,015.00\n\n| How financial transactions and costs are related i\n\nJulia\nImplementation {\nArchitect\n\nSo, we’ve talked about\ny costs and how these are\ncreated.\n\nKalani &\nRating Analyst\n\nCan you show me\nhow financial\ntransactions are\nrelated to costs?\n\n| Financial transactions: Example i\n\naad\n9\n\npolicy change\n\ncollision\n(auto 1)\n\ncompre-\nhensive\n(auto 1)\n\negis\n\nC9)\n\n7\n- fates GQ)\ncompre-\nhensi $7\nhensive (EQ)\n\n(financial) transactions\n\ncoy +$16\n$0\n\n| Financial transaction in the user interface\n\n¢ Display transactions in the user interface, including changes to the policy\n\nGi\n\n¢ Provide input for a downstream system including the billing system or the insurer’s\naccounting system — highlighted fields can potentially be sent to billing systems\n\n¢ Earned premium calculation in the Summary page uses transaction information\n\nAll Financial Transactions\n\nEff Date\n\n(09/21/2018\n11/01/2018\n09/21/2018\n09/21/2018\n09/21/2018\n09/21/2018\n09/21/2018\n\nExp Date\n(09/21/2019\n09/21/2019\n09/21/2019\n11/01/2018\n09/21/2019\n09/21/2019\n09/21/2019\n\nAmount > Posted Date\n\n‘$568.00 09/21/2018\n$495.00 09/21/2018\n$378.00 09/21/2018\n\nWritten\n\nYes\nYes\nYes\nYes\nYes\nYes\n\nYes\n\nCharged\n\nYes\nYes\nYes\nYes\nYes\nYes\n\nYes\n\nTo Be Accrued\n\nYes\n\nYes\n\nType (Date)\n\n‘Submission (09/21/2018)\nPolicy Change (11/01/2018)\nSubmission (09/21/2018)\nPolicy Change (11/01/2018)\nPolicy Change (11/01/2018)\nPolicy Change (11/01/2018)\n)\n\nPolicy Change (11/01/2018\n\nCost\nGeneral Liability coverage on 0012:\nGeneral Liability coverage on 0012\nGeneral Liability coverage on 0012:\nGeneral Liability coverage on 0012\nCalifornia Tax\n\nGeneral Liability coverage on 0012\nGeneral Liability coverage on 0012\n\n| Example: Personal Auto Coverage Change fa\n‘Component Original Values First half Change (split) Description =\n\nCoverage term 6 months\n\nEffective date\n\nExpiration\ndate\n\nProrata\nBasis\n\nBase rate\nRate factor 1\nRate factor 2\nAdjusted rate\nTerm amount\nAmount\nTransaction\n\n7/1/2019\n12/31/2019\n\n1\n\n1\n\n30\n\n1.93\n0.85\n$49.215\n$49.00\n$49.00\n$49.00\n\n3 months\n7/1/2019\n9/30/2019\n\n0.5\n\n4\n\n30\n\n1.93\n0.85\n$49.215\n$49.00\n($24.50)\n($24.50)\n\n3 months\n\n10/1/2019\n\n12/31/2019\n\n0.5 90 days coverage / 180 days term\n\n1 1 vehicle\n\n30 Table lookup\n\n1 Table lookup\n\n0.85 Table lookup\n\n$25.50 Base rate * Rate Factor 1* Rate factor 2\n$26.00 Adjusted rate * Basis rounded to nearest $\n$13.00 Term amount * prorata\n\n$13.00\n\n| Downstream system example: Billing system fa\n&: policy transaction billing instruction (BI) billing system\n\n: [rer The =\nPolicyCenter ae a | ee Eo\n\nE\n\nA billing instruction is the information set that the billing system must act upon\n\nYas\n\n* Contains information about financial transactions for a policy transaction that the billing\nsystem must bill or refund\n\n| Transaction fields for earned premium\nAll Financial Transactions\n\nEff Date Exp Date Amount > Posted Date Written Charged To Be Accrued\n09/21/2018 09/21/2019 $568.00 09/21/2018 Yes Yes ‘Yes\n11/01/2018 09/21/2019 $495.00 09/21/2018 Yes Yes Yes\n09/21/2018 09/21/2019 $378.00 09/21/2018 Yes Yes Yes\n09/21/2018 11/01/2018 $42.00 09/21/2018 Yes Yes Yes\n09/21/2018 09/21/2019 (869.00) 09/21/2018 Yes Yes No\n09/21/2018 09/21/2019 ($378.00) 09/21/2018 Yes Yes Yes\n09/21/2018 09/21/2019 ($568.00) 09/21/2018 Yes Yes Yes\n\n¢ Written: Amount included in written premium calculations?\n* Charged: Should amount be charged?\n¢ To be accrued: Included amount in earned premium accrual calculations?\n\n| Demonstration G\n\nFinancial transactions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — Define a cost and how it relates to a policy’s total cost.\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer fa\n\n_— — Define a cost and how it relates to a policy’s total cost.\n\n¢\noe The Cost is the discrete unit of price for any specific period of time. The total cost of a\n\npolicy is the sum of the individual costs.\n\nSS oe ooo ee oe oOoOe SoD\n\nQuestion\n\n_— — Describe the difference between the terms: rate scalable and basis\noo scalable.\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer fa\n\n_— — Describe the difference between the terms: rate scalable and basis\noo scalable.\n4\n\nRate scalable means that premium is calculated by determining a standard term\namount from base and adjusted rates and then prorating that amount based on the\namount of time the cost applies to the policy.\n\nBasis scalable means the premium is calculated from the value at risk — the basis —\nover the policy term. An example is dollars of sales between February 15 and October\n1.\n\nSS oe ooo ee oe oOoOe SoD\n\nQuestion\n\n,— — When would a financial transaction have an amount identical to the cost\n\noo amount?\n4\n\nSS oe Oooo ee Oooo ooOoD\n\nGi\n\nAnswer fa\n\n_— — When would a financial transaction have an amount identical to the cost\n\noo amount?\n4\n\nIf a cost has no prior policy period, such as a submission or a renewal, then there is no\ndifference in the cost. The financial transaction amount is identical to the cost amount.\n\nSS oe ooo ee oe oOoOe SoD\n\nLesson\nobjectives ¢ Describe what happens in rating when\n\nreview financial transactions occur in PolicyCenter\n« View costs on the quote screen\n¢ View differences in cost between financial\ntransactions\n\n| Student exercise\n\nWorking with costs and financial\ntransactions",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Costs and Financial Transactions",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe what happens in rating when\n\nfinancial transactions occur in PolicyCenter\n« View costs on the quote screen\n¢ View differences in cost between financial\ntransactions",
+      "word_count": 29,
+      "avg_confidence": 88.66,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| When a policy transaction is quoted fa\n\nKalani\nRating Analyst\n\nWhat happens when a policy\ntransaction is quoted in PolicyCenter?\n\nThe rating takes the tle\n. : mplementation We\npolicy details, such as Architect\n\ncoverages and\ncoverage terms, and\n\nWw\ndetermines the costs for\nthat transaction.",
+      "word_count": 47,
+      "avg_confidence": 87.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Review: Rating results in a set of costs i\n\nane -\n\nCECE CECE CREE\nRating is the process of determining the costs for a policy transaction\n\neekeketekekekelekeg 2\nRating Engine Set of costs\n\n¢ Input: Details of rating inputs\n« Anything that has a price: coverages, coverage terms, covered employees, etc.\n« Additional policy data: modifiers, jurisdiction, underwriting company, etc.\n\n¢ Output: Costs that represent the price for the various portions of the policies",
+      "word_count": 75,
+      "avg_confidence": 86.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| What is a cost? i\n\nWe've talked about how\n\nJulia\n\nTyla the policy details are\nused to determine the\n= .\ny costs for a policy\n| transaction. Are there rectiraf 3 T:\nany questions? Rating Analyst \\=\n\nWhat is a cost?",
+      "word_count": 43,
+      "avg_confidence": 85.93,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Costs\n\nGi\n\nAcost is a discrete unit which cannot\nbe broken up into smaller units.\n\nCosts attach directly to anything with\na price\nExamples:\n\n* Commercial vehicle coverable\n\n* Commercial property\n\n¢ Business owner /ine coverage\n\n* Personal vehicle coverable\n\n* Personal auto line coverage",
+      "word_count": 46,
+      "avg_confidence": 88.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Handling costs in PolicyCenter\n\nKalani &\nRating Analyst ¥\n\nHow are costs handled in\nPolicyCenter?\n\nCosts store details related to\nrating a policy. I'll show you.\n\nJulia\nImplementation We\nArchitect\n\ni",
+      "word_count": 32,
+      "avg_confidence": 89.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| How are costs handled in PolicyCenter? i\n\n¢ The cost is an entity in PolicyCenter\n\n¢ The cost stores several details\nrelated to rating a policy\n\n+ Base Rate (BaseRate)\n\n« Adjusted Rate(AdjRate)\n\n* Basis(Basis)\n\n« Pro rata Factor(ProrataFactor)\n* Term Amount(TermAmount)\n\n« Amount(Amount)",
+      "word_count": 45,
+      "avg_confidence": 80.51,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Costs _ i\n\n[ Te\neon\ntotal cost: $615 costs\n\n ] collision coverage for entire policy term (auto 1)\n\nQ\n€@\nYd] Gpmprehensive coverage for entire policy term (auto @ ] $7\n\nYd] liability coverage\n\n: suneeeeeeenne (rate from auto 1) @ | $317\neee eeeeaeeeeaeeeseeeeseueees (rate from auto 2) eg $233",
+      "word_count": 53,
+      "avg_confidence": 81.69,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Rate scalable examples i\n\n‘LOB Action fet\nPersonal Auto _ For a personal auto policy Split and prorate to price each slice or\n\neffective on July 1 with a six- coverage effective dates.\n\nmonth coverage term: the\n\ninsured increases the Term amount * pro rata factor\n\ndeductible midterm. Effective days (180)/rate for 180 days\n\nArate scalable object is one that is priced by determining a term amount from base\nand adjusted rates and then prorating that amount based on the amount of time the\ncost applies to the policy.",
+      "word_count": 90,
+      "avg_confidence": 91.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Example: Personal Auto coverage submission fa\n‘Component = Value. = escription\n\nCoverage term\nEffective date\nExpiration date\n\nProrata\nBasis\n\nBase rate\nRate factor 1\nRate factor 2\nAdjusted rate\nTerm amount\nAmount\nTransaction\n\n6 months\n\n7/1/2019\n\n12/31/2019\n\n1 180 coverage effective dates / 180 days in period\n1 1 vehicle\n\n30 Rate table lookup, rating engine saves to the cost\n1.93 The rating routine looks up the rate factor\n\n0.85 Table lookup\n\n$49.215 Base rate * Rate Factor 1* Rate factor 2\n\n$49.00 Adjusted rate * Basis rounded to nearest round figure\n$49.00 Term amount * Pro rata\n\n$49.00",
+      "word_count": 100,
+      "avg_confidence": 91.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Basis scalable and the term amount i\neS a\n\nBase rate The rate for a particular coverable or The rating engine looks up the base\ncoverage according to a rate table. rate and saves it to the cost\nThe rate is commonly found in a\n\nlookup table\n\nAdjusted rate 2.10 Base rate adjusted to represent Calculate adjusted rate based on table\ndetails of the risk and policy lookups\n\nBasis $500 Estimate of the value being insured _ Estimated gross sales revenue for the\nfor the policy term policy term\n\nTerm amount $1,050 Term amount= adjusted rate * basis The basis can vary on certain\nexposures. We use it to vary the rate\n\n¢« Aterm amount is the adjusted rate multiplied by the basis\n¢ Basis-rated coverages — premium calculated from rate and basis amount\n¢ Pro rata factor doesn’t apply to basis rated coverages\n\n« The basis amount represents the value at risk during the policy term",
+      "word_count": 158,
+      "avg_confidence": 90.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| General Liability exposure and coverage submission [5\n‘Component = GLI. GL Nts\n\nCode 0012 0012 Galleries from non-profit\n\nCoverage Term 12 months 6 months Policy term\n\nEffective Date 1/1/2018 7/1/2018\n\nExpiration Date 12/31/2018 12/31/2018\n\nBasis $500,000 $250,000 Estimated $ of sales over policy term\nBase rate 2 2 Table lookup for Code 0012\nAdjusted rate 2.1 241 Table lookup\n\nTerm amount $1,050 $525 Adjusted rate * Basis / $1,000\nAmount $1,050 $525 Same as term amount\n\nTransaction $1,050 $525",
+      "word_count": 80,
+      "avg_confidence": 91.47,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| General Liability: example in PolicyCenter\n\nExposure Premium\n\nLoc. Code Description\n\nArt Galleries -\n\n1 0012 Not-For-\n\nProfit only\n\nArt Galleries -\n\n1 0012 _Not-For-\n\nProfit only\nSubtotal\n\nSubline split\n\nPremises |CSL\n\nProducts CSL\n\nBasis | Rate\n\n500,000.00 | 1.135\n\n500,000.00 | 0.7566\n\nTerm Premium Eff Date\n\n$568.00 09/21/2018\n\n$378.00 09/21/2018\n\nExp Date Proration Amount\n09/21/2019 1.0000 $568.00\n09/21/2019 1.0000 $378.00\n\n$946.00\n\n¢ Actual GL example has a Subline field for two cost rows: premises and products\n\n¢ Different rates for these two different cost rows\n\n¢ This example is specific to GL — see the product documentation for other\n\nexamples",
+      "word_count": 101,
+      "avg_confidence": 88.28,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Cost calculation with the pro ratafactorincluded [5\n\nBaseRate\n\nBasis % AdjustedRate\n\nTermAmount 9¢ ProRataFactor = Amount\n¢ To calculate a rate scalable cost, multiply the term amount and the pro rata factor\n\n* Pro rata factor = length of time of effective coverage/days in standard rating\nperiod\n\n¢ Most costs (not all) are prorated.",
+      "word_count": 55,
+      "avg_confidence": 85.69,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| How are these values determined? i\nBaseRate > Look up the base rate\n\nv\nAdjustedRate - Look up the factors to adjust the rate\n\n. . Adjusted rate = base rate * factors\nBasis % AdjustedRate\n\nTermAmount 9% ProRataFactor = Amount",
+      "word_count": 42,
+      "avg_confidence": 84.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\n\nCosts\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Review: Cost terminology G\nTerm = Deseription\n\nBase rate\n\nAdjusted rate\n\nbasis scalable *\n\nrate scalable\n\nTerm amount\n\nPro rata factor\n\nActual Amount\n\nThe base rate is the rate for a particular coverable or coverage according to a rate\ntable. The base rate is commonly found in a lookup table\n\nThe base rate adjusted according to selected coverage terms such as deductibles\nand limits\n\nSomething priced according to a term amount of the value being insured. The basis\nis scaled to represent the term length\n\nrate scalable means that something is priced by calculating a term amount from\nbase and adjusted rates and then prorating that amount based on the amount of\ntime the cost applies to the policy. (Most insurable items are rate scalable)\n\nThe premium or cost used for a standard term length. The basis multiplied by the\nadjusted rate\n\nThe length of time for which a rate-scalable coverage is effective, divided by the total\nnumber of days in a rating period. For basis-scalable costs this factor is 1.0\n\nThe term amount multiplied by the pro rata factor",
+      "word_count": 181,
+      "avg_confidence": 94.46,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Costs in PolicyCenter\n\nKalani &\nRating Analyst\n\nWhere do costs get\ncalculated, and where are\nthey shown in the\nPolicyCenter?\n\nCosts are calculated in the\nRating Engine and then they\nare shown on the quote\nscreen.\n\nJulia\nImplementation We\nArchitect\n\n!",
+      "word_count": 42,
+      "avg_confidence": 91.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Where are costs calculated, where are they shown? [5\n\n¢ The costs are calculated in the rating\nengine\n\n¢ In PolicyCenter, the costs for new\npolicies appear in the “Quote” screen\n\n* Ifa policy has costs that do not apply\nto the entire term, then the amounts\nand pro rate factors are in the\nPolicyCenter display",
+      "word_count": 57,
+      "avg_confidence": 88.23,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Quote contains cost total\n\nQuote\n\nSubmission Number\nPolicy Period\nPrimary Named Insured\n\nAddress\n\nCounty\nAddress Type\nAddress Description\n\nUnderwriting Company\n\n0000002605 Total Premium\n09/21/2018 - 09/21/2019 Taxes & Surcharges\nGregory 0000 House 0000 Total Cost\n\n0000 Bridgepointe Parkway\n\nFloor 0000\n\nDeveloper Unit Habitation Cube #0000\n‘San Mateo, CA 94404-0000\n\n‘San Mateo\nHome\nCreated by the Address Builder with code 0\n\nAcme Low Hazard Insurance\n\n$946.00\n\n$69.00\n\n$1,015.00",
+      "word_count": 68,
+      "avg_confidence": 92.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| How financial transactions and costs are related i\n\nJulia\nImplementation {\nArchitect\n\nSo, we’ve talked about\ny costs and how these are\ncreated.\n\nKalani &\nRating Analyst\n\nCan you show me\nhow financial\ntransactions are\nrelated to costs?",
+      "word_count": 39,
+      "avg_confidence": 92.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Financial transactions: Example i\n\naad\n9\n\npolicy change\n\ncollision\n(auto 1)\n\ncompre-\nhensive\n(auto 1)\n\negis\n\nC9)\n\n7\n- fates GQ)\ncompre-\nhensi $7\nhensive (EQ)\n\n(financial) transactions\n\ncoy +$16\n$0",
+      "word_count": 32,
+      "avg_confidence": 80.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Financial transaction in the user interface\n\n¢ Display transactions in the user interface, including changes to the policy\n\nGi\n\n¢ Provide input for a downstream system including the billing system or the insurer’s\naccounting system — highlighted fields can potentially be sent to billing systems\n\n¢ Earned premium calculation in the Summary page uses transaction information\n\nAll Financial Transactions\n\nEff Date\n\n(09/21/2018\n11/01/2018\n09/21/2018\n09/21/2018\n09/21/2018\n09/21/2018\n09/21/2018\n\nExp Date\n(09/21/2019\n09/21/2019\n09/21/2019\n11/01/2018\n09/21/2019\n09/21/2019\n09/21/2019\n\nAmount > Posted Date\n\n‘$568.00 09/21/2018\n$495.00 09/21/2018\n$378.00 09/21/2018\n\nWritten\n\nYes\nYes\nYes\nYes\nYes\nYes\n\nYes\n\nCharged\n\nYes\nYes\nYes\nYes\nYes\nYes\n\nYes\n\nTo Be Accrued\n\nYes\n\nYes\n\nType (Date)\n\n‘Submission (09/21/2018)\nPolicy Change (11/01/2018)\nSubmission (09/21/2018)\nPolicy Change (11/01/2018)\nPolicy Change (11/01/2018)\nPolicy Change (11/01/2018)\n)\n\nPolicy Change (11/01/2018\n\nCost\nGeneral Liability coverage on 0012:\nGeneral Liability coverage on 0012\nGeneral Liability coverage on 0012:\nGeneral Liability coverage on 0012\nCalifornia Tax\n\nGeneral Liability coverage on 0012\nGeneral Liability coverage on 0012",
+      "word_count": 164,
+      "avg_confidence": 89.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Example: Personal Auto Coverage Change fa\n‘Component Original Values First half Change (split) Description =\n\nCoverage term 6 months\n\nEffective date\n\nExpiration\ndate\n\nProrata\nBasis\n\nBase rate\nRate factor 1\nRate factor 2\nAdjusted rate\nTerm amount\nAmount\nTransaction\n\n7/1/2019\n12/31/2019\n\n1\n\n1\n\n30\n\n1.93\n0.85\n$49.215\n$49.00\n$49.00\n$49.00\n\n3 months\n7/1/2019\n9/30/2019\n\n0.5\n\n4\n\n30\n\n1.93\n0.85\n$49.215\n$49.00\n($24.50)\n($24.50)\n\n3 months\n\n10/1/2019\n\n12/31/2019\n\n0.5 90 days coverage / 180 days term\n\n1 1 vehicle\n\n30 Table lookup\n\n1 Table lookup\n\n0.85 Table lookup\n\n$25.50 Base rate * Rate Factor 1* Rate factor 2\n$26.00 Adjusted rate * Basis rounded to nearest $\n$13.00 Term amount * prorata\n\n$13.00",
+      "word_count": 113,
+      "avg_confidence": 90.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Downstream system example: Billing system fa\n&: policy transaction billing instruction (BI) billing system\n\n: [rer The =\nPolicyCenter ae a | ee Eo\n\nE\n\nA billing instruction is the information set that the billing system must act upon\n\nYas\n\n* Contains information about financial transactions for a policy transaction that the billing\nsystem must bill or refund",
+      "word_count": 59,
+      "avg_confidence": 82.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Transaction fields for earned premium\nAll Financial Transactions\n\nEff Date Exp Date Amount > Posted Date Written Charged To Be Accrued\n09/21/2018 09/21/2019 $568.00 09/21/2018 Yes Yes ‘Yes\n11/01/2018 09/21/2019 $495.00 09/21/2018 Yes Yes Yes\n09/21/2018 09/21/2019 $378.00 09/21/2018 Yes Yes Yes\n09/21/2018 11/01/2018 $42.00 09/21/2018 Yes Yes Yes\n09/21/2018 09/21/2019 (869.00) 09/21/2018 Yes Yes No\n09/21/2018 09/21/2019 ($378.00) 09/21/2018 Yes Yes Yes\n09/21/2018 09/21/2019 ($568.00) 09/21/2018 Yes Yes Yes\n\n¢ Written: Amount included in written premium calculations?\n* Charged: Should amount be charged?\n¢ To be accrued: Included amount in earned premium accrual calculations?",
+      "word_count": 96,
+      "avg_confidence": 87.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Demonstration G\n\nFinancial transactions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question\n\n_— — Define a cost and how it relates to a policy’s total cost.\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 24,
+      "avg_confidence": 74.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer fa\n\n_— — Define a cost and how it relates to a policy’s total cost.\n\n¢\noe The Cost is the discrete unit of price for any specific period of time. The total cost of a\n\npolicy is the sum of the individual costs.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 52,
+      "avg_confidence": 83.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question\n\n_— — Describe the difference between the terms: rate scalable and basis\noo scalable.\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 21,
+      "avg_confidence": 73.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer fa\n\n_— — Describe the difference between the terms: rate scalable and basis\noo scalable.\n4\n\nRate scalable means that premium is calculated by determining a standard term\namount from base and adjusted rates and then prorating that amount based on the\namount of time the cost applies to the policy.\n\nBasis scalable means the premium is calculated from the value at risk — the basis —\nover the policy term. An example is dollars of sales between February 15 and October\n1.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 91,
+      "avg_confidence": 89.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question\n\n,— — When would a financial transaction have an amount identical to the cost\n\noo amount?\n4\n\nSS oe Oooo ee Oooo ooOoD\n\nGi",
+      "word_count": 25,
+      "avg_confidence": 70.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer fa\n\n_— — When would a financial transaction have an amount identical to the cost\n\noo amount?\n4\n\nIf a cost has no prior policy period, such as a submission or a renewal, then there is no\ndifference in the cost. The financial transaction amount is identical to the cost amount.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 59,
+      "avg_confidence": 85.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Lesson\nobjectives ¢ Describe what happens in rating when\n\nreview financial transactions occur in PolicyCenter\n« View costs on the quote screen\n¢ View differences in cost between financial\ntransactions",
+      "word_count": 30,
+      "avg_confidence": 88.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "| Student exercise\n\nWorking with costs and financial\ntransactions",
+      "word_count": 9,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

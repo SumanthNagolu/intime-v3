@@ -1,0 +1,2189 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_08_02.mp4",
+    "video_stem": "IS_Claim_08_02",
+    "duration_seconds": 141.18,
+    "duration_formatted": "00:02:21.180",
+    "segment_count": 22,
+    "word_count": 319,
+    "avg_confidence": 0.9681,
+    "transcription_time_seconds": 7.27,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:51:25.375906"
+  },
+  "full_text": "Welcome to the Diagnoses and ICD-10 Codes demonstration. In this demonstration, Eileen Lang will add a doctor and a diagnosis to an existing claim. First, let's flip at the medical details screen. While an injury description can be the best estimate of a lay person, a diagnosis is a very specific matter that can only come from a medical provider. In particular, diagnoses come in the form of codes, called International Classification of Diseases, Tenth Revision, or ICD-10. ICD-10 codes, once entered, appear on the Summary Card of the Medical Details page. Eileen requested and has received the initial medical report. She will enter the doctor's information on the parties involved page, then enter the diagnosis. She clicks the New Contact button. And, from the drop-down list, selects Vendor. And then Doctor. The doctor's first name is Jack. And his last name is Booney Apodic. A tax ID is required for all vendors. For a contact to be associated with a claim, it must have at least one role on that claim. A role is generally associated with either an exposure or with a claim as a whole. In this case, the role is associated with the medical details exposure. There is a list of roles, which can be expanded by configuration. One of the listed roles is Other, which provides additional flexibility. In this case, the role is Doctor. Eileen saves the doctor's information. In a real implementation more data would be collected. Returning to the medical details exposure. Eileen selects the medical case management card. And clicks Edit. She adds the medical diagnosis. The ICD code on the diagnosis is I49.0. The code represents ventricular fibrillation and flutter. The provider name picker lists only medical personnel and organizations associated with either this exposure or the claim as a whole. Eileen selects Dr. Booney Apodic. Eileen saves her work. This concludes the demonstration of diagnoses and ICD-10 code.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.8,
+      "end": 29.36,
+      "start_formatted": "00:00:00.800",
+      "end_formatted": "00:00:29.360",
+      "text": "Welcome to the Diagnoses and ICD-10 Codes demonstration. In this demonstration, Eileen Lang will add a doctor and a diagnosis to an existing claim. First, let's flip at the medical details screen. While an injury description can be the best estimate of a lay person, a diagnosis is a very specific matter that can only come from a medical provider. In particular, diagnoses come in the form of codes, called International Classification of Diseases,",
+      "words": [
+        {
+          "word": "Welcome",
+          "start": 0.8,
+          "end": 1.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 1.36,
+          "end": 1.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 1.56,
+          "end": 1.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "Diagnoses",
+          "start": 1.66,
+          "end": 2.34,
+          "probability": 0.9595
+        },
+        {
+          "word": "and",
+          "start": 2.34,
+          "end": 2.54,
+          "probability": 0.9722
+        },
+        {
+          "word": "ICD",
+          "start": 2.54,
+          "end": 3.1,
+          "probability": 0.998
+        },
+        {
+          "word": "-10",
+          "start": 3.1,
+          "end": 3.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "Codes",
+          "start": 3.4,
+          "end": 3.72,
+          "probability": 0.9912
+        },
+        {
+          "word": "demonstration.",
+          "start": 3.72,
+          "end": 4.4,
+          "probability": 0.3491
+        },
+        {
+          "word": "In",
+          "start": 4.9,
+          "end": 5.38,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 5.38,
+          "end": 5.56,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration,",
+          "start": 5.56,
+          "end": 6.22,
+          "probability": 1.0
+        },
+        {
+          "word": "Eileen",
+          "start": 6.74,
+          "end": 6.98,
+          "probability": 0.9316
+        },
+        {
+          "word": "Lang",
+          "start": 6.98,
+          "end": 7.22,
+          "probability": 0.7852
+        },
+        {
+          "word": "will",
+          "start": 7.22,
+          "end": 7.4,
+          "probability": 1.0
+        },
+        {
+          "word": "add",
+          "start": 7.4,
+          "end": 7.66,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 7.66,
+          "end": 7.76,
+          "probability": 1.0
+        },
+        {
+          "word": "doctor",
+          "start": 7.76,
+          "end": 8.06,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 8.06,
+          "end": 8.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 8.28,
+          "end": 8.36,
+          "probability": 1.0
+        },
+        {
+          "word": "diagnosis",
+          "start": 8.36,
+          "end": 8.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 8.88,
+          "end": 9.16,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 9.16,
+          "end": 9.3,
+          "probability": 1.0
+        },
+        {
+          "word": "existing",
+          "start": 9.3,
+          "end": 9.68,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 9.68,
+          "end": 10.08,
+          "probability": 1.0
+        },
+        {
+          "word": "First,",
+          "start": 11.0,
+          "end": 11.56,
+          "probability": 1.0
+        },
+        {
+          "word": "let's",
+          "start": 11.8,
+          "end": 12.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "flip",
+          "start": 12.18,
+          "end": 12.38,
+          "probability": 0.7856
+        },
+        {
+          "word": "at",
+          "start": 12.38,
+          "end": 12.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 12.5,
+          "end": 12.6,
+          "probability": 1.0
+        },
+        {
+          "word": "medical",
+          "start": 12.6,
+          "end": 12.86,
+          "probability": 0.7764
+        },
+        {
+          "word": "details",
+          "start": 12.86,
+          "end": 13.4,
+          "probability": 0.7275
+        },
+        {
+          "word": "screen.",
+          "start": 13.4,
+          "end": 13.78,
+          "probability": 1.0
+        },
+        {
+          "word": "While",
+          "start": 14.5,
+          "end": 15.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 15.06,
+          "end": 15.22,
+          "probability": 1.0
+        },
+        {
+          "word": "injury",
+          "start": 15.22,
+          "end": 15.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "description",
+          "start": 15.48,
+          "end": 15.94,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 15.94,
+          "end": 16.24,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 16.24,
+          "end": 16.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 16.38,
+          "end": 16.52,
+          "probability": 1.0
+        },
+        {
+          "word": "best",
+          "start": 16.52,
+          "end": 16.8,
+          "probability": 1.0
+        },
+        {
+          "word": "estimate",
+          "start": 16.8,
+          "end": 17.22,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 17.22,
+          "end": 17.4,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 17.4,
+          "end": 17.52,
+          "probability": 1.0
+        },
+        {
+          "word": "lay",
+          "start": 17.52,
+          "end": 17.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "person,",
+          "start": 17.66,
+          "end": 18.1,
+          "probability": 0.7686
+        },
+        {
+          "word": "a",
+          "start": 18.38,
+          "end": 18.6,
+          "probability": 1.0
+        },
+        {
+          "word": "diagnosis",
+          "start": 18.6,
+          "end": 19.12,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 19.12,
+          "end": 19.4,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 19.4,
+          "end": 19.5,
+          "probability": 1.0
+        },
+        {
+          "word": "very",
+          "start": 19.5,
+          "end": 19.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "specific",
+          "start": 19.74,
+          "end": 20.24,
+          "probability": 1.0
+        },
+        {
+          "word": "matter",
+          "start": 20.24,
+          "end": 20.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 20.6,
+          "end": 20.78,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 20.78,
+          "end": 20.92,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 20.92,
+          "end": 21.12,
+          "probability": 1.0
+        },
+        {
+          "word": "come",
+          "start": 21.12,
+          "end": 21.34,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 21.34,
+          "end": 21.52,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 21.52,
+          "end": 21.66,
+          "probability": 1.0
+        },
+        {
+          "word": "medical",
+          "start": 21.66,
+          "end": 21.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "provider.",
+          "start": 21.96,
+          "end": 22.46,
+          "probability": 1.0
+        },
+        {
+          "word": "In",
+          "start": 23.28,
+          "end": 23.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "particular,",
+          "start": 23.84,
+          "end": 24.28,
+          "probability": 1.0
+        },
+        {
+          "word": "diagnoses",
+          "start": 24.68,
+          "end": 25.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "come",
+          "start": 25.28,
+          "end": 25.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 25.56,
+          "end": 25.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 25.7,
+          "end": 25.78,
+          "probability": 1.0
+        },
+        {
+          "word": "form",
+          "start": 25.78,
+          "end": 26.0,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 26.0,
+          "end": 26.14,
+          "probability": 1.0
+        },
+        {
+          "word": "codes,",
+          "start": 26.14,
+          "end": 26.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "called",
+          "start": 26.84,
+          "end": 27.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "International",
+          "start": 27.1,
+          "end": 27.66,
+          "probability": 0.9619
+        },
+        {
+          "word": "Classification",
+          "start": 27.66,
+          "end": 28.56,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 28.56,
+          "end": 28.78,
+          "probability": 1.0
+        },
+        {
+          "word": "Diseases,",
+          "start": 28.78,
+          "end": 29.36,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.36,
+      "end": 58.74,
+      "start_formatted": "00:00:29.360",
+      "end_formatted": "00:00:58.740",
+      "text": "Tenth Revision, or ICD-10. ICD-10 codes, once entered, appear on the Summary Card of the Medical Details page. Eileen requested and has received the initial medical report. She will enter the doctor's information on the parties involved page, then enter the diagnosis. She clicks the New Contact button. And, from the drop-down list, selects Vendor. And then Doctor. The doctor's first name is Jack.",
+      "words": [
+        {
+          "word": "Tenth",
+          "start": 29.36,
+          "end": 29.92,
+          "probability": 0.5342
+        },
+        {
+          "word": "Revision,",
+          "start": 29.92,
+          "end": 30.34,
+          "probability": 0.9717
+        },
+        {
+          "word": "or",
+          "start": 30.5,
+          "end": 30.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "ICD",
+          "start": 30.7,
+          "end": 31.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "-10.",
+          "start": 31.28,
+          "end": 31.62,
+          "probability": 0.998
+        },
+        {
+          "word": "ICD",
+          "start": 32.14,
+          "end": 32.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "-10",
+          "start": 32.82,
+          "end": 33.1,
+          "probability": 1.0
+        },
+        {
+          "word": "codes,",
+          "start": 33.1,
+          "end": 33.48,
+          "probability": 0.9707
+        },
+        {
+          "word": "once",
+          "start": 33.68,
+          "end": 34.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "entered,",
+          "start": 34.04,
+          "end": 34.4,
+          "probability": 1.0
+        },
+        {
+          "word": "appear",
+          "start": 34.58,
+          "end": 34.86,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 34.86,
+          "end": 35.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 35.02,
+          "end": 35.14,
+          "probability": 1.0
+        },
+        {
+          "word": "Summary",
+          "start": 35.14,
+          "end": 35.48,
+          "probability": 0.8013
+        },
+        {
+          "word": "Card",
+          "start": 35.48,
+          "end": 35.74,
+          "probability": 0.8945
+        },
+        {
+          "word": "of",
+          "start": 35.74,
+          "end": 35.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 35.9,
+          "end": 36.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "Medical",
+          "start": 36.0,
+          "end": 36.3,
+          "probability": 0.9727
+        },
+        {
+          "word": "Details",
+          "start": 36.3,
+          "end": 36.8,
+          "probability": 0.9883
+        },
+        {
+          "word": "page.",
+          "start": 36.8,
+          "end": 37.28,
+          "probability": 0.9902
+        },
+        {
+          "word": "Eileen",
+          "start": 37.98,
+          "end": 38.66,
+          "probability": 0.9551
+        },
+        {
+          "word": "requested",
+          "start": 38.66,
+          "end": 39.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "and",
+          "start": 39.24,
+          "end": 39.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 39.44,
+          "end": 39.64,
+          "probability": 1.0
+        },
+        {
+          "word": "received",
+          "start": 39.64,
+          "end": 40.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 40.0,
+          "end": 40.14,
+          "probability": 1.0
+        },
+        {
+          "word": "initial",
+          "start": 40.14,
+          "end": 40.46,
+          "probability": 0.8911
+        },
+        {
+          "word": "medical",
+          "start": 40.46,
+          "end": 40.78,
+          "probability": 0.9795
+        },
+        {
+          "word": "report.",
+          "start": 40.78,
+          "end": 41.34,
+          "probability": 1.0
+        },
+        {
+          "word": "She",
+          "start": 41.76,
+          "end": 42.22,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 42.22,
+          "end": 42.42,
+          "probability": 1.0
+        },
+        {
+          "word": "enter",
+          "start": 42.42,
+          "end": 42.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 42.64,
+          "end": 42.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "doctor's",
+          "start": 42.8,
+          "end": 43.2,
+          "probability": 0.9902
+        },
+        {
+          "word": "information",
+          "start": 43.2,
+          "end": 43.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 43.64,
+          "end": 43.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 43.92,
+          "end": 44.02,
+          "probability": 1.0
+        },
+        {
+          "word": "parties",
+          "start": 44.02,
+          "end": 44.36,
+          "probability": 0.2695
+        },
+        {
+          "word": "involved",
+          "start": 44.36,
+          "end": 44.74,
+          "probability": 0.8765
+        },
+        {
+          "word": "page,",
+          "start": 44.74,
+          "end": 45.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "then",
+          "start": 45.5,
+          "end": 45.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "enter",
+          "start": 45.76,
+          "end": 46.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 46.06,
+          "end": 46.2,
+          "probability": 1.0
+        },
+        {
+          "word": "diagnosis.",
+          "start": 46.2,
+          "end": 46.76,
+          "probability": 0.9775
+        },
+        {
+          "word": "She",
+          "start": 47.48,
+          "end": 48.16,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 48.16,
+          "end": 48.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 48.52,
+          "end": 48.66,
+          "probability": 1.0
+        },
+        {
+          "word": "New",
+          "start": 48.66,
+          "end": 48.78,
+          "probability": 0.9233
+        },
+        {
+          "word": "Contact",
+          "start": 48.78,
+          "end": 49.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "button.",
+          "start": 49.22,
+          "end": 49.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "And,",
+          "start": 50.38,
+          "end": 51.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "from",
+          "start": 51.22,
+          "end": 51.36,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 51.36,
+          "end": 51.5,
+          "probability": 1.0
+        },
+        {
+          "word": "drop",
+          "start": 51.5,
+          "end": 51.72,
+          "probability": 0.9336
+        },
+        {
+          "word": "-down",
+          "start": 51.72,
+          "end": 51.96,
+          "probability": 0.9922
+        },
+        {
+          "word": "list,",
+          "start": 51.96,
+          "end": 52.34,
+          "probability": 1.0
+        },
+        {
+          "word": "selects",
+          "start": 52.54,
+          "end": 53.1,
+          "probability": 0.999
+        },
+        {
+          "word": "Vendor.",
+          "start": 53.1,
+          "end": 53.46,
+          "probability": 0.9912
+        },
+        {
+          "word": "And",
+          "start": 54.0,
+          "end": 54.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "then",
+          "start": 54.5,
+          "end": 54.68,
+          "probability": 0.999
+        },
+        {
+          "word": "Doctor.",
+          "start": 54.68,
+          "end": 55.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "The",
+          "start": 56.56,
+          "end": 57.24,
+          "probability": 0.999
+        },
+        {
+          "word": "doctor's",
+          "start": 57.24,
+          "end": 57.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "first",
+          "start": 57.68,
+          "end": 57.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 57.92,
+          "end": 58.18,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 58.18,
+          "end": 58.36,
+          "probability": 1.0
+        },
+        {
+          "word": "Jack.",
+          "start": 58.36,
+          "end": 58.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.52,
+      "end": 61.74,
+      "start_formatted": "00:00:59.520",
+      "end_formatted": "00:01:01.740",
+      "text": "And his last name is Booney Apodic.",
+      "words": [
+        {
+          "word": "And",
+          "start": 59.52,
+          "end": 60.04,
+          "probability": 0.8462
+        },
+        {
+          "word": "his",
+          "start": 60.04,
+          "end": 60.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "last",
+          "start": 60.2,
+          "end": 60.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "name",
+          "start": 60.48,
+          "end": 60.68,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 60.68,
+          "end": 60.88,
+          "probability": 1.0
+        },
+        {
+          "word": "Booney",
+          "start": 60.88,
+          "end": 61.2,
+          "probability": 0.4563
+        },
+        {
+          "word": "Apodic.",
+          "start": 61.2,
+          "end": 61.74,
+          "probability": 0.6328
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 64.56,
+      "end": 67.2,
+      "start_formatted": "00:01:04.560",
+      "end_formatted": "00:01:07.200",
+      "text": "A tax ID is required for all vendors.",
+      "words": [
+        {
+          "word": "A",
+          "start": 64.56,
+          "end": 65.08,
+          "probability": 0.9878
+        },
+        {
+          "word": "tax",
+          "start": 65.08,
+          "end": 65.3,
+          "probability": 0.854
+        },
+        {
+          "word": "ID",
+          "start": 65.3,
+          "end": 65.6,
+          "probability": 0.9736
+        },
+        {
+          "word": "is",
+          "start": 65.6,
+          "end": 65.82,
+          "probability": 1.0
+        },
+        {
+          "word": "required",
+          "start": 65.82,
+          "end": 66.22,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 66.22,
+          "end": 66.46,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 66.46,
+          "end": 66.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "vendors.",
+          "start": 66.74,
+          "end": 67.2,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 69.48,
+      "end": 74.42,
+      "start_formatted": "00:01:09.480",
+      "end_formatted": "00:01:14.420",
+      "text": "For a contact to be associated with a claim, it must have at least one role on that claim.",
+      "words": [
+        {
+          "word": "For",
+          "start": 69.48,
+          "end": 70.0,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 70.0,
+          "end": 70.16,
+          "probability": 1.0
+        },
+        {
+          "word": "contact",
+          "start": 70.16,
+          "end": 70.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 70.46,
+          "end": 70.7,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 70.7,
+          "end": 70.8,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 70.8,
+          "end": 71.32,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 71.32,
+          "end": 71.58,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 71.58,
+          "end": 71.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "claim,",
+          "start": 71.68,
+          "end": 72.02,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 72.22,
+          "end": 72.48,
+          "probability": 1.0
+        },
+        {
+          "word": "must",
+          "start": 72.48,
+          "end": 72.7,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 72.7,
+          "end": 72.9,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 72.9,
+          "end": 73.06,
+          "probability": 1.0
+        },
+        {
+          "word": "least",
+          "start": 73.06,
+          "end": 73.24,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 73.24,
+          "end": 73.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "role",
+          "start": 73.5,
+          "end": 73.72,
+          "probability": 0.9653
+        },
+        {
+          "word": "on",
+          "start": 73.72,
+          "end": 73.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 73.94,
+          "end": 74.1,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 74.1,
+          "end": 74.42,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 75.12,
+      "end": 79.8,
+      "start_formatted": "00:01:15.120",
+      "end_formatted": "00:01:19.800",
+      "text": "A role is generally associated with either an exposure or with a claim as a whole.",
+      "words": [
+        {
+          "word": "A",
+          "start": 75.12,
+          "end": 75.64,
+          "probability": 1.0
+        },
+        {
+          "word": "role",
+          "start": 75.64,
+          "end": 75.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 75.86,
+          "end": 76.08,
+          "probability": 1.0
+        },
+        {
+          "word": "generally",
+          "start": 76.08,
+          "end": 76.42,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 76.42,
+          "end": 77.16,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 77.16,
+          "end": 77.4,
+          "probability": 1.0
+        },
+        {
+          "word": "either",
+          "start": 77.4,
+          "end": 77.7,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 77.7,
+          "end": 77.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "exposure",
+          "start": 77.88,
+          "end": 78.32,
+          "probability": 0.998
+        },
+        {
+          "word": "or",
+          "start": 78.32,
+          "end": 78.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 78.7,
+          "end": 78.88,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 78.88,
+          "end": 78.98,
+          "probability": 0.856
+        },
+        {
+          "word": "claim",
+          "start": 78.98,
+          "end": 79.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 79.28,
+          "end": 79.44,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 79.44,
+          "end": 79.52,
+          "probability": 1.0
+        },
+        {
+          "word": "whole.",
+          "start": 79.52,
+          "end": 79.8,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 80.42,
+      "end": 84.36,
+      "start_formatted": "00:01:20.420",
+      "end_formatted": "00:01:24.360",
+      "text": "In this case, the role is associated with the medical details exposure.",
+      "words": [
+        {
+          "word": "In",
+          "start": 80.42,
+          "end": 80.94,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 80.94,
+          "end": 81.12,
+          "probability": 1.0
+        },
+        {
+          "word": "case,",
+          "start": 81.12,
+          "end": 81.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 81.64,
+          "end": 81.76,
+          "probability": 1.0
+        },
+        {
+          "word": "role",
+          "start": 81.76,
+          "end": 81.96,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 81.96,
+          "end": 82.12,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 82.12,
+          "end": 82.66,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 82.66,
+          "end": 82.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 82.9,
+          "end": 83.0,
+          "probability": 0.9907
+        },
+        {
+          "word": "medical",
+          "start": 83.0,
+          "end": 83.28,
+          "probability": 0.9883
+        },
+        {
+          "word": "details",
+          "start": 83.28,
+          "end": 83.86,
+          "probability": 0.9512
+        },
+        {
+          "word": "exposure.",
+          "start": 83.86,
+          "end": 84.36,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 85.06,
+      "end": 88.74,
+      "start_formatted": "00:01:25.060",
+      "end_formatted": "00:01:28.740",
+      "text": "There is a list of roles, which can be expanded by configuration.",
+      "words": [
+        {
+          "word": "There",
+          "start": 85.06,
+          "end": 85.7,
+          "probability": 0.9741
+        },
+        {
+          "word": "is",
+          "start": 85.7,
+          "end": 85.86,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 85.86,
+          "end": 85.94,
+          "probability": 1.0
+        },
+        {
+          "word": "list",
+          "start": 85.94,
+          "end": 86.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 86.16,
+          "end": 86.3,
+          "probability": 1.0
+        },
+        {
+          "word": "roles,",
+          "start": 86.3,
+          "end": 86.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "which",
+          "start": 86.8,
+          "end": 87.12,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 87.12,
+          "end": 87.28,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 87.28,
+          "end": 87.4,
+          "probability": 1.0
+        },
+        {
+          "word": "expanded",
+          "start": 87.4,
+          "end": 87.86,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 87.86,
+          "end": 88.08,
+          "probability": 1.0
+        },
+        {
+          "word": "configuration.",
+          "start": 88.08,
+          "end": 88.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 89.28,
+      "end": 93.16,
+      "start_formatted": "00:01:29.280",
+      "end_formatted": "00:01:33.160",
+      "text": "One of the listed roles is Other, which provides additional flexibility.",
+      "words": [
+        {
+          "word": "One",
+          "start": 89.28,
+          "end": 89.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 89.76,
+          "end": 89.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 89.86,
+          "end": 89.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "listed",
+          "start": 89.98,
+          "end": 90.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "roles",
+          "start": 90.28,
+          "end": 90.6,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 90.6,
+          "end": 90.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "Other,",
+          "start": 90.82,
+          "end": 91.06,
+          "probability": 0.4221
+        },
+        {
+          "word": "which",
+          "start": 91.26,
+          "end": 91.6,
+          "probability": 1.0
+        },
+        {
+          "word": "provides",
+          "start": 91.6,
+          "end": 92.02,
+          "probability": 1.0
+        },
+        {
+          "word": "additional",
+          "start": 92.02,
+          "end": 92.46,
+          "probability": 1.0
+        },
+        {
+          "word": "flexibility.",
+          "start": 92.46,
+          "end": 93.16,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 94.32,
+      "end": 96.06,
+      "start_formatted": "00:01:34.320",
+      "end_formatted": "00:01:36.060",
+      "text": "In this case, the role is Doctor.",
+      "words": [
+        {
+          "word": "In",
+          "start": 94.12,
+          "end": 94.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 94.44,
+          "end": 94.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "case,",
+          "start": 94.62,
+          "end": 94.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 95.14,
+          "end": 95.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "role",
+          "start": 95.32,
+          "end": 95.54,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 95.54,
+          "end": 95.7,
+          "probability": 1.0
+        },
+        {
+          "word": "Doctor.",
+          "start": 95.7,
+          "end": 96.06,
+          "probability": 0.9526
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 96.84,
+      "end": 98.98,
+      "start_formatted": "00:01:36.840",
+      "end_formatted": "00:01:38.980",
+      "text": "Eileen saves the doctor's information.",
+      "words": [
+        {
+          "word": "Eileen",
+          "start": 96.84,
+          "end": 97.48,
+          "probability": 0.9517
+        },
+        {
+          "word": "saves",
+          "start": 97.48,
+          "end": 97.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 97.78,
+          "end": 97.94,
+          "probability": 1.0
+        },
+        {
+          "word": "doctor's",
+          "start": 97.94,
+          "end": 98.36,
+          "probability": 0.9512
+        },
+        {
+          "word": "information.",
+          "start": 98.36,
+          "end": 98.98,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 99.42,
+      "end": 102.24,
+      "start_formatted": "00:01:39.420",
+      "end_formatted": "00:01:42.240",
+      "text": "In a real implementation more data would be collected.",
+      "words": [
+        {
+          "word": "In",
+          "start": 99.42,
+          "end": 99.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 99.82,
+          "end": 99.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "real",
+          "start": 99.9,
+          "end": 100.12,
+          "probability": 0.9668
+        },
+        {
+          "word": "implementation",
+          "start": 100.12,
+          "end": 100.74,
+          "probability": 0.999
+        },
+        {
+          "word": "more",
+          "start": 100.74,
+          "end": 101.12,
+          "probability": 0.8555
+        },
+        {
+          "word": "data",
+          "start": 101.12,
+          "end": 101.44,
+          "probability": 1.0
+        },
+        {
+          "word": "would",
+          "start": 101.44,
+          "end": 101.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 101.62,
+          "end": 101.76,
+          "probability": 1.0
+        },
+        {
+          "word": "collected.",
+          "start": 101.76,
+          "end": 102.24,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 103.18,
+      "end": 105.44,
+      "start_formatted": "00:01:43.180",
+      "end_formatted": "00:01:45.440",
+      "text": "Returning to the medical details exposure.",
+      "words": [
+        {
+          "word": "Returning",
+          "start": 103.18,
+          "end": 103.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 103.82,
+          "end": 103.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 103.98,
+          "end": 104.1,
+          "probability": 0.999
+        },
+        {
+          "word": "medical",
+          "start": 104.1,
+          "end": 104.38,
+          "probability": 0.4412
+        },
+        {
+          "word": "details",
+          "start": 104.38,
+          "end": 104.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "exposure.",
+          "start": 104.92,
+          "end": 105.44,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 106.3,
+      "end": 109.02,
+      "start_formatted": "00:01:46.300",
+      "end_formatted": "00:01:49.020",
+      "text": "Eileen selects the medical case management card.",
+      "words": [
+        {
+          "word": "Eileen",
+          "start": 106.3,
+          "end": 106.94,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 106.94,
+          "end": 107.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 107.38,
+          "end": 107.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "medical",
+          "start": 107.48,
+          "end": 107.8,
+          "probability": 0.855
+        },
+        {
+          "word": "case",
+          "start": 107.8,
+          "end": 108.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "management",
+          "start": 108.1,
+          "end": 108.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "card.",
+          "start": 108.6,
+          "end": 109.02,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 109.54,
+      "end": 110.74,
+      "start_formatted": "00:01:49.540",
+      "end_formatted": "00:01:50.740",
+      "text": "And clicks Edit.",
+      "words": [
+        {
+          "word": "And",
+          "start": 109.54,
+          "end": 110.18,
+          "probability": 0.998
+        },
+        {
+          "word": "clicks",
+          "start": 110.18,
+          "end": 110.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "Edit.",
+          "start": 110.48,
+          "end": 110.74,
+          "probability": 0.771
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 112.2,
+      "end": 114.46,
+      "start_formatted": "00:01:52.200",
+      "end_formatted": "00:01:54.460",
+      "text": "She adds the medical diagnosis.",
+      "words": [
+        {
+          "word": "She",
+          "start": 112.2,
+          "end": 112.92,
+          "probability": 0.9785
+        },
+        {
+          "word": "adds",
+          "start": 112.92,
+          "end": 113.26,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 113.26,
+          "end": 113.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "medical",
+          "start": 113.42,
+          "end": 113.74,
+          "probability": 0.9902
+        },
+        {
+          "word": "diagnosis.",
+          "start": 113.74,
+          "end": 114.46,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 115.7,
+      "end": 119.16,
+      "start_formatted": "00:01:55.700",
+      "end_formatted": "00:01:59.160",
+      "text": "The ICD code on the diagnosis is I49.0.",
+      "words": [
+        {
+          "word": "The",
+          "start": 115.44,
+          "end": 115.8,
+          "probability": 0.999
+        },
+        {
+          "word": "ICD",
+          "start": 115.8,
+          "end": 116.3,
+          "probability": 0.998
+        },
+        {
+          "word": "code",
+          "start": 116.3,
+          "end": 116.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 116.64,
+          "end": 116.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 116.78,
+          "end": 116.88,
+          "probability": 1.0
+        },
+        {
+          "word": "diagnosis",
+          "start": 116.88,
+          "end": 117.46,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 117.46,
+          "end": 117.74,
+          "probability": 1.0
+        },
+        {
+          "word": "I49",
+          "start": 117.74,
+          "end": 118.28,
+          "probability": 0.7378
+        },
+        {
+          "word": ".0.",
+          "start": 118.28,
+          "end": 119.16,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 119.7,
+      "end": 122.9,
+      "start_formatted": "00:01:59.700",
+      "end_formatted": "00:02:02.900",
+      "text": "The code represents ventricular fibrillation and flutter.",
+      "words": [
+        {
+          "word": "The",
+          "start": 119.7,
+          "end": 120.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "code",
+          "start": 120.26,
+          "end": 120.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "represents",
+          "start": 120.52,
+          "end": 121.12,
+          "probability": 1.0
+        },
+        {
+          "word": "ventricular",
+          "start": 121.12,
+          "end": 121.7,
+          "probability": 0.999
+        },
+        {
+          "word": "fibrillation",
+          "start": 121.7,
+          "end": 122.34,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 122.34,
+          "end": 122.56,
+          "probability": 1.0
+        },
+        {
+          "word": "flutter.",
+          "start": 122.56,
+          "end": 122.9,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 124.08,
+      "end": 130.92,
+      "start_formatted": "00:02:04.080",
+      "end_formatted": "00:02:10.920",
+      "text": "The provider name picker lists only medical personnel and organizations associated with either this exposure or the claim as a whole.",
+      "words": [
+        {
+          "word": "The",
+          "start": 123.82,
+          "end": 124.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "provider",
+          "start": 124.18,
+          "end": 124.58,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 124.58,
+          "end": 124.84,
+          "probability": 0.9229
+        },
+        {
+          "word": "picker",
+          "start": 124.84,
+          "end": 125.26,
+          "probability": 0.9443
+        },
+        {
+          "word": "lists",
+          "start": 125.26,
+          "end": 125.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 125.44,
+          "end": 125.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "medical",
+          "start": 125.82,
+          "end": 126.18,
+          "probability": 1.0
+        },
+        {
+          "word": "personnel",
+          "start": 126.18,
+          "end": 126.7,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 126.7,
+          "end": 127.04,
+          "probability": 1.0
+        },
+        {
+          "word": "organizations",
+          "start": 127.04,
+          "end": 127.72,
+          "probability": 0.999
+        },
+        {
+          "word": "associated",
+          "start": 127.72,
+          "end": 128.44,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 128.44,
+          "end": 128.76,
+          "probability": 1.0
+        },
+        {
+          "word": "either",
+          "start": 128.76,
+          "end": 129.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 129.06,
+          "end": 129.3,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 129.3,
+          "end": 129.76,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 129.76,
+          "end": 129.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 129.98,
+          "end": 130.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 130.1,
+          "end": 130.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 130.4,
+          "end": 130.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 130.56,
+          "end": 130.64,
+          "probability": 1.0
+        },
+        {
+          "word": "whole.",
+          "start": 130.64,
+          "end": 130.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 131.32,
+      "end": 133.54,
+      "start_formatted": "00:02:11.320",
+      "end_formatted": "00:02:13.540",
+      "text": "Eileen selects Dr. Booney Apodic.",
+      "words": [
+        {
+          "word": "Eileen",
+          "start": 131.32,
+          "end": 131.84,
+          "probability": 0.9062
+        },
+        {
+          "word": "selects",
+          "start": 131.84,
+          "end": 132.34,
+          "probability": 0.998
+        },
+        {
+          "word": "Dr.",
+          "start": 132.34,
+          "end": 132.56,
+          "probability": 0.998
+        },
+        {
+          "word": "Booney",
+          "start": 132.68,
+          "end": 132.96,
+          "probability": 0.1863
+        },
+        {
+          "word": "Apodic.",
+          "start": 132.96,
+          "end": 133.54,
+          "probability": 0.4062
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 134.2,
+      "end": 135.74,
+      "start_formatted": "00:02:14.200",
+      "end_formatted": "00:02:15.740",
+      "text": "Eileen saves her work.",
+      "words": [
+        {
+          "word": "Eileen",
+          "start": 134.2,
+          "end": 134.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "saves",
+          "start": 134.92,
+          "end": 135.18,
+          "probability": 0.999
+        },
+        {
+          "word": "her",
+          "start": 135.18,
+          "end": 135.38,
+          "probability": 1.0
+        },
+        {
+          "word": "work.",
+          "start": 135.38,
+          "end": 135.74,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 136.78,
+      "end": 141.18,
+      "start_formatted": "00:02:16.780",
+      "end_formatted": "00:02:21.180",
+      "text": "This concludes the demonstration of diagnoses and ICD-10 code.",
+      "words": [
+        {
+          "word": "This",
+          "start": 136.78,
+          "end": 137.6,
+          "probability": 0.9561
+        },
+        {
+          "word": "concludes",
+          "start": 137.6,
+          "end": 138.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 138.04,
+          "end": 138.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 138.26,
+          "end": 138.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 138.72,
+          "end": 139.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "diagnoses",
+          "start": 139.1,
+          "end": 139.82,
+          "probability": 0.9224
+        },
+        {
+          "word": "and",
+          "start": 139.82,
+          "end": 140.08,
+          "probability": 0.998
+        },
+        {
+          "word": "ICD",
+          "start": 140.08,
+          "end": 140.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "-10",
+          "start": 140.66,
+          "end": 140.96,
+          "probability": 0.999
+        },
+        {
+          "word": "code.",
+          "start": 140.96,
+          "end": 141.18,
+          "probability": 0.3762
+        }
+      ]
+    }
+  ]
+}

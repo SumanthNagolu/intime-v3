@@ -1,0 +1,4235 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_15_01.mp4",
+    "video_stem": "CC_15_01",
+    "duration_seconds": 319.04,
+    "duration_formatted": "00:05:19.040",
+    "segment_count": 46,
+    "word_count": 626,
+    "avg_confidence": 0.9036,
+    "transcription_time_seconds": 31.54,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:44:24.942388"
+  },
+  "full_text": "Next demonstration, I'm going to explore and show what roles and permissions do in terms of access to various aspects of the application. I will use three users, Rick Ralston, a claims supervisor, Ida Belt, a customer service representative, and the system administrator. As you will see, each user has access to different areas of the application, relative to their job responsibilities. I'll start with Rick. Since he's a supervisor, Rick has access to the team tab. Next, let's look at claim ownership. As Rick, I create a new claim. As Rick, I'll put together a quick auto claim to demonstrate. Let's suppose Mr. Williams hit a moose coming out of his garage. I'll add the vehicle Mr. Williams was driving. I'll add the vehicle to the vehicle. Finally, Rick assigns the claim to Ida Belt. Rick searches for Ida's user ID. Rick clicks Assign. But when he attempts to save the claim, he sees that Ida does not have permission to own claims. So instead, he assigns the claim to NDApplegate, an adjuster. Now he can finish and save the claim. I'll take note of the claim number for later use. Then, as Rick, navigate to the claim. On the contacts page, Rick has the ability to edit contacts in the address book. Rick also has the ability to close a claim. Now let's look at Ida. Ida does not have access to the team tab. Ida does not have access to the team tab. Ida can search for a claim. Ida does not need to close the claim. Ida does not need to close the claim. Ida does not need to close the claim. Ida does not need to close the claim. But she cannot close the claim. She can view contacts, but she cannot edit them. Let's look at why she is restricted this way. A login is the system administrator. Let's start by looking at IDA's user record. Users have roles. IDA has exactly one role, Customer Service Representative. Andy Applegate, on the other hand, has two roles, Adjuster Entrusted for Sensitive Claims, and Rick Ralston. Has the single role of Claim Supervisor. Let's look at these three roles. Let's start with the Claim Supervisor roles. A role is basically a list of permissions. A user who has a role assigned to them has every permission associated with that role. If the user has two or more roles, they have all permissions associated with any of those roles. The Claim Supervisor role has 12 pages of permissions associated with it. Among these are the right to close claims, to create contacts, to edit contacts, and to view their team. Adjusters, on the other hand, have the permission to own claims. But Customer Service Representatives do not have any of those permissions. This concludes the permissions in the base application demonstration. of the DSA of the DSA of the DSA of the DSA of the DSA of the DSA of the DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA D Thank you.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 24.64,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:24.640",
+      "text": "Next demonstration, I'm going to explore and show what roles and permissions do in terms of access to various aspects of the application. I will use three users, Rick Ralston, a claims supervisor, Ida Belt, a customer service representative, and the system administrator. As you will see, each user has access to different areas of the application, relative to their job responsibilities. I'll start with Rick.",
+      "words": [
+        {
+          "word": "Next",
+          "start": 0.0,
+          "end": 0.16,
+          "probability": 0.1201
+        },
+        {
+          "word": "demonstration,",
+          "start": 0.16,
+          "end": 0.72,
+          "probability": 0.5532
+        },
+        {
+          "word": "I'm",
+          "start": 1.08,
+          "end": 1.34,
+          "probability": 0.9609
+        },
+        {
+          "word": "going",
+          "start": 1.34,
+          "end": 1.54,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 1.54,
+          "end": 1.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "explore",
+          "start": 1.7,
+          "end": 2.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 2.1,
+          "end": 2.3,
+          "probability": 0.9932
+        },
+        {
+          "word": "show",
+          "start": 2.3,
+          "end": 2.54,
+          "probability": 0.998
+        },
+        {
+          "word": "what",
+          "start": 2.54,
+          "end": 2.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "roles",
+          "start": 2.78,
+          "end": 3.08,
+          "probability": 0.9858
+        },
+        {
+          "word": "and",
+          "start": 3.08,
+          "end": 3.34,
+          "probability": 0.9829
+        },
+        {
+          "word": "permissions",
+          "start": 3.34,
+          "end": 3.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "do",
+          "start": 3.72,
+          "end": 4.0,
+          "probability": 0.9385
+        },
+        {
+          "word": "in",
+          "start": 4.0,
+          "end": 4.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "terms",
+          "start": 4.14,
+          "end": 4.36,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 4.36,
+          "end": 4.54,
+          "probability": 0.999
+        },
+        {
+          "word": "access",
+          "start": 4.54,
+          "end": 4.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 4.9,
+          "end": 5.12,
+          "probability": 0.999
+        },
+        {
+          "word": "various",
+          "start": 5.12,
+          "end": 5.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "aspects",
+          "start": 5.44,
+          "end": 6.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 6.04,
+          "end": 6.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 6.24,
+          "end": 6.34,
+          "probability": 0.999
+        },
+        {
+          "word": "application.",
+          "start": 6.34,
+          "end": 6.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 7.34,
+          "end": 7.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "will",
+          "start": 7.7,
+          "end": 7.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "use",
+          "start": 7.9,
+          "end": 8.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "three",
+          "start": 8.12,
+          "end": 8.32,
+          "probability": 0.8115
+        },
+        {
+          "word": "users,",
+          "start": 8.32,
+          "end": 8.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "Rick",
+          "start": 9.16,
+          "end": 9.38,
+          "probability": 0.9902
+        },
+        {
+          "word": "Ralston,",
+          "start": 9.38,
+          "end": 9.92,
+          "probability": 0.9404
+        },
+        {
+          "word": "a",
+          "start": 10.16,
+          "end": 10.38,
+          "probability": 0.9849
+        },
+        {
+          "word": "claims",
+          "start": 10.38,
+          "end": 10.66,
+          "probability": 0.8457
+        },
+        {
+          "word": "supervisor,",
+          "start": 10.66,
+          "end": 11.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "Ida",
+          "start": 11.74,
+          "end": 11.94,
+          "probability": 0.5576
+        },
+        {
+          "word": "Belt,",
+          "start": 11.94,
+          "end": 12.18,
+          "probability": 0.7783
+        },
+        {
+          "word": "a",
+          "start": 12.48,
+          "end": 12.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "customer",
+          "start": 12.64,
+          "end": 12.96,
+          "probability": 0.9883
+        },
+        {
+          "word": "service",
+          "start": 12.96,
+          "end": 13.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "representative,",
+          "start": 13.44,
+          "end": 14.1,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 14.46,
+          "end": 14.64,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 14.64,
+          "end": 14.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "system",
+          "start": 14.78,
+          "end": 15.1,
+          "probability": 0.9785
+        },
+        {
+          "word": "administrator.",
+          "start": 15.1,
+          "end": 15.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "As",
+          "start": 16.16,
+          "end": 16.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "you",
+          "start": 16.54,
+          "end": 16.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 16.66,
+          "end": 16.8,
+          "probability": 0.9561
+        },
+        {
+          "word": "see,",
+          "start": 16.8,
+          "end": 17.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "each",
+          "start": 17.42,
+          "end": 17.62,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 17.62,
+          "end": 17.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 17.94,
+          "end": 18.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 18.14,
+          "end": 18.52,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 18.52,
+          "end": 18.76,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 18.76,
+          "end": 19.02,
+          "probability": 0.999
+        },
+        {
+          "word": "areas",
+          "start": 19.02,
+          "end": 19.5,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 19.5,
+          "end": 19.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 19.66,
+          "end": 19.78,
+          "probability": 0.999
+        },
+        {
+          "word": "application,",
+          "start": 19.78,
+          "end": 20.42,
+          "probability": 0.999
+        },
+        {
+          "word": "relative",
+          "start": 20.7,
+          "end": 21.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 21.14,
+          "end": 21.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "their",
+          "start": 21.38,
+          "end": 21.54,
+          "probability": 0.999
+        },
+        {
+          "word": "job",
+          "start": 21.54,
+          "end": 21.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "responsibilities.",
+          "start": 21.88,
+          "end": 22.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "I'll",
+          "start": 23.34,
+          "end": 23.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "start",
+          "start": 23.9,
+          "end": 24.16,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 24.16,
+          "end": 24.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Rick.",
+          "start": 24.36,
+          "end": 24.64,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 33.2,
+      "end": 49.08,
+      "start_formatted": "00:00:33.200",
+      "end_formatted": "00:00:49.080",
+      "text": "Since he's a supervisor, Rick has access to the team tab. Next, let's look at claim ownership. As Rick, I create a new claim. As Rick, I'll put together a quick auto claim to demonstrate.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 33.2,
+          "end": 33.72,
+          "probability": 0.9746
+        },
+        {
+          "word": "he's",
+          "start": 33.72,
+          "end": 33.98,
+          "probability": 0.9316
+        },
+        {
+          "word": "a",
+          "start": 33.98,
+          "end": 34.08,
+          "probability": 0.9824
+        },
+        {
+          "word": "supervisor,",
+          "start": 34.08,
+          "end": 34.7,
+          "probability": 0.9546
+        },
+        {
+          "word": "Rick",
+          "start": 35.06,
+          "end": 35.22,
+          "probability": 0.957
+        },
+        {
+          "word": "has",
+          "start": 35.22,
+          "end": 35.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "access",
+          "start": 35.42,
+          "end": 35.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 35.8,
+          "end": 36.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 36.08,
+          "end": 36.18,
+          "probability": 0.9932
+        },
+        {
+          "word": "team",
+          "start": 36.18,
+          "end": 36.42,
+          "probability": 0.4111
+        },
+        {
+          "word": "tab.",
+          "start": 36.42,
+          "end": 36.7,
+          "probability": 0.9883
+        },
+        {
+          "word": "Next,",
+          "start": 37.22,
+          "end": 37.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "let's",
+          "start": 37.98,
+          "end": 38.3,
+          "probability": 0.9844
+        },
+        {
+          "word": "look",
+          "start": 38.3,
+          "end": 38.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "at",
+          "start": 38.44,
+          "end": 38.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "claim",
+          "start": 38.62,
+          "end": 38.88,
+          "probability": 0.7026
+        },
+        {
+          "word": "ownership.",
+          "start": 38.88,
+          "end": 39.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "As",
+          "start": 40.38,
+          "end": 40.9,
+          "probability": 0.9897
+        },
+        {
+          "word": "Rick,",
+          "start": 40.9,
+          "end": 41.14,
+          "probability": 0.9858
+        },
+        {
+          "word": "I",
+          "start": 41.34,
+          "end": 41.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "create",
+          "start": 41.52,
+          "end": 41.84,
+          "probability": 0.9536
+        },
+        {
+          "word": "a",
+          "start": 41.84,
+          "end": 41.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "new",
+          "start": 41.96,
+          "end": 42.12,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 42.12,
+          "end": 42.46,
+          "probability": 0.981
+        },
+        {
+          "word": "As",
+          "start": 45.58,
+          "end": 46.1,
+          "probability": 0.9854
+        },
+        {
+          "word": "Rick,",
+          "start": 46.1,
+          "end": 46.34,
+          "probability": 0.999
+        },
+        {
+          "word": "I'll",
+          "start": 46.56,
+          "end": 46.8,
+          "probability": 0.9912
+        },
+        {
+          "word": "put",
+          "start": 46.8,
+          "end": 47.0,
+          "probability": 0.9917
+        },
+        {
+          "word": "together",
+          "start": 47.0,
+          "end": 47.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 47.34,
+          "end": 47.52,
+          "probability": 0.9922
+        },
+        {
+          "word": "quick",
+          "start": 47.52,
+          "end": 47.74,
+          "probability": 0.9839
+        },
+        {
+          "word": "auto",
+          "start": 47.74,
+          "end": 48.04,
+          "probability": 0.7832
+        },
+        {
+          "word": "claim",
+          "start": 48.04,
+          "end": 48.36,
+          "probability": 0.5093
+        },
+        {
+          "word": "to",
+          "start": 48.36,
+          "end": 48.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "demonstrate.",
+          "start": 48.54,
+          "end": 49.08,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 68.04,
+      "end": 71.4,
+      "start_formatted": "00:01:08.040",
+      "end_formatted": "00:01:11.400",
+      "text": "Let's suppose Mr. Williams hit a moose coming out of his garage.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 68.04,
+          "end": 68.56,
+          "probability": 0.9561
+        },
+        {
+          "word": "suppose",
+          "start": 68.56,
+          "end": 68.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "Mr.",
+          "start": 68.94,
+          "end": 69.28,
+          "probability": 0.9419
+        },
+        {
+          "word": "Williams",
+          "start": 69.46,
+          "end": 69.74,
+          "probability": 0.9727
+        },
+        {
+          "word": "hit",
+          "start": 69.74,
+          "end": 69.96,
+          "probability": 0.9561
+        },
+        {
+          "word": "a",
+          "start": 69.96,
+          "end": 70.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "moose",
+          "start": 70.1,
+          "end": 70.32,
+          "probability": 0.9902
+        },
+        {
+          "word": "coming",
+          "start": 70.32,
+          "end": 70.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "out",
+          "start": 70.56,
+          "end": 70.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 70.76,
+          "end": 70.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "his",
+          "start": 70.86,
+          "end": 71.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "garage.",
+          "start": 71.0,
+          "end": 71.4,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 79.24,
+      "end": 81.76,
+      "start_formatted": "00:01:19.240",
+      "end_formatted": "00:01:21.760",
+      "text": "I'll add the vehicle Mr. Williams was driving.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 79.24,
+          "end": 79.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "add",
+          "start": 79.76,
+          "end": 79.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 79.9,
+          "end": 80.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "vehicle",
+          "start": 80.02,
+          "end": 80.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "Mr.",
+          "start": 80.34,
+          "end": 80.66,
+          "probability": 0.9883
+        },
+        {
+          "word": "Williams",
+          "start": 80.84,
+          "end": 81.16,
+          "probability": 0.998
+        },
+        {
+          "word": "was",
+          "start": 81.16,
+          "end": 81.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "driving.",
+          "start": 81.4,
+          "end": 81.76,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 93.18,
+      "end": 93.82,
+      "start_formatted": "00:01:33.180",
+      "end_formatted": "00:01:33.820",
+      "text": "I'll add the vehicle to the vehicle.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 93.18,
+          "end": 93.82,
+          "probability": 0.0113
+        },
+        {
+          "word": "add",
+          "start": 93.82,
+          "end": 93.82,
+          "probability": 0.0133
+        },
+        {
+          "word": "the",
+          "start": 93.82,
+          "end": 93.82,
+          "probability": 0.2544
+        },
+        {
+          "word": "vehicle",
+          "start": 93.82,
+          "end": 93.82,
+          "probability": 0.0002
+        },
+        {
+          "word": "to",
+          "start": 93.82,
+          "end": 93.82,
+          "probability": 0.4272
+        },
+        {
+          "word": "the",
+          "start": 93.82,
+          "end": 93.82,
+          "probability": 0.3062
+        },
+        {
+          "word": "vehicle.",
+          "start": 93.82,
+          "end": 93.82,
+          "probability": 0.0057
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 93.82,
+      "end": 98.68,
+      "start_formatted": "00:01:33.820",
+      "end_formatted": "00:01:38.680",
+      "text": "Finally, Rick assigns the claim to Ida Belt. Rick searches for Ida's user ID.",
+      "words": [
+        {
+          "word": "Finally,",
+          "start": 93.82,
+          "end": 93.82,
+          "probability": 0.6841
+        },
+        {
+          "word": "Rick",
+          "start": 94.22,
+          "end": 94.3,
+          "probability": 0.9561
+        },
+        {
+          "word": "assigns",
+          "start": 94.3,
+          "end": 94.76,
+          "probability": 0.9648
+        },
+        {
+          "word": "the",
+          "start": 94.76,
+          "end": 94.86,
+          "probability": 0.9888
+        },
+        {
+          "word": "claim",
+          "start": 94.86,
+          "end": 95.14,
+          "probability": 0.9478
+        },
+        {
+          "word": "to",
+          "start": 95.14,
+          "end": 95.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "Ida",
+          "start": 95.3,
+          "end": 95.66,
+          "probability": 0.5605
+        },
+        {
+          "word": "Belt.",
+          "start": 95.66,
+          "end": 95.96,
+          "probability": 0.5913
+        },
+        {
+          "word": "Rick",
+          "start": 96.5,
+          "end": 97.14,
+          "probability": 0.98
+        },
+        {
+          "word": "searches",
+          "start": 97.14,
+          "end": 97.48,
+          "probability": 0.9731
+        },
+        {
+          "word": "for",
+          "start": 97.48,
+          "end": 97.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "Ida's",
+          "start": 97.76,
+          "end": 98.08,
+          "probability": 0.96
+        },
+        {
+          "word": "user",
+          "start": 98.08,
+          "end": 98.38,
+          "probability": 0.8218
+        },
+        {
+          "word": "ID.",
+          "start": 98.38,
+          "end": 98.68,
+          "probability": 0.9487
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 102.84,
+      "end": 114.04,
+      "start_formatted": "00:01:42.840",
+      "end_formatted": "00:01:54.040",
+      "text": "Rick clicks Assign. But when he attempts to save the claim, he sees that Ida does not have permission to own claims. So instead,",
+      "words": [
+        {
+          "word": "Rick",
+          "start": 102.84,
+          "end": 103.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "clicks",
+          "start": 103.48,
+          "end": 103.8,
+          "probability": 0.9756
+        },
+        {
+          "word": "Assign.",
+          "start": 103.8,
+          "end": 104.28,
+          "probability": 0.6445
+        },
+        {
+          "word": "But",
+          "start": 105.94,
+          "end": 106.58,
+          "probability": 0.9414
+        },
+        {
+          "word": "when",
+          "start": 106.58,
+          "end": 106.74,
+          "probability": 0.939
+        },
+        {
+          "word": "he",
+          "start": 106.74,
+          "end": 106.86,
+          "probability": 0.9912
+        },
+        {
+          "word": "attempts",
+          "start": 106.86,
+          "end": 107.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 107.2,
+          "end": 107.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "save",
+          "start": 107.4,
+          "end": 107.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 107.64,
+          "end": 107.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "claim,",
+          "start": 107.78,
+          "end": 108.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "he",
+          "start": 108.36,
+          "end": 110.1,
+          "probability": 0.8779
+        },
+        {
+          "word": "sees",
+          "start": 110.1,
+          "end": 110.38,
+          "probability": 0.9888
+        },
+        {
+          "word": "that",
+          "start": 110.38,
+          "end": 110.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "Ida",
+          "start": 110.56,
+          "end": 110.76,
+          "probability": 0.9878
+        },
+        {
+          "word": "does",
+          "start": 110.76,
+          "end": 110.94,
+          "probability": 0.9556
+        },
+        {
+          "word": "not",
+          "start": 110.94,
+          "end": 111.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "have",
+          "start": 111.14,
+          "end": 111.34,
+          "probability": 0.998
+        },
+        {
+          "word": "permission",
+          "start": 111.34,
+          "end": 111.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "to",
+          "start": 111.72,
+          "end": 111.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "own",
+          "start": 111.94,
+          "end": 112.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "claims.",
+          "start": 112.18,
+          "end": 112.64,
+          "probability": 0.9839
+        },
+        {
+          "word": "So",
+          "start": 113.06,
+          "end": 113.62,
+          "probability": 0.9756
+        },
+        {
+          "word": "instead,",
+          "start": 113.62,
+          "end": 114.04,
+          "probability": 0.9302
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 116.34,
+      "end": 119.72,
+      "start_formatted": "00:01:56.340",
+      "end_formatted": "00:01:59.720",
+      "text": "he assigns the claim to NDApplegate, an adjuster.",
+      "words": [
+        {
+          "word": "he",
+          "start": 116.34,
+          "end": 116.86,
+          "probability": 0.029
+        },
+        {
+          "word": "assigns",
+          "start": 116.86,
+          "end": 117.36,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 117.36,
+          "end": 117.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "claim",
+          "start": 117.48,
+          "end": 117.74,
+          "probability": 0.9722
+        },
+        {
+          "word": "to",
+          "start": 117.74,
+          "end": 117.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "NDApplegate,",
+          "start": 117.92,
+          "end": 118.86,
+          "probability": 0.7593
+        },
+        {
+          "word": "an",
+          "start": 118.9,
+          "end": 119.2,
+          "probability": 0.8496
+        },
+        {
+          "word": "adjuster.",
+          "start": 119.2,
+          "end": 119.72,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 127.02,
+      "end": 129.06,
+      "start_formatted": "00:02:07.020",
+      "end_formatted": "00:02:09.060",
+      "text": "Now he can finish and save the claim.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 127.02,
+          "end": 127.54,
+          "probability": 0.9829
+        },
+        {
+          "word": "he",
+          "start": 127.54,
+          "end": 127.72,
+          "probability": 0.8633
+        },
+        {
+          "word": "can",
+          "start": 127.72,
+          "end": 127.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "finish",
+          "start": 127.88,
+          "end": 128.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "and",
+          "start": 128.18,
+          "end": 128.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "save",
+          "start": 128.4,
+          "end": 128.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 128.64,
+          "end": 128.78,
+          "probability": 0.998
+        },
+        {
+          "word": "claim.",
+          "start": 128.78,
+          "end": 129.06,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 130.4,
+      "end": 135.8,
+      "start_formatted": "00:02:10.400",
+      "end_formatted": "00:02:15.800",
+      "text": "I'll take note of the claim number for later use. Then, as Rick, navigate to the claim.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 130.4,
+          "end": 130.92,
+          "probability": 0.9912
+        },
+        {
+          "word": "take",
+          "start": 130.92,
+          "end": 131.16,
+          "probability": 0.998
+        },
+        {
+          "word": "note",
+          "start": 131.16,
+          "end": 131.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 131.4,
+          "end": 131.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 131.54,
+          "end": 131.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 131.64,
+          "end": 131.9,
+          "probability": 0.9551
+        },
+        {
+          "word": "number",
+          "start": 131.9,
+          "end": 132.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "for",
+          "start": 132.24,
+          "end": 132.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "later",
+          "start": 132.44,
+          "end": 132.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "use.",
+          "start": 132.7,
+          "end": 133.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "Then,",
+          "start": 133.52,
+          "end": 133.68,
+          "probability": 0.9746
+        },
+        {
+          "word": "as",
+          "start": 133.88,
+          "end": 134.16,
+          "probability": 0.9849
+        },
+        {
+          "word": "Rick,",
+          "start": 134.16,
+          "end": 134.42,
+          "probability": 0.9219
+        },
+        {
+          "word": "navigate",
+          "start": 134.62,
+          "end": 135.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 135.08,
+          "end": 135.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 135.34,
+          "end": 135.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim.",
+          "start": 135.46,
+          "end": 135.8,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 135.8,
+      "end": 142.4,
+      "start_formatted": "00:02:15.800",
+      "end_formatted": "00:02:22.400",
+      "text": "On the contacts page, Rick has the ability to edit contacts in the address book.",
+      "words": [
+        {
+          "word": "On",
+          "start": 135.8,
+          "end": 136.54,
+          "probability": 0.9224
+        },
+        {
+          "word": "the",
+          "start": 136.54,
+          "end": 136.66,
+          "probability": 0.998
+        },
+        {
+          "word": "contacts",
+          "start": 136.66,
+          "end": 137.14,
+          "probability": 0.6836
+        },
+        {
+          "word": "page,",
+          "start": 137.14,
+          "end": 137.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "Rick",
+          "start": 138.64,
+          "end": 139.44,
+          "probability": 0.9033
+        },
+        {
+          "word": "has",
+          "start": 139.44,
+          "end": 139.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 139.68,
+          "end": 139.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "ability",
+          "start": 139.8,
+          "end": 140.18,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 140.18,
+          "end": 140.4,
+          "probability": 0.999
+        },
+        {
+          "word": "edit",
+          "start": 140.4,
+          "end": 140.7,
+          "probability": 0.9937
+        },
+        {
+          "word": "contacts",
+          "start": 140.7,
+          "end": 141.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "in",
+          "start": 141.26,
+          "end": 141.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 141.54,
+          "end": 141.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "address",
+          "start": 141.64,
+          "end": 141.96,
+          "probability": 0.9746
+        },
+        {
+          "word": "book.",
+          "start": 141.96,
+          "end": 142.4,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 144.96,
+      "end": 149.44,
+      "start_formatted": "00:02:24.960",
+      "end_formatted": "00:02:29.440",
+      "text": "Rick also has the ability to close a claim. Now let's look at Ida.",
+      "words": [
+        {
+          "word": "Rick",
+          "start": 144.96,
+          "end": 145.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "also",
+          "start": 145.56,
+          "end": 145.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "has",
+          "start": 145.92,
+          "end": 146.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 146.18,
+          "end": 146.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "ability",
+          "start": 146.34,
+          "end": 146.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 146.7,
+          "end": 146.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "close",
+          "start": 146.92,
+          "end": 147.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 147.18,
+          "end": 147.34,
+          "probability": 0.9731
+        },
+        {
+          "word": "claim.",
+          "start": 147.34,
+          "end": 147.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "Now",
+          "start": 148.04,
+          "end": 148.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "let's",
+          "start": 148.58,
+          "end": 148.88,
+          "probability": 0.9819
+        },
+        {
+          "word": "look",
+          "start": 148.88,
+          "end": 149.04,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 149.04,
+          "end": 149.24,
+          "probability": 0.999
+        },
+        {
+          "word": "Ida.",
+          "start": 149.24,
+          "end": 149.44,
+          "probability": 0.6924
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 164.52,
+      "end": 166.94,
+      "start_formatted": "00:02:44.520",
+      "end_formatted": "00:02:46.940",
+      "text": "Ida does not have access to the team tab.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 164.52,
+          "end": 165.04,
+          "probability": 0.7607
+        },
+        {
+          "word": "does",
+          "start": 165.04,
+          "end": 165.26,
+          "probability": 0.9795
+        },
+        {
+          "word": "not",
+          "start": 165.26,
+          "end": 165.44,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 165.44,
+          "end": 165.64,
+          "probability": 0.999
+        },
+        {
+          "word": "access",
+          "start": 165.64,
+          "end": 166.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 166.0,
+          "end": 166.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 166.26,
+          "end": 166.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "team",
+          "start": 166.36,
+          "end": 166.6,
+          "probability": 0.5728
+        },
+        {
+          "word": "tab.",
+          "start": 166.6,
+          "end": 166.94,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 168.24,
+      "end": 170.38,
+      "start_formatted": "00:02:48.240",
+      "end_formatted": "00:02:50.380",
+      "text": "Ida does not have access to the team tab.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 168.24,
+          "end": 168.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "does",
+          "start": 168.76,
+          "end": 168.76,
+          "probability": 0.0001
+        },
+        {
+          "word": "not",
+          "start": 168.76,
+          "end": 170.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "have",
+          "start": 170.18,
+          "end": 170.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "access",
+          "start": 170.18,
+          "end": 170.2,
+          "probability": 0.9575
+        },
+        {
+          "word": "to",
+          "start": 170.2,
+          "end": 170.38,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 170.38,
+          "end": 170.38,
+          "probability": 0.9629
+        },
+        {
+          "word": "team",
+          "start": 170.38,
+          "end": 170.38,
+          "probability": 0.9458
+        },
+        {
+          "word": "tab.",
+          "start": 170.38,
+          "end": 170.38,
+          "probability": 0.9175
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 175.12,
+      "end": 176.72,
+      "start_formatted": "00:02:55.120",
+      "end_formatted": "00:02:56.720",
+      "text": "Ida can search for a claim.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 175.12,
+          "end": 175.64,
+          "probability": 0.9844
+        },
+        {
+          "word": "can",
+          "start": 175.64,
+          "end": 175.8,
+          "probability": 0.9912
+        },
+        {
+          "word": "search",
+          "start": 175.8,
+          "end": 176.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "for",
+          "start": 176.06,
+          "end": 176.3,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 176.3,
+          "end": 176.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "claim.",
+          "start": 176.42,
+          "end": 176.72,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 184.1,
+      "end": 184.8,
+      "start_formatted": "00:03:04.100",
+      "end_formatted": "00:03:04.800",
+      "text": "Ida does not need to close the claim.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 184.1,
+          "end": 184.58,
+          "probability": 0.0005
+        },
+        {
+          "word": "does",
+          "start": 184.58,
+          "end": 184.8,
+          "probability": 0.0011
+        },
+        {
+          "word": "not",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.5508
+        },
+        {
+          "word": "need",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.0684
+        },
+        {
+          "word": "to",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.5103
+        },
+        {
+          "word": "close",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.1899
+        },
+        {
+          "word": "the",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.2391
+        },
+        {
+          "word": "claim.",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.6538
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 184.8,
+      "end": 184.9,
+      "start_formatted": "00:03:04.800",
+      "end_formatted": "00:03:04.900",
+      "text": "Ida does not need to close the claim.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.1935
+        },
+        {
+          "word": "does",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.4905
+        },
+        {
+          "word": "not",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.9819
+        },
+        {
+          "word": "need",
+          "start": 184.8,
+          "end": 184.8,
+          "probability": 0.8218
+        },
+        {
+          "word": "to",
+          "start": 184.8,
+          "end": 184.9,
+          "probability": 0.9194
+        },
+        {
+          "word": "close",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.3669
+        },
+        {
+          "word": "the",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.6836
+        },
+        {
+          "word": "claim.",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.9419
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 184.9,
+      "end": 185.24,
+      "start_formatted": "00:03:04.900",
+      "end_formatted": "00:03:05.240",
+      "text": "Ida does not need to close the claim.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.5649
+        },
+        {
+          "word": "does",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.769
+        },
+        {
+          "word": "not",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.9917
+        },
+        {
+          "word": "need",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.9072
+        },
+        {
+          "word": "to",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.9575
+        },
+        {
+          "word": "close",
+          "start": 184.9,
+          "end": 184.9,
+          "probability": 0.5903
+        },
+        {
+          "word": "the",
+          "start": 184.9,
+          "end": 185.0,
+          "probability": 0.8545
+        },
+        {
+          "word": "claim.",
+          "start": 185.0,
+          "end": 185.24,
+          "probability": 0.9673
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 185.24,
+      "end": 185.36,
+      "start_formatted": "00:03:05.240",
+      "end_formatted": "00:03:05.360",
+      "text": "Ida does not need to close the claim.",
+      "words": [
+        {
+          "word": "Ida",
+          "start": 185.24,
+          "end": 185.24,
+          "probability": 0.6123
+        },
+        {
+          "word": "does",
+          "start": 185.24,
+          "end": 185.36,
+          "probability": 0.8311
+        },
+        {
+          "word": "not",
+          "start": 185.36,
+          "end": 185.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "need",
+          "start": 185.36,
+          "end": 185.36,
+          "probability": 0.9131
+        },
+        {
+          "word": "to",
+          "start": 185.36,
+          "end": 185.36,
+          "probability": 0.9692
+        },
+        {
+          "word": "close",
+          "start": 185.36,
+          "end": 185.36,
+          "probability": 0.7534
+        },
+        {
+          "word": "the",
+          "start": 185.36,
+          "end": 185.36,
+          "probability": 0.8867
+        },
+        {
+          "word": "claim.",
+          "start": 185.36,
+          "end": 185.36,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 189.28,
+      "end": 191.0,
+      "start_formatted": "00:03:09.280",
+      "end_formatted": "00:03:11.000",
+      "text": "But she cannot close the claim.",
+      "words": [
+        {
+          "word": "But",
+          "start": 189.28,
+          "end": 189.76,
+          "probability": 0.178
+        },
+        {
+          "word": "she",
+          "start": 189.76,
+          "end": 189.92,
+          "probability": 0.502
+        },
+        {
+          "word": "cannot",
+          "start": 189.92,
+          "end": 190.22,
+          "probability": 0.771
+        },
+        {
+          "word": "close",
+          "start": 190.22,
+          "end": 190.54,
+          "probability": 0.8169
+        },
+        {
+          "word": "the",
+          "start": 190.54,
+          "end": 190.78,
+          "probability": 0.813
+        },
+        {
+          "word": "claim.",
+          "start": 190.78,
+          "end": 191.0,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 191.0,
+      "end": 195.82,
+      "start_formatted": "00:03:11.000",
+      "end_formatted": "00:03:15.820",
+      "text": "She can view contacts, but she cannot edit them.",
+      "words": [
+        {
+          "word": "She",
+          "start": 191.0,
+          "end": 191.7,
+          "probability": 0.8662
+        },
+        {
+          "word": "can",
+          "start": 191.7,
+          "end": 191.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "view",
+          "start": 191.88,
+          "end": 192.06,
+          "probability": 0.9819
+        },
+        {
+          "word": "contacts,",
+          "start": 192.06,
+          "end": 192.64,
+          "probability": 0.9429
+        },
+        {
+          "word": "but",
+          "start": 192.84,
+          "end": 194.76,
+          "probability": 0.9209
+        },
+        {
+          "word": "she",
+          "start": 194.76,
+          "end": 194.94,
+          "probability": 0.9478
+        },
+        {
+          "word": "cannot",
+          "start": 194.94,
+          "end": 195.2,
+          "probability": 0.9473
+        },
+        {
+          "word": "edit",
+          "start": 195.2,
+          "end": 195.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "them.",
+          "start": 195.52,
+          "end": 195.82,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 196.2,
+      "end": 198.56,
+      "start_formatted": "00:03:16.200",
+      "end_formatted": "00:03:18.560",
+      "text": "Let's look at why she is restricted this way.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 196.2,
+          "end": 196.7,
+          "probability": 0.9888
+        },
+        {
+          "word": "look",
+          "start": 196.7,
+          "end": 196.88,
+          "probability": 0.9917
+        },
+        {
+          "word": "at",
+          "start": 196.88,
+          "end": 197.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "why",
+          "start": 197.04,
+          "end": 197.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "she",
+          "start": 197.22,
+          "end": 197.42,
+          "probability": 0.9902
+        },
+        {
+          "word": "is",
+          "start": 197.42,
+          "end": 197.58,
+          "probability": 0.9902
+        },
+        {
+          "word": "restricted",
+          "start": 197.58,
+          "end": 198.0,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 198.0,
+          "end": 198.26,
+          "probability": 0.9888
+        },
+        {
+          "word": "way.",
+          "start": 198.26,
+          "end": 198.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 202.0,
+      "end": 204.3,
+      "start_formatted": "00:03:22.000",
+      "end_formatted": "00:03:24.300",
+      "text": "A login is the system administrator.",
+      "words": [
+        {
+          "word": "A",
+          "start": 202.0,
+          "end": 202.6,
+          "probability": 0.8896
+        },
+        {
+          "word": "login",
+          "start": 202.6,
+          "end": 202.94,
+          "probability": 0.8926
+        },
+        {
+          "word": "is",
+          "start": 202.94,
+          "end": 203.16,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 203.16,
+          "end": 203.26,
+          "probability": 0.9893
+        },
+        {
+          "word": "system",
+          "start": 203.26,
+          "end": 203.62,
+          "probability": 0.7769
+        },
+        {
+          "word": "administrator.",
+          "start": 203.62,
+          "end": 204.3,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 210.62,
+      "end": 213.04,
+      "start_formatted": "00:03:30.620",
+      "end_formatted": "00:03:33.040",
+      "text": "Let's start by looking at IDA's user record.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 210.62,
+          "end": 211.22,
+          "probability": 0.9927
+        },
+        {
+          "word": "start",
+          "start": 211.22,
+          "end": 211.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "by",
+          "start": 211.38,
+          "end": 211.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "looking",
+          "start": 211.6,
+          "end": 211.88,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 211.88,
+          "end": 212.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "IDA's",
+          "start": 212.06,
+          "end": 212.42,
+          "probability": 0.6987
+        },
+        {
+          "word": "user",
+          "start": 212.42,
+          "end": 212.62,
+          "probability": 0.874
+        },
+        {
+          "word": "record.",
+          "start": 212.62,
+          "end": 213.04,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 227.2,
+      "end": 232.34,
+      "start_formatted": "00:03:47.200",
+      "end_formatted": "00:03:52.340",
+      "text": "Users have roles. IDA has exactly one role, Customer Service Representative.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 227.2,
+          "end": 227.92,
+          "probability": 0.9561
+        },
+        {
+          "word": "have",
+          "start": 227.92,
+          "end": 228.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "roles.",
+          "start": 228.18,
+          "end": 228.52,
+          "probability": 0.9121
+        },
+        {
+          "word": "IDA",
+          "start": 228.88,
+          "end": 229.28,
+          "probability": 0.6519
+        },
+        {
+          "word": "has",
+          "start": 229.28,
+          "end": 229.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "exactly",
+          "start": 229.46,
+          "end": 229.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "one",
+          "start": 229.92,
+          "end": 230.2,
+          "probability": 0.9561
+        },
+        {
+          "word": "role,",
+          "start": 230.2,
+          "end": 230.52,
+          "probability": 0.9858
+        },
+        {
+          "word": "Customer",
+          "start": 230.74,
+          "end": 231.16,
+          "probability": 0.6392
+        },
+        {
+          "word": "Service",
+          "start": 231.16,
+          "end": 231.66,
+          "probability": 0.9692
+        },
+        {
+          "word": "Representative.",
+          "start": 231.66,
+          "end": 232.34,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 235.34,
+      "end": 237.8,
+      "start_formatted": "00:03:55.340",
+      "end_formatted": "00:03:57.800",
+      "text": "Andy Applegate, on the other hand,",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 235.34,
+          "end": 236.06,
+          "probability": 0.8442
+        },
+        {
+          "word": "Applegate,",
+          "start": 236.06,
+          "end": 236.72,
+          "probability": 0.9937
+        },
+        {
+          "word": "on",
+          "start": 236.84,
+          "end": 237.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 237.06,
+          "end": 237.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "other",
+          "start": 237.16,
+          "end": 237.36,
+          "probability": 0.999
+        },
+        {
+          "word": "hand,",
+          "start": 237.36,
+          "end": 237.8,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 245.28,
+      "end": 249.52,
+      "start_formatted": "00:04:05.280",
+      "end_formatted": "00:04:09.520",
+      "text": "has two roles, Adjuster Entrusted for Sensitive Claims,",
+      "words": [
+        {
+          "word": "has",
+          "start": 245.28,
+          "end": 246.26,
+          "probability": 0.4893
+        },
+        {
+          "word": "two",
+          "start": 246.26,
+          "end": 246.46,
+          "probability": 0.9658
+        },
+        {
+          "word": "roles,",
+          "start": 246.46,
+          "end": 246.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "Adjuster",
+          "start": 247.24,
+          "end": 247.76,
+          "probability": 0.7407
+        },
+        {
+          "word": "Entrusted",
+          "start": 247.76,
+          "end": 248.24,
+          "probability": 0.8218
+        },
+        {
+          "word": "for",
+          "start": 248.24,
+          "end": 248.44,
+          "probability": 0.9863
+        },
+        {
+          "word": "Sensitive",
+          "start": 248.44,
+          "end": 248.94,
+          "probability": 0.9424
+        },
+        {
+          "word": "Claims,",
+          "start": 248.94,
+          "end": 249.52,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 252.8,
+      "end": 253.62,
+      "start_formatted": "00:04:12.800",
+      "end_formatted": "00:04:13.620",
+      "text": "and Rick Ralston.",
+      "words": [
+        {
+          "word": "and",
+          "start": 252.39,
+          "end": 252.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Rick",
+          "start": 252.88,
+          "end": 253.12,
+          "probability": 0.7104
+        },
+        {
+          "word": "Ralston.",
+          "start": 253.12,
+          "end": 253.62,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 261.66,
+      "end": 263.98,
+      "start_formatted": "00:04:21.660",
+      "end_formatted": "00:04:23.980",
+      "text": "Has the single role of Claim Supervisor.",
+      "words": [
+        {
+          "word": "Has",
+          "start": 261.66,
+          "end": 262.14,
+          "probability": 0.3674
+        },
+        {
+          "word": "the",
+          "start": 262.14,
+          "end": 262.3,
+          "probability": 0.9839
+        },
+        {
+          "word": "single",
+          "start": 262.3,
+          "end": 262.6,
+          "probability": 0.938
+        },
+        {
+          "word": "role",
+          "start": 262.6,
+          "end": 262.84,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 262.84,
+          "end": 263.02,
+          "probability": 0.998
+        },
+        {
+          "word": "Claim",
+          "start": 263.02,
+          "end": 263.32,
+          "probability": 0.7017
+        },
+        {
+          "word": "Supervisor.",
+          "start": 263.32,
+          "end": 263.98,
+          "probability": 0.9717
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 264.76,
+      "end": 266.38,
+      "start_formatted": "00:04:24.760",
+      "end_formatted": "00:04:26.380",
+      "text": "Let's look at these three roles.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 264.76,
+          "end": 265.24,
+          "probability": 0.998
+        },
+        {
+          "word": "look",
+          "start": 265.24,
+          "end": 265.4,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 265.4,
+          "end": 265.54,
+          "probability": 1.0
+        },
+        {
+          "word": "these",
+          "start": 265.54,
+          "end": 265.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "three",
+          "start": 265.76,
+          "end": 266.0,
+          "probability": 0.939
+        },
+        {
+          "word": "roles.",
+          "start": 266.0,
+          "end": 266.38,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 268.24,
+      "end": 270.4,
+      "start_formatted": "00:04:28.240",
+      "end_formatted": "00:04:30.400",
+      "text": "Let's start with the Claim Supervisor roles.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 268.24,
+          "end": 268.72,
+          "probability": 0.999
+        },
+        {
+          "word": "start",
+          "start": 268.72,
+          "end": 268.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 268.9,
+          "end": 269.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 269.06,
+          "end": 269.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "Claim",
+          "start": 269.2,
+          "end": 269.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "Supervisor",
+          "start": 269.46,
+          "end": 270.12,
+          "probability": 0.999
+        },
+        {
+          "word": "roles.",
+          "start": 270.12,
+          "end": 270.4,
+          "probability": 0.9653
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 271.4,
+      "end": 273.78,
+      "start_formatted": "00:04:31.400",
+      "end_formatted": "00:04:33.780",
+      "text": "A role is basically a list of permissions.",
+      "words": [
+        {
+          "word": "A",
+          "start": 271.4,
+          "end": 271.88,
+          "probability": 0.999
+        },
+        {
+          "word": "role",
+          "start": 271.88,
+          "end": 272.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 272.1,
+          "end": 272.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "basically",
+          "start": 272.3,
+          "end": 272.74,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 272.74,
+          "end": 272.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "list",
+          "start": 272.98,
+          "end": 273.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 273.2,
+          "end": 273.32,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions.",
+          "start": 273.32,
+          "end": 273.78,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 274.22,
+      "end": 278.44,
+      "start_formatted": "00:04:34.220",
+      "end_formatted": "00:04:38.440",
+      "text": "A user who has a role assigned to them has every permission associated with that role.",
+      "words": [
+        {
+          "word": "A",
+          "start": 274.22,
+          "end": 274.54,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 274.54,
+          "end": 274.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "who",
+          "start": 274.82,
+          "end": 275.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 275.0,
+          "end": 275.18,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 275.18,
+          "end": 275.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "role",
+          "start": 275.28,
+          "end": 275.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "assigned",
+          "start": 275.46,
+          "end": 275.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 275.84,
+          "end": 275.98,
+          "probability": 1.0
+        },
+        {
+          "word": "them",
+          "start": 275.98,
+          "end": 276.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 276.16,
+          "end": 276.4,
+          "probability": 0.999
+        },
+        {
+          "word": "every",
+          "start": 276.4,
+          "end": 276.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "permission",
+          "start": 276.64,
+          "end": 277.06,
+          "probability": 0.998
+        },
+        {
+          "word": "associated",
+          "start": 277.06,
+          "end": 277.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 277.7,
+          "end": 277.94,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 277.94,
+          "end": 278.14,
+          "probability": 1.0
+        },
+        {
+          "word": "role.",
+          "start": 278.14,
+          "end": 278.44,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 278.44,
+      "end": 283.92,
+      "start_formatted": "00:04:38.440",
+      "end_formatted": "00:04:43.920",
+      "text": "If the user has two or more roles, they have all permissions associated with any of those roles.",
+      "words": [
+        {
+          "word": "If",
+          "start": 278.44,
+          "end": 279.08,
+          "probability": 0.915
+        },
+        {
+          "word": "the",
+          "start": 279.08,
+          "end": 279.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "user",
+          "start": 279.24,
+          "end": 279.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "has",
+          "start": 279.5,
+          "end": 279.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 279.74,
+          "end": 279.92,
+          "probability": 0.8774
+        },
+        {
+          "word": "or",
+          "start": 279.92,
+          "end": 280.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "more",
+          "start": 280.08,
+          "end": 280.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "roles,",
+          "start": 280.32,
+          "end": 280.7,
+          "probability": 0.9829
+        },
+        {
+          "word": "they",
+          "start": 281.02,
+          "end": 281.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "have",
+          "start": 281.22,
+          "end": 281.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 281.4,
+          "end": 281.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "permissions",
+          "start": 281.56,
+          "end": 282.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "associated",
+          "start": 282.04,
+          "end": 282.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 282.7,
+          "end": 282.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 282.98,
+          "end": 283.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 283.18,
+          "end": 283.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "those",
+          "start": 283.32,
+          "end": 283.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "roles.",
+          "start": 283.56,
+          "end": 283.92,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 284.38,
+      "end": 288.74,
+      "start_formatted": "00:04:44.380",
+      "end_formatted": "00:04:48.740",
+      "text": "The Claim Supervisor role has 12 pages of permissions associated with it.",
+      "words": [
+        {
+          "word": "The",
+          "start": 284.38,
+          "end": 284.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "Claim",
+          "start": 284.82,
+          "end": 285.1,
+          "probability": 0.7036
+        },
+        {
+          "word": "Supervisor",
+          "start": 285.1,
+          "end": 285.82,
+          "probability": 0.501
+        },
+        {
+          "word": "role",
+          "start": 285.82,
+          "end": 286.04,
+          "probability": 0.9824
+        },
+        {
+          "word": "has",
+          "start": 286.04,
+          "end": 286.24,
+          "probability": 0.999
+        },
+        {
+          "word": "12",
+          "start": 286.24,
+          "end": 286.5,
+          "probability": 0.9644
+        },
+        {
+          "word": "pages",
+          "start": 286.5,
+          "end": 286.92,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 286.92,
+          "end": 287.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "permissions",
+          "start": 287.14,
+          "end": 287.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "associated",
+          "start": 287.54,
+          "end": 288.24,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 288.24,
+          "end": 288.48,
+          "probability": 1.0
+        },
+        {
+          "word": "it.",
+          "start": 288.48,
+          "end": 288.74,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 289.02,
+      "end": 291.04,
+      "start_formatted": "00:04:49.020",
+      "end_formatted": "00:04:51.040",
+      "text": "Among these are the right to close claims,",
+      "words": [
+        {
+          "word": "Among",
+          "start": 289.02,
+          "end": 289.46,
+          "probability": 0.999
+        },
+        {
+          "word": "these",
+          "start": 289.46,
+          "end": 289.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 289.72,
+          "end": 289.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 289.88,
+          "end": 289.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "right",
+          "start": 289.96,
+          "end": 290.14,
+          "probability": 0.9624
+        },
+        {
+          "word": "to",
+          "start": 290.14,
+          "end": 290.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "close",
+          "start": 290.3,
+          "end": 290.56,
+          "probability": 0.9341
+        },
+        {
+          "word": "claims,",
+          "start": 290.56,
+          "end": 291.04,
+          "probability": 0.9312
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 291.08,
+      "end": 292.94,
+      "start_formatted": "00:04:51.080",
+      "end_formatted": "00:04:52.940",
+      "text": "to create contacts,",
+      "words": [
+        {
+          "word": "to",
+          "start": 291.08,
+          "end": 291.94,
+          "probability": 0.9917
+        },
+        {
+          "word": "create",
+          "start": 291.94,
+          "end": 292.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "contacts,",
+          "start": 292.28,
+          "end": 292.94,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 293.4,
+      "end": 294.8,
+      "start_formatted": "00:04:53.400",
+      "end_formatted": "00:04:54.800",
+      "text": "to edit contacts,",
+      "words": [
+        {
+          "word": "to",
+          "start": 293.4,
+          "end": 293.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "edit",
+          "start": 293.92,
+          "end": 294.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "contacts,",
+          "start": 294.16,
+          "end": 294.8,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 295.16,
+      "end": 296.6,
+      "start_formatted": "00:04:55.160",
+      "end_formatted": "00:04:56.600",
+      "text": "and to view their team.",
+      "words": [
+        {
+          "word": "and",
+          "start": 295.16,
+          "end": 295.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 295.72,
+          "end": 295.86,
+          "probability": 1.0
+        },
+        {
+          "word": "view",
+          "start": 295.86,
+          "end": 296.04,
+          "probability": 0.999
+        },
+        {
+          "word": "their",
+          "start": 296.04,
+          "end": 296.26,
+          "probability": 1.0
+        },
+        {
+          "word": "team.",
+          "start": 296.26,
+          "end": 296.6,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 300.26,
+      "end": 301.94,
+      "start_formatted": "00:05:00.260",
+      "end_formatted": "00:05:01.940",
+      "text": "Adjusters, on the other hand,",
+      "words": [
+        {
+          "word": "Adjusters,",
+          "start": 300.26,
+          "end": 300.78,
+          "probability": 0.9863
+        },
+        {
+          "word": "on",
+          "start": 300.96,
+          "end": 301.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 301.18,
+          "end": 301.3,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 301.3,
+          "end": 301.5,
+          "probability": 1.0
+        },
+        {
+          "word": "hand,",
+          "start": 301.5,
+          "end": 301.94,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 303.1,
+      "end": 305.16,
+      "start_formatted": "00:05:03.100",
+      "end_formatted": "00:05:05.160",
+      "text": "have the permission to own claims.",
+      "words": [
+        {
+          "word": "have",
+          "start": 303.1,
+          "end": 303.72,
+          "probability": 0.8867
+        },
+        {
+          "word": "the",
+          "start": 303.72,
+          "end": 303.84,
+          "probability": 1.0
+        },
+        {
+          "word": "permission",
+          "start": 303.84,
+          "end": 304.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 304.22,
+          "end": 304.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "own",
+          "start": 304.46,
+          "end": 304.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "claims.",
+          "start": 304.68,
+          "end": 305.16,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 307.94,
+      "end": 310.12,
+      "start_formatted": "00:05:07.940",
+      "end_formatted": "00:05:10.120",
+      "text": "But Customer Service Representatives",
+      "words": [
+        {
+          "word": "But",
+          "start": 307.94,
+          "end": 308.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "Customer",
+          "start": 308.56,
+          "end": 308.9,
+          "probability": 0.047
+        },
+        {
+          "word": "Service",
+          "start": 308.9,
+          "end": 309.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "Representatives",
+          "start": 309.4,
+          "end": 310.12,
+          "probability": 0.8242
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 311.4,
+      "end": 313.42,
+      "start_formatted": "00:05:11.400",
+      "end_formatted": "00:05:13.420",
+      "text": "do not have any of those permissions.",
+      "words": [
+        {
+          "word": "do",
+          "start": 311.4,
+          "end": 312.02,
+          "probability": 0.9736
+        },
+        {
+          "word": "not",
+          "start": 312.02,
+          "end": 312.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 312.22,
+          "end": 312.38,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 312.38,
+          "end": 312.54,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 312.54,
+          "end": 312.68,
+          "probability": 1.0
+        },
+        {
+          "word": "those",
+          "start": 312.68,
+          "end": 312.88,
+          "probability": 0.999
+        },
+        {
+          "word": "permissions.",
+          "start": 312.88,
+          "end": 313.42,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 315.34,
+      "end": 318.54,
+      "start_formatted": "00:05:15.340",
+      "end_formatted": "00:05:18.540",
+      "text": "This concludes the permissions in the base application demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 315.34,
+          "end": 315.96,
+          "probability": 0.999
+        },
+        {
+          "word": "concludes",
+          "start": 315.96,
+          "end": 316.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 316.42,
+          "end": 316.6,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions",
+          "start": 316.6,
+          "end": 317.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 317.06,
+          "end": 317.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 317.32,
+          "end": 317.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 317.4,
+          "end": 317.66,
+          "probability": 0.916
+        },
+        {
+          "word": "application",
+          "start": 317.66,
+          "end": 318.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration.",
+          "start": 318.28,
+          "end": 318.54,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 318.54,
+      "end": 318.92,
+      "start_formatted": "00:05:18.540",
+      "end_formatted": "00:05:18.920",
+      "text": "of the DSA of the DSA of the DSA of the DSA of the DSA of the DSA of the DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA of DSA D",
+      "words": [
+        {
+          "word": "of",
+          "start": 318.54,
+          "end": 318.54,
+          "probability": 0.0102
+        },
+        {
+          "word": "the",
+          "start": 318.54,
+          "end": 318.54,
+          "probability": 0.3184
+        },
+        {
+          "word": "DSA",
+          "start": 318.54,
+          "end": 318.56,
+          "probability": 0.0054
+        },
+        {
+          "word": "of",
+          "start": 318.56,
+          "end": 318.56,
+          "probability": 0.0072
+        },
+        {
+          "word": "the",
+          "start": 318.56,
+          "end": 318.56,
+          "probability": 0.2389
+        },
+        {
+          "word": "DSA",
+          "start": 318.56,
+          "end": 318.72,
+          "probability": 0.4746
+        },
+        {
+          "word": "of",
+          "start": 318.72,
+          "end": 318.72,
+          "probability": 0.0858
+        },
+        {
+          "word": "the",
+          "start": 318.72,
+          "end": 318.74,
+          "probability": 0.5928
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.6626
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.1937
+        },
+        {
+          "word": "the",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.7534
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.8477
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.3271
+        },
+        {
+          "word": "the",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.8145
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.9268
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.4324
+        },
+        {
+          "word": "the",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.8491
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.959
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.5464
+        },
+        {
+          "word": "the",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.8384
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.9731
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.6157
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.5488
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.5503
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.5923
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.5708
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.6729
+        },
+        {
+          "word": "of",
+          "start": 318.74,
+          "end": 318.74,
+          "probability": 0.6143
+        },
+        {
+          "word": "DSA",
+          "start": 318.74,
+          "end": 318.76,
+          "probability": 0.7427
+        },
+        {
+          "word": "of",
+          "start": 318.76,
+          "end": 318.76,
+          "probability": 0.6714
+        },
+        {
+          "word": "DSA",
+          "start": 318.76,
+          "end": 318.76,
+          "probability": 0.8101
+        },
+        {
+          "word": "of",
+          "start": 318.76,
+          "end": 318.76,
+          "probability": 0.7017
+        },
+        {
+          "word": "DSA",
+          "start": 318.76,
+          "end": 318.76,
+          "probability": 0.8662
+        },
+        {
+          "word": "of",
+          "start": 318.76,
+          "end": 318.76,
+          "probability": 0.7446
+        },
+        {
+          "word": "DSA",
+          "start": 318.76,
+          "end": 318.76,
+          "probability": 0.9023
+        },
+        {
+          "word": "of",
+          "start": 318.76,
+          "end": 318.76,
+          "probability": 0.7627
+        },
+        {
+          "word": "DSA",
+          "start": 318.76,
+          "end": 318.78,
+          "probability": 0.9312
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.7856
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9502
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8047
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9614
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8237
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8389
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9741
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8486
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8628
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8726
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8755
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.8838
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.896
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9043
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9053
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9077
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9131
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9209
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9233
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9316
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 318.78,
+          "end": 318.78,
+          "probability": 0.9326
+        },
+        {
+          "word": "DSA",
+          "start": 318.78,
+          "end": 318.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9355
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9341
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9365
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9404
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9414
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9438
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9453
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9478
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9463
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9463
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9468
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9473
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9468
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9458
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9463
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9473
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9487
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9497
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.82,
+          "end": 318.82,
+          "probability": 0.9492
+        },
+        {
+          "word": "DSA",
+          "start": 318.82,
+          "end": 318.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.86,
+          "end": 318.92,
+          "probability": 0.9517
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9507
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9512
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9502
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9502
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9502
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9478
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9492
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9497
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9492
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9492
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9507
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9502
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9458
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9463
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9478
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9438
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9453
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "of",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9429
+        },
+        {
+          "word": "DSA",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "D",
+          "start": 318.92,
+          "end": 318.92,
+          "probability": 0.0038
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 318.92,
+      "end": 319.04,
+      "start_formatted": "00:05:18.920",
+      "end_formatted": "00:05:19.040",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 318.92,
+          "end": 318.98,
+          "probability": 0.1091
+        },
+        {
+          "word": "you.",
+          "start": 318.98,
+          "end": 319.04,
+          "probability": 0.9985
+        }
+      ]
+    }
+  ]
+}

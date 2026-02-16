@@ -1,0 +1,4956 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_12_02.mp4",
+    "video_stem": "CC_12_02",
+    "duration_seconds": 416.84,
+    "duration_formatted": "00:06:56.840",
+    "segment_count": 90,
+    "word_count": 672,
+    "avg_confidence": 0.9069,
+    "transcription_time_seconds": 31.69,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:41:49.232996"
+  },
+  "full_text": "Succeed Insurance needs service types for fire and water slash mold restoral, associated with dwellings. Before starting, I want to make one important observation. Here and in the lab, we will do simple configuration by adding a few new services to the base configuration. In an actual implementation, you will probably rip out most or all of the sample service data provided in the base configuration and create completely new custom services. I will need several display keys to meet this requirement. I will save time by pasting them into the display.properties file. Now I will navigate to the VendorServiceTree.xml file, which creates the hierarchy of services and service categories. I am going to add a set of HomeRestoral services to the application at the end of the file. First, I will add a parent service type for HomeRestoral. This will be implemented, like all services, as a specialist service. The public ID will be H-Res, for HomeRestoral. The convention for services is to prefix the public ID with SVC and a colon. It will be active in the application. I will use HomeRestoral as its code. As its description. As its description. As its description. As its description. As its description. As its description. As its description. As its description. As its description. As its description. As its description.      As its description.    As its description.       As its description. As its description. As its description. As its description.   As its description. As its description. As its description.  As its description.  As its description. As its description. This is a top level category and has no parent, but the parent field is required, so I'll enter it as an alt tag. This completes the definition of the parent service, so I'll add a closing tag. To save time, I'll paste the fire and water slash mold services. Now I can save and close this file. For the services to display in the user interface, they must be implemented in the VendorServiceDetails.xml file, which creates the associations between service kinds, or categories, and incidents, and between services and service kinds. Service requests are associated with incident types at the bottom of the file. Services must be associated with incident types to appear in the user interface. In this file, the public IDs are implemented as numbers, so I will use the number 1 greater than the last incident type. The incident type for these services is Dwelling Incident. The service type to associate this incident with is the Home Restoreal type I created. Its public ID is hres. The service type to associate this incident with the service type. And, a closing tag. That ends this association. Now I need to associate the two services with their service kind. The surrounding tag for this association is Specialist Service Compatible Service Request Kind. Again, the public ID number is 1 greater than the last number already in place for service request kinds. The service kind is to quote and perform the service. To complete the association, I enter the tag for the service.  And, once again, a closing tag. To speed things along, I'll paste the water and mold service kind association. I'll save the file. This time, I'll close the editor. Now I'll start the Claim Center server. Now, I'll log in as the system administrator to import the new services. On the Administration page, I click Utilities in the sidebar. The Import Data screen is displayed. I browse to find the service data files I edited. The service tree must be imported first. Since no conflicts are found, I click Finish. The file was successfully imported, so I click Utilities to refresh the Data Import screen. Now I will import the service details file. Now, to test my work, I navigate to a known homeowner's claim. From the Actions menu, I begin to create a new service request. I look at the list of services to add. And here I see the services I added displayed correctly. This concludes the configuring services demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.12,
+      "end": 29.54,
+      "start_formatted": "00:00:01.120",
+      "end_formatted": "00:00:29.540",
+      "text": "Succeed Insurance needs service types for fire and water slash mold restoral, associated with dwellings. Before starting, I want to make one important observation. Here and in the lab, we will do simple configuration by adding a few new services to the base configuration. In an actual implementation, you will probably rip out most or all of the sample service data provided in the base configuration and create completely new custom services. I will need several display keys to meet this requirement.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 1.12,
+          "end": 1.68,
+          "probability": 0.9604
+        },
+        {
+          "word": "Insurance",
+          "start": 1.68,
+          "end": 2.06,
+          "probability": 0.4946
+        },
+        {
+          "word": "needs",
+          "start": 2.06,
+          "end": 2.42,
+          "probability": 0.749
+        },
+        {
+          "word": "service",
+          "start": 2.42,
+          "end": 2.82,
+          "probability": 0.9819
+        },
+        {
+          "word": "types",
+          "start": 2.82,
+          "end": 3.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 3.12,
+          "end": 3.36,
+          "probability": 0.998
+        },
+        {
+          "word": "fire",
+          "start": 3.36,
+          "end": 3.68,
+          "probability": 0.8398
+        },
+        {
+          "word": "and",
+          "start": 3.68,
+          "end": 3.84,
+          "probability": 0.9395
+        },
+        {
+          "word": "water",
+          "start": 3.84,
+          "end": 4.12,
+          "probability": 0.999
+        },
+        {
+          "word": "slash",
+          "start": 4.12,
+          "end": 4.4,
+          "probability": 0.1406
+        },
+        {
+          "word": "mold",
+          "start": 4.4,
+          "end": 4.78,
+          "probability": 0.9878
+        },
+        {
+          "word": "restoral,",
+          "start": 4.78,
+          "end": 5.32,
+          "probability": 0.9326
+        },
+        {
+          "word": "associated",
+          "start": 5.52,
+          "end": 6.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 6.16,
+          "end": 6.46,
+          "probability": 1.0
+        },
+        {
+          "word": "dwellings.",
+          "start": 6.46,
+          "end": 6.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "Before",
+          "start": 7.22,
+          "end": 7.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "starting,",
+          "start": 7.74,
+          "end": 8.18,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 8.44,
+          "end": 8.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "want",
+          "start": 8.66,
+          "end": 8.84,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 8.84,
+          "end": 8.96,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 8.96,
+          "end": 9.14,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 9.14,
+          "end": 9.34,
+          "probability": 1.0
+        },
+        {
+          "word": "important",
+          "start": 9.34,
+          "end": 9.76,
+          "probability": 1.0
+        },
+        {
+          "word": "observation.",
+          "start": 9.76,
+          "end": 10.4,
+          "probability": 1.0
+        },
+        {
+          "word": "Here",
+          "start": 10.9,
+          "end": 11.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 11.34,
+          "end": 11.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 11.48,
+          "end": 11.6,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 11.6,
+          "end": 11.68,
+          "probability": 1.0
+        },
+        {
+          "word": "lab,",
+          "start": 11.68,
+          "end": 12.0,
+          "probability": 0.998
+        },
+        {
+          "word": "we",
+          "start": 12.16,
+          "end": 12.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 12.36,
+          "end": 12.5,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 12.5,
+          "end": 12.66,
+          "probability": 1.0
+        },
+        {
+          "word": "simple",
+          "start": 12.66,
+          "end": 13.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "configuration",
+          "start": 13.02,
+          "end": 13.62,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 13.62,
+          "end": 13.96,
+          "probability": 1.0
+        },
+        {
+          "word": "adding",
+          "start": 13.96,
+          "end": 14.24,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 14.24,
+          "end": 14.42,
+          "probability": 1.0
+        },
+        {
+          "word": "few",
+          "start": 14.42,
+          "end": 14.54,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 14.54,
+          "end": 14.72,
+          "probability": 1.0
+        },
+        {
+          "word": "services",
+          "start": 14.72,
+          "end": 15.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 15.2,
+          "end": 15.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 15.42,
+          "end": 15.52,
+          "probability": 1.0
+        },
+        {
+          "word": "base",
+          "start": 15.52,
+          "end": 15.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "configuration.",
+          "start": 15.76,
+          "end": 16.46,
+          "probability": 1.0
+        },
+        {
+          "word": "In",
+          "start": 16.88,
+          "end": 17.28,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 17.28,
+          "end": 17.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "actual",
+          "start": 17.42,
+          "end": 17.8,
+          "probability": 1.0
+        },
+        {
+          "word": "implementation,",
+          "start": 17.8,
+          "end": 18.52,
+          "probability": 1.0
+        },
+        {
+          "word": "you",
+          "start": 18.96,
+          "end": 19.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 19.22,
+          "end": 19.34,
+          "probability": 1.0
+        },
+        {
+          "word": "probably",
+          "start": 19.34,
+          "end": 19.76,
+          "probability": 1.0
+        },
+        {
+          "word": "rip",
+          "start": 19.76,
+          "end": 20.02,
+          "probability": 1.0
+        },
+        {
+          "word": "out",
+          "start": 20.02,
+          "end": 20.16,
+          "probability": 1.0
+        },
+        {
+          "word": "most",
+          "start": 20.16,
+          "end": 20.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 20.4,
+          "end": 20.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 20.56,
+          "end": 20.74,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 20.74,
+          "end": 20.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 20.86,
+          "end": 20.98,
+          "probability": 1.0
+        },
+        {
+          "word": "sample",
+          "start": 20.98,
+          "end": 21.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "service",
+          "start": 21.3,
+          "end": 21.72,
+          "probability": 0.999
+        },
+        {
+          "word": "data",
+          "start": 21.72,
+          "end": 21.98,
+          "probability": 1.0
+        },
+        {
+          "word": "provided",
+          "start": 21.98,
+          "end": 22.44,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 22.44,
+          "end": 22.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 22.64,
+          "end": 22.72,
+          "probability": 1.0
+        },
+        {
+          "word": "base",
+          "start": 22.72,
+          "end": 23.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "configuration",
+          "start": 23.0,
+          "end": 23.6,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 23.6,
+          "end": 23.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 23.96,
+          "end": 24.3,
+          "probability": 1.0
+        },
+        {
+          "word": "completely",
+          "start": 24.3,
+          "end": 24.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 24.76,
+          "end": 25.0,
+          "probability": 1.0
+        },
+        {
+          "word": "custom",
+          "start": 25.0,
+          "end": 25.34,
+          "probability": 0.999
+        },
+        {
+          "word": "services.",
+          "start": 25.34,
+          "end": 25.9,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 26.38,
+          "end": 26.94,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 26.94,
+          "end": 27.12,
+          "probability": 1.0
+        },
+        {
+          "word": "need",
+          "start": 27.12,
+          "end": 27.3,
+          "probability": 1.0
+        },
+        {
+          "word": "several",
+          "start": 27.3,
+          "end": 27.66,
+          "probability": 1.0
+        },
+        {
+          "word": "display",
+          "start": 27.66,
+          "end": 28.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "keys",
+          "start": 28.08,
+          "end": 28.42,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 28.42,
+          "end": 28.56,
+          "probability": 1.0
+        },
+        {
+          "word": "meet",
+          "start": 28.56,
+          "end": 28.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 28.74,
+          "end": 28.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "requirement.",
+          "start": 28.94,
+          "end": 29.54,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 35.06,
+      "end": 57.7,
+      "start_formatted": "00:00:35.060",
+      "end_formatted": "00:00:57.700",
+      "text": "I will save time by pasting them into the display.properties file. Now I will navigate to the VendorServiceTree.xml file, which creates the hierarchy of services and service categories. I am going to add a set of HomeRestoral services to the application at the end of the file. First, I will add a parent service type for HomeRestoral.",
+      "words": [
+        {
+          "word": "I",
+          "start": 35.06,
+          "end": 35.62,
+          "probability": 0.9795
+        },
+        {
+          "word": "will",
+          "start": 35.62,
+          "end": 35.72,
+          "probability": 0.007
+        },
+        {
+          "word": "save",
+          "start": 35.72,
+          "end": 35.96,
+          "probability": 0.9746
+        },
+        {
+          "word": "time",
+          "start": 35.96,
+          "end": 36.26,
+          "probability": 0.9917
+        },
+        {
+          "word": "by",
+          "start": 36.26,
+          "end": 36.46,
+          "probability": 0.9214
+        },
+        {
+          "word": "pasting",
+          "start": 36.46,
+          "end": 36.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "them",
+          "start": 36.9,
+          "end": 37.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "into",
+          "start": 37.04,
+          "end": 37.26,
+          "probability": 0.9692
+        },
+        {
+          "word": "the",
+          "start": 37.26,
+          "end": 37.4,
+          "probability": 0.9839
+        },
+        {
+          "word": "display",
+          "start": 37.4,
+          "end": 37.78,
+          "probability": 0.3289
+        },
+        {
+          "word": ".properties",
+          "start": 37.78,
+          "end": 38.6,
+          "probability": 0.9805
+        },
+        {
+          "word": "file.",
+          "start": 38.6,
+          "end": 38.98,
+          "probability": 0.9683
+        },
+        {
+          "word": "Now",
+          "start": 40.8,
+          "end": 41.36,
+          "probability": 0.9648
+        },
+        {
+          "word": "I",
+          "start": 41.36,
+          "end": 41.52,
+          "probability": 0.9531
+        },
+        {
+          "word": "will",
+          "start": 41.52,
+          "end": 41.56,
+          "probability": 0.5811
+        },
+        {
+          "word": "navigate",
+          "start": 41.56,
+          "end": 41.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 41.96,
+          "end": 42.2,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 42.2,
+          "end": 42.28,
+          "probability": 0.9883
+        },
+        {
+          "word": "VendorServiceTree",
+          "start": 42.28,
+          "end": 43.22,
+          "probability": 0.854
+        },
+        {
+          "word": ".xml",
+          "start": 43.22,
+          "end": 43.8,
+          "probability": 0.8022
+        },
+        {
+          "word": "file,",
+          "start": 43.8,
+          "end": 44.18,
+          "probability": 0.978
+        },
+        {
+          "word": "which",
+          "start": 44.42,
+          "end": 44.66,
+          "probability": 0.9639
+        },
+        {
+          "word": "creates",
+          "start": 44.66,
+          "end": 45.08,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 45.08,
+          "end": 45.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "hierarchy",
+          "start": 45.26,
+          "end": 45.68,
+          "probability": 0.9375
+        },
+        {
+          "word": "of",
+          "start": 45.68,
+          "end": 45.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "services",
+          "start": 45.96,
+          "end": 46.36,
+          "probability": 0.854
+        },
+        {
+          "word": "and",
+          "start": 46.36,
+          "end": 46.64,
+          "probability": 0.9668
+        },
+        {
+          "word": "service",
+          "start": 46.64,
+          "end": 46.98,
+          "probability": 0.9619
+        },
+        {
+          "word": "categories.",
+          "start": 46.98,
+          "end": 47.52,
+          "probability": 0.9897
+        },
+        {
+          "word": "I",
+          "start": 48.24,
+          "end": 48.8,
+          "probability": 0.9922
+        },
+        {
+          "word": "am",
+          "start": 48.8,
+          "end": 48.94,
+          "probability": 0.9067
+        },
+        {
+          "word": "going",
+          "start": 48.94,
+          "end": 49.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 49.12,
+          "end": 49.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "add",
+          "start": 49.3,
+          "end": 49.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 49.48,
+          "end": 49.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "set",
+          "start": 49.6,
+          "end": 49.78,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 49.78,
+          "end": 49.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "HomeRestoral",
+          "start": 49.9,
+          "end": 50.68,
+          "probability": 0.8135
+        },
+        {
+          "word": "services",
+          "start": 50.68,
+          "end": 51.14,
+          "probability": 0.8994
+        },
+        {
+          "word": "to",
+          "start": 51.14,
+          "end": 51.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 51.44,
+          "end": 51.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "application",
+          "start": 51.58,
+          "end": 52.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "at",
+          "start": 52.18,
+          "end": 52.76,
+          "probability": 0.5923
+        },
+        {
+          "word": "the",
+          "start": 52.76,
+          "end": 52.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "end",
+          "start": 52.88,
+          "end": 53.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 53.08,
+          "end": 53.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 53.2,
+          "end": 53.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "file.",
+          "start": 53.32,
+          "end": 53.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "First,",
+          "start": 54.34,
+          "end": 54.9,
+          "probability": 0.9814
+        },
+        {
+          "word": "I",
+          "start": 55.12,
+          "end": 55.3,
+          "probability": 0.9937
+        },
+        {
+          "word": "will",
+          "start": 55.3,
+          "end": 55.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "add",
+          "start": 55.48,
+          "end": 55.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 55.64,
+          "end": 55.76,
+          "probability": 0.9775
+        },
+        {
+          "word": "parent",
+          "start": 55.76,
+          "end": 56.06,
+          "probability": 0.7637
+        },
+        {
+          "word": "service",
+          "start": 56.06,
+          "end": 56.4,
+          "probability": 0.9204
+        },
+        {
+          "word": "type",
+          "start": 56.4,
+          "end": 56.72,
+          "probability": 0.9897
+        },
+        {
+          "word": "for",
+          "start": 56.72,
+          "end": 56.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "HomeRestoral.",
+          "start": 56.9,
+          "end": 57.7,
+          "probability": 0.9678
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.28,
+      "end": 68.12,
+      "start_formatted": "00:01:00.280",
+      "end_formatted": "00:01:08.120",
+      "text": "This will be implemented, like all services, as a specialist service. The public ID will be H-Res, for HomeRestoral.",
+      "words": [
+        {
+          "word": "This",
+          "start": 60.28,
+          "end": 60.88,
+          "probability": 0.981
+        },
+        {
+          "word": "will",
+          "start": 60.88,
+          "end": 61.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 61.02,
+          "end": 61.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "implemented,",
+          "start": 61.16,
+          "end": 61.68,
+          "probability": 0.998
+        },
+        {
+          "word": "like",
+          "start": 61.94,
+          "end": 62.26,
+          "probability": 0.9946
+        },
+        {
+          "word": "all",
+          "start": 62.26,
+          "end": 62.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "services,",
+          "start": 62.44,
+          "end": 62.96,
+          "probability": 0.9727
+        },
+        {
+          "word": "as",
+          "start": 63.32,
+          "end": 63.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 63.54,
+          "end": 63.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "specialist",
+          "start": 63.64,
+          "end": 64.08,
+          "probability": 0.8696
+        },
+        {
+          "word": "service.",
+          "start": 64.08,
+          "end": 64.62,
+          "probability": 0.9907
+        },
+        {
+          "word": "The",
+          "start": 65.02,
+          "end": 65.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "public",
+          "start": 65.48,
+          "end": 65.78,
+          "probability": 0.6431
+        },
+        {
+          "word": "ID",
+          "start": 65.78,
+          "end": 66.04,
+          "probability": 0.9688
+        },
+        {
+          "word": "will",
+          "start": 66.04,
+          "end": 66.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 66.26,
+          "end": 66.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "H",
+          "start": 66.42,
+          "end": 66.6,
+          "probability": 0.2822
+        },
+        {
+          "word": "-Res,",
+          "start": 66.6,
+          "end": 66.92,
+          "probability": 0.3662
+        },
+        {
+          "word": "for",
+          "start": 67.1,
+          "end": 67.34,
+          "probability": 0.9902
+        },
+        {
+          "word": "HomeRestoral.",
+          "start": 67.34,
+          "end": 68.12,
+          "probability": 0.5737
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 71.0,
+      "end": 81.1,
+      "start_formatted": "00:01:11.000",
+      "end_formatted": "00:01:21.100",
+      "text": "The convention for services is to prefix the public ID with SVC and a colon. It will be active in the application.",
+      "words": [
+        {
+          "word": "The",
+          "start": 71.0,
+          "end": 71.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "convention",
+          "start": 71.6,
+          "end": 71.98,
+          "probability": 0.6704
+        },
+        {
+          "word": "for",
+          "start": 71.98,
+          "end": 72.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "services",
+          "start": 72.28,
+          "end": 72.7,
+          "probability": 0.959
+        },
+        {
+          "word": "is",
+          "start": 72.7,
+          "end": 72.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 72.96,
+          "end": 73.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "prefix",
+          "start": 73.1,
+          "end": 73.54,
+          "probability": 0.7466
+        },
+        {
+          "word": "the",
+          "start": 73.54,
+          "end": 73.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "public",
+          "start": 73.76,
+          "end": 74.08,
+          "probability": 0.9556
+        },
+        {
+          "word": "ID",
+          "start": 74.08,
+          "end": 74.44,
+          "probability": 0.9854
+        },
+        {
+          "word": "with",
+          "start": 74.44,
+          "end": 74.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "SVC",
+          "start": 74.68,
+          "end": 75.38,
+          "probability": 0.7349
+        },
+        {
+          "word": "and",
+          "start": 75.38,
+          "end": 75.5,
+          "probability": 0.4673
+        },
+        {
+          "word": "a",
+          "start": 75.5,
+          "end": 75.62,
+          "probability": 0.9517
+        },
+        {
+          "word": "colon.",
+          "start": 75.62,
+          "end": 75.86,
+          "probability": 0.9663
+        },
+        {
+          "word": "It",
+          "start": 79.04,
+          "end": 79.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "will",
+          "start": 79.64,
+          "end": 79.76,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 79.76,
+          "end": 79.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "active",
+          "start": 79.9,
+          "end": 80.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "in",
+          "start": 80.22,
+          "end": 80.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 80.4,
+          "end": 80.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "application.",
+          "start": 80.5,
+          "end": 81.1,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 90.44,
+      "end": 92.76,
+      "start_formatted": "00:01:30.440",
+      "end_formatted": "00:01:32.760",
+      "text": "I will use HomeRestoral as its code.",
+      "words": [
+        {
+          "word": "I",
+          "start": 90.44,
+          "end": 90.92,
+          "probability": 0.9824
+        },
+        {
+          "word": "will",
+          "start": 90.92,
+          "end": 91.04,
+          "probability": 0.011
+        },
+        {
+          "word": "use",
+          "start": 91.04,
+          "end": 91.26,
+          "probability": 0.9893
+        },
+        {
+          "word": "HomeRestoral",
+          "start": 91.26,
+          "end": 91.98,
+          "probability": 0.6606
+        },
+        {
+          "word": "as",
+          "start": 91.98,
+          "end": 92.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "its",
+          "start": 92.22,
+          "end": 92.34,
+          "probability": 0.8276
+        },
+        {
+          "word": "code.",
+          "start": 92.34,
+          "end": 92.76,
+          "probability": 0.9341
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 102.58,
+      "end": 103.68,
+      "start_formatted": "00:01:42.580",
+      "end_formatted": "00:01:43.680",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 102.58,
+          "end": 103.06,
+          "probability": 0.731
+        },
+        {
+          "word": "its",
+          "start": 103.06,
+          "end": 103.2,
+          "probability": 0.9092
+        },
+        {
+          "word": "description.",
+          "start": 103.2,
+          "end": 103.68,
+          "probability": 0.9517
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 104.26,
+      "end": 104.3,
+      "start_formatted": "00:01:44.260",
+      "end_formatted": "00:01:44.300",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 104.26,
+          "end": 104.3,
+          "probability": 0.0734
+        },
+        {
+          "word": "its",
+          "start": 104.3,
+          "end": 104.3,
+          "probability": 0.2937
+        },
+        {
+          "word": "description.",
+          "start": 104.3,
+          "end": 104.3,
+          "probability": 0.7803
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 104.3,
+      "end": 105.58,
+      "start_formatted": "00:01:44.300",
+      "end_formatted": "00:01:45.580",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 104.3,
+          "end": 105.0,
+          "probability": 0.0017
+        },
+        {
+          "word": "its",
+          "start": 105.0,
+          "end": 105.54,
+          "probability": 0.3103
+        },
+        {
+          "word": "description.",
+          "start": 105.54,
+          "end": 105.58,
+          "probability": 0.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 105.96,
+      "end": 111.5,
+      "start_formatted": "00:01:45.960",
+      "end_formatted": "00:01:51.500",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 105.96,
+          "end": 106.14,
+          "probability": 0.0395
+        },
+        {
+          "word": "its",
+          "start": 106.14,
+          "end": 111.48,
+          "probability": 0.6025
+        },
+        {
+          "word": "description.",
+          "start": 111.48,
+          "end": 111.5,
+          "probability": 0.0508
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 113.72,
+      "end": 115.16,
+      "start_formatted": "00:01:53.720",
+      "end_formatted": "00:01:55.160",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 113.72,
+          "end": 114.44,
+          "probability": 0.0016
+        },
+        {
+          "word": "its",
+          "start": 114.44,
+          "end": 115.16,
+          "probability": 0.3408
+        },
+        {
+          "word": "description.",
+          "start": 115.16,
+          "end": 115.16,
+          "probability": 0.0
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 115.16,
+      "end": 115.18,
+      "start_formatted": "00:01:55.160",
+      "end_formatted": "00:01:55.180",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 115.16,
+          "end": 115.16,
+          "probability": 0.0394
+        },
+        {
+          "word": "its",
+          "start": 115.16,
+          "end": 115.18,
+          "probability": 0.6646
+        },
+        {
+          "word": "description.",
+          "start": 115.18,
+          "end": 115.18,
+          "probability": 0.1377
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 116.48,
+      "end": 117.48,
+      "start_formatted": "00:01:56.480",
+      "end_formatted": "00:01:57.480",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 116.48,
+          "end": 117.2,
+          "probability": 0.1713
+        },
+        {
+          "word": "its",
+          "start": 117.2,
+          "end": 117.2,
+          "probability": 0.667
+        },
+        {
+          "word": "description.",
+          "start": 117.2,
+          "end": 117.48,
+          "probability": 0.9404
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 117.94,
+      "end": 118.76,
+      "start_formatted": "00:01:57.940",
+      "end_formatted": "00:01:58.760",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 117.94,
+          "end": 118.66,
+          "probability": 0.3586
+        },
+        {
+          "word": "its",
+          "start": 118.66,
+          "end": 118.66,
+          "probability": 0.6675
+        },
+        {
+          "word": "description.",
+          "start": 118.66,
+          "end": 118.76,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 124.66,
+      "end": 125.38,
+      "start_formatted": "00:02:04.660",
+      "end_formatted": "00:02:05.380",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 124.66,
+          "end": 125.38,
+          "probability": 0.5005
+        },
+        {
+          "word": "its",
+          "start": 125.38,
+          "end": 125.38,
+          "probability": 0.6411
+        },
+        {
+          "word": "description.",
+          "start": 125.38,
+          "end": 125.38,
+          "probability": 0.9849
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 129.24,
+      "end": 130.18,
+      "start_formatted": "00:02:09.240",
+      "end_formatted": "00:02:10.180",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 129.24,
+          "end": 129.96,
+          "probability": 0.623
+        },
+        {
+          "word": "its",
+          "start": 129.96,
+          "end": 130.18,
+          "probability": 0.6299
+        },
+        {
+          "word": "description.",
+          "start": 130.18,
+          "end": 130.18,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 130.18,
+      "end": 130.44,
+      "start_formatted": "00:02:10.180",
+      "end_formatted": "00:02:10.440",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 130.18,
+          "end": 130.18,
+          "probability": 0.6909
+        },
+        {
+          "word": "its",
+          "start": 130.18,
+          "end": 130.2,
+          "probability": 0.646
+        },
+        {
+          "word": "description.",
+          "start": 130.2,
+          "end": 130.44,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 130.44,
+      "end": 130.44,
+      "start_formatted": "00:02:10.440",
+      "end_formatted": "00:02:10.440",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 17,
+      "start": 130.7,
+      "end": 130.7,
+      "start_formatted": "00:02:10.700",
+      "end_formatted": "00:02:10.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 18,
+      "start": 130.7,
+      "end": 130.7,
+      "start_formatted": "00:02:10.700",
+      "end_formatted": "00:02:10.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 19,
+      "start": 130.72,
+      "end": 130.72,
+      "start_formatted": "00:02:10.720",
+      "end_formatted": "00:02:10.720",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 130.72,
+      "end": 130.72,
+      "start_formatted": "00:02:10.720",
+      "end_formatted": "00:02:10.720",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 130.72,
+      "end": 130.76,
+      "start_formatted": "00:02:10.720",
+      "end_formatted": "00:02:10.760",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 130.72,
+          "end": 130.76,
+          "probability": 0.8945
+        },
+        {
+          "word": "its",
+          "start": 130.76,
+          "end": 130.76,
+          "probability": 0.7183
+        },
+        {
+          "word": "description.",
+          "start": 130.76,
+          "end": 130.76,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 130.76,
+      "end": 130.76,
+      "start_formatted": "00:02:10.760",
+      "end_formatted": "00:02:10.760",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 130.76,
+      "end": 130.76,
+      "start_formatted": "00:02:10.760",
+      "end_formatted": "00:02:10.760",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 130.76,
+      "end": 130.76,
+      "start_formatted": "00:02:10.760",
+      "end_formatted": "00:02:10.760",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 130.76,
+      "end": 131.02,
+      "start_formatted": "00:02:10.760",
+      "end_formatted": "00:02:11.020",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 130.76,
+          "end": 131.02,
+          "probability": 0.9287
+        },
+        {
+          "word": "its",
+          "start": 131.02,
+          "end": 131.02,
+          "probability": 0.7798
+        },
+        {
+          "word": "description.",
+          "start": 131.02,
+          "end": 131.02,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 131.02,
+      "end": 131.02,
+      "start_formatted": "00:02:11.020",
+      "end_formatted": "00:02:11.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 131.02,
+      "end": 131.02,
+      "start_formatted": "00:02:11.020",
+      "end_formatted": "00:02:11.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 131.02,
+      "end": 131.02,
+      "start_formatted": "00:02:11.020",
+      "end_formatted": "00:02:11.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 131.02,
+      "end": 131.02,
+      "start_formatted": "00:02:11.020",
+      "end_formatted": "00:02:11.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 131.02,
+      "end": 131.02,
+      "start_formatted": "00:02:11.020",
+      "end_formatted": "00:02:11.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 131.02,
+      "end": 131.02,
+      "start_formatted": "00:02:11.020",
+      "end_formatted": "00:02:11.020",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 131.02,
+      "end": 131.24,
+      "start_formatted": "00:02:11.020",
+      "end_formatted": "00:02:11.240",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 131.02,
+          "end": 131.24,
+          "probability": 0.9546
+        },
+        {
+          "word": "its",
+          "start": 131.24,
+          "end": 131.24,
+          "probability": 0.7959
+        },
+        {
+          "word": "description.",
+          "start": 131.24,
+          "end": 131.24,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 131.24,
+      "end": 131.9,
+      "start_formatted": "00:02:11.240",
+      "end_formatted": "00:02:11.900",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 131.24,
+          "end": 131.9,
+          "probability": 0.958
+        },
+        {
+          "word": "its",
+          "start": 131.9,
+          "end": 131.9,
+          "probability": 0.7896
+        },
+        {
+          "word": "description.",
+          "start": 131.9,
+          "end": 131.9,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 131.9,
+      "end": 132.58,
+      "start_formatted": "00:02:11.900",
+      "end_formatted": "00:02:12.580",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 131.9,
+          "end": 132.58,
+          "probability": 0.9604
+        },
+        {
+          "word": "its",
+          "start": 132.58,
+          "end": 132.58,
+          "probability": 0.7915
+        },
+        {
+          "word": "description.",
+          "start": 132.58,
+          "end": 132.58,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 132.58,
+      "end": 133.14,
+      "start_formatted": "00:02:12.580",
+      "end_formatted": "00:02:13.140",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 132.58,
+          "end": 133.14,
+          "probability": 0.9634
+        },
+        {
+          "word": "its",
+          "start": 133.14,
+          "end": 133.14,
+          "probability": 0.792
+        },
+        {
+          "word": "description.",
+          "start": 133.14,
+          "end": 133.14,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 133.14,
+      "end": 133.14,
+      "start_formatted": "00:02:13.140",
+      "end_formatted": "00:02:13.140",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 133.14,
+      "end": 133.14,
+      "start_formatted": "00:02:13.140",
+      "end_formatted": "00:02:13.140",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 38,
+      "start": 133.14,
+      "end": 133.36,
+      "start_formatted": "00:02:13.140",
+      "end_formatted": "00:02:13.360",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 133.14,
+          "end": 133.36,
+          "probability": 0.9683
+        },
+        {
+          "word": "its",
+          "start": 133.36,
+          "end": 133.36,
+          "probability": 0.7822
+        },
+        {
+          "word": "description.",
+          "start": 133.36,
+          "end": 133.36,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 133.46,
+      "end": 133.52,
+      "start_formatted": "00:02:13.460",
+      "end_formatted": "00:02:13.520",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 133.46,
+          "end": 133.52,
+          "probability": 0.9692
+        },
+        {
+          "word": "its",
+          "start": 133.52,
+          "end": 133.52,
+          "probability": 0.7773
+        },
+        {
+          "word": "description.",
+          "start": 133.52,
+          "end": 133.52,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 133.68,
+      "end": 134.16,
+      "start_formatted": "00:02:13.680",
+      "end_formatted": "00:02:14.160",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 133.68,
+          "end": 134.16,
+          "probability": 0.9692
+        },
+        {
+          "word": "its",
+          "start": 134.16,
+          "end": 134.16,
+          "probability": 0.7793
+        },
+        {
+          "word": "description.",
+          "start": 134.16,
+          "end": 134.16,
+          "probability": 0.981
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 134.16,
+      "end": 134.16,
+      "start_formatted": "00:02:14.160",
+      "end_formatted": "00:02:14.160",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 42,
+      "start": 134.64,
+      "end": 135.04,
+      "start_formatted": "00:02:14.640",
+      "end_formatted": "00:02:15.040",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 134.64,
+          "end": 135.04,
+          "probability": 0.9717
+        },
+        {
+          "word": "its",
+          "start": 135.04,
+          "end": 135.04,
+          "probability": 0.7759
+        },
+        {
+          "word": "description.",
+          "start": 135.04,
+          "end": 135.04,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 135.14,
+      "end": 135.14,
+      "start_formatted": "00:02:15.140",
+      "end_formatted": "00:02:15.140",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 44,
+      "start": 136.28,
+      "end": 137.14,
+      "start_formatted": "00:02:16.280",
+      "end_formatted": "00:02:17.140",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 136.28,
+          "end": 136.88,
+          "probability": 0.9722
+        },
+        {
+          "word": "its",
+          "start": 136.88,
+          "end": 136.92,
+          "probability": 0.772
+        },
+        {
+          "word": "description.",
+          "start": 136.92,
+          "end": 137.14,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 138.0,
+      "end": 139.72,
+      "start_formatted": "00:02:18.000",
+      "end_formatted": "00:02:19.720",
+      "text": "As its description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 138.0,
+          "end": 138.72,
+          "probability": 0.9727
+        },
+        {
+          "word": "its",
+          "start": 138.72,
+          "end": 138.72,
+          "probability": 0.7661
+        },
+        {
+          "word": "description.",
+          "start": 138.72,
+          "end": 139.72,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 149.74,
+      "end": 155.04,
+      "start_formatted": "00:02:29.740",
+      "end_formatted": "00:02:35.040",
+      "text": "This is a top level category and has no parent, but the parent field is required, so I'll",
+      "words": [
+        {
+          "word": "This",
+          "start": 149.74,
+          "end": 150.22,
+          "probability": 0.9663
+        },
+        {
+          "word": "is",
+          "start": 150.22,
+          "end": 150.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 150.34,
+          "end": 150.46,
+          "probability": 0.9937
+        },
+        {
+          "word": "top",
+          "start": 150.46,
+          "end": 150.7,
+          "probability": 0.9575
+        },
+        {
+          "word": "level",
+          "start": 150.7,
+          "end": 150.94,
+          "probability": 0.5762
+        },
+        {
+          "word": "category",
+          "start": 150.94,
+          "end": 151.44,
+          "probability": 0.9927
+        },
+        {
+          "word": "and",
+          "start": 151.44,
+          "end": 151.76,
+          "probability": 0.9834
+        },
+        {
+          "word": "has",
+          "start": 151.76,
+          "end": 151.92,
+          "probability": 0.9912
+        },
+        {
+          "word": "no",
+          "start": 151.92,
+          "end": 152.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "parent,",
+          "start": 152.12,
+          "end": 152.5,
+          "probability": 0.96
+        },
+        {
+          "word": "but",
+          "start": 152.72,
+          "end": 152.92,
+          "probability": 0.9839
+        },
+        {
+          "word": "the",
+          "start": 152.92,
+          "end": 153.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "parent",
+          "start": 153.04,
+          "end": 153.34,
+          "probability": 0.9302
+        },
+        {
+          "word": "field",
+          "start": 153.34,
+          "end": 153.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 153.68,
+          "end": 153.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "required,",
+          "start": 153.88,
+          "end": 154.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "so",
+          "start": 154.62,
+          "end": 154.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "I'll",
+          "start": 154.86,
+          "end": 155.04,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 155.04,
+      "end": 156.14,
+      "start_formatted": "00:02:35.040",
+      "end_formatted": "00:02:36.140",
+      "text": "enter it as an alt tag.",
+      "words": [
+        {
+          "word": "enter",
+          "start": 155.04,
+          "end": 155.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 155.28,
+          "end": 155.44,
+          "probability": 0.9897
+        },
+        {
+          "word": "as",
+          "start": 155.44,
+          "end": 155.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "an",
+          "start": 155.6,
+          "end": 155.7,
+          "probability": 0.9844
+        },
+        {
+          "word": "alt",
+          "start": 155.7,
+          "end": 155.82,
+          "probability": 0.2803
+        },
+        {
+          "word": "tag.",
+          "start": 155.82,
+          "end": 156.14,
+          "probability": 0.9668
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 157.8,
+      "end": 162.14,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:42.140",
+      "text": "This completes the definition of the parent service, so I'll add a closing tag.",
+      "words": [
+        {
+          "word": "This",
+          "start": 157.8,
+          "end": 158.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "completes",
+          "start": 158.28,
+          "end": 158.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 158.68,
+          "end": 158.88,
+          "probability": 0.999
+        },
+        {
+          "word": "definition",
+          "start": 158.88,
+          "end": 159.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 159.32,
+          "end": 159.58,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 159.58,
+          "end": 159.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "parent",
+          "start": 159.68,
+          "end": 160.0,
+          "probability": 0.9297
+        },
+        {
+          "word": "service,",
+          "start": 160.0,
+          "end": 160.4,
+          "probability": 0.9653
+        },
+        {
+          "word": "so",
+          "start": 160.74,
+          "end": 160.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "I'll",
+          "start": 160.98,
+          "end": 161.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "add",
+          "start": 161.16,
+          "end": 161.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 161.32,
+          "end": 161.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "closing",
+          "start": 161.42,
+          "end": 161.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "tag.",
+          "start": 161.76,
+          "end": 162.14,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 167.14,
+      "end": 171.22,
+      "start_formatted": "00:02:47.140",
+      "end_formatted": "00:02:51.220",
+      "text": "To save time, I'll paste the fire and water slash mold services.",
+      "words": [
+        {
+          "word": "To",
+          "start": 167.14,
+          "end": 167.7,
+          "probability": 0.9487
+        },
+        {
+          "word": "save",
+          "start": 167.7,
+          "end": 167.98,
+          "probability": 0.998
+        },
+        {
+          "word": "time,",
+          "start": 167.98,
+          "end": 168.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "I'll",
+          "start": 168.58,
+          "end": 168.8,
+          "probability": 0.9829
+        },
+        {
+          "word": "paste",
+          "start": 168.8,
+          "end": 169.1,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 169.1,
+          "end": 169.24,
+          "probability": 0.9854
+        },
+        {
+          "word": "fire",
+          "start": 169.24,
+          "end": 169.52,
+          "probability": 0.603
+        },
+        {
+          "word": "and",
+          "start": 169.52,
+          "end": 169.7,
+          "probability": 0.7769
+        },
+        {
+          "word": "water",
+          "start": 169.7,
+          "end": 169.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "slash",
+          "start": 169.96,
+          "end": 170.32,
+          "probability": 0.0417
+        },
+        {
+          "word": "mold",
+          "start": 170.32,
+          "end": 170.68,
+          "probability": 0.9429
+        },
+        {
+          "word": "services.",
+          "start": 170.68,
+          "end": 171.22,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 172.28,
+      "end": 173.98,
+      "start_formatted": "00:02:52.280",
+      "end_formatted": "00:02:53.980",
+      "text": "Now I can save and close this file.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 172.04,
+          "end": 172.32,
+          "probability": 0.9897
+        },
+        {
+          "word": "I",
+          "start": 172.32,
+          "end": 172.44,
+          "probability": 0.9614
+        },
+        {
+          "word": "can",
+          "start": 172.44,
+          "end": 172.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "save",
+          "start": 172.6,
+          "end": 172.88,
+          "probability": 0.9609
+        },
+        {
+          "word": "and",
+          "start": 172.88,
+          "end": 173.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "close",
+          "start": 173.06,
+          "end": 173.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 173.3,
+          "end": 173.56,
+          "probability": 0.998
+        },
+        {
+          "word": "file.",
+          "start": 173.56,
+          "end": 173.98,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 180.9,
+      "end": 186.54,
+      "start_formatted": "00:03:00.900",
+      "end_formatted": "00:03:06.540",
+      "text": "For the services to display in the user interface, they must be implemented in the VendorServiceDetails.xml",
+      "words": [
+        {
+          "word": "For",
+          "start": 180.64,
+          "end": 180.92,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 180.92,
+          "end": 181.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "services",
+          "start": 181.06,
+          "end": 181.46,
+          "probability": 0.981
+        },
+        {
+          "word": "to",
+          "start": 181.46,
+          "end": 181.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "display",
+          "start": 181.68,
+          "end": 182.0,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 182.0,
+          "end": 182.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 182.16,
+          "end": 182.24,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 182.24,
+          "end": 182.54,
+          "probability": 0.9395
+        },
+        {
+          "word": "interface,",
+          "start": 182.54,
+          "end": 183.08,
+          "probability": 0.998
+        },
+        {
+          "word": "they",
+          "start": 183.42,
+          "end": 183.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "must",
+          "start": 183.62,
+          "end": 183.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 183.82,
+          "end": 183.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "implemented",
+          "start": 183.98,
+          "end": 184.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 184.52,
+          "end": 184.76,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 184.76,
+          "end": 184.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "VendorServiceDetails",
+          "start": 184.82,
+          "end": 185.96,
+          "probability": 0.8486
+        },
+        {
+          "word": ".xml",
+          "start": 185.96,
+          "end": 186.54,
+          "probability": 0.894
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 186.54,
+      "end": 192.18,
+      "start_formatted": "00:03:06.540",
+      "end_formatted": "00:03:12.180",
+      "text": "file, which creates the associations between service kinds, or categories, and incidents,",
+      "words": [
+        {
+          "word": "file,",
+          "start": 186.54,
+          "end": 186.96,
+          "probability": 0.9014
+        },
+        {
+          "word": "which",
+          "start": 187.14,
+          "end": 187.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "creates",
+          "start": 187.4,
+          "end": 187.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 187.84,
+          "end": 188.0,
+          "probability": 0.998
+        },
+        {
+          "word": "associations",
+          "start": 188.0,
+          "end": 188.7,
+          "probability": 0.9917
+        },
+        {
+          "word": "between",
+          "start": 188.7,
+          "end": 189.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "service",
+          "start": 189.1,
+          "end": 189.62,
+          "probability": 0.8442
+        },
+        {
+          "word": "kinds,",
+          "start": 189.62,
+          "end": 190.06,
+          "probability": 0.9805
+        },
+        {
+          "word": "or",
+          "start": 190.2,
+          "end": 190.56,
+          "probability": 0.9849
+        },
+        {
+          "word": "categories,",
+          "start": 190.56,
+          "end": 191.16,
+          "probability": 0.9644
+        },
+        {
+          "word": "and",
+          "start": 191.5,
+          "end": 191.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "incidents,",
+          "start": 191.74,
+          "end": 192.18,
+          "probability": 0.9707
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 192.46,
+      "end": 194.62,
+      "start_formatted": "00:03:12.460",
+      "end_formatted": "00:03:14.620",
+      "text": "and between services and service kinds.",
+      "words": [
+        {
+          "word": "and",
+          "start": 192.46,
+          "end": 192.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "between",
+          "start": 192.7,
+          "end": 192.98,
+          "probability": 0.999
+        },
+        {
+          "word": "services",
+          "start": 192.98,
+          "end": 193.56,
+          "probability": 0.9878
+        },
+        {
+          "word": "and",
+          "start": 193.56,
+          "end": 193.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "service",
+          "start": 193.8,
+          "end": 194.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "kinds.",
+          "start": 194.18,
+          "end": 194.62,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 195.76,
+      "end": 199.12,
+      "start_formatted": "00:03:15.760",
+      "end_formatted": "00:03:19.120",
+      "text": "Service requests are associated with incident types at the bottom of the file.",
+      "words": [
+        {
+          "word": "Service",
+          "start": 195.52,
+          "end": 195.8,
+          "probability": 0.9839
+        },
+        {
+          "word": "requests",
+          "start": 195.8,
+          "end": 196.24,
+          "probability": 0.9814
+        },
+        {
+          "word": "are",
+          "start": 196.24,
+          "end": 196.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "associated",
+          "start": 196.46,
+          "end": 197.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 197.02,
+          "end": 197.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "incident",
+          "start": 197.3,
+          "end": 197.62,
+          "probability": 0.9609
+        },
+        {
+          "word": "types",
+          "start": 197.62,
+          "end": 197.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "at",
+          "start": 197.96,
+          "end": 198.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 198.16,
+          "end": 198.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "bottom",
+          "start": 198.26,
+          "end": 198.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 198.5,
+          "end": 198.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 198.66,
+          "end": 198.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "file.",
+          "start": 198.76,
+          "end": 199.12,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 201.9,
+      "end": 206.08,
+      "start_formatted": "00:03:21.900",
+      "end_formatted": "00:03:26.080",
+      "text": "Services must be associated with incident types to appear in the user interface.",
+      "words": [
+        {
+          "word": "Services",
+          "start": 201.9,
+          "end": 202.46,
+          "probability": 0.9736
+        },
+        {
+          "word": "must",
+          "start": 202.46,
+          "end": 202.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "be",
+          "start": 202.76,
+          "end": 202.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "associated",
+          "start": 202.94,
+          "end": 203.54,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 203.54,
+          "end": 203.82,
+          "probability": 0.999
+        },
+        {
+          "word": "incident",
+          "start": 203.82,
+          "end": 204.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "types",
+          "start": 204.16,
+          "end": 204.5,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 204.5,
+          "end": 204.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "appear",
+          "start": 204.7,
+          "end": 205.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 205.0,
+          "end": 205.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 205.16,
+          "end": 205.26,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 205.26,
+          "end": 205.54,
+          "probability": 0.9355
+        },
+        {
+          "word": "interface.",
+          "start": 205.54,
+          "end": 206.08,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 207.16,
+      "end": 212.04,
+      "start_formatted": "00:03:27.160",
+      "end_formatted": "00:03:32.040",
+      "text": "In this file, the public IDs are implemented as numbers, so I will use the number 1 greater",
+      "words": [
+        {
+          "word": "In",
+          "start": 206.9,
+          "end": 207.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "this",
+          "start": 207.18,
+          "end": 207.38,
+          "probability": 0.999
+        },
+        {
+          "word": "file,",
+          "start": 207.38,
+          "end": 207.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 207.96,
+          "end": 208.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "public",
+          "start": 208.18,
+          "end": 208.46,
+          "probability": 0.8604
+        },
+        {
+          "word": "IDs",
+          "start": 208.46,
+          "end": 208.74,
+          "probability": 0.9443
+        },
+        {
+          "word": "are",
+          "start": 208.74,
+          "end": 208.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "implemented",
+          "start": 208.98,
+          "end": 209.52,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 209.52,
+          "end": 209.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "numbers,",
+          "start": 209.78,
+          "end": 210.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "so",
+          "start": 210.4,
+          "end": 210.64,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 210.64,
+          "end": 210.8,
+          "probability": 0.9917
+        },
+        {
+          "word": "will",
+          "start": 210.8,
+          "end": 210.94,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 210.94,
+          "end": 211.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 211.14,
+          "end": 211.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "number",
+          "start": 211.28,
+          "end": 211.52,
+          "probability": 0.9443
+        },
+        {
+          "word": "1",
+          "start": 211.52,
+          "end": 211.76,
+          "probability": 0.6758
+        },
+        {
+          "word": "greater",
+          "start": 211.76,
+          "end": 212.04,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 212.04,
+      "end": 213.5,
+      "start_formatted": "00:03:32.040",
+      "end_formatted": "00:03:33.500",
+      "text": "than the last incident type.",
+      "words": [
+        {
+          "word": "than",
+          "start": 212.04,
+          "end": 212.22,
+          "probability": 0.8047
+        },
+        {
+          "word": "the",
+          "start": 212.22,
+          "end": 212.36,
+          "probability": 0.9785
+        },
+        {
+          "word": "last",
+          "start": 212.36,
+          "end": 212.66,
+          "probability": 0.9375
+        },
+        {
+          "word": "incident",
+          "start": 212.66,
+          "end": 213.1,
+          "probability": 0.9048
+        },
+        {
+          "word": "type.",
+          "start": 213.1,
+          "end": 213.5,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 223.48,
+      "end": 226.14,
+      "start_formatted": "00:03:43.480",
+      "end_formatted": "00:03:46.140",
+      "text": "The incident type for these services is Dwelling Incident.",
+      "words": [
+        {
+          "word": "The",
+          "start": 223.23,
+          "end": 223.54,
+          "probability": 0.9873
+        },
+        {
+          "word": "incident",
+          "start": 223.54,
+          "end": 223.92,
+          "probability": 0.9189
+        },
+        {
+          "word": "type",
+          "start": 223.92,
+          "end": 224.22,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 224.22,
+          "end": 224.4,
+          "probability": 0.9829
+        },
+        {
+          "word": "these",
+          "start": 224.4,
+          "end": 224.56,
+          "probability": 0.9907
+        },
+        {
+          "word": "services",
+          "start": 224.56,
+          "end": 225.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 225.02,
+          "end": 225.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "Dwelling",
+          "start": 225.26,
+          "end": 225.58,
+          "probability": 0.6162
+        },
+        {
+          "word": "Incident.",
+          "start": 225.58,
+          "end": 226.14,
+          "probability": 0.8008
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 234.26,
+      "end": 239.14,
+      "start_formatted": "00:03:54.260",
+      "end_formatted": "00:03:59.140",
+      "text": "The service type to associate this incident with is the Home Restoreal type I created.",
+      "words": [
+        {
+          "word": "The",
+          "start": 234.26,
+          "end": 234.94,
+          "probability": 0.9575
+        },
+        {
+          "word": "service",
+          "start": 234.94,
+          "end": 235.3,
+          "probability": 0.9771
+        },
+        {
+          "word": "type",
+          "start": 235.3,
+          "end": 235.58,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 235.58,
+          "end": 235.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "associate",
+          "start": 235.74,
+          "end": 236.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 236.3,
+          "end": 236.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "incident",
+          "start": 236.64,
+          "end": 236.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "with",
+          "start": 236.98,
+          "end": 237.22,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 237.22,
+          "end": 237.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 237.4,
+          "end": 237.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "Home",
+          "start": 237.5,
+          "end": 237.72,
+          "probability": 0.5693
+        },
+        {
+          "word": "Restoreal",
+          "start": 237.72,
+          "end": 238.36,
+          "probability": 0.5283
+        },
+        {
+          "word": "type",
+          "start": 238.36,
+          "end": 238.5,
+          "probability": 0.7891
+        },
+        {
+          "word": "I",
+          "start": 238.5,
+          "end": 238.72,
+          "probability": 0.9863
+        },
+        {
+          "word": "created.",
+          "start": 238.72,
+          "end": 239.14,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 242.8,
+      "end": 244.2,
+      "start_formatted": "00:04:02.800",
+      "end_formatted": "00:04:04.200",
+      "text": "Its public ID is hres.",
+      "words": [
+        {
+          "word": "Its",
+          "start": 242.46,
+          "end": 242.8,
+          "probability": 0.9697
+        },
+        {
+          "word": "public",
+          "start": 242.8,
+          "end": 243.14,
+          "probability": 0.624
+        },
+        {
+          "word": "ID",
+          "start": 243.14,
+          "end": 243.4,
+          "probability": 0.9741
+        },
+        {
+          "word": "is",
+          "start": 243.4,
+          "end": 243.66,
+          "probability": 0.999
+        },
+        {
+          "word": "hres.",
+          "start": 243.66,
+          "end": 244.2,
+          "probability": 0.5513
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 251.0,
+      "end": 251.74,
+      "start_formatted": "00:04:11.000",
+      "end_formatted": "00:04:11.740",
+      "text": "The service type to associate this incident with the service type.",
+      "words": [
+        {
+          "word": "The",
+          "start": 251.0,
+          "end": 251.74,
+          "probability": 0.0005
+        },
+        {
+          "word": "service",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.0039
+        },
+        {
+          "word": "type",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.1747
+        },
+        {
+          "word": "to",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.0024
+        },
+        {
+          "word": "associate",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.0004
+        },
+        {
+          "word": "this",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.0188
+        },
+        {
+          "word": "incident",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.0
+        },
+        {
+          "word": "with",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.0955
+        },
+        {
+          "word": "the",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.1969
+        },
+        {
+          "word": "service",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.093
+        },
+        {
+          "word": "type.",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.4211
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 251.74,
+      "end": 252.86,
+      "start_formatted": "00:04:11.740",
+      "end_formatted": "00:04:12.860",
+      "text": "And, a closing tag.",
+      "words": [
+        {
+          "word": "And,",
+          "start": 251.74,
+          "end": 251.74,
+          "probability": 0.2554
+        },
+        {
+          "word": "a",
+          "start": 251.9,
+          "end": 252.12,
+          "probability": 0.9434
+        },
+        {
+          "word": "closing",
+          "start": 252.12,
+          "end": 252.46,
+          "probability": 0.9795
+        },
+        {
+          "word": "tag.",
+          "start": 252.46,
+          "end": 252.86,
+          "probability": 0.917
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 256.74,
+      "end": 258.62,
+      "start_formatted": "00:04:16.740",
+      "end_formatted": "00:04:18.620",
+      "text": "That ends this association.",
+      "words": [
+        {
+          "word": "That",
+          "start": 256.74,
+          "end": 257.48,
+          "probability": 0.9331
+        },
+        {
+          "word": "ends",
+          "start": 257.48,
+          "end": 257.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "this",
+          "start": 257.72,
+          "end": 257.92,
+          "probability": 0.9795
+        },
+        {
+          "word": "association.",
+          "start": 257.92,
+          "end": 258.62,
+          "probability": 0.9761
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 259.04,
+      "end": 262.56,
+      "start_formatted": "00:04:19.040",
+      "end_formatted": "00:04:22.560",
+      "text": "Now I need to associate the two services with their service kind.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 259.04,
+          "end": 259.44,
+          "probability": 0.9868
+        },
+        {
+          "word": "I",
+          "start": 259.44,
+          "end": 259.6,
+          "probability": 0.9346
+        },
+        {
+          "word": "need",
+          "start": 259.6,
+          "end": 259.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 259.8,
+          "end": 259.94,
+          "probability": 0.998
+        },
+        {
+          "word": "associate",
+          "start": 259.94,
+          "end": 260.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 260.44,
+          "end": 260.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "two",
+          "start": 260.74,
+          "end": 260.9,
+          "probability": 0.9639
+        },
+        {
+          "word": "services",
+          "start": 260.9,
+          "end": 261.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "with",
+          "start": 261.4,
+          "end": 261.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "their",
+          "start": 261.66,
+          "end": 261.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "service",
+          "start": 261.82,
+          "end": 262.2,
+          "probability": 0.9116
+        },
+        {
+          "word": "kind.",
+          "start": 262.2,
+          "end": 262.56,
+          "probability": 0.9614
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 268.82,
+      "end": 273.32,
+      "start_formatted": "00:04:28.820",
+      "end_formatted": "00:04:33.320",
+      "text": "The surrounding tag for this association is Specialist Service Compatible Service Request",
+      "words": [
+        {
+          "word": "The",
+          "start": 268.49,
+          "end": 268.86,
+          "probability": 0.9785
+        },
+        {
+          "word": "surrounding",
+          "start": 268.86,
+          "end": 269.24,
+          "probability": 0.9878
+        },
+        {
+          "word": "tag",
+          "start": 269.24,
+          "end": 269.62,
+          "probability": 0.9785
+        },
+        {
+          "word": "for",
+          "start": 269.62,
+          "end": 269.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "this",
+          "start": 269.84,
+          "end": 270.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "association",
+          "start": 270.02,
+          "end": 270.72,
+          "probability": 0.9858
+        },
+        {
+          "word": "is",
+          "start": 270.72,
+          "end": 271.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "Specialist",
+          "start": 271.0,
+          "end": 271.54,
+          "probability": 0.563
+        },
+        {
+          "word": "Service",
+          "start": 271.54,
+          "end": 271.86,
+          "probability": 0.7173
+        },
+        {
+          "word": "Compatible",
+          "start": 271.86,
+          "end": 272.48,
+          "probability": 0.9155
+        },
+        {
+          "word": "Service",
+          "start": 272.48,
+          "end": 272.78,
+          "probability": 0.752
+        },
+        {
+          "word": "Request",
+          "start": 272.78,
+          "end": 273.32,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 273.32,
+      "end": 273.7,
+      "start_formatted": "00:04:33.320",
+      "end_formatted": "00:04:33.700",
+      "text": "Kind.",
+      "words": [
+        {
+          "word": "Kind.",
+          "start": 273.32,
+          "end": 273.7,
+          "probability": 0.1122
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 275.86,
+      "end": 280.96,
+      "start_formatted": "00:04:35.860",
+      "end_formatted": "00:04:40.960",
+      "text": "Again, the public ID number is 1 greater than the last number already in place for service",
+      "words": [
+        {
+          "word": "Again,",
+          "start": 275.86,
+          "end": 276.5,
+          "probability": 0.9727
+        },
+        {
+          "word": "the",
+          "start": 276.82,
+          "end": 277.02,
+          "probability": 0.9893
+        },
+        {
+          "word": "public",
+          "start": 277.02,
+          "end": 277.3,
+          "probability": 0.7007
+        },
+        {
+          "word": "ID",
+          "start": 277.3,
+          "end": 277.64,
+          "probability": 0.9536
+        },
+        {
+          "word": "number",
+          "start": 277.64,
+          "end": 277.98,
+          "probability": 0.9585
+        },
+        {
+          "word": "is",
+          "start": 277.98,
+          "end": 278.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "1",
+          "start": 278.18,
+          "end": 278.36,
+          "probability": 0.4753
+        },
+        {
+          "word": "greater",
+          "start": 278.36,
+          "end": 278.68,
+          "probability": 0.957
+        },
+        {
+          "word": "than",
+          "start": 278.68,
+          "end": 278.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 278.88,
+          "end": 279.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "last",
+          "start": 279.0,
+          "end": 279.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "number",
+          "start": 279.28,
+          "end": 279.6,
+          "probability": 0.9858
+        },
+        {
+          "word": "already",
+          "start": 279.6,
+          "end": 279.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "in",
+          "start": 279.94,
+          "end": 280.18,
+          "probability": 0.998
+        },
+        {
+          "word": "place",
+          "start": 280.18,
+          "end": 280.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 280.44,
+          "end": 280.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "service",
+          "start": 280.6,
+          "end": 280.96,
+          "probability": 0.7339
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 280.96,
+      "end": 281.84,
+      "start_formatted": "00:04:40.960",
+      "end_formatted": "00:04:41.840",
+      "text": "request kinds.",
+      "words": [
+        {
+          "word": "request",
+          "start": 280.96,
+          "end": 281.46,
+          "probability": 0.938
+        },
+        {
+          "word": "kinds.",
+          "start": 281.46,
+          "end": 281.84,
+          "probability": 0.9551
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 286.04,
+      "end": 289.02,
+      "start_formatted": "00:04:46.040",
+      "end_formatted": "00:04:49.020",
+      "text": "The service kind is to quote and perform the service.",
+      "words": [
+        {
+          "word": "The",
+          "start": 286.04,
+          "end": 286.68,
+          "probability": 0.9731
+        },
+        {
+          "word": "service",
+          "start": 286.68,
+          "end": 287.04,
+          "probability": 0.7686
+        },
+        {
+          "word": "kind",
+          "start": 287.04,
+          "end": 287.36,
+          "probability": 0.9575
+        },
+        {
+          "word": "is",
+          "start": 287.36,
+          "end": 287.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 287.56,
+          "end": 287.72,
+          "probability": 0.9834
+        },
+        {
+          "word": "quote",
+          "start": 287.72,
+          "end": 287.94,
+          "probability": 0.9429
+        },
+        {
+          "word": "and",
+          "start": 287.94,
+          "end": 288.08,
+          "probability": 0.9819
+        },
+        {
+          "word": "perform",
+          "start": 288.08,
+          "end": 288.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 288.42,
+          "end": 288.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "service.",
+          "start": 288.6,
+          "end": 289.02,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 296.62,
+      "end": 300.48,
+      "start_formatted": "00:04:56.620",
+      "end_formatted": "00:05:00.480",
+      "text": "To complete the association, I enter the tag for the service.",
+      "words": [
+        {
+          "word": "To",
+          "start": 296.62,
+          "end": 297.26,
+          "probability": 0.8965
+        },
+        {
+          "word": "complete",
+          "start": 297.26,
+          "end": 297.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 297.62,
+          "end": 297.82,
+          "probability": 0.998
+        },
+        {
+          "word": "association,",
+          "start": 297.82,
+          "end": 298.36,
+          "probability": 0.9468
+        },
+        {
+          "word": "I",
+          "start": 298.82,
+          "end": 299.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "enter",
+          "start": 299.04,
+          "end": 299.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 299.3,
+          "end": 299.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "tag",
+          "start": 299.44,
+          "end": 299.72,
+          "probability": 0.9868
+        },
+        {
+          "word": "for",
+          "start": 299.72,
+          "end": 299.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 299.9,
+          "end": 300.02,
+          "probability": 0.9917
+        },
+        {
+          "word": "service.",
+          "start": 300.02,
+          "end": 300.48,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 300.48,
+      "end": 300.48,
+      "start_formatted": "00:05:00.480",
+      "end_formatted": "00:05:00.480",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 72,
+      "start": 310.44,
+      "end": 313.16,
+      "start_formatted": "00:05:10.440",
+      "end_formatted": "00:05:13.160",
+      "text": "And, once again, a closing tag.",
+      "words": [
+        {
+          "word": "And,",
+          "start": 310.44,
+          "end": 311.08,
+          "probability": 0.8623
+        },
+        {
+          "word": "once",
+          "start": 311.32,
+          "end": 311.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "again,",
+          "start": 311.66,
+          "end": 311.96,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 312.2,
+          "end": 312.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "closing",
+          "start": 312.42,
+          "end": 312.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "tag.",
+          "start": 312.76,
+          "end": 313.16,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "start": 317.96,
+      "end": 322.38,
+      "start_formatted": "00:05:17.960",
+      "end_formatted": "00:05:22.380",
+      "text": "To speed things along, I'll paste the water and mold service kind association.",
+      "words": [
+        {
+          "word": "To",
+          "start": 317.96,
+          "end": 318.52,
+          "probability": 0.9395
+        },
+        {
+          "word": "speed",
+          "start": 318.52,
+          "end": 318.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "things",
+          "start": 318.8,
+          "end": 319.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "along,",
+          "start": 319.06,
+          "end": 319.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "I'll",
+          "start": 319.68,
+          "end": 319.94,
+          "probability": 0.9834
+        },
+        {
+          "word": "paste",
+          "start": 319.94,
+          "end": 320.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 320.22,
+          "end": 320.38,
+          "probability": 0.9897
+        },
+        {
+          "word": "water",
+          "start": 320.38,
+          "end": 320.62,
+          "probability": 0.5088
+        },
+        {
+          "word": "and",
+          "start": 320.62,
+          "end": 320.8,
+          "probability": 0.8511
+        },
+        {
+          "word": "mold",
+          "start": 320.8,
+          "end": 321.06,
+          "probability": 0.8638
+        },
+        {
+          "word": "service",
+          "start": 321.06,
+          "end": 321.42,
+          "probability": 0.708
+        },
+        {
+          "word": "kind",
+          "start": 321.42,
+          "end": 321.72,
+          "probability": 0.8892
+        },
+        {
+          "word": "association.",
+          "start": 321.72,
+          "end": 322.38,
+          "probability": 0.9556
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 323.12,
+      "end": 324.38,
+      "start_formatted": "00:05:23.120",
+      "end_formatted": "00:05:24.380",
+      "text": "I'll save the file.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 323.12,
+          "end": 323.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "save",
+          "start": 323.68,
+          "end": 323.88,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 323.88,
+          "end": 324.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "file.",
+          "start": 324.02,
+          "end": 324.38,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "start": 328.84,
+      "end": 330.88,
+      "start_formatted": "00:05:28.840",
+      "end_formatted": "00:05:30.880",
+      "text": "This time, I'll close the editor.",
+      "words": [
+        {
+          "word": "This",
+          "start": 328.84,
+          "end": 329.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "time,",
+          "start": 329.4,
+          "end": 329.76,
+          "probability": 0.999
+        },
+        {
+          "word": "I'll",
+          "start": 329.94,
+          "end": 330.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "close",
+          "start": 330.2,
+          "end": 330.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 330.44,
+          "end": 330.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "editor.",
+          "start": 330.6,
+          "end": 330.88,
+          "probability": 0.9502
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "start": 332.38,
+      "end": 334.58,
+      "start_formatted": "00:05:32.380",
+      "end_formatted": "00:05:34.580",
+      "text": "Now I'll start the Claim Center server.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 332.38,
+          "end": 332.94,
+          "probability": 0.9849
+        },
+        {
+          "word": "I'll",
+          "start": 332.94,
+          "end": 333.18,
+          "probability": 0.9404
+        },
+        {
+          "word": "start",
+          "start": 333.18,
+          "end": 333.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 333.42,
+          "end": 333.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "Claim",
+          "start": 333.58,
+          "end": 333.84,
+          "probability": 0.8145
+        },
+        {
+          "word": "Center",
+          "start": 333.84,
+          "end": 334.18,
+          "probability": 0.6841
+        },
+        {
+          "word": "server.",
+          "start": 334.18,
+          "end": 334.58,
+          "probability": 0.7734
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "start": 335.86,
+      "end": 339.94,
+      "start_formatted": "00:05:35.860",
+      "end_formatted": "00:05:39.940",
+      "text": "Now, I'll log in as the system administrator to import the new services.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 335.86,
+          "end": 336.5,
+          "probability": 0.9292
+        },
+        {
+          "word": "I'll",
+          "start": 336.7,
+          "end": 337.0,
+          "probability": 0.9678
+        },
+        {
+          "word": "log",
+          "start": 337.0,
+          "end": 337.2,
+          "probability": 0.7715
+        },
+        {
+          "word": "in",
+          "start": 337.2,
+          "end": 337.3,
+          "probability": 0.9878
+        },
+        {
+          "word": "as",
+          "start": 337.3,
+          "end": 337.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 337.42,
+          "end": 337.54,
+          "probability": 0.9917
+        },
+        {
+          "word": "system",
+          "start": 337.54,
+          "end": 337.86,
+          "probability": 0.8608
+        },
+        {
+          "word": "administrator",
+          "start": 337.86,
+          "end": 338.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 338.48,
+          "end": 338.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "import",
+          "start": 338.76,
+          "end": 339.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 339.12,
+          "end": 339.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 339.28,
+          "end": 339.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "services.",
+          "start": 339.44,
+          "end": 339.94,
+          "probability": 0.981
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "start": 348.16,
+      "end": 354.0,
+      "start_formatted": "00:05:48.160",
+      "end_formatted": "00:05:54.000",
+      "text": "On the Administration page, I click Utilities in the sidebar.",
+      "words": [
+        {
+          "word": "On",
+          "start": 348.16,
+          "end": 348.8,
+          "probability": 0.9771
+        },
+        {
+          "word": "the",
+          "start": 348.8,
+          "end": 348.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "Administration",
+          "start": 348.92,
+          "end": 349.46,
+          "probability": 0.4202
+        },
+        {
+          "word": "page,",
+          "start": 349.46,
+          "end": 350.08,
+          "probability": 0.9614
+        },
+        {
+          "word": "I",
+          "start": 350.36,
+          "end": 352.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "click",
+          "start": 352.28,
+          "end": 352.6,
+          "probability": 0.9912
+        },
+        {
+          "word": "Utilities",
+          "start": 352.6,
+          "end": 353.2,
+          "probability": 0.9316
+        },
+        {
+          "word": "in",
+          "start": 353.2,
+          "end": 353.38,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 353.38,
+          "end": 353.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "sidebar.",
+          "start": 353.48,
+          "end": 354.0,
+          "probability": 0.9668
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "start": 354.24,
+      "end": 356.36,
+      "start_formatted": "00:05:54.240",
+      "end_formatted": "00:05:56.360",
+      "text": "The Import Data screen is displayed.",
+      "words": [
+        {
+          "word": "The",
+          "start": 354.24,
+          "end": 354.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "Import",
+          "start": 354.64,
+          "end": 355.04,
+          "probability": 0.8809
+        },
+        {
+          "word": "Data",
+          "start": 355.04,
+          "end": 355.3,
+          "probability": 0.9297
+        },
+        {
+          "word": "screen",
+          "start": 355.3,
+          "end": 355.66,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 355.66,
+          "end": 355.88,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed.",
+          "start": 355.88,
+          "end": 356.36,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "start": 356.36,
+      "end": 359.74,
+      "start_formatted": "00:05:56.360",
+      "end_formatted": "00:05:59.740",
+      "text": "I browse to find the service data files I edited.",
+      "words": [
+        {
+          "word": "I",
+          "start": 356.36,
+          "end": 357.24,
+          "probability": 0.9517
+        },
+        {
+          "word": "browse",
+          "start": 357.24,
+          "end": 357.58,
+          "probability": 0.9824
+        },
+        {
+          "word": "to",
+          "start": 357.58,
+          "end": 357.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "find",
+          "start": 357.76,
+          "end": 357.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 357.98,
+          "end": 358.12,
+          "probability": 0.998
+        },
+        {
+          "word": "service",
+          "start": 358.12,
+          "end": 358.44,
+          "probability": 0.9175
+        },
+        {
+          "word": "data",
+          "start": 358.44,
+          "end": 358.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "files",
+          "start": 358.72,
+          "end": 359.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 359.12,
+          "end": 359.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "edited.",
+          "start": 359.36,
+          "end": 359.74,
+          "probability": 0.9365
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "start": 360.26,
+      "end": 362.7,
+      "start_formatted": "00:06:00.260",
+      "end_formatted": "00:06:02.700",
+      "text": "The service tree must be imported first.",
+      "words": [
+        {
+          "word": "The",
+          "start": 360.26,
+          "end": 360.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "service",
+          "start": 360.78,
+          "end": 361.16,
+          "probability": 0.8369
+        },
+        {
+          "word": "tree",
+          "start": 361.16,
+          "end": 361.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "must",
+          "start": 361.4,
+          "end": 361.66,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 361.66,
+          "end": 361.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "imported",
+          "start": 361.84,
+          "end": 362.24,
+          "probability": 0.998
+        },
+        {
+          "word": "first.",
+          "start": 362.24,
+          "end": 362.7,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "start": 366.34,
+      "end": 369.28,
+      "start_formatted": "00:06:06.340",
+      "end_formatted": "00:06:09.280",
+      "text": "Since no conflicts are found, I click Finish.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 366.34,
+          "end": 366.98,
+          "probability": 0.9922
+        },
+        {
+          "word": "no",
+          "start": 366.98,
+          "end": 367.18,
+          "probability": 0.9912
+        },
+        {
+          "word": "conflicts",
+          "start": 367.18,
+          "end": 367.62,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 367.62,
+          "end": 367.86,
+          "probability": 0.999
+        },
+        {
+          "word": "found,",
+          "start": 367.86,
+          "end": 368.26,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 368.48,
+          "end": 368.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "click",
+          "start": 368.68,
+          "end": 368.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Finish.",
+          "start": 368.96,
+          "end": 369.28,
+          "probability": 0.4988
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "start": 369.88,
+      "end": 375.12,
+      "start_formatted": "00:06:09.880",
+      "end_formatted": "00:06:15.120",
+      "text": "The file was successfully imported, so I click Utilities to refresh the Data Import screen.",
+      "words": [
+        {
+          "word": "The",
+          "start": 369.88,
+          "end": 370.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "file",
+          "start": 370.44,
+          "end": 370.68,
+          "probability": 0.998
+        },
+        {
+          "word": "was",
+          "start": 370.68,
+          "end": 370.9,
+          "probability": 0.998
+        },
+        {
+          "word": "successfully",
+          "start": 370.9,
+          "end": 371.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "imported,",
+          "start": 371.46,
+          "end": 371.98,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 372.26,
+          "end": 372.5,
+          "probability": 0.9883
+        },
+        {
+          "word": "I",
+          "start": 372.5,
+          "end": 372.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "click",
+          "start": 372.62,
+          "end": 372.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "Utilities",
+          "start": 372.86,
+          "end": 373.44,
+          "probability": 0.9805
+        },
+        {
+          "word": "to",
+          "start": 373.44,
+          "end": 373.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "refresh",
+          "start": 373.64,
+          "end": 373.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 373.96,
+          "end": 374.16,
+          "probability": 0.998
+        },
+        {
+          "word": "Data",
+          "start": 374.16,
+          "end": 374.36,
+          "probability": 0.5342
+        },
+        {
+          "word": "Import",
+          "start": 374.36,
+          "end": 374.72,
+          "probability": 0.8232
+        },
+        {
+          "word": "screen.",
+          "start": 374.72,
+          "end": 375.12,
+          "probability": 0.9697
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "start": 375.98,
+      "end": 378.74,
+      "start_formatted": "00:06:15.980",
+      "end_formatted": "00:06:18.740",
+      "text": "Now I will import the service details file.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 375.98,
+          "end": 376.54,
+          "probability": 0.9116
+        },
+        {
+          "word": "I",
+          "start": 376.54,
+          "end": 376.72,
+          "probability": 0.9009
+        },
+        {
+          "word": "will",
+          "start": 376.72,
+          "end": 376.86,
+          "probability": 0.9907
+        },
+        {
+          "word": "import",
+          "start": 376.86,
+          "end": 377.22,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 377.22,
+          "end": 377.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "service",
+          "start": 377.42,
+          "end": 377.72,
+          "probability": 0.6733
+        },
+        {
+          "word": "details",
+          "start": 377.72,
+          "end": 378.18,
+          "probability": 0.9829
+        },
+        {
+          "word": "file.",
+          "start": 378.18,
+          "end": 378.74,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "start": 387.52,
+      "end": 391.6,
+      "start_formatted": "00:06:27.520",
+      "end_formatted": "00:06:31.600",
+      "text": "Now, to test my work, I navigate to a known homeowner's claim.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 387.52,
+          "end": 388.08,
+          "probability": 0.937
+        },
+        {
+          "word": "to",
+          "start": 388.26,
+          "end": 388.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "test",
+          "start": 388.5,
+          "end": 388.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "my",
+          "start": 388.76,
+          "end": 388.98,
+          "probability": 0.999
+        },
+        {
+          "word": "work,",
+          "start": 388.98,
+          "end": 389.34,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 389.52,
+          "end": 389.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "navigate",
+          "start": 389.72,
+          "end": 390.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 390.08,
+          "end": 390.34,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 390.34,
+          "end": 390.48,
+          "probability": 0.9888
+        },
+        {
+          "word": "known",
+          "start": 390.48,
+          "end": 390.66,
+          "probability": 0.9414
+        },
+        {
+          "word": "homeowner's",
+          "start": 390.66,
+          "end": 391.3,
+          "probability": 0.9482
+        },
+        {
+          "word": "claim.",
+          "start": 391.3,
+          "end": 391.6,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "start": 399.62,
+      "end": 403.46,
+      "start_formatted": "00:06:39.620",
+      "end_formatted": "00:06:43.460",
+      "text": "From the Actions menu, I begin to create a new service request.",
+      "words": [
+        {
+          "word": "From",
+          "start": 399.62,
+          "end": 400.18,
+          "probability": 0.8916
+        },
+        {
+          "word": "the",
+          "start": 400.18,
+          "end": 400.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "Actions",
+          "start": 400.32,
+          "end": 400.78,
+          "probability": 0.8477
+        },
+        {
+          "word": "menu,",
+          "start": 400.78,
+          "end": 401.1,
+          "probability": 0.9419
+        },
+        {
+          "word": "I",
+          "start": 401.38,
+          "end": 401.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "begin",
+          "start": 401.6,
+          "end": 401.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 401.86,
+          "end": 402.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "create",
+          "start": 402.02,
+          "end": 402.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 402.3,
+          "end": 402.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "new",
+          "start": 402.46,
+          "end": 402.6,
+          "probability": 0.9927
+        },
+        {
+          "word": "service",
+          "start": 402.6,
+          "end": 402.98,
+          "probability": 0.8477
+        },
+        {
+          "word": "request.",
+          "start": 402.98,
+          "end": 403.46,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "start": 406.76,
+      "end": 409.12,
+      "start_formatted": "00:06:46.760",
+      "end_formatted": "00:06:49.120",
+      "text": "I look at the list of services to add.",
+      "words": [
+        {
+          "word": "I",
+          "start": 406.76,
+          "end": 407.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "look",
+          "start": 407.32,
+          "end": 407.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "at",
+          "start": 407.52,
+          "end": 407.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 407.64,
+          "end": 407.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "list",
+          "start": 407.74,
+          "end": 407.96,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 407.96,
+          "end": 408.14,
+          "probability": 0.999
+        },
+        {
+          "word": "services",
+          "start": 408.14,
+          "end": 408.54,
+          "probability": 0.9448
+        },
+        {
+          "word": "to",
+          "start": 408.54,
+          "end": 408.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "add.",
+          "start": 408.82,
+          "end": 409.12,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "start": 410.58,
+      "end": 413.86,
+      "start_formatted": "00:06:50.580",
+      "end_formatted": "00:06:53.860",
+      "text": "And here I see the services I added displayed correctly.",
+      "words": [
+        {
+          "word": "And",
+          "start": 410.58,
+          "end": 411.3,
+          "probability": 0.897
+        },
+        {
+          "word": "here",
+          "start": 411.3,
+          "end": 411.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 411.46,
+          "end": 411.6,
+          "probability": 0.9912
+        },
+        {
+          "word": "see",
+          "start": 411.6,
+          "end": 411.78,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 411.78,
+          "end": 411.94,
+          "probability": 0.998
+        },
+        {
+          "word": "services",
+          "start": 411.94,
+          "end": 412.34,
+          "probability": 0.9736
+        },
+        {
+          "word": "I",
+          "start": 412.34,
+          "end": 412.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "added",
+          "start": 412.58,
+          "end": 412.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "displayed",
+          "start": 412.84,
+          "end": 413.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "correctly.",
+          "start": 413.26,
+          "end": 413.86,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "start": 414.22,
+      "end": 416.84,
+      "start_formatted": "00:06:54.220",
+      "end_formatted": "00:06:56.840",
+      "text": "This concludes the configuring services demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 414.22,
+          "end": 414.78,
+          "probability": 0.999
+        },
+        {
+          "word": "concludes",
+          "start": 414.78,
+          "end": 415.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 415.2,
+          "end": 415.4,
+          "probability": 0.999
+        },
+        {
+          "word": "configuring",
+          "start": 415.4,
+          "end": 415.98,
+          "probability": 0.9834
+        },
+        {
+          "word": "services",
+          "start": 415.98,
+          "end": 416.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "demonstration.",
+          "start": 416.5,
+          "end": 416.84,
+          "probability": 0.9893
+        }
+      ]
+    }
+  ]
+}

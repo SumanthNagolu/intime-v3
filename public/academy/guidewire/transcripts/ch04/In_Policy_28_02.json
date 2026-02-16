@@ -1,0 +1,1513 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_28_02.mp4",
+    "video_stem": "In_Policy_28_02",
+    "duration_seconds": 105.4,
+    "duration_formatted": "00:01:45.400",
+    "segment_count": 12,
+    "word_count": 224,
+    "avg_confidence": 0.9606,
+    "transcription_time_seconds": 12.39,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:39:01.914411"
+  },
+  "full_text": "Security Dictionary is a series of HTML pages that documents the permissions and roles in the application. It is located at policycenter.build.dictionary.security.index.html. There are four categories at the top. Click each category refreshes the list below. An Application Permission Key is a set of one or more system permissions. For example, the Account Create Permission Key represents the system permissions for creating an account. Each Application Permission Key displays the set ofountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount permissions needed to view or edit that page, if any. Next, move to the System Permissions section. System permissions are defined in the TypeList System Permission type. Each system permission lists the roles containing it, and the pages and elements in the user interface that reference the system permission. Next, go to the Roles section. It lists all the roles. Click to open a role. Each role lists the permissions it contains. Keep in mind that the Security Dictionary is a series of static HTML pages. If changes are made to the permissions in a given role, the Security Dictionary must be regenerated to reflect those changes. The Security Dictionary is a useful tool for both business and technical users. It can be used to check where a permission is applied, on which page, the UI element, and the permissions a role contains. This is the end of demonstration of Security Dictionary.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.58,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.580",
+      "text": "Security Dictionary is a series of HTML pages that documents the permissions and roles in the application. It is located at policycenter.build.dictionary.security.index.html. There are four categories at the top. Click each category refreshes the list below. An Application Permission Key is a set of one or more system permissions. For example, the Account Create Permission Key represents the system permissions for creating an account.",
+      "words": [
+        {
+          "word": "Security",
+          "start": 0.0,
+          "end": 1.2,
+          "probability": 0.9775
+        },
+        {
+          "word": "Dictionary",
+          "start": 1.2,
+          "end": 1.84,
+          "probability": 0.9536
+        },
+        {
+          "word": "is",
+          "start": 1.84,
+          "end": 2.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 2.0,
+          "end": 2.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "series",
+          "start": 2.1,
+          "end": 2.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 2.38,
+          "end": 2.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "HTML",
+          "start": 2.56,
+          "end": 3.1,
+          "probability": 0.98
+        },
+        {
+          "word": "pages",
+          "start": 3.1,
+          "end": 3.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 3.7,
+          "end": 4.26,
+          "probability": 0.665
+        },
+        {
+          "word": "documents",
+          "start": 4.26,
+          "end": 4.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 4.72,
+          "end": 5.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "permissions",
+          "start": 5.0,
+          "end": 5.42,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 5.42,
+          "end": 5.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "roles",
+          "start": 5.68,
+          "end": 5.92,
+          "probability": 0.9878
+        },
+        {
+          "word": "in",
+          "start": 5.92,
+          "end": 6.08,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 6.08,
+          "end": 6.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "application.",
+          "start": 6.18,
+          "end": 6.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "It",
+          "start": 7.16,
+          "end": 7.5,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 7.5,
+          "end": 7.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "located",
+          "start": 7.64,
+          "end": 8.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 8.12,
+          "end": 8.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "policycenter",
+          "start": 8.5,
+          "end": 9.54,
+          "probability": 0.585
+        },
+        {
+          "word": ".build",
+          "start": 9.54,
+          "end": 10.22,
+          "probability": 0.6768
+        },
+        {
+          "word": ".dictionary",
+          "start": 10.22,
+          "end": 11.26,
+          "probability": 0.9873
+        },
+        {
+          "word": ".security",
+          "start": 11.26,
+          "end": 11.96,
+          "probability": 0.9922
+        },
+        {
+          "word": ".index",
+          "start": 11.96,
+          "end": 13.02,
+          "probability": 0.9946
+        },
+        {
+          "word": ".html.",
+          "start": 13.02,
+          "end": 14.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "There",
+          "start": 14.32,
+          "end": 14.74,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 14.74,
+          "end": 14.9,
+          "probability": 1.0
+        },
+        {
+          "word": "four",
+          "start": 14.9,
+          "end": 15.08,
+          "probability": 0.9585
+        },
+        {
+          "word": "categories",
+          "start": 15.08,
+          "end": 15.64,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 15.64,
+          "end": 15.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 15.86,
+          "end": 15.96,
+          "probability": 1.0
+        },
+        {
+          "word": "top.",
+          "start": 15.96,
+          "end": 16.26,
+          "probability": 1.0
+        },
+        {
+          "word": "Click",
+          "start": 16.56,
+          "end": 16.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "each",
+          "start": 16.94,
+          "end": 17.18,
+          "probability": 0.8574
+        },
+        {
+          "word": "category",
+          "start": 17.18,
+          "end": 17.7,
+          "probability": 0.999
+        },
+        {
+          "word": "refreshes",
+          "start": 17.7,
+          "end": 18.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 18.38,
+          "end": 18.54,
+          "probability": 1.0
+        },
+        {
+          "word": "list",
+          "start": 18.54,
+          "end": 18.8,
+          "probability": 1.0
+        },
+        {
+          "word": "below.",
+          "start": 18.8,
+          "end": 19.12,
+          "probability": 0.999
+        },
+        {
+          "word": "An",
+          "start": 19.56,
+          "end": 20.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "Application",
+          "start": 20.2,
+          "end": 20.76,
+          "probability": 0.5396
+        },
+        {
+          "word": "Permission",
+          "start": 20.76,
+          "end": 21.32,
+          "probability": 0.9648
+        },
+        {
+          "word": "Key",
+          "start": 21.32,
+          "end": 21.54,
+          "probability": 0.96
+        },
+        {
+          "word": "is",
+          "start": 21.54,
+          "end": 21.74,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 21.74,
+          "end": 21.88,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 21.88,
+          "end": 22.04,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 22.04,
+          "end": 22.14,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 22.14,
+          "end": 22.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 22.3,
+          "end": 22.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "more",
+          "start": 22.42,
+          "end": 22.62,
+          "probability": 1.0
+        },
+        {
+          "word": "system",
+          "start": 22.62,
+          "end": 22.98,
+          "probability": 0.9688
+        },
+        {
+          "word": "permissions.",
+          "start": 22.98,
+          "end": 23.44,
+          "probability": 1.0
+        },
+        {
+          "word": "For",
+          "start": 24.04,
+          "end": 24.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 24.32,
+          "end": 24.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 25.18,
+          "end": 25.34,
+          "probability": 0.999
+        },
+        {
+          "word": "Account",
+          "start": 25.34,
+          "end": 25.62,
+          "probability": 0.8853
+        },
+        {
+          "word": "Create",
+          "start": 25.62,
+          "end": 26.02,
+          "probability": 0.9414
+        },
+        {
+          "word": "Permission",
+          "start": 26.02,
+          "end": 26.52,
+          "probability": 0.9893
+        },
+        {
+          "word": "Key",
+          "start": 26.52,
+          "end": 26.74,
+          "probability": 0.98
+        },
+        {
+          "word": "represents",
+          "start": 26.74,
+          "end": 27.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 27.26,
+          "end": 27.56,
+          "probability": 1.0
+        },
+        {
+          "word": "system",
+          "start": 27.56,
+          "end": 27.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "permissions",
+          "start": 27.88,
+          "end": 28.32,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 28.32,
+          "end": 28.62,
+          "probability": 1.0
+        },
+        {
+          "word": "creating",
+          "start": 28.62,
+          "end": 29.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 29.04,
+          "end": 29.22,
+          "probability": 1.0
+        },
+        {
+          "word": "account.",
+          "start": 29.22,
+          "end": 29.58,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.58,
+      "end": 50.74,
+      "start_formatted": "00:00:29.580",
+      "end_formatted": "00:00:50.740",
+      "text": "Each Application Permission Key displays the set ofountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "Each",
+          "start": 29.58,
+          "end": 30.78,
+          "probability": 0.8833
+        },
+        {
+          "word": "Application",
+          "start": 30.78,
+          "end": 31.38,
+          "probability": 0.2013
+        },
+        {
+          "word": "Permission",
+          "start": 31.38,
+          "end": 31.92,
+          "probability": 0.8877
+        },
+        {
+          "word": "Key",
+          "start": 31.92,
+          "end": 32.1,
+          "probability": 0.6978
+        },
+        {
+          "word": "displays",
+          "start": 32.1,
+          "end": 32.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 32.5,
+          "end": 32.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "set",
+          "start": 32.8,
+          "end": 33.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "ofountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 33.0,
+          "end": 50.74,
+          "probability": 0.9404
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 50.74,
+      "end": 57.0,
+      "start_formatted": "00:00:50.740",
+      "end_formatted": "00:00:57.000",
+      "text": "permissions needed to view or edit that page, if any. Next, move to the System Permissions section.",
+      "words": [
+        {
+          "word": "permissions",
+          "start": 50.74,
+          "end": 51.26,
+          "probability": 0.5898
+        },
+        {
+          "word": "needed",
+          "start": 51.26,
+          "end": 51.64,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 51.64,
+          "end": 51.8,
+          "probability": 0.999
+        },
+        {
+          "word": "view",
+          "start": 51.8,
+          "end": 52.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "or",
+          "start": 52.14,
+          "end": 52.56,
+          "probability": 0.646
+        },
+        {
+          "word": "edit",
+          "start": 52.56,
+          "end": 52.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 52.8,
+          "end": 53.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "page,",
+          "start": 53.04,
+          "end": 53.46,
+          "probability": 0.998
+        },
+        {
+          "word": "if",
+          "start": 53.6,
+          "end": 53.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "any.",
+          "start": 53.84,
+          "end": 54.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "Next,",
+          "start": 54.46,
+          "end": 54.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "move",
+          "start": 55.16,
+          "end": 55.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 55.48,
+          "end": 55.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 55.62,
+          "end": 55.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "System",
+          "start": 55.74,
+          "end": 56.02,
+          "probability": 0.6147
+        },
+        {
+          "word": "Permissions",
+          "start": 56.02,
+          "end": 56.56,
+          "probability": 0.8125
+        },
+        {
+          "word": "section.",
+          "start": 56.56,
+          "end": 57.0,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 57.66,
+      "end": 63.08,
+      "start_formatted": "00:00:57.660",
+      "end_formatted": "00:01:03.080",
+      "text": "System permissions are defined in the TypeList System Permission type. Each system permission",
+      "words": [
+        {
+          "word": "System",
+          "start": 57.66,
+          "end": 58.3,
+          "probability": 0.9932
+        },
+        {
+          "word": "permissions",
+          "start": 58.3,
+          "end": 58.68,
+          "probability": 0.8579
+        },
+        {
+          "word": "are",
+          "start": 58.68,
+          "end": 59.0,
+          "probability": 0.999
+        },
+        {
+          "word": "defined",
+          "start": 59.0,
+          "end": 59.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 59.34,
+          "end": 59.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 59.52,
+          "end": 59.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "TypeList",
+          "start": 59.62,
+          "end": 60.12,
+          "probability": 0.6221
+        },
+        {
+          "word": "System",
+          "start": 60.12,
+          "end": 60.48,
+          "probability": 0.5166
+        },
+        {
+          "word": "Permission",
+          "start": 60.48,
+          "end": 60.96,
+          "probability": 0.7998
+        },
+        {
+          "word": "type.",
+          "start": 60.96,
+          "end": 61.26,
+          "probability": 0.7036
+        },
+        {
+          "word": "Each",
+          "start": 61.7,
+          "end": 62.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "system",
+          "start": 62.32,
+          "end": 62.66,
+          "probability": 0.8428
+        },
+        {
+          "word": "permission",
+          "start": 62.66,
+          "end": 63.08,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 63.08,
+      "end": 67.9,
+      "start_formatted": "00:01:03.080",
+      "end_formatted": "00:01:07.900",
+      "text": "lists the roles containing it, and the pages and elements in the user interface that reference the",
+      "words": [
+        {
+          "word": "lists",
+          "start": 63.08,
+          "end": 63.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 63.42,
+          "end": 63.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "roles",
+          "start": 63.6,
+          "end": 63.84,
+          "probability": 0.9893
+        },
+        {
+          "word": "containing",
+          "start": 63.84,
+          "end": 64.32,
+          "probability": 0.999
+        },
+        {
+          "word": "it,",
+          "start": 64.32,
+          "end": 64.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 64.72,
+          "end": 64.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 64.96,
+          "end": 65.06,
+          "probability": 0.999
+        },
+        {
+          "word": "pages",
+          "start": 65.06,
+          "end": 65.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "and",
+          "start": 65.4,
+          "end": 65.6,
+          "probability": 0.9932
+        },
+        {
+          "word": "elements",
+          "start": 65.6,
+          "end": 66.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 66.0,
+          "end": 66.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 66.18,
+          "end": 66.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 66.28,
+          "end": 66.58,
+          "probability": 0.8379
+        },
+        {
+          "word": "interface",
+          "start": 66.58,
+          "end": 67.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "that",
+          "start": 67.08,
+          "end": 67.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "reference",
+          "start": 67.34,
+          "end": 67.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 67.7,
+          "end": 67.9,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 67.9,
+      "end": 74.7,
+      "start_formatted": "00:01:07.900",
+      "end_formatted": "00:01:14.700",
+      "text": "system permission. Next, go to the Roles section. It lists all the roles. Click to open a role.",
+      "words": [
+        {
+          "word": "system",
+          "start": 67.9,
+          "end": 68.24,
+          "probability": 0.9858
+        },
+        {
+          "word": "permission.",
+          "start": 68.24,
+          "end": 68.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "Next,",
+          "start": 69.16,
+          "end": 69.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "go",
+          "start": 69.92,
+          "end": 70.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 70.12,
+          "end": 70.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 70.24,
+          "end": 70.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "Roles",
+          "start": 70.4,
+          "end": 70.74,
+          "probability": 0.9004
+        },
+        {
+          "word": "section.",
+          "start": 70.74,
+          "end": 71.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "It",
+          "start": 71.54,
+          "end": 72.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "lists",
+          "start": 72.16,
+          "end": 72.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "all",
+          "start": 72.4,
+          "end": 72.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 72.64,
+          "end": 72.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "roles.",
+          "start": 72.78,
+          "end": 73.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "Click",
+          "start": 73.5,
+          "end": 73.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 73.86,
+          "end": 74.08,
+          "probability": 0.978
+        },
+        {
+          "word": "open",
+          "start": 74.08,
+          "end": 74.3,
+          "probability": 0.8198
+        },
+        {
+          "word": "a",
+          "start": 74.3,
+          "end": 74.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "role.",
+          "start": 74.48,
+          "end": 74.7,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 75.72,
+      "end": 81.04,
+      "start_formatted": "00:01:15.720",
+      "end_formatted": "00:01:21.040",
+      "text": "Each role lists the permissions it contains. Keep in mind that the Security Dictionary is a",
+      "words": [
+        {
+          "word": "Each",
+          "start": 75.72,
+          "end": 76.22,
+          "probability": 0.9854
+        },
+        {
+          "word": "role",
+          "start": 76.22,
+          "end": 76.44,
+          "probability": 0.9292
+        },
+        {
+          "word": "lists",
+          "start": 76.44,
+          "end": 76.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 76.74,
+          "end": 76.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "permissions",
+          "start": 76.9,
+          "end": 77.32,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 77.32,
+          "end": 77.56,
+          "probability": 0.999
+        },
+        {
+          "word": "contains.",
+          "start": 77.56,
+          "end": 78.06,
+          "probability": 1.0
+        },
+        {
+          "word": "Keep",
+          "start": 78.52,
+          "end": 79.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 79.02,
+          "end": 79.2,
+          "probability": 1.0
+        },
+        {
+          "word": "mind",
+          "start": 79.2,
+          "end": 79.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 79.38,
+          "end": 79.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 79.56,
+          "end": 79.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "Security",
+          "start": 79.68,
+          "end": 80.04,
+          "probability": 0.6069
+        },
+        {
+          "word": "Dictionary",
+          "start": 80.04,
+          "end": 80.7,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 80.7,
+          "end": 80.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 80.92,
+          "end": 81.04,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 81.04,
+      "end": 86.36,
+      "start_formatted": "00:01:21.040",
+      "end_formatted": "00:01:26.360",
+      "text": "series of static HTML pages. If changes are made to the permissions in a given role,",
+      "words": [
+        {
+          "word": "series",
+          "start": 81.04,
+          "end": 81.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 81.3,
+          "end": 81.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "static",
+          "start": 81.5,
+          "end": 81.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "HTML",
+          "start": 81.92,
+          "end": 82.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "pages.",
+          "start": 82.58,
+          "end": 83.2,
+          "probability": 0.999
+        },
+        {
+          "word": "If",
+          "start": 83.62,
+          "end": 83.98,
+          "probability": 0.999
+        },
+        {
+          "word": "changes",
+          "start": 83.98,
+          "end": 84.36,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 84.36,
+          "end": 84.6,
+          "probability": 1.0
+        },
+        {
+          "word": "made",
+          "start": 84.6,
+          "end": 84.8,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 84.8,
+          "end": 84.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 84.94,
+          "end": 85.04,
+          "probability": 0.998
+        },
+        {
+          "word": "permissions",
+          "start": 85.04,
+          "end": 85.46,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 85.46,
+          "end": 85.7,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 85.7,
+          "end": 85.8,
+          "probability": 1.0
+        },
+        {
+          "word": "given",
+          "start": 85.8,
+          "end": 86.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "role,",
+          "start": 86.0,
+          "end": 86.36,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 86.62,
+      "end": 90.3,
+      "start_formatted": "00:01:26.620",
+      "end_formatted": "00:01:30.300",
+      "text": "the Security Dictionary must be regenerated to reflect those changes.",
+      "words": [
+        {
+          "word": "the",
+          "start": 86.62,
+          "end": 86.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Security",
+          "start": 86.8,
+          "end": 87.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Dictionary",
+          "start": 87.18,
+          "end": 87.86,
+          "probability": 1.0
+        },
+        {
+          "word": "must",
+          "start": 87.86,
+          "end": 88.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 88.1,
+          "end": 88.26,
+          "probability": 1.0
+        },
+        {
+          "word": "regenerated",
+          "start": 88.26,
+          "end": 88.94,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 88.94,
+          "end": 89.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "reflect",
+          "start": 89.12,
+          "end": 89.52,
+          "probability": 1.0
+        },
+        {
+          "word": "those",
+          "start": 89.52,
+          "end": 89.82,
+          "probability": 0.999
+        },
+        {
+          "word": "changes.",
+          "start": 89.82,
+          "end": 90.3,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 90.76,
+      "end": 95.3,
+      "start_formatted": "00:01:30.760",
+      "end_formatted": "00:01:35.300",
+      "text": "The Security Dictionary is a useful tool for both business and technical users.",
+      "words": [
+        {
+          "word": "The",
+          "start": 90.76,
+          "end": 91.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "Security",
+          "start": 91.26,
+          "end": 91.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "Dictionary",
+          "start": 91.68,
+          "end": 92.34,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 92.34,
+          "end": 92.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 92.52,
+          "end": 92.62,
+          "probability": 0.999
+        },
+        {
+          "word": "useful",
+          "start": 92.62,
+          "end": 92.98,
+          "probability": 1.0
+        },
+        {
+          "word": "tool",
+          "start": 92.98,
+          "end": 93.26,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 93.26,
+          "end": 93.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "both",
+          "start": 93.5,
+          "end": 93.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "business",
+          "start": 93.74,
+          "end": 94.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "and",
+          "start": 94.1,
+          "end": 94.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "technical",
+          "start": 94.34,
+          "end": 94.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "users.",
+          "start": 94.74,
+          "end": 95.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 95.56,
+      "end": 100.38,
+      "start_formatted": "00:01:35.560",
+      "end_formatted": "00:01:40.380",
+      "text": "It can be used to check where a permission is applied, on which page, the UI element,",
+      "words": [
+        {
+          "word": "It",
+          "start": 95.56,
+          "end": 95.96,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 95.96,
+          "end": 96.1,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 96.1,
+          "end": 96.24,
+          "probability": 1.0
+        },
+        {
+          "word": "used",
+          "start": 96.24,
+          "end": 96.46,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 96.46,
+          "end": 96.62,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 96.62,
+          "end": 96.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "where",
+          "start": 96.84,
+          "end": 97.04,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 97.04,
+          "end": 97.18,
+          "probability": 0.999
+        },
+        {
+          "word": "permission",
+          "start": 97.18,
+          "end": 97.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 97.52,
+          "end": 97.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "applied,",
+          "start": 97.76,
+          "end": 98.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 98.42,
+          "end": 98.62,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 98.62,
+          "end": 98.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "page,",
+          "start": 98.86,
+          "end": 99.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 99.42,
+          "end": 99.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "UI",
+          "start": 99.64,
+          "end": 99.9,
+          "probability": 0.9722
+        },
+        {
+          "word": "element,",
+          "start": 99.9,
+          "end": 100.38,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 100.38,
+      "end": 105.4,
+      "start_formatted": "00:01:40.380",
+      "end_formatted": "00:01:45.400",
+      "text": "and the permissions a role contains. This is the end of demonstration of Security Dictionary.",
+      "words": [
+        {
+          "word": "and",
+          "start": 100.38,
+          "end": 100.78,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 100.78,
+          "end": 100.9,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions",
+          "start": 100.9,
+          "end": 101.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 101.3,
+          "end": 101.52,
+          "probability": 0.9854
+        },
+        {
+          "word": "role",
+          "start": 101.52,
+          "end": 101.66,
+          "probability": 0.8047
+        },
+        {
+          "word": "contains.",
+          "start": 101.66,
+          "end": 102.2,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 102.52,
+          "end": 103.16,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 103.16,
+          "end": 103.28,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 103.28,
+          "end": 103.4,
+          "probability": 1.0
+        },
+        {
+          "word": "end",
+          "start": 103.4,
+          "end": 103.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 103.58,
+          "end": 103.72,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 103.72,
+          "end": 104.18,
+          "probability": 0.9248
+        },
+        {
+          "word": "of",
+          "start": 104.18,
+          "end": 104.52,
+          "probability": 1.0
+        },
+        {
+          "word": "Security",
+          "start": 104.52,
+          "end": 104.94,
+          "probability": 0.1364
+        },
+        {
+          "word": "Dictionary.",
+          "start": 104.94,
+          "end": 105.4,
+          "probability": 0.9961
+        }
+      ]
+    }
+  ]
+}

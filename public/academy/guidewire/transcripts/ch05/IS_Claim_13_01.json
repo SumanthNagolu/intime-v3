@@ -1,0 +1,7274 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_13_01.mp4",
+    "video_stem": "IS_Claim_13_01",
+    "duration_seconds": 376.22,
+    "duration_formatted": "00:06:16.220",
+    "segment_count": 80,
+    "word_count": 1075,
+    "avg_confidence": 0.898,
+    "transcription_time_seconds": 29.46,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:55:07.324625"
+  },
+  "full_text": "This demonstration on managing contacts shows how to add contacts to a claim. Examples include adding both person and vendor contacts, which can be local or shared. The process of transferring roles from one contact to another is also covered. Claims Adjuster Andy Applegate logs into ClaimCenter. He locates the Andrew Williams claim in his desktop claims list and opens it. Claims Adjuster Andy has learned that there was a passenger in the vehicle involved in the collision, and he needs to add them to the claim. He navigates to the parties involved screen. Claims Adjuster The passenger is Kayla Marie. The only information he has about her right now is her phone number. To add the passenger to the claim, he clicks on the new contact menu button. Claims Adjuster And selects Person from the options list. He enters her name and mobile phone number into the new person screen. Claims Adjuster In order to save this contact, he must give it at least one role. Claims Adjuster When the new row displays, the related to field defaults to the claim. Claims Adjuster Andy will add the passenger role first, which should be related to the vehicle incident. Claims Adjuster He clicks the related to drop down. Claims Adjuster And selects the vehicle incident from the list. Claims Adjuster Next, he selects passenger from the roles list. Claims Adjuster He adds an additional row to the list view for the second role. Claims Adjuster He selects witness from the roles list, and keeps the default value for the related to field, which is the claim. Claims Adjuster He saves the new contact. Claims Adjuster Andy also found out that Mr. Williams requested that an alternate contact be added to the claim. Claims Adjuster To add another new contact, he clicks the new, contact menu button and selects person from the options list. Claims Adjuster Andy also has only a name and mobile phone number for the alternate contact, and he enters this information into the new person screen. Claims Adjuster He adds a role to the new contact. Claims Adjuster Selecting alternate contact from the list. Claims Adjuster He saves the new alternate contact. Claims Adjuster Mr. Williams also told Andy that he has chosen a vendor to repair his truck. Claims Adjuster Vendors are considered shared contacts because the same vendor can be used on multiple claims. Claims Shared contacts are stored in Contact Manager. Claims Adjuster Andy goes to the address book search screen to locate the auto repair vendor. Claims Adjuster Mr. Williams is going to use Mynake Car Care Center for the repairs to his truck. Claims Adjuster They are located in San Jose, California. Claims Adjuster Andy enters values for the name and city for the search. Claims Adjuster He clicks the search button to find the vendor. Claims Adjuster He selects the record in the search results to add it to the claim. Claims Adjuster The vendor's information displays in the new repair shop screen. Claims Adjuster Andy needs to add a role to the vendor in order to add it to the claim. Claims Adjuster Since the vendor will be repairing the truck, he selects the vehicle incident for the related to field. Claims Adjuster He also selects the role of repair shop. Claims Adjuster He adds a second role because this vendor will provide services for the claim. Claims Adjuster He selects Service vendor from the roles list. Claims Adjuster This role is associated with the claim, so he keeps the default related to value for the role. Claims Adjuster And he saves the new vendor contact. Claims Adjuster Notice that the claim now has 4 claim contacts, 3 persons and 1 vendor. Claims Adjuster Selecting a contact in the list highlights the contact row, and the details for the selected contact display below the list. Claims Adjuster Andy clicks on the row for Alyssa Grace to display her contact details. Claims Adjuster Notice the contact link status message that displays above Alyssa Grace's contact details. Claims Adjuster The fact that this contact is not linked to the address book indicates that it is a local contact, known only to this claim. Claims Adjuster Next, Andy selects another person contact, Cala Marie. Claims Adjuster Notice that this contact is also a local contact and is not linked to the address book. Claims Adjuster The last person contact, Andrew Williams, is also a local contact. Claims Adjuster Finally, Andy selects the vendor contact, Meineke Car Care Center. Claims Adjuster Notice that the link status for this contact indicates it is linked to the address book and is in sync. Claims Adjuster This means that the contact is a shared contact maintained in Contact Manager, also known as the address book. Claims Adjuster When linked contacts are in sync, Claims Adjuster The information in Claims Center matches the information in Contact Manager. Claims Adjuster Andy talks to Mr. Williams again. Claims Adjuster He has now decided that the alternate contact for the claim should be Kayla instead of Alyssa. Claims Adjuster He clicks Kayla Marie in the list of contacts. Claims Adjuster From Kayla's contact record, Andy initiates the transfer of the alternate contact role. Claims Adjuster The transfer role screen displays. Claims Adjuster The existing roles for contact Kayla Marie are listed at the top, followed by a list of other claim contacts and their roles. Claims Adjuster First, Andy selects the Alyssa Grace contact to transfer the role of alternate contact from Alyssa Grace to Kayla Marie. Claims Adjuster Then he clicks the select button. Claims Adjuster Notice that after the Alyssa Grace contact is selected, a message displays stating that she will no longer have any roles on the claim, and a second message identifies the roles Kayla Marie will have after the transfer. Claims Adjuster After reviewing the messages, Andy proceeds with the role transfer. Claims Center displays a final warning message. Kayla Marie will now also have the alternate, contact, role, and Alyssa Grace will no longer be a claim, contact because she will have no roles on the claim. Andy accepts the message to complete the transfer. The role transfer is completed, and Alyssa Grace has been removed from the claim because she has no roles. Kayla Marie now has the alternate, contact, role. Andy logs out of Claims Center. This is the end of a demonstration on managing claim, contact. D-YEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYE ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 15.84,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:15.840",
+      "text": "This demonstration on managing contacts shows how to add contacts to a claim. Examples include adding both person and vendor contacts, which can be local or shared. The process of transferring roles from one contact to another is also covered.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 0.82,
+          "probability": 0.8745
+        },
+        {
+          "word": "demonstration",
+          "start": 0.82,
+          "end": 1.46,
+          "probability": 0.9893
+        },
+        {
+          "word": "on",
+          "start": 1.46,
+          "end": 1.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "managing",
+          "start": 1.86,
+          "end": 2.32,
+          "probability": 0.9004
+        },
+        {
+          "word": "contacts",
+          "start": 2.32,
+          "end": 2.9,
+          "probability": 0.9917
+        },
+        {
+          "word": "shows",
+          "start": 2.9,
+          "end": 3.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "how",
+          "start": 3.32,
+          "end": 3.64,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 3.64,
+          "end": 3.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "add",
+          "start": 3.86,
+          "end": 4.12,
+          "probability": 0.9912
+        },
+        {
+          "word": "contacts",
+          "start": 4.12,
+          "end": 4.68,
+          "probability": 0.9922
+        },
+        {
+          "word": "to",
+          "start": 4.68,
+          "end": 4.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 4.92,
+          "end": 5.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim.",
+          "start": 5.06,
+          "end": 5.38,
+          "probability": 0.9746
+        },
+        {
+          "word": "Examples",
+          "start": 5.8,
+          "end": 6.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "include",
+          "start": 6.44,
+          "end": 6.96,
+          "probability": 0.998
+        },
+        {
+          "word": "adding",
+          "start": 6.96,
+          "end": 7.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "both",
+          "start": 7.26,
+          "end": 7.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "person",
+          "start": 7.54,
+          "end": 7.96,
+          "probability": 0.937
+        },
+        {
+          "word": "and",
+          "start": 7.96,
+          "end": 8.2,
+          "probability": 0.9731
+        },
+        {
+          "word": "vendor",
+          "start": 8.2,
+          "end": 8.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "contacts,",
+          "start": 8.56,
+          "end": 9.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "which",
+          "start": 9.5,
+          "end": 9.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 9.76,
+          "end": 9.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 9.92,
+          "end": 10.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "local",
+          "start": 10.06,
+          "end": 10.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "or",
+          "start": 10.38,
+          "end": 10.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "shared.",
+          "start": 10.66,
+          "end": 11.04,
+          "probability": 0.999
+        },
+        {
+          "word": "The",
+          "start": 11.38,
+          "end": 11.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "process",
+          "start": 11.68,
+          "end": 12.08,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 12.08,
+          "end": 12.32,
+          "probability": 1.0
+        },
+        {
+          "word": "transferring",
+          "start": 12.32,
+          "end": 12.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "roles",
+          "start": 12.8,
+          "end": 13.26,
+          "probability": 0.9922
+        },
+        {
+          "word": "from",
+          "start": 13.26,
+          "end": 13.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 13.52,
+          "end": 13.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact",
+          "start": 13.86,
+          "end": 14.32,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 14.32,
+          "end": 14.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "another",
+          "start": 14.54,
+          "end": 14.84,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 14.84,
+          "end": 15.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 15.06,
+          "end": 15.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "covered.",
+          "start": 15.4,
+          "end": 15.84,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 16.72,
+      "end": 25.34,
+      "start_formatted": "00:00:16.720",
+      "end_formatted": "00:00:25.340",
+      "text": "Claims Adjuster Andy Applegate logs into ClaimCenter. He locates the Andrew Williams claim in his desktop claims list and opens it.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 16.72,
+          "end": 17.1,
+          "probability": 0.9683
+        },
+        {
+          "word": "Adjuster",
+          "start": 17.1,
+          "end": 17.62,
+          "probability": 0.8086
+        },
+        {
+          "word": "Andy",
+          "start": 17.62,
+          "end": 17.82,
+          "probability": 0.9541
+        },
+        {
+          "word": "Applegate",
+          "start": 17.82,
+          "end": 18.48,
+          "probability": 0.9556
+        },
+        {
+          "word": "logs",
+          "start": 18.48,
+          "end": 18.8,
+          "probability": 0.8589
+        },
+        {
+          "word": "into",
+          "start": 18.8,
+          "end": 19.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 19.08,
+          "end": 19.82,
+          "probability": 0.7397
+        },
+        {
+          "word": "He",
+          "start": 20.22,
+          "end": 20.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "locates",
+          "start": 20.86,
+          "end": 21.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 21.4,
+          "end": 21.56,
+          "probability": 0.999
+        },
+        {
+          "word": "Andrew",
+          "start": 21.56,
+          "end": 21.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "Williams",
+          "start": 21.86,
+          "end": 22.34,
+          "probability": 0.9937
+        },
+        {
+          "word": "claim",
+          "start": 22.34,
+          "end": 22.66,
+          "probability": 0.9399
+        },
+        {
+          "word": "in",
+          "start": 22.66,
+          "end": 22.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 22.96,
+          "end": 23.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "desktop",
+          "start": 23.14,
+          "end": 23.6,
+          "probability": 0.8979
+        },
+        {
+          "word": "claims",
+          "start": 23.6,
+          "end": 24.16,
+          "probability": 0.9702
+        },
+        {
+          "word": "list",
+          "start": 24.16,
+          "end": 24.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 24.5,
+          "end": 24.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "opens",
+          "start": 24.76,
+          "end": 25.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "it.",
+          "start": 25.14,
+          "end": 25.34,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 26.06,
+      "end": 35.2,
+      "start_formatted": "00:00:26.060",
+      "end_formatted": "00:00:35.200",
+      "text": "Claims Adjuster Andy has learned that there was a passenger in the vehicle involved in the collision, and he needs to add them to the claim. He navigates to the parties involved screen.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 26.06,
+          "end": 26.62,
+          "probability": 0.0851
+        },
+        {
+          "word": "Adjuster",
+          "start": 26.62,
+          "end": 26.62,
+          "probability": 0.0492
+        },
+        {
+          "word": "Andy",
+          "start": 26.62,
+          "end": 26.62,
+          "probability": 0.0001
+        },
+        {
+          "word": "has",
+          "start": 26.62,
+          "end": 26.92,
+          "probability": 0.9771
+        },
+        {
+          "word": "learned",
+          "start": 26.92,
+          "end": 27.16,
+          "probability": 0.9849
+        },
+        {
+          "word": "that",
+          "start": 27.16,
+          "end": 27.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "there",
+          "start": 27.34,
+          "end": 27.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "was",
+          "start": 27.54,
+          "end": 27.72,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 27.72,
+          "end": 27.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "passenger",
+          "start": 27.82,
+          "end": 28.26,
+          "probability": 0.9814
+        },
+        {
+          "word": "in",
+          "start": 28.26,
+          "end": 28.52,
+          "probability": 0.9663
+        },
+        {
+          "word": "the",
+          "start": 28.52,
+          "end": 28.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "vehicle",
+          "start": 28.64,
+          "end": 29.06,
+          "probability": 0.999
+        },
+        {
+          "word": "involved",
+          "start": 29.06,
+          "end": 29.58,
+          "probability": 0.9907
+        },
+        {
+          "word": "in",
+          "start": 29.58,
+          "end": 29.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 29.8,
+          "end": 29.9,
+          "probability": 0.9834
+        },
+        {
+          "word": "collision,",
+          "start": 29.9,
+          "end": 30.26,
+          "probability": 0.9927
+        },
+        {
+          "word": "and",
+          "start": 30.5,
+          "end": 30.74,
+          "probability": 0.9912
+        },
+        {
+          "word": "he",
+          "start": 30.74,
+          "end": 30.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "needs",
+          "start": 30.88,
+          "end": 31.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 31.2,
+          "end": 31.34,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 31.34,
+          "end": 31.54,
+          "probability": 0.998
+        },
+        {
+          "word": "them",
+          "start": 31.54,
+          "end": 31.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 31.74,
+          "end": 31.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 31.88,
+          "end": 31.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim.",
+          "start": 31.98,
+          "end": 32.32,
+          "probability": 0.9736
+        },
+        {
+          "word": "He",
+          "start": 32.64,
+          "end": 33.02,
+          "probability": 0.8877
+        },
+        {
+          "word": "navigates",
+          "start": 33.02,
+          "end": 33.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 33.66,
+          "end": 33.84,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 33.84,
+          "end": 33.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "parties",
+          "start": 33.96,
+          "end": 34.3,
+          "probability": 0.501
+        },
+        {
+          "word": "involved",
+          "start": 34.3,
+          "end": 34.72,
+          "probability": 0.96
+        },
+        {
+          "word": "screen.",
+          "start": 34.72,
+          "end": 35.2,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 35.96,
+      "end": 46.68,
+      "start_formatted": "00:00:35.960",
+      "end_formatted": "00:00:46.680",
+      "text": "Claims Adjuster The passenger is Kayla Marie. The only information he has about her right now is her phone number. To add the passenger to the claim, he clicks on the new contact menu button.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 35.96,
+          "end": 36.52,
+          "probability": 0.7319
+        },
+        {
+          "word": "Adjuster",
+          "start": 36.52,
+          "end": 36.52,
+          "probability": 0.4878
+        },
+        {
+          "word": "The",
+          "start": 36.52,
+          "end": 36.52,
+          "probability": 0.9263
+        },
+        {
+          "word": "passenger",
+          "start": 36.52,
+          "end": 37.0,
+          "probability": 0.9604
+        },
+        {
+          "word": "is",
+          "start": 37.0,
+          "end": 37.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "Kayla",
+          "start": 37.24,
+          "end": 37.56,
+          "probability": 0.8062
+        },
+        {
+          "word": "Marie.",
+          "start": 37.56,
+          "end": 37.9,
+          "probability": 0.8804
+        },
+        {
+          "word": "The",
+          "start": 38.26,
+          "end": 38.6,
+          "probability": 0.9404
+        },
+        {
+          "word": "only",
+          "start": 38.6,
+          "end": 38.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "information",
+          "start": 38.86,
+          "end": 39.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "he",
+          "start": 39.46,
+          "end": 39.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "has",
+          "start": 39.76,
+          "end": 39.98,
+          "probability": 0.998
+        },
+        {
+          "word": "about",
+          "start": 39.98,
+          "end": 40.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "her",
+          "start": 40.24,
+          "end": 40.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "right",
+          "start": 40.44,
+          "end": 40.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "now",
+          "start": 40.74,
+          "end": 41.02,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 41.02,
+          "end": 41.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "her",
+          "start": 41.28,
+          "end": 41.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "phone",
+          "start": 41.46,
+          "end": 41.7,
+          "probability": 0.9937
+        },
+        {
+          "word": "number.",
+          "start": 41.7,
+          "end": 42.02,
+          "probability": 0.998
+        },
+        {
+          "word": "To",
+          "start": 42.28,
+          "end": 42.62,
+          "probability": 0.6709
+        },
+        {
+          "word": "add",
+          "start": 42.62,
+          "end": 42.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 42.84,
+          "end": 43.0,
+          "probability": 0.9907
+        },
+        {
+          "word": "passenger",
+          "start": 43.0,
+          "end": 43.46,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 43.46,
+          "end": 43.68,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 43.68,
+          "end": 43.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "claim,",
+          "start": 43.8,
+          "end": 44.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "he",
+          "start": 44.4,
+          "end": 44.64,
+          "probability": 0.9463
+        },
+        {
+          "word": "clicks",
+          "start": 44.64,
+          "end": 44.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "on",
+          "start": 44.96,
+          "end": 45.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 45.22,
+          "end": 45.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "new",
+          "start": 45.34,
+          "end": 45.48,
+          "probability": 0.4707
+        },
+        {
+          "word": "contact",
+          "start": 45.48,
+          "end": 45.88,
+          "probability": 0.9336
+        },
+        {
+          "word": "menu",
+          "start": 45.88,
+          "end": 46.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "button.",
+          "start": 46.32,
+          "end": 46.68,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 47.6,
+      "end": 54.72,
+      "start_formatted": "00:00:47.600",
+      "end_formatted": "00:00:54.720",
+      "text": "Claims Adjuster And selects Person from the options list. He enters her name and mobile phone number into the new person screen.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 47.6,
+          "end": 48.16,
+          "probability": 0.8506
+        },
+        {
+          "word": "Adjuster",
+          "start": 48.16,
+          "end": 48.16,
+          "probability": 0.4885
+        },
+        {
+          "word": "And",
+          "start": 48.16,
+          "end": 48.16,
+          "probability": 0.647
+        },
+        {
+          "word": "selects",
+          "start": 48.16,
+          "end": 48.68,
+          "probability": 0.9868
+        },
+        {
+          "word": "Person",
+          "start": 48.68,
+          "end": 48.96,
+          "probability": 0.262
+        },
+        {
+          "word": "from",
+          "start": 48.96,
+          "end": 49.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "the",
+          "start": 49.22,
+          "end": 49.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "options",
+          "start": 49.38,
+          "end": 49.74,
+          "probability": 0.9482
+        },
+        {
+          "word": "list.",
+          "start": 49.74,
+          "end": 50.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "He",
+          "start": 50.62,
+          "end": 51.16,
+          "probability": 0.3462
+        },
+        {
+          "word": "enters",
+          "start": 51.16,
+          "end": 51.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "her",
+          "start": 51.48,
+          "end": 51.7,
+          "probability": 0.9917
+        },
+        {
+          "word": "name",
+          "start": 51.7,
+          "end": 51.94,
+          "probability": 0.9917
+        },
+        {
+          "word": "and",
+          "start": 51.94,
+          "end": 52.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "mobile",
+          "start": 52.18,
+          "end": 52.52,
+          "probability": 0.9902
+        },
+        {
+          "word": "phone",
+          "start": 52.52,
+          "end": 52.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "number",
+          "start": 52.82,
+          "end": 53.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "into",
+          "start": 53.16,
+          "end": 53.4,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 53.4,
+          "end": 53.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "new",
+          "start": 53.6,
+          "end": 53.8,
+          "probability": 0.9766
+        },
+        {
+          "word": "person",
+          "start": 53.8,
+          "end": 54.28,
+          "probability": 0.8882
+        },
+        {
+          "word": "screen.",
+          "start": 54.28,
+          "end": 54.72,
+          "probability": 0.8184
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 55.72,
+      "end": 59.98,
+      "start_formatted": "00:00:55.720",
+      "end_formatted": "00:00:59.980",
+      "text": "Claims Adjuster In order to save this contact, he must give it at least one role.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 55.72,
+          "end": 56.32,
+          "probability": 0.342
+        },
+        {
+          "word": "Adjuster",
+          "start": 56.32,
+          "end": 56.32,
+          "probability": 0.0213
+        },
+        {
+          "word": "In",
+          "start": 56.32,
+          "end": 56.32,
+          "probability": 0.0233
+        },
+        {
+          "word": "order",
+          "start": 56.32,
+          "end": 56.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "to",
+          "start": 56.62,
+          "end": 56.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "save",
+          "start": 56.82,
+          "end": 57.08,
+          "probability": 0.9722
+        },
+        {
+          "word": "this",
+          "start": 57.08,
+          "end": 57.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "contact,",
+          "start": 57.32,
+          "end": 57.8,
+          "probability": 0.9165
+        },
+        {
+          "word": "he",
+          "start": 58.22,
+          "end": 58.44,
+          "probability": 0.9478
+        },
+        {
+          "word": "must",
+          "start": 58.44,
+          "end": 58.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "give",
+          "start": 58.7,
+          "end": 58.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "it",
+          "start": 58.88,
+          "end": 59.06,
+          "probability": 0.9902
+        },
+        {
+          "word": "at",
+          "start": 59.06,
+          "end": 59.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "least",
+          "start": 59.22,
+          "end": 59.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "one",
+          "start": 59.4,
+          "end": 59.74,
+          "probability": 0.7988
+        },
+        {
+          "word": "role.",
+          "start": 59.74,
+          "end": 59.98,
+          "probability": 0.4971
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 60.68,
+      "end": 65.08,
+      "start_formatted": "00:01:00.680",
+      "end_formatted": "00:01:05.080",
+      "text": "Claims Adjuster When the new row displays, the related to field defaults to the claim.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 60.68,
+          "end": 61.28,
+          "probability": 0.6616
+        },
+        {
+          "word": "Adjuster",
+          "start": 61.28,
+          "end": 61.28,
+          "probability": 0.4497
+        },
+        {
+          "word": "When",
+          "start": 61.28,
+          "end": 61.28,
+          "probability": 0.4888
+        },
+        {
+          "word": "the",
+          "start": 61.28,
+          "end": 61.44,
+          "probability": 0.9805
+        },
+        {
+          "word": "new",
+          "start": 61.44,
+          "end": 61.62,
+          "probability": 0.98
+        },
+        {
+          "word": "row",
+          "start": 61.62,
+          "end": 61.8,
+          "probability": 0.7617
+        },
+        {
+          "word": "displays,",
+          "start": 61.8,
+          "end": 62.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 62.64,
+          "end": 62.92,
+          "probability": 0.9839
+        },
+        {
+          "word": "related",
+          "start": 62.92,
+          "end": 63.38,
+          "probability": 0.501
+        },
+        {
+          "word": "to",
+          "start": 63.38,
+          "end": 63.62,
+          "probability": 0.8682
+        },
+        {
+          "word": "field",
+          "start": 63.62,
+          "end": 63.92,
+          "probability": 0.9619
+        },
+        {
+          "word": "defaults",
+          "start": 63.92,
+          "end": 64.54,
+          "probability": 0.9834
+        },
+        {
+          "word": "to",
+          "start": 64.54,
+          "end": 64.62,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 64.62,
+          "end": 64.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "claim.",
+          "start": 64.72,
+          "end": 65.08,
+          "probability": 0.9565
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 65.38,
+      "end": 70.48,
+      "start_formatted": "00:01:05.380",
+      "end_formatted": "00:01:10.480",
+      "text": "Claims Adjuster Andy will add the passenger role first, which should be related to the vehicle incident.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 65.38,
+          "end": 65.88,
+          "probability": 0.6665
+        },
+        {
+          "word": "Adjuster",
+          "start": 65.88,
+          "end": 65.9,
+          "probability": 0.478
+        },
+        {
+          "word": "Andy",
+          "start": 65.9,
+          "end": 65.9,
+          "probability": 0.606
+        },
+        {
+          "word": "will",
+          "start": 65.9,
+          "end": 66.16,
+          "probability": 0.9868
+        },
+        {
+          "word": "add",
+          "start": 66.16,
+          "end": 66.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 66.42,
+          "end": 66.62,
+          "probability": 0.9834
+        },
+        {
+          "word": "passenger",
+          "start": 66.62,
+          "end": 67.06,
+          "probability": 0.8994
+        },
+        {
+          "word": "role",
+          "start": 67.06,
+          "end": 67.54,
+          "probability": 0.9824
+        },
+        {
+          "word": "first,",
+          "start": 67.54,
+          "end": 68.04,
+          "probability": 0.9814
+        },
+        {
+          "word": "which",
+          "start": 68.26,
+          "end": 68.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "should",
+          "start": 68.54,
+          "end": 68.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 68.72,
+          "end": 68.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "related",
+          "start": 68.88,
+          "end": 69.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 69.22,
+          "end": 69.46,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 69.46,
+          "end": 69.6,
+          "probability": 0.9883
+        },
+        {
+          "word": "vehicle",
+          "start": 69.6,
+          "end": 70.0,
+          "probability": 0.9512
+        },
+        {
+          "word": "incident.",
+          "start": 70.0,
+          "end": 70.48,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 70.86,
+      "end": 73.0,
+      "start_formatted": "00:01:10.860",
+      "end_formatted": "00:01:13.000",
+      "text": "Claims Adjuster He clicks the related to drop down.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 70.86,
+          "end": 71.28,
+          "probability": 0.894
+        },
+        {
+          "word": "Adjuster",
+          "start": 71.28,
+          "end": 71.28,
+          "probability": 0.4717
+        },
+        {
+          "word": "He",
+          "start": 71.28,
+          "end": 71.28,
+          "probability": 0.7378
+        },
+        {
+          "word": "clicks",
+          "start": 71.28,
+          "end": 71.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 71.58,
+          "end": 71.76,
+          "probability": 0.9844
+        },
+        {
+          "word": "related",
+          "start": 71.76,
+          "end": 72.1,
+          "probability": 0.8984
+        },
+        {
+          "word": "to",
+          "start": 72.1,
+          "end": 72.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "drop",
+          "start": 72.32,
+          "end": 72.58,
+          "probability": 0.6748
+        },
+        {
+          "word": "down.",
+          "start": 72.58,
+          "end": 73.0,
+          "probability": 0.6025
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 74.22,
+      "end": 77.22,
+      "start_formatted": "00:01:14.220",
+      "end_formatted": "00:01:17.220",
+      "text": "Claims Adjuster And selects the vehicle incident from the list.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 74.22,
+          "end": 74.82,
+          "probability": 0.9604
+        },
+        {
+          "word": "Adjuster",
+          "start": 74.82,
+          "end": 74.82,
+          "probability": 0.4746
+        },
+        {
+          "word": "And",
+          "start": 74.82,
+          "end": 74.96,
+          "probability": 0.5664
+        },
+        {
+          "word": "selects",
+          "start": 74.96,
+          "end": 75.44,
+          "probability": 0.98
+        },
+        {
+          "word": "the",
+          "start": 75.44,
+          "end": 75.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "vehicle",
+          "start": 75.56,
+          "end": 75.92,
+          "probability": 0.9609
+        },
+        {
+          "word": "incident",
+          "start": 75.92,
+          "end": 76.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "from",
+          "start": 76.4,
+          "end": 76.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 76.72,
+          "end": 76.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "list.",
+          "start": 76.9,
+          "end": 77.22,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 78.76,
+      "end": 82.04,
+      "start_formatted": "00:01:18.760",
+      "end_formatted": "00:01:22.040",
+      "text": "Claims Adjuster Next, he selects passenger from the roles list.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 78.76,
+          "end": 79.36,
+          "probability": 0.98
+        },
+        {
+          "word": "Adjuster",
+          "start": 79.36,
+          "end": 79.5,
+          "probability": 0.6064
+        },
+        {
+          "word": "Next,",
+          "start": 79.5,
+          "end": 79.5,
+          "probability": 0.9473
+        },
+        {
+          "word": "he",
+          "start": 79.74,
+          "end": 79.98,
+          "probability": 0.8955
+        },
+        {
+          "word": "selects",
+          "start": 79.98,
+          "end": 80.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "passenger",
+          "start": 80.42,
+          "end": 80.88,
+          "probability": 0.9478
+        },
+        {
+          "word": "from",
+          "start": 80.88,
+          "end": 81.14,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 81.14,
+          "end": 81.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "roles",
+          "start": 81.3,
+          "end": 81.64,
+          "probability": 0.9214
+        },
+        {
+          "word": "list.",
+          "start": 81.64,
+          "end": 82.04,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 82.04,
+      "end": 85.94,
+      "start_formatted": "00:01:22.040",
+      "end_formatted": "00:01:25.940",
+      "text": "Claims Adjuster He adds an additional row to the list view for the second role.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 82.04,
+          "end": 83.1,
+          "probability": 0.4016
+        },
+        {
+          "word": "Adjuster",
+          "start": 83.1,
+          "end": 83.1,
+          "probability": 0.0236
+        },
+        {
+          "word": "He",
+          "start": 83.1,
+          "end": 83.1,
+          "probability": 0.0218
+        },
+        {
+          "word": "adds",
+          "start": 83.1,
+          "end": 83.38,
+          "probability": 0.9722
+        },
+        {
+          "word": "an",
+          "start": 83.38,
+          "end": 83.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "additional",
+          "start": 83.54,
+          "end": 84.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "row",
+          "start": 84.0,
+          "end": 84.24,
+          "probability": 0.9775
+        },
+        {
+          "word": "to",
+          "start": 84.24,
+          "end": 84.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 84.38,
+          "end": 84.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "list",
+          "start": 84.54,
+          "end": 84.78,
+          "probability": 0.8369
+        },
+        {
+          "word": "view",
+          "start": 84.78,
+          "end": 84.96,
+          "probability": 0.9282
+        },
+        {
+          "word": "for",
+          "start": 84.96,
+          "end": 85.14,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 85.14,
+          "end": 85.3,
+          "probability": 0.998
+        },
+        {
+          "word": "second",
+          "start": 85.3,
+          "end": 85.6,
+          "probability": 0.9619
+        },
+        {
+          "word": "role.",
+          "start": 85.6,
+          "end": 85.94,
+          "probability": 0.8848
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 86.44,
+      "end": 93.16,
+      "start_formatted": "00:01:26.440",
+      "end_formatted": "00:01:33.160",
+      "text": "Claims Adjuster He selects witness from the roles list, and keeps the default value for the related to field, which is the claim.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 86.44,
+          "end": 87.0,
+          "probability": 0.873
+        },
+        {
+          "word": "Adjuster",
+          "start": 87.0,
+          "end": 87.0,
+          "probability": 0.4224
+        },
+        {
+          "word": "He",
+          "start": 87.0,
+          "end": 87.0,
+          "probability": 0.9824
+        },
+        {
+          "word": "selects",
+          "start": 87.0,
+          "end": 87.86,
+          "probability": 0.9893
+        },
+        {
+          "word": "witness",
+          "start": 87.86,
+          "end": 87.86,
+          "probability": 0.27
+        },
+        {
+          "word": "from",
+          "start": 87.86,
+          "end": 88.1,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 88.1,
+          "end": 88.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "roles",
+          "start": 88.26,
+          "end": 88.58,
+          "probability": 0.8975
+        },
+        {
+          "word": "list,",
+          "start": 88.58,
+          "end": 88.98,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 89.14,
+          "end": 89.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "keeps",
+          "start": 89.4,
+          "end": 89.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 89.7,
+          "end": 89.9,
+          "probability": 0.999
+        },
+        {
+          "word": "default",
+          "start": 89.9,
+          "end": 90.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "value",
+          "start": 90.22,
+          "end": 90.66,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 90.66,
+          "end": 90.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 90.9,
+          "end": 91.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "related",
+          "start": 91.06,
+          "end": 91.42,
+          "probability": 0.8848
+        },
+        {
+          "word": "to",
+          "start": 91.42,
+          "end": 91.68,
+          "probability": 0.9526
+        },
+        {
+          "word": "field,",
+          "start": 91.68,
+          "end": 92.08,
+          "probability": 0.9932
+        },
+        {
+          "word": "which",
+          "start": 92.26,
+          "end": 92.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 92.52,
+          "end": 92.68,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 92.68,
+          "end": 92.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "claim.",
+          "start": 92.82,
+          "end": 93.16,
+          "probability": 0.8716
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 94.18,
+      "end": 95.98,
+      "start_formatted": "00:01:34.180",
+      "end_formatted": "00:01:35.980",
+      "text": "Claims Adjuster He saves the new contact.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 94.18,
+          "end": 94.74,
+          "probability": 0.9575
+        },
+        {
+          "word": "Adjuster",
+          "start": 94.74,
+          "end": 94.74,
+          "probability": 0.4619
+        },
+        {
+          "word": "He",
+          "start": 94.74,
+          "end": 94.74,
+          "probability": 0.9653
+        },
+        {
+          "word": "saves",
+          "start": 94.74,
+          "end": 95.12,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 95.12,
+          "end": 95.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "new",
+          "start": 95.32,
+          "end": 95.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "contact.",
+          "start": 95.5,
+          "end": 95.98,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 97.2,
+      "end": 102.9,
+      "start_formatted": "00:01:37.200",
+      "end_formatted": "00:01:42.900",
+      "text": "Claims Adjuster Andy also found out that Mr. Williams requested that an alternate contact be added to the claim.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 97.2,
+          "end": 97.76,
+          "probability": 0.832
+        },
+        {
+          "word": "Adjuster",
+          "start": 97.76,
+          "end": 97.76,
+          "probability": 0.2874
+        },
+        {
+          "word": "Andy",
+          "start": 97.76,
+          "end": 97.84,
+          "probability": 0.8633
+        },
+        {
+          "word": "also",
+          "start": 97.84,
+          "end": 98.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "found",
+          "start": 98.2,
+          "end": 98.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 98.58,
+          "end": 98.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 98.8,
+          "end": 99.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "Mr.",
+          "start": 99.0,
+          "end": 99.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Williams",
+          "start": 99.5,
+          "end": 99.78,
+          "probability": 0.9868
+        },
+        {
+          "word": "requested",
+          "start": 99.78,
+          "end": 100.4,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 100.4,
+          "end": 100.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "an",
+          "start": 100.66,
+          "end": 100.8,
+          "probability": 0.999
+        },
+        {
+          "word": "alternate",
+          "start": 100.8,
+          "end": 101.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "contact",
+          "start": 101.16,
+          "end": 101.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "be",
+          "start": 101.64,
+          "end": 102.0,
+          "probability": 0.998
+        },
+        {
+          "word": "added",
+          "start": 102.0,
+          "end": 102.24,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 102.24,
+          "end": 102.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 102.44,
+          "end": 102.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim.",
+          "start": 102.56,
+          "end": 102.9,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 102.9,
+      "end": 110.36,
+      "start_formatted": "00:01:42.900",
+      "end_formatted": "00:01:50.360",
+      "text": "Claims Adjuster To add another new contact, he clicks the new, contact menu button and selects person from the options list.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 102.9,
+          "end": 103.82,
+          "probability": 0.3518
+        },
+        {
+          "word": "Adjuster",
+          "start": 103.82,
+          "end": 103.82,
+          "probability": 0.0308
+        },
+        {
+          "word": "To",
+          "start": 103.82,
+          "end": 103.82,
+          "probability": 0.0457
+        },
+        {
+          "word": "add",
+          "start": 103.82,
+          "end": 104.02,
+          "probability": 0.9609
+        },
+        {
+          "word": "another",
+          "start": 104.02,
+          "end": 104.36,
+          "probability": 0.9829
+        },
+        {
+          "word": "new",
+          "start": 104.36,
+          "end": 104.56,
+          "probability": 0.9712
+        },
+        {
+          "word": "contact,",
+          "start": 104.56,
+          "end": 105.02,
+          "probability": 0.9443
+        },
+        {
+          "word": "he",
+          "start": 105.48,
+          "end": 105.7,
+          "probability": 0.8896
+        },
+        {
+          "word": "clicks",
+          "start": 105.7,
+          "end": 106.06,
+          "probability": 0.9805
+        },
+        {
+          "word": "the",
+          "start": 106.06,
+          "end": 106.26,
+          "probability": 0.9844
+        },
+        {
+          "word": "new,",
+          "start": 106.26,
+          "end": 106.5,
+          "probability": 0.3672
+        },
+        {
+          "word": "contact",
+          "start": 106.6,
+          "end": 107.16,
+          "probability": 0.3384
+        },
+        {
+          "word": "menu",
+          "start": 107.16,
+          "end": 107.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "button",
+          "start": 107.66,
+          "end": 107.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 107.94,
+          "end": 108.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "selects",
+          "start": 108.16,
+          "end": 108.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "person",
+          "start": 108.72,
+          "end": 108.98,
+          "probability": 0.4529
+        },
+        {
+          "word": "from",
+          "start": 108.98,
+          "end": 109.28,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 109.28,
+          "end": 109.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "options",
+          "start": 109.46,
+          "end": 109.82,
+          "probability": 0.9629
+        },
+        {
+          "word": "list.",
+          "start": 109.82,
+          "end": 110.36,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 111.26,
+      "end": 119.2,
+      "start_formatted": "00:01:51.260",
+      "end_formatted": "00:01:59.200",
+      "text": "Claims Adjuster Andy also has only a name and mobile phone number for the alternate contact, and he enters this information into the new person screen.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 111.26,
+          "end": 111.86,
+          "probability": 0.667
+        },
+        {
+          "word": "Adjuster",
+          "start": 111.86,
+          "end": 111.86,
+          "probability": 0.4854
+        },
+        {
+          "word": "Andy",
+          "start": 111.86,
+          "end": 111.86,
+          "probability": 0.5747
+        },
+        {
+          "word": "also",
+          "start": 111.86,
+          "end": 112.24,
+          "probability": 0.9648
+        },
+        {
+          "word": "has",
+          "start": 112.24,
+          "end": 112.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "only",
+          "start": 112.56,
+          "end": 112.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "a",
+          "start": 112.88,
+          "end": 113.02,
+          "probability": 0.9922
+        },
+        {
+          "word": "name",
+          "start": 113.02,
+          "end": 113.24,
+          "probability": 0.9722
+        },
+        {
+          "word": "and",
+          "start": 113.24,
+          "end": 113.4,
+          "probability": 0.9849
+        },
+        {
+          "word": "mobile",
+          "start": 113.4,
+          "end": 113.74,
+          "probability": 0.9819
+        },
+        {
+          "word": "phone",
+          "start": 113.74,
+          "end": 114.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "number",
+          "start": 114.02,
+          "end": 114.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "for",
+          "start": 114.3,
+          "end": 114.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 114.5,
+          "end": 114.66,
+          "probability": 0.9873
+        },
+        {
+          "word": "alternate",
+          "start": 114.66,
+          "end": 115.08,
+          "probability": 0.9805
+        },
+        {
+          "word": "contact,",
+          "start": 115.08,
+          "end": 115.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 116.0,
+          "end": 116.3,
+          "probability": 0.9868
+        },
+        {
+          "word": "he",
+          "start": 116.3,
+          "end": 116.44,
+          "probability": 0.9814
+        },
+        {
+          "word": "enters",
+          "start": 116.44,
+          "end": 116.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "this",
+          "start": 116.72,
+          "end": 117.0,
+          "probability": 0.9951
+        },
+        {
+          "word": "information",
+          "start": 117.0,
+          "end": 117.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "into",
+          "start": 117.54,
+          "end": 117.94,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 117.94,
+          "end": 118.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 118.12,
+          "end": 118.28,
+          "probability": 0.9551
+        },
+        {
+          "word": "person",
+          "start": 118.28,
+          "end": 118.74,
+          "probability": 0.9429
+        },
+        {
+          "word": "screen.",
+          "start": 118.74,
+          "end": 119.2,
+          "probability": 0.894
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 119.7,
+      "end": 121.92,
+      "start_formatted": "00:01:59.700",
+      "end_formatted": "00:02:01.920",
+      "text": "Claims Adjuster He adds a role to the new contact.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 119.7,
+          "end": 120.28,
+          "probability": 0.8413
+        },
+        {
+          "word": "Adjuster",
+          "start": 120.28,
+          "end": 120.28,
+          "probability": 0.519
+        },
+        {
+          "word": "He",
+          "start": 120.28,
+          "end": 120.28,
+          "probability": 0.7275
+        },
+        {
+          "word": "adds",
+          "start": 120.28,
+          "end": 120.52,
+          "probability": 0.9849
+        },
+        {
+          "word": "a",
+          "start": 120.52,
+          "end": 120.66,
+          "probability": 0.9912
+        },
+        {
+          "word": "role",
+          "start": 120.66,
+          "end": 120.8,
+          "probability": 0.9653
+        },
+        {
+          "word": "to",
+          "start": 120.8,
+          "end": 121.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 121.02,
+          "end": 121.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "new",
+          "start": 121.2,
+          "end": 121.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "contact.",
+          "start": 121.38,
+          "end": 121.92,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 122.7,
+      "end": 125.58,
+      "start_formatted": "00:02:02.700",
+      "end_formatted": "00:02:05.580",
+      "text": "Claims Adjuster Selecting alternate contact from the list.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 122.7,
+          "end": 123.3,
+          "probability": 0.9165
+        },
+        {
+          "word": "Adjuster",
+          "start": 123.3,
+          "end": 123.3,
+          "probability": 0.2253
+        },
+        {
+          "word": "Selecting",
+          "start": 123.3,
+          "end": 123.82,
+          "probability": 0.8945
+        },
+        {
+          "word": "alternate",
+          "start": 123.82,
+          "end": 124.2,
+          "probability": 0.8647
+        },
+        {
+          "word": "contact",
+          "start": 124.2,
+          "end": 124.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "from",
+          "start": 124.76,
+          "end": 125.1,
+          "probability": 0.9746
+        },
+        {
+          "word": "the",
+          "start": 125.1,
+          "end": 125.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "list.",
+          "start": 125.24,
+          "end": 125.58,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 128.44,
+      "end": 131.0,
+      "start_formatted": "00:02:08.440",
+      "end_formatted": "00:02:11.000",
+      "text": "Claims Adjuster He saves the new alternate contact.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 128.44,
+          "end": 129.04,
+          "probability": 0.3306
+        },
+        {
+          "word": "Adjuster",
+          "start": 129.04,
+          "end": 129.04,
+          "probability": 0.0126
+        },
+        {
+          "word": "He",
+          "start": 129.04,
+          "end": 129.04,
+          "probability": 0.0095
+        },
+        {
+          "word": "saves",
+          "start": 129.04,
+          "end": 129.44,
+          "probability": 0.9487
+        },
+        {
+          "word": "the",
+          "start": 129.44,
+          "end": 129.62,
+          "probability": 0.9819
+        },
+        {
+          "word": "new",
+          "start": 129.62,
+          "end": 129.84,
+          "probability": 0.9868
+        },
+        {
+          "word": "alternate",
+          "start": 129.84,
+          "end": 130.28,
+          "probability": 0.9658
+        },
+        {
+          "word": "contact.",
+          "start": 130.28,
+          "end": 131.0,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 131.78,
+      "end": 136.4,
+      "start_formatted": "00:02:11.780",
+      "end_formatted": "00:02:16.400",
+      "text": "Claims Adjuster Mr. Williams also told Andy that he has chosen a vendor to repair his truck.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 131.78,
+          "end": 132.38,
+          "probability": 0.666
+        },
+        {
+          "word": "Adjuster",
+          "start": 132.38,
+          "end": 132.38,
+          "probability": 0.4302
+        },
+        {
+          "word": "Mr.",
+          "start": 132.38,
+          "end": 132.38,
+          "probability": 0.5557
+        },
+        {
+          "word": "Williams",
+          "start": 132.78,
+          "end": 132.8,
+          "probability": 0.9756
+        },
+        {
+          "word": "also",
+          "start": 132.8,
+          "end": 133.22,
+          "probability": 0.9741
+        },
+        {
+          "word": "told",
+          "start": 133.22,
+          "end": 133.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "Andy",
+          "start": 133.62,
+          "end": 133.92,
+          "probability": 0.9683
+        },
+        {
+          "word": "that",
+          "start": 133.92,
+          "end": 134.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "he",
+          "start": 134.18,
+          "end": 134.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "has",
+          "start": 134.32,
+          "end": 134.54,
+          "probability": 0.998
+        },
+        {
+          "word": "chosen",
+          "start": 134.54,
+          "end": 134.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 134.92,
+          "end": 135.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "vendor",
+          "start": 135.08,
+          "end": 135.32,
+          "probability": 0.98
+        },
+        {
+          "word": "to",
+          "start": 135.32,
+          "end": 135.52,
+          "probability": 0.999
+        },
+        {
+          "word": "repair",
+          "start": 135.52,
+          "end": 135.8,
+          "probability": 0.998
+        },
+        {
+          "word": "his",
+          "start": 135.8,
+          "end": 136.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "truck.",
+          "start": 136.1,
+          "end": 136.4,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 136.76,
+      "end": 142.0,
+      "start_formatted": "00:02:16.760",
+      "end_formatted": "00:02:22.000",
+      "text": "Claims Adjuster Vendors are considered shared contacts because the same vendor can be used on multiple claims.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 136.76,
+          "end": 137.12,
+          "probability": 0.7661
+        },
+        {
+          "word": "Adjuster",
+          "start": 137.12,
+          "end": 137.12,
+          "probability": 0.4907
+        },
+        {
+          "word": "Vendors",
+          "start": 137.12,
+          "end": 137.3,
+          "probability": 0.9048
+        },
+        {
+          "word": "are",
+          "start": 137.3,
+          "end": 137.46,
+          "probability": 0.9175
+        },
+        {
+          "word": "considered",
+          "start": 137.46,
+          "end": 137.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "shared",
+          "start": 137.94,
+          "end": 138.36,
+          "probability": 0.9331
+        },
+        {
+          "word": "contacts",
+          "start": 138.36,
+          "end": 138.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "because",
+          "start": 138.88,
+          "end": 139.3,
+          "probability": 0.9761
+        },
+        {
+          "word": "the",
+          "start": 139.3,
+          "end": 139.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "same",
+          "start": 139.58,
+          "end": 139.84,
+          "probability": 0.998
+        },
+        {
+          "word": "vendor",
+          "start": 139.84,
+          "end": 140.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "can",
+          "start": 140.24,
+          "end": 140.46,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 140.46,
+          "end": 140.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 140.6,
+          "end": 140.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 140.86,
+          "end": 141.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "multiple",
+          "start": 141.1,
+          "end": 141.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "claims.",
+          "start": 141.46,
+          "end": 142.0,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 142.42,
+      "end": 145.36,
+      "start_formatted": "00:02:22.420",
+      "end_formatted": "00:02:25.360",
+      "text": "Claims Shared contacts are stored in Contact Manager.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 142.42,
+          "end": 142.76,
+          "probability": 0.979
+        },
+        {
+          "word": "Shared",
+          "start": 142.76,
+          "end": 143.0,
+          "probability": 0.5552
+        },
+        {
+          "word": "contacts",
+          "start": 143.0,
+          "end": 143.48,
+          "probability": 0.7637
+        },
+        {
+          "word": "are",
+          "start": 143.48,
+          "end": 143.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "stored",
+          "start": 143.78,
+          "end": 144.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 144.16,
+          "end": 144.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "Contact",
+          "start": 144.4,
+          "end": 144.78,
+          "probability": 0.7207
+        },
+        {
+          "word": "Manager.",
+          "start": 144.78,
+          "end": 145.36,
+          "probability": 0.9531
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 145.86,
+      "end": 150.54,
+      "start_formatted": "00:02:25.860",
+      "end_formatted": "00:02:30.540",
+      "text": "Claims Adjuster Andy goes to the address book search screen to locate the auto repair vendor.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 145.86,
+          "end": 146.46,
+          "probability": 0.688
+        },
+        {
+          "word": "Adjuster",
+          "start": 146.46,
+          "end": 146.46,
+          "probability": 0.6162
+        },
+        {
+          "word": "Andy",
+          "start": 146.46,
+          "end": 146.46,
+          "probability": 0.8633
+        },
+        {
+          "word": "goes",
+          "start": 146.46,
+          "end": 146.76,
+          "probability": 0.9844
+        },
+        {
+          "word": "to",
+          "start": 146.76,
+          "end": 146.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 146.96,
+          "end": 147.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "address",
+          "start": 147.14,
+          "end": 147.52,
+          "probability": 0.8018
+        },
+        {
+          "word": "book",
+          "start": 147.52,
+          "end": 147.94,
+          "probability": 0.9639
+        },
+        {
+          "word": "search",
+          "start": 147.94,
+          "end": 148.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "screen",
+          "start": 148.22,
+          "end": 148.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 148.68,
+          "end": 148.9,
+          "probability": 0.9917
+        },
+        {
+          "word": "locate",
+          "start": 148.9,
+          "end": 149.28,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 149.28,
+          "end": 149.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "auto",
+          "start": 149.52,
+          "end": 149.8,
+          "probability": 0.8188
+        },
+        {
+          "word": "repair",
+          "start": 149.8,
+          "end": 150.14,
+          "probability": 0.937
+        },
+        {
+          "word": "vendor.",
+          "start": 150.14,
+          "end": 150.54,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 151.88,
+      "end": 156.88,
+      "start_formatted": "00:02:31.880",
+      "end_formatted": "00:02:36.880",
+      "text": "Claims Adjuster Mr. Williams is going to use Mynake Car Care Center for the repairs to his truck.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 151.88,
+          "end": 152.4,
+          "probability": 0.4133
+        },
+        {
+          "word": "Adjuster",
+          "start": 152.4,
+          "end": 152.4,
+          "probability": 0.0222
+        },
+        {
+          "word": "Mr.",
+          "start": 152.4,
+          "end": 152.4,
+          "probability": 0.6548
+        },
+        {
+          "word": "Williams",
+          "start": 152.86,
+          "end": 152.86,
+          "probability": 0.9824
+        },
+        {
+          "word": "is",
+          "start": 152.86,
+          "end": 153.12,
+          "probability": 0.9893
+        },
+        {
+          "word": "going",
+          "start": 153.12,
+          "end": 153.32,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 153.32,
+          "end": 153.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "use",
+          "start": 153.48,
+          "end": 153.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "Mynake",
+          "start": 153.72,
+          "end": 154.18,
+          "probability": 0.3408
+        },
+        {
+          "word": "Car",
+          "start": 154.18,
+          "end": 154.58,
+          "probability": 0.7627
+        },
+        {
+          "word": "Care",
+          "start": 154.58,
+          "end": 154.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "Center",
+          "start": 154.86,
+          "end": 155.2,
+          "probability": 0.981
+        },
+        {
+          "word": "for",
+          "start": 155.2,
+          "end": 155.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 155.5,
+          "end": 155.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "repairs",
+          "start": 155.7,
+          "end": 156.12,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 156.12,
+          "end": 156.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 156.38,
+          "end": 156.56,
+          "probability": 0.998
+        },
+        {
+          "word": "truck.",
+          "start": 156.56,
+          "end": 156.88,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 157.14,
+      "end": 159.78,
+      "start_formatted": "00:02:37.140",
+      "end_formatted": "00:02:39.780",
+      "text": "Claims Adjuster They are located in San Jose, California.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 157.14,
+          "end": 157.58,
+          "probability": 0.6621
+        },
+        {
+          "word": "Adjuster",
+          "start": 157.58,
+          "end": 157.58,
+          "probability": 0.3809
+        },
+        {
+          "word": "They",
+          "start": 157.58,
+          "end": 157.58,
+          "probability": 0.6802
+        },
+        {
+          "word": "are",
+          "start": 157.58,
+          "end": 157.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "located",
+          "start": 157.76,
+          "end": 158.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "in",
+          "start": 158.26,
+          "end": 158.46,
+          "probability": 0.998
+        },
+        {
+          "word": "San",
+          "start": 158.46,
+          "end": 158.7,
+          "probability": 0.9946
+        },
+        {
+          "word": "Jose,",
+          "start": 158.7,
+          "end": 159.04,
+          "probability": 0.9756
+        },
+        {
+          "word": "California.",
+          "start": 159.2,
+          "end": 159.78,
+          "probability": 0.5693
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 160.44,
+      "end": 163.44,
+      "start_formatted": "00:02:40.440",
+      "end_formatted": "00:02:43.440",
+      "text": "Claims Adjuster Andy enters values for the name and city for the search.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 160.44,
+          "end": 160.62,
+          "probability": 0.6792
+        },
+        {
+          "word": "Adjuster",
+          "start": 160.62,
+          "end": 160.62,
+          "probability": 0.4287
+        },
+        {
+          "word": "Andy",
+          "start": 160.62,
+          "end": 160.62,
+          "probability": 0.8408
+        },
+        {
+          "word": "enters",
+          "start": 160.62,
+          "end": 161.02,
+          "probability": 0.9512
+        },
+        {
+          "word": "values",
+          "start": 161.02,
+          "end": 161.54,
+          "probability": 0.9375
+        },
+        {
+          "word": "for",
+          "start": 161.54,
+          "end": 161.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 161.88,
+          "end": 162.04,
+          "probability": 0.9893
+        },
+        {
+          "word": "name",
+          "start": 162.04,
+          "end": 162.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "and",
+          "start": 162.24,
+          "end": 162.52,
+          "probability": 0.9907
+        },
+        {
+          "word": "city",
+          "start": 162.52,
+          "end": 162.74,
+          "probability": 0.9751
+        },
+        {
+          "word": "for",
+          "start": 162.74,
+          "end": 162.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 162.96,
+          "end": 163.1,
+          "probability": 0.998
+        },
+        {
+          "word": "search.",
+          "start": 163.1,
+          "end": 163.44,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 163.86,
+      "end": 166.5,
+      "start_formatted": "00:02:43.860",
+      "end_formatted": "00:02:46.500",
+      "text": "Claims Adjuster He clicks the search button to find the vendor.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 163.86,
+          "end": 164.38,
+          "probability": 0.9692
+        },
+        {
+          "word": "Adjuster",
+          "start": 164.38,
+          "end": 164.38,
+          "probability": 0.4805
+        },
+        {
+          "word": "He",
+          "start": 164.38,
+          "end": 164.5,
+          "probability": 0.9653
+        },
+        {
+          "word": "clicks",
+          "start": 164.5,
+          "end": 164.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 164.82,
+          "end": 165.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "search",
+          "start": 165.02,
+          "end": 165.26,
+          "probability": 0.8315
+        },
+        {
+          "word": "button",
+          "start": 165.26,
+          "end": 165.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 165.58,
+          "end": 165.76,
+          "probability": 0.998
+        },
+        {
+          "word": "find",
+          "start": 165.76,
+          "end": 166.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 166.04,
+          "end": 166.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "vendor.",
+          "start": 166.22,
+          "end": 166.5,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 166.94,
+      "end": 170.76,
+      "start_formatted": "00:02:46.940",
+      "end_formatted": "00:02:50.760",
+      "text": "Claims Adjuster He selects the record in the search results to add it to the claim.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 166.94,
+          "end": 167.46,
+          "probability": 0.9888
+        },
+        {
+          "word": "Adjuster",
+          "start": 167.46,
+          "end": 167.46,
+          "probability": 0.5317
+        },
+        {
+          "word": "He",
+          "start": 167.46,
+          "end": 167.58,
+          "probability": 0.9502
+        },
+        {
+          "word": "selects",
+          "start": 167.58,
+          "end": 168.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 168.02,
+          "end": 168.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "record",
+          "start": 168.14,
+          "end": 168.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 168.48,
+          "end": 168.66,
+          "probability": 0.9775
+        },
+        {
+          "word": "the",
+          "start": 168.66,
+          "end": 168.8,
+          "probability": 0.998
+        },
+        {
+          "word": "search",
+          "start": 168.8,
+          "end": 169.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "results",
+          "start": 169.06,
+          "end": 169.56,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 169.56,
+          "end": 169.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "add",
+          "start": 169.76,
+          "end": 170.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 170.0,
+          "end": 170.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 170.1,
+          "end": 170.24,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 170.24,
+          "end": 170.38,
+          "probability": 0.9922
+        },
+        {
+          "word": "claim.",
+          "start": 170.38,
+          "end": 170.76,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 171.64,
+      "end": 175.9,
+      "start_formatted": "00:02:51.640",
+      "end_formatted": "00:02:55.900",
+      "text": "Claims Adjuster The vendor's information displays in the new repair shop screen.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 171.64,
+          "end": 172.16,
+          "probability": 0.9863
+        },
+        {
+          "word": "Adjuster",
+          "start": 172.16,
+          "end": 172.16,
+          "probability": 0.6479
+        },
+        {
+          "word": "The",
+          "start": 172.16,
+          "end": 172.26,
+          "probability": 0.9492
+        },
+        {
+          "word": "vendor's",
+          "start": 172.26,
+          "end": 172.78,
+          "probability": 0.9316
+        },
+        {
+          "word": "information",
+          "start": 172.78,
+          "end": 173.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "displays",
+          "start": 173.32,
+          "end": 173.88,
+          "probability": 0.9346
+        },
+        {
+          "word": "in",
+          "start": 173.88,
+          "end": 174.18,
+          "probability": 0.9692
+        },
+        {
+          "word": "the",
+          "start": 174.18,
+          "end": 174.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "new",
+          "start": 174.3,
+          "end": 174.5,
+          "probability": 0.562
+        },
+        {
+          "word": "repair",
+          "start": 174.5,
+          "end": 174.82,
+          "probability": 0.25
+        },
+        {
+          "word": "shop",
+          "start": 174.82,
+          "end": 175.34,
+          "probability": 0.9897
+        },
+        {
+          "word": "screen.",
+          "start": 175.34,
+          "end": 175.9,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 176.24,
+      "end": 180.06,
+      "start_formatted": "00:02:56.240",
+      "end_formatted": "00:03:00.060",
+      "text": "Claims Adjuster Andy needs to add a role to the vendor in order to add it to the claim.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 176.24,
+          "end": 176.74,
+          "probability": 0.978
+        },
+        {
+          "word": "Adjuster",
+          "start": 176.74,
+          "end": 176.76,
+          "probability": 0.603
+        },
+        {
+          "word": "Andy",
+          "start": 176.76,
+          "end": 176.76,
+          "probability": 0.9321
+        },
+        {
+          "word": "needs",
+          "start": 176.76,
+          "end": 177.16,
+          "probability": 0.9897
+        },
+        {
+          "word": "to",
+          "start": 177.16,
+          "end": 177.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "add",
+          "start": 177.32,
+          "end": 177.52,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 177.52,
+          "end": 177.62,
+          "probability": 0.9932
+        },
+        {
+          "word": "role",
+          "start": 177.62,
+          "end": 177.82,
+          "probability": 0.7476
+        },
+        {
+          "word": "to",
+          "start": 177.82,
+          "end": 178.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 178.0,
+          "end": 178.12,
+          "probability": 0.999
+        },
+        {
+          "word": "vendor",
+          "start": 178.12,
+          "end": 178.42,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 178.42,
+          "end": 178.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "order",
+          "start": 178.68,
+          "end": 178.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 178.9,
+          "end": 179.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 179.1,
+          "end": 179.34,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 179.34,
+          "end": 179.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 179.46,
+          "end": 179.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 179.58,
+          "end": 179.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "claim.",
+          "start": 179.72,
+          "end": 180.06,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 180.06,
+      "end": 183.12,
+      "start_formatted": "00:03:00.060",
+      "end_formatted": "00:03:03.120",
+      "text": "Claims Adjuster Since the vendor will be repairing the truck,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 180.06,
+          "end": 181.18,
+          "probability": 0.3442
+        },
+        {
+          "word": "Adjuster",
+          "start": 181.18,
+          "end": 181.32,
+          "probability": 0.0039
+        },
+        {
+          "word": "Since",
+          "start": 181.32,
+          "end": 181.32,
+          "probability": 0.0082
+        },
+        {
+          "word": "the",
+          "start": 181.32,
+          "end": 181.46,
+          "probability": 0.9805
+        },
+        {
+          "word": "vendor",
+          "start": 181.46,
+          "end": 181.74,
+          "probability": 0.9375
+        },
+        {
+          "word": "will",
+          "start": 181.74,
+          "end": 182.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "be",
+          "start": 182.0,
+          "end": 182.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "repairing",
+          "start": 182.16,
+          "end": 182.58,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 182.58,
+          "end": 182.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "truck,",
+          "start": 182.82,
+          "end": 183.12,
+          "probability": 0.9624
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 183.38,
+      "end": 186.42,
+      "start_formatted": "00:03:03.380",
+      "end_formatted": "00:03:06.420",
+      "text": "he selects the vehicle incident for the related to field.",
+      "words": [
+        {
+          "word": "he",
+          "start": 183.38,
+          "end": 183.58,
+          "probability": 0.9585
+        },
+        {
+          "word": "selects",
+          "start": 183.58,
+          "end": 184.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 184.06,
+          "end": 184.18,
+          "probability": 0.9795
+        },
+        {
+          "word": "vehicle",
+          "start": 184.18,
+          "end": 184.54,
+          "probability": 0.8506
+        },
+        {
+          "word": "incident",
+          "start": 184.54,
+          "end": 185.02,
+          "probability": 0.9805
+        },
+        {
+          "word": "for",
+          "start": 185.02,
+          "end": 185.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 185.32,
+          "end": 185.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "related",
+          "start": 185.46,
+          "end": 185.8,
+          "probability": 0.7495
+        },
+        {
+          "word": "to",
+          "start": 185.8,
+          "end": 186.04,
+          "probability": 0.9395
+        },
+        {
+          "word": "field.",
+          "start": 186.04,
+          "end": 186.42,
+          "probability": 0.9663
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 187.22,
+      "end": 190.02,
+      "start_formatted": "00:03:07.220",
+      "end_formatted": "00:03:10.020",
+      "text": "Claims Adjuster He also selects the role of repair shop.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 187.22,
+          "end": 187.82,
+          "probability": 0.6909
+        },
+        {
+          "word": "Adjuster",
+          "start": 187.82,
+          "end": 187.82,
+          "probability": 0.3457
+        },
+        {
+          "word": "He",
+          "start": 187.82,
+          "end": 187.88,
+          "probability": 0.9688
+        },
+        {
+          "word": "also",
+          "start": 187.88,
+          "end": 188.2,
+          "probability": 0.9863
+        },
+        {
+          "word": "selects",
+          "start": 188.2,
+          "end": 188.72,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 188.72,
+          "end": 188.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "role",
+          "start": 188.84,
+          "end": 189.04,
+          "probability": 0.9463
+        },
+        {
+          "word": "of",
+          "start": 189.04,
+          "end": 189.28,
+          "probability": 0.9917
+        },
+        {
+          "word": "repair",
+          "start": 189.28,
+          "end": 189.62,
+          "probability": 0.7715
+        },
+        {
+          "word": "shop.",
+          "start": 189.62,
+          "end": 190.02,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 190.42,
+      "end": 194.9,
+      "start_formatted": "00:03:10.420",
+      "end_formatted": "00:03:14.900",
+      "text": "Claims Adjuster He adds a second role because this vendor will provide services for the claim.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 190.42,
+          "end": 190.9,
+          "probability": 0.937
+        },
+        {
+          "word": "Adjuster",
+          "start": 190.9,
+          "end": 190.9,
+          "probability": 0.5488
+        },
+        {
+          "word": "He",
+          "start": 190.9,
+          "end": 190.98,
+          "probability": 0.9844
+        },
+        {
+          "word": "adds",
+          "start": 190.98,
+          "end": 191.28,
+          "probability": 0.9761
+        },
+        {
+          "word": "a",
+          "start": 191.28,
+          "end": 191.46,
+          "probability": 0.9897
+        },
+        {
+          "word": "second",
+          "start": 191.46,
+          "end": 191.74,
+          "probability": 0.958
+        },
+        {
+          "word": "role",
+          "start": 191.74,
+          "end": 192.04,
+          "probability": 0.9854
+        },
+        {
+          "word": "because",
+          "start": 192.04,
+          "end": 192.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "this",
+          "start": 192.36,
+          "end": 192.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "vendor",
+          "start": 192.68,
+          "end": 192.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "will",
+          "start": 192.96,
+          "end": 193.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "provide",
+          "start": 193.22,
+          "end": 193.6,
+          "probability": 0.998
+        },
+        {
+          "word": "services",
+          "start": 193.6,
+          "end": 194.14,
+          "probability": 0.9849
+        },
+        {
+          "word": "for",
+          "start": 194.14,
+          "end": 194.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 194.46,
+          "end": 194.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim.",
+          "start": 194.58,
+          "end": 194.9,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 195.24,
+      "end": 198.36,
+      "start_formatted": "00:03:15.240",
+      "end_formatted": "00:03:18.360",
+      "text": "Claims Adjuster He selects Service vendor from the roles list.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 195.24,
+          "end": 195.84,
+          "probability": 0.9834
+        },
+        {
+          "word": "Adjuster",
+          "start": 195.84,
+          "end": 195.84,
+          "probability": 0.4282
+        },
+        {
+          "word": "He",
+          "start": 195.84,
+          "end": 195.96,
+          "probability": 0.9414
+        },
+        {
+          "word": "selects",
+          "start": 195.96,
+          "end": 196.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "Service",
+          "start": 196.54,
+          "end": 196.82,
+          "probability": 0.3735
+        },
+        {
+          "word": "vendor",
+          "start": 196.82,
+          "end": 197.16,
+          "probability": 0.6768
+        },
+        {
+          "word": "from",
+          "start": 197.16,
+          "end": 197.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 197.46,
+          "end": 197.6,
+          "probability": 0.9917
+        },
+        {
+          "word": "roles",
+          "start": 197.6,
+          "end": 197.92,
+          "probability": 0.957
+        },
+        {
+          "word": "list.",
+          "start": 197.92,
+          "end": 198.36,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 198.54,
+      "end": 201.1,
+      "start_formatted": "00:03:18.540",
+      "end_formatted": "00:03:21.100",
+      "text": "Claims Adjuster This role is associated with the claim,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 198.54,
+          "end": 199.04,
+          "probability": 0.7344
+        },
+        {
+          "word": "Adjuster",
+          "start": 199.04,
+          "end": 199.04,
+          "probability": 0.5078
+        },
+        {
+          "word": "This",
+          "start": 199.04,
+          "end": 199.1,
+          "probability": 0.9731
+        },
+        {
+          "word": "role",
+          "start": 199.1,
+          "end": 199.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 199.38,
+          "end": 199.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "associated",
+          "start": 199.58,
+          "end": 200.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "with",
+          "start": 200.14,
+          "end": 200.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 200.56,
+          "end": 200.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "claim,",
+          "start": 200.72,
+          "end": 201.1,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 201.32,
+      "end": 204.28,
+      "start_formatted": "00:03:21.320",
+      "end_formatted": "00:03:24.280",
+      "text": "so he keeps the default related to value for the role.",
+      "words": [
+        {
+          "word": "so",
+          "start": 201.32,
+          "end": 201.66,
+          "probability": 0.9858
+        },
+        {
+          "word": "he",
+          "start": 201.66,
+          "end": 201.86,
+          "probability": 0.9731
+        },
+        {
+          "word": "keeps",
+          "start": 201.86,
+          "end": 202.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 202.12,
+          "end": 202.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "default",
+          "start": 202.32,
+          "end": 202.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "related",
+          "start": 202.66,
+          "end": 203.06,
+          "probability": 0.978
+        },
+        {
+          "word": "to",
+          "start": 203.06,
+          "end": 203.28,
+          "probability": 0.9829
+        },
+        {
+          "word": "value",
+          "start": 203.28,
+          "end": 203.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "for",
+          "start": 203.6,
+          "end": 203.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 203.84,
+          "end": 204.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "role.",
+          "start": 204.0,
+          "end": 204.28,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 204.88,
+      "end": 207.28,
+      "start_formatted": "00:03:24.880",
+      "end_formatted": "00:03:27.280",
+      "text": "Claims Adjuster And he saves the new vendor contact.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 204.88,
+          "end": 205.48,
+          "probability": 0.9614
+        },
+        {
+          "word": "Adjuster",
+          "start": 205.48,
+          "end": 205.48,
+          "probability": 0.5898
+        },
+        {
+          "word": "And",
+          "start": 205.48,
+          "end": 205.62,
+          "probability": 0.6953
+        },
+        {
+          "word": "he",
+          "start": 205.62,
+          "end": 205.8,
+          "probability": 0.9307
+        },
+        {
+          "word": "saves",
+          "start": 205.8,
+          "end": 206.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 206.1,
+          "end": 206.3,
+          "probability": 0.9883
+        },
+        {
+          "word": "new",
+          "start": 206.3,
+          "end": 206.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "vendor",
+          "start": 206.46,
+          "end": 206.8,
+          "probability": 0.9868
+        },
+        {
+          "word": "contact.",
+          "start": 206.8,
+          "end": 207.28,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 208.14,
+      "end": 211.42,
+      "start_formatted": "00:03:28.140",
+      "end_formatted": "00:03:31.420",
+      "text": "Claims Adjuster Notice that the claim now has 4 claim contacts,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 208.14,
+          "end": 208.78,
+          "probability": 0.3359
+        },
+        {
+          "word": "Adjuster",
+          "start": 208.78,
+          "end": 208.78,
+          "probability": 0.0166
+        },
+        {
+          "word": "Notice",
+          "start": 208.78,
+          "end": 208.78,
+          "probability": 0.0237
+        },
+        {
+          "word": "that",
+          "start": 208.78,
+          "end": 209.04,
+          "probability": 0.9556
+        },
+        {
+          "word": "the",
+          "start": 209.04,
+          "end": 209.18,
+          "probability": 0.979
+        },
+        {
+          "word": "claim",
+          "start": 209.18,
+          "end": 209.52,
+          "probability": 0.8652
+        },
+        {
+          "word": "now",
+          "start": 209.52,
+          "end": 209.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "has",
+          "start": 209.8,
+          "end": 210.06,
+          "probability": 0.999
+        },
+        {
+          "word": "4",
+          "start": 210.06,
+          "end": 210.32,
+          "probability": 0.5581
+        },
+        {
+          "word": "claim",
+          "start": 210.32,
+          "end": 210.7,
+          "probability": 0.7256
+        },
+        {
+          "word": "contacts,",
+          "start": 210.7,
+          "end": 211.42,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 211.64,
+      "end": 213.38,
+      "start_formatted": "00:03:31.640",
+      "end_formatted": "00:03:33.380",
+      "text": "3 persons and 1 vendor.",
+      "words": [
+        {
+          "word": "3",
+          "start": 211.64,
+          "end": 212.04,
+          "probability": 0.9492
+        },
+        {
+          "word": "persons",
+          "start": 212.04,
+          "end": 212.46,
+          "probability": 0.9897
+        },
+        {
+          "word": "and",
+          "start": 212.46,
+          "end": 212.74,
+          "probability": 0.9873
+        },
+        {
+          "word": "1",
+          "start": 212.74,
+          "end": 213.0,
+          "probability": 0.9043
+        },
+        {
+          "word": "vendor.",
+          "start": 213.0,
+          "end": 213.38,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 213.74,
+      "end": 217.06,
+      "start_formatted": "00:03:33.740",
+      "end_formatted": "00:03:37.060",
+      "text": "Claims Adjuster Selecting a contact in the list highlights the contact row,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 213.74,
+          "end": 214.28,
+          "probability": 0.6582
+        },
+        {
+          "word": "Adjuster",
+          "start": 214.28,
+          "end": 214.28,
+          "probability": 0.4644
+        },
+        {
+          "word": "Selecting",
+          "start": 214.28,
+          "end": 214.44,
+          "probability": 0.9028
+        },
+        {
+          "word": "a",
+          "start": 214.44,
+          "end": 214.56,
+          "probability": 0.9761
+        },
+        {
+          "word": "contact",
+          "start": 214.56,
+          "end": 214.9,
+          "probability": 0.939
+        },
+        {
+          "word": "in",
+          "start": 214.9,
+          "end": 215.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 215.2,
+          "end": 215.34,
+          "probability": 0.9917
+        },
+        {
+          "word": "list",
+          "start": 215.34,
+          "end": 215.6,
+          "probability": 0.9858
+        },
+        {
+          "word": "highlights",
+          "start": 215.6,
+          "end": 216.08,
+          "probability": 0.9722
+        },
+        {
+          "word": "the",
+          "start": 216.08,
+          "end": 216.3,
+          "probability": 0.998
+        },
+        {
+          "word": "contact",
+          "start": 216.3,
+          "end": 216.68,
+          "probability": 0.8916
+        },
+        {
+          "word": "row,",
+          "start": 216.68,
+          "end": 217.06,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 217.22,
+      "end": 220.98,
+      "start_formatted": "00:03:37.220",
+      "end_formatted": "00:03:40.980",
+      "text": "and the details for the selected contact display below the list.",
+      "words": [
+        {
+          "word": "and",
+          "start": 217.22,
+          "end": 217.54,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 217.54,
+          "end": 217.68,
+          "probability": 0.9902
+        },
+        {
+          "word": "details",
+          "start": 217.68,
+          "end": 218.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "for",
+          "start": 218.1,
+          "end": 218.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 218.42,
+          "end": 218.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "selected",
+          "start": 218.58,
+          "end": 219.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "contact",
+          "start": 219.0,
+          "end": 219.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "display",
+          "start": 219.48,
+          "end": 220.1,
+          "probability": 0.9775
+        },
+        {
+          "word": "below",
+          "start": 220.1,
+          "end": 220.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 220.4,
+          "end": 220.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "list.",
+          "start": 220.64,
+          "end": 220.98,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 221.5,
+      "end": 226.1,
+      "start_formatted": "00:03:41.500",
+      "end_formatted": "00:03:46.100",
+      "text": "Claims Adjuster Andy clicks on the row for Alyssa Grace to display her contact details.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 221.5,
+          "end": 222.14,
+          "probability": 0.8442
+        },
+        {
+          "word": "Adjuster",
+          "start": 222.14,
+          "end": 222.14,
+          "probability": 0.4529
+        },
+        {
+          "word": "Andy",
+          "start": 222.14,
+          "end": 222.14,
+          "probability": 0.5176
+        },
+        {
+          "word": "clicks",
+          "start": 222.14,
+          "end": 222.56,
+          "probability": 0.9727
+        },
+        {
+          "word": "on",
+          "start": 222.56,
+          "end": 222.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 222.74,
+          "end": 222.86,
+          "probability": 0.9902
+        },
+        {
+          "word": "row",
+          "start": 222.86,
+          "end": 223.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "for",
+          "start": 223.08,
+          "end": 223.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "Alyssa",
+          "start": 223.36,
+          "end": 223.74,
+          "probability": 0.8057
+        },
+        {
+          "word": "Grace",
+          "start": 223.74,
+          "end": 223.98,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 223.98,
+          "end": 224.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "display",
+          "start": 224.22,
+          "end": 224.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "her",
+          "start": 224.56,
+          "end": 224.84,
+          "probability": 0.998
+        },
+        {
+          "word": "contact",
+          "start": 224.84,
+          "end": 225.28,
+          "probability": 0.9941
+        },
+        {
+          "word": "details.",
+          "start": 225.28,
+          "end": 226.1,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 226.58,
+      "end": 232.56,
+      "start_formatted": "00:03:46.580",
+      "end_formatted": "00:03:52.560",
+      "text": "Claims Adjuster Notice the contact link status message that displays above Alyssa Grace's contact details.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 226.58,
+          "end": 227.22,
+          "probability": 0.9526
+        },
+        {
+          "word": "Adjuster",
+          "start": 227.22,
+          "end": 227.22,
+          "probability": 0.4529
+        },
+        {
+          "word": "Notice",
+          "start": 227.22,
+          "end": 227.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 227.42,
+          "end": 227.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "contact",
+          "start": 227.72,
+          "end": 228.08,
+          "probability": 0.688
+        },
+        {
+          "word": "link",
+          "start": 228.08,
+          "end": 228.46,
+          "probability": 0.9883
+        },
+        {
+          "word": "status",
+          "start": 228.46,
+          "end": 228.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "message",
+          "start": 228.78,
+          "end": 229.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 229.3,
+          "end": 229.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "displays",
+          "start": 229.52,
+          "end": 229.98,
+          "probability": 0.998
+        },
+        {
+          "word": "above",
+          "start": 229.98,
+          "end": 230.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "Alyssa",
+          "start": 230.32,
+          "end": 230.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "Grace's",
+          "start": 230.78,
+          "end": 231.34,
+          "probability": 0.9912
+        },
+        {
+          "word": "contact",
+          "start": 231.34,
+          "end": 231.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "details.",
+          "start": 231.76,
+          "end": 232.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 232.56,
+      "end": 238.7,
+      "start_formatted": "00:03:52.560",
+      "end_formatted": "00:03:58.700",
+      "text": "Claims Adjuster The fact that this contact is not linked to the address book indicates that it is a local contact,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 232.56,
+          "end": 233.3,
+          "probability": 0.4961
+        },
+        {
+          "word": "Adjuster",
+          "start": 233.3,
+          "end": 233.3,
+          "probability": 0.0116
+        },
+        {
+          "word": "The",
+          "start": 233.3,
+          "end": 233.3,
+          "probability": 0.0378
+        },
+        {
+          "word": "fact",
+          "start": 233.3,
+          "end": 233.52,
+          "probability": 0.2391
+        },
+        {
+          "word": "that",
+          "start": 233.52,
+          "end": 233.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 233.78,
+          "end": 233.98,
+          "probability": 0.9907
+        },
+        {
+          "word": "contact",
+          "start": 233.98,
+          "end": 234.38,
+          "probability": 0.9824
+        },
+        {
+          "word": "is",
+          "start": 234.38,
+          "end": 234.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "not",
+          "start": 234.66,
+          "end": 234.9,
+          "probability": 0.9888
+        },
+        {
+          "word": "linked",
+          "start": 234.9,
+          "end": 235.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 235.28,
+          "end": 235.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 235.52,
+          "end": 235.7,
+          "probability": 0.9937
+        },
+        {
+          "word": "address",
+          "start": 235.7,
+          "end": 236.1,
+          "probability": 0.8901
+        },
+        {
+          "word": "book",
+          "start": 236.1,
+          "end": 236.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "indicates",
+          "start": 236.5,
+          "end": 236.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "that",
+          "start": 236.94,
+          "end": 237.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "it",
+          "start": 237.3,
+          "end": 237.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "is",
+          "start": 237.42,
+          "end": 237.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 237.56,
+          "end": 237.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "local",
+          "start": 237.68,
+          "end": 237.98,
+          "probability": 0.9556
+        },
+        {
+          "word": "contact,",
+          "start": 237.98,
+          "end": 238.7,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 238.96,
+      "end": 240.44,
+      "start_formatted": "00:03:58.960",
+      "end_formatted": "00:04:00.440",
+      "text": "known only to this claim.",
+      "words": [
+        {
+          "word": "known",
+          "start": 238.96,
+          "end": 239.32,
+          "probability": 0.9907
+        },
+        {
+          "word": "only",
+          "start": 239.32,
+          "end": 239.7,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 239.7,
+          "end": 239.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 239.84,
+          "end": 240.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim.",
+          "start": 240.06,
+          "end": 240.44,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 241.22,
+      "end": 244.18,
+      "start_formatted": "00:04:01.220",
+      "end_formatted": "00:04:04.180",
+      "text": "Claims Adjuster Next, Andy selects another person contact,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 241.22,
+          "end": 241.82,
+          "probability": 0.7749
+        },
+        {
+          "word": "Adjuster",
+          "start": 241.82,
+          "end": 241.82,
+          "probability": 0.5122
+        },
+        {
+          "word": "Next,",
+          "start": 241.82,
+          "end": 241.82,
+          "probability": 0.4753
+        },
+        {
+          "word": "Andy",
+          "start": 242.08,
+          "end": 242.46,
+          "probability": 0.96
+        },
+        {
+          "word": "selects",
+          "start": 242.46,
+          "end": 243.0,
+          "probability": 0.9521
+        },
+        {
+          "word": "another",
+          "start": 243.0,
+          "end": 243.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "person",
+          "start": 243.22,
+          "end": 243.66,
+          "probability": 0.9844
+        },
+        {
+          "word": "contact,",
+          "start": 243.66,
+          "end": 244.18,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 244.62,
+      "end": 245.32,
+      "start_formatted": "00:04:04.620",
+      "end_formatted": "00:04:05.320",
+      "text": "Cala Marie.",
+      "words": [
+        {
+          "word": "Cala",
+          "start": 244.62,
+          "end": 245.06,
+          "probability": 0.2566
+        },
+        {
+          "word": "Marie.",
+          "start": 245.06,
+          "end": 245.32,
+          "probability": 0.9077
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 245.6,
+      "end": 251.0,
+      "start_formatted": "00:04:05.600",
+      "end_formatted": "00:04:11.000",
+      "text": "Claims Adjuster Notice that this contact is also a local contact and is not linked to the address book.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 245.6,
+          "end": 246.2,
+          "probability": 0.6997
+        },
+        {
+          "word": "Adjuster",
+          "start": 246.2,
+          "end": 246.2,
+          "probability": 0.6514
+        },
+        {
+          "word": "Notice",
+          "start": 246.2,
+          "end": 246.2,
+          "probability": 0.978
+        },
+        {
+          "word": "that",
+          "start": 246.2,
+          "end": 246.5,
+          "probability": 0.9922
+        },
+        {
+          "word": "this",
+          "start": 246.5,
+          "end": 246.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "contact",
+          "start": 246.72,
+          "end": 247.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 247.12,
+          "end": 247.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "also",
+          "start": 247.4,
+          "end": 247.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 247.72,
+          "end": 247.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "local",
+          "start": 247.92,
+          "end": 248.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "contact",
+          "start": 248.18,
+          "end": 248.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 248.66,
+          "end": 248.98,
+          "probability": 0.9824
+        },
+        {
+          "word": "is",
+          "start": 248.98,
+          "end": 249.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "not",
+          "start": 249.12,
+          "end": 249.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "linked",
+          "start": 249.36,
+          "end": 249.7,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 249.7,
+          "end": 249.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 249.94,
+          "end": 250.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "address",
+          "start": 250.12,
+          "end": 250.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "book.",
+          "start": 250.52,
+          "end": 251.0,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 252.16,
+      "end": 257.3,
+      "start_formatted": "00:04:12.160",
+      "end_formatted": "00:04:17.300",
+      "text": "Claims Adjuster The last person contact, Andrew Williams, is also a local contact.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 252.16,
+          "end": 252.48,
+          "probability": 0.958
+        },
+        {
+          "word": "Adjuster",
+          "start": 252.48,
+          "end": 252.48,
+          "probability": 0.668
+        },
+        {
+          "word": "The",
+          "start": 252.48,
+          "end": 252.6,
+          "probability": 0.9458
+        },
+        {
+          "word": "last",
+          "start": 252.6,
+          "end": 252.88,
+          "probability": 0.959
+        },
+        {
+          "word": "person",
+          "start": 252.88,
+          "end": 253.36,
+          "probability": 0.9912
+        },
+        {
+          "word": "contact,",
+          "start": 253.36,
+          "end": 254.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "Andrew",
+          "start": 254.26,
+          "end": 254.76,
+          "probability": 0.9863
+        },
+        {
+          "word": "Williams,",
+          "start": 254.76,
+          "end": 255.32,
+          "probability": 0.9775
+        },
+        {
+          "word": "is",
+          "start": 255.58,
+          "end": 255.86,
+          "probability": 0.9912
+        },
+        {
+          "word": "also",
+          "start": 255.86,
+          "end": 256.16,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 256.16,
+          "end": 256.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "local",
+          "start": 256.36,
+          "end": 256.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "contact.",
+          "start": 256.64,
+          "end": 257.3,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 258.2,
+      "end": 262.9,
+      "start_formatted": "00:04:18.200",
+      "end_formatted": "00:04:22.900",
+      "text": "Claims Adjuster Finally, Andy selects the vendor contact, Meineke Car Care Center.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 258.2,
+          "end": 258.8,
+          "probability": 0.386
+        },
+        {
+          "word": "Adjuster",
+          "start": 258.8,
+          "end": 258.8,
+          "probability": 0.0204
+        },
+        {
+          "word": "Finally,",
+          "start": 258.8,
+          "end": 258.8,
+          "probability": 0.03
+        },
+        {
+          "word": "Andy",
+          "start": 259.08,
+          "end": 259.48,
+          "probability": 0.9551
+        },
+        {
+          "word": "selects",
+          "start": 259.48,
+          "end": 260.0,
+          "probability": 0.9609
+        },
+        {
+          "word": "the",
+          "start": 260.0,
+          "end": 260.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "vendor",
+          "start": 260.08,
+          "end": 260.38,
+          "probability": 0.5312
+        },
+        {
+          "word": "contact,",
+          "start": 260.38,
+          "end": 261.04,
+          "probability": 0.9771
+        },
+        {
+          "word": "Meineke",
+          "start": 261.3,
+          "end": 261.92,
+          "probability": 0.8105
+        },
+        {
+          "word": "Car",
+          "start": 261.92,
+          "end": 262.3,
+          "probability": 0.9077
+        },
+        {
+          "word": "Care",
+          "start": 262.3,
+          "end": 262.54,
+          "probability": 0.9849
+        },
+        {
+          "word": "Center.",
+          "start": 262.54,
+          "end": 262.9,
+          "probability": 0.8564
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 263.32,
+      "end": 269.14,
+      "start_formatted": "00:04:23.320",
+      "end_formatted": "00:04:29.140",
+      "text": "Claims Adjuster Notice that the link status for this contact indicates it is linked to the address book and is in sync.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 263.32,
+          "end": 263.8,
+          "probability": 0.6431
+        },
+        {
+          "word": "Adjuster",
+          "start": 263.8,
+          "end": 263.8,
+          "probability": 0.4448
+        },
+        {
+          "word": "Notice",
+          "start": 263.8,
+          "end": 263.8,
+          "probability": 0.9653
+        },
+        {
+          "word": "that",
+          "start": 263.8,
+          "end": 264.06,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 264.06,
+          "end": 264.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "link",
+          "start": 264.24,
+          "end": 264.48,
+          "probability": 0.938
+        },
+        {
+          "word": "status",
+          "start": 264.48,
+          "end": 264.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "for",
+          "start": 264.76,
+          "end": 265.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 265.06,
+          "end": 265.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "contact",
+          "start": 265.3,
+          "end": 265.8,
+          "probability": 0.9912
+        },
+        {
+          "word": "indicates",
+          "start": 265.8,
+          "end": 266.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "it",
+          "start": 266.34,
+          "end": 266.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 266.64,
+          "end": 266.78,
+          "probability": 0.998
+        },
+        {
+          "word": "linked",
+          "start": 266.78,
+          "end": 267.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 267.06,
+          "end": 267.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 267.3,
+          "end": 267.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "address",
+          "start": 267.48,
+          "end": 267.88,
+          "probability": 0.9199
+        },
+        {
+          "word": "book",
+          "start": 267.88,
+          "end": 268.28,
+          "probability": 0.9863
+        },
+        {
+          "word": "and",
+          "start": 268.28,
+          "end": 268.52,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 268.52,
+          "end": 268.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 268.64,
+          "end": 268.8,
+          "probability": 0.9927
+        },
+        {
+          "word": "sync.",
+          "start": 268.8,
+          "end": 269.14,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 269.38,
+      "end": 274.02,
+      "start_formatted": "00:04:29.380",
+      "end_formatted": "00:04:34.020",
+      "text": "Claims Adjuster This means that the contact is a shared contact maintained in Contact Manager,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 269.38,
+          "end": 269.9,
+          "probability": 0.7637
+        },
+        {
+          "word": "Adjuster",
+          "start": 269.9,
+          "end": 269.9,
+          "probability": 0.5264
+        },
+        {
+          "word": "This",
+          "start": 269.9,
+          "end": 269.9,
+          "probability": 0.9707
+        },
+        {
+          "word": "means",
+          "start": 269.9,
+          "end": 270.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "that",
+          "start": 270.16,
+          "end": 270.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 270.4,
+          "end": 270.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "contact",
+          "start": 270.54,
+          "end": 270.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 270.96,
+          "end": 271.22,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 271.22,
+          "end": 271.38,
+          "probability": 0.9365
+        },
+        {
+          "word": "shared",
+          "start": 271.38,
+          "end": 271.68,
+          "probability": 0.9795
+        },
+        {
+          "word": "contact",
+          "start": 271.68,
+          "end": 272.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "maintained",
+          "start": 272.16,
+          "end": 272.88,
+          "probability": 0.9839
+        },
+        {
+          "word": "in",
+          "start": 272.88,
+          "end": 273.12,
+          "probability": 0.9785
+        },
+        {
+          "word": "Contact",
+          "start": 273.12,
+          "end": 273.46,
+          "probability": 0.8042
+        },
+        {
+          "word": "Manager,",
+          "start": 273.46,
+          "end": 274.02,
+          "probability": 0.9722
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 274.26,
+      "end": 276.14,
+      "start_formatted": "00:04:34.260",
+      "end_formatted": "00:04:36.140",
+      "text": "also known as the address book.",
+      "words": [
+        {
+          "word": "also",
+          "start": 274.26,
+          "end": 274.68,
+          "probability": 0.9849
+        },
+        {
+          "word": "known",
+          "start": 274.68,
+          "end": 274.9,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 274.9,
+          "end": 275.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 275.14,
+          "end": 275.3,
+          "probability": 0.9922
+        },
+        {
+          "word": "address",
+          "start": 275.3,
+          "end": 275.62,
+          "probability": 0.8545
+        },
+        {
+          "word": "book.",
+          "start": 275.62,
+          "end": 276.14,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 276.36,
+      "end": 278.46,
+      "start_formatted": "00:04:36.360",
+      "end_formatted": "00:04:38.460",
+      "text": "Claims Adjuster When linked contacts are in sync,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 276.36,
+          "end": 276.88,
+          "probability": 0.9199
+        },
+        {
+          "word": "Adjuster",
+          "start": 276.88,
+          "end": 276.88,
+          "probability": 0.5537
+        },
+        {
+          "word": "When",
+          "start": 276.88,
+          "end": 276.88,
+          "probability": 0.9458
+        },
+        {
+          "word": "linked",
+          "start": 276.88,
+          "end": 277.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "contacts",
+          "start": 277.16,
+          "end": 277.66,
+          "probability": 0.9897
+        },
+        {
+          "word": "are",
+          "start": 277.66,
+          "end": 277.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 277.96,
+          "end": 278.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "sync,",
+          "start": 278.14,
+          "end": 278.46,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 278.7,
+      "end": 282.98,
+      "start_formatted": "00:04:38.700",
+      "end_formatted": "00:04:42.980",
+      "text": "Claims Adjuster The information in Claims Center matches the information in Contact Manager.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 278.7,
+          "end": 278.94,
+          "probability": 0.6714
+        },
+        {
+          "word": "Adjuster",
+          "start": 278.94,
+          "end": 278.94,
+          "probability": 0.5308
+        },
+        {
+          "word": "The",
+          "start": 278.94,
+          "end": 278.94,
+          "probability": 0.2917
+        },
+        {
+          "word": "information",
+          "start": 278.94,
+          "end": 279.46,
+          "probability": 0.8931
+        },
+        {
+          "word": "in",
+          "start": 279.46,
+          "end": 279.82,
+          "probability": 0.9634
+        },
+        {
+          "word": "Claims",
+          "start": 279.82,
+          "end": 280.2,
+          "probability": 0.9644
+        },
+        {
+          "word": "Center",
+          "start": 280.2,
+          "end": 280.42,
+          "probability": 0.5034
+        },
+        {
+          "word": "matches",
+          "start": 280.42,
+          "end": 280.78,
+          "probability": 0.9683
+        },
+        {
+          "word": "the",
+          "start": 280.78,
+          "end": 281.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "information",
+          "start": 281.16,
+          "end": 281.64,
+          "probability": 0.9883
+        },
+        {
+          "word": "in",
+          "start": 281.64,
+          "end": 282.02,
+          "probability": 0.9868
+        },
+        {
+          "word": "Contact",
+          "start": 282.02,
+          "end": 282.34,
+          "probability": 0.958
+        },
+        {
+          "word": "Manager.",
+          "start": 282.34,
+          "end": 282.98,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 282.98,
+      "end": 286.02,
+      "start_formatted": "00:04:42.980",
+      "end_formatted": "00:04:46.020",
+      "text": "Claims Adjuster Andy talks to Mr. Williams again.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 282.98,
+          "end": 284.12,
+          "probability": 0.1509
+        },
+        {
+          "word": "Adjuster",
+          "start": 284.12,
+          "end": 284.12,
+          "probability": 0.1925
+        },
+        {
+          "word": "Andy",
+          "start": 284.12,
+          "end": 284.12,
+          "probability": 0.7119
+        },
+        {
+          "word": "talks",
+          "start": 284.12,
+          "end": 284.58,
+          "probability": 0.8018
+        },
+        {
+          "word": "to",
+          "start": 284.58,
+          "end": 284.84,
+          "probability": 0.998
+        },
+        {
+          "word": "Mr.",
+          "start": 284.84,
+          "end": 285.18,
+          "probability": 0.9907
+        },
+        {
+          "word": "Williams",
+          "start": 285.34,
+          "end": 285.66,
+          "probability": 0.9888
+        },
+        {
+          "word": "again.",
+          "start": 285.66,
+          "end": 286.02,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 286.24,
+      "end": 291.48,
+      "start_formatted": "00:04:46.240",
+      "end_formatted": "00:04:51.480",
+      "text": "Claims Adjuster He has now decided that the alternate contact for the claim should be Kayla instead of Alyssa.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 286.24,
+          "end": 286.66,
+          "probability": 0.665
+        },
+        {
+          "word": "Adjuster",
+          "start": 286.66,
+          "end": 286.66,
+          "probability": 0.4678
+        },
+        {
+          "word": "He",
+          "start": 286.66,
+          "end": 286.66,
+          "probability": 0.8257
+        },
+        {
+          "word": "has",
+          "start": 286.66,
+          "end": 286.82,
+          "probability": 0.9385
+        },
+        {
+          "word": "now",
+          "start": 286.82,
+          "end": 287.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "decided",
+          "start": 287.08,
+          "end": 287.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 287.58,
+          "end": 287.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 287.84,
+          "end": 288.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "alternate",
+          "start": 288.04,
+          "end": 288.42,
+          "probability": 0.9517
+        },
+        {
+          "word": "contact",
+          "start": 288.42,
+          "end": 288.94,
+          "probability": 0.9854
+        },
+        {
+          "word": "for",
+          "start": 288.94,
+          "end": 289.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 289.32,
+          "end": 289.46,
+          "probability": 0.9912
+        },
+        {
+          "word": "claim",
+          "start": 289.46,
+          "end": 289.72,
+          "probability": 0.9585
+        },
+        {
+          "word": "should",
+          "start": 289.72,
+          "end": 289.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "be",
+          "start": 289.96,
+          "end": 290.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "Kayla",
+          "start": 290.18,
+          "end": 290.46,
+          "probability": 0.8457
+        },
+        {
+          "word": "instead",
+          "start": 290.46,
+          "end": 290.86,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 290.86,
+          "end": 291.1,
+          "probability": 0.998
+        },
+        {
+          "word": "Alyssa.",
+          "start": 291.1,
+          "end": 291.48,
+          "probability": 0.835
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 291.98,
+      "end": 295.02,
+      "start_formatted": "00:04:51.980",
+      "end_formatted": "00:04:55.020",
+      "text": "Claims Adjuster He clicks Kayla Marie in the list of contacts.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 291.98,
+          "end": 292.5,
+          "probability": 0.9561
+        },
+        {
+          "word": "Adjuster",
+          "start": 292.5,
+          "end": 292.5,
+          "probability": 0.3857
+        },
+        {
+          "word": "He",
+          "start": 292.5,
+          "end": 292.62,
+          "probability": 0.98
+        },
+        {
+          "word": "clicks",
+          "start": 292.62,
+          "end": 292.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "Kayla",
+          "start": 292.98,
+          "end": 293.3,
+          "probability": 0.8838
+        },
+        {
+          "word": "Marie",
+          "start": 293.3,
+          "end": 293.68,
+          "probability": 0.9028
+        },
+        {
+          "word": "in",
+          "start": 293.68,
+          "end": 293.86,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 293.86,
+          "end": 293.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "list",
+          "start": 293.96,
+          "end": 294.28,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 294.28,
+          "end": 294.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "contacts.",
+          "start": 294.46,
+          "end": 295.02,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 295.72,
+      "end": 301.4,
+      "start_formatted": "00:04:55.720",
+      "end_formatted": "00:05:01.400",
+      "text": "Claims Adjuster From Kayla's contact record, Andy initiates the transfer of the alternate contact role.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 295.72,
+          "end": 296.44,
+          "probability": 0.9673
+        },
+        {
+          "word": "Adjuster",
+          "start": 296.44,
+          "end": 296.44,
+          "probability": 0.1637
+        },
+        {
+          "word": "From",
+          "start": 296.44,
+          "end": 296.44,
+          "probability": 0.9697
+        },
+        {
+          "word": "Kayla's",
+          "start": 296.44,
+          "end": 296.96,
+          "probability": 0.9893
+        },
+        {
+          "word": "contact",
+          "start": 296.96,
+          "end": 297.32,
+          "probability": 0.9487
+        },
+        {
+          "word": "record,",
+          "start": 297.32,
+          "end": 297.96,
+          "probability": 0.998
+        },
+        {
+          "word": "Andy",
+          "start": 298.12,
+          "end": 298.48,
+          "probability": 0.98
+        },
+        {
+          "word": "initiates",
+          "start": 298.48,
+          "end": 299.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 299.16,
+          "end": 299.34,
+          "probability": 0.998
+        },
+        {
+          "word": "transfer",
+          "start": 299.34,
+          "end": 299.7,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 299.7,
+          "end": 299.92,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 299.92,
+          "end": 300.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "alternate",
+          "start": 300.06,
+          "end": 300.46,
+          "probability": 0.9731
+        },
+        {
+          "word": "contact",
+          "start": 300.46,
+          "end": 301.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "role.",
+          "start": 301.0,
+          "end": 301.4,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 301.74,
+      "end": 304.38,
+      "start_formatted": "00:05:01.740",
+      "end_formatted": "00:05:04.380",
+      "text": "Claims Adjuster The transfer role screen displays.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 301.74,
+          "end": 302.46,
+          "probability": 0.9502
+        },
+        {
+          "word": "Adjuster",
+          "start": 302.46,
+          "end": 302.46,
+          "probability": 0.5059
+        },
+        {
+          "word": "The",
+          "start": 302.46,
+          "end": 302.46,
+          "probability": 0.9492
+        },
+        {
+          "word": "transfer",
+          "start": 302.46,
+          "end": 302.88,
+          "probability": 0.8477
+        },
+        {
+          "word": "role",
+          "start": 302.88,
+          "end": 303.26,
+          "probability": 0.8701
+        },
+        {
+          "word": "screen",
+          "start": 303.26,
+          "end": 303.6,
+          "probability": 0.9917
+        },
+        {
+          "word": "displays.",
+          "start": 303.6,
+          "end": 304.38,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 304.7,
+      "end": 308.84,
+      "start_formatted": "00:05:04.700",
+      "end_formatted": "00:05:08.840",
+      "text": "Claims Adjuster The existing roles for contact Kayla Marie are listed at the top,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 304.7,
+          "end": 305.12,
+          "probability": 0.9019
+        },
+        {
+          "word": "Adjuster",
+          "start": 305.12,
+          "end": 305.12,
+          "probability": 0.469
+        },
+        {
+          "word": "The",
+          "start": 305.12,
+          "end": 305.12,
+          "probability": 0.9541
+        },
+        {
+          "word": "existing",
+          "start": 305.12,
+          "end": 305.64,
+          "probability": 0.9858
+        },
+        {
+          "word": "roles",
+          "start": 305.64,
+          "end": 306.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "for",
+          "start": 306.08,
+          "end": 306.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "contact",
+          "start": 306.36,
+          "end": 306.82,
+          "probability": 0.8423
+        },
+        {
+          "word": "Kayla",
+          "start": 306.82,
+          "end": 307.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "Marie",
+          "start": 307.22,
+          "end": 307.6,
+          "probability": 0.9712
+        },
+        {
+          "word": "are",
+          "start": 307.6,
+          "end": 307.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "listed",
+          "start": 307.84,
+          "end": 308.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 308.14,
+          "end": 308.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 308.34,
+          "end": 308.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "top,",
+          "start": 308.48,
+          "end": 308.84,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 308.84,
+      "end": 312.44,
+      "start_formatted": "00:05:08.840",
+      "end_formatted": "00:05:12.440",
+      "text": "followed by a list of other claim contacts and their roles.",
+      "words": [
+        {
+          "word": "followed",
+          "start": 308.84,
+          "end": 309.48,
+          "probability": 0.9243
+        },
+        {
+          "word": "by",
+          "start": 309.48,
+          "end": 309.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 309.7,
+          "end": 309.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "list",
+          "start": 309.86,
+          "end": 310.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 310.2,
+          "end": 310.36,
+          "probability": 0.999
+        },
+        {
+          "word": "other",
+          "start": 310.36,
+          "end": 310.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim",
+          "start": 310.6,
+          "end": 310.96,
+          "probability": 0.6548
+        },
+        {
+          "word": "contacts",
+          "start": 310.96,
+          "end": 311.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "and",
+          "start": 311.44,
+          "end": 311.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "their",
+          "start": 311.74,
+          "end": 311.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "roles.",
+          "start": 311.94,
+          "end": 312.44,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 313.32,
+      "end": 320.8,
+      "start_formatted": "00:05:13.320",
+      "end_formatted": "00:05:20.800",
+      "text": "Claims Adjuster First, Andy selects the Alyssa Grace contact to transfer the role of alternate contact from Alyssa Grace to Kayla Marie.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 313.32,
+          "end": 313.96,
+          "probability": 0.3284
+        },
+        {
+          "word": "Adjuster",
+          "start": 313.96,
+          "end": 313.96,
+          "probability": 0.0155
+        },
+        {
+          "word": "First,",
+          "start": 313.96,
+          "end": 313.96,
+          "probability": 0.0113
+        },
+        {
+          "word": "Andy",
+          "start": 314.22,
+          "end": 314.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "selects",
+          "start": 314.56,
+          "end": 315.14,
+          "probability": 0.9746
+        },
+        {
+          "word": "the",
+          "start": 315.14,
+          "end": 315.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "Alyssa",
+          "start": 315.24,
+          "end": 315.58,
+          "probability": 0.7466
+        },
+        {
+          "word": "Grace",
+          "start": 315.58,
+          "end": 315.92,
+          "probability": 0.9219
+        },
+        {
+          "word": "contact",
+          "start": 315.92,
+          "end": 316.38,
+          "probability": 0.8057
+        },
+        {
+          "word": "to",
+          "start": 316.38,
+          "end": 316.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "transfer",
+          "start": 316.76,
+          "end": 317.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 317.14,
+          "end": 317.44,
+          "probability": 0.9878
+        },
+        {
+          "word": "role",
+          "start": 317.44,
+          "end": 317.68,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 317.68,
+          "end": 317.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "alternate",
+          "start": 317.92,
+          "end": 318.26,
+          "probability": 0.7144
+        },
+        {
+          "word": "contact",
+          "start": 318.26,
+          "end": 318.8,
+          "probability": 0.9858
+        },
+        {
+          "word": "from",
+          "start": 318.8,
+          "end": 319.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "Alyssa",
+          "start": 319.16,
+          "end": 319.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "Grace",
+          "start": 319.52,
+          "end": 319.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 319.88,
+          "end": 320.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "Kayla",
+          "start": 320.12,
+          "end": 320.42,
+          "probability": 0.9585
+        },
+        {
+          "word": "Marie.",
+          "start": 320.42,
+          "end": 320.8,
+          "probability": 0.9165
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 321.36,
+      "end": 323.38,
+      "start_formatted": "00:05:21.360",
+      "end_formatted": "00:05:23.380",
+      "text": "Claims Adjuster Then he clicks the select button.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 321.36,
+          "end": 322.0,
+          "probability": 0.6963
+        },
+        {
+          "word": "Adjuster",
+          "start": 322.0,
+          "end": 322.0,
+          "probability": 0.5508
+        },
+        {
+          "word": "Then",
+          "start": 322.0,
+          "end": 322.0,
+          "probability": 0.7217
+        },
+        {
+          "word": "he",
+          "start": 322.0,
+          "end": 322.16,
+          "probability": 0.9194
+        },
+        {
+          "word": "clicks",
+          "start": 322.16,
+          "end": 322.46,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 322.46,
+          "end": 322.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "select",
+          "start": 322.66,
+          "end": 323.0,
+          "probability": 0.3616
+        },
+        {
+          "word": "button.",
+          "start": 323.0,
+          "end": 323.38,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 324.36,
+      "end": 327.6,
+      "start_formatted": "00:05:24.360",
+      "end_formatted": "00:05:27.600",
+      "text": "Claims Adjuster Notice that after the Alyssa Grace contact is selected,",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 324.36,
+          "end": 325.0,
+          "probability": 0.8721
+        },
+        {
+          "word": "Adjuster",
+          "start": 325.0,
+          "end": 325.0,
+          "probability": 0.5181
+        },
+        {
+          "word": "Notice",
+          "start": 325.0,
+          "end": 325.0,
+          "probability": 0.9795
+        },
+        {
+          "word": "that",
+          "start": 325.0,
+          "end": 325.22,
+          "probability": 0.9912
+        },
+        {
+          "word": "after",
+          "start": 325.22,
+          "end": 325.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 325.52,
+          "end": 325.68,
+          "probability": 0.9814
+        },
+        {
+          "word": "Alyssa",
+          "start": 325.68,
+          "end": 326.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "Grace",
+          "start": 326.0,
+          "end": 326.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "contact",
+          "start": 326.36,
+          "end": 326.82,
+          "probability": 0.9834
+        },
+        {
+          "word": "is",
+          "start": 326.82,
+          "end": 327.14,
+          "probability": 0.998
+        },
+        {
+          "word": "selected,",
+          "start": 327.14,
+          "end": 327.6,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 327.86,
+      "end": 332.02,
+      "start_formatted": "00:05:27.860",
+      "end_formatted": "00:05:32.020",
+      "text": "a message displays stating that she will no longer have any roles on the claim,",
+      "words": [
+        {
+          "word": "a",
+          "start": 327.86,
+          "end": 328.08,
+          "probability": 0.9839
+        },
+        {
+          "word": "message",
+          "start": 328.08,
+          "end": 328.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "displays",
+          "start": 328.44,
+          "end": 328.98,
+          "probability": 0.9932
+        },
+        {
+          "word": "stating",
+          "start": 328.98,
+          "end": 329.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 329.4,
+          "end": 329.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "she",
+          "start": 329.68,
+          "end": 329.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "will",
+          "start": 329.82,
+          "end": 330.0,
+          "probability": 0.9614
+        },
+        {
+          "word": "no",
+          "start": 330.0,
+          "end": 330.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "longer",
+          "start": 330.18,
+          "end": 330.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 330.5,
+          "end": 330.74,
+          "probability": 0.999
+        },
+        {
+          "word": "any",
+          "start": 330.74,
+          "end": 330.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "roles",
+          "start": 330.98,
+          "end": 331.3,
+          "probability": 0.9922
+        },
+        {
+          "word": "on",
+          "start": 331.3,
+          "end": 331.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 331.54,
+          "end": 331.66,
+          "probability": 0.999
+        },
+        {
+          "word": "claim,",
+          "start": 331.66,
+          "end": 332.02,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 332.24,
+      "end": 336.66,
+      "start_formatted": "00:05:32.240",
+      "end_formatted": "00:05:36.660",
+      "text": "and a second message identifies the roles Kayla Marie will have after the transfer.",
+      "words": [
+        {
+          "word": "and",
+          "start": 332.24,
+          "end": 332.54,
+          "probability": 0.9727
+        },
+        {
+          "word": "a",
+          "start": 332.54,
+          "end": 332.64,
+          "probability": 0.9854
+        },
+        {
+          "word": "second",
+          "start": 332.64,
+          "end": 332.92,
+          "probability": 0.9775
+        },
+        {
+          "word": "message",
+          "start": 332.92,
+          "end": 333.34,
+          "probability": 0.9956
+        },
+        {
+          "word": "identifies",
+          "start": 333.34,
+          "end": 333.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 333.92,
+          "end": 334.28,
+          "probability": 0.998
+        },
+        {
+          "word": "roles",
+          "start": 334.28,
+          "end": 334.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "Kayla",
+          "start": 334.62,
+          "end": 334.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "Marie",
+          "start": 334.96,
+          "end": 335.32,
+          "probability": 0.9878
+        },
+        {
+          "word": "will",
+          "start": 335.32,
+          "end": 335.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "have",
+          "start": 335.58,
+          "end": 335.82,
+          "probability": 0.999
+        },
+        {
+          "word": "after",
+          "start": 335.82,
+          "end": 336.1,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 336.1,
+          "end": 336.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "transfer.",
+          "start": 336.26,
+          "end": 336.66,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 337.32,
+      "end": 341.44,
+      "start_formatted": "00:05:37.320",
+      "end_formatted": "00:05:41.440",
+      "text": "Claims Adjuster After reviewing the messages, Andy proceeds with the role transfer.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 337.32,
+          "end": 337.92,
+          "probability": 0.3916
+        },
+        {
+          "word": "Adjuster",
+          "start": 337.92,
+          "end": 337.92,
+          "probability": 0.1025
+        },
+        {
+          "word": "After",
+          "start": 337.92,
+          "end": 337.92,
+          "probability": 0.1071
+        },
+        {
+          "word": "reviewing",
+          "start": 337.92,
+          "end": 338.52,
+          "probability": 0.9741
+        },
+        {
+          "word": "the",
+          "start": 338.52,
+          "end": 338.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "messages,",
+          "start": 338.76,
+          "end": 339.22,
+          "probability": 0.9868
+        },
+        {
+          "word": "Andy",
+          "start": 339.64,
+          "end": 339.9,
+          "probability": 0.8857
+        },
+        {
+          "word": "proceeds",
+          "start": 339.9,
+          "end": 340.44,
+          "probability": 0.9712
+        },
+        {
+          "word": "with",
+          "start": 340.44,
+          "end": 340.6,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 340.6,
+          "end": 340.76,
+          "probability": 0.9854
+        },
+        {
+          "word": "role",
+          "start": 340.76,
+          "end": 340.96,
+          "probability": 0.6396
+        },
+        {
+          "word": "transfer.",
+          "start": 340.96,
+          "end": 341.44,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 342.54,
+      "end": 345.38,
+      "start_formatted": "00:05:42.540",
+      "end_formatted": "00:05:45.380",
+      "text": "Claims Center displays a final warning message.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 342.54,
+          "end": 343.14,
+          "probability": 0.8828
+        },
+        {
+          "word": "Center",
+          "start": 343.14,
+          "end": 343.36,
+          "probability": 0.7627
+        },
+        {
+          "word": "displays",
+          "start": 343.36,
+          "end": 343.74,
+          "probability": 0.9814
+        },
+        {
+          "word": "a",
+          "start": 343.74,
+          "end": 343.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "final",
+          "start": 343.98,
+          "end": 344.32,
+          "probability": 0.8228
+        },
+        {
+          "word": "warning",
+          "start": 344.32,
+          "end": 344.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "message.",
+          "start": 344.82,
+          "end": 345.38,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 345.74,
+      "end": 352.36,
+      "start_formatted": "00:05:45.740",
+      "end_formatted": "00:05:52.360",
+      "text": "Kayla Marie will now also have the alternate, contact, role, and Alyssa Grace will no longer be a claim,",
+      "words": [
+        {
+          "word": "Kayla",
+          "start": 345.74,
+          "end": 346.14,
+          "probability": 0.9087
+        },
+        {
+          "word": "Marie",
+          "start": 346.14,
+          "end": 346.5,
+          "probability": 0.8706
+        },
+        {
+          "word": "will",
+          "start": 346.5,
+          "end": 346.7,
+          "probability": 0.9702
+        },
+        {
+          "word": "now",
+          "start": 346.7,
+          "end": 346.9,
+          "probability": 0.998
+        },
+        {
+          "word": "also",
+          "start": 346.9,
+          "end": 347.34,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 347.34,
+          "end": 347.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 347.56,
+          "end": 347.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "alternate,",
+          "start": 347.7,
+          "end": 348.1,
+          "probability": 0.834
+        },
+        {
+          "word": "contact,",
+          "start": 348.38,
+          "end": 348.92,
+          "probability": 0.7544
+        },
+        {
+          "word": "role,",
+          "start": 349.38,
+          "end": 349.76,
+          "probability": 0.9863
+        },
+        {
+          "word": "and",
+          "start": 349.96,
+          "end": 350.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "Alyssa",
+          "start": 350.24,
+          "end": 350.62,
+          "probability": 0.7598
+        },
+        {
+          "word": "Grace",
+          "start": 350.62,
+          "end": 350.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "will",
+          "start": 350.92,
+          "end": 351.16,
+          "probability": 0.9873
+        },
+        {
+          "word": "no",
+          "start": 351.16,
+          "end": 351.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "longer",
+          "start": 351.34,
+          "end": 351.68,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 351.68,
+          "end": 351.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 351.86,
+          "end": 351.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 351.98,
+          "end": 352.36,
+          "probability": 0.9185
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "start": 352.54,
+      "end": 355.36,
+      "start_formatted": "00:05:52.540",
+      "end_formatted": "00:05:55.360",
+      "text": "contact because she will have no roles on the claim.",
+      "words": [
+        {
+          "word": "contact",
+          "start": 352.54,
+          "end": 353.02,
+          "probability": 0.9761
+        },
+        {
+          "word": "because",
+          "start": 353.02,
+          "end": 353.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "she",
+          "start": 353.42,
+          "end": 353.7,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 353.7,
+          "end": 353.86,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 353.86,
+          "end": 354.08,
+          "probability": 0.998
+        },
+        {
+          "word": "no",
+          "start": 354.08,
+          "end": 354.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "roles",
+          "start": 354.32,
+          "end": 354.64,
+          "probability": 0.9741
+        },
+        {
+          "word": "on",
+          "start": 354.64,
+          "end": 354.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 354.84,
+          "end": 354.96,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 354.96,
+          "end": 355.36,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "start": 355.8,
+      "end": 358.16,
+      "start_formatted": "00:05:55.800",
+      "end_formatted": "00:05:58.160",
+      "text": "Andy accepts the message to complete the transfer.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 355.8,
+          "end": 356.12,
+          "probability": 0.9756
+        },
+        {
+          "word": "accepts",
+          "start": 356.12,
+          "end": 356.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 356.5,
+          "end": 356.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "message",
+          "start": 356.68,
+          "end": 356.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 356.98,
+          "end": 357.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "complete",
+          "start": 357.2,
+          "end": 357.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 357.58,
+          "end": 357.74,
+          "probability": 1.0
+        },
+        {
+          "word": "transfer.",
+          "start": 357.74,
+          "end": 358.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 358.68,
+      "end": 364.84,
+      "start_formatted": "00:05:58.680",
+      "end_formatted": "00:06:04.840",
+      "text": "The role transfer is completed, and Alyssa Grace has been removed from the claim because she has no roles.",
+      "words": [
+        {
+          "word": "The",
+          "start": 358.68,
+          "end": 359.28,
+          "probability": 0.9795
+        },
+        {
+          "word": "role",
+          "start": 359.28,
+          "end": 359.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "transfer",
+          "start": 359.52,
+          "end": 359.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 359.98,
+          "end": 360.22,
+          "probability": 1.0
+        },
+        {
+          "word": "completed,",
+          "start": 360.22,
+          "end": 360.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 360.94,
+          "end": 361.2,
+          "probability": 0.999
+        },
+        {
+          "word": "Alyssa",
+          "start": 361.2,
+          "end": 361.6,
+          "probability": 1.0
+        },
+        {
+          "word": "Grace",
+          "start": 361.6,
+          "end": 361.9,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 361.9,
+          "end": 362.12,
+          "probability": 0.999
+        },
+        {
+          "word": "been",
+          "start": 362.12,
+          "end": 362.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "removed",
+          "start": 362.26,
+          "end": 362.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 362.7,
+          "end": 362.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 362.92,
+          "end": 363.08,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 363.08,
+          "end": 363.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "because",
+          "start": 363.34,
+          "end": 363.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 363.68,
+          "end": 363.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 363.9,
+          "end": 364.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 364.08,
+          "end": 364.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "roles.",
+          "start": 364.32,
+          "end": 364.84,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "start": 364.84,
+      "end": 368.38,
+      "start_formatted": "00:06:04.840",
+      "end_formatted": "00:06:08.380",
+      "text": "Kayla Marie now has the alternate, contact, role.",
+      "words": [
+        {
+          "word": "Kayla",
+          "start": 364.84,
+          "end": 365.64,
+          "probability": 0.8228
+        },
+        {
+          "word": "Marie",
+          "start": 365.64,
+          "end": 366.02,
+          "probability": 0.7939
+        },
+        {
+          "word": "now",
+          "start": 366.02,
+          "end": 366.28,
+          "probability": 0.9863
+        },
+        {
+          "word": "has",
+          "start": 366.28,
+          "end": 366.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 366.52,
+          "end": 366.66,
+          "probability": 0.9712
+        },
+        {
+          "word": "alternate,",
+          "start": 366.66,
+          "end": 367.06,
+          "probability": 0.7627
+        },
+        {
+          "word": "contact,",
+          "start": 367.32,
+          "end": 367.7,
+          "probability": 0.4104
+        },
+        {
+          "word": "role.",
+          "start": 367.98,
+          "end": 368.38,
+          "probability": 0.9692
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "start": 368.88,
+      "end": 370.94,
+      "start_formatted": "00:06:08.880",
+      "end_formatted": "00:06:10.940",
+      "text": "Andy logs out of Claims Center.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 368.88,
+          "end": 369.6,
+          "probability": 0.6782
+        },
+        {
+          "word": "logs",
+          "start": 369.6,
+          "end": 369.96,
+          "probability": 0.9644
+        },
+        {
+          "word": "out",
+          "start": 369.96,
+          "end": 370.14,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 370.14,
+          "end": 370.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "Claims",
+          "start": 370.28,
+          "end": 370.7,
+          "probability": 0.5039
+        },
+        {
+          "word": "Center.",
+          "start": 370.7,
+          "end": 370.94,
+          "probability": 0.8682
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "start": 371.98,
+      "end": 376.1,
+      "start_formatted": "00:06:11.980",
+      "end_formatted": "00:06:16.100",
+      "text": "This is the end of a demonstration on managing claim, contact.",
+      "words": [
+        {
+          "word": "This",
+          "start": 371.98,
+          "end": 372.7,
+          "probability": 0.9771
+        },
+        {
+          "word": "is",
+          "start": 372.7,
+          "end": 372.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 372.84,
+          "end": 372.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "end",
+          "start": 372.98,
+          "end": 373.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "of",
+          "start": 373.24,
+          "end": 373.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 373.4,
+          "end": 373.5,
+          "probability": 0.9458
+        },
+        {
+          "word": "demonstration",
+          "start": 373.5,
+          "end": 374.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "on",
+          "start": 374.0,
+          "end": 374.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "managing",
+          "start": 374.44,
+          "end": 374.92,
+          "probability": 0.9199
+        },
+        {
+          "word": "claim,",
+          "start": 374.92,
+          "end": 375.42,
+          "probability": 0.6543
+        },
+        {
+          "word": "contact.",
+          "start": 375.7,
+          "end": 376.1,
+          "probability": 0.793
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "start": 376.1,
+      "end": 376.24,
+      "start_formatted": "00:06:16.100",
+      "end_formatted": "00:06:16.240",
+      "text": "D-YEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYE",
+      "words": [
+        {
+          "word": "D",
+          "start": 376.1,
+          "end": 376.1,
+          "probability": 0.0002
+        },
+        {
+          "word": "-YEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYEYE",
+          "start": 376.1,
+          "end": 376.24,
+          "probability": 0.9653
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "start": 376.22,
+      "end": 376.22,
+      "start_formatted": "00:06:16.220",
+      "end_formatted": "00:06:16.220",
+      "text": "",
+      "words": []
+    }
+  ]
+}

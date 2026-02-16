@@ -1,0 +1,4250 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_18_01.mp4",
+    "video_stem": "Billing_18_01",
+    "duration_seconds": 231.34,
+    "duration_formatted": "00:03:51.340",
+    "segment_count": 49,
+    "word_count": 624,
+    "avg_confidence": 0.9277,
+    "transcription_time_seconds": 26.13,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:08:56.083632"
+  },
+  "full_text": "In this demonstration, I am going to add a general liability policy to the minor fleet management group. The premium will be paid by the management group, but the tax will be paid by the headquarters. Here's the minor fleet management group account. Let's create the policy. I click the Actions menu button. And I select Add Policy. First, I type in the policy number. Next, I click in the product field. Next, I click in the product field. I select General Liability from the list. Next, I click in the payment plan field. And I select PP12. Let's go to step 2. I'll add the premium charge first. I click Add. The premium charge is $16,200. I type in the amount. Next, I click Add. Next, I click Add. To add the taxes charge. I click in the type field for the charge. And I select taxes from the list of charge types. The taxes charge is for $1,200. Next, I type in the amount. I type in the amount. To change the payer for the tax. I'll click the search icon. I type M-I-N for the account name. Now I click Search. Here is Minor Fleet Headquarters in the search results. I select it. I click Finish. Let's go to the charges screen for the account. We can see the default payer for each of the two charges. The taxes charge is being paid by Demo 0610, which is the headquarters account, whereas the premium charge is being paid by Demo 0020, which is the policyholder. The taxes charge is being paid by Demo 0610. The taxes charge is being paid by Demo 0610. The charges screen allows me to reassign the payer of a charge, or even an individual invoice item for a charge. Suppose I want to assign a different payer to this invoice item. I simply click the checkbox next to the invoice item. And I click the arrow icon on the Assign Payer button. I can choose between an account payer and a producer payer. I choose Assign to Account. This screen lets me select a new payer and invoice stream, if the payer has multiple invoice streams. I can also decide how to handle invoice items that have been fully or partially paid. No change is needed, so I'll click Cancel to return to the charges screen. The charges screen has a filter for restricting the charges shown to those owned or paid by the account. First, I select Only Own & Pay. Selecting Only Own & Pay shows just the premium charge, because it is paid by the policy owner. Next, I select Only Owned. Only Owned shows all charges that are owned by the account, regardless of the payer. In this case, we see both the premium and the taxes charges. Let's see what the Only Payer filter does. Selecting Only Payer filters out the taxes charge because the Miner Fleet Management group is not the payer of the invoice item for the taxes charge. This concludes our demo on designating an alternate payer. Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Fil                           ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 26.58,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:26.580",
+      "text": "In this demonstration, I am going to add a general liability policy to the minor fleet management group. The premium will be paid by the management group, but the tax will be paid by the headquarters. Here's the minor fleet management group account. Let's create the policy. I click the Actions menu button. And I select Add Policy. First, I type in the policy number.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.46,
+          "probability": 0.9868
+        },
+        {
+          "word": "this",
+          "start": 0.46,
+          "end": 0.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "demonstration,",
+          "start": 0.62,
+          "end": 1.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "I",
+          "start": 1.68,
+          "end": 1.9,
+          "probability": 0.9863
+        },
+        {
+          "word": "am",
+          "start": 1.9,
+          "end": 2.02,
+          "probability": 0.9307
+        },
+        {
+          "word": "going",
+          "start": 2.02,
+          "end": 2.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 2.24,
+          "end": 2.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "add",
+          "start": 2.4,
+          "end": 2.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 2.62,
+          "end": 2.72,
+          "probability": 0.9937
+        },
+        {
+          "word": "general",
+          "start": 2.72,
+          "end": 3.0,
+          "probability": 0.7261
+        },
+        {
+          "word": "liability",
+          "start": 3.0,
+          "end": 3.48,
+          "probability": 0.9834
+        },
+        {
+          "word": "policy",
+          "start": 3.48,
+          "end": 4.14,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 4.14,
+          "end": 4.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 4.36,
+          "end": 4.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "minor",
+          "start": 4.48,
+          "end": 4.76,
+          "probability": 0.3433
+        },
+        {
+          "word": "fleet",
+          "start": 4.76,
+          "end": 5.04,
+          "probability": 0.9766
+        },
+        {
+          "word": "management",
+          "start": 5.04,
+          "end": 5.42,
+          "probability": 0.9902
+        },
+        {
+          "word": "group.",
+          "start": 5.42,
+          "end": 5.94,
+          "probability": 0.9746
+        },
+        {
+          "word": "The",
+          "start": 6.24,
+          "end": 6.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "premium",
+          "start": 6.6,
+          "end": 6.92,
+          "probability": 0.9653
+        },
+        {
+          "word": "will",
+          "start": 6.92,
+          "end": 7.18,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 7.18,
+          "end": 7.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "paid",
+          "start": 7.34,
+          "end": 7.58,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 7.58,
+          "end": 7.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 7.72,
+          "end": 7.84,
+          "probability": 0.998
+        },
+        {
+          "word": "management",
+          "start": 7.84,
+          "end": 8.2,
+          "probability": 0.9717
+        },
+        {
+          "word": "group,",
+          "start": 8.2,
+          "end": 8.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "but",
+          "start": 8.84,
+          "end": 9.06,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 9.06,
+          "end": 9.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "tax",
+          "start": 9.18,
+          "end": 9.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 9.44,
+          "end": 9.6,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 9.6,
+          "end": 9.74,
+          "probability": 0.998
+        },
+        {
+          "word": "paid",
+          "start": 9.74,
+          "end": 9.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "by",
+          "start": 9.98,
+          "end": 10.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 10.14,
+          "end": 10.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "headquarters.",
+          "start": 10.28,
+          "end": 10.66,
+          "probability": 0.9351
+        },
+        {
+          "word": "Here's",
+          "start": 11.44,
+          "end": 12.0,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 12.0,
+          "end": 12.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "minor",
+          "start": 12.12,
+          "end": 12.36,
+          "probability": 0.8784
+        },
+        {
+          "word": "fleet",
+          "start": 12.36,
+          "end": 12.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "management",
+          "start": 12.62,
+          "end": 13.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "group",
+          "start": 13.08,
+          "end": 13.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "account.",
+          "start": 13.54,
+          "end": 13.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "Let's",
+          "start": 14.74,
+          "end": 15.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "create",
+          "start": 15.3,
+          "end": 15.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 15.6,
+          "end": 15.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy.",
+          "start": 15.8,
+          "end": 16.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "I",
+          "start": 16.58,
+          "end": 16.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "click",
+          "start": 16.92,
+          "end": 17.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 17.16,
+          "end": 17.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "Actions",
+          "start": 17.34,
+          "end": 17.86,
+          "probability": 0.8086
+        },
+        {
+          "word": "menu",
+          "start": 17.86,
+          "end": 18.12,
+          "probability": 0.8867
+        },
+        {
+          "word": "button.",
+          "start": 18.12,
+          "end": 18.46,
+          "probability": 0.998
+        },
+        {
+          "word": "And",
+          "start": 20.04,
+          "end": 20.6,
+          "probability": 0.9209
+        },
+        {
+          "word": "I",
+          "start": 20.6,
+          "end": 20.74,
+          "probability": 0.9844
+        },
+        {
+          "word": "select",
+          "start": 20.74,
+          "end": 21.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "Add",
+          "start": 21.1,
+          "end": 21.28,
+          "probability": 0.856
+        },
+        {
+          "word": "Policy.",
+          "start": 21.28,
+          "end": 21.76,
+          "probability": 0.5278
+        },
+        {
+          "word": "First,",
+          "start": 24.3,
+          "end": 24.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "I",
+          "start": 25.1,
+          "end": 25.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "type",
+          "start": 25.32,
+          "end": 25.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 25.56,
+          "end": 25.68,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 25.68,
+          "end": 25.76,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 25.76,
+          "end": 26.2,
+          "probability": 0.9604
+        },
+        {
+          "word": "number.",
+          "start": 26.2,
+          "end": 26.58,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.4,
+      "end": 58.08,
+      "start_formatted": "00:00:30.400",
+      "end_formatted": "00:00:58.080",
+      "text": "Next, I click in the product field. Next, I click in the product field. I select General Liability from the list. Next, I click in the payment plan field. And I select PP12. Let's go to step 2. I'll add the premium charge first. I click Add. The premium charge is $16,200.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 30.4,
+          "end": 31.04,
+          "probability": 0.9819
+        },
+        {
+          "word": "I",
+          "start": 31.32,
+          "end": 31.52,
+          "probability": 0.9893
+        },
+        {
+          "word": "click",
+          "start": 31.52,
+          "end": 31.76,
+          "probability": 0.9829
+        },
+        {
+          "word": "in",
+          "start": 31.76,
+          "end": 31.92,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 31.92,
+          "end": 32.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "product",
+          "start": 32.02,
+          "end": 32.34,
+          "probability": 0.4844
+        },
+        {
+          "word": "field.",
+          "start": 32.34,
+          "end": 32.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "Next,",
+          "start": 34.14,
+          "end": 34.78,
+          "probability": 0.0006
+        },
+        {
+          "word": "I",
+          "start": 34.78,
+          "end": 34.78,
+          "probability": 0.9775
+        },
+        {
+          "word": "click",
+          "start": 34.78,
+          "end": 34.78,
+          "probability": 0.3423
+        },
+        {
+          "word": "in",
+          "start": 34.78,
+          "end": 34.78,
+          "probability": 0.9673
+        },
+        {
+          "word": "the",
+          "start": 34.78,
+          "end": 34.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "product",
+          "start": 34.78,
+          "end": 34.78,
+          "probability": 0.1442
+        },
+        {
+          "word": "field.",
+          "start": 34.78,
+          "end": 34.78,
+          "probability": 0.9634
+        },
+        {
+          "word": "I",
+          "start": 34.78,
+          "end": 34.78,
+          "probability": 0.8579
+        },
+        {
+          "word": "select",
+          "start": 34.78,
+          "end": 35.16,
+          "probability": 0.9834
+        },
+        {
+          "word": "General",
+          "start": 35.16,
+          "end": 35.48,
+          "probability": 0.2069
+        },
+        {
+          "word": "Liability",
+          "start": 35.48,
+          "end": 36.2,
+          "probability": 0.9541
+        },
+        {
+          "word": "from",
+          "start": 36.2,
+          "end": 36.44,
+          "probability": 0.9761
+        },
+        {
+          "word": "the",
+          "start": 36.44,
+          "end": 36.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "list.",
+          "start": 36.58,
+          "end": 36.88,
+          "probability": 0.9844
+        },
+        {
+          "word": "Next,",
+          "start": 38.34,
+          "end": 38.98,
+          "probability": 0.9907
+        },
+        {
+          "word": "I",
+          "start": 39.26,
+          "end": 39.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 39.48,
+          "end": 39.72,
+          "probability": 0.9897
+        },
+        {
+          "word": "in",
+          "start": 39.72,
+          "end": 39.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 39.86,
+          "end": 39.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "payment",
+          "start": 39.94,
+          "end": 40.2,
+          "probability": 0.6904
+        },
+        {
+          "word": "plan",
+          "start": 40.2,
+          "end": 40.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "field.",
+          "start": 40.52,
+          "end": 40.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "And",
+          "start": 42.6,
+          "end": 43.24,
+          "probability": 0.8584
+        },
+        {
+          "word": "I",
+          "start": 43.24,
+          "end": 43.36,
+          "probability": 0.9229
+        },
+        {
+          "word": "select",
+          "start": 43.36,
+          "end": 43.74,
+          "probability": 0.9888
+        },
+        {
+          "word": "PP12.",
+          "start": 43.74,
+          "end": 44.64,
+          "probability": 0.708
+        },
+        {
+          "word": "Let's",
+          "start": 46.76,
+          "end": 47.4,
+          "probability": 0.9639
+        },
+        {
+          "word": "go",
+          "start": 47.4,
+          "end": 47.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 47.54,
+          "end": 47.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "step",
+          "start": 47.68,
+          "end": 47.9,
+          "probability": 0.7148
+        },
+        {
+          "word": "2.",
+          "start": 47.9,
+          "end": 48.2,
+          "probability": 0.668
+        },
+        {
+          "word": "I'll",
+          "start": 50.62,
+          "end": 51.26,
+          "probability": 0.9805
+        },
+        {
+          "word": "add",
+          "start": 51.26,
+          "end": 51.42,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 51.42,
+          "end": 51.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "premium",
+          "start": 51.54,
+          "end": 51.86,
+          "probability": 0.9595
+        },
+        {
+          "word": "charge",
+          "start": 51.86,
+          "end": 52.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "first.",
+          "start": 52.28,
+          "end": 52.74,
+          "probability": 0.9937
+        },
+        {
+          "word": "I",
+          "start": 53.0,
+          "end": 53.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "click",
+          "start": 53.36,
+          "end": 53.62,
+          "probability": 0.9839
+        },
+        {
+          "word": "Add.",
+          "start": 53.62,
+          "end": 53.88,
+          "probability": 0.5186
+        },
+        {
+          "word": "The",
+          "start": 55.14,
+          "end": 55.78,
+          "probability": 0.98
+        },
+        {
+          "word": "premium",
+          "start": 55.78,
+          "end": 56.16,
+          "probability": 0.9868
+        },
+        {
+          "word": "charge",
+          "start": 56.16,
+          "end": 56.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 56.58,
+          "end": 56.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "$16",
+          "start": 56.78,
+          "end": 57.22,
+          "probability": 0.9697
+        },
+        {
+          "word": ",200.",
+          "start": 57.22,
+          "end": 58.08,
+          "probability": 0.9482
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.0,
+      "end": 80.44,
+      "start_formatted": "00:01:00.000",
+      "end_formatted": "00:01:20.440",
+      "text": "I type in the amount. Next, I click Add. Next, I click Add. To add the taxes charge. I click in the type field for the charge. And I select taxes from the list of charge types. The taxes charge is for $1,200.",
+      "words": [
+        {
+          "word": "I",
+          "start": 60.0,
+          "end": 60.24,
+          "probability": 0.9819
+        },
+        {
+          "word": "type",
+          "start": 60.24,
+          "end": 60.48,
+          "probability": 0.9893
+        },
+        {
+          "word": "in",
+          "start": 60.48,
+          "end": 60.62,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 60.62,
+          "end": 60.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "amount.",
+          "start": 60.72,
+          "end": 61.08,
+          "probability": 0.8496
+        },
+        {
+          "word": "Next,",
+          "start": 64.68,
+          "end": 65.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 65.46,
+          "end": 65.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 65.64,
+          "end": 65.88,
+          "probability": 0.9873
+        },
+        {
+          "word": "Add.",
+          "start": 65.88,
+          "end": 66.16,
+          "probability": 0.5039
+        },
+        {
+          "word": "Next,",
+          "start": 66.32,
+          "end": 66.54,
+          "probability": 0.0011
+        },
+        {
+          "word": "I",
+          "start": 66.54,
+          "end": 66.54,
+          "probability": 0.9741
+        },
+        {
+          "word": "click",
+          "start": 66.54,
+          "end": 66.54,
+          "probability": 0.897
+        },
+        {
+          "word": "Add.",
+          "start": 66.54,
+          "end": 66.54,
+          "probability": 0.873
+        },
+        {
+          "word": "To",
+          "start": 66.54,
+          "end": 66.54,
+          "probability": 0.793
+        },
+        {
+          "word": "add",
+          "start": 66.54,
+          "end": 66.76,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 66.76,
+          "end": 66.9,
+          "probability": 0.9805
+        },
+        {
+          "word": "taxes",
+          "start": 66.9,
+          "end": 67.26,
+          "probability": 0.5112
+        },
+        {
+          "word": "charge.",
+          "start": 67.26,
+          "end": 67.68,
+          "probability": 0.9829
+        },
+        {
+          "word": "I",
+          "start": 68.86,
+          "end": 69.38,
+          "probability": 0.9907
+        },
+        {
+          "word": "click",
+          "start": 69.38,
+          "end": 69.64,
+          "probability": 0.9644
+        },
+        {
+          "word": "in",
+          "start": 69.64,
+          "end": 69.78,
+          "probability": 0.9775
+        },
+        {
+          "word": "the",
+          "start": 69.78,
+          "end": 69.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "type",
+          "start": 69.86,
+          "end": 70.1,
+          "probability": 0.5908
+        },
+        {
+          "word": "field",
+          "start": 70.1,
+          "end": 70.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "for",
+          "start": 70.44,
+          "end": 70.62,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 70.62,
+          "end": 70.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "charge.",
+          "start": 70.76,
+          "end": 71.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "And",
+          "start": 73.34,
+          "end": 73.86,
+          "probability": 0.9297
+        },
+        {
+          "word": "I",
+          "start": 73.86,
+          "end": 73.98,
+          "probability": 0.8965
+        },
+        {
+          "word": "select",
+          "start": 73.98,
+          "end": 74.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "taxes",
+          "start": 74.36,
+          "end": 74.74,
+          "probability": 0.7471
+        },
+        {
+          "word": "from",
+          "start": 74.74,
+          "end": 74.98,
+          "probability": 0.979
+        },
+        {
+          "word": "the",
+          "start": 74.98,
+          "end": 75.12,
+          "probability": 0.9888
+        },
+        {
+          "word": "list",
+          "start": 75.12,
+          "end": 75.34,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 75.34,
+          "end": 75.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "charge",
+          "start": 75.48,
+          "end": 75.84,
+          "probability": 0.9692
+        },
+        {
+          "word": "types.",
+          "start": 75.84,
+          "end": 76.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 77.8,
+          "end": 78.32,
+          "probability": 0.9873
+        },
+        {
+          "word": "taxes",
+          "start": 78.32,
+          "end": 78.68,
+          "probability": 0.8906
+        },
+        {
+          "word": "charge",
+          "start": 78.68,
+          "end": 79.1,
+          "probability": 0.7876
+        },
+        {
+          "word": "is",
+          "start": 79.1,
+          "end": 79.26,
+          "probability": 0.9814
+        },
+        {
+          "word": "for",
+          "start": 79.26,
+          "end": 79.42,
+          "probability": 0.9746
+        },
+        {
+          "word": "$1",
+          "start": 79.42,
+          "end": 79.76,
+          "probability": 0.7334
+        },
+        {
+          "word": ",200.",
+          "start": 79.76,
+          "end": 80.44,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 82.22,
+      "end": 96.34,
+      "start_formatted": "00:01:22.220",
+      "end_formatted": "00:01:36.340",
+      "text": "Next, I type in the amount. I type in the amount. To change the payer for the tax. I'll click the search icon. I type M-I-N for the account name. Now I click Search.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 82.22,
+          "end": 82.82,
+          "probability": 0.0003
+        },
+        {
+          "word": "I",
+          "start": 82.82,
+          "end": 82.82,
+          "probability": 0.6636
+        },
+        {
+          "word": "type",
+          "start": 82.82,
+          "end": 83.04,
+          "probability": 0.5957
+        },
+        {
+          "word": "in",
+          "start": 83.04,
+          "end": 83.18,
+          "probability": 0.9082
+        },
+        {
+          "word": "the",
+          "start": 83.18,
+          "end": 83.28,
+          "probability": 0.9829
+        },
+        {
+          "word": "amount.",
+          "start": 83.28,
+          "end": 83.66,
+          "probability": 0.9243
+        },
+        {
+          "word": "I",
+          "start": 84.82,
+          "end": 84.82,
+          "probability": 0.0164
+        },
+        {
+          "word": "type",
+          "start": 84.82,
+          "end": 84.82,
+          "probability": 0.4302
+        },
+        {
+          "word": "in",
+          "start": 84.82,
+          "end": 84.82,
+          "probability": 0.241
+        },
+        {
+          "word": "the",
+          "start": 84.82,
+          "end": 84.82,
+          "probability": 0.8296
+        },
+        {
+          "word": "amount.",
+          "start": 84.82,
+          "end": 84.82,
+          "probability": 0.8062
+        },
+        {
+          "word": "To",
+          "start": 86.2,
+          "end": 86.8,
+          "probability": 0.894
+        },
+        {
+          "word": "change",
+          "start": 86.8,
+          "end": 87.06,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 87.06,
+          "end": 87.22,
+          "probability": 0.9922
+        },
+        {
+          "word": "payer",
+          "start": 87.22,
+          "end": 87.46,
+          "probability": 0.8018
+        },
+        {
+          "word": "for",
+          "start": 87.46,
+          "end": 87.6,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 87.6,
+          "end": 87.72,
+          "probability": 0.9805
+        },
+        {
+          "word": "tax.",
+          "start": 87.72,
+          "end": 88.1,
+          "probability": 0.9868
+        },
+        {
+          "word": "I'll",
+          "start": 88.3,
+          "end": 88.54,
+          "probability": 0.9082
+        },
+        {
+          "word": "click",
+          "start": 88.54,
+          "end": 88.74,
+          "probability": 0.9365
+        },
+        {
+          "word": "the",
+          "start": 88.74,
+          "end": 88.92,
+          "probability": 0.9756
+        },
+        {
+          "word": "search",
+          "start": 88.92,
+          "end": 89.18,
+          "probability": 0.8364
+        },
+        {
+          "word": "icon.",
+          "start": 89.18,
+          "end": 89.66,
+          "probability": 0.9922
+        },
+        {
+          "word": "I",
+          "start": 90.7,
+          "end": 91.3,
+          "probability": 0.9507
+        },
+        {
+          "word": "type",
+          "start": 91.3,
+          "end": 91.68,
+          "probability": 0.9624
+        },
+        {
+          "word": "M",
+          "start": 91.68,
+          "end": 92.18,
+          "probability": 0.1411
+        },
+        {
+          "word": "-I",
+          "start": 92.18,
+          "end": 92.76,
+          "probability": 0.7319
+        },
+        {
+          "word": "-N",
+          "start": 92.76,
+          "end": 93.36,
+          "probability": 0.9888
+        },
+        {
+          "word": "for",
+          "start": 93.36,
+          "end": 93.8,
+          "probability": 0.8779
+        },
+        {
+          "word": "the",
+          "start": 93.8,
+          "end": 93.92,
+          "probability": 0.9932
+        },
+        {
+          "word": "account",
+          "start": 93.92,
+          "end": 94.2,
+          "probability": 0.9702
+        },
+        {
+          "word": "name.",
+          "start": 94.2,
+          "end": 94.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "Now",
+          "start": 95.1,
+          "end": 95.66,
+          "probability": 0.8926
+        },
+        {
+          "word": "I",
+          "start": 95.66,
+          "end": 95.8,
+          "probability": 0.7661
+        },
+        {
+          "word": "click",
+          "start": 95.8,
+          "end": 96.04,
+          "probability": 0.9663
+        },
+        {
+          "word": "Search.",
+          "start": 96.04,
+          "end": 96.34,
+          "probability": 0.3406
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 99.06,
+      "end": 106.7,
+      "start_formatted": "00:01:39.060",
+      "end_formatted": "00:01:46.700",
+      "text": "Here is Minor Fleet Headquarters in the search results. I select it. I click Finish.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 99.06,
+          "end": 99.64,
+          "probability": 0.9507
+        },
+        {
+          "word": "is",
+          "start": 99.64,
+          "end": 99.8,
+          "probability": 0.9844
+        },
+        {
+          "word": "Minor",
+          "start": 99.8,
+          "end": 100.06,
+          "probability": 0.394
+        },
+        {
+          "word": "Fleet",
+          "start": 100.06,
+          "end": 100.34,
+          "probability": 0.8481
+        },
+        {
+          "word": "Headquarters",
+          "start": 100.34,
+          "end": 100.92,
+          "probability": 0.7998
+        },
+        {
+          "word": "in",
+          "start": 100.92,
+          "end": 101.16,
+          "probability": 0.7759
+        },
+        {
+          "word": "the",
+          "start": 101.16,
+          "end": 101.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "search",
+          "start": 101.24,
+          "end": 101.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "results.",
+          "start": 101.52,
+          "end": 102.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 102.32,
+          "end": 102.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "select",
+          "start": 102.66,
+          "end": 103.04,
+          "probability": 0.979
+        },
+        {
+          "word": "it.",
+          "start": 103.04,
+          "end": 103.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 105.56,
+          "end": 106.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "click",
+          "start": 106.14,
+          "end": 106.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "Finish.",
+          "start": 106.4,
+          "end": 106.7,
+          "probability": 0.6333
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 109.68,
+      "end": 127.76,
+      "start_formatted": "00:01:49.680",
+      "end_formatted": "00:02:07.760",
+      "text": "Let's go to the charges screen for the account. We can see the default payer for each of the two charges. The taxes charge is being paid by Demo 0610, which is the headquarters account, whereas the premium charge is being paid by Demo 0020, which is the policyholder.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 109.68,
+          "end": 110.24,
+          "probability": 0.9644
+        },
+        {
+          "word": "go",
+          "start": 110.24,
+          "end": 110.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 110.38,
+          "end": 110.52,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 110.52,
+          "end": 110.64,
+          "probability": 0.998
+        },
+        {
+          "word": "charges",
+          "start": 110.64,
+          "end": 110.96,
+          "probability": 0.7246
+        },
+        {
+          "word": "screen",
+          "start": 110.96,
+          "end": 111.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 111.38,
+          "end": 111.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 111.62,
+          "end": 111.74,
+          "probability": 0.999
+        },
+        {
+          "word": "account.",
+          "start": 111.74,
+          "end": 112.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "We",
+          "start": 114.04,
+          "end": 114.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 114.6,
+          "end": 114.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 114.76,
+          "end": 114.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 114.94,
+          "end": 115.08,
+          "probability": 0.998
+        },
+        {
+          "word": "default",
+          "start": 115.08,
+          "end": 115.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "payer",
+          "start": 115.42,
+          "end": 115.74,
+          "probability": 0.9756
+        },
+        {
+          "word": "for",
+          "start": 115.74,
+          "end": 115.94,
+          "probability": 0.998
+        },
+        {
+          "word": "each",
+          "start": 115.94,
+          "end": 116.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 116.16,
+          "end": 116.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 116.3,
+          "end": 116.4,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 116.4,
+          "end": 116.56,
+          "probability": 0.9707
+        },
+        {
+          "word": "charges.",
+          "start": 116.56,
+          "end": 117.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 117.48,
+          "end": 118.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "taxes",
+          "start": 118.02,
+          "end": 118.38,
+          "probability": 0.8433
+        },
+        {
+          "word": "charge",
+          "start": 118.38,
+          "end": 118.82,
+          "probability": 0.8491
+        },
+        {
+          "word": "is",
+          "start": 118.82,
+          "end": 118.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "being",
+          "start": 118.98,
+          "end": 119.2,
+          "probability": 0.999
+        },
+        {
+          "word": "paid",
+          "start": 119.2,
+          "end": 119.5,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 119.5,
+          "end": 119.68,
+          "probability": 0.999
+        },
+        {
+          "word": "Demo",
+          "start": 119.68,
+          "end": 120.04,
+          "probability": 0.7769
+        },
+        {
+          "word": "0610,",
+          "start": 120.04,
+          "end": 120.74,
+          "probability": 0.7949
+        },
+        {
+          "word": "which",
+          "start": 121.06,
+          "end": 121.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 121.32,
+          "end": 121.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 121.44,
+          "end": 121.58,
+          "probability": 0.999
+        },
+        {
+          "word": "headquarters",
+          "start": 121.58,
+          "end": 122.02,
+          "probability": 0.9233
+        },
+        {
+          "word": "account,",
+          "start": 122.02,
+          "end": 122.62,
+          "probability": 0.9932
+        },
+        {
+          "word": "whereas",
+          "start": 122.84,
+          "end": 123.14,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 123.14,
+          "end": 123.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "premium",
+          "start": 123.42,
+          "end": 123.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "charge",
+          "start": 123.78,
+          "end": 124.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "is",
+          "start": 124.18,
+          "end": 124.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "being",
+          "start": 124.36,
+          "end": 124.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "paid",
+          "start": 124.6,
+          "end": 124.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 124.88,
+          "end": 125.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "Demo",
+          "start": 125.04,
+          "end": 125.44,
+          "probability": 0.999
+        },
+        {
+          "word": "0020,",
+          "start": 125.44,
+          "end": 126.08,
+          "probability": 0.9546
+        },
+        {
+          "word": "which",
+          "start": 126.52,
+          "end": 126.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 126.78,
+          "end": 126.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 126.92,
+          "end": 127.02,
+          "probability": 0.999
+        },
+        {
+          "word": "policyholder.",
+          "start": 127.02,
+          "end": 127.76,
+          "probability": 0.8604
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 129.36,
+      "end": 142.26,
+      "start_formatted": "00:02:09.360",
+      "end_formatted": "00:02:22.260",
+      "text": "The taxes charge is being paid by Demo 0610. The taxes charge is being paid by Demo 0610. The charges screen allows me to reassign the payer of a charge, or even an individual invoice item for a charge.",
+      "words": [
+        {
+          "word": "The",
+          "start": 129.36,
+          "end": 130.0,
+          "probability": 0.7241
+        },
+        {
+          "word": "taxes",
+          "start": 130.0,
+          "end": 130.34,
+          "probability": 0.2241
+        },
+        {
+          "word": "charge",
+          "start": 130.34,
+          "end": 130.76,
+          "probability": 0.9082
+        },
+        {
+          "word": "is",
+          "start": 130.76,
+          "end": 130.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "being",
+          "start": 130.98,
+          "end": 131.34,
+          "probability": 0.0
+        },
+        {
+          "word": "paid",
+          "start": 131.34,
+          "end": 131.34,
+          "probability": 0.0005
+        },
+        {
+          "word": "by",
+          "start": 131.34,
+          "end": 133.9,
+          "probability": 0.069
+        },
+        {
+          "word": "Demo",
+          "start": 133.9,
+          "end": 134.7,
+          "probability": 0.4978
+        },
+        {
+          "word": "0610.",
+          "start": 134.7,
+          "end": 135.5,
+          "probability": 0.7925
+        },
+        {
+          "word": "The",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.5796
+        },
+        {
+          "word": "taxes",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.2319
+        },
+        {
+          "word": "charge",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.3196
+        },
+        {
+          "word": "is",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.877
+        },
+        {
+          "word": "being",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.0013
+        },
+        {
+          "word": "paid",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.7896
+        },
+        {
+          "word": "by",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.625
+        },
+        {
+          "word": "Demo",
+          "start": 135.5,
+          "end": 135.5,
+          "probability": 0.833
+        },
+        {
+          "word": "0610.",
+          "start": 135.5,
+          "end": 135.6,
+          "probability": 0.9614
+        },
+        {
+          "word": "The",
+          "start": 135.92,
+          "end": 136.56,
+          "probability": 0.6753
+        },
+        {
+          "word": "charges",
+          "start": 136.56,
+          "end": 136.92,
+          "probability": 0.5532
+        },
+        {
+          "word": "screen",
+          "start": 136.92,
+          "end": 137.28,
+          "probability": 0.769
+        },
+        {
+          "word": "allows",
+          "start": 137.28,
+          "end": 137.6,
+          "probability": 0.9526
+        },
+        {
+          "word": "me",
+          "start": 137.6,
+          "end": 137.9,
+          "probability": 0.979
+        },
+        {
+          "word": "to",
+          "start": 137.9,
+          "end": 138.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "reassign",
+          "start": 138.04,
+          "end": 138.48,
+          "probability": 0.8276
+        },
+        {
+          "word": "the",
+          "start": 138.48,
+          "end": 138.58,
+          "probability": 0.938
+        },
+        {
+          "word": "payer",
+          "start": 138.58,
+          "end": 138.8,
+          "probability": 0.939
+        },
+        {
+          "word": "of",
+          "start": 138.8,
+          "end": 138.96,
+          "probability": 0.9082
+        },
+        {
+          "word": "a",
+          "start": 138.96,
+          "end": 139.06,
+          "probability": 0.9478
+        },
+        {
+          "word": "charge,",
+          "start": 139.06,
+          "end": 139.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "or",
+          "start": 139.68,
+          "end": 139.94,
+          "probability": 0.9829
+        },
+        {
+          "word": "even",
+          "start": 139.94,
+          "end": 140.12,
+          "probability": 0.9595
+        },
+        {
+          "word": "an",
+          "start": 140.12,
+          "end": 140.26,
+          "probability": 0.9619
+        },
+        {
+          "word": "individual",
+          "start": 140.26,
+          "end": 140.76,
+          "probability": 0.9688
+        },
+        {
+          "word": "invoice",
+          "start": 140.76,
+          "end": 141.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "item",
+          "start": 141.28,
+          "end": 141.6,
+          "probability": 0.9785
+        },
+        {
+          "word": "for",
+          "start": 141.6,
+          "end": 141.78,
+          "probability": 0.9385
+        },
+        {
+          "word": "a",
+          "start": 141.78,
+          "end": 141.92,
+          "probability": 0.9688
+        },
+        {
+          "word": "charge.",
+          "start": 141.92,
+          "end": 142.26,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 142.26,
+      "end": 149.48,
+      "start_formatted": "00:02:22.260",
+      "end_formatted": "00:02:29.480",
+      "text": "Suppose I want to assign a different payer to this invoice item. I simply click the checkbox next to the invoice item.",
+      "words": [
+        {
+          "word": "Suppose",
+          "start": 142.26,
+          "end": 143.28,
+          "probability": 0.9546
+        },
+        {
+          "word": "I",
+          "start": 143.28,
+          "end": 143.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "want",
+          "start": 143.6,
+          "end": 143.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 143.78,
+          "end": 143.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "assign",
+          "start": 143.92,
+          "end": 144.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 144.22,
+          "end": 144.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "different",
+          "start": 144.38,
+          "end": 144.62,
+          "probability": 0.999
+        },
+        {
+          "word": "payer",
+          "start": 144.62,
+          "end": 144.92,
+          "probability": 0.9233
+        },
+        {
+          "word": "to",
+          "start": 144.92,
+          "end": 145.12,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 145.12,
+          "end": 145.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 145.34,
+          "end": 145.74,
+          "probability": 0.9585
+        },
+        {
+          "word": "item.",
+          "start": 145.74,
+          "end": 146.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 146.42,
+          "end": 146.78,
+          "probability": 0.999
+        },
+        {
+          "word": "simply",
+          "start": 146.78,
+          "end": 147.08,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 147.08,
+          "end": 147.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 147.36,
+          "end": 147.52,
+          "probability": 0.999
+        },
+        {
+          "word": "checkbox",
+          "start": 147.52,
+          "end": 148.04,
+          "probability": 0.9531
+        },
+        {
+          "word": "next",
+          "start": 148.04,
+          "end": 148.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 148.34,
+          "end": 148.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 148.54,
+          "end": 148.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "invoice",
+          "start": 148.66,
+          "end": 149.08,
+          "probability": 0.9272
+        },
+        {
+          "word": "item.",
+          "start": 149.08,
+          "end": 149.48,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 151.48,
+      "end": 154.4,
+      "start_formatted": "00:02:31.480",
+      "end_formatted": "00:02:34.400",
+      "text": "And I click the arrow icon on the Assign Payer button.",
+      "words": [
+        {
+          "word": "And",
+          "start": 151.48,
+          "end": 152.06,
+          "probability": 0.9854
+        },
+        {
+          "word": "I",
+          "start": 152.06,
+          "end": 152.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "click",
+          "start": 152.2,
+          "end": 152.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 152.44,
+          "end": 152.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "arrow",
+          "start": 152.6,
+          "end": 152.84,
+          "probability": 0.998
+        },
+        {
+          "word": "icon",
+          "start": 152.84,
+          "end": 153.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 153.18,
+          "end": 153.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.38,
+          "end": 153.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "Assign",
+          "start": 153.48,
+          "end": 153.82,
+          "probability": 0.9111
+        },
+        {
+          "word": "Payer",
+          "start": 153.82,
+          "end": 154.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "button.",
+          "start": 154.08,
+          "end": 154.4,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 155.98,
+      "end": 160.8,
+      "start_formatted": "00:02:35.980",
+      "end_formatted": "00:02:40.800",
+      "text": "I can choose between an account payer and a producer payer. I choose Assign to Account.",
+      "words": [
+        {
+          "word": "I",
+          "start": 155.98,
+          "end": 156.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 156.56,
+          "end": 156.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "choose",
+          "start": 156.72,
+          "end": 156.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "between",
+          "start": 156.98,
+          "end": 157.28,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 157.28,
+          "end": 157.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "account",
+          "start": 157.46,
+          "end": 157.76,
+          "probability": 0.8857
+        },
+        {
+          "word": "payer",
+          "start": 157.76,
+          "end": 158.02,
+          "probability": 0.9907
+        },
+        {
+          "word": "and",
+          "start": 158.02,
+          "end": 158.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 158.22,
+          "end": 158.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "producer",
+          "start": 158.28,
+          "end": 158.62,
+          "probability": 0.9858
+        },
+        {
+          "word": "payer.",
+          "start": 158.62,
+          "end": 159.02,
+          "probability": 0.9902
+        },
+        {
+          "word": "I",
+          "start": 159.3,
+          "end": 159.66,
+          "probability": 1.0
+        },
+        {
+          "word": "choose",
+          "start": 159.66,
+          "end": 159.92,
+          "probability": 0.999
+        },
+        {
+          "word": "Assign",
+          "start": 159.92,
+          "end": 160.3,
+          "probability": 0.9814
+        },
+        {
+          "word": "to",
+          "start": 160.3,
+          "end": 160.44,
+          "probability": 0.9873
+        },
+        {
+          "word": "Account.",
+          "start": 160.44,
+          "end": 160.8,
+          "probability": 0.8232
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 162.54,
+      "end": 168.24,
+      "start_formatted": "00:02:42.540",
+      "end_formatted": "00:02:48.240",
+      "text": "This screen lets me select a new payer and invoice stream, if the payer has multiple invoice streams.",
+      "words": [
+        {
+          "word": "This",
+          "start": 162.54,
+          "end": 163.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen",
+          "start": 163.12,
+          "end": 163.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "lets",
+          "start": 163.44,
+          "end": 163.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "me",
+          "start": 163.7,
+          "end": 163.9,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 163.9,
+          "end": 164.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 164.3,
+          "end": 164.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 164.48,
+          "end": 164.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "payer",
+          "start": 164.62,
+          "end": 164.9,
+          "probability": 0.9761
+        },
+        {
+          "word": "and",
+          "start": 164.9,
+          "end": 165.04,
+          "probability": 0.9604
+        },
+        {
+          "word": "invoice",
+          "start": 165.04,
+          "end": 165.42,
+          "probability": 0.998
+        },
+        {
+          "word": "stream,",
+          "start": 165.42,
+          "end": 165.82,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 166.08,
+          "end": 166.34,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 166.34,
+          "end": 166.44,
+          "probability": 1.0
+        },
+        {
+          "word": "payer",
+          "start": 166.44,
+          "end": 166.64,
+          "probability": 0.9883
+        },
+        {
+          "word": "has",
+          "start": 166.64,
+          "end": 166.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "multiple",
+          "start": 166.88,
+          "end": 167.26,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 167.26,
+          "end": 167.82,
+          "probability": 0.999
+        },
+        {
+          "word": "streams.",
+          "start": 167.82,
+          "end": 168.24,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 168.24,
+      "end": 178.12,
+      "start_formatted": "00:02:48.240",
+      "end_formatted": "00:02:58.120",
+      "text": "I can also decide how to handle invoice items that have been fully or partially paid. No change is needed, so I'll click Cancel to return to the charges screen.",
+      "words": [
+        {
+          "word": "I",
+          "start": 168.24,
+          "end": 169.18,
+          "probability": 0.9668
+        },
+        {
+          "word": "can",
+          "start": 169.18,
+          "end": 169.32,
+          "probability": 0.998
+        },
+        {
+          "word": "also",
+          "start": 169.32,
+          "end": 169.6,
+          "probability": 0.999
+        },
+        {
+          "word": "decide",
+          "start": 169.6,
+          "end": 170.0,
+          "probability": 0.999
+        },
+        {
+          "word": "how",
+          "start": 170.0,
+          "end": 170.24,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 170.24,
+          "end": 170.4,
+          "probability": 0.999
+        },
+        {
+          "word": "handle",
+          "start": 170.4,
+          "end": 170.68,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice",
+          "start": 170.68,
+          "end": 171.22,
+          "probability": 0.9863
+        },
+        {
+          "word": "items",
+          "start": 171.22,
+          "end": 171.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 171.56,
+          "end": 171.76,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 171.76,
+          "end": 171.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "been",
+          "start": 171.9,
+          "end": 172.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "fully",
+          "start": 172.04,
+          "end": 172.34,
+          "probability": 0.999
+        },
+        {
+          "word": "or",
+          "start": 172.34,
+          "end": 172.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "partially",
+          "start": 172.54,
+          "end": 172.96,
+          "probability": 0.999
+        },
+        {
+          "word": "paid.",
+          "start": 172.96,
+          "end": 173.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "No",
+          "start": 173.78,
+          "end": 174.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "change",
+          "start": 174.28,
+          "end": 174.68,
+          "probability": 0.9795
+        },
+        {
+          "word": "is",
+          "start": 174.68,
+          "end": 174.86,
+          "probability": 0.999
+        },
+        {
+          "word": "needed,",
+          "start": 174.86,
+          "end": 175.16,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 175.4,
+          "end": 175.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "I'll",
+          "start": 175.64,
+          "end": 175.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 175.84,
+          "end": 176.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "Cancel",
+          "start": 176.08,
+          "end": 176.48,
+          "probability": 0.8198
+        },
+        {
+          "word": "to",
+          "start": 176.48,
+          "end": 176.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "return",
+          "start": 176.64,
+          "end": 176.94,
+          "probability": 0.9897
+        },
+        {
+          "word": "to",
+          "start": 176.94,
+          "end": 177.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 177.16,
+          "end": 177.3,
+          "probability": 0.999
+        },
+        {
+          "word": "charges",
+          "start": 177.3,
+          "end": 177.66,
+          "probability": 0.2766
+        },
+        {
+          "word": "screen.",
+          "start": 177.66,
+          "end": 178.12,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 179.14,
+      "end": 184.36,
+      "start_formatted": "00:02:59.140",
+      "end_formatted": "00:03:04.360",
+      "text": "The charges screen has a filter for restricting the charges shown to those owned or paid by the account.",
+      "words": [
+        {
+          "word": "The",
+          "start": 179.14,
+          "end": 179.68,
+          "probability": 0.999
+        },
+        {
+          "word": "charges",
+          "start": 179.68,
+          "end": 180.04,
+          "probability": 0.9551
+        },
+        {
+          "word": "screen",
+          "start": 180.04,
+          "end": 180.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 180.4,
+          "end": 180.64,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 180.64,
+          "end": 180.76,
+          "probability": 1.0
+        },
+        {
+          "word": "filter",
+          "start": 180.76,
+          "end": 181.02,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 181.02,
+          "end": 181.26,
+          "probability": 1.0
+        },
+        {
+          "word": "restricting",
+          "start": 181.26,
+          "end": 181.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 181.76,
+          "end": 181.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "charges",
+          "start": 181.96,
+          "end": 182.36,
+          "probability": 0.999
+        },
+        {
+          "word": "shown",
+          "start": 182.36,
+          "end": 182.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 182.66,
+          "end": 182.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "those",
+          "start": 182.84,
+          "end": 183.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "owned",
+          "start": 183.08,
+          "end": 183.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "or",
+          "start": 183.36,
+          "end": 183.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "paid",
+          "start": 183.46,
+          "end": 183.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 183.7,
+          "end": 183.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 183.86,
+          "end": 184.0,
+          "probability": 1.0
+        },
+        {
+          "word": "account.",
+          "start": 184.0,
+          "end": 184.36,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 185.84,
+      "end": 188.12,
+      "start_formatted": "00:03:05.840",
+      "end_formatted": "00:03:08.120",
+      "text": "First, I select Only Own & Pay.",
+      "words": [
+        {
+          "word": "First,",
+          "start": 185.84,
+          "end": 186.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 186.62,
+          "end": 186.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "select",
+          "start": 186.82,
+          "end": 187.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "Only",
+          "start": 187.22,
+          "end": 187.48,
+          "probability": 0.8267
+        },
+        {
+          "word": "Own",
+          "start": 187.48,
+          "end": 187.68,
+          "probability": 0.8545
+        },
+        {
+          "word": "&",
+          "start": 187.68,
+          "end": 187.84,
+          "probability": 0.5479
+        },
+        {
+          "word": "Pay.",
+          "start": 187.84,
+          "end": 188.12,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 192.42,
+      "end": 198.0,
+      "start_formatted": "00:03:12.420",
+      "end_formatted": "00:03:18.000",
+      "text": "Selecting Only Own & Pay shows just the premium charge, because it is paid by the policy owner.",
+      "words": [
+        {
+          "word": "Selecting",
+          "start": 192.42,
+          "end": 192.94,
+          "probability": 0.9746
+        },
+        {
+          "word": "Only",
+          "start": 192.94,
+          "end": 193.18,
+          "probability": 0.4814
+        },
+        {
+          "word": "Own",
+          "start": 193.18,
+          "end": 193.36,
+          "probability": 0.7114
+        },
+        {
+          "word": "&",
+          "start": 193.36,
+          "end": 193.52,
+          "probability": 0.3416
+        },
+        {
+          "word": "Pay",
+          "start": 193.52,
+          "end": 193.88,
+          "probability": 0.9751
+        },
+        {
+          "word": "shows",
+          "start": 193.88,
+          "end": 194.48,
+          "probability": 0.5625
+        },
+        {
+          "word": "just",
+          "start": 194.48,
+          "end": 194.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 194.72,
+          "end": 194.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "premium",
+          "start": 194.9,
+          "end": 195.22,
+          "probability": 0.915
+        },
+        {
+          "word": "charge,",
+          "start": 195.22,
+          "end": 195.74,
+          "probability": 0.998
+        },
+        {
+          "word": "because",
+          "start": 196.02,
+          "end": 196.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "it",
+          "start": 196.32,
+          "end": 196.52,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 196.52,
+          "end": 196.64,
+          "probability": 0.998
+        },
+        {
+          "word": "paid",
+          "start": 196.64,
+          "end": 196.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "by",
+          "start": 196.86,
+          "end": 197.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 197.04,
+          "end": 197.18,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 197.18,
+          "end": 197.6,
+          "probability": 0.9106
+        },
+        {
+          "word": "owner.",
+          "start": 197.6,
+          "end": 198.0,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 198.68,
+      "end": 200.7,
+      "start_formatted": "00:03:18.680",
+      "end_formatted": "00:03:20.700",
+      "text": "Next, I select Only Owned.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 198.68,
+          "end": 199.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 199.44,
+          "end": 199.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "select",
+          "start": 199.62,
+          "end": 200.02,
+          "probability": 0.9927
+        },
+        {
+          "word": "Only",
+          "start": 200.02,
+          "end": 200.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "Owned.",
+          "start": 200.28,
+          "end": 200.7,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 204.12,
+      "end": 208.82,
+      "start_formatted": "00:03:24.120",
+      "end_formatted": "00:03:28.820",
+      "text": "Only Owned shows all charges that are owned by the account, regardless of the payer.",
+      "words": [
+        {
+          "word": "Only",
+          "start": 204.12,
+          "end": 204.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "Owned",
+          "start": 204.64,
+          "end": 205.08,
+          "probability": 0.9883
+        },
+        {
+          "word": "shows",
+          "start": 205.08,
+          "end": 205.44,
+          "probability": 0.9409
+        },
+        {
+          "word": "all",
+          "start": 205.44,
+          "end": 205.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "charges",
+          "start": 205.7,
+          "end": 206.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "that",
+          "start": 206.08,
+          "end": 206.34,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 206.34,
+          "end": 206.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "owned",
+          "start": 206.5,
+          "end": 206.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "by",
+          "start": 206.72,
+          "end": 206.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 206.88,
+          "end": 207.02,
+          "probability": 0.999
+        },
+        {
+          "word": "account,",
+          "start": 207.02,
+          "end": 207.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "regardless",
+          "start": 207.66,
+          "end": 208.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 208.16,
+          "end": 208.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 208.46,
+          "end": 208.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "payer.",
+          "start": 208.56,
+          "end": 208.82,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 209.14,
+      "end": 212.7,
+      "start_formatted": "00:03:29.140",
+      "end_formatted": "00:03:32.700",
+      "text": "In this case, we see both the premium and the taxes charges.",
+      "words": [
+        {
+          "word": "In",
+          "start": 209.14,
+          "end": 209.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 209.5,
+          "end": 209.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "case,",
+          "start": 209.7,
+          "end": 210.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "we",
+          "start": 210.26,
+          "end": 210.46,
+          "probability": 0.998
+        },
+        {
+          "word": "see",
+          "start": 210.46,
+          "end": 210.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "both",
+          "start": 210.68,
+          "end": 210.92,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 210.92,
+          "end": 211.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "premium",
+          "start": 211.1,
+          "end": 211.46,
+          "probability": 0.9653
+        },
+        {
+          "word": "and",
+          "start": 211.46,
+          "end": 211.7,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 211.7,
+          "end": 211.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "taxes",
+          "start": 211.8,
+          "end": 212.18,
+          "probability": 0.9409
+        },
+        {
+          "word": "charges.",
+          "start": 212.18,
+          "end": 212.7,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 214.5,
+      "end": 216.76,
+      "start_formatted": "00:03:34.500",
+      "end_formatted": "00:03:36.760",
+      "text": "Let's see what the Only Payer filter does.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 214.5,
+          "end": 215.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "see",
+          "start": 215.14,
+          "end": 215.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "what",
+          "start": 215.24,
+          "end": 215.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 215.4,
+          "end": 215.5,
+          "probability": 1.0
+        },
+        {
+          "word": "Only",
+          "start": 215.5,
+          "end": 215.7,
+          "probability": 0.6108
+        },
+        {
+          "word": "Payer",
+          "start": 215.7,
+          "end": 216.02,
+          "probability": 0.8506
+        },
+        {
+          "word": "filter",
+          "start": 216.02,
+          "end": 216.3,
+          "probability": 0.9414
+        },
+        {
+          "word": "does.",
+          "start": 216.3,
+          "end": 216.76,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 218.64,
+      "end": 226.52,
+      "start_formatted": "00:03:38.640",
+      "end_formatted": "00:03:46.520",
+      "text": "Selecting Only Payer filters out the taxes charge because the Miner Fleet Management group is not the payer of the invoice item for the taxes charge.",
+      "words": [
+        {
+          "word": "Selecting",
+          "start": 218.64,
+          "end": 219.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Only",
+          "start": 219.28,
+          "end": 219.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "Payer",
+          "start": 219.48,
+          "end": 219.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "filters",
+          "start": 219.86,
+          "end": 220.36,
+          "probability": 0.6123
+        },
+        {
+          "word": "out",
+          "start": 220.36,
+          "end": 220.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 220.68,
+          "end": 220.82,
+          "probability": 1.0
+        },
+        {
+          "word": "taxes",
+          "start": 220.82,
+          "end": 221.18,
+          "probability": 0.9019
+        },
+        {
+          "word": "charge",
+          "start": 221.18,
+          "end": 221.62,
+          "probability": 0.9932
+        },
+        {
+          "word": "because",
+          "start": 221.62,
+          "end": 221.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 221.92,
+          "end": 222.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "Miner",
+          "start": 222.14,
+          "end": 222.46,
+          "probability": 0.6221
+        },
+        {
+          "word": "Fleet",
+          "start": 222.46,
+          "end": 222.7,
+          "probability": 0.9673
+        },
+        {
+          "word": "Management",
+          "start": 222.7,
+          "end": 223.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "group",
+          "start": 223.12,
+          "end": 223.54,
+          "probability": 0.7085
+        },
+        {
+          "word": "is",
+          "start": 223.54,
+          "end": 223.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 223.78,
+          "end": 223.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 223.96,
+          "end": 224.12,
+          "probability": 1.0
+        },
+        {
+          "word": "payer",
+          "start": 224.12,
+          "end": 224.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 224.36,
+          "end": 224.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 224.52,
+          "end": 224.62,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice",
+          "start": 224.62,
+          "end": 225.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "item",
+          "start": 225.02,
+          "end": 225.34,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 225.34,
+          "end": 225.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 225.54,
+          "end": 225.64,
+          "probability": 1.0
+        },
+        {
+          "word": "taxes",
+          "start": 225.64,
+          "end": 226.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "charge.",
+          "start": 226.02,
+          "end": 226.52,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 226.9,
+      "end": 230.04,
+      "start_formatted": "00:03:46.900",
+      "end_formatted": "00:03:50.040",
+      "text": "This concludes our demo on designating an alternate payer.",
+      "words": [
+        {
+          "word": "This",
+          "start": 226.9,
+          "end": 227.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "concludes",
+          "start": 227.5,
+          "end": 227.9,
+          "probability": 1.0
+        },
+        {
+          "word": "our",
+          "start": 227.9,
+          "end": 228.1,
+          "probability": 1.0
+        },
+        {
+          "word": "demo",
+          "start": 228.1,
+          "end": 228.38,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 228.38,
+          "end": 228.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "designating",
+          "start": 228.64,
+          "end": 229.16,
+          "probability": 0.9775
+        },
+        {
+          "word": "an",
+          "start": 229.16,
+          "end": 229.3,
+          "probability": 0.999
+        },
+        {
+          "word": "alternate",
+          "start": 229.3,
+          "end": 229.62,
+          "probability": 0.9341
+        },
+        {
+          "word": "payer.",
+          "start": 229.62,
+          "end": 230.04,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 230.66,
+      "end": 231.36,
+      "start_formatted": "00:03:50.660",
+      "end_formatted": "00:03:51.360",
+      "text": "Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Filogy Fil",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 230.66,
+          "end": 230.7,
+          "probability": 0.0
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.4807
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.6704
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9307
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9688
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.7,
+          "end": 230.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.72,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.72,
+          "end": 230.74,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.74,
+          "end": 230.76,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.76,
+          "end": 230.8,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.8,
+          "end": 230.82,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.82,
+          "end": 230.84,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.84,
+          "end": 230.86,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.981
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.98
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9785
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9775
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9785
+        },
+        {
+          "word": "Filogy",
+          "start": 230.86,
+          "end": 230.86,
+          "probability": 0.9775
+        },
+        {
+          "word": "Fil",
+          "start": 230.86,
+          "end": 231.36,
+          "probability": 0.9658
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 33,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 38,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 42,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 43,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 44,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 45,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 46,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 47,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 48,
+      "start": 231.34,
+      "end": 231.34,
+      "start_formatted": "00:03:51.340",
+      "end_formatted": "00:03:51.340",
+      "text": "",
+      "words": []
+    }
+  ]
+}

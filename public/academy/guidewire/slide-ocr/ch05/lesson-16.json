@@ -1,0 +1,445 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-16",
+    "slide_count": 39,
+    "slides_with_text": 33,
+    "total_words": 2087,
+    "avg_confidence": 86.88,
+    "processing_time_seconds": 17.57,
+    "extracted_at": "2026-02-13T12:12:29.410153"
+  },
+  "full_text": "Administering workers’ compensation\n\nLesson\nobjectives\n\n¢ Describe the setup and administration\n\nprocess of jurisdictional benefit parameters\nDescribe the setup and administration\nprocess of managing ICD codes\n\nSet up denial periods for jurisdictions\n\nSet up and administer PPD parameters\n\nSet up search columns and default loss types\nfor users\n\n| Lesson outline\n\nWorkers’ compensation setup basics\nJurisdictional benefit parameters\n\nPPD administration parameters\nCompensability parameters\n\nICD-10 codes\n\nUser settings\n\nWorkers’ compensation setup\nbasics\n\n| ClaimCenter setup for WC background Gi\n\n¢ To implement the WC Line of Business (LOB), key administration tasks are\nrequired. Most of them are related to:\n\nBenefit calculations for Time Loss Exposures\nCompensability Decision Activity\n\nPPD (Permanent Partial Disability) calculations\nICD-10 codes\n\n¢ Note: ClaimCenter sample data provides administration parameters as examples\nonly\n\nMany parameters are out of date\n\nSome parameters may not be included for some jurisdictions\n\nConsult with official state board guidelines for official WC rates\n\nIt is assumed that, during an implementation, many WC parameters will be created, updated, or added\n\n| ClaimCenter WC Administration screens\n\nTF Clsimcenter* Desitop |» iaim|~ Search» AdsressBook | Dashboard Team Administration |\n\n©\ney\n\n— Jurisdictional benefit rates\n\nand settings\n@ PPD Min / Max\nf PPD limits\n\n—— Compensability decision\nformulas\n\n| Benefit parameters G&G\n\n¢ Used to calculate payments for lost time\n* Contain jurisdiction, start date, and end date\n\n* Sets benefit rates for a specific time period\n\n+ Claims that have a Time Loss exposure matching a jurisdiction and start/end date for the parameter\nuse the rates on that parameter\n\n* Conditions such as applying minimums and maximums may be used\n\nSample data provides sample parameters for 15 U.S. states\n\nNote: All sample data is for illustrative purposes only and does not reflect actual rates as\nprescribed by law.\n\n=.5B 9b B\n\nBenefit parameters: definitions\n\nAll four benefit types (TTD, TPD, PTD, and PPD)\nin ClaimCenter come with four “basic”\nparameters/rates:\n\nPercent of Wages (decimal): Usually 67%\n(two-thirds)\n\nMaximum Weekly Benefit ($): Sets maximum\npayout imposed by that jurisdiction.\n\nMinimum Weekly Benefit ($): Sets minimum\npayout imposed by that jurisdiction.\n\nMinimum adjusted by Weekly Wage: Yes/No\n\nGi\n\nTemporary Total Disability (TTD)\n\nPercent Of Wages 66.6667\nMaximum Weekly\n\n$525.00\nBenefit\nMinimum Weekly\n\n$50.00\n\nBenefit\n\nMinimum adjusted by Yes\nWeekly Wage\n\nExample: Time Loss exposure with no parameters [5\n\nType > Begin >  #PymtWeeks\nClaim Parameters,\n\nWeekly Wage (Pre-Injury 5 | 1,000.00\nWeekly Wage Amount Post- [ §\n\ninjury\n\nJurisdiction Texas\n\nTemporary Total Disability (TTD)\n\nReference Data\n\nWeekly Comp Rate (manual)\n\nNot available\n\ns\n\nTemporary Partial Disability (TPD)\n\nReference Data\n\nWeekly Comp Rate (manual)\n\nNot available\n\ns\n\nEnd\n\nMonthly Comp\nNo data to display\n\nWkly Comp Rate 2 Post injury Wkly Wages\n\nWaiting Period\nWaiting Period Applied Yes\nWaiting Period Days\nRetroactive Period\n\nAdd\n\nFrom > To > DaysWithheld\nNo data to display\n\n‘Permanent Total Disability (PTD)\n\nReference Data Not available\n\nWeekly Comp Rate (manual) | $\n\n‘Permanent Partial Disability (PPD)\n\nReference Data Not available\n\nWeekly Comp Rate (manual) [ $\n\nNo\n\nDays Repaid\n\nManual entry of\ncomp amounts is\navailable\n\n| Matching claim data to WC benefit parameters fa\n\n“State of Jurisdiction” on Loss Details matches the Jurisdiction WC parameter\n\n“Loss date’ (or “notice date”) of claim falls between start/end dates in WC\nparameter\n\n“Impairment Rating” on Time Loss exposure matches the PPD Weeks WC\nparameter (Disability %) (for PPD)\n\nIf the following data is provided, the “weekly comp rate” is automatically calculated:\n\nWeekly Wage (Pre-Injury) (AWW)\nWeekly Wage Amount (Post-Injury) (for TPD)\n\nOther jurisdictional factors Gi\n\nBenefit Parameter Detail  (Reuntosenettrs\n\nenerat\nsurisicion Fonda\n\"| other Jurisdictional Factors Florida\nCategory > Detailed Factor = Units = Comment * i> > 1p > PID > PPD =\noverice other formula pays 60% of (80% preinjury less 1008 of post.njury pay) ves\nEe’sattnbute Special ulesbeghoning at age 70 ves\nofteet social Security and Ul benefits ves\n\nBenefit Parameter Detail [Reuntosenet\n\nJurisdiction New Jersey\n\"other Jurisdictional Factors N\nlew Jerse\nCategory ¢ Detaledfacor ¢ Unks ¢ Comment $ TID STD > PID = pO Y,\n\n‘Override Other NJ does not have TPO. Yes\n\n| Impairment rating and disability percentage fa\n\nPPD is calculated using an “impairment rating” in addition to the “standard” 67% of\nAWW\n\nThis is because PPD is subject to jurisdiction limits including the number of weeks\nand maximum benefit amount\n\nThe impairment rating quantifies the I|W’s permanent disability and sets the\nmaximum number of weeks for which an IW is paid\n\nImpairment rating is also known as a “disability percentage”\n\nBecause the worker has limited capacity to work, the purpose is to compensate for\nthat limited capacity (example: “The impairment is 20% because the doctor has\ndetermined that you have lost some ability to move your right arm”)\n\n| PPD administration parameters i\n\nPPD Min / Max Larger maximum\nif disability > 70%\n\nJurisdiction StartDate  — EndDate > Min. PPD Percentage + Max. PPD Percentage > Min.Benefit > Max.Benefit >\ncalifornia o1joy/2013 32/81/2013 1 6 105.00\ncalifornia oxjoyj2013 12/81/2013 70 °9 105.00\ncalifornia oxjox2oxe 32/81/2014 1 6 105.00 3220.00\nPPD Weeks\n(1-15 0f297) Far) > | » IE=Ba\nJurisdiction 2 StartDate > EndDate + PPD Percentage > Number of Weeks > Separate rows for\nCalifornia oyo12013 12/31/2014 t each disability %\nCalifornia 01/01/2013 12/31/2014 2 6 (1-99)\nCalifornia oyo12o13 12/81/2014 3 9\nCalifornia 01/01/2013 12/31/2014 4 12\n\n¢ All PPD example parameters are California-only\n\n¢ Purpose is to illustrate how the min/max can be divided by a 1%—-69% / 70%-99%\nscale and how each impairment (disability) % equates to the number of weeks the\nbenefit lasts\n\n| Demonstration G\n\nJurisdictional benefit parameters\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Compensability decision\n\nIs this a valid claim?\nWas safety equipment used?\nWas the injured worker using illegal substances?\n\nWas the injured worker performing a regular job?\n\nLoss Details\n\nCompensability Factors\nInjury During Employment?\nPerforming Regular Job?\nEmployer Questions Claim?\nSafety Equipment Provided?\nSafety Equipment Used?\nDrugs involved?\n‘Compensability Decision\n‘Compensability\n\nDecision Date\n\nReason for Decision\n\nAccepted\n\n08/10/2018 11:25 AM\n\n| Compensability parameters: denial period\n\n* The denial period is the jurisdiction- 3 calendar days:\nspecific period of time in which an jurisdiction of Illinois\ninsurer must respond to a new WC\nclaim\n\n+ The insurer must respond by accepting or\ndenying the claim\n\n+ The “Determine Compensability” activity in\n\nClaimCenter is used to signal this task 21 calendar days:\n: . jurisdicti if G i\n¢ ClaimCenter provides a way to Jurisaliction of Georgia\ncustomize this denial period for each\njurisdiction:\n\n+ Denial periods may differ by jurisdiction\n\n+ Includes a denial period formula (days after\nloss, days after notice, greater of the two)\n\nICD-10 codes\n\n| ICD-10 codes G\n\nEF cisimcenter Desktop + claim)» Searen|> Aderess800k|¥ Dashboard Team Adminstration\n\nICD Codes ¢\n\n¢ ICD codes are separate\nfrom the WC parameters\nparent menu link\nbecause they are used in\nother lines of business\n(i.e., personal auto) in\naddition to WC\n\n¢ ICD-10 codes are\nprovided in sample data\nonly (no ICD-9) for\nClaimCenter 9.x on the\n“ICD Code Reference”\n\npage\n\n‘Search Results\neo code * Description\nwo,\n\nrr)\n\nDiseases ofthe ccult\ncule\n\n| Adding and editing ICD codes =\n\nGi ClaimCenter™ Desktop|~ Claim» Search|» Address Book |* Dashboard Team Administration |\n\nICD Codes code ‘ody System | Oleates ofthe ccultoryeytem (C010 10169)\n— Search Results (a 60081887) 1m\n: eocode > Description Body system ‘chronic > Ava Expres on\n\nRheumatic fever with\n\nPemactewrway NEW ICD Code [iimninicocodnieenc re)\n\ncute heumati pat\n\nort ‘Acute rheumatic endt | [CO Cod “Ol } | tronic\nAeuterheumaticmyg | Deseipton * Aalable From a\nother seu rheumal | 5.5 sytem 4 <so0ne> =) | expieson a\ncute eumati eat\n- Sal\nRheumatic chores (Diseases ofthe crclstory stem (CD10 100198)\nheumati chore wth hes invohement Diseases ofthe reulator system CD10 100186)\n\nDiseases ofthe culatory system CD10 100185)\nDiseases ofthe reulator system CD10 100185)\nDiseases ofthe cular system CD10 10018)\n\nws ‘Rheumatic mitral inten Diseases ofthe reulatory system CD10 100185)\n\n{182 Reumatemita sense with ns eases ofthe creator system (C010 10:65)\n058 __Otherheumatc mivalvave esses Dieses ofthe creultory tam (C010 19-28)\n6 areumatcserican ICD Code Details unico Page \"\n030 Rheumatic art ste\nos __Rheumaticartcin | ICO Code + (a cwone\n052 Rheumaticaorteset | oecrption + [Rheumatic chorea rae rom o\n38 Otherheumatc aor)\n~ Sin hewmen se | sot Sistem ++ | zea ofthe ctor tem 1C010 1088) =) | expreson 5\nWi ‘Rheumatic tricuspid valve diseases: ‘Diseases of the circulatory system (ICD10 100-196) \"\n02 Rheumati tcp oe Dsases ofthe creator system (C010 10:85\n\non heumatic cuspid insufciency Diseases of the erulatory yet CD10 10086)\n\nUser settings\n\n| Sort by injured worker G\n\n+ Claim» Search |~ :Z@ ©\nLana James * Default Loss Type set for each user\nasics | rote | Authontytimts | atobutes | mepons | eta .\nchoca en ak + When Loss type is Workers’ Comp\na * Claimant Column becomes Injured Worker\nSere + Injured Worker becomes a sortable column\nDefaults + Available on desktop and claim search\npat as :\nClaims\nAllopen owned .\n= > claim > Policy Insured Injured Worker\n\n- 3: 32-300869 P&P Construction | Annabelle Arlington\n\n= 3 44775949665-02 P&P Construction | Annabelle Arlington\n\n= 3 32376869 —-TRGrommett | Paul Sallade\n\n| Default policy type G\n\nAdjusters, CSRs, and other users that may only file WC claims can be set to search\nfor WC policies by default in the New Claim wizard\n\nLana James Step 1: Search or Create Policy\n\nBasics | profile | Authority Limits | Attributes | Regions | Details © Find Policy ©) Create Unverified Policy\n\n‘This contacts not linked to the Address Book\n\nBasic Profle Policy # |\n\nFirst name\nLast name\nOrganization Name\n\n‘Workers! Compensation 5 Policy Type Workers’ Compensation\n\nLoss Date\n\n| Demonstration G\n\n_. Compensability parameters, ICD codes,\n— and user settings\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nAdministering workers’ compensation\n\nQuestion G\n\n,- — Which parameter can set the Determine Compensability activity’s due\nx date on a claim?\n¢\nA) Jurisdictional Benefit Parameter\nB) PPD Min/Max\nC) Waiting Period\n\nD) Denial Period\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer a\n\n,~ — Which parameter can set the Determine Compensability activity’s due\n\nx date on a claim?\n74\n\nA) Jurisdictional Benefit Parameter\nB) PPD Min/Max\nC) Waiting Period\nD) Denial Period\n\nSooo ooo ooo Oooo oOoD\n\nQuestion G\n\n,~ — Whatis the purpose of an impairment rating on a claim? How is this\nx matched to admin parameters?\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer a\n\n,~ — Whatis the purpose of an impairment rating on a claim? How is this\n¢ matched to admin parameters?\n\n¢\n¢\n\nAn impairment rating specifies, for PPD, the degree of disability or loss of use the IW\nhas suffered as part of a permanent disability. It is matched to two admin parameters:\nthe PPD Min/Max and the PPD # of weeks (for a given jurisdiction and effective\nstart/end dates)\n\nSooo ooo ooo Oooo oOoD\n\nQuestion G\n\n_~ — 'fyou want to calculate a TTD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n_~ — 'fyou want to calculate a TTD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nThree pieces of data:\n\n1. The state (jurisdiction)\n\n2. The claim’s loss date or notice date\n3. The worker's AWW.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion G\n\n_~ — 'fyou want to calculate a PPD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer a\n\n_~ — 'fyou want to calculate a PPD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nFour pieces of data:\n\n1. The state (jurisdiction)\n\n2. The claim’s loss date or notice date\n3. The worker's AWW.\n\n4. The impairment rating (disability %)\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobjectives\nreview\n\n¢ Describe the setup and administration\n\nprocess of jurisdictional benefit parameters\n\n¢ Describe the setup and administration\n\nprocess of managing ICD codes\n\nSet up denial periods for jurisdictions\n\nSet up and administer PPD parameters\n\nSet up search columns and default loss types\nfor users",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Administering workers’ compensation",
+      "word_count": 3,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 557
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the setup and administration\n\nprocess of jurisdictional benefit parameters\nDescribe the setup and administration\nprocess of managing ICD codes\n\nSet up denial periods for jurisdictions\n\nSet up and administer PPD parameters\n\nSet up search columns and default loss types\nfor users",
+      "word_count": 45,
+      "avg_confidence": 94.73,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Lesson outline\n\nWorkers’ compensation setup basics\nJurisdictional benefit parameters\n\nPPD administration parameters\nCompensability parameters\n\nICD-10 codes\n\nUser settings",
+      "word_count": 19,
+      "avg_confidence": 95.14,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Workers’ compensation setup\nbasics",
+      "word_count": 4,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| ClaimCenter setup for WC background Gi\n\n¢ To implement the WC Line of Business (LOB), key administration tasks are\nrequired. Most of them are related to:\n\nBenefit calculations for Time Loss Exposures\nCompensability Decision Activity\n\nPPD (Permanent Partial Disability) calculations\nICD-10 codes\n\n¢ Note: ClaimCenter sample data provides administration parameters as examples\nonly\n\nMany parameters are out of date\n\nSome parameters may not be included for some jurisdictions\n\nConsult with official state board guidelines for official WC rates\n\nIt is assumed that, during an implementation, many WC parameters will be created, updated, or added",
+      "word_count": 95,
+      "avg_confidence": 92.92,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| ClaimCenter WC Administration screens\n\nTF Clsimcenter* Desitop |» iaim|~ Search» AdsressBook | Dashboard Team Administration |\n\n©\ney\n\n— Jurisdictional benefit rates\n\nand settings\n@ PPD Min / Max\nf PPD limits\n\n—— Compensability decision\nformulas",
+      "word_count": 37,
+      "avg_confidence": 72.31,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Benefit parameters G&G\n\n¢ Used to calculate payments for lost time\n* Contain jurisdiction, start date, and end date\n\n* Sets benefit rates for a specific time period\n\n+ Claims that have a Time Loss exposure matching a jurisdiction and start/end date for the parameter\nuse the rates on that parameter\n\n* Conditions such as applying minimums and maximums may be used\n\nSample data provides sample parameters for 15 U.S. states\n\nNote: All sample data is for illustrative purposes only and does not reflect actual rates as\nprescribed by law.\n\n=.5B 9b B",
+      "word_count": 94,
+      "avg_confidence": 91.5,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Benefit parameters: definitions\n\nAll four benefit types (TTD, TPD, PTD, and PPD)\nin ClaimCenter come with four “basic”\nparameters/rates:\n\nPercent of Wages (decimal): Usually 67%\n(two-thirds)\n\nMaximum Weekly Benefit ($): Sets maximum\npayout imposed by that jurisdiction.\n\nMinimum Weekly Benefit ($): Sets minimum\npayout imposed by that jurisdiction.\n\nMinimum adjusted by Weekly Wage: Yes/No\n\nGi\n\nTemporary Total Disability (TTD)\n\nPercent Of Wages 66.6667\nMaximum Weekly\n\n$525.00\nBenefit\nMinimum Weekly\n\n$50.00\n\nBenefit\n\nMinimum adjusted by Yes\nWeekly Wage",
+      "word_count": 77,
+      "avg_confidence": 94.86,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Example: Time Loss exposure with no parameters [5\n\nType > Begin >  #PymtWeeks\nClaim Parameters,\n\nWeekly Wage (Pre-Injury 5 | 1,000.00\nWeekly Wage Amount Post- [ §\n\ninjury\n\nJurisdiction Texas\n\nTemporary Total Disability (TTD)\n\nReference Data\n\nWeekly Comp Rate (manual)\n\nNot available\n\ns\n\nTemporary Partial Disability (TPD)\n\nReference Data\n\nWeekly Comp Rate (manual)\n\nNot available\n\ns\n\nEnd\n\nMonthly Comp\nNo data to display\n\nWkly Comp Rate 2 Post injury Wkly Wages\n\nWaiting Period\nWaiting Period Applied Yes\nWaiting Period Days\nRetroactive Period\n\nAdd\n\nFrom > To > DaysWithheld\nNo data to display\n\n‘Permanent Total Disability (PTD)\n\nReference Data Not available\n\nWeekly Comp Rate (manual) | $\n\n‘Permanent Partial Disability (PPD)\n\nReference Data Not available\n\nWeekly Comp Rate (manual) [ $\n\nNo\n\nDays Repaid\n\nManual entry of\ncomp amounts is\navailable",
+      "word_count": 130,
+      "avg_confidence": 80.69,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Matching claim data to WC benefit parameters fa\n\n“State of Jurisdiction” on Loss Details matches the Jurisdiction WC parameter\n\n“Loss date’ (or “notice date”) of claim falls between start/end dates in WC\nparameter\n\n“Impairment Rating” on Time Loss exposure matches the PPD Weeks WC\nparameter (Disability %) (for PPD)\n\nIf the following data is provided, the “weekly comp rate” is automatically calculated:\n\nWeekly Wage (Pre-Injury) (AWW)\nWeekly Wage Amount (Post-Injury) (for TPD)",
+      "word_count": 73,
+      "avg_confidence": 93.88,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Other jurisdictional factors Gi\n\nBenefit Parameter Detail  (Reuntosenettrs\n\nenerat\nsurisicion Fonda\n\"| other Jurisdictional Factors Florida\nCategory > Detailed Factor = Units = Comment * i> > 1p > PID > PPD =\noverice other formula pays 60% of (80% preinjury less 1008 of post.njury pay) ves\nEe’sattnbute Special ulesbeghoning at age 70 ves\nofteet social Security and Ul benefits ves\n\nBenefit Parameter Detail [Reuntosenet\n\nJurisdiction New Jersey\n\"other Jurisdictional Factors N\nlew Jerse\nCategory ¢ Detaledfacor ¢ Unks ¢ Comment $ TID STD > PID = pO Y,\n\n‘Override Other NJ does not have TPO. Yes",
+      "word_count": 97,
+      "avg_confidence": 60.7,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Impairment rating and disability percentage fa\n\nPPD is calculated using an “impairment rating” in addition to the “standard” 67% of\nAWW\n\nThis is because PPD is subject to jurisdiction limits including the number of weeks\nand maximum benefit amount\n\nThe impairment rating quantifies the I|W’s permanent disability and sets the\nmaximum number of weeks for which an IW is paid\n\nImpairment rating is also known as a “disability percentage”\n\nBecause the worker has limited capacity to work, the purpose is to compensate for\nthat limited capacity (example: “The impairment is 20% because the doctor has\ndetermined that you have lost some ability to move your right arm”)",
+      "word_count": 108,
+      "avg_confidence": 94.63,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| PPD administration parameters i\n\nPPD Min / Max Larger maximum\nif disability > 70%\n\nJurisdiction StartDate  — EndDate > Min. PPD Percentage + Max. PPD Percentage > Min.Benefit > Max.Benefit >\ncalifornia o1joy/2013 32/81/2013 1 6 105.00\ncalifornia oxjoyj2013 12/81/2013 70 °9 105.00\ncalifornia oxjox2oxe 32/81/2014 1 6 105.00 3220.00\nPPD Weeks\n(1-15 0f297) Far) > | » IE=Ba\nJurisdiction 2 StartDate > EndDate + PPD Percentage > Number of Weeks > Separate rows for\nCalifornia oyo12013 12/31/2014 t each disability %\nCalifornia 01/01/2013 12/31/2014 2 6 (1-99)\nCalifornia oyo12o13 12/81/2014 3 9\nCalifornia 01/01/2013 12/31/2014 4 12\n\n¢ All PPD example parameters are California-only\n\n¢ Purpose is to illustrate how the min/max can be divided by a 1%—-69% / 70%-99%\nscale and how each impairment (disability) % equates to the number of weeks the\nbenefit lasts",
+      "word_count": 138,
+      "avg_confidence": 74.98,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Demonstration G\n\nJurisdictional benefit parameters\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.36,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Compensability decision\n\nIs this a valid claim?\nWas safety equipment used?\nWas the injured worker using illegal substances?\n\nWas the injured worker performing a regular job?\n\nLoss Details\n\nCompensability Factors\nInjury During Employment?\nPerforming Regular Job?\nEmployer Questions Claim?\nSafety Equipment Provided?\nSafety Equipment Used?\nDrugs involved?\n‘Compensability Decision\n‘Compensability\n\nDecision Date\n\nReason for Decision\n\nAccepted\n\n08/10/2018 11:25 AM",
+      "word_count": 60,
+      "avg_confidence": 91.94,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Compensability parameters: denial period\n\n* The denial period is the jurisdiction- 3 calendar days:\nspecific period of time in which an jurisdiction of Illinois\ninsurer must respond to a new WC\nclaim\n\n+ The insurer must respond by accepting or\ndenying the claim\n\n+ The “Determine Compensability” activity in\n\nClaimCenter is used to signal this task 21 calendar days:\n: . jurisdicti if G i\n¢ ClaimCenter provides a way to Jurisaliction of Georgia\ncustomize this denial period for each\njurisdiction:\n\n+ Denial periods may differ by jurisdiction\n\n+ Includes a denial period formula (days after\nloss, days after notice, greater of the two)",
+      "word_count": 105,
+      "avg_confidence": 90.77,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "ICD-10 codes",
+      "word_count": 2,
+      "avg_confidence": 92.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| ICD-10 codes G\n\nEF cisimcenter Desktop + claim)» Searen|> Aderess800k|¥ Dashboard Team Adminstration\n\nICD Codes ¢\n\n¢ ICD codes are separate\nfrom the WC parameters\nparent menu link\nbecause they are used in\nother lines of business\n(i.e., personal auto) in\naddition to WC\n\n¢ ICD-10 codes are\nprovided in sample data\nonly (no ICD-9) for\nClaimCenter 9.x on the\n“ICD Code Reference”\n\npage\n\n‘Search Results\neo code * Description\nwo,\n\nrr)\n\nDiseases ofthe ccult\ncule",
+      "word_count": 77,
+      "avg_confidence": 79.49,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Adding and editing ICD codes =\n\nGi ClaimCenter™ Desktop|~ Claim» Search|» Address Book |* Dashboard Team Administration |\n\nICD Codes code ‘ody System | Oleates ofthe ccultoryeytem (C010 10169)\n— Search Results (a 60081887) 1m\n: eocode > Description Body system ‘chronic > Ava Expres on\n\nRheumatic fever with\n\nPemactewrway NEW ICD Code [iimninicocodnieenc re)\n\ncute heumati pat\n\nort ‘Acute rheumatic endt | [CO Cod “Ol } | tronic\nAeuterheumaticmyg | Deseipton * Aalable From a\nother seu rheumal | 5.5 sytem 4 <so0ne> =) | expieson a\ncute eumati eat\n- Sal\nRheumatic chores (Diseases ofthe crclstory stem (CD10 100198)\nheumati chore wth hes invohement Diseases ofthe reulator system CD10 100186)\n\nDiseases ofthe culatory system CD10 100185)\nDiseases ofthe reulator system CD10 100185)\nDiseases ofthe cular system CD10 10018)\n\nws ‘Rheumatic mitral inten Diseases ofthe reulatory system CD10 100185)\n\n{182 Reumatemita sense with ns eases ofthe creator system (C010 10:65)\n058 __Otherheumatc mivalvave esses Dieses ofthe creultory tam (C010 19-28)\n6 areumatcserican ICD Code Details unico Page \"\n030 Rheumatic art ste\nos __Rheumaticartcin | ICO Code + (a cwone\n052 Rheumaticaorteset | oecrption + [Rheumatic chorea rae rom o\n38 Otherheumatc aor)\n~ Sin hewmen se | sot Sistem ++ | zea ofthe ctor tem 1C010 1088) =) | expreson 5\nWi ‘Rheumatic tricuspid valve diseases: ‘Diseases of the circulatory system (ICD10 100-196) \"\n02 Rheumati tcp oe Dsases ofthe creator system (C010 10:85\n\non heumatic cuspid insufciency Diseases of the erulatory yet CD10 10086)",
+      "word_count": 248,
+      "avg_confidence": 54.52,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "User settings",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Sort by injured worker G\n\n+ Claim» Search |~ :Z@ ©\nLana James * Default Loss Type set for each user\nasics | rote | Authontytimts | atobutes | mepons | eta .\nchoca en ak + When Loss type is Workers’ Comp\na * Claimant Column becomes Injured Worker\nSere + Injured Worker becomes a sortable column\nDefaults + Available on desktop and claim search\npat as :\nClaims\nAllopen owned .\n= > claim > Policy Insured Injured Worker\n\n- 3: 32-300869 P&P Construction | Annabelle Arlington\n\n= 3 44775949665-02 P&P Construction | Annabelle Arlington\n\n= 3 32376869 —-TRGrommett | Paul Sallade",
+      "word_count": 105,
+      "avg_confidence": 75.75,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Default policy type G\n\nAdjusters, CSRs, and other users that may only file WC claims can be set to search\nfor WC policies by default in the New Claim wizard\n\nLana James Step 1: Search or Create Policy\n\nBasics | profile | Authority Limits | Attributes | Regions | Details © Find Policy ©) Create Unverified Policy\n\n‘This contacts not linked to the Address Book\n\nBasic Profle Policy # |\n\nFirst name\nLast name\nOrganization Name\n\n‘Workers! Compensation 5 Policy Type Workers’ Compensation\n\nLoss Date",
+      "word_count": 86,
+      "avg_confidence": 86.89,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Demonstration G\n\n_. Compensability parameters, ICD codes,\n— and user settings\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 42,
+      "avg_confidence": 93.49,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Student exercise\n\nAdministering workers’ compensation",
+      "word_count": 6,
+      "avg_confidence": 95.4,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question G\n\n,- — Which parameter can set the Determine Compensability activity’s due\nx date on a claim?\n¢\nA) Jurisdictional Benefit Parameter\nB) PPD Min/Max\nC) Waiting Period\n\nD) Denial Period\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 38,
+      "avg_confidence": 86.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer a\n\n,~ — Which parameter can set the Determine Compensability activity’s due\n\nx date on a claim?\n74\n\nA) Jurisdictional Benefit Parameter\nB) PPD Min/Max\nC) Waiting Period\nD) Denial Period\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 37,
+      "avg_confidence": 83.15,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question G\n\n,~ — Whatis the purpose of an impairment rating on a claim? How is this\nx matched to admin parameters?\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 28,
+      "avg_confidence": 82.88,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer a\n\n,~ — Whatis the purpose of an impairment rating on a claim? How is this\n¢ matched to admin parameters?\n\n¢\n¢\n\nAn impairment rating specifies, for PPD, the degree of disability or loss of use the IW\nhas suffered as part of a permanent disability. It is matched to two admin parameters:\nthe PPD Min/Max and the PPD # of weeks (for a given jurisdiction and effective\nstart/end dates)\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 77,
+      "avg_confidence": 90.51,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question G\n\n_~ — 'fyou want to calculate a TTD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 32,
+      "avg_confidence": 80.86,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer\n\n_~ — 'fyou want to calculate a TTD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nThree pieces of data:\n\n1. The state (jurisdiction)\n\n2. The claim’s loss date or notice date\n3. The worker's AWW.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 50,
+      "avg_confidence": 86.21,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Question G\n\n_~ — 'fyou want to calculate a PPD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 32,
+      "avg_confidence": 81.17,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Answer a\n\n_~ — 'fyou want to calculate a PPD weekly comp rate, what data on a claim\n\nx must exist to match admin parameters?\n\n¢\n\nFour pieces of data:\n\n1. The state (jurisdiction)\n\n2. The claim’s loss date or notice date\n3. The worker's AWW.\n\n4. The impairment rating (disability %)\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 57,
+      "avg_confidence": 85.76,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe the setup and administration\n\nprocess of jurisdictional benefit parameters\n\n¢ Describe the setup and administration\n\nprocess of managing ICD codes\n\nSet up denial periods for jurisdictions\n\nSet up and administer PPD parameters\n\nSet up search columns and default loss types\nfor users",
+      "word_count": 47,
+      "avg_confidence": 93.74,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    }
+  ]
+}

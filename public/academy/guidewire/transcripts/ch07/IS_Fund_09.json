@@ -1,0 +1,7759 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "filename": "IS_Fund_09.mp4",
+    "video_stem": "IS_Fund_09",
+    "duration_seconds": 504.16,
+    "duration_formatted": "00:08:24.160",
+    "segment_count": 66,
+    "word_count": 1149,
+    "avg_confidence": 0.9395,
+    "transcription_time_seconds": 34.97,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:16:30.461341"
+  },
+  "full_text": "The business analysts have determined that every new doctor contact with one or more flag entries should be assigned to the creator, the logged-in user, for further processing. In addition, a note explaining that the contact has been automatically assigned should be associated with the contact. Before beginning this demo, we'll create two display keys, 1, x.contact assigned equals contact automatically assigned 2, x.new contact with flag entries auto assigned equals new contact. The new contact has been automatically assigned to 0, because it has 1, flag entries. Expand the config folder. Expand localizations. Expand resource bundle display. Double-click display.properties. After the x.chirp display key, press return. We'll paste in the code for the new display keys. The code for the new display keys appears. There are already two places in the UI to create a contact in training app, and, since the application is fully configurable, additional contact creation methods could be introduced in the future. For example, contact information could be imported from an external system via an integration point. So, what's the best strategy to implement this requirement? Remember that GOSA rules will be executed when an event happens to an entity. The great thing about GOSA rules is that, is that they don't care what the source of an event is, whether it's from the UI or an integration point. As long as an event happens, we can be sure that the same set of rules will be executed, regardless of the source. That is why a Goza rule is the perfect tool to implement this requirement. A rule set is a collection of rules that have the same root entity type. Rules are organized into hierarchies. Also recall a rule set category is a collection of rule sets that have two things in common. High-level business purpose, triggering event in our business case. The triggering event is the creating of the contact, saving it to the database for the first time. What is the business purpose in our business use case? To set the assigned user field, and end a contact note, technically, last-minute changes before committing the transaction. The rule set category we should use then is pre-update. Expand rule sets. Expand pre-update. As you can see there are four rule sets available in the pre-update rule set category. The type of entity that is triggering is A-B contact, so we'll create a new A-B contact pre-update rule. Double-click A-B contact pre-update to open it. As you can see from the first few rules, the insurance company uses the naming convention for rules. Since we are going to make a rule for new doctor contacts, we'll expand the first pre-update for A-B contact to see the rules within it. Right-click on the A-B contact rule. We'll create a new rule that is triggered when a new doctor contact is created. Click new rule. In the rule name field, we'll give it a unique name using the company's naming convention. We'll use AB for the application name abbreviation, PU for the rule set category abbreviation, and 5000 for the unique rule four-digit code. We'll then add a dash and a user-friendly description of the rule's purpose. Enter the following for the name of the rule, AB for 5000, automatic assignment of new flagged contacts. Click OK. However, if you need to move the rule to a different position, you can simply drag and drop it. We'll return the rule to its original position. The rule has two sections to configure, the condition, and the action. The condition is set to true initially. It has to be a GoSue expression that returns either true or false. The action will only be executed if the condition returns true, otherwise, nothing happens. Click true and change the value. Based on the business requirement, the condition is that the contact must be new, and it must have at least one flag entry. We can use the new property of the entity to test if the contact is new. Every entity has this property, which is only true if the entity is being created in the current transaction. It will be false in case of any subsequent modifications. Type AB contact.new. Press Return. Flag entries is a data model array on the contact, defined in the abcontact.age file. Recall that arrays have a length property that we can use to test how many entities are in the array. Type. And. A bcontact.flag entries.length. equals 0. In the action section, we have to complete two different things. 1. Set the current user as the assigned user of the contact to. Create a new node and associate it with the contact. Recall from the introduction to locations lesson that the contact has the assigned user field. We can use the get current user function to get the currently logged in user. Type. App contract.assign user equals user.util.get current user. Recall from the introduction to Goza lesson that we can create new objects using the new keyword, and then use the dot notation to initialize its fields. I will paste the next section of code in now. Now that we've created the note, we have to associate that with the contact. How would you add a new entity to a data model array? Every parent object has two functions to work with arrays, add to array name entity and remove from array name entity. Press Return to add code to a new line. Type a bcontact.add to contact notes note. Type a new command. We see here the completed Goza rule. You can deploy modified rules using run, reload changed classes. But this is a new rule, so we have to restart the server. Restart the server in debug mode. Click run. Click debug server. We see the server ready message. Login to training app as a apple gate slash gw. Click login. Click actions. Under new person, vendor, click doctor. Enter a first name. Enter a last name. Enter a social security number. Click update. Click update. Now we'll view the contact we just created. Click search. Search for the last name of the contact we created. Click search. Click the name of the contact we created. We see that it is indeed assigned to the user of the system. In this case, we logged in as Alice AppleGate. Let's look at the notes. In the sidebar, click notes. We see there was a note created. Click the subject of the note. We can see the values in the note are set according to the new rule we created. Notice that we didn't do any database transaction management in the rules code. Rules have an implicit transaction that will be committed after the execution of the rules. Keep in mind that if your rule throws an exception, then all the changes done by the other rules will be rolled back too.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "The business analysts have determined that every new doctor contact with one or more flag entries should be assigned to the creator, the logged-in user, for further processing. In addition, a note explaining that the contact has been automatically assigned should be associated with the contact. Before beginning this demo, we'll create two display keys, 1, x.contact assigned equals contact automatically assigned 2, x.new contact with flag entries auto assigned equals new contact.",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.0,
+          "end": 0.72,
+          "probability": 0.9736
+        },
+        {
+          "word": "business",
+          "start": 0.72,
+          "end": 1.06,
+          "probability": 0.7974
+        },
+        {
+          "word": "analysts",
+          "start": 1.06,
+          "end": 1.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 1.64,
+          "end": 1.96,
+          "probability": 1.0
+        },
+        {
+          "word": "determined",
+          "start": 1.96,
+          "end": 2.4,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 2.4,
+          "end": 2.64,
+          "probability": 1.0
+        },
+        {
+          "word": "every",
+          "start": 2.64,
+          "end": 3.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 3.0,
+          "end": 3.2,
+          "probability": 0.98
+        },
+        {
+          "word": "doctor",
+          "start": 3.2,
+          "end": 3.6,
+          "probability": 0.9165
+        },
+        {
+          "word": "contact",
+          "start": 3.6,
+          "end": 4.04,
+          "probability": 0.9834
+        },
+        {
+          "word": "with",
+          "start": 4.04,
+          "end": 4.42,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 4.42,
+          "end": 4.66,
+          "probability": 0.998
+        },
+        {
+          "word": "or",
+          "start": 4.66,
+          "end": 4.86,
+          "probability": 1.0
+        },
+        {
+          "word": "more",
+          "start": 4.86,
+          "end": 5.12,
+          "probability": 1.0
+        },
+        {
+          "word": "flag",
+          "start": 5.12,
+          "end": 5.38,
+          "probability": 0.9751
+        },
+        {
+          "word": "entries",
+          "start": 5.38,
+          "end": 5.86,
+          "probability": 0.998
+        },
+        {
+          "word": "should",
+          "start": 5.86,
+          "end": 6.22,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 6.22,
+          "end": 6.42,
+          "probability": 1.0
+        },
+        {
+          "word": "assigned",
+          "start": 6.42,
+          "end": 6.78,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 6.78,
+          "end": 6.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 6.96,
+          "end": 7.06,
+          "probability": 1.0
+        },
+        {
+          "word": "creator,",
+          "start": 7.06,
+          "end": 7.5,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 7.66,
+          "end": 7.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "logged",
+          "start": 7.9,
+          "end": 8.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "-in",
+          "start": 8.2,
+          "end": 8.4,
+          "probability": 0.6865
+        },
+        {
+          "word": "user,",
+          "start": 8.4,
+          "end": 8.7,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 8.9,
+          "end": 9.16,
+          "probability": 1.0
+        },
+        {
+          "word": "further",
+          "start": 9.16,
+          "end": 9.5,
+          "probability": 1.0
+        },
+        {
+          "word": "processing.",
+          "start": 9.5,
+          "end": 10.12,
+          "probability": 1.0
+        },
+        {
+          "word": "In",
+          "start": 10.38,
+          "end": 10.84,
+          "probability": 1.0
+        },
+        {
+          "word": "addition,",
+          "start": 10.84,
+          "end": 11.2,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 11.52,
+          "end": 11.78,
+          "probability": 1.0
+        },
+        {
+          "word": "note",
+          "start": 11.78,
+          "end": 11.96,
+          "probability": 0.998
+        },
+        {
+          "word": "explaining",
+          "start": 11.96,
+          "end": 12.4,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 12.4,
+          "end": 12.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 12.64,
+          "end": 12.76,
+          "probability": 1.0
+        },
+        {
+          "word": "contact",
+          "start": 12.76,
+          "end": 13.18,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 13.18,
+          "end": 13.58,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 13.58,
+          "end": 13.76,
+          "probability": 1.0
+        },
+        {
+          "word": "automatically",
+          "start": 13.76,
+          "end": 14.3,
+          "probability": 1.0
+        },
+        {
+          "word": "assigned",
+          "start": 14.3,
+          "end": 14.88,
+          "probability": 1.0
+        },
+        {
+          "word": "should",
+          "start": 14.88,
+          "end": 15.1,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 15.1,
+          "end": 15.26,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 15.26,
+          "end": 15.86,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 15.86,
+          "end": 16.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 16.12,
+          "end": 16.28,
+          "probability": 1.0
+        },
+        {
+          "word": "contact.",
+          "start": 16.28,
+          "end": 16.76,
+          "probability": 1.0
+        },
+        {
+          "word": "Before",
+          "start": 17.04,
+          "end": 17.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "beginning",
+          "start": 17.7,
+          "end": 18.1,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 18.1,
+          "end": 18.4,
+          "probability": 1.0
+        },
+        {
+          "word": "demo,",
+          "start": 18.4,
+          "end": 18.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "we'll",
+          "start": 18.98,
+          "end": 19.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "create",
+          "start": 19.44,
+          "end": 19.76,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 19.76,
+          "end": 20.0,
+          "probability": 0.9883
+        },
+        {
+          "word": "display",
+          "start": 20.0,
+          "end": 20.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "keys,",
+          "start": 20.42,
+          "end": 20.86,
+          "probability": 0.999
+        },
+        {
+          "word": "1,",
+          "start": 21.04,
+          "end": 21.4,
+          "probability": 0.8457
+        },
+        {
+          "word": "x",
+          "start": 21.68,
+          "end": 21.94,
+          "probability": 0.7646
+        },
+        {
+          "word": ".contact",
+          "start": 21.94,
+          "end": 22.82,
+          "probability": 0.8325
+        },
+        {
+          "word": "assigned",
+          "start": 22.82,
+          "end": 23.2,
+          "probability": 0.7085
+        },
+        {
+          "word": "equals",
+          "start": 23.2,
+          "end": 23.76,
+          "probability": 0.9692
+        },
+        {
+          "word": "contact",
+          "start": 23.76,
+          "end": 24.38,
+          "probability": 0.9795
+        },
+        {
+          "word": "automatically",
+          "start": 24.38,
+          "end": 25.08,
+          "probability": 0.999
+        },
+        {
+          "word": "assigned",
+          "start": 25.08,
+          "end": 25.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "2,",
+          "start": 25.66,
+          "end": 25.94,
+          "probability": 0.4495
+        },
+        {
+          "word": "x",
+          "start": 26.2,
+          "end": 26.56,
+          "probability": 0.998
+        },
+        {
+          "word": ".new",
+          "start": 26.56,
+          "end": 27.02,
+          "probability": 0.9849
+        },
+        {
+          "word": "contact",
+          "start": 27.02,
+          "end": 27.42,
+          "probability": 0.9775
+        },
+        {
+          "word": "with",
+          "start": 27.42,
+          "end": 27.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "flag",
+          "start": 27.82,
+          "end": 28.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "entries",
+          "start": 28.14,
+          "end": 28.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "auto",
+          "start": 28.52,
+          "end": 28.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "assigned",
+          "start": 28.82,
+          "end": 29.28,
+          "probability": 0.9116
+        },
+        {
+          "word": "equals",
+          "start": 29.28,
+          "end": 29.88,
+          "probability": 0.9556
+        },
+        {
+          "word": "new",
+          "start": 29.88,
+          "end": 29.98,
+          "probability": 0.9517
+        },
+        {
+          "word": "contact.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2194
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.58,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.580",
+      "text": "The new contact has been automatically assigned to 0, because it has 1, flag entries. Expand the config folder. Expand localizations. Expand resource bundle display. Double-click display.properties. After the x.chirp display key, press return. We'll paste in the code for the new display keys. The code for the new display keys appears.",
+      "words": [
+        {
+          "word": "The",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2603
+        },
+        {
+          "word": "new",
+          "start": 29.98,
+          "end": 30.08,
+          "probability": 0.9526
+        },
+        {
+          "word": "contact",
+          "start": 30.08,
+          "end": 30.52,
+          "probability": 0.895
+        },
+        {
+          "word": "has",
+          "start": 30.52,
+          "end": 30.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "been",
+          "start": 30.9,
+          "end": 31.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "automatically",
+          "start": 31.08,
+          "end": 31.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "assigned",
+          "start": 31.66,
+          "end": 32.26,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 32.26,
+          "end": 32.56,
+          "probability": 0.9937
+        },
+        {
+          "word": "0,",
+          "start": 32.56,
+          "end": 33.16,
+          "probability": 0.0336
+        },
+        {
+          "word": "because",
+          "start": 33.5,
+          "end": 33.86,
+          "probability": 0.9863
+        },
+        {
+          "word": "it",
+          "start": 33.86,
+          "end": 34.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "has",
+          "start": 34.06,
+          "end": 34.42,
+          "probability": 0.998
+        },
+        {
+          "word": "1,",
+          "start": 34.42,
+          "end": 34.96,
+          "probability": 0.6719
+        },
+        {
+          "word": "flag",
+          "start": 35.14,
+          "end": 35.6,
+          "probability": 0.7974
+        },
+        {
+          "word": "entries.",
+          "start": 35.6,
+          "end": 36.06,
+          "probability": 0.9702
+        },
+        {
+          "word": "Expand",
+          "start": 36.44,
+          "end": 37.12,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 37.12,
+          "end": 37.24,
+          "probability": 0.9893
+        },
+        {
+          "word": "config",
+          "start": 37.24,
+          "end": 37.58,
+          "probability": 0.7036
+        },
+        {
+          "word": "folder.",
+          "start": 37.58,
+          "end": 38.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "Expand",
+          "start": 38.94,
+          "end": 39.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "localizations.",
+          "start": 39.7,
+          "end": 40.48,
+          "probability": 0.853
+        },
+        {
+          "word": "Expand",
+          "start": 42.5,
+          "end": 43.26,
+          "probability": 0.998
+        },
+        {
+          "word": "resource",
+          "start": 43.26,
+          "end": 43.64,
+          "probability": 0.8105
+        },
+        {
+          "word": "bundle",
+          "start": 43.64,
+          "end": 44.06,
+          "probability": 0.9619
+        },
+        {
+          "word": "display.",
+          "start": 44.06,
+          "end": 44.6,
+          "probability": 0.9878
+        },
+        {
+          "word": "Double",
+          "start": 45.84,
+          "end": 46.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "-click",
+          "start": 46.6,
+          "end": 46.96,
+          "probability": 0.7871
+        },
+        {
+          "word": "display",
+          "start": 46.96,
+          "end": 47.42,
+          "probability": 0.7417
+        },
+        {
+          "word": ".properties.",
+          "start": 47.42,
+          "end": 48.44,
+          "probability": 0.8936
+        },
+        {
+          "word": "After",
+          "start": 49.94,
+          "end": 50.7,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 50.7,
+          "end": 50.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "x",
+          "start": 50.88,
+          "end": 51.14,
+          "probability": 0.5039
+        },
+        {
+          "word": ".chirp",
+          "start": 51.14,
+          "end": 51.72,
+          "probability": 0.9756
+        },
+        {
+          "word": "display",
+          "start": 51.72,
+          "end": 52.02,
+          "probability": 0.8809
+        },
+        {
+          "word": "key,",
+          "start": 52.02,
+          "end": 52.42,
+          "probability": 0.9561
+        },
+        {
+          "word": "press",
+          "start": 52.64,
+          "end": 52.96,
+          "probability": 0.9805
+        },
+        {
+          "word": "return.",
+          "start": 52.96,
+          "end": 53.26,
+          "probability": 0.6611
+        },
+        {
+          "word": "We'll",
+          "start": 53.86,
+          "end": 54.38,
+          "probability": 0.9844
+        },
+        {
+          "word": "paste",
+          "start": 54.38,
+          "end": 54.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "in",
+          "start": 54.7,
+          "end": 54.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 54.86,
+          "end": 54.96,
+          "probability": 0.999
+        },
+        {
+          "word": "code",
+          "start": 54.96,
+          "end": 55.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 55.24,
+          "end": 55.44,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 55.44,
+          "end": 55.58,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 55.58,
+          "end": 55.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "display",
+          "start": 55.8,
+          "end": 56.26,
+          "probability": 0.9829
+        },
+        {
+          "word": "keys.",
+          "start": 56.26,
+          "end": 56.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "The",
+          "start": 57.18,
+          "end": 57.7,
+          "probability": 0.9946
+        },
+        {
+          "word": "code",
+          "start": 57.7,
+          "end": 57.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "for",
+          "start": 57.94,
+          "end": 58.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 58.1,
+          "end": 58.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 58.26,
+          "end": 58.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "display",
+          "start": 58.44,
+          "end": 58.88,
+          "probability": 0.9917
+        },
+        {
+          "word": "keys",
+          "start": 58.88,
+          "end": 59.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "appears.",
+          "start": 59.18,
+          "end": 59.58,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.58,
+      "end": 89.56,
+      "start_formatted": "00:00:59.580",
+      "end_formatted": "00:01:29.560",
+      "text": "There are already two places in the UI to create a contact in training app, and, since the application is fully configurable, additional contact creation methods could be introduced in the future. For example, contact information could be imported from an external system via an integration point. So, what's the best strategy to implement this requirement? Remember that GOSA rules will be executed when an event happens to an entity. The great thing about GOSA rules is that,",
+      "words": [
+        {
+          "word": "There",
+          "start": 59.58,
+          "end": 60.6,
+          "probability": 0.9346
+        },
+        {
+          "word": "are",
+          "start": 60.6,
+          "end": 60.82,
+          "probability": 0.999
+        },
+        {
+          "word": "already",
+          "start": 60.82,
+          "end": 61.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "two",
+          "start": 61.3,
+          "end": 61.56,
+          "probability": 0.9404
+        },
+        {
+          "word": "places",
+          "start": 61.56,
+          "end": 62.02,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 62.02,
+          "end": 62.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 62.32,
+          "end": 62.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "UI",
+          "start": 62.44,
+          "end": 62.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 62.7,
+          "end": 62.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "create",
+          "start": 62.88,
+          "end": 63.22,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 63.22,
+          "end": 63.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 63.4,
+          "end": 63.8,
+          "probability": 0.8032
+        },
+        {
+          "word": "in",
+          "start": 63.8,
+          "end": 64.1,
+          "probability": 0.457
+        },
+        {
+          "word": "training",
+          "start": 64.1,
+          "end": 64.38,
+          "probability": 0.8408
+        },
+        {
+          "word": "app,",
+          "start": 64.38,
+          "end": 64.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "and,",
+          "start": 64.98,
+          "end": 65.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "since",
+          "start": 65.56,
+          "end": 65.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 65.94,
+          "end": 66.12,
+          "probability": 0.999
+        },
+        {
+          "word": "application",
+          "start": 66.12,
+          "end": 66.68,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 66.68,
+          "end": 67.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "fully",
+          "start": 67.04,
+          "end": 67.36,
+          "probability": 0.999
+        },
+        {
+          "word": "configurable,",
+          "start": 67.36,
+          "end": 68.22,
+          "probability": 0.999
+        },
+        {
+          "word": "additional",
+          "start": 68.46,
+          "end": 68.92,
+          "probability": 0.999
+        },
+        {
+          "word": "contact",
+          "start": 68.92,
+          "end": 69.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "creation",
+          "start": 69.44,
+          "end": 70.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "methods",
+          "start": 70.08,
+          "end": 70.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "could",
+          "start": 70.48,
+          "end": 70.76,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 70.76,
+          "end": 70.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "introduced",
+          "start": 70.98,
+          "end": 71.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 71.42,
+          "end": 71.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 71.78,
+          "end": 71.88,
+          "probability": 0.999
+        },
+        {
+          "word": "future.",
+          "start": 71.88,
+          "end": 72.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 72.66,
+          "end": 73.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "example,",
+          "start": 73.02,
+          "end": 73.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 73.86,
+          "end": 74.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "information",
+          "start": 74.28,
+          "end": 74.96,
+          "probability": 1.0
+        },
+        {
+          "word": "could",
+          "start": 74.96,
+          "end": 75.26,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 75.26,
+          "end": 75.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "imported",
+          "start": 75.44,
+          "end": 75.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 75.84,
+          "end": 76.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 76.1,
+          "end": 76.26,
+          "probability": 0.999
+        },
+        {
+          "word": "external",
+          "start": 76.26,
+          "end": 76.72,
+          "probability": 0.999
+        },
+        {
+          "word": "system",
+          "start": 76.72,
+          "end": 77.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "via",
+          "start": 77.22,
+          "end": 77.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "an",
+          "start": 77.48,
+          "end": 77.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "integration",
+          "start": 77.7,
+          "end": 78.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "point.",
+          "start": 78.24,
+          "end": 78.76,
+          "probability": 0.998
+        },
+        {
+          "word": "So,",
+          "start": 79.0,
+          "end": 79.62,
+          "probability": 0.998
+        },
+        {
+          "word": "what's",
+          "start": 79.82,
+          "end": 80.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 80.32,
+          "end": 80.44,
+          "probability": 0.999
+        },
+        {
+          "word": "best",
+          "start": 80.44,
+          "end": 80.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "strategy",
+          "start": 80.7,
+          "end": 81.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 81.2,
+          "end": 81.46,
+          "probability": 1.0
+        },
+        {
+          "word": "implement",
+          "start": 81.46,
+          "end": 81.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 81.9,
+          "end": 82.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "requirement?",
+          "start": 82.2,
+          "end": 82.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Remember",
+          "start": 83.16,
+          "end": 83.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 83.7,
+          "end": 83.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "GOSA",
+          "start": 83.96,
+          "end": 84.38,
+          "probability": 0.9136
+        },
+        {
+          "word": "rules",
+          "start": 84.38,
+          "end": 84.62,
+          "probability": 0.9858
+        },
+        {
+          "word": "will",
+          "start": 84.62,
+          "end": 84.9,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 84.9,
+          "end": 85.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "executed",
+          "start": 85.04,
+          "end": 85.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 85.64,
+          "end": 85.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 85.92,
+          "end": 86.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "event",
+          "start": 86.08,
+          "end": 86.32,
+          "probability": 0.999
+        },
+        {
+          "word": "happens",
+          "start": 86.32,
+          "end": 86.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 86.7,
+          "end": 86.9,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 86.9,
+          "end": 87.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "entity.",
+          "start": 87.06,
+          "end": 87.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 87.66,
+          "end": 88.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "great",
+          "start": 88.04,
+          "end": 88.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "thing",
+          "start": 88.3,
+          "end": 88.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 88.5,
+          "end": 88.76,
+          "probability": 1.0
+        },
+        {
+          "word": "GOSA",
+          "start": 88.76,
+          "end": 89.18,
+          "probability": 0.999
+        },
+        {
+          "word": "rules",
+          "start": 89.18,
+          "end": 89.44,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 89.44,
+          "end": 89.56,
+          "probability": 0.5869
+        },
+        {
+          "word": "that,",
+          "start": 89.56,
+          "end": 89.56,
+          "probability": 0.49
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.58,
+      "end": 93.88,
+      "start_formatted": "00:01:29.580",
+      "end_formatted": "00:01:33.880",
+      "text": "is that they don't care what the source of an event is, whether it's from the UI or an",
+      "words": [
+        {
+          "word": "is",
+          "start": 89.58,
+          "end": 89.76,
+          "probability": 0.957
+        },
+        {
+          "word": "that",
+          "start": 89.76,
+          "end": 89.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "they",
+          "start": 89.9,
+          "end": 90.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "don't",
+          "start": 90.08,
+          "end": 90.36,
+          "probability": 0.9819
+        },
+        {
+          "word": "care",
+          "start": 90.36,
+          "end": 90.58,
+          "probability": 0.999
+        },
+        {
+          "word": "what",
+          "start": 90.58,
+          "end": 90.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 90.78,
+          "end": 90.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "source",
+          "start": 90.94,
+          "end": 91.22,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 91.22,
+          "end": 91.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 91.42,
+          "end": 91.54,
+          "probability": 0.998
+        },
+        {
+          "word": "event",
+          "start": 91.54,
+          "end": 91.76,
+          "probability": 0.9658
+        },
+        {
+          "word": "is,",
+          "start": 91.76,
+          "end": 92.18,
+          "probability": 0.998
+        },
+        {
+          "word": "whether",
+          "start": 92.36,
+          "end": 92.66,
+          "probability": 0.9912
+        },
+        {
+          "word": "it's",
+          "start": 92.66,
+          "end": 92.96,
+          "probability": 0.959
+        },
+        {
+          "word": "from",
+          "start": 92.96,
+          "end": 93.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 93.12,
+          "end": 93.24,
+          "probability": 0.998
+        },
+        {
+          "word": "UI",
+          "start": 93.24,
+          "end": 93.48,
+          "probability": 0.9863
+        },
+        {
+          "word": "or",
+          "start": 93.48,
+          "end": 93.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "an",
+          "start": 93.72,
+          "end": 93.88,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 93.88,
+      "end": 99.58,
+      "start_formatted": "00:01:33.880",
+      "end_formatted": "00:01:39.580",
+      "text": "integration point. As long as an event happens, we can be sure that the same set of rules will be",
+      "words": [
+        {
+          "word": "integration",
+          "start": 93.88,
+          "end": 94.38,
+          "probability": 0.9624
+        },
+        {
+          "word": "point.",
+          "start": 94.38,
+          "end": 94.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "As",
+          "start": 95.14,
+          "end": 95.62,
+          "probability": 0.9907
+        },
+        {
+          "word": "long",
+          "start": 95.62,
+          "end": 95.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 95.8,
+          "end": 96.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 96.04,
+          "end": 96.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "event",
+          "start": 96.18,
+          "end": 96.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "happens,",
+          "start": 96.44,
+          "end": 96.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 97.12,
+          "end": 97.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "can",
+          "start": 97.38,
+          "end": 97.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 97.54,
+          "end": 97.7,
+          "probability": 0.999
+        },
+        {
+          "word": "sure",
+          "start": 97.7,
+          "end": 97.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 97.96,
+          "end": 98.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 98.14,
+          "end": 98.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "same",
+          "start": 98.28,
+          "end": 98.52,
+          "probability": 0.998
+        },
+        {
+          "word": "set",
+          "start": 98.52,
+          "end": 98.82,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 98.82,
+          "end": 98.96,
+          "probability": 0.998
+        },
+        {
+          "word": "rules",
+          "start": 98.96,
+          "end": 99.22,
+          "probability": 0.9883
+        },
+        {
+          "word": "will",
+          "start": 99.22,
+          "end": 99.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 99.44,
+          "end": 99.58,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 99.58,
+      "end": 105.6,
+      "start_formatted": "00:01:39.580",
+      "end_formatted": "00:01:45.600",
+      "text": "executed, regardless of the source. That is why a Goza rule is the perfect tool to implement this",
+      "words": [
+        {
+          "word": "executed,",
+          "start": 99.58,
+          "end": 100.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "regardless",
+          "start": 100.44,
+          "end": 100.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 100.94,
+          "end": 101.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 101.28,
+          "end": 101.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "source.",
+          "start": 101.42,
+          "end": 101.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "That",
+          "start": 102.26,
+          "end": 102.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 102.56,
+          "end": 102.7,
+          "probability": 0.9883
+        },
+        {
+          "word": "why",
+          "start": 102.7,
+          "end": 102.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 102.92,
+          "end": 103.12,
+          "probability": 0.8911
+        },
+        {
+          "word": "Goza",
+          "start": 103.12,
+          "end": 103.38,
+          "probability": 0.3955
+        },
+        {
+          "word": "rule",
+          "start": 103.38,
+          "end": 103.62,
+          "probability": 0.8521
+        },
+        {
+          "word": "is",
+          "start": 103.62,
+          "end": 103.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 103.86,
+          "end": 104.02,
+          "probability": 0.998
+        },
+        {
+          "word": "perfect",
+          "start": 104.02,
+          "end": 104.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "tool",
+          "start": 104.34,
+          "end": 104.74,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 104.74,
+          "end": 104.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "implement",
+          "start": 104.94,
+          "end": 105.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 105.3,
+          "end": 105.6,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 105.6,
+      "end": 110.76,
+      "start_formatted": "00:01:45.600",
+      "end_formatted": "00:01:50.760",
+      "text": "requirement. A rule set is a collection of rules that have the same root entity type.",
+      "words": [
+        {
+          "word": "requirement.",
+          "start": 105.6,
+          "end": 106.2,
+          "probability": 0.998
+        },
+        {
+          "word": "A",
+          "start": 106.46,
+          "end": 106.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "rule",
+          "start": 106.9,
+          "end": 107.12,
+          "probability": 0.8442
+        },
+        {
+          "word": "set",
+          "start": 107.12,
+          "end": 107.4,
+          "probability": 0.9341
+        },
+        {
+          "word": "is",
+          "start": 107.4,
+          "end": 107.62,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 107.62,
+          "end": 107.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "collection",
+          "start": 107.72,
+          "end": 108.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 108.14,
+          "end": 108.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "rules",
+          "start": 108.44,
+          "end": 108.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 108.76,
+          "end": 109.0,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 109.0,
+          "end": 109.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 109.24,
+          "end": 109.4,
+          "probability": 0.998
+        },
+        {
+          "word": "same",
+          "start": 109.4,
+          "end": 109.6,
+          "probability": 0.998
+        },
+        {
+          "word": "root",
+          "start": 109.6,
+          "end": 109.9,
+          "probability": 0.9492
+        },
+        {
+          "word": "entity",
+          "start": 109.9,
+          "end": 110.32,
+          "probability": 0.9502
+        },
+        {
+          "word": "type.",
+          "start": 110.32,
+          "end": 110.76,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 111.08,
+      "end": 116.66,
+      "start_formatted": "00:01:51.080",
+      "end_formatted": "00:01:56.660",
+      "text": "Rules are organized into hierarchies. Also recall a rule set category is a collection",
+      "words": [
+        {
+          "word": "Rules",
+          "start": 111.08,
+          "end": 111.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "are",
+          "start": 111.48,
+          "end": 111.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "organized",
+          "start": 111.66,
+          "end": 112.18,
+          "probability": 0.9907
+        },
+        {
+          "word": "into",
+          "start": 112.18,
+          "end": 112.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "hierarchies.",
+          "start": 112.56,
+          "end": 113.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "Also",
+          "start": 113.78,
+          "end": 114.24,
+          "probability": 0.9932
+        },
+        {
+          "word": "recall",
+          "start": 114.24,
+          "end": 114.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "a",
+          "start": 114.56,
+          "end": 114.76,
+          "probability": 0.9673
+        },
+        {
+          "word": "rule",
+          "start": 114.76,
+          "end": 114.96,
+          "probability": 0.7275
+        },
+        {
+          "word": "set",
+          "start": 114.96,
+          "end": 115.24,
+          "probability": 0.9575
+        },
+        {
+          "word": "category",
+          "start": 115.24,
+          "end": 115.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 115.84,
+          "end": 116.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 116.14,
+          "end": 116.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "collection",
+          "start": 116.26,
+          "end": 116.66,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 116.66,
+      "end": 121.9,
+      "start_formatted": "00:01:56.660",
+      "end_formatted": "00:02:01.900",
+      "text": "of rule sets that have two things in common. High-level business purpose, triggering event",
+      "words": [
+        {
+          "word": "of",
+          "start": 116.66,
+          "end": 116.92,
+          "probability": 0.9473
+        },
+        {
+          "word": "rule",
+          "start": 116.92,
+          "end": 117.12,
+          "probability": 0.5029
+        },
+        {
+          "word": "sets",
+          "start": 117.12,
+          "end": 117.38,
+          "probability": 0.9419
+        },
+        {
+          "word": "that",
+          "start": 117.38,
+          "end": 117.66,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 117.66,
+          "end": 117.9,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 117.9,
+          "end": 118.14,
+          "probability": 0.9414
+        },
+        {
+          "word": "things",
+          "start": 118.14,
+          "end": 118.52,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 118.52,
+          "end": 118.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "common.",
+          "start": 118.78,
+          "end": 119.1,
+          "probability": 1.0
+        },
+        {
+          "word": "High",
+          "start": 119.34,
+          "end": 119.54,
+          "probability": 0.9282
+        },
+        {
+          "word": "-level",
+          "start": 119.54,
+          "end": 119.84,
+          "probability": 0.8037
+        },
+        {
+          "word": "business",
+          "start": 119.84,
+          "end": 120.2,
+          "probability": 0.9106
+        },
+        {
+          "word": "purpose,",
+          "start": 120.2,
+          "end": 120.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "triggering",
+          "start": 121.04,
+          "end": 121.46,
+          "probability": 0.9902
+        },
+        {
+          "word": "event",
+          "start": 121.46,
+          "end": 121.9,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 121.9,
+      "end": 127.18,
+      "start_formatted": "00:02:01.900",
+      "end_formatted": "00:02:07.180",
+      "text": "in our business case. The triggering event is the creating of the contact, saving it to the",
+      "words": [
+        {
+          "word": "in",
+          "start": 121.9,
+          "end": 122.1,
+          "probability": 0.9819
+        },
+        {
+          "word": "our",
+          "start": 122.1,
+          "end": 122.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "business",
+          "start": 122.24,
+          "end": 122.56,
+          "probability": 0.999
+        },
+        {
+          "word": "case.",
+          "start": 122.56,
+          "end": 123.04,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 123.3,
+          "end": 123.5,
+          "probability": 0.9922
+        },
+        {
+          "word": "triggering",
+          "start": 123.5,
+          "end": 123.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "event",
+          "start": 123.88,
+          "end": 124.34,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 124.34,
+          "end": 124.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 124.64,
+          "end": 124.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "creating",
+          "start": 124.78,
+          "end": 125.14,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 125.14,
+          "end": 125.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 125.38,
+          "end": 125.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact,",
+          "start": 125.5,
+          "end": 126.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "saving",
+          "start": 126.3,
+          "end": 126.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 126.7,
+          "end": 126.88,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 126.88,
+          "end": 127.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 127.04,
+          "end": 127.18,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 127.18,
+      "end": 132.96,
+      "start_formatted": "00:02:07.180",
+      "end_formatted": "00:02:12.960",
+      "text": "database for the first time. What is the business purpose in our business use case? To set the",
+      "words": [
+        {
+          "word": "database",
+          "start": 127.18,
+          "end": 127.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 127.56,
+          "end": 127.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 127.86,
+          "end": 128.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "first",
+          "start": 128.0,
+          "end": 128.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "time.",
+          "start": 128.28,
+          "end": 128.68,
+          "probability": 1.0
+        },
+        {
+          "word": "What",
+          "start": 129.02,
+          "end": 129.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 129.38,
+          "end": 129.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 129.54,
+          "end": 129.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "business",
+          "start": 129.68,
+          "end": 130.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "purpose",
+          "start": 130.0,
+          "end": 130.42,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 130.42,
+          "end": 130.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "our",
+          "start": 130.72,
+          "end": 130.84,
+          "probability": 0.999
+        },
+        {
+          "word": "business",
+          "start": 130.84,
+          "end": 131.18,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 131.18,
+          "end": 131.48,
+          "probability": 0.999
+        },
+        {
+          "word": "case?",
+          "start": 131.48,
+          "end": 131.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "To",
+          "start": 132.14,
+          "end": 132.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "set",
+          "start": 132.54,
+          "end": 132.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 132.8,
+          "end": 132.96,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 132.96,
+      "end": 138.82,
+      "start_formatted": "00:02:12.960",
+      "end_formatted": "00:02:18.820",
+      "text": "assigned user field, and end a contact note, technically, last-minute changes before committing",
+      "words": [
+        {
+          "word": "assigned",
+          "start": 132.96,
+          "end": 133.34,
+          "probability": 0.9912
+        },
+        {
+          "word": "user",
+          "start": 133.34,
+          "end": 133.64,
+          "probability": 0.999
+        },
+        {
+          "word": "field,",
+          "start": 133.64,
+          "end": 134.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 134.28,
+          "end": 134.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "end",
+          "start": 134.54,
+          "end": 134.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "a",
+          "start": 134.82,
+          "end": 135.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "contact",
+          "start": 135.0,
+          "end": 135.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "note,",
+          "start": 135.34,
+          "end": 135.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "technically,",
+          "start": 135.96,
+          "end": 136.48,
+          "probability": 0.998
+        },
+        {
+          "word": "last",
+          "start": 136.8,
+          "end": 137.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "-minute",
+          "start": 137.22,
+          "end": 137.48,
+          "probability": 0.916
+        },
+        {
+          "word": "changes",
+          "start": 137.48,
+          "end": 137.96,
+          "probability": 0.999
+        },
+        {
+          "word": "before",
+          "start": 137.96,
+          "end": 138.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "committing",
+          "start": 138.38,
+          "end": 138.82,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 138.82,
+      "end": 145.52,
+      "start_formatted": "00:02:18.820",
+      "end_formatted": "00:02:25.520",
+      "text": "the transaction. The rule set category we should use then is pre-update. Expand rule sets.",
+      "words": [
+        {
+          "word": "the",
+          "start": 138.82,
+          "end": 139.04,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction.",
+          "start": 139.04,
+          "end": 139.64,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 139.94,
+          "end": 140.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 140.34,
+          "end": 140.56,
+          "probability": 0.9878
+        },
+        {
+          "word": "set",
+          "start": 140.56,
+          "end": 140.86,
+          "probability": 0.9922
+        },
+        {
+          "word": "category",
+          "start": 140.86,
+          "end": 141.4,
+          "probability": 1.0
+        },
+        {
+          "word": "we",
+          "start": 141.4,
+          "end": 141.66,
+          "probability": 1.0
+        },
+        {
+          "word": "should",
+          "start": 141.66,
+          "end": 141.9,
+          "probability": 1.0
+        },
+        {
+          "word": "use",
+          "start": 141.9,
+          "end": 142.18,
+          "probability": 0.999
+        },
+        {
+          "word": "then",
+          "start": 142.18,
+          "end": 142.36,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 142.36,
+          "end": 142.56,
+          "probability": 0.9614
+        },
+        {
+          "word": "pre",
+          "start": 142.56,
+          "end": 142.76,
+          "probability": 0.9478
+        },
+        {
+          "word": "-update.",
+          "start": 142.76,
+          "end": 143.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "Expand",
+          "start": 144.24,
+          "end": 144.84,
+          "probability": 0.9941
+        },
+        {
+          "word": "rule",
+          "start": 144.84,
+          "end": 145.04,
+          "probability": 0.9448
+        },
+        {
+          "word": "sets.",
+          "start": 145.04,
+          "end": 145.52,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 147.38,
+      "end": 154.68,
+      "start_formatted": "00:02:27.380",
+      "end_formatted": "00:02:34.680",
+      "text": "Expand pre-update. As you can see there are four rule sets available in the pre-update rule set",
+      "words": [
+        {
+          "word": "Expand",
+          "start": 147.38,
+          "end": 147.9,
+          "probability": 0.9302
+        },
+        {
+          "word": "pre",
+          "start": 147.9,
+          "end": 148.12,
+          "probability": 0.2556
+        },
+        {
+          "word": "-update.",
+          "start": 148.12,
+          "end": 148.58,
+          "probability": 0.9502
+        },
+        {
+          "word": "As",
+          "start": 150.34,
+          "end": 150.86,
+          "probability": 0.9741
+        },
+        {
+          "word": "you",
+          "start": 150.86,
+          "end": 150.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 150.96,
+          "end": 151.16,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 151.16,
+          "end": 151.38,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 151.38,
+          "end": 151.58,
+          "probability": 0.9829
+        },
+        {
+          "word": "are",
+          "start": 151.58,
+          "end": 151.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "four",
+          "start": 151.74,
+          "end": 151.94,
+          "probability": 0.5869
+        },
+        {
+          "word": "rule",
+          "start": 151.94,
+          "end": 152.2,
+          "probability": 0.8833
+        },
+        {
+          "word": "sets",
+          "start": 152.2,
+          "end": 152.5,
+          "probability": 0.9854
+        },
+        {
+          "word": "available",
+          "start": 152.5,
+          "end": 153.04,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 153.04,
+          "end": 153.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 153.38,
+          "end": 153.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "pre",
+          "start": 153.48,
+          "end": 153.7,
+          "probability": 0.853
+        },
+        {
+          "word": "-update",
+          "start": 153.7,
+          "end": 154.08,
+          "probability": 0.9902
+        },
+        {
+          "word": "rule",
+          "start": 154.08,
+          "end": 154.36,
+          "probability": 0.9668
+        },
+        {
+          "word": "set",
+          "start": 154.36,
+          "end": 154.68,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 154.68,
+      "end": 161.02,
+      "start_formatted": "00:02:34.680",
+      "end_formatted": "00:02:41.020",
+      "text": "category. The type of entity that is triggering is A-B contact, so we'll create a new A-B contact",
+      "words": [
+        {
+          "word": "category.",
+          "start": 154.68,
+          "end": 155.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 155.54,
+          "end": 155.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "type",
+          "start": 155.88,
+          "end": 156.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 156.08,
+          "end": 156.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "entity",
+          "start": 156.24,
+          "end": 156.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "that",
+          "start": 156.58,
+          "end": 156.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 156.84,
+          "end": 157.0,
+          "probability": 0.999
+        },
+        {
+          "word": "triggering",
+          "start": 157.0,
+          "end": 157.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 157.36,
+          "end": 157.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "A",
+          "start": 157.66,
+          "end": 157.84,
+          "probability": 0.4365
+        },
+        {
+          "word": "-B",
+          "start": 157.84,
+          "end": 157.96,
+          "probability": 0.6592
+        },
+        {
+          "word": "contact,",
+          "start": 157.96,
+          "end": 158.4,
+          "probability": 0.7085
+        },
+        {
+          "word": "so",
+          "start": 158.8,
+          "end": 159.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "we'll",
+          "start": 159.08,
+          "end": 159.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "create",
+          "start": 159.36,
+          "end": 159.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 159.72,
+          "end": 159.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 159.94,
+          "end": 160.14,
+          "probability": 0.999
+        },
+        {
+          "word": "A",
+          "start": 160.14,
+          "end": 160.44,
+          "probability": 0.9897
+        },
+        {
+          "word": "-B",
+          "start": 160.44,
+          "end": 160.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "contact",
+          "start": 160.6,
+          "end": 161.02,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 161.02,
+      "end": 168.58,
+      "start_formatted": "00:02:41.020",
+      "end_formatted": "00:02:48.580",
+      "text": "pre-update rule. Double-click A-B contact pre-update to open it. As you can see from the first few rules,",
+      "words": [
+        {
+          "word": "pre",
+          "start": 161.02,
+          "end": 161.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "-update",
+          "start": 161.48,
+          "end": 161.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "rule.",
+          "start": 161.88,
+          "end": 162.34,
+          "probability": 0.999
+        },
+        {
+          "word": "Double",
+          "start": 162.7,
+          "end": 163.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "-click",
+          "start": 163.08,
+          "end": 163.38,
+          "probability": 0.7852
+        },
+        {
+          "word": "A",
+          "start": 163.38,
+          "end": 163.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "-B",
+          "start": 163.64,
+          "end": 163.8,
+          "probability": 0.999
+        },
+        {
+          "word": "contact",
+          "start": 163.8,
+          "end": 164.32,
+          "probability": 0.9912
+        },
+        {
+          "word": "pre",
+          "start": 164.32,
+          "end": 164.76,
+          "probability": 0.999
+        },
+        {
+          "word": "-update",
+          "start": 164.76,
+          "end": 165.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 165.12,
+          "end": 165.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "open",
+          "start": 165.32,
+          "end": 165.68,
+          "probability": 0.999
+        },
+        {
+          "word": "it.",
+          "start": 165.68,
+          "end": 165.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "As",
+          "start": 166.2,
+          "end": 166.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "you",
+          "start": 166.72,
+          "end": 166.82,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 166.82,
+          "end": 167.0,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 167.0,
+          "end": 167.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 167.24,
+          "end": 167.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 167.44,
+          "end": 167.6,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 167.6,
+          "end": 167.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "few",
+          "start": 167.86,
+          "end": 168.1,
+          "probability": 0.999
+        },
+        {
+          "word": "rules,",
+          "start": 168.1,
+          "end": 168.58,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 168.82,
+      "end": 174.94,
+      "start_formatted": "00:02:48.820",
+      "end_formatted": "00:02:54.940",
+      "text": "the insurance company uses the naming convention for rules. Since we are going to make a rule for new",
+      "words": [
+        {
+          "word": "the",
+          "start": 168.82,
+          "end": 169.04,
+          "probability": 0.9927
+        },
+        {
+          "word": "insurance",
+          "start": 169.04,
+          "end": 169.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "company",
+          "start": 169.42,
+          "end": 169.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "uses",
+          "start": 169.9,
+          "end": 170.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 170.3,
+          "end": 170.54,
+          "probability": 0.6294
+        },
+        {
+          "word": "naming",
+          "start": 170.54,
+          "end": 170.84,
+          "probability": 0.9829
+        },
+        {
+          "word": "convention",
+          "start": 170.84,
+          "end": 171.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 171.36,
+          "end": 171.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "rules.",
+          "start": 171.66,
+          "end": 172.14,
+          "probability": 0.9565
+        },
+        {
+          "word": "Since",
+          "start": 172.5,
+          "end": 173.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "we",
+          "start": 173.02,
+          "end": 173.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 173.26,
+          "end": 173.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "going",
+          "start": 173.4,
+          "end": 173.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 173.66,
+          "end": 173.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "make",
+          "start": 173.88,
+          "end": 174.08,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 174.08,
+          "end": 174.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 174.24,
+          "end": 174.46,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 174.46,
+          "end": 174.68,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 174.68,
+          "end": 174.94,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 174.94,
+      "end": 180.72,
+      "start_formatted": "00:02:54.940",
+      "end_formatted": "00:03:00.720",
+      "text": "doctor contacts, we'll expand the first pre-update for A-B contact to see the rules within it.",
+      "words": [
+        {
+          "word": "doctor",
+          "start": 174.94,
+          "end": 175.32,
+          "probability": 0.5073
+        },
+        {
+          "word": "contacts,",
+          "start": 175.32,
+          "end": 176.0,
+          "probability": 0.9751
+        },
+        {
+          "word": "we'll",
+          "start": 176.26,
+          "end": 176.6,
+          "probability": 0.9561
+        },
+        {
+          "word": "expand",
+          "start": 176.6,
+          "end": 177.0,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 177.0,
+          "end": 177.2,
+          "probability": 0.998
+        },
+        {
+          "word": "first",
+          "start": 177.2,
+          "end": 177.48,
+          "probability": 0.9756
+        },
+        {
+          "word": "pre",
+          "start": 177.48,
+          "end": 177.78,
+          "probability": 0.8765
+        },
+        {
+          "word": "-update",
+          "start": 177.78,
+          "end": 178.1,
+          "probability": 0.9385
+        },
+        {
+          "word": "for",
+          "start": 178.1,
+          "end": 178.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "A",
+          "start": 178.34,
+          "end": 178.54,
+          "probability": 0.4038
+        },
+        {
+          "word": "-B",
+          "start": 178.54,
+          "end": 178.68,
+          "probability": 0.5288
+        },
+        {
+          "word": "contact",
+          "start": 178.68,
+          "end": 179.12,
+          "probability": 0.772
+        },
+        {
+          "word": "to",
+          "start": 179.12,
+          "end": 179.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "see",
+          "start": 179.48,
+          "end": 179.7,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 179.7,
+          "end": 179.86,
+          "probability": 0.999
+        },
+        {
+          "word": "rules",
+          "start": 179.86,
+          "end": 180.16,
+          "probability": 0.9912
+        },
+        {
+          "word": "within",
+          "start": 180.16,
+          "end": 180.46,
+          "probability": 0.9946
+        },
+        {
+          "word": "it.",
+          "start": 180.46,
+          "end": 180.72,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 181.16,
+      "end": 187.96,
+      "start_formatted": "00:03:01.160",
+      "end_formatted": "00:03:07.960",
+      "text": "Right-click on the A-B contact rule. We'll create a new rule that is triggered when a new doctor",
+      "words": [
+        {
+          "word": "Right",
+          "start": 181.16,
+          "end": 181.72,
+          "probability": 0.9702
+        },
+        {
+          "word": "-click",
+          "start": 181.72,
+          "end": 181.96,
+          "probability": 0.7773
+        },
+        {
+          "word": "on",
+          "start": 181.96,
+          "end": 182.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 182.24,
+          "end": 182.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "A",
+          "start": 182.38,
+          "end": 182.56,
+          "probability": 0.8389
+        },
+        {
+          "word": "-B",
+          "start": 182.56,
+          "end": 182.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "contact",
+          "start": 182.72,
+          "end": 183.2,
+          "probability": 0.8057
+        },
+        {
+          "word": "rule.",
+          "start": 183.2,
+          "end": 183.66,
+          "probability": 0.9775
+        },
+        {
+          "word": "We'll",
+          "start": 184.62,
+          "end": 185.18,
+          "probability": 0.979
+        },
+        {
+          "word": "create",
+          "start": 185.18,
+          "end": 185.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 185.5,
+          "end": 185.74,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 185.74,
+          "end": 185.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "rule",
+          "start": 185.94,
+          "end": 186.26,
+          "probability": 0.9839
+        },
+        {
+          "word": "that",
+          "start": 186.26,
+          "end": 186.46,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 186.46,
+          "end": 186.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "triggered",
+          "start": 186.64,
+          "end": 186.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "when",
+          "start": 186.98,
+          "end": 187.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 187.2,
+          "end": 187.34,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 187.34,
+          "end": 187.54,
+          "probability": 0.9893
+        },
+        {
+          "word": "doctor",
+          "start": 187.54,
+          "end": 187.96,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 187.96,
+      "end": 194.78,
+      "start_formatted": "00:03:07.960",
+      "end_formatted": "00:03:14.780",
+      "text": "contact is created. Click new rule. In the rule name field, we'll give it a unique name using the",
+      "words": [
+        {
+          "word": "contact",
+          "start": 187.96,
+          "end": 188.44,
+          "probability": 0.7622
+        },
+        {
+          "word": "is",
+          "start": 188.44,
+          "end": 188.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "created.",
+          "start": 188.8,
+          "end": 189.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 189.5,
+          "end": 190.06,
+          "probability": 0.9751
+        },
+        {
+          "word": "new",
+          "start": 190.06,
+          "end": 190.24,
+          "probability": 0.3965
+        },
+        {
+          "word": "rule.",
+          "start": 190.24,
+          "end": 190.6,
+          "probability": 0.9824
+        },
+        {
+          "word": "In",
+          "start": 191.02,
+          "end": 191.62,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 191.62,
+          "end": 191.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "rule",
+          "start": 191.74,
+          "end": 191.96,
+          "probability": 0.9268
+        },
+        {
+          "word": "name",
+          "start": 191.96,
+          "end": 192.26,
+          "probability": 0.9902
+        },
+        {
+          "word": "field,",
+          "start": 192.26,
+          "end": 192.66,
+          "probability": 0.998
+        },
+        {
+          "word": "we'll",
+          "start": 192.86,
+          "end": 193.18,
+          "probability": 0.9639
+        },
+        {
+          "word": "give",
+          "start": 193.18,
+          "end": 193.36,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 193.36,
+          "end": 193.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 193.5,
+          "end": 193.6,
+          "probability": 0.998
+        },
+        {
+          "word": "unique",
+          "start": 193.6,
+          "end": 193.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 193.92,
+          "end": 194.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "using",
+          "start": 194.2,
+          "end": 194.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 194.56,
+          "end": 194.78,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 194.78,
+      "end": 199.54,
+      "start_formatted": "00:03:14.780",
+      "end_formatted": "00:03:19.540",
+      "text": "company's naming convention. We'll use AB for the application name abbreviation,",
+      "words": [
+        {
+          "word": "company's",
+          "start": 194.78,
+          "end": 195.3,
+          "probability": 0.9863
+        },
+        {
+          "word": "naming",
+          "start": 195.3,
+          "end": 195.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "convention.",
+          "start": 195.64,
+          "end": 196.18,
+          "probability": 0.999
+        },
+        {
+          "word": "We'll",
+          "start": 196.54,
+          "end": 197.02,
+          "probability": 0.9893
+        },
+        {
+          "word": "use",
+          "start": 197.02,
+          "end": 197.3,
+          "probability": 0.9941
+        },
+        {
+          "word": "AB",
+          "start": 197.3,
+          "end": 197.48,
+          "probability": 0.5566
+        },
+        {
+          "word": "for",
+          "start": 197.48,
+          "end": 197.66,
+          "probability": 0.9712
+        },
+        {
+          "word": "the",
+          "start": 197.66,
+          "end": 197.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "application",
+          "start": 197.78,
+          "end": 198.38,
+          "probability": 0.9771
+        },
+        {
+          "word": "name",
+          "start": 198.38,
+          "end": 198.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "abbreviation,",
+          "start": 198.72,
+          "end": 199.54,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 199.8,
+      "end": 205.46,
+      "start_formatted": "00:03:19.800",
+      "end_formatted": "00:03:25.460",
+      "text": "PU for the rule set category abbreviation, and 5000 for the unique rule four-digit code.",
+      "words": [
+        {
+          "word": "PU",
+          "start": 199.8,
+          "end": 199.98,
+          "probability": 0.6606
+        },
+        {
+          "word": "for",
+          "start": 199.98,
+          "end": 200.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 200.2,
+          "end": 200.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 200.34,
+          "end": 200.56,
+          "probability": 0.979
+        },
+        {
+          "word": "set",
+          "start": 200.56,
+          "end": 200.86,
+          "probability": 0.9883
+        },
+        {
+          "word": "category",
+          "start": 200.86,
+          "end": 201.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "abbreviation,",
+          "start": 201.44,
+          "end": 202.26,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 202.42,
+          "end": 202.78,
+          "probability": 0.998
+        },
+        {
+          "word": "5000",
+          "start": 202.78,
+          "end": 203.3,
+          "probability": 0.9468
+        },
+        {
+          "word": "for",
+          "start": 203.3,
+          "end": 203.68,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 203.68,
+          "end": 203.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "unique",
+          "start": 203.82,
+          "end": 204.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "rule",
+          "start": 204.1,
+          "end": 204.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "four",
+          "start": 204.36,
+          "end": 204.7,
+          "probability": 0.583
+        },
+        {
+          "word": "-digit",
+          "start": 204.7,
+          "end": 205.14,
+          "probability": 0.8267
+        },
+        {
+          "word": "code.",
+          "start": 205.14,
+          "end": 205.46,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 205.8,
+      "end": 209.82,
+      "start_formatted": "00:03:25.800",
+      "end_formatted": "00:03:29.820",
+      "text": "We'll then add a dash and a user-friendly description of the rule's purpose.",
+      "words": [
+        {
+          "word": "We'll",
+          "start": 205.8,
+          "end": 206.16,
+          "probability": 0.998
+        },
+        {
+          "word": "then",
+          "start": 206.16,
+          "end": 206.42,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 206.42,
+          "end": 206.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 206.7,
+          "end": 206.86,
+          "probability": 1.0
+        },
+        {
+          "word": "dash",
+          "start": 206.86,
+          "end": 207.12,
+          "probability": 0.9888
+        },
+        {
+          "word": "and",
+          "start": 207.12,
+          "end": 207.34,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 207.34,
+          "end": 207.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "user",
+          "start": 207.44,
+          "end": 207.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "-friendly",
+          "start": 207.76,
+          "end": 208.06,
+          "probability": 0.9541
+        },
+        {
+          "word": "description",
+          "start": 208.06,
+          "end": 208.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 208.6,
+          "end": 208.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 208.9,
+          "end": 209.02,
+          "probability": 1.0
+        },
+        {
+          "word": "rule's",
+          "start": 209.02,
+          "end": 209.42,
+          "probability": 0.9751
+        },
+        {
+          "word": "purpose.",
+          "start": 209.42,
+          "end": 209.82,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 209.82,
+      "end": 217.02,
+      "start_formatted": "00:03:29.820",
+      "end_formatted": "00:03:37.020",
+      "text": "Enter the following for the name of the rule, AB for 5000, automatic assignment of new flagged contacts.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 209.82,
+          "end": 210.82,
+          "probability": 0.8159
+        },
+        {
+          "word": "the",
+          "start": 210.82,
+          "end": 211.02,
+          "probability": 0.9775
+        },
+        {
+          "word": "following",
+          "start": 211.02,
+          "end": 211.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "for",
+          "start": 211.42,
+          "end": 211.7,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 211.7,
+          "end": 211.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "name",
+          "start": 211.84,
+          "end": 212.12,
+          "probability": 0.9609
+        },
+        {
+          "word": "of",
+          "start": 212.12,
+          "end": 212.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 212.32,
+          "end": 212.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "rule,",
+          "start": 212.44,
+          "end": 212.78,
+          "probability": 0.8359
+        },
+        {
+          "word": "AB",
+          "start": 212.96,
+          "end": 213.22,
+          "probability": 0.1024
+        },
+        {
+          "word": "for",
+          "start": 213.22,
+          "end": 213.34,
+          "probability": 0.0
+        },
+        {
+          "word": "5000,",
+          "start": 213.34,
+          "end": 214.06,
+          "probability": 0.9434
+        },
+        {
+          "word": "automatic",
+          "start": 214.36,
+          "end": 214.86,
+          "probability": 0.302
+        },
+        {
+          "word": "assignment",
+          "start": 214.86,
+          "end": 215.42,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 215.42,
+          "end": 215.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "new",
+          "start": 215.76,
+          "end": 215.94,
+          "probability": 0.9731
+        },
+        {
+          "word": "flagged",
+          "start": 215.94,
+          "end": 216.5,
+          "probability": 0.9834
+        },
+        {
+          "word": "contacts.",
+          "start": 216.5,
+          "end": 217.02,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 227.02,
+      "end": 235.9,
+      "start_formatted": "00:03:47.020",
+      "end_formatted": "00:03:55.900",
+      "text": "Click OK. However, if you need to move the rule to a different position, you can simply drag and drop it.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 227.02,
+          "end": 227.58,
+          "probability": 0.9619
+        },
+        {
+          "word": "OK.",
+          "start": 227.58,
+          "end": 227.92,
+          "probability": 0.8691
+        },
+        {
+          "word": "However,",
+          "start": 230.2,
+          "end": 230.76,
+          "probability": 0.9683
+        },
+        {
+          "word": "if",
+          "start": 231.16,
+          "end": 231.4,
+          "probability": 0.957
+        },
+        {
+          "word": "you",
+          "start": 231.4,
+          "end": 231.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "need",
+          "start": 231.54,
+          "end": 231.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 231.72,
+          "end": 231.88,
+          "probability": 0.999
+        },
+        {
+          "word": "move",
+          "start": 231.88,
+          "end": 232.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 232.12,
+          "end": 232.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "rule",
+          "start": 232.3,
+          "end": 232.54,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 232.54,
+          "end": 232.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 232.76,
+          "end": 232.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "different",
+          "start": 232.88,
+          "end": 233.12,
+          "probability": 0.999
+        },
+        {
+          "word": "position,",
+          "start": 233.12,
+          "end": 233.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "you",
+          "start": 233.98,
+          "end": 234.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "can",
+          "start": 234.22,
+          "end": 234.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "simply",
+          "start": 234.42,
+          "end": 234.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "drag",
+          "start": 234.78,
+          "end": 235.1,
+          "probability": 0.9858
+        },
+        {
+          "word": "and",
+          "start": 235.1,
+          "end": 235.38,
+          "probability": 0.9771
+        },
+        {
+          "word": "drop",
+          "start": 235.38,
+          "end": 235.62,
+          "probability": 0.999
+        },
+        {
+          "word": "it.",
+          "start": 235.62,
+          "end": 235.9,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 238.72,
+      "end": 241.54,
+      "start_formatted": "00:03:58.720",
+      "end_formatted": "00:04:01.540",
+      "text": "We'll return the rule to its original position.",
+      "words": [
+        {
+          "word": "We'll",
+          "start": 238.72,
+          "end": 239.34,
+          "probability": 0.9678
+        },
+        {
+          "word": "return",
+          "start": 239.34,
+          "end": 239.68,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 239.68,
+          "end": 239.88,
+          "probability": 0.999
+        },
+        {
+          "word": "rule",
+          "start": 239.88,
+          "end": 240.12,
+          "probability": 0.9678
+        },
+        {
+          "word": "to",
+          "start": 240.12,
+          "end": 240.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "its",
+          "start": 240.34,
+          "end": 240.56,
+          "probability": 0.998
+        },
+        {
+          "word": "original",
+          "start": 240.56,
+          "end": 240.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "position.",
+          "start": 240.98,
+          "end": 241.54,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 244.06,
+      "end": 250.14,
+      "start_formatted": "00:04:04.060",
+      "end_formatted": "00:04:10.140",
+      "text": "The rule has two sections to configure, the condition, and the action. The condition is set",
+      "words": [
+        {
+          "word": "The",
+          "start": 244.06,
+          "end": 244.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "rule",
+          "start": 244.68,
+          "end": 244.9,
+          "probability": 0.9902
+        },
+        {
+          "word": "has",
+          "start": 244.9,
+          "end": 245.16,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 245.16,
+          "end": 245.42,
+          "probability": 0.9902
+        },
+        {
+          "word": "sections",
+          "start": 245.42,
+          "end": 245.94,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 245.94,
+          "end": 246.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "configure,",
+          "start": 246.2,
+          "end": 246.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 246.9,
+          "end": 247.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "condition,",
+          "start": 247.12,
+          "end": 247.56,
+          "probability": 0.9575
+        },
+        {
+          "word": "and",
+          "start": 247.86,
+          "end": 248.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 248.12,
+          "end": 248.26,
+          "probability": 1.0
+        },
+        {
+          "word": "action.",
+          "start": 248.26,
+          "end": 248.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 248.96,
+          "end": 249.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "condition",
+          "start": 249.3,
+          "end": 249.7,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 249.7,
+          "end": 249.92,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 249.92,
+          "end": 250.14,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 250.14,
+      "end": 256.38,
+      "start_formatted": "00:04:10.140",
+      "end_formatted": "00:04:16.380",
+      "text": "to true initially. It has to be a GoSue expression that returns either true or false. The action will",
+      "words": [
+        {
+          "word": "to",
+          "start": 250.14,
+          "end": 250.3,
+          "probability": 1.0
+        },
+        {
+          "word": "true",
+          "start": 250.3,
+          "end": 250.5,
+          "probability": 0.731
+        },
+        {
+          "word": "initially.",
+          "start": 250.5,
+          "end": 250.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "It",
+          "start": 251.3,
+          "end": 251.64,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 251.64,
+          "end": 251.86,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 251.86,
+          "end": 252.0,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 252.0,
+          "end": 252.16,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 252.16,
+          "end": 252.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "GoSue",
+          "start": 252.28,
+          "end": 252.7,
+          "probability": 0.4771
+        },
+        {
+          "word": "expression",
+          "start": 252.7,
+          "end": 253.18,
+          "probability": 0.9829
+        },
+        {
+          "word": "that",
+          "start": 253.18,
+          "end": 253.48,
+          "probability": 1.0
+        },
+        {
+          "word": "returns",
+          "start": 253.48,
+          "end": 253.94,
+          "probability": 1.0
+        },
+        {
+          "word": "either",
+          "start": 253.94,
+          "end": 254.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "true",
+          "start": 254.3,
+          "end": 254.52,
+          "probability": 0.9736
+        },
+        {
+          "word": "or",
+          "start": 254.52,
+          "end": 254.76,
+          "probability": 1.0
+        },
+        {
+          "word": "false.",
+          "start": 254.76,
+          "end": 255.16,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 255.46,
+          "end": 255.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "action",
+          "start": 255.8,
+          "end": 256.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 256.14,
+          "end": 256.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 256.38,
+      "end": 263.44,
+      "start_formatted": "00:04:16.380",
+      "end_formatted": "00:04:23.440",
+      "text": "only be executed if the condition returns true, otherwise, nothing happens. Click true and change the value.",
+      "words": [
+        {
+          "word": "only",
+          "start": 256.38,
+          "end": 256.64,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 256.64,
+          "end": 256.82,
+          "probability": 1.0
+        },
+        {
+          "word": "executed",
+          "start": 256.82,
+          "end": 257.42,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 257.42,
+          "end": 257.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 257.7,
+          "end": 257.82,
+          "probability": 1.0
+        },
+        {
+          "word": "condition",
+          "start": 257.82,
+          "end": 258.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "returns",
+          "start": 258.22,
+          "end": 258.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "true,",
+          "start": 258.76,
+          "end": 259.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "otherwise,",
+          "start": 259.36,
+          "end": 259.82,
+          "probability": 0.999
+        },
+        {
+          "word": "nothing",
+          "start": 260.24,
+          "end": 260.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "happens.",
+          "start": 260.68,
+          "end": 261.26,
+          "probability": 1.0
+        },
+        {
+          "word": "Click",
+          "start": 261.58,
+          "end": 262.1,
+          "probability": 0.998
+        },
+        {
+          "word": "true",
+          "start": 262.1,
+          "end": 262.36,
+          "probability": 0.6519
+        },
+        {
+          "word": "and",
+          "start": 262.36,
+          "end": 262.54,
+          "probability": 1.0
+        },
+        {
+          "word": "change",
+          "start": 262.54,
+          "end": 262.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 262.84,
+          "end": 263.04,
+          "probability": 1.0
+        },
+        {
+          "word": "value.",
+          "start": 263.04,
+          "end": 263.44,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 263.44,
+      "end": 269.72,
+      "start_formatted": "00:04:23.440",
+      "end_formatted": "00:04:29.720",
+      "text": "Based on the business requirement, the condition is that the contact must be new, and it must have at",
+      "words": [
+        {
+          "word": "Based",
+          "start": 263.44,
+          "end": 264.5,
+          "probability": 0.8374
+        },
+        {
+          "word": "on",
+          "start": 264.5,
+          "end": 264.7,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 264.7,
+          "end": 264.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "business",
+          "start": 264.82,
+          "end": 265.14,
+          "probability": 0.9048
+        },
+        {
+          "word": "requirement,",
+          "start": 265.14,
+          "end": 265.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 266.1,
+          "end": 266.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "condition",
+          "start": 266.3,
+          "end": 266.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 266.7,
+          "end": 266.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 266.98,
+          "end": 267.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 267.14,
+          "end": 267.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "contact",
+          "start": 267.26,
+          "end": 267.66,
+          "probability": 0.939
+        },
+        {
+          "word": "must",
+          "start": 267.66,
+          "end": 268.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 268.02,
+          "end": 268.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "new,",
+          "start": 268.24,
+          "end": 268.52,
+          "probability": 0.8823
+        },
+        {
+          "word": "and",
+          "start": 268.72,
+          "end": 268.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "it",
+          "start": 268.96,
+          "end": 269.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "must",
+          "start": 269.08,
+          "end": 269.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 269.32,
+          "end": 269.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "at",
+          "start": 269.54,
+          "end": 269.72,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 269.72,
+      "end": 276.62,
+      "start_formatted": "00:04:29.720",
+      "end_formatted": "00:04:36.620",
+      "text": "least one flag entry. We can use the new property of the entity to test if the contact is new. Every",
+      "words": [
+        {
+          "word": "least",
+          "start": 269.72,
+          "end": 269.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "one",
+          "start": 269.9,
+          "end": 270.22,
+          "probability": 0.8994
+        },
+        {
+          "word": "flag",
+          "start": 270.22,
+          "end": 270.52,
+          "probability": 0.9316
+        },
+        {
+          "word": "entry.",
+          "start": 270.52,
+          "end": 270.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "We",
+          "start": 271.38,
+          "end": 271.9,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 271.9,
+          "end": 272.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "use",
+          "start": 272.1,
+          "end": 272.38,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 272.38,
+          "end": 272.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 272.56,
+          "end": 272.72,
+          "probability": 0.896
+        },
+        {
+          "word": "property",
+          "start": 272.72,
+          "end": 273.16,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 273.16,
+          "end": 273.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 273.42,
+          "end": 273.54,
+          "probability": 0.999
+        },
+        {
+          "word": "entity",
+          "start": 273.54,
+          "end": 273.88,
+          "probability": 0.9644
+        },
+        {
+          "word": "to",
+          "start": 273.88,
+          "end": 274.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "test",
+          "start": 274.14,
+          "end": 274.44,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 274.44,
+          "end": 274.68,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 274.68,
+          "end": 274.82,
+          "probability": 0.999
+        },
+        {
+          "word": "contact",
+          "start": 274.82,
+          "end": 275.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 275.2,
+          "end": 275.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "new.",
+          "start": 275.54,
+          "end": 275.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "Every",
+          "start": 276.12,
+          "end": 276.62,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 276.62,
+      "end": 282.24,
+      "start_formatted": "00:04:36.620",
+      "end_formatted": "00:04:42.240",
+      "text": "entity has this property, which is only true if the entity is being created in the current transaction.",
+      "words": [
+        {
+          "word": "entity",
+          "start": 276.62,
+          "end": 277.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "has",
+          "start": 277.02,
+          "end": 277.3,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 277.3,
+          "end": 277.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "property,",
+          "start": 277.54,
+          "end": 278.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 278.28,
+          "end": 278.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 278.58,
+          "end": 278.82,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 278.82,
+          "end": 279.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "true",
+          "start": 279.14,
+          "end": 279.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "if",
+          "start": 279.4,
+          "end": 279.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 279.68,
+          "end": 279.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "entity",
+          "start": 279.82,
+          "end": 280.16,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 280.16,
+          "end": 280.38,
+          "probability": 1.0
+        },
+        {
+          "word": "being",
+          "start": 280.38,
+          "end": 280.62,
+          "probability": 0.999
+        },
+        {
+          "word": "created",
+          "start": 280.62,
+          "end": 280.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 280.98,
+          "end": 281.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 281.22,
+          "end": 281.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "current",
+          "start": 281.32,
+          "end": 281.6,
+          "probability": 0.999
+        },
+        {
+          "word": "transaction.",
+          "start": 281.6,
+          "end": 282.24,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 282.6,
+      "end": 290.32,
+      "start_formatted": "00:04:42.600",
+      "end_formatted": "00:04:50.320",
+      "text": "It will be false in case of any subsequent modifications. Type AB contact.new. Press Return.",
+      "words": [
+        {
+          "word": "It",
+          "start": 282.6,
+          "end": 282.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 282.96,
+          "end": 283.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 283.1,
+          "end": 283.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "false",
+          "start": 283.28,
+          "end": 283.6,
+          "probability": 0.958
+        },
+        {
+          "word": "in",
+          "start": 283.6,
+          "end": 283.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "case",
+          "start": 283.86,
+          "end": 284.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 284.1,
+          "end": 284.32,
+          "probability": 0.998
+        },
+        {
+          "word": "any",
+          "start": 284.32,
+          "end": 284.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "subsequent",
+          "start": 284.54,
+          "end": 285.12,
+          "probability": 0.999
+        },
+        {
+          "word": "modifications.",
+          "start": 285.12,
+          "end": 285.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "Type",
+          "start": 286.6,
+          "end": 287.16,
+          "probability": 0.9883
+        },
+        {
+          "word": "AB",
+          "start": 287.16,
+          "end": 287.38,
+          "probability": 0.042
+        },
+        {
+          "word": "contact",
+          "start": 287.38,
+          "end": 287.84,
+          "probability": 0.5522
+        },
+        {
+          "word": ".new.",
+          "start": 287.84,
+          "end": 288.58,
+          "probability": 0.8857
+        },
+        {
+          "word": "Press",
+          "start": 289.34,
+          "end": 289.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "Return.",
+          "start": 289.9,
+          "end": 290.32,
+          "probability": 0.5151
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 291.44,
+      "end": 298.38,
+      "start_formatted": "00:04:51.440",
+      "end_formatted": "00:04:58.380",
+      "text": "Flag entries is a data model array on the contact, defined in the abcontact.age file. Recall that",
+      "words": [
+        {
+          "word": "Flag",
+          "start": 291.44,
+          "end": 291.96,
+          "probability": 0.7153
+        },
+        {
+          "word": "entries",
+          "start": 291.96,
+          "end": 292.38,
+          "probability": 0.0681
+        },
+        {
+          "word": "is",
+          "start": 292.38,
+          "end": 292.74,
+          "probability": 0.9722
+        },
+        {
+          "word": "a",
+          "start": 292.74,
+          "end": 292.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "data",
+          "start": 292.9,
+          "end": 293.08,
+          "probability": 0.8525
+        },
+        {
+          "word": "model",
+          "start": 293.08,
+          "end": 293.42,
+          "probability": 0.9663
+        },
+        {
+          "word": "array",
+          "start": 293.42,
+          "end": 293.68,
+          "probability": 0.9644
+        },
+        {
+          "word": "on",
+          "start": 293.68,
+          "end": 293.92,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 293.92,
+          "end": 294.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "contact,",
+          "start": 294.02,
+          "end": 294.6,
+          "probability": 0.895
+        },
+        {
+          "word": "defined",
+          "start": 294.78,
+          "end": 295.34,
+          "probability": 0.9917
+        },
+        {
+          "word": "in",
+          "start": 295.34,
+          "end": 295.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 295.62,
+          "end": 295.72,
+          "probability": 0.9888
+        },
+        {
+          "word": "abcontact",
+          "start": 295.72,
+          "end": 296.62,
+          "probability": 0.7515
+        },
+        {
+          "word": ".age",
+          "start": 296.62,
+          "end": 297.02,
+          "probability": 0.5356
+        },
+        {
+          "word": "file.",
+          "start": 297.02,
+          "end": 297.42,
+          "probability": 0.9268
+        },
+        {
+          "word": "Recall",
+          "start": 297.7,
+          "end": 298.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "that",
+          "start": 298.22,
+          "end": 298.38,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 298.38,
+      "end": 304.86,
+      "start_formatted": "00:04:58.380",
+      "end_formatted": "00:05:04.860",
+      "text": "arrays have a length property that we can use to test how many entities are in the array. Type. And.",
+      "words": [
+        {
+          "word": "arrays",
+          "start": 298.38,
+          "end": 298.64,
+          "probability": 0.8311
+        },
+        {
+          "word": "have",
+          "start": 298.64,
+          "end": 298.9,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 298.9,
+          "end": 299.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "length",
+          "start": 299.0,
+          "end": 299.24,
+          "probability": 0.5137
+        },
+        {
+          "word": "property",
+          "start": 299.24,
+          "end": 299.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 299.72,
+          "end": 299.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "we",
+          "start": 299.96,
+          "end": 300.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 300.12,
+          "end": 300.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "use",
+          "start": 300.32,
+          "end": 300.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 300.56,
+          "end": 300.74,
+          "probability": 0.998
+        },
+        {
+          "word": "test",
+          "start": 300.74,
+          "end": 301.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "how",
+          "start": 301.0,
+          "end": 301.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "many",
+          "start": 301.26,
+          "end": 301.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "entities",
+          "start": 301.5,
+          "end": 301.96,
+          "probability": 0.96
+        },
+        {
+          "word": "are",
+          "start": 301.96,
+          "end": 302.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 302.28,
+          "end": 302.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 302.46,
+          "end": 302.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "array.",
+          "start": 302.56,
+          "end": 302.84,
+          "probability": 0.9209
+        },
+        {
+          "word": "Type.",
+          "start": 303.34,
+          "end": 303.86,
+          "probability": 0.8623
+        },
+        {
+          "word": "And.",
+          "start": 304.34,
+          "end": 304.86,
+          "probability": 0.4893
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 304.86,
+      "end": 309.54,
+      "start_formatted": "00:05:04.860",
+      "end_formatted": "00:05:09.540",
+      "text": "A bcontact.flag entries.length. equals 0.",
+      "words": [
+        {
+          "word": "A",
+          "start": 304.86,
+          "end": 305.72,
+          "probability": 0.1969
+        },
+        {
+          "word": "bcontact",
+          "start": 305.72,
+          "end": 306.58,
+          "probability": 0.4731
+        },
+        {
+          "word": ".flag",
+          "start": 306.58,
+          "end": 307.22,
+          "probability": 0.9448
+        },
+        {
+          "word": "entries",
+          "start": 307.22,
+          "end": 307.56,
+          "probability": 0.0424
+        },
+        {
+          "word": ".length.",
+          "start": 307.56,
+          "end": 308.3,
+          "probability": 0.918
+        },
+        {
+          "word": "equals",
+          "start": 308.54,
+          "end": 309.08,
+          "probability": 0.5337
+        },
+        {
+          "word": "0.",
+          "start": 309.08,
+          "end": 309.54,
+          "probability": 0.6333
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 312.44,
+      "end": 316.46,
+      "start_formatted": "00:05:12.440",
+      "end_formatted": "00:05:16.460",
+      "text": "In the action section, we have to complete two different things.",
+      "words": [
+        {
+          "word": "In",
+          "start": 312.44,
+          "end": 313.12,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 313.12,
+          "end": 313.24,
+          "probability": 0.998
+        },
+        {
+          "word": "action",
+          "start": 313.24,
+          "end": 313.6,
+          "probability": 0.2605
+        },
+        {
+          "word": "section,",
+          "start": 313.6,
+          "end": 314.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "we",
+          "start": 314.38,
+          "end": 314.62,
+          "probability": 0.9897
+        },
+        {
+          "word": "have",
+          "start": 314.62,
+          "end": 314.82,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 314.82,
+          "end": 314.96,
+          "probability": 0.998
+        },
+        {
+          "word": "complete",
+          "start": 314.96,
+          "end": 315.4,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 315.4,
+          "end": 315.68,
+          "probability": 0.9126
+        },
+        {
+          "word": "different",
+          "start": 315.68,
+          "end": 316.04,
+          "probability": 0.999
+        },
+        {
+          "word": "things.",
+          "start": 316.04,
+          "end": 316.46,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 317.0,
+      "end": 323.84,
+      "start_formatted": "00:05:17.000",
+      "end_formatted": "00:05:23.840",
+      "text": "1. Set the current user as the assigned user of the contact to. Create a new node and associate it",
+      "words": [
+        {
+          "word": "1.",
+          "start": 317.0,
+          "end": 317.52,
+          "probability": 0.8745
+        },
+        {
+          "word": "Set",
+          "start": 318.04,
+          "end": 318.34,
+          "probability": 0.8237
+        },
+        {
+          "word": "the",
+          "start": 318.34,
+          "end": 318.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "current",
+          "start": 318.48,
+          "end": 318.76,
+          "probability": 0.9839
+        },
+        {
+          "word": "user",
+          "start": 318.76,
+          "end": 319.12,
+          "probability": 0.9722
+        },
+        {
+          "word": "as",
+          "start": 319.12,
+          "end": 319.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 319.46,
+          "end": 319.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "assigned",
+          "start": 319.6,
+          "end": 319.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "user",
+          "start": 319.96,
+          "end": 320.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 320.26,
+          "end": 320.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 320.5,
+          "end": 320.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 320.6,
+          "end": 321.0,
+          "probability": 0.9775
+        },
+        {
+          "word": "to.",
+          "start": 321.0,
+          "end": 321.38,
+          "probability": 0.5991
+        },
+        {
+          "word": "Create",
+          "start": 321.6,
+          "end": 322.26,
+          "probability": 0.9341
+        },
+        {
+          "word": "a",
+          "start": 322.26,
+          "end": 322.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 322.44,
+          "end": 322.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "node",
+          "start": 322.58,
+          "end": 322.82,
+          "probability": 0.9609
+        },
+        {
+          "word": "and",
+          "start": 322.82,
+          "end": 323.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "associate",
+          "start": 323.08,
+          "end": 323.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "it",
+          "start": 323.54,
+          "end": 323.84,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 323.84,
+      "end": 329.66,
+      "start_formatted": "00:05:23.840",
+      "end_formatted": "00:05:29.660",
+      "text": "with the contact. Recall from the introduction to locations lesson that the contact has the assigned",
+      "words": [
+        {
+          "word": "with",
+          "start": 323.84,
+          "end": 324.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 324.0,
+          "end": 324.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact.",
+          "start": 324.14,
+          "end": 324.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "Recall",
+          "start": 325.2,
+          "end": 325.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "from",
+          "start": 325.88,
+          "end": 326.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 326.1,
+          "end": 326.24,
+          "probability": 1.0
+        },
+        {
+          "word": "introduction",
+          "start": 326.24,
+          "end": 326.74,
+          "probability": 0.7422
+        },
+        {
+          "word": "to",
+          "start": 326.74,
+          "end": 327.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "locations",
+          "start": 327.08,
+          "end": 327.58,
+          "probability": 0.9468
+        },
+        {
+          "word": "lesson",
+          "start": 327.58,
+          "end": 328.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 328.02,
+          "end": 328.26,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 328.26,
+          "end": 328.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 328.38,
+          "end": 328.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "has",
+          "start": 328.76,
+          "end": 329.16,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 329.16,
+          "end": 329.32,
+          "probability": 1.0
+        },
+        {
+          "word": "assigned",
+          "start": 329.32,
+          "end": 329.66,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 329.66,
+      "end": 334.82,
+      "start_formatted": "00:05:29.660",
+      "end_formatted": "00:05:34.820",
+      "text": "user field. We can use the get current user function to get the currently logged in user.",
+      "words": [
+        {
+          "word": "user",
+          "start": 329.66,
+          "end": 330.0,
+          "probability": 0.2529
+        },
+        {
+          "word": "field.",
+          "start": 330.0,
+          "end": 330.48,
+          "probability": 0.9209
+        },
+        {
+          "word": "We",
+          "start": 330.7,
+          "end": 331.06,
+          "probability": 0.8745
+        },
+        {
+          "word": "can",
+          "start": 331.06,
+          "end": 331.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "use",
+          "start": 331.26,
+          "end": 331.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 331.54,
+          "end": 331.7,
+          "probability": 0.9922
+        },
+        {
+          "word": "get",
+          "start": 331.7,
+          "end": 331.9,
+          "probability": 0.5386
+        },
+        {
+          "word": "current",
+          "start": 331.9,
+          "end": 332.16,
+          "probability": 0.5059
+        },
+        {
+          "word": "user",
+          "start": 332.16,
+          "end": 332.5,
+          "probability": 0.8721
+        },
+        {
+          "word": "function",
+          "start": 332.5,
+          "end": 332.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 332.96,
+          "end": 333.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "get",
+          "start": 333.22,
+          "end": 333.4,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 333.4,
+          "end": 333.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "currently",
+          "start": 333.56,
+          "end": 333.94,
+          "probability": 0.9644
+        },
+        {
+          "word": "logged",
+          "start": 333.94,
+          "end": 334.3,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 334.3,
+          "end": 334.52,
+          "probability": 0.9565
+        },
+        {
+          "word": "user.",
+          "start": 334.52,
+          "end": 334.82,
+          "probability": 0.9648
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 335.22,
+      "end": 341.04,
+      "start_formatted": "00:05:35.220",
+      "end_formatted": "00:05:41.040",
+      "text": "Type. App contract.assign user equals user.util.get current user.",
+      "words": [
+        {
+          "word": "Type.",
+          "start": 335.22,
+          "end": 335.84,
+          "probability": 0.8677
+        },
+        {
+          "word": "App",
+          "start": 336.16,
+          "end": 336.74,
+          "probability": 0.7905
+        },
+        {
+          "word": "contract",
+          "start": 336.74,
+          "end": 337.16,
+          "probability": 0.2524
+        },
+        {
+          "word": ".assign",
+          "start": 337.16,
+          "end": 337.92,
+          "probability": 0.7949
+        },
+        {
+          "word": "user",
+          "start": 337.92,
+          "end": 338.16,
+          "probability": 0.6885
+        },
+        {
+          "word": "equals",
+          "start": 338.16,
+          "end": 338.52,
+          "probability": 0.468
+        },
+        {
+          "word": "user",
+          "start": 338.52,
+          "end": 339.06,
+          "probability": 0.8721
+        },
+        {
+          "word": ".util",
+          "start": 339.06,
+          "end": 339.7,
+          "probability": 0.6831
+        },
+        {
+          "word": ".get",
+          "start": 339.7,
+          "end": 340.3,
+          "probability": 0.9097
+        },
+        {
+          "word": "current",
+          "start": 340.3,
+          "end": 340.58,
+          "probability": 0.5991
+        },
+        {
+          "word": "user.",
+          "start": 340.58,
+          "end": 341.04,
+          "probability": 0.8535
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 350.0,
+      "end": 355.36,
+      "start_formatted": "00:05:50.000",
+      "end_formatted": "00:05:55.360",
+      "text": "Recall from the introduction to Goza lesson that we can create new objects using the new keyword,",
+      "words": [
+        {
+          "word": "Recall",
+          "start": 350.0,
+          "end": 350.62,
+          "probability": 0.9888
+        },
+        {
+          "word": "from",
+          "start": 350.62,
+          "end": 350.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 350.84,
+          "end": 350.96,
+          "probability": 0.998
+        },
+        {
+          "word": "introduction",
+          "start": 350.96,
+          "end": 351.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "to",
+          "start": 351.5,
+          "end": 351.8,
+          "probability": 0.9756
+        },
+        {
+          "word": "Goza",
+          "start": 351.8,
+          "end": 352.1,
+          "probability": 0.4824
+        },
+        {
+          "word": "lesson",
+          "start": 352.1,
+          "end": 352.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 352.5,
+          "end": 352.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "we",
+          "start": 352.72,
+          "end": 352.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 352.9,
+          "end": 353.1,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 353.1,
+          "end": 353.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 353.44,
+          "end": 353.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "objects",
+          "start": 353.66,
+          "end": 354.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "using",
+          "start": 354.14,
+          "end": 354.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 354.46,
+          "end": 354.66,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 354.66,
+          "end": 354.84,
+          "probability": 0.9902
+        },
+        {
+          "word": "keyword,",
+          "start": 354.84,
+          "end": 355.36,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 355.36,
+      "end": 362.16,
+      "start_formatted": "00:05:55.360",
+      "end_formatted": "00:06:02.160",
+      "text": "and then use the dot notation to initialize its fields. I will paste the next section of code in now.",
+      "words": [
+        {
+          "word": "and",
+          "start": 355.36,
+          "end": 355.82,
+          "probability": 0.6938
+        },
+        {
+          "word": "then",
+          "start": 355.82,
+          "end": 356.04,
+          "probability": 0.9912
+        },
+        {
+          "word": "use",
+          "start": 356.04,
+          "end": 356.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 356.34,
+          "end": 356.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "dot",
+          "start": 356.48,
+          "end": 356.68,
+          "probability": 0.6289
+        },
+        {
+          "word": "notation",
+          "start": 356.68,
+          "end": 357.2,
+          "probability": 0.9878
+        },
+        {
+          "word": "to",
+          "start": 357.2,
+          "end": 357.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "initialize",
+          "start": 357.48,
+          "end": 358.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "its",
+          "start": 358.18,
+          "end": 358.4,
+          "probability": 0.9824
+        },
+        {
+          "word": "fields.",
+          "start": 358.4,
+          "end": 358.84,
+          "probability": 0.9897
+        },
+        {
+          "word": "I",
+          "start": 359.22,
+          "end": 359.78,
+          "probability": 0.9902
+        },
+        {
+          "word": "will",
+          "start": 359.78,
+          "end": 359.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "paste",
+          "start": 359.94,
+          "end": 360.22,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 360.22,
+          "end": 360.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "next",
+          "start": 360.4,
+          "end": 360.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "section",
+          "start": 360.64,
+          "end": 361.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 361.06,
+          "end": 361.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "code",
+          "start": 361.3,
+          "end": 361.6,
+          "probability": 0.9717
+        },
+        {
+          "word": "in",
+          "start": 361.6,
+          "end": 361.84,
+          "probability": 0.9907
+        },
+        {
+          "word": "now.",
+          "start": 361.84,
+          "end": 362.16,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 362.58,
+      "end": 366.8,
+      "start_formatted": "00:06:02.580",
+      "end_formatted": "00:06:06.800",
+      "text": "Now that we've created the note, we have to associate that with the contact.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 362.58,
+          "end": 363.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "that",
+          "start": 363.14,
+          "end": 363.38,
+          "probability": 0.998
+        },
+        {
+          "word": "we've",
+          "start": 363.38,
+          "end": 363.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "created",
+          "start": 363.66,
+          "end": 364.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 364.06,
+          "end": 364.22,
+          "probability": 0.998
+        },
+        {
+          "word": "note,",
+          "start": 364.22,
+          "end": 364.46,
+          "probability": 0.8325
+        },
+        {
+          "word": "we",
+          "start": 364.7,
+          "end": 364.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "have",
+          "start": 364.94,
+          "end": 365.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 365.16,
+          "end": 365.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "associate",
+          "start": 365.32,
+          "end": 365.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 365.82,
+          "end": 366.12,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 366.12,
+          "end": 366.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 366.3,
+          "end": 366.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "contact.",
+          "start": 366.42,
+          "end": 366.8,
+          "probability": 0.939
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 367.24,
+      "end": 373.42,
+      "start_formatted": "00:06:07.240",
+      "end_formatted": "00:06:13.420",
+      "text": "How would you add a new entity to a data model array? Every parent object has two functions to work",
+      "words": [
+        {
+          "word": "How",
+          "start": 367.24,
+          "end": 367.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "would",
+          "start": 367.66,
+          "end": 367.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "you",
+          "start": 367.86,
+          "end": 368.0,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 368.0,
+          "end": 368.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 368.22,
+          "end": 368.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 368.34,
+          "end": 368.54,
+          "probability": 0.998
+        },
+        {
+          "word": "entity",
+          "start": 368.54,
+          "end": 368.9,
+          "probability": 0.981
+        },
+        {
+          "word": "to",
+          "start": 368.9,
+          "end": 369.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 369.12,
+          "end": 369.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "data",
+          "start": 369.24,
+          "end": 369.48,
+          "probability": 0.915
+        },
+        {
+          "word": "model",
+          "start": 369.48,
+          "end": 369.78,
+          "probability": 0.9922
+        },
+        {
+          "word": "array?",
+          "start": 369.78,
+          "end": 370.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "Every",
+          "start": 370.42,
+          "end": 370.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "parent",
+          "start": 370.92,
+          "end": 371.26,
+          "probability": 0.9917
+        },
+        {
+          "word": "object",
+          "start": 371.26,
+          "end": 371.72,
+          "probability": 0.998
+        },
+        {
+          "word": "has",
+          "start": 371.72,
+          "end": 372.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 372.12,
+          "end": 372.34,
+          "probability": 0.9756
+        },
+        {
+          "word": "functions",
+          "start": 372.34,
+          "end": 372.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 372.88,
+          "end": 373.14,
+          "probability": 0.999
+        },
+        {
+          "word": "work",
+          "start": 373.14,
+          "end": 373.42,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 373.42,
+      "end": 379.76,
+      "start_formatted": "00:06:13.420",
+      "end_formatted": "00:06:19.760",
+      "text": "with arrays, add to array name entity and remove from array name entity. Press Return to add code to a new line.",
+      "words": [
+        {
+          "word": "with",
+          "start": 373.42,
+          "end": 373.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "arrays,",
+          "start": 373.6,
+          "end": 374.02,
+          "probability": 0.8989
+        },
+        {
+          "word": "add",
+          "start": 374.28,
+          "end": 374.56,
+          "probability": 0.8862
+        },
+        {
+          "word": "to",
+          "start": 374.56,
+          "end": 374.7,
+          "probability": 0.9727
+        },
+        {
+          "word": "array",
+          "start": 374.7,
+          "end": 374.98,
+          "probability": 0.8862
+        },
+        {
+          "word": "name",
+          "start": 374.98,
+          "end": 375.24,
+          "probability": 0.8457
+        },
+        {
+          "word": "entity",
+          "start": 375.24,
+          "end": 375.58,
+          "probability": 0.9775
+        },
+        {
+          "word": "and",
+          "start": 375.58,
+          "end": 375.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "remove",
+          "start": 375.84,
+          "end": 376.18,
+          "probability": 0.998
+        },
+        {
+          "word": "from",
+          "start": 376.18,
+          "end": 376.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "array",
+          "start": 376.5,
+          "end": 376.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "name",
+          "start": 376.76,
+          "end": 377.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "entity.",
+          "start": 377.04,
+          "end": 377.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "Press",
+          "start": 377.66,
+          "end": 377.82,
+          "probability": 0.9819
+        },
+        {
+          "word": "Return",
+          "start": 377.82,
+          "end": 378.22,
+          "probability": 0.0676
+        },
+        {
+          "word": "to",
+          "start": 378.22,
+          "end": 378.44,
+          "probability": 0.998
+        },
+        {
+          "word": "add",
+          "start": 378.44,
+          "end": 378.7,
+          "probability": 0.9531
+        },
+        {
+          "word": "code",
+          "start": 378.7,
+          "end": 379.0,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 379.0,
+          "end": 379.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 379.16,
+          "end": 379.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 379.32,
+          "end": 379.42,
+          "probability": 1.0
+        },
+        {
+          "word": "line.",
+          "start": 379.42,
+          "end": 379.76,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 380.18,
+      "end": 383.48,
+      "start_formatted": "00:06:20.180",
+      "end_formatted": "00:06:23.480",
+      "text": "Type a bcontact.add to contact notes note.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 380.18,
+          "end": 380.72,
+          "probability": 0.98
+        },
+        {
+          "word": "a",
+          "start": 380.72,
+          "end": 380.88,
+          "probability": 0.5034
+        },
+        {
+          "word": "bcontact",
+          "start": 380.88,
+          "end": 381.64,
+          "probability": 0.7764
+        },
+        {
+          "word": ".add",
+          "start": 381.64,
+          "end": 382.12,
+          "probability": 0.8936
+        },
+        {
+          "word": "to",
+          "start": 382.12,
+          "end": 382.3,
+          "probability": 0.7852
+        },
+        {
+          "word": "contact",
+          "start": 382.3,
+          "end": 382.74,
+          "probability": 0.9624
+        },
+        {
+          "word": "notes",
+          "start": 382.74,
+          "end": 383.12,
+          "probability": 0.8926
+        },
+        {
+          "word": "note.",
+          "start": 383.12,
+          "end": 383.48,
+          "probability": 0.9746
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 392.7,
+      "end": 393.38,
+      "start_formatted": "00:06:32.700",
+      "end_formatted": "00:06:33.380",
+      "text": "Type a new command.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 392.7,
+          "end": 393.38,
+          "probability": 0.0
+        },
+        {
+          "word": "a",
+          "start": 393.38,
+          "end": 393.38,
+          "probability": 0.0105
+        },
+        {
+          "word": "new",
+          "start": 393.38,
+          "end": 393.38,
+          "probability": 0.113
+        },
+        {
+          "word": "command.",
+          "start": 393.38,
+          "end": 393.38,
+          "probability": 0.014
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 393.38,
+      "end": 399.94,
+      "start_formatted": "00:06:33.380",
+      "end_formatted": "00:06:39.940",
+      "text": "We see here the completed Goza rule. You can deploy modified rules using run, reload changed classes.",
+      "words": [
+        {
+          "word": "We",
+          "start": 393.38,
+          "end": 393.38,
+          "probability": 0.603
+        },
+        {
+          "word": "see",
+          "start": 393.38,
+          "end": 393.66,
+          "probability": 0.9829
+        },
+        {
+          "word": "here",
+          "start": 393.66,
+          "end": 393.92,
+          "probability": 0.9629
+        },
+        {
+          "word": "the",
+          "start": 393.92,
+          "end": 394.08,
+          "probability": 0.9868
+        },
+        {
+          "word": "completed",
+          "start": 394.08,
+          "end": 394.56,
+          "probability": 0.9624
+        },
+        {
+          "word": "Goza",
+          "start": 394.56,
+          "end": 394.9,
+          "probability": 0.1648
+        },
+        {
+          "word": "rule.",
+          "start": 394.9,
+          "end": 395.2,
+          "probability": 0.8491
+        },
+        {
+          "word": "You",
+          "start": 395.64,
+          "end": 396.2,
+          "probability": 0.9761
+        },
+        {
+          "word": "can",
+          "start": 396.2,
+          "end": 396.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "deploy",
+          "start": 396.38,
+          "end": 396.7,
+          "probability": 0.978
+        },
+        {
+          "word": "modified",
+          "start": 396.7,
+          "end": 397.12,
+          "probability": 0.9683
+        },
+        {
+          "word": "rules",
+          "start": 397.12,
+          "end": 397.52,
+          "probability": 0.9829
+        },
+        {
+          "word": "using",
+          "start": 397.52,
+          "end": 397.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "run,",
+          "start": 397.94,
+          "end": 398.32,
+          "probability": 0.541
+        },
+        {
+          "word": "reload",
+          "start": 398.52,
+          "end": 398.96,
+          "probability": 0.981
+        },
+        {
+          "word": "changed",
+          "start": 398.96,
+          "end": 399.42,
+          "probability": 0.8853
+        },
+        {
+          "word": "classes.",
+          "start": 399.42,
+          "end": 399.94,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 400.3,
+      "end": 407.56,
+      "start_formatted": "00:06:40.300",
+      "end_formatted": "00:06:47.560",
+      "text": "But this is a new rule, so we have to restart the server. Restart the server in debug mode. Click run.",
+      "words": [
+        {
+          "word": "But",
+          "start": 400.3,
+          "end": 400.68,
+          "probability": 0.9697
+        },
+        {
+          "word": "this",
+          "start": 400.68,
+          "end": 400.94,
+          "probability": 0.9888
+        },
+        {
+          "word": "is",
+          "start": 400.94,
+          "end": 401.08,
+          "probability": 0.9565
+        },
+        {
+          "word": "a",
+          "start": 401.08,
+          "end": 401.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "new",
+          "start": 401.22,
+          "end": 401.32,
+          "probability": 0.999
+        },
+        {
+          "word": "rule,",
+          "start": 401.32,
+          "end": 401.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "so",
+          "start": 401.82,
+          "end": 402.12,
+          "probability": 0.9863
+        },
+        {
+          "word": "we",
+          "start": 402.12,
+          "end": 402.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "have",
+          "start": 402.32,
+          "end": 402.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 402.54,
+          "end": 402.68,
+          "probability": 0.999
+        },
+        {
+          "word": "restart",
+          "start": 402.68,
+          "end": 403.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 403.08,
+          "end": 403.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "server.",
+          "start": 403.38,
+          "end": 403.74,
+          "probability": 0.9937
+        },
+        {
+          "word": "Restart",
+          "start": 404.26,
+          "end": 404.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 404.94,
+          "end": 405.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "server",
+          "start": 405.08,
+          "end": 405.4,
+          "probability": 0.9902
+        },
+        {
+          "word": "in",
+          "start": 405.4,
+          "end": 405.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "debug",
+          "start": 405.66,
+          "end": 405.96,
+          "probability": 0.8115
+        },
+        {
+          "word": "mode.",
+          "start": 405.96,
+          "end": 406.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 406.78,
+          "end": 407.3,
+          "probability": 0.9731
+        },
+        {
+          "word": "run.",
+          "start": 407.3,
+          "end": 407.56,
+          "probability": 0.6973
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 410.42,
+      "end": 427.9,
+      "start_formatted": "00:06:50.420",
+      "end_formatted": "00:07:07.900",
+      "text": "Click debug server. We see the server ready message. Login to training app as a apple gate slash gw. Click login.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 410.42,
+          "end": 411.1,
+          "probability": 0.0047
+        },
+        {
+          "word": "debug",
+          "start": 411.1,
+          "end": 411.6,
+          "probability": 0.0001
+        },
+        {
+          "word": "server.",
+          "start": 411.6,
+          "end": 411.88,
+          "probability": 0.876
+        },
+        {
+          "word": "We",
+          "start": 420.38,
+          "end": 421.06,
+          "probability": 0.0946
+        },
+        {
+          "word": "see",
+          "start": 421.06,
+          "end": 421.3,
+          "probability": 0.8462
+        },
+        {
+          "word": "the",
+          "start": 421.3,
+          "end": 421.46,
+          "probability": 0.938
+        },
+        {
+          "word": "server",
+          "start": 421.46,
+          "end": 421.8,
+          "probability": 0.8169
+        },
+        {
+          "word": "ready",
+          "start": 421.8,
+          "end": 422.08,
+          "probability": 0.8418
+        },
+        {
+          "word": "message.",
+          "start": 422.08,
+          "end": 422.62,
+          "probability": 0.959
+        },
+        {
+          "word": "Login",
+          "start": 423.1,
+          "end": 423.78,
+          "probability": 0.6289
+        },
+        {
+          "word": "to",
+          "start": 423.78,
+          "end": 423.94,
+          "probability": 0.9629
+        },
+        {
+          "word": "training",
+          "start": 423.94,
+          "end": 424.24,
+          "probability": 0.7495
+        },
+        {
+          "word": "app",
+          "start": 424.24,
+          "end": 424.56,
+          "probability": 0.9526
+        },
+        {
+          "word": "as",
+          "start": 424.56,
+          "end": 424.8,
+          "probability": 0.9604
+        },
+        {
+          "word": "a",
+          "start": 424.8,
+          "end": 424.94,
+          "probability": 0.792
+        },
+        {
+          "word": "apple",
+          "start": 424.94,
+          "end": 425.26,
+          "probability": 0.2181
+        },
+        {
+          "word": "gate",
+          "start": 425.26,
+          "end": 425.5,
+          "probability": 0.772
+        },
+        {
+          "word": "slash",
+          "start": 425.5,
+          "end": 425.76,
+          "probability": 0.3032
+        },
+        {
+          "word": "gw.",
+          "start": 425.76,
+          "end": 426.38,
+          "probability": 0.4348
+        },
+        {
+          "word": "Click",
+          "start": 426.98,
+          "end": 427.5,
+          "probability": 0.9795
+        },
+        {
+          "word": "login.",
+          "start": 427.5,
+          "end": 427.9,
+          "probability": 0.7939
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 430.68,
+      "end": 436.9,
+      "start_formatted": "00:07:10.680",
+      "end_formatted": "00:07:16.900",
+      "text": "Click actions. Under new person, vendor, click doctor.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 430.68,
+          "end": 431.56,
+          "probability": 0.8452
+        },
+        {
+          "word": "actions.",
+          "start": 431.56,
+          "end": 432.12,
+          "probability": 0.0952
+        },
+        {
+          "word": "Under",
+          "start": 433.62,
+          "end": 434.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "new",
+          "start": 434.5,
+          "end": 434.7,
+          "probability": 0.9526
+        },
+        {
+          "word": "person,",
+          "start": 434.7,
+          "end": 435.18,
+          "probability": 0.9775
+        },
+        {
+          "word": "vendor,",
+          "start": 435.42,
+          "end": 435.8,
+          "probability": 0.9805
+        },
+        {
+          "word": "click",
+          "start": 436.26,
+          "end": 436.46,
+          "probability": 0.9888
+        },
+        {
+          "word": "doctor.",
+          "start": 436.46,
+          "end": 436.9,
+          "probability": 0.9482
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 437.74,
+      "end": 441.82,
+      "start_formatted": "00:07:17.740",
+      "end_formatted": "00:07:21.820",
+      "text": "Enter a first name. Enter a last name.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 437.74,
+          "end": 437.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 437.92,
+          "end": 438.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "first",
+          "start": 438.18,
+          "end": 438.4,
+          "probability": 0.9878
+        },
+        {
+          "word": "name.",
+          "start": 438.4,
+          "end": 438.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "Enter",
+          "start": 440.14,
+          "end": 441.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 441.02,
+          "end": 441.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "last",
+          "start": 441.24,
+          "end": 441.46,
+          "probability": 0.999
+        },
+        {
+          "word": "name.",
+          "start": 441.46,
+          "end": 441.82,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 443.64,
+      "end": 445.98,
+      "start_formatted": "00:07:23.640",
+      "end_formatted": "00:07:25.980",
+      "text": "Enter a social security number.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 443.64,
+          "end": 444.52,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 444.52,
+          "end": 444.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "social",
+          "start": 444.78,
+          "end": 445.04,
+          "probability": 0.9795
+        },
+        {
+          "word": "security",
+          "start": 445.04,
+          "end": 445.62,
+          "probability": 1.0
+        },
+        {
+          "word": "number.",
+          "start": 445.62,
+          "end": 445.98,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 449.5,
+      "end": 452.52,
+      "start_formatted": "00:07:29.500",
+      "end_formatted": "00:07:32.520",
+      "text": "Click update. Click update.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 449.5,
+          "end": 450.18,
+          "probability": 0.7944
+        },
+        {
+          "word": "update.",
+          "start": 450.18,
+          "end": 450.52,
+          "probability": 0.4617
+        },
+        {
+          "word": "Click",
+          "start": 452.18,
+          "end": 452.52,
+          "probability": 0.0035
+        },
+        {
+          "word": "update.",
+          "start": 452.52,
+          "end": 452.52,
+          "probability": 0.4475
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 452.52,
+      "end": 455.44,
+      "start_formatted": "00:07:32.520",
+      "end_formatted": "00:07:35.440",
+      "text": "Now we'll view the contact we just created.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 452.52,
+          "end": 453.2,
+          "probability": 0.9326
+        },
+        {
+          "word": "we'll",
+          "start": 453.2,
+          "end": 453.48,
+          "probability": 0.9741
+        },
+        {
+          "word": "view",
+          "start": 453.48,
+          "end": 453.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 453.72,
+          "end": 453.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "contact",
+          "start": 453.9,
+          "end": 454.32,
+          "probability": 0.9834
+        },
+        {
+          "word": "we",
+          "start": 454.32,
+          "end": 454.66,
+          "probability": 0.9917
+        },
+        {
+          "word": "just",
+          "start": 454.66,
+          "end": 454.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "created.",
+          "start": 454.94,
+          "end": 455.44,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 455.44,
+      "end": 460.18,
+      "start_formatted": "00:07:35.440",
+      "end_formatted": "00:07:40.180",
+      "text": "Click search. Search for the last name of the contact we created.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 455.44,
+          "end": 456.18,
+          "probability": 0.7715
+        },
+        {
+          "word": "search.",
+          "start": 456.18,
+          "end": 456.58,
+          "probability": 0.541
+        },
+        {
+          "word": "Search",
+          "start": 457.04,
+          "end": 457.8,
+          "probability": 0.9707
+        },
+        {
+          "word": "for",
+          "start": 457.8,
+          "end": 458.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 458.06,
+          "end": 458.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "last",
+          "start": 458.18,
+          "end": 458.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "name",
+          "start": 458.48,
+          "end": 458.74,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 458.74,
+          "end": 458.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 458.94,
+          "end": 459.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact",
+          "start": 459.04,
+          "end": 459.44,
+          "probability": 0.9756
+        },
+        {
+          "word": "we",
+          "start": 459.44,
+          "end": 459.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "created.",
+          "start": 459.74,
+          "end": 460.18,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 460.94,
+      "end": 466.56,
+      "start_formatted": "00:07:40.940",
+      "end_formatted": "00:07:46.560",
+      "text": "Click search. Click the name of the contact we created.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 460.94,
+          "end": 461.7,
+          "probability": 0.9849
+        },
+        {
+          "word": "search.",
+          "start": 461.7,
+          "end": 462.06,
+          "probability": 0.8394
+        },
+        {
+          "word": "Click",
+          "start": 463.9,
+          "end": 464.66,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 464.66,
+          "end": 464.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "name",
+          "start": 464.84,
+          "end": 465.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 465.04,
+          "end": 465.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 465.22,
+          "end": 465.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact",
+          "start": 465.34,
+          "end": 465.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "we",
+          "start": 465.76,
+          "end": 466.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "created.",
+          "start": 466.1,
+          "end": 466.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 467.68,
+      "end": 474.08,
+      "start_formatted": "00:07:47.680",
+      "end_formatted": "00:07:54.080",
+      "text": "We see that it is indeed assigned to the user of the system. In this case, we logged in as Alice AppleGate.",
+      "words": [
+        {
+          "word": "We",
+          "start": 467.68,
+          "end": 468.2,
+          "probability": 0.8701
+        },
+        {
+          "word": "see",
+          "start": 468.2,
+          "end": 468.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "that",
+          "start": 468.4,
+          "end": 468.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 468.58,
+          "end": 468.72,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 468.72,
+          "end": 468.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "indeed",
+          "start": 468.86,
+          "end": 469.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "assigned",
+          "start": 469.12,
+          "end": 469.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "to",
+          "start": 469.56,
+          "end": 469.76,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 469.76,
+          "end": 469.88,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 469.88,
+          "end": 470.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 470.2,
+          "end": 470.44,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 470.44,
+          "end": 470.54,
+          "probability": 0.9917
+        },
+        {
+          "word": "system.",
+          "start": 470.54,
+          "end": 470.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "In",
+          "start": 471.16,
+          "end": 471.42,
+          "probability": 0.9644
+        },
+        {
+          "word": "this",
+          "start": 471.42,
+          "end": 471.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "case,",
+          "start": 471.66,
+          "end": 472.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "we",
+          "start": 472.22,
+          "end": 472.48,
+          "probability": 0.9868
+        },
+        {
+          "word": "logged",
+          "start": 472.48,
+          "end": 472.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 472.8,
+          "end": 472.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "as",
+          "start": 472.98,
+          "end": 473.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "Alice",
+          "start": 473.2,
+          "end": 473.5,
+          "probability": 0.8452
+        },
+        {
+          "word": "AppleGate.",
+          "start": 473.5,
+          "end": 474.08,
+          "probability": 0.4478
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 474.34,
+      "end": 477.96,
+      "start_formatted": "00:07:54.340",
+      "end_formatted": "00:07:57.960",
+      "text": "Let's look at the notes. In the sidebar, click notes.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 474.34,
+          "end": 474.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "look",
+          "start": 474.86,
+          "end": 475.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "at",
+          "start": 475.04,
+          "end": 475.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 475.18,
+          "end": 475.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "notes.",
+          "start": 475.3,
+          "end": 475.62,
+          "probability": 0.8193
+        },
+        {
+          "word": "In",
+          "start": 476.0,
+          "end": 476.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 476.36,
+          "end": 476.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "sidebar,",
+          "start": 476.52,
+          "end": 477.06,
+          "probability": 0.9834
+        },
+        {
+          "word": "click",
+          "start": 477.24,
+          "end": 477.66,
+          "probability": 0.9795
+        },
+        {
+          "word": "notes.",
+          "start": 477.66,
+          "end": 477.96,
+          "probability": 0.481
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 478.42,
+      "end": 482.34,
+      "start_formatted": "00:07:58.420",
+      "end_formatted": "00:08:02.340",
+      "text": "We see there was a note created. Click the subject of the note.",
+      "words": [
+        {
+          "word": "We",
+          "start": 478.42,
+          "end": 478.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "see",
+          "start": 478.94,
+          "end": 479.14,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 479.14,
+          "end": 479.3,
+          "probability": 0.998
+        },
+        {
+          "word": "was",
+          "start": 479.3,
+          "end": 479.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 479.5,
+          "end": 479.62,
+          "probability": 0.999
+        },
+        {
+          "word": "note",
+          "start": 479.62,
+          "end": 479.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "created.",
+          "start": 479.8,
+          "end": 480.26,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 480.58,
+          "end": 481.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 481.0,
+          "end": 481.22,
+          "probability": 0.999
+        },
+        {
+          "word": "subject",
+          "start": 481.22,
+          "end": 481.6,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 481.6,
+          "end": 481.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 481.9,
+          "end": 482.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "note.",
+          "start": 482.02,
+          "end": 482.34,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 482.92,
+      "end": 487.34,
+      "start_formatted": "00:08:02.920",
+      "end_formatted": "00:08:07.340",
+      "text": "We can see the values in the note are set according to the new rule we created.",
+      "words": [
+        {
+          "word": "We",
+          "start": 482.92,
+          "end": 483.44,
+          "probability": 0.8652
+        },
+        {
+          "word": "can",
+          "start": 483.44,
+          "end": 483.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "see",
+          "start": 483.64,
+          "end": 483.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 483.88,
+          "end": 484.04,
+          "probability": 0.9907
+        },
+        {
+          "word": "values",
+          "start": 484.04,
+          "end": 484.46,
+          "probability": 0.9854
+        },
+        {
+          "word": "in",
+          "start": 484.46,
+          "end": 484.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 484.7,
+          "end": 484.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "note",
+          "start": 484.8,
+          "end": 485.0,
+          "probability": 0.4299
+        },
+        {
+          "word": "are",
+          "start": 485.0,
+          "end": 485.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "set",
+          "start": 485.18,
+          "end": 485.46,
+          "probability": 0.998
+        },
+        {
+          "word": "according",
+          "start": 485.46,
+          "end": 485.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 485.82,
+          "end": 486.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 486.04,
+          "end": 486.18,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 486.18,
+          "end": 486.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "rule",
+          "start": 486.4,
+          "end": 486.68,
+          "probability": 0.9834
+        },
+        {
+          "word": "we",
+          "start": 486.68,
+          "end": 486.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "created.",
+          "start": 486.92,
+          "end": 487.34,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 487.72,
+      "end": 492.16,
+      "start_formatted": "00:08:07.720",
+      "end_formatted": "00:08:12.160",
+      "text": "Notice that we didn't do any database transaction management in the rules code.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 487.72,
+          "end": 488.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 488.14,
+          "end": 488.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 488.36,
+          "end": 488.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "didn't",
+          "start": 488.5,
+          "end": 488.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "do",
+          "start": 488.9,
+          "end": 489.02,
+          "probability": 0.999
+        },
+        {
+          "word": "any",
+          "start": 489.02,
+          "end": 489.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "database",
+          "start": 489.28,
+          "end": 489.66,
+          "probability": 0.981
+        },
+        {
+          "word": "transaction",
+          "start": 489.66,
+          "end": 490.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "management",
+          "start": 490.28,
+          "end": 490.96,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 490.96,
+          "end": 491.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 491.3,
+          "end": 491.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "rules",
+          "start": 491.4,
+          "end": 491.76,
+          "probability": 0.8765
+        },
+        {
+          "word": "code.",
+          "start": 491.76,
+          "end": 492.16,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 492.44,
+      "end": 497.56,
+      "start_formatted": "00:08:12.440",
+      "end_formatted": "00:08:17.560",
+      "text": "Rules have an implicit transaction that will be committed after the execution of the rules.",
+      "words": [
+        {
+          "word": "Rules",
+          "start": 492.44,
+          "end": 492.9,
+          "probability": 0.9917
+        },
+        {
+          "word": "have",
+          "start": 492.9,
+          "end": 493.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 493.16,
+          "end": 493.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "implicit",
+          "start": 493.3,
+          "end": 493.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "transaction",
+          "start": 493.72,
+          "end": 494.42,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 494.42,
+          "end": 494.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 494.74,
+          "end": 494.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 494.9,
+          "end": 495.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "committed",
+          "start": 495.06,
+          "end": 495.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "after",
+          "start": 495.44,
+          "end": 495.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 495.82,
+          "end": 496.02,
+          "probability": 0.999
+        },
+        {
+          "word": "execution",
+          "start": 496.02,
+          "end": 496.66,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 496.66,
+          "end": 497.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 497.0,
+          "end": 497.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "rules.",
+          "start": 497.12,
+          "end": 497.56,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 497.9,
+      "end": 500.52,
+      "start_formatted": "00:08:17.900",
+      "end_formatted": "00:08:20.520",
+      "text": "Keep in mind that if your rule throws an exception,",
+      "words": [
+        {
+          "word": "Keep",
+          "start": 497.9,
+          "end": 498.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "in",
+          "start": 498.36,
+          "end": 498.58,
+          "probability": 1.0
+        },
+        {
+          "word": "mind",
+          "start": 498.58,
+          "end": 498.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 498.8,
+          "end": 498.98,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 498.98,
+          "end": 499.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "your",
+          "start": 499.14,
+          "end": 499.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "rule",
+          "start": 499.28,
+          "end": 499.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "throws",
+          "start": 499.52,
+          "end": 499.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "an",
+          "start": 499.88,
+          "end": 500.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "exception,",
+          "start": 500.06,
+          "end": 500.52,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 500.82,
+      "end": 504.16,
+      "start_formatted": "00:08:20.820",
+      "end_formatted": "00:08:24.160",
+      "text": "then all the changes done by the other rules will be rolled back too.",
+      "words": [
+        {
+          "word": "then",
+          "start": 500.82,
+          "end": 501.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "all",
+          "start": 501.08,
+          "end": 501.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 501.28,
+          "end": 501.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "changes",
+          "start": 501.44,
+          "end": 501.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "done",
+          "start": 501.82,
+          "end": 502.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 502.08,
+          "end": 502.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 502.32,
+          "end": 502.46,
+          "probability": 0.998
+        },
+        {
+          "word": "other",
+          "start": 502.46,
+          "end": 502.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "rules",
+          "start": 502.7,
+          "end": 503.02,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 503.02,
+          "end": 503.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 503.18,
+          "end": 503.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "rolled",
+          "start": 503.32,
+          "end": 503.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "back",
+          "start": 503.58,
+          "end": 503.9,
+          "probability": 0.999
+        },
+        {
+          "word": "too.",
+          "start": 503.9,
+          "end": 504.16,
+          "probability": 0.9048
+        }
+      ]
+    }
+  ]
+}

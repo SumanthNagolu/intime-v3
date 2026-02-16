@@ -1,0 +1,2803 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_30_01.mp4",
+    "video_stem": "In_Policy_30_01",
+    "duration_seconds": 176.06,
+    "duration_formatted": "00:02:56.060",
+    "segment_count": 66,
+    "word_count": 359,
+    "avg_confidence": 0.9565,
+    "transcription_time_seconds": 17.04,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:39:35.283958"
+  },
+  "full_text": "A final audit is scheduled for workers' compensation or general liability policies in the base application. A final audit contains the verified, ultimate cost for a policy with variable basis. Login as an underwriter. In this example, the underwriter issued a general liability policy. The audit schedules are managed on its own page under Tools. The underwriter role does not have permissions to work with audits. Therefore, the action column does not have buttons visible. Note down the policy number. Log out. The auditors normally work with the audits. Login as Adam Auditor. Go to the same policy. Type in the policy number. Click the search icon. Go to the audit schedules page. In the action column, the edit button are visible for audits not yet started. The auditor can change the start date, due date, audit method, etc. The audit task batch process starts audit jobs when it is on, or passes the audit start date. Once the audit job is started, the auditor can view, and enter audit information. In this example, it has not reached the start date, so the audit job is not started. Log out. Log in as an auditor supervisor, who has the permission to manually start audit jobs. Locate the same policy. Go to audit schedules. In the action column, the edit, start, and wait buttons are visible. Manually start the final audit. There is a link to the audit job, which is available to users with the auditor role, as well. Clicking the link opens the audit wizard. Go to the details page. Enter the audited basis for the class code. Calculate the premium. Submit the final audit. Return to the policy. Go to audit schedules. Click the filter drop-down. To view the completed audits, select the option All, or Closed within last 12 months. The revise button is visible for completed final audits. It reverses the original final audit and copies the audit information to a new final audit. New information can be entered. Calculate the premium. Submit the revised final audit. This is the end of demonstration for final audit. This is the end of demonstration for final audit.                                    ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 12.9,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:12.900",
+      "text": "A final audit is scheduled for workers' compensation or general liability policies in the base application. A final audit contains the verified, ultimate cost for a policy with variable basis. Login as an underwriter.",
+      "words": [
+        {
+          "word": "A",
+          "start": 0.0,
+          "end": 0.16,
+          "probability": 0.9531
+        },
+        {
+          "word": "final",
+          "start": 0.16,
+          "end": 0.42,
+          "probability": 0.9756
+        },
+        {
+          "word": "audit",
+          "start": 0.42,
+          "end": 0.7,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 0.7,
+          "end": 0.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "scheduled",
+          "start": 0.9,
+          "end": 1.2,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 1.2,
+          "end": 1.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "workers'",
+          "start": 1.48,
+          "end": 1.86,
+          "probability": 0.9067
+        },
+        {
+          "word": "compensation",
+          "start": 2.06,
+          "end": 2.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 2.62,
+          "end": 2.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "general",
+          "start": 2.86,
+          "end": 3.18,
+          "probability": 0.9917
+        },
+        {
+          "word": "liability",
+          "start": 3.18,
+          "end": 3.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "policies",
+          "start": 3.68,
+          "end": 4.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 4.4,
+          "end": 4.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 4.62,
+          "end": 4.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 4.72,
+          "end": 4.96,
+          "probability": 0.9312
+        },
+        {
+          "word": "application.",
+          "start": 4.96,
+          "end": 5.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "A",
+          "start": 5.96,
+          "end": 6.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "final",
+          "start": 6.34,
+          "end": 6.62,
+          "probability": 0.999
+        },
+        {
+          "word": "audit",
+          "start": 6.62,
+          "end": 6.94,
+          "probability": 1.0
+        },
+        {
+          "word": "contains",
+          "start": 6.94,
+          "end": 7.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 7.38,
+          "end": 7.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "verified,",
+          "start": 7.6,
+          "end": 8.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "ultimate",
+          "start": 8.34,
+          "end": 8.74,
+          "probability": 0.998
+        },
+        {
+          "word": "cost",
+          "start": 8.74,
+          "end": 9.12,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 9.12,
+          "end": 9.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 9.3,
+          "end": 9.44,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 9.44,
+          "end": 9.86,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 9.86,
+          "end": 10.08,
+          "probability": 1.0
+        },
+        {
+          "word": "variable",
+          "start": 10.08,
+          "end": 10.52,
+          "probability": 0.999
+        },
+        {
+          "word": "basis.",
+          "start": 10.52,
+          "end": 11.04,
+          "probability": 0.8438
+        },
+        {
+          "word": "Login",
+          "start": 11.52,
+          "end": 12.12,
+          "probability": 0.6963
+        },
+        {
+          "word": "as",
+          "start": 12.12,
+          "end": 12.28,
+          "probability": 0.5269
+        },
+        {
+          "word": "an",
+          "start": 12.28,
+          "end": 12.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "underwriter.",
+          "start": 12.4,
+          "end": 12.9,
+          "probability": 0.96
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 14.0,
+      "end": 29.28,
+      "start_formatted": "00:00:14.000",
+      "end_formatted": "00:00:29.280",
+      "text": "In this example, the underwriter issued a general liability policy. The audit schedules are managed on its own page under Tools. The underwriter role does not have permissions to work with audits. Therefore, the action column does not have buttons visible.",
+      "words": [
+        {
+          "word": "In",
+          "start": 13.76,
+          "end": 14.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 14.06,
+          "end": 14.24,
+          "probability": 1.0
+        },
+        {
+          "word": "example,",
+          "start": 14.24,
+          "end": 14.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 15.0,
+          "end": 15.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "underwriter",
+          "start": 15.24,
+          "end": 15.78,
+          "probability": 0.998
+        },
+        {
+          "word": "issued",
+          "start": 15.78,
+          "end": 16.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 16.2,
+          "end": 16.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "general",
+          "start": 16.36,
+          "end": 16.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "liability",
+          "start": 16.66,
+          "end": 17.22,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 17.22,
+          "end": 17.92,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 18.22,
+          "end": 18.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "audit",
+          "start": 18.6,
+          "end": 18.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "schedules",
+          "start": 18.88,
+          "end": 19.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 19.26,
+          "end": 19.64,
+          "probability": 1.0
+        },
+        {
+          "word": "managed",
+          "start": 19.64,
+          "end": 20.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 20.02,
+          "end": 20.26,
+          "probability": 1.0
+        },
+        {
+          "word": "its",
+          "start": 20.26,
+          "end": 20.44,
+          "probability": 1.0
+        },
+        {
+          "word": "own",
+          "start": 20.44,
+          "end": 20.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "page",
+          "start": 20.64,
+          "end": 20.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "under",
+          "start": 20.94,
+          "end": 21.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "Tools.",
+          "start": 21.18,
+          "end": 21.52,
+          "probability": 0.7725
+        },
+        {
+          "word": "The",
+          "start": 22.1,
+          "end": 22.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "underwriter",
+          "start": 22.7,
+          "end": 23.24,
+          "probability": 0.999
+        },
+        {
+          "word": "role",
+          "start": 23.24,
+          "end": 23.54,
+          "probability": 0.9717
+        },
+        {
+          "word": "does",
+          "start": 23.54,
+          "end": 23.76,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 23.76,
+          "end": 23.94,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 23.94,
+          "end": 24.12,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions",
+          "start": 24.12,
+          "end": 24.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 24.52,
+          "end": 24.8,
+          "probability": 1.0
+        },
+        {
+          "word": "work",
+          "start": 24.8,
+          "end": 25.04,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 25.04,
+          "end": 25.2,
+          "probability": 1.0
+        },
+        {
+          "word": "audits.",
+          "start": 25.2,
+          "end": 25.64,
+          "probability": 1.0
+        },
+        {
+          "word": "Therefore,",
+          "start": 26.02,
+          "end": 26.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 26.84,
+          "end": 27.06,
+          "probability": 1.0
+        },
+        {
+          "word": "action",
+          "start": 27.06,
+          "end": 27.38,
+          "probability": 0.6304
+        },
+        {
+          "word": "column",
+          "start": 27.38,
+          "end": 27.78,
+          "probability": 1.0
+        },
+        {
+          "word": "does",
+          "start": 27.78,
+          "end": 28.06,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 28.06,
+          "end": 28.26,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 28.26,
+          "end": 28.44,
+          "probability": 1.0
+        },
+        {
+          "word": "buttons",
+          "start": 28.44,
+          "end": 28.8,
+          "probability": 1.0
+        },
+        {
+          "word": "visible.",
+          "start": 28.8,
+          "end": 29.28,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 30.0,
+      "end": 40.54,
+      "start_formatted": "00:00:30.000",
+      "end_formatted": "00:00:40.540",
+      "text": "Note down the policy number. Log out. The auditors normally work with the audits. Login as Adam Auditor. Go to the same policy.",
+      "words": [
+        {
+          "word": "Note",
+          "start": 30.0,
+          "end": 30.54,
+          "probability": 0.9443
+        },
+        {
+          "word": "down",
+          "start": 30.54,
+          "end": 30.76,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 30.76,
+          "end": 30.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "policy",
+          "start": 30.92,
+          "end": 31.32,
+          "probability": 0.876
+        },
+        {
+          "word": "number.",
+          "start": 31.32,
+          "end": 31.74,
+          "probability": 0.9932
+        },
+        {
+          "word": "Log",
+          "start": 32.02,
+          "end": 32.44,
+          "probability": 0.937
+        },
+        {
+          "word": "out.",
+          "start": 32.44,
+          "end": 32.72,
+          "probability": 0.7871
+        },
+        {
+          "word": "The",
+          "start": 33.96,
+          "end": 34.64,
+          "probability": 0.978
+        },
+        {
+          "word": "auditors",
+          "start": 34.64,
+          "end": 35.1,
+          "probability": 0.9448
+        },
+        {
+          "word": "normally",
+          "start": 35.1,
+          "end": 35.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "work",
+          "start": 35.54,
+          "end": 35.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 35.82,
+          "end": 35.96,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 35.96,
+          "end": 36.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "audits.",
+          "start": 36.1,
+          "end": 36.6,
+          "probability": 0.9873
+        },
+        {
+          "word": "Login",
+          "start": 36.88,
+          "end": 37.52,
+          "probability": 0.5107
+        },
+        {
+          "word": "as",
+          "start": 37.52,
+          "end": 37.68,
+          "probability": 0.8911
+        },
+        {
+          "word": "Adam",
+          "start": 37.68,
+          "end": 37.96,
+          "probability": 0.5015
+        },
+        {
+          "word": "Auditor.",
+          "start": 37.96,
+          "end": 38.48,
+          "probability": 0.9531
+        },
+        {
+          "word": "Go",
+          "start": 38.9,
+          "end": 39.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 39.46,
+          "end": 39.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 39.62,
+          "end": 39.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "same",
+          "start": 39.76,
+          "end": 39.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "policy.",
+          "start": 39.98,
+          "end": 40.54,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 42.98,
+      "end": 58.26,
+      "start_formatted": "00:00:42.980",
+      "end_formatted": "00:00:58.260",
+      "text": "Type in the policy number. Click the search icon. Go to the audit schedules page. In the action column, the edit button are visible for audits not yet started.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 42.98,
+          "end": 43.66,
+          "probability": 0.9907
+        },
+        {
+          "word": "in",
+          "start": 43.66,
+          "end": 43.8,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 43.8,
+          "end": 43.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 43.88,
+          "end": 44.32,
+          "probability": 0.9824
+        },
+        {
+          "word": "number.",
+          "start": 44.32,
+          "end": 44.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "Click",
+          "start": 45.38,
+          "end": 46.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 46.04,
+          "end": 46.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "search",
+          "start": 46.24,
+          "end": 46.48,
+          "probability": 0.9087
+        },
+        {
+          "word": "icon.",
+          "start": 46.48,
+          "end": 46.98,
+          "probability": 0.999
+        },
+        {
+          "word": "Go",
+          "start": 49.46,
+          "end": 50.14,
+          "probability": 0.9922
+        },
+        {
+          "word": "to",
+          "start": 50.14,
+          "end": 50.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 50.3,
+          "end": 50.42,
+          "probability": 0.998
+        },
+        {
+          "word": "audit",
+          "start": 50.42,
+          "end": 50.7,
+          "probability": 0.4644
+        },
+        {
+          "word": "schedules",
+          "start": 50.7,
+          "end": 51.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "page.",
+          "start": 51.14,
+          "end": 51.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "In",
+          "start": 53.84,
+          "end": 54.52,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 54.52,
+          "end": 54.62,
+          "probability": 0.999
+        },
+        {
+          "word": "action",
+          "start": 54.62,
+          "end": 54.94,
+          "probability": 0.7637
+        },
+        {
+          "word": "column,",
+          "start": 54.94,
+          "end": 55.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 55.6,
+          "end": 55.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "edit",
+          "start": 55.82,
+          "end": 56.02,
+          "probability": 0.813
+        },
+        {
+          "word": "button",
+          "start": 56.02,
+          "end": 56.34,
+          "probability": 0.9746
+        },
+        {
+          "word": "are",
+          "start": 56.34,
+          "end": 56.48,
+          "probability": 0.9683
+        },
+        {
+          "word": "visible",
+          "start": 56.48,
+          "end": 56.84,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 56.84,
+          "end": 57.08,
+          "probability": 0.998
+        },
+        {
+          "word": "audits",
+          "start": 57.08,
+          "end": 57.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "not",
+          "start": 57.4,
+          "end": 57.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "yet",
+          "start": 57.6,
+          "end": 57.84,
+          "probability": 0.999
+        },
+        {
+          "word": "started.",
+          "start": 57.84,
+          "end": 58.26,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 58.26,
+      "end": 63.04,
+      "start_formatted": "00:00:58.260",
+      "end_formatted": "00:01:03.040",
+      "text": "The auditor can change the start date, due date, audit method, etc.",
+      "words": [
+        {
+          "word": "The",
+          "start": 58.26,
+          "end": 59.22,
+          "probability": 0.8892
+        },
+        {
+          "word": "auditor",
+          "start": 59.22,
+          "end": 59.54,
+          "probability": 0.7456
+        },
+        {
+          "word": "can",
+          "start": 59.54,
+          "end": 59.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "change",
+          "start": 59.82,
+          "end": 60.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 60.14,
+          "end": 60.3,
+          "probability": 0.999
+        },
+        {
+          "word": "start",
+          "start": 60.3,
+          "end": 60.56,
+          "probability": 0.9424
+        },
+        {
+          "word": "date,",
+          "start": 60.56,
+          "end": 60.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "due",
+          "start": 61.18,
+          "end": 61.28,
+          "probability": 0.6558
+        },
+        {
+          "word": "date,",
+          "start": 61.28,
+          "end": 61.58,
+          "probability": 0.998
+        },
+        {
+          "word": "audit",
+          "start": 61.78,
+          "end": 62.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "method,",
+          "start": 62.1,
+          "end": 62.52,
+          "probability": 1.0
+        },
+        {
+          "word": "etc.",
+          "start": 62.74,
+          "end": 63.04,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 63.96,
+      "end": 74.26,
+      "start_formatted": "00:01:03.960",
+      "end_formatted": "00:01:14.260",
+      "text": "The audit task batch process starts audit jobs when it is on, or passes the audit start date. Once the audit job is started, the auditor can view, and enter audit information.",
+      "words": [
+        {
+          "word": "The",
+          "start": 63.96,
+          "end": 64.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "audit",
+          "start": 64.48,
+          "end": 64.76,
+          "probability": 0.7983
+        },
+        {
+          "word": "task",
+          "start": 64.76,
+          "end": 65.12,
+          "probability": 0.9922
+        },
+        {
+          "word": "batch",
+          "start": 65.12,
+          "end": 65.5,
+          "probability": 0.9883
+        },
+        {
+          "word": "process",
+          "start": 65.5,
+          "end": 65.98,
+          "probability": 1.0
+        },
+        {
+          "word": "starts",
+          "start": 65.98,
+          "end": 66.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "audit",
+          "start": 66.36,
+          "end": 66.7,
+          "probability": 0.9897
+        },
+        {
+          "word": "jobs",
+          "start": 66.7,
+          "end": 67.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 67.02,
+          "end": 67.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 67.26,
+          "end": 67.38,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 67.38,
+          "end": 67.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "on,",
+          "start": 67.52,
+          "end": 67.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "or",
+          "start": 67.94,
+          "end": 68.2,
+          "probability": 1.0
+        },
+        {
+          "word": "passes",
+          "start": 68.2,
+          "end": 68.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 68.6,
+          "end": 68.84,
+          "probability": 1.0
+        },
+        {
+          "word": "audit",
+          "start": 68.84,
+          "end": 69.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "start",
+          "start": 69.12,
+          "end": 69.44,
+          "probability": 0.9697
+        },
+        {
+          "word": "date.",
+          "start": 69.44,
+          "end": 69.76,
+          "probability": 1.0
+        },
+        {
+          "word": "Once",
+          "start": 70.06,
+          "end": 70.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 70.52,
+          "end": 70.68,
+          "probability": 1.0
+        },
+        {
+          "word": "audit",
+          "start": 70.68,
+          "end": 70.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "job",
+          "start": 70.96,
+          "end": 71.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 71.18,
+          "end": 71.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "started,",
+          "start": 71.38,
+          "end": 71.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 72.02,
+          "end": 72.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "auditor",
+          "start": 72.22,
+          "end": 72.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 72.56,
+          "end": 72.8,
+          "probability": 1.0
+        },
+        {
+          "word": "view,",
+          "start": 72.8,
+          "end": 73.12,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 73.28,
+          "end": 73.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "enter",
+          "start": 73.56,
+          "end": 73.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "audit",
+          "start": 73.84,
+          "end": 74.18,
+          "probability": 0.999
+        },
+        {
+          "word": "information.",
+          "start": 74.18,
+          "end": 74.46,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 75.3,
+      "end": 80.48,
+      "start_formatted": "00:01:15.300",
+      "end_formatted": "00:01:20.480",
+      "text": "In this example, it has not reached the start date, so the audit job is not started.",
+      "words": [
+        {
+          "word": "In",
+          "start": 75.3,
+          "end": 75.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 75.8,
+          "end": 75.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 75.98,
+          "end": 76.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 76.7,
+          "end": 76.94,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 76.94,
+          "end": 77.12,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 77.12,
+          "end": 77.32,
+          "probability": 1.0
+        },
+        {
+          "word": "reached",
+          "start": 77.32,
+          "end": 77.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 77.6,
+          "end": 77.78,
+          "probability": 1.0
+        },
+        {
+          "word": "start",
+          "start": 77.78,
+          "end": 78.08,
+          "probability": 1.0
+        },
+        {
+          "word": "date,",
+          "start": 78.08,
+          "end": 78.44,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 78.6,
+          "end": 78.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 78.88,
+          "end": 79.08,
+          "probability": 1.0
+        },
+        {
+          "word": "audit",
+          "start": 79.08,
+          "end": 79.36,
+          "probability": 1.0
+        },
+        {
+          "word": "job",
+          "start": 79.36,
+          "end": 79.64,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 79.64,
+          "end": 79.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 79.8,
+          "end": 79.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "started.",
+          "start": 79.98,
+          "end": 80.48,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 81.0,
+      "end": 81.84,
+      "start_formatted": "00:01:21.000",
+      "end_formatted": "00:01:21.840",
+      "text": "Log out.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 81.0,
+          "end": 81.54,
+          "probability": 0.9854
+        },
+        {
+          "word": "out.",
+          "start": 81.54,
+          "end": 81.84,
+          "probability": 0.3608
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 85.08,
+      "end": 90.02,
+      "start_formatted": "00:01:25.080",
+      "end_formatted": "00:01:30.020",
+      "text": "Log in as an auditor supervisor, who has the permission to manually start audit jobs.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 85.08,
+          "end": 85.72,
+          "probability": 0.9717
+        },
+        {
+          "word": "in",
+          "start": 85.72,
+          "end": 85.9,
+          "probability": 0.6147
+        },
+        {
+          "word": "as",
+          "start": 85.9,
+          "end": 86.06,
+          "probability": 0.9375
+        },
+        {
+          "word": "an",
+          "start": 86.06,
+          "end": 86.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "auditor",
+          "start": 86.18,
+          "end": 86.54,
+          "probability": 0.5308
+        },
+        {
+          "word": "supervisor,",
+          "start": 86.54,
+          "end": 87.22,
+          "probability": 0.9854
+        },
+        {
+          "word": "who",
+          "start": 87.52,
+          "end": 87.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 87.74,
+          "end": 87.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 87.9,
+          "end": 88.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "permission",
+          "start": 88.02,
+          "end": 88.36,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 88.36,
+          "end": 88.56,
+          "probability": 0.999
+        },
+        {
+          "word": "manually",
+          "start": 88.56,
+          "end": 88.88,
+          "probability": 0.999
+        },
+        {
+          "word": "start",
+          "start": 88.88,
+          "end": 89.24,
+          "probability": 0.999
+        },
+        {
+          "word": "audit",
+          "start": 89.24,
+          "end": 89.52,
+          "probability": 0.9824
+        },
+        {
+          "word": "jobs.",
+          "start": 89.52,
+          "end": 90.02,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 94.26,
+      "end": 95.8,
+      "start_formatted": "00:01:34.260",
+      "end_formatted": "00:01:35.800",
+      "text": "Locate the same policy.",
+      "words": [
+        {
+          "word": "Locate",
+          "start": 94.26,
+          "end": 94.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 94.9,
+          "end": 95.02,
+          "probability": 0.999
+        },
+        {
+          "word": "same",
+          "start": 95.02,
+          "end": 95.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "policy.",
+          "start": 95.24,
+          "end": 95.8,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 99.72,
+      "end": 101.22,
+      "start_formatted": "00:01:39.720",
+      "end_formatted": "00:01:41.220",
+      "text": "Go to audit schedules.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 99.72,
+          "end": 100.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 100.36,
+          "end": 100.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "audit",
+          "start": 100.5,
+          "end": 100.7,
+          "probability": 0.1129
+        },
+        {
+          "word": "schedules.",
+          "start": 100.7,
+          "end": 101.22,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 103.98,
+      "end": 108.62,
+      "start_formatted": "00:01:43.980",
+      "end_formatted": "00:01:48.620",
+      "text": "In the action column, the edit, start, and wait buttons are visible.",
+      "words": [
+        {
+          "word": "In",
+          "start": 103.98,
+          "end": 104.52,
+          "probability": 0.9502
+        },
+        {
+          "word": "the",
+          "start": 104.52,
+          "end": 104.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "action",
+          "start": 104.64,
+          "end": 104.96,
+          "probability": 0.4143
+        },
+        {
+          "word": "column,",
+          "start": 104.96,
+          "end": 105.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 105.66,
+          "end": 105.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "edit,",
+          "start": 105.86,
+          "end": 106.12,
+          "probability": 0.501
+        },
+        {
+          "word": "start,",
+          "start": 106.48,
+          "end": 106.9,
+          "probability": 0.9878
+        },
+        {
+          "word": "and",
+          "start": 107.1,
+          "end": 107.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "wait",
+          "start": 107.36,
+          "end": 107.58,
+          "probability": 0.9717
+        },
+        {
+          "word": "buttons",
+          "start": 107.58,
+          "end": 107.98,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 107.98,
+          "end": 108.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "visible.",
+          "start": 108.14,
+          "end": 108.62,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 109.06,
+      "end": 110.68,
+      "start_formatted": "00:01:49.060",
+      "end_formatted": "00:01:50.680",
+      "text": "Manually start the final audit.",
+      "words": [
+        {
+          "word": "Manually",
+          "start": 109.06,
+          "end": 109.6,
+          "probability": 0.9634
+        },
+        {
+          "word": "start",
+          "start": 109.6,
+          "end": 109.9,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 109.9,
+          "end": 110.06,
+          "probability": 0.999
+        },
+        {
+          "word": "final",
+          "start": 110.06,
+          "end": 110.34,
+          "probability": 0.9785
+        },
+        {
+          "word": "audit.",
+          "start": 110.34,
+          "end": 110.68,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 111.12,
+      "end": 116.44,
+      "start_formatted": "00:01:51.120",
+      "end_formatted": "00:01:56.440",
+      "text": "There is a link to the audit job, which is available to users with the auditor role, as well.",
+      "words": [
+        {
+          "word": "There",
+          "start": 111.12,
+          "end": 111.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 111.66,
+          "end": 111.8,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 111.8,
+          "end": 111.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "link",
+          "start": 111.9,
+          "end": 112.08,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 112.08,
+          "end": 112.24,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 112.24,
+          "end": 112.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "audit",
+          "start": 112.36,
+          "end": 112.64,
+          "probability": 0.9482
+        },
+        {
+          "word": "job,",
+          "start": 112.64,
+          "end": 113.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "which",
+          "start": 113.18,
+          "end": 113.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 113.44,
+          "end": 113.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 113.58,
+          "end": 114.0,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 114.0,
+          "end": 114.22,
+          "probability": 0.9937
+        },
+        {
+          "word": "users",
+          "start": 114.22,
+          "end": 114.58,
+          "probability": 0.9907
+        },
+        {
+          "word": "with",
+          "start": 114.58,
+          "end": 114.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 114.8,
+          "end": 114.94,
+          "probability": 0.998
+        },
+        {
+          "word": "auditor",
+          "start": 114.94,
+          "end": 115.32,
+          "probability": 0.8706
+        },
+        {
+          "word": "role,",
+          "start": 115.32,
+          "end": 115.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "as",
+          "start": 115.92,
+          "end": 116.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "well.",
+          "start": 116.2,
+          "end": 116.44,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 117.12,
+      "end": 119.12,
+      "start_formatted": "00:01:57.120",
+      "end_formatted": "00:01:59.120",
+      "text": "Clicking the link opens the audit wizard.",
+      "words": [
+        {
+          "word": "Clicking",
+          "start": 117.12,
+          "end": 117.66,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 117.66,
+          "end": 117.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "link",
+          "start": 117.78,
+          "end": 118.0,
+          "probability": 0.999
+        },
+        {
+          "word": "opens",
+          "start": 118.0,
+          "end": 118.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 118.34,
+          "end": 118.52,
+          "probability": 0.999
+        },
+        {
+          "word": "audit",
+          "start": 118.52,
+          "end": 118.78,
+          "probability": 0.9561
+        },
+        {
+          "word": "wizard.",
+          "start": 118.78,
+          "end": 119.12,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 119.66,
+      "end": 120.98,
+      "start_formatted": "00:01:59.660",
+      "end_formatted": "00:02:00.980",
+      "text": "Go to the details page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 119.66,
+          "end": 119.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 119.8,
+          "end": 119.96,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 119.96,
+          "end": 120.08,
+          "probability": 0.999
+        },
+        {
+          "word": "details",
+          "start": 120.08,
+          "end": 120.5,
+          "probability": 0.8589
+        },
+        {
+          "word": "page.",
+          "start": 120.5,
+          "end": 120.98,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 120.98,
+      "end": 123.96,
+      "start_formatted": "00:02:00.980",
+      "end_formatted": "00:02:03.960",
+      "text": "Enter the audited basis for the class code.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 120.98,
+          "end": 122.0,
+          "probability": 0.9595
+        },
+        {
+          "word": "the",
+          "start": 122.0,
+          "end": 122.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "audited",
+          "start": 122.16,
+          "end": 122.52,
+          "probability": 0.9795
+        },
+        {
+          "word": "basis",
+          "start": 122.52,
+          "end": 122.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 122.86,
+          "end": 123.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 123.14,
+          "end": 123.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "class",
+          "start": 123.24,
+          "end": 123.54,
+          "probability": 0.9375
+        },
+        {
+          "word": "code.",
+          "start": 123.54,
+          "end": 123.96,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 125.82,
+      "end": 127.0,
+      "start_formatted": "00:02:05.820",
+      "end_formatted": "00:02:07.000",
+      "text": "Calculate the premium.",
+      "words": [
+        {
+          "word": "Calculate",
+          "start": 125.82,
+          "end": 126.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 126.54,
+          "end": 126.64,
+          "probability": 1.0
+        },
+        {
+          "word": "premium.",
+          "start": 126.64,
+          "end": 127.0,
+          "probability": 0.9478
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 129.74,
+      "end": 131.22,
+      "start_formatted": "00:02:09.740",
+      "end_formatted": "00:02:11.220",
+      "text": "Submit the final audit.",
+      "words": [
+        {
+          "word": "Submit",
+          "start": 129.74,
+          "end": 130.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 130.46,
+          "end": 130.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "final",
+          "start": 130.62,
+          "end": 130.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "audit.",
+          "start": 130.9,
+          "end": 131.22,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 133.78,
+      "end": 135.32,
+      "start_formatted": "00:02:13.780",
+      "end_formatted": "00:02:15.320",
+      "text": "Return to the policy.",
+      "words": [
+        {
+          "word": "Return",
+          "start": 133.78,
+          "end": 134.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 134.5,
+          "end": 134.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 134.74,
+          "end": 134.84,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 134.84,
+          "end": 135.32,
+          "probability": 0.9683
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 137.98,
+      "end": 138.94,
+      "start_formatted": "00:02:17.980",
+      "end_formatted": "00:02:18.940",
+      "text": "Go to audit schedules.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 137.7,
+          "end": 138.06,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 138.06,
+          "end": 138.22,
+          "probability": 1.0
+        },
+        {
+          "word": "audit",
+          "start": 138.22,
+          "end": 138.42,
+          "probability": 0.095
+        },
+        {
+          "word": "schedules.",
+          "start": 138.42,
+          "end": 138.94,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 141.56,
+      "end": 143.4,
+      "start_formatted": "00:02:21.560",
+      "end_formatted": "00:02:23.400",
+      "text": "Click the filter drop-down.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 141.56,
+          "end": 142.24,
+          "probability": 0.9575
+        },
+        {
+          "word": "the",
+          "start": 142.24,
+          "end": 142.44,
+          "probability": 0.9736
+        },
+        {
+          "word": "filter",
+          "start": 142.44,
+          "end": 142.72,
+          "probability": 0.6382
+        },
+        {
+          "word": "drop",
+          "start": 142.72,
+          "end": 143.06,
+          "probability": 0.7744
+        },
+        {
+          "word": "-down.",
+          "start": 143.06,
+          "end": 143.4,
+          "probability": 0.8989
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 145.6,
+      "end": 151.04,
+      "start_formatted": "00:02:25.600",
+      "end_formatted": "00:02:31.040",
+      "text": "To view the completed audits, select the option All, or Closed within last 12 months.",
+      "words": [
+        {
+          "word": "To",
+          "start": 145.6,
+          "end": 146.28,
+          "probability": 0.998
+        },
+        {
+          "word": "view",
+          "start": 146.28,
+          "end": 146.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 146.5,
+          "end": 146.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "completed",
+          "start": 146.68,
+          "end": 147.08,
+          "probability": 0.9824
+        },
+        {
+          "word": "audits,",
+          "start": 147.08,
+          "end": 147.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "select",
+          "start": 147.74,
+          "end": 148.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 148.16,
+          "end": 148.36,
+          "probability": 0.999
+        },
+        {
+          "word": "option",
+          "start": 148.36,
+          "end": 148.7,
+          "probability": 0.9194
+        },
+        {
+          "word": "All,",
+          "start": 148.7,
+          "end": 149.0,
+          "probability": 0.7407
+        },
+        {
+          "word": "or",
+          "start": 149.16,
+          "end": 149.44,
+          "probability": 0.9937
+        },
+        {
+          "word": "Closed",
+          "start": 149.44,
+          "end": 149.86,
+          "probability": 0.8379
+        },
+        {
+          "word": "within",
+          "start": 149.86,
+          "end": 150.08,
+          "probability": 0.9067
+        },
+        {
+          "word": "last",
+          "start": 150.08,
+          "end": 150.4,
+          "probability": 0.9429
+        },
+        {
+          "word": "12",
+          "start": 150.4,
+          "end": 150.64,
+          "probability": 0.9829
+        },
+        {
+          "word": "months.",
+          "start": 150.64,
+          "end": 151.04,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 151.52,
+      "end": 154.94,
+      "start_formatted": "00:02:31.520",
+      "end_formatted": "00:02:34.940",
+      "text": "The revise button is visible for completed final audits.",
+      "words": [
+        {
+          "word": "The",
+          "start": 151.52,
+          "end": 152.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "revise",
+          "start": 152.12,
+          "end": 152.46,
+          "probability": 0.3081
+        },
+        {
+          "word": "button",
+          "start": 152.46,
+          "end": 152.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 152.76,
+          "end": 152.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "visible",
+          "start": 152.98,
+          "end": 153.34,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 153.34,
+          "end": 153.56,
+          "probability": 0.999
+        },
+        {
+          "word": "completed",
+          "start": 153.56,
+          "end": 154.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "final",
+          "start": 154.02,
+          "end": 154.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "audits.",
+          "start": 154.4,
+          "end": 154.94,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 155.56,
+      "end": 160.92,
+      "start_formatted": "00:02:35.560",
+      "end_formatted": "00:02:40.920",
+      "text": "It reverses the original final audit and copies the audit information to a new final audit.",
+      "words": [
+        {
+          "word": "It",
+          "start": 155.56,
+          "end": 156.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "reverses",
+          "start": 156.24,
+          "end": 156.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 156.8,
+          "end": 156.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "original",
+          "start": 156.92,
+          "end": 157.3,
+          "probability": 0.998
+        },
+        {
+          "word": "final",
+          "start": 157.3,
+          "end": 157.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "audit",
+          "start": 157.7,
+          "end": 158.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 158.04,
+          "end": 158.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "copies",
+          "start": 158.2,
+          "end": 158.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 158.62,
+          "end": 158.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "audit",
+          "start": 158.82,
+          "end": 159.14,
+          "probability": 0.998
+        },
+        {
+          "word": "information",
+          "start": 159.14,
+          "end": 159.62,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 159.62,
+          "end": 159.94,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 159.94,
+          "end": 160.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 160.06,
+          "end": 160.2,
+          "probability": 0.999
+        },
+        {
+          "word": "final",
+          "start": 160.2,
+          "end": 160.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "audit.",
+          "start": 160.52,
+          "end": 160.92,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 161.42,
+      "end": 163.26,
+      "start_formatted": "00:02:41.420",
+      "end_formatted": "00:02:43.260",
+      "text": "New information can be entered.",
+      "words": [
+        {
+          "word": "New",
+          "start": 161.42,
+          "end": 161.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "information",
+          "start": 161.94,
+          "end": 162.48,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 162.48,
+          "end": 162.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 162.74,
+          "end": 162.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "entered.",
+          "start": 162.92,
+          "end": 163.26,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 165.56,
+      "end": 166.7,
+      "start_formatted": "00:02:45.560",
+      "end_formatted": "00:02:46.700",
+      "text": "Calculate the premium.",
+      "words": [
+        {
+          "word": "Calculate",
+          "start": 165.56,
+          "end": 166.22,
+          "probability": 0.98
+        },
+        {
+          "word": "the",
+          "start": 166.22,
+          "end": 166.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "premium.",
+          "start": 166.34,
+          "end": 166.7,
+          "probability": 0.9316
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 169.52,
+      "end": 171.38,
+      "start_formatted": "00:02:49.520",
+      "end_formatted": "00:02:51.380",
+      "text": "Submit the revised final audit.",
+      "words": [
+        {
+          "word": "Submit",
+          "start": 169.52,
+          "end": 170.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 170.18,
+          "end": 170.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "revised",
+          "start": 170.28,
+          "end": 170.7,
+          "probability": 0.9858
+        },
+        {
+          "word": "final",
+          "start": 170.7,
+          "end": 171.02,
+          "probability": 0.9175
+        },
+        {
+          "word": "audit.",
+          "start": 171.02,
+          "end": 171.38,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 173.38,
+      "end": 176.0,
+      "start_formatted": "00:02:53.380",
+      "end_formatted": "00:02:56.000",
+      "text": "This is the end of demonstration for final audit.",
+      "words": [
+        {
+          "word": "This",
+          "start": 173.38,
+          "end": 174.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 174.04,
+          "end": 174.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 174.16,
+          "end": 174.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "end",
+          "start": 174.28,
+          "end": 174.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 174.48,
+          "end": 174.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 174.62,
+          "end": 175.14,
+          "probability": 0.9814
+        },
+        {
+          "word": "for",
+          "start": 175.14,
+          "end": 175.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "final",
+          "start": 175.48,
+          "end": 175.78,
+          "probability": 0.9692
+        },
+        {
+          "word": "audit.",
+          "start": 175.78,
+          "end": 176.0,
+          "probability": 0.9033
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 176.0,
+      "end": 176.08,
+      "start_formatted": "00:02:56.000",
+      "end_formatted": "00:02:56.080",
+      "text": "This is the end of demonstration for final audit.",
+      "words": [
+        {
+          "word": "This",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.0974
+        },
+        {
+          "word": "is",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.8804
+        },
+        {
+          "word": "the",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.9033
+        },
+        {
+          "word": "end",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.9409
+        },
+        {
+          "word": "of",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.9409
+        },
+        {
+          "word": "demonstration",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.6567
+        },
+        {
+          "word": "for",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.8716
+        },
+        {
+          "word": "final",
+          "start": 176.0,
+          "end": 176.0,
+          "probability": 0.9854
+        },
+        {
+          "word": "audit.",
+          "start": 176.0,
+          "end": 176.08,
+          "probability": 0.9302
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 33,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 38,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 42,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 43,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 44,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 45,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 46,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 47,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 48,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 49,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 50,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 51,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 52,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 53,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 54,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 55,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 56,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 57,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 58,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 59,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 60,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 61,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 62,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 63,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 64,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 65,
+      "start": 176.06,
+      "end": 176.06,
+      "start_formatted": "00:02:56.060",
+      "end_formatted": "00:02:56.060",
+      "text": "",
+      "words": []
+    }
+  ]
+}

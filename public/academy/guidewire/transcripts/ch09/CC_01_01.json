@@ -1,0 +1,4500 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_01_01.mp4",
+    "video_stem": "CC_01_01",
+    "duration_seconds": 325.66,
+    "duration_formatted": "00:05:25.660",
+    "segment_count": 60,
+    "word_count": 645,
+    "avg_confidence": 0.9353,
+    "transcription_time_seconds": 19.73,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:31:24.896708"
+  },
+  "full_text": "Succeed Insurance has specified that the persons involved section of a claim should have a page listing the officials associated with the claim. Information should include the official's name, title, and the number of any filed report. My first step will be to create a page called Claim Officials. In this demo, I shall create the page. I will add it to the UI in a subsequent demo. So, from the Configuration node, I expand Config. Config. Page configuration. Page configuration. Claim. Claim.  I will put the Claim Officials page in the parties involved node, so I right-click the node. And select New. PCF file. The file type of the PCF file will be Page. I will use a suffix of underscore SI for Succeed Insurance, so the full name of the page is Claim Officials underscore SI. I click OK to create the page. The page appears in red, because it has not yet been configured. A list of errors appears below. To begin configuring the page, I click its name. A title is required. I will use a display key, which I have created prior to this demonstration. Next, I create a variable to hold the page. I will hold the claim to which the officials are related. In the Variables tab, I click this button to create a new variable. The variable's name is Claim, with a small c. Its entity type is Claim, with a capital C. The page requires a panel ref to hold data. I click the panel ref icon. And then click in the page to drop a panel ref there. Note that when I add the panel ref, a screen is automatically created to contain it. The panel ref now needs a list view to display the list of officials. There is a list view in the Lost Details node that might serve the purpose. I double-click the editable officials list view to open it. This list view holds the data that is required, so I can use it. I return to the Claim Officials page. I click the panel ref to open its properties. In the definition property of the panel ref I enter the name of the list view, passing it the claim variable. I click the panel ref to open it. Users should be able to edit this list. I select the page. And set its can edit property. And its can visit property both to true. Next, I select the screen. And set its editable property to true. Then, I do the same for the panel ref. From the tool box, I select the edit buttons widget. And drop it into the screen. It is important that the edit buttons go onto the screen, not the page or the panel ref. The edit buttons do not require configuration at this time. Then I select an iterator buttons widget. And drop it onto the panel ref. The iterator buttons require an iterator, so I select them to open their properties. In the iterator property, I type the name of the list view, twice, separated by a period. Finally, I need to provide the page with an entry point, so that the user interface will be able to navigate to it. In the entry points tab, I create a new entry point. The entry point's name must match the name of the page. It needs a parameter to pass the claim to the page from the calling page. To see the layout of the page I have created, I step off it. And then back onto it. The page still has an error, because I haven't added it to a location group yet. I will not be able to see my work in the user interface until I've done so. That is the subject of the next demonstration. This concludes the configuring page components demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.98,
+      "end": 29.44,
+      "start_formatted": "00:00:01.980",
+      "end_formatted": "00:00:29.440",
+      "text": "Succeed Insurance has specified that the persons involved section of a claim should have a page listing the officials associated with the claim. Information should include the official's name, title, and the number of any filed report. My first step will be to create a page called Claim Officials. In this demo, I shall create the page. I will add it to the UI in a subsequent demo. So, from the Configuration node, I expand Config.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 1.98,
+          "end": 2.54,
+          "probability": 0.9653
+        },
+        {
+          "word": "Insurance",
+          "start": 2.54,
+          "end": 2.92,
+          "probability": 0.7178
+        },
+        {
+          "word": "has",
+          "start": 2.92,
+          "end": 3.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "specified",
+          "start": 3.2,
+          "end": 3.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 3.68,
+          "end": 3.96,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 3.96,
+          "end": 4.08,
+          "probability": 0.9883
+        },
+        {
+          "word": "persons",
+          "start": 4.08,
+          "end": 4.5,
+          "probability": 0.449
+        },
+        {
+          "word": "involved",
+          "start": 4.5,
+          "end": 4.94,
+          "probability": 0.9512
+        },
+        {
+          "word": "section",
+          "start": 4.94,
+          "end": 5.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "of",
+          "start": 5.36,
+          "end": 5.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 5.58,
+          "end": 5.68,
+          "probability": 0.9893
+        },
+        {
+          "word": "claim",
+          "start": 5.68,
+          "end": 5.9,
+          "probability": 0.9629
+        },
+        {
+          "word": "should",
+          "start": 5.9,
+          "end": 6.14,
+          "probability": 0.98
+        },
+        {
+          "word": "have",
+          "start": 6.14,
+          "end": 6.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 6.32,
+          "end": 6.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "page",
+          "start": 6.42,
+          "end": 6.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "listing",
+          "start": 6.7,
+          "end": 7.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 7.06,
+          "end": 7.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "officials",
+          "start": 7.24,
+          "end": 7.62,
+          "probability": 0.9839
+        },
+        {
+          "word": "associated",
+          "start": 7.62,
+          "end": 8.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "with",
+          "start": 8.26,
+          "end": 8.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 8.48,
+          "end": 8.6,
+          "probability": 0.9873
+        },
+        {
+          "word": "claim.",
+          "start": 8.6,
+          "end": 8.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "Information",
+          "start": 9.38,
+          "end": 9.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "should",
+          "start": 9.94,
+          "end": 10.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "include",
+          "start": 10.24,
+          "end": 10.56,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 10.56,
+          "end": 10.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "official's",
+          "start": 10.74,
+          "end": 11.26,
+          "probability": 0.7891
+        },
+        {
+          "word": "name,",
+          "start": 11.26,
+          "end": 11.64,
+          "probability": 0.9912
+        },
+        {
+          "word": "title,",
+          "start": 11.86,
+          "end": 12.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "and",
+          "start": 12.46,
+          "end": 12.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 12.72,
+          "end": 12.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "number",
+          "start": 12.86,
+          "end": 13.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 13.08,
+          "end": 13.24,
+          "probability": 0.999
+        },
+        {
+          "word": "any",
+          "start": 13.24,
+          "end": 13.4,
+          "probability": 0.998
+        },
+        {
+          "word": "filed",
+          "start": 13.4,
+          "end": 13.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "report.",
+          "start": 13.72,
+          "end": 14.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "My",
+          "start": 14.58,
+          "end": 14.9,
+          "probability": 0.98
+        },
+        {
+          "word": "first",
+          "start": 14.9,
+          "end": 15.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "step",
+          "start": 15.2,
+          "end": 16.08,
+          "probability": 0.7803
+        },
+        {
+          "word": "will",
+          "start": 16.08,
+          "end": 16.24,
+          "probability": 0.9707
+        },
+        {
+          "word": "be",
+          "start": 16.24,
+          "end": 16.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 16.34,
+          "end": 16.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "create",
+          "start": 16.46,
+          "end": 16.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 16.74,
+          "end": 16.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "page",
+          "start": 16.9,
+          "end": 17.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "called",
+          "start": 17.14,
+          "end": 17.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "Claim",
+          "start": 17.46,
+          "end": 17.82,
+          "probability": 0.8369
+        },
+        {
+          "word": "Officials.",
+          "start": 17.82,
+          "end": 18.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "In",
+          "start": 18.68,
+          "end": 19.04,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 19.04,
+          "end": 19.2,
+          "probability": 0.999
+        },
+        {
+          "word": "demo,",
+          "start": 19.2,
+          "end": 19.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 19.72,
+          "end": 19.96,
+          "probability": 0.998
+        },
+        {
+          "word": "shall",
+          "start": 19.96,
+          "end": 20.18,
+          "probability": 0.9839
+        },
+        {
+          "word": "create",
+          "start": 20.18,
+          "end": 20.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 20.54,
+          "end": 20.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "page.",
+          "start": 20.7,
+          "end": 21.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 21.3,
+          "end": 21.64,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 21.64,
+          "end": 21.8,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 21.8,
+          "end": 22.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 22.0,
+          "end": 22.08,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 22.08,
+          "end": 22.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 22.2,
+          "end": 22.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "UI",
+          "start": 22.32,
+          "end": 22.66,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 22.66,
+          "end": 22.88,
+          "probability": 0.9839
+        },
+        {
+          "word": "a",
+          "start": 22.88,
+          "end": 22.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "subsequent",
+          "start": 22.98,
+          "end": 23.42,
+          "probability": 0.998
+        },
+        {
+          "word": "demo.",
+          "start": 23.42,
+          "end": 23.82,
+          "probability": 0.999
+        },
+        {
+          "word": "So,",
+          "start": 24.4,
+          "end": 24.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "from",
+          "start": 25.22,
+          "end": 25.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 25.48,
+          "end": 25.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "Configuration",
+          "start": 25.6,
+          "end": 26.34,
+          "probability": 0.9082
+        },
+        {
+          "word": "node,",
+          "start": 26.34,
+          "end": 26.62,
+          "probability": 0.835
+        },
+        {
+          "word": "I",
+          "start": 26.84,
+          "end": 28.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "expand",
+          "start": 28.76,
+          "end": 29.14,
+          "probability": 0.9771
+        },
+        {
+          "word": "Config.",
+          "start": 29.14,
+          "end": 29.44,
+          "probability": 0.8574
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.44,
+      "end": 29.54,
+      "start_formatted": "00:00:29.440",
+      "end_formatted": "00:00:29.540",
+      "text": "Config.",
+      "words": [
+        {
+          "word": "Config.",
+          "start": 29.44,
+          "end": 29.54,
+          "probability": 0.0725
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 32.1,
+      "end": 33.16,
+      "start_formatted": "00:00:32.100",
+      "end_formatted": "00:00:33.160",
+      "text": "Page configuration.",
+      "words": [
+        {
+          "word": "Page",
+          "start": 32.1,
+          "end": 32.78,
+          "probability": 0.9609
+        },
+        {
+          "word": "configuration.",
+          "start": 32.78,
+          "end": 33.16,
+          "probability": 0.7007
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 33.16,
+      "end": 33.5,
+      "start_formatted": "00:00:33.160",
+      "end_formatted": "00:00:33.500",
+      "text": "Page configuration.",
+      "words": [
+        {
+          "word": "Page",
+          "start": 33.16,
+          "end": 33.16,
+          "probability": 0.0
+        },
+        {
+          "word": "configuration.",
+          "start": 33.16,
+          "end": 33.5,
+          "probability": 0.9624
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 40.88,
+      "end": 41.56,
+      "start_formatted": "00:00:40.880",
+      "end_formatted": "00:00:41.560",
+      "text": "Claim.",
+      "words": [
+        {
+          "word": "Claim.",
+          "start": 40.88,
+          "end": 41.56,
+          "probability": 0.9316
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 44.8,
+      "end": 45.48,
+      "start_formatted": "00:00:44.800",
+      "end_formatted": "00:00:45.480",
+      "text": "Claim.",
+      "words": [
+        {
+          "word": "Claim.",
+          "start": 44.8,
+          "end": 45.48,
+          "probability": 0.5083
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 45.48,
+      "end": 45.48,
+      "start_formatted": "00:00:45.480",
+      "end_formatted": "00:00:45.480",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 7,
+      "start": 45.48,
+      "end": 49.98,
+      "start_formatted": "00:00:45.480",
+      "end_formatted": "00:00:49.980",
+      "text": "I will put the Claim Officials page in the parties involved node, so I right-click the node.",
+      "words": [
+        {
+          "word": "I",
+          "start": 45.48,
+          "end": 45.48,
+          "probability": 0.7734
+        },
+        {
+          "word": "will",
+          "start": 45.48,
+          "end": 45.66,
+          "probability": 0.9741
+        },
+        {
+          "word": "put",
+          "start": 45.66,
+          "end": 45.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 45.86,
+          "end": 46.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "Claim",
+          "start": 46.02,
+          "end": 46.26,
+          "probability": 0.752
+        },
+        {
+          "word": "Officials",
+          "start": 46.26,
+          "end": 46.72,
+          "probability": 0.8584
+        },
+        {
+          "word": "page",
+          "start": 46.72,
+          "end": 46.98,
+          "probability": 0.9233
+        },
+        {
+          "word": "in",
+          "start": 46.98,
+          "end": 47.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 47.14,
+          "end": 47.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "parties",
+          "start": 47.22,
+          "end": 47.56,
+          "probability": 0.6084
+        },
+        {
+          "word": "involved",
+          "start": 47.56,
+          "end": 48.0,
+          "probability": 0.9619
+        },
+        {
+          "word": "node,",
+          "start": 48.0,
+          "end": 48.32,
+          "probability": 0.9873
+        },
+        {
+          "word": "so",
+          "start": 48.54,
+          "end": 48.82,
+          "probability": 0.9756
+        },
+        {
+          "word": "I",
+          "start": 48.82,
+          "end": 49.0,
+          "probability": 0.9771
+        },
+        {
+          "word": "right",
+          "start": 49.0,
+          "end": 49.2,
+          "probability": 0.9746
+        },
+        {
+          "word": "-click",
+          "start": 49.2,
+          "end": 49.42,
+          "probability": 0.8301
+        },
+        {
+          "word": "the",
+          "start": 49.42,
+          "end": 49.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "node.",
+          "start": 49.62,
+          "end": 49.98,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 52.52,
+      "end": 53.86,
+      "start_formatted": "00:00:52.520",
+      "end_formatted": "00:00:53.860",
+      "text": "And select New.",
+      "words": [
+        {
+          "word": "And",
+          "start": 52.52,
+          "end": 53.2,
+          "probability": 0.8057
+        },
+        {
+          "word": "select",
+          "start": 53.2,
+          "end": 53.58,
+          "probability": 0.9766
+        },
+        {
+          "word": "New.",
+          "start": 53.58,
+          "end": 53.86,
+          "probability": 0.6475
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 56.92,
+      "end": 57.96,
+      "start_formatted": "00:00:56.920",
+      "end_formatted": "00:00:57.960",
+      "text": "PCF file.",
+      "words": [
+        {
+          "word": "PCF",
+          "start": 56.92,
+          "end": 57.6,
+          "probability": 0.9429
+        },
+        {
+          "word": "file.",
+          "start": 57.6,
+          "end": 57.96,
+          "probability": 0.8359
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 60.5,
+      "end": 63.42,
+      "start_formatted": "00:01:00.500",
+      "end_formatted": "00:01:03.420",
+      "text": "The file type of the PCF file will be Page.",
+      "words": [
+        {
+          "word": "The",
+          "start": 60.5,
+          "end": 61.06,
+          "probability": 0.853
+        },
+        {
+          "word": "file",
+          "start": 61.06,
+          "end": 61.36,
+          "probability": 0.9639
+        },
+        {
+          "word": "type",
+          "start": 61.36,
+          "end": 61.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 61.6,
+          "end": 61.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 61.76,
+          "end": 61.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "PCF",
+          "start": 61.86,
+          "end": 62.46,
+          "probability": 0.9492
+        },
+        {
+          "word": "file",
+          "start": 62.46,
+          "end": 62.74,
+          "probability": 0.9844
+        },
+        {
+          "word": "will",
+          "start": 62.74,
+          "end": 62.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 62.92,
+          "end": 63.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Page.",
+          "start": 63.06,
+          "end": 63.42,
+          "probability": 0.4028
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 64.64,
+      "end": 71.82,
+      "start_formatted": "00:01:04.640",
+      "end_formatted": "00:01:11.820",
+      "text": "I will use a suffix of underscore SI for Succeed Insurance, so the full name of the page is Claim Officials underscore SI.",
+      "words": [
+        {
+          "word": "I",
+          "start": 64.64,
+          "end": 65.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "will",
+          "start": 65.2,
+          "end": 65.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "use",
+          "start": 65.34,
+          "end": 65.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 65.54,
+          "end": 65.66,
+          "probability": 0.8491
+        },
+        {
+          "word": "suffix",
+          "start": 65.66,
+          "end": 66.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 66.04,
+          "end": 66.2,
+          "probability": 0.9561
+        },
+        {
+          "word": "underscore",
+          "start": 66.2,
+          "end": 66.52,
+          "probability": 0.1294
+        },
+        {
+          "word": "SI",
+          "start": 66.52,
+          "end": 67.06,
+          "probability": 0.5029
+        },
+        {
+          "word": "for",
+          "start": 67.06,
+          "end": 67.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "Succeed",
+          "start": 67.36,
+          "end": 67.78,
+          "probability": 0.8589
+        },
+        {
+          "word": "Insurance,",
+          "start": 67.78,
+          "end": 68.18,
+          "probability": 0.7954
+        },
+        {
+          "word": "so",
+          "start": 68.48,
+          "end": 68.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 68.76,
+          "end": 68.9,
+          "probability": 0.999
+        },
+        {
+          "word": "full",
+          "start": 68.9,
+          "end": 69.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 69.12,
+          "end": 69.34,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 69.34,
+          "end": 69.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 69.5,
+          "end": 69.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "page",
+          "start": 69.58,
+          "end": 69.84,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 69.84,
+          "end": 69.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "Claim",
+          "start": 69.98,
+          "end": 70.28,
+          "probability": 0.8115
+        },
+        {
+          "word": "Officials",
+          "start": 70.28,
+          "end": 70.74,
+          "probability": 0.6001
+        },
+        {
+          "word": "underscore",
+          "start": 70.74,
+          "end": 71.14,
+          "probability": 0.7275
+        },
+        {
+          "word": "SI.",
+          "start": 71.14,
+          "end": 71.82,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 77.02,
+      "end": 79.18,
+      "start_formatted": "00:01:17.020",
+      "end_formatted": "00:01:19.180",
+      "text": "I click OK to create the page.",
+      "words": [
+        {
+          "word": "I",
+          "start": 77.02,
+          "end": 77.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "click",
+          "start": 77.58,
+          "end": 77.86,
+          "probability": 0.9893
+        },
+        {
+          "word": "OK",
+          "start": 77.86,
+          "end": 78.08,
+          "probability": 0.9443
+        },
+        {
+          "word": "to",
+          "start": 78.08,
+          "end": 78.34,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 78.34,
+          "end": 78.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 78.64,
+          "end": 78.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "page.",
+          "start": 78.8,
+          "end": 79.18,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 81.06,
+      "end": 84.82,
+      "start_formatted": "00:01:21.060",
+      "end_formatted": "00:01:24.820",
+      "text": "The page appears in red, because it has not yet been configured.",
+      "words": [
+        {
+          "word": "The",
+          "start": 81.06,
+          "end": 81.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "page",
+          "start": 81.62,
+          "end": 81.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "appears",
+          "start": 81.88,
+          "end": 82.26,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 82.26,
+          "end": 82.46,
+          "probability": 1.0
+        },
+        {
+          "word": "red,",
+          "start": 82.46,
+          "end": 82.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "because",
+          "start": 82.94,
+          "end": 83.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 83.3,
+          "end": 83.46,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 83.46,
+          "end": 83.62,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 83.62,
+          "end": 83.84,
+          "probability": 0.999
+        },
+        {
+          "word": "yet",
+          "start": 83.84,
+          "end": 84.06,
+          "probability": 0.999
+        },
+        {
+          "word": "been",
+          "start": 84.06,
+          "end": 84.24,
+          "probability": 0.999
+        },
+        {
+          "word": "configured.",
+          "start": 84.24,
+          "end": 84.82,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 84.82,
+      "end": 86.88,
+      "start_formatted": "00:01:24.820",
+      "end_formatted": "00:01:26.880",
+      "text": "A list of errors appears below.",
+      "words": [
+        {
+          "word": "A",
+          "start": 84.82,
+          "end": 85.48,
+          "probability": 0.793
+        },
+        {
+          "word": "list",
+          "start": 85.48,
+          "end": 85.68,
+          "probability": 0.9678
+        },
+        {
+          "word": "of",
+          "start": 85.68,
+          "end": 85.84,
+          "probability": 0.999
+        },
+        {
+          "word": "errors",
+          "start": 85.84,
+          "end": 86.1,
+          "probability": 0.9873
+        },
+        {
+          "word": "appears",
+          "start": 86.1,
+          "end": 86.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "below.",
+          "start": 86.5,
+          "end": 86.88,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 87.2,
+      "end": 90.1,
+      "start_formatted": "00:01:27.200",
+      "end_formatted": "00:01:30.100",
+      "text": "To begin configuring the page, I click its name.",
+      "words": [
+        {
+          "word": "To",
+          "start": 87.2,
+          "end": 87.54,
+          "probability": 0.9902
+        },
+        {
+          "word": "begin",
+          "start": 87.54,
+          "end": 87.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "configuring",
+          "start": 87.82,
+          "end": 88.44,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 88.44,
+          "end": 88.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "page,",
+          "start": 88.62,
+          "end": 89.0,
+          "probability": 0.9927
+        },
+        {
+          "word": "I",
+          "start": 89.18,
+          "end": 89.36,
+          "probability": 0.9888
+        },
+        {
+          "word": "click",
+          "start": 89.36,
+          "end": 89.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "its",
+          "start": 89.58,
+          "end": 89.8,
+          "probability": 0.9238
+        },
+        {
+          "word": "name.",
+          "start": 89.8,
+          "end": 90.1,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 92.56,
+      "end": 94.08,
+      "start_formatted": "00:01:32.560",
+      "end_formatted": "00:01:34.080",
+      "text": "A title is required.",
+      "words": [
+        {
+          "word": "A",
+          "start": 92.56,
+          "end": 93.08,
+          "probability": 0.9824
+        },
+        {
+          "word": "title",
+          "start": 93.08,
+          "end": 93.34,
+          "probability": 0.9453
+        },
+        {
+          "word": "is",
+          "start": 93.34,
+          "end": 93.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "required.",
+          "start": 93.58,
+          "end": 94.08,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 94.4,
+      "end": 98.58,
+      "start_formatted": "00:01:34.400",
+      "end_formatted": "00:01:38.580",
+      "text": "I will use a display key, which I have created prior to this demonstration.",
+      "words": [
+        {
+          "word": "I",
+          "start": 94.4,
+          "end": 94.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 94.78,
+          "end": 94.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "use",
+          "start": 94.96,
+          "end": 95.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 95.16,
+          "end": 95.28,
+          "probability": 0.9839
+        },
+        {
+          "word": "display",
+          "start": 95.28,
+          "end": 95.58,
+          "probability": 0.8765
+        },
+        {
+          "word": "key,",
+          "start": 95.58,
+          "end": 95.94,
+          "probability": 0.9868
+        },
+        {
+          "word": "which",
+          "start": 96.14,
+          "end": 96.38,
+          "probability": 0.9927
+        },
+        {
+          "word": "I",
+          "start": 96.38,
+          "end": 96.52,
+          "probability": 0.9922
+        },
+        {
+          "word": "have",
+          "start": 96.52,
+          "end": 96.68,
+          "probability": 0.9878
+        },
+        {
+          "word": "created",
+          "start": 96.68,
+          "end": 97.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "prior",
+          "start": 97.1,
+          "end": 97.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 97.44,
+          "end": 97.66,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 97.66,
+          "end": 97.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "demonstration.",
+          "start": 97.86,
+          "end": 98.58,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 112.66,
+      "end": 114.8,
+      "start_formatted": "00:01:52.660",
+      "end_formatted": "00:01:54.800",
+      "text": "Next, I create a variable to hold the page.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 112.66,
+          "end": 113.18,
+          "probability": 0.9565
+        },
+        {
+          "word": "I",
+          "start": 113.42,
+          "end": 113.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "create",
+          "start": 113.62,
+          "end": 113.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "a",
+          "start": 113.96,
+          "end": 114.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "variable",
+          "start": 114.08,
+          "end": 114.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 114.42,
+          "end": 114.62,
+          "probability": 0.981
+        },
+        {
+          "word": "hold",
+          "start": 114.62,
+          "end": 114.8,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 114.8,
+          "end": 114.8,
+          "probability": 0.3306
+        },
+        {
+          "word": "page.",
+          "start": 114.8,
+          "end": 114.8,
+          "probability": 0.155
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 114.8,
+      "end": 116.84,
+      "start_formatted": "00:01:54.800",
+      "end_formatted": "00:01:56.840",
+      "text": "I will hold the claim to which the officials are related.",
+      "words": [
+        {
+          "word": "I",
+          "start": 114.8,
+          "end": 114.84,
+          "probability": 0.0518
+        },
+        {
+          "word": "will",
+          "start": 114.84,
+          "end": 114.84,
+          "probability": 0.0421
+        },
+        {
+          "word": "hold",
+          "start": 114.84,
+          "end": 114.84,
+          "probability": 0.248
+        },
+        {
+          "word": "the",
+          "start": 114.84,
+          "end": 114.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "claim",
+          "start": 114.98,
+          "end": 115.22,
+          "probability": 0.8701
+        },
+        {
+          "word": "to",
+          "start": 115.22,
+          "end": 115.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "which",
+          "start": 115.38,
+          "end": 115.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 115.58,
+          "end": 115.72,
+          "probability": 0.9912
+        },
+        {
+          "word": "officials",
+          "start": 115.72,
+          "end": 116.12,
+          "probability": 0.9087
+        },
+        {
+          "word": "are",
+          "start": 116.12,
+          "end": 116.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "related.",
+          "start": 116.4,
+          "end": 116.84,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 117.16,
+      "end": 122.54,
+      "start_formatted": "00:01:57.160",
+      "end_formatted": "00:02:02.540",
+      "text": "In the Variables tab, I click this button to create a new variable.",
+      "words": [
+        {
+          "word": "In",
+          "start": 117.16,
+          "end": 117.5,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 117.5,
+          "end": 117.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "Variables",
+          "start": 117.6,
+          "end": 118.08,
+          "probability": 0.8286
+        },
+        {
+          "word": "tab,",
+          "start": 118.08,
+          "end": 118.36,
+          "probability": 0.9556
+        },
+        {
+          "word": "I",
+          "start": 118.68,
+          "end": 120.52,
+          "probability": 0.9771
+        },
+        {
+          "word": "click",
+          "start": 120.52,
+          "end": 120.78,
+          "probability": 0.9858
+        },
+        {
+          "word": "this",
+          "start": 120.78,
+          "end": 121.0,
+          "probability": 0.9883
+        },
+        {
+          "word": "button",
+          "start": 121.0,
+          "end": 121.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 121.32,
+          "end": 121.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "create",
+          "start": 121.5,
+          "end": 121.8,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 121.8,
+          "end": 121.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 121.96,
+          "end": 122.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "variable.",
+          "start": 122.08,
+          "end": 122.54,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 124.1,
+      "end": 127.02,
+      "start_formatted": "00:02:04.100",
+      "end_formatted": "00:02:07.020",
+      "text": "The variable's name is Claim, with a small c.",
+      "words": [
+        {
+          "word": "The",
+          "start": 124.1,
+          "end": 124.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "variable's",
+          "start": 124.66,
+          "end": 125.22,
+          "probability": 0.9595
+        },
+        {
+          "word": "name",
+          "start": 125.22,
+          "end": 125.48,
+          "probability": 0.9858
+        },
+        {
+          "word": "is",
+          "start": 125.48,
+          "end": 125.64,
+          "probability": 0.998
+        },
+        {
+          "word": "Claim,",
+          "start": 125.64,
+          "end": 126.02,
+          "probability": 0.6709
+        },
+        {
+          "word": "with",
+          "start": 126.16,
+          "end": 126.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 126.4,
+          "end": 126.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "small",
+          "start": 126.52,
+          "end": 126.76,
+          "probability": 0.9575
+        },
+        {
+          "word": "c.",
+          "start": 126.76,
+          "end": 127.02,
+          "probability": 0.4883
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 128.82,
+      "end": 131.74,
+      "start_formatted": "00:02:08.820",
+      "end_formatted": "00:02:11.740",
+      "text": "Its entity type is Claim, with a capital C.",
+      "words": [
+        {
+          "word": "Its",
+          "start": 128.82,
+          "end": 129.38,
+          "probability": 0.8721
+        },
+        {
+          "word": "entity",
+          "start": 129.38,
+          "end": 129.7,
+          "probability": 0.8433
+        },
+        {
+          "word": "type",
+          "start": 129.7,
+          "end": 130.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 130.02,
+          "end": 130.2,
+          "probability": 0.999
+        },
+        {
+          "word": "Claim,",
+          "start": 130.2,
+          "end": 130.62,
+          "probability": 0.9629
+        },
+        {
+          "word": "with",
+          "start": 130.74,
+          "end": 131.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 131.0,
+          "end": 131.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "capital",
+          "start": 131.1,
+          "end": 131.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "C.",
+          "start": 131.44,
+          "end": 131.74,
+          "probability": 0.7617
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 133.6,
+      "end": 136.32,
+      "start_formatted": "00:02:13.600",
+      "end_formatted": "00:02:16.320",
+      "text": "The page requires a panel ref to hold data.",
+      "words": [
+        {
+          "word": "The",
+          "start": 133.6,
+          "end": 134.16,
+          "probability": 0.9873
+        },
+        {
+          "word": "page",
+          "start": 134.16,
+          "end": 134.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "requires",
+          "start": 134.4,
+          "end": 134.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 134.92,
+          "end": 135.08,
+          "probability": 0.9858
+        },
+        {
+          "word": "panel",
+          "start": 135.08,
+          "end": 135.36,
+          "probability": 0.4563
+        },
+        {
+          "word": "ref",
+          "start": 135.36,
+          "end": 135.6,
+          "probability": 0.8384
+        },
+        {
+          "word": "to",
+          "start": 135.6,
+          "end": 135.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "hold",
+          "start": 135.76,
+          "end": 135.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "data.",
+          "start": 135.98,
+          "end": 136.32,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 139.1,
+      "end": 141.02,
+      "start_formatted": "00:02:19.100",
+      "end_formatted": "00:02:21.020",
+      "text": "I click the panel ref icon.",
+      "words": [
+        {
+          "word": "I",
+          "start": 139.1,
+          "end": 139.58,
+          "probability": 0.9868
+        },
+        {
+          "word": "click",
+          "start": 139.58,
+          "end": 139.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 139.82,
+          "end": 139.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "panel",
+          "start": 139.96,
+          "end": 140.22,
+          "probability": 0.4019
+        },
+        {
+          "word": "ref",
+          "start": 140.22,
+          "end": 140.48,
+          "probability": 0.8896
+        },
+        {
+          "word": "icon.",
+          "start": 140.48,
+          "end": 141.02,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 142.96,
+      "end": 145.68,
+      "start_formatted": "00:02:22.960",
+      "end_formatted": "00:02:25.680",
+      "text": "And then click in the page to drop a panel ref there.",
+      "words": [
+        {
+          "word": "And",
+          "start": 142.96,
+          "end": 143.44,
+          "probability": 0.9609
+        },
+        {
+          "word": "then",
+          "start": 143.44,
+          "end": 143.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 143.6,
+          "end": 143.82,
+          "probability": 0.9912
+        },
+        {
+          "word": "in",
+          "start": 143.82,
+          "end": 143.96,
+          "probability": 0.8867
+        },
+        {
+          "word": "the",
+          "start": 143.96,
+          "end": 144.04,
+          "probability": 0.999
+        },
+        {
+          "word": "page",
+          "start": 144.04,
+          "end": 144.3,
+          "probability": 0.9756
+        },
+        {
+          "word": "to",
+          "start": 144.3,
+          "end": 144.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "drop",
+          "start": 144.5,
+          "end": 144.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 144.72,
+          "end": 144.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "panel",
+          "start": 144.88,
+          "end": 145.18,
+          "probability": 0.9761
+        },
+        {
+          "word": "ref",
+          "start": 145.18,
+          "end": 145.44,
+          "probability": 0.998
+        },
+        {
+          "word": "there.",
+          "start": 145.44,
+          "end": 145.68,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 147.56,
+      "end": 152.2,
+      "start_formatted": "00:02:27.560",
+      "end_formatted": "00:02:32.200",
+      "text": "Note that when I add the panel ref, a screen is automatically created to contain it.",
+      "words": [
+        {
+          "word": "Note",
+          "start": 147.56,
+          "end": 148.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "that",
+          "start": 148.04,
+          "end": 148.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 148.2,
+          "end": 148.38,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 148.38,
+          "end": 148.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "add",
+          "start": 148.48,
+          "end": 148.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 148.66,
+          "end": 148.76,
+          "probability": 0.998
+        },
+        {
+          "word": "panel",
+          "start": 148.76,
+          "end": 149.06,
+          "probability": 0.9854
+        },
+        {
+          "word": "ref,",
+          "start": 149.06,
+          "end": 149.48,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 149.66,
+          "end": 149.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen",
+          "start": 149.86,
+          "end": 150.14,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 150.14,
+          "end": 150.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "automatically",
+          "start": 150.34,
+          "end": 150.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "created",
+          "start": 150.86,
+          "end": 151.42,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 151.42,
+          "end": 151.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "contain",
+          "start": 151.6,
+          "end": 151.92,
+          "probability": 0.999
+        },
+        {
+          "word": "it.",
+          "start": 151.92,
+          "end": 152.2,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 152.5,
+      "end": 155.92,
+      "start_formatted": "00:02:32.500",
+      "end_formatted": "00:02:35.920",
+      "text": "The panel ref now needs a list view to display the list of officials.",
+      "words": [
+        {
+          "word": "The",
+          "start": 152.5,
+          "end": 152.82,
+          "probability": 0.998
+        },
+        {
+          "word": "panel",
+          "start": 152.82,
+          "end": 153.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "ref",
+          "start": 153.12,
+          "end": 153.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "now",
+          "start": 153.36,
+          "end": 153.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "needs",
+          "start": 153.58,
+          "end": 153.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 153.9,
+          "end": 154.06,
+          "probability": 0.999
+        },
+        {
+          "word": "list",
+          "start": 154.06,
+          "end": 154.22,
+          "probability": 0.9048
+        },
+        {
+          "word": "view",
+          "start": 154.22,
+          "end": 154.4,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 154.4,
+          "end": 154.56,
+          "probability": 0.999
+        },
+        {
+          "word": "display",
+          "start": 154.56,
+          "end": 154.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 154.92,
+          "end": 155.12,
+          "probability": 0.999
+        },
+        {
+          "word": "list",
+          "start": 155.12,
+          "end": 155.34,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 155.34,
+          "end": 155.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "officials.",
+          "start": 155.48,
+          "end": 155.92,
+          "probability": 0.9692
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 155.92,
+      "end": 159.8,
+      "start_formatted": "00:02:35.920",
+      "end_formatted": "00:02:39.800",
+      "text": "There is a list view in the Lost Details node that might serve the purpose.",
+      "words": [
+        {
+          "word": "There",
+          "start": 155.92,
+          "end": 156.7,
+          "probability": 0.9297
+        },
+        {
+          "word": "is",
+          "start": 156.7,
+          "end": 156.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 156.84,
+          "end": 156.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "list",
+          "start": 156.96,
+          "end": 157.16,
+          "probability": 0.6255
+        },
+        {
+          "word": "view",
+          "start": 157.16,
+          "end": 157.38,
+          "probability": 0.9453
+        },
+        {
+          "word": "in",
+          "start": 157.38,
+          "end": 157.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 157.54,
+          "end": 157.64,
+          "probability": 0.9917
+        },
+        {
+          "word": "Lost",
+          "start": 157.64,
+          "end": 157.92,
+          "probability": 0.5
+        },
+        {
+          "word": "Details",
+          "start": 157.92,
+          "end": 158.34,
+          "probability": 0.9541
+        },
+        {
+          "word": "node",
+          "start": 158.34,
+          "end": 158.66,
+          "probability": 0.9604
+        },
+        {
+          "word": "that",
+          "start": 158.66,
+          "end": 158.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "might",
+          "start": 158.84,
+          "end": 159.02,
+          "probability": 0.998
+        },
+        {
+          "word": "serve",
+          "start": 159.02,
+          "end": 159.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 159.3,
+          "end": 159.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "purpose.",
+          "start": 159.46,
+          "end": 159.8,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 161.86,
+      "end": 165.14,
+      "start_formatted": "00:02:41.860",
+      "end_formatted": "00:02:45.140",
+      "text": "I double-click the editable officials list view to open it.",
+      "words": [
+        {
+          "word": "I",
+          "start": 161.86,
+          "end": 162.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "double",
+          "start": 162.34,
+          "end": 162.62,
+          "probability": 0.9893
+        },
+        {
+          "word": "-click",
+          "start": 162.62,
+          "end": 162.82,
+          "probability": 0.7998
+        },
+        {
+          "word": "the",
+          "start": 162.82,
+          "end": 163.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "editable",
+          "start": 163.02,
+          "end": 163.52,
+          "probability": 0.771
+        },
+        {
+          "word": "officials",
+          "start": 163.52,
+          "end": 163.92,
+          "probability": 0.5713
+        },
+        {
+          "word": "list",
+          "start": 163.92,
+          "end": 164.3,
+          "probability": 0.9277
+        },
+        {
+          "word": "view",
+          "start": 164.3,
+          "end": 164.5,
+          "probability": 0.9785
+        },
+        {
+          "word": "to",
+          "start": 164.5,
+          "end": 164.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "open",
+          "start": 164.64,
+          "end": 164.94,
+          "probability": 0.999
+        },
+        {
+          "word": "it.",
+          "start": 164.94,
+          "end": 165.14,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 166.32,
+      "end": 170.1,
+      "start_formatted": "00:02:46.320",
+      "end_formatted": "00:02:50.100",
+      "text": "This list view holds the data that is required, so I can use it.",
+      "words": [
+        {
+          "word": "This",
+          "start": 166.32,
+          "end": 166.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "list",
+          "start": 166.8,
+          "end": 167.04,
+          "probability": 0.9531
+        },
+        {
+          "word": "view",
+          "start": 167.04,
+          "end": 167.26,
+          "probability": 0.9946
+        },
+        {
+          "word": "holds",
+          "start": 167.26,
+          "end": 167.64,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 167.64,
+          "end": 167.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "data",
+          "start": 167.8,
+          "end": 168.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 168.06,
+          "end": 168.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 168.22,
+          "end": 168.36,
+          "probability": 0.998
+        },
+        {
+          "word": "required,",
+          "start": 168.36,
+          "end": 168.88,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 169.12,
+          "end": 169.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 169.38,
+          "end": 169.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "can",
+          "start": 169.5,
+          "end": 169.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "use",
+          "start": 169.64,
+          "end": 169.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "it.",
+          "start": 169.86,
+          "end": 170.1,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 170.32,
+      "end": 172.5,
+      "start_formatted": "00:02:50.320",
+      "end_formatted": "00:02:52.500",
+      "text": "I return to the Claim Officials page.",
+      "words": [
+        {
+          "word": "I",
+          "start": 170.32,
+          "end": 170.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "return",
+          "start": 170.66,
+          "end": 171.0,
+          "probability": 0.9351
+        },
+        {
+          "word": "to",
+          "start": 171.0,
+          "end": 171.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 171.18,
+          "end": 171.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "Claim",
+          "start": 171.32,
+          "end": 171.6,
+          "probability": 0.7842
+        },
+        {
+          "word": "Officials",
+          "start": 171.6,
+          "end": 172.08,
+          "probability": 0.873
+        },
+        {
+          "word": "page.",
+          "start": 172.08,
+          "end": 172.5,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 173.04,
+      "end": 175.56,
+      "start_formatted": "00:02:53.040",
+      "end_formatted": "00:02:55.560",
+      "text": "I click the panel ref to open its properties.",
+      "words": [
+        {
+          "word": "I",
+          "start": 173.04,
+          "end": 173.52,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 173.52,
+          "end": 173.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 173.76,
+          "end": 173.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "panel",
+          "start": 173.9,
+          "end": 174.2,
+          "probability": 0.3008
+        },
+        {
+          "word": "ref",
+          "start": 174.2,
+          "end": 174.44,
+          "probability": 0.8511
+        },
+        {
+          "word": "to",
+          "start": 174.44,
+          "end": 174.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "open",
+          "start": 174.6,
+          "end": 174.88,
+          "probability": 0.999
+        },
+        {
+          "word": "its",
+          "start": 174.88,
+          "end": 175.08,
+          "probability": 0.957
+        },
+        {
+          "word": "properties.",
+          "start": 175.08,
+          "end": 175.56,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 176.88,
+      "end": 182.32,
+      "start_formatted": "00:02:56.880",
+      "end_formatted": "00:03:02.320",
+      "text": "In the definition property of the panel ref I enter the name of the list view, passing it the claim variable.",
+      "words": [
+        {
+          "word": "In",
+          "start": 176.88,
+          "end": 177.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 177.36,
+          "end": 177.46,
+          "probability": 0.999
+        },
+        {
+          "word": "definition",
+          "start": 177.46,
+          "end": 177.84,
+          "probability": 0.6948
+        },
+        {
+          "word": "property",
+          "start": 177.84,
+          "end": 178.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 178.44,
+          "end": 178.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 178.62,
+          "end": 178.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "panel",
+          "start": 178.72,
+          "end": 178.98,
+          "probability": 0.8647
+        },
+        {
+          "word": "ref",
+          "start": 178.98,
+          "end": 179.26,
+          "probability": 0.9902
+        },
+        {
+          "word": "I",
+          "start": 179.26,
+          "end": 179.38,
+          "probability": 0.9346
+        },
+        {
+          "word": "enter",
+          "start": 179.38,
+          "end": 179.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 179.62,
+          "end": 179.76,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 179.76,
+          "end": 179.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 179.96,
+          "end": 180.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 180.1,
+          "end": 180.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "list",
+          "start": 180.22,
+          "end": 180.48,
+          "probability": 0.9087
+        },
+        {
+          "word": "view,",
+          "start": 180.48,
+          "end": 180.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "passing",
+          "start": 181.04,
+          "end": 181.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "it",
+          "start": 181.4,
+          "end": 181.54,
+          "probability": 0.9805
+        },
+        {
+          "word": "the",
+          "start": 181.54,
+          "end": 181.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 181.66,
+          "end": 181.9,
+          "probability": 0.8516
+        },
+        {
+          "word": "variable.",
+          "start": 181.9,
+          "end": 182.32,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 187.8,
+      "end": 188.3,
+      "start_formatted": "00:03:07.800",
+      "end_formatted": "00:03:08.300",
+      "text": "I click the panel ref to open it.",
+      "words": [
+        {
+          "word": "I",
+          "start": 187.8,
+          "end": 188.3,
+          "probability": 0.0051
+        },
+        {
+          "word": "click",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.0089
+        },
+        {
+          "word": "the",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.17
+        },
+        {
+          "word": "panel",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.0064
+        },
+        {
+          "word": "ref",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.0105
+        },
+        {
+          "word": "to",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.098
+        },
+        {
+          "word": "open",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.0019
+        },
+        {
+          "word": "it.",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.1112
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 188.3,
+      "end": 189.9,
+      "start_formatted": "00:03:08.300",
+      "end_formatted": "00:03:09.900",
+      "text": "Users should be able to edit this list.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 188.3,
+          "end": 188.3,
+          "probability": 0.5923
+        },
+        {
+          "word": "should",
+          "start": 188.3,
+          "end": 188.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "be",
+          "start": 188.52,
+          "end": 188.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "able",
+          "start": 188.66,
+          "end": 188.84,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 188.84,
+          "end": 188.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "edit",
+          "start": 188.96,
+          "end": 189.28,
+          "probability": 0.9868
+        },
+        {
+          "word": "this",
+          "start": 189.28,
+          "end": 189.54,
+          "probability": 0.9761
+        },
+        {
+          "word": "list.",
+          "start": 189.54,
+          "end": 189.9,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 190.14,
+      "end": 191.36,
+      "start_formatted": "00:03:10.140",
+      "end_formatted": "00:03:11.360",
+      "text": "I select the page.",
+      "words": [
+        {
+          "word": "I",
+          "start": 190.14,
+          "end": 190.46,
+          "probability": 0.9785
+        },
+        {
+          "word": "select",
+          "start": 190.46,
+          "end": 190.86,
+          "probability": 0.978
+        },
+        {
+          "word": "the",
+          "start": 190.86,
+          "end": 191.0,
+          "probability": 0.9873
+        },
+        {
+          "word": "page.",
+          "start": 191.0,
+          "end": 191.36,
+          "probability": 0.9399
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 193.02,
+      "end": 194.82,
+      "start_formatted": "00:03:13.020",
+      "end_formatted": "00:03:14.820",
+      "text": "And set its can edit property.",
+      "words": [
+        {
+          "word": "And",
+          "start": 193.02,
+          "end": 193.52,
+          "probability": 0.7534
+        },
+        {
+          "word": "set",
+          "start": 193.52,
+          "end": 193.76,
+          "probability": 0.9268
+        },
+        {
+          "word": "its",
+          "start": 193.76,
+          "end": 193.92,
+          "probability": 0.9126
+        },
+        {
+          "word": "can",
+          "start": 193.92,
+          "end": 194.1,
+          "probability": 0.4604
+        },
+        {
+          "word": "edit",
+          "start": 194.1,
+          "end": 194.3,
+          "probability": 0.5815
+        },
+        {
+          "word": "property.",
+          "start": 194.3,
+          "end": 194.82,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 197.08,
+      "end": 199.38,
+      "start_formatted": "00:03:17.080",
+      "end_formatted": "00:03:19.380",
+      "text": "And its can visit property both to true.",
+      "words": [
+        {
+          "word": "And",
+          "start": 197.08,
+          "end": 197.58,
+          "probability": 0.9619
+        },
+        {
+          "word": "its",
+          "start": 197.58,
+          "end": 197.76,
+          "probability": 0.8223
+        },
+        {
+          "word": "can",
+          "start": 197.76,
+          "end": 197.94,
+          "probability": 0.9673
+        },
+        {
+          "word": "visit",
+          "start": 197.94,
+          "end": 198.18,
+          "probability": 0.9507
+        },
+        {
+          "word": "property",
+          "start": 198.18,
+          "end": 198.7,
+          "probability": 0.9839
+        },
+        {
+          "word": "both",
+          "start": 198.7,
+          "end": 198.96,
+          "probability": 0.9492
+        },
+        {
+          "word": "to",
+          "start": 198.96,
+          "end": 199.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "true.",
+          "start": 199.18,
+          "end": 199.38,
+          "probability": 0.8506
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 201.16,
+      "end": 203.0,
+      "start_formatted": "00:03:21.160",
+      "end_formatted": "00:03:23.000",
+      "text": "Next, I select the screen.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 201.16,
+          "end": 201.66,
+          "probability": 0.9736
+        },
+        {
+          "word": "I",
+          "start": 201.9,
+          "end": 202.1,
+          "probability": 0.9824
+        },
+        {
+          "word": "select",
+          "start": 202.1,
+          "end": 202.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 202.5,
+          "end": 202.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "screen.",
+          "start": 202.66,
+          "end": 203.0,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 204.94,
+      "end": 207.22,
+      "start_formatted": "00:03:24.940",
+      "end_formatted": "00:03:27.220",
+      "text": "And set its editable property to true.",
+      "words": [
+        {
+          "word": "And",
+          "start": 204.94,
+          "end": 205.44,
+          "probability": 0.9634
+        },
+        {
+          "word": "set",
+          "start": 205.44,
+          "end": 205.7,
+          "probability": 0.9854
+        },
+        {
+          "word": "its",
+          "start": 205.7,
+          "end": 205.9,
+          "probability": 0.9712
+        },
+        {
+          "word": "editable",
+          "start": 205.9,
+          "end": 206.34,
+          "probability": 0.9775
+        },
+        {
+          "word": "property",
+          "start": 206.34,
+          "end": 206.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 206.78,
+          "end": 207.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "true.",
+          "start": 207.02,
+          "end": 207.22,
+          "probability": 0.9346
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 209.02,
+      "end": 211.48,
+      "start_formatted": "00:03:29.020",
+      "end_formatted": "00:03:31.480",
+      "text": "Then, I do the same for the panel ref.",
+      "words": [
+        {
+          "word": "Then,",
+          "start": 209.02,
+          "end": 209.52,
+          "probability": 0.9546
+        },
+        {
+          "word": "I",
+          "start": 209.68,
+          "end": 209.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "do",
+          "start": 209.92,
+          "end": 210.06,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 210.06,
+          "end": 210.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "same",
+          "start": 210.22,
+          "end": 210.46,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 210.46,
+          "end": 210.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 210.64,
+          "end": 210.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "panel",
+          "start": 210.74,
+          "end": 211.06,
+          "probability": 0.9604
+        },
+        {
+          "word": "ref.",
+          "start": 211.06,
+          "end": 211.48,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 216.6,
+      "end": 219.86,
+      "start_formatted": "00:03:36.600",
+      "end_formatted": "00:03:39.860",
+      "text": "From the tool box, I select the edit buttons widget.",
+      "words": [
+        {
+          "word": "From",
+          "start": 216.6,
+          "end": 217.1,
+          "probability": 0.9692
+        },
+        {
+          "word": "the",
+          "start": 217.1,
+          "end": 217.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "tool",
+          "start": 217.22,
+          "end": 217.46,
+          "probability": 0.4148
+        },
+        {
+          "word": "box,",
+          "start": 217.46,
+          "end": 217.92,
+          "probability": 0.9526
+        },
+        {
+          "word": "I",
+          "start": 218.16,
+          "end": 218.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "select",
+          "start": 218.36,
+          "end": 218.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 218.74,
+          "end": 218.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "edit",
+          "start": 218.9,
+          "end": 219.08,
+          "probability": 0.3218
+        },
+        {
+          "word": "buttons",
+          "start": 219.08,
+          "end": 219.42,
+          "probability": 0.7979
+        },
+        {
+          "word": "widget.",
+          "start": 219.42,
+          "end": 219.86,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 227.04,
+      "end": 228.56,
+      "start_formatted": "00:03:47.040",
+      "end_formatted": "00:03:48.560",
+      "text": "And drop it into the screen.",
+      "words": [
+        {
+          "word": "And",
+          "start": 227.04,
+          "end": 227.54,
+          "probability": 0.771
+        },
+        {
+          "word": "drop",
+          "start": 227.54,
+          "end": 227.78,
+          "probability": 0.9897
+        },
+        {
+          "word": "it",
+          "start": 227.78,
+          "end": 227.9,
+          "probability": 0.9927
+        },
+        {
+          "word": "into",
+          "start": 227.9,
+          "end": 228.08,
+          "probability": 0.9634
+        },
+        {
+          "word": "the",
+          "start": 228.08,
+          "end": 228.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "screen.",
+          "start": 228.24,
+          "end": 228.56,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 228.86,
+      "end": 233.5,
+      "start_formatted": "00:03:48.860",
+      "end_formatted": "00:03:53.500",
+      "text": "It is important that the edit buttons go onto the screen, not the page or the panel ref.",
+      "words": [
+        {
+          "word": "It",
+          "start": 228.86,
+          "end": 229.2,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 229.2,
+          "end": 229.34,
+          "probability": 0.9932
+        },
+        {
+          "word": "important",
+          "start": 229.34,
+          "end": 229.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 229.74,
+          "end": 229.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 229.96,
+          "end": 230.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "edit",
+          "start": 230.1,
+          "end": 230.32,
+          "probability": 0.9331
+        },
+        {
+          "word": "buttons",
+          "start": 230.32,
+          "end": 230.64,
+          "probability": 0.9849
+        },
+        {
+          "word": "go",
+          "start": 230.64,
+          "end": 230.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "onto",
+          "start": 230.9,
+          "end": 231.12,
+          "probability": 0.7515
+        },
+        {
+          "word": "the",
+          "start": 231.12,
+          "end": 231.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "screen,",
+          "start": 231.28,
+          "end": 231.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 231.88,
+          "end": 232.14,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 232.14,
+          "end": 232.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "page",
+          "start": 232.28,
+          "end": 232.52,
+          "probability": 0.9526
+        },
+        {
+          "word": "or",
+          "start": 232.52,
+          "end": 232.7,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 232.7,
+          "end": 232.84,
+          "probability": 0.978
+        },
+        {
+          "word": "panel",
+          "start": 232.84,
+          "end": 233.14,
+          "probability": 0.981
+        },
+        {
+          "word": "ref.",
+          "start": 233.14,
+          "end": 233.5,
+          "probability": 0.9336
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 233.8,
+      "end": 237.12,
+      "start_formatted": "00:03:53.800",
+      "end_formatted": "00:03:57.120",
+      "text": "The edit buttons do not require configuration at this time.",
+      "words": [
+        {
+          "word": "The",
+          "start": 233.8,
+          "end": 234.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "edit",
+          "start": 234.16,
+          "end": 234.4,
+          "probability": 0.981
+        },
+        {
+          "word": "buttons",
+          "start": 234.4,
+          "end": 234.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "do",
+          "start": 234.76,
+          "end": 234.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "not",
+          "start": 234.96,
+          "end": 235.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "require",
+          "start": 235.18,
+          "end": 235.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "configuration",
+          "start": 235.58,
+          "end": 236.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "at",
+          "start": 236.22,
+          "end": 236.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "this",
+          "start": 236.6,
+          "end": 236.78,
+          "probability": 0.998
+        },
+        {
+          "word": "time.",
+          "start": 236.78,
+          "end": 237.12,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 237.12,
+      "end": 239.92,
+      "start_formatted": "00:03:57.120",
+      "end_formatted": "00:03:59.920",
+      "text": "Then I select an iterator buttons widget.",
+      "words": [
+        {
+          "word": "Then",
+          "start": 237.12,
+          "end": 238.1,
+          "probability": 0.894
+        },
+        {
+          "word": "I",
+          "start": 238.1,
+          "end": 238.22,
+          "probability": 0.9834
+        },
+        {
+          "word": "select",
+          "start": 238.22,
+          "end": 238.62,
+          "probability": 0.9917
+        },
+        {
+          "word": "an",
+          "start": 238.62,
+          "end": 238.76,
+          "probability": 0.981
+        },
+        {
+          "word": "iterator",
+          "start": 238.76,
+          "end": 239.16,
+          "probability": 0.7109
+        },
+        {
+          "word": "buttons",
+          "start": 239.16,
+          "end": 239.54,
+          "probability": 0.4285
+        },
+        {
+          "word": "widget.",
+          "start": 239.54,
+          "end": 239.92,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 249.12,
+      "end": 250.66,
+      "start_formatted": "00:04:09.120",
+      "end_formatted": "00:04:10.660",
+      "text": "And drop it onto the panel ref.",
+      "words": [
+        {
+          "word": "And",
+          "start": 248.9,
+          "end": 249.22,
+          "probability": 0.8496
+        },
+        {
+          "word": "drop",
+          "start": 249.22,
+          "end": 249.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "it",
+          "start": 249.48,
+          "end": 249.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "onto",
+          "start": 249.6,
+          "end": 249.74,
+          "probability": 0.7163
+        },
+        {
+          "word": "the",
+          "start": 249.74,
+          "end": 249.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "panel",
+          "start": 249.94,
+          "end": 250.26,
+          "probability": 0.8789
+        },
+        {
+          "word": "ref.",
+          "start": 250.26,
+          "end": 250.66,
+          "probability": 0.8887
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 252.56,
+      "end": 257.46,
+      "start_formatted": "00:04:12.560",
+      "end_formatted": "00:04:17.460",
+      "text": "The iterator buttons require an iterator, so I select them to open their properties.",
+      "words": [
+        {
+          "word": "The",
+          "start": 252.56,
+          "end": 253.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "iterator",
+          "start": 253.2,
+          "end": 253.66,
+          "probability": 0.9565
+        },
+        {
+          "word": "buttons",
+          "start": 253.66,
+          "end": 253.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "require",
+          "start": 253.98,
+          "end": 254.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "an",
+          "start": 254.42,
+          "end": 254.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "iterator,",
+          "start": 254.64,
+          "end": 255.16,
+          "probability": 0.9775
+        },
+        {
+          "word": "so",
+          "start": 255.32,
+          "end": 255.62,
+          "probability": 0.9917
+        },
+        {
+          "word": "I",
+          "start": 255.62,
+          "end": 255.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "select",
+          "start": 255.76,
+          "end": 256.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "them",
+          "start": 256.12,
+          "end": 256.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 256.32,
+          "end": 256.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "open",
+          "start": 256.46,
+          "end": 256.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "their",
+          "start": 256.78,
+          "end": 256.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "properties.",
+          "start": 256.94,
+          "end": 257.46,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 257.46,
+      "end": 263.36,
+      "start_formatted": "00:04:17.460",
+      "end_formatted": "00:04:23.360",
+      "text": "In the iterator property, I type the name of the list view, twice, separated by a period.",
+      "words": [
+        {
+          "word": "In",
+          "start": 257.46,
+          "end": 258.28,
+          "probability": 0.9678
+        },
+        {
+          "word": "the",
+          "start": 258.28,
+          "end": 258.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "iterator",
+          "start": 258.38,
+          "end": 258.82,
+          "probability": 0.7734
+        },
+        {
+          "word": "property,",
+          "start": 258.82,
+          "end": 259.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 259.54,
+          "end": 259.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "type",
+          "start": 259.76,
+          "end": 260.0,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 260.0,
+          "end": 260.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "name",
+          "start": 260.14,
+          "end": 260.34,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 260.34,
+          "end": 260.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 260.46,
+          "end": 260.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "list",
+          "start": 260.58,
+          "end": 260.82,
+          "probability": 0.8286
+        },
+        {
+          "word": "view,",
+          "start": 260.82,
+          "end": 261.16,
+          "probability": 0.7754
+        },
+        {
+          "word": "twice,",
+          "start": 261.32,
+          "end": 261.74,
+          "probability": 0.9858
+        },
+        {
+          "word": "separated",
+          "start": 262.02,
+          "end": 262.68,
+          "probability": 0.9878
+        },
+        {
+          "word": "by",
+          "start": 262.68,
+          "end": 262.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 262.9,
+          "end": 263.06,
+          "probability": 0.9946
+        },
+        {
+          "word": "period.",
+          "start": 263.06,
+          "end": 263.36,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 273.18,
+      "end": 279.3,
+      "start_formatted": "00:04:33.180",
+      "end_formatted": "00:04:39.300",
+      "text": "Finally, I need to provide the page with an entry point, so that the user interface will be able to navigate to it.",
+      "words": [
+        {
+          "word": "Finally,",
+          "start": 273.18,
+          "end": 273.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 273.94,
+          "end": 274.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "need",
+          "start": 274.16,
+          "end": 274.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 274.32,
+          "end": 274.46,
+          "probability": 0.998
+        },
+        {
+          "word": "provide",
+          "start": 274.46,
+          "end": 274.76,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 274.76,
+          "end": 274.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "page",
+          "start": 274.94,
+          "end": 275.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "with",
+          "start": 275.22,
+          "end": 275.38,
+          "probability": 0.998
+        },
+        {
+          "word": "an",
+          "start": 275.38,
+          "end": 275.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "entry",
+          "start": 275.5,
+          "end": 275.76,
+          "probability": 0.9766
+        },
+        {
+          "word": "point,",
+          "start": 275.76,
+          "end": 276.14,
+          "probability": 0.9834
+        },
+        {
+          "word": "so",
+          "start": 276.38,
+          "end": 276.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 276.64,
+          "end": 276.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 276.8,
+          "end": 276.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "user",
+          "start": 276.92,
+          "end": 277.22,
+          "probability": 0.9771
+        },
+        {
+          "word": "interface",
+          "start": 277.22,
+          "end": 277.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 277.68,
+          "end": 277.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 277.96,
+          "end": 278.08,
+          "probability": 0.999
+        },
+        {
+          "word": "able",
+          "start": 278.08,
+          "end": 278.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 278.26,
+          "end": 278.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "navigate",
+          "start": 278.38,
+          "end": 278.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 278.8,
+          "end": 279.06,
+          "probability": 0.998
+        },
+        {
+          "word": "it.",
+          "start": 279.06,
+          "end": 279.3,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 281.24,
+      "end": 287.0,
+      "start_formatted": "00:04:41.240",
+      "end_formatted": "00:04:47.000",
+      "text": "In the entry points tab, I create a new entry point.",
+      "words": [
+        {
+          "word": "In",
+          "start": 281.24,
+          "end": 281.76,
+          "probability": 0.9541
+        },
+        {
+          "word": "the",
+          "start": 281.76,
+          "end": 281.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "entry",
+          "start": 281.88,
+          "end": 282.18,
+          "probability": 0.3142
+        },
+        {
+          "word": "points",
+          "start": 282.18,
+          "end": 282.52,
+          "probability": 0.9595
+        },
+        {
+          "word": "tab,",
+          "start": 282.52,
+          "end": 282.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 283.14,
+          "end": 285.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "create",
+          "start": 285.68,
+          "end": 286.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 286.04,
+          "end": 286.16,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 286.16,
+          "end": 286.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "entry",
+          "start": 286.3,
+          "end": 286.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "point.",
+          "start": 286.6,
+          "end": 287.0,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 289.06,
+      "end": 292.02,
+      "start_formatted": "00:04:49.060",
+      "end_formatted": "00:04:52.020",
+      "text": "The entry point's name must match the name of the page.",
+      "words": [
+        {
+          "word": "The",
+          "start": 289.06,
+          "end": 289.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "entry",
+          "start": 289.58,
+          "end": 289.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "point's",
+          "start": 289.9,
+          "end": 290.3,
+          "probability": 0.9619
+        },
+        {
+          "word": "name",
+          "start": 290.3,
+          "end": 290.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "must",
+          "start": 290.52,
+          "end": 290.74,
+          "probability": 0.998
+        },
+        {
+          "word": "match",
+          "start": 290.74,
+          "end": 291.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 291.04,
+          "end": 291.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "name",
+          "start": 291.18,
+          "end": 291.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 291.38,
+          "end": 291.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 291.5,
+          "end": 291.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "page.",
+          "start": 291.62,
+          "end": 292.02,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 292.28,
+      "end": 295.88,
+      "start_formatted": "00:04:52.280",
+      "end_formatted": "00:04:55.880",
+      "text": "It needs a parameter to pass the claim to the page from the calling page.",
+      "words": [
+        {
+          "word": "It",
+          "start": 292.28,
+          "end": 292.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "needs",
+          "start": 292.64,
+          "end": 292.88,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 292.88,
+          "end": 293.0,
+          "probability": 0.9932
+        },
+        {
+          "word": "parameter",
+          "start": 293.0,
+          "end": 293.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 293.42,
+          "end": 293.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "pass",
+          "start": 293.64,
+          "end": 293.9,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 293.9,
+          "end": 294.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 294.04,
+          "end": 294.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 294.28,
+          "end": 294.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 294.44,
+          "end": 294.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "page",
+          "start": 294.56,
+          "end": 294.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "from",
+          "start": 294.82,
+          "end": 294.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 294.98,
+          "end": 295.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "calling",
+          "start": 295.1,
+          "end": 295.36,
+          "probability": 0.979
+        },
+        {
+          "word": "page.",
+          "start": 295.36,
+          "end": 295.88,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 303.38,
+      "end": 307.12,
+      "start_formatted": "00:05:03.380",
+      "end_formatted": "00:05:07.120",
+      "text": "To see the layout of the page I have created, I step off it.",
+      "words": [
+        {
+          "word": "To",
+          "start": 303.38,
+          "end": 303.9,
+          "probability": 0.9014
+        },
+        {
+          "word": "see",
+          "start": 303.9,
+          "end": 304.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 304.08,
+          "end": 304.22,
+          "probability": 0.998
+        },
+        {
+          "word": "layout",
+          "start": 304.22,
+          "end": 304.5,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 304.5,
+          "end": 304.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 304.68,
+          "end": 304.78,
+          "probability": 0.998
+        },
+        {
+          "word": "page",
+          "start": 304.78,
+          "end": 305.04,
+          "probability": 0.9858
+        },
+        {
+          "word": "I",
+          "start": 305.04,
+          "end": 305.2,
+          "probability": 0.9824
+        },
+        {
+          "word": "have",
+          "start": 305.2,
+          "end": 305.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "created,",
+          "start": 305.36,
+          "end": 305.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 306.12,
+          "end": 306.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "step",
+          "start": 306.32,
+          "end": 306.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "off",
+          "start": 306.6,
+          "end": 306.88,
+          "probability": 0.9854
+        },
+        {
+          "word": "it.",
+          "start": 306.88,
+          "end": 307.12,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 307.32,
+      "end": 308.7,
+      "start_formatted": "00:05:07.320",
+      "end_formatted": "00:05:08.700",
+      "text": "And then back onto it.",
+      "words": [
+        {
+          "word": "And",
+          "start": 307.32,
+          "end": 307.74,
+          "probability": 0.9487
+        },
+        {
+          "word": "then",
+          "start": 307.74,
+          "end": 307.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "back",
+          "start": 307.9,
+          "end": 308.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "onto",
+          "start": 308.16,
+          "end": 308.38,
+          "probability": 0.9443
+        },
+        {
+          "word": "it.",
+          "start": 308.38,
+          "end": 308.7,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 311.16,
+      "end": 315.72,
+      "start_formatted": "00:05:11.160",
+      "end_formatted": "00:05:15.720",
+      "text": "The page still has an error, because I haven't added it to a location group yet.",
+      "words": [
+        {
+          "word": "The",
+          "start": 311.16,
+          "end": 311.68,
+          "probability": 0.9902
+        },
+        {
+          "word": "page",
+          "start": 311.68,
+          "end": 312.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "still",
+          "start": 312.0,
+          "end": 312.26,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 312.26,
+          "end": 312.48,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 312.48,
+          "end": 312.62,
+          "probability": 0.999
+        },
+        {
+          "word": "error,",
+          "start": 312.62,
+          "end": 312.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 313.06,
+          "end": 313.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 313.42,
+          "end": 313.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "haven't",
+          "start": 313.62,
+          "end": 313.96,
+          "probability": 0.999
+        },
+        {
+          "word": "added",
+          "start": 313.96,
+          "end": 314.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 314.22,
+          "end": 314.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 314.38,
+          "end": 314.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 314.52,
+          "end": 314.62,
+          "probability": 0.999
+        },
+        {
+          "word": "location",
+          "start": 314.62,
+          "end": 315.1,
+          "probability": 0.9082
+        },
+        {
+          "word": "group",
+          "start": 315.1,
+          "end": 315.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "yet.",
+          "start": 315.4,
+          "end": 315.72,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 315.72,
+      "end": 319.9,
+      "start_formatted": "00:05:15.720",
+      "end_formatted": "00:05:19.900",
+      "text": "I will not be able to see my work in the user interface until I've done so.",
+      "words": [
+        {
+          "word": "I",
+          "start": 315.72,
+          "end": 316.38,
+          "probability": 0.9502
+        },
+        {
+          "word": "will",
+          "start": 316.38,
+          "end": 316.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 316.58,
+          "end": 316.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "be",
+          "start": 316.78,
+          "end": 316.94,
+          "probability": 0.999
+        },
+        {
+          "word": "able",
+          "start": 316.94,
+          "end": 317.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 317.14,
+          "end": 317.26,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 317.26,
+          "end": 317.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "my",
+          "start": 317.44,
+          "end": 317.6,
+          "probability": 0.999
+        },
+        {
+          "word": "work",
+          "start": 317.6,
+          "end": 317.82,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 317.82,
+          "end": 317.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 317.96,
+          "end": 318.06,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 318.06,
+          "end": 318.36,
+          "probability": 0.9487
+        },
+        {
+          "word": "interface",
+          "start": 318.36,
+          "end": 318.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "until",
+          "start": 318.86,
+          "end": 319.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "I've",
+          "start": 319.16,
+          "end": 319.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "done",
+          "start": 319.4,
+          "end": 319.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "so.",
+          "start": 319.54,
+          "end": 319.9,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 320.16,
+      "end": 322.42,
+      "start_formatted": "00:05:20.160",
+      "end_formatted": "00:05:22.420",
+      "text": "That is the subject of the next demonstration.",
+      "words": [
+        {
+          "word": "That",
+          "start": 320.16,
+          "end": 320.56,
+          "probability": 0.9883
+        },
+        {
+          "word": "is",
+          "start": 320.56,
+          "end": 320.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 320.68,
+          "end": 320.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "subject",
+          "start": 320.82,
+          "end": 321.18,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 321.18,
+          "end": 321.4,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 321.4,
+          "end": 321.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "next",
+          "start": 321.5,
+          "end": 321.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "demonstration.",
+          "start": 321.72,
+          "end": 322.42,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 322.84,
+      "end": 325.66,
+      "start_formatted": "00:05:22.840",
+      "end_formatted": "00:05:25.660",
+      "text": "This concludes the configuring page components demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 322.84,
+          "end": 323.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "concludes",
+          "start": 323.28,
+          "end": 323.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 323.72,
+          "end": 323.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "configuring",
+          "start": 323.92,
+          "end": 324.5,
+          "probability": 0.8887
+        },
+        {
+          "word": "page",
+          "start": 324.5,
+          "end": 324.78,
+          "probability": 0.9849
+        },
+        {
+          "word": "components",
+          "start": 324.78,
+          "end": 325.4,
+          "probability": 0.9824
+        },
+        {
+          "word": "demonstration.",
+          "start": 325.4,
+          "end": 325.66,
+          "probability": 0.9658
+        }
+      ]
+    }
+  ]
+}

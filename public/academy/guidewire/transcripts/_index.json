@@ -1,0 +1,144 @@
+{
+  "title": "Guidewire Academy Video Transcriptions",
+  "purpose": "RAG knowledge base for Guidewire InsuranceSuite developer training",
+  "total_videos": 276,
+  "total_transcribed": 265,
+  "total_errors": 11,
+  "total_skipped": 0,
+  "processing_time_seconds": 5807.88,
+  "processing_time_formatted": "01:36:47.879",
+  "model_used": "mlx-community/whisper-large-v3-turbo",
+  "generated_at": "2026-02-13T13:01:27.863739",
+  "chapters": {
+    "ch01": {
+      "title": "Guidewire Cloud Overview",
+      "video_count": 1,
+      "total_words": 5090,
+      "total_duration": "00:34:18.760",
+      "avg_confidence": 0.9763
+    },
+    "ch02": {
+      "title": "Surepath Overview",
+      "video_count": 1,
+      "total_words": 2242,
+      "total_duration": "00:15:57.980",
+      "avg_confidence": 0.9272
+    },
+    "ch04": {
+      "title": "PolicyCenter Introduction",
+      "video_count": 47,
+      "total_words": 22787,
+      "total_duration": "02:40:59.260",
+      "avg_confidence": 0.9452
+    },
+    "ch05": {
+      "title": "ClaimCenter Introduction",
+      "video_count": 46,
+      "total_words": 33938,
+      "total_duration": "03:42:24.450",
+      "avg_confidence": 0.9517
+    },
+    "ch06": {
+      "title": "BillingCenter Introduction",
+      "video_count": 28,
+      "total_words": 17974,
+      "total_duration": "01:50:08.700",
+      "avg_confidence": 0.9521
+    },
+    "ch07": {
+      "title": "InsuranceSuite Developer Fundamentals",
+      "video_count": 29,
+      "total_words": 26197,
+      "total_duration": "03:06:42.700",
+      "avg_confidence": 0.9355
+    },
+    "ch08": {
+      "title": "PolicyCenter Product Model",
+      "video_count": 27,
+      "total_words": 9920,
+      "total_duration": "01:14:24.440",
+      "avg_confidence": 0.9151
+    },
+    "ch09": {
+      "title": "ClaimCenter Configuration",
+      "video_count": 36,
+      "total_words": 22132,
+      "total_duration": "03:13:54.190",
+      "avg_confidence": 0.9322
+    },
+    "ch11": {
+      "title": "InsuranceSuite Integration",
+      "video_count": 18,
+      "total_words": 11507,
+      "total_duration": "01:11:15.180",
+      "avg_confidence": 0.9336
+    },
+    "ch12": {
+      "title": "Advanced Product Designer",
+      "video_count": 22,
+      "total_words": 418,
+      "total_duration": "01:38:44.200",
+      "avg_confidence": 0.8895
+    },
+    "ch13": {
+      "title": "Rating Introduction",
+      "video_count": 5,
+      "total_words": 2163,
+      "total_duration": "00:14:21.600",
+      "avg_confidence": 0.9404
+    },
+    "ch14": {
+      "title": "Rating Configuration",
+      "video_count": 5,
+      "total_words": 2883,
+      "total_duration": "00:18:29.940",
+      "avg_confidence": 0.9375
+    }
+  },
+  "errors": [
+    {
+      "file": "public/academy/guidewire/videos/ch11/In_07_01.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xbbf020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xbbf020000] moov atom not found\n[in#0 @ 0xbbf01c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch11/In_07_01.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch13/Ra_Intro_01_03.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xb1501c000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xb1501c000] moov atom not found\n[in#0 @ 0xb15018000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch13/Ra_Intro_01_03.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch13/Ra_Intro_04_01.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xb7f020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xb7f020000] moov atom not found\n[in#0 @ 0xb7f01c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch13/Ra_Intro_04_01.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch13/Ra_Intro_05_01.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa2d020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa2d020000] moov atom not found\n[in#0 @ 0xa2d01c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch13/Ra_Intro_05_01.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch13/Ra_Intro_05_02.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa49020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa49020000] moov atom not found\n[in#0 @ 0xa4901c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch13/Ra_Intro_05_02.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch13/Ra_Intro_06_01.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xbe3020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xbe3020000] moov atom not found\n[in#0 @ 0xbe301c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch13/Ra_Intro_06_01.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch13/Ra_Intro_07_01.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa89020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa89020000] moov atom not found\n[in#0 @ 0xa8901c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch13/Ra_Intro_07_01.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch14/Ra_Conf_04_01.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0x8ad020000] moov atom not found\n[in#0 @ 0x8ad01c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch14/Ra_Conf_04_01.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch14/Ra_Conf_05_01.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0x83301c000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0x83301c000] moov atom not found\n[in#0 @ 0x833018000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch14/Ra_Conf_05_01.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch14/Ra_Conf_05_02.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7c1020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7c1020000] moov atom not found\n[in#0 @ 0x7c101c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch14/Ra_Conf_05_02.mp4.\nError opening input files: Invalid data found when processing input\n"
+    },
+    {
+      "file": "public/academy/guidewire/videos/ch14/Ra_Conf_05_03.mp4",
+      "error": "Failed to load audio: ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.3.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.0.1_3 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xc59020000] Format mov,mp4,m4a,3gp,3g2,mj2 detected only with low score of 1, misdetection possible!\n[mov,mp4,m4a,3gp,3g2,mj2 @ 0xc59020000] moov atom not found\n[in#0 @ 0xc5901c000] Error opening input: Invalid data found when processing input\nError opening input file public/academy/guidewire/videos/ch14/Ra_Conf_05_03.mp4.\nError opening input files: Invalid data found when processing input\n"
+    }
+  ]
+}

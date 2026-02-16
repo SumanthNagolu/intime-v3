@@ -1,0 +1,4541 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_10_02.mp4",
+    "video_stem": "IS_Claim_10_02",
+    "duration_seconds": 273.24,
+    "duration_formatted": "00:04:33.240",
+    "segment_count": 22,
+    "word_count": 715,
+    "avg_confidence": 0.9661,
+    "transcription_time_seconds": 13.81,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:53:11.334925"
+  },
+  "full_text": "Welcome to the issuing payments demonstration. In this demonstration, Gerald Ikes issues two payments for the Bob Tyre claim. One way to navigate to a claim from the desktop is to click its claim number. Since Gerald is about to issue payments, he needs to make sure that the claim and its exposures are all at the ability to pay validation level. From the actions menu, Gerald selects the validate claim and exposures action. And tests the validity of the claim to the ability to pay validation level. There are no validation errors, so Gerald clicks clear to close the validation results pane. Gerald has received bills from the medical provider and the nurse case manager. He will issue payments to cover these bills. The first payment is to the medical provider, Dr. Jim Kildare. Next to the reserve line for medical costs, Gerald clicks the picker. And selects create check. Remember that, in ClaimCenter, the word check refers to any payment. The payment instrument, be it's a payment instrument, be it cash, electronic, or a paper check. On the first step of the check wizard, the payee is selected, and details about them added to the check object. The medical provider is named Dr. Jim Kildare. On the second step of the check wizard, Gerald will enter details about the payment. A further bill is expected from Dr. Kildare when the cast is removed from Mr. Tyre's ankle. In the comments field, Gerald enters a note about the specific service for which the payment is made. A single payment instrument may cover more than one expense item within the cost type and cost category selected for the check. In this case, there will only be one expense item. The expense item is a payment to Dr. Kildare, so Gerald selects the doctor expense category. Note that the categories are filtered so, for example, only categories relevant to a medical expense appear here. This bill covers an emergency clinic visit, testing, x-rays, diagnosis, and treatment. The third step of the check wizard contains information which may not be relevant for all payment instrument types. None of the information gathered here is relevant to this check, so Gerald clicks finish to submit the payment for processing. The status of the check is awaiting submission. ClaimCenter processes payments in a batch on a regular basis, typically once per day. Until the batch is run, the status of all new checks will be awaiting submission. If Gerald now looks at the transaction screen. He sees a payment transaction in the amount of $3,875 against the claim cost, medical exposure. It was created by Gerald Ikes and its status is awaiting submission. Now Gerald will enter the second check. Now Gerald will enter the second check. He returns to the financial summary screen. This payment will be made against the reserve set aside for case management. Once again, he selects create check from the picker dropdown. On the first step of the check wizard, he selects the nurse case manager. Gerald, who, for this claim, is Suzanne Roche. The payee type does not autofill for payees with only one role. The payee type is vendor. Gerald navigates to step 2 of the check wizard. In this case, Ms. Roche does not expect to do any further work on this case, so she has sent us a final bill. Setting a payment to final has implications down the road. Gerald enters a note to the effect that this is the full and final payment to Ms. Roche for this claim. Ms. Roche's final bill, and our payment to her, is for $650. He navigates to the next page. And clicks finish to submit the claim. Once again, Gerald navigates to the transaction screen. Here, in addition to the $650 payment transaction, there is a minus $350 reserve transaction. The purpose of a reserve transaction is to zero out any balance remaining on a reserve when the final payment has been made against it. So now, if Gerald navigates to the financial summary screen. He sees that there are $625 remaining for the claim cost reserve line. While there is no money left in the case management reserve line, because it has been zeroed out. This concludes the issuing payments demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.8,
+      "end": 29.98,
+      "start_formatted": "00:00:00.800",
+      "end_formatted": "00:00:29.980",
+      "text": "Welcome to the issuing payments demonstration. In this demonstration, Gerald Ikes issues two payments for the Bob Tyre claim. One way to navigate to a claim from the desktop is to click its claim number. Since Gerald is about to issue payments, he needs to make sure that the claim and its exposures are all at the ability to pay validation level. From the actions menu, Gerald selects the validate claim and exposures action. And tests the validity of the claim to the ability to pay validation level.",
+      "words": [
+        {
+          "word": "Welcome",
+          "start": 0.8,
+          "end": 1.32,
+          "probability": 0.9795
+        },
+        {
+          "word": "to",
+          "start": 1.32,
+          "end": 1.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 1.5,
+          "end": 1.64,
+          "probability": 0.999
+        },
+        {
+          "word": "issuing",
+          "start": 1.64,
+          "end": 1.94,
+          "probability": 0.6182
+        },
+        {
+          "word": "payments",
+          "start": 1.94,
+          "end": 2.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "demonstration.",
+          "start": 2.46,
+          "end": 3.14,
+          "probability": 0.998
+        },
+        {
+          "word": "In",
+          "start": 3.6,
+          "end": 4.12,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 4.12,
+          "end": 4.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration,",
+          "start": 4.3,
+          "end": 4.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Gerald",
+          "start": 5.42,
+          "end": 5.66,
+          "probability": 0.9707
+        },
+        {
+          "word": "Ikes",
+          "start": 5.66,
+          "end": 6.0,
+          "probability": 0.9575
+        },
+        {
+          "word": "issues",
+          "start": 6.0,
+          "end": 6.34,
+          "probability": 0.9927
+        },
+        {
+          "word": "two",
+          "start": 6.34,
+          "end": 6.6,
+          "probability": 0.9478
+        },
+        {
+          "word": "payments",
+          "start": 6.6,
+          "end": 7.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 7.0,
+          "end": 7.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 7.22,
+          "end": 7.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "Bob",
+          "start": 7.3,
+          "end": 7.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "Tyre",
+          "start": 7.52,
+          "end": 7.9,
+          "probability": 0.6436
+        },
+        {
+          "word": "claim.",
+          "start": 7.9,
+          "end": 8.26,
+          "probability": 0.9561
+        },
+        {
+          "word": "One",
+          "start": 8.96,
+          "end": 9.48,
+          "probability": 0.999
+        },
+        {
+          "word": "way",
+          "start": 9.48,
+          "end": 9.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 9.64,
+          "end": 9.76,
+          "probability": 1.0
+        },
+        {
+          "word": "navigate",
+          "start": 9.76,
+          "end": 10.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 10.14,
+          "end": 10.4,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 10.4,
+          "end": 10.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 10.52,
+          "end": 10.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "from",
+          "start": 10.78,
+          "end": 10.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 10.98,
+          "end": 11.14,
+          "probability": 1.0
+        },
+        {
+          "word": "desktop",
+          "start": 11.14,
+          "end": 11.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 11.52,
+          "end": 11.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 11.86,
+          "end": 12.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 12.0,
+          "end": 12.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "its",
+          "start": 12.2,
+          "end": 12.4,
+          "probability": 0.9771
+        },
+        {
+          "word": "claim",
+          "start": 12.4,
+          "end": 12.68,
+          "probability": 0.9688
+        },
+        {
+          "word": "number.",
+          "start": 12.68,
+          "end": 13.02,
+          "probability": 0.7456
+        },
+        {
+          "word": "Since",
+          "start": 13.8,
+          "end": 14.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "Gerald",
+          "start": 14.32,
+          "end": 14.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 14.68,
+          "end": 14.9,
+          "probability": 1.0
+        },
+        {
+          "word": "about",
+          "start": 14.9,
+          "end": 15.1,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 15.1,
+          "end": 15.28,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 15.28,
+          "end": 15.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "payments,",
+          "start": 15.54,
+          "end": 16.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 16.3,
+          "end": 16.5,
+          "probability": 0.999
+        },
+        {
+          "word": "needs",
+          "start": 16.5,
+          "end": 16.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 16.74,
+          "end": 16.88,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 16.88,
+          "end": 17.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "sure",
+          "start": 17.02,
+          "end": 17.22,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 17.22,
+          "end": 17.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 17.4,
+          "end": 17.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 17.52,
+          "end": 17.84,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 17.84,
+          "end": 18.02,
+          "probability": 0.998
+        },
+        {
+          "word": "its",
+          "start": 18.02,
+          "end": 18.22,
+          "probability": 0.998
+        },
+        {
+          "word": "exposures",
+          "start": 18.22,
+          "end": 18.78,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 18.78,
+          "end": 18.96,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 18.96,
+          "end": 19.2,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 19.2,
+          "end": 19.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 19.36,
+          "end": 19.46,
+          "probability": 1.0
+        },
+        {
+          "word": "ability",
+          "start": 19.46,
+          "end": 19.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "to",
+          "start": 19.82,
+          "end": 20.02,
+          "probability": 0.9219
+        },
+        {
+          "word": "pay",
+          "start": 20.02,
+          "end": 20.2,
+          "probability": 0.999
+        },
+        {
+          "word": "validation",
+          "start": 20.2,
+          "end": 20.78,
+          "probability": 0.999
+        },
+        {
+          "word": "level.",
+          "start": 20.78,
+          "end": 21.2,
+          "probability": 1.0
+        },
+        {
+          "word": "From",
+          "start": 21.8,
+          "end": 22.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 22.32,
+          "end": 22.48,
+          "probability": 1.0
+        },
+        {
+          "word": "actions",
+          "start": 22.48,
+          "end": 22.84,
+          "probability": 0.8149
+        },
+        {
+          "word": "menu,",
+          "start": 22.84,
+          "end": 23.3,
+          "probability": 1.0
+        },
+        {
+          "word": "Gerald",
+          "start": 23.58,
+          "end": 23.86,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 23.86,
+          "end": 24.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 24.34,
+          "end": 24.44,
+          "probability": 0.999
+        },
+        {
+          "word": "validate",
+          "start": 24.44,
+          "end": 24.8,
+          "probability": 0.9688
+        },
+        {
+          "word": "claim",
+          "start": 24.8,
+          "end": 25.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 25.2,
+          "end": 25.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "exposures",
+          "start": 25.46,
+          "end": 26.0,
+          "probability": 0.9795
+        },
+        {
+          "word": "action.",
+          "start": 26.0,
+          "end": 26.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "And",
+          "start": 27.12,
+          "end": 27.64,
+          "probability": 0.9614
+        },
+        {
+          "word": "tests",
+          "start": 27.64,
+          "end": 27.92,
+          "probability": 0.9609
+        },
+        {
+          "word": "the",
+          "start": 27.92,
+          "end": 28.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "validity",
+          "start": 28.08,
+          "end": 28.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 28.4,
+          "end": 28.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 28.64,
+          "end": 28.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 28.74,
+          "end": 29.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 29.0,
+          "end": 29.14,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 29.14,
+          "end": 29.26,
+          "probability": 0.999
+        },
+        {
+          "word": "ability",
+          "start": 29.26,
+          "end": 29.66,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 29.66,
+          "end": 29.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "pay",
+          "start": 29.84,
+          "end": 29.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "validation",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.0417
+        },
+        {
+          "word": "level.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1003
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.96,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.960",
+      "text": "There are no validation errors, so Gerald clicks clear to close the validation results pane. Gerald has received bills from the medical provider and the nurse case manager. He will issue payments to cover these bills. The first payment is to the medical provider, Dr. Jim Kildare. Next to the reserve line for medical costs, Gerald clicks the picker. And selects create check. Remember that, in ClaimCenter, the word check refers to any payment.",
+      "words": [
+        {
+          "word": "There",
+          "start": 29.98,
+          "end": 31.02,
+          "probability": 0.0264
+        },
+        {
+          "word": "are",
+          "start": 31.02,
+          "end": 31.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "no",
+          "start": 31.82,
+          "end": 31.96,
+          "probability": 0.999
+        },
+        {
+          "word": "validation",
+          "start": 31.96,
+          "end": 32.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "errors,",
+          "start": 32.48,
+          "end": 33.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 33.32,
+          "end": 33.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "Gerald",
+          "start": 33.68,
+          "end": 34.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "clicks",
+          "start": 34.04,
+          "end": 34.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "clear",
+          "start": 34.44,
+          "end": 34.68,
+          "probability": 0.45
+        },
+        {
+          "word": "to",
+          "start": 34.68,
+          "end": 34.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "close",
+          "start": 34.86,
+          "end": 35.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 35.1,
+          "end": 35.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "validation",
+          "start": 35.24,
+          "end": 35.72,
+          "probability": 0.9243
+        },
+        {
+          "word": "results",
+          "start": 35.72,
+          "end": 36.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "pane.",
+          "start": 36.32,
+          "end": 36.7,
+          "probability": 0.9927
+        },
+        {
+          "word": "Gerald",
+          "start": 37.42,
+          "end": 38.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "has",
+          "start": 38.06,
+          "end": 38.34,
+          "probability": 0.999
+        },
+        {
+          "word": "received",
+          "start": 38.34,
+          "end": 38.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "bills",
+          "start": 38.74,
+          "end": 39.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 39.06,
+          "end": 39.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 39.3,
+          "end": 39.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "medical",
+          "start": 39.44,
+          "end": 39.74,
+          "probability": 0.998
+        },
+        {
+          "word": "provider",
+          "start": 39.74,
+          "end": 40.22,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 40.22,
+          "end": 40.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 40.46,
+          "end": 40.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "nurse",
+          "start": 40.56,
+          "end": 40.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "case",
+          "start": 40.78,
+          "end": 41.08,
+          "probability": 0.999
+        },
+        {
+          "word": "manager.",
+          "start": 41.08,
+          "end": 41.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "He",
+          "start": 41.92,
+          "end": 42.48,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 42.48,
+          "end": 42.64,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 42.64,
+          "end": 42.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "payments",
+          "start": 42.92,
+          "end": 43.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 43.32,
+          "end": 43.54,
+          "probability": 1.0
+        },
+        {
+          "word": "cover",
+          "start": 43.54,
+          "end": 43.78,
+          "probability": 1.0
+        },
+        {
+          "word": "these",
+          "start": 43.78,
+          "end": 44.02,
+          "probability": 1.0
+        },
+        {
+          "word": "bills.",
+          "start": 44.02,
+          "end": 44.4,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 45.04,
+          "end": 45.56,
+          "probability": 0.999
+        },
+        {
+          "word": "first",
+          "start": 45.56,
+          "end": 45.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 45.82,
+          "end": 46.14,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 46.14,
+          "end": 46.36,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 46.36,
+          "end": 46.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 46.5,
+          "end": 46.6,
+          "probability": 0.999
+        },
+        {
+          "word": "medical",
+          "start": 46.6,
+          "end": 46.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "provider,",
+          "start": 46.88,
+          "end": 47.46,
+          "probability": 1.0
+        },
+        {
+          "word": "Dr.",
+          "start": 47.78,
+          "end": 48.02,
+          "probability": 0.999
+        },
+        {
+          "word": "Jim",
+          "start": 48.18,
+          "end": 48.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "Kildare.",
+          "start": 48.34,
+          "end": 48.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "Next",
+          "start": 49.3,
+          "end": 49.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 49.8,
+          "end": 49.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 49.96,
+          "end": 50.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserve",
+          "start": 50.06,
+          "end": 50.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "line",
+          "start": 50.38,
+          "end": 50.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 50.7,
+          "end": 50.9,
+          "probability": 1.0
+        },
+        {
+          "word": "medical",
+          "start": 50.9,
+          "end": 51.22,
+          "probability": 0.998
+        },
+        {
+          "word": "costs,",
+          "start": 51.22,
+          "end": 51.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Gerald",
+          "start": 52.16,
+          "end": 52.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 52.46,
+          "end": 52.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 52.86,
+          "end": 53.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "picker.",
+          "start": 53.0,
+          "end": 53.38,
+          "probability": 0.998
+        },
+        {
+          "word": "And",
+          "start": 53.84,
+          "end": 54.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "selects",
+          "start": 54.48,
+          "end": 54.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "create",
+          "start": 54.96,
+          "end": 55.2,
+          "probability": 0.9736
+        },
+        {
+          "word": "check.",
+          "start": 55.2,
+          "end": 55.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "Remember",
+          "start": 56.18,
+          "end": 56.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "that,",
+          "start": 56.82,
+          "end": 57.16,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 57.26,
+          "end": 57.44,
+          "probability": 0.998
+        },
+        {
+          "word": "ClaimCenter,",
+          "start": 57.44,
+          "end": 58.1,
+          "probability": 0.6094
+        },
+        {
+          "word": "the",
+          "start": 58.26,
+          "end": 58.54,
+          "probability": 0.999
+        },
+        {
+          "word": "word",
+          "start": 58.54,
+          "end": 58.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "check",
+          "start": 58.72,
+          "end": 58.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "refers",
+          "start": 58.94,
+          "end": 59.32,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 59.32,
+          "end": 59.54,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 59.54,
+          "end": 59.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "payment.",
+          "start": 59.82,
+          "end": 59.96,
+          "probability": 0.8022
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.96,
+      "end": 89.9,
+      "start_formatted": "00:00:59.960",
+      "end_formatted": "00:01:29.900",
+      "text": "The payment instrument, be it's a payment instrument, be it cash, electronic, or a paper check. On the first step of the check wizard, the payee is selected, and details about them added to the check object. The medical provider is named Dr. Jim Kildare. On the second step of the check wizard, Gerald will enter details about the payment. A further bill is expected from Dr. Kildare when the cast is removed from Mr. Tyre's ankle. In the comments field, Gerald enters a note about the specific service for",
+      "words": [
+        {
+          "word": "The",
+          "start": 59.96,
+          "end": 60.16,
+          "probability": 0.0004
+        },
+        {
+          "word": "payment",
+          "start": 60.16,
+          "end": 60.16,
+          "probability": 0.0137
+        },
+        {
+          "word": "instrument,",
+          "start": 60.16,
+          "end": 60.62,
+          "probability": 0.7168
+        },
+        {
+          "word": "be",
+          "start": 61.04,
+          "end": 61.26,
+          "probability": 0.998
+        },
+        {
+          "word": "it's",
+          "start": 61.26,
+          "end": 61.54,
+          "probability": 0.4583
+        },
+        {
+          "word": "a",
+          "start": 61.54,
+          "end": 61.6,
+          "probability": 0.0427
+        },
+        {
+          "word": "payment",
+          "start": 61.6,
+          "end": 61.7,
+          "probability": 0.0001
+        },
+        {
+          "word": "instrument,",
+          "start": 61.7,
+          "end": 61.7,
+          "probability": 0.9282
+        },
+        {
+          "word": "be",
+          "start": 61.7,
+          "end": 61.7,
+          "probability": 0.9888
+        },
+        {
+          "word": "it",
+          "start": 61.7,
+          "end": 61.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "cash,",
+          "start": 61.7,
+          "end": 61.7,
+          "probability": 0.9321
+        },
+        {
+          "word": "electronic,",
+          "start": 61.88,
+          "end": 62.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 62.44,
+          "end": 62.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 62.7,
+          "end": 62.82,
+          "probability": 0.998
+        },
+        {
+          "word": "paper",
+          "start": 62.82,
+          "end": 63.12,
+          "probability": 0.999
+        },
+        {
+          "word": "check.",
+          "start": 63.12,
+          "end": 63.36,
+          "probability": 0.96
+        },
+        {
+          "word": "On",
+          "start": 64.12,
+          "end": 64.64,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 64.64,
+          "end": 64.74,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 64.74,
+          "end": 64.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "step",
+          "start": 64.96,
+          "end": 65.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 65.2,
+          "end": 65.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 65.32,
+          "end": 65.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "check",
+          "start": 65.44,
+          "end": 65.64,
+          "probability": 0.897
+        },
+        {
+          "word": "wizard,",
+          "start": 65.64,
+          "end": 65.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 66.3,
+          "end": 66.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "payee",
+          "start": 66.44,
+          "end": 66.84,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 66.84,
+          "end": 66.96,
+          "probability": 1.0
+        },
+        {
+          "word": "selected,",
+          "start": 66.96,
+          "end": 67.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 67.64,
+          "end": 67.92,
+          "probability": 1.0
+        },
+        {
+          "word": "details",
+          "start": 67.92,
+          "end": 68.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 68.32,
+          "end": 68.58,
+          "probability": 1.0
+        },
+        {
+          "word": "them",
+          "start": 68.58,
+          "end": 68.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "added",
+          "start": 68.76,
+          "end": 69.08,
+          "probability": 0.9844
+        },
+        {
+          "word": "to",
+          "start": 69.08,
+          "end": 69.26,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 69.26,
+          "end": 69.4,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 69.4,
+          "end": 69.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "object.",
+          "start": 69.6,
+          "end": 70.02,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 70.7,
+          "end": 71.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "medical",
+          "start": 71.2,
+          "end": 71.52,
+          "probability": 0.999
+        },
+        {
+          "word": "provider",
+          "start": 71.52,
+          "end": 72.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 72.0,
+          "end": 72.24,
+          "probability": 0.999
+        },
+        {
+          "word": "named",
+          "start": 72.24,
+          "end": 72.5,
+          "probability": 0.999
+        },
+        {
+          "word": "Dr.",
+          "start": 72.5,
+          "end": 72.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "Jim",
+          "start": 72.98,
+          "end": 73.14,
+          "probability": 0.9883
+        },
+        {
+          "word": "Kildare.",
+          "start": 73.14,
+          "end": 73.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "On",
+          "start": 74.78,
+          "end": 75.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 75.3,
+          "end": 75.42,
+          "probability": 1.0
+        },
+        {
+          "word": "second",
+          "start": 75.42,
+          "end": 75.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 75.68,
+          "end": 76.02,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 76.02,
+          "end": 76.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 76.14,
+          "end": 76.26,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 76.26,
+          "end": 76.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "wizard,",
+          "start": 76.46,
+          "end": 76.82,
+          "probability": 1.0
+        },
+        {
+          "word": "Gerald",
+          "start": 77.12,
+          "end": 77.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "will",
+          "start": 77.32,
+          "end": 77.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "enter",
+          "start": 77.58,
+          "end": 77.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "details",
+          "start": 77.86,
+          "end": 78.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 78.34,
+          "end": 78.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 78.56,
+          "end": 78.7,
+          "probability": 1.0
+        },
+        {
+          "word": "payment.",
+          "start": 78.7,
+          "end": 79.06,
+          "probability": 1.0
+        },
+        {
+          "word": "A",
+          "start": 79.76,
+          "end": 80.28,
+          "probability": 0.999
+        },
+        {
+          "word": "further",
+          "start": 80.28,
+          "end": 80.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "bill",
+          "start": 80.56,
+          "end": 80.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 80.8,
+          "end": 81.0,
+          "probability": 1.0
+        },
+        {
+          "word": "expected",
+          "start": 81.0,
+          "end": 81.42,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 81.42,
+          "end": 81.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "Dr.",
+          "start": 81.66,
+          "end": 81.98,
+          "probability": 1.0
+        },
+        {
+          "word": "Kildare",
+          "start": 82.1,
+          "end": 82.5,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 82.5,
+          "end": 82.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 82.66,
+          "end": 82.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "cast",
+          "start": 82.78,
+          "end": 83.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 83.04,
+          "end": 83.22,
+          "probability": 1.0
+        },
+        {
+          "word": "removed",
+          "start": 83.22,
+          "end": 83.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 83.58,
+          "end": 83.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "Mr.",
+          "start": 83.82,
+          "end": 84.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "Tyre's",
+          "start": 84.22,
+          "end": 84.6,
+          "probability": 0.8589
+        },
+        {
+          "word": "ankle.",
+          "start": 84.6,
+          "end": 84.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "In",
+          "start": 85.62,
+          "end": 86.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 86.14,
+          "end": 86.24,
+          "probability": 1.0
+        },
+        {
+          "word": "comments",
+          "start": 86.24,
+          "end": 86.66,
+          "probability": 0.9619
+        },
+        {
+          "word": "field,",
+          "start": 86.66,
+          "end": 87.06,
+          "probability": 0.999
+        },
+        {
+          "word": "Gerald",
+          "start": 87.38,
+          "end": 87.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "enters",
+          "start": 87.64,
+          "end": 88.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 88.04,
+          "end": 88.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "note",
+          "start": 88.22,
+          "end": 88.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "about",
+          "start": 88.42,
+          "end": 88.6,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 88.6,
+          "end": 88.76,
+          "probability": 0.999
+        },
+        {
+          "word": "specific",
+          "start": 88.76,
+          "end": 89.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "service",
+          "start": 89.18,
+          "end": 89.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 89.64,
+          "end": 89.9,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.96,
+      "end": 119.94,
+      "start_formatted": "00:01:29.960",
+      "end_formatted": "00:01:59.940",
+      "text": "which the payment is made. A single payment instrument may cover more than one expense item within the cost type and cost category selected for the check. In this case, there will only be one expense item. The expense item is a payment to Dr. Kildare, so Gerald selects the doctor expense category. Note that the categories are filtered so, for example, only categories relevant to a medical expense",
+      "words": [
+        {
+          "word": "which",
+          "start": 89.96,
+          "end": 90.12,
+          "probability": 0.959
+        },
+        {
+          "word": "the",
+          "start": 90.12,
+          "end": 90.28,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 90.28,
+          "end": 90.58,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 90.58,
+          "end": 90.78,
+          "probability": 1.0
+        },
+        {
+          "word": "made.",
+          "start": 90.78,
+          "end": 91.04,
+          "probability": 0.0001
+        },
+        {
+          "word": "A",
+          "start": 97.2,
+          "end": 97.8,
+          "probability": 0.9863
+        },
+        {
+          "word": "single",
+          "start": 97.8,
+          "end": 98.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "payment",
+          "start": 98.12,
+          "end": 98.46,
+          "probability": 0.9897
+        },
+        {
+          "word": "instrument",
+          "start": 98.46,
+          "end": 98.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "may",
+          "start": 98.94,
+          "end": 99.26,
+          "probability": 0.999
+        },
+        {
+          "word": "cover",
+          "start": 99.26,
+          "end": 99.58,
+          "probability": 0.999
+        },
+        {
+          "word": "more",
+          "start": 99.58,
+          "end": 99.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "than",
+          "start": 99.8,
+          "end": 99.98,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 99.98,
+          "end": 100.2,
+          "probability": 0.9863
+        },
+        {
+          "word": "expense",
+          "start": 100.2,
+          "end": 100.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "item",
+          "start": 100.58,
+          "end": 100.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "within",
+          "start": 100.96,
+          "end": 101.46,
+          "probability": 0.8286
+        },
+        {
+          "word": "the",
+          "start": 101.46,
+          "end": 101.68,
+          "probability": 0.999
+        },
+        {
+          "word": "cost",
+          "start": 101.68,
+          "end": 101.98,
+          "probability": 0.9858
+        },
+        {
+          "word": "type",
+          "start": 101.98,
+          "end": 102.2,
+          "probability": 0.9849
+        },
+        {
+          "word": "and",
+          "start": 102.2,
+          "end": 102.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "cost",
+          "start": 102.38,
+          "end": 102.68,
+          "probability": 0.9556
+        },
+        {
+          "word": "category",
+          "start": 102.68,
+          "end": 103.22,
+          "probability": 0.8945
+        },
+        {
+          "word": "selected",
+          "start": 103.22,
+          "end": 103.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 103.66,
+          "end": 103.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 103.88,
+          "end": 104.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "check.",
+          "start": 104.0,
+          "end": 104.24,
+          "probability": 0.9829
+        },
+        {
+          "word": "In",
+          "start": 104.62,
+          "end": 105.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 105.04,
+          "end": 105.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "case,",
+          "start": 105.24,
+          "end": 105.52,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 105.7,
+          "end": 105.96,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 105.96,
+          "end": 106.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 106.12,
+          "end": 106.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 106.42,
+          "end": 106.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 106.58,
+          "end": 106.82,
+          "probability": 0.999
+        },
+        {
+          "word": "expense",
+          "start": 106.82,
+          "end": 107.24,
+          "probability": 0.999
+        },
+        {
+          "word": "item.",
+          "start": 107.24,
+          "end": 107.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 108.16,
+          "end": 108.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "expense",
+          "start": 108.76,
+          "end": 109.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "item",
+          "start": 109.16,
+          "end": 109.46,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 109.46,
+          "end": 109.62,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 109.62,
+          "end": 109.72,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 109.72,
+          "end": 110.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 110.04,
+          "end": 110.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "Dr.",
+          "start": 110.24,
+          "end": 110.52,
+          "probability": 0.9917
+        },
+        {
+          "word": "Kildare,",
+          "start": 110.64,
+          "end": 111.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "so",
+          "start": 111.34,
+          "end": 111.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "Gerald",
+          "start": 111.64,
+          "end": 112.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "selects",
+          "start": 112.0,
+          "end": 112.56,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 112.56,
+          "end": 112.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "doctor",
+          "start": 112.64,
+          "end": 112.96,
+          "probability": 0.7559
+        },
+        {
+          "word": "expense",
+          "start": 112.96,
+          "end": 113.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "category.",
+          "start": 113.42,
+          "end": 114.0,
+          "probability": 0.998
+        },
+        {
+          "word": "Note",
+          "start": 114.5,
+          "end": 114.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 114.98,
+          "end": 115.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 115.12,
+          "end": 115.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "categories",
+          "start": 115.24,
+          "end": 115.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 115.74,
+          "end": 115.98,
+          "probability": 1.0
+        },
+        {
+          "word": "filtered",
+          "start": 115.98,
+          "end": 116.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "so,",
+          "start": 116.34,
+          "end": 116.66,
+          "probability": 0.9243
+        },
+        {
+          "word": "for",
+          "start": 116.86,
+          "end": 117.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 117.0,
+          "end": 117.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 117.7,
+          "end": 118.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "categories",
+          "start": 118.06,
+          "end": 118.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "relevant",
+          "start": 118.62,
+          "end": 119.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 119.08,
+          "end": 119.32,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 119.32,
+          "end": 119.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "medical",
+          "start": 119.44,
+          "end": 119.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "expense",
+          "start": 119.72,
+          "end": 119.94,
+          "probability": 0.5054
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 119.96,
+      "end": 149.9,
+      "start_formatted": "00:01:59.960",
+      "end_formatted": "00:02:29.900",
+      "text": "appear here. This bill covers an emergency clinic visit, testing, x-rays, diagnosis, and treatment. The third step of the check wizard contains information which may not be relevant for all payment instrument types. None of the information gathered here is relevant to this check, so Gerald clicks finish to submit the payment for processing. The status of the check is awaiting submission. ClaimCenter processes payments in a batch on a regular basis, typically once per day.",
+      "words": [
+        {
+          "word": "appear",
+          "start": 119.96,
+          "end": 120.4,
+          "probability": 0.1064
+        },
+        {
+          "word": "here.",
+          "start": 120.4,
+          "end": 120.88,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 121.46,
+          "end": 122.06,
+          "probability": 1.0
+        },
+        {
+          "word": "bill",
+          "start": 122.06,
+          "end": 122.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "covers",
+          "start": 122.28,
+          "end": 122.66,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 122.66,
+          "end": 122.8,
+          "probability": 1.0
+        },
+        {
+          "word": "emergency",
+          "start": 122.8,
+          "end": 123.22,
+          "probability": 0.998
+        },
+        {
+          "word": "clinic",
+          "start": 123.22,
+          "end": 123.58,
+          "probability": 1.0
+        },
+        {
+          "word": "visit,",
+          "start": 123.58,
+          "end": 124.02,
+          "probability": 1.0
+        },
+        {
+          "word": "testing,",
+          "start": 124.28,
+          "end": 124.7,
+          "probability": 1.0
+        },
+        {
+          "word": "x",
+          "start": 125.08,
+          "end": 125.3,
+          "probability": 0.9766
+        },
+        {
+          "word": "-rays,",
+          "start": 125.3,
+          "end": 125.52,
+          "probability": 1.0
+        },
+        {
+          "word": "diagnosis,",
+          "start": 125.9,
+          "end": 126.48,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 126.78,
+          "end": 126.98,
+          "probability": 1.0
+        },
+        {
+          "word": "treatment.",
+          "start": 126.98,
+          "end": 127.38,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 128.08,
+          "end": 128.68,
+          "probability": 1.0
+        },
+        {
+          "word": "third",
+          "start": 128.68,
+          "end": 128.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "step",
+          "start": 128.94,
+          "end": 129.26,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 129.26,
+          "end": 129.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 129.38,
+          "end": 129.48,
+          "probability": 0.998
+        },
+        {
+          "word": "check",
+          "start": 129.48,
+          "end": 129.68,
+          "probability": 0.939
+        },
+        {
+          "word": "wizard",
+          "start": 129.68,
+          "end": 130.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "contains",
+          "start": 130.0,
+          "end": 130.54,
+          "probability": 1.0
+        },
+        {
+          "word": "information",
+          "start": 130.54,
+          "end": 131.1,
+          "probability": 1.0
+        },
+        {
+          "word": "which",
+          "start": 131.1,
+          "end": 131.4,
+          "probability": 1.0
+        },
+        {
+          "word": "may",
+          "start": 131.4,
+          "end": 131.64,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 131.64,
+          "end": 131.86,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 131.86,
+          "end": 132.04,
+          "probability": 1.0
+        },
+        {
+          "word": "relevant",
+          "start": 132.04,
+          "end": 132.4,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 132.4,
+          "end": 132.68,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 132.68,
+          "end": 132.96,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 132.96,
+          "end": 133.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "instrument",
+          "start": 133.34,
+          "end": 133.84,
+          "probability": 1.0
+        },
+        {
+          "word": "types.",
+          "start": 133.84,
+          "end": 134.36,
+          "probability": 1.0
+        },
+        {
+          "word": "None",
+          "start": 135.0,
+          "end": 135.48,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 135.48,
+          "end": 135.6,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 135.6,
+          "end": 135.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "information",
+          "start": 135.72,
+          "end": 136.24,
+          "probability": 1.0
+        },
+        {
+          "word": "gathered",
+          "start": 136.24,
+          "end": 136.64,
+          "probability": 1.0
+        },
+        {
+          "word": "here",
+          "start": 136.64,
+          "end": 136.88,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 136.88,
+          "end": 137.06,
+          "probability": 1.0
+        },
+        {
+          "word": "relevant",
+          "start": 137.06,
+          "end": 137.42,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 137.42,
+          "end": 137.64,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 137.64,
+          "end": 137.84,
+          "probability": 1.0
+        },
+        {
+          "word": "check,",
+          "start": 137.84,
+          "end": 138.18,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 138.36,
+          "end": 138.62,
+          "probability": 1.0
+        },
+        {
+          "word": "Gerald",
+          "start": 138.62,
+          "end": 138.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "clicks",
+          "start": 138.98,
+          "end": 139.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "finish",
+          "start": 139.4,
+          "end": 139.7,
+          "probability": 0.6099
+        },
+        {
+          "word": "to",
+          "start": 139.7,
+          "end": 139.98,
+          "probability": 1.0
+        },
+        {
+          "word": "submit",
+          "start": 139.98,
+          "end": 140.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 140.28,
+          "end": 140.42,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 140.42,
+          "end": 140.72,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 140.72,
+          "end": 140.94,
+          "probability": 1.0
+        },
+        {
+          "word": "processing.",
+          "start": 140.94,
+          "end": 141.5,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 142.2,
+          "end": 142.8,
+          "probability": 1.0
+        },
+        {
+          "word": "status",
+          "start": 142.8,
+          "end": 143.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 143.14,
+          "end": 143.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 143.34,
+          "end": 143.44,
+          "probability": 0.999
+        },
+        {
+          "word": "check",
+          "start": 143.44,
+          "end": 143.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 143.64,
+          "end": 143.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "awaiting",
+          "start": 143.8,
+          "end": 144.12,
+          "probability": 0.979
+        },
+        {
+          "word": "submission.",
+          "start": 144.12,
+          "end": 144.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 145.46,
+          "end": 146.06,
+          "probability": 0.749
+        },
+        {
+          "word": "processes",
+          "start": 146.06,
+          "end": 146.56,
+          "probability": 0.9946
+        },
+        {
+          "word": "payments",
+          "start": 146.56,
+          "end": 147.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 147.04,
+          "end": 147.26,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 147.26,
+          "end": 147.38,
+          "probability": 1.0
+        },
+        {
+          "word": "batch",
+          "start": 147.38,
+          "end": 147.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 147.6,
+          "end": 147.74,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 147.74,
+          "end": 147.86,
+          "probability": 1.0
+        },
+        {
+          "word": "regular",
+          "start": 147.86,
+          "end": 148.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "basis,",
+          "start": 148.16,
+          "end": 148.64,
+          "probability": 1.0
+        },
+        {
+          "word": "typically",
+          "start": 148.92,
+          "end": 149.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "once",
+          "start": 149.22,
+          "end": 149.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "per",
+          "start": 149.54,
+          "end": 149.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "day.",
+          "start": 149.74,
+          "end": 149.9,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 149.96,
+      "end": 169.92,
+      "start_formatted": "00:02:29.960",
+      "end_formatted": "00:02:49.920",
+      "text": "Until the batch is run, the status of all new checks will be awaiting submission. If Gerald now looks at the transaction screen. He sees a payment transaction in the amount of $3,875 against the claim cost, medical exposure. It was created by Gerald Ikes and its status is awaiting submission.",
+      "words": [
+        {
+          "word": "Until",
+          "start": 149.96,
+          "end": 150.9,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 150.9,
+          "end": 151.06,
+          "probability": 1.0
+        },
+        {
+          "word": "batch",
+          "start": 151.06,
+          "end": 151.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 151.3,
+          "end": 151.46,
+          "probability": 0.9766
+        },
+        {
+          "word": "run,",
+          "start": 151.46,
+          "end": 151.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 151.98,
+          "end": 152.22,
+          "probability": 1.0
+        },
+        {
+          "word": "status",
+          "start": 152.22,
+          "end": 152.58,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 152.58,
+          "end": 152.78,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 152.78,
+          "end": 152.92,
+          "probability": 0.9932
+        },
+        {
+          "word": "new",
+          "start": 152.92,
+          "end": 153.12,
+          "probability": 1.0
+        },
+        {
+          "word": "checks",
+          "start": 153.12,
+          "end": 153.36,
+          "probability": 0.9761
+        },
+        {
+          "word": "will",
+          "start": 153.36,
+          "end": 153.62,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 153.62,
+          "end": 153.76,
+          "probability": 1.0
+        },
+        {
+          "word": "awaiting",
+          "start": 153.76,
+          "end": 154.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "submission.",
+          "start": 154.04,
+          "end": 154.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "If",
+          "start": 155.26,
+          "end": 155.82,
+          "probability": 0.999
+        },
+        {
+          "word": "Gerald",
+          "start": 155.82,
+          "end": 156.08,
+          "probability": 0.9922
+        },
+        {
+          "word": "now",
+          "start": 156.08,
+          "end": 156.32,
+          "probability": 0.999
+        },
+        {
+          "word": "looks",
+          "start": 156.32,
+          "end": 156.58,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 156.58,
+          "end": 156.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 156.7,
+          "end": 156.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "transaction",
+          "start": 156.8,
+          "end": 157.36,
+          "probability": 0.7598
+        },
+        {
+          "word": "screen.",
+          "start": 157.36,
+          "end": 157.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "He",
+          "start": 158.5,
+          "end": 159.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "sees",
+          "start": 159.06,
+          "end": 159.34,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 159.34,
+          "end": 159.44,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 159.44,
+          "end": 159.74,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 159.74,
+          "end": 160.38,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 160.38,
+          "end": 160.62,
+          "probability": 0.9644
+        },
+        {
+          "word": "the",
+          "start": 160.62,
+          "end": 160.72,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 160.72,
+          "end": 160.96,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 160.96,
+          "end": 161.14,
+          "probability": 1.0
+        },
+        {
+          "word": "$3",
+          "start": 161.14,
+          "end": 161.42,
+          "probability": 0.9775
+        },
+        {
+          "word": ",875",
+          "start": 161.42,
+          "end": 162.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "against",
+          "start": 162.88,
+          "end": 163.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 163.72,
+          "end": 163.94,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 163.94,
+          "end": 164.22,
+          "probability": 0.7778
+        },
+        {
+          "word": "cost,",
+          "start": 164.22,
+          "end": 164.68,
+          "probability": 0.999
+        },
+        {
+          "word": "medical",
+          "start": 164.9,
+          "end": 165.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "exposure.",
+          "start": 165.22,
+          "end": 165.78,
+          "probability": 1.0
+        },
+        {
+          "word": "It",
+          "start": 166.16,
+          "end": 166.66,
+          "probability": 1.0
+        },
+        {
+          "word": "was",
+          "start": 166.66,
+          "end": 166.82,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 166.82,
+          "end": 167.22,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 167.22,
+          "end": 167.44,
+          "probability": 1.0
+        },
+        {
+          "word": "Gerald",
+          "start": 167.44,
+          "end": 167.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ikes",
+          "start": 167.8,
+          "end": 168.18,
+          "probability": 0.8154
+        },
+        {
+          "word": "and",
+          "start": 168.18,
+          "end": 168.42,
+          "probability": 0.998
+        },
+        {
+          "word": "its",
+          "start": 168.42,
+          "end": 168.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "status",
+          "start": 168.6,
+          "end": 168.92,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 168.92,
+          "end": 169.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "awaiting",
+          "start": 169.12,
+          "end": 169.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "submission.",
+          "start": 169.4,
+          "end": 169.92,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 170.74,
+      "end": 180.58,
+      "start_formatted": "00:02:50.740",
+      "end_formatted": "00:03:00.580",
+      "text": "Now Gerald will enter the second check. Now Gerald will enter the second check. He returns to the financial summary screen. This payment will be made against the reserve set aside for case management.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 170.74,
+          "end": 171.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "Gerald",
+          "start": 171.3,
+          "end": 171.66,
+          "probability": 0.978
+        },
+        {
+          "word": "will",
+          "start": 171.66,
+          "end": 171.94,
+          "probability": 1.0
+        },
+        {
+          "word": "enter",
+          "start": 171.94,
+          "end": 172.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 172.2,
+          "end": 172.38,
+          "probability": 1.0
+        },
+        {
+          "word": "second",
+          "start": 172.38,
+          "end": 172.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "check.",
+          "start": 172.68,
+          "end": 172.94,
+          "probability": 0.9775
+        },
+        {
+          "word": "Now",
+          "start": 173.38,
+          "end": 173.8,
+          "probability": 0.0
+        },
+        {
+          "word": "Gerald",
+          "start": 173.8,
+          "end": 173.8,
+          "probability": 0.7783
+        },
+        {
+          "word": "will",
+          "start": 173.8,
+          "end": 173.8,
+          "probability": 0.8555
+        },
+        {
+          "word": "enter",
+          "start": 173.8,
+          "end": 173.8,
+          "probability": 0.9517
+        },
+        {
+          "word": "the",
+          "start": 173.8,
+          "end": 173.8,
+          "probability": 0.9619
+        },
+        {
+          "word": "second",
+          "start": 173.8,
+          "end": 173.8,
+          "probability": 0.8403
+        },
+        {
+          "word": "check.",
+          "start": 173.8,
+          "end": 173.8,
+          "probability": 0.9902
+        },
+        {
+          "word": "He",
+          "start": 173.8,
+          "end": 173.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "returns",
+          "start": 173.8,
+          "end": 174.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 174.22,
+          "end": 174.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 174.42,
+          "end": 174.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "financial",
+          "start": 174.54,
+          "end": 175.02,
+          "probability": 0.8696
+        },
+        {
+          "word": "summary",
+          "start": 175.02,
+          "end": 175.54,
+          "probability": 0.6558
+        },
+        {
+          "word": "screen.",
+          "start": 175.54,
+          "end": 175.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 176.7,
+          "end": 177.26,
+          "probability": 0.998
+        },
+        {
+          "word": "payment",
+          "start": 177.26,
+          "end": 177.58,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 177.58,
+          "end": 177.78,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 177.78,
+          "end": 177.92,
+          "probability": 1.0
+        },
+        {
+          "word": "made",
+          "start": 177.92,
+          "end": 178.14,
+          "probability": 1.0
+        },
+        {
+          "word": "against",
+          "start": 178.14,
+          "end": 178.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 178.42,
+          "end": 178.58,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 178.58,
+          "end": 178.98,
+          "probability": 0.8423
+        },
+        {
+          "word": "set",
+          "start": 178.98,
+          "end": 179.24,
+          "probability": 0.999
+        },
+        {
+          "word": "aside",
+          "start": 179.24,
+          "end": 179.54,
+          "probability": 0.9668
+        },
+        {
+          "word": "for",
+          "start": 179.54,
+          "end": 179.76,
+          "probability": 1.0
+        },
+        {
+          "word": "case",
+          "start": 179.76,
+          "end": 180.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "management.",
+          "start": 180.04,
+          "end": 180.58,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 181.48,
+      "end": 189.68,
+      "start_formatted": "00:03:01.480",
+      "end_formatted": "00:03:09.680",
+      "text": "Once again, he selects create check from the picker dropdown. On the first step of the check wizard, he selects the nurse case manager.",
+      "words": [
+        {
+          "word": "Once",
+          "start": 181.48,
+          "end": 182.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "again,",
+          "start": 182.04,
+          "end": 182.36,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 182.66,
+          "end": 182.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "selects",
+          "start": 182.9,
+          "end": 183.36,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 183.36,
+          "end": 183.58,
+          "probability": 0.7207
+        },
+        {
+          "word": "check",
+          "start": 183.58,
+          "end": 183.86,
+          "probability": 0.998
+        },
+        {
+          "word": "from",
+          "start": 183.86,
+          "end": 184.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 184.08,
+          "end": 184.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "picker",
+          "start": 184.22,
+          "end": 184.5,
+          "probability": 0.9912
+        },
+        {
+          "word": "dropdown.",
+          "start": 184.5,
+          "end": 184.82,
+          "probability": 0.4617
+        },
+        {
+          "word": "On",
+          "start": 185.58,
+          "end": 186.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 186.14,
+          "end": 186.26,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 186.26,
+          "end": 186.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 186.48,
+          "end": 186.72,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 186.72,
+          "end": 186.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 186.84,
+          "end": 186.96,
+          "probability": 0.999
+        },
+        {
+          "word": "check",
+          "start": 186.96,
+          "end": 187.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "wizard,",
+          "start": 187.18,
+          "end": 187.52,
+          "probability": 0.999
+        },
+        {
+          "word": "he",
+          "start": 187.8,
+          "end": 188.08,
+          "probability": 1.0
+        },
+        {
+          "word": "selects",
+          "start": 188.08,
+          "end": 188.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 188.54,
+          "end": 188.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "nurse",
+          "start": 188.62,
+          "end": 188.82,
+          "probability": 0.9868
+        },
+        {
+          "word": "case",
+          "start": 188.82,
+          "end": 189.12,
+          "probability": 0.999
+        },
+        {
+          "word": "manager.",
+          "start": 189.12,
+          "end": 189.68,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 190.46,
+      "end": 199.36,
+      "start_formatted": "00:03:10.460",
+      "end_formatted": "00:03:19.360",
+      "text": "Gerald, who, for this claim, is Suzanne Roche. The payee type does not autofill for payees with only one role. The payee type is vendor.",
+      "words": [
+        {
+          "word": "Gerald,",
+          "start": 190.46,
+          "end": 190.94,
+          "probability": 0.0002
+        },
+        {
+          "word": "who,",
+          "start": 190.94,
+          "end": 190.94,
+          "probability": 0.2124
+        },
+        {
+          "word": "for",
+          "start": 191.16,
+          "end": 191.26,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 191.26,
+          "end": 191.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 191.44,
+          "end": 191.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 191.98,
+          "end": 192.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "Suzanne",
+          "start": 192.18,
+          "end": 192.56,
+          "probability": 0.9307
+        },
+        {
+          "word": "Roche.",
+          "start": 192.56,
+          "end": 193.0,
+          "probability": 0.9863
+        },
+        {
+          "word": "The",
+          "start": 193.54,
+          "end": 194.02,
+          "probability": 0.9893
+        },
+        {
+          "word": "payee",
+          "start": 194.02,
+          "end": 194.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "type",
+          "start": 194.44,
+          "end": 194.64,
+          "probability": 0.9785
+        },
+        {
+          "word": "does",
+          "start": 194.64,
+          "end": 194.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 194.86,
+          "end": 195.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "autofill",
+          "start": 195.08,
+          "end": 195.62,
+          "probability": 0.9644
+        },
+        {
+          "word": "for",
+          "start": 195.62,
+          "end": 195.82,
+          "probability": 0.999
+        },
+        {
+          "word": "payees",
+          "start": 195.82,
+          "end": 196.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "with",
+          "start": 196.3,
+          "end": 196.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 196.48,
+          "end": 196.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 196.72,
+          "end": 196.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "role.",
+          "start": 196.96,
+          "end": 197.24,
+          "probability": 0.9165
+        },
+        {
+          "word": "The",
+          "start": 197.8,
+          "end": 198.28,
+          "probability": 0.9487
+        },
+        {
+          "word": "payee",
+          "start": 198.28,
+          "end": 198.64,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 198.64,
+          "end": 198.88,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 198.88,
+          "end": 199.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "vendor.",
+          "start": 199.04,
+          "end": 199.36,
+          "probability": 0.9185
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 202.3,
+      "end": 211.76,
+      "start_formatted": "00:03:22.300",
+      "end_formatted": "00:03:31.760",
+      "text": "Gerald navigates to step 2 of the check wizard. In this case, Ms. Roche does not expect to do any further work on this case, so she has sent us a final bill.",
+      "words": [
+        {
+          "word": "Gerald",
+          "start": 202.3,
+          "end": 202.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "navigates",
+          "start": 202.78,
+          "end": 203.26,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 203.26,
+          "end": 203.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 203.44,
+          "end": 203.66,
+          "probability": 0.6685
+        },
+        {
+          "word": "2",
+          "start": 203.66,
+          "end": 203.94,
+          "probability": 0.5034
+        },
+        {
+          "word": "of",
+          "start": 203.94,
+          "end": 204.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 204.08,
+          "end": 204.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "check",
+          "start": 204.18,
+          "end": 204.38,
+          "probability": 0.8892
+        },
+        {
+          "word": "wizard.",
+          "start": 204.38,
+          "end": 204.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "In",
+          "start": 205.48,
+          "end": 205.96,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 205.96,
+          "end": 206.16,
+          "probability": 1.0
+        },
+        {
+          "word": "case,",
+          "start": 206.16,
+          "end": 206.46,
+          "probability": 1.0
+        },
+        {
+          "word": "Ms.",
+          "start": 206.84,
+          "end": 206.96,
+          "probability": 0.9751
+        },
+        {
+          "word": "Roche",
+          "start": 207.06,
+          "end": 207.24,
+          "probability": 1.0
+        },
+        {
+          "word": "does",
+          "start": 207.24,
+          "end": 207.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 207.44,
+          "end": 207.66,
+          "probability": 1.0
+        },
+        {
+          "word": "expect",
+          "start": 207.66,
+          "end": 207.96,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 207.96,
+          "end": 208.16,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 208.16,
+          "end": 208.32,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 208.32,
+          "end": 208.64,
+          "probability": 1.0
+        },
+        {
+          "word": "further",
+          "start": 208.64,
+          "end": 208.94,
+          "probability": 1.0
+        },
+        {
+          "word": "work",
+          "start": 208.94,
+          "end": 209.22,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 209.22,
+          "end": 209.38,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 209.38,
+          "end": 209.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "case,",
+          "start": 209.54,
+          "end": 209.88,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 210.08,
+          "end": 210.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 210.36,
+          "end": 210.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 210.54,
+          "end": 210.72,
+          "probability": 1.0
+        },
+        {
+          "word": "sent",
+          "start": 210.72,
+          "end": 210.88,
+          "probability": 0.998
+        },
+        {
+          "word": "us",
+          "start": 210.88,
+          "end": 211.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 211.04,
+          "end": 211.16,
+          "probability": 1.0
+        },
+        {
+          "word": "final",
+          "start": 211.16,
+          "end": 211.44,
+          "probability": 0.998
+        },
+        {
+          "word": "bill.",
+          "start": 211.44,
+          "end": 211.76,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 212.56,
+      "end": 215.66,
+      "start_formatted": "00:03:32.560",
+      "end_formatted": "00:03:35.660",
+      "text": "Setting a payment to final has implications down the road.",
+      "words": [
+        {
+          "word": "Setting",
+          "start": 212.56,
+          "end": 213.08,
+          "probability": 0.98
+        },
+        {
+          "word": "a",
+          "start": 213.08,
+          "end": 213.22,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 213.22,
+          "end": 213.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 213.5,
+          "end": 213.7,
+          "probability": 0.999
+        },
+        {
+          "word": "final",
+          "start": 213.7,
+          "end": 213.96,
+          "probability": 0.9678
+        },
+        {
+          "word": "has",
+          "start": 213.96,
+          "end": 214.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "implications",
+          "start": 214.22,
+          "end": 214.84,
+          "probability": 1.0
+        },
+        {
+          "word": "down",
+          "start": 214.84,
+          "end": 215.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 215.2,
+          "end": 215.34,
+          "probability": 1.0
+        },
+        {
+          "word": "road.",
+          "start": 215.34,
+          "end": 215.66,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 216.74,
+      "end": 221.68,
+      "start_formatted": "00:03:36.740",
+      "end_formatted": "00:03:41.680",
+      "text": "Gerald enters a note to the effect that this is the full and final payment to Ms. Roche for this claim.",
+      "words": [
+        {
+          "word": "Gerald",
+          "start": 216.74,
+          "end": 217.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "enters",
+          "start": 217.26,
+          "end": 217.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 217.6,
+          "end": 217.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "note",
+          "start": 217.78,
+          "end": 218.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 218.0,
+          "end": 218.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 218.14,
+          "end": 218.28,
+          "probability": 1.0
+        },
+        {
+          "word": "effect",
+          "start": 218.28,
+          "end": 218.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 218.56,
+          "end": 218.76,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 218.76,
+          "end": 218.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 218.98,
+          "end": 219.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 219.1,
+          "end": 219.22,
+          "probability": 0.9922
+        },
+        {
+          "word": "full",
+          "start": 219.22,
+          "end": 219.48,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 219.48,
+          "end": 219.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "final",
+          "start": 219.64,
+          "end": 219.96,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 219.96,
+          "end": 220.3,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 220.3,
+          "end": 220.52,
+          "probability": 1.0
+        },
+        {
+          "word": "Ms.",
+          "start": 220.52,
+          "end": 220.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "Roche",
+          "start": 220.8,
+          "end": 221.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 221.02,
+          "end": 221.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 221.18,
+          "end": 221.36,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 221.36,
+          "end": 221.68,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 222.34,
+      "end": 226.58,
+      "start_formatted": "00:03:42.340",
+      "end_formatted": "00:03:46.580",
+      "text": "Ms. Roche's final bill, and our payment to her, is for $650.",
+      "words": [
+        {
+          "word": "Ms.",
+          "start": 222.34,
+          "end": 222.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "Roche's",
+          "start": 222.96,
+          "end": 223.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "final",
+          "start": 223.3,
+          "end": 223.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "bill,",
+          "start": 223.62,
+          "end": 223.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 224.12,
+          "end": 224.36,
+          "probability": 0.999
+        },
+        {
+          "word": "our",
+          "start": 224.36,
+          "end": 224.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "payment",
+          "start": 224.48,
+          "end": 224.8,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 224.8,
+          "end": 225.0,
+          "probability": 1.0
+        },
+        {
+          "word": "her,",
+          "start": 225.0,
+          "end": 225.24,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 225.38,
+          "end": 225.6,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 225.6,
+          "end": 225.74,
+          "probability": 1.0
+        },
+        {
+          "word": "$650.",
+          "start": 225.74,
+          "end": 226.58,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 227.72,
+      "end": 229.72,
+      "start_formatted": "00:03:47.720",
+      "end_formatted": "00:03:49.720",
+      "text": "He navigates to the next page.",
+      "words": [
+        {
+          "word": "He",
+          "start": 227.72,
+          "end": 228.24,
+          "probability": 0.999
+        },
+        {
+          "word": "navigates",
+          "start": 228.24,
+          "end": 228.76,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 228.76,
+          "end": 228.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 228.94,
+          "end": 229.06,
+          "probability": 1.0
+        },
+        {
+          "word": "next",
+          "start": 229.06,
+          "end": 229.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "page.",
+          "start": 229.26,
+          "end": 229.72,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 231.94,
+      "end": 234.04,
+      "start_formatted": "00:03:51.940",
+      "end_formatted": "00:03:54.040",
+      "text": "And clicks finish to submit the claim.",
+      "words": [
+        {
+          "word": "And",
+          "start": 231.94,
+          "end": 232.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "clicks",
+          "start": 232.46,
+          "end": 232.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "finish",
+          "start": 232.78,
+          "end": 233.06,
+          "probability": 0.6514
+        },
+        {
+          "word": "to",
+          "start": 233.06,
+          "end": 233.32,
+          "probability": 1.0
+        },
+        {
+          "word": "submit",
+          "start": 233.32,
+          "end": 233.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 233.56,
+          "end": 233.72,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 233.72,
+          "end": 234.04,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 234.98,
+      "end": 238.54,
+      "start_formatted": "00:03:54.980",
+      "end_formatted": "00:03:58.540",
+      "text": "Once again, Gerald navigates to the transaction screen.",
+      "words": [
+        {
+          "word": "Once",
+          "start": 234.98,
+          "end": 235.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "again,",
+          "start": 235.58,
+          "end": 235.94,
+          "probability": 1.0
+        },
+        {
+          "word": "Gerald",
+          "start": 236.28,
+          "end": 236.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "navigates",
+          "start": 236.52,
+          "end": 237.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 237.18,
+          "end": 237.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 237.34,
+          "end": 237.48,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 237.48,
+          "end": 238.02,
+          "probability": 0.8901
+        },
+        {
+          "word": "screen.",
+          "start": 238.02,
+          "end": 238.54,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 239.4,
+      "end": 246.78,
+      "start_formatted": "00:03:59.400",
+      "end_formatted": "00:04:06.780",
+      "text": "Here, in addition to the $650 payment transaction, there is a minus $350 reserve transaction.",
+      "words": [
+        {
+          "word": "Here,",
+          "start": 239.4,
+          "end": 240.0,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 240.22,
+          "end": 240.42,
+          "probability": 1.0
+        },
+        {
+          "word": "addition",
+          "start": 240.42,
+          "end": 240.72,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 240.72,
+          "end": 240.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 240.92,
+          "end": 241.04,
+          "probability": 1.0
+        },
+        {
+          "word": "$650",
+          "start": 241.04,
+          "end": 241.88,
+          "probability": 0.998
+        },
+        {
+          "word": "payment",
+          "start": 241.88,
+          "end": 242.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "transaction,",
+          "start": 242.58,
+          "end": 243.26,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 243.6,
+          "end": 243.84,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 243.84,
+          "end": 243.96,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 243.96,
+          "end": 244.06,
+          "probability": 1.0
+        },
+        {
+          "word": "minus",
+          "start": 244.06,
+          "end": 244.32,
+          "probability": 0.8018
+        },
+        {
+          "word": "$350",
+          "start": 244.32,
+          "end": 245.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "reserve",
+          "start": 245.24,
+          "end": 246.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "transaction.",
+          "start": 246.06,
+          "end": 246.78,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 247.12,
+      "end": 254.08,
+      "start_formatted": "00:04:07.120",
+      "end_formatted": "00:04:14.080",
+      "text": "The purpose of a reserve transaction is to zero out any balance remaining on a reserve when the final payment has been made against it.",
+      "words": [
+        {
+          "word": "The",
+          "start": 247.12,
+          "end": 247.66,
+          "probability": 1.0
+        },
+        {
+          "word": "purpose",
+          "start": 247.66,
+          "end": 247.96,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 247.96,
+          "end": 248.14,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 248.14,
+          "end": 248.22,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 248.22,
+          "end": 248.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "transaction",
+          "start": 248.58,
+          "end": 249.24,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 249.24,
+          "end": 249.52,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 249.52,
+          "end": 249.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "zero",
+          "start": 249.66,
+          "end": 249.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "out",
+          "start": 249.96,
+          "end": 250.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 250.26,
+          "end": 250.46,
+          "probability": 1.0
+        },
+        {
+          "word": "balance",
+          "start": 250.46,
+          "end": 250.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "remaining",
+          "start": 250.88,
+          "end": 251.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 251.3,
+          "end": 251.48,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 251.48,
+          "end": 251.58,
+          "probability": 0.9863
+        },
+        {
+          "word": "reserve",
+          "start": 251.58,
+          "end": 251.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 251.9,
+          "end": 252.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 252.12,
+          "end": 252.24,
+          "probability": 0.999
+        },
+        {
+          "word": "final",
+          "start": 252.24,
+          "end": 252.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "payment",
+          "start": 252.52,
+          "end": 252.92,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 252.92,
+          "end": 253.14,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 253.14,
+          "end": 253.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "made",
+          "start": 253.3,
+          "end": 253.54,
+          "probability": 1.0
+        },
+        {
+          "word": "against",
+          "start": 253.54,
+          "end": 253.84,
+          "probability": 1.0
+        },
+        {
+          "word": "it.",
+          "start": 253.84,
+          "end": 254.08,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 254.62,
+      "end": 258.48,
+      "start_formatted": "00:04:14.620",
+      "end_formatted": "00:04:18.480",
+      "text": "So now, if Gerald navigates to the financial summary screen.",
+      "words": [
+        {
+          "word": "So",
+          "start": 254.62,
+          "end": 255.22,
+          "probability": 1.0
+        },
+        {
+          "word": "now,",
+          "start": 255.22,
+          "end": 255.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "if",
+          "start": 255.76,
+          "end": 255.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "Gerald",
+          "start": 255.94,
+          "end": 256.24,
+          "probability": 1.0
+        },
+        {
+          "word": "navigates",
+          "start": 256.24,
+          "end": 256.84,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 256.84,
+          "end": 257.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 257.0,
+          "end": 257.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "financial",
+          "start": 257.12,
+          "end": 257.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "summary",
+          "start": 257.56,
+          "end": 258.06,
+          "probability": 0.7998
+        },
+        {
+          "word": "screen.",
+          "start": 258.06,
+          "end": 258.48,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 258.96,
+      "end": 263.9,
+      "start_formatted": "00:04:18.960",
+      "end_formatted": "00:04:23.900",
+      "text": "He sees that there are $625 remaining for the claim cost reserve line.",
+      "words": [
+        {
+          "word": "He",
+          "start": 258.96,
+          "end": 259.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "sees",
+          "start": 259.56,
+          "end": 259.88,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 259.88,
+          "end": 260.04,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 260.04,
+          "end": 260.18,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 260.18,
+          "end": 260.32,
+          "probability": 1.0
+        },
+        {
+          "word": "$625",
+          "start": 260.32,
+          "end": 261.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "remaining",
+          "start": 261.26,
+          "end": 262.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 262.12,
+          "end": 262.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 262.38,
+          "end": 262.5,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 262.5,
+          "end": 262.78,
+          "probability": 0.9414
+        },
+        {
+          "word": "cost",
+          "start": 262.78,
+          "end": 263.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "reserve",
+          "start": 263.14,
+          "end": 263.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "line.",
+          "start": 263.52,
+          "end": 263.9,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 265.0,
+      "end": 270.18,
+      "start_formatted": "00:04:25.000",
+      "end_formatted": "00:04:30.180",
+      "text": "While there is no money left in the case management reserve line, because it has been zeroed out.",
+      "words": [
+        {
+          "word": "While",
+          "start": 265.0,
+          "end": 265.56,
+          "probability": 0.4514
+        },
+        {
+          "word": "there",
+          "start": 265.56,
+          "end": 265.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 265.72,
+          "end": 265.86,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 265.86,
+          "end": 266.02,
+          "probability": 1.0
+        },
+        {
+          "word": "money",
+          "start": 266.02,
+          "end": 266.3,
+          "probability": 1.0
+        },
+        {
+          "word": "left",
+          "start": 266.3,
+          "end": 266.62,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 266.62,
+          "end": 266.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 266.78,
+          "end": 266.88,
+          "probability": 1.0
+        },
+        {
+          "word": "case",
+          "start": 266.88,
+          "end": 267.12,
+          "probability": 0.9053
+        },
+        {
+          "word": "management",
+          "start": 267.12,
+          "end": 267.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "reserve",
+          "start": 267.6,
+          "end": 268.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "line,",
+          "start": 268.02,
+          "end": 268.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 268.62,
+          "end": 269.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 269.0,
+          "end": 269.2,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 269.2,
+          "end": 269.34,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 269.34,
+          "end": 269.48,
+          "probability": 1.0
+        },
+        {
+          "word": "zeroed",
+          "start": 269.48,
+          "end": 269.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "out.",
+          "start": 269.94,
+          "end": 270.18,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 270.7,
+      "end": 273.24,
+      "start_formatted": "00:04:30.700",
+      "end_formatted": "00:04:33.240",
+      "text": "This concludes the issuing payments demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 270.7,
+          "end": 271.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "concludes",
+          "start": 271.26,
+          "end": 271.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 271.7,
+          "end": 271.9,
+          "probability": 1.0
+        },
+        {
+          "word": "issuing",
+          "start": 271.9,
+          "end": 272.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "payments",
+          "start": 272.22,
+          "end": 272.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration.",
+          "start": 272.76,
+          "end": 273.24,
+          "probability": 0.999
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,533 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-08",
+    "slide_count": 47,
+    "slides_with_text": 41,
+    "total_words": 1674,
+    "avg_confidence": 86.07,
+    "processing_time_seconds": 17.89,
+    "extracted_at": "2026-02-13T12:23:08.486189"
+  },
+  "full_text": "Validation Classes\n\nLesson\nobjectives\n\n¢ Describe class-based validation\n\nIdentify which objects should use validation\nclasses\n\nExplain how validation levels are used\nInvoke class-based validation from different\nlocations in PolicyCenter\n\nWrite validation checks needed to validate\nobjects on a policy\n\ni Class-based validation\n\n¢ Is validation used on-demand\n\n« Allows users to:\n* choose at what time to validate a data object\n* decide how to validate data objects\n* write complex validation logic in Gosu classes\n\ni What can be validated using class-based validation? [5\n\n* Class-based validation may be performed on policy-related objects only such as:\n* PolicyContactRole\n* PolicyLocation\n* PolicyPeriod\n+ Line of business entities such as PALine or BALine\n¢ Policy-specific entities such as PersonalVehicle or BusinessVehicle\n¢ Everything on the policy graph can be validated using class-based validation\n¢ Entities on a policy graph need not be defined specially or as validatable\n\n* Validation class can perform any number of checks against any entities on a policy graph\n\ni PolicyCenter validation classes\n\n¢ Validation classes validate an entity on the policy graph\nGE) lob\n\n= Validate Commerical\n86 ba a Auto LOB and\n© BALineValidation Business Vehicle\n\n(© BusinessVehicleValidation\n\n¢ Or potentially a wizard step\n\n&} E] lob\nValidate the Policy\nGE bop ; Info wizard step ina\n(© 80PPolicyInfoValidation submission\n& Ewe\n\n© wePolicyInfovalidation\n\nValidation levels\n\n| Validation levels G\n\n¢ Defined in ValidationLevel typelist\n\n« New levels can be added\n\n|i |categoryY| [Hl — |Vshowaiv| ~ = = Validationteveltti @ | =\nElement Code Name Priority Name Value\nY _typelistexten: ValidationLev..._ Validation lev. loa e\ntypecode loadsave name Load and save\ntypecodg default Default 8000 desc Minimum level that must be passed for a Polic\ntypecodq quotable Quotable 7000 identifierCode\ntypecoda bindable Bindable 6000 priority 10000\ntypecodq readyforissue | Ready for issue 5000 retired\n\ntypecodd quickquotable | Quick Quotab... 7200\n\n| Validation level priority G\n\nThe higher the priority value, the less restrictive the validation at that level is\n\nff) ValidationLevel.ttx. x\n\nHigh\n\nRestriction\n\nLess\n\ni Validation levels and class-based validation\n\n¢ Run validation at a certain level on an entity or a wizard step\n¢ See if all the validation checks required at the level are passed\n« Add errors or warnings as needed for checks not passed\n\n* PolicyCenter provides methods to determine what validation level is currently\nbeing tested\n\nQuestion G\n\n_~ — Name three policy-related objects in PolicyCenter on which class-based\no validation is performed.\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — Name three policy-related objects in PolicyCenter on which class-based\noo validation is performed.\n\nClass-based validation can be performed on PolicyContactRole, PolicyLocation,\nPolicyPeriod, or any LOB entities, or any other policy-specific entities.\n\nSS Se ee eee eo\n\n—— Validation class implementations\nand methods\n\ni Validation-related interfaces and classes Gi\n\nPolicyCenter provides the following in the package gw. validation:\n« PCValidation: Interface that all validation classes must implement\n+ PCValidationBase: Abstract convenience class that takes a PCValidationContext instance\n\n« PCValidationContext: Class that takes a ValidationLevel and creates a new\nPCValidationResult object during initialization\n\n« PCValidationResult: Class that contains the methods to use in generating warnings and\nerrors\n\ni Validation classes in the base configuration\n\n* Classes shared across LOB reside under\n* configuration > gsrc > gw > policy:\n+ PolicyPeriodValidation\n+ PolicyLineValidation\n+ PolicyLocationValidation\n+ PolicyContactRoleValidation\n¢ LOB specific validation classes reside under\n* configuration > gsrc > gw > lob > [LOBName]:\n« For example, for Commercial Auto (BA)\n+ BALineValidation\n\n+ BusinessVehicleValidation\n\ni PCValidation implementations Gi\n\n* All validation classes must implement PCValidation or extend its implementation\nclasses\n\n¢ Entity validation classes extend PCValidationBase\n+ Such as PersonalVehicleValidation or BOPBuildingValidation classes\n* The subclasses have a validatelmpl() method\n\n* Policy Line validation classes extend PolicyLineValidation\n* such as PALineValidation or BOPLineValidation classes\n+ The subclasses have a doValidate() method\n\n* Each validation class has a validatelmpl or a doValidate method\n\n* calls other validation methods that check a single problem\n\ni Define validation methods that test for a single issue [5\n\n* Call them in the validatelmpl() or doValidate() method\n\n¢ For example, methods to validate issues on personal auto objects are defined in\nPALineVehiclesValidator.gs and called using the doValidate method\n\nof override function doValidate() {\natLeastOneVehicle()\nallGaragesInSameState()\nvinIsUniqueInPeriod()\nvalidateEachVehicle()\n+\n\n| PcValidationContext G\n\n¢« PCValidationBase constructor defines validation context PCValidationContext\n¢« PCValidationContext:\n\n* Takes a ValidationLevel at which to perform validation\n\n* Creates a new PCValidationResult to store validation results (errors and warnings)\n\n© PALineVehiclesValidator.gs\n\n(ValidationLevel.7C_QUICKQUOTABLE)\n\nABLE, msg, VEHICLES WIZARD STEP)\n\nif (Context.isAtLeast|\nResult .addError (paLine, ValidationLevel- TC DUICROUO\n} else {\n\nResult .addWarning (paLine, |ValidationLevel.7C_DEFAULT,|msg, VEHICLES WIZARD STEP)\n\n}\n\n| PcValidationContext methods\n\nisAtLeast(valLevel)\nTests if the level specified by ValidationContext is at least atvalLevel\naddToVisited(validation, methodName)\n* Provides opportunity to trace validation logic\n\nhasVisited(className, methodName)\n* Indicates whether the combination of validation object and method have been seen before\n* returns true if the combination has been visited before\n\nshowVisited()\n\n¢ Produces a string that lists the validation methods that were visited as validation was\nperformed with the provided Context\n\ni PCValidationResult holds validation results Gi\n\n¢ PCValidationResult is created by Context methods\n\n* PCValidationResult class provides methods that hold the resulting warnings and\nerrors:\n\naddError(object, valLevel, errorMessage, wizardStepld)\naddFieldError(object, strRelativeFieldPath, valLevel, errorMessage, wizardStepld)\naddWarning(object, valLevel, warningMessage, wizardStepld)\n\naddFieldWarning(object, strRelativeFieldPath, valLevel, warningMessage, wizardStepld)\n\nwhere: valLevel means that the error or warning will be added at that level or any level more\nrestrictive\n\ni Demonstration G\n\nValidation class basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nValidation chaining\n\ni Validation chaining G\n\nValidation chaining is the process of one validation class calling another validation\nclass to perform additional validation checks\n\nValidate\nPeriod\nValidate\nLine\n\nValidate\n\nDriver ,\nValidate\nVehicle\n\n[ER submission ovat) CoPeronatauto €fL08/28/2018 RayNewton Account #CO00143542 Underwire Applegate\n\n| Validation chain flow\n\n3. Classes chain to\nvalidations of entities\n\n1. Call validate() 2. Invoke validate() method on\nmethod which in another validation class (may\n\nturn calls other have to loop through a set of\nmethods objects)\n\nthey hold\n\n« Aclass must be specifically set to perform validation chaining\n\n¢ Inthe base configuration, PolicyPeriodValidation class performs validation\nchaining\n\ni Demonstration G\n\nValidation chaining\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Invoking class-based validation Gi\n\n* Class-based validation must be explicitly invoked through:\n\n* Code, job processes, wizard steps, workflow steps, integration plug-ins, or from any Gosu\ncode\n\n¢ To invoke validation from a particular PolicyCenter location:\n* Wizard steps - use beforeSave attribute for that step\n¢ Pop-ups - use beforeCommit attribute for that pop-up\n\ni Demonstration G\n\nInvoking class based validation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n, 7 — State true or false:\n\n¢\noo a) All entities in PolicyCenter can be validated.\n\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.\n\nSS oe ee oe oe oo\n\nAnswer G\n\n, 7 — State true or false:\n\n¢\noo a) All entities in PolicyCenter can be validated.\n\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.\n\na) True\nb) True\n\nc) False\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Name the validation context method that produces a string of methods\no that were visited as validation was performed.\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — Name the validation context method that produces a string of methods\noo that were visited as validation was performed.\n\nThe showVisited() method shows a list of methods as a string that were visited as\nvalidation was performed.\n\nSS Se ee eee eo\n\nQuestion G\n\n_~ — Define validation chaining.\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n_~ — Define validation chaining.\n\n¢\n4\n¢\n\nValidation chaining is the process of one validation class calling another validation\nclass to perform additional validation checks.\n\nSS Se ee eee eo\n\nQuestion G\n\n,- — Name the PCF attributes used to invoke class-based validation in a\n¢ popup and in a job wizard.\n\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — Name the PCF attributes used to invoke class-based validation in a\noo popup and in a job wizard.\n¢\n\nBeforeSave attribute for a job wizard step and beforeCommit attribute on a popup.\n\nSS Se ee eee eo\n\ni Student exercise G\n\nValidation Classes: Validation chaining\n\nCreating a new validation class\nand adding a validation check\n\ni Creating a new validation class\n\nFor new entities:\n* Create new validation class for entity you want to validate or\n* Create new validation class when you create a new LOB\nFor existing entities:\n+ Ifa validation class for the entity exists add validation check methods to that class\n¢ If the validation class does not exist, then create new validation class\nNew class should extend PCValidationBase\n\nUse an existing validation class as a reference\n\n| Adding a validation check\n\nak WN =\n\n. Edit/add appropriate validation class\n\n. Add the validation check method\n\n. Call method from validatelmpl() or doValidate()\n. Invoke the method\n\n. Verify the result in the UI\n\ni Demonstration G\n\nConfiguring validation classes\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nLesson\nobjectives\nreview\n\n¢ Describe class-based validation\n\nIdentify which objects should use validation\nclasses\n\nExplain how validation levels are used\nInvoke class-based validation from different\nlocations in PolicyCenter\n\nWrite validation checks needed to validate\nobjects on a policy\n\ni Student exercise\n\nValidation Classes:\nConfigure validation classes",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Validation Classes",
+      "word_count": 2,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe class-based validation\n\nIdentify which objects should use validation\nclasses\n\nExplain how validation levels are used\nInvoke class-based validation from different\nlocations in PolicyCenter\n\nWrite validation checks needed to validate\nobjects on a policy",
+      "word_count": 37,
+      "avg_confidence": 93.22,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Class-based validation\n\n¢ Is validation used on-demand\n\n« Allows users to:\n* choose at what time to validate a data object\n* decide how to validate data objects\n* write complex validation logic in Gosu classes",
+      "word_count": 37,
+      "avg_confidence": 86.03,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i What can be validated using class-based validation? [5\n\n* Class-based validation may be performed on policy-related objects only such as:\n* PolicyContactRole\n* PolicyLocation\n* PolicyPeriod\n+ Line of business entities such as PALine or BALine\n¢ Policy-specific entities such as PersonalVehicle or BusinessVehicle\n¢ Everything on the policy graph can be validated using class-based validation\n¢ Entities on a policy graph need not be defined specially or as validatable\n\n* Validation class can perform any number of checks against any entities on a policy graph",
+      "word_count": 87,
+      "avg_confidence": 89.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i PolicyCenter validation classes\n\n¢ Validation classes validate an entity on the policy graph\nGE) lob\n\n= Validate Commerical\n86 ba a Auto LOB and\n© BALineValidation Business Vehicle\n\n(© BusinessVehicleValidation\n\n¢ Or potentially a wizard step\n\n&} E] lob\nValidate the Policy\nGE bop ; Info wizard step ina\n(© 80PPolicyInfoValidation submission\n& Ewe\n\n© wePolicyInfovalidation",
+      "word_count": 57,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Validation levels",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Validation levels G\n\n¢ Defined in ValidationLevel typelist\n\n« New levels can be added\n\n|i |categoryY| [Hl — |Vshowaiv| ~ = = Validationteveltti @ | =\nElement Code Name Priority Name Value\nY _typelistexten: ValidationLev..._ Validation lev. loa e\ntypecode loadsave name Load and save\ntypecodg default Default 8000 desc Minimum level that must be passed for a Polic\ntypecodq quotable Quotable 7000 identifierCode\ntypecoda bindable Bindable 6000 priority 10000\ntypecodq readyforissue | Ready for issue 5000 retired\n\ntypecodd quickquotable | Quick Quotab... 7200",
+      "word_count": 85,
+      "avg_confidence": 85.04,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Validation level priority G\n\nThe higher the priority value, the less restrictive the validation at that level is\n\nff) ValidationLevel.ttx. x\n\nHigh\n\nRestriction\n\nLess",
+      "word_count": 25,
+      "avg_confidence": 88.41,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Validation levels and class-based validation\n\n¢ Run validation at a certain level on an entity or a wizard step\n¢ See if all the validation checks required at the level are passed\n« Add errors or warnings as needed for checks not passed\n\n* PolicyCenter provides methods to determine what validation level is currently\nbeing tested",
+      "word_count": 57,
+      "avg_confidence": 90.23,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Question G\n\n_~ — Name three policy-related objects in PolicyCenter on which class-based\no validation is performed.\n\nSS oe ee oe oe oo",
+      "word_count": 23,
+      "avg_confidence": 69.88,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Answer G\n\n,~ — Name three policy-related objects in PolicyCenter on which class-based\noo validation is performed.\n\nClass-based validation can be performed on PolicyContactRole, PolicyLocation,\nPolicyPeriod, or any LOB entities, or any other policy-specific entities.\n\nSS Se ee eee eo",
+      "word_count": 40,
+      "avg_confidence": 80.93,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "—— Validation class implementations\nand methods",
+      "word_count": 6,
+      "avg_confidence": 82.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Validation-related interfaces and classes Gi\n\nPolicyCenter provides the following in the package gw. validation:\n« PCValidation: Interface that all validation classes must implement\n+ PCValidationBase: Abstract convenience class that takes a PCValidationContext instance\n\n« PCValidationContext: Class that takes a ValidationLevel and creates a new\nPCValidationResult object during initialization\n\n« PCValidationResult: Class that contains the methods to use in generating warnings and\nerrors",
+      "word_count": 63,
+      "avg_confidence": 89.41,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Validation classes in the base configuration\n\n* Classes shared across LOB reside under\n* configuration > gsrc > gw > policy:\n+ PolicyPeriodValidation\n+ PolicyLineValidation\n+ PolicyLocationValidation\n+ PolicyContactRoleValidation\n¢ LOB specific validation classes reside under\n* configuration > gsrc > gw > lob > [LOBName]:\n« For example, for Commercial Auto (BA)\n+ BALineValidation\n\n+ BusinessVehicleValidation",
+      "word_count": 58,
+      "avg_confidence": 85.47,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i PCValidation implementations Gi\n\n* All validation classes must implement PCValidation or extend its implementation\nclasses\n\n¢ Entity validation classes extend PCValidationBase\n+ Such as PersonalVehicleValidation or BOPBuildingValidation classes\n* The subclasses have a validatelmpl() method\n\n* Policy Line validation classes extend PolicyLineValidation\n* such as PALineValidation or BOPLineValidation classes\n+ The subclasses have a doValidate() method\n\n* Each validation class has a validatelmpl or a doValidate method\n\n* calls other validation methods that check a single problem",
+      "word_count": 78,
+      "avg_confidence": 87.73,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Define validation methods that test for a single issue [5\n\n* Call them in the validatelmpl() or doValidate() method\n\n¢ For example, methods to validate issues on personal auto objects are defined in\nPALineVehiclesValidator.gs and called using the doValidate method\n\nof override function doValidate() {\natLeastOneVehicle()\nallGaragesInSameState()\nvinIsUniqueInPeriod()\nvalidateEachVehicle()\n+",
+      "word_count": 51,
+      "avg_confidence": 85.25,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| PcValidationContext G\n\n¢« PCValidationBase constructor defines validation context PCValidationContext\n¢« PCValidationContext:\n\n* Takes a ValidationLevel at which to perform validation\n\n* Creates a new PCValidationResult to store validation results (errors and warnings)\n\n© PALineVehiclesValidator.gs\n\n(ValidationLevel.7C_QUICKQUOTABLE)\n\nABLE, msg, VEHICLES WIZARD STEP)\n\nif (Context.isAtLeast|\nResult .addError (paLine, ValidationLevel- TC DUICROUO\n} else {\n\nResult .addWarning (paLine, |ValidationLevel.7C_DEFAULT,|msg, VEHICLES WIZARD STEP)\n\n}",
+      "word_count": 60,
+      "avg_confidence": 75.32,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| PcValidationContext methods\n\nisAtLeast(valLevel)\nTests if the level specified by ValidationContext is at least atvalLevel\naddToVisited(validation, methodName)\n* Provides opportunity to trace validation logic\n\nhasVisited(className, methodName)\n* Indicates whether the combination of validation object and method have been seen before\n* returns true if the combination has been visited before\n\nshowVisited()\n\n¢ Produces a string that lists the validation methods that were visited as validation was\nperformed with the provided Context",
+      "word_count": 71,
+      "avg_confidence": 91.08,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i PCValidationResult holds validation results Gi\n\n¢ PCValidationResult is created by Context methods\n\n* PCValidationResult class provides methods that hold the resulting warnings and\nerrors:\n\naddError(object, valLevel, errorMessage, wizardStepld)\naddFieldError(object, strRelativeFieldPath, valLevel, errorMessage, wizardStepld)\naddWarning(object, valLevel, warningMessage, wizardStepld)\n\naddFieldWarning(object, strRelativeFieldPath, valLevel, warningMessage, wizardStepld)\n\nwhere: valLevel means that the error or warning will be added at that level or any level more\nrestrictive",
+      "word_count": 62,
+      "avg_confidence": 88.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Demonstration G\n\nValidation class basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.78,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Validation chaining",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i Validation chaining G\n\nValidation chaining is the process of one validation class calling another validation\nclass to perform additional validation checks\n\nValidate\nPeriod\nValidate\nLine\n\nValidate\n\nDriver ,\nValidate\nVehicle\n\n[ER submission ovat) CoPeronatauto €fL08/28/2018 RayNewton Account #CO00143542 Underwire Applegate",
+      "word_count": 41,
+      "avg_confidence": 82.68,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Validation chain flow\n\n3. Classes chain to\nvalidations of entities\n\n1. Call validate() 2. Invoke validate() method on\nmethod which in another validation class (may\n\nturn calls other have to loop through a set of\nmethods objects)\n\nthey hold\n\n« Aclass must be specifically set to perform validation chaining\n\n¢ Inthe base configuration, PolicyPeriodValidation class performs validation\nchaining",
+      "word_count": 59,
+      "avg_confidence": 92.39,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "i Demonstration G\n\nValidation chaining\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.71,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "i Invoking class-based validation Gi\n\n* Class-based validation must be explicitly invoked through:\n\n* Code, job processes, wizard steps, workflow steps, integration plug-ins, or from any Gosu\ncode\n\n¢ To invoke validation from a particular PolicyCenter location:\n* Wizard steps - use beforeSave attribute for that step\n¢ Pop-ups - use beforeCommit attribute for that pop-up",
+      "word_count": 56,
+      "avg_confidence": 88.58,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "i Demonstration G\n\nInvoking class based validation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.84,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n, 7 — State true or false:\n\n¢\noo a) All entities in PolicyCenter can be validated.\n\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.\n\nSS oe ee oe oe oo",
+      "word_count": 47,
+      "avg_confidence": 80.96,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer G\n\n, 7 — State true or false:\n\n¢\noo a) All entities in PolicyCenter can be validated.\n\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.\n\na) True\nb) True\n\nc) False\n\nSS Se ee eee eo",
+      "word_count": 52,
+      "avg_confidence": 84.08,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question G\n\n,~ — Name the validation context method that produces a string of methods\no that were visited as validation was performed.\n\nSS oe ee oe oe oo",
+      "word_count": 29,
+      "avg_confidence": 74.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer G\n\n,~ — Name the validation context method that produces a string of methods\noo that were visited as validation was performed.\n\nThe showVisited() method shows a list of methods as a string that were visited as\nvalidation was performed.\n\nSS Se ee eee eo",
+      "word_count": 46,
+      "avg_confidence": 83.52,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question G\n\n_~ — Define validation chaining.\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 16,
+      "avg_confidence": 56.39,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer G\n\n_~ — Define validation chaining.\n\n¢\n4\n¢\n\nValidation chaining is the process of one validation class calling another validation\nclass to perform additional validation checks.\n\nSS Se ee eee eo",
+      "word_count": 33,
+      "avg_confidence": 78.6,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question G\n\n,- — Name the PCF attributes used to invoke class-based validation in a\n¢ popup and in a job wizard.\n\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 30,
+      "avg_confidence": 72.77,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer G\n\n,~ — Name the PCF attributes used to invoke class-based validation in a\noo popup and in a job wizard.\n¢\n\nBeforeSave attribute for a job wizard step and beforeCommit attribute on a popup.\n\nSS Se ee eee eo",
+      "word_count": 41,
+      "avg_confidence": 80.84,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "i Student exercise G\n\nValidation Classes: Validation chaining",
+      "word_count": 8,
+      "avg_confidence": 84.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Creating a new validation class\nand adding a validation check",
+      "word_count": 10,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "i Creating a new validation class\n\nFor new entities:\n* Create new validation class for entity you want to validate or\n* Create new validation class when you create a new LOB\nFor existing entities:\n+ Ifa validation class for the entity exists add validation check methods to that class\n¢ If the validation class does not exist, then create new validation class\nNew class should extend PCValidationBase\n\nUse an existing validation class as a reference",
+      "word_count": 76,
+      "avg_confidence": 92.08,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "| Adding a validation check\n\nak WN =\n\n. Edit/add appropriate validation class\n\n. Add the validation check method\n\n. Call method from validatelmpl() or doValidate()\n. Invoke the method\n\n. Verify the result in the UI",
+      "word_count": 37,
+      "avg_confidence": 87.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "i Demonstration G\n\nConfiguring validation classes\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-46.png",
+      "slide_number": 46,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe class-based validation\n\nIdentify which objects should use validation\nclasses\n\nExplain how validation levels are used\nInvoke class-based validation from different\nlocations in PolicyCenter\n\nWrite validation checks needed to validate\nobjects on a policy",
+      "word_count": 38,
+      "avg_confidence": 93.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-47.png",
+      "slide_number": 47,
+      "text": "i Student exercise\n\nValidation Classes:\nConfigure validation classes",
+      "word_count": 8,
+      "avg_confidence": 88.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

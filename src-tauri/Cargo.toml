@@ -1,0 +1,47 @@
+[package]
+name = "intime"
+version = "1.0.0"
+description = "InTime - Multi-agent staffing platform"
+authors = ["InTime Inc."]
+license = ""
+repository = ""
+default-run = "intime"
+edition = "2021"
+rust-version = "1.70"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.6", features = [
+    "api-all",
+    "clipboard-all",
+    "dialog-all",
+    "fs-all",
+    "global-shortcut-all",
+    "http-all",
+    "notification-all",
+    "os-all",
+    "path-all",
+    "process-exit",
+    "process-relaunch",
+    "shell-open",
+    "system-tray",
+    "window-all",
+] }
+
+[features]
+# by default Tauri runs in production mode
+# when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is a URL
+default = ["custom-protocol"]
+# this feature is used for production builds where `distDir` points to an index.html
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

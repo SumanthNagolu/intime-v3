@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "chapter": "ch14",
+    "chapter_title": "Rating Configuration",
+    "lesson": "lesson-04",
+    "slide_count": 17,
+    "slides_with_text": 16,
+    "total_words": 889,
+    "avg_confidence": 87.73,
+    "processing_time_seconds": 6.17,
+    "extracted_at": "2026-02-15T18:24:49.970288"
+  },
+  "full_text": "Rating Maintenance Configuration\n\nLesson\nobjectives\n\n* Configure the rating plugin to allow rate books\nto be tested prior to releasing into a\nproduction environment\n\n¢ Describe ways to enhance rating performance\n\n| Configure IRatingPlugin G\n\n¢ Set the implementation class for the rating plugin (for example, PCRatingPlugin)\n\n¢ Set the RatingLevel parameter that controls the minimum rate book status\nconsidered during rate book selection\n\n* Default level is Active for the production environment\n\n* Lower level can be set for the development or test environment (for example,Stage)\n\nieonfiguration [i config i plugin Ei registry IRatingPiugingwp\n3 eB iRatingPlugingwp *\nE Name: [iRatingPiugin\n\nEr intertace: | RatingPtugin\n\ng\\+ Gosu Class qw-pluginpolicyperiod.impl.PCRatingPlugin ~\n\n1d.impl.PCRatingPlugin}\n\nEnvironment:\n\n$2 Struct\n\nServer:\nCo Disabtea\n\nParameters: Name. Yat Environment | Server | 4\nfRatinglevel_ Active\n\n| Physical tables for rate tables Gi\n\n¢ Default physical table\n* Defined in DefaultRateFactorRow.eti\n« Avery large generic physical table used to store many rate tables for most lines of business\n* Indexing and performance tuning of large tables takes more time\n* Custom physical table\n« Example: CoverageRateFactor.eti for simple coverage-based rate tables\n* Create a custom table when you need a medium sized table, which must have\n+ A foreign key to the RateTable entity\n\n+ Atleast two columns, one for parameter and one for factor\n\n| Ways to improve rate table performance\n\n¢ Use the rate table lookup strategy in a rate book\n\n« Use rate table normalization\n\n| Rate table lookup strategy\n\nFi\n« Arate table can be loaded into memory or accessed from the database\n\n¢ By default, it is loaded into memory providing quick access\n\n« Loading a large rate table may slow system performance if there is inadequate memory\n\nEdit Rate Book\n\nRate Book Details\n\nPolicy Criteria\ncode + | gxcrtm_demo_rating Policy Line <applies toall>\nName o& | Generic RTM Demo Rating Jurisdiction % | <applies to all> +\nRate Tables | Rate Routines\nIncluded Rate Tables ~) Available Rate Tables ge\nPending Import Name ‘Lookup\nLi\n\nName\nGenericStateTax\n\nMemory\n\nNo data to display\n\nDatabase\n\n| Edit rate table lookup G\n\n¢ The lookup setting can be changed only when the rate book is in Draft status\n* The lookup setting is checked when a rate book is promoted from Draft to Stage\n\n« When arate table is included in multiple rate books\n* It can have only one lookup setting\n\n* The setting can be changed only in the rate book that owns the rate table when it is in Draft\n\nstatus PA RTM Demo Rating (Geemisoss)\nCode pa_rtm_demo_rating -<applies to all>\na> > ee\n= a me RSs es\n\n| Rate table normalization Gi\n\nSpeeds up rate factor lookups, but requires more memory\n\nApplies only when matching against more than one parameter, one of which is a\nrange parameter with overlapping ranges\n\nRemoves overlapping ranges by expanding the number of table rows in memory\n\nConfiguration parameters control whether or not PolicyCenter normalizes rate\ntable by default\n\nUsers can choose not to normalize a rate table by setting the Reduce Memory\nUsage option\n\n| Rate table normalization example\n\nThe rate table has two parameters: Age and Jurisdiction\n\n+ Where age is a range parameter\n\nRate table in a rate book\n\nRow#| Minimum Age | Maximum Age | Jurisdiction | * Factor\ni 1 5 California 1\n2 3 2\n3 5 8 Oregon 3\n\nRate table normalized in memory for lookup\n\nRow #| Minimum Age | Maximum Age | Jurisdiction | * Factor\n1 1 3 California 1\n2 3 5 California 1\n3 3 5 2\n4 5 6 2\n5 5 6 Oregon 3\n6 6 8 Oregon 3\n\n| Parameters that control rate table normalization Gi\n\n« RateTableManagementNormalizationRowThreshold\n\n« If the number of rows in the normalized table exceeds this threshold, the user is given the\n“Reduce Memory Usage” option to load a non-normalized version of the table\n\nRate Table Content\n\n¢« RateTableManagementNormalizationRowLimit\n\n« If the number of rows in the normalized table exceeds this limit, the table is automatically\nmarked as non-normalizable and PolicyCenter stores the non-normalized version of the table\n\n| Demonstration G\n\nRating maintenance configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,~ — When should you create a custom physical table?\n\n¢\n4\n¢\n\nseo eooce Sse Sbeese505\n\nAnswer Gi\n\n,~ — When should you create a custom physical table?\n¢\nor In the base configuration there are two physical tables that can be used as-is and as\nmodels for other custom tables that may be required for a particular implementation.\nNew custom physical table can be configured for one or a group of similar rate table\n\ndefinitions if neither table is appropriate.\n\nse sSeSo SoS Se See ese\n\nQuestion\n\n,~ — Arate table is normalized for what type of parameters in it?\n\n¢\n4\n¢\n\nseo eooce Sse Sbeese505\n\nAnswer\n\n,~ — Arate table is normalized for what type of parameters in it?\n\n¢\nor Arate table is normalized for range parameters with overlapping ranges.\n\nse sSeSo SoS Se See ese\n\nLesson\nobjectives * Configure the rating plugin to allow rate books\n\nreview to be tested prior to release into a production\nenvironment\n\n¢ Describe ways to enhance rating performance",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Rating Maintenance Configuration",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Configure the rating plugin to allow rate books\nto be tested prior to releasing into a\nproduction environment\n\n¢ Describe ways to enhance rating performance",
+      "word_count": 28,
+      "avg_confidence": 91.07,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Configure IRatingPlugin G\n\n¢ Set the implementation class for the rating plugin (for example, PCRatingPlugin)\n\n¢ Set the RatingLevel parameter that controls the minimum rate book status\nconsidered during rate book selection\n\n* Default level is Active for the production environment\n\n* Lower level can be set for the development or test environment (for example,Stage)\n\nieonfiguration [i config i plugin Ei registry IRatingPiugingwp\n3 eB iRatingPlugingwp *\nE Name: [iRatingPiugin\n\nEr intertace: | RatingPtugin\n\ng\\+ Gosu Class qw-pluginpolicyperiod.impl.PCRatingPlugin ~\n\n1d.impl.PCRatingPlugin}\n\nEnvironment:\n\n$2 Struct\n\nServer:\nCo Disabtea\n\nParameters: Name. Yat Environment | Server | 4\nfRatinglevel_ Active",
+      "word_count": 97,
+      "avg_confidence": 70.62,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Physical tables for rate tables Gi\n\n¢ Default physical table\n* Defined in DefaultRateFactorRow.eti\n« Avery large generic physical table used to store many rate tables for most lines of business\n* Indexing and performance tuning of large tables takes more time\n* Custom physical table\n« Example: CoverageRateFactor.eti for simple coverage-based rate tables\n* Create a custom table when you need a medium sized table, which must have\n+ A foreign key to the RateTable entity\n\n+ Atleast two columns, one for parameter and one for factor",
+      "word_count": 89,
+      "avg_confidence": 89.93,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Ways to improve rate table performance\n\n¢ Use the rate table lookup strategy in a rate book\n\n« Use rate table normalization",
+      "word_count": 23,
+      "avg_confidence": 90.96,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Rate table lookup strategy\n\nFi\n« Arate table can be loaded into memory or accessed from the database\n\n¢ By default, it is loaded into memory providing quick access\n\n« Loading a large rate table may slow system performance if there is inadequate memory\n\nEdit Rate Book\n\nRate Book Details\n\nPolicy Criteria\ncode + | gxcrtm_demo_rating Policy Line <applies toall>\nName o& | Generic RTM Demo Rating Jurisdiction % | <applies to all> +\nRate Tables | Rate Routines\nIncluded Rate Tables ~) Available Rate Tables ge\nPending Import Name ‘Lookup\nLi\n\nName\nGenericStateTax\n\nMemory\n\nNo data to display\n\nDatabase",
+      "word_count": 101,
+      "avg_confidence": 83.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Edit rate table lookup G\n\n¢ The lookup setting can be changed only when the rate book is in Draft status\n* The lookup setting is checked when a rate book is promoted from Draft to Stage\n\n« When arate table is included in multiple rate books\n* It can have only one lookup setting\n\n* The setting can be changed only in the rate book that owns the rate table when it is in Draft\n\nstatus PA RTM Demo Rating (Geemisoss)\nCode pa_rtm_demo_rating -<applies to all>\na> > ee\n= a me RSs es",
+      "word_count": 96,
+      "avg_confidence": 84.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Rate table normalization Gi\n\nSpeeds up rate factor lookups, but requires more memory\n\nApplies only when matching against more than one parameter, one of which is a\nrange parameter with overlapping ranges\n\nRemoves overlapping ranges by expanding the number of table rows in memory\n\nConfiguration parameters control whether or not PolicyCenter normalizes rate\ntable by default\n\nUsers can choose not to normalize a rate table by setting the Reduce Memory\nUsage option",
+      "word_count": 73,
+      "avg_confidence": 95.04,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Rate table normalization example\n\nThe rate table has two parameters: Age and Jurisdiction\n\n+ Where age is a range parameter\n\nRate table in a rate book\n\nRow#| Minimum Age | Maximum Age | Jurisdiction | * Factor\ni 1 5 California 1\n2 3 2\n3 5 8 Oregon 3\n\nRate table normalized in memory for lookup\n\nRow #| Minimum Age | Maximum Age | Jurisdiction | * Factor\n1 1 3 California 1\n2 3 5 California 1\n3 3 5 2\n4 5 6 2\n5 5 6 Oregon 3\n6 6 8 Oregon 3",
+      "word_count": 98,
+      "avg_confidence": 92.87,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Parameters that control rate table normalization Gi\n\n« RateTableManagementNormalizationRowThreshold\n\n« If the number of rows in the normalized table exceeds this threshold, the user is given the\n“Reduce Memory Usage” option to load a non-normalized version of the table\n\nRate Table Content\n\n¢« RateTableManagementNormalizationRowLimit\n\n« If the number of rows in the normalized table exceeds this limit, the table is automatically\nmarked as non-normalizable and PolicyCenter stores the non-normalized version of the table",
+      "word_count": 74,
+      "avg_confidence": 90.85,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Demonstration G\n\nRating maintenance configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Question\n\n,~ — When should you create a custom physical table?\n\n¢\n4\n¢\n\nseo eooce Sse Sbeese505",
+      "word_count": 18,
+      "avg_confidence": 81.38,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Answer Gi\n\n,~ — When should you create a custom physical table?\n¢\nor In the base configuration there are two physical tables that can be used as-is and as\nmodels for other custom tables that may be required for a particular implementation.\nNew custom physical table can be configured for one or a group of similar rate table\n\ndefinitions if neither table is appropriate.\n\nse sSeSo SoS Se See ese",
+      "word_count": 71,
+      "avg_confidence": 89.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question\n\n,~ — Arate table is normalized for what type of parameters in it?\n\n¢\n4\n¢\n\nseo eooce Sse Sbeese505",
+      "word_count": 21,
+      "avg_confidence": 80.21,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer\n\n,~ — Arate table is normalized for what type of parameters in it?\n\n¢\nor Arate table is normalized for range parameters with overlapping ranges.\n\nse sSeSo SoS Se See ese",
+      "word_count": 32,
+      "avg_confidence": 80.43,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Lesson\nobjectives * Configure the rating plugin to allow rate books\n\nreview to be tested prior to release into a production\nenvironment\n\n¢ Describe ways to enhance rating performance",
+      "word_count": 29,
+      "avg_confidence": 91.17,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

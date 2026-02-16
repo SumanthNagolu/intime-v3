@@ -118,7 +118,7 @@ export function CreateJobOrderDialog({ open, onOpenChange, preselectedVendorId }
       title: title.trim(),
       description: description || undefined,
       location: location || undefined,
-      workMode: workMode as 'onsite' | 'remote' | 'hybrid' | undefined,
+      workMode: workMode as 'on_site' | 'remote' | 'hybrid' | undefined,
       rateType: rateType as 'hourly' | 'daily' | 'monthly' | 'annual',
       billRate: billRate ? parseFloat(billRate) : undefined,
       durationMonths: durationMonths ? parseInt(durationMonths) : undefined,
@@ -288,7 +288,7 @@ export function CreateJobOrderDialog({ open, onOpenChange, preselectedVendorId }
                       <SelectValue placeholder="Select work mode" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="onsite">Onsite</SelectItem>
+                      <SelectItem value="on_site">On-Site</SelectItem>
                       <SelectItem value="remote">Remote</SelectItem>
                       <SelectItem value="hybrid">Hybrid</SelectItem>
                     </SelectContent>

@@ -1,0 +1,5761 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_09_02.mp4",
+    "video_stem": "CC_09_02",
+    "duration_seconds": 542.82,
+    "duration_formatted": "00:09:02.820",
+    "segment_count": 57,
+    "word_count": 852,
+    "avg_confidence": 0.9292,
+    "transcription_time_seconds": 40.0,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:39:17.235763"
+  },
+  "full_text": "At Succeed Insurance, sometimes a payment submitted by an adjuster exceeds the limit imposed by the policy for that exposure type. There are often good reasons for this, but when it occurs, the group's supervisor must investigate and verify that the payment issued is reasonable and appropriate. A rule must be created to implement this requirement. To save time, I have already created such a rule. It is a transaction set pre-update rule. This is the rule, Exposure Payments Beyond Limit. The condition for this rule ensures that the rule fires only when a check set is submitted, not a reserve or recovery transaction set. To meet this requirement I use a financials calculations engine that obtains total payments. The rule looks at each exposure in the transaction set. For each exposure, it determines whether the amount being paid for the exposure is greater than the limit for that exposure. If it is, the rule creates an exposure limit exceeded activity. It then assigns that activity to the supervisor of the group assigned. It is a validating rule. There is a validating rule. There is a validating rule that would interfere with the function of my new rule. It rejects transaction sets that would bring the total payments for an exposure above the exposure's limit. This would mean that my pre-update rule would never fire. I will simply disable the rule for the purposes of this demonstration. Now I will start the Claim Center Server. In debug mode. When the server is ready, I will start the Claim Center Server. In debug mode. I will start the Claim Center Server. In debug mode. I log in as Andy Applegate. Now I will start a new claim to test the rule. I'll use today's date. I need a policy with a good set of exposure limits. Most of the time I will start the Claim Center Server. In debug mode. Most homeowners policies meet this requirement. I'll use the Kandarian policy. Let's look at the policy details. There is one location on the policy. Looking at the coverages for that location. I note a personal property coverage, with an exposure limit of $50,000 and an incident limit of $75,000. Now I'll return to the main sequence. the wizard. For the reporter, I'll select the main insured party. Mr. Darien informs us that his house has been vandalized. An intruder spray-painted his living room walls, including a Dali painting. The loss causes malicious mischief and vandalism. Damage has been done to the dwelling. Particularly, rude words, spray painted on the wall of the living room. Mr. Darien has already gotten estimates for repairs to the damage. There is also damage to personal property in the form of the painting. The painting will require extensive restoration. This is related to the property contents incident. I will add one service. For purposes of this claim, the painting counts as furniture. We definitely want the painting restored. The work will be done by Stan's Restoral Service, the best in the Chicago area. I will add Stan's Restoral Service as a company vendor. Theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount This completes the service request. The base configuration of Claim Center does not automatically create exposures for homeowners' policies, so I will create one for the painting. The claimant for the exposure is Kentarian. I'll assign the claim to myself. Now the claim is complete. I'll visit the claim and add a reserve. There is only one exposure. This reserve is for claim cost. Its purpose is to pay for the restoral of the painting. Stan's Restoral has given us an estimate of $60,000. Recall that the limit for personal property exposures is $50,000. A reserve this big will obviously require high-level approval. So I will log out as Andy Applegate. And log in as the supervisor. I'll search for the claim I just created. Looking at the work plan for the claim, I see that there is an activity to approve the reserve. By logging in as the supervisor I'm skipping several levels to the level that would ultimately approve the reserve of this size. This seems like a reasonable estimate for such a delicate restoral job. Though it exceeds the exposure limit, it is within the incident limit, so I approve it. Now I'll log back in as Andy Applegate and create the check that will test the rule. First, I must return to the claim I created. Now I create a new check. The check will go to Stan's Restoral Service. This is the only payment that will be made on this reserve. So, it is a final payment. The payment is in the amount of $60,000. I will log in as Andy Applegate. Like the reserve, the check requires approval at the supervisory level. So I log out as Andy Applegate. And, once again, log in as the supervisor. I navigate to the claims work plan. There is an activity to approve the check. I simply approve it. And the activity created by the rule is present. The rule is working properly. This concludes the transaction set pre-update rules demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.66,
+      "end": 29.34,
+      "start_formatted": "00:00:00.660",
+      "end_formatted": "00:00:29.340",
+      "text": "At Succeed Insurance, sometimes a payment submitted by an adjuster exceeds the limit imposed by the policy for that exposure type. There are often good reasons for this, but when it occurs, the group's supervisor must investigate and verify that the payment issued is reasonable and appropriate. A rule must be created to implement this requirement. To save time, I have already created such a rule. It is a transaction set pre-update rule. This is the rule, Exposure Payments Beyond Limit.",
+      "words": [
+        {
+          "word": "At",
+          "start": 0.66,
+          "end": 1.26,
+          "probability": 0.9248
+        },
+        {
+          "word": "Succeed",
+          "start": 1.26,
+          "end": 1.7,
+          "probability": 0.8848
+        },
+        {
+          "word": "Insurance,",
+          "start": 1.7,
+          "end": 2.1,
+          "probability": 0.9468
+        },
+        {
+          "word": "sometimes",
+          "start": 2.44,
+          "end": 2.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 2.92,
+          "end": 3.14,
+          "probability": 0.9668
+        },
+        {
+          "word": "payment",
+          "start": 3.14,
+          "end": 3.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "submitted",
+          "start": 3.44,
+          "end": 3.82,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 3.82,
+          "end": 4.06,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 4.06,
+          "end": 4.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "adjuster",
+          "start": 4.22,
+          "end": 4.64,
+          "probability": 0.9795
+        },
+        {
+          "word": "exceeds",
+          "start": 4.64,
+          "end": 5.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 5.0,
+          "end": 5.18,
+          "probability": 1.0
+        },
+        {
+          "word": "limit",
+          "start": 5.18,
+          "end": 5.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "imposed",
+          "start": 5.48,
+          "end": 5.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 5.9,
+          "end": 6.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 6.08,
+          "end": 6.22,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 6.22,
+          "end": 6.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 6.64,
+          "end": 6.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 6.86,
+          "end": 7.0,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 7.0,
+          "end": 7.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "type.",
+          "start": 7.44,
+          "end": 7.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "There",
+          "start": 8.08,
+          "end": 8.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 8.44,
+          "end": 8.58,
+          "probability": 1.0
+        },
+        {
+          "word": "often",
+          "start": 8.58,
+          "end": 8.86,
+          "probability": 1.0
+        },
+        {
+          "word": "good",
+          "start": 8.86,
+          "end": 9.04,
+          "probability": 1.0
+        },
+        {
+          "word": "reasons",
+          "start": 9.04,
+          "end": 9.42,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 9.42,
+          "end": 9.64,
+          "probability": 1.0
+        },
+        {
+          "word": "this,",
+          "start": 9.64,
+          "end": 9.92,
+          "probability": 1.0
+        },
+        {
+          "word": "but",
+          "start": 10.08,
+          "end": 10.28,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 10.28,
+          "end": 10.42,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 10.42,
+          "end": 10.54,
+          "probability": 1.0
+        },
+        {
+          "word": "occurs,",
+          "start": 10.54,
+          "end": 10.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 11.18,
+          "end": 11.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "group's",
+          "start": 11.4,
+          "end": 11.78,
+          "probability": 0.9517
+        },
+        {
+          "word": "supervisor",
+          "start": 11.78,
+          "end": 12.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "must",
+          "start": 12.34,
+          "end": 12.68,
+          "probability": 1.0
+        },
+        {
+          "word": "investigate",
+          "start": 12.68,
+          "end": 13.16,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 13.16,
+          "end": 13.4,
+          "probability": 1.0
+        },
+        {
+          "word": "verify",
+          "start": 13.4,
+          "end": 13.76,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 13.76,
+          "end": 14.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 14.0,
+          "end": 14.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 14.12,
+          "end": 14.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "issued",
+          "start": 14.44,
+          "end": 14.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 14.78,
+          "end": 14.98,
+          "probability": 1.0
+        },
+        {
+          "word": "reasonable",
+          "start": 14.98,
+          "end": 15.42,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 15.42,
+          "end": 15.66,
+          "probability": 0.998
+        },
+        {
+          "word": "appropriate.",
+          "start": 15.66,
+          "end": 16.1,
+          "probability": 0.999
+        },
+        {
+          "word": "A",
+          "start": 16.46,
+          "end": 16.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 16.84,
+          "end": 17.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "must",
+          "start": 17.06,
+          "end": 17.3,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 17.3,
+          "end": 17.46,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 17.46,
+          "end": 17.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 17.86,
+          "end": 18.06,
+          "probability": 1.0
+        },
+        {
+          "word": "implement",
+          "start": 18.06,
+          "end": 18.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 18.48,
+          "end": 18.72,
+          "probability": 1.0
+        },
+        {
+          "word": "requirement.",
+          "start": 18.72,
+          "end": 19.34,
+          "probability": 1.0
+        },
+        {
+          "word": "To",
+          "start": 19.76,
+          "end": 20.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "save",
+          "start": 20.12,
+          "end": 20.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "time,",
+          "start": 20.4,
+          "end": 20.74,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 20.98,
+          "end": 21.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 21.2,
+          "end": 21.36,
+          "probability": 1.0
+        },
+        {
+          "word": "already",
+          "start": 21.36,
+          "end": 21.72,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 21.72,
+          "end": 22.16,
+          "probability": 1.0
+        },
+        {
+          "word": "such",
+          "start": 22.16,
+          "end": 22.48,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 22.48,
+          "end": 22.6,
+          "probability": 1.0
+        },
+        {
+          "word": "rule.",
+          "start": 22.6,
+          "end": 22.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "It",
+          "start": 23.14,
+          "end": 23.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 23.42,
+          "end": 23.54,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 23.54,
+          "end": 23.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "transaction",
+          "start": 23.66,
+          "end": 24.18,
+          "probability": 0.772
+        },
+        {
+          "word": "set",
+          "start": 24.18,
+          "end": 24.56,
+          "probability": 0.8687
+        },
+        {
+          "word": "pre",
+          "start": 24.56,
+          "end": 24.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "-update",
+          "start": 24.86,
+          "end": 25.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "rule.",
+          "start": 25.28,
+          "end": 25.58,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 26.16,
+          "end": 26.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 26.76,
+          "end": 26.88,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 26.88,
+          "end": 27.02,
+          "probability": 1.0
+        },
+        {
+          "word": "rule,",
+          "start": 27.02,
+          "end": 27.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "Exposure",
+          "start": 27.6,
+          "end": 28.18,
+          "probability": 0.6748
+        },
+        {
+          "word": "Payments",
+          "start": 28.18,
+          "end": 28.66,
+          "probability": 0.98
+        },
+        {
+          "word": "Beyond",
+          "start": 28.66,
+          "end": 28.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "Limit.",
+          "start": 28.96,
+          "end": 29.34,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.34,
+      "end": 59.32,
+      "start_formatted": "00:00:29.340",
+      "end_formatted": "00:00:59.320",
+      "text": "The condition for this rule ensures that the rule fires only when a check set is submitted, not a reserve or recovery transaction set. To meet this requirement I use a financials calculations engine that obtains total payments. The rule looks at each exposure in the transaction set. For each exposure, it determines whether the amount being paid for the exposure is greater than the limit for that exposure. If it is, the rule creates an exposure limit exceeded activity. It then assigns that activity to the supervisor of the group assigned.",
+      "words": [
+        {
+          "word": "The",
+          "start": 29.34,
+          "end": 29.96,
+          "probability": 0.9619
+        },
+        {
+          "word": "condition",
+          "start": 29.96,
+          "end": 30.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 30.34,
+          "end": 30.58,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 30.58,
+          "end": 30.78,
+          "probability": 1.0
+        },
+        {
+          "word": "rule",
+          "start": 30.78,
+          "end": 31.02,
+          "probability": 0.999
+        },
+        {
+          "word": "ensures",
+          "start": 31.02,
+          "end": 31.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 31.4,
+          "end": 31.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 31.64,
+          "end": 31.78,
+          "probability": 1.0
+        },
+        {
+          "word": "rule",
+          "start": 31.78,
+          "end": 32.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "fires",
+          "start": 32.0,
+          "end": 32.34,
+          "probability": 0.999
+        },
+        {
+          "word": "only",
+          "start": 32.34,
+          "end": 32.64,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 32.64,
+          "end": 32.86,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 32.86,
+          "end": 33.02,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 33.02,
+          "end": 33.12,
+          "probability": 0.833
+        },
+        {
+          "word": "set",
+          "start": 33.12,
+          "end": 33.34,
+          "probability": 0.9585
+        },
+        {
+          "word": "is",
+          "start": 33.34,
+          "end": 33.52,
+          "probability": 1.0
+        },
+        {
+          "word": "submitted,",
+          "start": 33.52,
+          "end": 33.94,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 34.32,
+          "end": 34.48,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 34.48,
+          "end": 34.6,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 34.6,
+          "end": 34.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "or",
+          "start": 34.96,
+          "end": 35.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "recovery",
+          "start": 35.16,
+          "end": 35.6,
+          "probability": 0.998
+        },
+        {
+          "word": "transaction",
+          "start": 35.6,
+          "end": 36.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "set.",
+          "start": 36.08,
+          "end": 36.66,
+          "probability": 1.0
+        },
+        {
+          "word": "To",
+          "start": 36.98,
+          "end": 37.24,
+          "probability": 1.0
+        },
+        {
+          "word": "meet",
+          "start": 37.24,
+          "end": 37.42,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 37.42,
+          "end": 37.62,
+          "probability": 1.0
+        },
+        {
+          "word": "requirement",
+          "start": 37.62,
+          "end": 38.14,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 38.14,
+          "end": 38.36,
+          "probability": 0.9648
+        },
+        {
+          "word": "use",
+          "start": 38.36,
+          "end": 38.56,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 38.56,
+          "end": 38.68,
+          "probability": 1.0
+        },
+        {
+          "word": "financials",
+          "start": 38.68,
+          "end": 39.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "calculations",
+          "start": 39.34,
+          "end": 39.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "engine",
+          "start": 39.98,
+          "end": 40.42,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 40.42,
+          "end": 40.62,
+          "probability": 1.0
+        },
+        {
+          "word": "obtains",
+          "start": 40.62,
+          "end": 41.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "total",
+          "start": 41.02,
+          "end": 41.28,
+          "probability": 1.0
+        },
+        {
+          "word": "payments.",
+          "start": 41.28,
+          "end": 41.82,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 42.04,
+          "end": 42.42,
+          "probability": 1.0
+        },
+        {
+          "word": "rule",
+          "start": 42.42,
+          "end": 42.62,
+          "probability": 1.0
+        },
+        {
+          "word": "looks",
+          "start": 42.62,
+          "end": 42.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 42.9,
+          "end": 43.04,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 43.04,
+          "end": 43.28,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 43.28,
+          "end": 43.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 43.76,
+          "end": 44.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 44.02,
+          "end": 44.1,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 44.1,
+          "end": 44.68,
+          "probability": 1.0
+        },
+        {
+          "word": "set.",
+          "start": 44.68,
+          "end": 45.1,
+          "probability": 1.0
+        },
+        {
+          "word": "For",
+          "start": 45.28,
+          "end": 45.78,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 45.78,
+          "end": 46.06,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure,",
+          "start": 46.06,
+          "end": 46.58,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 46.86,
+          "end": 47.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "determines",
+          "start": 47.08,
+          "end": 47.48,
+          "probability": 1.0
+        },
+        {
+          "word": "whether",
+          "start": 47.48,
+          "end": 47.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 47.86,
+          "end": 48.06,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 48.06,
+          "end": 48.34,
+          "probability": 1.0
+        },
+        {
+          "word": "being",
+          "start": 48.34,
+          "end": 48.6,
+          "probability": 1.0
+        },
+        {
+          "word": "paid",
+          "start": 48.6,
+          "end": 48.88,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 48.88,
+          "end": 49.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 49.08,
+          "end": 49.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 49.2,
+          "end": 49.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 49.68,
+          "end": 49.92,
+          "probability": 1.0
+        },
+        {
+          "word": "greater",
+          "start": 49.92,
+          "end": 50.2,
+          "probability": 1.0
+        },
+        {
+          "word": "than",
+          "start": 50.2,
+          "end": 50.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 50.4,
+          "end": 50.52,
+          "probability": 1.0
+        },
+        {
+          "word": "limit",
+          "start": 50.52,
+          "end": 50.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 50.74,
+          "end": 50.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 50.9,
+          "end": 51.02,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure.",
+          "start": 51.02,
+          "end": 51.52,
+          "probability": 1.0
+        },
+        {
+          "word": "If",
+          "start": 51.8,
+          "end": 52.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 52.22,
+          "end": 52.34,
+          "probability": 1.0
+        },
+        {
+          "word": "is,",
+          "start": 52.34,
+          "end": 52.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 52.92,
+          "end": 53.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 53.1,
+          "end": 53.28,
+          "probability": 1.0
+        },
+        {
+          "word": "creates",
+          "start": 53.28,
+          "end": 53.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 53.72,
+          "end": 53.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 53.88,
+          "end": 54.36,
+          "probability": 0.9902
+        },
+        {
+          "word": "limit",
+          "start": 54.36,
+          "end": 54.74,
+          "probability": 0.998
+        },
+        {
+          "word": "exceeded",
+          "start": 54.74,
+          "end": 55.06,
+          "probability": 0.9531
+        },
+        {
+          "word": "activity.",
+          "start": 55.06,
+          "end": 55.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "It",
+          "start": 55.96,
+          "end": 56.3,
+          "probability": 0.998
+        },
+        {
+          "word": "then",
+          "start": 56.3,
+          "end": 56.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "assigns",
+          "start": 56.44,
+          "end": 56.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 56.88,
+          "end": 57.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "activity",
+          "start": 57.02,
+          "end": 57.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 57.48,
+          "end": 57.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 57.74,
+          "end": 57.9,
+          "probability": 1.0
+        },
+        {
+          "word": "supervisor",
+          "start": 57.9,
+          "end": 58.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 58.42,
+          "end": 58.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 58.66,
+          "end": 58.76,
+          "probability": 1.0
+        },
+        {
+          "word": "group",
+          "start": 58.76,
+          "end": 58.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "assigned.",
+          "start": 58.96,
+          "end": 59.32,
+          "probability": 0.8931
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.32,
+      "end": 89.3,
+      "start_formatted": "00:00:59.320",
+      "end_formatted": "00:01:29.300",
+      "text": "It is a validating rule. There is a validating rule. There is a validating rule that would interfere with the function of my new rule. It rejects transaction sets that would bring the total payments for an exposure above the exposure's limit. This would mean that my pre-update rule would never fire. I will simply disable the rule for the purposes of this demonstration. Now I will start the Claim Center Server. In debug mode. When the server is ready, I will start the Claim Center Server. In debug mode.",
+      "words": [
+        {
+          "word": "It",
+          "start": 59.32,
+          "end": 60.24,
+          "probability": 0.0115
+        },
+        {
+          "word": "is",
+          "start": 60.24,
+          "end": 60.24,
+          "probability": 0.1119
+        },
+        {
+          "word": "a",
+          "start": 60.24,
+          "end": 60.24,
+          "probability": 0.058
+        },
+        {
+          "word": "validating",
+          "start": 60.24,
+          "end": 60.24,
+          "probability": 0.1198
+        },
+        {
+          "word": "rule.",
+          "start": 60.24,
+          "end": 60.24,
+          "probability": 0.9233
+        },
+        {
+          "word": "There",
+          "start": 60.24,
+          "end": 60.68,
+          "probability": 0.2632
+        },
+        {
+          "word": "is",
+          "start": 60.68,
+          "end": 60.82,
+          "probability": 0.9795
+        },
+        {
+          "word": "a",
+          "start": 60.82,
+          "end": 60.92,
+          "probability": 0.9502
+        },
+        {
+          "word": "validating",
+          "start": 60.92,
+          "end": 61.52,
+          "probability": 0.5078
+        },
+        {
+          "word": "rule.",
+          "start": 61.52,
+          "end": 61.78,
+          "probability": 0.98
+        },
+        {
+          "word": "There",
+          "start": 61.98,
+          "end": 61.98,
+          "probability": 0.0862
+        },
+        {
+          "word": "is",
+          "start": 61.98,
+          "end": 61.98,
+          "probability": 0.8521
+        },
+        {
+          "word": "a",
+          "start": 61.98,
+          "end": 61.98,
+          "probability": 0.7954
+        },
+        {
+          "word": "validating",
+          "start": 61.98,
+          "end": 61.98,
+          "probability": 0.7881
+        },
+        {
+          "word": "rule",
+          "start": 61.98,
+          "end": 61.98,
+          "probability": 0.9814
+        },
+        {
+          "word": "that",
+          "start": 61.98,
+          "end": 61.98,
+          "probability": 0.7109
+        },
+        {
+          "word": "would",
+          "start": 61.98,
+          "end": 62.14,
+          "probability": 0.9097
+        },
+        {
+          "word": "interfere",
+          "start": 62.14,
+          "end": 62.5,
+          "probability": 0.9443
+        },
+        {
+          "word": "with",
+          "start": 62.5,
+          "end": 62.78,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 62.78,
+          "end": 62.9,
+          "probability": 0.8594
+        },
+        {
+          "word": "function",
+          "start": 62.9,
+          "end": 63.18,
+          "probability": 0.9399
+        },
+        {
+          "word": "of",
+          "start": 63.18,
+          "end": 63.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "my",
+          "start": 63.38,
+          "end": 63.54,
+          "probability": 0.9287
+        },
+        {
+          "word": "new",
+          "start": 63.54,
+          "end": 63.68,
+          "probability": 0.9795
+        },
+        {
+          "word": "rule.",
+          "start": 63.68,
+          "end": 64.0,
+          "probability": 0.9771
+        },
+        {
+          "word": "It",
+          "start": 67.98,
+          "end": 68.54,
+          "probability": 0.7925
+        },
+        {
+          "word": "rejects",
+          "start": 68.54,
+          "end": 68.96,
+          "probability": 0.9673
+        },
+        {
+          "word": "transaction",
+          "start": 68.96,
+          "end": 69.5,
+          "probability": 0.8784
+        },
+        {
+          "word": "sets",
+          "start": 69.5,
+          "end": 69.92,
+          "probability": 0.9487
+        },
+        {
+          "word": "that",
+          "start": 69.92,
+          "end": 70.12,
+          "probability": 0.9438
+        },
+        {
+          "word": "would",
+          "start": 70.12,
+          "end": 70.26,
+          "probability": 0.9663
+        },
+        {
+          "word": "bring",
+          "start": 70.26,
+          "end": 70.46,
+          "probability": 0.9839
+        },
+        {
+          "word": "the",
+          "start": 70.46,
+          "end": 70.6,
+          "probability": 0.9116
+        },
+        {
+          "word": "total",
+          "start": 70.6,
+          "end": 70.82,
+          "probability": 0.9741
+        },
+        {
+          "word": "payments",
+          "start": 70.82,
+          "end": 71.18,
+          "probability": 0.9233
+        },
+        {
+          "word": "for",
+          "start": 71.18,
+          "end": 71.48,
+          "probability": 0.958
+        },
+        {
+          "word": "an",
+          "start": 71.48,
+          "end": 71.62,
+          "probability": 0.958
+        },
+        {
+          "word": "exposure",
+          "start": 71.62,
+          "end": 72.04,
+          "probability": 0.939
+        },
+        {
+          "word": "above",
+          "start": 72.04,
+          "end": 72.4,
+          "probability": 0.978
+        },
+        {
+          "word": "the",
+          "start": 72.4,
+          "end": 72.58,
+          "probability": 0.9595
+        },
+        {
+          "word": "exposure's",
+          "start": 72.58,
+          "end": 73.24,
+          "probability": 0.6318
+        },
+        {
+          "word": "limit.",
+          "start": 73.24,
+          "end": 73.58,
+          "probability": 0.9844
+        },
+        {
+          "word": "This",
+          "start": 73.88,
+          "end": 74.28,
+          "probability": 0.9556
+        },
+        {
+          "word": "would",
+          "start": 74.28,
+          "end": 74.42,
+          "probability": 0.9756
+        },
+        {
+          "word": "mean",
+          "start": 74.42,
+          "end": 74.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "that",
+          "start": 74.62,
+          "end": 74.8,
+          "probability": 0.9473
+        },
+        {
+          "word": "my",
+          "start": 74.8,
+          "end": 74.94,
+          "probability": 0.9849
+        },
+        {
+          "word": "pre",
+          "start": 74.94,
+          "end": 75.18,
+          "probability": 0.875
+        },
+        {
+          "word": "-update",
+          "start": 75.18,
+          "end": 75.52,
+          "probability": 0.9238
+        },
+        {
+          "word": "rule",
+          "start": 75.52,
+          "end": 75.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "would",
+          "start": 75.76,
+          "end": 75.98,
+          "probability": 0.9829
+        },
+        {
+          "word": "never",
+          "start": 75.98,
+          "end": 76.2,
+          "probability": 0.9839
+        },
+        {
+          "word": "fire.",
+          "start": 76.2,
+          "end": 76.54,
+          "probability": 0.9502
+        },
+        {
+          "word": "I",
+          "start": 76.88,
+          "end": 77.2,
+          "probability": 0.9663
+        },
+        {
+          "word": "will",
+          "start": 77.2,
+          "end": 77.38,
+          "probability": 0.9692
+        },
+        {
+          "word": "simply",
+          "start": 77.38,
+          "end": 77.7,
+          "probability": 0.9624
+        },
+        {
+          "word": "disable",
+          "start": 77.7,
+          "end": 78.1,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 78.1,
+          "end": 78.32,
+          "probability": 0.9673
+        },
+        {
+          "word": "rule",
+          "start": 78.32,
+          "end": 78.5,
+          "probability": 0.9829
+        },
+        {
+          "word": "for",
+          "start": 78.5,
+          "end": 78.7,
+          "probability": 0.9717
+        },
+        {
+          "word": "the",
+          "start": 78.7,
+          "end": 78.82,
+          "probability": 0.9712
+        },
+        {
+          "word": "purposes",
+          "start": 78.82,
+          "end": 79.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 79.22,
+          "end": 79.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 79.44,
+          "end": 79.6,
+          "probability": 0.9839
+        },
+        {
+          "word": "demonstration.",
+          "start": 79.6,
+          "end": 80.18,
+          "probability": 0.9565
+        },
+        {
+          "word": "Now",
+          "start": 80.72,
+          "end": 81.1,
+          "probability": 0.9443
+        },
+        {
+          "word": "I",
+          "start": 81.1,
+          "end": 81.26,
+          "probability": 0.9375
+        },
+        {
+          "word": "will",
+          "start": 81.26,
+          "end": 81.42,
+          "probability": 0.9873
+        },
+        {
+          "word": "start",
+          "start": 81.42,
+          "end": 81.68,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 81.68,
+          "end": 81.82,
+          "probability": 0.9849
+        },
+        {
+          "word": "Claim",
+          "start": 81.82,
+          "end": 82.1,
+          "probability": 0.7642
+        },
+        {
+          "word": "Center",
+          "start": 82.1,
+          "end": 82.44,
+          "probability": 0.8325
+        },
+        {
+          "word": "Server.",
+          "start": 82.44,
+          "end": 82.88,
+          "probability": 0.3428
+        },
+        {
+          "word": "In",
+          "start": 84.28,
+          "end": 84.84,
+          "probability": 0.8398
+        },
+        {
+          "word": "debug",
+          "start": 84.84,
+          "end": 85.12,
+          "probability": 0.3662
+        },
+        {
+          "word": "mode.",
+          "start": 85.12,
+          "end": 85.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "When",
+          "start": 88.02,
+          "end": 88.58,
+          "probability": 0.8291
+        },
+        {
+          "word": "the",
+          "start": 88.58,
+          "end": 88.7,
+          "probability": 0.9727
+        },
+        {
+          "word": "server",
+          "start": 88.7,
+          "end": 89.0,
+          "probability": 0.9023
+        },
+        {
+          "word": "is",
+          "start": 89.0,
+          "end": 89.2,
+          "probability": 0.9888
+        },
+        {
+          "word": "ready,",
+          "start": 89.2,
+          "end": 89.3,
+          "probability": 0.7554
+        },
+        {
+          "word": "I",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.2971
+        },
+        {
+          "word": "will",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.6519
+        },
+        {
+          "word": "start",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.202
+        },
+        {
+          "word": "the",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.6865
+        },
+        {
+          "word": "Claim",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.8164
+        },
+        {
+          "word": "Center",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "Server.",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.467
+        },
+        {
+          "word": "In",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.2961
+        },
+        {
+          "word": "debug",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.75
+        },
+        {
+          "word": "mode.",
+          "start": 89.3,
+          "end": 89.3,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.3,
+      "end": 119.28,
+      "start_formatted": "00:01:29.300",
+      "end_formatted": "00:01:59.280",
+      "text": "I will start the Claim Center Server. In debug mode. I log in as Andy Applegate. Now I will start a new claim to test the rule. I'll use today's date. I need a policy with a good set of exposure limits. Most of the time I will start the Claim Center Server. In debug mode.",
+      "words": [
+        {
+          "word": "I",
+          "start": 89.3,
+          "end": 89.94,
+          "probability": 0.4797
+        },
+        {
+          "word": "will",
+          "start": 89.94,
+          "end": 90.1,
+          "probability": 0.6519
+        },
+        {
+          "word": "start",
+          "start": 90.1,
+          "end": 90.4,
+          "probability": 0.0054
+        },
+        {
+          "word": "the",
+          "start": 90.4,
+          "end": 90.64,
+          "probability": 0.0136
+        },
+        {
+          "word": "Claim",
+          "start": 90.64,
+          "end": 90.96,
+          "probability": 0.5293
+        },
+        {
+          "word": "Center",
+          "start": 90.96,
+          "end": 91.3,
+          "probability": 0.9062
+        },
+        {
+          "word": "Server.",
+          "start": 91.3,
+          "end": 91.58,
+          "probability": 0.0
+        },
+        {
+          "word": "In",
+          "start": 91.94,
+          "end": 92.42,
+          "probability": 0.0056
+        },
+        {
+          "word": "debug",
+          "start": 92.42,
+          "end": 92.42,
+          "probability": 0.0
+        },
+        {
+          "word": "mode.",
+          "start": 92.42,
+          "end": 92.42,
+          "probability": 0.0312
+        },
+        {
+          "word": "I",
+          "start": 92.42,
+          "end": 92.42,
+          "probability": 0.3306
+        },
+        {
+          "word": "log",
+          "start": 92.42,
+          "end": 92.62,
+          "probability": 0.1225
+        },
+        {
+          "word": "in",
+          "start": 92.62,
+          "end": 92.84,
+          "probability": 0.9556
+        },
+        {
+          "word": "as",
+          "start": 92.84,
+          "end": 92.98,
+          "probability": 0.9048
+        },
+        {
+          "word": "Andy",
+          "start": 92.98,
+          "end": 93.3,
+          "probability": 0.8633
+        },
+        {
+          "word": "Applegate.",
+          "start": 93.3,
+          "end": 94.02,
+          "probability": 0.9761
+        },
+        {
+          "word": "Now",
+          "start": 102.58,
+          "end": 103.06,
+          "probability": 0.5225
+        },
+        {
+          "word": "I",
+          "start": 103.06,
+          "end": 103.22,
+          "probability": 0.9116
+        },
+        {
+          "word": "will",
+          "start": 103.22,
+          "end": 103.38,
+          "probability": 0.9595
+        },
+        {
+          "word": "start",
+          "start": 103.38,
+          "end": 103.62,
+          "probability": 0.9375
+        },
+        {
+          "word": "a",
+          "start": 103.62,
+          "end": 103.78,
+          "probability": 0.9717
+        },
+        {
+          "word": "new",
+          "start": 103.78,
+          "end": 103.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "claim",
+          "start": 103.9,
+          "end": 104.12,
+          "probability": 0.7905
+        },
+        {
+          "word": "to",
+          "start": 104.12,
+          "end": 104.34,
+          "probability": 0.9395
+        },
+        {
+          "word": "test",
+          "start": 104.34,
+          "end": 104.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 104.58,
+          "end": 104.74,
+          "probability": 0.9863
+        },
+        {
+          "word": "rule.",
+          "start": 104.74,
+          "end": 104.94,
+          "probability": 0.9399
+        },
+        {
+          "word": "I'll",
+          "start": 113.02,
+          "end": 113.5,
+          "probability": 0.8101
+        },
+        {
+          "word": "use",
+          "start": 113.5,
+          "end": 113.7,
+          "probability": 0.9702
+        },
+        {
+          "word": "today's",
+          "start": 113.7,
+          "end": 114.18,
+          "probability": 0.877
+        },
+        {
+          "word": "date.",
+          "start": 114.18,
+          "end": 114.36,
+          "probability": 0.9614
+        },
+        {
+          "word": "I",
+          "start": 115.6,
+          "end": 116.08,
+          "probability": 0.9604
+        },
+        {
+          "word": "need",
+          "start": 116.08,
+          "end": 116.26,
+          "probability": 0.9658
+        },
+        {
+          "word": "a",
+          "start": 116.26,
+          "end": 116.38,
+          "probability": 0.8931
+        },
+        {
+          "word": "policy",
+          "start": 116.38,
+          "end": 116.76,
+          "probability": 0.9731
+        },
+        {
+          "word": "with",
+          "start": 116.76,
+          "end": 116.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 116.96,
+          "end": 117.08,
+          "probability": 0.9854
+        },
+        {
+          "word": "good",
+          "start": 117.08,
+          "end": 117.26,
+          "probability": 0.9453
+        },
+        {
+          "word": "set",
+          "start": 117.26,
+          "end": 117.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 117.48,
+          "end": 117.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "exposure",
+          "start": 117.62,
+          "end": 118.02,
+          "probability": 0.9746
+        },
+        {
+          "word": "limits.",
+          "start": 118.02,
+          "end": 118.56,
+          "probability": 0.9897
+        },
+        {
+          "word": "Most",
+          "start": 118.84,
+          "end": 119.28,
+          "probability": 0.6729
+        },
+        {
+          "word": "of",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.5
+        },
+        {
+          "word": "the",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.3574
+        },
+        {
+          "word": "time",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.0876
+        },
+        {
+          "word": "I",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.259
+        },
+        {
+          "word": "will",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.0881
+        },
+        {
+          "word": "start",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.0411
+        },
+        {
+          "word": "the",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.2561
+        },
+        {
+          "word": "Claim",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.5444
+        },
+        {
+          "word": "Center",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Server.",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.4084
+        },
+        {
+          "word": "In",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.0457
+        },
+        {
+          "word": "debug",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.0041
+        },
+        {
+          "word": "mode.",
+          "start": 119.28,
+          "end": 119.28,
+          "probability": 0.9097
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 119.28,
+      "end": 126.46,
+      "start_formatted": "00:01:59.280",
+      "end_formatted": "00:02:06.460",
+      "text": "Most homeowners policies meet this requirement. I'll use the Kandarian policy.",
+      "words": [
+        {
+          "word": "Most",
+          "start": 119.28,
+          "end": 119.42,
+          "probability": 0.8169
+        },
+        {
+          "word": "homeowners",
+          "start": 119.42,
+          "end": 119.82,
+          "probability": 0.7642
+        },
+        {
+          "word": "policies",
+          "start": 119.82,
+          "end": 120.44,
+          "probability": 0.7192
+        },
+        {
+          "word": "meet",
+          "start": 120.44,
+          "end": 120.8,
+          "probability": 0.9927
+        },
+        {
+          "word": "this",
+          "start": 120.8,
+          "end": 121.0,
+          "probability": 0.9858
+        },
+        {
+          "word": "requirement.",
+          "start": 121.0,
+          "end": 121.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "I'll",
+          "start": 124.28,
+          "end": 125.0,
+          "probability": 0.9756
+        },
+        {
+          "word": "use",
+          "start": 125.0,
+          "end": 125.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 125.24,
+          "end": 125.36,
+          "probability": 0.9912
+        },
+        {
+          "word": "Kandarian",
+          "start": 125.36,
+          "end": 125.86,
+          "probability": 0.7231
+        },
+        {
+          "word": "policy.",
+          "start": 125.86,
+          "end": 126.46,
+          "probability": 0.7642
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 130.74,
+      "end": 149.26,
+      "start_formatted": "00:02:10.740",
+      "end_formatted": "00:02:29.260",
+      "text": "Let's look at the policy details. There is one location on the policy. Looking at the coverages for that location. I note a personal property coverage, with an exposure limit of $50,000 and an incident limit of $75,000. Now I'll return to the main sequence.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 130.74,
+          "end": 131.46,
+          "probability": 0.9805
+        },
+        {
+          "word": "look",
+          "start": 131.46,
+          "end": 131.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "at",
+          "start": 131.66,
+          "end": 131.78,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 131.78,
+          "end": 131.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy",
+          "start": 131.88,
+          "end": 132.3,
+          "probability": 0.9683
+        },
+        {
+          "word": "details.",
+          "start": 132.3,
+          "end": 132.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "There",
+          "start": 133.86,
+          "end": 134.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "is",
+          "start": 134.58,
+          "end": 134.7,
+          "probability": 0.9937
+        },
+        {
+          "word": "one",
+          "start": 134.7,
+          "end": 134.9,
+          "probability": 0.9829
+        },
+        {
+          "word": "location",
+          "start": 134.9,
+          "end": 135.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 135.36,
+          "end": 135.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 135.56,
+          "end": 135.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy.",
+          "start": 135.66,
+          "end": 136.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "Looking",
+          "start": 136.76,
+          "end": 137.48,
+          "probability": 0.9741
+        },
+        {
+          "word": "at",
+          "start": 137.48,
+          "end": 137.6,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 137.6,
+          "end": 137.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "coverages",
+          "start": 137.72,
+          "end": 138.26,
+          "probability": 0.9824
+        },
+        {
+          "word": "for",
+          "start": 138.26,
+          "end": 138.46,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 138.46,
+          "end": 138.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "location.",
+          "start": 138.64,
+          "end": 139.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 139.6,
+          "end": 140.1,
+          "probability": 0.9907
+        },
+        {
+          "word": "note",
+          "start": 140.1,
+          "end": 140.3,
+          "probability": 0.8931
+        },
+        {
+          "word": "a",
+          "start": 140.3,
+          "end": 140.4,
+          "probability": 0.9858
+        },
+        {
+          "word": "personal",
+          "start": 140.4,
+          "end": 140.74,
+          "probability": 0.8779
+        },
+        {
+          "word": "property",
+          "start": 140.74,
+          "end": 141.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "coverage,",
+          "start": 141.22,
+          "end": 141.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "with",
+          "start": 141.96,
+          "end": 142.2,
+          "probability": 0.9902
+        },
+        {
+          "word": "an",
+          "start": 142.2,
+          "end": 142.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "exposure",
+          "start": 142.32,
+          "end": 142.74,
+          "probability": 0.9575
+        },
+        {
+          "word": "limit",
+          "start": 142.74,
+          "end": 143.14,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 143.14,
+          "end": 143.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "$50",
+          "start": 143.3,
+          "end": 143.58,
+          "probability": 0.9395
+        },
+        {
+          "word": ",000",
+          "start": 143.58,
+          "end": 144.06,
+          "probability": 0.9785
+        },
+        {
+          "word": "and",
+          "start": 144.06,
+          "end": 144.48,
+          "probability": 0.9536
+        },
+        {
+          "word": "an",
+          "start": 144.48,
+          "end": 144.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "incident",
+          "start": 144.64,
+          "end": 144.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "limit",
+          "start": 144.96,
+          "end": 145.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 145.26,
+          "end": 145.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "$75",
+          "start": 145.46,
+          "end": 145.98,
+          "probability": 0.9951
+        },
+        {
+          "word": ",000.",
+          "start": 145.98,
+          "end": 146.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "Now",
+          "start": 147.22,
+          "end": 147.74,
+          "probability": 0.9736
+        },
+        {
+          "word": "I'll",
+          "start": 147.74,
+          "end": 148.06,
+          "probability": 0.9629
+        },
+        {
+          "word": "return",
+          "start": 148.06,
+          "end": 148.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 148.36,
+          "end": 148.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 148.6,
+          "end": 148.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "main",
+          "start": 148.7,
+          "end": 148.88,
+          "probability": 0.9878
+        },
+        {
+          "word": "sequence.",
+          "start": 148.88,
+          "end": 149.26,
+          "probability": 0.9595
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 149.26,
+      "end": 154.02,
+      "start_formatted": "00:02:29.260",
+      "end_formatted": "00:02:34.020",
+      "text": "the wizard. For the reporter, I'll select the main insured party.",
+      "words": [
+        {
+          "word": "the",
+          "start": 149.26,
+          "end": 149.62,
+          "probability": 0.0316
+        },
+        {
+          "word": "wizard.",
+          "start": 149.62,
+          "end": 149.94,
+          "probability": 0.301
+        },
+        {
+          "word": "For",
+          "start": 150.82,
+          "end": 151.46,
+          "probability": 0.978
+        },
+        {
+          "word": "the",
+          "start": 151.46,
+          "end": 151.56,
+          "probability": 0.9883
+        },
+        {
+          "word": "reporter,",
+          "start": 151.56,
+          "end": 151.96,
+          "probability": 0.9263
+        },
+        {
+          "word": "I'll",
+          "start": 152.3,
+          "end": 152.52,
+          "probability": 0.9312
+        },
+        {
+          "word": "select",
+          "start": 152.52,
+          "end": 152.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 152.86,
+          "end": 153.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "main",
+          "start": 153.0,
+          "end": 153.22,
+          "probability": 0.9629
+        },
+        {
+          "word": "insured",
+          "start": 153.22,
+          "end": 153.58,
+          "probability": 0.9121
+        },
+        {
+          "word": "party.",
+          "start": 153.58,
+          "end": 154.02,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 158.34,
+      "end": 166.12,
+      "start_formatted": "00:02:38.340",
+      "end_formatted": "00:02:46.120",
+      "text": "Mr. Darien informs us that his house has been vandalized. An intruder spray-painted his living room walls, including a Dali painting.",
+      "words": [
+        {
+          "word": "Mr.",
+          "start": 158.34,
+          "end": 158.98,
+          "probability": 0.9336
+        },
+        {
+          "word": "Darien",
+          "start": 159.08,
+          "end": 159.4,
+          "probability": 0.7627
+        },
+        {
+          "word": "informs",
+          "start": 159.4,
+          "end": 159.86,
+          "probability": 0.9878
+        },
+        {
+          "word": "us",
+          "start": 159.86,
+          "end": 160.06,
+          "probability": 0.9907
+        },
+        {
+          "word": "that",
+          "start": 160.06,
+          "end": 160.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "his",
+          "start": 160.24,
+          "end": 160.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "house",
+          "start": 160.38,
+          "end": 160.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "has",
+          "start": 160.62,
+          "end": 160.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "been",
+          "start": 160.78,
+          "end": 160.96,
+          "probability": 0.999
+        },
+        {
+          "word": "vandalized.",
+          "start": 160.96,
+          "end": 161.66,
+          "probability": 0.9761
+        },
+        {
+          "word": "An",
+          "start": 161.88,
+          "end": 162.24,
+          "probability": 0.9888
+        },
+        {
+          "word": "intruder",
+          "start": 162.24,
+          "end": 162.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "spray",
+          "start": 162.68,
+          "end": 163.02,
+          "probability": 0.9878
+        },
+        {
+          "word": "-painted",
+          "start": 163.02,
+          "end": 163.34,
+          "probability": 0.7822
+        },
+        {
+          "word": "his",
+          "start": 163.34,
+          "end": 163.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "living",
+          "start": 163.62,
+          "end": 163.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "room",
+          "start": 163.86,
+          "end": 164.12,
+          "probability": 0.8096
+        },
+        {
+          "word": "walls,",
+          "start": 164.12,
+          "end": 164.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "including",
+          "start": 164.76,
+          "end": 165.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 165.22,
+          "end": 165.4,
+          "probability": 0.9248
+        },
+        {
+          "word": "Dali",
+          "start": 165.4,
+          "end": 165.64,
+          "probability": 0.6943
+        },
+        {
+          "word": "painting.",
+          "start": 165.64,
+          "end": 166.12,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 181.72,
+      "end": 186.98,
+      "start_formatted": "00:03:01.720",
+      "end_formatted": "00:03:06.980",
+      "text": "The loss causes malicious mischief and vandalism. Damage has been done to the dwelling.",
+      "words": [
+        {
+          "word": "The",
+          "start": 181.72,
+          "end": 182.36,
+          "probability": 0.9399
+        },
+        {
+          "word": "loss",
+          "start": 182.36,
+          "end": 182.64,
+          "probability": 0.9712
+        },
+        {
+          "word": "causes",
+          "start": 182.64,
+          "end": 183.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "malicious",
+          "start": 183.12,
+          "end": 183.56,
+          "probability": 0.998
+        },
+        {
+          "word": "mischief",
+          "start": 183.56,
+          "end": 184.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 184.1,
+          "end": 184.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "vandalism.",
+          "start": 184.28,
+          "end": 185.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "Damage",
+          "start": 185.22,
+          "end": 185.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "has",
+          "start": 185.84,
+          "end": 186.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "been",
+          "start": 186.0,
+          "end": 186.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "done",
+          "start": 186.18,
+          "end": 186.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 186.34,
+          "end": 186.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 186.5,
+          "end": 186.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "dwelling.",
+          "start": 186.62,
+          "end": 186.98,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 188.72,
+      "end": 192.7,
+      "start_formatted": "00:03:08.720",
+      "end_formatted": "00:03:12.700",
+      "text": "Particularly, rude words, spray painted on the wall of the living room.",
+      "words": [
+        {
+          "word": "Particularly,",
+          "start": 188.72,
+          "end": 189.32,
+          "probability": 0.0017
+        },
+        {
+          "word": "rude",
+          "start": 189.9,
+          "end": 190.04,
+          "probability": 0.7324
+        },
+        {
+          "word": "words,",
+          "start": 190.04,
+          "end": 190.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "spray",
+          "start": 190.5,
+          "end": 190.94,
+          "probability": 0.0003
+        },
+        {
+          "word": "painted",
+          "start": 190.94,
+          "end": 191.42,
+          "probability": 0.6948
+        },
+        {
+          "word": "on",
+          "start": 191.42,
+          "end": 191.58,
+          "probability": 0.9243
+        },
+        {
+          "word": "the",
+          "start": 191.58,
+          "end": 191.66,
+          "probability": 0.9829
+        },
+        {
+          "word": "wall",
+          "start": 191.66,
+          "end": 191.9,
+          "probability": 0.9731
+        },
+        {
+          "word": "of",
+          "start": 191.9,
+          "end": 192.06,
+          "probability": 0.9531
+        },
+        {
+          "word": "the",
+          "start": 192.06,
+          "end": 192.16,
+          "probability": 0.9761
+        },
+        {
+          "word": "living",
+          "start": 192.16,
+          "end": 192.38,
+          "probability": 0.9897
+        },
+        {
+          "word": "room.",
+          "start": 192.38,
+          "end": 192.7,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 204.18,
+      "end": 208.0,
+      "start_formatted": "00:03:24.180",
+      "end_formatted": "00:03:28.000",
+      "text": "Mr. Darien has already gotten estimates for repairs to the damage.",
+      "words": [
+        {
+          "word": "Mr.",
+          "start": 204.18,
+          "end": 204.78,
+          "probability": 0.9111
+        },
+        {
+          "word": "Darien",
+          "start": 204.86,
+          "end": 205.22,
+          "probability": 0.7197
+        },
+        {
+          "word": "has",
+          "start": 205.22,
+          "end": 205.44,
+          "probability": 0.9541
+        },
+        {
+          "word": "already",
+          "start": 205.44,
+          "end": 205.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "gotten",
+          "start": 205.86,
+          "end": 206.16,
+          "probability": 0.8599
+        },
+        {
+          "word": "estimates",
+          "start": 206.16,
+          "end": 206.54,
+          "probability": 0.9819
+        },
+        {
+          "word": "for",
+          "start": 206.54,
+          "end": 206.84,
+          "probability": 0.9595
+        },
+        {
+          "word": "repairs",
+          "start": 206.84,
+          "end": 207.26,
+          "probability": 0.9844
+        },
+        {
+          "word": "to",
+          "start": 207.26,
+          "end": 207.46,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 207.46,
+          "end": 207.56,
+          "probability": 0.9922
+        },
+        {
+          "word": "damage.",
+          "start": 207.56,
+          "end": 208.0,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 210.78,
+      "end": 215.02,
+      "start_formatted": "00:03:30.780",
+      "end_formatted": "00:03:35.020",
+      "text": "There is also damage to personal property in the form of the painting.",
+      "words": [
+        {
+          "word": "There",
+          "start": 210.78,
+          "end": 211.54,
+          "probability": 0.896
+        },
+        {
+          "word": "is",
+          "start": 211.54,
+          "end": 211.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "also",
+          "start": 211.72,
+          "end": 212.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "damage",
+          "start": 212.06,
+          "end": 212.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "to",
+          "start": 212.42,
+          "end": 212.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "personal",
+          "start": 212.62,
+          "end": 213.04,
+          "probability": 0.9814
+        },
+        {
+          "word": "property",
+          "start": 213.04,
+          "end": 213.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 213.62,
+          "end": 214.06,
+          "probability": 0.8301
+        },
+        {
+          "word": "the",
+          "start": 214.06,
+          "end": 214.16,
+          "probability": 0.998
+        },
+        {
+          "word": "form",
+          "start": 214.16,
+          "end": 214.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 214.4,
+          "end": 214.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 214.54,
+          "end": 214.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "painting.",
+          "start": 214.64,
+          "end": 215.02,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 227.4,
+      "end": 230.18,
+      "start_formatted": "00:03:47.400",
+      "end_formatted": "00:03:50.180",
+      "text": "The painting will require extensive restoration.",
+      "words": [
+        {
+          "word": "The",
+          "start": 227.4,
+          "end": 228.16,
+          "probability": 0.9663
+        },
+        {
+          "word": "painting",
+          "start": 228.16,
+          "end": 228.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "will",
+          "start": 228.44,
+          "end": 228.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "require",
+          "start": 228.64,
+          "end": 229.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "extensive",
+          "start": 229.06,
+          "end": 229.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "restoration.",
+          "start": 229.52,
+          "end": 230.18,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 233.36,
+      "end": 236.34,
+      "start_formatted": "00:03:53.360",
+      "end_formatted": "00:03:56.340",
+      "text": "This is related to the property contents incident.",
+      "words": [
+        {
+          "word": "This",
+          "start": 233.36,
+          "end": 234.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 234.12,
+          "end": 234.26,
+          "probability": 0.998
+        },
+        {
+          "word": "related",
+          "start": 234.26,
+          "end": 234.64,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 234.64,
+          "end": 234.84,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 234.84,
+          "end": 234.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "property",
+          "start": 234.96,
+          "end": 235.38,
+          "probability": 0.9771
+        },
+        {
+          "word": "contents",
+          "start": 235.38,
+          "end": 235.9,
+          "probability": 0.9907
+        },
+        {
+          "word": "incident.",
+          "start": 235.9,
+          "end": 236.34,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 237.1,
+      "end": 238.86,
+      "start_formatted": "00:03:57.100",
+      "end_formatted": "00:03:58.860",
+      "text": "I will add one service.",
+      "words": [
+        {
+          "word": "I",
+          "start": 237.1,
+          "end": 237.82,
+          "probability": 0.957
+        },
+        {
+          "word": "will",
+          "start": 237.82,
+          "end": 238.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "add",
+          "start": 238.02,
+          "end": 238.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "one",
+          "start": 238.18,
+          "end": 238.4,
+          "probability": 0.9219
+        },
+        {
+          "word": "service.",
+          "start": 238.4,
+          "end": 238.86,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 239.94,
+      "end": 243.62,
+      "start_formatted": "00:03:59.940",
+      "end_formatted": "00:04:03.620",
+      "text": "For purposes of this claim, the painting counts as furniture.",
+      "words": [
+        {
+          "word": "For",
+          "start": 239.94,
+          "end": 240.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "purposes",
+          "start": 240.66,
+          "end": 241.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 241.06,
+          "end": 241.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 241.3,
+          "end": 241.46,
+          "probability": 0.999
+        },
+        {
+          "word": "claim,",
+          "start": 241.46,
+          "end": 241.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 242.06,
+          "end": 242.24,
+          "probability": 0.998
+        },
+        {
+          "word": "painting",
+          "start": 242.24,
+          "end": 242.54,
+          "probability": 0.998
+        },
+        {
+          "word": "counts",
+          "start": 242.54,
+          "end": 242.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 242.94,
+          "end": 243.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "furniture.",
+          "start": 243.12,
+          "end": 243.62,
+          "probability": 0.9531
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 246.3,
+      "end": 248.72,
+      "start_formatted": "00:04:06.300",
+      "end_formatted": "00:04:08.720",
+      "text": "We definitely want the painting restored.",
+      "words": [
+        {
+          "word": "We",
+          "start": 246.3,
+          "end": 247.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "definitely",
+          "start": 247.02,
+          "end": 247.4,
+          "probability": 0.998
+        },
+        {
+          "word": "want",
+          "start": 247.4,
+          "end": 247.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 247.8,
+          "end": 247.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "painting",
+          "start": 247.92,
+          "end": 248.26,
+          "probability": 0.999
+        },
+        {
+          "word": "restored.",
+          "start": 248.26,
+          "end": 248.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 249.6,
+      "end": 254.48,
+      "start_formatted": "00:04:09.600",
+      "end_formatted": "00:04:14.480",
+      "text": "The work will be done by Stan's Restoral Service, the best in the Chicago area.",
+      "words": [
+        {
+          "word": "The",
+          "start": 249.6,
+          "end": 250.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "work",
+          "start": 250.32,
+          "end": 250.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 250.56,
+          "end": 250.74,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 250.74,
+          "end": 250.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "done",
+          "start": 250.86,
+          "end": 251.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 251.08,
+          "end": 251.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "Stan's",
+          "start": 251.32,
+          "end": 251.8,
+          "probability": 0.9453
+        },
+        {
+          "word": "Restoral",
+          "start": 251.8,
+          "end": 252.22,
+          "probability": 0.9131
+        },
+        {
+          "word": "Service,",
+          "start": 252.22,
+          "end": 252.68,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 252.94,
+          "end": 253.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "best",
+          "start": 253.14,
+          "end": 253.4,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 253.4,
+          "end": 253.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 253.56,
+          "end": 253.66,
+          "probability": 0.999
+        },
+        {
+          "word": "Chicago",
+          "start": 253.66,
+          "end": 254.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "area.",
+          "start": 254.02,
+          "end": 254.48,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 255.0,
+      "end": 258.3,
+      "start_formatted": "00:04:15.000",
+      "end_formatted": "00:04:18.300",
+      "text": "I will add Stan's Restoral Service as a company vendor.",
+      "words": [
+        {
+          "word": "I",
+          "start": 255.0,
+          "end": 255.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 255.56,
+          "end": 255.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 255.74,
+          "end": 255.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Stan's",
+          "start": 255.96,
+          "end": 256.42,
+          "probability": 0.999
+        },
+        {
+          "word": "Restoral",
+          "start": 256.42,
+          "end": 256.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "Service",
+          "start": 256.9,
+          "end": 257.26,
+          "probability": 0.9912
+        },
+        {
+          "word": "as",
+          "start": 257.26,
+          "end": 257.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 257.46,
+          "end": 257.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "company",
+          "start": 257.54,
+          "end": 257.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "vendor.",
+          "start": 257.88,
+          "end": 258.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 286.7,
+      "end": 288.1,
+      "start_formatted": "00:04:46.700",
+      "end_formatted": "00:04:48.100",
+      "text": "Theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "Theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 286.7,
+          "end": 288.1,
+          "probability": 0.9053
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 297.4,
+      "end": 299.58,
+      "start_formatted": "00:04:57.400",
+      "end_formatted": "00:04:59.580",
+      "text": "This completes the service request.",
+      "words": [
+        {
+          "word": "This",
+          "start": 297.4,
+          "end": 298.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "completes",
+          "start": 298.04,
+          "end": 298.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 298.46,
+          "end": 298.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "service",
+          "start": 298.68,
+          "end": 299.0,
+          "probability": 0.915
+        },
+        {
+          "word": "request.",
+          "start": 299.0,
+          "end": 299.58,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 303.04,
+      "end": 311.0,
+      "start_formatted": "00:05:03.040",
+      "end_formatted": "00:05:11.000",
+      "text": "The base configuration of Claim Center does not automatically create exposures for homeowners' policies, so I will create one for the painting.",
+      "words": [
+        {
+          "word": "The",
+          "start": 303.04,
+          "end": 303.68,
+          "probability": 0.9873
+        },
+        {
+          "word": "base",
+          "start": 303.68,
+          "end": 303.9,
+          "probability": 0.8364
+        },
+        {
+          "word": "configuration",
+          "start": 303.9,
+          "end": 304.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 304.46,
+          "end": 304.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "Claim",
+          "start": 304.8,
+          "end": 305.1,
+          "probability": 0.833
+        },
+        {
+          "word": "Center",
+          "start": 305.1,
+          "end": 305.42,
+          "probability": 0.6968
+        },
+        {
+          "word": "does",
+          "start": 305.42,
+          "end": 305.66,
+          "probability": 0.9888
+        },
+        {
+          "word": "not",
+          "start": 305.66,
+          "end": 305.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "automatically",
+          "start": 305.88,
+          "end": 306.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "create",
+          "start": 306.54,
+          "end": 306.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "exposures",
+          "start": 306.96,
+          "end": 307.58,
+          "probability": 0.9922
+        },
+        {
+          "word": "for",
+          "start": 307.58,
+          "end": 307.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "homeowners'",
+          "start": 307.76,
+          "end": 308.2,
+          "probability": 0.7949
+        },
+        {
+          "word": "policies,",
+          "start": 308.46,
+          "end": 308.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "so",
+          "start": 309.2,
+          "end": 309.44,
+          "probability": 0.9883
+        },
+        {
+          "word": "I",
+          "start": 309.44,
+          "end": 309.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "will",
+          "start": 309.6,
+          "end": 309.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "create",
+          "start": 309.76,
+          "end": 310.1,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 310.1,
+          "end": 310.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 310.36,
+          "end": 310.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 310.54,
+          "end": 310.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "painting.",
+          "start": 310.66,
+          "end": 311.0,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 316.32,
+      "end": 319.2,
+      "start_formatted": "00:05:16.320",
+      "end_formatted": "00:05:19.200",
+      "text": "The claimant for the exposure is Kentarian.",
+      "words": [
+        {
+          "word": "The",
+          "start": 316.32,
+          "end": 317.2,
+          "probability": 0.9048
+        },
+        {
+          "word": "claimant",
+          "start": 317.2,
+          "end": 317.64,
+          "probability": 0.9902
+        },
+        {
+          "word": "for",
+          "start": 317.64,
+          "end": 317.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 317.78,
+          "end": 317.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "exposure",
+          "start": 317.9,
+          "end": 318.38,
+          "probability": 0.9556
+        },
+        {
+          "word": "is",
+          "start": 318.38,
+          "end": 318.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "Kentarian.",
+          "start": 318.64,
+          "end": 319.2,
+          "probability": 0.7021
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 325.82,
+      "end": 328.04,
+      "start_formatted": "00:05:25.820",
+      "end_formatted": "00:05:28.040",
+      "text": "I'll assign the claim to myself.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 325.82,
+          "end": 326.7,
+          "probability": 0.9927
+        },
+        {
+          "word": "assign",
+          "start": 326.7,
+          "end": 327.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 327.0,
+          "end": 327.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 327.14,
+          "end": 327.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 327.38,
+          "end": 327.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "myself.",
+          "start": 327.56,
+          "end": 328.04,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 331.66,
+      "end": 333.54,
+      "start_formatted": "00:05:31.660",
+      "end_formatted": "00:05:33.540",
+      "text": "Now the claim is complete.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 331.66,
+          "end": 332.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 332.54,
+          "end": 332.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "claim",
+          "start": 332.66,
+          "end": 332.92,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 332.92,
+          "end": 333.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "complete.",
+          "start": 333.1,
+          "end": 333.54,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 334.8,
+      "end": 336.78,
+      "start_formatted": "00:05:34.800",
+      "end_formatted": "00:05:36.780",
+      "text": "I'll visit the claim and add a reserve.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 334.8,
+          "end": 335.32,
+          "probability": 0.9531
+        },
+        {
+          "word": "visit",
+          "start": 335.32,
+          "end": 335.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 335.58,
+          "end": 335.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "claim",
+          "start": 335.72,
+          "end": 335.98,
+          "probability": 0.9751
+        },
+        {
+          "word": "and",
+          "start": 335.98,
+          "end": 336.14,
+          "probability": 0.9692
+        },
+        {
+          "word": "add",
+          "start": 336.14,
+          "end": 336.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 336.36,
+          "end": 336.42,
+          "probability": 0.9907
+        },
+        {
+          "word": "reserve.",
+          "start": 336.42,
+          "end": 336.78,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 343.8,
+      "end": 345.48,
+      "start_formatted": "00:05:43.800",
+      "end_formatted": "00:05:45.480",
+      "text": "There is only one exposure.",
+      "words": [
+        {
+          "word": "There",
+          "start": 343.8,
+          "end": 344.32,
+          "probability": 0.9785
+        },
+        {
+          "word": "is",
+          "start": 344.32,
+          "end": 344.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "only",
+          "start": 344.48,
+          "end": 344.72,
+          "probability": 0.998
+        },
+        {
+          "word": "one",
+          "start": 344.72,
+          "end": 344.96,
+          "probability": 0.9712
+        },
+        {
+          "word": "exposure.",
+          "start": 344.96,
+          "end": 345.48,
+          "probability": 0.9751
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 347.08,
+      "end": 349.14,
+      "start_formatted": "00:05:47.080",
+      "end_formatted": "00:05:49.140",
+      "text": "This reserve is for claim cost.",
+      "words": [
+        {
+          "word": "This",
+          "start": 347.08,
+          "end": 347.6,
+          "probability": 0.9927
+        },
+        {
+          "word": "reserve",
+          "start": 347.6,
+          "end": 347.98,
+          "probability": 0.9819
+        },
+        {
+          "word": "is",
+          "start": 347.98,
+          "end": 348.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 348.16,
+          "end": 348.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 348.34,
+          "end": 348.64,
+          "probability": 0.9746
+        },
+        {
+          "word": "cost.",
+          "start": 348.64,
+          "end": 349.14,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 350.28,
+      "end": 353.1,
+      "start_formatted": "00:05:50.280",
+      "end_formatted": "00:05:53.100",
+      "text": "Its purpose is to pay for the restoral of the painting.",
+      "words": [
+        {
+          "word": "Its",
+          "start": 350.28,
+          "end": 350.8,
+          "probability": 0.9014
+        },
+        {
+          "word": "purpose",
+          "start": 350.8,
+          "end": 351.12,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 351.12,
+          "end": 351.34,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 351.34,
+          "end": 351.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "pay",
+          "start": 351.46,
+          "end": 351.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 351.64,
+          "end": 351.8,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 351.8,
+          "end": 351.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "restoral",
+          "start": 351.92,
+          "end": 352.4,
+          "probability": 0.9014
+        },
+        {
+          "word": "of",
+          "start": 352.4,
+          "end": 352.58,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 352.58,
+          "end": 352.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "painting.",
+          "start": 352.68,
+          "end": 353.1,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 354.18,
+      "end": 357.6,
+      "start_formatted": "00:05:54.180",
+      "end_formatted": "00:05:57.600",
+      "text": "Stan's Restoral has given us an estimate of $60,000.",
+      "words": [
+        {
+          "word": "Stan's",
+          "start": 354.18,
+          "end": 354.9,
+          "probability": 0.9404
+        },
+        {
+          "word": "Restoral",
+          "start": 354.9,
+          "end": 355.34,
+          "probability": 0.8838
+        },
+        {
+          "word": "has",
+          "start": 355.34,
+          "end": 355.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "given",
+          "start": 355.56,
+          "end": 355.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "us",
+          "start": 355.78,
+          "end": 356.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 356.0,
+          "end": 356.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "estimate",
+          "start": 356.12,
+          "end": 356.54,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 356.54,
+          "end": 356.74,
+          "probability": 0.998
+        },
+        {
+          "word": "$60",
+          "start": 356.74,
+          "end": 357.1,
+          "probability": 0.9619
+        },
+        {
+          "word": ",000.",
+          "start": 357.1,
+          "end": 357.6,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 358.24,
+      "end": 362.2,
+      "start_formatted": "00:05:58.240",
+      "end_formatted": "00:06:02.200",
+      "text": "Recall that the limit for personal property exposures is $50,000.",
+      "words": [
+        {
+          "word": "Recall",
+          "start": 358.24,
+          "end": 358.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 358.84,
+          "end": 359.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 359.02,
+          "end": 359.14,
+          "probability": 0.998
+        },
+        {
+          "word": "limit",
+          "start": 359.14,
+          "end": 359.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "for",
+          "start": 359.4,
+          "end": 359.6,
+          "probability": 0.998
+        },
+        {
+          "word": "personal",
+          "start": 359.6,
+          "end": 360.02,
+          "probability": 0.9546
+        },
+        {
+          "word": "property",
+          "start": 360.02,
+          "end": 360.5,
+          "probability": 0.999
+        },
+        {
+          "word": "exposures",
+          "start": 360.5,
+          "end": 361.16,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 361.16,
+          "end": 361.36,
+          "probability": 0.998
+        },
+        {
+          "word": "$50",
+          "start": 361.36,
+          "end": 361.7,
+          "probability": 0.9971
+        },
+        {
+          "word": ",000.",
+          "start": 361.7,
+          "end": 362.2,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 367.38,
+      "end": 370.86,
+      "start_formatted": "00:06:07.380",
+      "end_formatted": "00:06:10.860",
+      "text": "A reserve this big will obviously require high-level approval.",
+      "words": [
+        {
+          "word": "A",
+          "start": 367.38,
+          "end": 367.98,
+          "probability": 0.981
+        },
+        {
+          "word": "reserve",
+          "start": 367.98,
+          "end": 368.36,
+          "probability": 0.9712
+        },
+        {
+          "word": "this",
+          "start": 368.36,
+          "end": 368.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "big",
+          "start": 368.58,
+          "end": 368.78,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 368.78,
+          "end": 369.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "obviously",
+          "start": 369.0,
+          "end": 369.44,
+          "probability": 0.999
+        },
+        {
+          "word": "require",
+          "start": 369.44,
+          "end": 369.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "high",
+          "start": 369.92,
+          "end": 370.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "-level",
+          "start": 370.18,
+          "end": 370.42,
+          "probability": 0.7808
+        },
+        {
+          "word": "approval.",
+          "start": 370.42,
+          "end": 370.86,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 371.26,
+      "end": 373.7,
+      "start_formatted": "00:06:11.260",
+      "end_formatted": "00:06:13.700",
+      "text": "So I will log out as Andy Applegate.",
+      "words": [
+        {
+          "word": "So",
+          "start": 371.26,
+          "end": 371.76,
+          "probability": 0.9893
+        },
+        {
+          "word": "I",
+          "start": 371.76,
+          "end": 371.92,
+          "probability": 0.9844
+        },
+        {
+          "word": "will",
+          "start": 371.92,
+          "end": 372.06,
+          "probability": 0.999
+        },
+        {
+          "word": "log",
+          "start": 372.06,
+          "end": 372.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "out",
+          "start": 372.28,
+          "end": 372.5,
+          "probability": 0.9688
+        },
+        {
+          "word": "as",
+          "start": 372.5,
+          "end": 372.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "Andy",
+          "start": 372.68,
+          "end": 373.0,
+          "probability": 0.9858
+        },
+        {
+          "word": "Applegate.",
+          "start": 373.0,
+          "end": 373.7,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 377.16,
+      "end": 378.9,
+      "start_formatted": "00:06:17.160",
+      "end_formatted": "00:06:18.900",
+      "text": "And log in as the supervisor.",
+      "words": [
+        {
+          "word": "And",
+          "start": 377.16,
+          "end": 377.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "log",
+          "start": 377.76,
+          "end": 378.06,
+          "probability": 0.9648
+        },
+        {
+          "word": "in",
+          "start": 378.06,
+          "end": 378.2,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 378.2,
+          "end": 378.34,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 378.34,
+          "end": 378.46,
+          "probability": 0.999
+        },
+        {
+          "word": "supervisor.",
+          "start": 378.46,
+          "end": 378.9,
+          "probability": 0.8921
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 387.88,
+      "end": 390.04,
+      "start_formatted": "00:06:27.880",
+      "end_formatted": "00:06:30.040",
+      "text": "I'll search for the claim I just created.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 387.88,
+          "end": 388.34,
+          "probability": 0.9316
+        },
+        {
+          "word": "search",
+          "start": 388.34,
+          "end": 388.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "for",
+          "start": 388.58,
+          "end": 388.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 388.78,
+          "end": 388.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "claim",
+          "start": 388.88,
+          "end": 389.12,
+          "probability": 0.9688
+        },
+        {
+          "word": "I",
+          "start": 389.12,
+          "end": 389.32,
+          "probability": 0.98
+        },
+        {
+          "word": "just",
+          "start": 389.32,
+          "end": 389.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "created.",
+          "start": 389.56,
+          "end": 390.04,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 397.14,
+      "end": 399.0,
+      "start_formatted": "00:06:37.140",
+      "end_formatted": "00:06:39.000",
+      "text": "Looking at the work plan for the claim,",
+      "words": [
+        {
+          "word": "Looking",
+          "start": 397.14,
+          "end": 397.6,
+          "probability": 0.9712
+        },
+        {
+          "word": "at",
+          "start": 397.6,
+          "end": 397.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 397.78,
+          "end": 397.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "work",
+          "start": 397.9,
+          "end": 398.08,
+          "probability": 0.9243
+        },
+        {
+          "word": "plan",
+          "start": 398.08,
+          "end": 398.34,
+          "probability": 0.8813
+        },
+        {
+          "word": "for",
+          "start": 398.34,
+          "end": 398.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 398.56,
+          "end": 398.66,
+          "probability": 0.999
+        },
+        {
+          "word": "claim,",
+          "start": 398.66,
+          "end": 399.0,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 400.34,
+      "end": 403.12,
+      "start_formatted": "00:06:40.340",
+      "end_formatted": "00:06:43.120",
+      "text": "I see that there is an activity to approve the reserve.",
+      "words": [
+        {
+          "word": "I",
+          "start": 400.34,
+          "end": 400.86,
+          "probability": 0.8823
+        },
+        {
+          "word": "see",
+          "start": 400.86,
+          "end": 401.06,
+          "probability": 0.9858
+        },
+        {
+          "word": "that",
+          "start": 401.06,
+          "end": 401.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "there",
+          "start": 401.24,
+          "end": 401.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 401.36,
+          "end": 401.48,
+          "probability": 0.9888
+        },
+        {
+          "word": "an",
+          "start": 401.48,
+          "end": 401.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "activity",
+          "start": 401.58,
+          "end": 401.98,
+          "probability": 0.9741
+        },
+        {
+          "word": "to",
+          "start": 401.98,
+          "end": 402.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "approve",
+          "start": 402.28,
+          "end": 402.6,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 402.6,
+          "end": 402.76,
+          "probability": 0.998
+        },
+        {
+          "word": "reserve.",
+          "start": 402.76,
+          "end": 403.12,
+          "probability": 0.9189
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 403.44,
+      "end": 409.54,
+      "start_formatted": "00:06:43.440",
+      "end_formatted": "00:06:49.540",
+      "text": "By logging in as the supervisor I'm skipping several levels to the level that would ultimately approve the reserve of this size.",
+      "words": [
+        {
+          "word": "By",
+          "start": 403.44,
+          "end": 403.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "logging",
+          "start": 403.82,
+          "end": 404.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 404.14,
+          "end": 404.32,
+          "probability": 0.9927
+        },
+        {
+          "word": "as",
+          "start": 404.32,
+          "end": 404.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 404.46,
+          "end": 404.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "supervisor",
+          "start": 404.58,
+          "end": 405.16,
+          "probability": 0.9492
+        },
+        {
+          "word": "I'm",
+          "start": 405.16,
+          "end": 405.54,
+          "probability": 0.7593
+        },
+        {
+          "word": "skipping",
+          "start": 405.54,
+          "end": 405.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "several",
+          "start": 405.86,
+          "end": 406.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "levels",
+          "start": 406.3,
+          "end": 406.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 406.64,
+          "end": 406.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 406.82,
+          "end": 406.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "level",
+          "start": 406.94,
+          "end": 407.2,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 407.2,
+          "end": 407.4,
+          "probability": 0.998
+        },
+        {
+          "word": "would",
+          "start": 407.4,
+          "end": 407.52,
+          "probability": 0.999
+        },
+        {
+          "word": "ultimately",
+          "start": 407.52,
+          "end": 407.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "approve",
+          "start": 407.92,
+          "end": 408.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 408.3,
+          "end": 408.48,
+          "probability": 0.9849
+        },
+        {
+          "word": "reserve",
+          "start": 408.48,
+          "end": 408.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 408.8,
+          "end": 408.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 408.96,
+          "end": 409.12,
+          "probability": 0.999
+        },
+        {
+          "word": "size.",
+          "start": 409.12,
+          "end": 409.54,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 409.82,
+      "end": 413.78,
+      "start_formatted": "00:06:49.820",
+      "end_formatted": "00:06:53.780",
+      "text": "This seems like a reasonable estimate for such a delicate restoral job.",
+      "words": [
+        {
+          "word": "This",
+          "start": 409.82,
+          "end": 410.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "seems",
+          "start": 410.32,
+          "end": 410.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "like",
+          "start": 410.56,
+          "end": 410.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 410.82,
+          "end": 410.94,
+          "probability": 0.998
+        },
+        {
+          "word": "reasonable",
+          "start": 410.94,
+          "end": 411.32,
+          "probability": 0.999
+        },
+        {
+          "word": "estimate",
+          "start": 411.32,
+          "end": 411.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 411.78,
+          "end": 412.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "such",
+          "start": 412.04,
+          "end": 412.28,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 412.28,
+          "end": 412.4,
+          "probability": 0.999
+        },
+        {
+          "word": "delicate",
+          "start": 412.4,
+          "end": 412.78,
+          "probability": 0.9927
+        },
+        {
+          "word": "restoral",
+          "start": 412.78,
+          "end": 413.3,
+          "probability": 0.9614
+        },
+        {
+          "word": "job.",
+          "start": 413.3,
+          "end": 413.78,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 413.98,
+      "end": 418.84,
+      "start_formatted": "00:06:53.980",
+      "end_formatted": "00:06:58.840",
+      "text": "Though it exceeds the exposure limit, it is within the incident limit, so I approve it.",
+      "words": [
+        {
+          "word": "Though",
+          "start": 413.98,
+          "end": 414.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "it",
+          "start": 414.36,
+          "end": 414.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "exceeds",
+          "start": 414.5,
+          "end": 414.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 414.84,
+          "end": 415.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 415.02,
+          "end": 415.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "limit,",
+          "start": 415.5,
+          "end": 415.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 416.12,
+          "end": 416.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 416.34,
+          "end": 416.48,
+          "probability": 0.999
+        },
+        {
+          "word": "within",
+          "start": 416.48,
+          "end": 416.7,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 416.7,
+          "end": 416.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "incident",
+          "start": 416.88,
+          "end": 417.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "limit,",
+          "start": 417.26,
+          "end": 417.64,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 417.82,
+          "end": 418.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 418.08,
+          "end": 418.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "approve",
+          "start": 418.26,
+          "end": 418.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "it.",
+          "start": 418.62,
+          "end": 418.84,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 437.32,
+      "end": 441.34,
+      "start_formatted": "00:07:17.320",
+      "end_formatted": "00:07:21.340",
+      "text": "Now I'll log back in as Andy Applegate and create the check that will test the rule.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 437.32,
+          "end": 437.76,
+          "probability": 0.9131
+        },
+        {
+          "word": "I'll",
+          "start": 437.76,
+          "end": 438.0,
+          "probability": 0.9609
+        },
+        {
+          "word": "log",
+          "start": 438.0,
+          "end": 438.22,
+          "probability": 0.9551
+        },
+        {
+          "word": "back",
+          "start": 438.22,
+          "end": 438.42,
+          "probability": 0.939
+        },
+        {
+          "word": "in",
+          "start": 438.42,
+          "end": 438.62,
+          "probability": 0.9668
+        },
+        {
+          "word": "as",
+          "start": 438.62,
+          "end": 438.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "Andy",
+          "start": 438.74,
+          "end": 439.04,
+          "probability": 0.9321
+        },
+        {
+          "word": "Applegate",
+          "start": 439.04,
+          "end": 439.54,
+          "probability": 0.978
+        },
+        {
+          "word": "and",
+          "start": 439.54,
+          "end": 439.68,
+          "probability": 0.9858
+        },
+        {
+          "word": "create",
+          "start": 439.68,
+          "end": 439.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 439.98,
+          "end": 440.14,
+          "probability": 0.979
+        },
+        {
+          "word": "check",
+          "start": 440.14,
+          "end": 440.3,
+          "probability": 0.9546
+        },
+        {
+          "word": "that",
+          "start": 440.3,
+          "end": 440.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "will",
+          "start": 440.54,
+          "end": 440.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "test",
+          "start": 440.68,
+          "end": 440.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 440.94,
+          "end": 441.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "rule.",
+          "start": 441.12,
+          "end": 441.34,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 458.6,
+      "end": 461.38,
+      "start_formatted": "00:07:38.600",
+      "end_formatted": "00:07:41.380",
+      "text": "First, I must return to the claim I created.",
+      "words": [
+        {
+          "word": "First,",
+          "start": 458.6,
+          "end": 459.14,
+          "probability": 0.9355
+        },
+        {
+          "word": "I",
+          "start": 459.42,
+          "end": 459.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "must",
+          "start": 459.62,
+          "end": 459.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "return",
+          "start": 459.88,
+          "end": 460.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 460.22,
+          "end": 460.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 460.44,
+          "end": 460.54,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 460.54,
+          "end": 460.78,
+          "probability": 0.9648
+        },
+        {
+          "word": "I",
+          "start": 460.78,
+          "end": 460.98,
+          "probability": 0.9897
+        },
+        {
+          "word": "created.",
+          "start": 460.98,
+          "end": 461.38,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 465.52,
+      "end": 467.2,
+      "start_formatted": "00:07:45.520",
+      "end_formatted": "00:07:47.200",
+      "text": "Now I create a new check.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 465.52,
+          "end": 466.06,
+          "probability": 0.9863
+        },
+        {
+          "word": "I",
+          "start": 466.06,
+          "end": 466.22,
+          "probability": 0.9624
+        },
+        {
+          "word": "create",
+          "start": 466.22,
+          "end": 466.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 466.56,
+          "end": 466.72,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 466.72,
+          "end": 466.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "check.",
+          "start": 466.88,
+          "end": 467.2,
+          "probability": 0.9204
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 471.36,
+      "end": 473.96,
+      "start_formatted": "00:07:51.360",
+      "end_formatted": "00:07:53.960",
+      "text": "The check will go to Stan's Restoral Service.",
+      "words": [
+        {
+          "word": "The",
+          "start": 471.36,
+          "end": 471.84,
+          "probability": 0.7471
+        },
+        {
+          "word": "check",
+          "start": 471.84,
+          "end": 472.02,
+          "probability": 0.8828
+        },
+        {
+          "word": "will",
+          "start": 472.02,
+          "end": 472.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "go",
+          "start": 472.22,
+          "end": 472.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 472.36,
+          "end": 472.56,
+          "probability": 0.998
+        },
+        {
+          "word": "Stan's",
+          "start": 472.56,
+          "end": 473.02,
+          "probability": 0.8726
+        },
+        {
+          "word": "Restoral",
+          "start": 473.02,
+          "end": 473.44,
+          "probability": 0.8115
+        },
+        {
+          "word": "Service.",
+          "start": 473.44,
+          "end": 473.96,
+          "probability": 0.8394
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 480.82,
+      "end": 483.5,
+      "start_formatted": "00:08:00.820",
+      "end_formatted": "00:08:03.500",
+      "text": "This is the only payment that will be made on this reserve.",
+      "words": [
+        {
+          "word": "This",
+          "start": 480.82,
+          "end": 481.3,
+          "probability": 0.9746
+        },
+        {
+          "word": "is",
+          "start": 481.3,
+          "end": 481.42,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 481.42,
+          "end": 481.56,
+          "probability": 0.999
+        },
+        {
+          "word": "only",
+          "start": 481.56,
+          "end": 481.78,
+          "probability": 0.998
+        },
+        {
+          "word": "payment",
+          "start": 481.78,
+          "end": 482.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "that",
+          "start": 482.12,
+          "end": 482.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 482.32,
+          "end": 482.46,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 482.46,
+          "end": 482.58,
+          "probability": 0.999
+        },
+        {
+          "word": "made",
+          "start": 482.58,
+          "end": 482.8,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 482.8,
+          "end": 482.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 482.94,
+          "end": 483.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "reserve.",
+          "start": 483.1,
+          "end": 483.5,
+          "probability": 0.9219
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 484.28,
+      "end": 486.2,
+      "start_formatted": "00:08:04.280",
+      "end_formatted": "00:08:06.200",
+      "text": "So, it is a final payment.",
+      "words": [
+        {
+          "word": "So,",
+          "start": 484.28,
+          "end": 484.76,
+          "probability": 0.9824
+        },
+        {
+          "word": "it",
+          "start": 485.02,
+          "end": 485.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "is",
+          "start": 485.24,
+          "end": 485.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 485.36,
+          "end": 485.46,
+          "probability": 0.9521
+        },
+        {
+          "word": "final",
+          "start": 485.46,
+          "end": 485.74,
+          "probability": 0.9746
+        },
+        {
+          "word": "payment.",
+          "start": 485.74,
+          "end": 486.2,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 487.3,
+      "end": 489.8,
+      "start_formatted": "00:08:07.300",
+      "end_formatted": "00:08:09.800",
+      "text": "The payment is in the amount of $60,000.",
+      "words": [
+        {
+          "word": "The",
+          "start": 487.3,
+          "end": 487.78,
+          "probability": 0.9897
+        },
+        {
+          "word": "payment",
+          "start": 487.78,
+          "end": 488.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 488.08,
+          "end": 488.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "in",
+          "start": 488.28,
+          "end": 488.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 488.42,
+          "end": 488.5,
+          "probability": 0.998
+        },
+        {
+          "word": "amount",
+          "start": 488.5,
+          "end": 488.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 488.76,
+          "end": 488.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "$60",
+          "start": 488.94,
+          "end": 489.28,
+          "probability": 0.9209
+        },
+        {
+          "word": ",000.",
+          "start": 489.28,
+          "end": 489.8,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 500.44,
+      "end": 501.1,
+      "start_formatted": "00:08:20.440",
+      "end_formatted": "00:08:21.100",
+      "text": "I will log in as Andy Applegate.",
+      "words": [
+        {
+          "word": "I",
+          "start": 500.44,
+          "end": 501.1,
+          "probability": 0.0016
+        },
+        {
+          "word": "will",
+          "start": 501.1,
+          "end": 501.1,
+          "probability": 0.0175
+        },
+        {
+          "word": "log",
+          "start": 501.1,
+          "end": 501.1,
+          "probability": 0.4441
+        },
+        {
+          "word": "in",
+          "start": 501.1,
+          "end": 501.1,
+          "probability": 0.5312
+        },
+        {
+          "word": "as",
+          "start": 501.1,
+          "end": 501.1,
+          "probability": 0.2781
+        },
+        {
+          "word": "Andy",
+          "start": 501.1,
+          "end": 501.1,
+          "probability": 0.1202
+        },
+        {
+          "word": "Applegate.",
+          "start": 501.1,
+          "end": 501.1,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 501.1,
+      "end": 504.7,
+      "start_formatted": "00:08:21.100",
+      "end_formatted": "00:08:24.700",
+      "text": "Like the reserve, the check requires approval at the supervisory level.",
+      "words": [
+        {
+          "word": "Like",
+          "start": 501.1,
+          "end": 501.1,
+          "probability": 0.2961
+        },
+        {
+          "word": "the",
+          "start": 501.1,
+          "end": 501.24,
+          "probability": 0.9854
+        },
+        {
+          "word": "reserve,",
+          "start": 501.24,
+          "end": 501.6,
+          "probability": 0.7744
+        },
+        {
+          "word": "the",
+          "start": 501.88,
+          "end": 502.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "check",
+          "start": 502.1,
+          "end": 502.28,
+          "probability": 0.9517
+        },
+        {
+          "word": "requires",
+          "start": 502.28,
+          "end": 502.82,
+          "probability": 0.9858
+        },
+        {
+          "word": "approval",
+          "start": 502.82,
+          "end": 503.2,
+          "probability": 0.9854
+        },
+        {
+          "word": "at",
+          "start": 503.2,
+          "end": 503.44,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 503.44,
+          "end": 503.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "supervisory",
+          "start": 503.56,
+          "end": 504.34,
+          "probability": 0.9785
+        },
+        {
+          "word": "level.",
+          "start": 504.34,
+          "end": 504.7,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 505.0,
+      "end": 507.2,
+      "start_formatted": "00:08:25.000",
+      "end_formatted": "00:08:27.200",
+      "text": "So I log out as Andy Applegate.",
+      "words": [
+        {
+          "word": "So",
+          "start": 505.0,
+          "end": 505.38,
+          "probability": 0.9448
+        },
+        {
+          "word": "I",
+          "start": 505.38,
+          "end": 505.54,
+          "probability": 0.9292
+        },
+        {
+          "word": "log",
+          "start": 505.54,
+          "end": 505.82,
+          "probability": 0.9873
+        },
+        {
+          "word": "out",
+          "start": 505.82,
+          "end": 506.0,
+          "probability": 0.9287
+        },
+        {
+          "word": "as",
+          "start": 506.0,
+          "end": 506.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "Andy",
+          "start": 506.18,
+          "end": 506.52,
+          "probability": 0.9897
+        },
+        {
+          "word": "Applegate.",
+          "start": 506.52,
+          "end": 507.2,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 510.78,
+      "end": 513.88,
+      "start_formatted": "00:08:30.780",
+      "end_formatted": "00:08:33.880",
+      "text": "And, once again, log in as the supervisor.",
+      "words": [
+        {
+          "word": "And,",
+          "start": 510.78,
+          "end": 511.44,
+          "probability": 0.8486
+        },
+        {
+          "word": "once",
+          "start": 511.6,
+          "end": 511.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "again,",
+          "start": 511.96,
+          "end": 512.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "log",
+          "start": 512.56,
+          "end": 512.9,
+          "probability": 0.9458
+        },
+        {
+          "word": "in",
+          "start": 512.9,
+          "end": 513.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "as",
+          "start": 513.08,
+          "end": 513.2,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 513.2,
+          "end": 513.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "supervisor.",
+          "start": 513.32,
+          "end": 513.88,
+          "probability": 0.916
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 520.1,
+      "end": 522.52,
+      "start_formatted": "00:08:40.100",
+      "end_formatted": "00:08:42.520",
+      "text": "I navigate to the claims work plan.",
+      "words": [
+        {
+          "word": "I",
+          "start": 520.1,
+          "end": 520.76,
+          "probability": 0.9614
+        },
+        {
+          "word": "navigate",
+          "start": 520.76,
+          "end": 521.16,
+          "probability": 0.9897
+        },
+        {
+          "word": "to",
+          "start": 521.16,
+          "end": 521.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 521.46,
+          "end": 521.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "claims",
+          "start": 521.58,
+          "end": 521.9,
+          "probability": 0.5278
+        },
+        {
+          "word": "work",
+          "start": 521.9,
+          "end": 522.18,
+          "probability": 0.9424
+        },
+        {
+          "word": "plan.",
+          "start": 522.18,
+          "end": 522.52,
+          "probability": 0.8257
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 528.68,
+      "end": 530.96,
+      "start_formatted": "00:08:48.680",
+      "end_formatted": "00:08:50.960",
+      "text": "There is an activity to approve the check.",
+      "words": [
+        {
+          "word": "There",
+          "start": 528.68,
+          "end": 529.3,
+          "probability": 0.9097
+        },
+        {
+          "word": "is",
+          "start": 529.3,
+          "end": 529.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 529.44,
+          "end": 529.56,
+          "probability": 0.999
+        },
+        {
+          "word": "activity",
+          "start": 529.56,
+          "end": 529.9,
+          "probability": 0.9761
+        },
+        {
+          "word": "to",
+          "start": 529.9,
+          "end": 530.24,
+          "probability": 0.999
+        },
+        {
+          "word": "approve",
+          "start": 530.24,
+          "end": 530.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 530.54,
+          "end": 530.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "check.",
+          "start": 530.72,
+          "end": 530.96,
+          "probability": 0.9712
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 531.94,
+      "end": 533.52,
+      "start_formatted": "00:08:51.940",
+      "end_formatted": "00:08:53.520",
+      "text": "I simply approve it.",
+      "words": [
+        {
+          "word": "I",
+          "start": 531.94,
+          "end": 532.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "simply",
+          "start": 532.56,
+          "end": 532.9,
+          "probability": 0.999
+        },
+        {
+          "word": "approve",
+          "start": 532.9,
+          "end": 533.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "it.",
+          "start": 533.22,
+          "end": 533.52,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 534.74,
+      "end": 537.54,
+      "start_formatted": "00:08:54.740",
+      "end_formatted": "00:08:57.540",
+      "text": "And the activity created by the rule is present.",
+      "words": [
+        {
+          "word": "And",
+          "start": 534.74,
+          "end": 535.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 535.36,
+          "end": 535.5,
+          "probability": 0.998
+        },
+        {
+          "word": "activity",
+          "start": 535.5,
+          "end": 535.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "created",
+          "start": 535.94,
+          "end": 536.4,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 536.4,
+          "end": 536.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 536.62,
+          "end": 536.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 536.74,
+          "end": 536.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 536.94,
+          "end": 537.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "present.",
+          "start": 537.14,
+          "end": 537.54,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 537.84,
+      "end": 539.38,
+      "start_formatted": "00:08:57.840",
+      "end_formatted": "00:08:59.380",
+      "text": "The rule is working properly.",
+      "words": [
+        {
+          "word": "The",
+          "start": 537.84,
+          "end": 538.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "rule",
+          "start": 538.18,
+          "end": 538.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 538.38,
+          "end": 538.54,
+          "probability": 1.0
+        },
+        {
+          "word": "working",
+          "start": 538.54,
+          "end": 538.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "properly.",
+          "start": 538.84,
+          "end": 539.38,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 539.38,
+      "end": 542.82,
+      "start_formatted": "00:08:59.380",
+      "end_formatted": "00:09:02.820",
+      "text": "This concludes the transaction set pre-update rules demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 539.38,
+          "end": 540.08,
+          "probability": 0.8916
+        },
+        {
+          "word": "concludes",
+          "start": 540.08,
+          "end": 540.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 540.5,
+          "end": 540.72,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 540.72,
+          "end": 541.3,
+          "probability": 0.3845
+        },
+        {
+          "word": "set",
+          "start": 541.3,
+          "end": 541.62,
+          "probability": 0.9917
+        },
+        {
+          "word": "pre",
+          "start": 541.62,
+          "end": 541.86,
+          "probability": 0.9912
+        },
+        {
+          "word": "-update",
+          "start": 541.86,
+          "end": 542.22,
+          "probability": 0.9897
+        },
+        {
+          "word": "rules",
+          "start": 542.22,
+          "end": 542.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration.",
+          "start": 542.56,
+          "end": 542.82,
+          "probability": 0.9912
+        }
+      ]
+    }
+  ]
+}

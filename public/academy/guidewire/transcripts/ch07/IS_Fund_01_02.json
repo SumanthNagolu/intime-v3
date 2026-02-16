@@ -1,0 +1,2773 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "filename": "IS_Fund_01_02.mp4",
+    "video_stem": "IS_Fund_01_02",
+    "duration_seconds": 173.92,
+    "duration_formatted": "00:02:53.920",
+    "segment_count": 18,
+    "word_count": 429,
+    "avg_confidence": 0.9579,
+    "transcription_time_seconds": 14.24,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:10:46.688844"
+  },
+  "full_text": "In your browser, navigate to TrainingApp by entering the URL. Press Return. Enter Applegate for the username. Alice is a basic end user, so she doesn't have access to all the functionality available to the super user. For example, she has no access to the Administration tab. Click the Andy Applegate login. Enter GW for the password. Click the login button. Create a new doctor contact. Select Doctor from the Actions menu. There are different contact types that could be created here. Note that TrainingApp needs to store slightly different information about a contact based on the contact type. For example, TrainingApp needs to store the law license of an attorney or the medical specialty of a doctor. Click Update to save the contact and return to the Search tab. If you search for contacts whose name begins with A, you will see that Dr. Appleby has been added to the database. Click Search. Select the doctor that was created. The sidebar on the left side lists the screens you can view in the current tab bar selection in this case, Contact. There can be tabs within a screen, as here on the Summary screen, where we have Basics, Social Media, and Analysis. The latter two we will configure during training. Click Details. On the Details screen, we have basic information about the contact. Note that some of this information is specific to a doctor. We also have tabs for phone and addresses, bank accounts and vendor info. These last two we will configure during training. Click Addresses. Addresses show all the addresses listed for the contact. Click Notes. The Notes screen displays notes associated with the contact. There are no notes associated with this doctor yet. But we can add them using the Actions menu. The note is created in this workspace. We won't go through with creating the note right now. Click History. The history screen shows various things that have happened in the application, with regards to the contact. In this case, there are two entries, its creation, and my viewing the contact right now. Now we will switch to Studio. You can stop the server in three ways after starting it in Studio. The first way is to click the stop button. The second way is to select stop from the run menu. The third is to select the exit button to exit from Studio. You will generally want to stop the server when you exit Studio, because it becomes difficult to stop it once Studio is closed. This is the end of the demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 28.62,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:28.620",
+      "text": "In your browser, navigate to TrainingApp by entering the URL. Press Return. Enter Applegate for the username. Alice is a basic end user, so she doesn't have access to all the functionality available to the super user. For example, she has no access to the Administration tab. Click the Andy Applegate login. Enter GW for the password. Click the login button.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.82,
+          "probability": 0.9692
+        },
+        {
+          "word": "your",
+          "start": 0.82,
+          "end": 0.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "browser,",
+          "start": 0.94,
+          "end": 1.32,
+          "probability": 0.9839
+        },
+        {
+          "word": "navigate",
+          "start": 1.58,
+          "end": 2.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 2.06,
+          "end": 2.28,
+          "probability": 0.9819
+        },
+        {
+          "word": "TrainingApp",
+          "start": 2.28,
+          "end": 2.7,
+          "probability": 0.3726
+        },
+        {
+          "word": "by",
+          "start": 2.7,
+          "end": 2.9,
+          "probability": 0.9839
+        },
+        {
+          "word": "entering",
+          "start": 2.9,
+          "end": 3.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 3.22,
+          "end": 3.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "URL.",
+          "start": 3.42,
+          "end": 3.88,
+          "probability": 0.9839
+        },
+        {
+          "word": "Press",
+          "start": 4.66,
+          "end": 5.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "Return.",
+          "start": 5.28,
+          "end": 5.6,
+          "probability": 0.688
+        },
+        {
+          "word": "Enter",
+          "start": 6.32,
+          "end": 6.94,
+          "probability": 0.9917
+        },
+        {
+          "word": "Applegate",
+          "start": 6.94,
+          "end": 7.44,
+          "probability": 0.855
+        },
+        {
+          "word": "for",
+          "start": 7.44,
+          "end": 7.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 7.56,
+          "end": 7.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "username.",
+          "start": 7.7,
+          "end": 8.12,
+          "probability": 0.7036
+        },
+        {
+          "word": "Alice",
+          "start": 8.7,
+          "end": 9.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "is",
+          "start": 9.18,
+          "end": 9.36,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 9.36,
+          "end": 9.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "basic",
+          "start": 9.48,
+          "end": 9.76,
+          "probability": 0.8984
+        },
+        {
+          "word": "end",
+          "start": 9.76,
+          "end": 9.96,
+          "probability": 0.9717
+        },
+        {
+          "word": "user,",
+          "start": 9.96,
+          "end": 10.26,
+          "probability": 0.6724
+        },
+        {
+          "word": "so",
+          "start": 10.46,
+          "end": 10.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "she",
+          "start": 10.78,
+          "end": 10.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "doesn't",
+          "start": 10.96,
+          "end": 11.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "have",
+          "start": 11.24,
+          "end": 11.4,
+          "probability": 0.999
+        },
+        {
+          "word": "access",
+          "start": 11.4,
+          "end": 11.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 11.74,
+          "end": 12.02,
+          "probability": 0.998
+        },
+        {
+          "word": "all",
+          "start": 12.02,
+          "end": 12.18,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 12.18,
+          "end": 12.32,
+          "probability": 0.9917
+        },
+        {
+          "word": "functionality",
+          "start": 12.32,
+          "end": 12.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "available",
+          "start": 12.8,
+          "end": 13.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 13.4,
+          "end": 13.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 13.62,
+          "end": 13.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "super",
+          "start": 13.74,
+          "end": 14.02,
+          "probability": 0.7017
+        },
+        {
+          "word": "user.",
+          "start": 14.02,
+          "end": 14.38,
+          "probability": 0.5898
+        },
+        {
+          "word": "For",
+          "start": 14.66,
+          "end": 14.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "example,",
+          "start": 14.92,
+          "end": 15.28,
+          "probability": 0.998
+        },
+        {
+          "word": "she",
+          "start": 15.62,
+          "end": 15.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "has",
+          "start": 15.86,
+          "end": 16.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 16.06,
+          "end": 16.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "access",
+          "start": 16.26,
+          "end": 16.66,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 16.66,
+          "end": 16.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 16.9,
+          "end": 17.02,
+          "probability": 0.998
+        },
+        {
+          "word": "Administration",
+          "start": 17.02,
+          "end": 17.54,
+          "probability": 0.7095
+        },
+        {
+          "word": "tab.",
+          "start": 17.54,
+          "end": 18.04,
+          "probability": 0.978
+        },
+        {
+          "word": "Click",
+          "start": 18.78,
+          "end": 19.4,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 19.4,
+          "end": 19.58,
+          "probability": 0.9849
+        },
+        {
+          "word": "Andy",
+          "start": 19.58,
+          "end": 19.8,
+          "probability": 0.9038
+        },
+        {
+          "word": "Applegate",
+          "start": 19.8,
+          "end": 20.34,
+          "probability": 0.9883
+        },
+        {
+          "word": "login.",
+          "start": 20.34,
+          "end": 20.64,
+          "probability": 0.7783
+        },
+        {
+          "word": "Enter",
+          "start": 22.82,
+          "end": 23.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "GW",
+          "start": 23.44,
+          "end": 23.7,
+          "probability": 0.9385
+        },
+        {
+          "word": "for",
+          "start": 23.7,
+          "end": 24.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 24.16,
+          "end": 24.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "password.",
+          "start": 24.26,
+          "end": 24.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "Click",
+          "start": 27.16,
+          "end": 27.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 27.78,
+          "end": 27.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "login",
+          "start": 27.94,
+          "end": 28.2,
+          "probability": 0.2908
+        },
+        {
+          "word": "button.",
+          "start": 28.2,
+          "end": 28.62,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 31.28,
+      "end": 58.84,
+      "start_formatted": "00:00:31.280",
+      "end_formatted": "00:00:58.840",
+      "text": "Create a new doctor contact. Select Doctor from the Actions menu. There are different contact types that could be created here. Note that TrainingApp needs to store slightly different information about a contact based on the contact type. For example, TrainingApp needs to store the law license of an attorney or the medical specialty of a doctor. Click Update to save the contact and return to the Search tab.",
+      "words": [
+        {
+          "word": "Create",
+          "start": 31.28,
+          "end": 31.88,
+          "probability": 0.9307
+        },
+        {
+          "word": "a",
+          "start": 31.88,
+          "end": 32.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "new",
+          "start": 32.04,
+          "end": 32.12,
+          "probability": 0.9399
+        },
+        {
+          "word": "doctor",
+          "start": 32.12,
+          "end": 32.48,
+          "probability": 0.6934
+        },
+        {
+          "word": "contact.",
+          "start": 32.48,
+          "end": 32.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "Select",
+          "start": 35.68,
+          "end": 36.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "Doctor",
+          "start": 36.28,
+          "end": 36.58,
+          "probability": 0.468
+        },
+        {
+          "word": "from",
+          "start": 36.58,
+          "end": 36.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 36.82,
+          "end": 36.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "Actions",
+          "start": 36.94,
+          "end": 37.34,
+          "probability": 0.9419
+        },
+        {
+          "word": "menu.",
+          "start": 37.34,
+          "end": 37.66,
+          "probability": 0.9419
+        },
+        {
+          "word": "There",
+          "start": 39.54,
+          "end": 40.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "are",
+          "start": 40.14,
+          "end": 40.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "different",
+          "start": 40.26,
+          "end": 40.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact",
+          "start": 40.56,
+          "end": 41.0,
+          "probability": 0.9707
+        },
+        {
+          "word": "types",
+          "start": 41.0,
+          "end": 41.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 41.38,
+          "end": 41.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "could",
+          "start": 41.6,
+          "end": 41.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "be",
+          "start": 41.72,
+          "end": 41.86,
+          "probability": 0.999
+        },
+        {
+          "word": "created",
+          "start": 41.86,
+          "end": 42.26,
+          "probability": 0.999
+        },
+        {
+          "word": "here.",
+          "start": 42.26,
+          "end": 42.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "Note",
+          "start": 43.78,
+          "end": 44.38,
+          "probability": 0.9888
+        },
+        {
+          "word": "that",
+          "start": 44.38,
+          "end": 44.56,
+          "probability": 0.9878
+        },
+        {
+          "word": "TrainingApp",
+          "start": 44.56,
+          "end": 45.1,
+          "probability": 0.4707
+        },
+        {
+          "word": "needs",
+          "start": 45.1,
+          "end": 45.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "to",
+          "start": 45.38,
+          "end": 45.54,
+          "probability": 0.999
+        },
+        {
+          "word": "store",
+          "start": 45.54,
+          "end": 45.82,
+          "probability": 0.998
+        },
+        {
+          "word": "slightly",
+          "start": 45.82,
+          "end": 46.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "different",
+          "start": 46.12,
+          "end": 46.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "information",
+          "start": 46.46,
+          "end": 47.0,
+          "probability": 0.999
+        },
+        {
+          "word": "about",
+          "start": 47.0,
+          "end": 47.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 47.3,
+          "end": 47.46,
+          "probability": 0.999
+        },
+        {
+          "word": "contact",
+          "start": 47.46,
+          "end": 47.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "based",
+          "start": 47.84,
+          "end": 48.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "on",
+          "start": 48.24,
+          "end": 48.42,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 48.42,
+          "end": 48.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "contact",
+          "start": 48.54,
+          "end": 48.94,
+          "probability": 0.9692
+        },
+        {
+          "word": "type.",
+          "start": 48.94,
+          "end": 49.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 49.7,
+          "end": 50.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "example,",
+          "start": 50.04,
+          "end": 50.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "TrainingApp",
+          "start": 50.8,
+          "end": 51.32,
+          "probability": 0.9824
+        },
+        {
+          "word": "needs",
+          "start": 51.32,
+          "end": 51.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 51.58,
+          "end": 51.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "store",
+          "start": 51.72,
+          "end": 52.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 52.0,
+          "end": 52.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "law",
+          "start": 52.14,
+          "end": 52.32,
+          "probability": 0.96
+        },
+        {
+          "word": "license",
+          "start": 52.32,
+          "end": 52.66,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 52.66,
+          "end": 52.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "an",
+          "start": 52.86,
+          "end": 52.98,
+          "probability": 0.998
+        },
+        {
+          "word": "attorney",
+          "start": 52.98,
+          "end": 53.24,
+          "probability": 0.9922
+        },
+        {
+          "word": "or",
+          "start": 53.24,
+          "end": 53.42,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 53.42,
+          "end": 53.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "medical",
+          "start": 53.54,
+          "end": 53.82,
+          "probability": 0.9956
+        },
+        {
+          "word": "specialty",
+          "start": 53.82,
+          "end": 54.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 54.34,
+          "end": 54.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 54.56,
+          "end": 54.66,
+          "probability": 0.9902
+        },
+        {
+          "word": "doctor.",
+          "start": 54.66,
+          "end": 54.94,
+          "probability": 0.9824
+        },
+        {
+          "word": "Click",
+          "start": 55.48,
+          "end": 56.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "Update",
+          "start": 56.08,
+          "end": 56.36,
+          "probability": 0.9272
+        },
+        {
+          "word": "to",
+          "start": 56.36,
+          "end": 56.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "save",
+          "start": 56.6,
+          "end": 56.82,
+          "probability": 0.9727
+        },
+        {
+          "word": "the",
+          "start": 56.82,
+          "end": 56.98,
+          "probability": 0.998
+        },
+        {
+          "word": "contact",
+          "start": 56.98,
+          "end": 57.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 57.36,
+          "end": 57.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "return",
+          "start": 57.62,
+          "end": 57.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 57.92,
+          "end": 58.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 58.14,
+          "end": 58.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "Search",
+          "start": 58.26,
+          "end": 58.5,
+          "probability": 0.8091
+        },
+        {
+          "word": "tab.",
+          "start": 58.5,
+          "end": 58.84,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.46,
+      "end": 71.74,
+      "start_formatted": "00:00:59.460",
+      "end_formatted": "00:01:11.740",
+      "text": "If you search for contacts whose name begins with A, you will see that Dr. Appleby has been added to the database. Click Search. Select the doctor that was created.",
+      "words": [
+        {
+          "word": "If",
+          "start": 59.46,
+          "end": 59.98,
+          "probability": 0.793
+        },
+        {
+          "word": "you",
+          "start": 59.98,
+          "end": 60.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "search",
+          "start": 60.12,
+          "end": 60.38,
+          "probability": 0.9897
+        },
+        {
+          "word": "for",
+          "start": 60.38,
+          "end": 60.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "contacts",
+          "start": 60.56,
+          "end": 61.04,
+          "probability": 0.6855
+        },
+        {
+          "word": "whose",
+          "start": 61.04,
+          "end": 61.3,
+          "probability": 0.9785
+        },
+        {
+          "word": "name",
+          "start": 61.3,
+          "end": 61.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "begins",
+          "start": 61.5,
+          "end": 61.84,
+          "probability": 0.9927
+        },
+        {
+          "word": "with",
+          "start": 61.84,
+          "end": 61.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "A,",
+          "start": 61.98,
+          "end": 62.24,
+          "probability": 0.5488
+        },
+        {
+          "word": "you",
+          "start": 62.54,
+          "end": 62.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "will",
+          "start": 62.78,
+          "end": 62.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "see",
+          "start": 62.94,
+          "end": 63.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 63.14,
+          "end": 63.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "Dr.",
+          "start": 63.34,
+          "end": 63.62,
+          "probability": 0.7354
+        },
+        {
+          "word": "Appleby",
+          "start": 63.76,
+          "end": 64.1,
+          "probability": 0.8882
+        },
+        {
+          "word": "has",
+          "start": 64.1,
+          "end": 64.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "been",
+          "start": 64.28,
+          "end": 64.42,
+          "probability": 0.999
+        },
+        {
+          "word": "added",
+          "start": 64.42,
+          "end": 64.64,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 64.64,
+          "end": 64.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 64.8,
+          "end": 64.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "database.",
+          "start": 64.9,
+          "end": 65.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "Click",
+          "start": 65.94,
+          "end": 66.46,
+          "probability": 0.9819
+        },
+        {
+          "word": "Search.",
+          "start": 66.46,
+          "end": 66.78,
+          "probability": 0.6104
+        },
+        {
+          "word": "Select",
+          "start": 70.0,
+          "end": 70.52,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 70.52,
+          "end": 70.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "doctor",
+          "start": 70.68,
+          "end": 71.0,
+          "probability": 0.7754
+        },
+        {
+          "word": "that",
+          "start": 71.0,
+          "end": 71.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "was",
+          "start": 71.18,
+          "end": 71.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "created.",
+          "start": 71.32,
+          "end": 71.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 73.74,
+      "end": 91.6,
+      "start_formatted": "00:01:13.740",
+      "end_formatted": "00:01:31.600",
+      "text": "The sidebar on the left side lists the screens you can view in the current tab bar selection in this case, Contact. There can be tabs within a screen, as here on the Summary screen, where we have Basics, Social Media, and Analysis. The latter two we will configure during training. Click Details.",
+      "words": [
+        {
+          "word": "The",
+          "start": 73.74,
+          "end": 74.3,
+          "probability": 0.9199
+        },
+        {
+          "word": "sidebar",
+          "start": 74.3,
+          "end": 74.86,
+          "probability": 0.8955
+        },
+        {
+          "word": "on",
+          "start": 74.86,
+          "end": 75.26,
+          "probability": 0.541
+        },
+        {
+          "word": "the",
+          "start": 75.26,
+          "end": 75.36,
+          "probability": 0.999
+        },
+        {
+          "word": "left",
+          "start": 75.36,
+          "end": 75.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "side",
+          "start": 75.58,
+          "end": 76.0,
+          "probability": 0.9746
+        },
+        {
+          "word": "lists",
+          "start": 76.0,
+          "end": 76.62,
+          "probability": 0.6851
+        },
+        {
+          "word": "the",
+          "start": 76.62,
+          "end": 76.78,
+          "probability": 0.999
+        },
+        {
+          "word": "screens",
+          "start": 76.78,
+          "end": 77.1,
+          "probability": 0.9893
+        },
+        {
+          "word": "you",
+          "start": 77.1,
+          "end": 77.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "can",
+          "start": 77.28,
+          "end": 77.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "view",
+          "start": 77.42,
+          "end": 77.64,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 77.64,
+          "end": 77.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 77.78,
+          "end": 77.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "current",
+          "start": 77.88,
+          "end": 78.14,
+          "probability": 0.981
+        },
+        {
+          "word": "tab",
+          "start": 78.14,
+          "end": 78.44,
+          "probability": 0.9443
+        },
+        {
+          "word": "bar",
+          "start": 78.44,
+          "end": 78.72,
+          "probability": 0.9785
+        },
+        {
+          "word": "selection",
+          "start": 78.72,
+          "end": 79.16,
+          "probability": 0.9614
+        },
+        {
+          "word": "in",
+          "start": 79.16,
+          "end": 79.34,
+          "probability": 0.7534
+        },
+        {
+          "word": "this",
+          "start": 79.34,
+          "end": 79.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "case,",
+          "start": 79.5,
+          "end": 79.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "Contact.",
+          "start": 80.12,
+          "end": 80.44,
+          "probability": 0.5698
+        },
+        {
+          "word": "There",
+          "start": 80.94,
+          "end": 81.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "can",
+          "start": 81.32,
+          "end": 81.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 81.5,
+          "end": 81.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "tabs",
+          "start": 81.64,
+          "end": 81.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "within",
+          "start": 81.98,
+          "end": 82.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 82.2,
+          "end": 82.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "screen,",
+          "start": 82.36,
+          "end": 82.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 82.9,
+          "end": 83.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "here",
+          "start": 83.2,
+          "end": 83.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 83.4,
+          "end": 83.54,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 83.54,
+          "end": 83.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "Summary",
+          "start": 83.66,
+          "end": 84.04,
+          "probability": 0.8394
+        },
+        {
+          "word": "screen,",
+          "start": 84.04,
+          "end": 84.38,
+          "probability": 0.9717
+        },
+        {
+          "word": "where",
+          "start": 84.66,
+          "end": 84.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "we",
+          "start": 84.92,
+          "end": 85.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 85.08,
+          "end": 85.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "Basics,",
+          "start": 85.24,
+          "end": 85.68,
+          "probability": 0.8706
+        },
+        {
+          "word": "Social",
+          "start": 85.86,
+          "end": 86.26,
+          "probability": 0.9863
+        },
+        {
+          "word": "Media,",
+          "start": 86.26,
+          "end": 86.64,
+          "probability": 0.9585
+        },
+        {
+          "word": "and",
+          "start": 86.88,
+          "end": 87.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "Analysis.",
+          "start": 87.14,
+          "end": 87.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "The",
+          "start": 87.94,
+          "end": 88.14,
+          "probability": 0.8701
+        },
+        {
+          "word": "latter",
+          "start": 88.14,
+          "end": 88.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "two",
+          "start": 88.36,
+          "end": 88.6,
+          "probability": 0.9419
+        },
+        {
+          "word": "we",
+          "start": 88.6,
+          "end": 88.82,
+          "probability": 0.9614
+        },
+        {
+          "word": "will",
+          "start": 88.82,
+          "end": 89.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "configure",
+          "start": 89.02,
+          "end": 89.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "during",
+          "start": 89.42,
+          "end": 89.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "training.",
+          "start": 89.72,
+          "end": 90.12,
+          "probability": 0.8477
+        },
+        {
+          "word": "Click",
+          "start": 90.64,
+          "end": 91.2,
+          "probability": 0.9785
+        },
+        {
+          "word": "Details.",
+          "start": 91.2,
+          "end": 91.6,
+          "probability": 0.959
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 94.52,
+      "end": 110.2,
+      "start_formatted": "00:01:34.520",
+      "end_formatted": "00:01:50.200",
+      "text": "On the Details screen, we have basic information about the contact. Note that some of this information is specific to a doctor. We also have tabs for phone and addresses, bank accounts and vendor info. These last two we will configure during training. Click Addresses.",
+      "words": [
+        {
+          "word": "On",
+          "start": 94.52,
+          "end": 95.12,
+          "probability": 0.5332
+        },
+        {
+          "word": "the",
+          "start": 95.12,
+          "end": 95.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "Details",
+          "start": 95.26,
+          "end": 95.62,
+          "probability": 0.4011
+        },
+        {
+          "word": "screen,",
+          "start": 95.62,
+          "end": 96.0,
+          "probability": 0.9565
+        },
+        {
+          "word": "we",
+          "start": 96.3,
+          "end": 96.58,
+          "probability": 0.9868
+        },
+        {
+          "word": "have",
+          "start": 96.58,
+          "end": 96.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "basic",
+          "start": 96.7,
+          "end": 97.0,
+          "probability": 0.9663
+        },
+        {
+          "word": "information",
+          "start": 97.0,
+          "end": 97.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "about",
+          "start": 97.46,
+          "end": 97.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 97.76,
+          "end": 97.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact.",
+          "start": 97.96,
+          "end": 98.3,
+          "probability": 0.9272
+        },
+        {
+          "word": "Note",
+          "start": 98.76,
+          "end": 99.22,
+          "probability": 0.9878
+        },
+        {
+          "word": "that",
+          "start": 99.22,
+          "end": 99.4,
+          "probability": 0.998
+        },
+        {
+          "word": "some",
+          "start": 99.4,
+          "end": 99.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 99.6,
+          "end": 99.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 99.74,
+          "end": 99.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "information",
+          "start": 99.9,
+          "end": 100.36,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 100.36,
+          "end": 100.64,
+          "probability": 0.998
+        },
+        {
+          "word": "specific",
+          "start": 100.64,
+          "end": 101.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 101.02,
+          "end": 101.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 101.24,
+          "end": 101.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "doctor.",
+          "start": 101.38,
+          "end": 101.64,
+          "probability": 0.9702
+        },
+        {
+          "word": "We",
+          "start": 102.0,
+          "end": 102.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "also",
+          "start": 102.34,
+          "end": 102.58,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 102.58,
+          "end": 102.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "tabs",
+          "start": 102.82,
+          "end": 103.12,
+          "probability": 0.9863
+        },
+        {
+          "word": "for",
+          "start": 103.12,
+          "end": 103.32,
+          "probability": 0.999
+        },
+        {
+          "word": "phone",
+          "start": 103.32,
+          "end": 103.58,
+          "probability": 0.9263
+        },
+        {
+          "word": "and",
+          "start": 103.58,
+          "end": 103.7,
+          "probability": 0.9697
+        },
+        {
+          "word": "addresses,",
+          "start": 103.7,
+          "end": 104.14,
+          "probability": 0.9883
+        },
+        {
+          "word": "bank",
+          "start": 104.5,
+          "end": 104.82,
+          "probability": 0.9878
+        },
+        {
+          "word": "accounts",
+          "start": 104.82,
+          "end": 105.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 105.2,
+          "end": 105.4,
+          "probability": 0.9194
+        },
+        {
+          "word": "vendor",
+          "start": 105.4,
+          "end": 105.64,
+          "probability": 0.9907
+        },
+        {
+          "word": "info.",
+          "start": 105.64,
+          "end": 106.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "These",
+          "start": 106.32,
+          "end": 106.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "last",
+          "start": 106.72,
+          "end": 107.0,
+          "probability": 0.998
+        },
+        {
+          "word": "two",
+          "start": 107.0,
+          "end": 107.2,
+          "probability": 0.9097
+        },
+        {
+          "word": "we",
+          "start": 107.2,
+          "end": 107.34,
+          "probability": 0.9761
+        },
+        {
+          "word": "will",
+          "start": 107.34,
+          "end": 107.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "configure",
+          "start": 107.52,
+          "end": 107.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "during",
+          "start": 107.92,
+          "end": 108.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "training.",
+          "start": 108.22,
+          "end": 108.64,
+          "probability": 0.9863
+        },
+        {
+          "word": "Click",
+          "start": 109.08,
+          "end": 109.64,
+          "probability": 0.9839
+        },
+        {
+          "word": "Addresses.",
+          "start": 109.64,
+          "end": 110.2,
+          "probability": 0.9434
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 113.02,
+      "end": 117.32,
+      "start_formatted": "00:01:53.020",
+      "end_formatted": "00:01:57.320",
+      "text": "Addresses show all the addresses listed for the contact. Click Notes.",
+      "words": [
+        {
+          "word": "Addresses",
+          "start": 113.02,
+          "end": 113.74,
+          "probability": 0.9561
+        },
+        {
+          "word": "show",
+          "start": 113.74,
+          "end": 113.98,
+          "probability": 0.9702
+        },
+        {
+          "word": "all",
+          "start": 113.98,
+          "end": 114.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 114.18,
+          "end": 114.32,
+          "probability": 0.9897
+        },
+        {
+          "word": "addresses",
+          "start": 114.32,
+          "end": 114.78,
+          "probability": 0.9805
+        },
+        {
+          "word": "listed",
+          "start": 114.78,
+          "end": 115.2,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 115.2,
+          "end": 115.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 115.4,
+          "end": 115.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "contact.",
+          "start": 115.52,
+          "end": 115.88,
+          "probability": 0.9043
+        },
+        {
+          "word": "Click",
+          "start": 116.42,
+          "end": 116.96,
+          "probability": 0.9883
+        },
+        {
+          "word": "Notes.",
+          "start": 116.96,
+          "end": 117.32,
+          "probability": 0.7422
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 120.26,
+      "end": 135.66,
+      "start_formatted": "00:02:00.260",
+      "end_formatted": "00:02:15.660",
+      "text": "The Notes screen displays notes associated with the contact. There are no notes associated with this doctor yet. But we can add them using the Actions menu. The note is created in this workspace. We won't go through with creating the note right now. Click History.",
+      "words": [
+        {
+          "word": "The",
+          "start": 120.26,
+          "end": 120.84,
+          "probability": 0.9351
+        },
+        {
+          "word": "Notes",
+          "start": 120.84,
+          "end": 121.06,
+          "probability": 0.4407
+        },
+        {
+          "word": "screen",
+          "start": 121.06,
+          "end": 121.34,
+          "probability": 0.9893
+        },
+        {
+          "word": "displays",
+          "start": 121.34,
+          "end": 121.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "notes",
+          "start": 121.76,
+          "end": 122.06,
+          "probability": 0.9556
+        },
+        {
+          "word": "associated",
+          "start": 122.06,
+          "end": 122.64,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 122.64,
+          "end": 122.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 122.86,
+          "end": 123.0,
+          "probability": 0.9873
+        },
+        {
+          "word": "contact.",
+          "start": 123.0,
+          "end": 123.32,
+          "probability": 0.7656
+        },
+        {
+          "word": "There",
+          "start": 123.8,
+          "end": 124.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "are",
+          "start": 124.2,
+          "end": 124.3,
+          "probability": 0.999
+        },
+        {
+          "word": "no",
+          "start": 124.3,
+          "end": 124.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "notes",
+          "start": 124.46,
+          "end": 124.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "associated",
+          "start": 124.74,
+          "end": 125.3,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 125.3,
+          "end": 125.52,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 125.52,
+          "end": 125.7,
+          "probability": 0.9907
+        },
+        {
+          "word": "doctor",
+          "start": 125.7,
+          "end": 126.0,
+          "probability": 0.8442
+        },
+        {
+          "word": "yet.",
+          "start": 126.0,
+          "end": 126.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "But",
+          "start": 126.66,
+          "end": 127.1,
+          "probability": 0.9751
+        },
+        {
+          "word": "we",
+          "start": 127.1,
+          "end": 127.22,
+          "probability": 0.9751
+        },
+        {
+          "word": "can",
+          "start": 127.22,
+          "end": 127.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 127.38,
+          "end": 127.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "them",
+          "start": 127.56,
+          "end": 127.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "using",
+          "start": 127.72,
+          "end": 127.96,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 127.96,
+          "end": 128.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "Actions",
+          "start": 128.16,
+          "end": 128.6,
+          "probability": 0.9238
+        },
+        {
+          "word": "menu.",
+          "start": 128.6,
+          "end": 128.92,
+          "probability": 0.9258
+        },
+        {
+          "word": "The",
+          "start": 129.42,
+          "end": 129.88,
+          "probability": 0.9922
+        },
+        {
+          "word": "note",
+          "start": 129.88,
+          "end": 130.06,
+          "probability": 0.9385
+        },
+        {
+          "word": "is",
+          "start": 130.06,
+          "end": 130.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "created",
+          "start": 130.18,
+          "end": 130.54,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 130.54,
+          "end": 130.74,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 130.74,
+          "end": 130.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "workspace.",
+          "start": 130.86,
+          "end": 131.36,
+          "probability": 0.9844
+        },
+        {
+          "word": "We",
+          "start": 131.8,
+          "end": 132.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "won't",
+          "start": 132.14,
+          "end": 132.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "go",
+          "start": 132.38,
+          "end": 132.54,
+          "probability": 0.999
+        },
+        {
+          "word": "through",
+          "start": 132.54,
+          "end": 132.78,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 132.78,
+          "end": 133.02,
+          "probability": 0.999
+        },
+        {
+          "word": "creating",
+          "start": 133.02,
+          "end": 133.4,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 133.4,
+          "end": 133.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "note",
+          "start": 133.56,
+          "end": 133.78,
+          "probability": 0.9834
+        },
+        {
+          "word": "right",
+          "start": 133.78,
+          "end": 133.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "now.",
+          "start": 133.98,
+          "end": 134.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Click",
+          "start": 134.96,
+          "end": 135.32,
+          "probability": 0.9834
+        },
+        {
+          "word": "History.",
+          "start": 135.32,
+          "end": 135.66,
+          "probability": 0.8721
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 138.6,
+      "end": 143.18,
+      "start_formatted": "00:02:18.600",
+      "end_formatted": "00:02:23.180",
+      "text": "The history screen shows various things that have happened in the application, with regards",
+      "words": [
+        {
+          "word": "The",
+          "start": 138.6,
+          "end": 139.12,
+          "probability": 0.8462
+        },
+        {
+          "word": "history",
+          "start": 139.12,
+          "end": 139.5,
+          "probability": 0.6665
+        },
+        {
+          "word": "screen",
+          "start": 139.5,
+          "end": 139.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "shows",
+          "start": 139.84,
+          "end": 140.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "various",
+          "start": 140.14,
+          "end": 140.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "things",
+          "start": 140.52,
+          "end": 140.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 140.88,
+          "end": 141.1,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 141.1,
+          "end": 141.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "happened",
+          "start": 141.22,
+          "end": 141.48,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 141.48,
+          "end": 141.62,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 141.62,
+          "end": 141.7,
+          "probability": 0.999
+        },
+        {
+          "word": "application,",
+          "start": 141.7,
+          "end": 142.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "with",
+          "start": 142.52,
+          "end": 142.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "regards",
+          "start": 142.78,
+          "end": 143.18,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 143.18,
+      "end": 143.82,
+      "start_formatted": "00:02:23.180",
+      "end_formatted": "00:02:23.820",
+      "text": "to the contact.",
+      "words": [
+        {
+          "word": "to",
+          "start": 143.18,
+          "end": 143.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 143.38,
+          "end": 143.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "contact.",
+          "start": 143.5,
+          "end": 143.82,
+          "probability": 0.8618
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 144.34,
+      "end": 149.44,
+      "start_formatted": "00:02:24.340",
+      "end_formatted": "00:02:29.440",
+      "text": "In this case, there are two entries, its creation, and my viewing the contact right now.",
+      "words": [
+        {
+          "word": "In",
+          "start": 144.34,
+          "end": 144.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 144.68,
+          "end": 144.88,
+          "probability": 0.999
+        },
+        {
+          "word": "case,",
+          "start": 144.88,
+          "end": 145.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 145.38,
+          "end": 145.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 145.62,
+          "end": 145.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 145.74,
+          "end": 145.92,
+          "probability": 0.8701
+        },
+        {
+          "word": "entries,",
+          "start": 145.92,
+          "end": 146.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "its",
+          "start": 146.54,
+          "end": 146.78,
+          "probability": 0.8525
+        },
+        {
+          "word": "creation,",
+          "start": 146.78,
+          "end": 147.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 147.5,
+          "end": 147.76,
+          "probability": 0.999
+        },
+        {
+          "word": "my",
+          "start": 147.76,
+          "end": 147.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "viewing",
+          "start": 147.92,
+          "end": 148.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 148.22,
+          "end": 148.4,
+          "probability": 0.999
+        },
+        {
+          "word": "contact",
+          "start": 148.4,
+          "end": 148.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "right",
+          "start": 148.82,
+          "end": 149.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "now.",
+          "start": 149.1,
+          "end": 149.44,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 149.92,
+      "end": 151.56,
+      "start_formatted": "00:02:29.920",
+      "end_formatted": "00:02:31.560",
+      "text": "Now we will switch to Studio.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 149.92,
+          "end": 150.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "we",
+          "start": 150.44,
+          "end": 150.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 150.6,
+          "end": 150.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "switch",
+          "start": 150.78,
+          "end": 151.02,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 151.02,
+          "end": 151.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Studio.",
+          "start": 151.22,
+          "end": 151.56,
+          "probability": 0.7422
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 152.0,
+      "end": 155.1,
+      "start_formatted": "00:02:32.000",
+      "end_formatted": "00:02:35.100",
+      "text": "You can stop the server in three ways after starting it in Studio.",
+      "words": [
+        {
+          "word": "You",
+          "start": 152.0,
+          "end": 152.34,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 152.34,
+          "end": 152.5,
+          "probability": 1.0
+        },
+        {
+          "word": "stop",
+          "start": 152.5,
+          "end": 152.76,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 152.76,
+          "end": 152.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "server",
+          "start": 152.94,
+          "end": 153.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "in",
+          "start": 153.2,
+          "end": 153.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "three",
+          "start": 153.38,
+          "end": 153.56,
+          "probability": 0.9385
+        },
+        {
+          "word": "ways",
+          "start": 153.56,
+          "end": 153.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "after",
+          "start": 153.88,
+          "end": 154.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "starting",
+          "start": 154.16,
+          "end": 154.52,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 154.52,
+          "end": 154.66,
+          "probability": 0.9902
+        },
+        {
+          "word": "in",
+          "start": 154.66,
+          "end": 154.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "Studio.",
+          "start": 154.78,
+          "end": 155.1,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 155.68,
+      "end": 157.96,
+      "start_formatted": "00:02:35.680",
+      "end_formatted": "00:02:37.960",
+      "text": "The first way is to click the stop button.",
+      "words": [
+        {
+          "word": "The",
+          "start": 155.68,
+          "end": 156.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "first",
+          "start": 156.18,
+          "end": 156.44,
+          "probability": 0.999
+        },
+        {
+          "word": "way",
+          "start": 156.44,
+          "end": 156.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 156.7,
+          "end": 156.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 156.88,
+          "end": 157.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 157.0,
+          "end": 157.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 157.2,
+          "end": 157.38,
+          "probability": 0.999
+        },
+        {
+          "word": "stop",
+          "start": 157.38,
+          "end": 157.62,
+          "probability": 0.4333
+        },
+        {
+          "word": "button.",
+          "start": 157.62,
+          "end": 157.96,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 158.38,
+      "end": 161.24,
+      "start_formatted": "00:02:38.380",
+      "end_formatted": "00:02:41.240",
+      "text": "The second way is to select stop from the run menu.",
+      "words": [
+        {
+          "word": "The",
+          "start": 158.38,
+          "end": 158.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "second",
+          "start": 158.9,
+          "end": 159.18,
+          "probability": 0.999
+        },
+        {
+          "word": "way",
+          "start": 159.18,
+          "end": 159.44,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 159.44,
+          "end": 159.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 159.6,
+          "end": 159.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "select",
+          "start": 159.72,
+          "end": 160.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "stop",
+          "start": 160.02,
+          "end": 160.3,
+          "probability": 0.9004
+        },
+        {
+          "word": "from",
+          "start": 160.3,
+          "end": 160.54,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 160.54,
+          "end": 160.68,
+          "probability": 0.999
+        },
+        {
+          "word": "run",
+          "start": 160.68,
+          "end": 160.88,
+          "probability": 0.8955
+        },
+        {
+          "word": "menu.",
+          "start": 160.88,
+          "end": 161.24,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 161.66,
+      "end": 164.76,
+      "start_formatted": "00:02:41.660",
+      "end_formatted": "00:02:44.760",
+      "text": "The third is to select the exit button to exit from Studio.",
+      "words": [
+        {
+          "word": "The",
+          "start": 161.66,
+          "end": 162.18,
+          "probability": 0.999
+        },
+        {
+          "word": "third",
+          "start": 162.18,
+          "end": 162.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 162.38,
+          "end": 162.58,
+          "probability": 0.9888
+        },
+        {
+          "word": "to",
+          "start": 162.58,
+          "end": 162.72,
+          "probability": 0.999
+        },
+        {
+          "word": "select",
+          "start": 162.72,
+          "end": 163.0,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 163.0,
+          "end": 163.16,
+          "probability": 0.999
+        },
+        {
+          "word": "exit",
+          "start": 163.16,
+          "end": 163.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "button",
+          "start": 163.42,
+          "end": 163.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 163.72,
+          "end": 163.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "exit",
+          "start": 163.9,
+          "end": 164.18,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 164.18,
+          "end": 164.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "Studio.",
+          "start": 164.38,
+          "end": 164.76,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 164.76,
+      "end": 169.84,
+      "start_formatted": "00:02:44.760",
+      "end_formatted": "00:02:49.840",
+      "text": "You will generally want to stop the server when you exit Studio, because it becomes difficult",
+      "words": [
+        {
+          "word": "You",
+          "start": 164.76,
+          "end": 165.5,
+          "probability": 0.9004
+        },
+        {
+          "word": "will",
+          "start": 165.5,
+          "end": 165.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "generally",
+          "start": 165.68,
+          "end": 166.06,
+          "probability": 0.999
+        },
+        {
+          "word": "want",
+          "start": 166.06,
+          "end": 166.3,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 166.3,
+          "end": 166.42,
+          "probability": 1.0
+        },
+        {
+          "word": "stop",
+          "start": 166.42,
+          "end": 166.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 166.68,
+          "end": 166.84,
+          "probability": 0.999
+        },
+        {
+          "word": "server",
+          "start": 166.84,
+          "end": 167.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "when",
+          "start": 167.12,
+          "end": 167.38,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 167.38,
+          "end": 167.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "exit",
+          "start": 167.54,
+          "end": 167.8,
+          "probability": 0.999
+        },
+        {
+          "word": "Studio,",
+          "start": 167.8,
+          "end": 168.24,
+          "probability": 0.522
+        },
+        {
+          "word": "because",
+          "start": 168.58,
+          "end": 168.98,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 168.98,
+          "end": 169.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "becomes",
+          "start": 169.12,
+          "end": 169.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "difficult",
+          "start": 169.46,
+          "end": 169.84,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 169.84,
+      "end": 171.8,
+      "start_formatted": "00:02:49.840",
+      "end_formatted": "00:02:51.800",
+      "text": "to stop it once Studio is closed.",
+      "words": [
+        {
+          "word": "to",
+          "start": 169.84,
+          "end": 170.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "stop",
+          "start": 170.1,
+          "end": 170.38,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 170.38,
+          "end": 170.52,
+          "probability": 0.9785
+        },
+        {
+          "word": "once",
+          "start": 170.52,
+          "end": 170.76,
+          "probability": 0.999
+        },
+        {
+          "word": "Studio",
+          "start": 170.76,
+          "end": 171.16,
+          "probability": 0.9658
+        },
+        {
+          "word": "is",
+          "start": 171.16,
+          "end": 171.42,
+          "probability": 0.999
+        },
+        {
+          "word": "closed.",
+          "start": 171.42,
+          "end": 171.8,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 172.26,
+      "end": 173.92,
+      "start_formatted": "00:02:52.260",
+      "end_formatted": "00:02:53.920",
+      "text": "This is the end of the demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 172.26,
+          "end": 172.78,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 172.78,
+          "end": 172.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 172.92,
+          "end": 173.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "end",
+          "start": 173.06,
+          "end": 173.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 173.22,
+          "end": 173.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 173.32,
+          "end": 173.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "demonstration.",
+          "start": 173.4,
+          "end": 173.92,
+          "probability": 0.9956
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,478 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-13",
+    "slide_count": 42,
+    "slides_with_text": 38,
+    "total_words": 1526,
+    "avg_confidence": 82.5,
+    "processing_time_seconds": 16.49,
+    "extracted_at": "2026-02-13T12:11:33.895604"
+  },
+  "full_text": "Managing contacts\n\nLesson\nobjectives\n\nCreate a contact in ClaimCenter\n\nAssign or reassign roles to contacts on a claim\nAdd a vendor contact to a claim\n\nDescribe how ClaimCenter and\nContactManager share contacts\n\n| Review: Parts of a claim (1 of) Gi\n\n| Review: Parts of a claim (2 of 9) Gi\n\nARO\nis: ge\n\na\nz\n3\n\n| Review: Parts of a claim (3 of 9) Gi\n\nLD\nLp\nap\n\nincident service\n\nSe\nBBE\n\na\nz\n3\n\n| Review: Parts of a claim (4 of9) Gi\n\nSe\nBBE\n\nnes =\n\n[ + Va IK a ==1.___$\n\na8 i, iS\n= we M3 ter S\ncontact incident service exposure\n\nreserve line\n\n| Review: Parts of a claim (5 of) Gi\n\n[SS i\nALAR Le) activity\n@ Stes\n\ncheck\n\nSe\nBBE\n\n3\nz\n3\n\nincident service exposure .\nreserve line\n\n| Review: Parts of a claim ¢ of)\n\nclaim\n\nvo i a, -\nte iS) a ie\n= BS oS\n\nreserve line\n\n| Review: Parts of a claim (7 of9)\n\nclaim Al\n\now) ia 3G\nea.\n\n% YS te\n\nvity document\n\na.\n\nreserve lin\n\n| Review: Parts of a claim (8 of9)\n\nclaim Al\n\nWDD \"_ a, = @;\n2268 B5®\nPY >) A}--ep &) acivity document = \"*® matter\n\nreserve line\n\nnl\n\n| Review: Parts of a claim (of)\n\nclaim Al\n\n286 80\noe on\n> ee =\n\nreserve line\n\n| Discussion\n\nAs a claims adjuster, | need to keep track of\neveryone who is associated with a claim. That could\nmean witnesses, pedestrians, claimants or even\nvendors who have some relationship with the claim.\nHow does ClaimCenter keep track of involved\nparties? Does ClaimCenter integrate with another\nsystem to manage contacts?\n\n_Tanvi\nAdjuster \\s9/\n\n| What is a contact? G\n\nUW L )\nclaimant reporter auto repair shop hospital doctor court\n\nAcontact is a person, organization, vendor, or venue which is related to the claim,\nsuch as...\n\n* Someone who suffered a loss\n\n*« Acompany or vendor which repaired a damaged asset or treated an injured person\n\n« A place where disputes were resolved\n\n| Two applications store contacts\n\nClaimCenter ContactManager\n\n(Address Book)\n\ncontacts\n\nrelevant to\n\nmultiple claims\n—\n\nTwo applications store contacts\n* ClaimCenter stores contact information as it pertains to a claim (single use)\n* ContactManager stores contacts that are relevant to multiple claims (multi-use)\n* Contacts can be shared across both applications\n\n| Local contacts\n\nClaim 000-00-002006\nStanley Poole\n(person) l\n\n* Person or company\n\n* Contacts that are not used across\nmultiple claims (single use)\n\nContactManager\n\nSy Dr. Matt Sawyer\n(doctor)\n\n¢ Vendor, attorney, auto repair, doctor,\nmedical care organization, etc.\n\n* Contacts which may be used across\nmultiple claims (multi-use)\n\nShared contacts Gi\n\nContactManager\n\non EHO\n\nDr. Matt Sawyer (1) L_\n\n. Dr. Matt Sawyer\nClaim 036-22-93% 12 (doctor)\nDr. Matt Sawyer (2) L_\nVendor, attorney, auto repair,\n. doctor, medical care\nClaim 908-00-230166 organization, and so on.\nDr. Matt Sawyer (3) L_\n\n| Adding contacts to a claim (1 of 5)\n\n-- a) 9...\n1. Adding a\n\nNew Contact\n\n(non-vendor)\n\nClaim 000-00-002006\n\nContactManager\n\n| Adding contacts to a claim (2 of 5) Gi\n\n. Adding a\nNew Contact\n\n(non-vendor)\n\nStanley Poole (person) .\nClaim 000-00-002006\n\n| Adding contacts to a claim (3 of 5)\n\n. Adding a\nNew Contact\n(non-vendor)\n\nStanley Poole (person) .\nClaim 000-00-002006\n\n. Adding an\nExisting Vendor\nDr. Matt Sawyer\n\nClaim 908-00-230166\n\nContactManager\n\nDr. Matt Sawyer (doctor)\nExisting Vendor\n\n| Adding contacts to a claim (4 of 5)\n\n. Adding a\nNew Contact\n(non-vendor) —\n\n—_\n\nStanley Poole (person)\n\nClaim 000-00-002006\n\n. Adding an\nExisting Vendor\nDr. Matt Sawyer\n\nClaim 908-00-230166\n\nContactManager\n\nDr. Matt Sawyer (doctor)\nExisting Vendor\n\n| Adding contacts to a claim (5 of 5)\n\n. Adding a\nNew Contact\n(non-vendor)\n\n—_\n\nStanley Poole (person) .\nClaim 000-00-002006\n\n. Adding an\nExisting Vendor\nDr. Matt Sawyer\n\nClaim 908-00-230166\n\nContactManager\n\nDr. Matt Sawyer (doctor)\nExisting Vendor\n\n| New contacts in ClaimCenter Gi\n\n« Always created from within a claim\n\n¢ May be related to:\n+ The claim\n+ An exposure\n+ Anincident\n+ The policy\n+ Aservice\n\n¢ Must have a role\n\n« May be linked to ContactManager\n(primarily for vendors)\n\nNew Person\n\nBasics | Addresses | Related Contacts\n\nThis contact is not linked to the Address Book\n\nContacts\n\nRoles Add\n;\nRelated To Role\" >\nName > Roles:\n\nAnnabelle Arlington Claimant, Reporter\n\nPerson:\nP&P Construction Insured\nPrefix <none>\nFirst name ran Basics | Addresses | Related Contacts |\n\nMiddle name\n\nLast name % | Anderson ‘This contact is not linked to the Address Book\nRoles\nRelatedTo Role Active? SC\n\n312-36-300870 Witness Yes\n\n| Creating contacts in NCW\n\n¢ Roles assignment is automatic on Basic information\n\n¢ Parties involved can have any role\n\nStep 2 of 4: Basic information\n\nContacts\n\nPolicy Location\n\nLocation Code\n\nReported By\nName\n\nRelation to Insured\n\nMain Contact\n\nSame Person?\n\n‘This contactis not linked tothe Address Book\n\nte\n55 California St, Washington, IL 61571 ¥ Reset\n312.96:68870\n21236368870\n33296:68870\n\nReporter role\n\n* Jennifer Albee\n\n* | HR Representative .\n\nMain Contact role\n\n© Same as reporter\nDifferent person\n\nAny role\n\nfoe” =\n\ncheckPayee -\nclaimant\n|\nMoconct\n4 Reporter\n\nrocsenger\n\nalternate Contact\nattorney\n\n| Contact roles Gi\n\nAuto Claim Workers' Comp Claim\n036-22-934712 772-12-900000\nEllen Lopez . Tech Supplies Inc.\nInsured (policy) Insured (policy)\n- Reporter (claim) i\n\nClaimant (exposure 1)\n\n: Jim Farris Tommy Duke\nClaimCenter Witness (claim) Claimant (claim)\nCheck Payee (claim)\nMatt Sawyer\nMatt Sawyer . ;\nSf Doctor (exposure 1) Sy Doctor (Medical Details)\n\n| Adding a vendor contact to a claim\n\nVendors are maintained in\nContactManager\n\nAdding an existing vendor to a claim\ncopies the vendor information from\nContactManager\n\nUse Add Existing Contact\nSearch for the vendor\nSelect the vendor and add a role\n\nThe vendor will be linked automatically\n\nSearch Address Book\n\nType »* [Person a\nFirst name Company\nPerson\nLast name Place\nAdjudicator\nTaxID attorney\nA ir She\nInclude Pending Creates | Auto Repair Shop\nAuto Towing Agency\n\nLimit to vendors providing| contact\nLegal Venue\nMedical Care Organization\nSearch Results [MQUAIS) vendor (Company)\nVendor (Person)\nName > Address = City = State > _ZIPCode > Ph\n\n| Demonstration G\n\nAdding contacts to a claim\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nManaging contacts activity\n\nQuestion\n\n,~ — |f “Tire Town” is in Address Book and is associated with three claims,\n\now how many contacts have the name “Tire Town\"?\n\n¢\n\nSSoopooD OOOO OD ooo\n\nGi\n\nAnswer [a\n\n,~ — 'f “Tire Town” is in Address Book and is associated with three claims,\n¢ how many contacts have the name “Tire Town\"?\n\n¢\n¢\n\nFour. There would be one contact in ContactManager and three in ClaimCenter. Every\ncontact, whether it is linked or not, is a unique and separate object.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n_~ — 'sitcommon or uncommon to have a contact that exists only in\n¢ ClaimCenter? Only in ContactManager?\n\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nAnswer [a\n\n,~ — 'sitcommon or uncommon to have a contact that exists only in\n¢ ClaimCenter? Only in ContactManager?\n\n¢\n¢\n\nIt is common to have a contact that exists only in ClaimCenter. This is true for contacts\nthat are relevant to only one claim (such as a witness or passenger). It is uncommon\nto have a contact exist only in Address Book. The primary purpose for a contact in\nAddress Book is to have it associated with multiple claims, and if it is associated with\neven one claim, then the contact will also exist in ClaimCenter.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n_~ — What is the purpose of a contact role?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nAnswer\n\nae What is the purpose of a contact role?\n\n¢\n¢\n\nAcontact role identifies the relationship that the contact has with the claim (such as\ninsured, witness, doctor, and so on).\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n,~ — Howcan you tell if a contact is linked or in sync?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nAnswer\n\n,~ — Howcan you tell if a contact is linked or in sync?\n\n4\n¢\n¢\n\nYou can tell whether a contact is linked and/or in sync by selecting the contact from\nthe Parties Involved — Contacts’ screen. A label on the Basics card identifies the\ncontact's status.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n,~ — How many claims can a contact be associated with if the contact is only\now defined in ClaimCenter?\n\nSSoopooD OOOO OD ooo\n\nGi\n\nAnswer\n\n,~ — Howmany claims can a contact be associated with if the contact is only\nra defined in ClaimCenter?\n\nOne. Each contact is created within a claim. If a contact (usually an insured) has\nmultiple claims, there will be a separate contact on each of those claims.\n\nSS Oooo D OOOO ODD oo\n\nGi\n\nLesson\nobjectives\nreview\n\nCreate a contact in ClaimCenter\n\nAssign or reassign roles to contacts on a claim\nAdd a vendor contact to a claim\n\nDescribe how ClaimCenter and\nContactManager share contacts",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Managing contacts",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 557
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nCreate a contact in ClaimCenter\n\nAssign or reassign roles to contacts on a claim\nAdd a vendor contact to a claim\n\nDescribe how ClaimCenter and\nContactManager share contacts",
+      "word_count": 30,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Review: Parts of a claim (1 of) Gi",
+      "word_count": 9,
+      "avg_confidence": 80.6,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Review: Parts of a claim (2 of 9) Gi\n\nARO\nis: ge\n\na\nz\n3",
+      "word_count": 16,
+      "avg_confidence": 60.06,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Review: Parts of a claim (3 of 9) Gi\n\nLD\nLp\nap\n\nincident service\n\nSe\nBBE\n\na\nz\n3",
+      "word_count": 20,
+      "avg_confidence": 60.75,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Review: Parts of a claim (4 of9) Gi\n\nSe\nBBE\n\nnes =\n\n[ + Va IK a ==1.___$\n\na8 i, iS\n= we M3 ter S\ncontact incident service exposure\n\nreserve line",
+      "word_count": 33,
+      "avg_confidence": 60.3,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Review: Parts of a claim (5 of) Gi\n\n[SS i\nALAR Le) activity\n@ Stes\n\ncheck\n\nSe\nBBE\n\n3\nz\n3\n\nincident service exposure .\nreserve line",
+      "word_count": 28,
+      "avg_confidence": 64.1,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Review: Parts of a claim ¢ of)\n\nclaim\n\nvo i a, -\nte iS) a ie\n= BS oS\n\nreserve line",
+      "word_count": 22,
+      "avg_confidence": 66.65,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Review: Parts of a claim (7 of9)\n\nclaim Al\n\now) ia 3G\nea.\n\n% YS te\n\nvity document\n\na.\n\nreserve lin",
+      "word_count": 22,
+      "avg_confidence": 69.83,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Review: Parts of a claim (8 of9)\n\nclaim Al\n\nWDD \"_ a, = @;\n2268 B5®\nPY >) A}--ep &) acivity document = \"*® matter\n\nreserve line\n\nnl",
+      "word_count": 29,
+      "avg_confidence": 68.04,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Review: Parts of a claim (of)\n\nclaim Al\n\n286 80\noe on\n> ee =\n\nreserve line",
+      "word_count": 18,
+      "avg_confidence": 69.05,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Discussion\n\nAs a claims adjuster, | need to keep track of\neveryone who is associated with a claim. That could\nmean witnesses, pedestrians, claimants or even\nvendors who have some relationship with the claim.\nHow does ClaimCenter keep track of involved\nparties? Does ClaimCenter integrate with another\nsystem to manage contacts?\n\n_Tanvi\nAdjuster \\s9/",
+      "word_count": 55,
+      "avg_confidence": 94.43,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| What is a contact? G\n\nUW L )\nclaimant reporter auto repair shop hospital doctor court\n\nAcontact is a person, organization, vendor, or venue which is related to the claim,\nsuch as...\n\n* Someone who suffered a loss\n\n*« Acompany or vendor which repaired a damaged asset or treated an injured person\n\n« A place where disputes were resolved",
+      "word_count": 60,
+      "avg_confidence": 85.7,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Two applications store contacts\n\nClaimCenter ContactManager\n\n(Address Book)\n\ncontacts\n\nrelevant to\n\nmultiple claims\n—\n\nTwo applications store contacts\n* ClaimCenter stores contact information as it pertains to a claim (single use)\n* ContactManager stores contacts that are relevant to multiple claims (multi-use)\n* Contacts can be shared across both applications",
+      "word_count": 51,
+      "avg_confidence": 94.15,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Local contacts\n\nClaim 000-00-002006\nStanley Poole\n(person) l\n\n* Person or company\n\n* Contacts that are not used across\nmultiple claims (single use)\n\nContactManager\n\nSy Dr. Matt Sawyer\n(doctor)\n\n¢ Vendor, attorney, auto repair, doctor,\nmedical care organization, etc.\n\n* Contacts which may be used across\nmultiple claims (multi-use)",
+      "word_count": 50,
+      "avg_confidence": 90.02,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Shared contacts Gi\n\nContactManager\n\non EHO\n\nDr. Matt Sawyer (1) L_\n\n. Dr. Matt Sawyer\nClaim 036-22-93% 12 (doctor)\nDr. Matt Sawyer (2) L_\nVendor, attorney, auto repair,\n. doctor, medical care\nClaim 908-00-230166 organization, and so on.\nDr. Matt Sawyer (3) L_",
+      "word_count": 43,
+      "avg_confidence": 83.58,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Adding contacts to a claim (1 of 5)\n\n-- a) 9...\n1. Adding a\n\nNew Contact\n\n(non-vendor)\n\nClaim 000-00-002006\n\nContactManager",
+      "word_count": 21,
+      "avg_confidence": 87.3,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Adding contacts to a claim (2 of 5) Gi\n\n. Adding a\nNew Contact\n\n(non-vendor)\n\nStanley Poole (person) .\nClaim 000-00-002006",
+      "word_count": 22,
+      "avg_confidence": 83.54,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Adding contacts to a claim (3 of 5)\n\n. Adding a\nNew Contact\n(non-vendor)\n\nStanley Poole (person) .\nClaim 000-00-002006\n\n. Adding an\nExisting Vendor\nDr. Matt Sawyer\n\nClaim 908-00-230166\n\nContactManager\n\nDr. Matt Sawyer (doctor)\nExisting Vendor",
+      "word_count": 38,
+      "avg_confidence": 92.39,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Adding contacts to a claim (4 of 5)\n\n. Adding a\nNew Contact\n(non-vendor) —\n\n—_\n\nStanley Poole (person)\n\nClaim 000-00-002006\n\n. Adding an\nExisting Vendor\nDr. Matt Sawyer\n\nClaim 908-00-230166\n\nContactManager\n\nDr. Matt Sawyer (doctor)\nExisting Vendor",
+      "word_count": 39,
+      "avg_confidence": 94.29,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Adding contacts to a claim (5 of 5)\n\n. Adding a\nNew Contact\n(non-vendor)\n\n—_\n\nStanley Poole (person) .\nClaim 000-00-002006\n\n. Adding an\nExisting Vendor\nDr. Matt Sawyer\n\nClaim 908-00-230166\n\nContactManager\n\nDr. Matt Sawyer (doctor)\nExisting Vendor",
+      "word_count": 39,
+      "avg_confidence": 92.42,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| New contacts in ClaimCenter Gi\n\n« Always created from within a claim\n\n¢ May be related to:\n+ The claim\n+ An exposure\n+ Anincident\n+ The policy\n+ Aservice\n\n¢ Must have a role\n\n« May be linked to ContactManager\n(primarily for vendors)\n\nNew Person\n\nBasics | Addresses | Related Contacts\n\nThis contact is not linked to the Address Book\n\nContacts\n\nRoles Add\n;\nRelated To Role\" >\nName > Roles:\n\nAnnabelle Arlington Claimant, Reporter\n\nPerson:\nP&P Construction Insured\nPrefix <none>\nFirst name ran Basics | Addresses | Related Contacts |\n\nMiddle name\n\nLast name % | Anderson ‘This contact is not linked to the Address Book\nRoles\nRelatedTo Role Active? SC\n\n312-36-300870 Witness Yes",
+      "word_count": 117,
+      "avg_confidence": 82.18,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Creating contacts in NCW\n\n¢ Roles assignment is automatic on Basic information\n\n¢ Parties involved can have any role\n\nStep 2 of 4: Basic information\n\nContacts\n\nPolicy Location\n\nLocation Code\n\nReported By\nName\n\nRelation to Insured\n\nMain Contact\n\nSame Person?\n\n‘This contactis not linked tothe Address Book\n\nte\n55 California St, Washington, IL 61571 ¥ Reset\n312.96:68870\n21236368870\n33296:68870\n\nReporter role\n\n* Jennifer Albee\n\n* | HR Representative .\n\nMain Contact role\n\n© Same as reporter\nDifferent person\n\nAny role\n\nfoe” =\n\ncheckPayee -\nclaimant\n|\nMoconct\n4 Reporter\n\nrocsenger\n\nalternate Contact\nattorney",
+      "word_count": 94,
+      "avg_confidence": 82.22,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Contact roles Gi\n\nAuto Claim Workers' Comp Claim\n036-22-934712 772-12-900000\nEllen Lopez . Tech Supplies Inc.\nInsured (policy) Insured (policy)\n- Reporter (claim) i\n\nClaimant (exposure 1)\n\n: Jim Farris Tommy Duke\nClaimCenter Witness (claim) Claimant (claim)\nCheck Payee (claim)\nMatt Sawyer\nMatt Sawyer . ;\nSf Doctor (exposure 1) Sy Doctor (Medical Details)",
+      "word_count": 55,
+      "avg_confidence": 86.59,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Adding a vendor contact to a claim\n\nVendors are maintained in\nContactManager\n\nAdding an existing vendor to a claim\ncopies the vendor information from\nContactManager\n\nUse Add Existing Contact\nSearch for the vendor\nSelect the vendor and add a role\n\nThe vendor will be linked automatically\n\nSearch Address Book\n\nType »* [Person a\nFirst name Company\nPerson\nLast name Place\nAdjudicator\nTaxID attorney\nA ir She\nInclude Pending Creates | Auto Repair Shop\nAuto Towing Agency\n\nLimit to vendors providing| contact\nLegal Venue\nMedical Care Organization\nSearch Results [MQUAIS) vendor (Company)\nVendor (Person)\nName > Address = City = State > _ZIPCode > Ph",
+      "word_count": 105,
+      "avg_confidence": 86.59,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Demonstration G\n\nAdding contacts to a claim\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.31,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Student exercise\n\nManaging contacts activity",
+      "word_count": 6,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n,~ — |f “Tire Town” is in Address Book and is associated with three claims,\n\now how many contacts have the name “Tire Town\"?\n\n¢\n\nSSoopooD OOOO OD ooo\n\nGi",
+      "word_count": 31,
+      "avg_confidence": 78.7,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer [a\n\n,~ — 'f “Tire Town” is in Address Book and is associated with three claims,\n¢ how many contacts have the name “Tire Town\"?\n\n¢\n¢\n\nFour. There would be one contact in ContactManager and three in ClaimCenter. Every\ncontact, whether it is linked or not, is a unique and separate object.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 60,
+      "avg_confidence": 85.49,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question\n\n_~ — 'sitcommon or uncommon to have a contact that exists only in\n¢ ClaimCenter? Only in ContactManager?\n\n¢\n¢\n\nSSoopooD OOOO OD ooo",
+      "word_count": 25,
+      "avg_confidence": 77.52,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer [a\n\n,~ — 'sitcommon or uncommon to have a contact that exists only in\n¢ ClaimCenter? Only in ContactManager?\n\n¢\n¢\n\nIt is common to have a contact that exists only in ClaimCenter. This is true for contacts\nthat are relevant to only one claim (such as a witness or passenger). It is uncommon\nto have a contact exist only in Address Book. The primary purpose for a contact in\nAddress Book is to have it associated with multiple claims, and if it is associated with\neven one claim, then the contact will also exist in ClaimCenter.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 104,
+      "avg_confidence": 90.06,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question\n\n_~ — What is the purpose of a contact role?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo",
+      "word_count": 18,
+      "avg_confidence": 69.41,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer\n\nae What is the purpose of a contact role?\n\n¢\n¢\n\nAcontact role identifies the relationship that the contact has with the claim (such as\ninsured, witness, doctor, and so on).\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 38,
+      "avg_confidence": 85.78,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question\n\n,~ — Howcan you tell if a contact is linked or in sync?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo",
+      "word_count": 21,
+      "avg_confidence": 72.4,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer\n\n,~ — Howcan you tell if a contact is linked or in sync?\n\n4\n¢\n¢\n\nYou can tell whether a contact is linked and/or in sync by selecting the contact from\nthe Parties Involved — Contacts’ screen. A label on the Basics card identifies the\ncontact's status.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 55,
+      "avg_confidence": 85.91,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Question\n\n,~ — How many claims can a contact be associated with if the contact is only\now defined in ClaimCenter?\n\nSSoopooD OOOO OD ooo\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 78.96,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Answer\n\n,~ — Howmany claims can a contact be associated with if the contact is only\nra defined in ClaimCenter?\n\nOne. Each contact is created within a claim. If a contact (usually an insured) has\nmultiple claims, there will be a separate contact on each of those claims.\n\nSS Oooo D OOOO ODD oo\n\nGi",
+      "word_count": 55,
+      "avg_confidence": 87.02,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Lesson\nobjectives\nreview\n\nCreate a contact in ClaimCenter\n\nAssign or reassign roles to contacts on a claim\nAdd a vendor contact to a claim\n\nDescribe how ClaimCenter and\nContactManager share contacts",
+      "word_count": 31,
+      "avg_confidence": 95.03,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

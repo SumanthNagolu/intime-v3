@@ -1,0 +1,6465 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_14_01.mp4",
+    "video_stem": "IS_Claim_14_01",
+    "duration_seconds": 399.94,
+    "duration_formatted": "00:06:39.940",
+    "segment_count": 62,
+    "word_count": 971,
+    "avg_confidence": 0.9482,
+    "transcription_time_seconds": 21.74,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:55:29.081054"
+  },
+  "full_text": "Roles and permissions help control what a user can and cannot do on a claim. In most cases, users are assigned roles, like customer service representative, adjuster, supervisor, and others which contain permissions specific to their jobs. Users may be assigned multiple roles which help keep specific permissions from being assigned to a wide group of users. For example, any adjuster can add activities or documents to closed claims. If the insurer decides to be a restrict those permissions, an administrator can assign them to a single role. Andy Applegate logs into ClaimCenter. Andy is going to work on the Bill Kinman claim, so he starts with a search. He enters Kinman as the last name and clicks search. Bill Kinman is a claimant on three claims. The first claim in the list is the only one where the claim is closed and he is the sole claimant. This is the claim Andy is looking for. There is an icon at the top of the screen and a status in the summary that shows the claim is closed. Now that he has the claim, Andy adds an activity as a reminder to send a letter to the claimant. On the new activity screen, he makes sure that the reminder activity is assigned to himself. The default values for the other details of the activity are fine, so he clicks update. Andy has also received a document confirming the claimant. The client has accepted the claim payments, so he adds the document to the claim. Andy enters the name of the document. He sets the status of the document to approved. And the document type to letter received. He reviews the fields for completeness. And clicks update to save the document reference. He opens the document screen. And sees the customer acceptance letter he just added to the claim. Since he is finished with this claim for now, he logs out of claim center. The administrator. Succeed Insurance has decided that there are too many adjusters who are adding activities and documents to claims that are closed. To address this problem, Succeed has asked the system administrator to remove that ability from all adjusters with the exception of Andy Applegate. The administrator. The administrator. Logs into claim center. The administrator goes to the administration section of claim center. And clicks users and security. The administrator is going to use roles to solve the issue of too many users creating activities and documents on closed claims. She starts by opening the adjuster role. The adjuster role includes the permissions create activities on closed claim. And create documents on closed claim. The administrator clicks edit to make changes to the permissions on the adjuster role. She selects create activities on closed claim. And create documents on closed claim. The administrator clicks remove. To remove the selected permissions from the role. She clicks update to save the changes. With those two permissions gone. Adjusters will no longer be allowed to create activities or documents on closed claims. The administrator logs out of claim center. To demonstrate the effect of the changes to the adjuster role. Andy Applegate logs into claim center. As before. He selects the bill Kinman claim. Remember the Kinman claim is closed. Andy selects the actions menu and sees that there are no activity or document options. This is because his role. Adjuster. No longer contains those permissions. Andy logs out of claim center. Remember that succeed insurance wants only Andy to be able to add documents and activities to closed claims. During the previous steps. The administrator removed those permissions from all adjusters. Now. She needs to somehow grant those permissions to Andy. The claim center administrator logs back in. She starts with the administration tab. And then. Users and security. The administrator is going to use roles to grant those closed claim permissions to Andy. She is going to add a role created specifically for creating activities and documents on closed claims. On the roles screen. She clicks add role. The administrator names the role. Closed claims. And then describes the purpose of the role. The next step is to choose which permissions will be assigned to this role. The first permission the administrator adds is. Create activities on closed claim. She adds the second permission. The second permission for this role is create documents on closed claim. The new role is named closed claims. It has two permissions assigned. Create activities on closed claim. And create documents on closed claim. The administrator clicks update to save the new closed claims role. The administrator verifies that the role closed claims is now included in the list of roles. Next. She needs to assign the closed claims role to Andy. The administrator searches for Andy by entering the first few letters of his user name and clicking search. She then clicks Andy Applegate in the search results. Because she is going to make changes to the roles Andy has. The administrator clicks edit. Currently Andy has two roles. Trusted for sensitive claims. And adjuster. The administrator clicks add to add the new role. She selects the new role. Closed claims. From the list. Andy now has three roles assigned. Trusted for sensitive claims. Adjuster. And closed claims. He inherits all the permissions from each of these three roles. The administrator clicks update to save the changes. And logs out of claim center. To verify that he has permission to create activities and documents on claims that are closed. Andy logs back into claim center. He opens the Bill Kinman claim. Which is closed. He clicks the actions menu. And sees that even on this closed claim. He can now create both activities and documents. Andy logs out of claim center. This is the end of the managing roles and permissions demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "Roles and permissions help control what a user can and cannot do on a claim. In most cases, users are assigned roles, like customer service representative, adjuster, supervisor, and others which contain permissions specific to their jobs. Users may be assigned multiple roles which help keep specific permissions from being assigned to a wide group of users. For example, any adjuster can add activities or documents to closed claims. If the insurer decides to be a",
+      "words": [
+        {
+          "word": "Roles",
+          "start": 0.0,
+          "end": 0.18,
+          "probability": 0.8516
+        },
+        {
+          "word": "and",
+          "start": 0.18,
+          "end": 0.38,
+          "probability": 0.9668
+        },
+        {
+          "word": "permissions",
+          "start": 0.38,
+          "end": 0.84,
+          "probability": 0.9146
+        },
+        {
+          "word": "help",
+          "start": 0.84,
+          "end": 1.24,
+          "probability": 0.9854
+        },
+        {
+          "word": "control",
+          "start": 1.24,
+          "end": 1.68,
+          "probability": 0.998
+        },
+        {
+          "word": "what",
+          "start": 1.68,
+          "end": 1.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 1.98,
+          "end": 2.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "user",
+          "start": 2.1,
+          "end": 2.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "can",
+          "start": 2.32,
+          "end": 2.6,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 2.6,
+          "end": 2.8,
+          "probability": 0.9907
+        },
+        {
+          "word": "cannot",
+          "start": 2.8,
+          "end": 3.08,
+          "probability": 0.9033
+        },
+        {
+          "word": "do",
+          "start": 3.08,
+          "end": 3.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 3.34,
+          "end": 3.6,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 3.6,
+          "end": 3.72,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 3.72,
+          "end": 4.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "In",
+          "start": 4.36,
+          "end": 5.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "most",
+          "start": 5.0,
+          "end": 5.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "cases,",
+          "start": 5.34,
+          "end": 5.78,
+          "probability": 0.999
+        },
+        {
+          "word": "users",
+          "start": 6.04,
+          "end": 6.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "are",
+          "start": 6.42,
+          "end": 6.64,
+          "probability": 0.999
+        },
+        {
+          "word": "assigned",
+          "start": 6.64,
+          "end": 7.04,
+          "probability": 0.999
+        },
+        {
+          "word": "roles,",
+          "start": 7.04,
+          "end": 7.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "like",
+          "start": 7.78,
+          "end": 8.18,
+          "probability": 0.998
+        },
+        {
+          "word": "customer",
+          "start": 8.18,
+          "end": 8.56,
+          "probability": 0.8335
+        },
+        {
+          "word": "service",
+          "start": 8.56,
+          "end": 9.1,
+          "probability": 0.9863
+        },
+        {
+          "word": "representative,",
+          "start": 9.1,
+          "end": 9.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "adjuster,",
+          "start": 10.22,
+          "end": 10.88,
+          "probability": 0.9893
+        },
+        {
+          "word": "supervisor,",
+          "start": 11.1,
+          "end": 11.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 12.1,
+          "end": 12.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "others",
+          "start": 12.42,
+          "end": 12.74,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 12.74,
+          "end": 12.98,
+          "probability": 0.9922
+        },
+        {
+          "word": "contain",
+          "start": 12.98,
+          "end": 13.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "permissions",
+          "start": 13.4,
+          "end": 14.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "specific",
+          "start": 14.06,
+          "end": 14.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 14.6,
+          "end": 14.86,
+          "probability": 1.0
+        },
+        {
+          "word": "their",
+          "start": 14.86,
+          "end": 15.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "jobs.",
+          "start": 15.02,
+          "end": 15.5,
+          "probability": 0.999
+        },
+        {
+          "word": "Users",
+          "start": 15.98,
+          "end": 16.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "may",
+          "start": 16.62,
+          "end": 16.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 16.82,
+          "end": 16.96,
+          "probability": 1.0
+        },
+        {
+          "word": "assigned",
+          "start": 16.96,
+          "end": 17.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "multiple",
+          "start": 17.38,
+          "end": 17.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "roles",
+          "start": 17.78,
+          "end": 18.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 18.22,
+          "end": 18.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "help",
+          "start": 18.46,
+          "end": 18.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "keep",
+          "start": 18.66,
+          "end": 18.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "specific",
+          "start": 18.88,
+          "end": 19.44,
+          "probability": 0.999
+        },
+        {
+          "word": "permissions",
+          "start": 19.44,
+          "end": 20.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 20.0,
+          "end": 20.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "being",
+          "start": 20.32,
+          "end": 20.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "assigned",
+          "start": 20.6,
+          "end": 21.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 21.02,
+          "end": 21.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 21.3,
+          "end": 21.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "wide",
+          "start": 21.48,
+          "end": 21.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "group",
+          "start": 21.76,
+          "end": 22.0,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 22.0,
+          "end": 22.26,
+          "probability": 1.0
+        },
+        {
+          "word": "users.",
+          "start": 22.26,
+          "end": 22.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 23.12,
+          "end": 23.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "example,",
+          "start": 23.76,
+          "end": 24.22,
+          "probability": 0.999
+        },
+        {
+          "word": "any",
+          "start": 24.54,
+          "end": 24.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "adjuster",
+          "start": 24.86,
+          "end": 25.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "can",
+          "start": 25.32,
+          "end": 25.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 25.52,
+          "end": 25.74,
+          "probability": 0.999
+        },
+        {
+          "word": "activities",
+          "start": 25.74,
+          "end": 26.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "or",
+          "start": 26.28,
+          "end": 26.58,
+          "probability": 0.999
+        },
+        {
+          "word": "documents",
+          "start": 26.58,
+          "end": 27.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 27.16,
+          "end": 27.38,
+          "probability": 1.0
+        },
+        {
+          "word": "closed",
+          "start": 27.38,
+          "end": 27.68,
+          "probability": 0.9648
+        },
+        {
+          "word": "claims.",
+          "start": 27.68,
+          "end": 28.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "If",
+          "start": 28.38,
+          "end": 28.86,
+          "probability": 0.978
+        },
+        {
+          "word": "the",
+          "start": 28.86,
+          "end": 29.0,
+          "probability": 0.998
+        },
+        {
+          "word": "insurer",
+          "start": 29.0,
+          "end": 29.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "decides",
+          "start": 29.4,
+          "end": 29.72,
+          "probability": 0.9282
+        },
+        {
+          "word": "to",
+          "start": 29.72,
+          "end": 29.98,
+          "probability": 0.9912
+        },
+        {
+          "word": "be",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.178
+        },
+        {
+          "word": "a",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1136
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.5,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.500",
+      "text": "restrict those permissions, an administrator can assign them to a single role. Andy Applegate logs into ClaimCenter. Andy is going to work on the Bill Kinman claim, so he starts with a search. He enters Kinman as the last name and clicks search. Bill Kinman is a claimant on three claims. The first claim in the list is the only one where the claim is closed and he is the sole claimant. This is the claim Andy is looking for.",
+      "words": [
+        {
+          "word": "restrict",
+          "start": 29.98,
+          "end": 30.4,
+          "probability": 0.1967
+        },
+        {
+          "word": "those",
+          "start": 30.4,
+          "end": 30.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "permissions,",
+          "start": 30.76,
+          "end": 31.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "an",
+          "start": 31.74,
+          "end": 32.0,
+          "probability": 0.917
+        },
+        {
+          "word": "administrator",
+          "start": 32.0,
+          "end": 32.52,
+          "probability": 0.9434
+        },
+        {
+          "word": "can",
+          "start": 32.52,
+          "end": 32.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "assign",
+          "start": 32.96,
+          "end": 33.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "them",
+          "start": 33.3,
+          "end": 33.52,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 33.52,
+          "end": 33.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 33.68,
+          "end": 33.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "single",
+          "start": 33.82,
+          "end": 34.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "role.",
+          "start": 34.16,
+          "end": 34.5,
+          "probability": 0.979
+        },
+        {
+          "word": "Andy",
+          "start": 36.56,
+          "end": 37.12,
+          "probability": 0.9028
+        },
+        {
+          "word": "Applegate",
+          "start": 37.12,
+          "end": 37.74,
+          "probability": 0.9634
+        },
+        {
+          "word": "logs",
+          "start": 37.74,
+          "end": 38.04,
+          "probability": 0.812
+        },
+        {
+          "word": "into",
+          "start": 38.04,
+          "end": 38.3,
+          "probability": 0.9702
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 38.3,
+          "end": 39.08,
+          "probability": 0.6992
+        },
+        {
+          "word": "Andy",
+          "start": 39.9,
+          "end": 40.46,
+          "probability": 0.9873
+        },
+        {
+          "word": "is",
+          "start": 40.46,
+          "end": 40.66,
+          "probability": 0.998
+        },
+        {
+          "word": "going",
+          "start": 40.66,
+          "end": 40.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 40.86,
+          "end": 41.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "work",
+          "start": 41.04,
+          "end": 41.26,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 41.26,
+          "end": 41.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 41.46,
+          "end": 41.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "Bill",
+          "start": 41.62,
+          "end": 41.82,
+          "probability": 0.9526
+        },
+        {
+          "word": "Kinman",
+          "start": 41.82,
+          "end": 42.2,
+          "probability": 0.9385
+        },
+        {
+          "word": "claim,",
+          "start": 42.2,
+          "end": 42.58,
+          "probability": 0.9146
+        },
+        {
+          "word": "so",
+          "start": 42.82,
+          "end": 43.14,
+          "probability": 0.9878
+        },
+        {
+          "word": "he",
+          "start": 43.14,
+          "end": 43.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "starts",
+          "start": 43.34,
+          "end": 43.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "with",
+          "start": 43.7,
+          "end": 43.9,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 43.9,
+          "end": 44.04,
+          "probability": 0.9546
+        },
+        {
+          "word": "search.",
+          "start": 44.04,
+          "end": 44.36,
+          "probability": 0.96
+        },
+        {
+          "word": "He",
+          "start": 44.94,
+          "end": 45.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "enters",
+          "start": 45.5,
+          "end": 45.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "Kinman",
+          "start": 45.84,
+          "end": 46.26,
+          "probability": 0.8516
+        },
+        {
+          "word": "as",
+          "start": 46.26,
+          "end": 46.46,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 46.46,
+          "end": 46.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "last",
+          "start": 46.58,
+          "end": 46.92,
+          "probability": 0.9873
+        },
+        {
+          "word": "name",
+          "start": 46.92,
+          "end": 47.2,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 47.2,
+          "end": 47.46,
+          "probability": 0.9912
+        },
+        {
+          "word": "clicks",
+          "start": 47.46,
+          "end": 47.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "search.",
+          "start": 47.78,
+          "end": 48.1,
+          "probability": 0.6963
+        },
+        {
+          "word": "Bill",
+          "start": 48.74,
+          "end": 49.3,
+          "probability": 0.9917
+        },
+        {
+          "word": "Kinman",
+          "start": 49.3,
+          "end": 49.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 49.7,
+          "end": 49.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 49.84,
+          "end": 49.94,
+          "probability": 0.998
+        },
+        {
+          "word": "claimant",
+          "start": 49.94,
+          "end": 50.42,
+          "probability": 0.9883
+        },
+        {
+          "word": "on",
+          "start": 50.42,
+          "end": 50.62,
+          "probability": 0.998
+        },
+        {
+          "word": "three",
+          "start": 50.62,
+          "end": 50.9,
+          "probability": 0.7642
+        },
+        {
+          "word": "claims.",
+          "start": 50.9,
+          "end": 51.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "The",
+          "start": 51.78,
+          "end": 52.2,
+          "probability": 0.9893
+        },
+        {
+          "word": "first",
+          "start": 52.2,
+          "end": 52.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "claim",
+          "start": 52.48,
+          "end": 52.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 52.86,
+          "end": 53.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 53.08,
+          "end": 53.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "list",
+          "start": 53.18,
+          "end": 53.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 53.48,
+          "end": 53.7,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 53.7,
+          "end": 53.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "only",
+          "start": 53.86,
+          "end": 54.14,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 54.14,
+          "end": 54.46,
+          "probability": 0.998
+        },
+        {
+          "word": "where",
+          "start": 54.46,
+          "end": 54.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 54.62,
+          "end": 54.74,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 54.74,
+          "end": 55.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 55.0,
+          "end": 55.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "closed",
+          "start": 55.22,
+          "end": 55.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 55.54,
+          "end": 55.74,
+          "probability": 0.98
+        },
+        {
+          "word": "he",
+          "start": 55.74,
+          "end": 55.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 55.86,
+          "end": 56.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 56.02,
+          "end": 56.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "sole",
+          "start": 56.14,
+          "end": 56.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "claimant.",
+          "start": 56.38,
+          "end": 57.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "This",
+          "start": 57.22,
+          "end": 57.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 57.7,
+          "end": 57.86,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 57.86,
+          "end": 58.0,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 58.0,
+          "end": 58.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Andy",
+          "start": 58.28,
+          "end": 58.66,
+          "probability": 0.9595
+        },
+        {
+          "word": "is",
+          "start": 58.66,
+          "end": 58.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "looking",
+          "start": 58.88,
+          "end": 59.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "for.",
+          "start": 59.14,
+          "end": 59.5,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.22,
+      "end": 72.56,
+      "start_formatted": "00:01:00.220",
+      "end_formatted": "00:01:12.560",
+      "text": "There is an icon at the top of the screen and a status in the summary that shows the claim is closed. Now that he has the claim, Andy adds an activity as a reminder to send a letter to the claimant.",
+      "words": [
+        {
+          "word": "There",
+          "start": 60.22,
+          "end": 60.82,
+          "probability": 0.8926
+        },
+        {
+          "word": "is",
+          "start": 60.82,
+          "end": 61.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "an",
+          "start": 61.0,
+          "end": 61.16,
+          "probability": 0.9731
+        },
+        {
+          "word": "icon",
+          "start": 61.16,
+          "end": 61.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "at",
+          "start": 61.44,
+          "end": 61.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 61.78,
+          "end": 61.9,
+          "probability": 0.999
+        },
+        {
+          "word": "top",
+          "start": 61.9,
+          "end": 62.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 62.16,
+          "end": 62.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 62.34,
+          "end": 62.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "screen",
+          "start": 62.48,
+          "end": 62.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 62.9,
+          "end": 63.4,
+          "probability": 0.176
+        },
+        {
+          "word": "a",
+          "start": 63.4,
+          "end": 63.56,
+          "probability": 0.9463
+        },
+        {
+          "word": "status",
+          "start": 63.56,
+          "end": 63.88,
+          "probability": 0.9702
+        },
+        {
+          "word": "in",
+          "start": 63.88,
+          "end": 64.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 64.1,
+          "end": 64.2,
+          "probability": 0.9932
+        },
+        {
+          "word": "summary",
+          "start": 64.2,
+          "end": 64.52,
+          "probability": 0.8467
+        },
+        {
+          "word": "that",
+          "start": 64.52,
+          "end": 64.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "shows",
+          "start": 64.82,
+          "end": 65.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 65.12,
+          "end": 65.32,
+          "probability": 0.9111
+        },
+        {
+          "word": "claim",
+          "start": 65.32,
+          "end": 65.6,
+          "probability": 0.9438
+        },
+        {
+          "word": "is",
+          "start": 65.6,
+          "end": 65.82,
+          "probability": 0.9912
+        },
+        {
+          "word": "closed.",
+          "start": 65.82,
+          "end": 66.3,
+          "probability": 0.9614
+        },
+        {
+          "word": "Now",
+          "start": 66.96,
+          "end": 67.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "that",
+          "start": 67.56,
+          "end": 67.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "he",
+          "start": 67.72,
+          "end": 67.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "has",
+          "start": 67.86,
+          "end": 68.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 68.06,
+          "end": 68.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim,",
+          "start": 68.18,
+          "end": 68.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "Andy",
+          "start": 68.92,
+          "end": 69.1,
+          "probability": 0.9688
+        },
+        {
+          "word": "adds",
+          "start": 69.1,
+          "end": 69.46,
+          "probability": 0.9932
+        },
+        {
+          "word": "an",
+          "start": 69.46,
+          "end": 69.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "activity",
+          "start": 69.6,
+          "end": 69.98,
+          "probability": 0.9038
+        },
+        {
+          "word": "as",
+          "start": 69.98,
+          "end": 70.32,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 70.32,
+          "end": 70.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "reminder",
+          "start": 70.4,
+          "end": 70.82,
+          "probability": 0.9668
+        },
+        {
+          "word": "to",
+          "start": 70.82,
+          "end": 71.1,
+          "probability": 0.999
+        },
+        {
+          "word": "send",
+          "start": 71.1,
+          "end": 71.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 71.38,
+          "end": 71.56,
+          "probability": 0.9438
+        },
+        {
+          "word": "letter",
+          "start": 71.56,
+          "end": 71.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 71.76,
+          "end": 71.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 71.94,
+          "end": 72.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "claimant.",
+          "start": 72.08,
+          "end": 72.56,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 74.06,
+      "end": 89.96,
+      "start_formatted": "00:01:14.060",
+      "end_formatted": "00:01:29.960",
+      "text": "On the new activity screen, he makes sure that the reminder activity is assigned to himself. The default values for the other details of the activity are fine, so he clicks update. Andy has also received a document confirming the claimant.",
+      "words": [
+        {
+          "word": "On",
+          "start": 74.06,
+          "end": 74.66,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 74.66,
+          "end": 74.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 74.78,
+          "end": 75.0,
+          "probability": 0.7363
+        },
+        {
+          "word": "activity",
+          "start": 75.0,
+          "end": 75.5,
+          "probability": 0.9121
+        },
+        {
+          "word": "screen,",
+          "start": 75.5,
+          "end": 75.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "he",
+          "start": 76.3,
+          "end": 76.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "makes",
+          "start": 76.52,
+          "end": 76.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "sure",
+          "start": 76.8,
+          "end": 77.04,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 77.04,
+          "end": 77.24,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 77.24,
+          "end": 77.4,
+          "probability": 0.9907
+        },
+        {
+          "word": "reminder",
+          "start": 77.4,
+          "end": 77.88,
+          "probability": 0.9492
+        },
+        {
+          "word": "activity",
+          "start": 77.88,
+          "end": 78.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 78.38,
+          "end": 78.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "assigned",
+          "start": 78.78,
+          "end": 79.22,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 79.22,
+          "end": 79.46,
+          "probability": 0.999
+        },
+        {
+          "word": "himself.",
+          "start": 79.46,
+          "end": 79.88,
+          "probability": 0.998
+        },
+        {
+          "word": "The",
+          "start": 80.8,
+          "end": 81.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "default",
+          "start": 81.4,
+          "end": 81.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "values",
+          "start": 81.76,
+          "end": 82.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 82.28,
+          "end": 82.5,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 82.5,
+          "end": 82.66,
+          "probability": 0.998
+        },
+        {
+          "word": "other",
+          "start": 82.66,
+          "end": 82.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "details",
+          "start": 82.88,
+          "end": 83.36,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 83.36,
+          "end": 83.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 83.56,
+          "end": 83.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "activity",
+          "start": 83.7,
+          "end": 84.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "are",
+          "start": 84.24,
+          "end": 84.56,
+          "probability": 0.999
+        },
+        {
+          "word": "fine,",
+          "start": 84.56,
+          "end": 84.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "so",
+          "start": 85.22,
+          "end": 85.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "he",
+          "start": 85.56,
+          "end": 85.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "clicks",
+          "start": 85.74,
+          "end": 86.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "update.",
+          "start": 86.06,
+          "end": 86.4,
+          "probability": 0.4204
+        },
+        {
+          "word": "Andy",
+          "start": 87.12,
+          "end": 87.72,
+          "probability": 0.9717
+        },
+        {
+          "word": "has",
+          "start": 87.72,
+          "end": 87.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "also",
+          "start": 87.96,
+          "end": 88.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "received",
+          "start": 88.28,
+          "end": 88.72,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 88.72,
+          "end": 88.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "document",
+          "start": 88.88,
+          "end": 89.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "confirming",
+          "start": 89.32,
+          "end": 89.9,
+          "probability": 0.9673
+        },
+        {
+          "word": "the",
+          "start": 89.9,
+          "end": 89.96,
+          "probability": 0.27
+        },
+        {
+          "word": "claimant.",
+          "start": 89.96,
+          "end": 89.96,
+          "probability": 0.4485
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 89.96,
+      "end": 100.92,
+      "start_formatted": "00:01:29.960",
+      "end_formatted": "00:01:40.920",
+      "text": "The client has accepted the claim payments, so he adds the document to the claim. Andy enters the name of the document. He sets the status of the document to approved.",
+      "words": [
+        {
+          "word": "The",
+          "start": 89.96,
+          "end": 90.26,
+          "probability": 0.042
+        },
+        {
+          "word": "client",
+          "start": 90.26,
+          "end": 90.54,
+          "probability": 0.8198
+        },
+        {
+          "word": "has",
+          "start": 90.54,
+          "end": 90.8,
+          "probability": 0.9819
+        },
+        {
+          "word": "accepted",
+          "start": 90.8,
+          "end": 91.3,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 91.3,
+          "end": 91.5,
+          "probability": 0.9868
+        },
+        {
+          "word": "claim",
+          "start": 91.5,
+          "end": 91.78,
+          "probability": 0.9751
+        },
+        {
+          "word": "payments,",
+          "start": 91.78,
+          "end": 92.3,
+          "probability": 0.9868
+        },
+        {
+          "word": "so",
+          "start": 92.52,
+          "end": 92.8,
+          "probability": 0.9375
+        },
+        {
+          "word": "he",
+          "start": 92.8,
+          "end": 92.96,
+          "probability": 0.9819
+        },
+        {
+          "word": "adds",
+          "start": 92.96,
+          "end": 93.24,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 93.24,
+          "end": 93.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "document",
+          "start": 93.4,
+          "end": 93.8,
+          "probability": 0.9761
+        },
+        {
+          "word": "to",
+          "start": 93.8,
+          "end": 94.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 94.08,
+          "end": 94.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim.",
+          "start": 94.22,
+          "end": 94.62,
+          "probability": 0.9927
+        },
+        {
+          "word": "Andy",
+          "start": 95.2,
+          "end": 95.8,
+          "probability": 0.0191
+        },
+        {
+          "word": "enters",
+          "start": 95.8,
+          "end": 96.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 96.22,
+          "end": 96.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "name",
+          "start": 96.42,
+          "end": 96.64,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 96.64,
+          "end": 96.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 96.84,
+          "end": 96.96,
+          "probability": 0.998
+        },
+        {
+          "word": "document.",
+          "start": 96.96,
+          "end": 97.38,
+          "probability": 0.9883
+        },
+        {
+          "word": "He",
+          "start": 97.96,
+          "end": 98.56,
+          "probability": 0.9883
+        },
+        {
+          "word": "sets",
+          "start": 98.56,
+          "end": 98.84,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 98.84,
+          "end": 99.04,
+          "probability": 0.998
+        },
+        {
+          "word": "status",
+          "start": 99.04,
+          "end": 99.38,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 99.38,
+          "end": 99.6,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 99.6,
+          "end": 99.72,
+          "probability": 0.998
+        },
+        {
+          "word": "document",
+          "start": 99.72,
+          "end": 100.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "to",
+          "start": 100.18,
+          "end": 100.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "approved.",
+          "start": 100.44,
+          "end": 100.92,
+          "probability": 0.5112
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 101.68,
+      "end": 110.56,
+      "start_formatted": "00:01:41.680",
+      "end_formatted": "00:01:50.560",
+      "text": "And the document type to letter received. He reviews the fields for completeness. And clicks update to save the document reference.",
+      "words": [
+        {
+          "word": "And",
+          "start": 101.68,
+          "end": 102.28,
+          "probability": 0.9468
+        },
+        {
+          "word": "the",
+          "start": 102.28,
+          "end": 102.42,
+          "probability": 0.9873
+        },
+        {
+          "word": "document",
+          "start": 102.42,
+          "end": 102.86,
+          "probability": 0.9712
+        },
+        {
+          "word": "type",
+          "start": 102.86,
+          "end": 103.2,
+          "probability": 0.8071
+        },
+        {
+          "word": "to",
+          "start": 103.2,
+          "end": 103.42,
+          "probability": 0.9863
+        },
+        {
+          "word": "letter",
+          "start": 103.42,
+          "end": 103.64,
+          "probability": 0.9487
+        },
+        {
+          "word": "received.",
+          "start": 103.64,
+          "end": 104.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "He",
+          "start": 104.78,
+          "end": 105.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "reviews",
+          "start": 105.36,
+          "end": 105.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 105.76,
+          "end": 105.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "fields",
+          "start": 105.94,
+          "end": 106.3,
+          "probability": 0.9839
+        },
+        {
+          "word": "for",
+          "start": 106.3,
+          "end": 106.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "completeness.",
+          "start": 106.52,
+          "end": 107.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "And",
+          "start": 107.82,
+          "end": 108.34,
+          "probability": 0.9888
+        },
+        {
+          "word": "clicks",
+          "start": 108.34,
+          "end": 108.68,
+          "probability": 0.9854
+        },
+        {
+          "word": "update",
+          "start": 108.68,
+          "end": 109.0,
+          "probability": 0.9204
+        },
+        {
+          "word": "to",
+          "start": 109.0,
+          "end": 109.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "save",
+          "start": 109.26,
+          "end": 109.52,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 109.52,
+          "end": 109.68,
+          "probability": 0.999
+        },
+        {
+          "word": "document",
+          "start": 109.68,
+          "end": 110.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "reference.",
+          "start": 110.14,
+          "end": 110.56,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 111.36,
+      "end": 123.22,
+      "start_formatted": "00:01:51.360",
+      "end_formatted": "00:02:03.220",
+      "text": "He opens the document screen. And sees the customer acceptance letter he just added to the claim. Since he is finished with this claim for now, he logs out of claim center.",
+      "words": [
+        {
+          "word": "He",
+          "start": 111.36,
+          "end": 112.04,
+          "probability": 0.9194
+        },
+        {
+          "word": "opens",
+          "start": 112.04,
+          "end": 112.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 112.4,
+          "end": 112.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "document",
+          "start": 112.62,
+          "end": 113.08,
+          "probability": 0.9233
+        },
+        {
+          "word": "screen.",
+          "start": 113.08,
+          "end": 113.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "And",
+          "start": 114.22,
+          "end": 114.9,
+          "probability": 0.9478
+        },
+        {
+          "word": "sees",
+          "start": 114.9,
+          "end": 115.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 115.24,
+          "end": 115.4,
+          "probability": 1.0
+        },
+        {
+          "word": "customer",
+          "start": 115.4,
+          "end": 115.82,
+          "probability": 0.9751
+        },
+        {
+          "word": "acceptance",
+          "start": 115.82,
+          "end": 116.4,
+          "probability": 0.999
+        },
+        {
+          "word": "letter",
+          "start": 116.4,
+          "end": 116.86,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 116.86,
+          "end": 117.08,
+          "probability": 0.998
+        },
+        {
+          "word": "just",
+          "start": 117.08,
+          "end": 117.34,
+          "probability": 1.0
+        },
+        {
+          "word": "added",
+          "start": 117.34,
+          "end": 117.7,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 117.7,
+          "end": 117.88,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 117.88,
+          "end": 118.02,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 118.02,
+          "end": 118.36,
+          "probability": 0.999
+        },
+        {
+          "word": "Since",
+          "start": 118.72,
+          "end": 119.2,
+          "probability": 0.999
+        },
+        {
+          "word": "he",
+          "start": 119.2,
+          "end": 119.34,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 119.34,
+          "end": 119.5,
+          "probability": 0.7578
+        },
+        {
+          "word": "finished",
+          "start": 119.5,
+          "end": 119.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 119.84,
+          "end": 120.06,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 120.06,
+          "end": 120.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 120.3,
+          "end": 120.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 120.66,
+          "end": 120.9,
+          "probability": 0.999
+        },
+        {
+          "word": "now,",
+          "start": 120.9,
+          "end": 121.24,
+          "probability": 0.9839
+        },
+        {
+          "word": "he",
+          "start": 121.5,
+          "end": 121.76,
+          "probability": 0.999
+        },
+        {
+          "word": "logs",
+          "start": 121.76,
+          "end": 122.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 122.14,
+          "end": 122.34,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 122.34,
+          "end": 122.52,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 122.52,
+          "end": 122.82,
+          "probability": 0.0875
+        },
+        {
+          "word": "center.",
+          "start": 122.82,
+          "end": 123.22,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 124.76,
+      "end": 125.4,
+      "start_formatted": "00:02:04.760",
+      "end_formatted": "00:02:05.400",
+      "text": "The administrator.",
+      "words": [
+        {
+          "word": "The",
+          "start": 124.76,
+          "end": 125.4,
+          "probability": 0.01
+        },
+        {
+          "word": "administrator.",
+          "start": 125.4,
+          "end": 125.4,
+          "probability": 0.7539
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 125.4,
+      "end": 131.9,
+      "start_formatted": "00:02:05.400",
+      "end_formatted": "00:02:11.900",
+      "text": "Succeed Insurance has decided that there are too many adjusters who are adding activities and documents to claims that are closed.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 125.4,
+          "end": 125.7,
+          "probability": 0.8418
+        },
+        {
+          "word": "Insurance",
+          "start": 125.7,
+          "end": 126.1,
+          "probability": 0.8696
+        },
+        {
+          "word": "has",
+          "start": 126.1,
+          "end": 126.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "decided",
+          "start": 126.44,
+          "end": 126.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 126.88,
+          "end": 127.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 127.14,
+          "end": 127.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 127.32,
+          "end": 127.5,
+          "probability": 1.0
+        },
+        {
+          "word": "too",
+          "start": 127.5,
+          "end": 127.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "many",
+          "start": 127.68,
+          "end": 127.96,
+          "probability": 1.0
+        },
+        {
+          "word": "adjusters",
+          "start": 127.96,
+          "end": 128.5,
+          "probability": 0.9902
+        },
+        {
+          "word": "who",
+          "start": 128.5,
+          "end": 128.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 128.66,
+          "end": 128.82,
+          "probability": 1.0
+        },
+        {
+          "word": "adding",
+          "start": 128.82,
+          "end": 129.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "activities",
+          "start": 129.12,
+          "end": 129.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 129.72,
+          "end": 130.02,
+          "probability": 0.999
+        },
+        {
+          "word": "documents",
+          "start": 130.02,
+          "end": 130.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 130.56,
+          "end": 130.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "claims",
+          "start": 130.76,
+          "end": 131.08,
+          "probability": 0.9736
+        },
+        {
+          "word": "that",
+          "start": 131.08,
+          "end": 131.28,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 131.28,
+          "end": 131.42,
+          "probability": 1.0
+        },
+        {
+          "word": "closed.",
+          "start": 131.42,
+          "end": 131.9,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 132.22,
+      "end": 140.76,
+      "start_formatted": "00:02:12.220",
+      "end_formatted": "00:02:20.760",
+      "text": "To address this problem, Succeed has asked the system administrator to remove that ability from all adjusters with the exception of Andy Applegate.",
+      "words": [
+        {
+          "word": "To",
+          "start": 132.22,
+          "end": 132.84,
+          "probability": 0.998
+        },
+        {
+          "word": "address",
+          "start": 132.84,
+          "end": 133.16,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 133.16,
+          "end": 133.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "problem,",
+          "start": 133.44,
+          "end": 133.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "Succeed",
+          "start": 134.32,
+          "end": 134.64,
+          "probability": 0.981
+        },
+        {
+          "word": "has",
+          "start": 134.64,
+          "end": 134.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "asked",
+          "start": 134.84,
+          "end": 135.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 135.18,
+          "end": 135.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "system",
+          "start": 135.36,
+          "end": 135.68,
+          "probability": 0.9634
+        },
+        {
+          "word": "administrator",
+          "start": 135.68,
+          "end": 136.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 136.4,
+          "end": 136.86,
+          "probability": 0.7358
+        },
+        {
+          "word": "remove",
+          "start": 136.86,
+          "end": 137.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 137.2,
+          "end": 137.46,
+          "probability": 0.999
+        },
+        {
+          "word": "ability",
+          "start": 137.46,
+          "end": 137.86,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 137.86,
+          "end": 138.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 138.2,
+          "end": 138.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "adjusters",
+          "start": 138.44,
+          "end": 138.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 138.9,
+          "end": 139.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 139.04,
+          "end": 139.18,
+          "probability": 1.0
+        },
+        {
+          "word": "exception",
+          "start": 139.18,
+          "end": 139.56,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 139.56,
+          "end": 139.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy",
+          "start": 139.8,
+          "end": 140.06,
+          "probability": 0.9839
+        },
+        {
+          "word": "Applegate.",
+          "start": 140.06,
+          "end": 140.76,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 140.76,
+      "end": 148.76,
+      "start_formatted": "00:02:20.760",
+      "end_formatted": "00:02:28.760",
+      "text": "The administrator. The administrator. Logs into claim center. The administrator goes to the administration section of claim center.",
+      "words": [
+        {
+          "word": "The",
+          "start": 140.76,
+          "end": 141.62,
+          "probability": 0.9033
+        },
+        {
+          "word": "administrator.",
+          "start": 141.62,
+          "end": 142.22,
+          "probability": 0.7266
+        },
+        {
+          "word": "The",
+          "start": 142.56,
+          "end": 142.92,
+          "probability": 0.0035
+        },
+        {
+          "word": "administrator.",
+          "start": 142.92,
+          "end": 142.92,
+          "probability": 0.9785
+        },
+        {
+          "word": "Logs",
+          "start": 142.92,
+          "end": 143.08,
+          "probability": 0.9561
+        },
+        {
+          "word": "into",
+          "start": 143.08,
+          "end": 143.26,
+          "probability": 0.8716
+        },
+        {
+          "word": "claim",
+          "start": 143.26,
+          "end": 143.6,
+          "probability": 0.3911
+        },
+        {
+          "word": "center.",
+          "start": 143.6,
+          "end": 143.98,
+          "probability": 0.9834
+        },
+        {
+          "word": "The",
+          "start": 144.66,
+          "end": 145.32,
+          "probability": 0.9893
+        },
+        {
+          "word": "administrator",
+          "start": 145.32,
+          "end": 146.02,
+          "probability": 0.999
+        },
+        {
+          "word": "goes",
+          "start": 146.02,
+          "end": 146.4,
+          "probability": 0.8145
+        },
+        {
+          "word": "to",
+          "start": 146.4,
+          "end": 146.6,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 146.6,
+          "end": 146.72,
+          "probability": 0.9912
+        },
+        {
+          "word": "administration",
+          "start": 146.72,
+          "end": 147.22,
+          "probability": 0.9883
+        },
+        {
+          "word": "section",
+          "start": 147.22,
+          "end": 147.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "of",
+          "start": 147.82,
+          "end": 148.08,
+          "probability": 0.9702
+        },
+        {
+          "word": "claim",
+          "start": 148.08,
+          "end": 148.34,
+          "probability": 0.9785
+        },
+        {
+          "word": "center.",
+          "start": 148.34,
+          "end": 148.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 149.3,
+      "end": 159.84,
+      "start_formatted": "00:02:29.300",
+      "end_formatted": "00:02:39.840",
+      "text": "And clicks users and security. The administrator is going to use roles to solve the issue of too many users creating activities and documents on closed claims.",
+      "words": [
+        {
+          "word": "And",
+          "start": 149.3,
+          "end": 150.02,
+          "probability": 0.9897
+        },
+        {
+          "word": "clicks",
+          "start": 150.02,
+          "end": 150.38,
+          "probability": 0.9937
+        },
+        {
+          "word": "users",
+          "start": 150.38,
+          "end": 150.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "and",
+          "start": 150.76,
+          "end": 151.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "security.",
+          "start": 151.08,
+          "end": 151.56,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 152.2,
+          "end": 152.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "administrator",
+          "start": 152.82,
+          "end": 153.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 153.42,
+          "end": 153.8,
+          "probability": 0.9746
+        },
+        {
+          "word": "going",
+          "start": 153.8,
+          "end": 154.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 154.02,
+          "end": 154.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "use",
+          "start": 154.2,
+          "end": 154.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "roles",
+          "start": 154.5,
+          "end": 154.8,
+          "probability": 0.9819
+        },
+        {
+          "word": "to",
+          "start": 154.8,
+          "end": 155.04,
+          "probability": 0.9321
+        },
+        {
+          "word": "solve",
+          "start": 155.04,
+          "end": 155.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 155.28,
+          "end": 155.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "issue",
+          "start": 155.42,
+          "end": 155.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 155.7,
+          "end": 155.88,
+          "probability": 0.9912
+        },
+        {
+          "word": "too",
+          "start": 155.88,
+          "end": 156.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "many",
+          "start": 156.02,
+          "end": 156.22,
+          "probability": 1.0
+        },
+        {
+          "word": "users",
+          "start": 156.22,
+          "end": 156.7,
+          "probability": 0.999
+        },
+        {
+          "word": "creating",
+          "start": 156.7,
+          "end": 157.26,
+          "probability": 0.98
+        },
+        {
+          "word": "activities",
+          "start": 157.26,
+          "end": 157.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 157.9,
+          "end": 158.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "documents",
+          "start": 158.24,
+          "end": 158.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 158.78,
+          "end": 159.08,
+          "probability": 0.999
+        },
+        {
+          "word": "closed",
+          "start": 159.08,
+          "end": 159.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "claims.",
+          "start": 159.42,
+          "end": 159.84,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 161.06,
+      "end": 171.04,
+      "start_formatted": "00:02:41.060",
+      "end_formatted": "00:02:51.040",
+      "text": "She starts by opening the adjuster role. The adjuster role includes the permissions create activities on closed claim. And create documents on closed claim.",
+      "words": [
+        {
+          "word": "She",
+          "start": 161.06,
+          "end": 161.82,
+          "probability": 0.9077
+        },
+        {
+          "word": "starts",
+          "start": 161.82,
+          "end": 162.2,
+          "probability": 0.9878
+        },
+        {
+          "word": "by",
+          "start": 162.2,
+          "end": 162.42,
+          "probability": 0.998
+        },
+        {
+          "word": "opening",
+          "start": 162.42,
+          "end": 162.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 162.82,
+          "end": 163.02,
+          "probability": 0.998
+        },
+        {
+          "word": "adjuster",
+          "start": 163.02,
+          "end": 163.48,
+          "probability": 0.6963
+        },
+        {
+          "word": "role.",
+          "start": 163.48,
+          "end": 163.72,
+          "probability": 0.8271
+        },
+        {
+          "word": "The",
+          "start": 164.1,
+          "end": 164.82,
+          "probability": 0.98
+        },
+        {
+          "word": "adjuster",
+          "start": 164.82,
+          "end": 165.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "role",
+          "start": 165.36,
+          "end": 165.56,
+          "probability": 0.998
+        },
+        {
+          "word": "includes",
+          "start": 165.56,
+          "end": 165.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 165.98,
+          "end": 166.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "permissions",
+          "start": 166.24,
+          "end": 166.72,
+          "probability": 0.9785
+        },
+        {
+          "word": "create",
+          "start": 166.72,
+          "end": 167.14,
+          "probability": 0.3748
+        },
+        {
+          "word": "activities",
+          "start": 167.14,
+          "end": 167.78,
+          "probability": 0.9351
+        },
+        {
+          "word": "on",
+          "start": 167.78,
+          "end": 168.08,
+          "probability": 0.998
+        },
+        {
+          "word": "closed",
+          "start": 168.08,
+          "end": 168.38,
+          "probability": 0.875
+        },
+        {
+          "word": "claim.",
+          "start": 168.38,
+          "end": 168.78,
+          "probability": 0.9795
+        },
+        {
+          "word": "And",
+          "start": 169.0,
+          "end": 169.24,
+          "probability": 0.6348
+        },
+        {
+          "word": "create",
+          "start": 169.24,
+          "end": 169.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "documents",
+          "start": 169.62,
+          "end": 170.14,
+          "probability": 0.9854
+        },
+        {
+          "word": "on",
+          "start": 170.14,
+          "end": 170.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "closed",
+          "start": 170.42,
+          "end": 170.74,
+          "probability": 0.9854
+        },
+        {
+          "word": "claim.",
+          "start": 170.74,
+          "end": 171.04,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 171.56,
+      "end": 176.32,
+      "start_formatted": "00:02:51.560",
+      "end_formatted": "00:02:56.320",
+      "text": "The administrator clicks edit to make changes to the permissions on the adjuster role.",
+      "words": [
+        {
+          "word": "The",
+          "start": 171.56,
+          "end": 172.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "administrator",
+          "start": 172.18,
+          "end": 172.84,
+          "probability": 0.9678
+        },
+        {
+          "word": "clicks",
+          "start": 172.84,
+          "end": 173.3,
+          "probability": 0.9692
+        },
+        {
+          "word": "edit",
+          "start": 173.3,
+          "end": 173.58,
+          "probability": 0.8232
+        },
+        {
+          "word": "to",
+          "start": 173.58,
+          "end": 173.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "make",
+          "start": 173.76,
+          "end": 173.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "changes",
+          "start": 173.94,
+          "end": 174.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 174.38,
+          "end": 174.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 174.6,
+          "end": 174.74,
+          "probability": 0.998
+        },
+        {
+          "word": "permissions",
+          "start": 174.74,
+          "end": 175.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "on",
+          "start": 175.18,
+          "end": 175.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 175.48,
+          "end": 175.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "adjuster",
+          "start": 175.6,
+          "end": 176.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "role.",
+          "start": 176.06,
+          "end": 176.32,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 177.06,
+      "end": 183.28,
+      "start_formatted": "00:02:57.060",
+      "end_formatted": "00:03:03.280",
+      "text": "She selects create activities on closed claim. And create documents on closed claim.",
+      "words": [
+        {
+          "word": "She",
+          "start": 177.06,
+          "end": 177.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "selects",
+          "start": 177.82,
+          "end": 178.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "create",
+          "start": 178.32,
+          "end": 178.6,
+          "probability": 0.979
+        },
+        {
+          "word": "activities",
+          "start": 178.6,
+          "end": 179.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "on",
+          "start": 179.26,
+          "end": 179.54,
+          "probability": 0.999
+        },
+        {
+          "word": "closed",
+          "start": 179.54,
+          "end": 179.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "claim.",
+          "start": 179.82,
+          "end": 180.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "And",
+          "start": 180.76,
+          "end": 181.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "create",
+          "start": 181.44,
+          "end": 181.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "documents",
+          "start": 181.82,
+          "end": 182.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 182.32,
+          "end": 182.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "closed",
+          "start": 182.6,
+          "end": 182.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim.",
+          "start": 182.92,
+          "end": 183.28,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 183.28,
+      "end": 188.68,
+      "start_formatted": "00:03:03.280",
+      "end_formatted": "00:03:08.680",
+      "text": "The administrator clicks remove. To remove the selected permissions from the role.",
+      "words": [
+        {
+          "word": "The",
+          "start": 183.28,
+          "end": 184.28,
+          "probability": 0.6587
+        },
+        {
+          "word": "administrator",
+          "start": 184.28,
+          "end": 184.88,
+          "probability": 0.7495
+        },
+        {
+          "word": "clicks",
+          "start": 184.88,
+          "end": 185.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "remove.",
+          "start": 185.48,
+          "end": 185.82,
+          "probability": 0.1854
+        },
+        {
+          "word": "To",
+          "start": 186.2,
+          "end": 186.38,
+          "probability": 0.7114
+        },
+        {
+          "word": "remove",
+          "start": 186.38,
+          "end": 186.64,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 186.64,
+          "end": 186.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "selected",
+          "start": 186.94,
+          "end": 187.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "permissions",
+          "start": 187.38,
+          "end": 187.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "from",
+          "start": 187.88,
+          "end": 188.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 188.26,
+          "end": 188.46,
+          "probability": 0.9883
+        },
+        {
+          "word": "role.",
+          "start": 188.46,
+          "end": 188.68,
+          "probability": 0.8945
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 189.26,
+      "end": 194.46,
+      "start_formatted": "00:03:09.260",
+      "end_formatted": "00:03:14.460",
+      "text": "She clicks update to save the changes. With those two permissions gone.",
+      "words": [
+        {
+          "word": "She",
+          "start": 189.26,
+          "end": 189.94,
+          "probability": 0.9805
+        },
+        {
+          "word": "clicks",
+          "start": 189.94,
+          "end": 190.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "update",
+          "start": 190.34,
+          "end": 190.64,
+          "probability": 0.8828
+        },
+        {
+          "word": "to",
+          "start": 190.64,
+          "end": 190.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "save",
+          "start": 190.92,
+          "end": 191.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 191.2,
+          "end": 191.4,
+          "probability": 0.998
+        },
+        {
+          "word": "changes.",
+          "start": 191.4,
+          "end": 191.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "With",
+          "start": 192.42,
+          "end": 193.02,
+          "probability": 0.9883
+        },
+        {
+          "word": "those",
+          "start": 193.02,
+          "end": 193.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "two",
+          "start": 193.24,
+          "end": 193.46,
+          "probability": 0.9482
+        },
+        {
+          "word": "permissions",
+          "start": 193.46,
+          "end": 194.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "gone.",
+          "start": 194.02,
+          "end": 194.46,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 194.84,
+      "end": 199.76,
+      "start_formatted": "00:03:14.840",
+      "end_formatted": "00:03:19.760",
+      "text": "Adjusters will no longer be allowed to create activities or documents on closed claims.",
+      "words": [
+        {
+          "word": "Adjusters",
+          "start": 194.84,
+          "end": 195.4,
+          "probability": 0.9541
+        },
+        {
+          "word": "will",
+          "start": 195.4,
+          "end": 195.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "no",
+          "start": 195.62,
+          "end": 195.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "longer",
+          "start": 195.8,
+          "end": 196.12,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 196.12,
+          "end": 196.32,
+          "probability": 0.998
+        },
+        {
+          "word": "allowed",
+          "start": 196.32,
+          "end": 196.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 196.62,
+          "end": 196.84,
+          "probability": 0.9702
+        },
+        {
+          "word": "create",
+          "start": 196.84,
+          "end": 197.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "activities",
+          "start": 197.16,
+          "end": 197.82,
+          "probability": 0.9854
+        },
+        {
+          "word": "or",
+          "start": 197.82,
+          "end": 198.12,
+          "probability": 0.9517
+        },
+        {
+          "word": "documents",
+          "start": 198.12,
+          "end": 198.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "on",
+          "start": 198.66,
+          "end": 199.0,
+          "probability": 0.9844
+        },
+        {
+          "word": "closed",
+          "start": 199.0,
+          "end": 199.36,
+          "probability": 0.9219
+        },
+        {
+          "word": "claims.",
+          "start": 199.36,
+          "end": 199.76,
+          "probability": 0.9619
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 200.36,
+      "end": 207.58,
+      "start_formatted": "00:03:20.360",
+      "end_formatted": "00:03:27.580",
+      "text": "The administrator logs out of claim center. To demonstrate the effect of the changes to the adjuster role.",
+      "words": [
+        {
+          "word": "The",
+          "start": 200.36,
+          "end": 200.92,
+          "probability": 0.9707
+        },
+        {
+          "word": "administrator",
+          "start": 200.92,
+          "end": 201.64,
+          "probability": 0.9771
+        },
+        {
+          "word": "logs",
+          "start": 201.64,
+          "end": 202.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "out",
+          "start": 202.1,
+          "end": 202.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 202.4,
+          "end": 202.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "claim",
+          "start": 202.58,
+          "end": 202.84,
+          "probability": 0.4478
+        },
+        {
+          "word": "center.",
+          "start": 202.84,
+          "end": 203.22,
+          "probability": 0.8892
+        },
+        {
+          "word": "To",
+          "start": 204.02,
+          "end": 204.6,
+          "probability": 0.9795
+        },
+        {
+          "word": "demonstrate",
+          "start": 204.6,
+          "end": 205.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 205.06,
+          "end": 205.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "effect",
+          "start": 205.36,
+          "end": 205.68,
+          "probability": 0.8574
+        },
+        {
+          "word": "of",
+          "start": 205.68,
+          "end": 205.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 205.88,
+          "end": 206.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "changes",
+          "start": 206.02,
+          "end": 206.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 206.38,
+          "end": 206.6,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 206.6,
+          "end": 206.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "adjuster",
+          "start": 206.72,
+          "end": 207.26,
+          "probability": 0.9814
+        },
+        {
+          "word": "role.",
+          "start": 207.26,
+          "end": 207.58,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 207.9,
+      "end": 211.8,
+      "start_formatted": "00:03:27.900",
+      "end_formatted": "00:03:31.800",
+      "text": "Andy Applegate logs into claim center. As before.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 207.9,
+          "end": 208.2,
+          "probability": 0.9209
+        },
+        {
+          "word": "Applegate",
+          "start": 208.2,
+          "end": 208.8,
+          "probability": 0.8696
+        },
+        {
+          "word": "logs",
+          "start": 208.8,
+          "end": 209.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "into",
+          "start": 209.12,
+          "end": 209.4,
+          "probability": 0.9819
+        },
+        {
+          "word": "claim",
+          "start": 209.4,
+          "end": 209.7,
+          "probability": 0.8506
+        },
+        {
+          "word": "center.",
+          "start": 209.7,
+          "end": 210.12,
+          "probability": 0.9771
+        },
+        {
+          "word": "As",
+          "start": 210.72,
+          "end": 211.4,
+          "probability": 0.9878
+        },
+        {
+          "word": "before.",
+          "start": 211.4,
+          "end": 211.8,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 211.8,
+      "end": 216.46,
+      "start_formatted": "00:03:31.800",
+      "end_formatted": "00:03:36.460",
+      "text": "He selects the bill Kinman claim. Remember the Kinman claim is closed.",
+      "words": [
+        {
+          "word": "He",
+          "start": 211.8,
+          "end": 212.28,
+          "probability": 0.0833
+        },
+        {
+          "word": "selects",
+          "start": 212.28,
+          "end": 212.78,
+          "probability": 0.9512
+        },
+        {
+          "word": "the",
+          "start": 212.78,
+          "end": 212.9,
+          "probability": 0.9775
+        },
+        {
+          "word": "bill",
+          "start": 212.9,
+          "end": 213.08,
+          "probability": 0.4209
+        },
+        {
+          "word": "Kinman",
+          "start": 213.08,
+          "end": 213.46,
+          "probability": 0.8506
+        },
+        {
+          "word": "claim.",
+          "start": 213.46,
+          "end": 213.8,
+          "probability": 0.9189
+        },
+        {
+          "word": "Remember",
+          "start": 214.22,
+          "end": 214.86,
+          "probability": 0.9531
+        },
+        {
+          "word": "the",
+          "start": 214.86,
+          "end": 215.0,
+          "probability": 0.9146
+        },
+        {
+          "word": "Kinman",
+          "start": 215.0,
+          "end": 215.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "claim",
+          "start": 215.4,
+          "end": 215.68,
+          "probability": 0.957
+        },
+        {
+          "word": "is",
+          "start": 215.68,
+          "end": 215.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "closed.",
+          "start": 215.92,
+          "end": 216.46,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 217.5,
+      "end": 222.42,
+      "start_formatted": "00:03:37.500",
+      "end_formatted": "00:03:42.420",
+      "text": "Andy selects the actions menu and sees that there are no activity or document options.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 217.5,
+          "end": 217.76,
+          "probability": 0.957
+        },
+        {
+          "word": "selects",
+          "start": 217.76,
+          "end": 218.32,
+          "probability": 0.9668
+        },
+        {
+          "word": "the",
+          "start": 218.32,
+          "end": 218.4,
+          "probability": 0.998
+        },
+        {
+          "word": "actions",
+          "start": 218.4,
+          "end": 218.8,
+          "probability": 0.5049
+        },
+        {
+          "word": "menu",
+          "start": 218.8,
+          "end": 219.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "and",
+          "start": 219.22,
+          "end": 219.56,
+          "probability": 0.981
+        },
+        {
+          "word": "sees",
+          "start": 219.56,
+          "end": 219.84,
+          "probability": 0.9922
+        },
+        {
+          "word": "that",
+          "start": 219.84,
+          "end": 220.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "there",
+          "start": 220.08,
+          "end": 220.24,
+          "probability": 0.9897
+        },
+        {
+          "word": "are",
+          "start": 220.24,
+          "end": 220.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "no",
+          "start": 220.4,
+          "end": 220.58,
+          "probability": 0.9873
+        },
+        {
+          "word": "activity",
+          "start": 220.58,
+          "end": 221.08,
+          "probability": 0.9102
+        },
+        {
+          "word": "or",
+          "start": 221.08,
+          "end": 221.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "document",
+          "start": 221.4,
+          "end": 221.9,
+          "probability": 0.9897
+        },
+        {
+          "word": "options.",
+          "start": 221.9,
+          "end": 222.42,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 222.9,
+      "end": 227.66,
+      "start_formatted": "00:03:42.900",
+      "end_formatted": "00:03:47.660",
+      "text": "This is because his role. Adjuster. No longer contains those permissions.",
+      "words": [
+        {
+          "word": "This",
+          "start": 222.9,
+          "end": 223.36,
+          "probability": 0.9912
+        },
+        {
+          "word": "is",
+          "start": 223.36,
+          "end": 223.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "because",
+          "start": 223.54,
+          "end": 223.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "his",
+          "start": 223.82,
+          "end": 224.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "role.",
+          "start": 224.1,
+          "end": 224.46,
+          "probability": 0.8936
+        },
+        {
+          "word": "Adjuster.",
+          "start": 224.66,
+          "end": 225.34,
+          "probability": 0.7139
+        },
+        {
+          "word": "No",
+          "start": 225.52,
+          "end": 225.86,
+          "probability": 0.9673
+        },
+        {
+          "word": "longer",
+          "start": 225.86,
+          "end": 226.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "contains",
+          "start": 226.2,
+          "end": 226.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "those",
+          "start": 226.7,
+          "end": 227.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "permissions.",
+          "start": 227.04,
+          "end": 227.66,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 228.64,
+      "end": 238.02,
+      "start_formatted": "00:03:48.640",
+      "end_formatted": "00:03:58.020",
+      "text": "Andy logs out of claim center. Remember that succeed insurance wants only Andy to be able to add documents and activities to closed claims.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 228.64,
+          "end": 229.32,
+          "probability": 0.9316
+        },
+        {
+          "word": "logs",
+          "start": 229.32,
+          "end": 229.66,
+          "probability": 0.9727
+        },
+        {
+          "word": "out",
+          "start": 229.66,
+          "end": 229.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 229.86,
+          "end": 230.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "claim",
+          "start": 230.0,
+          "end": 230.28,
+          "probability": 0.5386
+        },
+        {
+          "word": "center.",
+          "start": 230.28,
+          "end": 230.66,
+          "probability": 0.8311
+        },
+        {
+          "word": "Remember",
+          "start": 231.76,
+          "end": 232.44,
+          "probability": 0.9805
+        },
+        {
+          "word": "that",
+          "start": 232.44,
+          "end": 232.66,
+          "probability": 0.9854
+        },
+        {
+          "word": "succeed",
+          "start": 232.66,
+          "end": 233.02,
+          "probability": 0.8164
+        },
+        {
+          "word": "insurance",
+          "start": 233.02,
+          "end": 233.58,
+          "probability": 0.8032
+        },
+        {
+          "word": "wants",
+          "start": 233.58,
+          "end": 233.98,
+          "probability": 0.7559
+        },
+        {
+          "word": "only",
+          "start": 233.98,
+          "end": 234.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "Andy",
+          "start": 234.24,
+          "end": 234.54,
+          "probability": 0.7134
+        },
+        {
+          "word": "to",
+          "start": 234.54,
+          "end": 234.74,
+          "probability": 0.9736
+        },
+        {
+          "word": "be",
+          "start": 234.74,
+          "end": 234.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "able",
+          "start": 234.88,
+          "end": 235.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 235.12,
+          "end": 235.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "add",
+          "start": 235.26,
+          "end": 235.52,
+          "probability": 0.9517
+        },
+        {
+          "word": "documents",
+          "start": 235.52,
+          "end": 236.12,
+          "probability": 0.8911
+        },
+        {
+          "word": "and",
+          "start": 236.12,
+          "end": 236.44,
+          "probability": 0.9863
+        },
+        {
+          "word": "activities",
+          "start": 236.44,
+          "end": 236.98,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 236.98,
+          "end": 237.24,
+          "probability": 0.9902
+        },
+        {
+          "word": "closed",
+          "start": 237.24,
+          "end": 237.54,
+          "probability": 0.8325
+        },
+        {
+          "word": "claims.",
+          "start": 237.54,
+          "end": 238.02,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 238.02,
+      "end": 243.84,
+      "start_formatted": "00:03:58.020",
+      "end_formatted": "00:04:03.840",
+      "text": "During the previous steps. The administrator removed those permissions from all adjusters.",
+      "words": [
+        {
+          "word": "During",
+          "start": 238.02,
+          "end": 238.94,
+          "probability": 0.8208
+        },
+        {
+          "word": "the",
+          "start": 238.94,
+          "end": 239.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "previous",
+          "start": 239.18,
+          "end": 239.6,
+          "probability": 0.9883
+        },
+        {
+          "word": "steps.",
+          "start": 239.6,
+          "end": 240.08,
+          "probability": 0.9858
+        },
+        {
+          "word": "The",
+          "start": 240.46,
+          "end": 240.54,
+          "probability": 0.8862
+        },
+        {
+          "word": "administrator",
+          "start": 240.54,
+          "end": 241.14,
+          "probability": 0.8804
+        },
+        {
+          "word": "removed",
+          "start": 241.14,
+          "end": 241.82,
+          "probability": 0.9873
+        },
+        {
+          "word": "those",
+          "start": 241.82,
+          "end": 242.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "permissions",
+          "start": 242.1,
+          "end": 242.66,
+          "probability": 0.9902
+        },
+        {
+          "word": "from",
+          "start": 242.66,
+          "end": 242.98,
+          "probability": 0.9897
+        },
+        {
+          "word": "all",
+          "start": 242.98,
+          "end": 243.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "adjusters.",
+          "start": 243.22,
+          "end": 243.84,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 244.2,
+      "end": 248.06,
+      "start_formatted": "00:04:04.200",
+      "end_formatted": "00:04:08.060",
+      "text": "Now. She needs to somehow grant those permissions to Andy.",
+      "words": [
+        {
+          "word": "Now.",
+          "start": 244.2,
+          "end": 244.68,
+          "probability": 0.9829
+        },
+        {
+          "word": "She",
+          "start": 244.92,
+          "end": 245.2,
+          "probability": 0.8994
+        },
+        {
+          "word": "needs",
+          "start": 245.2,
+          "end": 245.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 245.54,
+          "end": 245.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "somehow",
+          "start": 245.74,
+          "end": 246.12,
+          "probability": 0.9922
+        },
+        {
+          "word": "grant",
+          "start": 246.12,
+          "end": 246.54,
+          "probability": 0.9766
+        },
+        {
+          "word": "those",
+          "start": 246.54,
+          "end": 246.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "permissions",
+          "start": 246.84,
+          "end": 247.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 247.42,
+          "end": 247.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "Andy.",
+          "start": 247.74,
+          "end": 248.06,
+          "probability": 0.8989
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 248.38,
+      "end": 251.22,
+      "start_formatted": "00:04:08.380",
+      "end_formatted": "00:04:11.220",
+      "text": "The claim center administrator logs back in.",
+      "words": [
+        {
+          "word": "The",
+          "start": 248.38,
+          "end": 248.8,
+          "probability": 0.9878
+        },
+        {
+          "word": "claim",
+          "start": 248.8,
+          "end": 249.1,
+          "probability": 0.5952
+        },
+        {
+          "word": "center",
+          "start": 249.1,
+          "end": 249.48,
+          "probability": 0.8857
+        },
+        {
+          "word": "administrator",
+          "start": 249.48,
+          "end": 250.14,
+          "probability": 0.9858
+        },
+        {
+          "word": "logs",
+          "start": 250.14,
+          "end": 250.64,
+          "probability": 0.9893
+        },
+        {
+          "word": "back",
+          "start": 250.64,
+          "end": 250.9,
+          "probability": 0.9927
+        },
+        {
+          "word": "in.",
+          "start": 250.9,
+          "end": 251.22,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 251.72,
+      "end": 254.14,
+      "start_formatted": "00:04:11.720",
+      "end_formatted": "00:04:14.140",
+      "text": "She starts with the administration tab.",
+      "words": [
+        {
+          "word": "She",
+          "start": 251.72,
+          "end": 252.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "starts",
+          "start": 252.38,
+          "end": 252.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "with",
+          "start": 252.76,
+          "end": 252.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 252.94,
+          "end": 253.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "administration",
+          "start": 253.08,
+          "end": 253.68,
+          "probability": 0.8633
+        },
+        {
+          "word": "tab.",
+          "start": 253.68,
+          "end": 254.14,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 255.0,
+      "end": 257.42,
+      "start_formatted": "00:04:15.000",
+      "end_formatted": "00:04:17.420",
+      "text": "And then. Users and security.",
+      "words": [
+        {
+          "word": "And",
+          "start": 255.0,
+          "end": 255.68,
+          "probability": 0.9492
+        },
+        {
+          "word": "then.",
+          "start": 255.68,
+          "end": 255.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "Users",
+          "start": 256.24,
+          "end": 256.6,
+          "probability": 0.9722
+        },
+        {
+          "word": "and",
+          "start": 256.6,
+          "end": 256.92,
+          "probability": 0.9341
+        },
+        {
+          "word": "security.",
+          "start": 256.92,
+          "end": 257.42,
+          "probability": 0.8843
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 258.12,
+      "end": 263.42,
+      "start_formatted": "00:04:18.120",
+      "end_formatted": "00:04:23.420",
+      "text": "The administrator is going to use roles to grant those closed claim permissions to Andy.",
+      "words": [
+        {
+          "word": "The",
+          "start": 258.12,
+          "end": 258.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "administrator",
+          "start": 258.76,
+          "end": 259.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 259.42,
+          "end": 259.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "going",
+          "start": 259.74,
+          "end": 259.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 259.96,
+          "end": 260.16,
+          "probability": 0.999
+        },
+        {
+          "word": "use",
+          "start": 260.16,
+          "end": 260.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "roles",
+          "start": 260.42,
+          "end": 260.74,
+          "probability": 0.9712
+        },
+        {
+          "word": "to",
+          "start": 260.74,
+          "end": 260.98,
+          "probability": 0.9644
+        },
+        {
+          "word": "grant",
+          "start": 260.98,
+          "end": 261.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "those",
+          "start": 261.26,
+          "end": 261.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "closed",
+          "start": 261.58,
+          "end": 261.94,
+          "probability": 0.9878
+        },
+        {
+          "word": "claim",
+          "start": 261.94,
+          "end": 262.24,
+          "probability": 0.957
+        },
+        {
+          "word": "permissions",
+          "start": 262.24,
+          "end": 262.82,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 262.82,
+          "end": 263.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "Andy.",
+          "start": 263.1,
+          "end": 263.42,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 264.12,
+      "end": 270.3,
+      "start_formatted": "00:04:24.120",
+      "end_formatted": "00:04:30.300",
+      "text": "She is going to add a role created specifically for creating activities and documents on closed claims.",
+      "words": [
+        {
+          "word": "She",
+          "start": 264.12,
+          "end": 264.68,
+          "probability": 0.8818
+        },
+        {
+          "word": "is",
+          "start": 264.68,
+          "end": 264.88,
+          "probability": 0.998
+        },
+        {
+          "word": "going",
+          "start": 264.88,
+          "end": 265.12,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 265.12,
+          "end": 265.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 265.32,
+          "end": 265.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 265.54,
+          "end": 265.66,
+          "probability": 0.998
+        },
+        {
+          "word": "role",
+          "start": 265.66,
+          "end": 265.88,
+          "probability": 0.9839
+        },
+        {
+          "word": "created",
+          "start": 265.88,
+          "end": 266.38,
+          "probability": 0.998
+        },
+        {
+          "word": "specifically",
+          "start": 266.38,
+          "end": 267.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 267.02,
+          "end": 267.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "creating",
+          "start": 267.3,
+          "end": 267.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "activities",
+          "start": 267.78,
+          "end": 268.4,
+          "probability": 0.9844
+        },
+        {
+          "word": "and",
+          "start": 268.4,
+          "end": 268.72,
+          "probability": 0.9888
+        },
+        {
+          "word": "documents",
+          "start": 268.72,
+          "end": 269.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "on",
+          "start": 269.26,
+          "end": 269.56,
+          "probability": 0.999
+        },
+        {
+          "word": "closed",
+          "start": 269.56,
+          "end": 269.88,
+          "probability": 0.6689
+        },
+        {
+          "word": "claims.",
+          "start": 269.88,
+          "end": 270.3,
+          "probability": 0.979
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 270.7,
+      "end": 273.44,
+      "start_formatted": "00:04:30.700",
+      "end_formatted": "00:04:33.440",
+      "text": "On the roles screen. She clicks add role.",
+      "words": [
+        {
+          "word": "On",
+          "start": 270.7,
+          "end": 271.1,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 271.1,
+          "end": 271.22,
+          "probability": 0.999
+        },
+        {
+          "word": "roles",
+          "start": 271.22,
+          "end": 271.5,
+          "probability": 0.8291
+        },
+        {
+          "word": "screen.",
+          "start": 271.5,
+          "end": 272.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "She",
+          "start": 272.28,
+          "end": 272.54,
+          "probability": 0.8945
+        },
+        {
+          "word": "clicks",
+          "start": 272.54,
+          "end": 272.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "add",
+          "start": 272.86,
+          "end": 273.14,
+          "probability": 0.7422
+        },
+        {
+          "word": "role.",
+          "start": 273.14,
+          "end": 273.44,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 273.98,
+      "end": 279.8,
+      "start_formatted": "00:04:33.980",
+      "end_formatted": "00:04:39.800",
+      "text": "The administrator names the role. Closed claims. And then describes the purpose of the role.",
+      "words": [
+        {
+          "word": "The",
+          "start": 273.98,
+          "end": 274.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "administrator",
+          "start": 274.54,
+          "end": 275.24,
+          "probability": 0.9526
+        },
+        {
+          "word": "names",
+          "start": 275.24,
+          "end": 275.72,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 275.72,
+          "end": 275.9,
+          "probability": 0.9917
+        },
+        {
+          "word": "role.",
+          "start": 275.9,
+          "end": 276.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "Closed",
+          "start": 276.46,
+          "end": 276.96,
+          "probability": 0.9873
+        },
+        {
+          "word": "claims.",
+          "start": 276.96,
+          "end": 277.38,
+          "probability": 0.9683
+        },
+        {
+          "word": "And",
+          "start": 277.66,
+          "end": 277.88,
+          "probability": 0.9663
+        },
+        {
+          "word": "then",
+          "start": 277.88,
+          "end": 278.08,
+          "probability": 0.9902
+        },
+        {
+          "word": "describes",
+          "start": 278.08,
+          "end": 278.5,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 278.5,
+          "end": 278.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "purpose",
+          "start": 278.84,
+          "end": 279.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 279.2,
+          "end": 279.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 279.42,
+          "end": 279.52,
+          "probability": 0.998
+        },
+        {
+          "word": "role.",
+          "start": 279.52,
+          "end": 279.8,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 280.38,
+      "end": 284.54,
+      "start_formatted": "00:04:40.380",
+      "end_formatted": "00:04:44.540",
+      "text": "The next step is to choose which permissions will be assigned to this role.",
+      "words": [
+        {
+          "word": "The",
+          "start": 280.38,
+          "end": 280.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "next",
+          "start": 280.94,
+          "end": 281.24,
+          "probability": 0.999
+        },
+        {
+          "word": "step",
+          "start": 281.24,
+          "end": 281.6,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 281.6,
+          "end": 281.78,
+          "probability": 0.9878
+        },
+        {
+          "word": "to",
+          "start": 281.78,
+          "end": 281.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "choose",
+          "start": 281.92,
+          "end": 282.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "which",
+          "start": 282.28,
+          "end": 282.52,
+          "probability": 0.9644
+        },
+        {
+          "word": "permissions",
+          "start": 282.52,
+          "end": 283.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "will",
+          "start": 283.08,
+          "end": 283.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "be",
+          "start": 283.36,
+          "end": 283.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "assigned",
+          "start": 283.5,
+          "end": 283.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 283.86,
+          "end": 284.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 284.06,
+          "end": 284.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "role.",
+          "start": 284.26,
+          "end": 284.54,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 284.54,
+      "end": 290.3,
+      "start_formatted": "00:04:44.540",
+      "end_formatted": "00:04:50.300",
+      "text": "The first permission the administrator adds is. Create activities on closed claim.",
+      "words": [
+        {
+          "word": "The",
+          "start": 284.54,
+          "end": 285.58,
+          "probability": 0.7612
+        },
+        {
+          "word": "first",
+          "start": 285.58,
+          "end": 285.88,
+          "probability": 0.9771
+        },
+        {
+          "word": "permission",
+          "start": 285.88,
+          "end": 286.4,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 286.4,
+          "end": 286.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "administrator",
+          "start": 286.64,
+          "end": 287.22,
+          "probability": 0.8364
+        },
+        {
+          "word": "adds",
+          "start": 287.22,
+          "end": 287.74,
+          "probability": 0.9717
+        },
+        {
+          "word": "is.",
+          "start": 287.74,
+          "end": 288.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "Create",
+          "start": 288.26,
+          "end": 288.82,
+          "probability": 0.3389
+        },
+        {
+          "word": "activities",
+          "start": 288.82,
+          "end": 289.42,
+          "probability": 0.5952
+        },
+        {
+          "word": "on",
+          "start": 289.42,
+          "end": 289.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "closed",
+          "start": 289.7,
+          "end": 289.98,
+          "probability": 0.751
+        },
+        {
+          "word": "claim.",
+          "start": 289.98,
+          "end": 290.3,
+          "probability": 0.9482
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 290.86,
+      "end": 292.7,
+      "start_formatted": "00:04:50.860",
+      "end_formatted": "00:04:52.700",
+      "text": "She adds the second permission.",
+      "words": [
+        {
+          "word": "She",
+          "start": 290.86,
+          "end": 291.44,
+          "probability": 0.9844
+        },
+        {
+          "word": "adds",
+          "start": 291.44,
+          "end": 291.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 291.74,
+          "end": 291.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "second",
+          "start": 291.88,
+          "end": 292.16,
+          "probability": 0.9824
+        },
+        {
+          "word": "permission.",
+          "start": 292.16,
+          "end": 292.7,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 293.98,
+      "end": 298.48,
+      "start_formatted": "00:04:53.980",
+      "end_formatted": "00:04:58.480",
+      "text": "The second permission for this role is create documents on closed claim.",
+      "words": [
+        {
+          "word": "The",
+          "start": 293.98,
+          "end": 294.7,
+          "probability": 0.9829
+        },
+        {
+          "word": "second",
+          "start": 294.7,
+          "end": 295.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "permission",
+          "start": 295.02,
+          "end": 295.52,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 295.52,
+          "end": 295.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 295.84,
+          "end": 296.04,
+          "probability": 0.999
+        },
+        {
+          "word": "role",
+          "start": 296.04,
+          "end": 296.34,
+          "probability": 0.981
+        },
+        {
+          "word": "is",
+          "start": 296.34,
+          "end": 296.68,
+          "probability": 0.9902
+        },
+        {
+          "word": "create",
+          "start": 296.68,
+          "end": 297.04,
+          "probability": 0.6528
+        },
+        {
+          "word": "documents",
+          "start": 297.04,
+          "end": 297.54,
+          "probability": 0.9624
+        },
+        {
+          "word": "on",
+          "start": 297.54,
+          "end": 297.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "closed",
+          "start": 297.84,
+          "end": 298.16,
+          "probability": 0.9658
+        },
+        {
+          "word": "claim.",
+          "start": 298.16,
+          "end": 298.48,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 299.04,
+      "end": 301.4,
+      "start_formatted": "00:04:59.040",
+      "end_formatted": "00:05:01.400",
+      "text": "The new role is named closed claims.",
+      "words": [
+        {
+          "word": "The",
+          "start": 299.04,
+          "end": 299.62,
+          "probability": 0.9893
+        },
+        {
+          "word": "new",
+          "start": 299.62,
+          "end": 299.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "role",
+          "start": 299.8,
+          "end": 300.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 300.06,
+          "end": 300.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "named",
+          "start": 300.3,
+          "end": 300.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "closed",
+          "start": 300.58,
+          "end": 300.94,
+          "probability": 0.8257
+        },
+        {
+          "word": "claims.",
+          "start": 300.94,
+          "end": 301.4,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 301.98,
+      "end": 306.08,
+      "start_formatted": "00:05:01.980",
+      "end_formatted": "00:05:06.080",
+      "text": "It has two permissions assigned. Create activities on closed claim.",
+      "words": [
+        {
+          "word": "It",
+          "start": 301.98,
+          "end": 302.12,
+          "probability": 0.9824
+        },
+        {
+          "word": "has",
+          "start": 302.12,
+          "end": 302.34,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 302.34,
+          "end": 302.56,
+          "probability": 0.9072
+        },
+        {
+          "word": "permissions",
+          "start": 302.56,
+          "end": 303.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "assigned.",
+          "start": 303.14,
+          "end": 303.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "Create",
+          "start": 304.08,
+          "end": 304.48,
+          "probability": 0.9536
+        },
+        {
+          "word": "activities",
+          "start": 304.48,
+          "end": 305.06,
+          "probability": 0.9863
+        },
+        {
+          "word": "on",
+          "start": 305.06,
+          "end": 305.36,
+          "probability": 0.999
+        },
+        {
+          "word": "closed",
+          "start": 305.36,
+          "end": 305.68,
+          "probability": 0.9946
+        },
+        {
+          "word": "claim.",
+          "start": 305.68,
+          "end": 306.08,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 306.44,
+      "end": 308.36,
+      "start_formatted": "00:05:06.440",
+      "end_formatted": "00:05:08.360",
+      "text": "And create documents on closed claim.",
+      "words": [
+        {
+          "word": "And",
+          "start": 306.44,
+          "end": 306.52,
+          "probability": 0.877
+        },
+        {
+          "word": "create",
+          "start": 306.52,
+          "end": 306.92,
+          "probability": 0.9707
+        },
+        {
+          "word": "documents",
+          "start": 306.92,
+          "end": 307.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "on",
+          "start": 307.42,
+          "end": 307.7,
+          "probability": 0.999
+        },
+        {
+          "word": "closed",
+          "start": 307.7,
+          "end": 308.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "claim.",
+          "start": 308.02,
+          "end": 308.36,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 308.96,
+      "end": 313.18,
+      "start_formatted": "00:05:08.960",
+      "end_formatted": "00:05:13.180",
+      "text": "The administrator clicks update to save the new closed claims role.",
+      "words": [
+        {
+          "word": "The",
+          "start": 308.96,
+          "end": 309.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "administrator",
+          "start": 309.44,
+          "end": 310.16,
+          "probability": 0.9927
+        },
+        {
+          "word": "clicks",
+          "start": 310.16,
+          "end": 310.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "update",
+          "start": 310.64,
+          "end": 310.98,
+          "probability": 0.9702
+        },
+        {
+          "word": "to",
+          "start": 310.98,
+          "end": 311.26,
+          "probability": 0.9814
+        },
+        {
+          "word": "save",
+          "start": 311.26,
+          "end": 311.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 311.54,
+          "end": 311.74,
+          "probability": 0.9946
+        },
+        {
+          "word": "new",
+          "start": 311.74,
+          "end": 311.92,
+          "probability": 0.9932
+        },
+        {
+          "word": "closed",
+          "start": 311.92,
+          "end": 312.3,
+          "probability": 0.9556
+        },
+        {
+          "word": "claims",
+          "start": 312.3,
+          "end": 312.82,
+          "probability": 0.9854
+        },
+        {
+          "word": "role.",
+          "start": 312.82,
+          "end": 313.18,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 313.18,
+      "end": 319.3,
+      "start_formatted": "00:05:13.180",
+      "end_formatted": "00:05:19.300",
+      "text": "The administrator verifies that the role closed claims is now included in the list of roles.",
+      "words": [
+        {
+          "word": "The",
+          "start": 313.18,
+          "end": 314.26,
+          "probability": 0.6826
+        },
+        {
+          "word": "administrator",
+          "start": 314.26,
+          "end": 314.88,
+          "probability": 0.8105
+        },
+        {
+          "word": "verifies",
+          "start": 314.88,
+          "end": 315.66,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 315.66,
+          "end": 315.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 315.9,
+          "end": 316.08,
+          "probability": 0.9927
+        },
+        {
+          "word": "role",
+          "start": 316.08,
+          "end": 316.36,
+          "probability": 0.9556
+        },
+        {
+          "word": "closed",
+          "start": 316.36,
+          "end": 316.7,
+          "probability": 0.134
+        },
+        {
+          "word": "claims",
+          "start": 316.7,
+          "end": 317.1,
+          "probability": 0.8413
+        },
+        {
+          "word": "is",
+          "start": 317.1,
+          "end": 317.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "now",
+          "start": 317.38,
+          "end": 317.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "included",
+          "start": 317.58,
+          "end": 318.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 318.04,
+          "end": 318.24,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 318.24,
+          "end": 318.36,
+          "probability": 0.9219
+        },
+        {
+          "word": "list",
+          "start": 318.36,
+          "end": 318.66,
+          "probability": 0.9917
+        },
+        {
+          "word": "of",
+          "start": 318.66,
+          "end": 318.84,
+          "probability": 0.999
+        },
+        {
+          "word": "roles.",
+          "start": 318.84,
+          "end": 319.3,
+          "probability": 0.9683
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 320.1,
+      "end": 324.16,
+      "start_formatted": "00:05:20.100",
+      "end_formatted": "00:05:24.160",
+      "text": "Next. She needs to assign the closed claims role to Andy.",
+      "words": [
+        {
+          "word": "Next.",
+          "start": 320.1,
+          "end": 320.7,
+          "probability": 0.9922
+        },
+        {
+          "word": "She",
+          "start": 320.9,
+          "end": 321.18,
+          "probability": 0.7603
+        },
+        {
+          "word": "needs",
+          "start": 321.18,
+          "end": 321.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 321.52,
+          "end": 321.7,
+          "probability": 0.999
+        },
+        {
+          "word": "assign",
+          "start": 321.7,
+          "end": 322.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 322.16,
+          "end": 322.34,
+          "probability": 0.5024
+        },
+        {
+          "word": "closed",
+          "start": 322.34,
+          "end": 322.7,
+          "probability": 0.8091
+        },
+        {
+          "word": "claims",
+          "start": 322.7,
+          "end": 323.22,
+          "probability": 0.9692
+        },
+        {
+          "word": "role",
+          "start": 323.22,
+          "end": 323.58,
+          "probability": 0.9814
+        },
+        {
+          "word": "to",
+          "start": 323.58,
+          "end": 323.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "Andy.",
+          "start": 323.82,
+          "end": 324.16,
+          "probability": 0.9487
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 324.76,
+      "end": 330.56,
+      "start_formatted": "00:05:24.760",
+      "end_formatted": "00:05:30.560",
+      "text": "The administrator searches for Andy by entering the first few letters of his user name and clicking search.",
+      "words": [
+        {
+          "word": "The",
+          "start": 324.76,
+          "end": 325.2,
+          "probability": 0.9897
+        },
+        {
+          "word": "administrator",
+          "start": 325.2,
+          "end": 325.9,
+          "probability": 0.9824
+        },
+        {
+          "word": "searches",
+          "start": 325.9,
+          "end": 326.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 326.38,
+          "end": 326.68,
+          "probability": 0.998
+        },
+        {
+          "word": "Andy",
+          "start": 326.68,
+          "end": 326.92,
+          "probability": 0.9854
+        },
+        {
+          "word": "by",
+          "start": 326.92,
+          "end": 327.16,
+          "probability": 0.9839
+        },
+        {
+          "word": "entering",
+          "start": 327.16,
+          "end": 327.54,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 327.54,
+          "end": 327.8,
+          "probability": 0.999
+        },
+        {
+          "word": "first",
+          "start": 327.8,
+          "end": 328.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "few",
+          "start": 328.08,
+          "end": 328.42,
+          "probability": 0.999
+        },
+        {
+          "word": "letters",
+          "start": 328.42,
+          "end": 328.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 328.7,
+          "end": 328.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 328.92,
+          "end": 329.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "user",
+          "start": 329.08,
+          "end": 329.38,
+          "probability": 0.3689
+        },
+        {
+          "word": "name",
+          "start": 329.38,
+          "end": 329.68,
+          "probability": 0.9834
+        },
+        {
+          "word": "and",
+          "start": 329.68,
+          "end": 329.86,
+          "probability": 0.9844
+        },
+        {
+          "word": "clicking",
+          "start": 329.86,
+          "end": 330.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "search.",
+          "start": 330.22,
+          "end": 330.56,
+          "probability": 0.7764
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 331.36,
+      "end": 334.68,
+      "start_formatted": "00:05:31.360",
+      "end_formatted": "00:05:34.680",
+      "text": "She then clicks Andy Applegate in the search results.",
+      "words": [
+        {
+          "word": "She",
+          "start": 331.36,
+          "end": 331.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "then",
+          "start": 331.96,
+          "end": 332.16,
+          "probability": 0.998
+        },
+        {
+          "word": "clicks",
+          "start": 332.16,
+          "end": 332.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "Andy",
+          "start": 332.54,
+          "end": 332.9,
+          "probability": 0.8105
+        },
+        {
+          "word": "Applegate",
+          "start": 332.9,
+          "end": 333.58,
+          "probability": 0.9727
+        },
+        {
+          "word": "in",
+          "start": 333.58,
+          "end": 333.7,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 333.7,
+          "end": 333.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "search",
+          "start": 333.84,
+          "end": 334.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "results.",
+          "start": 334.1,
+          "end": 334.68,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 335.32,
+      "end": 338.66,
+      "start_formatted": "00:05:35.320",
+      "end_formatted": "00:05:38.660",
+      "text": "Because she is going to make changes to the roles Andy has.",
+      "words": [
+        {
+          "word": "Because",
+          "start": 335.32,
+          "end": 335.92,
+          "probability": 0.9883
+        },
+        {
+          "word": "she",
+          "start": 335.92,
+          "end": 336.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 336.1,
+          "end": 336.24,
+          "probability": 0.981
+        },
+        {
+          "word": "going",
+          "start": 336.24,
+          "end": 336.42,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 336.42,
+          "end": 336.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "make",
+          "start": 336.6,
+          "end": 336.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "changes",
+          "start": 336.8,
+          "end": 337.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 337.2,
+          "end": 337.42,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 337.42,
+          "end": 337.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "roles",
+          "start": 337.54,
+          "end": 337.86,
+          "probability": 0.9795
+        },
+        {
+          "word": "Andy",
+          "start": 337.86,
+          "end": 338.18,
+          "probability": 0.981
+        },
+        {
+          "word": "has.",
+          "start": 338.18,
+          "end": 338.66,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 338.86,
+      "end": 340.48,
+      "start_formatted": "00:05:38.860",
+      "end_formatted": "00:05:40.480",
+      "text": "The administrator clicks edit.",
+      "words": [
+        {
+          "word": "The",
+          "start": 338.86,
+          "end": 339.1,
+          "probability": 0.9375
+        },
+        {
+          "word": "administrator",
+          "start": 339.1,
+          "end": 339.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "clicks",
+          "start": 339.78,
+          "end": 340.22,
+          "probability": 0.979
+        },
+        {
+          "word": "edit.",
+          "start": 340.22,
+          "end": 340.48,
+          "probability": 0.6807
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 341.2,
+      "end": 343.18,
+      "start_formatted": "00:05:41.200",
+      "end_formatted": "00:05:43.180",
+      "text": "Currently Andy has two roles.",
+      "words": [
+        {
+          "word": "Currently",
+          "start": 341.2,
+          "end": 341.84,
+          "probability": 0.8921
+        },
+        {
+          "word": "Andy",
+          "start": 341.84,
+          "end": 342.14,
+          "probability": 0.0729
+        },
+        {
+          "word": "has",
+          "start": 342.14,
+          "end": 342.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "two",
+          "start": 342.38,
+          "end": 342.62,
+          "probability": 0.7642
+        },
+        {
+          "word": "roles.",
+          "start": 342.62,
+          "end": 343.18,
+          "probability": 0.9526
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 343.4,
+      "end": 346.32,
+      "start_formatted": "00:05:43.400",
+      "end_formatted": "00:05:46.320",
+      "text": "Trusted for sensitive claims. And adjuster.",
+      "words": [
+        {
+          "word": "Trusted",
+          "start": 343.4,
+          "end": 343.9,
+          "probability": 0.9331
+        },
+        {
+          "word": "for",
+          "start": 343.9,
+          "end": 344.12,
+          "probability": 0.9702
+        },
+        {
+          "word": "sensitive",
+          "start": 344.12,
+          "end": 344.56,
+          "probability": 0.5928
+        },
+        {
+          "word": "claims.",
+          "start": 344.56,
+          "end": 345.16,
+          "probability": 0.9541
+        },
+        {
+          "word": "And",
+          "start": 345.42,
+          "end": 345.72,
+          "probability": 0.6011
+        },
+        {
+          "word": "adjuster.",
+          "start": 345.72,
+          "end": 346.32,
+          "probability": 0.8203
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 347.24,
+      "end": 350.42,
+      "start_formatted": "00:05:47.240",
+      "end_formatted": "00:05:50.420",
+      "text": "The administrator clicks add to add the new role.",
+      "words": [
+        {
+          "word": "The",
+          "start": 347.24,
+          "end": 347.88,
+          "probability": 0.9771
+        },
+        {
+          "word": "administrator",
+          "start": 347.88,
+          "end": 348.48,
+          "probability": 0.8848
+        },
+        {
+          "word": "clicks",
+          "start": 348.48,
+          "end": 349.02,
+          "probability": 0.9834
+        },
+        {
+          "word": "add",
+          "start": 349.02,
+          "end": 349.36,
+          "probability": 0.7417
+        },
+        {
+          "word": "to",
+          "start": 349.36,
+          "end": 349.58,
+          "probability": 0.9155
+        },
+        {
+          "word": "add",
+          "start": 349.58,
+          "end": 349.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 349.82,
+          "end": 349.98,
+          "probability": 0.9897
+        },
+        {
+          "word": "new",
+          "start": 349.98,
+          "end": 350.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "role.",
+          "start": 350.16,
+          "end": 350.42,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 350.94,
+      "end": 354.9,
+      "start_formatted": "00:05:50.940",
+      "end_formatted": "00:05:54.900",
+      "text": "She selects the new role. Closed claims. From the list.",
+      "words": [
+        {
+          "word": "She",
+          "start": 350.94,
+          "end": 351.58,
+          "probability": 0.9844
+        },
+        {
+          "word": "selects",
+          "start": 351.58,
+          "end": 352.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 352.1,
+          "end": 352.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 352.2,
+          "end": 352.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "role.",
+          "start": 352.38,
+          "end": 352.74,
+          "probability": 0.9946
+        },
+        {
+          "word": "Closed",
+          "start": 352.92,
+          "end": 353.46,
+          "probability": 0.9741
+        },
+        {
+          "word": "claims.",
+          "start": 353.46,
+          "end": 353.86,
+          "probability": 0.9165
+        },
+        {
+          "word": "From",
+          "start": 354.2,
+          "end": 354.42,
+          "probability": 0.9297
+        },
+        {
+          "word": "the",
+          "start": 354.42,
+          "end": 354.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "list.",
+          "start": 354.56,
+          "end": 354.9,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 355.74,
+      "end": 362.22,
+      "start_formatted": "00:05:55.740",
+      "end_formatted": "00:06:02.220",
+      "text": "Andy now has three roles assigned. Trusted for sensitive claims. Adjuster. And closed claims.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 355.74,
+          "end": 356.38,
+          "probability": 0.981
+        },
+        {
+          "word": "now",
+          "start": 356.38,
+          "end": 356.66,
+          "probability": 0.9912
+        },
+        {
+          "word": "has",
+          "start": 356.66,
+          "end": 356.92,
+          "probability": 0.998
+        },
+        {
+          "word": "three",
+          "start": 356.92,
+          "end": 357.18,
+          "probability": 0.9053
+        },
+        {
+          "word": "roles",
+          "start": 357.18,
+          "end": 357.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "assigned.",
+          "start": 357.58,
+          "end": 358.12,
+          "probability": 0.979
+        },
+        {
+          "word": "Trusted",
+          "start": 358.5,
+          "end": 358.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "for",
+          "start": 358.8,
+          "end": 359.06,
+          "probability": 0.998
+        },
+        {
+          "word": "sensitive",
+          "start": 359.06,
+          "end": 359.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "claims.",
+          "start": 359.48,
+          "end": 360.1,
+          "probability": 0.9902
+        },
+        {
+          "word": "Adjuster.",
+          "start": 360.42,
+          "end": 361.04,
+          "probability": 0.9805
+        },
+        {
+          "word": "And",
+          "start": 361.2,
+          "end": 361.52,
+          "probability": 0.9937
+        },
+        {
+          "word": "closed",
+          "start": 361.52,
+          "end": 361.82,
+          "probability": 0.8657
+        },
+        {
+          "word": "claims.",
+          "start": 361.82,
+          "end": 362.22,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 362.68,
+      "end": 366.16,
+      "start_formatted": "00:06:02.680",
+      "end_formatted": "00:06:06.160",
+      "text": "He inherits all the permissions from each of these three roles.",
+      "words": [
+        {
+          "word": "He",
+          "start": 362.68,
+          "end": 363.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "inherits",
+          "start": 363.04,
+          "end": 363.58,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 363.58,
+          "end": 363.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 363.82,
+          "end": 364.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "permissions",
+          "start": 364.0,
+          "end": 364.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "from",
+          "start": 364.44,
+          "end": 364.76,
+          "probability": 0.9731
+        },
+        {
+          "word": "each",
+          "start": 364.76,
+          "end": 365.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 365.02,
+          "end": 365.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "these",
+          "start": 365.22,
+          "end": 365.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "three",
+          "start": 365.44,
+          "end": 365.7,
+          "probability": 0.9688
+        },
+        {
+          "word": "roles.",
+          "start": 365.7,
+          "end": 366.16,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 366.16,
+      "end": 370.22,
+      "start_formatted": "00:06:06.160",
+      "end_formatted": "00:06:10.220",
+      "text": "The administrator clicks update to save the changes.",
+      "words": [
+        {
+          "word": "The",
+          "start": 366.16,
+          "end": 367.4,
+          "probability": 0.8555
+        },
+        {
+          "word": "administrator",
+          "start": 367.4,
+          "end": 368.02,
+          "probability": 0.8013
+        },
+        {
+          "word": "clicks",
+          "start": 368.02,
+          "end": 368.62,
+          "probability": 0.998
+        },
+        {
+          "word": "update",
+          "start": 368.62,
+          "end": 368.96,
+          "probability": 0.1754
+        },
+        {
+          "word": "to",
+          "start": 368.96,
+          "end": 369.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "save",
+          "start": 369.24,
+          "end": 369.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 369.54,
+          "end": 369.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes.",
+          "start": 369.7,
+          "end": 370.22,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 370.86,
+      "end": 372.8,
+      "start_formatted": "00:06:10.860",
+      "end_formatted": "00:06:12.800",
+      "text": "And logs out of claim center.",
+      "words": [
+        {
+          "word": "And",
+          "start": 370.86,
+          "end": 371.42,
+          "probability": 0.9595
+        },
+        {
+          "word": "logs",
+          "start": 371.42,
+          "end": 371.76,
+          "probability": 0.98
+        },
+        {
+          "word": "out",
+          "start": 371.76,
+          "end": 371.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 371.96,
+          "end": 372.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 372.12,
+          "end": 372.4,
+          "probability": 0.1586
+        },
+        {
+          "word": "center.",
+          "start": 372.4,
+          "end": 372.8,
+          "probability": 0.9639
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 373.5,
+      "end": 379.3,
+      "start_formatted": "00:06:13.500",
+      "end_formatted": "00:06:19.300",
+      "text": "To verify that he has permission to create activities and documents on claims that are closed.",
+      "words": [
+        {
+          "word": "To",
+          "start": 373.5,
+          "end": 374.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "verify",
+          "start": 374.14,
+          "end": 374.6,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 374.6,
+          "end": 374.9,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 374.9,
+          "end": 375.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 375.04,
+          "end": 375.24,
+          "probability": 1.0
+        },
+        {
+          "word": "permission",
+          "start": 375.24,
+          "end": 375.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 375.66,
+          "end": 375.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 375.88,
+          "end": 376.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "activities",
+          "start": 376.22,
+          "end": 376.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 376.8,
+          "end": 377.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "documents",
+          "start": 377.14,
+          "end": 377.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 377.64,
+          "end": 377.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "claims",
+          "start": 377.96,
+          "end": 378.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 378.4,
+          "end": 378.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 378.64,
+          "end": 378.78,
+          "probability": 1.0
+        },
+        {
+          "word": "closed.",
+          "start": 378.78,
+          "end": 379.3,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 379.56,
+      "end": 381.56,
+      "start_formatted": "00:06:19.560",
+      "end_formatted": "00:06:21.560",
+      "text": "Andy logs back into claim center.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 379.56,
+          "end": 379.86,
+          "probability": 0.7842
+        },
+        {
+          "word": "logs",
+          "start": 379.86,
+          "end": 380.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "back",
+          "start": 380.28,
+          "end": 380.56,
+          "probability": 0.999
+        },
+        {
+          "word": "into",
+          "start": 380.56,
+          "end": 380.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim",
+          "start": 380.84,
+          "end": 381.16,
+          "probability": 0.9365
+        },
+        {
+          "word": "center.",
+          "start": 381.16,
+          "end": 381.56,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 382.1,
+      "end": 385.38,
+      "start_formatted": "00:06:22.100",
+      "end_formatted": "00:06:25.380",
+      "text": "He opens the Bill Kinman claim. Which is closed.",
+      "words": [
+        {
+          "word": "He",
+          "start": 382.1,
+          "end": 382.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "opens",
+          "start": 382.78,
+          "end": 383.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 383.14,
+          "end": 383.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "Bill",
+          "start": 383.32,
+          "end": 383.52,
+          "probability": 0.6099
+        },
+        {
+          "word": "Kinman",
+          "start": 383.52,
+          "end": 383.9,
+          "probability": 0.9258
+        },
+        {
+          "word": "claim.",
+          "start": 383.9,
+          "end": 384.28,
+          "probability": 0.9614
+        },
+        {
+          "word": "Which",
+          "start": 384.54,
+          "end": 384.78,
+          "probability": 0.9229
+        },
+        {
+          "word": "is",
+          "start": 384.78,
+          "end": 384.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "closed.",
+          "start": 384.92,
+          "end": 385.38,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 385.94,
+      "end": 390.22,
+      "start_formatted": "00:06:25.940",
+      "end_formatted": "00:06:30.220",
+      "text": "He clicks the actions menu. And sees that even on this closed claim.",
+      "words": [
+        {
+          "word": "He",
+          "start": 385.94,
+          "end": 386.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "clicks",
+          "start": 386.42,
+          "end": 386.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 386.76,
+          "end": 386.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "actions",
+          "start": 386.94,
+          "end": 387.38,
+          "probability": 0.8872
+        },
+        {
+          "word": "menu.",
+          "start": 387.38,
+          "end": 387.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "And",
+          "start": 388.16,
+          "end": 388.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "sees",
+          "start": 388.32,
+          "end": 388.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 388.66,
+          "end": 388.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "even",
+          "start": 388.9,
+          "end": 389.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 389.12,
+          "end": 389.32,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 389.32,
+          "end": 389.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "closed",
+          "start": 389.52,
+          "end": 389.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "claim.",
+          "start": 389.86,
+          "end": 390.22,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 390.22,
+      "end": 393.22,
+      "start_formatted": "00:06:30.220",
+      "end_formatted": "00:06:33.220",
+      "text": "He can now create both activities and documents.",
+      "words": [
+        {
+          "word": "He",
+          "start": 390.22,
+          "end": 390.64,
+          "probability": 0.3972
+        },
+        {
+          "word": "can",
+          "start": 390.64,
+          "end": 390.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "now",
+          "start": 390.86,
+          "end": 391.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "create",
+          "start": 391.08,
+          "end": 391.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "both",
+          "start": 391.46,
+          "end": 391.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "activities",
+          "start": 391.76,
+          "end": 392.32,
+          "probability": 0.978
+        },
+        {
+          "word": "and",
+          "start": 392.32,
+          "end": 392.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "documents.",
+          "start": 392.6,
+          "end": 393.22,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 393.82,
+      "end": 395.82,
+      "start_formatted": "00:06:33.820",
+      "end_formatted": "00:06:35.820",
+      "text": "Andy logs out of claim center.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 393.82,
+          "end": 394.46,
+          "probability": 0.7324
+        },
+        {
+          "word": "logs",
+          "start": 394.46,
+          "end": 394.82,
+          "probability": 0.9678
+        },
+        {
+          "word": "out",
+          "start": 394.82,
+          "end": 395.02,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 395.02,
+          "end": 395.16,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 395.16,
+          "end": 395.42,
+          "probability": 0.1537
+        },
+        {
+          "word": "center.",
+          "start": 395.42,
+          "end": 395.82,
+          "probability": 0.9614
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 396.58,
+      "end": 399.94,
+      "start_formatted": "00:06:36.580",
+      "end_formatted": "00:06:39.940",
+      "text": "This is the end of the managing roles and permissions demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 396.58,
+          "end": 397.22,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 397.22,
+          "end": 397.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 397.34,
+          "end": 397.48,
+          "probability": 0.999
+        },
+        {
+          "word": "end",
+          "start": 397.48,
+          "end": 397.74,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 397.74,
+          "end": 397.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 397.9,
+          "end": 398.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "managing",
+          "start": 398.02,
+          "end": 398.4,
+          "probability": 0.9688
+        },
+        {
+          "word": "roles",
+          "start": 398.4,
+          "end": 398.82,
+          "probability": 0.9902
+        },
+        {
+          "word": "and",
+          "start": 398.82,
+          "end": 399.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "permissions",
+          "start": 399.06,
+          "end": 399.62,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration.",
+          "start": 399.62,
+          "end": 399.94,
+          "probability": 0.7827
+        }
+      ]
+    }
+  ]
+}

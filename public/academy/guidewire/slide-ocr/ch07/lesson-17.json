@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-17",
+    "slide_count": 35,
+    "slides_with_text": 32,
+    "total_words": 1882,
+    "avg_confidence": 87.92,
+    "processing_time_seconds": 15.46,
+    "extracted_at": "2026-02-13T12:20:25.627344"
+  },
+  "full_text": "Validation\n\nLesson\nobjectives\n\n¢ Distinguish between field-level validation\n\nconfiguration in the user interface and the\ndata model\n\nDescribe how an input mask differs from a\nregular expression\n\nCreate and use an entity field validator\nDescribe basic validation rule behavior\nCreate validation rules that raise warnings\nand errors\n\ni User Story — Policy Number Format Gi\n\n“The insurance company has a very specific policy number format: two letters, a\nhyphen, and seven digits. We want this format to be enforced when the policy is\nbeing saved. The same format must be used when the policy is saved from the UI or\nthrough API calls. In the Ul, a watermark should be displayed to guide the users. If\nthe policy number format is incorrect then the following error message should be\ndisplayed: Policy Number must be a valid policy number. Example: AA-1234567\"\n\n— Insurance company business analysts\n\nAbout Pattern Matching\n\ni Pattern matching\n\n¢ Pattern matching is a field-level validation technique\n\n¢ Verifies that the user entered the data in the correct format for that field\n¢ E.g.: tax id must be a nine-digit number with hyphens after the third and fifth digits\n* Prevents the user from saving invalid business data\n\n* Could be implemented in the data model or the UI tier\n\n« Main components:\n« Regular expression\n* Input mask (optional)\n\ni Pattern matching - regular expressions Gi\n\n¢ Aregular expression defines an abstract pattern\n¢ Examples:\n\n« Email address: ot@.t\\. et\n« Routing number: [0-9a-zA-Z] {3}-[0-9] {3}\nDetails\n\nValidation errors on current page: i)\n\n@ Routing Number: Must be 3 alphanumerics, a hyphen, and 3 digits.\n\nSavings | Pending\n\ni Pattern matching — input masks\n\n¢ Appears as a watermark in field and mouse over\n\ntooltip\n\n* Changes to a darker color with data entry\n\n* No format warning\n\n* Does not restrict data commit but instead guides the\n\nuser to input the data in a certain format\n\nmnemoue\ninputConversion\ninputMask\nInhelahove.\n\n‘outputConversion\n\nFequestValidationExpression\n\nfalee\n\n48-123\n\n* (A-2} (2) [0-9] (3)\"\n\nips\n\nValidation errors on curr\n© Ucense: The valuein this field\n\nes)\n\ni Pattern matching- practices comparison\n\nData model User interface.\n¢ Pros * Pros\n¢ Application enforces compliance in the ¢ Dynamic values: regex and input mask\nUI and through API can change based on business logic\n* Supports full localization * Can restrict data commit\n¢ Robust extensibility ¢ Cons\n* Cons * Only a few widget support it\n* Static values only: regex and input « Must be configured per widget\n\nmask cannot change based on * No custom error message option\nbusiness logic\n\n« Extensibility a big concern\n¢ Implemented as a reusable field ya bia\n\nvalidator ¢ Implemented as widget properties\n\ni Example: pattern matching in the Ul\n\nGi\n\nImplementing the user story in the UI requires duplicating regex and input mask\n\ninputMask and regex\n\nproperties can be dynamic\n* To improve the design, a\n\nfunction call could be used\n\ninstead of hard-coding the\nstrings\n\nNo custom error message\n\nNot all the widgets have the\nregex and inputMask\nproperties\n\n« Refer to PCF Format Reference\n\nBroiicyPopuppct *\n\nEdit] Update) Cancel\n\nBoiicytv.net x\n\nPolicy Number ][ Premium\n\nLocation\n\nPolicy Number _[aPolicyPolicyNumber\n\n[currentPoticy.] jj s[currentPoticy.|\n\nSores |\n\nPage Configuration | Text\nProperties: JBMnnaced) [= tayoutconig | BE Reflection |) #\nText Input\ninputConversion\ninputMask\nlabelAbove\nlabelstyeclass\nmaxchars °\numcols\nrnumEntiesPerColumn °\n‘onPick\n‘outputConversion\nregex [2] (2)-(0-9) (7)\"\n\nwn—enennE\nfalse\n\nPage Configuration| Text\n\nText Cell\n\nReflection) PostOnchange\n\ninputMask\nlabelstyleCiass\nmaxChars °\numCols\n\nnumEntries a\nnumEntriesPerColumn °\n‘onPick\n‘outputConversion\nprintWidth\n\nregex\n\nree\n\n{A-zZ] (2)- [0-9] (7)\"\n\ni Demonstration G\nPolicy number format\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni User Story — High-value policy Gi\n\n“We want TrainingApp to warn the users when they are saving a high-value\n(Premium greater than $5000) California policy.\n\nThe following warning message should be displayed when trying to save the policy:\nThis is a high-value California policy!\n\nThe second time, after warning the user, the save should be allowed.”\n\n— Insurance company business analysts\n\ni Business logic — validation expression Gi\n\n« Avvalidation expression is a logical Gosu expression associated with a single\natomic widget that implements field-level validation\n\n¢ If expression returns null, save is allowed\n\n¢ If expression returns string (an error message), then save is prevented, field is flagged, and\nmessage is displayed at top of screen\n\n¢ Configured as a widget property in the UI tier\n\ni Business logic — validation expression (continued) Gi\n\n¢ Input validated on update and invalid value stops commit\nInvalid field value shows red box warning\n* Mouse over the field to see the invalid value in field error message\n* Message bar localizable error displayed\n\n* requestValidationExpression property is similar\n\n« It validates the user input on update AND on every other server request (e.g.: when navigating\nto a different page)\n\ni Example: business logic — validationExpression Gi\nA\n\nBascontactbetsiscompanyov.pct * |\nCollateral Info: Toolbox structure\nCollateral Requred? [] Search POF elements (4\ncotateralamaunt [(enASContac as AbPokcyCompany).Coaterla Tab Bar\n\n== Hidden Link\n|Colateral verted? (eSContect as ASPoicyCompeny).Compe... v Toolbars\n\nF oober\n\n|| Pose Configuration |” Text |\n\nPropertes: [IF] Layout config | 5) Reflecton | ji) PostOnchange _\nfextest\nvalidationExpression\n\n(anaBContact as ABPolicyCompany) .CollateralAmount > 4999 ? DisplayKey.get(\"Training.CollateralAnountExceeded”) : null\n\nDetails\n\nErrors on current page:\n© Collateral Amount : Amount must be less than 5000\n\n[company into Phone saddresses | BankAccounts | Financial Summary\n\nCollateral info\nCollateral Required?\n\nCollateral Amount\n\nCollateral Verified? <none> +\n\ni Business logic — validation rules Gi\n\n¢ Validation rules are written as Gosu rules and contain logic to validate (complex)\nlogical conditions and/or relationships between entity fields\n\n¢ E.g.: primary phone number must be selected if the user has more than one phone numbers\n« Validation rules can be used to:\n\n* Ensure that the user enters data that makes sense\n\n« Ensure that the user enters all necessary data\n\n« Manage relationships between data fields\n\ni Business logic — validation rules\n\n« Business rules can show warnings or errors\n¢ Validation during saved\n\n* Checked when Validatable entity is committed to the database\n¢ Entity must implement the Validatable delegate\n\n* implementsEntity tag in the ETI/ETX file\n\ni Delegates Gi\n\n« Adelegate models a capability and allows sharing functionality across the data\nmodel\n\n¢« Examples:\n« Any entity implementing the Validatable delegate can be validated by Gosu rules\n\n« Any entity implementing the Assignable delegate can be automatically assigned to a user and\nuser group by Gosu rules\n\n¢ Technically a delegate is a virtual object defined in the data model\n« It consists of database fields and/or methods that can be reused by multiple entities\n« Anentity can implement multiple delegates\n\ni Delegate examples Gi\n\n¢ Validatable delegate defines reusable functions to show warning or error\nmessages\n\n¢ Assignable delegate contains functions to perform the assignment and database\nfields to store the assignment details (AssignedUser, AssignedTime)\n\ni Validation graph\n\n¢ The rules engine performs validation during database commit\n¢ Validation is triggered when:\n¢ Validatable object is created or changed\n\n¢ Validatable sub-object is created, changed, or removed\n\n* \"triggersValidation\" attribute on the foreign key or array controls this behavior\n\ni Validation graph\n\n¢ The rules engine performs validation during database commit\n¢ Validation is triggered when:\n¢ Validatable object is created or changed\n\n¢ Validatable sub-object is created, changed, or removed\n\n* \"triggersValidation\" attribute on the foreign key or array controls this behavior\n\ni Business logic — practices comparison Gi\n\n¢ Validates a simple logical condition ¢ Validates complex logical\nfor a single field relationships between entity fields\n¢ Implemented in the UI and must be ¢ Entity must implement the\nconfigured per widget Validatable delegate in the data\nmodel\n\n¢ Application enforces compliance in\nthe UI and through the APIs\n\ni Demonstration G\nHigh value policy\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — Assume that there is an Order entity that has an OrderNumber field. The\nPa field appears on two detail views: LegacyOrdersDV and NewOrdersDV.\n\nA) Name a situation where you would implement validation logic for the\nOrderNumber field at the data model level.\n\nB) Name a situation where you would implement validation logic for the\nOrderNumber field at the UI level.\n\nSe Sess e ese ssc esaeK\n\nAnswer Gi\n\n_— — Assume that there is an Order entity that has an OrderNumber field. The\nPa field appears on two detail views: LegacyOrdersDV and NewOrdersDV.\n¢\n\nA) Name a situation where you would implement validation logic for the\n\nOrderNumber field at the data model level.\n\nB) Name a situation where you would implement validation logic for the\nOrderNumber field at the UI level.\n\nA) Possible answer: The OrderNumber field has a pattern, such as two characters, a\nhyphen, and five characters, and this pattern must be followed everywhere the\nfield is used. Also, you want to localize the error message.\n\nB) Possible answer: On the detail view for orders imported from a legacy system, the\norder number could take any format. On the detail view for orders created in the\nGuidewire application, the order number must start with the characters \"GW-*.\n\nSS Se SSeS sess e eases\n\nQuestion\n\n_— — What happens if a widget's validation expression retums null?\n\n¢\n¢\n4\n\nSe Sess e ese ssc esaeK\n\nAnswer\n\na What happens if a widget's validation expression retums null?\n\n¢\n¢\n\nThe save is allowed—a return value of null signifies that the validation condition was\nmet.\n\nSS Se SSeS sess e eases\n\nQuestion G\n\n_- — Incase of validation rules, if you have an existing reject statement which\n\nPa raises only a warning, how would you change it to instead raise an error?\n\n4\n\nSe Sess e ese ssc esaeK\n\nAnswer Gi\n\n_- — Incase of validation rules, if you have an existing reject statement which\nPa raises only a warning, how would you change it to instead raise an error?\n¢\n\nYou would swap the order of the final two pairs of arguments. The first pair should be\nthe last pair and vice versa.\n\nSS Se SSeS sess e eases\n\nQuestion\n\n,— — the first argument of rejectField is a “relative path” to the object to\nPa highlight. Why is it relevant to keep in mind that the path is relative?\n\nSe Sess e ese ssc esaeK\n\nAnswer\n\n,— — the first argument of rejectField is a “relative path” to the object to\nPa highlight. Why is it relevant to keep in mind that the path is relative?\n\nItis important to keep this in mind because the root object must be omitted from the\npath. If you include the root object, then TrainingApp will not be able to find the field to\nhighlight.\n\nSS Se SSeS sess e eases\n\nLesson\nobjectives\nreview\n\n¢ Distinguish between field-level validation\n\nconfiguration in the user interface and the\ndata model\n\nDescribe how an input mask differs from a\nregular expression\n\nCreate and use an entity field validator\nDescribe basic validation rule behavior\nCreate validation rules that raise warnings\nand errors\n\ni Student exercise\n\nValidation",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Validation",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Distinguish between field-level validation\n\nconfiguration in the user interface and the\ndata model\n\nDescribe how an input mask differs from a\nregular expression\n\nCreate and use an entity field validator\nDescribe basic validation rule behavior\nCreate validation rules that raise warnings\nand errors",
+      "word_count": 46,
+      "avg_confidence": 94.96,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "i User Story — Policy Number Format Gi\n\n“The insurance company has a very specific policy number format: two letters, a\nhyphen, and seven digits. We want this format to be enforced when the policy is\nbeing saved. The same format must be used when the policy is saved from the UI or\nthrough API calls. In the Ul, a watermark should be displayed to guide the users. If\nthe policy number format is incorrect then the following error message should be\ndisplayed: Policy Number must be a valid policy number. Example: AA-1234567\"\n\n— Insurance company business analysts",
+      "word_count": 98,
+      "avg_confidence": 93.15,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "About Pattern Matching",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Pattern matching\n\n¢ Pattern matching is a field-level validation technique\n\n¢ Verifies that the user entered the data in the correct format for that field\n¢ E.g.: tax id must be a nine-digit number with hyphens after the third and fifth digits\n* Prevents the user from saving invalid business data\n\n* Could be implemented in the data model or the UI tier\n\n« Main components:\n« Regular expression\n* Input mask (optional)",
+      "word_count": 74,
+      "avg_confidence": 89.44,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Pattern matching - regular expressions Gi\n\n¢ Aregular expression defines an abstract pattern\n¢ Examples:\n\n« Email address: ot@.t\\. et\n« Routing number: [0-9a-zA-Z] {3}-[0-9] {3}\nDetails\n\nValidation errors on current page: i)\n\n@ Routing Number: Must be 3 alphanumerics, a hyphen, and 3 digits.\n\nSavings | Pending",
+      "word_count": 49,
+      "avg_confidence": 82.78,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Pattern matching — input masks\n\n¢ Appears as a watermark in field and mouse over\n\ntooltip\n\n* Changes to a darker color with data entry\n\n* No format warning\n\n* Does not restrict data commit but instead guides the\n\nuser to input the data in a certain format\n\nmnemoue\ninputConversion\ninputMask\nInhelahove.\n\n‘outputConversion\n\nFequestValidationExpression\n\nfalee\n\n48-123\n\n* (A-2} (2) [0-9] (3)\"\n\nips\n\nValidation errors on curr\n© Ucense: The valuein this field\n\nes)",
+      "word_count": 74,
+      "avg_confidence": 84.17,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Pattern matching- practices comparison\n\nData model User interface.\n¢ Pros * Pros\n¢ Application enforces compliance in the ¢ Dynamic values: regex and input mask\nUI and through API can change based on business logic\n* Supports full localization * Can restrict data commit\n¢ Robust extensibility ¢ Cons\n* Cons * Only a few widget support it\n* Static values only: regex and input « Must be configured per widget\n\nmask cannot change based on * No custom error message option\nbusiness logic\n\n« Extensibility a big concern\n¢ Implemented as a reusable field ya bia\n\nvalidator ¢ Implemented as widget properties",
+      "word_count": 104,
+      "avg_confidence": 86.25,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Example: pattern matching in the Ul\n\nGi\n\nImplementing the user story in the UI requires duplicating regex and input mask\n\ninputMask and regex\n\nproperties can be dynamic\n* To improve the design, a\n\nfunction call could be used\n\ninstead of hard-coding the\nstrings\n\nNo custom error message\n\nNot all the widgets have the\nregex and inputMask\nproperties\n\n« Refer to PCF Format Reference\n\nBroiicyPopuppct *\n\nEdit] Update) Cancel\n\nBoiicytv.net x\n\nPolicy Number ][ Premium\n\nLocation\n\nPolicy Number _[aPolicyPolicyNumber\n\n[currentPoticy.] jj s[currentPoticy.|\n\nSores |\n\nPage Configuration | Text\nProperties: JBMnnaced) [= tayoutconig | BE Reflection |) #\nText Input\ninputConversion\ninputMask\nlabelAbove\nlabelstyeclass\nmaxchars °\numcols\nrnumEntiesPerColumn °\n‘onPick\n‘outputConversion\nregex [2] (2)-(0-9) (7)\"\n\nwn—enennE\nfalse\n\nPage Configuration| Text\n\nText Cell\n\nReflection) PostOnchange\n\ninputMask\nlabelstyleCiass\nmaxChars °\numCols\n\nnumEntries a\nnumEntriesPerColumn °\n‘onPick\n‘outputConversion\nprintWidth\n\nregex\n\nree\n\n{A-zZ] (2)- [0-9] (7)\"",
+      "word_count": 141,
+      "avg_confidence": 76.35,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Demonstration G\nPolicy number format\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.92,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i User Story — High-value policy Gi\n\n“We want TrainingApp to warn the users when they are saving a high-value\n(Premium greater than $5000) California policy.\n\nThe following warning message should be displayed when trying to save the policy:\nThis is a high-value California policy!\n\nThe second time, after warning the user, the save should be allowed.”\n\n— Insurance company business analysts",
+      "word_count": 62,
+      "avg_confidence": 93.48,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Business logic — validation expression Gi\n\n« Avvalidation expression is a logical Gosu expression associated with a single\natomic widget that implements field-level validation\n\n¢ If expression returns null, save is allowed\n\n¢ If expression returns string (an error message), then save is prevented, field is flagged, and\nmessage is displayed at top of screen\n\n¢ Configured as a widget property in the UI tier",
+      "word_count": 66,
+      "avg_confidence": 88.98,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Business logic — validation expression (continued) Gi\n\n¢ Input validated on update and invalid value stops commit\nInvalid field value shows red box warning\n* Mouse over the field to see the invalid value in field error message\n* Message bar localizable error displayed\n\n* requestValidationExpression property is similar\n\n« It validates the user input on update AND on every other server request (e.g.: when navigating\nto a different page)",
+      "word_count": 71,
+      "avg_confidence": 91.33,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Example: business logic — validationExpression Gi\nA\n\nBascontactbetsiscompanyov.pct * |\nCollateral Info: Toolbox structure\nCollateral Requred? [] Search POF elements (4\ncotateralamaunt [(enASContac as AbPokcyCompany).Coaterla Tab Bar\n\n== Hidden Link\n|Colateral verted? (eSContect as ASPoicyCompeny).Compe... v Toolbars\n\nF oober\n\n|| Pose Configuration |” Text |\n\nPropertes: [IF] Layout config | 5) Reflecton | ji) PostOnchange _\nfextest\nvalidationExpression\n\n(anaBContact as ABPolicyCompany) .CollateralAmount > 4999 ? DisplayKey.get(\"Training.CollateralAnountExceeded”) : null\n\nDetails\n\nErrors on current page:\n© Collateral Amount : Amount must be less than 5000\n\n[company into Phone saddresses | BankAccounts | Financial Summary\n\nCollateral info\nCollateral Required?\n\nCollateral Amount\n\nCollateral Verified? <none> +",
+      "word_count": 103,
+      "avg_confidence": 73.02,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Business logic — validation rules Gi\n\n¢ Validation rules are written as Gosu rules and contain logic to validate (complex)\nlogical conditions and/or relationships between entity fields\n\n¢ E.g.: primary phone number must be selected if the user has more than one phone numbers\n« Validation rules can be used to:\n\n* Ensure that the user enters data that makes sense\n\n« Ensure that the user enters all necessary data\n\n« Manage relationships between data fields",
+      "word_count": 77,
+      "avg_confidence": 89.61,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Business logic — validation rules\n\n« Business rules can show warnings or errors\n¢ Validation during saved\n\n* Checked when Validatable entity is committed to the database\n¢ Entity must implement the Validatable delegate\n\n* implementsEntity tag in the ETI/ETX file",
+      "word_count": 42,
+      "avg_confidence": 89.5,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i Delegates Gi\n\n« Adelegate models a capability and allows sharing functionality across the data\nmodel\n\n¢« Examples:\n« Any entity implementing the Validatable delegate can be validated by Gosu rules\n\n« Any entity implementing the Assignable delegate can be automatically assigned to a user and\nuser group by Gosu rules\n\n¢ Technically a delegate is a virtual object defined in the data model\n« It consists of database fields and/or methods that can be reused by multiple entities\n« Anentity can implement multiple delegates",
+      "word_count": 85,
+      "avg_confidence": 87.8,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Delegate examples Gi\n\n¢ Validatable delegate defines reusable functions to show warning or error\nmessages\n\n¢ Assignable delegate contains functions to perform the assignment and database\nfields to store the assignment details (AssignedUser, AssignedTime)",
+      "word_count": 35,
+      "avg_confidence": 87.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Validation graph\n\n¢ The rules engine performs validation during database commit\n¢ Validation is triggered when:\n¢ Validatable object is created or changed\n\n¢ Validatable sub-object is created, changed, or removed\n\n* \"triggersValidation\" attribute on the foreign key or array controls this behavior",
+      "word_count": 44,
+      "avg_confidence": 87.36,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Validation graph\n\n¢ The rules engine performs validation during database commit\n¢ Validation is triggered when:\n¢ Validatable object is created or changed\n\n¢ Validatable sub-object is created, changed, or removed\n\n* \"triggersValidation\" attribute on the foreign key or array controls this behavior",
+      "word_count": 44,
+      "avg_confidence": 87.36,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Business logic — practices comparison Gi\n\n¢ Validates a simple logical condition ¢ Validates complex logical\nfor a single field relationships between entity fields\n¢ Implemented in the UI and must be ¢ Entity must implement the\nconfigured per widget Validatable delegate in the data\nmodel\n\n¢ Application enforces compliance in\nthe UI and through the APIs",
+      "word_count": 58,
+      "avg_confidence": 88.55,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i Demonstration G\nHigh value policy\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.94,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question G\n\n_— — Assume that there is an Order entity that has an OrderNumber field. The\nPa field appears on two detail views: LegacyOrdersDV and NewOrdersDV.\n\nA) Name a situation where you would implement validation logic for the\nOrderNumber field at the data model level.\n\nB) Name a situation where you would implement validation logic for the\nOrderNumber field at the UI level.\n\nSe Sess e ese ssc esaeK",
+      "word_count": 70,
+      "avg_confidence": 86.81,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer Gi\n\n_— — Assume that there is an Order entity that has an OrderNumber field. The\nPa field appears on two detail views: LegacyOrdersDV and NewOrdersDV.\n¢\n\nA) Name a situation where you would implement validation logic for the\n\nOrderNumber field at the data model level.\n\nB) Name a situation where you would implement validation logic for the\nOrderNumber field at the UI level.\n\nA) Possible answer: The OrderNumber field has a pattern, such as two characters, a\nhyphen, and five characters, and this pattern must be followed everywhere the\nfield is used. Also, you want to localize the error message.\n\nB) Possible answer: On the detail view for orders imported from a legacy system, the\norder number could take any format. On the detail view for orders created in the\nGuidewire application, the order number must start with the characters \"GW-*.\n\nSS Se SSeS sess e eases",
+      "word_count": 149,
+      "avg_confidence": 88.6,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question\n\n_— — What happens if a widget's validation expression retums null?\n\n¢\n¢\n4\n\nSe Sess e ese ssc esaeK",
+      "word_count": 21,
+      "avg_confidence": 78.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer\n\na What happens if a widget's validation expression retums null?\n\n¢\n¢\n\nThe save is allowed—a return value of null signifies that the validation condition was\nmet.\n\nSS Se SSeS sess e eases",
+      "word_count": 34,
+      "avg_confidence": 82.46,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n_- — Incase of validation rules, if you have an existing reject statement which\n\nPa raises only a warning, how would you change it to instead raise an error?\n\n4\n\nSe Sess e ese ssc esaeK",
+      "word_count": 38,
+      "avg_confidence": 86.39,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer Gi\n\n_- — Incase of validation rules, if you have an existing reject statement which\nPa raises only a warning, how would you change it to instead raise an error?\n¢\n\nYou would swap the order of the final two pairs of arguments. The first pair should be\nthe last pair and vice versa.\n\nSS Se SSeS sess e eases",
+      "word_count": 61,
+      "avg_confidence": 86.45,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n,— — the first argument of rejectField is a “relative path” to the object to\nPa highlight. Why is it relevant to keep in mind that the path is relative?\n\nSe Sess e ese ssc esaeK",
+      "word_count": 37,
+      "avg_confidence": 86.51,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\n,— — the first argument of rejectField is a “relative path” to the object to\nPa highlight. Why is it relevant to keep in mind that the path is relative?\n\nItis important to keep this in mind because the root object must be omitted from the\npath. If you include the root object, then TrainingApp will not be able to find the field to\nhighlight.\n\nSS Se SSeS sess e eases",
+      "word_count": 72,
+      "avg_confidence": 87.88,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Distinguish between field-level validation\n\nconfiguration in the user interface and the\ndata model\n\nDescribe how an input mask differs from a\nregular expression\n\nCreate and use an entity field validator\nDescribe basic validation rule behavior\nCreate validation rules that raise warnings\nand errors",
+      "word_count": 47,
+      "avg_confidence": 94.98,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "i Student exercise\n\nValidation",
+      "word_count": 4,
+      "avg_confidence": 84.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

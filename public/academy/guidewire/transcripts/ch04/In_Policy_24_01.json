@@ -1,0 +1,3373 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_24_01.mp4",
+    "video_stem": "In_Policy_24_01",
+    "duration_seconds": 308.08,
+    "duration_formatted": "00:05:08.080",
+    "segment_count": 51,
+    "word_count": 469,
+    "avg_confidence": 0.923,
+    "transcription_time_seconds": 25.99,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:37:37.655488"
+  },
+  "full_text": "A policy hold is placed on a transaction in the event of a natural disaster, or for changes in business to prevent users from creating new policies, or changing existing policies. Log in as SuperUser. Policy holds are managed through the Administration page. Select Business Settings, Policy Holds. Create a new policy hold to prevent personal auto-submission during hurricane season. When Underwriting Holds. When Underwriting Hold is selected for the Hold Type, the UW-issue info fields will be available. The code must be unique. Enter a detailed description of the policy hold. The hold starts on June 1. It ends on September 30. It can be open-ended. You can always update the end date when you know the exact date. Select the predefined UW-issue type, UW Policy Hold. Enter the long description for the UW-issue. It must have at least one hold rule. A hold rule. A hold rule specifies the line of business, policy transaction, date type, and coverage that Policy Center uses to determine whether or not to hold a policy transaction. There is no region added, so it applies countrywide. Save the new policy hold. Log out. Log in as an underwriter Alice Applegate. Open the account for Ray Newton. Create a new submission. Select Personal Auto. Go to the policy info page. The submission's effective date is between the policy hold's effective date range. Add a driver. Create a vehicle. Quote the submission. A warning is displayed for an underwriting issue that blocks bind. On the risk analysis page, the underwriting issue raised due to the policy hold is listed. The user does not have the authority to approve it. Let's log out. Log back in as super user. Go to Administration. Users and Security. Authority Profiles. Open Underwriter 1. Edit the authority profile. Add a new authority. Search or enter the UW issue type for UW Policy Hold. Save the changes. You may have to click Update again. Log out. Log in as Alice Applegate again. Go to the previous submission. On the risk analysis page, the user can approve the underwriting issue now. Click OK. The user can issue the policy. The user can issue the policy. Log out. Log in as super user one more time. Policy holds can be exported and imported through the admin tab. To export, select Utilities, Export Data. Under Export Administrative Data, select Policy Holds. Click Export. An XML file containing the policy holds are created. To import, go to Utilities, Import Data. Locate the policy holds XML file. Click Finish to import the file. Since we did not change the policy holds, no new entries are imported. It is useful for transferring data from one environment to another. Filogy holds the Filogy holds the Filogy holds the Filogy holds the Filogy holds the Filogy Thank you.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 25.48,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:25.480",
+      "text": "A policy hold is placed on a transaction in the event of a natural disaster, or for changes in business to prevent users from creating new policies, or changing existing policies. Log in as SuperUser. Policy holds are managed through the Administration page. Select Business Settings, Policy Holds. Create a new policy hold to prevent personal auto-submission during hurricane season.",
+      "words": [
+        {
+          "word": "A",
+          "start": 0.0,
+          "end": 0.72,
+          "probability": 0.9736
+        },
+        {
+          "word": "policy",
+          "start": 0.72,
+          "end": 1.16,
+          "probability": 0.9482
+        },
+        {
+          "word": "hold",
+          "start": 1.16,
+          "end": 1.4,
+          "probability": 0.96
+        },
+        {
+          "word": "is",
+          "start": 1.4,
+          "end": 1.58,
+          "probability": 1.0
+        },
+        {
+          "word": "placed",
+          "start": 1.58,
+          "end": 1.88,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 1.88,
+          "end": 2.04,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 2.04,
+          "end": 2.12,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 2.12,
+          "end": 2.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 2.66,
+          "end": 2.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 2.9,
+          "end": 3.0,
+          "probability": 1.0
+        },
+        {
+          "word": "event",
+          "start": 3.0,
+          "end": 3.24,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 3.24,
+          "end": 3.38,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 3.38,
+          "end": 3.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "natural",
+          "start": 3.48,
+          "end": 3.8,
+          "probability": 1.0
+        },
+        {
+          "word": "disaster,",
+          "start": 3.8,
+          "end": 4.46,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 4.74,
+          "end": 5.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 5.0,
+          "end": 5.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes",
+          "start": 5.18,
+          "end": 5.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 5.58,
+          "end": 5.8,
+          "probability": 1.0
+        },
+        {
+          "word": "business",
+          "start": 5.8,
+          "end": 6.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 6.12,
+          "end": 6.32,
+          "probability": 1.0
+        },
+        {
+          "word": "prevent",
+          "start": 6.32,
+          "end": 6.6,
+          "probability": 1.0
+        },
+        {
+          "word": "users",
+          "start": 6.6,
+          "end": 6.94,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 6.94,
+          "end": 7.2,
+          "probability": 1.0
+        },
+        {
+          "word": "creating",
+          "start": 7.2,
+          "end": 7.58,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 7.58,
+          "end": 7.86,
+          "probability": 1.0
+        },
+        {
+          "word": "policies,",
+          "start": 7.86,
+          "end": 8.38,
+          "probability": 1.0
+        },
+        {
+          "word": "or",
+          "start": 8.68,
+          "end": 8.88,
+          "probability": 1.0
+        },
+        {
+          "word": "changing",
+          "start": 8.88,
+          "end": 9.24,
+          "probability": 1.0
+        },
+        {
+          "word": "existing",
+          "start": 9.24,
+          "end": 9.74,
+          "probability": 1.0
+        },
+        {
+          "word": "policies.",
+          "start": 9.74,
+          "end": 10.48,
+          "probability": 1.0
+        },
+        {
+          "word": "Log",
+          "start": 10.76,
+          "end": 11.24,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 11.24,
+          "end": 11.42,
+          "probability": 0.9722
+        },
+        {
+          "word": "as",
+          "start": 11.42,
+          "end": 11.58,
+          "probability": 0.999
+        },
+        {
+          "word": "SuperUser.",
+          "start": 11.58,
+          "end": 12.3,
+          "probability": 0.6514
+        },
+        {
+          "word": "Policy",
+          "start": 12.84,
+          "end": 13.48,
+          "probability": 0.999
+        },
+        {
+          "word": "holds",
+          "start": 13.48,
+          "end": 13.76,
+          "probability": 0.9487
+        },
+        {
+          "word": "are",
+          "start": 13.76,
+          "end": 13.96,
+          "probability": 1.0
+        },
+        {
+          "word": "managed",
+          "start": 13.96,
+          "end": 14.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "through",
+          "start": 14.3,
+          "end": 14.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 14.5,
+          "end": 14.64,
+          "probability": 1.0
+        },
+        {
+          "word": "Administration",
+          "start": 14.64,
+          "end": 15.14,
+          "probability": 0.7773
+        },
+        {
+          "word": "page.",
+          "start": 15.14,
+          "end": 15.84,
+          "probability": 0.9878
+        },
+        {
+          "word": "Select",
+          "start": 16.82,
+          "end": 17.46,
+          "probability": 0.998
+        },
+        {
+          "word": "Business",
+          "start": 17.46,
+          "end": 17.84,
+          "probability": 0.9829
+        },
+        {
+          "word": "Settings,",
+          "start": 17.84,
+          "end": 18.36,
+          "probability": 0.9746
+        },
+        {
+          "word": "Policy",
+          "start": 18.68,
+          "end": 19.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "Holds.",
+          "start": 19.18,
+          "end": 19.84,
+          "probability": 0.8789
+        },
+        {
+          "word": "Create",
+          "start": 20.78,
+          "end": 21.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 21.42,
+          "end": 21.58,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 21.58,
+          "end": 21.7,
+          "probability": 0.9844
+        },
+        {
+          "word": "policy",
+          "start": 21.7,
+          "end": 22.16,
+          "probability": 0.998
+        },
+        {
+          "word": "hold",
+          "start": 22.16,
+          "end": 22.46,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 22.46,
+          "end": 22.64,
+          "probability": 1.0
+        },
+        {
+          "word": "prevent",
+          "start": 22.64,
+          "end": 22.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "personal",
+          "start": 22.94,
+          "end": 23.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "auto",
+          "start": 23.42,
+          "end": 23.78,
+          "probability": 0.998
+        },
+        {
+          "word": "-submission",
+          "start": 23.78,
+          "end": 24.26,
+          "probability": 0.98
+        },
+        {
+          "word": "during",
+          "start": 24.26,
+          "end": 24.54,
+          "probability": 1.0
+        },
+        {
+          "word": "hurricane",
+          "start": 24.54,
+          "end": 24.96,
+          "probability": 0.8564
+        },
+        {
+          "word": "season.",
+          "start": 24.96,
+          "end": 25.48,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.22,
+      "end": 37.14,
+      "start_formatted": "00:00:29.220",
+      "end_formatted": "00:00:37.140",
+      "text": "When Underwriting Holds. When Underwriting Hold is selected for the Hold Type, the UW-issue info fields will be available. The code must be unique.",
+      "words": [
+        {
+          "word": "When",
+          "start": 29.22,
+          "end": 29.96,
+          "probability": 0.9565
+        },
+        {
+          "word": "Underwriting",
+          "start": 29.96,
+          "end": 30.48,
+          "probability": 0.7266
+        },
+        {
+          "word": "Holds.",
+          "start": 30.48,
+          "end": 30.88,
+          "probability": 0.3723
+        },
+        {
+          "word": "When",
+          "start": 30.92,
+          "end": 30.92,
+          "probability": 0.0734
+        },
+        {
+          "word": "Underwriting",
+          "start": 30.92,
+          "end": 30.92,
+          "probability": 0.875
+        },
+        {
+          "word": "Hold",
+          "start": 30.92,
+          "end": 30.92,
+          "probability": 0.937
+        },
+        {
+          "word": "is",
+          "start": 30.92,
+          "end": 30.92,
+          "probability": 0.7812
+        },
+        {
+          "word": "selected",
+          "start": 30.92,
+          "end": 31.28,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 31.28,
+          "end": 31.52,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 31.52,
+          "end": 31.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "Hold",
+          "start": 31.66,
+          "end": 31.88,
+          "probability": 0.3564
+        },
+        {
+          "word": "Type,",
+          "start": 31.88,
+          "end": 32.16,
+          "probability": 0.4814
+        },
+        {
+          "word": "the",
+          "start": 32.42,
+          "end": 32.66,
+          "probability": 0.9907
+        },
+        {
+          "word": "UW",
+          "start": 32.66,
+          "end": 33.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "-issue",
+          "start": 33.04,
+          "end": 33.58,
+          "probability": 0.626
+        },
+        {
+          "word": "info",
+          "start": 33.58,
+          "end": 33.8,
+          "probability": 0.7119
+        },
+        {
+          "word": "fields",
+          "start": 33.8,
+          "end": 34.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "will",
+          "start": 34.3,
+          "end": 34.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 34.5,
+          "end": 34.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "available.",
+          "start": 34.66,
+          "end": 35.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 35.6,
+          "end": 36.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "code",
+          "start": 36.04,
+          "end": 36.28,
+          "probability": 0.8096
+        },
+        {
+          "word": "must",
+          "start": 36.28,
+          "end": 36.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 36.52,
+          "end": 36.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "unique.",
+          "start": 36.68,
+          "end": 37.14,
+          "probability": 0.9468
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 43.64,
+      "end": 46.58,
+      "start_formatted": "00:00:43.640",
+      "end_formatted": "00:00:46.580",
+      "text": "Enter a detailed description of the policy hold.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 43.64,
+          "end": 44.38,
+          "probability": 0.9844
+        },
+        {
+          "word": "a",
+          "start": 44.38,
+          "end": 44.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "detailed",
+          "start": 44.56,
+          "end": 44.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "description",
+          "start": 44.94,
+          "end": 45.38,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 45.38,
+          "end": 45.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 45.66,
+          "end": 45.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 45.76,
+          "end": 46.18,
+          "probability": 0.791
+        },
+        {
+          "word": "hold.",
+          "start": 46.18,
+          "end": 46.58,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 52.8,
+      "end": 54.74,
+      "start_formatted": "00:00:52.800",
+      "end_formatted": "00:00:54.740",
+      "text": "The hold starts on June 1.",
+      "words": [
+        {
+          "word": "The",
+          "start": 52.8,
+          "end": 53.48,
+          "probability": 0.9341
+        },
+        {
+          "word": "hold",
+          "start": 53.48,
+          "end": 53.7,
+          "probability": 0.9404
+        },
+        {
+          "word": "starts",
+          "start": 53.7,
+          "end": 54.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 54.06,
+          "end": 54.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "June",
+          "start": 54.28,
+          "end": 54.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "1.",
+          "start": 54.48,
+          "end": 54.74,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 58.74,
+      "end": 74.28,
+      "start_formatted": "00:00:58.740",
+      "end_formatted": "00:01:14.280",
+      "text": "It ends on September 30. It can be open-ended. You can always update the end date when you know the exact date. Select the predefined UW-issue type, UW Policy Hold. Enter the long description for the UW-issue.",
+      "words": [
+        {
+          "word": "It",
+          "start": 58.74,
+          "end": 59.42,
+          "probability": 0.9902
+        },
+        {
+          "word": "ends",
+          "start": 59.42,
+          "end": 59.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 59.68,
+          "end": 59.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "September",
+          "start": 59.86,
+          "end": 60.32,
+          "probability": 0.9878
+        },
+        {
+          "word": "30.",
+          "start": 60.32,
+          "end": 61.0,
+          "probability": 0.958
+        },
+        {
+          "word": "It",
+          "start": 61.54,
+          "end": 61.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "can",
+          "start": 61.9,
+          "end": 62.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 62.04,
+          "end": 62.2,
+          "probability": 0.999
+        },
+        {
+          "word": "open",
+          "start": 62.2,
+          "end": 62.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "-ended.",
+          "start": 62.5,
+          "end": 62.84,
+          "probability": 0.9443
+        },
+        {
+          "word": "You",
+          "start": 63.14,
+          "end": 63.48,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 63.48,
+          "end": 63.64,
+          "probability": 1.0
+        },
+        {
+          "word": "always",
+          "start": 63.64,
+          "end": 64.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "update",
+          "start": 64.02,
+          "end": 64.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 64.4,
+          "end": 64.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "end",
+          "start": 64.62,
+          "end": 64.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "date",
+          "start": 64.82,
+          "end": 65.0,
+          "probability": 0.9829
+        },
+        {
+          "word": "when",
+          "start": 65.0,
+          "end": 65.16,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 65.16,
+          "end": 65.3,
+          "probability": 1.0
+        },
+        {
+          "word": "know",
+          "start": 65.3,
+          "end": 65.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 65.46,
+          "end": 65.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "exact",
+          "start": 65.62,
+          "end": 65.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "date.",
+          "start": 65.96,
+          "end": 66.34,
+          "probability": 1.0
+        },
+        {
+          "word": "Select",
+          "start": 66.72,
+          "end": 67.34,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 67.34,
+          "end": 67.54,
+          "probability": 1.0
+        },
+        {
+          "word": "predefined",
+          "start": 67.54,
+          "end": 68.1,
+          "probability": 0.9219
+        },
+        {
+          "word": "UW",
+          "start": 68.1,
+          "end": 68.56,
+          "probability": 0.9785
+        },
+        {
+          "word": "-issue",
+          "start": 68.56,
+          "end": 69.0,
+          "probability": 0.7168
+        },
+        {
+          "word": "type,",
+          "start": 69.0,
+          "end": 69.36,
+          "probability": 0.9893
+        },
+        {
+          "word": "UW",
+          "start": 69.58,
+          "end": 69.84,
+          "probability": 0.9917
+        },
+        {
+          "word": "Policy",
+          "start": 69.84,
+          "end": 70.6,
+          "probability": 0.49
+        },
+        {
+          "word": "Hold.",
+          "start": 70.6,
+          "end": 71.0,
+          "probability": 0.8335
+        },
+        {
+          "word": "Enter",
+          "start": 71.38,
+          "end": 71.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 71.96,
+          "end": 72.14,
+          "probability": 1.0
+        },
+        {
+          "word": "long",
+          "start": 72.14,
+          "end": 72.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "description",
+          "start": 72.36,
+          "end": 72.86,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 72.86,
+          "end": 73.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 73.16,
+          "end": 73.3,
+          "probability": 1.0
+        },
+        {
+          "word": "UW",
+          "start": 73.3,
+          "end": 73.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "-issue.",
+          "start": 73.74,
+          "end": 74.28,
+          "probability": 0.8906
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 85.94,
+      "end": 88.02,
+      "start_formatted": "00:01:25.940",
+      "end_formatted": "00:01:28.020",
+      "text": "It must have at least one hold rule.",
+      "words": [
+        {
+          "word": "It",
+          "start": 85.94,
+          "end": 86.42,
+          "probability": 0.978
+        },
+        {
+          "word": "must",
+          "start": 86.42,
+          "end": 86.64,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 86.64,
+          "end": 86.88,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 86.88,
+          "end": 87.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "least",
+          "start": 87.04,
+          "end": 87.22,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 87.22,
+          "end": 87.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "hold",
+          "start": 87.48,
+          "end": 87.72,
+          "probability": 0.9106
+        },
+        {
+          "word": "rule.",
+          "start": 87.72,
+          "end": 88.02,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 89.92,
+      "end": 90.8,
+      "start_formatted": "00:01:29.920",
+      "end_formatted": "00:01:30.800",
+      "text": "A hold rule.",
+      "words": [
+        {
+          "word": "A",
+          "start": 89.92,
+          "end": 90.46,
+          "probability": 0.9233
+        },
+        {
+          "word": "hold",
+          "start": 90.46,
+          "end": 90.66,
+          "probability": 0.7466
+        },
+        {
+          "word": "rule.",
+          "start": 90.66,
+          "end": 90.8,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 90.8,
+      "end": 99.96,
+      "start_formatted": "00:01:30.800",
+      "end_formatted": "00:01:39.960",
+      "text": "A hold rule specifies the line of business, policy transaction, date type, and coverage that Policy Center uses to determine whether or not to hold a policy transaction.",
+      "words": [
+        {
+          "word": "A",
+          "start": 90.8,
+          "end": 90.8,
+          "probability": 0.5815
+        },
+        {
+          "word": "hold",
+          "start": 90.8,
+          "end": 90.8,
+          "probability": 0.9263
+        },
+        {
+          "word": "rule",
+          "start": 90.8,
+          "end": 90.86,
+          "probability": 0.9819
+        },
+        {
+          "word": "specifies",
+          "start": 90.86,
+          "end": 91.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 91.54,
+          "end": 91.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "line",
+          "start": 91.72,
+          "end": 91.9,
+          "probability": 0.9761
+        },
+        {
+          "word": "of",
+          "start": 91.9,
+          "end": 92.02,
+          "probability": 0.8994
+        },
+        {
+          "word": "business,",
+          "start": 92.02,
+          "end": 92.46,
+          "probability": 0.9902
+        },
+        {
+          "word": "policy",
+          "start": 92.68,
+          "end": 93.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "transaction,",
+          "start": 93.22,
+          "end": 93.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "date",
+          "start": 94.32,
+          "end": 94.54,
+          "probability": 0.9824
+        },
+        {
+          "word": "type,",
+          "start": 94.54,
+          "end": 94.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 95.1,
+          "end": 95.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "coverage",
+          "start": 95.32,
+          "end": 95.74,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 95.74,
+          "end": 95.98,
+          "probability": 0.9922
+        },
+        {
+          "word": "Policy",
+          "start": 95.98,
+          "end": 96.42,
+          "probability": 0.6509
+        },
+        {
+          "word": "Center",
+          "start": 96.42,
+          "end": 96.76,
+          "probability": 0.8848
+        },
+        {
+          "word": "uses",
+          "start": 96.76,
+          "end": 97.1,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 97.1,
+          "end": 97.34,
+          "probability": 0.9937
+        },
+        {
+          "word": "determine",
+          "start": 97.34,
+          "end": 97.76,
+          "probability": 0.999
+        },
+        {
+          "word": "whether",
+          "start": 97.76,
+          "end": 98.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "or",
+          "start": 98.06,
+          "end": 98.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "not",
+          "start": 98.24,
+          "end": 98.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 98.42,
+          "end": 98.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "hold",
+          "start": 98.54,
+          "end": 98.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 98.7,
+          "end": 98.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy",
+          "start": 98.82,
+          "end": 99.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "transaction.",
+          "start": 99.26,
+          "end": 99.96,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 100.54,
+      "end": 105.88,
+      "start_formatted": "00:01:40.540",
+      "end_formatted": "00:01:45.880",
+      "text": "There is no region added, so it applies countrywide. Save the new policy hold.",
+      "words": [
+        {
+          "word": "There",
+          "start": 100.54,
+          "end": 101.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 101.08,
+          "end": 101.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "no",
+          "start": 101.26,
+          "end": 101.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "region",
+          "start": 101.44,
+          "end": 101.8,
+          "probability": 0.9741
+        },
+        {
+          "word": "added,",
+          "start": 101.8,
+          "end": 102.14,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 102.38,
+          "end": 102.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 102.62,
+          "end": 102.76,
+          "probability": 0.998
+        },
+        {
+          "word": "applies",
+          "start": 102.76,
+          "end": 103.12,
+          "probability": 0.999
+        },
+        {
+          "word": "countrywide.",
+          "start": 103.12,
+          "end": 103.92,
+          "probability": 0.8311
+        },
+        {
+          "word": "Save",
+          "start": 104.16,
+          "end": 104.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 104.68,
+          "end": 104.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "new",
+          "start": 104.84,
+          "end": 105.0,
+          "probability": 0.9668
+        },
+        {
+          "word": "policy",
+          "start": 105.0,
+          "end": 105.48,
+          "probability": 0.9736
+        },
+        {
+          "word": "hold.",
+          "start": 105.48,
+          "end": 105.88,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 109.66,
+      "end": 110.9,
+      "start_formatted": "00:01:49.660",
+      "end_formatted": "00:01:50.900",
+      "text": "Log out.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 109.66,
+          "end": 110.58,
+          "probability": 0.9746
+        },
+        {
+          "word": "out.",
+          "start": 110.58,
+          "end": 110.9,
+          "probability": 0.6953
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 113.76,
+      "end": 116.84,
+      "start_formatted": "00:01:53.760",
+      "end_formatted": "00:01:56.840",
+      "text": "Log in as an underwriter Alice Applegate.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 113.76,
+          "end": 114.68,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 114.68,
+          "end": 114.88,
+          "probability": 0.9863
+        },
+        {
+          "word": "as",
+          "start": 114.88,
+          "end": 115.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "an",
+          "start": 115.02,
+          "end": 115.16,
+          "probability": 0.9683
+        },
+        {
+          "word": "underwriter",
+          "start": 115.16,
+          "end": 115.7,
+          "probability": 0.9458
+        },
+        {
+          "word": "Alice",
+          "start": 115.7,
+          "end": 116.12,
+          "probability": 0.9849
+        },
+        {
+          "word": "Applegate.",
+          "start": 116.12,
+          "end": 116.84,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 117.74,
+      "end": 119.76,
+      "start_formatted": "00:01:57.740",
+      "end_formatted": "00:01:59.760",
+      "text": "Open the account for Ray Newton.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 117.74,
+          "end": 118.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 118.66,
+          "end": 118.78,
+          "probability": 1.0
+        },
+        {
+          "word": "account",
+          "start": 118.78,
+          "end": 119.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 119.08,
+          "end": 119.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ray",
+          "start": 119.3,
+          "end": 119.5,
+          "probability": 0.9839
+        },
+        {
+          "word": "Newton.",
+          "start": 119.5,
+          "end": 119.76,
+          "probability": 0.9468
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 121.86,
+      "end": 123.54,
+      "start_formatted": "00:02:01.860",
+      "end_formatted": "00:02:03.540",
+      "text": "Create a new submission.",
+      "words": [
+        {
+          "word": "Create",
+          "start": 121.86,
+          "end": 122.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 122.78,
+          "end": 122.94,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 122.94,
+          "end": 123.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "submission.",
+          "start": 123.06,
+          "end": 123.54,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 125.96,
+      "end": 127.7,
+      "start_formatted": "00:02:05.960",
+      "end_formatted": "00:02:07.700",
+      "text": "Select Personal Auto.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 125.96,
+          "end": 126.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "Personal",
+          "start": 126.88,
+          "end": 127.34,
+          "probability": 0.8447
+        },
+        {
+          "word": "Auto.",
+          "start": 127.34,
+          "end": 127.7,
+          "probability": 0.9746
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 129.96,
+      "end": 132.3,
+      "start_formatted": "00:02:09.960",
+      "end_formatted": "00:02:12.300",
+      "text": "Go to the policy info page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 129.96,
+          "end": 130.76,
+          "probability": 0.9194
+        },
+        {
+          "word": "to",
+          "start": 130.76,
+          "end": 130.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 130.92,
+          "end": 131.04,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 131.04,
+          "end": 131.44,
+          "probability": 0.4104
+        },
+        {
+          "word": "info",
+          "start": 131.44,
+          "end": 131.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "page.",
+          "start": 131.82,
+          "end": 132.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 133.94,
+      "end": 139.92,
+      "start_formatted": "00:02:13.940",
+      "end_formatted": "00:02:19.920",
+      "text": "The submission's effective date is between the policy hold's effective date range. Add a driver.",
+      "words": [
+        {
+          "word": "The",
+          "start": 133.94,
+          "end": 134.74,
+          "probability": 0.98
+        },
+        {
+          "word": "submission's",
+          "start": 134.74,
+          "end": 135.36,
+          "probability": 0.9883
+        },
+        {
+          "word": "effective",
+          "start": 135.36,
+          "end": 135.64,
+          "probability": 0.9897
+        },
+        {
+          "word": "date",
+          "start": 135.64,
+          "end": 135.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 135.96,
+          "end": 136.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "between",
+          "start": 136.14,
+          "end": 136.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 136.42,
+          "end": 136.58,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 136.58,
+          "end": 136.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "hold's",
+          "start": 136.98,
+          "end": 137.46,
+          "probability": 0.7578
+        },
+        {
+          "word": "effective",
+          "start": 137.46,
+          "end": 137.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "date",
+          "start": 137.8,
+          "end": 138.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "range.",
+          "start": 138.04,
+          "end": 138.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "Add",
+          "start": 138.94,
+          "end": 139.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 139.42,
+          "end": 139.56,
+          "probability": 0.9766
+        },
+        {
+          "word": "driver.",
+          "start": 139.56,
+          "end": 139.92,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 142.86,
+      "end": 145.6,
+      "start_formatted": "00:02:22.860",
+      "end_formatted": "00:02:25.600",
+      "text": "Create a vehicle. Quote the submission.",
+      "words": [
+        {
+          "word": "Create",
+          "start": 142.86,
+          "end": 143.66,
+          "probability": 0.8125
+        },
+        {
+          "word": "a",
+          "start": 143.66,
+          "end": 143.78,
+          "probability": 0.999
+        },
+        {
+          "word": "vehicle.",
+          "start": 143.78,
+          "end": 144.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "Quote",
+          "start": 144.84,
+          "end": 145.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 145.02,
+          "end": 145.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "submission.",
+          "start": 145.16,
+          "end": 145.6,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 146.88,
+      "end": 150.58,
+      "start_formatted": "00:02:26.880",
+      "end_formatted": "00:02:30.580",
+      "text": "A warning is displayed for an underwriting issue that blocks bind.",
+      "words": [
+        {
+          "word": "A",
+          "start": 146.88,
+          "end": 147.5,
+          "probability": 0.9609
+        },
+        {
+          "word": "warning",
+          "start": 147.5,
+          "end": 147.76,
+          "probability": 0.9722
+        },
+        {
+          "word": "is",
+          "start": 147.76,
+          "end": 147.96,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed",
+          "start": 147.96,
+          "end": 148.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 148.36,
+          "end": 148.58,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 148.58,
+          "end": 148.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "underwriting",
+          "start": 148.74,
+          "end": 149.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "issue",
+          "start": 149.24,
+          "end": 149.58,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 149.58,
+          "end": 149.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "blocks",
+          "start": 149.76,
+          "end": 150.18,
+          "probability": 0.9932
+        },
+        {
+          "word": "bind.",
+          "start": 150.18,
+          "end": 150.58,
+          "probability": 0.8936
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 150.94,
+      "end": 156.24,
+      "start_formatted": "00:02:30.940",
+      "end_formatted": "00:02:36.240",
+      "text": "On the risk analysis page, the underwriting issue raised due to the policy hold is listed.",
+      "words": [
+        {
+          "word": "On",
+          "start": 150.94,
+          "end": 151.52,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 151.52,
+          "end": 151.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "risk",
+          "start": 151.62,
+          "end": 151.86,
+          "probability": 0.5684
+        },
+        {
+          "word": "analysis",
+          "start": 151.86,
+          "end": 152.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "page,",
+          "start": 152.32,
+          "end": 152.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.04,
+          "end": 153.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "underwriting",
+          "start": 153.24,
+          "end": 153.82,
+          "probability": 0.999
+        },
+        {
+          "word": "issue",
+          "start": 153.82,
+          "end": 154.18,
+          "probability": 0.998
+        },
+        {
+          "word": "raised",
+          "start": 154.18,
+          "end": 154.46,
+          "probability": 0.9907
+        },
+        {
+          "word": "due",
+          "start": 154.46,
+          "end": 154.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 154.62,
+          "end": 154.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 154.76,
+          "end": 154.9,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 154.9,
+          "end": 155.32,
+          "probability": 0.9912
+        },
+        {
+          "word": "hold",
+          "start": 155.32,
+          "end": 155.66,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 155.66,
+          "end": 155.86,
+          "probability": 0.999
+        },
+        {
+          "word": "listed.",
+          "start": 155.86,
+          "end": 156.24,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 156.58,
+      "end": 159.18,
+      "start_formatted": "00:02:36.580",
+      "end_formatted": "00:02:39.180",
+      "text": "The user does not have the authority to approve it.",
+      "words": [
+        {
+          "word": "The",
+          "start": 156.58,
+          "end": 156.92,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 156.92,
+          "end": 157.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "does",
+          "start": 157.2,
+          "end": 157.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 157.46,
+          "end": 157.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 157.66,
+          "end": 157.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 157.84,
+          "end": 157.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "authority",
+          "start": 157.96,
+          "end": 158.38,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 158.38,
+          "end": 158.64,
+          "probability": 1.0
+        },
+        {
+          "word": "approve",
+          "start": 158.64,
+          "end": 158.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "it.",
+          "start": 158.96,
+          "end": 159.18,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 159.6,
+      "end": 160.68,
+      "start_formatted": "00:02:39.600",
+      "end_formatted": "00:02:40.680",
+      "text": "Let's log out.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 159.6,
+          "end": 160.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "log",
+          "start": 160.12,
+          "end": 160.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "out.",
+          "start": 160.36,
+          "end": 160.68,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 163.54,
+      "end": 165.38,
+      "start_formatted": "00:02:43.540",
+      "end_formatted": "00:02:45.380",
+      "text": "Log back in as super user.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 163.54,
+          "end": 164.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "back",
+          "start": 164.16,
+          "end": 164.44,
+          "probability": 0.9863
+        },
+        {
+          "word": "in",
+          "start": 164.44,
+          "end": 164.62,
+          "probability": 0.9443
+        },
+        {
+          "word": "as",
+          "start": 164.62,
+          "end": 164.74,
+          "probability": 0.5737
+        },
+        {
+          "word": "super",
+          "start": 164.74,
+          "end": 165.04,
+          "probability": 0.728
+        },
+        {
+          "word": "user.",
+          "start": 165.04,
+          "end": 165.38,
+          "probability": 0.6001
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 167.24,
+      "end": 168.98,
+      "start_formatted": "00:02:47.240",
+      "end_formatted": "00:02:48.980",
+      "text": "Go to Administration.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 167.24,
+          "end": 168.12,
+          "probability": 0.9312
+        },
+        {
+          "word": "to",
+          "start": 168.12,
+          "end": 168.32,
+          "probability": 0.999
+        },
+        {
+          "word": "Administration.",
+          "start": 168.32,
+          "end": 168.98,
+          "probability": 0.8813
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 171.66,
+      "end": 174.9,
+      "start_formatted": "00:02:51.660",
+      "end_formatted": "00:02:54.900",
+      "text": "Users and Security. Authority Profiles.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 171.66,
+          "end": 172.54,
+          "probability": 0.9785
+        },
+        {
+          "word": "and",
+          "start": 172.54,
+          "end": 172.84,
+          "probability": 0.6821
+        },
+        {
+          "word": "Security.",
+          "start": 172.84,
+          "end": 173.34,
+          "probability": 0.7246
+        },
+        {
+          "word": "Authority",
+          "start": 173.6,
+          "end": 174.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "Profiles.",
+          "start": 174.08,
+          "end": 174.9,
+          "probability": 0.7832
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 175.64,
+      "end": 177.36,
+      "start_formatted": "00:02:55.640",
+      "end_formatted": "00:02:57.360",
+      "text": "Open Underwriter 1.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 175.64,
+          "end": 176.52,
+          "probability": 0.999
+        },
+        {
+          "word": "Underwriter",
+          "start": 176.52,
+          "end": 177.02,
+          "probability": 0.8916
+        },
+        {
+          "word": "1.",
+          "start": 177.02,
+          "end": 177.36,
+          "probability": 0.6841
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 179.66,
+      "end": 181.74,
+      "start_formatted": "00:02:59.660",
+      "end_formatted": "00:03:01.740",
+      "text": "Edit the authority profile.",
+      "words": [
+        {
+          "word": "Edit",
+          "start": 179.66,
+          "end": 180.54,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 180.54,
+          "end": 180.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "authority",
+          "start": 180.68,
+          "end": 181.08,
+          "probability": 0.313
+        },
+        {
+          "word": "profile.",
+          "start": 181.08,
+          "end": 181.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 183.62,
+      "end": 185.12,
+      "start_formatted": "00:03:03.620",
+      "end_formatted": "00:03:05.120",
+      "text": "Add a new authority.",
+      "words": [
+        {
+          "word": "Add",
+          "start": 183.62,
+          "end": 184.5,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 184.5,
+          "end": 184.6,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 184.6,
+          "end": 184.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "authority.",
+          "start": 184.7,
+          "end": 185.12,
+          "probability": 0.979
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 187.86,
+      "end": 191.98,
+      "start_formatted": "00:03:07.860",
+      "end_formatted": "00:03:11.980",
+      "text": "Search or enter the UW issue type for UW Policy Hold.",
+      "words": [
+        {
+          "word": "Search",
+          "start": 187.86,
+          "end": 188.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "or",
+          "start": 188.74,
+          "end": 188.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "enter",
+          "start": 188.94,
+          "end": 189.14,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 189.14,
+          "end": 189.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "UW",
+          "start": 189.32,
+          "end": 189.7,
+          "probability": 0.9883
+        },
+        {
+          "word": "issue",
+          "start": 189.7,
+          "end": 190.18,
+          "probability": 0.4294
+        },
+        {
+          "word": "type",
+          "start": 190.18,
+          "end": 190.46,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 190.46,
+          "end": 190.62,
+          "probability": 0.9194
+        },
+        {
+          "word": "UW",
+          "start": 190.62,
+          "end": 190.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "Policy",
+          "start": 190.98,
+          "end": 191.6,
+          "probability": 0.6729
+        },
+        {
+          "word": "Hold.",
+          "start": 191.6,
+          "end": 191.98,
+          "probability": 0.873
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 198.74,
+      "end": 200.08,
+      "start_formatted": "00:03:18.740",
+      "end_formatted": "00:03:20.080",
+      "text": "Save the changes.",
+      "words": [
+        {
+          "word": "Save",
+          "start": 198.74,
+          "end": 199.52,
+          "probability": 0.9082
+        },
+        {
+          "word": "the",
+          "start": 199.52,
+          "end": 199.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "changes.",
+          "start": 199.66,
+          "end": 200.08,
+          "probability": 0.9727
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 202.64,
+      "end": 204.92,
+      "start_formatted": "00:03:22.640",
+      "end_formatted": "00:03:24.920",
+      "text": "You may have to click Update again.",
+      "words": [
+        {
+          "word": "You",
+          "start": 202.64,
+          "end": 203.42,
+          "probability": 0.9912
+        },
+        {
+          "word": "may",
+          "start": 203.42,
+          "end": 203.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 203.56,
+          "end": 203.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 203.76,
+          "end": 203.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "click",
+          "start": 203.88,
+          "end": 204.12,
+          "probability": 0.9844
+        },
+        {
+          "word": "Update",
+          "start": 204.12,
+          "end": 204.44,
+          "probability": 0.3879
+        },
+        {
+          "word": "again.",
+          "start": 204.44,
+          "end": 204.92,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 210.18,
+      "end": 211.26,
+      "start_formatted": "00:03:30.180",
+      "end_formatted": "00:03:31.260",
+      "text": "Log out.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 210.18,
+          "end": 210.96,
+          "probability": 0.9873
+        },
+        {
+          "word": "out.",
+          "start": 210.96,
+          "end": 211.26,
+          "probability": 0.7822
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 214.32,
+      "end": 216.68,
+      "start_formatted": "00:03:34.320",
+      "end_formatted": "00:03:36.680",
+      "text": "Log in as Alice Applegate again.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 214.32,
+          "end": 215.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "in",
+          "start": 215.1,
+          "end": 215.28,
+          "probability": 0.8857
+        },
+        {
+          "word": "as",
+          "start": 215.28,
+          "end": 215.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "Alice",
+          "start": 215.44,
+          "end": 215.74,
+          "probability": 0.981
+        },
+        {
+          "word": "Applegate",
+          "start": 215.74,
+          "end": 216.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "again.",
+          "start": 216.36,
+          "end": 216.68,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 218.24,
+      "end": 220.18,
+      "start_formatted": "00:03:38.240",
+      "end_formatted": "00:03:40.180",
+      "text": "Go to the previous submission.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 218.24,
+          "end": 219.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 219.02,
+          "end": 219.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 219.18,
+          "end": 219.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "previous",
+          "start": 219.28,
+          "end": 219.64,
+          "probability": 0.8994
+        },
+        {
+          "word": "submission.",
+          "start": 219.64,
+          "end": 220.18,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 226.02,
+      "end": 230.46,
+      "start_formatted": "00:03:46.020",
+      "end_formatted": "00:03:50.460",
+      "text": "On the risk analysis page, the user can approve the underwriting issue now.",
+      "words": [
+        {
+          "word": "On",
+          "start": 226.02,
+          "end": 226.6,
+          "probability": 0.896
+        },
+        {
+          "word": "the",
+          "start": 226.6,
+          "end": 226.7,
+          "probability": 0.999
+        },
+        {
+          "word": "risk",
+          "start": 226.7,
+          "end": 226.92,
+          "probability": 0.4243
+        },
+        {
+          "word": "analysis",
+          "start": 226.92,
+          "end": 227.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "page,",
+          "start": 227.38,
+          "end": 227.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 228.14,
+          "end": 228.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "user",
+          "start": 228.34,
+          "end": 228.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 228.62,
+          "end": 228.84,
+          "probability": 0.999
+        },
+        {
+          "word": "approve",
+          "start": 228.84,
+          "end": 229.1,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 229.1,
+          "end": 229.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "underwriting",
+          "start": 229.28,
+          "end": 229.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "issue",
+          "start": 229.78,
+          "end": 230.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "now.",
+          "start": 230.16,
+          "end": 230.46,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 230.94,
+      "end": 231.82,
+      "start_formatted": "00:03:50.940",
+      "end_formatted": "00:03:51.820",
+      "text": "Click OK.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 230.94,
+          "end": 231.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "OK.",
+          "start": 231.52,
+          "end": 231.82,
+          "probability": 0.8154
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 238.78,
+      "end": 240.76,
+      "start_formatted": "00:03:58.780",
+      "end_formatted": "00:04:00.760",
+      "text": "The user can issue the policy.",
+      "words": [
+        {
+          "word": "The",
+          "start": 238.78,
+          "end": 239.36,
+          "probability": 0.9883
+        },
+        {
+          "word": "user",
+          "start": 239.36,
+          "end": 239.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "can",
+          "start": 239.64,
+          "end": 239.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "issue",
+          "start": 239.9,
+          "end": 240.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 240.12,
+          "end": 240.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy.",
+          "start": 240.26,
+          "end": 240.76,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 241.18,
+      "end": 241.26,
+      "start_formatted": "00:04:01.180",
+      "end_formatted": "00:04:01.260",
+      "text": "The user can issue the policy.",
+      "words": [
+        {
+          "word": "The",
+          "start": 241.18,
+          "end": 241.26,
+          "probability": 0.1942
+        },
+        {
+          "word": "user",
+          "start": 241.26,
+          "end": 241.26,
+          "probability": 0.3628
+        },
+        {
+          "word": "can",
+          "start": 241.26,
+          "end": 241.26,
+          "probability": 0.8662
+        },
+        {
+          "word": "issue",
+          "start": 241.26,
+          "end": 241.26,
+          "probability": 0.7935
+        },
+        {
+          "word": "the",
+          "start": 241.26,
+          "end": 241.26,
+          "probability": 0.9761
+        },
+        {
+          "word": "policy.",
+          "start": 241.26,
+          "end": 241.26,
+          "probability": 0.9307
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 250.18,
+      "end": 250.7,
+      "start_formatted": "00:04:10.180",
+      "end_formatted": "00:04:10.700",
+      "text": "Log out.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 250.18,
+          "end": 250.4,
+          "probability": 0.9033
+        },
+        {
+          "word": "out.",
+          "start": 250.4,
+          "end": 250.7,
+          "probability": 0.6973
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 253.88,
+      "end": 256.2,
+      "start_formatted": "00:04:13.880",
+      "end_formatted": "00:04:16.200",
+      "text": "Log in as super user one more time.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 253.88,
+          "end": 254.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "in",
+          "start": 254.56,
+          "end": 254.72,
+          "probability": 0.9199
+        },
+        {
+          "word": "as",
+          "start": 254.72,
+          "end": 254.84,
+          "probability": 0.9731
+        },
+        {
+          "word": "super",
+          "start": 254.84,
+          "end": 255.12,
+          "probability": 0.4382
+        },
+        {
+          "word": "user",
+          "start": 255.12,
+          "end": 255.4,
+          "probability": 0.4265
+        },
+        {
+          "word": "one",
+          "start": 255.4,
+          "end": 255.68,
+          "probability": 0.9849
+        },
+        {
+          "word": "more",
+          "start": 255.68,
+          "end": 255.88,
+          "probability": 0.999
+        },
+        {
+          "word": "time.",
+          "start": 255.88,
+          "end": 256.2,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 258.0,
+      "end": 261.42,
+      "start_formatted": "00:04:18.000",
+      "end_formatted": "00:04:21.420",
+      "text": "Policy holds can be exported and imported through the admin tab.",
+      "words": [
+        {
+          "word": "Policy",
+          "start": 258.0,
+          "end": 258.68,
+          "probability": 0.9946
+        },
+        {
+          "word": "holds",
+          "start": 258.68,
+          "end": 258.9,
+          "probability": 0.604
+        },
+        {
+          "word": "can",
+          "start": 258.9,
+          "end": 259.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 259.12,
+          "end": 259.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "exported",
+          "start": 259.26,
+          "end": 259.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 259.74,
+          "end": 259.94,
+          "probability": 0.9902
+        },
+        {
+          "word": "imported",
+          "start": 259.94,
+          "end": 260.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "through",
+          "start": 260.34,
+          "end": 260.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 260.56,
+          "end": 260.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "admin",
+          "start": 260.7,
+          "end": 261.04,
+          "probability": 0.7212
+        },
+        {
+          "word": "tab.",
+          "start": 261.04,
+          "end": 261.42,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 261.82,
+      "end": 265.38,
+      "start_formatted": "00:04:21.820",
+      "end_formatted": "00:04:25.380",
+      "text": "To export, select Utilities, Export Data.",
+      "words": [
+        {
+          "word": "To",
+          "start": 261.82,
+          "end": 262.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "export,",
+          "start": 262.36,
+          "end": 262.86,
+          "probability": 0.9873
+        },
+        {
+          "word": "select",
+          "start": 263.12,
+          "end": 263.58,
+          "probability": 0.9854
+        },
+        {
+          "word": "Utilities,",
+          "start": 263.58,
+          "end": 264.36,
+          "probability": 0.8696
+        },
+        {
+          "word": "Export",
+          "start": 264.54,
+          "end": 265.08,
+          "probability": 0.9365
+        },
+        {
+          "word": "Data.",
+          "start": 265.08,
+          "end": 265.38,
+          "probability": 0.6616
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 265.86,
+      "end": 269.18,
+      "start_formatted": "00:04:25.860",
+      "end_formatted": "00:04:29.180",
+      "text": "Under Export Administrative Data, select Policy Holds.",
+      "words": [
+        {
+          "word": "Under",
+          "start": 265.86,
+          "end": 266.44,
+          "probability": 0.9907
+        },
+        {
+          "word": "Export",
+          "start": 266.44,
+          "end": 266.86,
+          "probability": 0.9614
+        },
+        {
+          "word": "Administrative",
+          "start": 266.86,
+          "end": 267.6,
+          "probability": 0.7808
+        },
+        {
+          "word": "Data,",
+          "start": 267.6,
+          "end": 267.88,
+          "probability": 0.9634
+        },
+        {
+          "word": "select",
+          "start": 268.14,
+          "end": 268.62,
+          "probability": 0.9731
+        },
+        {
+          "word": "Policy",
+          "start": 268.62,
+          "end": 269.08,
+          "probability": 0.9668
+        },
+        {
+          "word": "Holds.",
+          "start": 269.08,
+          "end": 269.42,
+          "probability": 0.8735
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 270.0,
+      "end": 271.02,
+      "start_formatted": "00:04:30.000",
+      "end_formatted": "00:04:31.020",
+      "text": "Click Export.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 270.0,
+          "end": 270.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "Export.",
+          "start": 270.6,
+          "end": 271.02,
+          "probability": 0.9429
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 273.72,
+      "end": 277.4,
+      "start_formatted": "00:04:33.720",
+      "end_formatted": "00:04:37.400",
+      "text": "An XML file containing the policy holds are created.",
+      "words": [
+        {
+          "word": "An",
+          "start": 273.72,
+          "end": 274.5,
+          "probability": 0.6763
+        },
+        {
+          "word": "XML",
+          "start": 274.5,
+          "end": 274.92,
+          "probability": 0.9385
+        },
+        {
+          "word": "file",
+          "start": 274.92,
+          "end": 275.3,
+          "probability": 0.9946
+        },
+        {
+          "word": "containing",
+          "start": 275.3,
+          "end": 275.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 275.8,
+          "end": 276.0,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 276.0,
+          "end": 276.42,
+          "probability": 0.7632
+        },
+        {
+          "word": "holds",
+          "start": 276.42,
+          "end": 276.74,
+          "probability": 0.9004
+        },
+        {
+          "word": "are",
+          "start": 276.74,
+          "end": 276.94,
+          "probability": 0.9863
+        },
+        {
+          "word": "created.",
+          "start": 276.94,
+          "end": 277.4,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 277.9,
+      "end": 281.2,
+      "start_formatted": "00:04:37.900",
+      "end_formatted": "00:04:41.200",
+      "text": "To import, go to Utilities, Import Data.",
+      "words": [
+        {
+          "word": "To",
+          "start": 277.9,
+          "end": 278.52,
+          "probability": 0.9902
+        },
+        {
+          "word": "import,",
+          "start": 278.52,
+          "end": 278.9,
+          "probability": 0.9785
+        },
+        {
+          "word": "go",
+          "start": 279.18,
+          "end": 279.4,
+          "probability": 0.979
+        },
+        {
+          "word": "to",
+          "start": 279.4,
+          "end": 279.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "Utilities,",
+          "start": 279.54,
+          "end": 280.26,
+          "probability": 0.9189
+        },
+        {
+          "word": "Import",
+          "start": 280.42,
+          "end": 280.9,
+          "probability": 0.9771
+        },
+        {
+          "word": "Data.",
+          "start": 280.9,
+          "end": 281.2,
+          "probability": 0.8125
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 282.1,
+      "end": 284.78,
+      "start_formatted": "00:04:42.100",
+      "end_formatted": "00:04:44.780",
+      "text": "Locate the policy holds XML file.",
+      "words": [
+        {
+          "word": "Locate",
+          "start": 282.1,
+          "end": 282.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 282.88,
+          "end": 283.0,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 283.0,
+          "end": 283.4,
+          "probability": 0.6421
+        },
+        {
+          "word": "holds",
+          "start": 283.4,
+          "end": 283.76,
+          "probability": 0.9736
+        },
+        {
+          "word": "XML",
+          "start": 283.76,
+          "end": 284.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "file.",
+          "start": 284.22,
+          "end": 284.78,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 293.06,
+      "end": 295.3,
+      "start_formatted": "00:04:53.060",
+      "end_formatted": "00:04:55.300",
+      "text": "Click Finish to import the file.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 293.06,
+          "end": 293.84,
+          "probability": 0.9888
+        },
+        {
+          "word": "Finish",
+          "start": 293.84,
+          "end": 294.16,
+          "probability": 0.917
+        },
+        {
+          "word": "to",
+          "start": 294.16,
+          "end": 294.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "import",
+          "start": 294.38,
+          "end": 294.76,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 294.76,
+          "end": 294.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "file.",
+          "start": 294.96,
+          "end": 295.3,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 297.24,
+      "end": 301.5,
+      "start_formatted": "00:04:57.240",
+      "end_formatted": "00:05:01.500",
+      "text": "Since we did not change the policy holds, no new entries are imported.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 297.24,
+          "end": 297.88,
+          "probability": 0.9521
+        },
+        {
+          "word": "we",
+          "start": 297.88,
+          "end": 298.08,
+          "probability": 0.999
+        },
+        {
+          "word": "did",
+          "start": 298.08,
+          "end": 298.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 298.26,
+          "end": 298.42,
+          "probability": 0.999
+        },
+        {
+          "word": "change",
+          "start": 298.42,
+          "end": 298.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 298.74,
+          "end": 298.9,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 298.9,
+          "end": 299.32,
+          "probability": 0.8799
+        },
+        {
+          "word": "holds,",
+          "start": 299.32,
+          "end": 299.8,
+          "probability": 0.9795
+        },
+        {
+          "word": "no",
+          "start": 300.04,
+          "end": 300.3,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 300.3,
+          "end": 300.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "entries",
+          "start": 300.52,
+          "end": 300.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 300.86,
+          "end": 301.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "imported.",
+          "start": 301.1,
+          "end": 301.5,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 301.86,
+      "end": 305.32,
+      "start_formatted": "00:05:01.860",
+      "end_formatted": "00:05:05.320",
+      "text": "It is useful for transferring data from one environment to another.",
+      "words": [
+        {
+          "word": "It",
+          "start": 301.86,
+          "end": 302.2,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 302.2,
+          "end": 302.36,
+          "probability": 1.0
+        },
+        {
+          "word": "useful",
+          "start": 302.36,
+          "end": 302.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 302.7,
+          "end": 302.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "transferring",
+          "start": 302.9,
+          "end": 303.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "data",
+          "start": 303.42,
+          "end": 303.74,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 303.74,
+          "end": 303.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 303.98,
+          "end": 304.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "environment",
+          "start": 304.2,
+          "end": 304.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 304.7,
+          "end": 305.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "another.",
+          "start": 305.0,
+          "end": 305.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 305.88,
+      "end": 308.06,
+      "start_formatted": "00:05:05.880",
+      "end_formatted": "00:05:08.060",
+      "text": "Filogy holds the Filogy holds the Filogy holds the Filogy holds the Filogy holds the Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 305.88,
+          "end": 306.18,
+          "probability": 0.0
+        },
+        {
+          "word": "holds",
+          "start": 306.18,
+          "end": 306.2,
+          "probability": 0.0
+        },
+        {
+          "word": "the",
+          "start": 306.2,
+          "end": 306.28,
+          "probability": 0.1425
+        },
+        {
+          "word": "Filogy",
+          "start": 306.28,
+          "end": 306.6,
+          "probability": 0.4712
+        },
+        {
+          "word": "holds",
+          "start": 306.6,
+          "end": 306.62,
+          "probability": 0.0004
+        },
+        {
+          "word": "the",
+          "start": 306.62,
+          "end": 306.7,
+          "probability": 0.7642
+        },
+        {
+          "word": "Filogy",
+          "start": 306.7,
+          "end": 307.02,
+          "probability": 0.4885
+        },
+        {
+          "word": "holds",
+          "start": 307.02,
+          "end": 307.02,
+          "probability": 0.0076
+        },
+        {
+          "word": "the",
+          "start": 307.02,
+          "end": 307.02,
+          "probability": 0.8271
+        },
+        {
+          "word": "Filogy",
+          "start": 307.02,
+          "end": 307.18,
+          "probability": 0.4951
+        },
+        {
+          "word": "holds",
+          "start": 307.18,
+          "end": 307.18,
+          "probability": 0.0413
+        },
+        {
+          "word": "the",
+          "start": 307.18,
+          "end": 307.18,
+          "probability": 0.8696
+        },
+        {
+          "word": "Filogy",
+          "start": 307.18,
+          "end": 307.32,
+          "probability": 0.5186
+        },
+        {
+          "word": "holds",
+          "start": 307.32,
+          "end": 307.42,
+          "probability": 0.1204
+        },
+        {
+          "word": "the",
+          "start": 307.42,
+          "end": 307.58,
+          "probability": 0.8906
+        },
+        {
+          "word": "Filogy",
+          "start": 307.58,
+          "end": 308.06,
+          "probability": 0.5762
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 308.06,
+      "end": 308.08,
+      "start_formatted": "00:05:08.060",
+      "end_formatted": "00:05:08.080",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 308.06,
+          "end": 308.08,
+          "probability": 0.2546
+        },
+        {
+          "word": "you.",
+          "start": 308.08,
+          "end": 308.08,
+          "probability": 0.9985
+        }
+      ]
+    }
+  ]
+}

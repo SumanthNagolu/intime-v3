@@ -1,0 +1,2618 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_15_03.mp4",
+    "video_stem": "CC_15_03",
+    "duration_seconds": 263.54,
+    "duration_formatted": "00:04:23.540",
+    "segment_count": 43,
+    "word_count": 362,
+    "avg_confidence": 0.927,
+    "transcription_time_seconds": 21.88,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:44:57.626542"
+  },
+  "full_text": "Welcome to the configuring permissions demonstration. Succeed Insurance has identified a requirement to limit which employees are able to add and remove officials on a claim. Initially, this will be permitted only to adjusters. I begin by typing Alt Shift I to determine the name of the PCF that contains the Add slash Remove Officials buttons. It is the Lost Details detail view. The first step is to add a new permission type. The system permission type type list already has an extension I can use. I click to add. And name the new permission official manage, remembering to use the underscore SI suffix. The name is Add and Remove Officials.  And add a description.  And add a description. The next step is to set the visibility properties on the toolbar on Lost Details. I will use the auto mode of the detail view. In a real implementation I would probably also need to do the same for other modes, but for this demonstration I will keep it simple. I scroll down and select the button set for the officials list. There are two visibility properties on this toolbar, one for the Add button. And one for the Remove button. I'll populate them both with the system permission I just created. Now I'll restart the server so my changes will be effective in the application. When the server is ready. I'll add the new permission to the adjuster role. On the roles page of the administration tab. I click the adjuster role. And edit it. I click Add. And select my new permission. To test the configuration, I will log in as two users, an adjuster and a supervisor. And the Applegate is the adjuster I'll use. I'll navigate to a claim. On the Lost Details page. I click Edit. The Add and Remove buttons are visible to the adjuster. Remove is not currently available because there is nothing selected to remove. Now I'll log in as Sue Smith, a claims supervisor. I'll navigate to the same claim. I'll navigate to the same claim. And the Lost Details screen. When I click Edit. The Add and Remove buttons are not visible. It'sountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 3.38,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:03.380",
+      "text": "Welcome to the configuring permissions demonstration.",
+      "words": [
+        {
+          "word": "Welcome",
+          "start": 0.0,
+          "end": 1.06,
+          "probability": 0.9795
+        },
+        {
+          "word": "to",
+          "start": 1.06,
+          "end": 1.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 1.28,
+          "end": 1.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "configuring",
+          "start": 1.42,
+          "end": 2.08,
+          "probability": 0.8423
+        },
+        {
+          "word": "permissions",
+          "start": 2.08,
+          "end": 2.6,
+          "probability": 0.9883
+        },
+        {
+          "word": "demonstration.",
+          "start": 2.6,
+          "end": 3.38,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 5.2,
+      "end": 14.58,
+      "start_formatted": "00:00:05.200",
+      "end_formatted": "00:00:14.580",
+      "text": "Succeed Insurance has identified a requirement to limit which employees are able to add and remove officials on a claim. Initially, this will be permitted only to adjusters.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 5.2,
+          "end": 5.8,
+          "probability": 0.9629
+        },
+        {
+          "word": "Insurance",
+          "start": 5.8,
+          "end": 6.16,
+          "probability": 0.7261
+        },
+        {
+          "word": "has",
+          "start": 6.16,
+          "end": 6.48,
+          "probability": 0.998
+        },
+        {
+          "word": "identified",
+          "start": 6.48,
+          "end": 6.92,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 6.92,
+          "end": 7.16,
+          "probability": 0.9834
+        },
+        {
+          "word": "requirement",
+          "start": 7.16,
+          "end": 7.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 7.66,
+          "end": 7.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "limit",
+          "start": 7.88,
+          "end": 8.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "which",
+          "start": 8.12,
+          "end": 8.34,
+          "probability": 0.9849
+        },
+        {
+          "word": "employees",
+          "start": 8.34,
+          "end": 8.84,
+          "probability": 0.9927
+        },
+        {
+          "word": "are",
+          "start": 8.84,
+          "end": 9.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "able",
+          "start": 9.1,
+          "end": 9.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 9.34,
+          "end": 9.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "add",
+          "start": 9.52,
+          "end": 9.7,
+          "probability": 0.9824
+        },
+        {
+          "word": "and",
+          "start": 9.7,
+          "end": 9.82,
+          "probability": 0.9287
+        },
+        {
+          "word": "remove",
+          "start": 9.82,
+          "end": 10.12,
+          "probability": 0.9946
+        },
+        {
+          "word": "officials",
+          "start": 10.12,
+          "end": 10.58,
+          "probability": 0.9775
+        },
+        {
+          "word": "on",
+          "start": 10.58,
+          "end": 10.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 10.84,
+          "end": 10.94,
+          "probability": 0.998
+        },
+        {
+          "word": "claim.",
+          "start": 10.94,
+          "end": 11.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "Initially,",
+          "start": 11.58,
+          "end": 12.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "this",
+          "start": 12.5,
+          "end": 12.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 12.84,
+          "end": 12.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 12.98,
+          "end": 13.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "permitted",
+          "start": 13.1,
+          "end": 13.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "only",
+          "start": 13.46,
+          "end": 13.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 13.7,
+          "end": 13.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "adjusters.",
+          "start": 13.88,
+          "end": 14.58,
+          "probability": 0.9678
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 17.92,
+      "end": 24.34,
+      "start_formatted": "00:00:17.920",
+      "end_formatted": "00:00:24.340",
+      "text": "I begin by typing Alt Shift I to determine the name of the PCF that contains the Add slash Remove Officials buttons.",
+      "words": [
+        {
+          "word": "I",
+          "start": 17.92,
+          "end": 18.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "begin",
+          "start": 18.52,
+          "end": 18.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "by",
+          "start": 18.82,
+          "end": 19.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "typing",
+          "start": 19.02,
+          "end": 19.42,
+          "probability": 0.999
+        },
+        {
+          "word": "Alt",
+          "start": 19.42,
+          "end": 19.66,
+          "probability": 0.5752
+        },
+        {
+          "word": "Shift",
+          "start": 19.66,
+          "end": 19.92,
+          "probability": 0.5034
+        },
+        {
+          "word": "I",
+          "start": 19.92,
+          "end": 20.08,
+          "probability": 0.9575
+        },
+        {
+          "word": "to",
+          "start": 20.08,
+          "end": 20.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "determine",
+          "start": 20.2,
+          "end": 20.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 20.6,
+          "end": 20.78,
+          "probability": 0.998
+        },
+        {
+          "word": "name",
+          "start": 20.78,
+          "end": 20.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 20.96,
+          "end": 21.08,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 21.08,
+          "end": 21.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "PCF",
+          "start": 21.2,
+          "end": 21.74,
+          "probability": 0.981
+        },
+        {
+          "word": "that",
+          "start": 21.74,
+          "end": 21.9,
+          "probability": 0.9917
+        },
+        {
+          "word": "contains",
+          "start": 21.9,
+          "end": 22.34,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 22.34,
+          "end": 22.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "Add",
+          "start": 22.52,
+          "end": 22.7,
+          "probability": 0.5728
+        },
+        {
+          "word": "slash",
+          "start": 22.7,
+          "end": 22.98,
+          "probability": 0.0181
+        },
+        {
+          "word": "Remove",
+          "start": 22.98,
+          "end": 23.42,
+          "probability": 0.9121
+        },
+        {
+          "word": "Officials",
+          "start": 23.42,
+          "end": 23.96,
+          "probability": 0.9482
+        },
+        {
+          "word": "buttons.",
+          "start": 23.96,
+          "end": 24.34,
+          "probability": 0.978
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 24.9,
+      "end": 27.24,
+      "start_formatted": "00:00:24.900",
+      "end_formatted": "00:00:27.240",
+      "text": "It is the Lost Details detail view.",
+      "words": [
+        {
+          "word": "It",
+          "start": 24.9,
+          "end": 25.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 25.5,
+          "end": 25.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 25.62,
+          "end": 25.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "Lost",
+          "start": 25.76,
+          "end": 25.98,
+          "probability": 0.7979
+        },
+        {
+          "word": "Details",
+          "start": 25.98,
+          "end": 26.46,
+          "probability": 0.9751
+        },
+        {
+          "word": "detail",
+          "start": 26.46,
+          "end": 26.8,
+          "probability": 0.54
+        },
+        {
+          "word": "view.",
+          "start": 26.8,
+          "end": 27.24,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 32.78,
+      "end": 35.46,
+      "start_formatted": "00:00:32.780",
+      "end_formatted": "00:00:35.460",
+      "text": "The first step is to add a new permission type.",
+      "words": [
+        {
+          "word": "The",
+          "start": 32.78,
+          "end": 33.42,
+          "probability": 0.9614
+        },
+        {
+          "word": "first",
+          "start": 33.42,
+          "end": 33.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "step",
+          "start": 33.7,
+          "end": 34.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 34.0,
+          "end": 34.14,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 34.14,
+          "end": 34.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "add",
+          "start": 34.26,
+          "end": 34.44,
+          "probability": 0.9839
+        },
+        {
+          "word": "a",
+          "start": 34.44,
+          "end": 34.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "new",
+          "start": 34.54,
+          "end": 34.68,
+          "probability": 0.9883
+        },
+        {
+          "word": "permission",
+          "start": 34.68,
+          "end": 35.1,
+          "probability": 0.9595
+        },
+        {
+          "word": "type.",
+          "start": 35.1,
+          "end": 35.46,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 39.14,
+      "end": 43.42,
+      "start_formatted": "00:00:39.140",
+      "end_formatted": "00:00:43.420",
+      "text": "The system permission type type list already has an extension I can use.",
+      "words": [
+        {
+          "word": "The",
+          "start": 39.14,
+          "end": 39.78,
+          "probability": 0.9888
+        },
+        {
+          "word": "system",
+          "start": 39.78,
+          "end": 40.12,
+          "probability": 0.3992
+        },
+        {
+          "word": "permission",
+          "start": 40.12,
+          "end": 40.54,
+          "probability": 0.8599
+        },
+        {
+          "word": "type",
+          "start": 40.54,
+          "end": 40.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "type",
+          "start": 40.92,
+          "end": 41.14,
+          "probability": 0.9033
+        },
+        {
+          "word": "list",
+          "start": 41.14,
+          "end": 41.44,
+          "probability": 0.9766
+        },
+        {
+          "word": "already",
+          "start": 41.44,
+          "end": 41.82,
+          "probability": 0.9917
+        },
+        {
+          "word": "has",
+          "start": 41.82,
+          "end": 42.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "an",
+          "start": 42.1,
+          "end": 42.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "extension",
+          "start": 42.22,
+          "end": 42.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 42.66,
+          "end": 42.88,
+          "probability": 0.9863
+        },
+        {
+          "word": "can",
+          "start": 42.88,
+          "end": 43.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "use.",
+          "start": 43.04,
+          "end": 43.42,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 43.86,
+      "end": 45.08,
+      "start_formatted": "00:00:43.860",
+      "end_formatted": "00:00:45.080",
+      "text": "I click to add.",
+      "words": [
+        {
+          "word": "I",
+          "start": 43.86,
+          "end": 44.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "click",
+          "start": 44.38,
+          "end": 44.64,
+          "probability": 0.978
+        },
+        {
+          "word": "to",
+          "start": 44.64,
+          "end": 44.82,
+          "probability": 0.9199
+        },
+        {
+          "word": "add.",
+          "start": 44.82,
+          "end": 45.08,
+          "probability": 0.8818
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 46.98,
+      "end": 52.22,
+      "start_formatted": "00:00:46.980",
+      "end_formatted": "00:00:52.220",
+      "text": "And name the new permission official manage, remembering to use the underscore SI suffix.",
+      "words": [
+        {
+          "word": "And",
+          "start": 46.98,
+          "end": 47.62,
+          "probability": 0.9307
+        },
+        {
+          "word": "name",
+          "start": 47.62,
+          "end": 47.84,
+          "probability": 0.9722
+        },
+        {
+          "word": "the",
+          "start": 47.84,
+          "end": 47.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 47.96,
+          "end": 48.12,
+          "probability": 0.9922
+        },
+        {
+          "word": "permission",
+          "start": 48.12,
+          "end": 48.52,
+          "probability": 0.9834
+        },
+        {
+          "word": "official",
+          "start": 48.52,
+          "end": 48.96,
+          "probability": 0.7715
+        },
+        {
+          "word": "manage,",
+          "start": 48.96,
+          "end": 49.4,
+          "probability": 0.71
+        },
+        {
+          "word": "remembering",
+          "start": 49.64,
+          "end": 50.1,
+          "probability": 0.9707
+        },
+        {
+          "word": "to",
+          "start": 50.1,
+          "end": 50.32,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 50.32,
+          "end": 50.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 50.54,
+          "end": 50.68,
+          "probability": 0.9883
+        },
+        {
+          "word": "underscore",
+          "start": 50.68,
+          "end": 51.12,
+          "probability": 0.3469
+        },
+        {
+          "word": "SI",
+          "start": 51.12,
+          "end": 51.62,
+          "probability": 0.3457
+        },
+        {
+          "word": "suffix.",
+          "start": 51.62,
+          "end": 52.22,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 55.4,
+      "end": 57.82,
+      "start_formatted": "00:00:55.400",
+      "end_formatted": "00:00:57.820",
+      "text": "The name is Add and Remove Officials.",
+      "words": [
+        {
+          "word": "The",
+          "start": 55.4,
+          "end": 56.26,
+          "probability": 0.8359
+        },
+        {
+          "word": "name",
+          "start": 56.26,
+          "end": 56.46,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 56.46,
+          "end": 56.6,
+          "probability": 0.998
+        },
+        {
+          "word": "Add",
+          "start": 56.6,
+          "end": 56.76,
+          "probability": 0.3855
+        },
+        {
+          "word": "and",
+          "start": 56.76,
+          "end": 56.86,
+          "probability": 0.7339
+        },
+        {
+          "word": "Remove",
+          "start": 56.86,
+          "end": 57.18,
+          "probability": 0.7153
+        },
+        {
+          "word": "Officials.",
+          "start": 57.18,
+          "end": 57.82,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 57.82,
+      "end": 57.82,
+      "start_formatted": "00:00:57.820",
+      "end_formatted": "00:00:57.820",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 10,
+      "start": 65.14,
+      "end": 66.72,
+      "start_formatted": "00:01:05.140",
+      "end_formatted": "00:01:06.720",
+      "text": "And add a description.",
+      "words": [
+        {
+          "word": "And",
+          "start": 65.14,
+          "end": 66.0,
+          "probability": 0.8296
+        },
+        {
+          "word": "add",
+          "start": 66.0,
+          "end": 66.18,
+          "probability": 0.5298
+        },
+        {
+          "word": "a",
+          "start": 66.18,
+          "end": 66.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "description.",
+          "start": 66.3,
+          "end": 66.72,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 67.42,
+      "end": 67.42,
+      "start_formatted": "00:01:07.420",
+      "end_formatted": "00:01:07.420",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 12,
+      "start": 67.98,
+      "end": 82.06,
+      "start_formatted": "00:01:07.980",
+      "end_formatted": "00:01:22.060",
+      "text": "And add a description.",
+      "words": [
+        {
+          "word": "And",
+          "start": 67.98,
+          "end": 68.84,
+          "probability": 0.2048
+        },
+        {
+          "word": "add",
+          "start": 68.84,
+          "end": 72.5,
+          "probability": 0.8281
+        },
+        {
+          "word": "a",
+          "start": 72.5,
+          "end": 80.44,
+          "probability": 0.9375
+        },
+        {
+          "word": "description.",
+          "start": 80.44,
+          "end": 82.06,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 84.92,
+      "end": 89.34,
+      "start_formatted": "00:01:24.920",
+      "end_formatted": "00:01:29.340",
+      "text": "The next step is to set the visibility properties on the toolbar on Lost Details.",
+      "words": [
+        {
+          "word": "The",
+          "start": 84.92,
+          "end": 85.4,
+          "probability": 0.9287
+        },
+        {
+          "word": "next",
+          "start": 85.4,
+          "end": 85.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "step",
+          "start": 85.62,
+          "end": 85.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 85.92,
+          "end": 86.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 86.06,
+          "end": 86.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "set",
+          "start": 86.18,
+          "end": 86.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 86.38,
+          "end": 86.52,
+          "probability": 0.9922
+        },
+        {
+          "word": "visibility",
+          "start": 86.52,
+          "end": 87.0,
+          "probability": 0.8906
+        },
+        {
+          "word": "properties",
+          "start": 87.0,
+          "end": 87.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "on",
+          "start": 87.6,
+          "end": 87.84,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 87.84,
+          "end": 87.92,
+          "probability": 0.9927
+        },
+        {
+          "word": "toolbar",
+          "start": 87.92,
+          "end": 88.36,
+          "probability": 0.8984
+        },
+        {
+          "word": "on",
+          "start": 88.36,
+          "end": 88.64,
+          "probability": 0.8569
+        },
+        {
+          "word": "Lost",
+          "start": 88.64,
+          "end": 88.88,
+          "probability": 0.6748
+        },
+        {
+          "word": "Details.",
+          "start": 88.88,
+          "end": 89.34,
+          "probability": 0.8296
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 89.7,
+      "end": 92.08,
+      "start_formatted": "00:01:29.700",
+      "end_formatted": "00:01:32.080",
+      "text": "I will use the auto mode of the detail view.",
+      "words": [
+        {
+          "word": "I",
+          "start": 89.7,
+          "end": 90.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 90.12,
+          "end": 90.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "use",
+          "start": 90.28,
+          "end": 90.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 90.48,
+          "end": 90.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "auto",
+          "start": 90.62,
+          "end": 90.88,
+          "probability": 0.4775
+        },
+        {
+          "word": "mode",
+          "start": 90.88,
+          "end": 91.18,
+          "probability": 0.9731
+        },
+        {
+          "word": "of",
+          "start": 91.18,
+          "end": 91.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 91.32,
+          "end": 91.44,
+          "probability": 0.9697
+        },
+        {
+          "word": "detail",
+          "start": 91.44,
+          "end": 91.76,
+          "probability": 0.6323
+        },
+        {
+          "word": "view.",
+          "start": 91.76,
+          "end": 92.08,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 92.42,
+      "end": 98.98,
+      "start_formatted": "00:01:32.420",
+      "end_formatted": "00:01:38.980",
+      "text": "In a real implementation I would probably also need to do the same for other modes, but for this demonstration I will keep it simple.",
+      "words": [
+        {
+          "word": "In",
+          "start": 92.42,
+          "end": 92.76,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 92.76,
+          "end": 92.82,
+          "probability": 0.9844
+        },
+        {
+          "word": "real",
+          "start": 92.82,
+          "end": 93.02,
+          "probability": 0.9595
+        },
+        {
+          "word": "implementation",
+          "start": 93.02,
+          "end": 93.52,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 93.52,
+          "end": 93.92,
+          "probability": 0.9263
+        },
+        {
+          "word": "would",
+          "start": 93.92,
+          "end": 94.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "probably",
+          "start": 94.12,
+          "end": 94.52,
+          "probability": 0.9922
+        },
+        {
+          "word": "also",
+          "start": 94.52,
+          "end": 94.92,
+          "probability": 0.979
+        },
+        {
+          "word": "need",
+          "start": 94.92,
+          "end": 95.16,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 95.16,
+          "end": 95.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "do",
+          "start": 95.3,
+          "end": 95.42,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 95.42,
+          "end": 95.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "same",
+          "start": 95.56,
+          "end": 95.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 95.8,
+          "end": 95.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "other",
+          "start": 95.98,
+          "end": 96.14,
+          "probability": 0.9907
+        },
+        {
+          "word": "modes,",
+          "start": 96.14,
+          "end": 96.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "but",
+          "start": 96.76,
+          "end": 96.98,
+          "probability": 0.9546
+        },
+        {
+          "word": "for",
+          "start": 96.98,
+          "end": 97.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 97.12,
+          "end": 97.3,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration",
+          "start": 97.3,
+          "end": 97.8,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 97.8,
+          "end": 98.14,
+          "probability": 0.9907
+        },
+        {
+          "word": "will",
+          "start": 98.14,
+          "end": 98.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "keep",
+          "start": 98.28,
+          "end": 98.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 98.44,
+          "end": 98.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "simple.",
+          "start": 98.64,
+          "end": 98.98,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 98.98,
+      "end": 103.0,
+      "start_formatted": "00:01:38.980",
+      "end_formatted": "00:01:43.000",
+      "text": "I scroll down and select the button set for the officials list.",
+      "words": [
+        {
+          "word": "I",
+          "start": 98.98,
+          "end": 99.98,
+          "probability": 0.9756
+        },
+        {
+          "word": "scroll",
+          "start": 99.98,
+          "end": 100.3,
+          "probability": 0.9771
+        },
+        {
+          "word": "down",
+          "start": 100.3,
+          "end": 100.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 100.56,
+          "end": 100.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "select",
+          "start": 100.74,
+          "end": 101.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 101.08,
+          "end": 101.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "button",
+          "start": 101.3,
+          "end": 101.54,
+          "probability": 0.6313
+        },
+        {
+          "word": "set",
+          "start": 101.54,
+          "end": 101.84,
+          "probability": 0.9814
+        },
+        {
+          "word": "for",
+          "start": 101.84,
+          "end": 102.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 102.0,
+          "end": 102.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "officials",
+          "start": 102.1,
+          "end": 102.52,
+          "probability": 0.4702
+        },
+        {
+          "word": "list.",
+          "start": 102.52,
+          "end": 103.0,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 104.34,
+      "end": 108.56,
+      "start_formatted": "00:01:44.340",
+      "end_formatted": "00:01:48.560",
+      "text": "There are two visibility properties on this toolbar, one for the Add button.",
+      "words": [
+        {
+          "word": "There",
+          "start": 104.34,
+          "end": 104.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 104.9,
+          "end": 105.04,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 105.04,
+          "end": 105.22,
+          "probability": 0.938
+        },
+        {
+          "word": "visibility",
+          "start": 105.22,
+          "end": 105.8,
+          "probability": 0.9453
+        },
+        {
+          "word": "properties",
+          "start": 105.8,
+          "end": 106.4,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 106.4,
+          "end": 106.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 106.6,
+          "end": 106.78,
+          "probability": 0.998
+        },
+        {
+          "word": "toolbar,",
+          "start": 106.78,
+          "end": 107.26,
+          "probability": 0.9473
+        },
+        {
+          "word": "one",
+          "start": 107.54,
+          "end": 107.76,
+          "probability": 0.9937
+        },
+        {
+          "word": "for",
+          "start": 107.76,
+          "end": 107.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 107.92,
+          "end": 108.04,
+          "probability": 0.999
+        },
+        {
+          "word": "Add",
+          "start": 108.04,
+          "end": 108.2,
+          "probability": 0.438
+        },
+        {
+          "word": "button.",
+          "start": 108.2,
+          "end": 108.56,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 109.26,
+      "end": 111.02,
+      "start_formatted": "00:01:49.260",
+      "end_formatted": "00:01:51.020",
+      "text": "And one for the Remove button.",
+      "words": [
+        {
+          "word": "And",
+          "start": 109.26,
+          "end": 109.82,
+          "probability": 0.9458
+        },
+        {
+          "word": "one",
+          "start": 109.82,
+          "end": 110.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 110.04,
+          "end": 110.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 110.22,
+          "end": 110.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "Remove",
+          "start": 110.34,
+          "end": 110.64,
+          "probability": 0.9717
+        },
+        {
+          "word": "button.",
+          "start": 110.64,
+          "end": 111.02,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 111.6,
+      "end": 114.94,
+      "start_formatted": "00:01:51.600",
+      "end_formatted": "00:01:54.940",
+      "text": "I'll populate them both with the system permission I just created.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 111.6,
+          "end": 112.16,
+          "probability": 0.999
+        },
+        {
+          "word": "populate",
+          "start": 112.16,
+          "end": 112.68,
+          "probability": 0.999
+        },
+        {
+          "word": "them",
+          "start": 112.68,
+          "end": 112.84,
+          "probability": 0.999
+        },
+        {
+          "word": "both",
+          "start": 112.84,
+          "end": 113.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 113.06,
+          "end": 113.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 113.22,
+          "end": 113.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "system",
+          "start": 113.34,
+          "end": 113.66,
+          "probability": 0.9565
+        },
+        {
+          "word": "permission",
+          "start": 113.66,
+          "end": 114.06,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 114.06,
+          "end": 114.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "just",
+          "start": 114.28,
+          "end": 114.5,
+          "probability": 0.999
+        },
+        {
+          "word": "created.",
+          "start": 114.5,
+          "end": 114.94,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 133.42,
+      "end": 136.94,
+      "start_formatted": "00:02:13.420",
+      "end_formatted": "00:02:16.940",
+      "text": "Now I'll restart the server so my changes will be effective in the application.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 133.42,
+          "end": 133.94,
+          "probability": 0.8906
+        },
+        {
+          "word": "I'll",
+          "start": 133.94,
+          "end": 134.22,
+          "probability": 0.9443
+        },
+        {
+          "word": "restart",
+          "start": 134.22,
+          "end": 134.6,
+          "probability": 0.9658
+        },
+        {
+          "word": "the",
+          "start": 134.6,
+          "end": 134.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "server",
+          "start": 134.8,
+          "end": 135.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "so",
+          "start": 135.06,
+          "end": 135.3,
+          "probability": 0.9722
+        },
+        {
+          "word": "my",
+          "start": 135.3,
+          "end": 135.48,
+          "probability": 0.9863
+        },
+        {
+          "word": "changes",
+          "start": 135.48,
+          "end": 135.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 135.88,
+          "end": 136.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 136.1,
+          "end": 136.24,
+          "probability": 0.999
+        },
+        {
+          "word": "effective",
+          "start": 136.24,
+          "end": 136.62,
+          "probability": 0.9883
+        },
+        {
+          "word": "in",
+          "start": 136.62,
+          "end": 136.82,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 136.82,
+          "end": 136.92,
+          "probability": 0.999
+        },
+        {
+          "word": "application.",
+          "start": 136.92,
+          "end": 137.18,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 148.82,
+      "end": 150.3,
+      "start_formatted": "00:02:28.820",
+      "end_formatted": "00:02:30.300",
+      "text": "When the server is ready.",
+      "words": [
+        {
+          "word": "When",
+          "start": 148.82,
+          "end": 149.34,
+          "probability": 0.5781
+        },
+        {
+          "word": "the",
+          "start": 149.34,
+          "end": 149.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "server",
+          "start": 149.48,
+          "end": 149.78,
+          "probability": 0.9692
+        },
+        {
+          "word": "is",
+          "start": 149.78,
+          "end": 149.98,
+          "probability": 0.998
+        },
+        {
+          "word": "ready.",
+          "start": 149.98,
+          "end": 150.3,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 150.94,
+      "end": 153.38,
+      "start_formatted": "00:02:30.940",
+      "end_formatted": "00:02:33.380",
+      "text": "I'll add the new permission to the adjuster role.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 150.94,
+          "end": 151.46,
+          "probability": 0.9541
+        },
+        {
+          "word": "add",
+          "start": 151.46,
+          "end": 151.58,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 151.58,
+          "end": 151.72,
+          "probability": 0.9917
+        },
+        {
+          "word": "new",
+          "start": 151.72,
+          "end": 151.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "permission",
+          "start": 151.86,
+          "end": 152.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "to",
+          "start": 152.28,
+          "end": 152.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 152.5,
+          "end": 152.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "adjuster",
+          "start": 152.64,
+          "end": 153.18,
+          "probability": 0.8936
+        },
+        {
+          "word": "role.",
+          "start": 153.18,
+          "end": 153.38,
+          "probability": 0.9126
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 158.44,
+      "end": 161.06,
+      "start_formatted": "00:02:38.440",
+      "end_formatted": "00:02:41.060",
+      "text": "On the roles page of the administration tab.",
+      "words": [
+        {
+          "word": "On",
+          "start": 158.44,
+          "end": 159.08,
+          "probability": 0.9214
+        },
+        {
+          "word": "the",
+          "start": 159.08,
+          "end": 159.18,
+          "probability": 0.999
+        },
+        {
+          "word": "roles",
+          "start": 159.18,
+          "end": 159.42,
+          "probability": 0.7847
+        },
+        {
+          "word": "page",
+          "start": 159.42,
+          "end": 159.74,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 159.74,
+          "end": 159.88,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 159.88,
+          "end": 159.98,
+          "probability": 0.998
+        },
+        {
+          "word": "administration",
+          "start": 159.98,
+          "end": 160.48,
+          "probability": 0.5415
+        },
+        {
+          "word": "tab.",
+          "start": 160.48,
+          "end": 161.06,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 167.26,
+      "end": 169.06,
+      "start_formatted": "00:02:47.260",
+      "end_formatted": "00:02:49.060",
+      "text": "I click the adjuster role.",
+      "words": [
+        {
+          "word": "I",
+          "start": 167.26,
+          "end": 167.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 167.9,
+          "end": 168.16,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 168.16,
+          "end": 168.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "adjuster",
+          "start": 168.3,
+          "end": 168.82,
+          "probability": 0.9668
+        },
+        {
+          "word": "role.",
+          "start": 168.82,
+          "end": 169.06,
+          "probability": 0.979
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 170.5,
+      "end": 171.64,
+      "start_formatted": "00:02:50.500",
+      "end_formatted": "00:02:51.640",
+      "text": "And edit it.",
+      "words": [
+        {
+          "word": "And",
+          "start": 170.5,
+          "end": 171.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "edit",
+          "start": 171.14,
+          "end": 171.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "it.",
+          "start": 171.4,
+          "end": 171.64,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 173.52,
+      "end": 174.7,
+      "start_formatted": "00:02:53.520",
+      "end_formatted": "00:02:54.700",
+      "text": "I click Add.",
+      "words": [
+        {
+          "word": "I",
+          "start": 173.52,
+          "end": 174.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "click",
+          "start": 174.16,
+          "end": 174.44,
+          "probability": 0.998
+        },
+        {
+          "word": "Add.",
+          "start": 174.44,
+          "end": 174.7,
+          "probability": 0.2111
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 176.7,
+      "end": 178.5,
+      "start_formatted": "00:02:56.700",
+      "end_formatted": "00:02:58.500",
+      "text": "And select my new permission.",
+      "words": [
+        {
+          "word": "And",
+          "start": 176.7,
+          "end": 177.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "select",
+          "start": 177.34,
+          "end": 177.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "my",
+          "start": 177.7,
+          "end": 177.9,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 177.9,
+          "end": 178.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "permission.",
+          "start": 178.06,
+          "end": 178.5,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 182.9,
+      "end": 188.14,
+      "start_formatted": "00:03:02.900",
+      "end_formatted": "00:03:08.140",
+      "text": "To test the configuration, I will log in as two users, an adjuster and a supervisor.",
+      "words": [
+        {
+          "word": "To",
+          "start": 182.9,
+          "end": 183.5,
+          "probability": 0.9087
+        },
+        {
+          "word": "test",
+          "start": 183.5,
+          "end": 183.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 183.74,
+          "end": 183.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "configuration,",
+          "start": 183.88,
+          "end": 184.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 184.9,
+          "end": 185.12,
+          "probability": 0.9849
+        },
+        {
+          "word": "will",
+          "start": 185.12,
+          "end": 185.28,
+          "probability": 0.9707
+        },
+        {
+          "word": "log",
+          "start": 185.28,
+          "end": 185.5,
+          "probability": 0.5879
+        },
+        {
+          "word": "in",
+          "start": 185.5,
+          "end": 185.6,
+          "probability": 0.9565
+        },
+        {
+          "word": "as",
+          "start": 185.6,
+          "end": 185.74,
+          "probability": 0.9912
+        },
+        {
+          "word": "two",
+          "start": 185.74,
+          "end": 185.92,
+          "probability": 0.7686
+        },
+        {
+          "word": "users,",
+          "start": 185.92,
+          "end": 186.46,
+          "probability": 0.9917
+        },
+        {
+          "word": "an",
+          "start": 186.62,
+          "end": 186.84,
+          "probability": 0.9731
+        },
+        {
+          "word": "adjuster",
+          "start": 186.84,
+          "end": 187.34,
+          "probability": 0.9561
+        },
+        {
+          "word": "and",
+          "start": 187.34,
+          "end": 187.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "a",
+          "start": 187.48,
+          "end": 187.56,
+          "probability": 0.9785
+        },
+        {
+          "word": "supervisor.",
+          "start": 187.56,
+          "end": 188.14,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 191.44,
+      "end": 194.08,
+      "start_formatted": "00:03:11.440",
+      "end_formatted": "00:03:14.080",
+      "text": "And the Applegate is the adjuster I'll use.",
+      "words": [
+        {
+          "word": "And",
+          "start": 191.44,
+          "end": 192.04,
+          "probability": 0.291
+        },
+        {
+          "word": "the",
+          "start": 192.04,
+          "end": 192.16,
+          "probability": 0.645
+        },
+        {
+          "word": "Applegate",
+          "start": 192.16,
+          "end": 192.68,
+          "probability": 0.9844
+        },
+        {
+          "word": "is",
+          "start": 192.68,
+          "end": 192.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 192.86,
+          "end": 193.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "adjuster",
+          "start": 193.0,
+          "end": 193.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "I'll",
+          "start": 193.48,
+          "end": 193.76,
+          "probability": 0.9766
+        },
+        {
+          "word": "use.",
+          "start": 193.76,
+          "end": 194.08,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 201.44,
+      "end": 203.16,
+      "start_formatted": "00:03:21.440",
+      "end_formatted": "00:03:23.160",
+      "text": "I'll navigate to a claim.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 201.44,
+          "end": 202.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "navigate",
+          "start": 202.04,
+          "end": 202.42,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 202.42,
+          "end": 202.72,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 202.72,
+          "end": 202.86,
+          "probability": 0.8784
+        },
+        {
+          "word": "claim.",
+          "start": 202.86,
+          "end": 203.16,
+          "probability": 0.9102
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 204.6,
+      "end": 206.46,
+      "start_formatted": "00:03:24.600",
+      "end_formatted": "00:03:26.460",
+      "text": "On the Lost Details page.",
+      "words": [
+        {
+          "word": "On",
+          "start": 204.6,
+          "end": 205.2,
+          "probability": 0.9805
+        },
+        {
+          "word": "the",
+          "start": 205.2,
+          "end": 205.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "Lost",
+          "start": 205.3,
+          "end": 205.54,
+          "probability": 0.5454
+        },
+        {
+          "word": "Details",
+          "start": 205.54,
+          "end": 206.0,
+          "probability": 0.9624
+        },
+        {
+          "word": "page.",
+          "start": 206.0,
+          "end": 206.46,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 208.5,
+      "end": 209.4,
+      "start_formatted": "00:03:28.500",
+      "end_formatted": "00:03:29.400",
+      "text": "I click Edit.",
+      "words": [
+        {
+          "word": "I",
+          "start": 208.5,
+          "end": 208.9,
+          "probability": 0.9756
+        },
+        {
+          "word": "click",
+          "start": 208.9,
+          "end": 209.18,
+          "probability": 0.9766
+        },
+        {
+          "word": "Edit.",
+          "start": 209.18,
+          "end": 209.4,
+          "probability": 0.468
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 211.52,
+      "end": 214.68,
+      "start_formatted": "00:03:31.520",
+      "end_formatted": "00:03:34.680",
+      "text": "The Add and Remove buttons are visible to the adjuster.",
+      "words": [
+        {
+          "word": "The",
+          "start": 211.52,
+          "end": 212.06,
+          "probability": 0.9858
+        },
+        {
+          "word": "Add",
+          "start": 212.06,
+          "end": 212.28,
+          "probability": 0.7646
+        },
+        {
+          "word": "and",
+          "start": 212.28,
+          "end": 212.38,
+          "probability": 0.7959
+        },
+        {
+          "word": "Remove",
+          "start": 212.38,
+          "end": 212.78,
+          "probability": 0.9526
+        },
+        {
+          "word": "buttons",
+          "start": 212.78,
+          "end": 213.2,
+          "probability": 0.9883
+        },
+        {
+          "word": "are",
+          "start": 213.2,
+          "end": 213.38,
+          "probability": 0.999
+        },
+        {
+          "word": "visible",
+          "start": 213.38,
+          "end": 213.76,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 213.76,
+          "end": 213.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 213.96,
+          "end": 214.1,
+          "probability": 0.998
+        },
+        {
+          "word": "adjuster.",
+          "start": 214.1,
+          "end": 214.68,
+          "probability": 0.9551
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 214.96,
+      "end": 218.76,
+      "start_formatted": "00:03:34.960",
+      "end_formatted": "00:03:38.760",
+      "text": "Remove is not currently available because there is nothing selected to remove.",
+      "words": [
+        {
+          "word": "Remove",
+          "start": 214.96,
+          "end": 215.46,
+          "probability": 0.9785
+        },
+        {
+          "word": "is",
+          "start": 215.46,
+          "end": 215.62,
+          "probability": 0.9883
+        },
+        {
+          "word": "not",
+          "start": 215.62,
+          "end": 215.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "currently",
+          "start": 215.82,
+          "end": 216.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "available",
+          "start": 216.24,
+          "end": 216.7,
+          "probability": 0.999
+        },
+        {
+          "word": "because",
+          "start": 216.7,
+          "end": 217.06,
+          "probability": 0.9854
+        },
+        {
+          "word": "there",
+          "start": 217.06,
+          "end": 217.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 217.32,
+          "end": 217.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "nothing",
+          "start": 217.46,
+          "end": 217.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "selected",
+          "start": 217.72,
+          "end": 218.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 218.24,
+          "end": 218.42,
+          "probability": 0.999
+        },
+        {
+          "word": "remove.",
+          "start": 218.42,
+          "end": 218.76,
+          "probability": 0.9258
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 227.12,
+      "end": 230.28,
+      "start_formatted": "00:03:47.120",
+      "end_formatted": "00:03:50.280",
+      "text": "Now I'll log in as Sue Smith, a claims supervisor.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 227.12,
+          "end": 227.66,
+          "probability": 0.9805
+        },
+        {
+          "word": "I'll",
+          "start": 227.66,
+          "end": 227.9,
+          "probability": 0.9609
+        },
+        {
+          "word": "log",
+          "start": 227.9,
+          "end": 228.1,
+          "probability": 0.5698
+        },
+        {
+          "word": "in",
+          "start": 228.1,
+          "end": 228.2,
+          "probability": 0.9771
+        },
+        {
+          "word": "as",
+          "start": 228.2,
+          "end": 228.34,
+          "probability": 0.9443
+        },
+        {
+          "word": "Sue",
+          "start": 228.34,
+          "end": 228.54,
+          "probability": 0.9526
+        },
+        {
+          "word": "Smith,",
+          "start": 228.54,
+          "end": 228.94,
+          "probability": 0.9858
+        },
+        {
+          "word": "a",
+          "start": 229.12,
+          "end": 229.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "claims",
+          "start": 229.36,
+          "end": 229.58,
+          "probability": 0.667
+        },
+        {
+          "word": "supervisor.",
+          "start": 229.58,
+          "end": 230.28,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 238.5,
+      "end": 240.36,
+      "start_formatted": "00:03:58.500",
+      "end_formatted": "00:04:00.360",
+      "text": "I'll navigate to the same claim.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 238.5,
+          "end": 238.92,
+          "probability": 0.9688
+        },
+        {
+          "word": "navigate",
+          "start": 238.92,
+          "end": 239.32,
+          "probability": 0.9834
+        },
+        {
+          "word": "to",
+          "start": 239.32,
+          "end": 239.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 239.62,
+          "end": 239.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "same",
+          "start": 239.76,
+          "end": 240.0,
+          "probability": 0.9927
+        },
+        {
+          "word": "claim.",
+          "start": 240.0,
+          "end": 240.36,
+          "probability": 0.9639
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 240.36,
+      "end": 240.38,
+      "start_formatted": "00:04:00.360",
+      "end_formatted": "00:04:00.380",
+      "text": "I'll navigate to the same claim.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 240.36,
+          "end": 240.36,
+          "probability": 0.3333
+        },
+        {
+          "word": "navigate",
+          "start": 240.36,
+          "end": 240.36,
+          "probability": 0.2678
+        },
+        {
+          "word": "to",
+          "start": 240.36,
+          "end": 240.36,
+          "probability": 0.8911
+        },
+        {
+          "word": "the",
+          "start": 240.36,
+          "end": 240.36,
+          "probability": 0.9585
+        },
+        {
+          "word": "same",
+          "start": 240.36,
+          "end": 240.36,
+          "probability": 0.8652
+        },
+        {
+          "word": "claim.",
+          "start": 240.36,
+          "end": 240.38,
+          "probability": 0.9111
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 250.5,
+      "end": 252.46,
+      "start_formatted": "00:04:10.500",
+      "end_formatted": "00:04:12.460",
+      "text": "And the Lost Details screen.",
+      "words": [
+        {
+          "word": "And",
+          "start": 250.5,
+          "end": 251.24,
+          "probability": 0.6309
+        },
+        {
+          "word": "the",
+          "start": 251.24,
+          "end": 251.34,
+          "probability": 0.9551
+        },
+        {
+          "word": "Lost",
+          "start": 251.34,
+          "end": 251.56,
+          "probability": 0.4683
+        },
+        {
+          "word": "Details",
+          "start": 251.56,
+          "end": 252.02,
+          "probability": 0.8906
+        },
+        {
+          "word": "screen.",
+          "start": 252.02,
+          "end": 252.46,
+          "probability": 0.9429
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 254.14,
+      "end": 255.44,
+      "start_formatted": "00:04:14.140",
+      "end_formatted": "00:04:15.440",
+      "text": "When I click Edit.",
+      "words": [
+        {
+          "word": "When",
+          "start": 254.14,
+          "end": 254.88,
+          "probability": 0.9502
+        },
+        {
+          "word": "I",
+          "start": 254.88,
+          "end": 254.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 254.98,
+          "end": 255.24,
+          "probability": 0.9678
+        },
+        {
+          "word": "Edit.",
+          "start": 255.24,
+          "end": 255.44,
+          "probability": 0.6904
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 257.24,
+      "end": 259.92,
+      "start_formatted": "00:04:17.240",
+      "end_formatted": "00:04:19.920",
+      "text": "The Add and Remove buttons are not visible.",
+      "words": [
+        {
+          "word": "The",
+          "start": 257.24,
+          "end": 257.98,
+          "probability": 0.9443
+        },
+        {
+          "word": "Add",
+          "start": 257.98,
+          "end": 258.2,
+          "probability": 0.7773
+        },
+        {
+          "word": "and",
+          "start": 258.2,
+          "end": 258.32,
+          "probability": 0.8306
+        },
+        {
+          "word": "Remove",
+          "start": 258.32,
+          "end": 258.7,
+          "probability": 0.9175
+        },
+        {
+          "word": "buttons",
+          "start": 258.7,
+          "end": 259.14,
+          "probability": 0.9805
+        },
+        {
+          "word": "are",
+          "start": 259.14,
+          "end": 259.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "not",
+          "start": 259.3,
+          "end": 259.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "visible.",
+          "start": 259.48,
+          "end": 259.92,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 262.16,
+      "end": 263.56,
+      "start_formatted": "00:04:22.160",
+      "end_formatted": "00:04:23.560",
+      "text": "It'sountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "It'sountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 262.16,
+          "end": 263.56,
+          "probability": 0.9131
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 263.54,
+      "end": 263.54,
+      "start_formatted": "00:04:23.540",
+      "end_formatted": "00:04:23.540",
+      "text": "",
+      "words": []
+    }
+  ]
+}

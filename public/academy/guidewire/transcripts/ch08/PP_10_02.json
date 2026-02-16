@@ -1,0 +1,1684 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_10_02.mp4",
+    "video_stem": "PP_10_02",
+    "duration_seconds": 112.28,
+    "duration_formatted": "00:01:52.280",
+    "segment_count": 7,
+    "word_count": 264,
+    "avg_confidence": 0.895,
+    "transcription_time_seconds": 12.77,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:29:42.570709"
+  },
+  "full_text": "We will show you how to check the permissions using Gosu. On the Team Forward page, the CanVisit attribute checks if the user has the system permission, ViewDim to view the Team tab. If the expression evaluates to True, the Team tab is visible. Perm is a Gosu namespace used to create expressions that evaluate if current user has a given permission. In PolicyCenter, login is Alice Applegate. The Team tab is not available to Alice Applegate. because she does not have the ViewDim permissions. Log in a Supervisor Steve Smith. The Team tab is available to Steve Smith because he has the Underwriter Supervisor role and it has the ViewDim permission. In Studio, we will update the editability of the Affinity Group field with the new permission we created earlier. Open the PolicyInfo Input Set PCF file. Select the Affinity Group Input field. Select the Address. In the Editable property, type in the expression perm.system.editAffinityGroup underscore ext, which tests if the user has the new EditAffinityGroup permission. Save the file. Select the Address. Save the file. In PolicyCenter, press Alt plus Shift plus L to reload the PCF changes. Log in as an Underwriter Alice Applegate. Open a Policy Transaction in Draft Mode and go to the Policy Info page. User Alice Applegate has the Underwriter role and can edit the Affinity Group field. Log in as Dennis Wright. User Dennis Wright has the Underwriter Assistant role, which does not have the new permission, so he cannot edit the Affinity Group field. This is the end of demonstration for checking permissions using Gosu. ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.6,
+      "end": 29.98,
+      "start_formatted": "00:00:00.600",
+      "end_formatted": "00:00:29.980",
+      "text": "We will show you how to check the permissions using Gosu. On the Team Forward page, the CanVisit attribute checks if the user has the system permission, ViewDim to view the Team tab. If the expression evaluates to True, the Team tab is visible. Perm is a Gosu namespace used to create expressions that evaluate if current user has a given permission. In PolicyCenter, login is Alice Applegate. The Team tab is not available to Alice Applegate.",
+      "words": [
+        {
+          "word": "We",
+          "start": 0.6,
+          "end": 1.18,
+          "probability": 0.8979
+        },
+        {
+          "word": "will",
+          "start": 1.18,
+          "end": 1.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "show",
+          "start": 1.36,
+          "end": 1.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "you",
+          "start": 1.54,
+          "end": 1.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "how",
+          "start": 1.74,
+          "end": 1.94,
+          "probability": 0.9917
+        },
+        {
+          "word": "to",
+          "start": 1.94,
+          "end": 2.14,
+          "probability": 0.999
+        },
+        {
+          "word": "check",
+          "start": 2.14,
+          "end": 2.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 2.38,
+          "end": 2.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "permissions",
+          "start": 2.56,
+          "end": 3.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "using",
+          "start": 3.02,
+          "end": 3.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "Gosu.",
+          "start": 3.48,
+          "end": 3.96,
+          "probability": 0.7783
+        },
+        {
+          "word": "On",
+          "start": 4.2,
+          "end": 4.62,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 4.62,
+          "end": 4.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "Team",
+          "start": 4.74,
+          "end": 4.98,
+          "probability": 0.6309
+        },
+        {
+          "word": "Forward",
+          "start": 4.98,
+          "end": 5.46,
+          "probability": 0.8491
+        },
+        {
+          "word": "page,",
+          "start": 5.46,
+          "end": 6.04,
+          "probability": 0.9741
+        },
+        {
+          "word": "the",
+          "start": 6.24,
+          "end": 6.46,
+          "probability": 0.9824
+        },
+        {
+          "word": "CanVisit",
+          "start": 6.46,
+          "end": 7.04,
+          "probability": 0.7812
+        },
+        {
+          "word": "attribute",
+          "start": 7.04,
+          "end": 7.42,
+          "probability": 0.9492
+        },
+        {
+          "word": "checks",
+          "start": 7.42,
+          "end": 7.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "if",
+          "start": 7.9,
+          "end": 8.18,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 8.18,
+          "end": 8.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "user",
+          "start": 8.34,
+          "end": 8.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "has",
+          "start": 8.66,
+          "end": 8.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 8.94,
+          "end": 9.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "system",
+          "start": 9.12,
+          "end": 9.46,
+          "probability": 0.9053
+        },
+        {
+          "word": "permission,",
+          "start": 9.46,
+          "end": 9.98,
+          "probability": 0.9912
+        },
+        {
+          "word": "ViewDim",
+          "start": 10.32,
+          "end": 10.8,
+          "probability": 0.5527
+        },
+        {
+          "word": "to",
+          "start": 10.8,
+          "end": 10.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "view",
+          "start": 10.94,
+          "end": 11.14,
+          "probability": 0.9736
+        },
+        {
+          "word": "the",
+          "start": 11.14,
+          "end": 11.34,
+          "probability": 0.999
+        },
+        {
+          "word": "Team",
+          "start": 11.34,
+          "end": 11.5,
+          "probability": 0.8955
+        },
+        {
+          "word": "tab.",
+          "start": 11.5,
+          "end": 11.76,
+          "probability": 0.9575
+        },
+        {
+          "word": "If",
+          "start": 12.16,
+          "end": 12.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 12.54,
+          "end": 12.68,
+          "probability": 0.999
+        },
+        {
+          "word": "expression",
+          "start": 12.68,
+          "end": 13.18,
+          "probability": 0.9824
+        },
+        {
+          "word": "evaluates",
+          "start": 13.18,
+          "end": 14.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "to",
+          "start": 14.04,
+          "end": 14.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "True,",
+          "start": 14.22,
+          "end": 14.46,
+          "probability": 0.6182
+        },
+        {
+          "word": "the",
+          "start": 14.78,
+          "end": 15.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "Team",
+          "start": 15.06,
+          "end": 15.32,
+          "probability": 0.9702
+        },
+        {
+          "word": "tab",
+          "start": 15.32,
+          "end": 15.64,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 15.64,
+          "end": 15.86,
+          "probability": 1.0
+        },
+        {
+          "word": "visible.",
+          "start": 15.86,
+          "end": 16.3,
+          "probability": 0.9922
+        },
+        {
+          "word": "Perm",
+          "start": 16.82,
+          "end": 16.96,
+          "probability": 0.8389
+        },
+        {
+          "word": "is",
+          "start": 16.96,
+          "end": 17.18,
+          "probability": 0.9834
+        },
+        {
+          "word": "a",
+          "start": 17.18,
+          "end": 17.3,
+          "probability": 0.998
+        },
+        {
+          "word": "Gosu",
+          "start": 17.3,
+          "end": 17.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "namespace",
+          "start": 17.66,
+          "end": 18.28,
+          "probability": 0.9902
+        },
+        {
+          "word": "used",
+          "start": 18.28,
+          "end": 18.66,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 18.66,
+          "end": 18.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 18.92,
+          "end": 19.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "expressions",
+          "start": 19.3,
+          "end": 19.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 19.92,
+          "end": 20.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "evaluate",
+          "start": 20.18,
+          "end": 20.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "if",
+          "start": 20.72,
+          "end": 21.02,
+          "probability": 0.999
+        },
+        {
+          "word": "current",
+          "start": 21.02,
+          "end": 21.34,
+          "probability": 0.9204
+        },
+        {
+          "word": "user",
+          "start": 21.34,
+          "end": 21.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 21.66,
+          "end": 21.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 21.94,
+          "end": 22.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "given",
+          "start": 22.08,
+          "end": 22.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "permission.",
+          "start": 22.32,
+          "end": 22.82,
+          "probability": 0.999
+        },
+        {
+          "word": "In",
+          "start": 23.36,
+          "end": 23.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "PolicyCenter,",
+          "start": 23.72,
+          "end": 24.62,
+          "probability": 0.6987
+        },
+        {
+          "word": "login",
+          "start": 24.82,
+          "end": 25.3,
+          "probability": 0.6265
+        },
+        {
+          "word": "is",
+          "start": 25.3,
+          "end": 25.54,
+          "probability": 0.7661
+        },
+        {
+          "word": "Alice",
+          "start": 25.54,
+          "end": 25.82,
+          "probability": 0.9517
+        },
+        {
+          "word": "Applegate.",
+          "start": 25.82,
+          "end": 26.52,
+          "probability": 0.8926
+        },
+        {
+          "word": "The",
+          "start": 27.1,
+          "end": 27.68,
+          "probability": 0.9551
+        },
+        {
+          "word": "Team",
+          "start": 27.68,
+          "end": 27.98,
+          "probability": 0.979
+        },
+        {
+          "word": "tab",
+          "start": 27.98,
+          "end": 28.28,
+          "probability": 0.9902
+        },
+        {
+          "word": "is",
+          "start": 28.28,
+          "end": 28.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 28.48,
+          "end": 28.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "available",
+          "start": 28.68,
+          "end": 29.24,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 29.24,
+          "end": 29.52,
+          "probability": 0.999
+        },
+        {
+          "word": "Alice",
+          "start": 29.52,
+          "end": 29.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "Applegate.",
+          "start": 29.86,
+          "end": 29.98,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 57.32,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:57.320",
+      "text": "because she does not have the ViewDim permissions. Log in a Supervisor Steve Smith. The Team tab is available to Steve Smith because he has the Underwriter Supervisor role and it has the ViewDim permission. In Studio, we will update the editability of the Affinity Group field with the new permission we created earlier. Open the PolicyInfo Input Set PCF file. Select the Affinity Group Input field.",
+      "words": [
+        {
+          "word": "because",
+          "start": 29.98,
+          "end": 30.76,
+          "probability": 0.2664
+        },
+        {
+          "word": "she",
+          "start": 30.76,
+          "end": 31.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "does",
+          "start": 31.04,
+          "end": 31.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "not",
+          "start": 31.22,
+          "end": 31.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "have",
+          "start": 31.44,
+          "end": 31.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 31.72,
+          "end": 31.84,
+          "probability": 0.9878
+        },
+        {
+          "word": "ViewDim",
+          "start": 31.84,
+          "end": 32.26,
+          "probability": 0.4155
+        },
+        {
+          "word": "permissions.",
+          "start": 32.26,
+          "end": 32.72,
+          "probability": 0.9839
+        },
+        {
+          "word": "Log",
+          "start": 33.2,
+          "end": 33.86,
+          "probability": 0.9106
+        },
+        {
+          "word": "in",
+          "start": 33.86,
+          "end": 34.08,
+          "probability": 0.6138
+        },
+        {
+          "word": "a",
+          "start": 34.08,
+          "end": 34.18,
+          "probability": 0.8169
+        },
+        {
+          "word": "Supervisor",
+          "start": 34.18,
+          "end": 34.78,
+          "probability": 0.6499
+        },
+        {
+          "word": "Steve",
+          "start": 34.78,
+          "end": 35.14,
+          "probability": 0.9224
+        },
+        {
+          "word": "Smith.",
+          "start": 35.14,
+          "end": 35.62,
+          "probability": 0.9917
+        },
+        {
+          "word": "The",
+          "start": 36.82,
+          "end": 37.5,
+          "probability": 0.9775
+        },
+        {
+          "word": "Team",
+          "start": 37.5,
+          "end": 37.78,
+          "probability": 0.5688
+        },
+        {
+          "word": "tab",
+          "start": 37.78,
+          "end": 38.06,
+          "probability": 0.9189
+        },
+        {
+          "word": "is",
+          "start": 38.06,
+          "end": 38.28,
+          "probability": 0.999
+        },
+        {
+          "word": "available",
+          "start": 38.28,
+          "end": 38.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 38.76,
+          "end": 39.02,
+          "probability": 0.998
+        },
+        {
+          "word": "Steve",
+          "start": 39.02,
+          "end": 39.32,
+          "probability": 0.9927
+        },
+        {
+          "word": "Smith",
+          "start": 39.32,
+          "end": 39.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "because",
+          "start": 39.78,
+          "end": 40.14,
+          "probability": 0.9697
+        },
+        {
+          "word": "he",
+          "start": 40.14,
+          "end": 40.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "has",
+          "start": 40.36,
+          "end": 40.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 40.56,
+          "end": 40.74,
+          "probability": 0.9922
+        },
+        {
+          "word": "Underwriter",
+          "start": 40.74,
+          "end": 41.28,
+          "probability": 0.9141
+        },
+        {
+          "word": "Supervisor",
+          "start": 41.28,
+          "end": 42.06,
+          "probability": 0.8477
+        },
+        {
+          "word": "role",
+          "start": 42.06,
+          "end": 42.46,
+          "probability": 0.9688
+        },
+        {
+          "word": "and",
+          "start": 42.46,
+          "end": 42.8,
+          "probability": 0.9653
+        },
+        {
+          "word": "it",
+          "start": 42.8,
+          "end": 42.94,
+          "probability": 0.9907
+        },
+        {
+          "word": "has",
+          "start": 42.94,
+          "end": 43.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 43.1,
+          "end": 43.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "ViewDim",
+          "start": 43.28,
+          "end": 43.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "permission.",
+          "start": 43.68,
+          "end": 44.12,
+          "probability": 0.9585
+        },
+        {
+          "word": "In",
+          "start": 44.52,
+          "end": 45.02,
+          "probability": 0.9912
+        },
+        {
+          "word": "Studio,",
+          "start": 45.02,
+          "end": 45.4,
+          "probability": 0.6733
+        },
+        {
+          "word": "we",
+          "start": 45.66,
+          "end": 45.9,
+          "probability": 0.9751
+        },
+        {
+          "word": "will",
+          "start": 45.9,
+          "end": 46.1,
+          "probability": 0.999
+        },
+        {
+          "word": "update",
+          "start": 46.1,
+          "end": 46.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 46.48,
+          "end": 46.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "editability",
+          "start": 46.68,
+          "end": 47.24,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 47.24,
+          "end": 47.58,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 47.58,
+          "end": 47.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "Affinity",
+          "start": 47.7,
+          "end": 48.08,
+          "probability": 0.8018
+        },
+        {
+          "word": "Group",
+          "start": 48.08,
+          "end": 48.32,
+          "probability": 0.7949
+        },
+        {
+          "word": "field",
+          "start": 48.32,
+          "end": 48.68,
+          "probability": 0.9727
+        },
+        {
+          "word": "with",
+          "start": 48.68,
+          "end": 48.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 48.92,
+          "end": 49.08,
+          "probability": 0.9775
+        },
+        {
+          "word": "new",
+          "start": 49.08,
+          "end": 49.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "permission",
+          "start": 49.28,
+          "end": 49.68,
+          "probability": 0.9766
+        },
+        {
+          "word": "we",
+          "start": 49.68,
+          "end": 49.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "created",
+          "start": 49.92,
+          "end": 50.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "earlier.",
+          "start": 50.34,
+          "end": 50.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "Open",
+          "start": 51.14,
+          "end": 51.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 51.66,
+          "end": 51.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "PolicyInfo",
+          "start": 51.82,
+          "end": 52.72,
+          "probability": 0.6934
+        },
+        {
+          "word": "Input",
+          "start": 52.72,
+          "end": 53.28,
+          "probability": 0.6006
+        },
+        {
+          "word": "Set",
+          "start": 53.28,
+          "end": 53.54,
+          "probability": 0.5049
+        },
+        {
+          "word": "PCF",
+          "start": 53.54,
+          "end": 54.22,
+          "probability": 0.8486
+        },
+        {
+          "word": "file.",
+          "start": 54.22,
+          "end": 54.56,
+          "probability": 0.8828
+        },
+        {
+          "word": "Select",
+          "start": 54.9,
+          "end": 55.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 55.52,
+          "end": 55.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "Affinity",
+          "start": 55.7,
+          "end": 56.1,
+          "probability": 0.981
+        },
+        {
+          "word": "Group",
+          "start": 56.1,
+          "end": 56.4,
+          "probability": 0.9399
+        },
+        {
+          "word": "Input",
+          "start": 56.4,
+          "end": 56.9,
+          "probability": 0.9443
+        },
+        {
+          "word": "field.",
+          "start": 56.9,
+          "end": 57.32,
+          "probability": 0.979
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 61.04,
+      "end": 74.06,
+      "start_formatted": "00:01:01.040",
+      "end_formatted": "00:01:14.060",
+      "text": "Select the Address. In the Editable property, type in the expression perm.system.editAffinityGroup underscore ext, which tests if the user has the new EditAffinityGroup permission. Save the file.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 61.04,
+          "end": 61.72,
+          "probability": 0.0003
+        },
+        {
+          "word": "the",
+          "start": 61.72,
+          "end": 61.72,
+          "probability": 0.2734
+        },
+        {
+          "word": "Address.",
+          "start": 61.72,
+          "end": 61.72,
+          "probability": 0.0942
+        },
+        {
+          "word": "In",
+          "start": 61.72,
+          "end": 61.72,
+          "probability": 0.3311
+        },
+        {
+          "word": "the",
+          "start": 61.72,
+          "end": 61.84,
+          "probability": 0.9668
+        },
+        {
+          "word": "Editable",
+          "start": 61.84,
+          "end": 62.38,
+          "probability": 0.5669
+        },
+        {
+          "word": "property,",
+          "start": 62.38,
+          "end": 62.84,
+          "probability": 0.9004
+        },
+        {
+          "word": "type",
+          "start": 63.08,
+          "end": 63.4,
+          "probability": 0.9756
+        },
+        {
+          "word": "in",
+          "start": 63.4,
+          "end": 63.58,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 63.58,
+          "end": 63.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "expression",
+          "start": 63.66,
+          "end": 64.22,
+          "probability": 0.9756
+        },
+        {
+          "word": "perm",
+          "start": 64.22,
+          "end": 64.64,
+          "probability": 0.3643
+        },
+        {
+          "word": ".system",
+          "start": 64.64,
+          "end": 65.36,
+          "probability": 0.8979
+        },
+        {
+          "word": ".editAffinityGroup",
+          "start": 65.36,
+          "end": 66.84,
+          "probability": 0.8794
+        },
+        {
+          "word": "underscore",
+          "start": 66.84,
+          "end": 67.2,
+          "probability": 0.0112
+        },
+        {
+          "word": "ext,",
+          "start": 67.2,
+          "end": 67.94,
+          "probability": 0.4502
+        },
+        {
+          "word": "which",
+          "start": 68.24,
+          "end": 68.48,
+          "probability": 0.9888
+        },
+        {
+          "word": "tests",
+          "start": 68.48,
+          "end": 68.88,
+          "probability": 0.9902
+        },
+        {
+          "word": "if",
+          "start": 68.88,
+          "end": 69.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 69.14,
+          "end": 69.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "user",
+          "start": 69.28,
+          "end": 69.6,
+          "probability": 0.9863
+        },
+        {
+          "word": "has",
+          "start": 69.6,
+          "end": 69.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 69.88,
+          "end": 70.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "new",
+          "start": 70.04,
+          "end": 70.24,
+          "probability": 0.9805
+        },
+        {
+          "word": "EditAffinityGroup",
+          "start": 70.24,
+          "end": 71.24,
+          "probability": 0.9565
+        },
+        {
+          "word": "permission.",
+          "start": 71.24,
+          "end": 71.74,
+          "probability": 0.9766
+        },
+        {
+          "word": "Save",
+          "start": 72.88,
+          "end": 73.56,
+          "probability": 0.9512
+        },
+        {
+          "word": "the",
+          "start": 73.56,
+          "end": 73.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "file.",
+          "start": 73.72,
+          "end": 74.06,
+          "probability": 0.917
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 76.6,
+      "end": 85.14,
+      "start_formatted": "00:01:16.600",
+      "end_formatted": "00:01:25.140",
+      "text": "Select the Address. Save the file. In PolicyCenter, press Alt plus Shift plus L to reload the PCF changes. Log in as an Underwriter Alice Applegate.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 76.6,
+          "end": 77.28,
+          "probability": 0.0067
+        },
+        {
+          "word": "the",
+          "start": 77.28,
+          "end": 77.28,
+          "probability": 0.6509
+        },
+        {
+          "word": "Address.",
+          "start": 77.28,
+          "end": 77.28,
+          "probability": 0.6377
+        },
+        {
+          "word": "Save",
+          "start": 77.28,
+          "end": 77.28,
+          "probability": 0.0041
+        },
+        {
+          "word": "the",
+          "start": 77.28,
+          "end": 77.28,
+          "probability": 0.7861
+        },
+        {
+          "word": "file.",
+          "start": 77.28,
+          "end": 77.28,
+          "probability": 0.2539
+        },
+        {
+          "word": "In",
+          "start": 77.28,
+          "end": 77.28,
+          "probability": 0.426
+        },
+        {
+          "word": "PolicyCenter,",
+          "start": 77.28,
+          "end": 78.18,
+          "probability": 0.6636
+        },
+        {
+          "word": "press",
+          "start": 78.36,
+          "end": 78.74,
+          "probability": 0.896
+        },
+        {
+          "word": "Alt",
+          "start": 78.74,
+          "end": 78.96,
+          "probability": 0.8555
+        },
+        {
+          "word": "plus",
+          "start": 78.96,
+          "end": 79.26,
+          "probability": 0.0241
+        },
+        {
+          "word": "Shift",
+          "start": 79.26,
+          "end": 79.58,
+          "probability": 0.9736
+        },
+        {
+          "word": "plus",
+          "start": 79.58,
+          "end": 79.86,
+          "probability": 0.9712
+        },
+        {
+          "word": "L",
+          "start": 79.86,
+          "end": 80.12,
+          "probability": 0.978
+        },
+        {
+          "word": "to",
+          "start": 80.12,
+          "end": 80.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "reload",
+          "start": 80.3,
+          "end": 80.64,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 80.64,
+          "end": 80.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "PCF",
+          "start": 80.84,
+          "end": 81.42,
+          "probability": 0.9531
+        },
+        {
+          "word": "changes.",
+          "start": 81.42,
+          "end": 81.96,
+          "probability": 0.9868
+        },
+        {
+          "word": "Log",
+          "start": 82.36,
+          "end": 82.96,
+          "probability": 0.7803
+        },
+        {
+          "word": "in",
+          "start": 82.96,
+          "end": 83.24,
+          "probability": 0.8354
+        },
+        {
+          "word": "as",
+          "start": 83.24,
+          "end": 83.4,
+          "probability": 0.9844
+        },
+        {
+          "word": "an",
+          "start": 83.4,
+          "end": 83.54,
+          "probability": 0.978
+        },
+        {
+          "word": "Underwriter",
+          "start": 83.54,
+          "end": 84.06,
+          "probability": 0.627
+        },
+        {
+          "word": "Alice",
+          "start": 84.06,
+          "end": 84.44,
+          "probability": 0.7329
+        },
+        {
+          "word": "Applegate.",
+          "start": 84.44,
+          "end": 85.14,
+          "probability": 0.9604
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 86.32,
+      "end": 98.14,
+      "start_formatted": "00:01:26.320",
+      "end_formatted": "00:01:38.140",
+      "text": "Open a Policy Transaction in Draft Mode and go to the Policy Info page. User Alice Applegate has the Underwriter role and can edit the Affinity Group field. Log in as Dennis Wright.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 86.32,
+          "end": 86.92,
+          "probability": 0.8984
+        },
+        {
+          "word": "a",
+          "start": 86.92,
+          "end": 87.06,
+          "probability": 0.7729
+        },
+        {
+          "word": "Policy",
+          "start": 87.06,
+          "end": 87.48,
+          "probability": 0.1831
+        },
+        {
+          "word": "Transaction",
+          "start": 87.48,
+          "end": 88.28,
+          "probability": 0.9053
+        },
+        {
+          "word": "in",
+          "start": 88.28,
+          "end": 88.54,
+          "probability": 0.9849
+        },
+        {
+          "word": "Draft",
+          "start": 88.54,
+          "end": 88.9,
+          "probability": 0.833
+        },
+        {
+          "word": "Mode",
+          "start": 88.9,
+          "end": 89.16,
+          "probability": 0.626
+        },
+        {
+          "word": "and",
+          "start": 89.16,
+          "end": 89.42,
+          "probability": 0.9888
+        },
+        {
+          "word": "go",
+          "start": 89.42,
+          "end": 89.66,
+          "probability": 0.9585
+        },
+        {
+          "word": "to",
+          "start": 89.66,
+          "end": 89.84,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 89.84,
+          "end": 89.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "Policy",
+          "start": 89.96,
+          "end": 90.36,
+          "probability": 0.8896
+        },
+        {
+          "word": "Info",
+          "start": 90.36,
+          "end": 90.84,
+          "probability": 0.9868
+        },
+        {
+          "word": "page.",
+          "start": 90.84,
+          "end": 91.22,
+          "probability": 0.7725
+        },
+        {
+          "word": "User",
+          "start": 91.74,
+          "end": 92.08,
+          "probability": 0.9683
+        },
+        {
+          "word": "Alice",
+          "start": 92.08,
+          "end": 92.38,
+          "probability": 0.8325
+        },
+        {
+          "word": "Applegate",
+          "start": 92.38,
+          "end": 93.0,
+          "probability": 0.9644
+        },
+        {
+          "word": "has",
+          "start": 93.0,
+          "end": 93.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 93.2,
+          "end": 93.38,
+          "probability": 0.998
+        },
+        {
+          "word": "Underwriter",
+          "start": 93.38,
+          "end": 93.92,
+          "probability": 0.8984
+        },
+        {
+          "word": "role",
+          "start": 93.92,
+          "end": 94.28,
+          "probability": 0.9009
+        },
+        {
+          "word": "and",
+          "start": 94.28,
+          "end": 94.48,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 94.48,
+          "end": 94.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "edit",
+          "start": 94.68,
+          "end": 94.94,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 94.94,
+          "end": 95.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "Affinity",
+          "start": 95.1,
+          "end": 95.48,
+          "probability": 0.896
+        },
+        {
+          "word": "Group",
+          "start": 95.48,
+          "end": 95.76,
+          "probability": 0.8677
+        },
+        {
+          "word": "field.",
+          "start": 95.76,
+          "end": 96.2,
+          "probability": 0.9805
+        },
+        {
+          "word": "Log",
+          "start": 96.6,
+          "end": 97.14,
+          "probability": 0.9854
+        },
+        {
+          "word": "in",
+          "start": 97.14,
+          "end": 97.38,
+          "probability": 0.8564
+        },
+        {
+          "word": "as",
+          "start": 97.38,
+          "end": 97.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "Dennis",
+          "start": 97.56,
+          "end": 97.8,
+          "probability": 0.9248
+        },
+        {
+          "word": "Wright.",
+          "start": 97.8,
+          "end": 98.14,
+          "probability": 0.9536
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 100.38,
+      "end": 112.3,
+      "start_formatted": "00:01:40.380",
+      "end_formatted": "00:01:52.300",
+      "text": "User Dennis Wright has the Underwriter Assistant role, which does not have the new permission, so he cannot edit the Affinity Group field. This is the end of demonstration for checking permissions using Gosu.",
+      "words": [
+        {
+          "word": "User",
+          "start": 100.38,
+          "end": 100.98,
+          "probability": 0.9824
+        },
+        {
+          "word": "Dennis",
+          "start": 100.98,
+          "end": 101.24,
+          "probability": 0.999
+        },
+        {
+          "word": "Wright",
+          "start": 101.24,
+          "end": 101.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 101.64,
+          "end": 101.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 101.84,
+          "end": 102.0,
+          "probability": 1.0
+        },
+        {
+          "word": "Underwriter",
+          "start": 102.0,
+          "end": 102.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "Assistant",
+          "start": 102.56,
+          "end": 103.0,
+          "probability": 0.9453
+        },
+        {
+          "word": "role,",
+          "start": 103.0,
+          "end": 103.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 103.56,
+          "end": 103.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "does",
+          "start": 103.84,
+          "end": 104.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 104.06,
+          "end": 104.34,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 104.34,
+          "end": 104.6,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 104.6,
+          "end": 104.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 104.74,
+          "end": 104.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "permission,",
+          "start": 104.92,
+          "end": 105.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "so",
+          "start": 105.66,
+          "end": 106.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 106.0,
+          "end": 106.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "cannot",
+          "start": 106.2,
+          "end": 106.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "edit",
+          "start": 106.5,
+          "end": 106.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 106.82,
+          "end": 107.02,
+          "probability": 1.0
+        },
+        {
+          "word": "Affinity",
+          "start": 107.02,
+          "end": 107.4,
+          "probability": 0.9922
+        },
+        {
+          "word": "Group",
+          "start": 107.4,
+          "end": 107.66,
+          "probability": 0.979
+        },
+        {
+          "word": "field.",
+          "start": 107.66,
+          "end": 108.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 108.36,
+          "end": 108.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 108.9,
+          "end": 109.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 109.02,
+          "end": 109.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "end",
+          "start": 109.16,
+          "end": 109.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 109.44,
+          "end": 109.58,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 109.58,
+          "end": 110.14,
+          "probability": 0.9829
+        },
+        {
+          "word": "for",
+          "start": 110.14,
+          "end": 110.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "checking",
+          "start": 110.56,
+          "end": 110.9,
+          "probability": 0.9619
+        },
+        {
+          "word": "permissions",
+          "start": 110.9,
+          "end": 111.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "using",
+          "start": 111.5,
+          "end": 111.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "Gosu.",
+          "start": 111.94,
+          "end": 112.3,
+          "probability": 0.0127
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 112.28,
+      "end": 112.28,
+      "start_formatted": "00:01:52.280",
+      "end_formatted": "00:01:52.280",
+      "text": "",
+      "words": []
+    }
+  ]
+}

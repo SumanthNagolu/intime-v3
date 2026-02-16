@@ -1,0 +1,2257 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_17_01.mp4",
+    "video_stem": "In_Policy_17_01",
+    "duration_seconds": 150.12,
+    "duration_formatted": "00:02:30.120",
+    "segment_count": 18,
+    "word_count": 337,
+    "avg_confidence": 0.9793,
+    "transcription_time_seconds": 9.2,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:34:33.198422"
+  },
+  "full_text": "In this demonstration, I will show you how the product model relates to PolicyCenter at a high level. This is a PolicyCenter screen. I am going to access Ray Newton's account. I am going to do a quick quote for a personal auto policy for Ray Newton's account. Early in the submission process, you are prompted to select a product name. Products are configured using a product model. The product model is at the heart of PolicyCenter's configuration. The product selection looks very simple in PolicyCenter, but the details behind it are all contained in the design of the product model. Before looking more at the product model, let me complete the personal auto submission I began. Ray Newton is the only driver, and he has a Toyota Highlander. Please hold on while I populate all the fields. Here is our quote. Now, let's get back to the product model. Guidewire's product designer tool provides insight into the product model. Let me log in and show you where some aspects of that personal auto product can be managed. Using the product designer, I can locate the specific products that you saw in PolicyCenter. Here is the personal auto product. Take a look at the details that are available for viewing here in the product designer. These are all parts of the product model. Here is the name of the product, as we saw in PolicyCenter. Here is the product description, which also appears in PolicyCenter. You can also have a look at the display key settings for the product. Here is the default for the policy term. Note that you can make some, but not all changes using the product designer. These are the options for the out-of-the-box product. Likewise, the product types for the product are personal and commercial, based on the out-of-the-box configuration. You can also define which type of account the product applies to. Additional changes to the policy lines included in policy terms can be made using these options. This concludes the demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 10.08,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:10.080",
+      "text": "In this demonstration, I will show you how the product model relates to PolicyCenter at a high level. This is a PolicyCenter screen. I am going to access Ray Newton's account.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.34,
+          "probability": 0.936
+        },
+        {
+          "word": "this",
+          "start": 0.34,
+          "end": 0.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "demonstration,",
+          "start": 0.52,
+          "end": 1.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 1.58,
+          "end": 1.82,
+          "probability": 0.9912
+        },
+        {
+          "word": "will",
+          "start": 1.82,
+          "end": 1.98,
+          "probability": 0.9912
+        },
+        {
+          "word": "show",
+          "start": 1.98,
+          "end": 2.18,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 2.18,
+          "end": 2.32,
+          "probability": 0.9912
+        },
+        {
+          "word": "how",
+          "start": 2.32,
+          "end": 2.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 2.46,
+          "end": 2.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "product",
+          "start": 2.62,
+          "end": 2.92,
+          "probability": 0.8833
+        },
+        {
+          "word": "model",
+          "start": 2.92,
+          "end": 3.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "relates",
+          "start": 3.28,
+          "end": 3.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 3.74,
+          "end": 3.92,
+          "probability": 0.998
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 3.92,
+          "end": 4.68,
+          "probability": 0.6382
+        },
+        {
+          "word": "at",
+          "start": 4.68,
+          "end": 4.84,
+          "probability": 0.9907
+        },
+        {
+          "word": "a",
+          "start": 4.84,
+          "end": 4.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "high",
+          "start": 4.9,
+          "end": 5.08,
+          "probability": 0.9854
+        },
+        {
+          "word": "level.",
+          "start": 5.08,
+          "end": 5.44,
+          "probability": 0.9556
+        },
+        {
+          "word": "This",
+          "start": 5.7,
+          "end": 6.1,
+          "probability": 0.9922
+        },
+        {
+          "word": "is",
+          "start": 6.1,
+          "end": 6.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 6.22,
+          "end": 6.34,
+          "probability": 0.9854
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 6.34,
+          "end": 7.12,
+          "probability": 0.9624
+        },
+        {
+          "word": "screen.",
+          "start": 7.12,
+          "end": 7.46,
+          "probability": 0.9829
+        },
+        {
+          "word": "I",
+          "start": 7.72,
+          "end": 8.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "am",
+          "start": 8.1,
+          "end": 8.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "going",
+          "start": 8.24,
+          "end": 8.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 8.42,
+          "end": 8.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "access",
+          "start": 8.58,
+          "end": 8.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "Ray",
+          "start": 8.98,
+          "end": 9.26,
+          "probability": 0.9561
+        },
+        {
+          "word": "Newton's",
+          "start": 9.26,
+          "end": 9.7,
+          "probability": 0.8984
+        },
+        {
+          "word": "account.",
+          "start": 9.7,
+          "end": 10.08,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 14.44,
+      "end": 18.98,
+      "start_formatted": "00:00:14.440",
+      "end_formatted": "00:00:18.980",
+      "text": "I am going to do a quick quote for a personal auto policy for Ray Newton's account.",
+      "words": [
+        {
+          "word": "I",
+          "start": 14.44,
+          "end": 14.96,
+          "probability": 0.9839
+        },
+        {
+          "word": "am",
+          "start": 14.96,
+          "end": 15.1,
+          "probability": 0.9673
+        },
+        {
+          "word": "going",
+          "start": 15.1,
+          "end": 15.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 15.24,
+          "end": 15.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "do",
+          "start": 15.38,
+          "end": 15.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 15.5,
+          "end": 15.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "quick",
+          "start": 15.64,
+          "end": 15.86,
+          "probability": 0.98
+        },
+        {
+          "word": "quote",
+          "start": 15.86,
+          "end": 16.14,
+          "probability": 0.9932
+        },
+        {
+          "word": "for",
+          "start": 16.14,
+          "end": 16.32,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 16.32,
+          "end": 16.46,
+          "probability": 0.9907
+        },
+        {
+          "word": "personal",
+          "start": 16.46,
+          "end": 16.86,
+          "probability": 0.7725
+        },
+        {
+          "word": "auto",
+          "start": 16.86,
+          "end": 17.18,
+          "probability": 0.8643
+        },
+        {
+          "word": "policy",
+          "start": 17.18,
+          "end": 17.7,
+          "probability": 0.9419
+        },
+        {
+          "word": "for",
+          "start": 17.7,
+          "end": 17.94,
+          "probability": 0.998
+        },
+        {
+          "word": "Ray",
+          "start": 17.94,
+          "end": 18.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "Newton's",
+          "start": 18.16,
+          "end": 18.6,
+          "probability": 0.998
+        },
+        {
+          "word": "account.",
+          "start": 18.6,
+          "end": 18.98,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 23.04,
+      "end": 41.54,
+      "start_formatted": "00:00:23.040",
+      "end_formatted": "00:00:41.540",
+      "text": "Early in the submission process, you are prompted to select a product name. Products are configured using a product model. The product model is at the heart of PolicyCenter's configuration. The product selection looks very simple in PolicyCenter, but the details behind it are all contained in the design of the product model.",
+      "words": [
+        {
+          "word": "Early",
+          "start": 23.04,
+          "end": 23.64,
+          "probability": 0.6982
+        },
+        {
+          "word": "in",
+          "start": 23.64,
+          "end": 23.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 23.78,
+          "end": 23.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "submission",
+          "start": 23.9,
+          "end": 24.3,
+          "probability": 0.9893
+        },
+        {
+          "word": "process,",
+          "start": 24.3,
+          "end": 24.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 25.2,
+          "end": 25.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "are",
+          "start": 25.42,
+          "end": 25.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "prompted",
+          "start": 25.56,
+          "end": 25.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 25.92,
+          "end": 26.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "select",
+          "start": 26.12,
+          "end": 26.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 26.42,
+          "end": 26.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "product",
+          "start": 26.6,
+          "end": 26.9,
+          "probability": 0.9482
+        },
+        {
+          "word": "name.",
+          "start": 26.9,
+          "end": 27.3,
+          "probability": 0.998
+        },
+        {
+          "word": "Products",
+          "start": 27.62,
+          "end": 28.2,
+          "probability": 0.9844
+        },
+        {
+          "word": "are",
+          "start": 28.2,
+          "end": 28.44,
+          "probability": 0.999
+        },
+        {
+          "word": "configured",
+          "start": 28.44,
+          "end": 28.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "using",
+          "start": 28.9,
+          "end": 29.26,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 29.26,
+          "end": 29.46,
+          "probability": 0.9946
+        },
+        {
+          "word": "product",
+          "start": 29.46,
+          "end": 29.82,
+          "probability": 0.9082
+        },
+        {
+          "word": "model.",
+          "start": 29.82,
+          "end": 30.22,
+          "probability": 0.999
+        },
+        {
+          "word": "The",
+          "start": 30.58,
+          "end": 30.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "product",
+          "start": 30.86,
+          "end": 31.18,
+          "probability": 0.9727
+        },
+        {
+          "word": "model",
+          "start": 31.18,
+          "end": 31.52,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 31.52,
+          "end": 31.78,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 31.78,
+          "end": 31.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 31.92,
+          "end": 32.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "heart",
+          "start": 32.02,
+          "end": 32.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 32.2,
+          "end": 32.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "PolicyCenter's",
+          "start": 32.36,
+          "end": 33.34,
+          "probability": 0.7407
+        },
+        {
+          "word": "configuration.",
+          "start": 33.34,
+          "end": 33.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "The",
+          "start": 34.5,
+          "end": 34.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "product",
+          "start": 34.8,
+          "end": 35.14,
+          "probability": 0.9912
+        },
+        {
+          "word": "selection",
+          "start": 35.14,
+          "end": 35.6,
+          "probability": 0.998
+        },
+        {
+          "word": "looks",
+          "start": 35.6,
+          "end": 35.92,
+          "probability": 0.999
+        },
+        {
+          "word": "very",
+          "start": 35.92,
+          "end": 36.22,
+          "probability": 0.998
+        },
+        {
+          "word": "simple",
+          "start": 36.22,
+          "end": 36.6,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 36.6,
+          "end": 36.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "PolicyCenter,",
+          "start": 36.76,
+          "end": 37.64,
+          "probability": 0.9912
+        },
+        {
+          "word": "but",
+          "start": 37.82,
+          "end": 38.1,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 38.1,
+          "end": 38.22,
+          "probability": 0.999
+        },
+        {
+          "word": "details",
+          "start": 38.22,
+          "end": 38.66,
+          "probability": 0.999
+        },
+        {
+          "word": "behind",
+          "start": 38.66,
+          "end": 39.0,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 39.0,
+          "end": 39.24,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 39.24,
+          "end": 39.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "all",
+          "start": 39.36,
+          "end": 39.52,
+          "probability": 0.999
+        },
+        {
+          "word": "contained",
+          "start": 39.52,
+          "end": 39.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 39.92,
+          "end": 40.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 40.12,
+          "end": 40.22,
+          "probability": 0.999
+        },
+        {
+          "word": "design",
+          "start": 40.22,
+          "end": 40.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 40.52,
+          "end": 40.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 40.66,
+          "end": 40.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "product",
+          "start": 40.78,
+          "end": 41.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "model.",
+          "start": 41.1,
+          "end": 41.54,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 42.12,
+      "end": 47.28,
+      "start_formatted": "00:00:42.120",
+      "end_formatted": "00:00:47.280",
+      "text": "Before looking more at the product model, let me complete the personal auto submission I began.",
+      "words": [
+        {
+          "word": "Before",
+          "start": 42.12,
+          "end": 42.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "looking",
+          "start": 42.72,
+          "end": 43.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "more",
+          "start": 43.02,
+          "end": 43.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "at",
+          "start": 43.26,
+          "end": 43.42,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 43.42,
+          "end": 43.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "product",
+          "start": 43.52,
+          "end": 43.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "model,",
+          "start": 43.86,
+          "end": 44.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "let",
+          "start": 44.54,
+          "end": 44.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "me",
+          "start": 44.76,
+          "end": 44.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "complete",
+          "start": 44.88,
+          "end": 45.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 45.28,
+          "end": 45.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "personal",
+          "start": 45.42,
+          "end": 45.84,
+          "probability": 0.9517
+        },
+        {
+          "word": "auto",
+          "start": 45.84,
+          "end": 46.18,
+          "probability": 0.9751
+        },
+        {
+          "word": "submission",
+          "start": 46.18,
+          "end": 46.62,
+          "probability": 0.3801
+        },
+        {
+          "word": "I",
+          "start": 46.62,
+          "end": 46.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "began.",
+          "start": 46.9,
+          "end": 47.28,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 47.88,
+      "end": 54.22,
+      "start_formatted": "00:00:47.880",
+      "end_formatted": "00:00:54.220",
+      "text": "Ray Newton is the only driver, and he has a Toyota Highlander. Please hold on while I populate all the fields.",
+      "words": [
+        {
+          "word": "Ray",
+          "start": 47.88,
+          "end": 48.36,
+          "probability": 0.9199
+        },
+        {
+          "word": "Newton",
+          "start": 48.36,
+          "end": 48.62,
+          "probability": 0.9849
+        },
+        {
+          "word": "is",
+          "start": 48.62,
+          "end": 48.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 48.84,
+          "end": 48.96,
+          "probability": 0.999
+        },
+        {
+          "word": "only",
+          "start": 48.96,
+          "end": 49.16,
+          "probability": 0.999
+        },
+        {
+          "word": "driver,",
+          "start": 49.16,
+          "end": 49.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 49.84,
+          "end": 50.04,
+          "probability": 0.999
+        },
+        {
+          "word": "he",
+          "start": 50.04,
+          "end": 50.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 50.16,
+          "end": 50.34,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 50.34,
+          "end": 50.44,
+          "probability": 0.999
+        },
+        {
+          "word": "Toyota",
+          "start": 50.44,
+          "end": 50.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "Highlander.",
+          "start": 50.82,
+          "end": 51.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "Please",
+          "start": 51.74,
+          "end": 52.2,
+          "probability": 0.998
+        },
+        {
+          "word": "hold",
+          "start": 52.2,
+          "end": 52.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 52.48,
+          "end": 52.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "while",
+          "start": 52.62,
+          "end": 52.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 52.8,
+          "end": 52.96,
+          "probability": 0.998
+        },
+        {
+          "word": "populate",
+          "start": 52.96,
+          "end": 53.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 53.48,
+          "end": 53.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 53.66,
+          "end": 53.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "fields.",
+          "start": 53.8,
+          "end": 54.22,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 72.88,
+      "end": 76.82,
+      "start_formatted": "00:01:12.880",
+      "end_formatted": "00:01:16.820",
+      "text": "Here is our quote. Now, let's get back to the product model.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 72.88,
+          "end": 73.36,
+          "probability": 0.9736
+        },
+        {
+          "word": "is",
+          "start": 73.36,
+          "end": 73.52,
+          "probability": 0.998
+        },
+        {
+          "word": "our",
+          "start": 73.52,
+          "end": 73.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "quote.",
+          "start": 73.66,
+          "end": 73.98,
+          "probability": 0.998
+        },
+        {
+          "word": "Now,",
+          "start": 74.32,
+          "end": 74.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "let's",
+          "start": 74.98,
+          "end": 75.34,
+          "probability": 0.999
+        },
+        {
+          "word": "get",
+          "start": 75.34,
+          "end": 75.52,
+          "probability": 1.0
+        },
+        {
+          "word": "back",
+          "start": 75.52,
+          "end": 75.78,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 75.78,
+          "end": 75.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 75.92,
+          "end": 76.04,
+          "probability": 1.0
+        },
+        {
+          "word": "product",
+          "start": 76.04,
+          "end": 76.36,
+          "probability": 0.998
+        },
+        {
+          "word": "model.",
+          "start": 76.36,
+          "end": 76.82,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 77.98,
+      "end": 86.64,
+      "start_formatted": "00:01:17.980",
+      "end_formatted": "00:01:26.640",
+      "text": "Guidewire's product designer tool provides insight into the product model. Let me log in and show you where some aspects of that personal auto product can be managed.",
+      "words": [
+        {
+          "word": "Guidewire's",
+          "start": 77.98,
+          "end": 78.58,
+          "probability": 0.9692
+        },
+        {
+          "word": "product",
+          "start": 78.58,
+          "end": 78.88,
+          "probability": 0.4338
+        },
+        {
+          "word": "designer",
+          "start": 78.88,
+          "end": 79.28,
+          "probability": 0.9922
+        },
+        {
+          "word": "tool",
+          "start": 79.28,
+          "end": 79.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "provides",
+          "start": 79.58,
+          "end": 80.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "insight",
+          "start": 80.04,
+          "end": 80.5,
+          "probability": 0.9883
+        },
+        {
+          "word": "into",
+          "start": 80.5,
+          "end": 80.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 80.74,
+          "end": 80.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "product",
+          "start": 80.9,
+          "end": 81.26,
+          "probability": 0.9727
+        },
+        {
+          "word": "model.",
+          "start": 81.26,
+          "end": 81.68,
+          "probability": 0.999
+        },
+        {
+          "word": "Let",
+          "start": 82.0,
+          "end": 82.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "me",
+          "start": 82.34,
+          "end": 82.5,
+          "probability": 0.999
+        },
+        {
+          "word": "log",
+          "start": 82.5,
+          "end": 82.8,
+          "probability": 0.7021
+        },
+        {
+          "word": "in",
+          "start": 82.8,
+          "end": 82.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "and",
+          "start": 82.98,
+          "end": 83.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "show",
+          "start": 83.12,
+          "end": 83.32,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 83.32,
+          "end": 83.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "where",
+          "start": 83.48,
+          "end": 83.68,
+          "probability": 0.9907
+        },
+        {
+          "word": "some",
+          "start": 83.68,
+          "end": 83.86,
+          "probability": 0.998
+        },
+        {
+          "word": "aspects",
+          "start": 83.86,
+          "end": 84.3,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 84.3,
+          "end": 84.5,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 84.5,
+          "end": 84.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "personal",
+          "start": 84.64,
+          "end": 85.06,
+          "probability": 0.877
+        },
+        {
+          "word": "auto",
+          "start": 85.06,
+          "end": 85.4,
+          "probability": 0.9648
+        },
+        {
+          "word": "product",
+          "start": 85.4,
+          "end": 85.8,
+          "probability": 0.981
+        },
+        {
+          "word": "can",
+          "start": 85.8,
+          "end": 86.04,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 86.04,
+          "end": 86.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "managed.",
+          "start": 86.18,
+          "end": 86.64,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 87.26,
+      "end": 92.52,
+      "start_formatted": "00:01:27.260",
+      "end_formatted": "00:01:32.520",
+      "text": "Using the product designer, I can locate the specific products that you saw in PolicyCenter.",
+      "words": [
+        {
+          "word": "Using",
+          "start": 87.26,
+          "end": 87.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 87.86,
+          "end": 88.02,
+          "probability": 0.998
+        },
+        {
+          "word": "product",
+          "start": 88.02,
+          "end": 88.38,
+          "probability": 0.9229
+        },
+        {
+          "word": "designer,",
+          "start": 88.38,
+          "end": 88.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 89.1,
+          "end": 89.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "can",
+          "start": 89.32,
+          "end": 89.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "locate",
+          "start": 89.46,
+          "end": 89.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 89.88,
+          "end": 90.06,
+          "probability": 0.999
+        },
+        {
+          "word": "specific",
+          "start": 90.06,
+          "end": 90.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "products",
+          "start": 90.48,
+          "end": 90.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 90.96,
+          "end": 91.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "you",
+          "start": 91.16,
+          "end": 91.3,
+          "probability": 0.999
+        },
+        {
+          "word": "saw",
+          "start": 91.3,
+          "end": 91.54,
+          "probability": 0.9907
+        },
+        {
+          "word": "in",
+          "start": 91.54,
+          "end": 91.64,
+          "probability": 0.998
+        },
+        {
+          "word": "PolicyCenter.",
+          "start": 91.64,
+          "end": 92.52,
+          "probability": 0.7217
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 93.02,
+      "end": 101.84,
+      "start_formatted": "00:01:33.020",
+      "end_formatted": "00:01:41.840",
+      "text": "Here is the personal auto product. Take a look at the details that are available for viewing here in the product designer. These are all parts of the product model.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 93.02,
+          "end": 93.62,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 93.62,
+          "end": 93.76,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 93.76,
+          "end": 93.88,
+          "probability": 0.999
+        },
+        {
+          "word": "personal",
+          "start": 93.88,
+          "end": 94.3,
+          "probability": 0.9668
+        },
+        {
+          "word": "auto",
+          "start": 94.3,
+          "end": 94.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "product.",
+          "start": 94.68,
+          "end": 95.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "Take",
+          "start": 95.44,
+          "end": 95.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 95.82,
+          "end": 95.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "look",
+          "start": 95.98,
+          "end": 96.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 96.1,
+          "end": 96.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 96.24,
+          "end": 96.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "details",
+          "start": 96.32,
+          "end": 96.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 96.76,
+          "end": 96.96,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 96.96,
+          "end": 97.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 97.08,
+          "end": 97.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 97.5,
+          "end": 97.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "viewing",
+          "start": 97.74,
+          "end": 98.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "here",
+          "start": 98.02,
+          "end": 98.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 98.32,
+          "end": 98.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 98.44,
+          "end": 98.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "product",
+          "start": 98.52,
+          "end": 98.84,
+          "probability": 0.8965
+        },
+        {
+          "word": "designer.",
+          "start": 98.84,
+          "end": 99.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "These",
+          "start": 99.66,
+          "end": 100.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "are",
+          "start": 100.1,
+          "end": 100.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 100.26,
+          "end": 100.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "parts",
+          "start": 100.48,
+          "end": 100.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 100.82,
+          "end": 100.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 100.96,
+          "end": 101.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "product",
+          "start": 101.06,
+          "end": 101.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "model.",
+          "start": 101.44,
+          "end": 101.84,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 102.6,
+      "end": 105.34,
+      "start_formatted": "00:01:42.600",
+      "end_formatted": "00:01:45.340",
+      "text": "Here is the name of the product, as we saw in PolicyCenter.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 102.6,
+          "end": 103.08,
+          "probability": 0.9663
+        },
+        {
+          "word": "is",
+          "start": 103.08,
+          "end": 103.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 103.22,
+          "end": 103.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "name",
+          "start": 103.34,
+          "end": 103.54,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 103.54,
+          "end": 103.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 103.68,
+          "end": 103.8,
+          "probability": 0.999
+        },
+        {
+          "word": "product,",
+          "start": 103.8,
+          "end": 104.16,
+          "probability": 0.9878
+        },
+        {
+          "word": "as",
+          "start": 104.4,
+          "end": 104.64,
+          "probability": 0.998
+        },
+        {
+          "word": "we",
+          "start": 104.64,
+          "end": 104.76,
+          "probability": 0.999
+        },
+        {
+          "word": "saw",
+          "start": 104.76,
+          "end": 105.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "in",
+          "start": 105.0,
+          "end": 105.14,
+          "probability": 0.998
+        },
+        {
+          "word": "PolicyCenter.",
+          "start": 105.14,
+          "end": 105.38,
+          "probability": 0.688
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 107.36,
+      "end": 111.5,
+      "start_formatted": "00:01:47.360",
+      "end_formatted": "00:01:51.500",
+      "text": "Here is the product description, which also appears in PolicyCenter.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 107.36,
+          "end": 107.84,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 107.84,
+          "end": 107.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 107.98,
+          "end": 108.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "product",
+          "start": 108.12,
+          "end": 108.46,
+          "probability": 0.9775
+        },
+        {
+          "word": "description,",
+          "start": 108.46,
+          "end": 108.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "which",
+          "start": 109.36,
+          "end": 109.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 109.64,
+          "end": 109.98,
+          "probability": 1.0
+        },
+        {
+          "word": "appears",
+          "start": 109.98,
+          "end": 110.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 110.42,
+          "end": 110.62,
+          "probability": 1.0
+        },
+        {
+          "word": "PolicyCenter.",
+          "start": 110.62,
+          "end": 111.5,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 112.2,
+      "end": 115.58,
+      "start_formatted": "00:01:52.200",
+      "end_formatted": "00:01:55.580",
+      "text": "You can also have a look at the display key settings for the product.",
+      "words": [
+        {
+          "word": "You",
+          "start": 112.2,
+          "end": 112.68,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 112.68,
+          "end": 112.84,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 112.84,
+          "end": 113.12,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 113.12,
+          "end": 113.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 113.34,
+          "end": 113.44,
+          "probability": 1.0
+        },
+        {
+          "word": "look",
+          "start": 113.44,
+          "end": 113.62,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 113.62,
+          "end": 113.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 113.74,
+          "end": 113.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "display",
+          "start": 113.84,
+          "end": 114.22,
+          "probability": 0.7168
+        },
+        {
+          "word": "key",
+          "start": 114.22,
+          "end": 114.46,
+          "probability": 0.9907
+        },
+        {
+          "word": "settings",
+          "start": 114.46,
+          "end": 114.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 114.86,
+          "end": 115.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 115.1,
+          "end": 115.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "product.",
+          "start": 115.22,
+          "end": 115.58,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 120.08,
+      "end": 126.46,
+      "start_formatted": "00:02:00.080",
+      "end_formatted": "00:02:06.460",
+      "text": "Here is the default for the policy term. Note that you can make some, but not all changes using the product designer.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 120.08,
+          "end": 120.52,
+          "probability": 0.9097
+        },
+        {
+          "word": "is",
+          "start": 120.52,
+          "end": 120.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 120.68,
+          "end": 120.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "default",
+          "start": 120.8,
+          "end": 121.14,
+          "probability": 0.9795
+        },
+        {
+          "word": "for",
+          "start": 121.14,
+          "end": 121.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 121.34,
+          "end": 121.46,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 121.46,
+          "end": 121.86,
+          "probability": 0.8892
+        },
+        {
+          "word": "term.",
+          "start": 121.86,
+          "end": 122.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "Note",
+          "start": 122.76,
+          "end": 122.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "that",
+          "start": 122.94,
+          "end": 123.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 123.08,
+          "end": 123.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 123.2,
+          "end": 123.36,
+          "probability": 0.999
+        },
+        {
+          "word": "make",
+          "start": 123.36,
+          "end": 123.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "some,",
+          "start": 123.58,
+          "end": 123.9,
+          "probability": 0.998
+        },
+        {
+          "word": "but",
+          "start": 123.96,
+          "end": 124.3,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 124.3,
+          "end": 124.46,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 124.46,
+          "end": 124.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes",
+          "start": 124.66,
+          "end": 125.06,
+          "probability": 0.8496
+        },
+        {
+          "word": "using",
+          "start": 125.06,
+          "end": 125.4,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 125.4,
+          "end": 125.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "product",
+          "start": 125.6,
+          "end": 125.96,
+          "probability": 0.7393
+        },
+        {
+          "word": "designer.",
+          "start": 125.96,
+          "end": 126.46,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 127.24,
+      "end": 129.84,
+      "start_formatted": "00:02:07.240",
+      "end_formatted": "00:02:09.840",
+      "text": "These are the options for the out-of-the-box product.",
+      "words": [
+        {
+          "word": "These",
+          "start": 127.24,
+          "end": 127.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "are",
+          "start": 127.68,
+          "end": 127.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 127.8,
+          "end": 127.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "options",
+          "start": 127.92,
+          "end": 128.34,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 128.34,
+          "end": 128.58,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 128.58,
+          "end": 128.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "out",
+          "start": 128.7,
+          "end": 128.86,
+          "probability": 0.9346
+        },
+        {
+          "word": "-of",
+          "start": 128.86,
+          "end": 128.96,
+          "probability": 0.8916
+        },
+        {
+          "word": "-the",
+          "start": 128.96,
+          "end": 129.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "-box",
+          "start": 129.06,
+          "end": 129.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "product.",
+          "start": 129.32,
+          "end": 129.84,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 131.64,
+      "end": 137.8,
+      "start_formatted": "00:02:11.640",
+      "end_formatted": "00:02:17.800",
+      "text": "Likewise, the product types for the product are personal and commercial, based on the out-of-the-box configuration.",
+      "words": [
+        {
+          "word": "Likewise,",
+          "start": 131.64,
+          "end": 132.2,
+          "probability": 0.9404
+        },
+        {
+          "word": "the",
+          "start": 132.64,
+          "end": 132.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "product",
+          "start": 132.84,
+          "end": 133.2,
+          "probability": 0.9688
+        },
+        {
+          "word": "types",
+          "start": 133.2,
+          "end": 133.5,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 133.5,
+          "end": 133.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 133.72,
+          "end": 133.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "product",
+          "start": 133.84,
+          "end": 134.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 134.14,
+          "end": 134.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "personal",
+          "start": 134.34,
+          "end": 134.8,
+          "probability": 0.9302
+        },
+        {
+          "word": "and",
+          "start": 134.8,
+          "end": 135.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "commercial,",
+          "start": 135.04,
+          "end": 135.5,
+          "probability": 0.999
+        },
+        {
+          "word": "based",
+          "start": 135.78,
+          "end": 136.14,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 136.14,
+          "end": 136.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 136.3,
+          "end": 136.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "out",
+          "start": 136.42,
+          "end": 136.58,
+          "probability": 0.9893
+        },
+        {
+          "word": "-of",
+          "start": 136.58,
+          "end": 136.68,
+          "probability": 0.959
+        },
+        {
+          "word": "-the",
+          "start": 136.68,
+          "end": 136.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "-box",
+          "start": 136.76,
+          "end": 137.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "configuration.",
+          "start": 137.04,
+          "end": 137.8,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 138.42,
+      "end": 142.06,
+      "start_formatted": "00:02:18.420",
+      "end_formatted": "00:02:22.060",
+      "text": "You can also define which type of account the product applies to.",
+      "words": [
+        {
+          "word": "You",
+          "start": 138.42,
+          "end": 138.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 138.98,
+          "end": 139.14,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 139.14,
+          "end": 139.42,
+          "probability": 1.0
+        },
+        {
+          "word": "define",
+          "start": 139.42,
+          "end": 139.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 139.8,
+          "end": 140.12,
+          "probability": 0.999
+        },
+        {
+          "word": "type",
+          "start": 140.12,
+          "end": 140.34,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 140.34,
+          "end": 140.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "account",
+          "start": 140.5,
+          "end": 140.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 140.78,
+          "end": 140.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "product",
+          "start": 140.98,
+          "end": 141.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "applies",
+          "start": 141.28,
+          "end": 141.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "to.",
+          "start": 141.74,
+          "end": 142.06,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 142.74,
+      "end": 148.02,
+      "start_formatted": "00:02:22.740",
+      "end_formatted": "00:02:28.020",
+      "text": "Additional changes to the policy lines included in policy terms can be made using these options.",
+      "words": [
+        {
+          "word": "Additional",
+          "start": 142.74,
+          "end": 143.36,
+          "probability": 0.9614
+        },
+        {
+          "word": "changes",
+          "start": 143.36,
+          "end": 143.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 143.88,
+          "end": 144.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 144.12,
+          "end": 144.24,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 144.24,
+          "end": 144.64,
+          "probability": 0.9897
+        },
+        {
+          "word": "lines",
+          "start": 144.64,
+          "end": 145.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "included",
+          "start": 145.0,
+          "end": 145.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 145.46,
+          "end": 145.64,
+          "probability": 0.8594
+        },
+        {
+          "word": "policy",
+          "start": 145.64,
+          "end": 146.08,
+          "probability": 0.9907
+        },
+        {
+          "word": "terms",
+          "start": 146.08,
+          "end": 146.4,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 146.4,
+          "end": 146.66,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 146.66,
+          "end": 146.82,
+          "probability": 1.0
+        },
+        {
+          "word": "made",
+          "start": 146.82,
+          "end": 147.04,
+          "probability": 1.0
+        },
+        {
+          "word": "using",
+          "start": 147.04,
+          "end": 147.28,
+          "probability": 1.0
+        },
+        {
+          "word": "these",
+          "start": 147.28,
+          "end": 147.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "options.",
+          "start": 147.58,
+          "end": 148.02,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 148.56,
+      "end": 150.12,
+      "start_formatted": "00:02:28.560",
+      "end_formatted": "00:02:30.120",
+      "text": "This concludes the demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 148.56,
+          "end": 149.18,
+          "probability": 0.998
+        },
+        {
+          "word": "concludes",
+          "start": 149.18,
+          "end": 149.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 149.62,
+          "end": 149.84,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration.",
+          "start": 149.84,
+          "end": 150.12,
+          "probability": 0.98
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-16",
+    "slide_count": 22,
+    "slides_with_text": 19,
+    "total_words": 734,
+    "avg_confidence": 86.64,
+    "processing_time_seconds": 8.07,
+    "extracted_at": "2026-02-13T12:20:10.164522"
+  },
+  "full_text": "Popups\n\nLesson\nobjectives\n\n* Describe the functionality of Popups\n* Create Popups used to view and edit objects\n\nUser Story: Policy Details Popup Gi\n\n“Currently, users can add, remove, and edit policy details in the Policy list view\npanel. However, the editable list view panel only exposes some of the Policy\nentity fields. Earlier we requested the addition of the invoicing method field only,\nbut we anticipate the need to add 5-10 more policy fields in the near future.\nCould you analyze the different implementation options and let us know the best\nway to implement this?”\n\n— Insurance company business analysts\n\ni Review: Locations\nJ wicgot a7\n—'—_,\n\n¢ Alocation is a PCF element to which a user can\nnavigate\n\n* Locations themselves do not define any visual\n\ncontent, but they can contain Screen container(s)\nthat do\n\n¢ Locations can use system permissions to control\nwhat the users can see/access in the application\n\ni Review: Popups Gi\n\n¢« Apopup contains a single screen and returns the user to the previous pef\nlocation once the popup is closed —lE|\n\n« Automatically has \"Return to <previous location>\" link\n\nSummary\n\nBasics | Social Media\n\nBasic Information\nName\n\nPublic ID\n\nAnalysis\n\nFlag Entries\nDate Unflagged\n\nWilliam Andy View  DateFlagged Reason\nli\nReturn to Summary\n\nabs cess Flag Entry\nFate Flagged 06/19/2018\n\nReason No email address for this contact.\n\nResolution rr\n\ni Why not use browser popup windows?\n\n« Many users configure their web browsers to block popups\n* Even if website or URL is from trusted source\n\n¢ Passing context and objects between browser windows can cause\nsynchronization problems\n\n¢ Multiple popups open for same view\n\n* Popup window is left open while parent (main) window is closed\n* Guidewire popups\n\n* Provide almost all the functionality of true popup windows\n\n« Avoid blocking issues and synchronization problems\n\ni Popup use case 1: View and edit existing objects Gi\n\nSummary\n\nBasics | SocialMedia | Analysis\n\nBasic Information Flag Entries\n\nName William Andy View Date Flagged = Reason Date Unflagged\n06/19/2018 No email address for this contact.\nPublic ID abs\n\nFlag Entry\n\nged 06/19/2018\n\nReason\n\nNo email address for this contact.\n\nResolution\n\nPopup use case 2: Create new objects Gi\n\nAdd Service\n\nRelated To * Clair .\nae a\nCategory > Subcategory © service ype Select Services to Add [Betumtonddsenic:\n\nAccommodation Alternative accommodation Cancel\n\n‘Showing services available for: Claim\nServices that cannot be requested with previously-selected services are hidden.\n. Services\nAdd Service\n¥ Auto\nAppraisal\nRelated To * Claim + pra\nInspection / Repair\nAudio equipment\n\n‘Auto body\nCategory > Subcategory > Service Type +\n\n‘Accommodation Alternative accommodation\n\nOther\n\nProvide courtesy car\nProvide courtesy car -\nTowing\n\ni Popup use case 3: Execute \"popped\" searches Gi\n\nContact Info\nPrimary Contact\nPhone\n\nFax\n\nMain Email\n\nAlternate Email\n\nContact Info\nPrimary Contact\nPhone\n\nFax\n\nMain Email\n\nAlternate Email\n\n‘<none selected>\n\nSelect a Contact [BewmtoNew company)\n\nNew Person\n\nContact Type % | Person\nFirst name Eric\n\nLast name Andy\n\nTax iD\n\nOrganization Name\n\nMinimum Score <none> ¥\n\nPear Po]\n\nSearch Results\n\nName > Address > City > State > ZIPCod:\n\nGricAndy 345FirLane LaCanada California 91352\n\ni Demonstration G\n\nPolicy Details Popup\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nReview questions\n\nQuestion\n\n_- — Whatare the three primary use cases for popups?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK\n\nAnswer\n\nan What are the three primary use cases for popups?\nx Viewing and editing existing objects, creating new objects, and executing popped\n\nsearches.\n\nSS See See sess e eases\n\nQuestion\n\n_— — What happens if a location's canEdit property evaluates to false?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK\n\nAnswer\n\n,- — What happens if a location's canEdit property evaluates to false?\n\n¢\n“ The screen and its contents are non-editable.\n\nSS See See sess e eases\n\nQuestion\n\n,- — What happens if a location's canVisit property evaluates to false?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK\n\nAnswer\n\n,- — What happens if a location's canVisit property evaluates to false?\n\n¢\nx The widget navigating to the location is either not visible or not clickable.\n\nSS See See sess e eases\n\nLesson\nobjectives ¢ Describe the functionality of Popups\n\nreview * Create Popups used to view and edit objects\n\ni Student exercise\n\nPopups",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Popups",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Describe the functionality of Popups\n* Create Popups used to view and edit objects",
+      "word_count": 17,
+      "avg_confidence": 89.59,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "User Story: Policy Details Popup Gi\n\n“Currently, users can add, remove, and edit policy details in the Policy list view\npanel. However, the editable list view panel only exposes some of the Policy\nentity fields. Earlier we requested the addition of the invoicing method field only,\nbut we anticipate the need to add 5-10 more policy fields in the near future.\nCould you analyze the different implementation options and let us know the best\nway to implement this?”\n\n— Insurance company business analysts",
+      "word_count": 83,
+      "avg_confidence": 95.1,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Review: Locations\nJ wicgot a7\n—'—_,\n\n¢ Alocation is a PCF element to which a user can\nnavigate\n\n* Locations themselves do not define any visual\n\ncontent, but they can contain Screen container(s)\nthat do\n\n¢ Locations can use system permissions to control\nwhat the users can see/access in the application",
+      "word_count": 52,
+      "avg_confidence": 89.23,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Review: Popups Gi\n\n¢« Apopup contains a single screen and returns the user to the previous pef\nlocation once the popup is closed —lE|\n\n« Automatically has \"Return to <previous location>\" link\n\nSummary\n\nBasics | Social Media\n\nBasic Information\nName\n\nPublic ID\n\nAnalysis\n\nFlag Entries\nDate Unflagged\n\nWilliam Andy View  DateFlagged Reason\nli\nReturn to Summary\n\nabs cess Flag Entry\nFate Flagged 06/19/2018\n\nReason No email address for this contact.\n\nResolution rr",
+      "word_count": 73,
+      "avg_confidence": 81.58,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Why not use browser popup windows?\n\n« Many users configure their web browsers to block popups\n* Even if website or URL is from trusted source\n\n¢ Passing context and objects between browser windows can cause\nsynchronization problems\n\n¢ Multiple popups open for same view\n\n* Popup window is left open while parent (main) window is closed\n* Guidewire popups\n\n* Provide almost all the functionality of true popup windows\n\n« Avoid blocking issues and synchronization problems",
+      "word_count": 78,
+      "avg_confidence": 88.65,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Popup use case 1: View and edit existing objects Gi\n\nSummary\n\nBasics | SocialMedia | Analysis\n\nBasic Information Flag Entries\n\nName William Andy View Date Flagged = Reason Date Unflagged\n06/19/2018 No email address for this contact.\nPublic ID abs\n\nFlag Entry\n\nged 06/19/2018\n\nReason\n\nNo email address for this contact.\n\nResolution",
+      "word_count": 53,
+      "avg_confidence": 86.88,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Popup use case 2: Create new objects Gi\n\nAdd Service\n\nRelated To * Clair .\nae a\nCategory > Subcategory © service ype Select Services to Add [Betumtonddsenic:\n\nAccommodation Alternative accommodation Cancel\n\n‘Showing services available for: Claim\nServices that cannot be requested with previously-selected services are hidden.\n. Services\nAdd Service\n¥ Auto\nAppraisal\nRelated To * Claim + pra\nInspection / Repair\nAudio equipment\n\n‘Auto body\nCategory > Subcategory > Service Type +\n\n‘Accommodation Alternative accommodation\n\nOther\n\nProvide courtesy car\nProvide courtesy car -\nTowing",
+      "word_count": 86,
+      "avg_confidence": 81.31,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Popup use case 3: Execute \"popped\" searches Gi\n\nContact Info\nPrimary Contact\nPhone\n\nFax\n\nMain Email\n\nAlternate Email\n\nContact Info\nPrimary Contact\nPhone\n\nFax\n\nMain Email\n\nAlternate Email\n\n‘<none selected>\n\nSelect a Contact [BewmtoNew company)\n\nNew Person\n\nContact Type % | Person\nFirst name Eric\n\nLast name Andy\n\nTax iD\n\nOrganization Name\n\nMinimum Score <none> ¥\n\nPear Po]\n\nSearch Results\n\nName > Address > City > State > ZIPCod:\n\nGricAndy 345FirLane LaCanada California 91352",
+      "word_count": 75,
+      "avg_confidence": 77.89,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Demonstration G\n\nPolicy Details Popup\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.75,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Review questions",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question\n\n_- — Whatare the three primary use cases for popups?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK",
+      "word_count": 20,
+      "avg_confidence": 81.41,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer\n\nan What are the three primary use cases for popups?\nx Viewing and editing existing objects, creating new objects, and executing popped\n\nsearches.\n\nSS See See sess e eases",
+      "word_count": 30,
+      "avg_confidence": 87.45,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Question\n\n_— — What happens if a location's canEdit property evaluates to false?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK",
+      "word_count": 22,
+      "avg_confidence": 78.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Answer\n\n,- — What happens if a location's canEdit property evaluates to false?\n\n¢\n“ The screen and its contents are non-editable.\n\nSS See See sess e eases",
+      "word_count": 28,
+      "avg_confidence": 82.96,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question\n\n,- — What happens if a location's canVisit property evaluates to false?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK",
+      "word_count": 22,
+      "avg_confidence": 79.84,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer\n\n,- — What happens if a location's canVisit property evaluates to false?\n\n¢\nx The widget navigating to the location is either not visible or not clickable.\n\nSS See See sess e eases",
+      "word_count": 34,
+      "avg_confidence": 85.64,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Lesson\nobjectives ¢ Describe the functionality of Popups\n\nreview * Create Popups used to view and edit objects",
+      "word_count": 18,
+      "avg_confidence": 90.72,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Student exercise\n\nPopups",
+      "word_count": 4,
+      "avg_confidence": 84.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

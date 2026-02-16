@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-12",
+    "slide_count": 43,
+    "slides_with_text": 37,
+    "total_words": 1821,
+    "avg_confidence": 84.13,
+    "processing_time_seconds": 17.58,
+    "extracted_at": "2026-02-13T12:24:05.942389"
+  },
+  "full_text": "Assigning Activities\n\nLesson\nobjectives\n\n¢ Describe primary assignment\n¢ Assign an activity\n\ni Primary versus role-based assignment\n\n¢ Primary assignment (discussed in\nthis lesson)\n\n* The entity can have a single owner only\n\n* In the base configuration, this applies to\nActivity entities\n\n¢ Role-based assignment\n\n* The entity has a set of users — with different\nroles — assigned to it\n\n* In the base configuration, this applies to\nAccount, Job (and its subtypes), and\nPolicy entities\n\nActivity User\n\nProducer\n\nPolicy @\n<9\n\nUnderwriter\n\ni Typical flow of assignment execution\n\nmi\n\nAssign\n\nNothing specified to group\n\nGroup specified\n\nAssign To * Eastern Region Underwriting ~ Q\n\nAssign\nto user\n\nDefault Group Activity\nAssignment Rules\nGroup and user specified\n\nAssign To * Bruce Baker (Los Angeles Bra ~ Q.\n\ni Activity ownership Gi\n\n« An activity is owned by (assigned to) both a user and a group\n* The assigned user must be a member of the assigned group\n« Assigning “just” a user also assigns that user’s default group\n\n¢ When an activity is assigned to a user:\n+ It appears in that user's My Activities desktop list\n\n* It can be edited only by that user (or other users with appropriate permissions, such as the\nowner's supervisor)\n\n¢ It can be viewed by other users in the group\n\ni Activity assignment\n\nIn PolicyCenter, an activity is assigned by:\n\n+ Assignment rules, or > 8s\"\n\n« Assignment classes, or\n\n* Combination of both\n\ni Activity assignment rule sets Ga\n© DefaultGroupActivityAssignmentRules.grs x\n\nGP Rule Sets\n© Bl Assignment [9% © Default Group Activity Assignment Rules\n(© DefaultGroupAccountAssignmentRules ©) [Yj Assign Round Robin\n©\n\nDefaultGroupActivityAssignmentRules\n‘© DefaultGroupJobAssignmentRules Octal\n(© DefaultGroupPreRenewalAssignmentRules [DF 1 Global Activity Assignment Rules\n© GhobalAccountAssignmentRules {Gi (2 Activity based on pattern\n© GlobalActivityAssignmentfules #8) 1 Requestor Activities\n©) 1) Producer Activities\n© GlbalJobAssignmentRules 8) Underwriter Activities\n© GlbalPreRenewalAssignmentRules ®) 1 UW superviser Activities\n© 1 Defeat\n\n¢ GlobalActivityAssignmentRules assign activity to a group and may also assign to\na user\n\n* Has rules that assign an activity by job role\n* OOTB Default rule assigns to the underwriter\n¢ DefaultGroupActivityAssignmentRules assigns activity to user in assigned group\n\n* Has arule that assigns activity to user in a group using round-robin\n\ni Initiating activity assignment from Gosu\n\nGi\n\n¢ Bycalling autoAssign() methods ¢ By calling other activity\n\nassignment methods\ndirectly in assignment\nclasses\n\n* Invokes activity assignment engine\n* Can cause assignment rules to be run\n+ Do not call autoAssign() from within an assignment rule! @\n\nSignature Assignment rules to be run\n\nActivity.autoAssign() Global and Default Group\n\nActivity.autoAssign( group, null)\n\nDefault Group\n\nAssign To * Eastern Region Underwriting ~ Q\n\nActivity.autoAssign( group, user)\n\nNone\n\nActivity.assign( group, user )\n\nNone\n\nAssign To + Bruce Baker (Los Angeles Bra ~ Q\n\ni autoAssign() example Ga\n\n¢ Business requirement: Create an activity informing a user in the account creator\ngroup that a participant was updated on the account\n\n¢ Solution\n\n* Add code to PreUpdateHandlerlmpl class, which executes logic before saving data to DB\n\n* Only default group rule set will run since group is specified\n\n26\n27)\n28\n29\n30\n31\n32\n33\n34\n35\n36\n7\n3\n39\n40\na\na\n43\n“\n\nfor (bean in context.UpdatedBeans) {\naddBeansToBePreUpdaced (entitySec, bean)\n\nAf(bean typeis AccountUserRoleRssignnent) {\nvar act : Aetivity\nvar account = bean.Account\nvar actGroup : Group\nvar pattern = ActivityPactern. tinder. getActivityPatcernByCode (\"general reminder\")\nact = account.newhetivity (pattern)\nact.Subject = \"Account participant updated”\n\nfor(zole in\nif(role.Fo!\naceérot\n\n-RoleRssignnents) {\n-ypekey.UserRole.7C_CREATOR)\nle AsignedGroup\n\n)\n\nact.autokssign (actGroup, mull)\n)\n,\n\ni Common assignment strategies Ga\n\n« Assign to a specific group and then round-robin among users\n\n« Round robin ignores users that lack permission to own the object\n\n« Round-robin functionality can be configured to take into account user workload/load factors\n¢ Assign to a specific group and user\n\n¢ Assign to a queue\n\ni Common assignment methods\n\nThese methods on the Activity entity\n\n* Can be used in assignment rules\n\n* Can be called in assignment classes directly to initiate activity assignment\n\nContext Method Assigns to...\n\nGroup assignGroup() Named group\n\nGroup assignGroupByLocation() Group matching specified location\nand group type\n\nUser assign() Named user (and group)\n\nUser assignUserAndDefaultGroup() Named user (default group)\n\nQueue assignActivityToQueue() Named queue\n\ni Classes you can configure\n\nMethods you may need to modify activity assignment logic are under\ngsrc/gw/assignment:\n\n« AuditAssignmentEnhancement\n¢ JobAssignmentEnhancement\n« Example: createRoleActivity() method on Job entity\n\n+ Creates activity from a specified ActivityPattern\n\n+ Assigns to a user with a specified role on the job\n\ni Always exit rule when configuring assignment rules Gi\n\n« When assignment succeeds\n\nThis avoids reassigning an entity that has just been assigned\n¢ Assignment methods return boolean values\n\n* True > assignment was successful\n\n* False unsuccessful, appropriate group (or user) could not be found\n\nPlace methods in if/exit wrapper to exit assignment rule set as needed\n\nvar theGroup = activity.Job.getUserRoleAssignmentByRole( \"Underwriter\" ).AssignedGroup\nif (activity.assign( theGroup, theGroup.Supervisor )) {\n\nactions.exit()\n} S$\nIf assignment is successful,\n\nensures that no other\nassignment is done\n\ni Demonstration G\nActivity assignment basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Assigning to a specific group\n\n« Assign object to a specified group\n\n¢ Syntax:\nobject.assignGroup ( group )\n\n// Ass: y to Lo. anch UW group\nvar group = activity.findGroup(\"Los Angeles Branch UN\")\nif (activity.assignGroup(group)) {\n\nactions.exit()\n\nu\n\ni Assigning to group by type and location\n\n¢ Assigns to group:\n* Of specified group type...\n* ...whose region covers specified address...\n* ...including only direct child groups or all descendent groups...\n* ...beginning with children of specified group\n+ Specified group typically set to null or <entity>.AssignedGroup\n¢ Using round-robin\n\n¢ Syntax: object.assignGroupByLocation (\ngroupType, address, directChildrenOnly, group)\n\nif (activity.assignGroupByLocation (\ntypekey.GroupType.IC_HOMEOFFICEADMIN, policyPeriod.PolicyAddress.Address, false, null)) {\nactions.exit()\n\n}\n\ni Step 1: Identify candidate groups Gi\n\nif (activity.assignGroupByLocation(\ntypekey.GroupType.IC_HOMEOFFICEADMIN, policyPeriod.PolicyAddress.Address,[false, null)) {\nactions.exit()\n+\n\nActuary Unit\n\nExecution\nSession\n\n@@ = descendants\nof...\n\nBusiness Production Offices\n\nEastern Region\n\nFinance & Treasury\n\nEnigma Fire Casualty\nInsurance\n\nHome Office Admin Services\nHome Office Marketing\n\nHome Office U.W.\n\ni Step 2: Filter by group type\n\nif (activity.assignGroupByLocation(\n\n‘typekey.Grouplype.1c_HOMEOFFICEADMIN,] policyPeriod.PolicyAddress.Address, false, null)) {\n\nactions.exit ()\n+\n\nActuary Unit\nBusiness Production Offices\n\nEastern Region\n\n20\n‘62 Finance & Treasury\n\n2\n\nHome Office Admin Services\nHome Office Marketing\n\nHome Office U.W.\n\ni Step 3: Select by location Gi\n\n« Assume policy address is in California\n\n« Based on zone-config.xml (see next slide), activity is assigned to based on zip,\nthen county, then state\n\nif (activity.assignGroupByLocation(\ntypekey.GroupType.1C_HOMEOFFICEADMIN, [policyPeriod.PolicyAddress.Address,] false, null)) {\nactions.exit()\n\n}\n\n5% Eastern Mid-West Clerical\n\n@ . .\n‘@ Eastern Region Clerical\n\n% Home Office Admin Services\n\nWestern Mid-West Clerical\n\nWestern Region Clerical\n\ni Configuring location selection\n\n¢ Selection by location uses zones and\nregions\n¢ Azone is a type of geographic area\n\n« Examples: State/province, county, city,\npostal code\n\n* Configured in zone-config.xml\n\n¢ Aregion is a collection of specific zone\nvalues, configured through\nAdministration tab\n\nSan Diego Local Area\n\n« Western States\nRegion\n\n* San Diego Local Area\n\nName ‘San Diego Local Area\n\n* State of Michigan plus Chicago Areas Covered CAimperal, CAsSan Diego\n\ni What if group assignment fails?\n\niid\n: * Global Activity Assign\nNothing specified Assignment Rules | to group\n\nAssign to\nDefault Owner\nand root group\n\nWas group\nassigned?\n\nAlso assigned\nto user?\nGroup specified No\nAssign To ® Eastern Region Underwriting + Q.\n\nied\nDefault Group Activity /Assign\nAssignment Rules __ |to use!\nGroup and user specified\n\nAssign To %* Bruce Baker (Los AngelesBra y Q\n\ni Assigning to a specific user\n\n« Assigns object to both a group and user\n¢ Syntax:\n\nobject.assign( group, user )\n\nwar _user = activity. findUser\n\n\"ssmith\")\nif(activity.assign(group, user)) {\n\nactions.exit()\n\n}\n\ni Assigning to a user and any group\n\n¢ Assigns object to a user and any group that the user belongs to\n\n¢ Syntax:\nobject.assignUserAndDefaultGroup (User)\n\nactions.exit()\n\ni What if user assignment fails?\n\nind\nGlobal Activity | Assign\nAssignment Rules | to group\nWas group assigned?\n\nNo\nL*\n\nNothing specified\n\nGroup specified\n\nAssign To % Eastern Region Underwriting ~ Q\n-| Default Group Activity} Assign\nAssignment Rules_ | to user\nYes\nNew group assigned?\nAssign to group supervisor\n\nYes\n\nGroup and user specified\n\nAssign To %* Bruce Baker (Los Angeles Bra ~ Q.\n\ni Demonstration G\nAssigning activities\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — Whatis the difference between primary and secondary assignment?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — What is the difference between primary and secondary assignment?\n\n¢\n4\n¢\n\nIn primary assignment, a single user is assigned ownership of the assigned object. In\nsecondary assignment, one or more users are assigned to roles with respect to the\nassigned object.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — When an activity is assigned by rules, which two rule sets are typically\noo executed? In what order?\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — When an activity is assigned by rules, which two rule sets are typically\nFa executed? In what order?\n\nFirst, global rules are executed. Then, default group rules are executed.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Under what circumstances can an activity be assigned without\n\noo assignment rules being executed?\n\n¢\n\nSS oe ee oe oe oo\n\nAnswer\n\n,~ — Under what circumstances can an activity be assigned without\n\nFa assignment rules being executed?\n\n¢\n\nWhen the activity is assigned to a specific user.\n\nSS Se ee eee eo\n\nQuestion G\n\n,- — Why are assignment methods always inside i‘ statements in assignment\n\n7 rules?\n0 ! ’\n7\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,- — Why are assignment methods always inside i statements in assignment\nFa rules?\n¢\n\nAssignment methods are always inside if statements because they might fail. For\nexample, an assignGroup method may not be able to find the specified group.\n\nIf the assignment succeeds, then the if statement causes control of flow to execute an\nactions.exit() statement, which exits execution from the rule set.\n\nIf the assignment fails, then the actions.exit() statement is skipped and execution\nproceeds to the next rule.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — What is the Default Owner of an object?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — What is the Default Owner of an object?\n¢\n4\n¢\n\nDefault Owner is a dummy user that objects are assigned to when global assignment\nrules fail to assign the object to a group.\n\nSS Se ee eee eo\n\nLesson\nobj ectives ¢ Describe primary assignment\nreview * Assign an activity\n\ni Student exercise\n\nAssigning Activities",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Assigning Activities",
+      "word_count": 2,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe primary assignment\n¢ Assign an activity",
+      "word_count": 10,
+      "avg_confidence": 82.4,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Primary versus role-based assignment\n\n¢ Primary assignment (discussed in\nthis lesson)\n\n* The entity can have a single owner only\n\n* In the base configuration, this applies to\nActivity entities\n\n¢ Role-based assignment\n\n* The entity has a set of users — with different\nroles — assigned to it\n\n* In the base configuration, this applies to\nAccount, Job (and its subtypes), and\nPolicy entities\n\nActivity User\n\nProducer\n\nPolicy @\n<9\n\nUnderwriter",
+      "word_count": 73,
+      "avg_confidence": 88.44,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Typical flow of assignment execution\n\nmi\n\nAssign\n\nNothing specified to group\n\nGroup specified\n\nAssign To * Eastern Region Underwriting ~ Q\n\nAssign\nto user\n\nDefault Group Activity\nAssignment Rules\nGroup and user specified\n\nAssign To * Bruce Baker (Los Angeles Bra ~ Q.",
+      "word_count": 44,
+      "avg_confidence": 83.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Activity ownership Gi\n\n« An activity is owned by (assigned to) both a user and a group\n* The assigned user must be a member of the assigned group\n« Assigning “just” a user also assigns that user’s default group\n\n¢ When an activity is assigned to a user:\n+ It appears in that user's My Activities desktop list\n\n* It can be edited only by that user (or other users with appropriate permissions, such as the\nowner's supervisor)\n\n¢ It can be viewed by other users in the group",
+      "word_count": 91,
+      "avg_confidence": 88.25,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Activity assignment\n\nIn PolicyCenter, an activity is assigned by:\n\n+ Assignment rules, or > 8s\"\n\n« Assignment classes, or\n\n* Combination of both",
+      "word_count": 24,
+      "avg_confidence": 85.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Activity assignment rule sets Ga\n© DefaultGroupActivityAssignmentRules.grs x\n\nGP Rule Sets\n© Bl Assignment [9% © Default Group Activity Assignment Rules\n(© DefaultGroupAccountAssignmentRules ©) [Yj Assign Round Robin\n©\n\nDefaultGroupActivityAssignmentRules\n‘© DefaultGroupJobAssignmentRules Octal\n(© DefaultGroupPreRenewalAssignmentRules [DF 1 Global Activity Assignment Rules\n© GhobalAccountAssignmentRules {Gi (2 Activity based on pattern\n© GlobalActivityAssignmentfules #8) 1 Requestor Activities\n©) 1) Producer Activities\n© GlbalJobAssignmentRules 8) Underwriter Activities\n© GlbalPreRenewalAssignmentRules ®) 1 UW superviser Activities\n© 1 Defeat\n\n¢ GlobalActivityAssignmentRules assign activity to a group and may also assign to\na user\n\n* Has rules that assign an activity by job role\n* OOTB Default rule assigns to the underwriter\n¢ DefaultGroupActivityAssignmentRules assigns activity to user in assigned group\n\n* Has arule that assigns activity to user in a group using round-robin",
+      "word_count": 129,
+      "avg_confidence": 74.38,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Initiating activity assignment from Gosu\n\nGi\n\n¢ Bycalling autoAssign() methods ¢ By calling other activity\n\nassignment methods\ndirectly in assignment\nclasses\n\n* Invokes activity assignment engine\n* Can cause assignment rules to be run\n+ Do not call autoAssign() from within an assignment rule! @\n\nSignature Assignment rules to be run\n\nActivity.autoAssign() Global and Default Group\n\nActivity.autoAssign( group, null)\n\nDefault Group\n\nAssign To * Eastern Region Underwriting ~ Q\n\nActivity.autoAssign( group, user)\n\nNone\n\nActivity.assign( group, user )\n\nNone\n\nAssign To + Bruce Baker (Los Angeles Bra ~ Q",
+      "word_count": 89,
+      "avg_confidence": 86.11,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i autoAssign() example Ga\n\n¢ Business requirement: Create an activity informing a user in the account creator\ngroup that a participant was updated on the account\n\n¢ Solution\n\n* Add code to PreUpdateHandlerlmpl class, which executes logic before saving data to DB\n\n* Only default group rule set will run since group is specified\n\n26\n27)\n28\n29\n30\n31\n32\n33\n34\n35\n36\n7\n3\n39\n40\na\na\n43\n“\n\nfor (bean in context.UpdatedBeans) {\naddBeansToBePreUpdaced (entitySec, bean)\n\nAf(bean typeis AccountUserRoleRssignnent) {\nvar act : Aetivity\nvar account = bean.Account\nvar actGroup : Group\nvar pattern = ActivityPactern. tinder. getActivityPatcernByCode (\"general reminder\")\nact = account.newhetivity (pattern)\nact.Subject = \"Account participant updated”\n\nfor(zole in\nif(role.Fo!\naceérot\n\n-RoleRssignnents) {\n-ypekey.UserRole.7C_CREATOR)\nle AsignedGroup\n\n)\n\nact.autokssign (actGroup, mull)\n)\n,",
+      "word_count": 129,
+      "avg_confidence": 79.55,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Common assignment strategies Ga\n\n« Assign to a specific group and then round-robin among users\n\n« Round robin ignores users that lack permission to own the object\n\n« Round-robin functionality can be configured to take into account user workload/load factors\n¢ Assign to a specific group and user\n\n¢ Assign to a queue",
+      "word_count": 54,
+      "avg_confidence": 87.11,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Common assignment methods\n\nThese methods on the Activity entity\n\n* Can be used in assignment rules\n\n* Can be called in assignment classes directly to initiate activity assignment\n\nContext Method Assigns to...\n\nGroup assignGroup() Named group\n\nGroup assignGroupByLocation() Group matching specified location\nand group type\n\nUser assign() Named user (and group)\n\nUser assignUserAndDefaultGroup() Named user (default group)\n\nQueue assignActivityToQueue() Named queue",
+      "word_count": 62,
+      "avg_confidence": 93.08,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Classes you can configure\n\nMethods you may need to modify activity assignment logic are under\ngsrc/gw/assignment:\n\n« AuditAssignmentEnhancement\n¢ JobAssignmentEnhancement\n« Example: createRoleActivity() method on Job entity\n\n+ Creates activity from a specified ActivityPattern\n\n+ Assigns to a user with a specified role on the job",
+      "word_count": 47,
+      "avg_confidence": 87.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Always exit rule when configuring assignment rules Gi\n\n« When assignment succeeds\n\nThis avoids reassigning an entity that has just been assigned\n¢ Assignment methods return boolean values\n\n* True > assignment was successful\n\n* False unsuccessful, appropriate group (or user) could not be found\n\nPlace methods in if/exit wrapper to exit assignment rule set as needed\n\nvar theGroup = activity.Job.getUserRoleAssignmentByRole( \"Underwriter\" ).AssignedGroup\nif (activity.assign( theGroup, theGroup.Supervisor )) {\n\nactions.exit()\n} S$\nIf assignment is successful,\n\nensures that no other\nassignment is done",
+      "word_count": 84,
+      "avg_confidence": 89.87,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Demonstration G\nActivity assignment basics\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Assigning to a specific group\n\n« Assign object to a specified group\n\n¢ Syntax:\nobject.assignGroup ( group )\n\n// Ass: y to Lo. anch UW group\nvar group = activity.findGroup(\"Los Angeles Branch UN\")\nif (activity.assignGroup(group)) {\n\nactions.exit()\n\nu",
+      "word_count": 39,
+      "avg_confidence": 84.49,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i Assigning to group by type and location\n\n¢ Assigns to group:\n* Of specified group type...\n* ...whose region covers specified address...\n* ...including only direct child groups or all descendent groups...\n* ...beginning with children of specified group\n+ Specified group typically set to null or <entity>.AssignedGroup\n¢ Using round-robin\n\n¢ Syntax: object.assignGroupByLocation (\ngroupType, address, directChildrenOnly, group)\n\nif (activity.assignGroupByLocation (\ntypekey.GroupType.IC_HOMEOFFICEADMIN, policyPeriod.PolicyAddress.Address, false, null)) {\nactions.exit()\n\n}",
+      "word_count": 70,
+      "avg_confidence": 81.87,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Step 1: Identify candidate groups Gi\n\nif (activity.assignGroupByLocation(\ntypekey.GroupType.IC_HOMEOFFICEADMIN, policyPeriod.PolicyAddress.Address,[false, null)) {\nactions.exit()\n+\n\nActuary Unit\n\nExecution\nSession\n\n@@ = descendants\nof...\n\nBusiness Production Offices\n\nEastern Region\n\nFinance & Treasury\n\nEnigma Fire Casualty\nInsurance\n\nHome Office Admin Services\nHome Office Marketing\n\nHome Office U.W.",
+      "word_count": 45,
+      "avg_confidence": 85.08,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Step 2: Filter by group type\n\nif (activity.assignGroupByLocation(\n\n‘typekey.Grouplype.1c_HOMEOFFICEADMIN,] policyPeriod.PolicyAddress.Address, false, null)) {\n\nactions.exit ()\n+\n\nActuary Unit\nBusiness Production Offices\n\nEastern Region\n\n20\n‘62 Finance & Treasury\n\n2\n\nHome Office Admin Services\nHome Office Marketing\n\nHome Office U.W.",
+      "word_count": 40,
+      "avg_confidence": 84.26,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Step 3: Select by location Gi\n\n« Assume policy address is in California\n\n« Based on zone-config.xml (see next slide), activity is assigned to based on zip,\nthen county, then state\n\nif (activity.assignGroupByLocation(\ntypekey.GroupType.1C_HOMEOFFICEADMIN, [policyPeriod.PolicyAddress.Address,] false, null)) {\nactions.exit()\n\n}\n\n5% Eastern Mid-West Clerical\n\n@ . .\n‘@ Eastern Region Clerical\n\n% Home Office Admin Services\n\nWestern Mid-West Clerical\n\nWestern Region Clerical",
+      "word_count": 63,
+      "avg_confidence": 85.61,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Configuring location selection\n\n¢ Selection by location uses zones and\nregions\n¢ Azone is a type of geographic area\n\n« Examples: State/province, county, city,\npostal code\n\n* Configured in zone-config.xml\n\n¢ Aregion is a collection of specific zone\nvalues, configured through\nAdministration tab\n\nSan Diego Local Area\n\n« Western States\nRegion\n\n* San Diego Local Area\n\nName ‘San Diego Local Area\n\n* State of Michigan plus Chicago Areas Covered CAimperal, CAsSan Diego",
+      "word_count": 73,
+      "avg_confidence": 87.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i What if group assignment fails?\n\niid\n: * Global Activity Assign\nNothing specified Assignment Rules | to group\n\nAssign to\nDefault Owner\nand root group\n\nWas group\nassigned?\n\nAlso assigned\nto user?\nGroup specified No\nAssign To ® Eastern Region Underwriting + Q.\n\nied\nDefault Group Activity /Assign\nAssignment Rules __ |to use!\nGroup and user specified\n\nAssign To %* Bruce Baker (Los AngelesBra y Q",
+      "word_count": 67,
+      "avg_confidence": 85.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "i Assigning to a specific user\n\n« Assigns object to both a group and user\n¢ Syntax:\n\nobject.assign( group, user )\n\nwar _user = activity. findUser\n\n\"ssmith\")\nif(activity.assign(group, user)) {\n\nactions.exit()\n\n}",
+      "word_count": 32,
+      "avg_confidence": 82.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "i Assigning to a user and any group\n\n¢ Assigns object to a user and any group that the user belongs to\n\n¢ Syntax:\nobject.assignUserAndDefaultGroup (User)\n\nactions.exit()",
+      "word_count": 27,
+      "avg_confidence": 87.39,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "i What if user assignment fails?\n\nind\nGlobal Activity | Assign\nAssignment Rules | to group\nWas group assigned?\n\nNo\nL*\n\nNothing specified\n\nGroup specified\n\nAssign To % Eastern Region Underwriting ~ Q\n-| Default Group Activity} Assign\nAssignment Rules_ | to user\nYes\nNew group assigned?\nAssign to group supervisor\n\nYes\n\nGroup and user specified\n\nAssign To %* Bruce Baker (Los Angeles Bra ~ Q.",
+      "word_count": 66,
+      "avg_confidence": 88.06,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "i Demonstration G\nAssigning activities\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.43,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n,~ — Whatis the difference between primary and secondary assignment?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 21,
+      "avg_confidence": 63.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer Gi\n\n,~ — What is the difference between primary and secondary assignment?\n\n¢\n4\n¢\n\nIn primary assignment, a single user is assigned ownership of the assigned object. In\nsecondary assignment, one or more users are assigned to roles with respect to the\nassigned object.\n\nSS Se ee eee eo",
+      "word_count": 51,
+      "avg_confidence": 79.32,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question G\n\n,~ — When an activity is assigned by rules, which two rule sets are typically\noo executed? In what order?\n\nSS oe ee oe oe oo",
+      "word_count": 28,
+      "avg_confidence": 74.24,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer Gi\n\n,~ — When an activity is assigned by rules, which two rule sets are typically\nFa executed? In what order?\n\nFirst, global rules are executed. Then, default group rules are executed.\n\nSS Se ee eee eo",
+      "word_count": 38,
+      "avg_confidence": 79.33,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question G\n\n,~ — Under what circumstances can an activity be assigned without\n\noo assignment rules being executed?\n\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 25,
+      "avg_confidence": 71.27,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer\n\n,~ — Under what circumstances can an activity be assigned without\n\nFa assignment rules being executed?\n\n¢\n\nWhen the activity is assigned to a specific user.\n\nSS Se ee eee eo",
+      "word_count": 32,
+      "avg_confidence": 78.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question G\n\n,- — Why are assignment methods always inside i‘ statements in assignment\n\n7 rules?\n0 ! ’\n7\n\nSS oe ee oe oe oo",
+      "word_count": 26,
+      "avg_confidence": 62.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer Gi\n\n,- — Why are assignment methods always inside i statements in assignment\nFa rules?\n¢\n\nAssignment methods are always inside if statements because they might fail. For\nexample, an assignGroup method may not be able to find the specified group.\n\nIf the assignment succeeds, then the if statement causes control of flow to execute an\nactions.exit() statement, which exits execution from the rule set.\n\nIf the assignment fails, then the actions.exit() statement is skipped and execution\nproceeds to the next rule.\n\nSS Se ee eee eo",
+      "word_count": 88,
+      "avg_confidence": 86.71,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Question G\n\n,~ — What is the Default Owner of an object?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 21,
+      "avg_confidence": 63.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Answer Gi\n\n,~ — What is the Default Owner of an object?\n¢\n4\n¢\n\nDefault Owner is a dummy user that objects are assigned to when global assignment\nrules fail to assign the object to a group.\n\nSS Se ee eee eo",
+      "word_count": 43,
+      "avg_confidence": 80.67,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Lesson\nobj ectives ¢ Describe primary assignment\nreview * Assign an activity",
+      "word_count": 12,
+      "avg_confidence": 83.67,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "i Student exercise\n\nAssigning Activities",
+      "word_count": 5,
+      "avg_confidence": 85.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

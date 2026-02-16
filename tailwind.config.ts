@@ -65,8 +65,23 @@ const config: Config = {
 					'800': '#7C6030',
 					'900': '#5E4521'
 				},
+				// Rust - Warm accent color (Academy/Portal)
+				rust: {
+					DEFAULT: '#C1440E',
+					'50': '#FEF3EE',
+					'100': '#FCDCC9',
+					'200': '#F9B896',
+					'300': '#F58F5E',
+					'400': '#E96A2D',
+					'500': '#C1440E',
+					'600': '#A33A0C',
+					'700': '#852F0A',
+					'800': '#672508',
+					'900': '#4A1B06',
+				},
 				// Premium Neutrals (refined)
 				charcoal: {
+					DEFAULT: '#171717',
 					'50': '#FAFAFA',
 					'100': '#F5F5F5',
 					'200': '#E5E5E5',
@@ -90,6 +105,40 @@ const config: Config = {
 					'700': '#1D2A38',
 					'800': '#15202C',
 					'900': '#0D1620'
+				},
+				// Academy warm palette
+				warm: {
+					'bg': '#faf6f0',
+					'cream': '#f5efe5',
+					'primary': '#2a2520',
+					'secondary': '#5a524a',
+					'muted': '#9a9088',
+					'light': '#b8b0a4',
+					'deep': '#2a2520',
+				},
+				copper: {
+					'50': '#fdf5ef',
+					'100': '#fae8d8',
+					'200': '#f4ccaa',
+					'300': '#edab78',
+					'400': '#e08a4e',
+					'500': '#c06830',
+					'600': '#a85428',
+					'700': '#8c4122',
+					'800': '#703520',
+					'900': '#5c2c1c',
+				},
+				sage: {
+					'50': '#f2f6f2',
+					'100': '#e0eae0',
+					'200': '#c2d5c2',
+					'300': '#9aba9a',
+					'400': '#729a72',
+					'500': '#5a7a5a',
+					'600': '#476247',
+					'700': '#3a4f3a',
+					'800': '#304030',
+					'900': '#283528',
 				},
 				// Premium backgrounds (keep cream as requested)
 				cream: '#FDFBF7',
@@ -263,6 +312,24 @@ const config: Config = {
 					'"JetBrains Mono"',
 					'"Fira Code"',
 					'"Courier New"',
+					'monospace'
+				],
+				// Academy lesson fonts - warm editorial
+				display: [
+					'Fraunces',
+					'Georgia',
+					'"Times New Roman"',
+					'serif'
+				],
+				serif: [
+					'Lora',
+					'Georgia',
+					'"Times New Roman"',
+					'serif'
+				],
+				'mono-warm': [
+					'"Source Code Pro"',
+					'"JetBrains Mono"',
 					'monospace'
 				]
 			},

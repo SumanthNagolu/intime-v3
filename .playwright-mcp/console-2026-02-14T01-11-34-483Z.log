@@ -1,0 +1,130 @@
+[  298586ms] [ERROR] ./src/components/academy/lesson/NotesPanel.tsx:21:1
+Export generateSenseiResponse doesn't exist in target module
+  19 | import type { SlideContent } from '@/lib/academy/types'
+  20 | import type { SenseiMessage } from '@/lib/academy/types'
+> 21 | import { generateSenseiResponse } from '@/lib/academy/guru-service'
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  22 | import { useAcademyStore } from '@/lib/academy/progress-store'
+  23 |
+  24 | // ---------------------------------------------------------------------------
+
+The export generateSenseiResponse was not found in module [project]/src/lib/academy/guru-service.ts [app-client] (ecmascript).
+Did you mean to import generateGuruResponse?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/15ed4_next_dist_e687ec57._.js:3117
+[  298586ms] [ERROR] ./src/components/academy/lesson/NotesPanel.tsx:21:1
+Export generateSenseiResponse doesn't exist in target module
+  19 | import type { SlideContent } from '@/lib/academy/types'
+  20 | import type { SenseiMessage } from '@/lib/academy/types'
+> 21 | import { generateSenseiResponse } from '@/lib/academy/guru-service'
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  22 | import { useAcademyStore } from '@/lib/academy/progress-store'
+  23 |
+  24 | // ---------------------------------------------------------------------------
+
+The export generateSenseiResponse was not found in module [project]/src/lib/academy/guru-service.ts [app-ssr] (ecmascript).
+Did you mean to import generateGuruResponse?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/15ed4_next_dist_e687ec57._.js:3117
+[  319464ms] [ERROR] ./src/components/academy/lesson/NotesPanel.tsx:21:1
+Export generateSenseiResponse doesn't exist in target module
+  19 | import type { SlideContent } from '@/lib/academy/types'
+  20 | import type { GuruMessage } from '@/lib/academy/types'
+> 21 | import { generateSenseiResponse } from '@/lib/academy/guru-service'
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  22 | import { useAcademyStore } from '@/lib/academy/progress-store'
+  23 |
+  24 | // ---------------------------------------------------------------------------
+
+The export generateSenseiResponse was not found in module [project]/src/lib/academy/guru-service.ts [app-client] (ecmascript).
+Did you mean to import generateGuruResponse?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/15ed4_next_dist_e687ec57._.js:3117
+[  319465ms] [ERROR] ./src/components/academy/lesson/NotesPanel.tsx:21:1
+Export generateSenseiResponse doesn't exist in target module
+  19 | import type { SlideContent } from '@/lib/academy/types'
+  20 | import type { GuruMessage } from '@/lib/academy/types'
+> 21 | import { generateSenseiResponse } from '@/lib/academy/guru-service'
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  22 | import { useAcademyStore } from '@/lib/academy/progress-store'
+  23 |
+  24 | // ---------------------------------------------------------------------------
+
+The export generateSenseiResponse was not found in module [project]/src/lib/academy/guru-service.ts [app-ssr] (ecmascript).
+Did you mean to import generateGuruResponse?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component Browser]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/academy/lesson/NotesPanel.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Client Component SSR]
+    ./src/components/academy/lesson/LessonPresentationView.tsx [Server Component]
+    ./src/app/academy/lesson/[moduleId]/[lessonId]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/15ed4_next_dist_e687ec57._.js:3117
+[  337276ms] [ERROR] %o
+
+%s ReferenceError: buildExplanation is not defined
+    at NotesPanel.useMemo[explanation] (http://localhost:3000/_next/static/chunks/src_93fbf782._.js?id=%255Bproject%255D%252Fsrc%252Fcomponents%252Facademy%252Flesson%252FNotesPanel.tsx+%255Bapp-client%255D+%2528ecmascript%2529:132:48)
+    at updateMemo (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:5438:21)
+    at Object.useMemo (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:15245:24)
+    at exports.useMemo (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_bc8054be._.js:1742:36)
+    at NotesPanel (http://localhost:3000/_next/static/chunks/src_93fbf782._.js?id=%255Bproject%255D%252Fsrc%252Fcomponents%252Facademy%252Flesson%252FNotesPanel.tsx+%255Bapp-client%255D+%2528ecmascript%2529:131:405)
+    at Object.react_stack_bottom_frame (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:14816:24)
+    at renderWithHooks (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:4645:24)
+    at updateFunctionComponent (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:6106:21)
+    at beginWork (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:6702:24)
+    at runWithFiberInDEV (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:959:74)
+    at performUnitOfWork (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9556:97)
+    at workLoopSync (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9450:40)
+    at renderRootSync (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9434:13)
+    at performWorkOnRoot (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9099:47)
+    at performSyncWorkOnRoot (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:10232:9)
+    at flushSyncWorkAcrossRoots_impl (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:10148:316)
+    at flushSyncWork$1 (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:9231:86)
+    at Object.scheduleRefresh (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_react-dom_648b3fd0._.js:294:13)
+    at http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_bc8054be._.js:391:33
+    at Set.forEach (<anonymous>)
+    at Object.performReactRefresh (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_bc8054be._.js:384:38)
+    at applyUpdate (http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_bc8054be._.js:878:31)
+    at http://localhost:3000/_next/static/chunks/15ed4_next_dist_compiled_bc8054be._.js:886:13 The above error occurred in the <NotesPanel> component. It was handled by the <ErrorBoundaryHandler> error boundary. @ http://localhost:3000/_next/static/chunks/15ed4_next_dist_client_f2c7d901._.js:1294

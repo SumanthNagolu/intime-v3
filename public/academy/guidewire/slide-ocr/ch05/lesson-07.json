@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-07",
+    "slide_count": 43,
+    "slides_with_text": 39,
+    "total_words": 1809,
+    "avg_confidence": 88.03,
+    "processing_time_seconds": 16.97,
+    "extracted_at": "2026-02-13T12:09:58.271274"
+  },
+  "full_text": "Adjudication\n\nLesson\nobjectives\n\n¢ Create and manage incidents\n\n* Create and manage exposures\n\n* Create and manage reserves (Automatic /\nManual)\n\nThere are several very important\naspects or parts of a claim. | need to\nunderstand what each of them mean\n\nand how they fit together so that\n\n| can manage the claims process\neffectively.\n\nTanvi\nAdjuster \\\n\nWhen | get a call from a customer, |\ntry to get the most information about\nthe claim that | can. The more | know\nand understand about how that\ninformation is used in adjudication,\nthe better job | can do.\n\nTanya\n\nCustomer\n\nService\nRepresentative\n\ni Adjudication: The functional perspective Gi\n\n¢ Determine if the claim should be\npaid and how much\n\nAdjudication: everything that takes\nplace between the creation of the\nclaim and the payment of the claim\n¢ Within ClaimCenter, adjudication is\nthe process of:\n\n* Completing the relevant activities on the\nclaim and its exposures\n\n* Moving the claim and its exposures to\nthe \"ability to pay\" level of maturity\n\ni Common questions during adjudication a\n\n¢ What is the extent of the insurer's responsibility?\n+ Was there a policy in effect at the time of the loss?\n+ Are there coverages on the policy which cover the loss?\n\n¢ What occurred during the loss?\n« Where, when and how did the loss occur?\n+ What other parties were involved?\n\nIs there relevant information from other agencies?\n+ Examples: medical bill reviews, diagnoses, police reports\n\n¢ How much will it cost to indemnify the claimant?\n+ Medical costs\n+ Lost wages\n+ Is there a limit?\n\n| Determine Compensability on workers’\n\ncompensation claims\n\nFor every workers’ compensation claim saved in ClaimCenter, the claim must be\n\ndetermined to be accepted, denied, or pending decision\n\nThis is known as the “compensability decision,” and a Determine Compensation\nactivity is automatically generated on every WC claim to track this task\n\nThree general steps:\n\n1.\n\n2.\n\n3.\n\nGather information (compensability\nfactors)\n\nSet a value of Accepted or Denied on\nthe activity\n\nComplete the activity\n\nGi\n\n| Ordinary activities versus compensability activity G\n\n¢ Appear in Workplan « Appears in Workplan\n* Can be edited from Workplan or * Can be edited from Workplan or completed\nrelated objects in Loss Details screen\n\n* Created automatically with claim\n\n* Contains two additional fields Sa\na, + Compensability ~~\n\n* Can be manually created\n\nN + Reason for decision\n(OQ,\nlis ‘ * Cannot be completed unless\nle Compensability field is “accepted” or\neS “denied”\n\n« Due date derived from “Denial Period”\nreference table\n\n| Demonstration G\n\nDetermining compensability\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n_Tanvi\nThe Customer Service Adjuster (i\n\nRepresentative recorded all the\ninformation about the injury. | need v\n\nto determine what needs to be paid,\nto whom, for what damage, and\nunder which coverage.\n\nCO Coverage\n\n-_\n\n| The primary elements of an exposure G\n\n¢ An exposure is used to track\n\npotential payments from one\ncoverage to one claimant\n\nIt is defined by the specific coverage,\n\nthe claimant and the incident\n\ne\nClaimant\n\nkX\n\nReserve lines are usually added after\n\nthe exposure is created\n\nIncident\n\n| Exposures G&G\n\n¢ For many claims, a single case of loss involves:\n+ More than one coverage\n¢ Policies have specific coverages for specific types of loss (injury, liability)\n\n¢ Claims systems need a mechanism for tracking progress of each possible claim\npayment\n\n| incidents G\n\n¢ Asingle instance of loss\n¢ In aworkers' comp claim, the list of\nincidents can include\n\n+ Injuries\n\n| ~\nHp insured\naS\n\na injured\nworker\n\n+ Lost wages\n\n* May involve multiple coverages\n+ Not typical of WC incidents\n\ninjury incident\n\nliability incident\n\n| Automatic creation of WC exposures G&G\n\n* Workers’ compensation exposures are generally created by rules during claim creation\n\n* There are three types of exposure available on a WC claim:\n\n1. Time Loss — workers’ wages for time lost to work-related injury or illness\n\n2. Medical Details -treatment of work-related injury or illness\n3. Employer Liability — (potential) settlement of lawsuit against employer\n\n+ Employer Liability is not created by rules in the base configuration\n\nStep 3 of 4: Add claim information\n\nLost time from work? * Oves Ono\n\nMedical attention required? * ves ©)No\n\n| Manual creation of WC exposures\n\nGF\nBy changing the Classification section of the Loss Details screen,\nyou can add exposures to the claim ®@\n¢ Employer Liability exposures can only be created here\n@\n\nClassification\n\nMedical attention required? Yes\n\nLost time from work?\n\nYes\n\nEmployer Liability? No\n\nCreation of WC exposures - Summary a\n\nMed attention | Incident Medical details Employer Employer liability\nrequired? “ o_ created? a — created?\nYes\n\nYes Yes Yes No No\nNo No Yes\nNo Yes No\nfrom work? result in exposure created?\ndeath?\nYes No Yes\nYes Yes Yes\nNo No No\n\nNo Yes Yes\n\n| Demonstration G\n\nExposures\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nReserve lines are a way for to us to track\nhow much money we may need to pay out\nfor a claim. This is an important number, as it\naffects the financial status of the company. |\nneed to know how to create and maintain\nreserve lines so that number can be as\naccurate as possible.\n\nTanvi\n\nAdjuster \\—\n\n| Financials G&G\n\n¢ Financials is an umbrella term for the process of setting aside money and then\nissuing payments\n\n* The purpose of an exposure is to track information about payment from coverage\nto claimant\n\n¢ Reserve lines track money associated with a specific exposure\n\n8\nL239 —— 2\n\n| Reserve lines G&G\n\n© @ Coverage: WC medical details\nClaimant: Jim Means\n\nE = ai Reserve Line 1 (hospitalization)\n\nTT .\nuae a Reserve Line 2 (nurse case manager)\n\n« Areserve line is an amount of money set aside for expected payments related to a\ngiven exposure\n\n¢ Every exposure that is payable, ultimately has one or more reserve lines\n« Reserve transactions add to or subtract from reserve lines\n¢ Areserve line is the total amount available for an exposure\n\n| Cost types\n\n© @ Coverage: WC employer’s liability\nf Claimant: Jim Means\n\n7 Reserve Line 1 (injury)\nTT Cost type: Claim Cost\n\nCost type: Claim Cost\n\n— (H Reserve Line 2 (case manager)\n\n« Every reserve line is categorized by a cost type, which describes if the money is\nfor indemnity or expense\n\n¢ Indemnity reserves (claim cost) are used to indemnify claimants\n« Expense reserves are used to cover costs incurred processing the claim\n¢ There may be more than two cost types, but these are most widely used\n\n| Cost categories Gi\n\n©. e Coverage: WC employer’s liability\nD Claimant: Jim Means\n\n7 Reserve Line 1 (injury)\nCost type: Claim Cost\nCost category: Medical\n\nCost type: Claim Cost\nCost category: Case management\n\n— (H Reserve Line 2 (case manager)\n\n¢ Acost category is a specific classification of a cost type used to track payments,\nidentify leakage, predict future reserves, or control reserve creation and approval\n\n« Reserve lines are uniquely defined by exposure, cost type, and cost category\n\n| Who creates reserve transactions? G&G\n\nAutomated\n« Areserve can be created automatically : Claim Setup\n\nby Gosu rules\n\n« Automatically created reserves are eA)\ntypically created during exposure setup\n\nan adjuster\n\n¢ Areserve can be created manually by — =H\ninp\naya\n\n| Demonstration G\n\nReserve Lines\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nAs | adjudicate a claim, | often obtain\nmore information about the claim over\ntime. | need to understand the difference\nin the data required for each type of\nclaim. | know that the data on an auto\nclaim is different from the data ona\nhomeowners claim.\n\nTanvi :\nAdjuster \\ae/\n\n| Loss details\n\nPart of adjudication is to determine if you are going to pay a claim\nDecision is based on circumstances and specific data on the claim\nCritical decision data may be Line of Business specific\nAdjudication also determines how much to pay for a claim\n\n| Workers’ compensation critical data G&G\n\nInjured worker (incident) — is this a covered worker?\n\nLocation — is the location covered by the policy?\n\n&\nLoss cause — is it covered (validate coverage type)? A\nFault rating — who is at fault (controls liability)? D\nWitnesses — can they help identify responsible parties?\nMetropolitan reports — could identify responsible parties?\n\nContributing factors — could identify responsible parties?\n\n| Demonstration G\n\nLoss details\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nAdjudication\n\nLesson\nobjectives ¢ Define, create and manage incidents\n\nreview ¢ Define, create and manage exposures\n¢ Define, create and manage reserves\n(automatic/manual)\n¢ Understand how loss details change based\non-line of business\n\nQuestion G\n\n,— — What is a main goal of adjudication?\n4\n\n¢\n4\n\n-S S SS  SS SS SSS HS SH\n\nAnswer G\n\n,— — What is a main goal of adjudication?\n¢\n\n¢\n7\n\nTo determine if a claim should be paid, and if so, how much should be paid to make\nthe claimant whole again.\n\n- Se SSS e S ee sS e H\n\nQuestion G\n\n_— — InClaimCenter terms, what is an incident?\n\n4\n¢\n4\n\n-S S SS  SS SS SSS HS SH\n\nAnswer G\n\n,— — InClaimCenter terms, what is an incident?\n4\n\n¢\n7\n\nAn incident is a single instance of loss. It is the property or person that is damaged or\ninjured.\n\n- Se SSS e S ee sS e H\n\nQuestion G\n\nae What is the purpose of an exposure?\n\n¢\n4\n\n-S S SS  SS SS SSS HS SH\n\nAnswer G\n\na What is the purpose of an exposure?\n\n¢\n7\n\nAn exposure is the mechanism that ClaimCenter uses to track potential payments for\none coverage to one claimant.\n\n- Se SSS e S ee sS e H\n\nQuestion G\n\n,— — What is the purpose of a reserve line?\n\n4\n¢\n4\n\n-S S SS  SS SS SSS HS SH\n\nAnswer G\n\na What is the purpose of a reserve line?\n\n¢\n7\n\nAreserve line is an amount of money set aside for expected payments related to a\ngiven exposure. It is defined by the exposure, a cost type, and a cost category.\n\n- Se SSS e S ee sS e H",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Adjudication",
+      "word_count": 1,
+      "avg_confidence": 95.25,
+      "image_size": {
+        "width": 1280,
+        "height": 559
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Create and manage incidents\n\n* Create and manage exposures\n\n* Create and manage reserves (Automatic /\nManual)",
+      "word_count": 20,
+      "avg_confidence": 86.5,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "There are several very important\naspects or parts of a claim. | need to\nunderstand what each of them mean\n\nand how they fit together so that\n\n| can manage the claims process\neffectively.\n\nTanvi\nAdjuster \\",
+      "word_count": 37,
+      "avg_confidence": 93.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "When | get a call from a customer, |\ntry to get the most information about\nthe claim that | can. The more | know\nand understand about how that\ninformation is used in adjudication,\nthe better job | can do.\n\nTanya\n\nCustomer\n\nService\nRepresentative",
+      "word_count": 45,
+      "avg_confidence": 94.84,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Adjudication: The functional perspective Gi\n\n¢ Determine if the claim should be\npaid and how much\n\nAdjudication: everything that takes\nplace between the creation of the\nclaim and the payment of the claim\n¢ Within ClaimCenter, adjudication is\nthe process of:\n\n* Completing the relevant activities on the\nclaim and its exposures\n\n* Moving the claim and its exposures to\nthe \"ability to pay\" level of maturity",
+      "word_count": 68,
+      "avg_confidence": 91.07,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Common questions during adjudication a\n\n¢ What is the extent of the insurer's responsibility?\n+ Was there a policy in effect at the time of the loss?\n+ Are there coverages on the policy which cover the loss?\n\n¢ What occurred during the loss?\n« Where, when and how did the loss occur?\n+ What other parties were involved?\n\nIs there relevant information from other agencies?\n+ Examples: medical bill reviews, diagnoses, police reports\n\n¢ How much will it cost to indemnify the claimant?\n+ Medical costs\n+ Lost wages\n+ Is there a limit?",
+      "word_count": 96,
+      "avg_confidence": 89.45,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Determine Compensability on workers’\n\ncompensation claims\n\nFor every workers’ compensation claim saved in ClaimCenter, the claim must be\n\ndetermined to be accepted, denied, or pending decision\n\nThis is known as the “compensability decision,” and a Determine Compensation\nactivity is automatically generated on every WC claim to track this task\n\nThree general steps:\n\n1.\n\n2.\n\n3.\n\nGather information (compensability\nfactors)\n\nSet a value of Accepted or Denied on\nthe activity\n\nComplete the activity\n\nGi",
+      "word_count": 74,
+      "avg_confidence": 94.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Ordinary activities versus compensability activity G\n\n¢ Appear in Workplan « Appears in Workplan\n* Can be edited from Workplan or * Can be edited from Workplan or completed\nrelated objects in Loss Details screen\n\n* Created automatically with claim\n\n* Contains two additional fields Sa\na, + Compensability ~~\n\n* Can be manually created\n\nN + Reason for decision\n(OQ,\nlis ‘ * Cannot be completed unless\nle Compensability field is “accepted” or\neS “denied”\n\n« Due date derived from “Denial Period”\nreference table",
+      "word_count": 86,
+      "avg_confidence": 85.79,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Demonstration G\n\nDetermining compensability\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "_Tanvi\nThe Customer Service Adjuster (i\n\nRepresentative recorded all the\ninformation about the injury. | need v\n\nto determine what needs to be paid,\nto whom, for what damage, and\nunder which coverage.",
+      "word_count": 33,
+      "avg_confidence": 90.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "CO Coverage\n\n-_\n\n| The primary elements of an exposure G\n\n¢ An exposure is used to track\n\npotential payments from one\ncoverage to one claimant\n\nIt is defined by the specific coverage,\n\nthe claimant and the incident\n\ne\nClaimant\n\nkX\n\nReserve lines are usually added after\n\nthe exposure is created\n\nIncident",
+      "word_count": 52,
+      "avg_confidence": 89.51,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Exposures G&G",
+      "word_count": 3,
+      "avg_confidence": 81.8,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "¢ For many claims, a single case of loss involves:\n+ More than one coverage\n¢ Policies have specific coverages for specific types of loss (injury, liability)\n\n¢ Claims systems need a mechanism for tracking progress of each possible claim\npayment",
+      "word_count": 41,
+      "avg_confidence": 90.14,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| incidents G\n\n¢ Asingle instance of loss\n¢ In aworkers' comp claim, the list of\nincidents can include\n\n+ Injuries\n\n| ~\nHp insured\naS\n\na injured\nworker\n\n+ Lost wages\n\n* May involve multiple coverages\n+ Not typical of WC incidents\n\ninjury incident\n\nliability incident",
+      "word_count": 47,
+      "avg_confidence": 79.96,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Automatic creation of WC exposures G&G\n\n* Workers’ compensation exposures are generally created by rules during claim creation\n\n* There are three types of exposure available on a WC claim:\n\n1. Time Loss — workers’ wages for time lost to work-related injury or illness\n\n2. Medical Details -treatment of work-related injury or illness\n3. Employer Liability — (potential) settlement of lawsuit against employer\n\n+ Employer Liability is not created by rules in the base configuration\n\nStep 3 of 4: Add claim information\n\nLost time from work? * Oves Ono\n\nMedical attention required? * ves ©)No",
+      "word_count": 96,
+      "avg_confidence": 90.37,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Manual creation of WC exposures\n\nGF\nBy changing the Classification section of the Loss Details screen,\nyou can add exposures to the claim ®@\n¢ Employer Liability exposures can only be created here\n@\n\nClassification\n\nMedical attention required? Yes\n\nLost time from work?\n\nYes\n\nEmployer Liability? No",
+      "word_count": 48,
+      "avg_confidence": 89.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Creation of WC exposures - Summary a\n\nMed attention | Incident Medical details Employer Employer liability\nrequired? “ o_ created? a — created?\nYes\n\nYes Yes Yes No No\nNo No Yes\nNo Yes No\nfrom work? result in exposure created?\ndeath?\nYes No Yes\nYes Yes Yes\nNo No No\n\nNo Yes Yes",
+      "word_count": 54,
+      "avg_confidence": 90.25,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Demonstration G\n\nExposures\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Reserve lines are a way for to us to track\nhow much money we may need to pay out\nfor a claim. This is an important number, as it\naffects the financial status of the company. |\nneed to know how to create and maintain\nreserve lines so that number can be as\naccurate as possible.\n\nTanvi\n\nAdjuster \\—",
+      "word_count": 59,
+      "avg_confidence": 94.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Financials G&G\n\n¢ Financials is an umbrella term for the process of setting aside money and then\nissuing payments\n\n* The purpose of an exposure is to track information about payment from coverage\nto claimant\n\n¢ Reserve lines track money associated with a specific exposure\n\n8\nL239 —— 2",
+      "word_count": 50,
+      "avg_confidence": 87.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Reserve lines G&G\n\n© @ Coverage: WC medical details\nClaimant: Jim Means\n\nE = ai Reserve Line 1 (hospitalization)\n\nTT .\nuae a Reserve Line 2 (nurse case manager)\n\n« Areserve line is an amount of money set aside for expected payments related to a\ngiven exposure\n\n¢ Every exposure that is payable, ultimately has one or more reserve lines\n« Reserve transactions add to or subtract from reserve lines\n¢ Areserve line is the total amount available for an exposure",
+      "word_count": 82,
+      "avg_confidence": 86.3,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Cost types\n\n© @ Coverage: WC employer’s liability\nf Claimant: Jim Means\n\n7 Reserve Line 1 (injury)\nTT Cost type: Claim Cost\n\nCost type: Claim Cost\n\n— (H Reserve Line 2 (case manager)\n\n« Every reserve line is categorized by a cost type, which describes if the money is\nfor indemnity or expense\n\n¢ Indemnity reserves (claim cost) are used to indemnify claimants\n« Expense reserves are used to cover costs incurred processing the claim\n¢ There may be more than two cost types, but these are most widely used",
+      "word_count": 91,
+      "avg_confidence": 88.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Cost categories Gi\n\n©. e Coverage: WC employer’s liability\nD Claimant: Jim Means\n\n7 Reserve Line 1 (injury)\nCost type: Claim Cost\nCost category: Medical\n\nCost type: Claim Cost\nCost category: Case management\n\n— (H Reserve Line 2 (case manager)\n\n¢ Acost category is a specific classification of a cost type used to track payments,\nidentify leakage, predict future reserves, or control reserve creation and approval\n\n« Reserve lines are uniquely defined by exposure, cost type, and cost category",
+      "word_count": 80,
+      "avg_confidence": 88.49,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Who creates reserve transactions? G&G\n\nAutomated\n« Areserve can be created automatically : Claim Setup\n\nby Gosu rules\n\n« Automatically created reserves are eA)\ntypically created during exposure setup\n\nan adjuster\n\n¢ Areserve can be created manually by — =H\ninp\naya",
+      "word_count": 43,
+      "avg_confidence": 84.16,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Demonstration G\n\nReserve Lines\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "As | adjudicate a claim, | often obtain\nmore information about the claim over\ntime. | need to understand the difference\nin the data required for each type of\nclaim. | know that the data on an auto\nclaim is different from the data ona\nhomeowners claim.\n\nTanvi :\nAdjuster \\ae/",
+      "word_count": 51,
+      "avg_confidence": 93.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Loss details\n\nPart of adjudication is to determine if you are going to pay a claim\nDecision is based on circumstances and specific data on the claim\nCritical decision data may be Line of Business specific\nAdjudication also determines how much to pay for a claim",
+      "word_count": 47,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Workers’ compensation critical data G&G\n\nInjured worker (incident) — is this a covered worker?\n\nLocation — is the location covered by the policy?\n\n&\nLoss cause — is it covered (validate coverage type)? A\nFault rating — who is at fault (controls liability)? D\nWitnesses — can they help identify responsible parties?\nMetropolitan reports — could identify responsible parties?\n\nContributing factors — could identify responsible parties?",
+      "word_count": 67,
+      "avg_confidence": 92.64,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "| Demonstration G\n\nLoss details\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "| Student exercise\n\nAdjudication",
+      "word_count": 4,
+      "avg_confidence": 95.57,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Lesson\nobjectives ¢ Define, create and manage incidents\n\nreview ¢ Define, create and manage exposures\n¢ Define, create and manage reserves\n(automatic/manual)\n¢ Understand how loss details change based\non-line of business",
+      "word_count": 32,
+      "avg_confidence": 88.25,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question G\n\n,— — What is a main goal of adjudication?\n4\n\n¢\n4\n\n-S S SS  SS SS SSS HS SH",
+      "word_count": 22,
+      "avg_confidence": 68.53,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer G\n\n,— — What is a main goal of adjudication?\n¢\n\n¢\n7\n\nTo determine if a claim should be paid, and if so, how much should be paid to make\nthe claimant whole again.\n\n- Se SSS e S ee sS e H",
+      "word_count": 45,
+      "avg_confidence": 86.68,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question G\n\n_— — InClaimCenter terms, what is an incident?\n\n4\n¢\n4\n\n-S S SS  SS SS SSS HS SH",
+      "word_count": 21,
+      "avg_confidence": 66.14,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer G\n\n,— — InClaimCenter terms, what is an incident?\n4\n\n¢\n7\n\nAn incident is a single instance of loss. It is the property or person that is damaged or\ninjured.\n\n- Se SSS e S ee sS e H",
+      "word_count": 41,
+      "avg_confidence": 84.48,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Question G\n\nae What is the purpose of an exposure?\n\n¢\n4\n\n-S S SS  SS SS SSS HS SH",
+      "word_count": 20,
+      "avg_confidence": 73.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Answer G\n\na What is the purpose of an exposure?\n\n¢\n7\n\nAn exposure is the mechanism that ClaimCenter uses to track potential payments for\none coverage to one claimant.\n\n- Se SSS e S ee sS e H",
+      "word_count": 39,
+      "avg_confidence": 87.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Question G\n\n,— — What is the purpose of a reserve line?\n\n4\n¢\n4\n\n-S S SS  SS SS SSS HS SH",
+      "word_count": 23,
+      "avg_confidence": 67.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Answer G\n\na What is the purpose of a reserve line?\n\n¢\n7\n\nAreserve line is an amount of money set aside for expected payments related to a\ngiven exposure. It is defined by the exposure, a cost type, and a cost category.\n\n- Se SSS e S ee sS e H",
+      "word_count": 52,
+      "avg_confidence": 89.39,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

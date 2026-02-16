@@ -1,0 +1,610 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-04",
+    "slide_count": 54,
+    "slides_with_text": 50,
+    "total_words": 2530,
+    "avg_confidence": 87.97,
+    "processing_time_seconds": 19.69,
+    "extracted_at": "2026-02-15T18:19:49.996923"
+  },
+  "full_text": "Bundles and Database Transactions\n\nLesson\nobjectives\n\n¢ Describe bundle context\n\nDifferentiate between read-only and writable\nbundles\n\nUtilize API methods for creating and\ncommitting bundles\n\nAdd and/or edit entity instances in a bundle\nReference original values for edited entity\ninstance fields\n\nUnderstand bundle best practices for\nintegration\n\n| Bundles Gi\n\ng\n\naBankAcount\n\naFlagEntry\n\nXN\n\naLegalCase\n\n* To manage database transactions, Guidewire applications group entity instances\nin groups called bundles\n\n¢ A bundle is an in-memory container for entity instances that represent rows in the\ndatabase\n\n« Includes new entity instances, changed entity instances, and retired entity instances\n\n| Entity instances\n\n¢ Java objects that represent\n\n¢ To view an existing entity instance —eon\n\nDatabase\n\nab_abcontact\n\ndatabase rows\n\nthe application must read data from —Butingsmeseab_abi78\nthe database and place the entity “®t as\ninstance into a bundle\n\nHealth South ab:73 56\n\n* To modify an existing entity instance the application must:\n\n1.\n\nRead entity instance from the database into the application\nserver\n\nPut them in a bundle\nModify them in the bundle\n\n. Commit the bundle of changes back to the database\n\nGi\n\nApplication Server\n\n= +g\n\nt\n\nGenerated Java class\n\nlo\n\n| How are entity instances read? a\n\n« Viaa query Database Application Server\nb\n+ Via accessors from an existing entity\ninstance a @S,\n* aBContact.PrimaryAddress Burlingame Saab ab:78 134 > [sz\n+ Returns a single address entity instance “”*\"*°\"* oben ad\nHealth South ab:73 56\n* aBContact.BankAccounts t\n\n+ Returns an array of bank account entity instances\n¢ But performing a query for every accessor would be far too\n\nexpensive | y\n* Each one is cheap but they add up @\n* The solution is two levels of caching\n\n¢ The first level is the bundle which represents local cache\n* The second level is the application server global cache\n\nGenerated Java class\n\n| Accessor Flow — claim.Policy\nBundle\n(local)\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase\n\n| Accessor Flow — claim.Policy (continued)\nBundle\n(local)\nApp Server\n(global)\n\nNetwork Boundary\n\n-_ - lessscsscscsses, |\n\n| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n\nSS\n\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase\n\n| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase\n\n| Accessor Flow — claim.Policy (continued)\nBundle\n(local)\nApp Server -——\n(global)\n\nNetwork Boundary\n\nDatabase\n\n| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n\nSN\nAS\n\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase\n\n| Accessor Flow — claim.Policy (continued)\nBundle\n(local)\nApp Server\n(global)\n\nNetwork Boundary\n\n-_ - lessscsscscsso: |\n\n| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n7\n¢\nApp Server\n(global)\n\nNetwork Boundary\n\n- - essscoscssess: |\n\n| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\nRl\n4\nApp Server\n(global)\n\nNetwork Boundary\n\n-_ - lessscsscscsso: |\n\n| Bundle types\n\n¢ Entity instances retrieved from a database\nquery\n\n* Foreign key entity or array key entities\nreferenced by an entity instance in a read-\nonly bundle\n\nr\n\n—>\n=>\n\nJ\n%\n\nGi\n\nEntity instances that are being edited or\nretired in the user interface, an application\nprocess, or in code\n\nEntity instances you intend to create or\nmodify in the database must first exist or be\nadded in a writable bundle\n\nForeign key entity or array key entities\nreferenced by an entity instance already ina\nwritable bundle G mo\n\nv\ng-5\n\n| Bundle context Gi\n\n¢ Application creates current bundle to —*_— Integration code creates bundle\ncreate, read, update, and/or retire explicitly\ndata\n\n* Contains entity instances available\nto the current code context\n\n* Code determines bundle contents\n¢ New bundles are writable\n\n¢ Read-only or writable\n\nmm lgrY\n\n| Committing a bundle\n\nBundle\n\n* Commits are transactional\n+ All DB changes occur in a transaction, and succeed or fail as a group\n\n+ A failure of any entity instance in the bundle to successfully commit will cause changes or additions to\nany entity instance in the bundle to be rolled back\n\n+ In most situations bundle commits are automatic unless you are controlling the bundle\n+ Because you created the bundle\n\n* Or you've taken over control of the Current bundle\n\n| Automatic bundle processing\n\nExplicit bundle manipulation is not required\nIn:\n\nBusiness rules\n\nWorkflows\n\nCertain plugins\n\nChanges made through the user Interface\n\nIn the above contexts, bundle manipulation On\nis handled by the application ny\nChanges, Additions, Retires are committed\n\nto the database at an appropriate time\ndepending on context\n\n| Manual bundle processing\n\n* Your code must explicitly manage\nbundles for:\n\n« Web services that make DB changes\n* Batch processes that make DB changes\n\n* Modifications to entities returned from\nqueries\n\n* Certain plugins\n\n| Gosu capabilities with bundles Gi\n\nCreate new bundles « Remove an entity instance from a bundle\nModify entity instances in writable * Modify entity instances in a read-only\nbundles bundle\n\nIdentify whether an entity instance in a * Copy a newly created entity instance\nbundle has changed since it was read from one bundle to another\n\nfrom the DB + From a bundle perspective new entity\n\nCopy unchanged entity instances from instances are treated as “changed”\n\none bundle to another\n\nCommit a bundle\n\nWorking with bundles\n\n| Committing the current bundle\n\n* gw.transaction.Transaction.getCurrent ()\n* Gets current bundle\n\n* bundle.commit ()\n* Commits every entity instance in the bundle\n\n¢ Make sure that the Commit is appropriate for the\nprogramming context\n¢ The Current bundle contains data known to the current context,\n\nsuch as entity instances being presented/changed in the user\ninterface\n\n* Committing data inappropriately can cause data integrity problems\n\nLAY\n\nPLL /\n\nOYG\n\nWR\n\nXY\n\nWA\nWw\n\n9\n\nVY \\\n\n| Create a new bundle: runWithNewBundle Gi\n\n* gw.transaction.Transaction.runWithNewBundle(\\ newBundle -> {\n\nodeBloc: Nol\n\n* Create a new bundle, no user specified\n« Requires permissive user credential context\n\n* gw.transaction.Transaction.runWithNewBundle(\\ newBundle -> {\n\nCodeBlock } , user ) <>\nAy\n\n* Create a new bundle with specified user\n¢ New bundles are always writable\n* tis not necessary or desirable to commit the bundle\n\n« runWithNewBundle block automatically commits the bundle at the end of the method by\ndesign\n\n| runWithNewBundle and new entity instance Gi\n\n¢ Any entity instantiated within the block\ncontext will automatically be added to <+. Ss\nthe bundle belonging to the block, and =>\npersisted to the database at the eé.\nconclusion of the block @\n\ngw. transaction. Transaction. runWithNewBundle(\\ newBundle -> {\n— var newEntity = new ABPerson()\nnewEntity.LastName = \"Jones\"\n}, username)\n\n| Create a new bundle: newBundle Gi\n\n* gw.transaction.Transaction.newBundle () <S\n\n* Creates a new bundle\n\nNo code block\n\n« No user, so requires permissive user credential context\n\n« Commit is not automatic\nbundle. commit ()\n\n* Call commit to save a new\nentity instance or changed\nentity instance\n\n>\n\nuses trainingapp.base.QueryUtil\nuses gw.transaction.Transaction\n\nvar targetPerson = QueryUtil.findPerson(\"ab:5\")\nvar newBundle = Transaction. nevBundle()\ntargetPerson = newBundle.add(targetPerson)\ntargetPerson.MiddleName = \"John\"\n\nnewBundle. commit ()\n\n| Copying an entity instance\n\nol\n\n* Copying entity instance from read-only to writable bundle:\n* origEntity = writableBundle.add(origEntity)\n\n* Copying entity instance into a new bundle: NI YZ <\n\n* origEntity = newBundle.add(origEntity)\n\nto, LEW,\nOe ROY\nSN\n\ncd\n\nWAU\n\nPL Li\nP77\nmam\nq\n-\n\n1 uses trainingapp.base.QueryUtil\n2 uses gw.transaction.Transaction\n\nvar targetPerson = QueryUtil. findPerson(\"ab:5\")\nvar newBundle = Transaction. newBundle()\n——> 6 targetPerson = newBundle.add(targetPerson)\n7 targetPerson.MiddleName = \"John\"\nnewBundle.commit ()\n\nQuery results and Bundles G\n\n——p 3\n\nODIKHUKMS\n\n10\nii\n12\n13\n14\n15\n16\n17\n18s\nme 19\n\ngw.transaction.Transaction. runWithNewBundle(\\newBundle -> {\n\nvar query0bj = gw.api.database.Query.make(ABCompany)\nqueryObj.compare (ABCompany#Name, Equals, \"Albertson's\")\nvar targetCompany = queryOb}.select () .AtMostOneRow\n\n// targetCompany must be copied from read-only bundle\n// to\ntargetCompany = newBundle.add(targetCompany)\n\new bundle\n\n// Set the Inspection fields as appropriate\ntargetCompany.InspectionRequired = true\ntargetCompany.InspectionDate = gw.api.util.DateUtil.currentDate()\n\n// runWithNewBundle() executes an implicit commit; user ca\n// is requ\n\next\n\ned wh\n\nyn none is supplied\n}, username)\n\nQuery results and Bundles (alternative syntax) Gi\n\np> 21 var newBundle = gw.transaction.Transaction. newBundle()\n22\n23 var queryObj = gw.api.database.Query.make(ABCompany)\n24 queryObj.compare (ABCompany#Name, Equals, \"Albertson's\")\nyay var targetCompany = queryObj.select () .AtMostOneRow\n26\n27 // targetCompany must be copied from read-only bundle\n28 // to new bundle\n\nmm 29 targetCompany = newBundle.add(targetCompany)\n30\n31 Inspection fields as appropriate\n32 targetCompany.InspectionRequired = true\n33 targetCompany.InspectionDate = gw.api.util.DateUtil.currentDate()\n34\n35 // requires an explicit commit; user c\n\n36 // so it req\n=> 37 newBundle.commit ()\n\nres a service\n\n| Foreign keys and array keys Gi\n\n* References from a parent to a foreign key or array key cause the referenced entity\ninstance(s) to be loaded into the same bundle as the parent\n\nworgVHsYH\n\ngw.transaction. Transaction. runWithNewBundle(\\newBundle -> {\nvar queryObj = gw.api.database.Query.make(ABCompany)\nquery0bj.compare (ABCompany#Name, Equals, \"Albertson's\")\n\nvar targetCompany = query0bj.select () .AtMostOneRow\n\nW/\n\n// to new bundle\ntargetCompany = newBundle.add(targetCompany)\n// Set the In fields as ar ate\n\ntargetCompany.InspectionRequired = true\ntargetCompany.InspectionDate = gw.api.util.DateUtil.currentDate()\n\nvar primaryContactPerson = targetCompany.PrimaryContact\nprimaryContactPerson.Emailaddress1 = \"inspectors@albertsons.com\"\n\n}, username)\n\n| Example: new entity instances Gi\n\n« Any entity (keyable bean) instantiated within the block context will automatically\nbe added to the bundle belonging to the block, and persisted to the database at\nthe conclusion of the block\n\n3 gw. transaction. Transaction. runWithNewBundle(\\ newBundle -> {\n> 4 var newAddress = new Address ()\n\n5 newAddress.City = \"Marina Del Rey\"\n\n6 newAddress.State = State.TC¢_CA\n\n7 }, username)\n\n¢ lf you use the alternative syntax, you'll have to pass in the bundle to the\nconstructor of the entity, so the entity will be created in the new bundle\n\n8 var newBundle = gw.transaction.Transaction.newBundle()\n9\nmmm i0 var newAddress = new Address (newBundle)\n11 newAddress.City = \"Marina Del Rey\"\n12 newAddress.State = State.TC_CA\n13\n\n14 newBundle. commit ()\n\n| Copying entity instances to bundle restrictions Gi\n\nse te\nwy wy\nNI r a Sd a\nUnmodified i i Unmodified\noO : i\n\nG—o\n\nModified H\n\nNew in First\n\nNew in Second\n\n| Original values Gi\n\n¢ Prior to the commit, Gosu retains a copy of each entity instance read from the\ndatabase\n\n¢ Several properties and methods let you work with the original data in the entity\ninstance\n* entityName.Changed\n+ Returns true if any property on the entity instance has changed\n* entityName. isFieldChanged (Entity#FieldName)\n+ Returns true if a property has changed since the entity instance was read from database\n\n* entityName.getOriginalValue (Entity#FieldName.getPropertyInfo()as\nIEntityPropertyInfo)\n\n+ Returns property value read from database\n\n| Using original values example Gi\n\nprivate static function createABCompanyNoteForInspection(targetCompany: ABCompany, inspectionDat\nvar hasInspectionDateChanged = targetCompany. isFieldChanged (ABCompanyéInspectionDate)\nif (nasInspectionDateChanged) {\nvar newNote = new ContactNote ()\nnewllote. Subject = \"Change to inspection date”\nnewNlote.ContactNoteType = typekey.ContactNlotelype. 7¢_DATA_UPDATE\nvar originalInspectionDate = targetCompany.getOriginalValue (ABCompany#InspectionDate.getPropertyInfo() as IEntityPropertyInfo)\nnewNote.Body = String. format(\"Inspection date updated from #s to #s \", {originalInspectionDate, targetCompany.InspectionDate})\nreturn newNote\n} else\nreturn null\n\nContactNote {\n\nEdit Note\n\nContact Note Type Update Contact Data a\nConfidential? Yes (¢) No\n\nSubject Change to inspection date\nBody Inspection date updated\n\nfrom 2014-12-12 to 2015-01-\n1\n\n| Updating the Database Gi\n\nNo Current Bundle for integration resources\nUse Transaction. runWithNewBundle(/ bundle ->{}) or\nTransaction.newBundle ()\nIf you expect to update large numbers of entities:\n“Large number of entities” is a relative term\nConsider using paging with regular commits\nKeep bundle sizes as small as practicable\nBe careful about how you use accessors\n\nUse Query best practices\n+ Do filtering at the database rather than in memory — Let the DB do what it’s good at\n\n+ See “Guidewire Query API” lesson for more information\n\n| Updating the Database in a Batch Process\n\n¢ Simple minded approach:\n\n6 gw.transaction.Transaction. runWithNewBundle(\\ newBundle -> {\n7 queryResults.each(\\ oneResult -> {\n\n8 var tyToM = newBundle.add(oneResult)\n\n9 //\n\n10 )\n\n11 }, username)\n\n* Two main problems:\n\n« Memory\n\n¢ Bundle performance\n\nEvery new accessor retrieves an entity into the bundle\nUsing accessors from those entities retrieves more entities\n\nBundles can grow very large\n\n| A Better Approach: Paging Plus Regular Commits\n\n¢ Better approach:\n\n— var pageSize = 10000\n—> var chunkSize = 250\nresults. set PageSize (pageSize)\nfor( entities in com.google.common.collect.Iterables.partition(results, chunkSize) )\ngw.transaction.Transaction. runWithNewBundle( \\ bundle -> {\nfor( e in entities) {\n\nvar Modify = bundle.add(e)\n\n}\n}, username )\n\n¢ Page size: 10,000\n¢ Bundle size: 250\n\n{\n\n| Paging Plus Regular Commits — Considerations Gi\n\n¢ Optimal page and bundle sizes will vary with specific tables, queries, DB’s, and\nenvironments\n\n* There is no one size fits all\n* Performance testing can be very revealing\n¢ Still likely to be slow for big queries\n« Paging doesn’t work well with some types of modification\n\n* Modifying columns you queried on repositions the cursor\n\n| Paging with Modifications\n\nApp\nserver\n\n| Paging with Modifications (continues\n\nApp\nserver\n\n|\nI\nI\n\n| Paging with Modifications (continues\n\nApp\nserver\n\n|\nI\n\n| Paging with Modifications (continues G\n\nApp\nserver\n1\n\nDatabase\n\nSkipped\nrows\n\n| Demonstration G\nGosu bundles\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Whatis a bundle?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see\n\nAnswer\n\n_- — What is a bundle?\n¢\n\n¢\n¢\n\nA Guidewire bundle is a set of in-memory entities that are saved to the database as a\nunit. Each bundle corresponds to one database transaction.\n\nSoo eS eee soe ese ese\n\nQuestion G\n\n_ _ For each of the following, identify if its an example of auto commit or\n7’ manual commit?\n\n, A) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\n\nD) Code executed from the UI in read-only mode\n\nSeo e Soe esses see see\n\nAnswer Gi\n\n_ _ For each of the following, identify if its an example of auto commit or\n7’ manual commit?\n\n¢ A) Queried entities that must be modified\nB\nCc\nD\n\nCode executed from the Ul in edit mode\n\nCode executed in business rules\n\nSwv\n\nCode executed from the UI in read-only mode\n\n&\n\nManual commit\n\nwy\n\nAuto commit\nCc\nD\n\nAuto commit\n\nwv\n\nManual commit\n\n=\n\nSoo eS eee soe ese ese\n\nQuestion G\n\n_- — What kind of entities are initially put into read-only bundles?\nPa Under what circumstance would you need to copy one of those entities\n: to a writable bundle and how is this done?\n\nSeo e Soe esses see see\n\nAnswer Gi\n\n_— — What kind of entities are initially put into read-only bundles?\nPa Under what circumstance would you need to copy one of those entities\n: to a writable bundle and how is this done?\n\nEntities that are the result of a query are put into read-only bundles, and entities\nreferenced by foreign key are put into a read-only bundle if the referencing entity is\nalso in a read-only bundle.\n\nYou need to copy these entities to a writable bundle if you need to modify them, which\nis done via the bundle's add method.\n\nSoo eS eee soe ese ese\n\nLesson\nobjectives\nreview\n\n¢ Describe bundle context\n\nDifferentiate between read-only and writable\nbundles\n\nUtilize API methods for creating and\ncommitting bundles\n\nAdd and/or edit entity instances in a bundle\nReference original values for edited entity\ninstance fields\n\n| Student exercise\n\nCreate a contact summary note",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Bundles and Database Transactions",
+      "word_count": 4,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe bundle context\n\nDifferentiate between read-only and writable\nbundles\n\nUtilize API methods for creating and\ncommitting bundles\n\nAdd and/or edit entity instances in a bundle\nReference original values for edited entity\ninstance fields\n\nUnderstand bundle best practices for\nintegration",
+      "word_count": 42,
+      "avg_confidence": 94.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Bundles Gi\n\ng\n\naBankAcount\n\naFlagEntry\n\nXN\n\naLegalCase\n\n* To manage database transactions, Guidewire applications group entity instances\nin groups called bundles\n\n¢ A bundle is an in-memory container for entity instances that represent rows in the\ndatabase\n\n« Includes new entity instances, changed entity instances, and retired entity instances",
+      "word_count": 50,
+      "avg_confidence": 86.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Entity instances\n\n¢ Java objects that represent\n\n¢ To view an existing entity instance —eon\n\nDatabase\n\nab_abcontact\n\ndatabase rows\n\nthe application must read data from —Butingsmeseab_abi78\nthe database and place the entity “®t as\ninstance into a bundle\n\nHealth South ab:73 56\n\n* To modify an existing entity instance the application must:\n\n1.\n\nRead entity instance from the database into the application\nserver\n\nPut them in a bundle\nModify them in the bundle\n\n. Commit the bundle of changes back to the database\n\nGi\n\nApplication Server\n\n= +g\n\nt\n\nGenerated Java class\n\nlo",
+      "word_count": 94,
+      "avg_confidence": 89.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| How are entity instances read? a\n\n« Viaa query Database Application Server\nb\n+ Via accessors from an existing entity\ninstance a @S,\n* aBContact.PrimaryAddress Burlingame Saab ab:78 134 > [sz\n+ Returns a single address entity instance “”*\"*°\"* oben ad\nHealth South ab:73 56\n* aBContact.BankAccounts t\n\n+ Returns an array of bank account entity instances\n¢ But performing a query for every accessor would be far too\n\nexpensive | y\n* Each one is cheap but they add up @\n* The solution is two levels of caching\n\n¢ The first level is the bundle which represents local cache\n* The second level is the application server global cache\n\nGenerated Java class",
+      "word_count": 115,
+      "avg_confidence": 85.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Accessor Flow — claim.Policy\nBundle\n(local)\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase",
+      "word_count": 13,
+      "avg_confidence": 92.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Accessor Flow — claim.Policy (continued)\nBundle\n(local)\nApp Server\n(global)\n\nNetwork Boundary\n\n-_ - lessscsscscsses, |",
+      "word_count": 17,
+      "avg_confidence": 88.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n\nSS\n\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase",
+      "word_count": 15,
+      "avg_confidence": 92.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase",
+      "word_count": 14,
+      "avg_confidence": 93.47,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Accessor Flow — claim.Policy (continued)\nBundle\n(local)\nApp Server -——\n(global)\n\nNetwork Boundary\n\nDatabase",
+      "word_count": 15,
+      "avg_confidence": 88.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n\nSN\nAS\n\nApp Server\n(global)\n\nNetwork Boundary\n\nDatabase",
+      "word_count": 16,
+      "avg_confidence": 86.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Accessor Flow — claim.Policy (continued)\nBundle\n(local)\nApp Server\n(global)\n\nNetwork Boundary\n\n-_ - lessscsscscsso: |",
+      "word_count": 17,
+      "avg_confidence": 87.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\n7\n¢\nApp Server\n(global)\n\nNetwork Boundary\n\n- - essscoscssess: |",
+      "word_count": 19,
+      "avg_confidence": 83.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Accessor Flow — claim.Policy (continued)\n\nBundle\n(local)\nRl\n4\nApp Server\n(global)\n\nNetwork Boundary\n\n-_ - lessscsscscsso: |",
+      "word_count": 19,
+      "avg_confidence": 82.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Bundle types\n\n¢ Entity instances retrieved from a database\nquery\n\n* Foreign key entity or array key entities\nreferenced by an entity instance in a read-\nonly bundle\n\nr\n\n—>\n=>\n\nJ\n%\n\nGi\n\nEntity instances that are being edited or\nretired in the user interface, an application\nprocess, or in code\n\nEntity instances you intend to create or\nmodify in the database must first exist or be\nadded in a writable bundle\n\nForeign key entity or array key entities\nreferenced by an entity instance already ina\nwritable bundle G mo\n\nv\ng-5",
+      "word_count": 94,
+      "avg_confidence": 90.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Bundle context Gi\n\n¢ Application creates current bundle to —*_— Integration code creates bundle\ncreate, read, update, and/or retire explicitly\ndata\n\n* Contains entity instances available\nto the current code context\n\n* Code determines bundle contents\n¢ New bundles are writable\n\n¢ Read-only or writable\n\nmm lgrY",
+      "word_count": 48,
+      "avg_confidence": 83.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Committing a bundle\n\nBundle\n\n* Commits are transactional\n+ All DB changes occur in a transaction, and succeed or fail as a group\n\n+ A failure of any entity instance in the bundle to successfully commit will cause changes or additions to\nany entity instance in the bundle to be rolled back\n\n+ In most situations bundle commits are automatic unless you are controlling the bundle\n+ Because you created the bundle\n\n* Or you've taken over control of the Current bundle",
+      "word_count": 83,
+      "avg_confidence": 92.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Automatic bundle processing\n\nExplicit bundle manipulation is not required\nIn:\n\nBusiness rules\n\nWorkflows\n\nCertain plugins\n\nChanges made through the user Interface\n\nIn the above contexts, bundle manipulation On\nis handled by the application ny\nChanges, Additions, Retires are committed\n\nto the database at an appropriate time\ndepending on context",
+      "word_count": 50,
+      "avg_confidence": 94.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Manual bundle processing\n\n* Your code must explicitly manage\nbundles for:\n\n« Web services that make DB changes\n* Batch processes that make DB changes\n\n* Modifications to entities returned from\nqueries\n\n* Certain plugins",
+      "word_count": 36,
+      "avg_confidence": 88.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Gosu capabilities with bundles Gi\n\nCreate new bundles « Remove an entity instance from a bundle\nModify entity instances in writable * Modify entity instances in a read-only\nbundles bundle\n\nIdentify whether an entity instance in a * Copy a newly created entity instance\nbundle has changed since it was read from one bundle to another\n\nfrom the DB + From a bundle perspective new entity\n\nCopy unchanged entity instances from instances are treated as “changed”\n\none bundle to another\n\nCommit a bundle",
+      "word_count": 84,
+      "avg_confidence": 92.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Working with bundles",
+      "word_count": 3,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Committing the current bundle\n\n* gw.transaction.Transaction.getCurrent ()\n* Gets current bundle\n\n* bundle.commit ()\n* Commits every entity instance in the bundle\n\n¢ Make sure that the Commit is appropriate for the\nprogramming context\n¢ The Current bundle contains data known to the current context,\n\nsuch as entity instances being presented/changed in the user\ninterface\n\n* Committing data inappropriately can cause data integrity problems\n\nLAY\n\nPLL /\n\nOYG\n\nWR\n\nXY\n\nWA\nWw\n\n9\n\nVY \\",
+      "word_count": 76,
+      "avg_confidence": 85.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Create a new bundle: runWithNewBundle Gi\n\n* gw.transaction.Transaction.runWithNewBundle(\\ newBundle -> {\n\nodeBloc: Nol\n\n* Create a new bundle, no user specified\n« Requires permissive user credential context\n\n* gw.transaction.Transaction.runWithNewBundle(\\ newBundle -> {\n\nCodeBlock } , user ) <>\nAy\n\n* Create a new bundle with specified user\n¢ New bundles are always writable\n* tis not necessary or desirable to commit the bundle\n\n« runWithNewBundle block automatically commits the bundle at the end of the method by\ndesign",
+      "word_count": 79,
+      "avg_confidence": 83.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| runWithNewBundle and new entity instance Gi\n\n¢ Any entity instantiated within the block\ncontext will automatically be added to <+. Ss\nthe bundle belonging to the block, and =>\npersisted to the database at the eé.\nconclusion of the block @\n\ngw. transaction. Transaction. runWithNewBundle(\\ newBundle -> {\n— var newEntity = new ABPerson()\nnewEntity.LastName = \"Jones\"\n}, username)",
+      "word_count": 60,
+      "avg_confidence": 88.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Create a new bundle: newBundle Gi\n\n* gw.transaction.Transaction.newBundle () <S\n\n* Creates a new bundle\n\nNo code block\n\n« No user, so requires permissive user credential context\n\n« Commit is not automatic\nbundle. commit ()\n\n* Call commit to save a new\nentity instance or changed\nentity instance\n\n>\n\nuses trainingapp.base.QueryUtil\nuses gw.transaction.Transaction\n\nvar targetPerson = QueryUtil.findPerson(\"ab:5\")\nvar newBundle = Transaction. nevBundle()\ntargetPerson = newBundle.add(targetPerson)\ntargetPerson.MiddleName = \"John\"\n\nnewBundle. commit ()",
+      "word_count": 72,
+      "avg_confidence": 86.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Copying an entity instance\n\nol\n\n* Copying entity instance from read-only to writable bundle:\n* origEntity = writableBundle.add(origEntity)\n\n* Copying entity instance into a new bundle: NI YZ <\n\n* origEntity = newBundle.add(origEntity)\n\nto, LEW,\nOe ROY\nSN\n\ncd\n\nWAU\n\nPL Li\nP77\nmam\nq\n-\n\n1 uses trainingapp.base.QueryUtil\n2 uses gw.transaction.Transaction\n\nvar targetPerson = QueryUtil. findPerson(\"ab:5\")\nvar newBundle = Transaction. newBundle()\n——> 6 targetPerson = newBundle.add(targetPerson)\n7 targetPerson.MiddleName = \"John\"\nnewBundle.commit ()",
+      "word_count": 74,
+      "avg_confidence": 77.34,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Query results and Bundles G\n\n——p 3\n\nODIKHUKMS\n\n10\nii\n12\n13\n14\n15\n16\n17\n18s\nme 19\n\ngw.transaction.Transaction. runWithNewBundle(\\newBundle -> {\n\nvar query0bj = gw.api.database.Query.make(ABCompany)\nqueryObj.compare (ABCompany#Name, Equals, \"Albertson's\")\nvar targetCompany = queryOb}.select () .AtMostOneRow\n\n// targetCompany must be copied from read-only bundle\n// to\ntargetCompany = newBundle.add(targetCompany)\n\new bundle\n\n// Set the Inspection fields as appropriate\ntargetCompany.InspectionRequired = true\ntargetCompany.InspectionDate = gw.api.util.DateUtil.currentDate()\n\n// runWithNewBundle() executes an implicit commit; user ca\n// is requ\n\next\n\ned wh\n\nyn none is supplied\n}, username)",
+      "word_count": 85,
+      "avg_confidence": 84.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Query results and Bundles (alternative syntax) Gi\n\np> 21 var newBundle = gw.transaction.Transaction. newBundle()\n22\n23 var queryObj = gw.api.database.Query.make(ABCompany)\n24 queryObj.compare (ABCompany#Name, Equals, \"Albertson's\")\nyay var targetCompany = queryObj.select () .AtMostOneRow\n26\n27 // targetCompany must be copied from read-only bundle\n28 // to new bundle\n\nmm 29 targetCompany = newBundle.add(targetCompany)\n30\n31 Inspection fields as appropriate\n32 targetCompany.InspectionRequired = true\n33 targetCompany.InspectionDate = gw.api.util.DateUtil.currentDate()\n34\n35 // requires an explicit commit; user c\n\n36 // so it req\n=> 37 newBundle.commit ()\n\nres a service",
+      "word_count": 87,
+      "avg_confidence": 88.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Foreign keys and array keys Gi\n\n* References from a parent to a foreign key or array key cause the referenced entity\ninstance(s) to be loaded into the same bundle as the parent\n\nworgVHsYH\n\ngw.transaction. Transaction. runWithNewBundle(\\newBundle -> {\nvar queryObj = gw.api.database.Query.make(ABCompany)\nquery0bj.compare (ABCompany#Name, Equals, \"Albertson's\")\n\nvar targetCompany = query0bj.select () .AtMostOneRow\n\nW/\n\n// to new bundle\ntargetCompany = newBundle.add(targetCompany)\n// Set the In fields as ar ate\n\ntargetCompany.InspectionRequired = true\ntargetCompany.InspectionDate = gw.api.util.DateUtil.currentDate()\n\nvar primaryContactPerson = targetCompany.PrimaryContact\nprimaryContactPerson.Emailaddress1 = \"inspectors@albertsons.com\"\n\n}, username)",
+      "word_count": 85,
+      "avg_confidence": 87.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Example: new entity instances Gi\n\n« Any entity (keyable bean) instantiated within the block context will automatically\nbe added to the bundle belonging to the block, and persisted to the database at\nthe conclusion of the block\n\n3 gw. transaction. Transaction. runWithNewBundle(\\ newBundle -> {\n> 4 var newAddress = new Address ()\n\n5 newAddress.City = \"Marina Del Rey\"\n\n6 newAddress.State = State.TC¢_CA\n\n7 }, username)\n\n¢ lf you use the alternative syntax, you'll have to pass in the bundle to the\nconstructor of the entity, so the entity will be created in the new bundle\n\n8 var newBundle = gw.transaction.Transaction.newBundle()\n9\nmmm i0 var newAddress = new Address (newBundle)\n11 newAddress.City = \"Marina Del Rey\"\n12 newAddress.State = State.TC_CA\n13\n\n14 newBundle. commit ()",
+      "word_count": 126,
+      "avg_confidence": 84.93,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "| Copying entity instances to bundle restrictions Gi\n\nse te\nwy wy\nNI r a Sd a\nUnmodified i i Unmodified\noO : i\n\nG—o\n\nModified H\n\nNew in First\n\nNew in Second",
+      "word_count": 33,
+      "avg_confidence": 72.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "| Original values Gi\n\n¢ Prior to the commit, Gosu retains a copy of each entity instance read from the\ndatabase\n\n¢ Several properties and methods let you work with the original data in the entity\ninstance\n* entityName.Changed\n+ Returns true if any property on the entity instance has changed\n* entityName. isFieldChanged (Entity#FieldName)\n+ Returns true if a property has changed since the entity instance was read from database\n\n* entityName.getOriginalValue (Entity#FieldName.getPropertyInfo()as\nIEntityPropertyInfo)\n\n+ Returns property value read from database",
+      "word_count": 82,
+      "avg_confidence": 88.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Using original values example Gi\n\nprivate static function createABCompanyNoteForInspection(targetCompany: ABCompany, inspectionDat\nvar hasInspectionDateChanged = targetCompany. isFieldChanged (ABCompanyéInspectionDate)\nif (nasInspectionDateChanged) {\nvar newNote = new ContactNote ()\nnewllote. Subject = \"Change to inspection date”\nnewNlote.ContactNoteType = typekey.ContactNlotelype. 7¢_DATA_UPDATE\nvar originalInspectionDate = targetCompany.getOriginalValue (ABCompany#InspectionDate.getPropertyInfo() as IEntityPropertyInfo)\nnewNote.Body = String. format(\"Inspection date updated from #s to #s \", {originalInspectionDate, targetCompany.InspectionDate})\nreturn newNote\n} else\nreturn null\n\nContactNote {\n\nEdit Note\n\nContact Note Type Update Contact Data a\nConfidential? Yes (¢) No\n\nSubject Change to inspection date\nBody Inspection date updated\n\nfrom 2014-12-12 to 2015-01-\n1",
+      "word_count": 93,
+      "avg_confidence": 80.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Updating the Database Gi\n\nNo Current Bundle for integration resources\nUse Transaction. runWithNewBundle(/ bundle ->{}) or\nTransaction.newBundle ()\nIf you expect to update large numbers of entities:\n“Large number of entities” is a relative term\nConsider using paging with regular commits\nKeep bundle sizes as small as practicable\nBe careful about how you use accessors\n\nUse Query best practices\n+ Do filtering at the database rather than in memory — Let the DB do what it’s good at\n\n+ See “Guidewire Query API” lesson for more information",
+      "word_count": 88,
+      "avg_confidence": 93.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "| Updating the Database in a Batch Process\n\n¢ Simple minded approach:\n\n6 gw.transaction.Transaction. runWithNewBundle(\\ newBundle -> {\n7 queryResults.each(\\ oneResult -> {\n\n8 var tyToM = newBundle.add(oneResult)\n\n9 //\n\n10 )\n\n11 }, username)\n\n* Two main problems:\n\n« Memory\n\n¢ Bundle performance\n\nEvery new accessor retrieves an entity into the bundle\nUsing accessors from those entities retrieves more entities\n\nBundles can grow very large",
+      "word_count": 66,
+      "avg_confidence": 89.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "| A Better Approach: Paging Plus Regular Commits\n\n¢ Better approach:\n\n— var pageSize = 10000\n—> var chunkSize = 250\nresults. set PageSize (pageSize)\nfor( entities in com.google.common.collect.Iterables.partition(results, chunkSize) )\ngw.transaction.Transaction. runWithNewBundle( \\ bundle -> {\nfor( e in entities) {\n\nvar Modify = bundle.add(e)\n\n}\n}, username )\n\n¢ Page size: 10,000\n¢ Bundle size: 250\n\n{",
+      "word_count": 59,
+      "avg_confidence": 85.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "| Paging Plus Regular Commits — Considerations Gi\n\n¢ Optimal page and bundle sizes will vary with specific tables, queries, DB’s, and\nenvironments\n\n* There is no one size fits all\n* Performance testing can be very revealing\n¢ Still likely to be slow for big queries\n« Paging doesn’t work well with some types of modification\n\n* Modifying columns you queried on repositions the cursor",
+      "word_count": 66,
+      "avg_confidence": 87.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "| Paging with Modifications\n\nApp\nserver",
+      "word_count": 6,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "| Paging with Modifications (continues\n\nApp\nserver\n\n|\nI\nI",
+      "word_count": 10,
+      "avg_confidence": 81.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "| Paging with Modifications (continues\n\nApp\nserver\n\n|\nI",
+      "word_count": 9,
+      "avg_confidence": 85.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "| Paging with Modifications (continues G\n\nApp\nserver\n1\n\nDatabase\n\nSkipped\nrows",
+      "word_count": 12,
+      "avg_confidence": 89.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "| Demonstration G\nGosu bundles\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.34,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-46.png",
+      "slide_number": 46,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-47.png",
+      "slide_number": 47,
+      "text": "Question\n\n_- — Whatis a bundle?\n\n¢\n¢\n¢\n\nSeo e Soe esses see see",
+      "word_count": 15,
+      "avg_confidence": 73.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-48.png",
+      "slide_number": 48,
+      "text": "Answer\n\n_- — What is a bundle?\n¢\n\n¢\n¢\n\nA Guidewire bundle is a set of in-memory entities that are saved to the database as a\nunit. Each bundle corresponds to one database transaction.\n\nSoo eS eee soe ese ese",
+      "word_count": 41,
+      "avg_confidence": 81.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-49.png",
+      "slide_number": 49,
+      "text": "Question G\n\n_ _ For each of the following, identify if its an example of auto commit or\n7’ manual commit?\n\n, A) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\n\nD) Code executed from the UI in read-only mode\n\nSeo e Soe esses see see",
+      "word_count": 59,
+      "avg_confidence": 90.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-50.png",
+      "slide_number": 50,
+      "text": "Answer Gi\n\n_ _ For each of the following, identify if its an example of auto commit or\n7’ manual commit?\n\n¢ A) Queried entities that must be modified\nB\nCc\nD\n\nCode executed from the Ul in edit mode\n\nCode executed in business rules\n\nSwv\n\nCode executed from the UI in read-only mode\n\n&\n\nManual commit\n\nwy\n\nAuto commit\nCc\nD\n\nAuto commit\n\nwv\n\nManual commit\n\n=\n\nSoo eS eee soe ese ese",
+      "word_count": 74,
+      "avg_confidence": 83.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-51.png",
+      "slide_number": 51,
+      "text": "Question G\n\n_- — What kind of entities are initially put into read-only bundles?\nPa Under what circumstance would you need to copy one of those entities\n: to a writable bundle and how is this done?\n\nSeo e Soe esses see see",
+      "word_count": 43,
+      "avg_confidence": 87.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-52.png",
+      "slide_number": 52,
+      "text": "Answer Gi\n\n_— — What kind of entities are initially put into read-only bundles?\nPa Under what circumstance would you need to copy one of those entities\n: to a writable bundle and how is this done?\n\nEntities that are the result of a query are put into read-only bundles, and entities\nreferenced by foreign key are put into a read-only bundle if the referencing entity is\nalso in a read-only bundle.\n\nYou need to copy these entities to a writable bundle if you need to modify them, which\nis done via the bundle's add method.\n\nSoo eS eee soe ese ese",
+      "word_count": 102,
+      "avg_confidence": 89.72,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-53.png",
+      "slide_number": 53,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe bundle context\n\nDifferentiate between read-only and writable\nbundles\n\nUtilize API methods for creating and\ncommitting bundles\n\nAdd and/or edit entity instances in a bundle\nReference original values for edited entity\ninstance fields",
+      "word_count": 37,
+      "avg_confidence": 94.73,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-54.png",
+      "slide_number": 54,
+      "text": "| Student exercise\n\nCreate a contact summary note",
+      "word_count": 8,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

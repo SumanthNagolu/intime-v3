@@ -1,0 +1,5462 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_19_01.mp4",
+    "video_stem": "Billing_19_01",
+    "duration_seconds": 289.02,
+    "duration_formatted": "00:04:49.020",
+    "segment_count": 47,
+    "word_count": 828,
+    "avg_confidence": 0.959,
+    "transcription_time_seconds": 25.13,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:10:10.401011"
+  },
+  "full_text": "This demonstration shows where to find security information in the BillingCenter user interface about users, roles, permissions, authority limits, groups, and security zones. In BillingCenter, security information is located on the Administration tab. Currently, I'm logged in as SuperUser, so I can see all the security details. We're interested in the entries listed under Users and Security in the sidebar. Let's start with Users and search for Jeff Park, whose username is jpark. I click Search. The results show a summary of Jeff's security information. We can see he has three roles and he belongs to the Operations group. I'll click Jeff's display name to see his details. Jeff Park security details are displayed on three tabs. Basics shows general information. Notice Jeff's password is masked. Jeff's user roles are listed at the bottom of the page. Let's look at Jeff's authority limits. At the top, we see Jeff's authority limit profile is that of SuperUser. So this list of authority limits are those belonging to the SuperUser authority limit profile. As we would expect of a Billing and Finance Manager, Jeff has consistently high authority limits, which means he can approve several types of transactions up to $1 million. I'll click the Profile tab next. The Profile tab provides user details such as address, phone numbers, and email. Let's return to the Basics tab to examine one of Jeff's roles. I'll click Finance Manager. A Finance Manager has five pages of permissions. Page 1 lists permissions to approve, assign, create, delete, and edit several entities. After scrolling down, I see the remainder of permissions on this page. Let's look at page 2. Page 2 lists more added permissions. A Finance Manager also has permissions to own, reassign, and search for entities. Earlier we saw that Jeff's authority limit profile is SuperUser. I'll click the authority limit profile link in the sidebar to see what other authority limit profiles are defined in our sample data. Here is the list of authority limit profiles. We have already seen the SuperUser profile. Let's take a look at the low authority limit profile. In contrast to SuperUser, someone with a low authority limit profile requires approval for transactions over $100. Let's return to the list of authority limit profiles. Now let's look at TLTest, which is a set of low limits for the purpose of load testing. The first thing I notice is that the TLTest profile in our sample data has only a handful of authority limits. An authority limit profile contains only those authority limits that are needed for a set of users. We have looked at a user, his roles, and authority limit profile. Now let's visit groups. Here we see the groups, their supervisor and their parent group. Jeff Park is the supervisor of the operations group, whose parent group is headquarters. You can see a three-level group hierarchy, commercial lines and personal lines have central billing as a parent, which in turn has headquarters as its parent. Group supervisors play a significant role during the tiered approval process, where each supervisor has greater approval authority than the supervisor of a group lower in the hierarchy. To find out who belongs to a group, simply click the group name. Let's look at personal lines. Here we see the personal lines group has three members. Its parent is central billing and it is associated with the personal lines zone security zone. Notice, a group can be associated with a maximum of one security zone. However, a user can belong to more than one group. In this way, the user can access entities that are in different security zones. I click the link to the personal lines zone. I'll click the security zones link to see a list of security zones in this system. As you can see, a security zone has a name and description. In your lab, you will have the opportunity to enroll entities in a security zone to see how security zones restrict access. This concludes our demonstration on viewing security information in the Billing Center user interface. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 16.52,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:16.520",
+      "text": "This demonstration shows where to find security information in the BillingCenter user interface about users, roles, permissions, authority limits, groups, and security zones. In BillingCenter, security information is located on the Administration tab.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 1.36,
+          "probability": 0.9458
+        },
+        {
+          "word": "demonstration",
+          "start": 1.36,
+          "end": 1.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "shows",
+          "start": 1.96,
+          "end": 2.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "where",
+          "start": 2.44,
+          "end": 2.64,
+          "probability": 0.98
+        },
+        {
+          "word": "to",
+          "start": 2.64,
+          "end": 2.8,
+          "probability": 0.9648
+        },
+        {
+          "word": "find",
+          "start": 2.8,
+          "end": 3.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "security",
+          "start": 3.0,
+          "end": 3.46,
+          "probability": 0.9531
+        },
+        {
+          "word": "information",
+          "start": 3.46,
+          "end": 3.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 3.98,
+          "end": 4.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 4.36,
+          "end": 4.44,
+          "probability": 0.9937
+        },
+        {
+          "word": "BillingCenter",
+          "start": 4.44,
+          "end": 5.06,
+          "probability": 0.7227
+        },
+        {
+          "word": "user",
+          "start": 5.06,
+          "end": 5.34,
+          "probability": 0.8228
+        },
+        {
+          "word": "interface",
+          "start": 5.34,
+          "end": 5.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "about",
+          "start": 5.88,
+          "end": 6.16,
+          "probability": 0.9912
+        },
+        {
+          "word": "users,",
+          "start": 6.16,
+          "end": 6.66,
+          "probability": 0.9585
+        },
+        {
+          "word": "roles,",
+          "start": 6.94,
+          "end": 7.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "permissions,",
+          "start": 7.68,
+          "end": 8.24,
+          "probability": 0.998
+        },
+        {
+          "word": "authority",
+          "start": 8.62,
+          "end": 9.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "limits,",
+          "start": 9.04,
+          "end": 9.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "groups,",
+          "start": 9.76,
+          "end": 10.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 10.34,
+          "end": 10.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "security",
+          "start": 10.58,
+          "end": 11.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "zones.",
+          "start": 11.02,
+          "end": 11.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "In",
+          "start": 11.88,
+          "end": 12.38,
+          "probability": 0.998
+        },
+        {
+          "word": "BillingCenter,",
+          "start": 12.38,
+          "end": 13.14,
+          "probability": 0.9883
+        },
+        {
+          "word": "security",
+          "start": 13.34,
+          "end": 13.9,
+          "probability": 0.9927
+        },
+        {
+          "word": "information",
+          "start": 13.9,
+          "end": 14.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 14.34,
+          "end": 14.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "located",
+          "start": 14.7,
+          "end": 15.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 15.14,
+          "end": 15.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 15.34,
+          "end": 15.48,
+          "probability": 0.999
+        },
+        {
+          "word": "Administration",
+          "start": 15.48,
+          "end": 16.0,
+          "probability": 0.8052
+        },
+        {
+          "word": "tab.",
+          "start": 16.0,
+          "end": 16.52,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 18.42,
+      "end": 27.74,
+      "start_formatted": "00:00:18.420",
+      "end_formatted": "00:00:27.740",
+      "text": "Currently, I'm logged in as SuperUser, so I can see all the security details. We're interested in the entries listed under Users and Security in the sidebar.",
+      "words": [
+        {
+          "word": "Currently,",
+          "start": 18.42,
+          "end": 19.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "I'm",
+          "start": 19.46,
+          "end": 19.72,
+          "probability": 0.9844
+        },
+        {
+          "word": "logged",
+          "start": 19.72,
+          "end": 19.98,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 19.98,
+          "end": 20.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "as",
+          "start": 20.14,
+          "end": 20.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "SuperUser,",
+          "start": 20.26,
+          "end": 21.02,
+          "probability": 0.7559
+        },
+        {
+          "word": "so",
+          "start": 21.22,
+          "end": 21.48,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 21.48,
+          "end": 21.6,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 21.6,
+          "end": 21.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 21.74,
+          "end": 21.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 21.92,
+          "end": 22.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 22.06,
+          "end": 22.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "security",
+          "start": 22.18,
+          "end": 22.58,
+          "probability": 0.998
+        },
+        {
+          "word": "details.",
+          "start": 22.58,
+          "end": 23.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "We're",
+          "start": 23.6,
+          "end": 24.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "interested",
+          "start": 24.14,
+          "end": 24.54,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 24.54,
+          "end": 24.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 24.78,
+          "end": 24.88,
+          "probability": 0.999
+        },
+        {
+          "word": "entries",
+          "start": 24.88,
+          "end": 25.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "listed",
+          "start": 25.26,
+          "end": 25.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "under",
+          "start": 25.66,
+          "end": 25.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "Users",
+          "start": 25.9,
+          "end": 26.22,
+          "probability": 0.9624
+        },
+        {
+          "word": "and",
+          "start": 26.22,
+          "end": 26.46,
+          "probability": 0.7876
+        },
+        {
+          "word": "Security",
+          "start": 26.46,
+          "end": 26.88,
+          "probability": 0.9707
+        },
+        {
+          "word": "in",
+          "start": 26.88,
+          "end": 27.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 27.12,
+          "end": 27.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "sidebar.",
+          "start": 27.22,
+          "end": 27.74,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 27.74,
+      "end": 36.12,
+      "start_formatted": "00:00:27.740",
+      "end_formatted": "00:00:36.120",
+      "text": "Let's start with Users and search for Jeff Park, whose username is jpark. I click Search.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 27.74,
+          "end": 28.9,
+          "probability": 0.9614
+        },
+        {
+          "word": "start",
+          "start": 28.9,
+          "end": 29.1,
+          "probability": 0.9849
+        },
+        {
+          "word": "with",
+          "start": 29.1,
+          "end": 29.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Users",
+          "start": 29.28,
+          "end": 29.64,
+          "probability": 0.2358
+        },
+        {
+          "word": "and",
+          "start": 29.64,
+          "end": 29.86,
+          "probability": 0.9629
+        },
+        {
+          "word": "search",
+          "start": 29.86,
+          "end": 30.14,
+          "probability": 0.9502
+        },
+        {
+          "word": "for",
+          "start": 30.14,
+          "end": 30.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "Jeff",
+          "start": 30.34,
+          "end": 30.6,
+          "probability": 0.895
+        },
+        {
+          "word": "Park,",
+          "start": 30.6,
+          "end": 30.98,
+          "probability": 0.9468
+        },
+        {
+          "word": "whose",
+          "start": 31.2,
+          "end": 31.48,
+          "probability": 0.9868
+        },
+        {
+          "word": "username",
+          "start": 31.48,
+          "end": 31.88,
+          "probability": 0.7363
+        },
+        {
+          "word": "is",
+          "start": 31.88,
+          "end": 32.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "jpark.",
+          "start": 32.18,
+          "end": 32.6,
+          "probability": 0.7373
+        },
+        {
+          "word": "I",
+          "start": 34.98,
+          "end": 35.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "click",
+          "start": 35.56,
+          "end": 35.82,
+          "probability": 0.9878
+        },
+        {
+          "word": "Search.",
+          "start": 35.82,
+          "end": 36.12,
+          "probability": 0.8135
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 38.96,
+      "end": 49.32,
+      "start_formatted": "00:00:38.960",
+      "end_formatted": "00:00:49.320",
+      "text": "The results show a summary of Jeff's security information. We can see he has three roles and he belongs to the Operations group. I'll click Jeff's display name to see his details.",
+      "words": [
+        {
+          "word": "The",
+          "start": 38.96,
+          "end": 39.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "results",
+          "start": 39.54,
+          "end": 39.9,
+          "probability": 0.9922
+        },
+        {
+          "word": "show",
+          "start": 39.9,
+          "end": 40.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 40.18,
+          "end": 40.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "summary",
+          "start": 40.3,
+          "end": 40.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "of",
+          "start": 40.58,
+          "end": 40.76,
+          "probability": 1.0
+        },
+        {
+          "word": "Jeff's",
+          "start": 40.76,
+          "end": 41.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "security",
+          "start": 41.08,
+          "end": 41.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "information.",
+          "start": 41.5,
+          "end": 42.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "We",
+          "start": 42.52,
+          "end": 42.86,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 42.86,
+          "end": 43.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 43.0,
+          "end": 43.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 43.24,
+          "end": 43.42,
+          "probability": 0.998
+        },
+        {
+          "word": "has",
+          "start": 43.42,
+          "end": 43.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "three",
+          "start": 43.6,
+          "end": 43.8,
+          "probability": 0.8281
+        },
+        {
+          "word": "roles",
+          "start": 43.8,
+          "end": 44.14,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 44.14,
+          "end": 44.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "he",
+          "start": 44.34,
+          "end": 44.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "belongs",
+          "start": 44.44,
+          "end": 44.78,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 44.78,
+          "end": 44.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 44.98,
+          "end": 45.12,
+          "probability": 0.999
+        },
+        {
+          "word": "Operations",
+          "start": 45.12,
+          "end": 45.66,
+          "probability": 0.6694
+        },
+        {
+          "word": "group.",
+          "start": 45.66,
+          "end": 46.14,
+          "probability": 0.6768
+        },
+        {
+          "word": "I'll",
+          "start": 46.6,
+          "end": 47.16,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 47.16,
+          "end": 47.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "Jeff's",
+          "start": 47.36,
+          "end": 47.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "display",
+          "start": 47.72,
+          "end": 48.08,
+          "probability": 0.8418
+        },
+        {
+          "word": "name",
+          "start": 48.08,
+          "end": 48.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 48.34,
+          "end": 48.48,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 48.48,
+          "end": 48.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 48.66,
+          "end": 48.86,
+          "probability": 0.999
+        },
+        {
+          "word": "details.",
+          "start": 48.86,
+          "end": 49.32,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 52.02,
+      "end": 55.62,
+      "start_formatted": "00:00:52.020",
+      "end_formatted": "00:00:55.620",
+      "text": "Jeff Park security details are displayed on three tabs.",
+      "words": [
+        {
+          "word": "Jeff",
+          "start": 52.02,
+          "end": 52.74,
+          "probability": 0.7427
+        },
+        {
+          "word": "Park",
+          "start": 52.74,
+          "end": 53.04,
+          "probability": 0.8633
+        },
+        {
+          "word": "security",
+          "start": 53.04,
+          "end": 53.52,
+          "probability": 0.5137
+        },
+        {
+          "word": "details",
+          "start": 53.52,
+          "end": 54.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "are",
+          "start": 54.1,
+          "end": 54.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "displayed",
+          "start": 54.3,
+          "end": 54.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 54.72,
+          "end": 54.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "three",
+          "start": 54.94,
+          "end": 55.18,
+          "probability": 0.8477
+        },
+        {
+          "word": "tabs.",
+          "start": 55.18,
+          "end": 55.62,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 56.12,
+      "end": 63.56,
+      "start_formatted": "00:00:56.120",
+      "end_formatted": "00:01:03.560",
+      "text": "Basics shows general information. Notice Jeff's password is masked. Jeff's user roles are listed at the bottom of the page.",
+      "words": [
+        {
+          "word": "Basics",
+          "start": 56.12,
+          "end": 56.76,
+          "probability": 0.9565
+        },
+        {
+          "word": "shows",
+          "start": 56.76,
+          "end": 57.02,
+          "probability": 0.9897
+        },
+        {
+          "word": "general",
+          "start": 57.02,
+          "end": 57.4,
+          "probability": 0.9185
+        },
+        {
+          "word": "information.",
+          "start": 57.4,
+          "end": 58.1,
+          "probability": 0.998
+        },
+        {
+          "word": "Notice",
+          "start": 58.46,
+          "end": 58.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "Jeff's",
+          "start": 58.94,
+          "end": 59.32,
+          "probability": 0.9834
+        },
+        {
+          "word": "password",
+          "start": 59.32,
+          "end": 59.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 59.74,
+          "end": 59.98,
+          "probability": 0.999
+        },
+        {
+          "word": "masked.",
+          "start": 59.98,
+          "end": 60.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "Jeff's",
+          "start": 60.72,
+          "end": 61.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "user",
+          "start": 61.26,
+          "end": 61.56,
+          "probability": 0.9653
+        },
+        {
+          "word": "roles",
+          "start": 61.56,
+          "end": 61.9,
+          "probability": 0.9912
+        },
+        {
+          "word": "are",
+          "start": 61.9,
+          "end": 62.1,
+          "probability": 0.999
+        },
+        {
+          "word": "listed",
+          "start": 62.1,
+          "end": 62.42,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 62.42,
+          "end": 62.6,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 62.6,
+          "end": 62.7,
+          "probability": 0.999
+        },
+        {
+          "word": "bottom",
+          "start": 62.7,
+          "end": 62.92,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 62.92,
+          "end": 63.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 63.1,
+          "end": 63.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "page.",
+          "start": 63.2,
+          "end": 63.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 64.08,
+      "end": 66.08,
+      "start_formatted": "00:01:04.080",
+      "end_formatted": "00:01:06.080",
+      "text": "Let's look at Jeff's authority limits.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 64.08,
+          "end": 64.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "look",
+          "start": 64.66,
+          "end": 64.84,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 64.84,
+          "end": 64.96,
+          "probability": 0.999
+        },
+        {
+          "word": "Jeff's",
+          "start": 64.96,
+          "end": 65.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "authority",
+          "start": 65.26,
+          "end": 65.62,
+          "probability": 0.8462
+        },
+        {
+          "word": "limits.",
+          "start": 65.62,
+          "end": 66.08,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 67.84,
+      "end": 77.1,
+      "start_formatted": "00:01:07.840",
+      "end_formatted": "00:01:17.100",
+      "text": "At the top, we see Jeff's authority limit profile is that of SuperUser. So this list of authority limits are those belonging to the SuperUser authority limit profile.",
+      "words": [
+        {
+          "word": "At",
+          "start": 67.84,
+          "end": 68.48,
+          "probability": 0.8926
+        },
+        {
+          "word": "the",
+          "start": 68.48,
+          "end": 68.6,
+          "probability": 0.999
+        },
+        {
+          "word": "top,",
+          "start": 68.6,
+          "end": 68.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "we",
+          "start": 69.3,
+          "end": 69.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "see",
+          "start": 69.34,
+          "end": 69.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "Jeff's",
+          "start": 69.56,
+          "end": 69.9,
+          "probability": 0.9805
+        },
+        {
+          "word": "authority",
+          "start": 69.9,
+          "end": 70.22,
+          "probability": 0.6147
+        },
+        {
+          "word": "limit",
+          "start": 70.22,
+          "end": 70.52,
+          "probability": 0.9814
+        },
+        {
+          "word": "profile",
+          "start": 70.52,
+          "end": 71.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 71.02,
+          "end": 71.26,
+          "probability": 0.9155
+        },
+        {
+          "word": "that",
+          "start": 71.26,
+          "end": 71.4,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 71.4,
+          "end": 71.52,
+          "probability": 0.9624
+        },
+        {
+          "word": "SuperUser.",
+          "start": 71.52,
+          "end": 72.14,
+          "probability": 0.5557
+        },
+        {
+          "word": "So",
+          "start": 72.38,
+          "end": 72.8,
+          "probability": 0.9912
+        },
+        {
+          "word": "this",
+          "start": 72.8,
+          "end": 73.02,
+          "probability": 0.9146
+        },
+        {
+          "word": "list",
+          "start": 73.02,
+          "end": 73.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 73.28,
+          "end": 73.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "authority",
+          "start": 73.4,
+          "end": 73.76,
+          "probability": 0.9395
+        },
+        {
+          "word": "limits",
+          "start": 73.76,
+          "end": 74.08,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 74.08,
+          "end": 74.26,
+          "probability": 0.998
+        },
+        {
+          "word": "those",
+          "start": 74.26,
+          "end": 74.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "belonging",
+          "start": 74.44,
+          "end": 74.88,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 74.88,
+          "end": 75.1,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 75.1,
+          "end": 75.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "SuperUser",
+          "start": 75.22,
+          "end": 75.84,
+          "probability": 0.8965
+        },
+        {
+          "word": "authority",
+          "start": 75.84,
+          "end": 76.2,
+          "probability": 0.9023
+        },
+        {
+          "word": "limit",
+          "start": 76.2,
+          "end": 76.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "profile.",
+          "start": 76.54,
+          "end": 77.1,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 77.1,
+      "end": 86.76,
+      "start_formatted": "00:01:17.100",
+      "end_formatted": "00:01:26.760",
+      "text": "As we would expect of a Billing and Finance Manager, Jeff has consistently high authority limits, which means he can approve several types of transactions up to $1 million.",
+      "words": [
+        {
+          "word": "As",
+          "start": 77.1,
+          "end": 78.04,
+          "probability": 0.9546
+        },
+        {
+          "word": "we",
+          "start": 78.04,
+          "end": 78.16,
+          "probability": 0.998
+        },
+        {
+          "word": "would",
+          "start": 78.16,
+          "end": 78.32,
+          "probability": 0.998
+        },
+        {
+          "word": "expect",
+          "start": 78.32,
+          "end": 78.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 78.66,
+          "end": 78.84,
+          "probability": 0.9731
+        },
+        {
+          "word": "a",
+          "start": 78.84,
+          "end": 78.9,
+          "probability": 0.9863
+        },
+        {
+          "word": "Billing",
+          "start": 78.9,
+          "end": 79.2,
+          "probability": 0.6074
+        },
+        {
+          "word": "and",
+          "start": 79.2,
+          "end": 79.34,
+          "probability": 0.6543
+        },
+        {
+          "word": "Finance",
+          "start": 79.34,
+          "end": 79.82,
+          "probability": 0.9619
+        },
+        {
+          "word": "Manager,",
+          "start": 79.82,
+          "end": 80.26,
+          "probability": 0.8203
+        },
+        {
+          "word": "Jeff",
+          "start": 80.64,
+          "end": 80.78,
+          "probability": 0.9741
+        },
+        {
+          "word": "has",
+          "start": 80.78,
+          "end": 81.04,
+          "probability": 0.999
+        },
+        {
+          "word": "consistently",
+          "start": 81.04,
+          "end": 81.64,
+          "probability": 0.998
+        },
+        {
+          "word": "high",
+          "start": 81.64,
+          "end": 81.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "authority",
+          "start": 81.96,
+          "end": 82.4,
+          "probability": 0.9819
+        },
+        {
+          "word": "limits,",
+          "start": 82.4,
+          "end": 82.84,
+          "probability": 0.998
+        },
+        {
+          "word": "which",
+          "start": 83.08,
+          "end": 83.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "means",
+          "start": 83.32,
+          "end": 83.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 83.58,
+          "end": 83.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 83.76,
+          "end": 83.9,
+          "probability": 0.999
+        },
+        {
+          "word": "approve",
+          "start": 83.9,
+          "end": 84.22,
+          "probability": 0.9746
+        },
+        {
+          "word": "several",
+          "start": 84.22,
+          "end": 84.58,
+          "probability": 0.999
+        },
+        {
+          "word": "types",
+          "start": 84.58,
+          "end": 84.9,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 84.9,
+          "end": 85.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "transactions",
+          "start": 85.1,
+          "end": 85.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "up",
+          "start": 85.7,
+          "end": 86.04,
+          "probability": 0.9741
+        },
+        {
+          "word": "to",
+          "start": 86.04,
+          "end": 86.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "$1",
+          "start": 86.2,
+          "end": 86.44,
+          "probability": 0.8994
+        },
+        {
+          "word": "million.",
+          "start": 86.44,
+          "end": 86.76,
+          "probability": 0.6191
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 87.76,
+      "end": 89.9,
+      "start_formatted": "00:01:27.760",
+      "end_formatted": "00:01:29.900",
+      "text": "I'll click the Profile tab next.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 87.76,
+          "end": 88.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "click",
+          "start": 88.4,
+          "end": 88.6,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 88.6,
+          "end": 88.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "Profile",
+          "start": 88.74,
+          "end": 89.2,
+          "probability": 0.9106
+        },
+        {
+          "word": "tab",
+          "start": 89.2,
+          "end": 89.44,
+          "probability": 0.978
+        },
+        {
+          "word": "next.",
+          "start": 89.44,
+          "end": 89.9,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 91.78,
+      "end": 97.3,
+      "start_formatted": "00:01:31.780",
+      "end_formatted": "00:01:37.300",
+      "text": "The Profile tab provides user details such as address, phone numbers, and email.",
+      "words": [
+        {
+          "word": "The",
+          "start": 91.78,
+          "end": 92.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "Profile",
+          "start": 92.42,
+          "end": 92.88,
+          "probability": 0.9814
+        },
+        {
+          "word": "tab",
+          "start": 92.88,
+          "end": 93.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "provides",
+          "start": 93.28,
+          "end": 93.86,
+          "probability": 0.8452
+        },
+        {
+          "word": "user",
+          "start": 93.86,
+          "end": 94.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "details",
+          "start": 94.16,
+          "end": 94.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "such",
+          "start": 94.62,
+          "end": 94.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "as",
+          "start": 94.92,
+          "end": 95.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "address,",
+          "start": 95.08,
+          "end": 95.46,
+          "probability": 0.979
+        },
+        {
+          "word": "phone",
+          "start": 95.8,
+          "end": 96.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "numbers,",
+          "start": 96.1,
+          "end": 96.52,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 96.76,
+          "end": 96.98,
+          "probability": 0.999
+        },
+        {
+          "word": "email.",
+          "start": 96.98,
+          "end": 97.3,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 97.3,
+      "end": 101.68,
+      "start_formatted": "00:01:37.300",
+      "end_formatted": "00:01:41.680",
+      "text": "Let's return to the Basics tab to examine one of Jeff's roles.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 97.3,
+          "end": 98.48,
+          "probability": 0.9854
+        },
+        {
+          "word": "return",
+          "start": 98.48,
+          "end": 98.72,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 98.72,
+          "end": 98.92,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 98.92,
+          "end": 99.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "Basics",
+          "start": 99.04,
+          "end": 99.5,
+          "probability": 0.7686
+        },
+        {
+          "word": "tab",
+          "start": 99.5,
+          "end": 99.86,
+          "probability": 0.9771
+        },
+        {
+          "word": "to",
+          "start": 99.86,
+          "end": 100.2,
+          "probability": 0.4761
+        },
+        {
+          "word": "examine",
+          "start": 100.2,
+          "end": 100.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "one",
+          "start": 100.62,
+          "end": 100.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 100.82,
+          "end": 100.98,
+          "probability": 0.998
+        },
+        {
+          "word": "Jeff's",
+          "start": 100.98,
+          "end": 101.32,
+          "probability": 0.9165
+        },
+        {
+          "word": "roles.",
+          "start": 101.32,
+          "end": 101.68,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 103.12,
+      "end": 105.0,
+      "start_formatted": "00:01:43.120",
+      "end_formatted": "00:01:45.000",
+      "text": "I'll click Finance Manager.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 103.12,
+          "end": 103.84,
+          "probability": 0.9858
+        },
+        {
+          "word": "click",
+          "start": 103.84,
+          "end": 104.02,
+          "probability": 0.9873
+        },
+        {
+          "word": "Finance",
+          "start": 104.02,
+          "end": 104.4,
+          "probability": 0.9297
+        },
+        {
+          "word": "Manager.",
+          "start": 104.4,
+          "end": 105.0,
+          "probability": 0.9414
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 107.06,
+      "end": 116.58,
+      "start_formatted": "00:01:47.060",
+      "end_formatted": "00:01:56.580",
+      "text": "A Finance Manager has five pages of permissions. Page 1 lists permissions to approve, assign, create, delete, and edit several entities.",
+      "words": [
+        {
+          "word": "A",
+          "start": 107.06,
+          "end": 107.78,
+          "probability": 0.9888
+        },
+        {
+          "word": "Finance",
+          "start": 107.78,
+          "end": 108.2,
+          "probability": 0.5288
+        },
+        {
+          "word": "Manager",
+          "start": 108.2,
+          "end": 108.68,
+          "probability": 0.9497
+        },
+        {
+          "word": "has",
+          "start": 108.68,
+          "end": 108.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "five",
+          "start": 108.96,
+          "end": 109.22,
+          "probability": 0.6328
+        },
+        {
+          "word": "pages",
+          "start": 109.22,
+          "end": 109.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 109.64,
+          "end": 109.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "permissions.",
+          "start": 109.82,
+          "end": 110.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "Page",
+          "start": 110.74,
+          "end": 111.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "1",
+          "start": 111.14,
+          "end": 111.32,
+          "probability": 0.8047
+        },
+        {
+          "word": "lists",
+          "start": 111.32,
+          "end": 111.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "permissions",
+          "start": 111.64,
+          "end": 112.16,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 112.16,
+          "end": 112.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "approve,",
+          "start": 112.44,
+          "end": 112.88,
+          "probability": 0.9336
+        },
+        {
+          "word": "assign,",
+          "start": 113.2,
+          "end": 113.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "create,",
+          "start": 114.0,
+          "end": 114.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "delete,",
+          "start": 114.74,
+          "end": 115.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 115.38,
+          "end": 115.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "edit",
+          "start": 115.6,
+          "end": 115.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "several",
+          "start": 115.84,
+          "end": 116.2,
+          "probability": 0.999
+        },
+        {
+          "word": "entities.",
+          "start": 116.2,
+          "end": 116.58,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 118.9,
+      "end": 124.86,
+      "start_formatted": "00:01:58.900",
+      "end_formatted": "00:02:04.860",
+      "text": "After scrolling down, I see the remainder of permissions on this page. Let's look at page 2.",
+      "words": [
+        {
+          "word": "After",
+          "start": 118.9,
+          "end": 119.54,
+          "probability": 0.9741
+        },
+        {
+          "word": "scrolling",
+          "start": 119.54,
+          "end": 119.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "down,",
+          "start": 119.98,
+          "end": 120.34,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 120.6,
+          "end": 120.82,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 120.82,
+          "end": 121.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 121.02,
+          "end": 121.16,
+          "probability": 1.0
+        },
+        {
+          "word": "remainder",
+          "start": 121.16,
+          "end": 121.48,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 121.48,
+          "end": 121.7,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions",
+          "start": 121.7,
+          "end": 122.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "on",
+          "start": 122.14,
+          "end": 122.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 122.4,
+          "end": 122.6,
+          "probability": 1.0
+        },
+        {
+          "word": "page.",
+          "start": 122.6,
+          "end": 123.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "Let's",
+          "start": 123.34,
+          "end": 123.92,
+          "probability": 0.999
+        },
+        {
+          "word": "look",
+          "start": 123.92,
+          "end": 124.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 124.1,
+          "end": 124.24,
+          "probability": 1.0
+        },
+        {
+          "word": "page",
+          "start": 124.24,
+          "end": 124.52,
+          "probability": 0.9224
+        },
+        {
+          "word": "2.",
+          "start": 124.52,
+          "end": 124.86,
+          "probability": 0.9233
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 127.38,
+      "end": 129.54,
+      "start_formatted": "00:02:07.380",
+      "end_formatted": "00:02:09.540",
+      "text": "Page 2 lists more added permissions.",
+      "words": [
+        {
+          "word": "Page",
+          "start": 127.38,
+          "end": 128.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "2",
+          "start": 128.02,
+          "end": 128.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "lists",
+          "start": 128.24,
+          "end": 128.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "more",
+          "start": 128.56,
+          "end": 128.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "added",
+          "start": 128.84,
+          "end": 129.02,
+          "probability": 0.9702
+        },
+        {
+          "word": "permissions.",
+          "start": 129.02,
+          "end": 129.54,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 130.04,
+      "end": 135.3,
+      "start_formatted": "00:02:10.040",
+      "end_formatted": "00:02:15.300",
+      "text": "A Finance Manager also has permissions to own, reassign, and search for entities.",
+      "words": [
+        {
+          "word": "A",
+          "start": 130.04,
+          "end": 130.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Finance",
+          "start": 130.54,
+          "end": 130.9,
+          "probability": 0.1478
+        },
+        {
+          "word": "Manager",
+          "start": 130.9,
+          "end": 131.36,
+          "probability": 0.9766
+        },
+        {
+          "word": "also",
+          "start": 131.36,
+          "end": 131.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 131.78,
+          "end": 132.08,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions",
+          "start": 132.08,
+          "end": 132.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 132.52,
+          "end": 132.76,
+          "probability": 1.0
+        },
+        {
+          "word": "own,",
+          "start": 132.76,
+          "end": 133.12,
+          "probability": 0.9326
+        },
+        {
+          "word": "reassign,",
+          "start": 133.36,
+          "end": 134.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 134.16,
+          "end": 134.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "search",
+          "start": 134.42,
+          "end": 134.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 134.7,
+          "end": 134.9,
+          "probability": 1.0
+        },
+        {
+          "word": "entities.",
+          "start": 134.9,
+          "end": 135.3,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 135.88,
+      "end": 139.42,
+      "start_formatted": "00:02:15.880",
+      "end_formatted": "00:02:19.420",
+      "text": "Earlier we saw that Jeff's authority limit profile is SuperUser.",
+      "words": [
+        {
+          "word": "Earlier",
+          "start": 135.88,
+          "end": 136.48,
+          "probability": 0.999
+        },
+        {
+          "word": "we",
+          "start": 136.48,
+          "end": 136.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "saw",
+          "start": 136.68,
+          "end": 136.94,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 136.94,
+          "end": 137.12,
+          "probability": 1.0
+        },
+        {
+          "word": "Jeff's",
+          "start": 137.12,
+          "end": 137.44,
+          "probability": 0.4973
+        },
+        {
+          "word": "authority",
+          "start": 137.44,
+          "end": 137.78,
+          "probability": 0.3
+        },
+        {
+          "word": "limit",
+          "start": 137.78,
+          "end": 138.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "profile",
+          "start": 138.06,
+          "end": 138.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 138.58,
+          "end": 138.8,
+          "probability": 0.999
+        },
+        {
+          "word": "SuperUser.",
+          "start": 138.8,
+          "end": 139.42,
+          "probability": 0.4966
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 139.42,
+      "end": 146.54,
+      "start_formatted": "00:02:19.420",
+      "end_formatted": "00:02:26.540",
+      "text": "I'll click the authority limit profile link in the sidebar to see what other authority limit profiles are defined in our sample data.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 139.42,
+          "end": 140.36,
+          "probability": 0.9858
+        },
+        {
+          "word": "click",
+          "start": 140.36,
+          "end": 140.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 140.56,
+          "end": 140.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "authority",
+          "start": 140.7,
+          "end": 141.1,
+          "probability": 0.417
+        },
+        {
+          "word": "limit",
+          "start": 141.1,
+          "end": 141.42,
+          "probability": 0.978
+        },
+        {
+          "word": "profile",
+          "start": 141.42,
+          "end": 141.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "link",
+          "start": 141.94,
+          "end": 142.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 142.28,
+          "end": 142.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 142.42,
+          "end": 142.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "sidebar",
+          "start": 142.5,
+          "end": 142.98,
+          "probability": 0.9824
+        },
+        {
+          "word": "to",
+          "start": 142.98,
+          "end": 143.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "see",
+          "start": 143.12,
+          "end": 143.28,
+          "probability": 0.999
+        },
+        {
+          "word": "what",
+          "start": 143.28,
+          "end": 143.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "other",
+          "start": 143.46,
+          "end": 143.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "authority",
+          "start": 143.66,
+          "end": 144.1,
+          "probability": 0.9829
+        },
+        {
+          "word": "limit",
+          "start": 144.1,
+          "end": 144.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "profiles",
+          "start": 144.42,
+          "end": 144.98,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 144.98,
+          "end": 145.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "defined",
+          "start": 145.2,
+          "end": 145.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 145.54,
+          "end": 145.72,
+          "probability": 0.999
+        },
+        {
+          "word": "our",
+          "start": 145.72,
+          "end": 145.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "sample",
+          "start": 145.86,
+          "end": 146.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "data.",
+          "start": 146.22,
+          "end": 146.54,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 149.18,
+      "end": 151.86,
+      "start_formatted": "00:02:29.180",
+      "end_formatted": "00:02:31.860",
+      "text": "Here is the list of authority limit profiles.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 149.18,
+          "end": 149.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 149.86,
+          "end": 150.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 150.0,
+          "end": 150.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "list",
+          "start": 150.12,
+          "end": 150.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 150.36,
+          "end": 150.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "authority",
+          "start": 150.52,
+          "end": 150.86,
+          "probability": 0.96
+        },
+        {
+          "word": "limit",
+          "start": 150.86,
+          "end": 151.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "profiles.",
+          "start": 151.22,
+          "end": 151.86,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 152.34,
+      "end": 154.94,
+      "start_formatted": "00:02:32.340",
+      "end_formatted": "00:02:34.940",
+      "text": "We have already seen the SuperUser profile.",
+      "words": [
+        {
+          "word": "We",
+          "start": 152.34,
+          "end": 152.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "have",
+          "start": 152.86,
+          "end": 153.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "already",
+          "start": 153.02,
+          "end": 153.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "seen",
+          "start": 153.36,
+          "end": 153.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 153.68,
+          "end": 153.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "SuperUser",
+          "start": 153.82,
+          "end": 154.38,
+          "probability": 0.5117
+        },
+        {
+          "word": "profile.",
+          "start": 154.38,
+          "end": 154.94,
+          "probability": 0.9253
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 155.28,
+      "end": 157.98,
+      "start_formatted": "00:02:35.280",
+      "end_formatted": "00:02:37.980",
+      "text": "Let's take a look at the low authority limit profile.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 155.28,
+          "end": 155.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "take",
+          "start": 155.76,
+          "end": 155.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 155.94,
+          "end": 156.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "look",
+          "start": 156.06,
+          "end": 156.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 156.2,
+          "end": 156.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 156.34,
+          "end": 156.44,
+          "probability": 0.998
+        },
+        {
+          "word": "low",
+          "start": 156.44,
+          "end": 156.64,
+          "probability": 0.7612
+        },
+        {
+          "word": "authority",
+          "start": 156.64,
+          "end": 157.08,
+          "probability": 0.9805
+        },
+        {
+          "word": "limit",
+          "start": 157.08,
+          "end": 157.38,
+          "probability": 0.998
+        },
+        {
+          "word": "profile.",
+          "start": 157.38,
+          "end": 157.98,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 161.0,
+      "end": 168.36,
+      "start_formatted": "00:02:41.000",
+      "end_formatted": "00:02:48.360",
+      "text": "In contrast to SuperUser, someone with a low authority limit profile requires approval for transactions over $100.",
+      "words": [
+        {
+          "word": "In",
+          "start": 161.0,
+          "end": 161.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "contrast",
+          "start": 161.68,
+          "end": 162.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 162.12,
+          "end": 162.42,
+          "probability": 0.9883
+        },
+        {
+          "word": "SuperUser,",
+          "start": 162.42,
+          "end": 163.04,
+          "probability": 0.916
+        },
+        {
+          "word": "someone",
+          "start": 163.22,
+          "end": 163.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "with",
+          "start": 163.62,
+          "end": 163.84,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 163.84,
+          "end": 163.94,
+          "probability": 0.9897
+        },
+        {
+          "word": "low",
+          "start": 163.94,
+          "end": 164.14,
+          "probability": 0.9868
+        },
+        {
+          "word": "authority",
+          "start": 164.14,
+          "end": 164.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "limit",
+          "start": 164.58,
+          "end": 164.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "profile",
+          "start": 164.88,
+          "end": 165.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "requires",
+          "start": 165.42,
+          "end": 165.94,
+          "probability": 0.998
+        },
+        {
+          "word": "approval",
+          "start": 165.94,
+          "end": 166.4,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 166.4,
+          "end": 166.66,
+          "probability": 0.999
+        },
+        {
+          "word": "transactions",
+          "start": 166.66,
+          "end": 167.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "over",
+          "start": 167.28,
+          "end": 167.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "$100.",
+          "start": 167.74,
+          "end": 168.36,
+          "probability": 0.957
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 169.18,
+      "end": 171.92,
+      "start_formatted": "00:02:49.180",
+      "end_formatted": "00:02:51.920",
+      "text": "Let's return to the list of authority limit profiles.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 169.18,
+          "end": 169.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "return",
+          "start": 169.7,
+          "end": 170.0,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 170.0,
+          "end": 170.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 170.18,
+          "end": 170.3,
+          "probability": 1.0
+        },
+        {
+          "word": "list",
+          "start": 170.3,
+          "end": 170.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 170.48,
+          "end": 170.64,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 170.64,
+          "end": 170.98,
+          "probability": 0.7739
+        },
+        {
+          "word": "limit",
+          "start": 170.98,
+          "end": 171.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "profiles.",
+          "start": 171.3,
+          "end": 171.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 174.72,
+      "end": 179.42,
+      "start_formatted": "00:02:54.720",
+      "end_formatted": "00:02:59.420",
+      "text": "Now let's look at TLTest, which is a set of low limits for the purpose of load testing.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 174.72,
+          "end": 175.24,
+          "probability": 0.999
+        },
+        {
+          "word": "let's",
+          "start": 175.24,
+          "end": 175.54,
+          "probability": 0.998
+        },
+        {
+          "word": "look",
+          "start": 175.54,
+          "end": 175.72,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 175.72,
+          "end": 175.84,
+          "probability": 1.0
+        },
+        {
+          "word": "TLTest,",
+          "start": 175.84,
+          "end": 176.6,
+          "probability": 0.6846
+        },
+        {
+          "word": "which",
+          "start": 176.78,
+          "end": 177.04,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 177.04,
+          "end": 177.16,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 177.16,
+          "end": 177.26,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 177.26,
+          "end": 177.46,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 177.46,
+          "end": 177.58,
+          "probability": 1.0
+        },
+        {
+          "word": "low",
+          "start": 177.58,
+          "end": 177.74,
+          "probability": 0.9863
+        },
+        {
+          "word": "limits",
+          "start": 177.74,
+          "end": 178.04,
+          "probability": 0.9893
+        },
+        {
+          "word": "for",
+          "start": 178.04,
+          "end": 178.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 178.22,
+          "end": 178.32,
+          "probability": 1.0
+        },
+        {
+          "word": "purpose",
+          "start": 178.32,
+          "end": 178.62,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 178.62,
+          "end": 178.8,
+          "probability": 1.0
+        },
+        {
+          "word": "load",
+          "start": 178.8,
+          "end": 179.0,
+          "probability": 0.9785
+        },
+        {
+          "word": "testing.",
+          "start": 179.0,
+          "end": 179.42,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 182.12,
+      "end": 188.18,
+      "start_formatted": "00:03:02.120",
+      "end_formatted": "00:03:08.180",
+      "text": "The first thing I notice is that the TLTest profile in our sample data has only a handful of authority limits.",
+      "words": [
+        {
+          "word": "The",
+          "start": 182.12,
+          "end": 182.64,
+          "probability": 0.999
+        },
+        {
+          "word": "first",
+          "start": 182.64,
+          "end": 182.9,
+          "probability": 1.0
+        },
+        {
+          "word": "thing",
+          "start": 182.9,
+          "end": 183.1,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 183.1,
+          "end": 183.24,
+          "probability": 1.0
+        },
+        {
+          "word": "notice",
+          "start": 183.24,
+          "end": 183.56,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 183.56,
+          "end": 183.76,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 183.76,
+          "end": 183.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 183.9,
+          "end": 184.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "TLTest",
+          "start": 184.04,
+          "end": 184.74,
+          "probability": 0.9922
+        },
+        {
+          "word": "profile",
+          "start": 184.74,
+          "end": 185.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "in",
+          "start": 185.12,
+          "end": 185.42,
+          "probability": 1.0
+        },
+        {
+          "word": "our",
+          "start": 185.42,
+          "end": 185.56,
+          "probability": 1.0
+        },
+        {
+          "word": "sample",
+          "start": 185.56,
+          "end": 185.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "data",
+          "start": 185.94,
+          "end": 186.22,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 186.22,
+          "end": 186.44,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 186.44,
+          "end": 186.7,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 186.7,
+          "end": 186.82,
+          "probability": 1.0
+        },
+        {
+          "word": "handful",
+          "start": 186.82,
+          "end": 187.14,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 187.14,
+          "end": 187.34,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 187.34,
+          "end": 187.7,
+          "probability": 0.999
+        },
+        {
+          "word": "limits.",
+          "start": 187.7,
+          "end": 188.18,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 188.62,
+      "end": 193.82,
+      "start_formatted": "00:03:08.620",
+      "end_formatted": "00:03:13.820",
+      "text": "An authority limit profile contains only those authority limits that are needed for a set of users.",
+      "words": [
+        {
+          "word": "An",
+          "start": 188.62,
+          "end": 189.08,
+          "probability": 0.999
+        },
+        {
+          "word": "authority",
+          "start": 189.08,
+          "end": 189.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "limit",
+          "start": 189.44,
+          "end": 189.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "profile",
+          "start": 189.76,
+          "end": 190.32,
+          "probability": 1.0
+        },
+        {
+          "word": "contains",
+          "start": 190.32,
+          "end": 190.72,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 190.72,
+          "end": 191.16,
+          "probability": 1.0
+        },
+        {
+          "word": "those",
+          "start": 191.16,
+          "end": 191.42,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 191.42,
+          "end": 191.82,
+          "probability": 1.0
+        },
+        {
+          "word": "limits",
+          "start": 191.82,
+          "end": 192.2,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 192.2,
+          "end": 192.38,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 192.38,
+          "end": 192.5,
+          "probability": 1.0
+        },
+        {
+          "word": "needed",
+          "start": 192.5,
+          "end": 192.74,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 192.74,
+          "end": 192.98,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 192.98,
+          "end": 193.12,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 193.12,
+          "end": 193.3,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 193.3,
+          "end": 193.42,
+          "probability": 1.0
+        },
+        {
+          "word": "users.",
+          "start": 193.42,
+          "end": 193.82,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 193.82,
+      "end": 198.4,
+      "start_formatted": "00:03:13.820",
+      "end_formatted": "00:03:18.400",
+      "text": "We have looked at a user, his roles, and authority limit profile.",
+      "words": [
+        {
+          "word": "We",
+          "start": 193.82,
+          "end": 194.72,
+          "probability": 0.9473
+        },
+        {
+          "word": "have",
+          "start": 194.72,
+          "end": 194.9,
+          "probability": 0.998
+        },
+        {
+          "word": "looked",
+          "start": 194.9,
+          "end": 195.1,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 195.1,
+          "end": 195.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 195.22,
+          "end": 195.34,
+          "probability": 0.9854
+        },
+        {
+          "word": "user,",
+          "start": 195.34,
+          "end": 195.64,
+          "probability": 0.9834
+        },
+        {
+          "word": "his",
+          "start": 195.98,
+          "end": 196.22,
+          "probability": 0.998
+        },
+        {
+          "word": "roles,",
+          "start": 196.22,
+          "end": 196.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 196.88,
+          "end": 197.12,
+          "probability": 0.999
+        },
+        {
+          "word": "authority",
+          "start": 197.12,
+          "end": 197.52,
+          "probability": 0.9219
+        },
+        {
+          "word": "limit",
+          "start": 197.52,
+          "end": 197.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "profile.",
+          "start": 197.82,
+          "end": 198.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 198.86,
+      "end": 200.42,
+      "start_formatted": "00:03:18.860",
+      "end_formatted": "00:03:20.420",
+      "text": "Now let's visit groups.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 198.86,
+          "end": 199.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "let's",
+          "start": 199.38,
+          "end": 199.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "visit",
+          "start": 199.7,
+          "end": 200.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "groups.",
+          "start": 200.0,
+          "end": 200.42,
+          "probability": 0.9434
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 202.76,
+      "end": 206.36,
+      "start_formatted": "00:03:22.760",
+      "end_formatted": "00:03:26.360",
+      "text": "Here we see the groups, their supervisor and their parent group.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 202.76,
+          "end": 203.36,
+          "probability": 0.9907
+        },
+        {
+          "word": "we",
+          "start": 203.36,
+          "end": 203.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 203.54,
+          "end": 203.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 203.74,
+          "end": 203.88,
+          "probability": 0.999
+        },
+        {
+          "word": "groups,",
+          "start": 203.88,
+          "end": 204.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "their",
+          "start": 204.48,
+          "end": 204.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "supervisor",
+          "start": 204.7,
+          "end": 205.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 205.24,
+          "end": 205.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "their",
+          "start": 205.5,
+          "end": 205.62,
+          "probability": 1.0
+        },
+        {
+          "word": "parent",
+          "start": 205.62,
+          "end": 206.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "group.",
+          "start": 206.0,
+          "end": 206.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 206.62,
+      "end": 211.2,
+      "start_formatted": "00:03:26.620",
+      "end_formatted": "00:03:31.200",
+      "text": "Jeff Park is the supervisor of the operations group, whose parent group is headquarters.",
+      "words": [
+        {
+          "word": "Jeff",
+          "start": 206.62,
+          "end": 207.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "Park",
+          "start": 207.08,
+          "end": 207.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 207.34,
+          "end": 207.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 207.5,
+          "end": 207.64,
+          "probability": 1.0
+        },
+        {
+          "word": "supervisor",
+          "start": 207.64,
+          "end": 208.18,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 208.18,
+          "end": 208.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 208.4,
+          "end": 208.52,
+          "probability": 1.0
+        },
+        {
+          "word": "operations",
+          "start": 208.52,
+          "end": 209.08,
+          "probability": 0.938
+        },
+        {
+          "word": "group,",
+          "start": 209.08,
+          "end": 209.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "whose",
+          "start": 209.78,
+          "end": 210.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "parent",
+          "start": 210.02,
+          "end": 210.32,
+          "probability": 1.0
+        },
+        {
+          "word": "group",
+          "start": 210.32,
+          "end": 210.56,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 210.56,
+          "end": 210.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "headquarters.",
+          "start": 210.76,
+          "end": 211.2,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 211.2,
+      "end": 220.02,
+      "start_formatted": "00:03:31.200",
+      "end_formatted": "00:03:40.020",
+      "text": "You can see a three-level group hierarchy, commercial lines and personal lines have central billing as a parent, which in turn has headquarters as its parent.",
+      "words": [
+        {
+          "word": "You",
+          "start": 211.2,
+          "end": 212.3,
+          "probability": 0.8623
+        },
+        {
+          "word": "can",
+          "start": 212.3,
+          "end": 212.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "see",
+          "start": 212.46,
+          "end": 212.66,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 212.66,
+          "end": 212.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "three",
+          "start": 212.8,
+          "end": 212.96,
+          "probability": 0.8184
+        },
+        {
+          "word": "-level",
+          "start": 212.96,
+          "end": 213.26,
+          "probability": 0.9507
+        },
+        {
+          "word": "group",
+          "start": 213.26,
+          "end": 213.52,
+          "probability": 0.9678
+        },
+        {
+          "word": "hierarchy,",
+          "start": 213.52,
+          "end": 214.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "commercial",
+          "start": 214.42,
+          "end": 214.88,
+          "probability": 0.9629
+        },
+        {
+          "word": "lines",
+          "start": 214.88,
+          "end": 215.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 215.26,
+          "end": 215.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "personal",
+          "start": 215.44,
+          "end": 215.84,
+          "probability": 0.9878
+        },
+        {
+          "word": "lines",
+          "start": 215.84,
+          "end": 216.2,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 216.2,
+          "end": 216.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "central",
+          "start": 216.42,
+          "end": 216.76,
+          "probability": 0.9634
+        },
+        {
+          "word": "billing",
+          "start": 216.76,
+          "end": 217.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "as",
+          "start": 217.06,
+          "end": 217.26,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 217.26,
+          "end": 217.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "parent,",
+          "start": 217.38,
+          "end": 217.7,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 217.92,
+          "end": 218.16,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 218.16,
+          "end": 218.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "turn",
+          "start": 218.32,
+          "end": 218.48,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 218.48,
+          "end": 218.68,
+          "probability": 0.999
+        },
+        {
+          "word": "headquarters",
+          "start": 218.68,
+          "end": 219.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "as",
+          "start": 219.18,
+          "end": 219.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "its",
+          "start": 219.52,
+          "end": 219.64,
+          "probability": 0.999
+        },
+        {
+          "word": "parent.",
+          "start": 219.64,
+          "end": 220.02,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 220.58,
+      "end": 230.3,
+      "start_formatted": "00:03:40.580",
+      "end_formatted": "00:03:50.300",
+      "text": "Group supervisors play a significant role during the tiered approval process, where each supervisor has greater approval authority than the supervisor of a group lower in the hierarchy.",
+      "words": [
+        {
+          "word": "Group",
+          "start": 220.58,
+          "end": 221.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "supervisors",
+          "start": 221.1,
+          "end": 221.76,
+          "probability": 0.9424
+        },
+        {
+          "word": "play",
+          "start": 221.76,
+          "end": 222.18,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 222.18,
+          "end": 222.32,
+          "probability": 1.0
+        },
+        {
+          "word": "significant",
+          "start": 222.32,
+          "end": 222.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "role",
+          "start": 222.76,
+          "end": 223.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "during",
+          "start": 223.14,
+          "end": 223.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 223.36,
+          "end": 223.52,
+          "probability": 0.999
+        },
+        {
+          "word": "tiered",
+          "start": 223.52,
+          "end": 223.88,
+          "probability": 0.998
+        },
+        {
+          "word": "approval",
+          "start": 223.88,
+          "end": 224.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "process,",
+          "start": 224.18,
+          "end": 224.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "where",
+          "start": 225.12,
+          "end": 225.36,
+          "probability": 0.999
+        },
+        {
+          "word": "each",
+          "start": 225.36,
+          "end": 225.66,
+          "probability": 1.0
+        },
+        {
+          "word": "supervisor",
+          "start": 225.66,
+          "end": 226.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 226.22,
+          "end": 226.58,
+          "probability": 1.0
+        },
+        {
+          "word": "greater",
+          "start": 226.58,
+          "end": 226.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "approval",
+          "start": 226.86,
+          "end": 227.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "authority",
+          "start": 227.32,
+          "end": 227.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "than",
+          "start": 227.84,
+          "end": 228.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 228.08,
+          "end": 228.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "supervisor",
+          "start": 228.2,
+          "end": 228.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 228.82,
+          "end": 229.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 229.04,
+          "end": 229.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "group",
+          "start": 229.12,
+          "end": 229.32,
+          "probability": 0.999
+        },
+        {
+          "word": "lower",
+          "start": 229.32,
+          "end": 229.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 229.6,
+          "end": 229.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 229.76,
+          "end": 229.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "hierarchy.",
+          "start": 229.84,
+          "end": 230.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 231.38,
+      "end": 235.02,
+      "start_formatted": "00:03:51.380",
+      "end_formatted": "00:03:55.020",
+      "text": "To find out who belongs to a group, simply click the group name.",
+      "words": [
+        {
+          "word": "To",
+          "start": 231.38,
+          "end": 231.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "find",
+          "start": 231.94,
+          "end": 232.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 232.18,
+          "end": 232.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "who",
+          "start": 232.36,
+          "end": 232.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "belongs",
+          "start": 232.5,
+          "end": 232.88,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 232.88,
+          "end": 233.06,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 233.06,
+          "end": 233.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "group,",
+          "start": 233.18,
+          "end": 233.48,
+          "probability": 0.998
+        },
+        {
+          "word": "simply",
+          "start": 233.7,
+          "end": 234.08,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 234.08,
+          "end": 234.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 234.34,
+          "end": 234.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "group",
+          "start": 234.5,
+          "end": 234.74,
+          "probability": 0.9927
+        },
+        {
+          "word": "name.",
+          "start": 234.74,
+          "end": 235.02,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 235.02,
+      "end": 237.24,
+      "start_formatted": "00:03:55.020",
+      "end_formatted": "00:03:57.240",
+      "text": "Let's look at personal lines.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 235.02,
+          "end": 236.12,
+          "probability": 0.9541
+        },
+        {
+          "word": "look",
+          "start": 236.12,
+          "end": 236.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "at",
+          "start": 236.3,
+          "end": 236.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "personal",
+          "start": 236.46,
+          "end": 236.86,
+          "probability": 0.322
+        },
+        {
+          "word": "lines.",
+          "start": 236.86,
+          "end": 237.24,
+          "probability": 0.9502
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 239.98,
+      "end": 242.96,
+      "start_formatted": "00:03:59.980",
+      "end_formatted": "00:04:02.960",
+      "text": "Here we see the personal lines group has three members.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 239.98,
+          "end": 240.54,
+          "probability": 0.9829
+        },
+        {
+          "word": "we",
+          "start": 240.54,
+          "end": 240.7,
+          "probability": 0.9888
+        },
+        {
+          "word": "see",
+          "start": 240.7,
+          "end": 240.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 240.92,
+          "end": 241.08,
+          "probability": 0.9922
+        },
+        {
+          "word": "personal",
+          "start": 241.08,
+          "end": 241.46,
+          "probability": 0.8096
+        },
+        {
+          "word": "lines",
+          "start": 241.46,
+          "end": 241.8,
+          "probability": 0.9614
+        },
+        {
+          "word": "group",
+          "start": 241.8,
+          "end": 242.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "has",
+          "start": 242.04,
+          "end": 242.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "three",
+          "start": 242.32,
+          "end": 242.54,
+          "probability": 0.8145
+        },
+        {
+          "word": "members.",
+          "start": 242.54,
+          "end": 242.96,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 243.34,
+      "end": 248.24,
+      "start_formatted": "00:04:03.340",
+      "end_formatted": "00:04:08.240",
+      "text": "Its parent is central billing and it is associated with the personal lines zone security zone.",
+      "words": [
+        {
+          "word": "Its",
+          "start": 243.34,
+          "end": 243.72,
+          "probability": 0.8955
+        },
+        {
+          "word": "parent",
+          "start": 243.72,
+          "end": 244.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 244.06,
+          "end": 244.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "central",
+          "start": 244.26,
+          "end": 244.56,
+          "probability": 0.71
+        },
+        {
+          "word": "billing",
+          "start": 244.56,
+          "end": 244.86,
+          "probability": 0.9766
+        },
+        {
+          "word": "and",
+          "start": 244.86,
+          "end": 245.02,
+          "probability": 0.9761
+        },
+        {
+          "word": "it",
+          "start": 245.02,
+          "end": 245.14,
+          "probability": 0.9761
+        },
+        {
+          "word": "is",
+          "start": 245.14,
+          "end": 245.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "associated",
+          "start": 245.28,
+          "end": 245.84,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 245.84,
+          "end": 246.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 246.1,
+          "end": 246.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "personal",
+          "start": 246.22,
+          "end": 246.64,
+          "probability": 0.8862
+        },
+        {
+          "word": "lines",
+          "start": 246.64,
+          "end": 247.02,
+          "probability": 0.4514
+        },
+        {
+          "word": "zone",
+          "start": 247.02,
+          "end": 247.3,
+          "probability": 0.7412
+        },
+        {
+          "word": "security",
+          "start": 247.3,
+          "end": 247.76,
+          "probability": 0.936
+        },
+        {
+          "word": "zone.",
+          "start": 247.76,
+          "end": 248.24,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 248.78,
+      "end": 253.0,
+      "start_formatted": "00:04:08.780",
+      "end_formatted": "00:04:13.000",
+      "text": "Notice, a group can be associated with a maximum of one security zone.",
+      "words": [
+        {
+          "word": "Notice,",
+          "start": 248.78,
+          "end": 249.34,
+          "probability": 0.8853
+        },
+        {
+          "word": "a",
+          "start": 249.6,
+          "end": 249.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "group",
+          "start": 249.8,
+          "end": 250.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "can",
+          "start": 250.02,
+          "end": 250.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 250.22,
+          "end": 250.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "associated",
+          "start": 250.36,
+          "end": 250.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 250.9,
+          "end": 251.18,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 251.18,
+          "end": 251.28,
+          "probability": 0.8081
+        },
+        {
+          "word": "maximum",
+          "start": 251.28,
+          "end": 251.66,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 251.66,
+          "end": 251.9,
+          "probability": 0.998
+        },
+        {
+          "word": "one",
+          "start": 251.9,
+          "end": 252.08,
+          "probability": 0.9727
+        },
+        {
+          "word": "security",
+          "start": 252.08,
+          "end": 252.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "zone.",
+          "start": 252.54,
+          "end": 253.0,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 253.5,
+      "end": 256.5,
+      "start_formatted": "00:04:13.500",
+      "end_formatted": "00:04:16.500",
+      "text": "However, a user can belong to more than one group.",
+      "words": [
+        {
+          "word": "However,",
+          "start": 253.5,
+          "end": 254.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 254.4,
+          "end": 254.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "user",
+          "start": 254.6,
+          "end": 254.88,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 254.88,
+          "end": 255.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "belong",
+          "start": 255.1,
+          "end": 255.4,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 255.4,
+          "end": 255.62,
+          "probability": 0.999
+        },
+        {
+          "word": "more",
+          "start": 255.62,
+          "end": 255.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "than",
+          "start": 255.8,
+          "end": 255.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 255.96,
+          "end": 256.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "group.",
+          "start": 256.14,
+          "end": 256.5,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 256.76,
+      "end": 261.1,
+      "start_formatted": "00:04:16.760",
+      "end_formatted": "00:04:21.100",
+      "text": "In this way, the user can access entities that are in different security zones.",
+      "words": [
+        {
+          "word": "In",
+          "start": 256.76,
+          "end": 257.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "this",
+          "start": 257.08,
+          "end": 257.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "way,",
+          "start": 257.26,
+          "end": 257.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 257.76,
+          "end": 257.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "user",
+          "start": 257.98,
+          "end": 258.26,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 258.26,
+          "end": 258.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 258.48,
+          "end": 258.9,
+          "probability": 0.999
+        },
+        {
+          "word": "entities",
+          "start": 258.9,
+          "end": 259.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "that",
+          "start": 259.34,
+          "end": 259.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 259.64,
+          "end": 259.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 259.76,
+          "end": 259.9,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 259.9,
+          "end": 260.1,
+          "probability": 0.998
+        },
+        {
+          "word": "security",
+          "start": 260.1,
+          "end": 260.6,
+          "probability": 0.998
+        },
+        {
+          "word": "zones.",
+          "start": 260.6,
+          "end": 261.1,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 261.1,
+      "end": 264.1,
+      "start_formatted": "00:04:21.100",
+      "end_formatted": "00:04:24.100",
+      "text": "I click the link to the personal lines zone.",
+      "words": [
+        {
+          "word": "I",
+          "start": 261.1,
+          "end": 262.04,
+          "probability": 0.9648
+        },
+        {
+          "word": "click",
+          "start": 262.04,
+          "end": 262.3,
+          "probability": 0.8262
+        },
+        {
+          "word": "the",
+          "start": 262.3,
+          "end": 262.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "link",
+          "start": 262.46,
+          "end": 262.66,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 262.66,
+          "end": 262.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 262.82,
+          "end": 262.94,
+          "probability": 0.9907
+        },
+        {
+          "word": "personal",
+          "start": 262.94,
+          "end": 263.34,
+          "probability": 0.3455
+        },
+        {
+          "word": "lines",
+          "start": 263.34,
+          "end": 263.74,
+          "probability": 0.1757
+        },
+        {
+          "word": "zone.",
+          "start": 263.74,
+          "end": 264.1,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 266.04,
+      "end": 270.62,
+      "start_formatted": "00:04:26.040",
+      "end_formatted": "00:04:30.620",
+      "text": "I'll click the security zones link to see a list of security zones in this system.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 266.04,
+          "end": 266.64,
+          "probability": 0.9863
+        },
+        {
+          "word": "click",
+          "start": 266.64,
+          "end": 266.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 266.84,
+          "end": 266.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "security",
+          "start": 266.98,
+          "end": 267.4,
+          "probability": 0.752
+        },
+        {
+          "word": "zones",
+          "start": 267.4,
+          "end": 267.8,
+          "probability": 0.9365
+        },
+        {
+          "word": "link",
+          "start": 267.8,
+          "end": 268.14,
+          "probability": 0.9766
+        },
+        {
+          "word": "to",
+          "start": 268.14,
+          "end": 268.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "see",
+          "start": 268.28,
+          "end": 268.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 268.46,
+          "end": 268.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "list",
+          "start": 268.6,
+          "end": 268.78,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 268.78,
+          "end": 268.94,
+          "probability": 0.998
+        },
+        {
+          "word": "security",
+          "start": 268.94,
+          "end": 269.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "zones",
+          "start": 269.38,
+          "end": 269.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 269.8,
+          "end": 270.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 270.06,
+          "end": 270.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "system.",
+          "start": 270.22,
+          "end": 270.62,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 272.5,
+      "end": 275.96,
+      "start_formatted": "00:04:32.500",
+      "end_formatted": "00:04:35.960",
+      "text": "As you can see, a security zone has a name and description.",
+      "words": [
+        {
+          "word": "As",
+          "start": 272.5,
+          "end": 273.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "you",
+          "start": 273.1,
+          "end": 273.22,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 273.22,
+          "end": 273.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "see,",
+          "start": 273.38,
+          "end": 273.68,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 273.88,
+          "end": 274.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "security",
+          "start": 274.06,
+          "end": 274.5,
+          "probability": 0.9692
+        },
+        {
+          "word": "zone",
+          "start": 274.5,
+          "end": 274.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 274.86,
+          "end": 275.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 275.06,
+          "end": 275.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "name",
+          "start": 275.2,
+          "end": 275.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 275.42,
+          "end": 275.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "description.",
+          "start": 275.54,
+          "end": 275.96,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 276.58,
+      "end": 283.3,
+      "start_formatted": "00:04:36.580",
+      "end_formatted": "00:04:43.300",
+      "text": "In your lab, you will have the opportunity to enroll entities in a security zone to see how security zones restrict access.",
+      "words": [
+        {
+          "word": "In",
+          "start": 276.58,
+          "end": 277.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "your",
+          "start": 277.04,
+          "end": 277.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "lab,",
+          "start": 277.18,
+          "end": 277.54,
+          "probability": 0.9834
+        },
+        {
+          "word": "you",
+          "start": 277.72,
+          "end": 277.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "will",
+          "start": 277.9,
+          "end": 278.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "have",
+          "start": 278.02,
+          "end": 278.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 278.16,
+          "end": 278.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "opportunity",
+          "start": 278.26,
+          "end": 278.74,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 278.74,
+          "end": 279.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "enroll",
+          "start": 279.08,
+          "end": 279.34,
+          "probability": 0.9688
+        },
+        {
+          "word": "entities",
+          "start": 279.34,
+          "end": 279.8,
+          "probability": 0.9937
+        },
+        {
+          "word": "in",
+          "start": 279.8,
+          "end": 280.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 280.06,
+          "end": 280.16,
+          "probability": 0.9932
+        },
+        {
+          "word": "security",
+          "start": 280.16,
+          "end": 280.56,
+          "probability": 0.9946
+        },
+        {
+          "word": "zone",
+          "start": 280.56,
+          "end": 280.9,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 280.9,
+          "end": 281.06,
+          "probability": 0.9922
+        },
+        {
+          "word": "see",
+          "start": 281.06,
+          "end": 281.24,
+          "probability": 0.999
+        },
+        {
+          "word": "how",
+          "start": 281.24,
+          "end": 281.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "security",
+          "start": 281.42,
+          "end": 281.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "zones",
+          "start": 281.92,
+          "end": 282.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "restrict",
+          "start": 282.24,
+          "end": 282.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "access.",
+          "start": 282.62,
+          "end": 283.3,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 283.62,
+      "end": 288.8,
+      "start_formatted": "00:04:43.620",
+      "end_formatted": "00:04:48.800",
+      "text": "This concludes our demonstration on viewing security information in the Billing Center user interface.",
+      "words": [
+        {
+          "word": "This",
+          "start": 283.62,
+          "end": 284.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "concludes",
+          "start": 284.16,
+          "end": 284.56,
+          "probability": 0.999
+        },
+        {
+          "word": "our",
+          "start": 284.56,
+          "end": 284.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "demonstration",
+          "start": 284.76,
+          "end": 285.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 285.26,
+          "end": 285.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "viewing",
+          "start": 285.62,
+          "end": 285.88,
+          "probability": 0.9595
+        },
+        {
+          "word": "security",
+          "start": 285.88,
+          "end": 286.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "information",
+          "start": 286.4,
+          "end": 286.98,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 286.98,
+          "end": 287.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 287.3,
+          "end": 287.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "Billing",
+          "start": 287.4,
+          "end": 287.7,
+          "probability": 0.7554
+        },
+        {
+          "word": "Center",
+          "start": 287.7,
+          "end": 288.02,
+          "probability": 0.9067
+        },
+        {
+          "word": "user",
+          "start": 288.02,
+          "end": 288.32,
+          "probability": 0.7202
+        },
+        {
+          "word": "interface.",
+          "start": 288.32,
+          "end": 288.8,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 288.8,
+      "end": 289.04,
+      "start_formatted": "00:04:48.800",
+      "end_formatted": "00:04:49.040",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.0835
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.3789
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.5518
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.4832
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.687
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.5317
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.7871
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.667
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.8408
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.7822
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.8823
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.8555
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9028
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.8901
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9204
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9146
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9297
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9341
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.937
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.938
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9419
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9492
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9541
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.96
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9629
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9551
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9663
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9551
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9678
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9561
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9688
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9585
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9722
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9741
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 288.8,
+          "end": 288.8,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 288.8,
+          "end": 288.92,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 288.92,
+          "end": 289.02,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.9771
+        },
+        {
+          "word": "of",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.9609
+        },
+        {
+          "word": "Filogy",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.978
+        },
+        {
+          "word": "of",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 289.02,
+          "end": 289.02,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 289.02,
+          "end": 289.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9639
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9644
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9644
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9644
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9648
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9658
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9663
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9668
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9668
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9673
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9668
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9678
+        },
+        {
+          "word": "Filogy",
+          "start": 289.04,
+          "end": 289.04,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 289.02,
+      "end": 289.02,
+      "start_formatted": "00:04:49.020",
+      "end_formatted": "00:04:49.020",
+      "text": "",
+      "words": []
+    }
+  ]
+}

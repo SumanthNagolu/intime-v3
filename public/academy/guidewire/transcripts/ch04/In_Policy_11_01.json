@@ -1,0 +1,2856 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_11_01.mp4",
+    "video_stem": "In_Policy_11_01",
+    "duration_seconds": 245.56,
+    "duration_formatted": "00:04:05.560",
+    "segment_count": 21,
+    "word_count": 436,
+    "avg_confidence": 0.9508,
+    "transcription_time_seconds": 13.3,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:30:40.849483"
+  },
+  "full_text": "A transaction or job is out of sequence if its effective date is earlier than other bound transactions on the policy for that contractual term. In this example, a customer calls to change a car's color in an auto policy, effective on March 1st. Later, the customer calls to make some changes effective on February 1st. Click Actions. Create the first policy change. Set the effective date of the policy change to March 1st, using the calendar. Click Next to start the policy change process. Go to Vehicles. Change the car's color to yellow. Go to PIA Coverages. Medical limit is changed to 10,000. Quote the policy change. Issue the policy. Go back to the same policy file. The customer calls again to say that he had the car painted blue. And added a new driver on February 1st. Start the second policy change job. Set the effective date to February 1st, which is earlier than the previous policy change job. Click Next to start the process. Click OK to proceed. The out of sequence message is displayed on the top of every page. Go to Drivers. Add a new driver. Create a new driver. Simply select an existing driver. Click the Roles tab. Make sure to populate the fields for year first licensed and the number of accidents and violations. Go to Vehicles. Change the vehicle's color to blue. Go to PIA Coverages. The customer also wants to select a higher medical limit. Select 20,000. Try to quote.  An error message is displayed for an out of sequence conflict that requires resolution. Go to Policy Review. Click Change Conflicts. The conflicts occur when changes are made to the same fields. In this example, the color and medical limit. The newly added driver does not cause any conflict because the change is not on the same field. You can click the Override All or Override None buttons. You can also resolve individual conflict by selecting Yes or No in the Override Future Conflicts column. In this example, click No for the car's color, so that the color is not on the same field. The color blue of the current job is only effective from February 1st to March 1st. On March 1st, the color yellow from the other job will be effective for the policy, while the liability limit will be merged forward to the job with a later effective date. Click Submit. After submitting the resolution, it cannot be reverted. Click OK to confirm. Now you can quote the policy change. Issue the policy. This is the end of demonstration of out of sequence transaction.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.26,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.260",
+      "text": "A transaction or job is out of sequence if its effective date is earlier than other bound transactions on the policy for that contractual term. In this example, a customer calls to change a car's color in an auto policy, effective on March 1st. Later, the customer calls to make some changes effective on February 1st. Click Actions. Create the first policy change. Set the effective date of the policy change to March 1st, using the calendar.",
+      "words": [
+        {
+          "word": "A",
+          "start": 0.0,
+          "end": 0.54,
+          "probability": 0.9746
+        },
+        {
+          "word": "transaction",
+          "start": 0.54,
+          "end": 1.1,
+          "probability": 0.979
+        },
+        {
+          "word": "or",
+          "start": 1.1,
+          "end": 1.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "job",
+          "start": 1.32,
+          "end": 1.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 1.6,
+          "end": 1.78,
+          "probability": 0.999
+        },
+        {
+          "word": "out",
+          "start": 1.78,
+          "end": 1.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "of",
+          "start": 1.94,
+          "end": 2.04,
+          "probability": 0.8896
+        },
+        {
+          "word": "sequence",
+          "start": 2.04,
+          "end": 2.48,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 2.48,
+          "end": 2.92,
+          "probability": 0.6567
+        },
+        {
+          "word": "its",
+          "start": 2.92,
+          "end": 3.1,
+          "probability": 0.9858
+        },
+        {
+          "word": "effective",
+          "start": 3.1,
+          "end": 3.46,
+          "probability": 0.9868
+        },
+        {
+          "word": "date",
+          "start": 3.46,
+          "end": 3.74,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 3.74,
+          "end": 3.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "earlier",
+          "start": 3.94,
+          "end": 4.16,
+          "probability": 0.999
+        },
+        {
+          "word": "than",
+          "start": 4.16,
+          "end": 4.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "other",
+          "start": 4.38,
+          "end": 4.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "bound",
+          "start": 4.58,
+          "end": 4.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "transactions",
+          "start": 4.86,
+          "end": 5.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 5.44,
+          "end": 5.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 5.74,
+          "end": 5.84,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 5.84,
+          "end": 6.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "for",
+          "start": 6.22,
+          "end": 6.44,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 6.44,
+          "end": 6.6,
+          "probability": 0.998
+        },
+        {
+          "word": "contractual",
+          "start": 6.6,
+          "end": 7.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "term.",
+          "start": 7.22,
+          "end": 7.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "In",
+          "start": 8.02,
+          "end": 8.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 8.52,
+          "end": 8.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 8.7,
+          "end": 9.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 9.36,
+          "end": 9.6,
+          "probability": 0.998
+        },
+        {
+          "word": "customer",
+          "start": 9.6,
+          "end": 9.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "calls",
+          "start": 9.96,
+          "end": 10.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 10.38,
+          "end": 10.54,
+          "probability": 1.0
+        },
+        {
+          "word": "change",
+          "start": 10.54,
+          "end": 10.78,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 10.78,
+          "end": 10.96,
+          "probability": 0.999
+        },
+        {
+          "word": "car's",
+          "start": 10.96,
+          "end": 11.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "color",
+          "start": 11.22,
+          "end": 11.44,
+          "probability": 0.9761
+        },
+        {
+          "word": "in",
+          "start": 11.44,
+          "end": 11.62,
+          "probability": 0.9805
+        },
+        {
+          "word": "an",
+          "start": 11.62,
+          "end": 11.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "auto",
+          "start": 11.7,
+          "end": 11.88,
+          "probability": 0.9194
+        },
+        {
+          "word": "policy,",
+          "start": 11.88,
+          "end": 12.42,
+          "probability": 0.999
+        },
+        {
+          "word": "effective",
+          "start": 12.6,
+          "end": 13.04,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 13.04,
+          "end": 13.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "March",
+          "start": 13.3,
+          "end": 13.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "1st.",
+          "start": 13.52,
+          "end": 14.08,
+          "probability": 0.8291
+        },
+        {
+          "word": "Later,",
+          "start": 14.46,
+          "end": 15.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 15.28,
+          "end": 15.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "customer",
+          "start": 15.5,
+          "end": 15.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "calls",
+          "start": 15.86,
+          "end": 16.3,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 16.3,
+          "end": 16.44,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 16.44,
+          "end": 16.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "some",
+          "start": 16.62,
+          "end": 16.84,
+          "probability": 1.0
+        },
+        {
+          "word": "changes",
+          "start": 16.84,
+          "end": 17.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "effective",
+          "start": 17.28,
+          "end": 17.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "on",
+          "start": 17.66,
+          "end": 17.92,
+          "probability": 1.0
+        },
+        {
+          "word": "February",
+          "start": 17.92,
+          "end": 18.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "1st.",
+          "start": 18.32,
+          "end": 18.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "Click",
+          "start": 19.38,
+          "end": 19.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "Actions.",
+          "start": 19.94,
+          "end": 20.42,
+          "probability": 0.9683
+        },
+        {
+          "word": "Create",
+          "start": 20.94,
+          "end": 21.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 21.48,
+          "end": 21.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "first",
+          "start": 21.64,
+          "end": 21.88,
+          "probability": 0.979
+        },
+        {
+          "word": "policy",
+          "start": 21.88,
+          "end": 22.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "change.",
+          "start": 22.34,
+          "end": 22.82,
+          "probability": 1.0
+        },
+        {
+          "word": "Set",
+          "start": 25.0,
+          "end": 25.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 25.56,
+          "end": 25.74,
+          "probability": 1.0
+        },
+        {
+          "word": "effective",
+          "start": 25.74,
+          "end": 26.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "date",
+          "start": 26.14,
+          "end": 26.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 26.4,
+          "end": 26.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 26.56,
+          "end": 26.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 26.64,
+          "end": 27.0,
+          "probability": 1.0
+        },
+        {
+          "word": "change",
+          "start": 27.0,
+          "end": 27.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 27.34,
+          "end": 27.5,
+          "probability": 1.0
+        },
+        {
+          "word": "March",
+          "start": 27.5,
+          "end": 27.74,
+          "probability": 1.0
+        },
+        {
+          "word": "1st,",
+          "start": 27.74,
+          "end": 28.28,
+          "probability": 1.0
+        },
+        {
+          "word": "using",
+          "start": 28.34,
+          "end": 28.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 28.7,
+          "end": 28.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "calendar.",
+          "start": 28.86,
+          "end": 29.26,
+          "probability": 0.813
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 40.9,
+      "end": 59.1,
+      "start_formatted": "00:00:40.900",
+      "end_formatted": "00:00:59.100",
+      "text": "Click Next to start the policy change process. Go to Vehicles. Change the car's color to yellow. Go to PIA Coverages.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 40.9,
+          "end": 41.54,
+          "probability": 0.9033
+        },
+        {
+          "word": "Next",
+          "start": 41.54,
+          "end": 41.78,
+          "probability": 0.7915
+        },
+        {
+          "word": "to",
+          "start": 41.78,
+          "end": 41.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "start",
+          "start": 41.98,
+          "end": 42.22,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 42.22,
+          "end": 42.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 42.42,
+          "end": 42.78,
+          "probability": 0.9048
+        },
+        {
+          "word": "change",
+          "start": 42.78,
+          "end": 43.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "process.",
+          "start": 43.1,
+          "end": 43.72,
+          "probability": 0.998
+        },
+        {
+          "word": "Go",
+          "start": 45.02,
+          "end": 45.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 45.66,
+          "end": 45.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Vehicles.",
+          "start": 45.8,
+          "end": 46.3,
+          "probability": 0.9697
+        },
+        {
+          "word": "Change",
+          "start": 49.3,
+          "end": 49.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 49.94,
+          "end": 50.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "car's",
+          "start": 50.1,
+          "end": 50.42,
+          "probability": 0.9878
+        },
+        {
+          "word": "color",
+          "start": 50.42,
+          "end": 50.62,
+          "probability": 0.9878
+        },
+        {
+          "word": "to",
+          "start": 50.62,
+          "end": 50.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "yellow.",
+          "start": 50.84,
+          "end": 51.18,
+          "probability": 0.6509
+        },
+        {
+          "word": "Go",
+          "start": 57.5,
+          "end": 58.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 58.14,
+          "end": 58.28,
+          "probability": 0.999
+        },
+        {
+          "word": "PIA",
+          "start": 58.28,
+          "end": 58.54,
+          "probability": 0.8271
+        },
+        {
+          "word": "Coverages.",
+          "start": 58.54,
+          "end": 59.1,
+          "probability": 0.7754
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 61.8,
+      "end": 89.2,
+      "start_formatted": "00:01:01.800",
+      "end_formatted": "00:01:29.200",
+      "text": "Medical limit is changed to 10,000. Quote the policy change. Issue the policy. Go back to the same policy file. The customer calls again to say that he had the car painted blue.",
+      "words": [
+        {
+          "word": "Medical",
+          "start": 61.8,
+          "end": 62.44,
+          "probability": 0.8906
+        },
+        {
+          "word": "limit",
+          "start": 62.44,
+          "end": 62.72,
+          "probability": 0.9585
+        },
+        {
+          "word": "is",
+          "start": 62.72,
+          "end": 62.9,
+          "probability": 0.9771
+        },
+        {
+          "word": "changed",
+          "start": 62.9,
+          "end": 63.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 63.22,
+          "end": 63.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "10",
+          "start": 63.38,
+          "end": 63.58,
+          "probability": 0.8438
+        },
+        {
+          "word": ",000.",
+          "start": 63.58,
+          "end": 64.1,
+          "probability": 0.9727
+        },
+        {
+          "word": "Quote",
+          "start": 69.46,
+          "end": 70.1,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 70.1,
+          "end": 70.22,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 70.22,
+          "end": 70.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "change.",
+          "start": 70.62,
+          "end": 71.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "Issue",
+          "start": 73.58,
+          "end": 74.22,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 74.22,
+          "end": 74.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy.",
+          "start": 74.36,
+          "end": 74.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "Go",
+          "start": 81.16,
+          "end": 81.8,
+          "probability": 0.9878
+        },
+        {
+          "word": "back",
+          "start": 81.8,
+          "end": 82.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 82.0,
+          "end": 82.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 82.12,
+          "end": 82.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "same",
+          "start": 82.24,
+          "end": 82.48,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 82.48,
+          "end": 82.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "file.",
+          "start": 82.94,
+          "end": 83.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 85.38,
+          "end": 86.02,
+          "probability": 0.9897
+        },
+        {
+          "word": "customer",
+          "start": 86.02,
+          "end": 86.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "calls",
+          "start": 86.38,
+          "end": 86.84,
+          "probability": 0.999
+        },
+        {
+          "word": "again",
+          "start": 86.84,
+          "end": 87.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 87.24,
+          "end": 87.66,
+          "probability": 0.8242
+        },
+        {
+          "word": "say",
+          "start": 87.66,
+          "end": 87.86,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 87.86,
+          "end": 88.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "he",
+          "start": 88.02,
+          "end": 88.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "had",
+          "start": 88.12,
+          "end": 88.22,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 88.22,
+          "end": 88.34,
+          "probability": 0.999
+        },
+        {
+          "word": "car",
+          "start": 88.34,
+          "end": 88.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "painted",
+          "start": 88.6,
+          "end": 88.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "blue.",
+          "start": 88.94,
+          "end": 89.2,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.2,
+      "end": 94.04,
+      "start_formatted": "00:01:29.200",
+      "end_formatted": "00:01:34.040",
+      "text": "And added a new driver on February 1st. Start the second policy change job.",
+      "words": [
+        {
+          "word": "And",
+          "start": 89.2,
+          "end": 89.7,
+          "probability": 0.0413
+        },
+        {
+          "word": "added",
+          "start": 89.7,
+          "end": 89.94,
+          "probability": 0.8354
+        },
+        {
+          "word": "a",
+          "start": 89.94,
+          "end": 90.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "new",
+          "start": 90.06,
+          "end": 90.18,
+          "probability": 0.9731
+        },
+        {
+          "word": "driver",
+          "start": 90.18,
+          "end": 90.52,
+          "probability": 0.9429
+        },
+        {
+          "word": "on",
+          "start": 90.52,
+          "end": 90.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "February",
+          "start": 90.76,
+          "end": 91.1,
+          "probability": 0.8999
+        },
+        {
+          "word": "1st.",
+          "start": 91.1,
+          "end": 91.96,
+          "probability": 0.7246
+        },
+        {
+          "word": "Start",
+          "start": 92.0,
+          "end": 92.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 92.48,
+          "end": 92.64,
+          "probability": 0.998
+        },
+        {
+          "word": "second",
+          "start": 92.64,
+          "end": 92.92,
+          "probability": 0.8838
+        },
+        {
+          "word": "policy",
+          "start": 92.92,
+          "end": 93.32,
+          "probability": 0.8447
+        },
+        {
+          "word": "change",
+          "start": 93.32,
+          "end": 93.66,
+          "probability": 0.9907
+        },
+        {
+          "word": "job.",
+          "start": 93.66,
+          "end": 94.04,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 98.06,
+      "end": 103.28,
+      "start_formatted": "00:01:38.060",
+      "end_formatted": "00:01:43.280",
+      "text": "Set the effective date to February 1st, which is earlier than the previous policy change job.",
+      "words": [
+        {
+          "word": "Set",
+          "start": 98.06,
+          "end": 98.7,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 98.7,
+          "end": 98.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "effective",
+          "start": 98.88,
+          "end": 99.28,
+          "probability": 0.9414
+        },
+        {
+          "word": "date",
+          "start": 99.28,
+          "end": 99.56,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 99.56,
+          "end": 99.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "February",
+          "start": 99.76,
+          "end": 100.08,
+          "probability": 0.9888
+        },
+        {
+          "word": "1st,",
+          "start": 100.08,
+          "end": 100.72,
+          "probability": 0.9678
+        },
+        {
+          "word": "which",
+          "start": 100.78,
+          "end": 101.04,
+          "probability": 0.9692
+        },
+        {
+          "word": "is",
+          "start": 101.04,
+          "end": 101.16,
+          "probability": 0.999
+        },
+        {
+          "word": "earlier",
+          "start": 101.16,
+          "end": 101.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "than",
+          "start": 101.42,
+          "end": 101.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 101.6,
+          "end": 101.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "previous",
+          "start": 101.74,
+          "end": 102.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy",
+          "start": 102.1,
+          "end": 102.56,
+          "probability": 0.9937
+        },
+        {
+          "word": "change",
+          "start": 102.56,
+          "end": 102.9,
+          "probability": 0.9912
+        },
+        {
+          "word": "job.",
+          "start": 102.9,
+          "end": 103.28,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 114.36,
+      "end": 116.28,
+      "start_formatted": "00:01:54.360",
+      "end_formatted": "00:01:56.280",
+      "text": "Click Next to start the process.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 114.36,
+          "end": 115.0,
+          "probability": 0.9829
+        },
+        {
+          "word": "Next",
+          "start": 115.0,
+          "end": 115.2,
+          "probability": 0.6465
+        },
+        {
+          "word": "to",
+          "start": 115.2,
+          "end": 115.4,
+          "probability": 0.9854
+        },
+        {
+          "word": "start",
+          "start": 115.4,
+          "end": 115.64,
+          "probability": 0.9702
+        },
+        {
+          "word": "the",
+          "start": 115.64,
+          "end": 115.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "process.",
+          "start": 115.82,
+          "end": 116.28,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 118.52,
+      "end": 119.94,
+      "start_formatted": "00:01:58.520",
+      "end_formatted": "00:01:59.940",
+      "text": "Click OK to proceed.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 118.52,
+          "end": 119.1,
+          "probability": 0.895
+        },
+        {
+          "word": "OK",
+          "start": 119.1,
+          "end": 119.36,
+          "probability": 0.7612
+        },
+        {
+          "word": "to",
+          "start": 119.36,
+          "end": 119.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "proceed.",
+          "start": 119.56,
+          "end": 119.94,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 122.72,
+      "end": 129.22,
+      "start_formatted": "00:02:02.720",
+      "end_formatted": "00:02:09.220",
+      "text": "The out of sequence message is displayed on the top of every page. Go to Drivers. Add a new driver.",
+      "words": [
+        {
+          "word": "The",
+          "start": 122.72,
+          "end": 123.3,
+          "probability": 0.9883
+        },
+        {
+          "word": "out",
+          "start": 123.3,
+          "end": 123.48,
+          "probability": 0.7246
+        },
+        {
+          "word": "of",
+          "start": 123.48,
+          "end": 123.6,
+          "probability": 0.4441
+        },
+        {
+          "word": "sequence",
+          "start": 123.6,
+          "end": 123.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "message",
+          "start": 123.92,
+          "end": 124.36,
+          "probability": 0.9883
+        },
+        {
+          "word": "is",
+          "start": 124.36,
+          "end": 124.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "displayed",
+          "start": 124.62,
+          "end": 124.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 124.98,
+          "end": 125.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 125.14,
+          "end": 125.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "top",
+          "start": 125.26,
+          "end": 125.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 125.44,
+          "end": 125.62,
+          "probability": 0.999
+        },
+        {
+          "word": "every",
+          "start": 125.62,
+          "end": 125.82,
+          "probability": 0.998
+        },
+        {
+          "word": "page.",
+          "start": 125.82,
+          "end": 126.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "Go",
+          "start": 126.46,
+          "end": 126.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 126.84,
+          "end": 127.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "Drivers.",
+          "start": 127.0,
+          "end": 127.5,
+          "probability": 0.8496
+        },
+        {
+          "word": "Add",
+          "start": 127.94,
+          "end": 128.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 128.52,
+          "end": 128.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "new",
+          "start": 128.64,
+          "end": 128.74,
+          "probability": 0.9355
+        },
+        {
+          "word": "driver.",
+          "start": 128.74,
+          "end": 129.22,
+          "probability": 0.9072
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 132.24,
+      "end": 137.44,
+      "start_formatted": "00:02:12.240",
+      "end_formatted": "00:02:17.440",
+      "text": "Create a new driver. Simply select an existing driver. Click the Roles tab.",
+      "words": [
+        {
+          "word": "Create",
+          "start": 132.24,
+          "end": 132.84,
+          "probability": 0.9331
+        },
+        {
+          "word": "a",
+          "start": 132.84,
+          "end": 132.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 132.98,
+          "end": 133.1,
+          "probability": 0.9766
+        },
+        {
+          "word": "driver.",
+          "start": 133.1,
+          "end": 133.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "Simply",
+          "start": 133.7,
+          "end": 133.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "select",
+          "start": 133.94,
+          "end": 134.3,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 134.3,
+          "end": 134.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "existing",
+          "start": 134.46,
+          "end": 134.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "driver.",
+          "start": 134.84,
+          "end": 135.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "Click",
+          "start": 136.2,
+          "end": 136.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 136.8,
+          "end": 136.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Roles",
+          "start": 136.96,
+          "end": 137.2,
+          "probability": 0.8311
+        },
+        {
+          "word": "tab.",
+          "start": 137.2,
+          "end": 137.44,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 140.38,
+      "end": 149.84,
+      "start_formatted": "00:02:20.380",
+      "end_formatted": "00:02:29.840",
+      "text": "Make sure to populate the fields for year first licensed and the number of accidents and violations. Go to Vehicles. Change the vehicle's color to blue.",
+      "words": [
+        {
+          "word": "Make",
+          "start": 140.38,
+          "end": 140.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "sure",
+          "start": 140.98,
+          "end": 141.16,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 141.16,
+          "end": 141.34,
+          "probability": 1.0
+        },
+        {
+          "word": "populate",
+          "start": 141.34,
+          "end": 141.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 141.84,
+          "end": 141.98,
+          "probability": 1.0
+        },
+        {
+          "word": "fields",
+          "start": 141.98,
+          "end": 142.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 142.26,
+          "end": 142.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "year",
+          "start": 142.5,
+          "end": 142.76,
+          "probability": 0.5845
+        },
+        {
+          "word": "first",
+          "start": 142.76,
+          "end": 143.08,
+          "probability": 0.7368
+        },
+        {
+          "word": "licensed",
+          "start": 143.08,
+          "end": 143.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 143.58,
+          "end": 144.08,
+          "probability": 0.7324
+        },
+        {
+          "word": "the",
+          "start": 144.08,
+          "end": 144.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "number",
+          "start": 144.2,
+          "end": 144.42,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 144.42,
+          "end": 144.62,
+          "probability": 1.0
+        },
+        {
+          "word": "accidents",
+          "start": 144.62,
+          "end": 144.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 144.96,
+          "end": 145.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "violations.",
+          "start": 145.26,
+          "end": 145.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "Go",
+          "start": 146.28,
+          "end": 146.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 146.66,
+          "end": 146.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Vehicles.",
+          "start": 146.8,
+          "end": 147.28,
+          "probability": 0.9824
+        },
+        {
+          "word": "Change",
+          "start": 147.9,
+          "end": 148.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 148.5,
+          "end": 148.66,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle's",
+          "start": 148.66,
+          "end": 149.18,
+          "probability": 0.9092
+        },
+        {
+          "word": "color",
+          "start": 149.18,
+          "end": 149.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 149.4,
+          "end": 149.58,
+          "probability": 1.0
+        },
+        {
+          "word": "blue.",
+          "start": 149.58,
+          "end": 149.84,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 155.14,
+      "end": 156.76,
+      "start_formatted": "00:02:35.140",
+      "end_formatted": "00:02:36.760",
+      "text": "Go to PIA Coverages.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 155.14,
+          "end": 155.76,
+          "probability": 0.9775
+        },
+        {
+          "word": "to",
+          "start": 155.76,
+          "end": 155.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "PIA",
+          "start": 155.9,
+          "end": 156.16,
+          "probability": 0.623
+        },
+        {
+          "word": "Coverages.",
+          "start": 156.16,
+          "end": 156.76,
+          "probability": 0.6924
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 159.16,
+      "end": 164.88,
+      "start_formatted": "00:02:39.160",
+      "end_formatted": "00:02:44.880",
+      "text": "The customer also wants to select a higher medical limit. Select 20,000.",
+      "words": [
+        {
+          "word": "The",
+          "start": 159.16,
+          "end": 159.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "customer",
+          "start": 159.78,
+          "end": 160.16,
+          "probability": 0.9805
+        },
+        {
+          "word": "also",
+          "start": 160.16,
+          "end": 160.52,
+          "probability": 0.998
+        },
+        {
+          "word": "wants",
+          "start": 160.52,
+          "end": 160.78,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 160.78,
+          "end": 160.94,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 160.94,
+          "end": 161.24,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 161.24,
+          "end": 161.38,
+          "probability": 0.998
+        },
+        {
+          "word": "higher",
+          "start": 161.38,
+          "end": 161.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "medical",
+          "start": 161.58,
+          "end": 161.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "limit.",
+          "start": 161.9,
+          "end": 162.3,
+          "probability": 0.999
+        },
+        {
+          "word": "Select",
+          "start": 163.5,
+          "end": 164.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "20",
+          "start": 164.12,
+          "end": 164.4,
+          "probability": 0.8911
+        },
+        {
+          "word": ",000.",
+          "start": 164.4,
+          "end": 164.88,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 167.34,
+      "end": 168.56,
+      "start_formatted": "00:02:47.340",
+      "end_formatted": "00:02:48.560",
+      "text": "Try to quote.",
+      "words": [
+        {
+          "word": "Try",
+          "start": 167.34,
+          "end": 168.06,
+          "probability": 0.8335
+        },
+        {
+          "word": "to",
+          "start": 168.06,
+          "end": 168.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "quote.",
+          "start": 168.18,
+          "end": 168.56,
+          "probability": 0.9111
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 168.98,
+      "end": 168.98,
+      "start_formatted": "00:02:48.980",
+      "end_formatted": "00:02:48.980",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 14,
+      "start": 171.44,
+      "end": 177.7,
+      "start_formatted": "00:02:51.440",
+      "end_formatted": "00:02:57.700",
+      "text": "An error message is displayed for an out of sequence conflict that requires resolution. Go to Policy Review.",
+      "words": [
+        {
+          "word": "An",
+          "start": 171.44,
+          "end": 172.16,
+          "probability": 0.8799
+        },
+        {
+          "word": "error",
+          "start": 172.16,
+          "end": 172.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "message",
+          "start": 172.36,
+          "end": 172.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 172.72,
+          "end": 172.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "displayed",
+          "start": 172.94,
+          "end": 173.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 173.32,
+          "end": 173.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "an",
+          "start": 173.5,
+          "end": 173.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "out",
+          "start": 173.64,
+          "end": 173.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 173.8,
+          "end": 173.92,
+          "probability": 0.0927
+        },
+        {
+          "word": "sequence",
+          "start": 173.92,
+          "end": 174.28,
+          "probability": 0.998
+        },
+        {
+          "word": "conflict",
+          "start": 174.28,
+          "end": 174.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "that",
+          "start": 174.8,
+          "end": 175.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "requires",
+          "start": 175.04,
+          "end": 175.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "resolution.",
+          "start": 175.48,
+          "end": 176.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "Go",
+          "start": 176.42,
+          "end": 176.78,
+          "probability": 0.9844
+        },
+        {
+          "word": "to",
+          "start": 176.78,
+          "end": 176.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "Policy",
+          "start": 176.94,
+          "end": 177.34,
+          "probability": 0.5991
+        },
+        {
+          "word": "Review.",
+          "start": 177.34,
+          "end": 177.7,
+          "probability": 0.9531
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 180.4,
+      "end": 181.94,
+      "start_formatted": "00:03:00.400",
+      "end_formatted": "00:03:01.940",
+      "text": "Click Change Conflicts.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 180.4,
+          "end": 180.92,
+          "probability": 0.624
+        },
+        {
+          "word": "Change",
+          "start": 180.92,
+          "end": 181.24,
+          "probability": 0.6226
+        },
+        {
+          "word": "Conflicts.",
+          "start": 181.24,
+          "end": 181.94,
+          "probability": 0.8486
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 184.48,
+      "end": 207.68,
+      "start_formatted": "00:03:04.480",
+      "end_formatted": "00:03:27.680",
+      "text": "The conflicts occur when changes are made to the same fields. In this example, the color and medical limit. The newly added driver does not cause any conflict because the change is not on the same field. You can click the Override All or Override None buttons. You can also resolve individual conflict by selecting Yes or No in the Override Future Conflicts column. In this example, click No for the car's color, so that the color is not on the same field.",
+      "words": [
+        {
+          "word": "The",
+          "start": 184.48,
+          "end": 185.0,
+          "probability": 0.9585
+        },
+        {
+          "word": "conflicts",
+          "start": 185.0,
+          "end": 185.38,
+          "probability": 0.958
+        },
+        {
+          "word": "occur",
+          "start": 185.38,
+          "end": 185.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "when",
+          "start": 185.74,
+          "end": 185.98,
+          "probability": 0.998
+        },
+        {
+          "word": "changes",
+          "start": 185.98,
+          "end": 186.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "are",
+          "start": 186.36,
+          "end": 186.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "made",
+          "start": 186.54,
+          "end": 186.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 186.74,
+          "end": 186.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 186.86,
+          "end": 186.98,
+          "probability": 0.998
+        },
+        {
+          "word": "same",
+          "start": 186.98,
+          "end": 187.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "fields.",
+          "start": 187.2,
+          "end": 187.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "In",
+          "start": 188.08,
+          "end": 188.46,
+          "probability": 0.9907
+        },
+        {
+          "word": "this",
+          "start": 188.46,
+          "end": 188.62,
+          "probability": 0.998
+        },
+        {
+          "word": "example,",
+          "start": 188.62,
+          "end": 189.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 189.32,
+          "end": 189.52,
+          "probability": 0.9868
+        },
+        {
+          "word": "color",
+          "start": 189.52,
+          "end": 189.76,
+          "probability": 0.7871
+        },
+        {
+          "word": "and",
+          "start": 189.76,
+          "end": 189.96,
+          "probability": 0.9609
+        },
+        {
+          "word": "medical",
+          "start": 189.96,
+          "end": 190.24,
+          "probability": 0.9741
+        },
+        {
+          "word": "limit.",
+          "start": 190.24,
+          "end": 190.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 190.86,
+          "end": 191.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "newly",
+          "start": 191.18,
+          "end": 191.42,
+          "probability": 0.999
+        },
+        {
+          "word": "added",
+          "start": 191.42,
+          "end": 191.66,
+          "probability": 0.9849
+        },
+        {
+          "word": "driver",
+          "start": 191.66,
+          "end": 191.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "does",
+          "start": 191.98,
+          "end": 192.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "not",
+          "start": 192.2,
+          "end": 192.4,
+          "probability": 0.9917
+        },
+        {
+          "word": "cause",
+          "start": 192.4,
+          "end": 192.74,
+          "probability": 0.9946
+        },
+        {
+          "word": "any",
+          "start": 192.74,
+          "end": 192.88,
+          "probability": 0.3657
+        },
+        {
+          "word": "conflict",
+          "start": 192.88,
+          "end": 193.3,
+          "probability": 0.9932
+        },
+        {
+          "word": "because",
+          "start": 193.3,
+          "end": 193.66,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 193.66,
+          "end": 193.88,
+          "probability": 0.998
+        },
+        {
+          "word": "change",
+          "start": 193.88,
+          "end": 194.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 194.16,
+          "end": 194.34,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 194.34,
+          "end": 194.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 194.48,
+          "end": 194.6,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 194.6,
+          "end": 194.7,
+          "probability": 0.4944
+        },
+        {
+          "word": "same",
+          "start": 194.7,
+          "end": 194.88,
+          "probability": 0.999
+        },
+        {
+          "word": "field.",
+          "start": 194.88,
+          "end": 195.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "You",
+          "start": 195.66,
+          "end": 196.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "can",
+          "start": 196.0,
+          "end": 196.16,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 196.16,
+          "end": 196.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 196.38,
+          "end": 196.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "Override",
+          "start": 196.54,
+          "end": 197.02,
+          "probability": 0.917
+        },
+        {
+          "word": "All",
+          "start": 197.02,
+          "end": 197.16,
+          "probability": 0.8569
+        },
+        {
+          "word": "or",
+          "start": 197.16,
+          "end": 197.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Override",
+          "start": 197.28,
+          "end": 197.72,
+          "probability": 0.9712
+        },
+        {
+          "word": "None",
+          "start": 197.72,
+          "end": 197.86,
+          "probability": 0.9761
+        },
+        {
+          "word": "buttons.",
+          "start": 197.86,
+          "end": 198.26,
+          "probability": 0.9683
+        },
+        {
+          "word": "You",
+          "start": 198.62,
+          "end": 198.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "can",
+          "start": 198.96,
+          "end": 199.08,
+          "probability": 0.999
+        },
+        {
+          "word": "also",
+          "start": 199.08,
+          "end": 199.3,
+          "probability": 0.999
+        },
+        {
+          "word": "resolve",
+          "start": 199.3,
+          "end": 199.7,
+          "probability": 0.9917
+        },
+        {
+          "word": "individual",
+          "start": 199.7,
+          "end": 200.12,
+          "probability": 0.9922
+        },
+        {
+          "word": "conflict",
+          "start": 200.12,
+          "end": 200.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "by",
+          "start": 200.64,
+          "end": 200.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "selecting",
+          "start": 200.94,
+          "end": 201.38,
+          "probability": 0.998
+        },
+        {
+          "word": "Yes",
+          "start": 201.38,
+          "end": 201.58,
+          "probability": 0.8101
+        },
+        {
+          "word": "or",
+          "start": 201.58,
+          "end": 201.72,
+          "probability": 0.9863
+        },
+        {
+          "word": "No",
+          "start": 201.72,
+          "end": 201.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "in",
+          "start": 201.84,
+          "end": 201.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 201.96,
+          "end": 202.08,
+          "probability": 0.999
+        },
+        {
+          "word": "Override",
+          "start": 202.08,
+          "end": 202.54,
+          "probability": 0.9902
+        },
+        {
+          "word": "Future",
+          "start": 202.54,
+          "end": 202.9,
+          "probability": 0.9087
+        },
+        {
+          "word": "Conflicts",
+          "start": 202.9,
+          "end": 203.44,
+          "probability": 0.9746
+        },
+        {
+          "word": "column.",
+          "start": 203.44,
+          "end": 203.74,
+          "probability": 0.9878
+        },
+        {
+          "word": "In",
+          "start": 204.06,
+          "end": 204.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 204.5,
+          "end": 204.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "example,",
+          "start": 204.66,
+          "end": 205.1,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 205.38,
+          "end": 205.68,
+          "probability": 0.9487
+        },
+        {
+          "word": "No",
+          "start": 205.68,
+          "end": 205.82,
+          "probability": 0.9595
+        },
+        {
+          "word": "for",
+          "start": 205.82,
+          "end": 206.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 206.02,
+          "end": 206.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "car's",
+          "start": 206.14,
+          "end": 206.5,
+          "probability": 0.9766
+        },
+        {
+          "word": "color,",
+          "start": 206.5,
+          "end": 206.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "so",
+          "start": 206.96,
+          "end": 207.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "that",
+          "start": 207.26,
+          "end": 207.42,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 207.42,
+          "end": 207.52,
+          "probability": 0.999
+        },
+        {
+          "word": "color",
+          "start": 207.52,
+          "end": 207.68,
+          "probability": 0.9746
+        },
+        {
+          "word": "is",
+          "start": 207.68,
+          "end": 207.68,
+          "probability": 0.1604
+        },
+        {
+          "word": "not",
+          "start": 207.68,
+          "end": 207.68,
+          "probability": 0.2002
+        },
+        {
+          "word": "on",
+          "start": 207.68,
+          "end": 207.68,
+          "probability": 0.1209
+        },
+        {
+          "word": "the",
+          "start": 207.68,
+          "end": 207.68,
+          "probability": 0.8062
+        },
+        {
+          "word": "same",
+          "start": 207.68,
+          "end": 207.68,
+          "probability": 0.3613
+        },
+        {
+          "word": "field.",
+          "start": 207.68,
+          "end": 207.68,
+          "probability": 0.6875
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 207.68,
+      "end": 222.6,
+      "start_formatted": "00:03:27.680",
+      "end_formatted": "00:03:42.600",
+      "text": "The color blue of the current job is only effective from February 1st to March 1st. On March 1st, the color yellow from the other job will be effective for the policy, while the liability limit will be merged forward to the job with a later effective date. Click Submit.",
+      "words": [
+        {
+          "word": "The",
+          "start": 207.68,
+          "end": 207.68,
+          "probability": 0.5381
+        },
+        {
+          "word": "color",
+          "start": 207.68,
+          "end": 207.76,
+          "probability": 0.9502
+        },
+        {
+          "word": "blue",
+          "start": 207.76,
+          "end": 208.0,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 208.0,
+          "end": 208.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 208.12,
+          "end": 208.22,
+          "probability": 0.999
+        },
+        {
+          "word": "current",
+          "start": 208.22,
+          "end": 208.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "job",
+          "start": 208.48,
+          "end": 208.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 208.82,
+          "end": 209.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "only",
+          "start": 209.0,
+          "end": 209.24,
+          "probability": 0.998
+        },
+        {
+          "word": "effective",
+          "start": 209.24,
+          "end": 209.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "from",
+          "start": 209.64,
+          "end": 209.94,
+          "probability": 0.9922
+        },
+        {
+          "word": "February",
+          "start": 209.94,
+          "end": 210.22,
+          "probability": 0.9043
+        },
+        {
+          "word": "1st",
+          "start": 210.22,
+          "end": 210.72,
+          "probability": 0.8047
+        },
+        {
+          "word": "to",
+          "start": 210.72,
+          "end": 210.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "March",
+          "start": 210.82,
+          "end": 211.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "1st.",
+          "start": 211.06,
+          "end": 211.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "On",
+          "start": 211.8,
+          "end": 212.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "March",
+          "start": 212.16,
+          "end": 212.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "1st,",
+          "start": 212.36,
+          "end": 212.84,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 213.0,
+          "end": 213.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "color",
+          "start": 213.18,
+          "end": 213.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "yellow",
+          "start": 213.4,
+          "end": 213.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "from",
+          "start": 213.66,
+          "end": 213.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 213.88,
+          "end": 214.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "other",
+          "start": 214.02,
+          "end": 214.2,
+          "probability": 0.998
+        },
+        {
+          "word": "job",
+          "start": 214.2,
+          "end": 214.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 214.48,
+          "end": 214.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 214.68,
+          "end": 214.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "effective",
+          "start": 214.82,
+          "end": 215.22,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 215.22,
+          "end": 215.46,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 215.46,
+          "end": 215.58,
+          "probability": 0.998
+        },
+        {
+          "word": "policy,",
+          "start": 215.58,
+          "end": 216.06,
+          "probability": 0.9775
+        },
+        {
+          "word": "while",
+          "start": 216.36,
+          "end": 217.02,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 217.02,
+          "end": 217.18,
+          "probability": 0.999
+        },
+        {
+          "word": "liability",
+          "start": 217.18,
+          "end": 217.56,
+          "probability": 0.9707
+        },
+        {
+          "word": "limit",
+          "start": 217.56,
+          "end": 218.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "will",
+          "start": 218.0,
+          "end": 218.2,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 218.2,
+          "end": 218.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "merged",
+          "start": 218.36,
+          "end": 218.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "forward",
+          "start": 218.72,
+          "end": 219.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 219.08,
+          "end": 219.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 219.26,
+          "end": 219.38,
+          "probability": 0.999
+        },
+        {
+          "word": "job",
+          "start": 219.38,
+          "end": 219.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 219.62,
+          "end": 219.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 219.8,
+          "end": 219.9,
+          "probability": 0.9517
+        },
+        {
+          "word": "later",
+          "start": 219.9,
+          "end": 220.14,
+          "probability": 0.998
+        },
+        {
+          "word": "effective",
+          "start": 220.14,
+          "end": 220.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "date.",
+          "start": 220.62,
+          "end": 221.02,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 221.62,
+          "end": 222.1,
+          "probability": 0.9873
+        },
+        {
+          "word": "Submit.",
+          "start": 222.1,
+          "end": 222.6,
+          "probability": 0.79
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 225.86,
+      "end": 233.24,
+      "start_formatted": "00:03:45.860",
+      "end_formatted": "00:03:53.240",
+      "text": "After submitting the resolution, it cannot be reverted. Click OK to confirm. Now you can quote the policy change.",
+      "words": [
+        {
+          "word": "After",
+          "start": 225.86,
+          "end": 226.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "submitting",
+          "start": 226.34,
+          "end": 226.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 226.7,
+          "end": 226.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "resolution,",
+          "start": 226.92,
+          "end": 227.42,
+          "probability": 0.9619
+        },
+        {
+          "word": "it",
+          "start": 227.72,
+          "end": 227.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "cannot",
+          "start": 227.98,
+          "end": 228.18,
+          "probability": 0.9741
+        },
+        {
+          "word": "be",
+          "start": 228.18,
+          "end": 228.48,
+          "probability": 0.999
+        },
+        {
+          "word": "reverted.",
+          "start": 228.48,
+          "end": 228.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "Click",
+          "start": 229.24,
+          "end": 229.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "OK",
+          "start": 229.72,
+          "end": 229.96,
+          "probability": 0.8662
+        },
+        {
+          "word": "to",
+          "start": 229.96,
+          "end": 230.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "confirm.",
+          "start": 230.2,
+          "end": 230.6,
+          "probability": 0.9434
+        },
+        {
+          "word": "Now",
+          "start": 231.2,
+          "end": 231.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "you",
+          "start": 231.68,
+          "end": 231.86,
+          "probability": 0.98
+        },
+        {
+          "word": "can",
+          "start": 231.86,
+          "end": 232.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "quote",
+          "start": 232.04,
+          "end": 232.26,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 232.26,
+          "end": 232.42,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 232.42,
+          "end": 232.8,
+          "probability": 0.9893
+        },
+        {
+          "word": "change.",
+          "start": 232.8,
+          "end": 233.24,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 234.96,
+      "end": 236.08,
+      "start_formatted": "00:03:54.960",
+      "end_formatted": "00:03:56.080",
+      "text": "Issue the policy.",
+      "words": [
+        {
+          "word": "Issue",
+          "start": 234.96,
+          "end": 235.52,
+          "probability": 0.9414
+        },
+        {
+          "word": "the",
+          "start": 235.52,
+          "end": 235.66,
+          "probability": 0.999
+        },
+        {
+          "word": "policy.",
+          "start": 235.66,
+          "end": 236.08,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 242.58,
+      "end": 245.56,
+      "start_formatted": "00:04:02.580",
+      "end_formatted": "00:04:05.560",
+      "text": "This is the end of demonstration of out of sequence transaction.",
+      "words": [
+        {
+          "word": "This",
+          "start": 242.58,
+          "end": 243.14,
+          "probability": 0.9829
+        },
+        {
+          "word": "is",
+          "start": 243.14,
+          "end": 243.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 243.3,
+          "end": 243.44,
+          "probability": 0.999
+        },
+        {
+          "word": "end",
+          "start": 243.44,
+          "end": 243.6,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 243.6,
+          "end": 243.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 243.72,
+          "end": 244.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 244.28,
+          "end": 244.6,
+          "probability": 0.999
+        },
+        {
+          "word": "out",
+          "start": 244.6,
+          "end": 244.76,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 244.76,
+          "end": 244.86,
+          "probability": 0.0953
+        },
+        {
+          "word": "sequence",
+          "start": 244.86,
+          "end": 245.2,
+          "probability": 0.999
+        },
+        {
+          "word": "transaction.",
+          "start": 245.2,
+          "end": 245.56,
+          "probability": 0.4563
+        }
+      ]
+    }
+  ]
+}

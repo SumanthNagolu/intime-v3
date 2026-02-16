@@ -1,0 +1,324 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-12",
+    "slide_count": 28,
+    "slides_with_text": 26,
+    "total_words": 1506,
+    "avg_confidence": 84.79,
+    "processing_time_seconds": 11.28,
+    "extracted_at": "2026-02-15T18:21:34.683726"
+  },
+  "full_text": "Triggering Messages\n\nLesson\nobjectives\n\n¢ Describe how event messages are triggered\n* Create destinations and configure required\nfields\n\n| Use case — Bank account verification Gi\n\n¢ Trigger a message when a bank 1\n\n. Configure the bank account entity\naccount is added or modified\n\nto trigger messages\n¢ Create an abstract representation of 2\n\nan external system to define the key Deploy code changes\nmessaging components ,\n\n. Create a messaging destination\n\n| Guidewire servers and messaging transactions Gi\n\nsonesvocccccccccccccccccecesscccccccessscsccsccsssessense: tp seersonnccnscessecnsenscesssreccssccessscccesccesssscseseee,\n\n: Application Context y Integration Context\n\ni Event triggering & ¥: Sending message &:\n( ») Message generation LJ Payload 7 Process synchronous External\niN (event fired rules) transformation acknowledgment :\n\nProcess asynchronous\n\nacknowledgement\n(reply plugin or API)\n\n¢ All activity from event triggering takes place in transaction 1\n* Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back\n\nMessaging entities\n\n| EventAware entity\n\n« Amessaging event often occurs when\nadding, changing, or removing an instance\nof an EventAware entity\n\n¢ An EventAware entity delegates to\nEventAware delegate\n\n* Configured by adding the events Element to the BankAccount (abx_bankaccount)\n\nentity\n\nImplements the default set of messaging events:\nAdded, Changed and Removed\n\nNaming convention\n\n+ <EventAwareEntityName><ChangeType>\n\n* Custom message events can be added\n\nExample: Custom BankAccountFlagged message\n\nar\n\nGi\n\nBB eankAccount.eti\n(se event v — [YVshowalv]) g = = AO\nElement. Primary Value Secondary Value\nY entity BankAccount Contact bank account\nimplementsEntity _Extractable\n\nBankAccountFlagged\n\n‘Custom BankAccountFlagged Event\n\n> Description\n\nAttributes: Editable’, Exportable”, Extendable”, Final”, Keyed”, Loadable”, Sourceable”\nMessaging Events: The application will generate these events for this entity:\n\n| Triggering custom message events Gi\n\nE’BankAccounteti\n\n|x event v — |VShowAlv) zB =F AO\nElement Primary Value Secondary Value\n\n© entity BankAccount Contact bank account\n\nimplementsEntity _Extractable\n\nevent BankAccountFlagged Custom BankAccountFlagged Event\n\n¢ Useful when messaging must be initiated by something that cannot be captured in\na standard (built-in) message event\n\n* Syntax\n\n* eventAwareEntityInstance.addEvent (\"CustomEventName\")\n* Only for EventAware entity\n\n+ Triggered manually in code\n\n*« Example: aBankAccount.addEvent (\"BankAccountFlagged\")\n\n| MessageContext entity\n\n¢ An internal, non-persistent, virtual\nentity\n\n* Only used in event fired rules\n¢ Important fields\n* DestID\n+ Identifies the subscribing destination\n+ EventName\n+ Identifies the name of the triggering event\n+ Root\n\n+ Can be used to reference data from the\ntriggering entity\n\nGi\n\nMessageContext (Virtual) (delegates to Versionable)\n> Description\n\nAttributes: Extendable’, Final’, Keyed’, Sourceable”\n\nShow user interface details on all fields\n\nFields | Arrays\n\nFields\nDestID Derived property returning int (virtual property)”\nEventName Derived property returning java.lang String (virtual property)”\n\nRoot Derived property returning java.lang.Object (virtual property)”\n\n+ Example: messageContext.Root typeis BankAccount\n\n| Message entity\n\nAn entity containing message details and payload to\nbe sent to an external system\n\nDestinationID\n\n+ Identifies the subscribing destination\n\nEventName\n\n+ Identifies the name of the triggering event\nMessageRoot\n\n+ ls a pointer to the triggering event-aware entity instance\nPayload\n\n+ Holds the information to communicate\n\nSenderReflD\n\n+ Is asender reference number typically set at message send time\nStatus\n\n+ Message status pending and errored messages\n\nGi\n\nMessage (ab_message) («\n> Description\n\nAttributes: Extendable”, Final”, Keyed”, Sourceable’\n> Concrete FK references:\n\n‘Show user interface details on all elds\n\n1s to KeyableBean)\n\nFields | Unique Keys for Message\n\nFields\n\nDestinationID inioo» (non-nul” (unique index)\n‘denies the destination to send this message to\n\n> Show user interface\n\nEventName varchar (255) (non-null\n[Name of the event\n> Show user interface details\n\nMessageRoot (\n\nPayload 10x: (10000\nContents ofthe messag\n\n(tual property)? (writable)\n\n(writable)\n\n> Show user interface details\n\nSenderRefID varchar (64) (ut)\nOptional sender reference set at message send time.\n\nStatus integer (roneah? (oiqueinden)\n‘Message status: 1-Pending send; 2-Pending ack; 3-Error; 4-Retryable error\n\n| MessageHistory entity Gi\n\n+ Anentity containing message history details Message story (ab_messagehistory) (delegates to KevableBean)\n« DestinationID pameies Erendatis Fa ikon ‘Sourceable\n\n+ Identifies the subscribing destination Fields |\n\n+ DuplicateCount\n\nFields\n. i DestinationID integer oon\nNumber of duplicate message acknowledgments Identifies the message destination to send this message to.\nDuplicateCount intexer einue 9)_ ronnw\n+ ErrorCategory ‘Number of duplicate errors received\n. ErrorCategory type key to\n+ Type of message processing error ‘Type of error if the message is in error.\nEventName archos (255) (ores)\n+ EventName Name of the event\n; oo SenderReflD varchar (64) (wate)\n* Identifies the name of the triggering event Optional sender reference set at message send time,\nStatus inioger  oreus\n* SenderRefiID Message status: 10-Acked; 11-Error cleared; 12-Error retried; 13-Skipped\n\n+ Is a sender reference number typically set at message send time\n+ Status\n\ne Meccane ctatiic for acknowledaed ckinned or errored meccanec\n\nDestination\n(=) Gi\n\nExternal System ( td\n\n() Entity Event ~. Request Plugin (Hp\n\nEventAware gy “F\nEntity (a) Transport Plugin\nDestination iP)\n\nReply Plugin\n« Amessaging destination is an abstraction of an external system\n\n* Subscribes to message events of interest\n\n* Defines list of message plugins used in processing outbound request messages and received\ninbound replies\n\n¢ Defines connectivity, retryable error parameters, predictable message ordering, multithreading,\nand distributed actions\n\n| Destination message events\n\nys >) Gi\n\n(3),\n_— BankAccountAdded yN\n\nBankAccountChanged Destination 13\n\nBankAccountChanged ® ra)\n-¢ Destination 14\n\nBankAccount\n2637 ActivityAdded >)\nSY ActivityChanged +\nDestination 15\n* Messaging destination subscribes to one or more specific message events\n¢« When a message event occurs:\n* One MessageContext instance is created for each destination that listens to that event\n\n« Each MessageContext object is then processed by the event fired business rules\n\n| Defining a message destination\n\n¢ Destinations are defined in the\nmessaging-config.xml file\n\n¢ Under configuration.config.Messaging\n¢ To create a new destination, click the\nplus symbol and define the required\nfields\n¢ ID: unique ID value from 0 to 63\n\n« Name: unique name displayed in the Ul\nmessaging administration screen\n\n¢ Transport Plugin: sends message to\nexternal system(s)\n\n+ Discussed in Sending Messages lesson\n\ne EFvante: cithecrihad meaeceaninga avente\n\nsh messaging-configam!\n\nDefault Server:\n\nMessaging Config: [Default\n\n@-\n\nEnvironment:\nName:\nServer:\n\nTransport Plugin:\n\nEvents:\n\n3 S) O Disable destination\nBank Account Verification\nHost Name: ¥\n\nBankAccountVerificationTransport\n\n=\nName\n\nBankAccountAdded\nBankAccountChanged\n\n| Other messaging destination parameters Gi\n\n* Optional Plugins hs Sd Pages\n\n« Request plugin is discussed in the Message\nPayload Transformation lesson\n\nConnectivity and\nError Parameters\n\n¢ Reply plugin is discussed in the\nAsynchronous Message Acknowledgements\nlesson\n\n2 =\n\nstrict Mode\n\nrimary\n\n* Connectivity and error parameters\n\n¢ Discussed in the Sending Messages lesson MAREE Distribute Request Processing |\n\n‘Always Call Before Send:\n\n* Message Without Primary Bele Sen Pin\n* Discussed in the Sending Messages lesson\n¢ Distribute Request Processing\n\n¢ Discussed in the Master’s Subscription and\n\nnAnniimantatinn\n\n| Deploy code changes\nRestart Server\n\n¢ Any new or modified destinations\n\n« Read only at server startup\n\nGt Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nYE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+Shift+F9\n\\y Attach to Local Process...\n\n[PP Edit Configurations...\n\nBl import Test Results >\nI Stop ‘Server’ Ctrl+F2\n\n| Demonstration G\n\nExamine an event aware entity and\n— destination\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,- — When does a message event get triggered?\n\n7\n¢\n4\n\nSe Soe Se sees esse ese\n\nAnswer\n\n,- — When does a message event get triggered?\n\n¢\n¢\n4\n\nTypically, a message event gets triggered when an event-aware entity is created,\nchanged, or removed.\n\nSoo eS oe ese Sse ese\n\nQuestion\n\nan What is the primary purpose of the MessageContext entity?\n¢\n4\n\nSe Soe Se sees esse ese\n\nAnswer\n\nae What is the primary purpose of the MessageContext entity?\n\n¢\n4\n\nThe primary purpose of the MessageContext entity is to create messages using\ninformation from the message event and the triggering entity.\n\nSoo eS oe ese Sse ese\n\nQuestion\n\n_ _ AGuidewire application has seven destinations and an event-aware\n7’ entity called Escalation.\n\ny 4 A) When an Escalation is created, what is the maximum number of\n\nMessageContexts that might get created?\n\nB) What is the minimum?\n\nSe Soe Se sees esse ese\n\nAnswer Gi\n\n_ _ AGuidewire application has seven destinations and an event-aware\n7 entity called Escalation.\n\ny A) When an Escalation is created, what is the maximum number of\nMessageContexts that might get created?\n\nB) What is the minimum?\n\nA) Seven, which would occur if all seven destinations listen to EscalationAdded.\nB) Zero, which would occur if none of the destinations listen to EscalationAdded.\n\nSoo eS oe ese Sse ese\n\nQuestion G\n\nan What plugin is required for every destination? What does this plugin do?\n\n¢\n4\n\nSe Soe Se sees esse ese\n\nAnswer Gi\n\nae What plugin is required for every destination? What does this plugin do?\n\n¢\n4\n\nMessageTransport, which sends the message to the external system.\n\nSoo eS oe ese Sse ese\n\nLesson\nobjectives ¢ Describe how event messages are triggered\n\nreview * Create destinations and configure required\nfields\n\n| Student exercise\n\nConfigure an event aware entity and\ndestination",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Triggering Messages",
+      "word_count": 2,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe how event messages are triggered\n* Create destinations and configure required\nfields",
+      "word_count": 16,
+      "avg_confidence": 87.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Use case — Bank account verification Gi\n\n¢ Trigger a message when a bank 1\n\n. Configure the bank account entity\naccount is added or modified\n\nto trigger messages\n¢ Create an abstract representation of 2\n\nan external system to define the key Deploy code changes\nmessaging components ,\n\n. Create a messaging destination",
+      "word_count": 55,
+      "avg_confidence": 89.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Guidewire servers and messaging transactions Gi\n\nsonesvocccccccccccccccccecesscccccccessscsccsccsssessense: tp seersonnccnscessecnsenscesssreccssccessscccesccesssscseseee,\n\n: Application Context y Integration Context\n\ni Event triggering & ¥: Sending message &:\n( ») Message generation LJ Payload 7 Process synchronous External\niN (event fired rules) transformation acknowledgment :\n\nProcess asynchronous\n\nacknowledgement\n(reply plugin or API)\n\n¢ All activity from event triggering takes place in transaction 1\n* Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back",
+      "word_count": 79,
+      "avg_confidence": 85.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Messaging entities",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| EventAware entity\n\n« Amessaging event often occurs when\nadding, changing, or removing an instance\nof an EventAware entity\n\n¢ An EventAware entity delegates to\nEventAware delegate\n\n* Configured by adding the events Element to the BankAccount (abx_bankaccount)\n\nentity\n\nImplements the default set of messaging events:\nAdded, Changed and Removed\n\nNaming convention\n\n+ <EventAwareEntityName><ChangeType>\n\n* Custom message events can be added\n\nExample: Custom BankAccountFlagged message\n\nar\n\nGi\n\nBB eankAccount.eti\n(se event v — [YVshowalv]) g = = AO\nElement. Primary Value Secondary Value\nY entity BankAccount Contact bank account\nimplementsEntity _Extractable\n\nBankAccountFlagged\n\n‘Custom BankAccountFlagged Event\n\n> Description\n\nAttributes: Editable’, Exportable”, Extendable”, Final”, Keyed”, Loadable”, Sourceable”\nMessaging Events: The application will generate these events for this entity:",
+      "word_count": 116,
+      "avg_confidence": 82.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Triggering custom message events Gi\n\nE’BankAccounteti\n\n|x event v — |VShowAlv) zB =F AO\nElement Primary Value Secondary Value\n\n© entity BankAccount Contact bank account\n\nimplementsEntity _Extractable\n\nevent BankAccountFlagged Custom BankAccountFlagged Event\n\n¢ Useful when messaging must be initiated by something that cannot be captured in\na standard (built-in) message event\n\n* Syntax\n\n* eventAwareEntityInstance.addEvent (\"CustomEventName\")\n* Only for EventAware entity\n\n+ Triggered manually in code\n\n*« Example: aBankAccount.addEvent (\"BankAccountFlagged\")",
+      "word_count": 71,
+      "avg_confidence": 83.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| MessageContext entity\n\n¢ An internal, non-persistent, virtual\nentity\n\n* Only used in event fired rules\n¢ Important fields\n* DestID\n+ Identifies the subscribing destination\n+ EventName\n+ Identifies the name of the triggering event\n+ Root\n\n+ Can be used to reference data from the\ntriggering entity\n\nGi\n\nMessageContext (Virtual) (delegates to Versionable)\n> Description\n\nAttributes: Extendable’, Final’, Keyed’, Sourceable”\n\nShow user interface details on all fields\n\nFields | Arrays\n\nFields\nDestID Derived property returning int (virtual property)”\nEventName Derived property returning java.lang String (virtual property)”\n\nRoot Derived property returning java.lang.Object (virtual property)”\n\n+ Example: messageContext.Root typeis BankAccount",
+      "word_count": 100,
+      "avg_confidence": 84.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Message entity\n\nAn entity containing message details and payload to\nbe sent to an external system\n\nDestinationID\n\n+ Identifies the subscribing destination\n\nEventName\n\n+ Identifies the name of the triggering event\nMessageRoot\n\n+ ls a pointer to the triggering event-aware entity instance\nPayload\n\n+ Holds the information to communicate\n\nSenderReflD\n\n+ Is asender reference number typically set at message send time\nStatus\n\n+ Message status pending and errored messages\n\nGi\n\nMessage (ab_message) («\n> Description\n\nAttributes: Extendable”, Final”, Keyed”, Sourceable’\n> Concrete FK references:\n\n‘Show user interface details on all elds\n\n1s to KeyableBean)\n\nFields | Unique Keys for Message\n\nFields\n\nDestinationID inioo» (non-nul” (unique index)\n‘denies the destination to send this message to\n\n> Show user interface\n\nEventName varchar (255) (non-null\n[Name of the event\n> Show user interface details\n\nMessageRoot (\n\nPayload 10x: (10000\nContents ofthe messag\n\n(tual property)? (writable)\n\n(writable)\n\n> Show user interface details\n\nSenderRefID varchar (64) (ut)\nOptional sender reference set at message send time.\n\nStatus integer (roneah? (oiqueinden)\n‘Message status: 1-Pending send; 2-Pending ack; 3-Error; 4-Retryable error",
+      "word_count": 174,
+      "avg_confidence": 79.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| MessageHistory entity Gi\n\n+ Anentity containing message history details Message story (ab_messagehistory) (delegates to KevableBean)\n« DestinationID pameies Erendatis Fa ikon ‘Sourceable\n\n+ Identifies the subscribing destination Fields |\n\n+ DuplicateCount\n\nFields\n. i DestinationID integer oon\nNumber of duplicate message acknowledgments Identifies the message destination to send this message to.\nDuplicateCount intexer einue 9)_ ronnw\n+ ErrorCategory ‘Number of duplicate errors received\n. ErrorCategory type key to\n+ Type of message processing error ‘Type of error if the message is in error.\nEventName archos (255) (ores)\n+ EventName Name of the event\n; oo SenderReflD varchar (64) (wate)\n* Identifies the name of the triggering event Optional sender reference set at message send time,\nStatus inioger  oreus\n* SenderRefiID Message status: 10-Acked; 11-Error cleared; 12-Error retried; 13-Skipped\n\n+ Is a sender reference number typically set at message send time\n+ Status\n\ne Meccane ctatiic for acknowledaed ckinned or errored meccanec",
+      "word_count": 152,
+      "avg_confidence": 77.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Destination\n(=) Gi\n\nExternal System ( td\n\n() Entity Event ~. Request Plugin (Hp\n\nEventAware gy “F\nEntity (a) Transport Plugin\nDestination iP)\n\nReply Plugin\n« Amessaging destination is an abstraction of an external system\n\n* Subscribes to message events of interest\n\n* Defines list of message plugins used in processing outbound request messages and received\ninbound replies\n\n¢ Defines connectivity, retryable error parameters, predictable message ordering, multithreading,\nand distributed actions",
+      "word_count": 71,
+      "avg_confidence": 83.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Destination message events\n\nys >) Gi\n\n(3),\n_— BankAccountAdded yN\n\nBankAccountChanged Destination 13\n\nBankAccountChanged ® ra)\n-¢ Destination 14\n\nBankAccount\n2637 ActivityAdded >)\nSY ActivityChanged +\nDestination 15\n* Messaging destination subscribes to one or more specific message events\n¢« When a message event occurs:\n* One MessageContext instance is created for each destination that listens to that event\n\n« Each MessageContext object is then processed by the event fired business rules",
+      "word_count": 73,
+      "avg_confidence": 84.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Defining a message destination\n\n¢ Destinations are defined in the\nmessaging-config.xml file\n\n¢ Under configuration.config.Messaging\n¢ To create a new destination, click the\nplus symbol and define the required\nfields\n¢ ID: unique ID value from 0 to 63\n\n« Name: unique name displayed in the Ul\nmessaging administration screen\n\n¢ Transport Plugin: sends message to\nexternal system(s)\n\n+ Discussed in Sending Messages lesson\n\ne EFvante: cithecrihad meaeceaninga avente\n\nsh messaging-configam!\n\nDefault Server:\n\nMessaging Config: [Default\n\n@-\n\nEnvironment:\nName:\nServer:\n\nTransport Plugin:\n\nEvents:\n\n3 S) O Disable destination\nBank Account Verification\nHost Name: ¥\n\nBankAccountVerificationTransport\n\n=\nName\n\nBankAccountAdded\nBankAccountChanged",
+      "word_count": 100,
+      "avg_confidence": 83.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Other messaging destination parameters Gi\n\n* Optional Plugins hs Sd Pages\n\n« Request plugin is discussed in the Message\nPayload Transformation lesson\n\nConnectivity and\nError Parameters\n\n¢ Reply plugin is discussed in the\nAsynchronous Message Acknowledgements\nlesson\n\n2 =\n\nstrict Mode\n\nrimary\n\n* Connectivity and error parameters\n\n¢ Discussed in the Sending Messages lesson MAREE Distribute Request Processing |\n\n‘Always Call Before Send:\n\n* Message Without Primary Bele Sen Pin\n* Discussed in the Sending Messages lesson\n¢ Distribute Request Processing\n\n¢ Discussed in the Master’s Subscription and\n\nnAnniimantatinn",
+      "word_count": 90,
+      "avg_confidence": 81.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Deploy code changes\nRestart Server\n\n¢ Any new or modified destinations\n\n« Read only at server startup\n\nGt Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nYE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+Shift+F9\n\\y Attach to Local Process...\n\n[PP Edit Configurations...\n\nBl import Test Results >\nI Stop ‘Server’ Ctrl+F2",
+      "word_count": 55,
+      "avg_confidence": 76.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\n\nExamine an event aware entity and\n— destination\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 41,
+      "avg_confidence": 94.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question\n\n,- — When does a message event get triggered?\n\n7\n¢\n4\n\nSe Soe Se sees esse ese",
+      "word_count": 19,
+      "avg_confidence": 69.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer\n\n,- — When does a message event get triggered?\n\n¢\n¢\n4\n\nTypically, a message event gets triggered when an event-aware entity is created,\nchanged, or removed.\n\nSoo eS oe ese Sse ese",
+      "word_count": 34,
+      "avg_confidence": 81.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question\n\nan What is the primary purpose of the MessageContext entity?\n¢\n4\n\nSe Soe Se sees esse ese",
+      "word_count": 19,
+      "avg_confidence": 74.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\nae What is the primary purpose of the MessageContext entity?\n\n¢\n4\n\nThe primary purpose of the MessageContext entity is to create messages using\ninformation from the message event and the triggering entity.\n\nSoo eS oe ese Sse ese",
+      "word_count": 40,
+      "avg_confidence": 85.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\n_ _ AGuidewire application has seven destinations and an event-aware\n7’ entity called Escalation.\n\ny 4 A) When an Escalation is created, what is the maximum number of\n\nMessageContexts that might get created?\n\nB) What is the minimum?\n\nSe Soe Se sees esse ese",
+      "word_count": 45,
+      "avg_confidence": 85.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer Gi\n\n_ _ AGuidewire application has seven destinations and an event-aware\n7 entity called Escalation.\n\ny A) When an Escalation is created, what is the maximum number of\nMessageContexts that might get created?\n\nB) What is the minimum?\n\nA) Seven, which would occur if all seven destinations listen to EscalationAdded.\nB) Zero, which would occur if none of the destinations listen to EscalationAdded.\n\nSoo eS oe ese Sse ese",
+      "word_count": 70,
+      "avg_confidence": 89.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question G\n\nan What plugin is required for every destination? What does this plugin do?\n\n¢\n4\n\nSe Soe Se sees esse ese",
+      "word_count": 23,
+      "avg_confidence": 78.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer Gi\n\nae What plugin is required for every destination? What does this plugin do?\n\n¢\n4\n\nMessageTransport, which sends the message to the external system.\n\nSoo eS oe ese Sse ese",
+      "word_count": 32,
+      "avg_confidence": 81.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Lesson\nobjectives ¢ Describe how event messages are triggered\n\nreview * Create destinations and configure required\nfields",
+      "word_count": 17,
+      "avg_confidence": 88.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Student exercise\n\nConfigure an event aware entity and\ndestination",
+      "word_count": 10,
+      "avg_confidence": 95.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

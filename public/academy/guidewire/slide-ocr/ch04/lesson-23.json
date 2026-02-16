@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-23",
+    "slide_count": 17,
+    "slides_with_text": 15,
+    "total_words": 762,
+    "avg_confidence": 90.46,
+    "processing_time_seconds": 6.97,
+    "extracted_at": "2026-02-13T12:07:06.102183"
+  },
+  "full_text": "Policy Holds and Underwriting Referral Reasons\n\nLesson\nobjectives\n\n¢ Explain and define the policy holds\n¢ Describe and work with the Underwriting\nReferral Reasons\n\nDarren\nInsurance\nProduct Manager\n\n.\n\nq\n|\n\nThere are situations that require us to\nput customer policies on hold. Does\nPolicyCenter provide this capability?\n\n| Policy holds G\n\n¢ Are placed on a transaction in the event of a natural disaster or for changes in\nbusiness\n\n¢ Are placed in a specific region for a period of time\n« Allow a carrier to prevent users from:\n* Creating new policies\n* Changing existing policies\n« Raise underwriting (UW) issues during a transaction\n« When the effective date of the transaction falls in the date range of the policy hold, and\n* The policy location matches the region affected by the policy hold\n\n« Underwriting issues can be processed by an underwriter with proper underwriting authority\n\n| Hold and release a transaction in PolicyCenter (1 of 3) [\n\nThe following explains how a transaction is held and then released:\n\noe 4\nPolicy transaction\nquote, bind or issue\n\nL\npA ©\n\nUW issue created\n\nPolicy Hold evaluated for Policy Hold\n\n| Hold and release a transaction in PolicyCenter (2 of 3) [\nThe following explains how a transaction is held and then released:\n\neoe\n\nSG\n\nPolicy transaction\nquote, bind or issue\n\n|\npl~- O-f-\n\nUW issue created UW approves Process\n\nPolicy Hold evaluated for Policy Hold issues transaction\n\n| Hold and release a transaction in PolicyCenter (1 of 3) [\n\nThe following explains how a transaction is held and then released:\n\na e- f} -&\n\nPolicy transaction Policy Hold Job PolicyHoldJob- ok activity release\n\nquote, bind or issue Evaluation batch EvalPlugin producer\n\n| t |\n\npa- Gi -38-\n\nUW issue created UW approves Process\n\nPolicy Hold evaluated for Policy Hold issues transaction\n\n| Demonstration G\n\nPolicy holds\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nSimone\n\nAgent\n\nSometimes | need to refer a policy to an\nunderwriter because there is not enough\ninformation available in the system to make a\ndecision on a policy. Is there a way to do this in\nPolicyCenter?\n\n| Underwriting referral reasons Gi\n\n¢ Used when a notable condition arises outside of a transaction, possibly outside of\nthe PolicyCenter maintained policy data\n\n* Can be added manually or by external systems through an API\n* Cannot be approved but can be removed from the policy\n\n* Raises UW issues next time a transaction is run on that policy\n\nManual Nb\nExternal .\nSystem UW referral reason added UW issue raised\n\non bound policy on next policy transaction\n\n| UW referral reasons and UW issues compared Gi\n\nUW referral reason\n\nRelated to the policy — when something\nnotable about the policy needs to be brought\nto the attention of underwriting the next time a\ntransaction runs\n\nGenerates a UWlssue which can stop\ntransactions progress\n\nOften manually created, can only be deleted\nmanually or through an API, can’t be approved\n\nPersists with the policy; resulting UWlssues\ncan be approved\n\nRelated to the transaction - when something\nnotable about this transaction needs to be\nbrought to the attention of underwriting\n\nCan stop transaction progress that somebody\nmight approve when writing the policy\n\nOften automatically generated, is usually\nautomatically removed when the cause no\nlonger exists\n\nCan be approved; with approval, persists\nalong any descendent of the policy period\n\n| Demonstration G\n\nUnderwriting referral reasons\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_~ — Distinguish underwriting (UW) referral reasons from an UW issue.\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer Gi\n\n_~ — Distinguish underwriting (UW) referral reasons from an UW issue.\n\n¢\n¢\n¢\n\nThe underwriting referral reason is specific to a policy. When it generates an\nunderwriting issue, the transaction will not progress further. UW referral reasons are\noften manually created, cannot be approved, and are manually deleted (or through an\nAPI). UW referral reasons persist with the policy.\n\nUnderwriting issues are related to the transaction. When something is notable about this\ntransaction requiring the attention of underwriting. They are often automatically generated,\nand are usually automatically removed when the cause no longer exists.\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobjectives ¢ Explain and define the policy holds\n\nreview * Describe and work with the Underwriting\nReferral Reasons",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Policy Holds and Underwriting Referral Reasons",
+      "word_count": 6,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Explain and define the policy holds\n¢ Describe and work with the Underwriting\nReferral Reasons",
+      "word_count": 18,
+      "avg_confidence": 89.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Darren\nInsurance\nProduct Manager\n\n.\n\nq\n|\n\nThere are situations that require us to\nput customer policies on hold. Does\nPolicyCenter provide this capability?",
+      "word_count": 24,
+      "avg_confidence": 94.42,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Policy holds G\n\n¢ Are placed on a transaction in the event of a natural disaster or for changes in\nbusiness\n\n¢ Are placed in a specific region for a period of time\n« Allow a carrier to prevent users from:\n* Creating new policies\n* Changing existing policies\n« Raise underwriting (UW) issues during a transaction\n« When the effective date of the transaction falls in the date range of the policy hold, and\n* The policy location matches the region affected by the policy hold\n\n« Underwriting issues can be processed by an underwriter with proper underwriting authority",
+      "word_count": 101,
+      "avg_confidence": 89.13,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Hold and release a transaction in PolicyCenter (1 of 3) [\n\nThe following explains how a transaction is held and then released:\n\noe 4\nPolicy transaction\nquote, bind or issue\n\nL\npA ©\n\nUW issue created\n\nPolicy Hold evaluated for Policy Hold",
+      "word_count": 43,
+      "avg_confidence": 86.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Hold and release a transaction in PolicyCenter (2 of 3) [\nThe following explains how a transaction is held and then released:\n\neoe\n\nSG\n\nPolicy transaction\nquote, bind or issue\n\n|\npl~- O-f-\n\nUW issue created UW approves Process\n\nPolicy Hold evaluated for Policy Hold issues transaction",
+      "word_count": 48,
+      "avg_confidence": 89.26,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Hold and release a transaction in PolicyCenter (1 of 3) [\n\nThe following explains how a transaction is held and then released:\n\na e- f} -&\n\nPolicy transaction Policy Hold Job PolicyHoldJob- ok activity release\n\nquote, bind or issue Evaluation batch EvalPlugin producer\n\n| t |\n\npa- Gi -38-\n\nUW issue created UW approves Process\n\nPolicy Hold evaluated for Policy Hold issues transaction",
+      "word_count": 64,
+      "avg_confidence": 85.7,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Demonstration G\n\nPolicy holds\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.54,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Simone\n\nAgent\n\nSometimes | need to refer a policy to an\nunderwriter because there is not enough\ninformation available in the system to make a\ndecision on a policy. Is there a way to do this in\nPolicyCenter?",
+      "word_count": 38,
+      "avg_confidence": 94.87,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Underwriting referral reasons Gi\n\n¢ Used when a notable condition arises outside of a transaction, possibly outside of\nthe PolicyCenter maintained policy data\n\n* Can be added manually or by external systems through an API\n* Cannot be approved but can be removed from the policy\n\n* Raises UW issues next time a transaction is run on that policy\n\nManual Nb\nExternal .\nSystem UW referral reason added UW issue raised\n\non bound policy on next policy transaction",
+      "word_count": 79,
+      "avg_confidence": 91.69,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| UW referral reasons and UW issues compared Gi\n\nUW referral reason\n\nRelated to the policy — when something\nnotable about the policy needs to be brought\nto the attention of underwriting the next time a\ntransaction runs\n\nGenerates a UWlssue which can stop\ntransactions progress\n\nOften manually created, can only be deleted\nmanually or through an API, can’t be approved\n\nPersists with the policy; resulting UWlssues\ncan be approved\n\nRelated to the transaction - when something\nnotable about this transaction needs to be\nbrought to the attention of underwriting\n\nCan stop transaction progress that somebody\nmight approve when writing the policy\n\nOften automatically generated, is usually\nautomatically removed when the cause no\nlonger exists\n\nCan be approved; with approval, persists\nalong any descendent of the policy period",
+      "word_count": 128,
+      "avg_confidence": 94.22,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Demonstration G\n\nUnderwriting referral reasons\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.53,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question\n\n_~ — Distinguish underwriting (UW) referral reasons from an UW issue.\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 21,
+      "avg_confidence": 72.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer Gi\n\n_~ — Distinguish underwriting (UW) referral reasons from an UW issue.\n\n¢\n¢\n¢\n\nThe underwriting referral reason is specific to a policy. When it generates an\nunderwriting issue, the transaction will not progress further. UW referral reasons are\noften manually created, cannot be approved, and are manually deleted (or through an\nAPI). UW referral reasons persist with the policy.\n\nUnderwriting issues are related to the transaction. When something is notable about this\ntransaction requiring the attention of underwriting. They are often automatically generated,\nand are usually automatically removed when the cause no longer exists.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 102,
+      "avg_confidence": 92.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Lesson\nobjectives ¢ Explain and define the policy holds\n\nreview * Describe and work with the Underwriting\nReferral Reasons",
+      "word_count": 19,
+      "avg_confidence": 91.37,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

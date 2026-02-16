@@ -1,0 +1,2370 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_10_02.mp4",
+    "video_stem": "Billing_10_02",
+    "duration_seconds": 128.42,
+    "duration_formatted": "00:02:08.420",
+    "segment_count": 27,
+    "word_count": 349,
+    "avg_confidence": 0.9465,
+    "transcription_time_seconds": 16.07,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:02:31.136492"
+  },
+  "full_text": "This demonstration will show how to override a default payment allocation in the Direct Bill Payment Wizard. Here's the OpenZoom account that we used in the previous demo. OpenZoom has sent us a $200 payment. A company representative wants to know how much they will owe on their next invoice after this payment is applied. So I will enter the payment and apply it immediately to a future invoice. I click the Actions menu button. OpenZoom button. And I select New Direct Bill Payment from the New Payment menu. I know that OpenZoom uses policy level billing with cash separation, so first I select the Designated Unapplied Fund. I click the Designated Unapplied Fund for the policy. Next I type in the amount. The payment is for $200. Notice no invoice items are listed at the moment. This is because our payment allocation plan has a filter that allows only billed and do invoice items. In this case, however, I want to apply this payment to planned invoice items. I need to override the behavior of the payment allocation plan. So I click Override Distribution. Now I'll change the selection for which invoice items to include. I select Up to Amount Under Contract. This setting will list all unsettled invoice items, including those unplanned invoices. Now let's look at the invoice items that are displayed. Currently, each invoice item is listed separately. For a more concise view, I'll change the aggregate field to Summary so that the invoice item amounts are rolled up to display one row per invoice. We can easily see that the entire $200 payment will be applied by default to the next planned invoice. I'll click Execute to complete the payment. OpenZoom wants to know how much their next invoice will be. I'll go to the Invoices screen. I can see that the next planned invoice will be $140. This concludes our demonstration on overriding payment allocation in the Direct Bill Payment Wizard. OpenZoom needs to be updated.     OpenZoom needs to be updated. OpenZoom needs to be updated. OpenZoom needs to be updated.          Thank you.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 24.68,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:24.680",
+      "text": "This demonstration will show how to override a default payment allocation in the Direct Bill Payment Wizard. Here's the OpenZoom account that we used in the previous demo. OpenZoom has sent us a $200 payment. A company representative wants to know how much they will owe on their next invoice after this payment is applied. So I will enter the payment and apply it immediately to a future invoice. I click the Actions menu button.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 1.02,
+          "probability": 0.9565
+        },
+        {
+          "word": "demonstration",
+          "start": 1.02,
+          "end": 1.62,
+          "probability": 0.9873
+        },
+        {
+          "word": "will",
+          "start": 1.62,
+          "end": 1.96,
+          "probability": 0.999
+        },
+        {
+          "word": "show",
+          "start": 1.96,
+          "end": 2.2,
+          "probability": 0.999
+        },
+        {
+          "word": "how",
+          "start": 2.2,
+          "end": 2.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 2.38,
+          "end": 2.5,
+          "probability": 0.999
+        },
+        {
+          "word": "override",
+          "start": 2.5,
+          "end": 2.92,
+          "probability": 0.979
+        },
+        {
+          "word": "a",
+          "start": 2.92,
+          "end": 3.16,
+          "probability": 0.9805
+        },
+        {
+          "word": "default",
+          "start": 3.16,
+          "end": 3.44,
+          "probability": 0.9629
+        },
+        {
+          "word": "payment",
+          "start": 3.44,
+          "end": 3.8,
+          "probability": 0.9897
+        },
+        {
+          "word": "allocation",
+          "start": 3.8,
+          "end": 4.28,
+          "probability": 0.98
+        },
+        {
+          "word": "in",
+          "start": 4.28,
+          "end": 4.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 4.58,
+          "end": 4.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "Direct",
+          "start": 4.68,
+          "end": 4.96,
+          "probability": 0.7271
+        },
+        {
+          "word": "Bill",
+          "start": 4.96,
+          "end": 5.16,
+          "probability": 0.8281
+        },
+        {
+          "word": "Payment",
+          "start": 5.16,
+          "end": 5.6,
+          "probability": 0.8379
+        },
+        {
+          "word": "Wizard.",
+          "start": 5.6,
+          "end": 5.88,
+          "probability": 0.6274
+        },
+        {
+          "word": "Here's",
+          "start": 6.24,
+          "end": 6.8,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 6.8,
+          "end": 6.94,
+          "probability": 0.998
+        },
+        {
+          "word": "OpenZoom",
+          "start": 6.94,
+          "end": 7.46,
+          "probability": 0.9248
+        },
+        {
+          "word": "account",
+          "start": 7.46,
+          "end": 7.78,
+          "probability": 0.9849
+        },
+        {
+          "word": "that",
+          "start": 7.78,
+          "end": 7.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "we",
+          "start": 7.98,
+          "end": 8.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "used",
+          "start": 8.14,
+          "end": 8.44,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 8.44,
+          "end": 8.58,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 8.58,
+          "end": 8.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "previous",
+          "start": 8.68,
+          "end": 9.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "demo.",
+          "start": 9.08,
+          "end": 9.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "OpenZoom",
+          "start": 10.12,
+          "end": 10.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "has",
+          "start": 10.68,
+          "end": 10.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "sent",
+          "start": 10.86,
+          "end": 11.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "us",
+          "start": 11.08,
+          "end": 11.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 11.26,
+          "end": 11.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "$200",
+          "start": 11.38,
+          "end": 11.88,
+          "probability": 0.9658
+        },
+        {
+          "word": "payment.",
+          "start": 11.88,
+          "end": 12.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "A",
+          "start": 12.9,
+          "end": 13.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "company",
+          "start": 13.26,
+          "end": 13.56,
+          "probability": 0.9551
+        },
+        {
+          "word": "representative",
+          "start": 13.56,
+          "end": 14.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "wants",
+          "start": 14.2,
+          "end": 14.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 14.58,
+          "end": 14.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "know",
+          "start": 14.74,
+          "end": 14.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "how",
+          "start": 14.9,
+          "end": 15.04,
+          "probability": 0.998
+        },
+        {
+          "word": "much",
+          "start": 15.04,
+          "end": 15.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "they",
+          "start": 15.22,
+          "end": 15.38,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 15.38,
+          "end": 15.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "owe",
+          "start": 15.54,
+          "end": 15.66,
+          "probability": 0.9526
+        },
+        {
+          "word": "on",
+          "start": 15.66,
+          "end": 15.76,
+          "probability": 0.8789
+        },
+        {
+          "word": "their",
+          "start": 15.76,
+          "end": 15.86,
+          "probability": 0.999
+        },
+        {
+          "word": "next",
+          "start": 15.86,
+          "end": 16.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "invoice",
+          "start": 16.14,
+          "end": 16.58,
+          "probability": 0.9927
+        },
+        {
+          "word": "after",
+          "start": 16.58,
+          "end": 16.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 16.88,
+          "end": 17.1,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 17.1,
+          "end": 17.46,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 17.46,
+          "end": 17.66,
+          "probability": 0.999
+        },
+        {
+          "word": "applied.",
+          "start": 17.66,
+          "end": 18.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "So",
+          "start": 18.36,
+          "end": 18.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "I",
+          "start": 18.76,
+          "end": 18.92,
+          "probability": 0.9385
+        },
+        {
+          "word": "will",
+          "start": 18.92,
+          "end": 19.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "enter",
+          "start": 19.08,
+          "end": 19.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 19.3,
+          "end": 19.44,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 19.44,
+          "end": 19.76,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 19.76,
+          "end": 20.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "apply",
+          "start": 20.0,
+          "end": 20.28,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 20.28,
+          "end": 20.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "immediately",
+          "start": 20.46,
+          "end": 20.9,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 20.9,
+          "end": 21.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 21.16,
+          "end": 21.32,
+          "probability": 0.999
+        },
+        {
+          "word": "future",
+          "start": 21.32,
+          "end": 21.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "invoice.",
+          "start": 21.62,
+          "end": 22.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 22.62,
+          "end": 23.12,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 23.12,
+          "end": 23.38,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 23.38,
+          "end": 23.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "Actions",
+          "start": 23.56,
+          "end": 24.06,
+          "probability": 0.9072
+        },
+        {
+          "word": "menu",
+          "start": 24.06,
+          "end": 24.34,
+          "probability": 0.8706
+        },
+        {
+          "word": "button.",
+          "start": 24.34,
+          "end": 24.68,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 26.5,
+      "end": 54.66,
+      "start_formatted": "00:00:26.500",
+      "end_formatted": "00:00:54.660",
+      "text": "OpenZoom button. And I select New Direct Bill Payment from the New Payment menu. I know that OpenZoom uses policy level billing with cash separation, so first I select the Designated Unapplied Fund. I click the Designated Unapplied Fund for the policy. Next I type in the amount. The payment is for $200. Notice no invoice items are listed at the moment. This is",
+      "words": [
+        {
+          "word": "OpenZoom",
+          "start": 26.5,
+          "end": 27.14,
+          "probability": 0.4885
+        },
+        {
+          "word": "button.",
+          "start": 27.14,
+          "end": 27.14,
+          "probability": 0.0073
+        },
+        {
+          "word": "And",
+          "start": 27.14,
+          "end": 27.16,
+          "probability": 0.7739
+        },
+        {
+          "word": "I",
+          "start": 27.16,
+          "end": 27.32,
+          "probability": 0.9658
+        },
+        {
+          "word": "select",
+          "start": 27.32,
+          "end": 27.7,
+          "probability": 0.9897
+        },
+        {
+          "word": "New",
+          "start": 27.7,
+          "end": 27.9,
+          "probability": 0.5918
+        },
+        {
+          "word": "Direct",
+          "start": 27.9,
+          "end": 28.24,
+          "probability": 0.894
+        },
+        {
+          "word": "Bill",
+          "start": 28.24,
+          "end": 28.46,
+          "probability": 0.8853
+        },
+        {
+          "word": "Payment",
+          "start": 28.46,
+          "end": 28.88,
+          "probability": 0.792
+        },
+        {
+          "word": "from",
+          "start": 28.88,
+          "end": 29.04,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 29.04,
+          "end": 29.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "New",
+          "start": 29.16,
+          "end": 29.3,
+          "probability": 0.9287
+        },
+        {
+          "word": "Payment",
+          "start": 29.3,
+          "end": 29.76,
+          "probability": 0.9834
+        },
+        {
+          "word": "menu.",
+          "start": 29.76,
+          "end": 30.08,
+          "probability": 0.9443
+        },
+        {
+          "word": "I",
+          "start": 30.66,
+          "end": 31.18,
+          "probability": 0.9819
+        },
+        {
+          "word": "know",
+          "start": 31.18,
+          "end": 31.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 31.34,
+          "end": 31.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "OpenZoom",
+          "start": 31.56,
+          "end": 32.08,
+          "probability": 0.9902
+        },
+        {
+          "word": "uses",
+          "start": 32.08,
+          "end": 32.4,
+          "probability": 0.9771
+        },
+        {
+          "word": "policy",
+          "start": 32.4,
+          "end": 32.92,
+          "probability": 0.9175
+        },
+        {
+          "word": "level",
+          "start": 32.92,
+          "end": 33.24,
+          "probability": 0.5947
+        },
+        {
+          "word": "billing",
+          "start": 33.24,
+          "end": 33.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "with",
+          "start": 33.58,
+          "end": 33.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "cash",
+          "start": 33.8,
+          "end": 34.08,
+          "probability": 0.9629
+        },
+        {
+          "word": "separation,",
+          "start": 34.08,
+          "end": 34.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "so",
+          "start": 35.02,
+          "end": 35.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "first",
+          "start": 35.3,
+          "end": 35.58,
+          "probability": 0.9912
+        },
+        {
+          "word": "I",
+          "start": 35.58,
+          "end": 35.78,
+          "probability": 0.9897
+        },
+        {
+          "word": "select",
+          "start": 35.78,
+          "end": 36.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 36.16,
+          "end": 36.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "Designated",
+          "start": 36.32,
+          "end": 36.88,
+          "probability": 0.6885
+        },
+        {
+          "word": "Unapplied",
+          "start": 36.88,
+          "end": 37.38,
+          "probability": 0.9321
+        },
+        {
+          "word": "Fund.",
+          "start": 37.38,
+          "end": 37.7,
+          "probability": 0.9536
+        },
+        {
+          "word": "I",
+          "start": 38.12,
+          "end": 38.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 38.76,
+          "end": 39.0,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 39.0,
+          "end": 39.14,
+          "probability": 0.9878
+        },
+        {
+          "word": "Designated",
+          "start": 39.14,
+          "end": 39.7,
+          "probability": 0.9834
+        },
+        {
+          "word": "Unapplied",
+          "start": 39.7,
+          "end": 40.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "Fund",
+          "start": 40.26,
+          "end": 40.52,
+          "probability": 0.9834
+        },
+        {
+          "word": "for",
+          "start": 40.52,
+          "end": 40.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 40.68,
+          "end": 40.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "policy.",
+          "start": 40.78,
+          "end": 41.24,
+          "probability": 0.9634
+        },
+        {
+          "word": "Next",
+          "start": 42.26,
+          "end": 42.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "I",
+          "start": 42.9,
+          "end": 43.08,
+          "probability": 0.9648
+        },
+        {
+          "word": "type",
+          "start": 43.08,
+          "end": 43.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "in",
+          "start": 43.32,
+          "end": 43.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 43.46,
+          "end": 43.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "amount.",
+          "start": 43.54,
+          "end": 43.88,
+          "probability": 0.9609
+        },
+        {
+          "word": "The",
+          "start": 46.1,
+          "end": 46.74,
+          "probability": 0.9795
+        },
+        {
+          "word": "payment",
+          "start": 46.74,
+          "end": 47.0,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 47.0,
+          "end": 47.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 47.22,
+          "end": 47.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "$200.",
+          "start": 47.4,
+          "end": 47.92,
+          "probability": 0.959
+        },
+        {
+          "word": "Notice",
+          "start": 50.96,
+          "end": 51.6,
+          "probability": 0.9775
+        },
+        {
+          "word": "no",
+          "start": 51.6,
+          "end": 51.82,
+          "probability": 0.9756
+        },
+        {
+          "word": "invoice",
+          "start": 51.82,
+          "end": 52.26,
+          "probability": 0.9683
+        },
+        {
+          "word": "items",
+          "start": 52.26,
+          "end": 52.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "are",
+          "start": 52.6,
+          "end": 52.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "listed",
+          "start": 52.82,
+          "end": 53.14,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 53.14,
+          "end": 53.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 53.34,
+          "end": 53.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "moment.",
+          "start": 53.44,
+          "end": 53.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "This",
+          "start": 54.08,
+          "end": 54.54,
+          "probability": 0.9624
+        },
+        {
+          "word": "is",
+          "start": 54.54,
+          "end": 54.66,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 54.68,
+      "end": 64.02,
+      "start_formatted": "00:00:54.680",
+      "end_formatted": "00:01:04.020",
+      "text": "because our payment allocation plan has a filter that allows only billed and do invoice items. In this case, however, I want to apply this payment to planned invoice items.",
+      "words": [
+        {
+          "word": "because",
+          "start": 54.68,
+          "end": 54.9,
+          "probability": 0.3521
+        },
+        {
+          "word": "our",
+          "start": 54.9,
+          "end": 55.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "payment",
+          "start": 55.1,
+          "end": 55.38,
+          "probability": 0.6875
+        },
+        {
+          "word": "allocation",
+          "start": 55.38,
+          "end": 55.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "plan",
+          "start": 55.86,
+          "end": 56.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 56.26,
+          "end": 56.54,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 56.54,
+          "end": 56.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "filter",
+          "start": 56.66,
+          "end": 56.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 56.92,
+          "end": 57.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "allows",
+          "start": 57.1,
+          "end": 57.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "only",
+          "start": 57.4,
+          "end": 57.74,
+          "probability": 0.9834
+        },
+        {
+          "word": "billed",
+          "start": 57.74,
+          "end": 58.06,
+          "probability": 0.6812
+        },
+        {
+          "word": "and",
+          "start": 58.06,
+          "end": 58.16,
+          "probability": 0.9502
+        },
+        {
+          "word": "do",
+          "start": 58.16,
+          "end": 58.28,
+          "probability": 0.4749
+        },
+        {
+          "word": "invoice",
+          "start": 58.28,
+          "end": 58.7,
+          "probability": 0.9888
+        },
+        {
+          "word": "items.",
+          "start": 58.7,
+          "end": 59.1,
+          "probability": 0.998
+        },
+        {
+          "word": "In",
+          "start": 59.46,
+          "end": 59.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "this",
+          "start": 59.82,
+          "end": 60.02,
+          "probability": 0.999
+        },
+        {
+          "word": "case,",
+          "start": 60.02,
+          "end": 60.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "however,",
+          "start": 60.64,
+          "end": 61.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 61.32,
+          "end": 61.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "want",
+          "start": 61.54,
+          "end": 61.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 61.72,
+          "end": 61.84,
+          "probability": 0.999
+        },
+        {
+          "word": "apply",
+          "start": 61.84,
+          "end": 62.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 62.14,
+          "end": 62.38,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 62.38,
+          "end": 62.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 62.72,
+          "end": 62.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "planned",
+          "start": 62.94,
+          "end": 63.22,
+          "probability": 0.9678
+        },
+        {
+          "word": "invoice",
+          "start": 63.22,
+          "end": 63.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "items.",
+          "start": 63.58,
+          "end": 64.02,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 64.68,
+      "end": 74.4,
+      "start_formatted": "00:01:04.680",
+      "end_formatted": "00:01:14.400",
+      "text": "I need to override the behavior of the payment allocation plan. So I click Override Distribution. Now I'll change the selection for which invoice items to include.",
+      "words": [
+        {
+          "word": "I",
+          "start": 64.68,
+          "end": 65.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "need",
+          "start": 65.24,
+          "end": 65.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 65.4,
+          "end": 65.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "override",
+          "start": 65.52,
+          "end": 65.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 65.94,
+          "end": 66.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "behavior",
+          "start": 66.18,
+          "end": 66.58,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 66.58,
+          "end": 66.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 66.82,
+          "end": 66.9,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 66.9,
+          "end": 67.16,
+          "probability": 0.9639
+        },
+        {
+          "word": "allocation",
+          "start": 67.16,
+          "end": 67.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "plan.",
+          "start": 67.66,
+          "end": 68.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "So",
+          "start": 68.4,
+          "end": 68.8,
+          "probability": 0.9897
+        },
+        {
+          "word": "I",
+          "start": 68.8,
+          "end": 68.94,
+          "probability": 0.9668
+        },
+        {
+          "word": "click",
+          "start": 68.94,
+          "end": 69.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "Override",
+          "start": 69.2,
+          "end": 69.68,
+          "probability": 0.8008
+        },
+        {
+          "word": "Distribution.",
+          "start": 69.68,
+          "end": 70.28,
+          "probability": 0.8467
+        },
+        {
+          "word": "Now",
+          "start": 70.8,
+          "end": 71.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "I'll",
+          "start": 71.3,
+          "end": 71.56,
+          "probability": 0.9941
+        },
+        {
+          "word": "change",
+          "start": 71.56,
+          "end": 71.84,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 71.84,
+          "end": 72.04,
+          "probability": 0.998
+        },
+        {
+          "word": "selection",
+          "start": 72.04,
+          "end": 72.46,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 72.46,
+          "end": 72.74,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 72.74,
+          "end": 72.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 72.98,
+          "end": 73.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "items",
+          "start": 73.32,
+          "end": 73.7,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 73.7,
+          "end": 73.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "include.",
+          "start": 73.92,
+          "end": 74.4,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 75.1,
+      "end": 82.74,
+      "start_formatted": "00:01:15.100",
+      "end_formatted": "00:01:22.740",
+      "text": "I select Up to Amount Under Contract. This setting will list all unsettled invoice items, including those unplanned invoices.",
+      "words": [
+        {
+          "word": "I",
+          "start": 75.1,
+          "end": 75.74,
+          "probability": 0.9512
+        },
+        {
+          "word": "select",
+          "start": 75.74,
+          "end": 76.14,
+          "probability": 0.981
+        },
+        {
+          "word": "Up",
+          "start": 76.14,
+          "end": 76.32,
+          "probability": 0.2839
+        },
+        {
+          "word": "to",
+          "start": 76.32,
+          "end": 76.46,
+          "probability": 0.8413
+        },
+        {
+          "word": "Amount",
+          "start": 76.46,
+          "end": 76.84,
+          "probability": 0.7695
+        },
+        {
+          "word": "Under",
+          "start": 76.84,
+          "end": 77.04,
+          "probability": 0.1445
+        },
+        {
+          "word": "Contract.",
+          "start": 77.04,
+          "end": 77.48,
+          "probability": 0.9253
+        },
+        {
+          "word": "This",
+          "start": 77.92,
+          "end": 78.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "setting",
+          "start": 78.32,
+          "end": 78.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 78.6,
+          "end": 78.76,
+          "probability": 0.999
+        },
+        {
+          "word": "list",
+          "start": 78.76,
+          "end": 79.0,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 79.0,
+          "end": 79.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "unsettled",
+          "start": 79.22,
+          "end": 79.74,
+          "probability": 0.9321
+        },
+        {
+          "word": "invoice",
+          "start": 79.74,
+          "end": 80.12,
+          "probability": 0.9731
+        },
+        {
+          "word": "items,",
+          "start": 80.12,
+          "end": 80.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "including",
+          "start": 80.9,
+          "end": 81.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "those",
+          "start": 81.32,
+          "end": 81.62,
+          "probability": 0.999
+        },
+        {
+          "word": "unplanned",
+          "start": 81.62,
+          "end": 82.14,
+          "probability": 0.8232
+        },
+        {
+          "word": "invoices.",
+          "start": 82.14,
+          "end": 82.74,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 84.82,
+      "end": 99.46,
+      "start_formatted": "00:01:24.820",
+      "end_formatted": "00:01:39.460",
+      "text": "Now let's look at the invoice items that are displayed. Currently, each invoice item is listed separately. For a more concise view, I'll change the aggregate field to Summary so that the invoice item amounts are rolled up to display one row per invoice.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 84.82,
+          "end": 85.46,
+          "probability": 0.9951
+        },
+        {
+          "word": "let's",
+          "start": 85.46,
+          "end": 85.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "look",
+          "start": 85.78,
+          "end": 85.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 85.96,
+          "end": 86.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 86.06,
+          "end": 86.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 86.18,
+          "end": 86.58,
+          "probability": 0.9854
+        },
+        {
+          "word": "items",
+          "start": 86.58,
+          "end": 86.96,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 86.96,
+          "end": 87.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 87.18,
+          "end": 87.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed.",
+          "start": 87.32,
+          "end": 87.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "Currently,",
+          "start": 88.12,
+          "end": 88.72,
+          "probability": 0.999
+        },
+        {
+          "word": "each",
+          "start": 89.04,
+          "end": 89.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 89.36,
+          "end": 89.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "item",
+          "start": 89.74,
+          "end": 90.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 90.04,
+          "end": 90.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "listed",
+          "start": 90.24,
+          "end": 90.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "separately.",
+          "start": 90.58,
+          "end": 91.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 91.58,
+          "end": 92.22,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 92.22,
+          "end": 92.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "more",
+          "start": 92.36,
+          "end": 92.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "concise",
+          "start": 92.56,
+          "end": 92.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "view,",
+          "start": 92.92,
+          "end": 93.4,
+          "probability": 0.999
+        },
+        {
+          "word": "I'll",
+          "start": 93.62,
+          "end": 93.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "change",
+          "start": 93.88,
+          "end": 94.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 94.18,
+          "end": 94.38,
+          "probability": 0.999
+        },
+        {
+          "word": "aggregate",
+          "start": 94.38,
+          "end": 94.78,
+          "probability": 0.6382
+        },
+        {
+          "word": "field",
+          "start": 94.78,
+          "end": 95.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 95.18,
+          "end": 95.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "Summary",
+          "start": 95.38,
+          "end": 95.72,
+          "probability": 0.7554
+        },
+        {
+          "word": "so",
+          "start": 95.72,
+          "end": 95.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 95.9,
+          "end": 96.04,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 96.04,
+          "end": 96.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "invoice",
+          "start": 96.18,
+          "end": 96.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "item",
+          "start": 96.58,
+          "end": 96.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "amounts",
+          "start": 96.86,
+          "end": 97.2,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 97.2,
+          "end": 97.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "rolled",
+          "start": 97.36,
+          "end": 97.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "up",
+          "start": 97.58,
+          "end": 97.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 97.76,
+          "end": 97.9,
+          "probability": 0.999
+        },
+        {
+          "word": "display",
+          "start": 97.9,
+          "end": 98.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "one",
+          "start": 98.28,
+          "end": 98.58,
+          "probability": 0.916
+        },
+        {
+          "word": "row",
+          "start": 98.58,
+          "end": 98.8,
+          "probability": 0.9829
+        },
+        {
+          "word": "per",
+          "start": 98.8,
+          "end": 98.98,
+          "probability": 0.998
+        },
+        {
+          "word": "invoice.",
+          "start": 98.98,
+          "end": 99.46,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 100.18,
+      "end": 108.7,
+      "start_formatted": "00:01:40.180",
+      "end_formatted": "00:01:48.700",
+      "text": "We can easily see that the entire $200 payment will be applied by default to the next planned invoice. I'll click Execute to complete the payment.",
+      "words": [
+        {
+          "word": "We",
+          "start": 100.18,
+          "end": 100.7,
+          "probability": 0.9365
+        },
+        {
+          "word": "can",
+          "start": 100.7,
+          "end": 100.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "easily",
+          "start": 100.88,
+          "end": 101.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "see",
+          "start": 101.26,
+          "end": 101.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 101.54,
+          "end": 101.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 101.72,
+          "end": 101.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "entire",
+          "start": 101.84,
+          "end": 102.18,
+          "probability": 0.999
+        },
+        {
+          "word": "$200",
+          "start": 102.18,
+          "end": 102.8,
+          "probability": 0.9814
+        },
+        {
+          "word": "payment",
+          "start": 102.8,
+          "end": 103.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 103.44,
+          "end": 103.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 103.74,
+          "end": 103.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "applied",
+          "start": 103.86,
+          "end": 104.2,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 104.2,
+          "end": 104.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "default",
+          "start": 104.38,
+          "end": 104.74,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 104.74,
+          "end": 104.92,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 104.92,
+          "end": 105.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 105.0,
+          "end": 105.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "planned",
+          "start": 105.22,
+          "end": 105.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "invoice.",
+          "start": 105.52,
+          "end": 105.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "I'll",
+          "start": 106.48,
+          "end": 107.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "click",
+          "start": 107.0,
+          "end": 107.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "Execute",
+          "start": 107.2,
+          "end": 107.76,
+          "probability": 0.8467
+        },
+        {
+          "word": "to",
+          "start": 107.76,
+          "end": 107.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "complete",
+          "start": 107.88,
+          "end": 108.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 108.22,
+          "end": 108.38,
+          "probability": 1.0
+        },
+        {
+          "word": "payment.",
+          "start": 108.38,
+          "end": 108.7,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 110.44,
+      "end": 118.86,
+      "start_formatted": "00:01:50.440",
+      "end_formatted": "00:01:58.860",
+      "text": "OpenZoom wants to know how much their next invoice will be. I'll go to the Invoices screen. I can see that the next planned invoice will be $140.",
+      "words": [
+        {
+          "word": "OpenZoom",
+          "start": 110.44,
+          "end": 110.96,
+          "probability": 0.9614
+        },
+        {
+          "word": "wants",
+          "start": 110.96,
+          "end": 111.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 111.22,
+          "end": 111.36,
+          "probability": 1.0
+        },
+        {
+          "word": "know",
+          "start": 111.36,
+          "end": 111.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "how",
+          "start": 111.5,
+          "end": 111.66,
+          "probability": 1.0
+        },
+        {
+          "word": "much",
+          "start": 111.66,
+          "end": 111.84,
+          "probability": 1.0
+        },
+        {
+          "word": "their",
+          "start": 111.84,
+          "end": 112.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 112.02,
+          "end": 112.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 112.28,
+          "end": 112.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 112.72,
+          "end": 112.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "be.",
+          "start": 112.94,
+          "end": 113.14,
+          "probability": 1.0
+        },
+        {
+          "word": "I'll",
+          "start": 113.4,
+          "end": 113.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "go",
+          "start": 113.8,
+          "end": 113.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 113.92,
+          "end": 114.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 114.08,
+          "end": 114.26,
+          "probability": 0.998
+        },
+        {
+          "word": "Invoices",
+          "start": 114.26,
+          "end": 114.76,
+          "probability": 0.9629
+        },
+        {
+          "word": "screen.",
+          "start": 114.76,
+          "end": 115.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 115.6,
+          "end": 116.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 116.12,
+          "end": 116.28,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 116.28,
+          "end": 116.46,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 116.46,
+          "end": 116.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 116.64,
+          "end": 116.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "next",
+          "start": 116.76,
+          "end": 116.98,
+          "probability": 0.999
+        },
+        {
+          "word": "planned",
+          "start": 116.98,
+          "end": 117.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "invoice",
+          "start": 117.28,
+          "end": 117.72,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 117.72,
+          "end": 117.94,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 117.94,
+          "end": 118.08,
+          "probability": 1.0
+        },
+        {
+          "word": "$140.",
+          "start": 118.08,
+          "end": 118.86,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 118.86,
+      "end": 124.62,
+      "start_formatted": "00:01:58.860",
+      "end_formatted": "00:02:04.620",
+      "text": "This concludes our demonstration on overriding payment allocation in the Direct Bill Payment Wizard.",
+      "words": [
+        {
+          "word": "This",
+          "start": 118.86,
+          "end": 120.04,
+          "probability": 0.8672
+        },
+        {
+          "word": "concludes",
+          "start": 120.04,
+          "end": 120.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "our",
+          "start": 120.48,
+          "end": 120.68,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 120.68,
+          "end": 121.14,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 121.14,
+          "end": 121.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "overriding",
+          "start": 121.54,
+          "end": 122.12,
+          "probability": 0.9746
+        },
+        {
+          "word": "payment",
+          "start": 122.12,
+          "end": 122.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "allocation",
+          "start": 122.5,
+          "end": 122.98,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 122.98,
+          "end": 123.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 123.26,
+          "end": 123.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Direct",
+          "start": 123.36,
+          "end": 123.64,
+          "probability": 0.6841
+        },
+        {
+          "word": "Bill",
+          "start": 123.64,
+          "end": 123.86,
+          "probability": 0.7275
+        },
+        {
+          "word": "Payment",
+          "start": 123.86,
+          "end": 124.3,
+          "probability": 0.8428
+        },
+        {
+          "word": "Wizard.",
+          "start": 124.3,
+          "end": 124.62,
+          "probability": 0.8911
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 124.62,
+      "end": 124.66,
+      "start_formatted": "00:02:04.620",
+      "end_formatted": "00:02:04.660",
+      "text": "OpenZoom needs to be updated.",
+      "words": [
+        {
+          "word": "OpenZoom",
+          "start": 124.62,
+          "end": 124.66,
+          "probability": 0.0373
+        },
+        {
+          "word": "needs",
+          "start": 124.66,
+          "end": 124.66,
+          "probability": 0.0
+        },
+        {
+          "word": "to",
+          "start": 124.66,
+          "end": 124.66,
+          "probability": 0.3774
+        },
+        {
+          "word": "be",
+          "start": 124.66,
+          "end": 124.66,
+          "probability": 0.77
+        },
+        {
+          "word": "updated.",
+          "start": 124.66,
+          "end": 124.66,
+          "probability": 0.001
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 124.94,
+      "end": 124.94,
+      "start_formatted": "00:02:04.940",
+      "end_formatted": "00:02:04.940",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 11,
+      "start": 124.94,
+      "end": 124.94,
+      "start_formatted": "00:02:04.940",
+      "end_formatted": "00:02:04.940",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 12,
+      "start": 124.94,
+      "end": 124.94,
+      "start_formatted": "00:02:04.940",
+      "end_formatted": "00:02:04.940",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 13,
+      "start": 124.94,
+      "end": 124.94,
+      "start_formatted": "00:02:04.940",
+      "end_formatted": "00:02:04.940",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 14,
+      "start": 125.04,
+      "end": 125.6,
+      "start_formatted": "00:02:05.040",
+      "end_formatted": "00:02:05.600",
+      "text": "OpenZoom needs to be updated.",
+      "words": [
+        {
+          "word": "OpenZoom",
+          "start": 125.04,
+          "end": 125.6,
+          "probability": 0.9087
+        },
+        {
+          "word": "needs",
+          "start": 125.6,
+          "end": 125.6,
+          "probability": 0.8857
+        },
+        {
+          "word": "to",
+          "start": 125.6,
+          "end": 125.6,
+          "probability": 0.9893
+        },
+        {
+          "word": "be",
+          "start": 125.6,
+          "end": 125.6,
+          "probability": 0.9507
+        },
+        {
+          "word": "updated.",
+          "start": 125.6,
+          "end": 125.6,
+          "probability": 0.9712
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 126.18,
+      "end": 128.18,
+      "start_formatted": "00:02:06.180",
+      "end_formatted": "00:02:08.180",
+      "text": "OpenZoom needs to be updated.",
+      "words": [
+        {
+          "word": "OpenZoom",
+          "start": 126.18,
+          "end": 126.74,
+          "probability": 0.9277
+        },
+        {
+          "word": "needs",
+          "start": 126.74,
+          "end": 126.76,
+          "probability": 0.8926
+        },
+        {
+          "word": "to",
+          "start": 126.76,
+          "end": 127.6,
+          "probability": 0.9902
+        },
+        {
+          "word": "be",
+          "start": 127.6,
+          "end": 127.6,
+          "probability": 0.9604
+        },
+        {
+          "word": "updated.",
+          "start": 127.6,
+          "end": 128.18,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 128.18,
+      "end": 128.38,
+      "start_formatted": "00:02:08.180",
+      "end_formatted": "00:02:08.380",
+      "text": "OpenZoom needs to be updated.",
+      "words": [
+        {
+          "word": "OpenZoom",
+          "start": 128.18,
+          "end": 128.38,
+          "probability": 0.938
+        },
+        {
+          "word": "needs",
+          "start": 128.38,
+          "end": 128.38,
+          "probability": 0.8901
+        },
+        {
+          "word": "to",
+          "start": 128.38,
+          "end": 128.38,
+          "probability": 0.9907
+        },
+        {
+          "word": "be",
+          "start": 128.38,
+          "end": 128.38,
+          "probability": 0.9658
+        },
+        {
+          "word": "updated.",
+          "start": 128.38,
+          "end": 128.38,
+          "probability": 0.978
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 18,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 19,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 128.38,
+      "end": 128.38,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.380",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 128.38,
+      "end": 128.42,
+      "start_formatted": "00:02:08.380",
+      "end_formatted": "00:02:08.420",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 128.38,
+          "end": 128.42,
+          "probability": 0.1752
+        },
+        {
+          "word": "you.",
+          "start": 128.42,
+          "end": 128.42,
+          "probability": 0.998
+        }
+      ]
+    }
+  ]
+}

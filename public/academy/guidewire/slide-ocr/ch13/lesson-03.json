@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "chapter": "ch13",
+    "chapter_title": "Rating Introduction",
+    "lesson": "lesson-03",
+    "slide_count": 38,
+    "slides_with_text": 37,
+    "total_words": 1748,
+    "avg_confidence": 87.78,
+    "processing_time_seconds": 13.65,
+    "extracted_at": "2026-02-15T18:24:09.835733"
+  },
+  "full_text": "Rate Books and Rate Tables\n\nLesson\nobjectives\n\nCreate and maintain rate tables and rate\nbooks\n\nDescribe rate book life cycle and move to\nproduction\n\nDescribe the rate book matching process\nExport and import rate books and rate tables\n\n| About rate books i\n\nKalani &\nRating Analyst\n\n| understand that a rate book is a\ngroup of rate tables and rate routines.\nCan you tell me more about these?\n\nJulia\nImplementation\nArchitect\n\nYes, a rate book\nrepresents a rating\nmanual. I'll show you\n\nmore about rate books.\n\n!\n\n| Rate book Gi\n\n* Arate book represents a rating\n\nrating manual\nmanual\n\n* To implement rating in PolicyCenter,\nyou need to create a rate book for the\nrating manual being used\n\n| Review: Rating process diagram\n\n@ G\n\nZ\n>. f§_..@\n\nQuote Rating Engine selects a Rate Book. The Rating Engine calls a Rate\nRoutine for the Cost Item (for\nexample, a Coverage)\n\n« =|\nReturn them to the calling policy transaction (Quote) G\n\nThe Rating Engine constructs the\ncorresponding Worksheet with the\ncalculated results\n\n| Rate book: Implementation story\n\nGi\n\nCreation of a country-wide\nrate book and a jurisdictional\nRate Book\n\nAs an actuary or rating\nanalyst, | want to define rate\nbooks to support policy lines\nand jurisdictional\nrequirements so that | can\nbetter manage rate tables and\nrate routines\n\nRate books connect rate\ntables and rate routines for the\ninsurer to file and use for each\njurisdiction\n\n* Create a rate book for the rating manual\n\nConsider rate book structure\n\n¢ State and jurisdictional rate books can override common rates\n\n| Rate books in PolicyCenter i\n\nRate Book Details\n\nCode cp_rtm_demo_rating\n\nIncluded Rate Tables | Included Rate Routines\n\nEdition 1\n\nDescription Sample rate book Name Code Descri\nBaseRate cp_coverage_base_rate\nDeductibleFactor cp_deduct\n\nFireProtectClassFactor cp_fire_protect_class\n\nUWCompanyFactor cp_uw_company\n\n¢ In PolicyCenter, the rate book contains rate tables and rate routines\n¢ The rate book is downloadable in a spreadsheet format\n\n¢ Rate tables can be accessed through the rate book\n\n| About static rates\n\nJulia\nImplementation {\nArchitect\n\nSo now we’ve talked\nabout rate books. Any\n\nLd\n| “ questions?\n\nYes, | understand that a\nrate table contains static\nrates in a table format.\nCan you tell me more\nabout these?\n\nKalani 3\nRating Analyst \\-\n\n| Base rate table example (Personal Auto) fa\na\n\nPersonal Auto Physical Damage Group-Collision\n\nPersonal Auto Physical Damage Group-Collision California 94404 85\nPersonal Auto Physical Damage Group-Collision- Massachusetts 90\nLimited Coverage\n\nPersonal Auto Physical Damage Group-Collision- Michigan 90\n\nLimited Coverage\n¢ Rate tables are made up of the numerical values required to rate a policy\n¢ Multiple table implementations contributes to policy costs\n¢ Examples of rate tables:\n* Base rate table\n* Coverage factor table\n\n¢ Underwriting company\n\n| Rate tables: Base Rate (Commercial Property) fa\n\nBuilding/Contents Category - Business Basic cpDeductGrp1\n\nPersonal Property Coverage\n\nBuilding/Contents Category - Business Broad cpDeductBroad 0.08\nPersonal Property Coverage\n\nBuilding/Contents Category - Business Special cpDeductGrpSpecial 0\n\nPersonal Property Coverage\n* These examples are in the PolicyCenter base configuration\n\n¢ Rate tables can be exported to a spreadsheet\n\n| Rate table: Implementation story Gi\n\nSet up Rate Table As an actuary or rating The Rate Tables in\nanalyst, | wantto be able to _—— PolicyCenter represent the\ndefine and populate the lookups for Rate Factors\n\nrequired rate tables.\n\n¢ Rate tables are organized in columns\n\n¢ Rate tables contain parameter values such as a coverage term\n\n| Rate table list in PolicyCenter\n\n| Included Rate Tables | Included Rate Routines\n\nName >\n\nAutomaticRenewalCap\n\nBaseRate\nCoverageDiscount\nCoverageFactor\nDiscount\nDriverAgeFactor\nInterpolationParam\n\nMultipolicyDiscount\n\nCode >\npa_renewal_cap\npa_coverage_base_rate\npa_coverages_discount\npa_coverages\npa_discount\npa_driver_age\npa_interpolation_param\n\npa_multiple_policy\n\nDescription >\n\nUsage >\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\n\nLookup &\nMemory\nMemory\nMemory\nMemory\nMemory\nMemory\nMemory\nMemory\n\n| Rate table list in PolicyCenter: DrivingAgeFactor Gi\n\n| Included Rate Tables | Included Rate Routines DriverAgeFactor\n\n. . Code pa_driver_age\nName > Code > up\nDescription\nAutomaticRenewalCap pa_renewal_cap ory\nPolicy Line Personal Auto Line\nBaseRate pa_coverage_base_rate ory\nCoverageDiscount pa_coverages_discount . ory\nIn Rate Book PARTM Demo Rating -1\nCoverageFactor pa_coverages usage Owned-Shared ory\nDiscount pa_discount ory\nRate Table Content\nory\nInterpolationParam pa_interpolation_param ory\nAGE_MIN™ AGE_MAX* * Factor\nMultipolicyDiscount pa_multiple_policy 25 125 ory\n\n26 1\n\n| Let's talk about rate table definitions i\n\nJulia\nImplementation {\nArchitect\n\n!\n\nNext, let’s talk about\nrate table definitions.\n\nKalani °\nYes, | remember that a Rating Analyst We\nrate table definition\ndescribes the\nparameters and factors\nfor a particular rate table.\nPlease tell me more.\n\n| Rate table definition\n\n* Specifies parameters and the factors\nrequired for a rate table\n\n¢ Example: the DriverAgeFactor table\nmust be defined with specific\ninformation\n\n* Basics\n« Parameters (for example, max/min)\n¢ Factors (Column code, data type)\n\n« Argument Sources (Parameter set,\nParameter)\n\n+ Usage\n\nal\n\n| Rate table definition: Personal Auto example i\n\n« Rate table definition specifies parameters and factors required for a rate table\n* The rate table definition sets out what the rate table can contain\n\n¢ The following is a rate table example about “driver age”\n\n25 or under 1.25\n26 or over 26 1\n¢ The table contents are defined by:\n\n¢ Parameters: the driver age parameter is compared using AGE_MIN and\nAGE_MAX\n\n¢ Factors: a resulting decimal value (up to three decimal places)\n\n| Rate table definition: Personal Auto example Gi\n\n¢ In PolicyCenter, you\ndefine the details about\nthe rate table contents\nusing the rate table EF\ndefinition option\n\n| Basics | Parameters || Factors Argument Sources Usage\n\nLabel Priority Matching Rule DataType Column Labels\n¢ The rate table definition\nis editable in the user\n\ninterface\n\nBasics | Parameters Factors | Argument Sources\n\nUsage\n\nSe\n\nColumnCode > Priority > DataType > ColumnLabels\n\n| Rate book lifecycle\n\nKalani @\n\nRating Analyst\n\n)\n\nOK, so what does the rate\nbook life cycle look like?\n\n| Rate books progress though\na lifecycle as they are\ncreated, reviewed, and\napproved for use in\nproduction. I'll show you how\nthis works.\n\nJulia\nImplementation\nArchitect\n\ni\n\nRate book lifecycle and move to production fa\n\n¢ Default implementation of the rate book life cycle\n\nAdd new RB or Version existing Change RB Promote to Stage\nactive RB (status=Draft) content (status=Stage)\nTest RB\n\n‘\n\n[seeararesiarncton | [ettenernreray | =\nReturn to Draft\n(status=Draft)\n\n¢ Active rate books cannot be modified including a change in status\n\nNo\n\n| Rate tables and rate routines are grouped fa\n\nKalani J\nRating Analyst How do rate books and rate\ntables work with rate routines?\n\nJulia\nImplementation\n\nA rate book groups rate Architect Ws\ntables and rate routines\nso that they can be\nversioned together.\n\n!\n\n| Rate tables, rate books, and rate routines G\n\n* To calculate a rate, the rating engine\nRate book :\n(editions) selects the appropriate rate book\nedition and rate table version\nA set of rate * The rating engine executes the rate\n\nnone routine in the rate book to get a cost\n\nA set of rate\nroutines\n\n(versions)\n\n| Rate table versions Gi\n\n¢ PolicyCenter creates new rate table\nversions when editing a rate table in\na rate book\nG — * The rate book includes the new rate\ntable\n\nla d * If you want to change rate tables in\n\nan active rate book, creating a new\n\n« rate book edition will be required\n\n| Rate book editions Gi\n\n« Helps manage rate tables in active\nrate books\n[ ( * If changes are to be made to the rate\n\ntable content, the changes are\ncommitted to a new rate book\n\nLv g edition\nel,\n\n| Rate books and rate book editions Gi\n\nRate book Rate tables Rate book\n\n“Edition 1” “Edition 2”\n\n| Selecting a rate book Gi\n\nJulia\nImplementation \\\nArchitect\n\n4\nad\n\nDo you understand how\nthe rating engine\nselects a rate book for\nuse during policy\n\nrating? Kalani aG\nRating Analyst © =\n\nNo, please explain\nhow this works.\n\n| Rate book matching\n\n« Arating query selects the most appropriate rate book edition, to use for policy\nrating\n\n« Rating selects the most appropriate rate book with or without a cascaded lookup\n\n| Required attributes for rate book candidates Gi\n\n¢ Activation Date: The rate book\n\n| vatic 7\nactivation date must be earlier than\n\ni [| the policy Rate as of Date\n\ni\n\n¢ The rate book status setting is set\nto Minimum Rating or higher\n\n¢ Effective/Expiration Dates: The\nreference date must be later than\nor equal to the rate book’s effective\ndate, yet earlier than the expiration\ndate\n\n| Which rate book (RB) should be used?\n3: sept 10, also Feb 12,\n\nRBZ\nOct\n\nRBX\nSep 2016\n\nfnew) RBs X, Y, and Z\n016 Effective Date: Jan 1, 2017\n\nRB Y\nSep 2016\n\n* Submission: Sept 10, 2016 — Rate book Y\n« Rate books effective on January 1, 2017\n* Change: Which rates should it use?\n\n| Demonstration G\n\nExport and import rate books\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — Describe the relationship among rate routines, rate tables and rate\n: books.\n4\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n_— — Describe the relationship among rate routines, rate tables and rate\n¢ books.\n4\n\nArate book is a group of rate tables and rate routines.\n\nSS oe ooo ee oe oOoOe SoD\n\nQuestion\n\n_- — Whatis the purpose of a rate table definition?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer fa\n\n_— — Whatis the purpose of a rate table definition?\n\n¢\noe Arate table definition describes the parameters and factors for a particular rate table.\n\nSS oe ooo ee oe oOoOe SoD\n\nQuestion\n\n_— — Explain the concept of rate table versions and rate book editions.\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer fa\n\n_— — Explain the concept of rate table versions and rate book editions.\n¢\noe PolicyCenter creates new rate table versions when you edit a rate table in a rate book.\nActive rate books cannot be edited. You must create a new rate book edition to be\nable to edit a rate table.\n\nSS oe ooo ee oe oOoOe SoD\n\nLesson\nobjectives\nreview\n\nCreate and maintain rate tables and rate\nbooks\n\nDescribe rate book life cycle and move to\nproduction\n\nDescribe the rate book matching process\nExport and import rate books and rate tables\n\n| Student exercise\n\nCreate and edit rate books",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Rate Books and Rate Tables",
+      "word_count": 5,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nCreate and maintain rate tables and rate\nbooks\n\nDescribe rate book life cycle and move to\nproduction\n\nDescribe the rate book matching process\nExport and import rate books and rate tables",
+      "word_count": 33,
+      "avg_confidence": 95.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| About rate books i\n\nKalani &\nRating Analyst\n\n| understand that a rate book is a\ngroup of rate tables and rate routines.\nCan you tell me more about these?\n\nJulia\nImplementation\nArchitect\n\nYes, a rate book\nrepresents a rating\nmanual. I'll show you\n\nmore about rate books.\n\n!",
+      "word_count": 50,
+      "avg_confidence": 92.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Rate book Gi\n\n* Arate book represents a rating\n\nrating manual\nmanual\n\n* To implement rating in PolicyCenter,\nyou need to create a rate book for the\nrating manual being used",
+      "word_count": 32,
+      "avg_confidence": 88.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Review: Rating process diagram\n\n@ G\n\nZ\n>. f§_..@\n\nQuote Rating Engine selects a Rate Book. The Rating Engine calls a Rate\nRoutine for the Cost Item (for\nexample, a Coverage)\n\n« =|\nReturn them to the calling policy transaction (Quote) G\n\nThe Rating Engine constructs the\ncorresponding Worksheet with the\ncalculated results",
+      "word_count": 54,
+      "avg_confidence": 91.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Rate book: Implementation story\n\nGi\n\nCreation of a country-wide\nrate book and a jurisdictional\nRate Book\n\nAs an actuary or rating\nanalyst, | want to define rate\nbooks to support policy lines\nand jurisdictional\nrequirements so that | can\nbetter manage rate tables and\nrate routines\n\nRate books connect rate\ntables and rate routines for the\ninsurer to file and use for each\njurisdiction\n\n* Create a rate book for the rating manual\n\nConsider rate book structure\n\n¢ State and jurisdictional rate books can override common rates",
+      "word_count": 88,
+      "avg_confidence": 93.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Rate books in PolicyCenter i\n\nRate Book Details\n\nCode cp_rtm_demo_rating\n\nIncluded Rate Tables | Included Rate Routines\n\nEdition 1\n\nDescription Sample rate book Name Code Descri\nBaseRate cp_coverage_base_rate\nDeductibleFactor cp_deduct\n\nFireProtectClassFactor cp_fire_protect_class\n\nUWCompanyFactor cp_uw_company\n\n¢ In PolicyCenter, the rate book contains rate tables and rate routines\n¢ The rate book is downloadable in a spreadsheet format\n\n¢ Rate tables can be accessed through the rate book",
+      "word_count": 67,
+      "avg_confidence": 89.28,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| About static rates\n\nJulia\nImplementation {\nArchitect\n\nSo now we’ve talked\nabout rate books. Any\n\nLd\n| “ questions?\n\nYes, | understand that a\nrate table contains static\nrates in a table format.\nCan you tell me more\nabout these?\n\nKalani 3\nRating Analyst \\-",
+      "word_count": 46,
+      "avg_confidence": 88.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Base rate table example (Personal Auto) fa\na\n\nPersonal Auto Physical Damage Group-Collision\n\nPersonal Auto Physical Damage Group-Collision California 94404 85\nPersonal Auto Physical Damage Group-Collision- Massachusetts 90\nLimited Coverage\n\nPersonal Auto Physical Damage Group-Collision- Michigan 90\n\nLimited Coverage\n¢ Rate tables are made up of the numerical values required to rate a policy\n¢ Multiple table implementations contributes to policy costs\n¢ Examples of rate tables:\n* Base rate table\n* Coverage factor table\n\n¢ Underwriting company",
+      "word_count": 79,
+      "avg_confidence": 89.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Rate tables: Base Rate (Commercial Property) fa\n\nBuilding/Contents Category - Business Basic cpDeductGrp1\n\nPersonal Property Coverage\n\nBuilding/Contents Category - Business Broad cpDeductBroad 0.08\nPersonal Property Coverage\n\nBuilding/Contents Category - Business Special cpDeductGrpSpecial 0\n\nPersonal Property Coverage\n* These examples are in the PolicyCenter base configuration\n\n¢ Rate tables can be exported to a spreadsheet",
+      "word_count": 55,
+      "avg_confidence": 91.45,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Rate table: Implementation story Gi\n\nSet up Rate Table As an actuary or rating The Rate Tables in\nanalyst, | wantto be able to _—— PolicyCenter represent the\ndefine and populate the lookups for Rate Factors\n\nrequired rate tables.\n\n¢ Rate tables are organized in columns\n\n¢ Rate tables contain parameter values such as a coverage term",
+      "word_count": 58,
+      "avg_confidence": 87.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Rate table list in PolicyCenter\n\n| Included Rate Tables | Included Rate Routines\n\nName >\n\nAutomaticRenewalCap\n\nBaseRate\nCoverageDiscount\nCoverageFactor\nDiscount\nDriverAgeFactor\nInterpolationParam\n\nMultipolicyDiscount\n\nCode >\npa_renewal_cap\npa_coverage_base_rate\npa_coverages_discount\npa_coverages\npa_discount\npa_driver_age\npa_interpolation_param\n\npa_multiple_policy\n\nDescription >\n\nUsage >\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\nOwned-Shared\n\nLookup &\nMemory\nMemory\nMemory\nMemory\nMemory\nMemory\nMemory\nMemory",
+      "word_count": 56,
+      "avg_confidence": 90.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Rate table list in PolicyCenter: DrivingAgeFactor Gi\n\n| Included Rate Tables | Included Rate Routines DriverAgeFactor\n\n. . Code pa_driver_age\nName > Code > up\nDescription\nAutomaticRenewalCap pa_renewal_cap ory\nPolicy Line Personal Auto Line\nBaseRate pa_coverage_base_rate ory\nCoverageDiscount pa_coverages_discount . ory\nIn Rate Book PARTM Demo Rating -1\nCoverageFactor pa_coverages usage Owned-Shared ory\nDiscount pa_discount ory\nRate Table Content\nory\nInterpolationParam pa_interpolation_param ory\nAGE_MIN™ AGE_MAX* * Factor\nMultipolicyDiscount pa_multiple_policy 25 125 ory\n\n26 1",
+      "word_count": 75,
+      "avg_confidence": 83.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Let's talk about rate table definitions i\n\nJulia\nImplementation {\nArchitect\n\n!\n\nNext, let’s talk about\nrate table definitions.\n\nKalani °\nYes, | remember that a Rating Analyst We\nrate table definition\ndescribes the\nparameters and factors\nfor a particular rate table.\nPlease tell me more.",
+      "word_count": 47,
+      "avg_confidence": 89.44,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Rate table definition\n\n* Specifies parameters and the factors\nrequired for a rate table\n\n¢ Example: the DriverAgeFactor table\nmust be defined with specific\ninformation\n\n* Basics\n« Parameters (for example, max/min)\n¢ Factors (Column code, data type)\n\n« Argument Sources (Parameter set,\nParameter)\n\n+ Usage\n\nal",
+      "word_count": 48,
+      "avg_confidence": 84.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Rate table definition: Personal Auto example i\n\n« Rate table definition specifies parameters and factors required for a rate table\n* The rate table definition sets out what the rate table can contain\n\n¢ The following is a rate table example about “driver age”\n\n25 or under 1.25\n26 or over 26 1\n¢ The table contents are defined by:\n\n¢ Parameters: the driver age parameter is compared using AGE_MIN and\nAGE_MAX\n\n¢ Factors: a resulting decimal value (up to three decimal places)",
+      "word_count": 84,
+      "avg_confidence": 91.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Rate table definition: Personal Auto example Gi\n\n¢ In PolicyCenter, you\ndefine the details about\nthe rate table contents\nusing the rate table EF\ndefinition option\n\n| Basics | Parameters || Factors Argument Sources Usage\n\nLabel Priority Matching Rule DataType Column Labels\n¢ The rate table definition\nis editable in the user\n\ninterface\n\nBasics | Parameters Factors | Argument Sources\n\nUsage\n\nSe\n\nColumnCode > Priority > DataType > ColumnLabels",
+      "word_count": 70,
+      "avg_confidence": 86.09,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Rate book lifecycle\n\nKalani @\n\nRating Analyst\n\n)\n\nOK, so what does the rate\nbook life cycle look like?\n\n| Rate books progress though\na lifecycle as they are\ncreated, reviewed, and\napproved for use in\nproduction. I'll show you how\nthis works.\n\nJulia\nImplementation\nArchitect\n\ni",
+      "word_count": 48,
+      "avg_confidence": 91.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Rate book lifecycle and move to production fa\n\n¢ Default implementation of the rate book life cycle\n\nAdd new RB or Version existing Change RB Promote to Stage\nactive RB (status=Draft) content (status=Stage)\nTest RB\n\n‘\n\n[seeararesiarncton | [ettenernreray | =\nReturn to Draft\n(status=Draft)\n\n¢ Active rate books cannot be modified including a change in status\n\nNo",
+      "word_count": 58,
+      "avg_confidence": 91.48,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Rate tables and rate routines are grouped fa\n\nKalani J\nRating Analyst How do rate books and rate\ntables work with rate routines?\n\nJulia\nImplementation\n\nA rate book groups rate Architect Ws\ntables and rate routines\nso that they can be\nversioned together.\n\n!",
+      "word_count": 45,
+      "avg_confidence": 91.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Rate tables, rate books, and rate routines G\n\n* To calculate a rate, the rating engine\nRate book :\n(editions) selects the appropriate rate book\nedition and rate table version\nA set of rate * The rating engine executes the rate\n\nnone routine in the rate book to get a cost\n\nA set of rate\nroutines\n\n(versions)",
+      "word_count": 58,
+      "avg_confidence": 86.15,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Rate table versions Gi\n\n¢ PolicyCenter creates new rate table\nversions when editing a rate table in\na rate book\nG — * The rate book includes the new rate\ntable\n\nla d * If you want to change rate tables in\n\nan active rate book, creating a new\n\n« rate book edition will be required",
+      "word_count": 57,
+      "avg_confidence": 86.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Rate book editions Gi\n\n« Helps manage rate tables in active\nrate books\n[ ( * If changes are to be made to the rate\n\ntable content, the changes are\ncommitted to a new rate book\n\nLv g edition\nel,",
+      "word_count": 41,
+      "avg_confidence": 84.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Rate books and rate book editions Gi\n\nRate book Rate tables Rate book\n\n“Edition 1” “Edition 2”",
+      "word_count": 18,
+      "avg_confidence": 93.16,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Selecting a rate book Gi\n\nJulia\nImplementation \\\nArchitect\n\n4\nad\n\nDo you understand how\nthe rating engine\nselects a rate book for\nuse during policy\n\nrating? Kalani aG\nRating Analyst © =\n\nNo, please explain\nhow this works.",
+      "word_count": 40,
+      "avg_confidence": 87.93,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Rate book matching\n\n« Arating query selects the most appropriate rate book edition, to use for policy\nrating\n\n« Rating selects the most appropriate rate book with or without a cascaded lookup",
+      "word_count": 33,
+      "avg_confidence": 91.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Required attributes for rate book candidates Gi\n\n¢ Activation Date: The rate book\n\n| vatic 7\nactivation date must be earlier than\n\ni [| the policy Rate as of Date\n\ni\n\n¢ The rate book status setting is set\nto Minimum Rating or higher\n\n¢ Effective/Expiration Dates: The\nreference date must be later than\nor equal to the rate book’s effective\ndate, yet earlier than the expiration\ndate",
+      "word_count": 69,
+      "avg_confidence": 87.12,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Which rate book (RB) should be used?\n3: sept 10, also Feb 12,\n\nRBZ\nOct\n\nRBX\nSep 2016\n\nfnew) RBs X, Y, and Z\n016 Effective Date: Jan 1, 2017\n\nRB Y\nSep 2016\n\n* Submission: Sept 10, 2016 — Rate book Y\n« Rate books effective on January 1, 2017\n* Change: Which rates should it use?",
+      "word_count": 59,
+      "avg_confidence": 84.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Demonstration G\n\nExport and import rate books\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question\n\n_— — Describe the relationship among rate routines, rate tables and rate\n: books.\n4\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 22,
+      "avg_confidence": 74.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer\n\n_— — Describe the relationship among rate routines, rate tables and rate\n¢ books.\n4\n\nArate book is a group of rate tables and rate routines.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 34,
+      "avg_confidence": 78.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question\n\n_- — Whatis the purpose of a rate table definition?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 20,
+      "avg_confidence": 66.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer fa\n\n_— — Whatis the purpose of a rate table definition?\n\n¢\noe Arate table definition describes the parameters and factors for a particular rate table.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 34,
+      "avg_confidence": 75.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question\n\n_— — Explain the concept of rate table versions and rate book editions.\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 23,
+      "avg_confidence": 73.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer fa\n\n_— — Explain the concept of rate table versions and rate book editions.\n¢\noe PolicyCenter creates new rate table versions when you edit a rate table in a rate book.\nActive rate books cannot be edited. You must create a new rate book edition to be\nable to edit a rate table.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 62,
+      "avg_confidence": 86.16,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Lesson\nobjectives\nreview\n\nCreate and maintain rate tables and rate\nbooks\n\nDescribe rate book life cycle and move to\nproduction\n\nDescribe the rate book matching process\nExport and import rate books and rate tables",
+      "word_count": 34,
+      "avg_confidence": 95.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "| Student exercise\n\nCreate and edit rate books",
+      "word_count": 8,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

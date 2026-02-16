@@ -1,0 +1,5823 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_03_01.mp4",
+    "video_stem": "CC_03_01",
+    "duration_seconds": 336.92,
+    "duration_formatted": "00:05:36.920",
+    "segment_count": 75,
+    "word_count": 841,
+    "avg_confidence": 0.9556,
+    "transcription_time_seconds": 29.74,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:33:00.479628"
+  },
+  "full_text": "In this demo, I'll review claim intake from a user's perspective, and at the same time take a look at it from behind the scenes in Studio's PCF files. I'm logged on as Darlene Olson, an adjuster. I receive a call from Jennifer Albee at Lennar Construction, reporting that a worker has been injured, so I start a new claim. Notice, by the way, that the title says that this is step 1. I search for the Lennar Construction policy. There is only one policy matching this search, so it is automatically selected. Because it is a worker's compensation policy, the header changes, indicating that this is step 1 of 4. I'll type CTRL-SHIFT-I to view the details of the PCF behind this step. The screen I am viewing is part of the new claim wizard, also called the FNAL wizard. The screen is the FNAL wizard underscore find policy screen. Note that the naming can be used as part of the new claim wizard, also called the FNAL wizard. The convention for the screens in a wizard is wizard name underscore screen name. Let's look at this in Studio. Looking at this screen, I notice some fields called shared section modes, which I'll explain in the next demo. But what I want to show you right now, is that, if I select search in this field, I now see the fields I saw in the UI. Speaking of the UI, Ms. Albee tells me that the injury occurred at the beginning of today's morning shift, at 8am. Moving on to the next page of the new claim wizard. The injury occurred at the company's headquarters. Ms. Albee is the supervisor of the injured employee, 1 Edward Teach. I add Mr. Teach. I add Mr. Teach as the injured employee. Ms. Albee has also provided me with a total of statements, Mr.Teach's social security number. I'll type Alt Shift I again. I'm still viewing the FNUL wizard, and now the screen is the basic info screen. At this point, I want to show you the structure of the wizard itself. I open FNULwizard.pcf. Structurally, a wizard is simply a list of steps. A wizard has some interesting properties. The first is menu actions. You may recall from location groups that this defines the actions menu that will appear. It also has the standard claim info bar and tab bar. The cancel warning property specifies the text of a pop-up message that appears if you cancel the claim before finishing the wizard. This message should be stored as a display key. The wizard goes through the steps in order. You can create step sets that group steps, so that you can make them available or unavailable together. The full wizard step set is the main body of the FNUL wizard. Note that its visibility property is true only if the old wizard step property is false, which is the default. This exists for backwards compatibility. Within the step set, the individual steps have their own visible and available conditions. The only step for which these do not simply default to true is the services step, which does not make sense for some policy types. The services step determines its availability by a property coded in the wizard. The code for a servicer's step available checks against a list of lost types for which a services step makes sense. In the base configuration, these include auto and property. Each step in the wizard has a screen property. This identifies the signature of a screen which will be displayed when the wizard reaches that step. Each step also has a title property, which references a display key. Note that this display key takes variables that reference the current step number and the total number of steps for the wizard. Finally, let's look at two special types of step. The first is the quick claim step. A quick claim step bypasses the normal set of steps and inputs the essential information on one screen. The quick claim step has a property called condition, which determines whether it is available. For example, the quick claim auto step is available only if the loss type is auto. The decision to use the quick claim step is made by the user in the first step of the wizard. Some steps are independent of the wizard's built-in sequencing. They are available from anywhere in the wizard, except for the first step, where the policy is found. Independent steps have their independent property set to true. Independent steps are usually grouped in a special step set called an independent wizard step set, which appears at the end of the wizard steps. Grouping in this manner is a recommended standard, but not required. Any step marked as independent will be an independent step. The independent steps for the FNAL wizard include parties involved, policy, documents, and notes. This concludes our tour of wizard structure, so I'll cancel the claim now. This ends the wizard structure demonstration.                  DEMONSTRATION  DEMONSTRATION           DEMONSTRATION Thank you.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 18.34,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:18.340",
+      "text": "In this demo, I'll review claim intake from a user's perspective, and at the same time take a look at it from behind the scenes in Studio's PCF files. I'm logged on as Darlene Olson, an adjuster. I receive a call from Jennifer Albee at Lennar Construction, reporting that a worker has been injured, so I start a new claim.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.14,
+          "probability": 0.9819
+        },
+        {
+          "word": "this",
+          "start": 0.14,
+          "end": 0.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "demo,",
+          "start": 0.3,
+          "end": 0.6,
+          "probability": 0.9932
+        },
+        {
+          "word": "I'll",
+          "start": 0.84,
+          "end": 1.16,
+          "probability": 0.9907
+        },
+        {
+          "word": "review",
+          "start": 1.16,
+          "end": 1.44,
+          "probability": 0.9878
+        },
+        {
+          "word": "claim",
+          "start": 1.44,
+          "end": 1.72,
+          "probability": 0.855
+        },
+        {
+          "word": "intake",
+          "start": 1.72,
+          "end": 2.08,
+          "probability": 0.9902
+        },
+        {
+          "word": "from",
+          "start": 2.08,
+          "end": 2.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 2.34,
+          "end": 2.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "user's",
+          "start": 2.5,
+          "end": 2.86,
+          "probability": 0.9893
+        },
+        {
+          "word": "perspective,",
+          "start": 2.86,
+          "end": 3.36,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 3.74,
+          "end": 3.98,
+          "probability": 0.978
+        },
+        {
+          "word": "at",
+          "start": 3.98,
+          "end": 4.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 4.1,
+          "end": 4.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "same",
+          "start": 4.2,
+          "end": 4.46,
+          "probability": 0.999
+        },
+        {
+          "word": "time",
+          "start": 4.46,
+          "end": 4.72,
+          "probability": 0.9771
+        },
+        {
+          "word": "take",
+          "start": 4.72,
+          "end": 4.98,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 4.98,
+          "end": 5.1,
+          "probability": 0.999
+        },
+        {
+          "word": "look",
+          "start": 5.1,
+          "end": 5.26,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 5.26,
+          "end": 5.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "it",
+          "start": 5.38,
+          "end": 5.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "from",
+          "start": 5.48,
+          "end": 5.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "behind",
+          "start": 5.62,
+          "end": 5.94,
+          "probability": 0.9722
+        },
+        {
+          "word": "the",
+          "start": 5.94,
+          "end": 6.12,
+          "probability": 0.8091
+        },
+        {
+          "word": "scenes",
+          "start": 6.12,
+          "end": 6.4,
+          "probability": 0.9922
+        },
+        {
+          "word": "in",
+          "start": 6.4,
+          "end": 6.62,
+          "probability": 0.9751
+        },
+        {
+          "word": "Studio's",
+          "start": 6.62,
+          "end": 7.22,
+          "probability": 0.7837
+        },
+        {
+          "word": "PCF",
+          "start": 7.22,
+          "end": 7.82,
+          "probability": 0.9575
+        },
+        {
+          "word": "files.",
+          "start": 7.82,
+          "end": 8.2,
+          "probability": 0.9844
+        },
+        {
+          "word": "I'm",
+          "start": 8.52,
+          "end": 9.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "logged",
+          "start": 9.02,
+          "end": 9.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "on",
+          "start": 9.26,
+          "end": 9.42,
+          "probability": 0.9917
+        },
+        {
+          "word": "as",
+          "start": 9.42,
+          "end": 9.54,
+          "probability": 0.9888
+        },
+        {
+          "word": "Darlene",
+          "start": 9.54,
+          "end": 9.94,
+          "probability": 0.9185
+        },
+        {
+          "word": "Olson,",
+          "start": 9.94,
+          "end": 10.36,
+          "probability": 0.8115
+        },
+        {
+          "word": "an",
+          "start": 10.56,
+          "end": 10.82,
+          "probability": 0.9854
+        },
+        {
+          "word": "adjuster.",
+          "start": 10.82,
+          "end": 11.34,
+          "probability": 0.9814
+        },
+        {
+          "word": "I",
+          "start": 11.58,
+          "end": 11.9,
+          "probability": 0.999
+        },
+        {
+          "word": "receive",
+          "start": 11.9,
+          "end": 12.26,
+          "probability": 0.9902
+        },
+        {
+          "word": "a",
+          "start": 12.26,
+          "end": 12.44,
+          "probability": 0.999
+        },
+        {
+          "word": "call",
+          "start": 12.44,
+          "end": 12.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "from",
+          "start": 12.66,
+          "end": 12.86,
+          "probability": 0.999
+        },
+        {
+          "word": "Jennifer",
+          "start": 12.86,
+          "end": 13.2,
+          "probability": 0.9761
+        },
+        {
+          "word": "Albee",
+          "start": 13.2,
+          "end": 13.66,
+          "probability": 0.6519
+        },
+        {
+          "word": "at",
+          "start": 13.66,
+          "end": 13.84,
+          "probability": 0.9849
+        },
+        {
+          "word": "Lennar",
+          "start": 13.84,
+          "end": 14.06,
+          "probability": 0.7251
+        },
+        {
+          "word": "Construction,",
+          "start": 14.06,
+          "end": 14.56,
+          "probability": 0.9663
+        },
+        {
+          "word": "reporting",
+          "start": 15.02,
+          "end": 15.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "that",
+          "start": 15.54,
+          "end": 15.72,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 15.72,
+          "end": 15.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "worker",
+          "start": 15.84,
+          "end": 16.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "has",
+          "start": 16.08,
+          "end": 16.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "been",
+          "start": 16.32,
+          "end": 16.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "injured,",
+          "start": 16.46,
+          "end": 16.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "so",
+          "start": 17.08,
+          "end": 17.34,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 17.34,
+          "end": 17.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "start",
+          "start": 17.5,
+          "end": 17.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 17.76,
+          "end": 17.9,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 17.9,
+          "end": 18.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim.",
+          "start": 18.02,
+          "end": 18.34,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 22.54,
+      "end": 28.7,
+      "start_formatted": "00:00:22.540",
+      "end_formatted": "00:00:28.700",
+      "text": "Notice, by the way, that the title says that this is step 1. I search for the Lennar Construction policy.",
+      "words": [
+        {
+          "word": "Notice,",
+          "start": 22.54,
+          "end": 23.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "by",
+          "start": 23.26,
+          "end": 23.48,
+          "probability": 0.9658
+        },
+        {
+          "word": "the",
+          "start": 23.48,
+          "end": 23.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "way,",
+          "start": 23.62,
+          "end": 23.88,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 24.08,
+          "end": 24.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 24.32,
+          "end": 24.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "title",
+          "start": 24.44,
+          "end": 24.7,
+          "probability": 0.9927
+        },
+        {
+          "word": "says",
+          "start": 24.7,
+          "end": 25.02,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 25.02,
+          "end": 25.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 25.2,
+          "end": 25.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 25.4,
+          "end": 25.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "step",
+          "start": 25.54,
+          "end": 25.78,
+          "probability": 0.6914
+        },
+        {
+          "word": "1.",
+          "start": 25.78,
+          "end": 26.06,
+          "probability": 0.5278
+        },
+        {
+          "word": "I",
+          "start": 26.32,
+          "end": 26.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "search",
+          "start": 26.66,
+          "end": 26.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "for",
+          "start": 26.98,
+          "end": 27.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 27.16,
+          "end": 27.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "Lennar",
+          "start": 27.24,
+          "end": 27.52,
+          "probability": 0.9834
+        },
+        {
+          "word": "Construction",
+          "start": 27.52,
+          "end": 28.04,
+          "probability": 0.9199
+        },
+        {
+          "word": "policy.",
+          "start": 28.04,
+          "end": 28.7,
+          "probability": 0.644
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 34.26,
+      "end": 59.98,
+      "start_formatted": "00:00:34.260",
+      "end_formatted": "00:00:59.980",
+      "text": "There is only one policy matching this search, so it is automatically selected. Because it is a worker's compensation policy, the header changes, indicating that this is step 1 of 4. I'll type CTRL-SHIFT-I to view the details of the PCF behind this step. The screen I am viewing is part of the new claim wizard, also called the FNAL wizard. The screen is the FNAL wizard underscore find policy screen. Note that the naming can be used as part of the new claim wizard, also called the FNAL wizard.",
+      "words": [
+        {
+          "word": "There",
+          "start": 34.26,
+          "end": 34.78,
+          "probability": 0.79
+        },
+        {
+          "word": "is",
+          "start": 34.78,
+          "end": 34.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "only",
+          "start": 34.92,
+          "end": 35.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "one",
+          "start": 35.14,
+          "end": 35.4,
+          "probability": 0.9482
+        },
+        {
+          "word": "policy",
+          "start": 35.4,
+          "end": 35.92,
+          "probability": 0.9653
+        },
+        {
+          "word": "matching",
+          "start": 35.92,
+          "end": 36.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 36.3,
+          "end": 36.56,
+          "probability": 0.8306
+        },
+        {
+          "word": "search,",
+          "start": 36.56,
+          "end": 36.9,
+          "probability": 0.9854
+        },
+        {
+          "word": "so",
+          "start": 37.08,
+          "end": 37.38,
+          "probability": 0.9897
+        },
+        {
+          "word": "it",
+          "start": 37.38,
+          "end": 37.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 37.54,
+          "end": 37.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "automatically",
+          "start": 37.66,
+          "end": 38.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "selected.",
+          "start": 38.18,
+          "end": 38.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "Because",
+          "start": 39.2,
+          "end": 39.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "it",
+          "start": 39.72,
+          "end": 39.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 39.88,
+          "end": 40.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 40.0,
+          "end": 40.1,
+          "probability": 0.9912
+        },
+        {
+          "word": "worker's",
+          "start": 40.1,
+          "end": 40.54,
+          "probability": 0.6924
+        },
+        {
+          "word": "compensation",
+          "start": 40.54,
+          "end": 41.14,
+          "probability": 0.9878
+        },
+        {
+          "word": "policy,",
+          "start": 41.14,
+          "end": 41.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 42.12,
+          "end": 42.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "header",
+          "start": 42.32,
+          "end": 42.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "changes,",
+          "start": 42.52,
+          "end": 43.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "indicating",
+          "start": 43.36,
+          "end": 43.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 43.92,
+          "end": 44.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 44.18,
+          "end": 44.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 44.38,
+          "end": 44.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "step",
+          "start": 44.5,
+          "end": 44.76,
+          "probability": 0.7075
+        },
+        {
+          "word": "1",
+          "start": 44.76,
+          "end": 45.0,
+          "probability": 0.6636
+        },
+        {
+          "word": "of",
+          "start": 45.0,
+          "end": 45.12,
+          "probability": 0.9707
+        },
+        {
+          "word": "4.",
+          "start": 45.12,
+          "end": 45.4,
+          "probability": 0.9771
+        },
+        {
+          "word": "I'll",
+          "start": 45.84,
+          "end": 46.32,
+          "probability": 0.9912
+        },
+        {
+          "word": "type",
+          "start": 46.32,
+          "end": 46.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "CTRL",
+          "start": 46.58,
+          "end": 47.06,
+          "probability": 0.6763
+        },
+        {
+          "word": "-SHIFT",
+          "start": 47.06,
+          "end": 47.48,
+          "probability": 0.7524
+        },
+        {
+          "word": "-I",
+          "start": 47.48,
+          "end": 47.56,
+          "probability": 0.6606
+        },
+        {
+          "word": "to",
+          "start": 47.56,
+          "end": 47.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "view",
+          "start": 47.66,
+          "end": 47.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 47.82,
+          "end": 47.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "details",
+          "start": 47.96,
+          "end": 48.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 48.4,
+          "end": 48.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 48.58,
+          "end": 48.68,
+          "probability": 0.998
+        },
+        {
+          "word": "PCF",
+          "start": 48.68,
+          "end": 49.3,
+          "probability": 0.9844
+        },
+        {
+          "word": "behind",
+          "start": 49.3,
+          "end": 49.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 49.64,
+          "end": 49.88,
+          "probability": 0.9917
+        },
+        {
+          "word": "step.",
+          "start": 49.88,
+          "end": 50.18,
+          "probability": 0.998
+        },
+        {
+          "word": "The",
+          "start": 50.48,
+          "end": 50.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "screen",
+          "start": 50.84,
+          "end": 51.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "I",
+          "start": 51.12,
+          "end": 51.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "am",
+          "start": 51.3,
+          "end": 51.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "viewing",
+          "start": 51.42,
+          "end": 51.68,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 51.68,
+          "end": 51.88,
+          "probability": 0.9385
+        },
+        {
+          "word": "part",
+          "start": 51.88,
+          "end": 52.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 52.1,
+          "end": 52.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 52.26,
+          "end": 52.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 52.36,
+          "end": 52.5,
+          "probability": 0.915
+        },
+        {
+          "word": "claim",
+          "start": 52.5,
+          "end": 52.76,
+          "probability": 0.4995
+        },
+        {
+          "word": "wizard,",
+          "start": 52.76,
+          "end": 53.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "also",
+          "start": 53.4,
+          "end": 53.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "called",
+          "start": 53.76,
+          "end": 54.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 54.12,
+          "end": 54.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "FNAL",
+          "start": 54.28,
+          "end": 54.58,
+          "probability": 0.6455
+        },
+        {
+          "word": "wizard.",
+          "start": 54.58,
+          "end": 54.9,
+          "probability": 0.8765
+        },
+        {
+          "word": "The",
+          "start": 55.3,
+          "end": 55.68,
+          "probability": 0.9878
+        },
+        {
+          "word": "screen",
+          "start": 55.68,
+          "end": 55.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 55.96,
+          "end": 56.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 56.16,
+          "end": 56.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "FNAL",
+          "start": 56.26,
+          "end": 56.52,
+          "probability": 0.9653
+        },
+        {
+          "word": "wizard",
+          "start": 56.52,
+          "end": 56.82,
+          "probability": 0.8203
+        },
+        {
+          "word": "underscore",
+          "start": 56.82,
+          "end": 57.24,
+          "probability": 0.3035
+        },
+        {
+          "word": "find",
+          "start": 57.24,
+          "end": 57.7,
+          "probability": 0.5405
+        },
+        {
+          "word": "policy",
+          "start": 57.7,
+          "end": 58.2,
+          "probability": 0.958
+        },
+        {
+          "word": "screen.",
+          "start": 58.2,
+          "end": 58.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "Note",
+          "start": 58.88,
+          "end": 59.32,
+          "probability": 0.981
+        },
+        {
+          "word": "that",
+          "start": 59.32,
+          "end": 59.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 59.46,
+          "end": 59.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "naming",
+          "start": 59.58,
+          "end": 59.82,
+          "probability": 0.9629
+        },
+        {
+          "word": "can",
+          "start": 59.82,
+          "end": 59.98,
+          "probability": 0.5977
+        },
+        {
+          "word": "be",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.7358
+        },
+        {
+          "word": "used",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.0612
+        },
+        {
+          "word": "as",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.26
+        },
+        {
+          "word": "part",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.0934
+        },
+        {
+          "word": "of",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9766
+        },
+        {
+          "word": "the",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.8408
+        },
+        {
+          "word": "new",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.3481
+        },
+        {
+          "word": "claim",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9121
+        },
+        {
+          "word": "wizard,",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9868
+        },
+        {
+          "word": "also",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.6426
+        },
+        {
+          "word": "called",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9604
+        },
+        {
+          "word": "FNAL",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9761
+        },
+        {
+          "word": "wizard.",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 59.98,
+      "end": 72.16,
+      "start_formatted": "00:00:59.980",
+      "end_formatted": "00:01:12.160",
+      "text": "The convention for the screens in a wizard is wizard name underscore screen name. Let's look at this in Studio. Looking at this screen, I notice some fields called shared section modes, which I'll explain in the next demo.",
+      "words": [
+        {
+          "word": "The",
+          "start": 59.98,
+          "end": 60.26,
+          "probability": 0.0657
+        },
+        {
+          "word": "convention",
+          "start": 60.26,
+          "end": 60.26,
+          "probability": 0.562
+        },
+        {
+          "word": "for",
+          "start": 60.26,
+          "end": 60.56,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 60.56,
+          "end": 60.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "screens",
+          "start": 60.7,
+          "end": 61.06,
+          "probability": 0.8818
+        },
+        {
+          "word": "in",
+          "start": 61.06,
+          "end": 61.26,
+          "probability": 0.9902
+        },
+        {
+          "word": "a",
+          "start": 61.26,
+          "end": 61.36,
+          "probability": 0.9526
+        },
+        {
+          "word": "wizard",
+          "start": 61.36,
+          "end": 61.66,
+          "probability": 0.9297
+        },
+        {
+          "word": "is",
+          "start": 61.66,
+          "end": 61.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "wizard",
+          "start": 61.88,
+          "end": 62.14,
+          "probability": 0.5591
+        },
+        {
+          "word": "name",
+          "start": 62.14,
+          "end": 62.4,
+          "probability": 0.5308
+        },
+        {
+          "word": "underscore",
+          "start": 62.4,
+          "end": 62.82,
+          "probability": 0.2034
+        },
+        {
+          "word": "screen",
+          "start": 62.82,
+          "end": 63.34,
+          "probability": 0.979
+        },
+        {
+          "word": "name.",
+          "start": 63.34,
+          "end": 63.6,
+          "probability": 0.9873
+        },
+        {
+          "word": "Let's",
+          "start": 64.12,
+          "end": 64.64,
+          "probability": 0.9834
+        },
+        {
+          "word": "look",
+          "start": 64.64,
+          "end": 64.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "at",
+          "start": 64.84,
+          "end": 64.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 64.98,
+          "end": 65.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 65.14,
+          "end": 65.28,
+          "probability": 0.9912
+        },
+        {
+          "word": "Studio.",
+          "start": 65.28,
+          "end": 65.64,
+          "probability": 0.1637
+        },
+        {
+          "word": "Looking",
+          "start": 66.12,
+          "end": 66.64,
+          "probability": 0.9917
+        },
+        {
+          "word": "at",
+          "start": 66.64,
+          "end": 66.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 66.8,
+          "end": 66.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "screen,",
+          "start": 66.98,
+          "end": 67.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 67.58,
+          "end": 67.8,
+          "probability": 0.9917
+        },
+        {
+          "word": "notice",
+          "start": 67.8,
+          "end": 68.08,
+          "probability": 0.4592
+        },
+        {
+          "word": "some",
+          "start": 68.08,
+          "end": 68.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "fields",
+          "start": 68.34,
+          "end": 68.7,
+          "probability": 0.9937
+        },
+        {
+          "word": "called",
+          "start": 68.7,
+          "end": 69.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "shared",
+          "start": 69.02,
+          "end": 69.38,
+          "probability": 0.6499
+        },
+        {
+          "word": "section",
+          "start": 69.38,
+          "end": 69.78,
+          "probability": 0.9658
+        },
+        {
+          "word": "modes,",
+          "start": 69.78,
+          "end": 70.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "which",
+          "start": 70.42,
+          "end": 70.68,
+          "probability": 0.9873
+        },
+        {
+          "word": "I'll",
+          "start": 70.68,
+          "end": 70.94,
+          "probability": 0.98
+        },
+        {
+          "word": "explain",
+          "start": 70.94,
+          "end": 71.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 71.3,
+          "end": 71.48,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 71.48,
+          "end": 71.58,
+          "probability": 0.998
+        },
+        {
+          "word": "next",
+          "start": 71.58,
+          "end": 71.8,
+          "probability": 0.998
+        },
+        {
+          "word": "demo.",
+          "start": 71.8,
+          "end": 72.16,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 73.4,
+      "end": 91.16,
+      "start_formatted": "00:01:13.400",
+      "end_formatted": "00:01:31.160",
+      "text": "But what I want to show you right now, is that, if I select search in this field, I now see the fields I saw in the UI. Speaking of the UI, Ms. Albee tells me that the injury occurred at the beginning of today's morning shift, at 8am.",
+      "words": [
+        {
+          "word": "But",
+          "start": 73.4,
+          "end": 73.84,
+          "probability": 0.7964
+        },
+        {
+          "word": "what",
+          "start": 73.84,
+          "end": 74.04,
+          "probability": 0.9463
+        },
+        {
+          "word": "I",
+          "start": 74.04,
+          "end": 74.16,
+          "probability": 0.9824
+        },
+        {
+          "word": "want",
+          "start": 74.16,
+          "end": 74.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 74.34,
+          "end": 74.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "show",
+          "start": 74.48,
+          "end": 74.66,
+          "probability": 0.998
+        },
+        {
+          "word": "you",
+          "start": 74.66,
+          "end": 74.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "right",
+          "start": 74.82,
+          "end": 74.98,
+          "probability": 0.9805
+        },
+        {
+          "word": "now,",
+          "start": 74.98,
+          "end": 75.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 75.42,
+          "end": 77.72,
+          "probability": 0.8691
+        },
+        {
+          "word": "that,",
+          "start": 77.72,
+          "end": 78.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "if",
+          "start": 78.18,
+          "end": 78.4,
+          "probability": 0.9746
+        },
+        {
+          "word": "I",
+          "start": 78.4,
+          "end": 78.5,
+          "probability": 0.9883
+        },
+        {
+          "word": "select",
+          "start": 78.5,
+          "end": 78.88,
+          "probability": 0.9829
+        },
+        {
+          "word": "search",
+          "start": 78.88,
+          "end": 79.12,
+          "probability": 0.4863
+        },
+        {
+          "word": "in",
+          "start": 79.12,
+          "end": 79.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 79.28,
+          "end": 79.46,
+          "probability": 0.998
+        },
+        {
+          "word": "field,",
+          "start": 79.46,
+          "end": 79.84,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 80.1,
+          "end": 82.08,
+          "probability": 0.9932
+        },
+        {
+          "word": "now",
+          "start": 82.08,
+          "end": 82.28,
+          "probability": 0.9917
+        },
+        {
+          "word": "see",
+          "start": 82.28,
+          "end": 82.5,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 82.5,
+          "end": 82.66,
+          "probability": 0.998
+        },
+        {
+          "word": "fields",
+          "start": 82.66,
+          "end": 82.96,
+          "probability": 0.9907
+        },
+        {
+          "word": "I",
+          "start": 82.96,
+          "end": 83.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "saw",
+          "start": 83.14,
+          "end": 83.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "in",
+          "start": 83.36,
+          "end": 83.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 83.48,
+          "end": 83.56,
+          "probability": 0.998
+        },
+        {
+          "word": "UI.",
+          "start": 83.56,
+          "end": 83.94,
+          "probability": 0.9897
+        },
+        {
+          "word": "Speaking",
+          "start": 84.66,
+          "end": 85.1,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 85.1,
+          "end": 85.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 85.3,
+          "end": 85.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "UI,",
+          "start": 85.4,
+          "end": 85.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "Ms.",
+          "start": 86.14,
+          "end": 86.5,
+          "probability": 0.9243
+        },
+        {
+          "word": "Albee",
+          "start": 86.62,
+          "end": 86.86,
+          "probability": 0.6938
+        },
+        {
+          "word": "tells",
+          "start": 86.86,
+          "end": 87.16,
+          "probability": 0.9844
+        },
+        {
+          "word": "me",
+          "start": 87.16,
+          "end": 87.34,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 87.34,
+          "end": 87.5,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 87.5,
+          "end": 87.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "injury",
+          "start": 87.62,
+          "end": 87.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "occurred",
+          "start": 87.92,
+          "end": 88.26,
+          "probability": 0.9897
+        },
+        {
+          "word": "at",
+          "start": 88.26,
+          "end": 88.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 88.4,
+          "end": 88.48,
+          "probability": 0.998
+        },
+        {
+          "word": "beginning",
+          "start": 88.48,
+          "end": 88.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 88.8,
+          "end": 88.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "today's",
+          "start": 88.98,
+          "end": 89.4,
+          "probability": 0.9863
+        },
+        {
+          "word": "morning",
+          "start": 89.4,
+          "end": 89.66,
+          "probability": 0.9761
+        },
+        {
+          "word": "shift,",
+          "start": 89.66,
+          "end": 90.14,
+          "probability": 0.9912
+        },
+        {
+          "word": "at",
+          "start": 90.32,
+          "end": 90.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "8am.",
+          "start": 90.54,
+          "end": 91.16,
+          "probability": 0.5947
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 103.14,
+      "end": 109.3,
+      "start_formatted": "00:01:43.140",
+      "end_formatted": "00:01:49.300",
+      "text": "Moving on to the next page of the new claim wizard. The injury occurred at the company's headquarters.",
+      "words": [
+        {
+          "word": "Moving",
+          "start": 103.14,
+          "end": 103.7,
+          "probability": 0.7876
+        },
+        {
+          "word": "on",
+          "start": 103.7,
+          "end": 103.92,
+          "probability": 0.9292
+        },
+        {
+          "word": "to",
+          "start": 103.92,
+          "end": 104.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 104.06,
+          "end": 104.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "next",
+          "start": 104.2,
+          "end": 104.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "page",
+          "start": 104.42,
+          "end": 104.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 104.72,
+          "end": 104.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 104.86,
+          "end": 104.96,
+          "probability": 0.98
+        },
+        {
+          "word": "new",
+          "start": 104.96,
+          "end": 105.12,
+          "probability": 0.8325
+        },
+        {
+          "word": "claim",
+          "start": 105.12,
+          "end": 105.4,
+          "probability": 0.6377
+        },
+        {
+          "word": "wizard.",
+          "start": 105.4,
+          "end": 105.84,
+          "probability": 0.9839
+        },
+        {
+          "word": "The",
+          "start": 106.82,
+          "end": 107.38,
+          "probability": 0.9609
+        },
+        {
+          "word": "injury",
+          "start": 107.38,
+          "end": 107.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "occurred",
+          "start": 107.7,
+          "end": 108.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "at",
+          "start": 108.06,
+          "end": 108.22,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 108.22,
+          "end": 108.32,
+          "probability": 0.998
+        },
+        {
+          "word": "company's",
+          "start": 108.32,
+          "end": 108.84,
+          "probability": 0.9902
+        },
+        {
+          "word": "headquarters.",
+          "start": 108.84,
+          "end": 109.3,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 114.32,
+      "end": 118.24,
+      "start_formatted": "00:01:54.320",
+      "end_formatted": "00:01:58.240",
+      "text": "Ms. Albee is the supervisor of the injured employee, 1 Edward Teach.",
+      "words": [
+        {
+          "word": "Ms.",
+          "start": 114.32,
+          "end": 114.88,
+          "probability": 0.9253
+        },
+        {
+          "word": "Albee",
+          "start": 114.98,
+          "end": 115.18,
+          "probability": 0.8267
+        },
+        {
+          "word": "is",
+          "start": 115.18,
+          "end": 115.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 115.34,
+          "end": 115.46,
+          "probability": 0.998
+        },
+        {
+          "word": "supervisor",
+          "start": 115.46,
+          "end": 115.94,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 115.94,
+          "end": 116.24,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 116.24,
+          "end": 116.34,
+          "probability": 0.9956
+        },
+        {
+          "word": "injured",
+          "start": 116.34,
+          "end": 116.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "employee,",
+          "start": 116.62,
+          "end": 117.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "1",
+          "start": 117.38,
+          "end": 117.62,
+          "probability": 0.687
+        },
+        {
+          "word": "Edward",
+          "start": 117.62,
+          "end": 117.9,
+          "probability": 0.8721
+        },
+        {
+          "word": "Teach.",
+          "start": 117.9,
+          "end": 118.24,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 130.32,
+      "end": 131.24,
+      "start_formatted": "00:02:10.320",
+      "end_formatted": "00:02:11.240",
+      "text": "I add Mr. Teach.",
+      "words": [
+        {
+          "word": "I",
+          "start": 130.32,
+          "end": 130.78,
+          "probability": 0.9355
+        },
+        {
+          "word": "add",
+          "start": 130.78,
+          "end": 131.02,
+          "probability": 0.9756
+        },
+        {
+          "word": "Mr.",
+          "start": 131.02,
+          "end": 131.24,
+          "probability": 0.9502
+        },
+        {
+          "word": "Teach.",
+          "start": 131.24,
+          "end": 131.24,
+          "probability": 0.8438
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 131.24,
+      "end": 132.76,
+      "start_formatted": "00:02:11.240",
+      "end_formatted": "00:02:12.760",
+      "text": "I add Mr. Teach as the injured employee.",
+      "words": [
+        {
+          "word": "I",
+          "start": 131.24,
+          "end": 131.24,
+          "probability": 0.689
+        },
+        {
+          "word": "add",
+          "start": 131.24,
+          "end": 131.24,
+          "probability": 0.9888
+        },
+        {
+          "word": "Mr.",
+          "start": 131.24,
+          "end": 131.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "Teach",
+          "start": 131.26,
+          "end": 131.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "as",
+          "start": 131.58,
+          "end": 131.76,
+          "probability": 0.9556
+        },
+        {
+          "word": "the",
+          "start": 131.76,
+          "end": 131.9,
+          "probability": 0.998
+        },
+        {
+          "word": "injured",
+          "start": 131.9,
+          "end": 132.22,
+          "probability": 0.9922
+        },
+        {
+          "word": "employee.",
+          "start": 132.22,
+          "end": 132.76,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 146.0,
+      "end": 148.22,
+      "start_formatted": "00:02:26.000",
+      "end_formatted": "00:02:28.220",
+      "text": "Ms. Albee has also provided me with a total of statements,",
+      "words": [
+        {
+          "word": "Ms.",
+          "start": 146.0,
+          "end": 146.46,
+          "probability": 0.7446
+        },
+        {
+          "word": "Albee",
+          "start": 146.64,
+          "end": 146.84,
+          "probability": 0.7373
+        },
+        {
+          "word": "has",
+          "start": 146.84,
+          "end": 147.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "also",
+          "start": 147.06,
+          "end": 147.42,
+          "probability": 0.999
+        },
+        {
+          "word": "provided",
+          "start": 147.42,
+          "end": 147.86,
+          "probability": 0.999
+        },
+        {
+          "word": "me",
+          "start": 147.86,
+          "end": 148.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 148.08,
+          "end": 148.22,
+          "probability": 0.979
+        },
+        {
+          "word": "a",
+          "start": 148.22,
+          "end": 148.22,
+          "probability": 0.2527
+        },
+        {
+          "word": "total",
+          "start": 148.22,
+          "end": 148.22,
+          "probability": 0.0006
+        },
+        {
+          "word": "of",
+          "start": 148.22,
+          "end": 148.22,
+          "probability": 0.3608
+        },
+        {
+          "word": "statements,",
+          "start": 148.22,
+          "end": 148.22,
+          "probability": 0.0001
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 148.22,
+      "end": 150.28,
+      "start_formatted": "00:02:28.220",
+      "end_formatted": "00:02:30.280",
+      "text": "Mr.Teach's social security number.",
+      "words": [
+        {
+          "word": "Mr",
+          "start": 148.22,
+          "end": 148.56,
+          "probability": 0.4832
+        },
+        {
+          "word": ".Teach's",
+          "start": 148.56,
+          "end": 149.04,
+          "probability": 0.7144
+        },
+        {
+          "word": "social",
+          "start": 149.04,
+          "end": 149.32,
+          "probability": 0.5366
+        },
+        {
+          "word": "security",
+          "start": 149.32,
+          "end": 149.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "number.",
+          "start": 149.88,
+          "end": 150.28,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 157.28,
+      "end": 162.62,
+      "start_formatted": "00:02:37.280",
+      "end_formatted": "00:02:42.620",
+      "text": "I'll type Alt Shift I again. I'm still viewing the FNUL wizard, and now the screen is the",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 157.28,
+          "end": 157.84,
+          "probability": 0.9717
+        },
+        {
+          "word": "type",
+          "start": 157.84,
+          "end": 158.08,
+          "probability": 0.9878
+        },
+        {
+          "word": "Alt",
+          "start": 158.08,
+          "end": 158.3,
+          "probability": 0.4861
+        },
+        {
+          "word": "Shift",
+          "start": 158.3,
+          "end": 158.58,
+          "probability": 0.5503
+        },
+        {
+          "word": "I",
+          "start": 158.58,
+          "end": 158.82,
+          "probability": 0.856
+        },
+        {
+          "word": "again.",
+          "start": 158.82,
+          "end": 159.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "I'm",
+          "start": 159.44,
+          "end": 159.74,
+          "probability": 0.9922
+        },
+        {
+          "word": "still",
+          "start": 159.74,
+          "end": 159.94,
+          "probability": 0.999
+        },
+        {
+          "word": "viewing",
+          "start": 159.94,
+          "end": 160.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 160.32,
+          "end": 160.5,
+          "probability": 0.9922
+        },
+        {
+          "word": "FNUL",
+          "start": 160.5,
+          "end": 160.8,
+          "probability": 0.688
+        },
+        {
+          "word": "wizard,",
+          "start": 160.8,
+          "end": 161.14,
+          "probability": 0.5645
+        },
+        {
+          "word": "and",
+          "start": 161.4,
+          "end": 161.64,
+          "probability": 0.9912
+        },
+        {
+          "word": "now",
+          "start": 161.64,
+          "end": 161.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 161.82,
+          "end": 162.0,
+          "probability": 0.9897
+        },
+        {
+          "word": "screen",
+          "start": 162.0,
+          "end": 162.28,
+          "probability": 0.9912
+        },
+        {
+          "word": "is",
+          "start": 162.28,
+          "end": 162.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 162.5,
+          "end": 162.62,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 162.62,
+      "end": 167.42,
+      "start_formatted": "00:02:42.620",
+      "end_formatted": "00:02:47.420",
+      "text": "basic info screen. At this point, I want to show you the structure of the wizard itself.",
+      "words": [
+        {
+          "word": "basic",
+          "start": 162.62,
+          "end": 162.96,
+          "probability": 0.8374
+        },
+        {
+          "word": "info",
+          "start": 162.96,
+          "end": 163.26,
+          "probability": 0.8853
+        },
+        {
+          "word": "screen.",
+          "start": 163.26,
+          "end": 163.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "At",
+          "start": 163.92,
+          "end": 164.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "this",
+          "start": 164.24,
+          "end": 164.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "point,",
+          "start": 164.44,
+          "end": 164.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 165.0,
+          "end": 165.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "want",
+          "start": 165.2,
+          "end": 165.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 165.38,
+          "end": 165.5,
+          "probability": 0.999
+        },
+        {
+          "word": "show",
+          "start": 165.5,
+          "end": 165.66,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 165.66,
+          "end": 165.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 165.84,
+          "end": 165.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "structure",
+          "start": 165.98,
+          "end": 166.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 166.32,
+          "end": 166.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 166.54,
+          "end": 166.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "wizard",
+          "start": 166.64,
+          "end": 166.92,
+          "probability": 0.9629
+        },
+        {
+          "word": "itself.",
+          "start": 166.92,
+          "end": 167.42,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 167.66,
+      "end": 177.36,
+      "start_formatted": "00:02:47.660",
+      "end_formatted": "00:02:57.360",
+      "text": "I open FNULwizard.pcf. Structurally, a wizard is simply a list of steps. A wizard has some",
+      "words": [
+        {
+          "word": "I",
+          "start": 167.66,
+          "end": 168.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "open",
+          "start": 168.02,
+          "end": 168.3,
+          "probability": 0.9458
+        },
+        {
+          "word": "FNULwizard",
+          "start": 168.3,
+          "end": 168.96,
+          "probability": 0.8564
+        },
+        {
+          "word": ".pcf.",
+          "start": 168.96,
+          "end": 169.96,
+          "probability": 0.9258
+        },
+        {
+          "word": "Structurally,",
+          "start": 172.42,
+          "end": 172.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 173.24,
+          "end": 173.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "wizard",
+          "start": 173.48,
+          "end": 173.76,
+          "probability": 0.9829
+        },
+        {
+          "word": "is",
+          "start": 173.76,
+          "end": 173.94,
+          "probability": 0.9277
+        },
+        {
+          "word": "simply",
+          "start": 173.94,
+          "end": 174.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 174.24,
+          "end": 174.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "list",
+          "start": 174.4,
+          "end": 174.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 174.6,
+          "end": 174.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "steps.",
+          "start": 174.76,
+          "end": 175.16,
+          "probability": 0.9932
+        },
+        {
+          "word": "A",
+          "start": 176.08,
+          "end": 176.64,
+          "probability": 0.9824
+        },
+        {
+          "word": "wizard",
+          "start": 176.64,
+          "end": 176.94,
+          "probability": 0.9844
+        },
+        {
+          "word": "has",
+          "start": 176.94,
+          "end": 177.16,
+          "probability": 0.998
+        },
+        {
+          "word": "some",
+          "start": 177.16,
+          "end": 177.36,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 177.36,
+      "end": 184.26,
+      "start_formatted": "00:02:57.360",
+      "end_formatted": "00:03:04.260",
+      "text": "interesting properties. The first is menu actions. You may recall from location groups that this",
+      "words": [
+        {
+          "word": "interesting",
+          "start": 177.36,
+          "end": 177.84,
+          "probability": 0.9727
+        },
+        {
+          "word": "properties.",
+          "start": 177.84,
+          "end": 178.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 179.84,
+          "end": 180.4,
+          "probability": 0.9922
+        },
+        {
+          "word": "first",
+          "start": 180.4,
+          "end": 180.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 180.66,
+          "end": 180.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "menu",
+          "start": 180.86,
+          "end": 181.14,
+          "probability": 0.7603
+        },
+        {
+          "word": "actions.",
+          "start": 181.14,
+          "end": 181.5,
+          "probability": 0.8657
+        },
+        {
+          "word": "You",
+          "start": 181.92,
+          "end": 182.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "may",
+          "start": 182.28,
+          "end": 182.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "recall",
+          "start": 182.42,
+          "end": 182.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 182.78,
+          "end": 183.0,
+          "probability": 0.999
+        },
+        {
+          "word": "location",
+          "start": 183.0,
+          "end": 183.5,
+          "probability": 0.9844
+        },
+        {
+          "word": "groups",
+          "start": 183.5,
+          "end": 183.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 183.86,
+          "end": 184.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 184.1,
+          "end": 184.26,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 184.26,
+      "end": 190.88,
+      "start_formatted": "00:03:04.260",
+      "end_formatted": "00:03:10.880",
+      "text": "defines the actions menu that will appear. It also has the standard claim info bar and tab bar.",
+      "words": [
+        {
+          "word": "defines",
+          "start": 184.26,
+          "end": 184.64,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 184.64,
+          "end": 184.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "actions",
+          "start": 184.84,
+          "end": 185.22,
+          "probability": 0.9619
+        },
+        {
+          "word": "menu",
+          "start": 185.22,
+          "end": 185.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 185.56,
+          "end": 185.78,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 185.78,
+          "end": 185.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "appear.",
+          "start": 185.92,
+          "end": 186.3,
+          "probability": 1.0
+        },
+        {
+          "word": "It",
+          "start": 186.96,
+          "end": 187.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "also",
+          "start": 187.52,
+          "end": 187.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 187.8,
+          "end": 188.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 188.06,
+          "end": 188.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "standard",
+          "start": 188.22,
+          "end": 188.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim",
+          "start": 188.56,
+          "end": 188.92,
+          "probability": 0.9468
+        },
+        {
+          "word": "info",
+          "start": 188.92,
+          "end": 189.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "bar",
+          "start": 189.28,
+          "end": 189.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 189.7,
+          "end": 190.26,
+          "probability": 0.9058
+        },
+        {
+          "word": "tab",
+          "start": 190.26,
+          "end": 190.54,
+          "probability": 0.998
+        },
+        {
+          "word": "bar.",
+          "start": 190.54,
+          "end": 190.88,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 191.4,
+      "end": 196.78,
+      "start_formatted": "00:03:11.400",
+      "end_formatted": "00:03:16.780",
+      "text": "The cancel warning property specifies the text of a pop-up message that appears if you cancel the",
+      "words": [
+        {
+          "word": "The",
+          "start": 191.4,
+          "end": 191.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "cancel",
+          "start": 191.96,
+          "end": 192.32,
+          "probability": 0.9863
+        },
+        {
+          "word": "warning",
+          "start": 192.32,
+          "end": 192.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "property",
+          "start": 192.74,
+          "end": 193.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "specifies",
+          "start": 193.22,
+          "end": 193.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 193.9,
+          "end": 194.1,
+          "probability": 1.0
+        },
+        {
+          "word": "text",
+          "start": 194.1,
+          "end": 194.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 194.36,
+          "end": 194.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 194.5,
+          "end": 194.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "pop",
+          "start": 194.58,
+          "end": 194.82,
+          "probability": 1.0
+        },
+        {
+          "word": "-up",
+          "start": 194.82,
+          "end": 194.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "message",
+          "start": 194.98,
+          "end": 195.34,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 195.34,
+          "end": 195.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "appears",
+          "start": 195.58,
+          "end": 195.96,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 195.96,
+          "end": 196.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 196.16,
+          "end": 196.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "cancel",
+          "start": 196.26,
+          "end": 196.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 196.62,
+          "end": 196.78,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 196.78,
+      "end": 202.14,
+      "start_formatted": "00:03:16.780",
+      "end_formatted": "00:03:22.140",
+      "text": "claim before finishing the wizard. This message should be stored as a display key. The wizard goes",
+      "words": [
+        {
+          "word": "claim",
+          "start": 196.78,
+          "end": 197.04,
+          "probability": 0.998
+        },
+        {
+          "word": "before",
+          "start": 197.04,
+          "end": 197.32,
+          "probability": 0.999
+        },
+        {
+          "word": "finishing",
+          "start": 197.32,
+          "end": 197.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 197.76,
+          "end": 197.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "wizard.",
+          "start": 197.96,
+          "end": 198.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "This",
+          "start": 198.72,
+          "end": 199.04,
+          "probability": 0.998
+        },
+        {
+          "word": "message",
+          "start": 199.04,
+          "end": 199.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "should",
+          "start": 199.42,
+          "end": 199.62,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 199.62,
+          "end": 199.78,
+          "probability": 1.0
+        },
+        {
+          "word": "stored",
+          "start": 199.78,
+          "end": 200.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 200.08,
+          "end": 200.28,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 200.28,
+          "end": 200.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "display",
+          "start": 200.36,
+          "end": 200.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "key.",
+          "start": 200.7,
+          "end": 201.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 201.32,
+          "end": 201.56,
+          "probability": 0.999
+        },
+        {
+          "word": "wizard",
+          "start": 201.56,
+          "end": 201.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "goes",
+          "start": 201.84,
+          "end": 202.14,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 202.14,
+      "end": 207.06,
+      "start_formatted": "00:03:22.140",
+      "end_formatted": "00:03:27.060",
+      "text": "through the steps in order. You can create step sets that group steps, so that you can make them",
+      "words": [
+        {
+          "word": "through",
+          "start": 202.14,
+          "end": 202.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 202.3,
+          "end": 202.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "steps",
+          "start": 202.46,
+          "end": 202.76,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 202.76,
+          "end": 202.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "order.",
+          "start": 202.96,
+          "end": 203.2,
+          "probability": 1.0
+        },
+        {
+          "word": "You",
+          "start": 203.46,
+          "end": 203.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 203.78,
+          "end": 203.94,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 203.94,
+          "end": 204.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 204.3,
+          "end": 204.58,
+          "probability": 0.7456
+        },
+        {
+          "word": "sets",
+          "start": 204.58,
+          "end": 204.82,
+          "probability": 0.9849
+        },
+        {
+          "word": "that",
+          "start": 204.82,
+          "end": 205.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "group",
+          "start": 205.06,
+          "end": 205.32,
+          "probability": 0.9849
+        },
+        {
+          "word": "steps,",
+          "start": 205.32,
+          "end": 205.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "so",
+          "start": 205.96,
+          "end": 206.26,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 206.26,
+          "end": 206.42,
+          "probability": 1.0
+        },
+        {
+          "word": "you",
+          "start": 206.42,
+          "end": 206.54,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 206.54,
+          "end": 206.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "make",
+          "start": 206.68,
+          "end": 206.9,
+          "probability": 0.999
+        },
+        {
+          "word": "them",
+          "start": 206.9,
+          "end": 207.06,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 207.06,
+      "end": 212.26,
+      "start_formatted": "00:03:27.060",
+      "end_formatted": "00:03:32.260",
+      "text": "available or unavailable together. The full wizard step set is the main body of the FNUL wizard.",
+      "words": [
+        {
+          "word": "available",
+          "start": 207.06,
+          "end": 207.46,
+          "probability": 0.9624
+        },
+        {
+          "word": "or",
+          "start": 207.46,
+          "end": 207.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "unavailable",
+          "start": 207.76,
+          "end": 208.36,
+          "probability": 1.0
+        },
+        {
+          "word": "together.",
+          "start": 208.36,
+          "end": 208.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "The",
+          "start": 209.16,
+          "end": 209.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "full",
+          "start": 209.46,
+          "end": 209.66,
+          "probability": 0.7642
+        },
+        {
+          "word": "wizard",
+          "start": 209.66,
+          "end": 209.92,
+          "probability": 0.9175
+        },
+        {
+          "word": "step",
+          "start": 209.92,
+          "end": 210.2,
+          "probability": 0.9653
+        },
+        {
+          "word": "set",
+          "start": 210.2,
+          "end": 210.42,
+          "probability": 0.9619
+        },
+        {
+          "word": "is",
+          "start": 210.42,
+          "end": 210.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 210.6,
+          "end": 210.72,
+          "probability": 1.0
+        },
+        {
+          "word": "main",
+          "start": 210.72,
+          "end": 210.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "body",
+          "start": 210.96,
+          "end": 211.3,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 211.3,
+          "end": 211.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 211.44,
+          "end": 211.54,
+          "probability": 0.999
+        },
+        {
+          "word": "FNUL",
+          "start": 211.54,
+          "end": 211.88,
+          "probability": 0.6304
+        },
+        {
+          "word": "wizard.",
+          "start": 211.88,
+          "end": 212.26,
+          "probability": 0.9619
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 212.6,
+      "end": 217.48,
+      "start_formatted": "00:03:32.600",
+      "end_formatted": "00:03:37.480",
+      "text": "Note that its visibility property is true only if the old wizard step property is false,",
+      "words": [
+        {
+          "word": "Note",
+          "start": 212.6,
+          "end": 213.0,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 213.0,
+          "end": 213.16,
+          "probability": 1.0
+        },
+        {
+          "word": "its",
+          "start": 213.16,
+          "end": 213.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "visibility",
+          "start": 213.32,
+          "end": 213.84,
+          "probability": 0.9561
+        },
+        {
+          "word": "property",
+          "start": 213.84,
+          "end": 214.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 214.38,
+          "end": 214.62,
+          "probability": 1.0
+        },
+        {
+          "word": "true",
+          "start": 214.62,
+          "end": 214.84,
+          "probability": 0.8545
+        },
+        {
+          "word": "only",
+          "start": 214.84,
+          "end": 215.18,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 215.18,
+          "end": 215.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 215.38,
+          "end": 215.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "old",
+          "start": 215.48,
+          "end": 215.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "wizard",
+          "start": 215.7,
+          "end": 216.04,
+          "probability": 0.999
+        },
+        {
+          "word": "step",
+          "start": 216.04,
+          "end": 216.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "property",
+          "start": 216.34,
+          "end": 216.8,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 216.8,
+          "end": 217.06,
+          "probability": 1.0
+        },
+        {
+          "word": "false,",
+          "start": 217.06,
+          "end": 217.48,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 217.74,
+      "end": 221.36,
+      "start_formatted": "00:03:37.740",
+      "end_formatted": "00:03:41.360",
+      "text": "which is the default. This exists for backwards compatibility.",
+      "words": [
+        {
+          "word": "which",
+          "start": 217.74,
+          "end": 217.96,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 217.96,
+          "end": 218.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 218.1,
+          "end": 218.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "default.",
+          "start": 218.24,
+          "end": 218.64,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 218.96,
+          "end": 219.36,
+          "probability": 1.0
+        },
+        {
+          "word": "exists",
+          "start": 219.36,
+          "end": 219.8,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 219.8,
+          "end": 220.0,
+          "probability": 1.0
+        },
+        {
+          "word": "backwards",
+          "start": 220.0,
+          "end": 220.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "compatibility.",
+          "start": 220.54,
+          "end": 221.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 222.68,
+      "end": 227.58,
+      "start_formatted": "00:03:42.680",
+      "end_formatted": "00:03:47.580",
+      "text": "Within the step set, the individual steps have their own visible and available conditions.",
+      "words": [
+        {
+          "word": "Within",
+          "start": 222.68,
+          "end": 223.24,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 223.24,
+          "end": 223.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "step",
+          "start": 223.44,
+          "end": 223.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "set,",
+          "start": 223.7,
+          "end": 224.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 224.3,
+          "end": 224.5,
+          "probability": 1.0
+        },
+        {
+          "word": "individual",
+          "start": 224.5,
+          "end": 224.98,
+          "probability": 1.0
+        },
+        {
+          "word": "steps",
+          "start": 224.98,
+          "end": 225.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "have",
+          "start": 225.4,
+          "end": 225.68,
+          "probability": 1.0
+        },
+        {
+          "word": "their",
+          "start": 225.68,
+          "end": 225.8,
+          "probability": 1.0
+        },
+        {
+          "word": "own",
+          "start": 225.8,
+          "end": 226.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "visible",
+          "start": 226.0,
+          "end": 226.38,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 226.38,
+          "end": 226.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 226.56,
+          "end": 227.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "conditions.",
+          "start": 227.0,
+          "end": 227.58,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 228.02,
+      "end": 232.18,
+      "start_formatted": "00:03:48.020",
+      "end_formatted": "00:03:52.180",
+      "text": "The only step for which these do not simply default to true is the services step,",
+      "words": [
+        {
+          "word": "The",
+          "start": 228.02,
+          "end": 228.4,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 228.4,
+          "end": 228.68,
+          "probability": 1.0
+        },
+        {
+          "word": "step",
+          "start": 228.68,
+          "end": 229.0,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 229.0,
+          "end": 229.18,
+          "probability": 1.0
+        },
+        {
+          "word": "which",
+          "start": 229.18,
+          "end": 229.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "these",
+          "start": 229.36,
+          "end": 229.58,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 229.58,
+          "end": 229.72,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 229.72,
+          "end": 229.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "simply",
+          "start": 229.9,
+          "end": 230.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "default",
+          "start": 230.26,
+          "end": 230.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 230.68,
+          "end": 230.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "true",
+          "start": 230.88,
+          "end": 231.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 231.06,
+          "end": 231.22,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 231.22,
+          "end": 231.36,
+          "probability": 1.0
+        },
+        {
+          "word": "services",
+          "start": 231.36,
+          "end": 231.74,
+          "probability": 0.9883
+        },
+        {
+          "word": "step,",
+          "start": 231.74,
+          "end": 232.18,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 232.18,
+      "end": 238.14,
+      "start_formatted": "00:03:52.180",
+      "end_formatted": "00:03:58.140",
+      "text": "which does not make sense for some policy types. The services step determines its availability by a",
+      "words": [
+        {
+          "word": "which",
+          "start": 232.18,
+          "end": 232.62,
+          "probability": 0.876
+        },
+        {
+          "word": "does",
+          "start": 232.62,
+          "end": 232.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 232.84,
+          "end": 233.08,
+          "probability": 0.999
+        },
+        {
+          "word": "make",
+          "start": 233.08,
+          "end": 233.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "sense",
+          "start": 233.3,
+          "end": 233.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 233.54,
+          "end": 233.74,
+          "probability": 0.999
+        },
+        {
+          "word": "some",
+          "start": 233.74,
+          "end": 233.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 233.96,
+          "end": 234.4,
+          "probability": 0.98
+        },
+        {
+          "word": "types.",
+          "start": 234.4,
+          "end": 234.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "The",
+          "start": 235.14,
+          "end": 235.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "services",
+          "start": 235.56,
+          "end": 235.98,
+          "probability": 0.646
+        },
+        {
+          "word": "step",
+          "start": 235.98,
+          "end": 236.34,
+          "probability": 0.9907
+        },
+        {
+          "word": "determines",
+          "start": 236.34,
+          "end": 236.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "its",
+          "start": 236.86,
+          "end": 237.1,
+          "probability": 0.9946
+        },
+        {
+          "word": "availability",
+          "start": 237.1,
+          "end": 237.64,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 237.64,
+          "end": 238.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 238.0,
+          "end": 238.14,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 238.14,
+      "end": 243.16,
+      "start_formatted": "00:03:58.140",
+      "end_formatted": "00:04:03.160",
+      "text": "property coded in the wizard. The code for a servicer's step available checks against a list",
+      "words": [
+        {
+          "word": "property",
+          "start": 238.14,
+          "end": 238.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "coded",
+          "start": 238.54,
+          "end": 238.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "in",
+          "start": 238.88,
+          "end": 239.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 239.06,
+          "end": 239.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "wizard.",
+          "start": 239.16,
+          "end": 239.5,
+          "probability": 0.9043
+        },
+        {
+          "word": "The",
+          "start": 239.82,
+          "end": 240.26,
+          "probability": 0.998
+        },
+        {
+          "word": "code",
+          "start": 240.26,
+          "end": 240.5,
+          "probability": 0.9824
+        },
+        {
+          "word": "for",
+          "start": 240.5,
+          "end": 240.7,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 240.7,
+          "end": 240.84,
+          "probability": 0.7656
+        },
+        {
+          "word": "servicer's",
+          "start": 240.84,
+          "end": 241.44,
+          "probability": 0.748
+        },
+        {
+          "word": "step",
+          "start": 241.44,
+          "end": 241.66,
+          "probability": 0.9766
+        },
+        {
+          "word": "available",
+          "start": 241.66,
+          "end": 242.08,
+          "probability": 0.9873
+        },
+        {
+          "word": "checks",
+          "start": 242.08,
+          "end": 242.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "against",
+          "start": 242.4,
+          "end": 242.74,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 242.74,
+          "end": 242.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "list",
+          "start": 242.92,
+          "end": 243.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 243.16,
+      "end": 248.76,
+      "start_formatted": "00:04:03.160",
+      "end_formatted": "00:04:08.760",
+      "text": "of lost types for which a services step makes sense. In the base configuration, these include auto and",
+      "words": [
+        {
+          "word": "of",
+          "start": 243.16,
+          "end": 243.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "lost",
+          "start": 243.3,
+          "end": 243.56,
+          "probability": 0.7202
+        },
+        {
+          "word": "types",
+          "start": 243.56,
+          "end": 243.88,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 243.88,
+          "end": 244.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "which",
+          "start": 244.08,
+          "end": 244.28,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 244.28,
+          "end": 244.4,
+          "probability": 0.999
+        },
+        {
+          "word": "services",
+          "start": 244.4,
+          "end": 244.8,
+          "probability": 0.9697
+        },
+        {
+          "word": "step",
+          "start": 244.8,
+          "end": 245.16,
+          "probability": 0.998
+        },
+        {
+          "word": "makes",
+          "start": 245.16,
+          "end": 245.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "sense.",
+          "start": 245.46,
+          "end": 245.9,
+          "probability": 1.0
+        },
+        {
+          "word": "In",
+          "start": 246.1,
+          "end": 246.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 246.28,
+          "end": 246.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 246.38,
+          "end": 246.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "configuration,",
+          "start": 246.62,
+          "end": 247.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "these",
+          "start": 247.7,
+          "end": 248.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "include",
+          "start": 248.0,
+          "end": 248.36,
+          "probability": 1.0
+        },
+        {
+          "word": "auto",
+          "start": 248.36,
+          "end": 248.6,
+          "probability": 0.9443
+        },
+        {
+          "word": "and",
+          "start": 248.6,
+          "end": 248.76,
+          "probability": 0.9712
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 248.76,
+      "end": 254.6,
+      "start_formatted": "00:04:08.760",
+      "end_formatted": "00:04:14.600",
+      "text": "property. Each step in the wizard has a screen property. This identifies the signature of a screen",
+      "words": [
+        {
+          "word": "property.",
+          "start": 248.76,
+          "end": 249.26,
+          "probability": 1.0
+        },
+        {
+          "word": "Each",
+          "start": 249.5,
+          "end": 250.06,
+          "probability": 1.0
+        },
+        {
+          "word": "step",
+          "start": 250.06,
+          "end": 250.32,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 250.32,
+          "end": 250.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 250.46,
+          "end": 250.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "wizard",
+          "start": 250.56,
+          "end": 250.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 250.84,
+          "end": 251.1,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 251.1,
+          "end": 251.24,
+          "probability": 1.0
+        },
+        {
+          "word": "screen",
+          "start": 251.24,
+          "end": 251.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "property.",
+          "start": 251.52,
+          "end": 252.0,
+          "probability": 0.999
+        },
+        {
+          "word": "This",
+          "start": 252.32,
+          "end": 252.8,
+          "probability": 1.0
+        },
+        {
+          "word": "identifies",
+          "start": 252.8,
+          "end": 253.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 253.28,
+          "end": 253.6,
+          "probability": 1.0
+        },
+        {
+          "word": "signature",
+          "start": 253.6,
+          "end": 254.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 254.0,
+          "end": 254.22,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 254.22,
+          "end": 254.3,
+          "probability": 0.999
+        },
+        {
+          "word": "screen",
+          "start": 254.3,
+          "end": 254.6,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 254.6,
+      "end": 259.66,
+      "start_formatted": "00:04:14.600",
+      "end_formatted": "00:04:19.660",
+      "text": "which will be displayed when the wizard reaches that step. Each step also has a title property,",
+      "words": [
+        {
+          "word": "which",
+          "start": 254.6,
+          "end": 254.82,
+          "probability": 0.9956
+        },
+        {
+          "word": "will",
+          "start": 254.82,
+          "end": 254.98,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 254.98,
+          "end": 255.1,
+          "probability": 1.0
+        },
+        {
+          "word": "displayed",
+          "start": 255.1,
+          "end": 255.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "when",
+          "start": 255.52,
+          "end": 255.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 255.7,
+          "end": 255.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "wizard",
+          "start": 255.84,
+          "end": 256.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "reaches",
+          "start": 256.14,
+          "end": 256.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 256.52,
+          "end": 256.8,
+          "probability": 1.0
+        },
+        {
+          "word": "step.",
+          "start": 256.8,
+          "end": 257.18,
+          "probability": 1.0
+        },
+        {
+          "word": "Each",
+          "start": 257.54,
+          "end": 257.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 257.94,
+          "end": 258.18,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 258.18,
+          "end": 258.5,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 258.5,
+          "end": 258.78,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 258.78,
+          "end": 258.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "title",
+          "start": 258.92,
+          "end": 259.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "property,",
+          "start": 259.16,
+          "end": 259.66,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 259.66,
+      "end": 264.92,
+      "start_formatted": "00:04:19.660",
+      "end_formatted": "00:04:24.920",
+      "text": "which references a display key. Note that this display key takes variables that reference the",
+      "words": [
+        {
+          "word": "which",
+          "start": 259.66,
+          "end": 260.2,
+          "probability": 0.9927
+        },
+        {
+          "word": "references",
+          "start": 260.2,
+          "end": 260.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 260.72,
+          "end": 260.96,
+          "probability": 1.0
+        },
+        {
+          "word": "display",
+          "start": 260.96,
+          "end": 261.28,
+          "probability": 0.9585
+        },
+        {
+          "word": "key.",
+          "start": 261.28,
+          "end": 261.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "Note",
+          "start": 261.98,
+          "end": 262.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 262.32,
+          "end": 262.48,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 262.48,
+          "end": 262.66,
+          "probability": 1.0
+        },
+        {
+          "word": "display",
+          "start": 262.66,
+          "end": 263.06,
+          "probability": 1.0
+        },
+        {
+          "word": "key",
+          "start": 263.06,
+          "end": 263.3,
+          "probability": 1.0
+        },
+        {
+          "word": "takes",
+          "start": 263.3,
+          "end": 263.58,
+          "probability": 1.0
+        },
+        {
+          "word": "variables",
+          "start": 263.58,
+          "end": 264.1,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 264.1,
+          "end": 264.38,
+          "probability": 1.0
+        },
+        {
+          "word": "reference",
+          "start": 264.38,
+          "end": 264.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 264.74,
+          "end": 264.92,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 264.92,
+      "end": 270.48,
+      "start_formatted": "00:04:24.920",
+      "end_formatted": "00:04:30.480",
+      "text": "current step number and the total number of steps for the wizard. Finally, let's look at two special",
+      "words": [
+        {
+          "word": "current",
+          "start": 264.92,
+          "end": 265.2,
+          "probability": 0.999
+        },
+        {
+          "word": "step",
+          "start": 265.2,
+          "end": 265.5,
+          "probability": 0.998
+        },
+        {
+          "word": "number",
+          "start": 265.5,
+          "end": 265.86,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 265.86,
+          "end": 266.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 266.02,
+          "end": 266.14,
+          "probability": 0.999
+        },
+        {
+          "word": "total",
+          "start": 266.14,
+          "end": 266.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "number",
+          "start": 266.4,
+          "end": 266.7,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 266.7,
+          "end": 266.9,
+          "probability": 1.0
+        },
+        {
+          "word": "steps",
+          "start": 266.9,
+          "end": 267.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 267.18,
+          "end": 267.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 267.4,
+          "end": 267.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "wizard.",
+          "start": 267.5,
+          "end": 267.84,
+          "probability": 0.9644
+        },
+        {
+          "word": "Finally,",
+          "start": 268.38,
+          "end": 268.88,
+          "probability": 1.0
+        },
+        {
+          "word": "let's",
+          "start": 269.16,
+          "end": 269.58,
+          "probability": 0.999
+        },
+        {
+          "word": "look",
+          "start": 269.58,
+          "end": 269.78,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 269.78,
+          "end": 269.92,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 269.92,
+          "end": 270.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "special",
+          "start": 270.08,
+          "end": 270.48,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 270.48,
+      "end": 276.54,
+      "start_formatted": "00:04:30.480",
+      "end_formatted": "00:04:36.540",
+      "text": "types of step. The first is the quick claim step. A quick claim step bypasses the normal set of steps",
+      "words": [
+        {
+          "word": "types",
+          "start": 270.48,
+          "end": 270.82,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 270.82,
+          "end": 271.0,
+          "probability": 1.0
+        },
+        {
+          "word": "step.",
+          "start": 271.0,
+          "end": 271.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "The",
+          "start": 271.68,
+          "end": 271.9,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 271.9,
+          "end": 272.16,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 272.16,
+          "end": 272.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 272.34,
+          "end": 272.48,
+          "probability": 1.0
+        },
+        {
+          "word": "quick",
+          "start": 272.48,
+          "end": 272.68,
+          "probability": 0.7671
+        },
+        {
+          "word": "claim",
+          "start": 272.68,
+          "end": 272.98,
+          "probability": 0.853
+        },
+        {
+          "word": "step.",
+          "start": 272.98,
+          "end": 273.3,
+          "probability": 1.0
+        },
+        {
+          "word": "A",
+          "start": 273.64,
+          "end": 273.94,
+          "probability": 1.0
+        },
+        {
+          "word": "quick",
+          "start": 273.94,
+          "end": 274.14,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 274.14,
+          "end": 274.46,
+          "probability": 1.0
+        },
+        {
+          "word": "step",
+          "start": 274.46,
+          "end": 274.76,
+          "probability": 1.0
+        },
+        {
+          "word": "bypasses",
+          "start": 274.76,
+          "end": 275.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 275.44,
+          "end": 275.56,
+          "probability": 1.0
+        },
+        {
+          "word": "normal",
+          "start": 275.56,
+          "end": 275.82,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 275.82,
+          "end": 276.06,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 276.06,
+          "end": 276.2,
+          "probability": 1.0
+        },
+        {
+          "word": "steps",
+          "start": 276.2,
+          "end": 276.54,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 276.54,
+      "end": 282.16,
+      "start_formatted": "00:04:36.540",
+      "end_formatted": "00:04:42.160",
+      "text": "and inputs the essential information on one screen. The quick claim step has a property called condition,",
+      "words": [
+        {
+          "word": "and",
+          "start": 276.54,
+          "end": 276.72,
+          "probability": 1.0
+        },
+        {
+          "word": "inputs",
+          "start": 276.72,
+          "end": 277.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 277.12,
+          "end": 277.3,
+          "probability": 1.0
+        },
+        {
+          "word": "essential",
+          "start": 277.3,
+          "end": 277.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "information",
+          "start": 277.72,
+          "end": 278.24,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 278.24,
+          "end": 278.5,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 278.5,
+          "end": 278.72,
+          "probability": 1.0
+        },
+        {
+          "word": "screen.",
+          "start": 278.72,
+          "end": 279.08,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 279.32,
+          "end": 279.82,
+          "probability": 1.0
+        },
+        {
+          "word": "quick",
+          "start": 279.82,
+          "end": 280.04,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 280.04,
+          "end": 280.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 280.36,
+          "end": 280.62,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 280.62,
+          "end": 280.88,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 280.88,
+          "end": 281.0,
+          "probability": 1.0
+        },
+        {
+          "word": "property",
+          "start": 281.0,
+          "end": 281.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "called",
+          "start": 281.38,
+          "end": 281.7,
+          "probability": 1.0
+        },
+        {
+          "word": "condition,",
+          "start": 281.7,
+          "end": 282.16,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 282.52,
+      "end": 288.22,
+      "start_formatted": "00:04:42.520",
+      "end_formatted": "00:04:48.220",
+      "text": "which determines whether it is available. For example, the quick claim auto step is available only if the",
+      "words": [
+        {
+          "word": "which",
+          "start": 282.52,
+          "end": 282.74,
+          "probability": 1.0
+        },
+        {
+          "word": "determines",
+          "start": 282.74,
+          "end": 283.22,
+          "probability": 1.0
+        },
+        {
+          "word": "whether",
+          "start": 283.22,
+          "end": 283.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 283.58,
+          "end": 283.78,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 283.78,
+          "end": 283.9,
+          "probability": 1.0
+        },
+        {
+          "word": "available.",
+          "start": 283.9,
+          "end": 284.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 284.72,
+          "end": 285.02,
+          "probability": 1.0
+        },
+        {
+          "word": "example,",
+          "start": 285.02,
+          "end": 285.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 285.78,
+          "end": 285.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "quick",
+          "start": 285.96,
+          "end": 286.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 286.16,
+          "end": 286.48,
+          "probability": 0.999
+        },
+        {
+          "word": "auto",
+          "start": 286.48,
+          "end": 286.7,
+          "probability": 0.998
+        },
+        {
+          "word": "step",
+          "start": 286.7,
+          "end": 287.02,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 287.02,
+          "end": 287.22,
+          "probability": 1.0
+        },
+        {
+          "word": "available",
+          "start": 287.22,
+          "end": 287.62,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 287.62,
+          "end": 287.92,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 287.92,
+          "end": 288.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 288.12,
+          "end": 288.22,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 288.22,
+      "end": 293.92,
+      "start_formatted": "00:04:48.220",
+      "end_formatted": "00:04:53.920",
+      "text": "loss type is auto. The decision to use the quick claim step is made by the user in the first step of the",
+      "words": [
+        {
+          "word": "loss",
+          "start": 288.22,
+          "end": 288.48,
+          "probability": 0.7544
+        },
+        {
+          "word": "type",
+          "start": 288.48,
+          "end": 288.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 288.7,
+          "end": 288.9,
+          "probability": 0.999
+        },
+        {
+          "word": "auto.",
+          "start": 288.9,
+          "end": 289.16,
+          "probability": 0.792
+        },
+        {
+          "word": "The",
+          "start": 289.64,
+          "end": 290.14,
+          "probability": 0.999
+        },
+        {
+          "word": "decision",
+          "start": 290.14,
+          "end": 290.52,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 290.52,
+          "end": 290.7,
+          "probability": 1.0
+        },
+        {
+          "word": "use",
+          "start": 290.7,
+          "end": 290.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 290.9,
+          "end": 291.04,
+          "probability": 1.0
+        },
+        {
+          "word": "quick",
+          "start": 291.04,
+          "end": 291.24,
+          "probability": 0.9043
+        },
+        {
+          "word": "claim",
+          "start": 291.24,
+          "end": 291.56,
+          "probability": 0.8325
+        },
+        {
+          "word": "step",
+          "start": 291.56,
+          "end": 291.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 291.82,
+          "end": 292.04,
+          "probability": 1.0
+        },
+        {
+          "word": "made",
+          "start": 292.04,
+          "end": 292.26,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 292.26,
+          "end": 292.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 292.44,
+          "end": 292.6,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 292.6,
+          "end": 292.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 292.88,
+          "end": 293.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 293.04,
+          "end": 293.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "first",
+          "start": 293.12,
+          "end": 293.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "step",
+          "start": 293.38,
+          "end": 293.7,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 293.7,
+          "end": 293.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 293.84,
+          "end": 293.92,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 293.92,
+      "end": 299.74,
+      "start_formatted": "00:04:53.920",
+      "end_formatted": "00:04:59.740",
+      "text": "wizard. Some steps are independent of the wizard's built-in sequencing. They are available from anywhere",
+      "words": [
+        {
+          "word": "wizard.",
+          "start": 293.92,
+          "end": 294.26,
+          "probability": 0.9653
+        },
+        {
+          "word": "Some",
+          "start": 294.7,
+          "end": 295.22,
+          "probability": 1.0
+        },
+        {
+          "word": "steps",
+          "start": 295.22,
+          "end": 295.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 295.52,
+          "end": 295.72,
+          "probability": 1.0
+        },
+        {
+          "word": "independent",
+          "start": 295.72,
+          "end": 296.24,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 296.24,
+          "end": 296.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 296.52,
+          "end": 296.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "wizard's",
+          "start": 296.6,
+          "end": 297.04,
+          "probability": 0.999
+        },
+        {
+          "word": "built",
+          "start": 297.04,
+          "end": 297.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "-in",
+          "start": 297.28,
+          "end": 297.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "sequencing.",
+          "start": 297.42,
+          "end": 298.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "They",
+          "start": 298.34,
+          "end": 298.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 298.56,
+          "end": 298.68,
+          "probability": 1.0
+        },
+        {
+          "word": "available",
+          "start": 298.68,
+          "end": 299.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 299.06,
+          "end": 299.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "anywhere",
+          "start": 299.34,
+          "end": 299.74,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 299.74,
+      "end": 305.32,
+      "start_formatted": "00:04:59.740",
+      "end_formatted": "00:05:05.320",
+      "text": "in the wizard, except for the first step, where the policy is found. Independent steps have their",
+      "words": [
+        {
+          "word": "in",
+          "start": 299.74,
+          "end": 299.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 299.92,
+          "end": 300.0,
+          "probability": 0.999
+        },
+        {
+          "word": "wizard,",
+          "start": 300.0,
+          "end": 300.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "except",
+          "start": 300.62,
+          "end": 300.94,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 300.94,
+          "end": 301.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 301.18,
+          "end": 301.3,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 301.3,
+          "end": 301.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "step,",
+          "start": 301.56,
+          "end": 301.96,
+          "probability": 1.0
+        },
+        {
+          "word": "where",
+          "start": 302.16,
+          "end": 302.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 302.3,
+          "end": 302.44,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 302.44,
+          "end": 302.86,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 302.86,
+          "end": 303.06,
+          "probability": 1.0
+        },
+        {
+          "word": "found.",
+          "start": 303.06,
+          "end": 303.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "Independent",
+          "start": 303.94,
+          "end": 304.46,
+          "probability": 0.998
+        },
+        {
+          "word": "steps",
+          "start": 304.46,
+          "end": 304.9,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 304.9,
+          "end": 305.18,
+          "probability": 1.0
+        },
+        {
+          "word": "their",
+          "start": 305.18,
+          "end": 305.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 305.32,
+      "end": 310.98,
+      "start_formatted": "00:05:05.320",
+      "end_formatted": "00:05:10.980",
+      "text": "independent property set to true. Independent steps are usually grouped in a special step set called an",
+      "words": [
+        {
+          "word": "independent",
+          "start": 305.32,
+          "end": 305.82,
+          "probability": 0.999
+        },
+        {
+          "word": "property",
+          "start": 305.82,
+          "end": 306.34,
+          "probability": 0.9585
+        },
+        {
+          "word": "set",
+          "start": 306.34,
+          "end": 306.62,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 306.62,
+          "end": 306.78,
+          "probability": 1.0
+        },
+        {
+          "word": "true.",
+          "start": 306.78,
+          "end": 307.06,
+          "probability": 0.9883
+        },
+        {
+          "word": "Independent",
+          "start": 307.58,
+          "end": 308.04,
+          "probability": 0.999
+        },
+        {
+          "word": "steps",
+          "start": 308.04,
+          "end": 308.48,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 308.48,
+          "end": 308.72,
+          "probability": 1.0
+        },
+        {
+          "word": "usually",
+          "start": 308.72,
+          "end": 309.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "grouped",
+          "start": 309.06,
+          "end": 309.36,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 309.36,
+          "end": 309.52,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 309.52,
+          "end": 309.68,
+          "probability": 1.0
+        },
+        {
+          "word": "special",
+          "start": 309.68,
+          "end": 309.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "step",
+          "start": 309.96,
+          "end": 310.28,
+          "probability": 0.999
+        },
+        {
+          "word": "set",
+          "start": 310.28,
+          "end": 310.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "called",
+          "start": 310.52,
+          "end": 310.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 310.82,
+          "end": 310.98,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 310.98,
+      "end": 316.76,
+      "start_formatted": "00:05:10.980",
+      "end_formatted": "00:05:16.760",
+      "text": "independent wizard step set, which appears at the end of the wizard steps. Grouping in this manner is a",
+      "words": [
+        {
+          "word": "independent",
+          "start": 310.98,
+          "end": 311.48,
+          "probability": 0.9639
+        },
+        {
+          "word": "wizard",
+          "start": 311.48,
+          "end": 311.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "step",
+          "start": 311.9,
+          "end": 312.24,
+          "probability": 0.998
+        },
+        {
+          "word": "set,",
+          "start": 312.24,
+          "end": 312.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 312.82,
+          "end": 313.02,
+          "probability": 1.0
+        },
+        {
+          "word": "appears",
+          "start": 313.02,
+          "end": 313.34,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 313.34,
+          "end": 313.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 313.5,
+          "end": 313.6,
+          "probability": 1.0
+        },
+        {
+          "word": "end",
+          "start": 313.6,
+          "end": 313.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 313.76,
+          "end": 313.88,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 313.88,
+          "end": 313.98,
+          "probability": 0.998
+        },
+        {
+          "word": "wizard",
+          "start": 313.98,
+          "end": 314.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "steps.",
+          "start": 314.28,
+          "end": 314.76,
+          "probability": 0.9858
+        },
+        {
+          "word": "Grouping",
+          "start": 315.36,
+          "end": 315.86,
+          "probability": 0.9902
+        },
+        {
+          "word": "in",
+          "start": 315.86,
+          "end": 316.0,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 316.0,
+          "end": 316.18,
+          "probability": 1.0
+        },
+        {
+          "word": "manner",
+          "start": 316.18,
+          "end": 316.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 316.48,
+          "end": 316.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 316.66,
+          "end": 316.76,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 316.76,
+      "end": 322.48,
+      "start_formatted": "00:05:16.760",
+      "end_formatted": "00:05:22.480",
+      "text": "recommended standard, but not required. Any step marked as independent will be an independent step.",
+      "words": [
+        {
+          "word": "recommended",
+          "start": 316.76,
+          "end": 317.24,
+          "probability": 0.8574
+        },
+        {
+          "word": "standard,",
+          "start": 317.24,
+          "end": 317.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "but",
+          "start": 318.02,
+          "end": 318.24,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 318.24,
+          "end": 318.44,
+          "probability": 0.998
+        },
+        {
+          "word": "required.",
+          "start": 318.44,
+          "end": 318.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "Any",
+          "start": 319.28,
+          "end": 319.72,
+          "probability": 0.9937
+        },
+        {
+          "word": "step",
+          "start": 319.72,
+          "end": 320.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "marked",
+          "start": 320.04,
+          "end": 320.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 320.32,
+          "end": 320.54,
+          "probability": 0.998
+        },
+        {
+          "word": "independent",
+          "start": 320.54,
+          "end": 320.9,
+          "probability": 0.8906
+        },
+        {
+          "word": "will",
+          "start": 320.9,
+          "end": 321.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 321.3,
+          "end": 321.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 321.44,
+          "end": 321.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "independent",
+          "start": 321.58,
+          "end": 322.02,
+          "probability": 0.9917
+        },
+        {
+          "word": "step.",
+          "start": 322.02,
+          "end": 322.48,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 322.78,
+      "end": 328.92,
+      "start_formatted": "00:05:22.780",
+      "end_formatted": "00:05:28.920",
+      "text": "The independent steps for the FNAL wizard include parties involved, policy, documents, and notes.",
+      "words": [
+        {
+          "word": "The",
+          "start": 322.78,
+          "end": 323.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "independent",
+          "start": 323.14,
+          "end": 323.68,
+          "probability": 0.9849
+        },
+        {
+          "word": "steps",
+          "start": 323.68,
+          "end": 324.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 324.1,
+          "end": 324.3,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 324.3,
+          "end": 324.38,
+          "probability": 0.9883
+        },
+        {
+          "word": "FNAL",
+          "start": 324.38,
+          "end": 324.72,
+          "probability": 0.7446
+        },
+        {
+          "word": "wizard",
+          "start": 324.72,
+          "end": 325.0,
+          "probability": 0.8633
+        },
+        {
+          "word": "include",
+          "start": 325.0,
+          "end": 325.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "parties",
+          "start": 325.48,
+          "end": 325.86,
+          "probability": 0.9688
+        },
+        {
+          "word": "involved,",
+          "start": 325.86,
+          "end": 326.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "policy,",
+          "start": 326.62,
+          "end": 327.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "documents,",
+          "start": 327.46,
+          "end": 328.12,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 328.36,
+          "end": 328.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "notes.",
+          "start": 328.58,
+          "end": 328.92,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 329.24,
+      "end": 333.32,
+      "start_formatted": "00:05:29.240",
+      "end_formatted": "00:05:33.320",
+      "text": "This concludes our tour of wizard structure, so I'll cancel the claim now.",
+      "words": [
+        {
+          "word": "This",
+          "start": 329.24,
+          "end": 329.68,
+          "probability": 0.999
+        },
+        {
+          "word": "concludes",
+          "start": 329.68,
+          "end": 330.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "our",
+          "start": 330.1,
+          "end": 330.38,
+          "probability": 0.999
+        },
+        {
+          "word": "tour",
+          "start": 330.38,
+          "end": 330.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 330.54,
+          "end": 330.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "wizard",
+          "start": 330.72,
+          "end": 331.04,
+          "probability": 0.9785
+        },
+        {
+          "word": "structure,",
+          "start": 331.04,
+          "end": 331.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "so",
+          "start": 331.78,
+          "end": 332.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "I'll",
+          "start": 332.06,
+          "end": 332.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "cancel",
+          "start": 332.24,
+          "end": 332.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 332.56,
+          "end": 332.76,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 332.76,
+          "end": 333.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "now.",
+          "start": 333.02,
+          "end": 333.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 334.32,
+      "end": 336.4,
+      "start_formatted": "00:05:34.320",
+      "end_formatted": "00:05:36.400",
+      "text": "This ends the wizard structure demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 334.32,
+          "end": 334.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "ends",
+          "start": 334.96,
+          "end": 335.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 335.18,
+          "end": 335.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "wizard",
+          "start": 335.32,
+          "end": 335.64,
+          "probability": 0.9888
+        },
+        {
+          "word": "structure",
+          "start": 335.64,
+          "end": 336.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "demonstration.",
+          "start": 336.14,
+          "end": 336.4,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 44,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 45,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 46,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 47,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 48,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 49,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 50,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 51,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 52,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 53,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 54,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 55,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 56,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 57,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 58,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 59,
+      "start": 336.4,
+      "end": 336.4,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.400",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 60,
+      "start": 336.4,
+      "end": 336.68,
+      "start_formatted": "00:05:36.400",
+      "end_formatted": "00:05:36.680",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 336.4,
+          "end": 336.68,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 336.68,
+      "end": 336.68,
+      "start_formatted": "00:05:36.680",
+      "end_formatted": "00:05:36.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 62,
+      "start": 336.68,
+      "end": 336.7,
+      "start_formatted": "00:05:36.680",
+      "end_formatted": "00:05:36.700",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 336.68,
+          "end": 336.7,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 64,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 65,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 66,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 67,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 68,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 69,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 70,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 71,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 72,
+      "start": 336.7,
+      "end": 336.7,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.700",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 73,
+      "start": 336.7,
+      "end": 336.88,
+      "start_formatted": "00:05:36.700",
+      "end_formatted": "00:05:36.880",
+      "text": "DEMONSTRATION",
+      "words": [
+        {
+          "word": "DEMONSTRATION",
+          "start": 336.7,
+          "end": 336.88,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 336.88,
+      "end": 336.92,
+      "start_formatted": "00:05:36.880",
+      "end_formatted": "00:05:36.920",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 336.88,
+          "end": 336.88,
+          "probability": 0.168
+        },
+        {
+          "word": "you.",
+          "start": 336.88,
+          "end": 336.92,
+          "probability": 0.999
+        }
+      ]
+    }
+  ]
+}

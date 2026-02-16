@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-06",
+    "slide_count": 31,
+    "slides_with_text": 29,
+    "total_words": 1124,
+    "avg_confidence": 86.55,
+    "processing_time_seconds": 12.67,
+    "extracted_at": "2026-02-13T12:09:41.299759"
+  },
+  "full_text": "Introduction to the Data Model\n\nLesson\nobjectives * Describe the major components of the\n\nClaimCenter data model\n\n¢ Describe the relationships between\ncomponents of the data model\n\n¢ Use the data dictionary to discover\ninformation about the data model\n\n| need to understand how ClaimCenter\nmanages the many pieces of data\nassociated with a claim. That will help me\nevaluate how | can tailor ClaimCenter to\nmeet our specific needs.\n\nMarcus\nBusiness =\nAnalyst\n\n| What is a data model\n\nThe data model is\n+ The structure of data in ClaimCenter used to store, retrieve, and use data\n+ Aset of definitions for entities, relationships, and typelists\n+ The data structure for claims business\n+ Visible in the Data Dictionary\n\nAn entity\n+ Defines a set of attributes related to an object (claim, exposure, contact)\n+ May contain columns, type keys, arrays, foreign keys\n\nA typelist\n+ Defines a set of code/value pairs called typecodes\n+ Defines allowable values for type key fields on entities\n\nRelationships provide the ability to use data from multiple related entities\n\nClaim\n\n| Data model in ClaimCenter «1.1»\n\n« Loss Date\n\n« Reported Date\n¢ Assigned User\n- Loss Cause\n\n| Data model in ClaimCenter es) Gi\n\n« Loss Date\n\n« Reported Date\n¢ Assigned User\n- Loss Cause\n\nClaim\n\nSy Multiple subtypes\n- Person\n- Company\n\nContact ~ Place\n\n| Data model in ClaimCenter «ors\n\n*\n\nConnects Multiple subtypes\nClaim to - Person\nContact - Company\n\nClaim Contact ~ Place\nContact\n\n| Data model in ClaimCenter (crs) Gi\n\ntyes pion\nMultiple subtypes\n- Injury\n\n- Property\nIncident - Vehicle\n\n- Trip\n\nConnects\nClaim to\nContact\nClaim Contact\n\n| Data model in ClaimCenter ¢crs) Gi\n\nL « Coverage\nx —_* © WW - Coverage Subtype\nye + Claimant\n\nC)\n\nIncident Exposure\n\n| Data model in ClaimCenter ¢crs) Gi\n\n2\n\n(A]—\"&3—_=\n\nIncident Exposure\n\nEf\n\nClaim Contact\nContact\n\n| Data model in ClaimCenter cs) Gi\n\n| Data model in ClaimCenter os\n\n| Data model in ClaimCenter 01»\n\n| Demonstration G\n\nEntities in the Ul\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| The Data Dictionary G\n\nDocuments entities and typelists in the ClaimCenter installation\nMust be generated: gwb genDataDictionary\nIncludes objects at generation time (base application and modifications)\n\nView in a browser at\n<install directory>\\build\\dictionary\\data\\index.html\n\n| The Data Dictionary G\n\ns Data Dictionary has three views\n\n¢ Full shows persistent and non-\npersistent objects\n\n¢ Database view shows only\npersistent objects\n\n¢ Migration view shows only objects\nthat are persistent and loadable\n(mainly for migration)\n\n¢ The entities section lists\neach entity with details\n\n+ Foreign Key References\n+ Fields\n+ Arrays\n+ Unique Keys\n¢ Useful information for\n\n+ What you can add toa\nscreen\n\n+ What can be used in\nBusiness Rules\n\n+ What can be exported for\nintegration or reporting\n\n] Using the Data Dictionary\n\nCitation\n\nClaim\n(ClaimAbstractView\nClaimAccess\nClaimAccessData\nClaimAggregateL mit\n‘ClaimAssionmentView\n\n“laimAssociation\n\nlai jationSear\nClaimCloseReopeninfc\nClaimContact\nGlaimContactRole\nGlaimContactRoleOwr\nClaimDesktonView\nClaimempdata\nClaimException\nClaiminAssociation\n\n7\nClaimindicatorAutama’ 7\n\nFields\n\nID key (roneun’\nInternally managed primary key\n\nACCESS_PROP Derived property returning\ngwpl.persistence.type.EntityPropertyinfoReference —_(vitual proper)”\n\nAccidentType type key to AccidentType using key filter LossCause\n(exporabie)” oadabley” (writable\nDetailed accident type; augments LossCause.\n\n> Show user interface details.\n\nACCIDENTTYPE_PROP Derived property returning\ngwplpersistence.type.EntityPropertyinfoReference (vita propery)\n\nACTIVITIES_PROP Derived property returning\ngwpl.persistence.type.EntityPropertyinfoReference (vitua property)\n\nActivityPerformed Derived property retuming java lang String rus\nproperty)” (wrtable)” aa\n\n| Entity header G\n\nClaim (cc_claim) (delegates to CCAssignable, ClaimContactRoleOwner, EventAware,\nExtractable, |SOReportable, Retireable, UserRoleOwner, Validatable, WorkloadDelegate)\n\n> Description\n\nAttributes: Editable’, Exportable’, Extendable’, Final’, Keyed’, Loadable’, Sourceable’, Versionable’\nMessaging Events: The application will generate these events for this entity:\n\n* ClaimValid\n« Entity name and name of database table\n\n¢ Delegate entities (if any)\n\n+ Delegates define fields and behaviors needed by multiple entities, such as \"Assignable\" or \"ABLinkable\n(to other apps)\"\n\n¢ Description of the entity (collapsed above)\n¢ Entity attributes\n\n¢ Other entities with foreign key and array references to this entity (not shown)\n\n| Subtypes list\n\nIf an entity is subtyped, it has a subtypes list\nIdentifies all child subtypes\nIncludes links to each subtype\n\nSubtypes are on the same page so you can use tt\nlink or scroll to see them\n\nIf an entity is subtyped, fields and arrays declared\nfor each subtype level are listed in their own sectic\n\nSubtypes\n\nCode Name\nCompany Company\nCompanyVendor |CompanyVendor\n\nAutoRepairShop |AutoRepairShop\n\nAutoTowingAgcy |AutoTowingAgcy\n\nLawFirm LawFirm\nMedicalCareOrg |MedicalCareOrg\nPerson Person\nAdjudicator Adjudicator\nPersonVendor PersonVendor\nAttorney Attorney\nDoctor Doctor\nUserContact UserContact\nPlace Place\n\nLegalVenue LegalVenue\n\n| Fields list\n\nThe fields section shows\ninformation on:\n\n+ Columns\n\n+ Foreign keys\n\n+ Type keys\n\n+ Virtual properties\n\nFields\n\nID key ¢ronaun?\nInternally managed primary key\n\nACCESS_PROP Derived property returning gw_pl.persistence type.EntityP,\n\nAccidentType type key to AccidentType uping key filter LossCause — expor\nDetailed accident type; augments LossCause|\n\n> Show user interface details.\n\nACCIDENTTYPE_PROP Derived property returning gw.pl.persistence.tyy\nproperty)\n\nBase application fel (dark green) [senate or wav nonsnnmmes\n\nExtensions to entity (dark blue)\n\nExpandable list of user interface\n(UI) files that use field (if field is\nused in Ul)\n\nproperty)\nActivityPerformed Derived property returning java.lang.String (virtual prop.\n\nAddressOwner Derived property returning gw.api.address.CCAddressOwr\n‘The address owner object required by the AddressinputSet\n\nIntegration programmers can write Event Firec\nAgencyld varchar (9) exportable)’ (loadable (wt Remember to configure a new or existing mes.\nAn ID assigned to indicate company and offic 2 C||> Concrete FK references:\n\n[seuscceactacmaci |\n\nFields | Arrays | Unique Keys for Claim\n\nclick here\n\n| Demonstration\n\nExamining the data dictionary\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nExamine the data dictionary\n\nQuestion G\n\n_~ — How does ClaimCenter manage a contact that has multiple relationships\nx toaclaim?\n\nee\n\nAnswer a\n\n,~ — How does ClaimCenter manage a contact that has multiple relationships\nx toaclaim?\n\nThrough the ClaimContact entity\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion\n\n_~ — Whatis an incident?\n\nSse ssee ses 55555 =5-\n\nAnswer a\n\n,~ — Whatis an incident?\n7\n\n¢\n¢\n\nAn incident is an item that was lost or damaged, such as a vehicle, property, or person\nsuffering one or more injuries.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n,~ — What is an exposure?\n\n4\n¢\n¢\n\nee\n\nAnswer a\n\nae What is an exposure?\n\n¢\n¢\n\nExposures are the mechanism used by ClaimCenter to track the progress of each\npossible payment in compensation for a loss.\n\nSOOO ODDDSDoOODDODOoOoS\n\nLesson\nobj ectives * Describe the major components of the\nreview ClaimCenter data model\n\n¢ Describe the relationships between\ncomponents of the data model\n\n¢ Use the data dictionary to discover\ninformation about the data model",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to the Data Model",
+      "word_count": 5,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 559
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives * Describe the major components of the\n\nClaimCenter data model\n\n¢ Describe the relationships between\ncomponents of the data model\n\n¢ Use the data dictionary to discover\ninformation about the data model",
+      "word_count": 34,
+      "avg_confidence": 90.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| need to understand how ClaimCenter\nmanages the many pieces of data\nassociated with a claim. That will help me\nevaluate how | can tailor ClaimCenter to\nmeet our specific needs.\n\nMarcus\nBusiness =\nAnalyst",
+      "word_count": 35,
+      "avg_confidence": 91.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| What is a data model\n\nThe data model is\n+ The structure of data in ClaimCenter used to store, retrieve, and use data\n+ Aset of definitions for entities, relationships, and typelists\n+ The data structure for claims business\n+ Visible in the Data Dictionary\n\nAn entity\n+ Defines a set of attributes related to an object (claim, exposure, contact)\n+ May contain columns, type keys, arrays, foreign keys\n\nA typelist\n+ Defines a set of code/value pairs called typecodes\n+ Defines allowable values for type key fields on entities\n\nRelationships provide the ability to use data from multiple related entities",
+      "word_count": 102,
+      "avg_confidence": 91.99,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Claim\n\n| Data model in ClaimCenter «1.1»\n\n« Loss Date\n\n« Reported Date\n¢ Assigned User\n- Loss Cause",
+      "word_count": 19,
+      "avg_confidence": 84.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Data model in ClaimCenter es) Gi\n\n« Loss Date\n\n« Reported Date\n¢ Assigned User\n- Loss Cause\n\nClaim\n\nSy Multiple subtypes\n- Person\n- Company\n\nContact ~ Place",
+      "word_count": 30,
+      "avg_confidence": 83.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Data model in ClaimCenter «ors\n\n*\n\nConnects Multiple subtypes\nClaim to - Person\nContact - Company\n\nClaim Contact ~ Place\nContact",
+      "word_count": 22,
+      "avg_confidence": 92.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Data model in ClaimCenter (crs) Gi\n\ntyes pion\nMultiple subtypes\n- Injury\n\n- Property\nIncident - Vehicle\n\n- Trip\n\nConnects\nClaim to\nContact\nClaim Contact",
+      "word_count": 26,
+      "avg_confidence": 85.66,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Data model in ClaimCenter ¢crs) Gi\n\nL « Coverage\nx —_* © WW - Coverage Subtype\nye + Claimant\n\nC)\n\nIncident Exposure",
+      "word_count": 23,
+      "avg_confidence": 78.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Data model in ClaimCenter ¢crs) Gi\n\n2\n\n(A]—\"&3—_=\n\nIncident Exposure\n\nEf\n\nClaim Contact\nContact",
+      "word_count": 15,
+      "avg_confidence": 80.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Data model in ClaimCenter cs) Gi",
+      "word_count": 7,
+      "avg_confidence": 85.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Data model in ClaimCenter os",
+      "word_count": 6,
+      "avg_confidence": 86.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Data model in ClaimCenter 01»",
+      "word_count": 6,
+      "avg_confidence": 89.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\n\nEntities in the Ul\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| The Data Dictionary G\n\nDocuments entities and typelists in the ClaimCenter installation\nMust be generated: gwb genDataDictionary\nIncludes objects at generation time (base application and modifications)\n\nView in a browser at\n<install directory>\\build\\dictionary\\data\\index.html",
+      "word_count": 34,
+      "avg_confidence": 93.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| The Data Dictionary G\n\ns Data Dictionary has three views\n\n¢ Full shows persistent and non-\npersistent objects\n\n¢ Database view shows only\npersistent objects\n\n¢ Migration view shows only objects\nthat are persistent and loadable\n(mainly for migration)",
+      "word_count": 40,
+      "avg_confidence": 90.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "¢ The entities section lists\neach entity with details\n\n+ Foreign Key References\n+ Fields\n+ Arrays\n+ Unique Keys\n¢ Useful information for\n\n+ What you can add toa\nscreen\n\n+ What can be used in\nBusiness Rules\n\n+ What can be exported for\nintegration or reporting\n\n] Using the Data Dictionary\n\nCitation\n\nClaim\n(ClaimAbstractView\nClaimAccess\nClaimAccessData\nClaimAggregateL mit\n‘ClaimAssionmentView\n\n“laimAssociation\n\nlai jationSear\nClaimCloseReopeninfc\nClaimContact\nGlaimContactRole\nGlaimContactRoleOwr\nClaimDesktonView\nClaimempdata\nClaimException\nClaiminAssociation\n\n7\nClaimindicatorAutama’ 7\n\nFields\n\nID key (roneun’\nInternally managed primary key\n\nACCESS_PROP Derived property returning\ngwpl.persistence.type.EntityPropertyinfoReference —_(vitual proper)”\n\nAccidentType type key to AccidentType using key filter LossCause\n(exporabie)” oadabley” (writable\nDetailed accident type; augments LossCause.\n\n> Show user interface details.\n\nACCIDENTTYPE_PROP Derived property returning\ngwplpersistence.type.EntityPropertyinfoReference (vita propery)\n\nACTIVITIES_PROP Derived property returning\ngwpl.persistence.type.EntityPropertyinfoReference (vitua property)\n\nActivityPerformed Derived property retuming java lang String rus\nproperty)” (wrtable)” aa",
+      "word_count": 137,
+      "avg_confidence": 75.28,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Entity header G\n\nClaim (cc_claim) (delegates to CCAssignable, ClaimContactRoleOwner, EventAware,\nExtractable, |SOReportable, Retireable, UserRoleOwner, Validatable, WorkloadDelegate)\n\n> Description\n\nAttributes: Editable’, Exportable’, Extendable’, Final’, Keyed’, Loadable’, Sourceable’, Versionable’\nMessaging Events: The application will generate these events for this entity:\n\n* ClaimValid\n« Entity name and name of database table\n\n¢ Delegate entities (if any)\n\n+ Delegates define fields and behaviors needed by multiple entities, such as \"Assignable\" or \"ABLinkable\n(to other apps)\"\n\n¢ Description of the entity (collapsed above)\n¢ Entity attributes\n\n¢ Other entities with foreign key and array references to this entity (not shown)",
+      "word_count": 96,
+      "avg_confidence": 89.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Subtypes list\n\nIf an entity is subtyped, it has a subtypes list\nIdentifies all child subtypes\nIncludes links to each subtype\n\nSubtypes are on the same page so you can use tt\nlink or scroll to see them\n\nIf an entity is subtyped, fields and arrays declared\nfor each subtype level are listed in their own sectic\n\nSubtypes\n\nCode Name\nCompany Company\nCompanyVendor |CompanyVendor\n\nAutoRepairShop |AutoRepairShop\n\nAutoTowingAgcy |AutoTowingAgcy\n\nLawFirm LawFirm\nMedicalCareOrg |MedicalCareOrg\nPerson Person\nAdjudicator Adjudicator\nPersonVendor PersonVendor\nAttorney Attorney\nDoctor Doctor\nUserContact UserContact\nPlace Place\n\nLegalVenue LegalVenue",
+      "word_count": 89,
+      "avg_confidence": 89.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Fields list\n\nThe fields section shows\ninformation on:\n\n+ Columns\n\n+ Foreign keys\n\n+ Type keys\n\n+ Virtual properties\n\nFields\n\nID key ¢ronaun?\nInternally managed primary key\n\nACCESS_PROP Derived property returning gw_pl.persistence type.EntityP,\n\nAccidentType type key to AccidentType uping key filter LossCause — expor\nDetailed accident type; augments LossCause|\n\n> Show user interface details.\n\nACCIDENTTYPE_PROP Derived property returning gw.pl.persistence.tyy\nproperty)\n\nBase application fel (dark green) [senate or wav nonsnnmmes\n\nExtensions to entity (dark blue)\n\nExpandable list of user interface\n(UI) files that use field (if field is\nused in Ul)\n\nproperty)\nActivityPerformed Derived property returning java.lang.String (virtual prop.\n\nAddressOwner Derived property returning gw.api.address.CCAddressOwr\n‘The address owner object required by the AddressinputSet\n\nIntegration programmers can write Event Firec\nAgencyld varchar (9) exportable)’ (loadable (wt Remember to configure a new or existing mes.\nAn ID assigned to indicate company and offic 2 C||> Concrete FK references:\n\n[seuscceactacmaci |\n\nFields | Arrays | Unique Keys for Claim",
+      "word_count": 155,
+      "avg_confidence": 82.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "click here\n\n| Demonstration\n\nExamining the data dictionary\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Student exercise\n\nExamine the data dictionary",
+      "word_count": 7,
+      "avg_confidence": 95.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question G\n\n_~ — How does ClaimCenter manage a contact that has multiple relationships\nx toaclaim?\n\nee",
+      "word_count": 17,
+      "avg_confidence": 81.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer a\n\n,~ — How does ClaimCenter manage a contact that has multiple relationships\nx toaclaim?\n\nThrough the ClaimContact entity\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 22,
+      "avg_confidence": 82.8,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n_~ — Whatis an incident?\n\nSse ssee ses 55555 =5-",
+      "word_count": 11,
+      "avg_confidence": 73.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer a\n\n,~ — Whatis an incident?\n7\n\n¢\n¢\n\nAn incident is an item that was lost or damaged, such as a vehicle, property, or person\nsuffering one or more injuries.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 34,
+      "avg_confidence": 85.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question G\n\n,~ — What is an exposure?\n\n4\n¢\n¢\n\nee",
+      "word_count": 12,
+      "avg_confidence": 64.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer a\n\nae What is an exposure?\n\n¢\n¢\n\nExposures are the mechanism used by ClaimCenter to track the progress of each\npossible payment in compensation for a loss.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 31,
+      "avg_confidence": 88.72,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Lesson\nobj ectives * Describe the major components of the\nreview ClaimCenter data model\n\n¢ Describe the relationships between\ncomponents of the data model\n\n¢ Use the data dictionary to discover\ninformation about the data model",
+      "word_count": 36,
+      "avg_confidence": 90.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

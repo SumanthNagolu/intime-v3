@@ -1,0 +1,4979 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_12_01.mp4",
+    "video_stem": "In_12_01",
+    "duration_seconds": 339.72,
+    "duration_formatted": "00:05:39.720",
+    "segment_count": 79,
+    "word_count": 691,
+    "avg_confidence": 0.9252,
+    "transcription_time_seconds": 24.31,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:49:53.831282"
+  },
+  "full_text": "This demonstration will examine the following messaging components for bank account verification. Configuration of the bank account entity making it an event aware entity. Configuration of the destination focusing on the required fields. Triggering a message in the UI. This demonstration requires that you use Training App, External App, Guidewire Studio, and a supported web browser. To understand why the bank account entity is an event aware entity, examine the bank account.eti file. Press CTRL plus SHIFT plus N to search for the file. In the search screen, start typing the name of the file. Double-click on the file name to open. Notice that the entity implements the event aware delegate by adding the events element. The events that are implemented by default are, added, changed, and removed. Also, a custom event was configured called Bank Account Flagged. Examine the bank account entity in the data dictionary. Navigate to the bank account entity. Click the data entities link. Click the bank account link. Observe that the bank account entity delegates to event aware and other delegates. Under Messaging Events is the list of messaging events. Bank account flagged, bank account added, bank account changed, bank account removed. The next messaging component to examine is the destination. Double-click the messaging config.xml file to view all the existing destinations. Select the bank account verification destination. Examine the configuration for the required fields. ID can be a number between 0 to 63. This destination is 13. Name has to be a unique name. Transport plugin. Configured to use the bank account verification transport plugin which will be examined in detail when the transport plugin is discussed. Events. The destination can subscribe to 4 possible events, but this destination only subscribes to the bank account added and bank account changed events. The remainder relevant fields will be discussed as needed through the remaining messaging lessons. In Training App, trigger a bank account verification message by adding a bank account to a contact. Prior to triggering the message, perform the following administrative tasks. Clear the message table. Clear the message history table. Ensure the bank account verification destination is started. Type the username for super user. Type the password for super user. Click the login button. Click the administration link. Click the training, messaging link. Click the select all box. Click the skip selected messages button. Click OK. Click the message history table link. Click the select all box. Click the delete selected message histories button. Click OK. Click the message administration link. Note, the bank account verification destination is currently suspended. Select the bank account verification destination. Click the resume button. Click the search button. Search for Brandi Amante. Type the last name in the search field. Click the search button. In the search results, select the contact link. Click the details link. Click the bank accounts link. Click the edit button. Click the add button. Click the add button. Type the bank name. Type the routing number. Type the routing number. Type the account number. Type the account type. Click the account type. Type the account type. Click the update button. Click the update button. Click theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount The payload was transformed by replacing the token with the actual age of the message. Also, a sender ref ID field was added to the payload. Stage 4, the message was sent. Stage 5, the message was acknowledged and the verified field was updated. This is an example of synchronous acknowledgement. In Training App, confirm the updated status of the new bank account. Note, the screen needs to be refreshed to see the updated status. Refresh the screen by clicking on the Verification Check button. Observe that the status is now verified. To determine the status of the message in Training App, navigate to the Training, Messaging screen. Click the Administration link. Click the Training, Messaging link. Why isn't the new message displayed in the message table? This is because the message has already been acknowledged and moved to the Message History table. Click the Message History table link. Note, the acknowledged message in the table. This ends the examine an event aware entity and destination demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.34,
+      "end": 6.18,
+      "start_formatted": "00:00:01.340",
+      "end_formatted": "00:00:06.180",
+      "text": "This demonstration will examine the following messaging components for bank account verification.",
+      "words": [
+        {
+          "word": "This",
+          "start": 1.34,
+          "end": 1.92,
+          "probability": 0.9551
+        },
+        {
+          "word": "demonstration",
+          "start": 1.92,
+          "end": 2.5,
+          "probability": 0.9858
+        },
+        {
+          "word": "will",
+          "start": 2.5,
+          "end": 2.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "examine",
+          "start": 2.82,
+          "end": 3.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 3.2,
+          "end": 3.36,
+          "probability": 0.998
+        },
+        {
+          "word": "following",
+          "start": 3.36,
+          "end": 3.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "messaging",
+          "start": 3.68,
+          "end": 4.12,
+          "probability": 0.98
+        },
+        {
+          "word": "components",
+          "start": 4.12,
+          "end": 4.68,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 4.68,
+          "end": 4.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "bank",
+          "start": 4.94,
+          "end": 5.22,
+          "probability": 0.8218
+        },
+        {
+          "word": "account",
+          "start": 5.22,
+          "end": 5.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "verification.",
+          "start": 5.48,
+          "end": 6.18,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 6.7,
+      "end": 15.98,
+      "start_formatted": "00:00:06.700",
+      "end_formatted": "00:00:15.980",
+      "text": "Configuration of the bank account entity making it an event aware entity. Configuration of the destination focusing on the required fields. Triggering a message in the UI.",
+      "words": [
+        {
+          "word": "Configuration",
+          "start": 6.7,
+          "end": 7.28,
+          "probability": 0.9673
+        },
+        {
+          "word": "of",
+          "start": 7.28,
+          "end": 7.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 7.4,
+          "end": 7.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "bank",
+          "start": 7.5,
+          "end": 7.74,
+          "probability": 0.9688
+        },
+        {
+          "word": "account",
+          "start": 7.74,
+          "end": 8.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "entity",
+          "start": 8.02,
+          "end": 8.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "making",
+          "start": 8.32,
+          "end": 8.6,
+          "probability": 0.8672
+        },
+        {
+          "word": "it",
+          "start": 8.6,
+          "end": 8.8,
+          "probability": 0.9907
+        },
+        {
+          "word": "an",
+          "start": 8.8,
+          "end": 8.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "event",
+          "start": 8.9,
+          "end": 9.16,
+          "probability": 0.9434
+        },
+        {
+          "word": "aware",
+          "start": 9.16,
+          "end": 9.42,
+          "probability": 0.6392
+        },
+        {
+          "word": "entity.",
+          "start": 9.42,
+          "end": 9.8,
+          "probability": 0.998
+        },
+        {
+          "word": "Configuration",
+          "start": 10.7,
+          "end": 11.28,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 11.28,
+          "end": 11.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 11.38,
+          "end": 11.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "destination",
+          "start": 11.48,
+          "end": 11.88,
+          "probability": 0.999
+        },
+        {
+          "word": "focusing",
+          "start": 11.88,
+          "end": 12.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "on",
+          "start": 12.46,
+          "end": 12.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 12.72,
+          "end": 12.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "required",
+          "start": 12.84,
+          "end": 13.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "fields.",
+          "start": 13.24,
+          "end": 13.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "Triggering",
+          "start": 14.38,
+          "end": 14.96,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 14.96,
+          "end": 15.06,
+          "probability": 0.999
+        },
+        {
+          "word": "message",
+          "start": 15.06,
+          "end": 15.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 15.36,
+          "end": 15.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 15.54,
+          "end": 15.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "UI.",
+          "start": 15.62,
+          "end": 15.98,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 16.4,
+      "end": 23.26,
+      "start_formatted": "00:00:16.400",
+      "end_formatted": "00:00:23.260",
+      "text": "This demonstration requires that you use Training App, External App, Guidewire Studio, and a supported web browser.",
+      "words": [
+        {
+          "word": "This",
+          "start": 16.4,
+          "end": 16.94,
+          "probability": 0.998
+        },
+        {
+          "word": "demonstration",
+          "start": 16.94,
+          "end": 17.52,
+          "probability": 0.999
+        },
+        {
+          "word": "requires",
+          "start": 17.52,
+          "end": 18.14,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 18.14,
+          "end": 18.34,
+          "probability": 0.9937
+        },
+        {
+          "word": "you",
+          "start": 18.34,
+          "end": 18.46,
+          "probability": 0.999
+        },
+        {
+          "word": "use",
+          "start": 18.46,
+          "end": 18.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "Training",
+          "start": 18.7,
+          "end": 18.96,
+          "probability": 0.4307
+        },
+        {
+          "word": "App,",
+          "start": 18.96,
+          "end": 19.34,
+          "probability": 0.8174
+        },
+        {
+          "word": "External",
+          "start": 19.56,
+          "end": 19.98,
+          "probability": 0.9556
+        },
+        {
+          "word": "App,",
+          "start": 19.98,
+          "end": 20.34,
+          "probability": 0.9844
+        },
+        {
+          "word": "Guidewire",
+          "start": 20.6,
+          "end": 21.12,
+          "probability": 0.9785
+        },
+        {
+          "word": "Studio,",
+          "start": 21.12,
+          "end": 21.54,
+          "probability": 0.9541
+        },
+        {
+          "word": "and",
+          "start": 21.88,
+          "end": 22.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 22.12,
+          "end": 22.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "supported",
+          "start": 22.22,
+          "end": 22.6,
+          "probability": 0.9331
+        },
+        {
+          "word": "web",
+          "start": 22.6,
+          "end": 22.86,
+          "probability": 0.9565
+        },
+        {
+          "word": "browser.",
+          "start": 22.86,
+          "end": 23.26,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 23.78,
+      "end": 29.7,
+      "start_formatted": "00:00:23.780",
+      "end_formatted": "00:00:29.700",
+      "text": "To understand why the bank account entity is an event aware entity, examine the bank account.eti file.",
+      "words": [
+        {
+          "word": "To",
+          "start": 23.78,
+          "end": 24.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "understand",
+          "start": 24.36,
+          "end": 24.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "why",
+          "start": 24.8,
+          "end": 25.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 25.04,
+          "end": 25.14,
+          "probability": 0.998
+        },
+        {
+          "word": "bank",
+          "start": 25.14,
+          "end": 25.38,
+          "probability": 0.9565
+        },
+        {
+          "word": "account",
+          "start": 25.38,
+          "end": 25.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "entity",
+          "start": 25.64,
+          "end": 26.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 26.0,
+          "end": 26.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "an",
+          "start": 26.22,
+          "end": 26.32,
+          "probability": 0.999
+        },
+        {
+          "word": "event",
+          "start": 26.32,
+          "end": 26.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "aware",
+          "start": 26.56,
+          "end": 26.8,
+          "probability": 0.9731
+        },
+        {
+          "word": "entity,",
+          "start": 26.8,
+          "end": 27.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "examine",
+          "start": 27.36,
+          "end": 27.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 27.88,
+          "end": 28.04,
+          "probability": 0.998
+        },
+        {
+          "word": "bank",
+          "start": 28.04,
+          "end": 28.24,
+          "probability": 0.9155
+        },
+        {
+          "word": "account",
+          "start": 28.24,
+          "end": 28.6,
+          "probability": 0.626
+        },
+        {
+          "word": ".eti",
+          "start": 28.6,
+          "end": 29.2,
+          "probability": 0.7559
+        },
+        {
+          "word": "file.",
+          "start": 29.2,
+          "end": 29.7,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 30.0,
+      "end": 39.64,
+      "start_formatted": "00:00:30.000",
+      "end_formatted": "00:00:39.640",
+      "text": "Press CTRL plus SHIFT plus N to search for the file. In the search screen, start typing the name of the file. Double-click on the file name to open.",
+      "words": [
+        {
+          "word": "Press",
+          "start": 30.0,
+          "end": 30.72,
+          "probability": 0.9238
+        },
+        {
+          "word": "CTRL",
+          "start": 30.72,
+          "end": 31.14,
+          "probability": 0.6514
+        },
+        {
+          "word": "plus",
+          "start": 31.14,
+          "end": 31.44,
+          "probability": 0.0204
+        },
+        {
+          "word": "SHIFT",
+          "start": 31.44,
+          "end": 31.82,
+          "probability": 0.8857
+        },
+        {
+          "word": "plus",
+          "start": 31.82,
+          "end": 32.02,
+          "probability": 0.7886
+        },
+        {
+          "word": "N",
+          "start": 32.02,
+          "end": 32.26,
+          "probability": 0.9531
+        },
+        {
+          "word": "to",
+          "start": 32.26,
+          "end": 32.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "search",
+          "start": 32.4,
+          "end": 32.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "for",
+          "start": 32.66,
+          "end": 32.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 32.84,
+          "end": 32.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "file.",
+          "start": 32.94,
+          "end": 33.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "In",
+          "start": 33.74,
+          "end": 34.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 34.3,
+          "end": 34.42,
+          "probability": 0.998
+        },
+        {
+          "word": "search",
+          "start": 34.42,
+          "end": 34.66,
+          "probability": 0.7603
+        },
+        {
+          "word": "screen,",
+          "start": 34.66,
+          "end": 35.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "start",
+          "start": 35.3,
+          "end": 35.76,
+          "probability": 0.9878
+        },
+        {
+          "word": "typing",
+          "start": 35.76,
+          "end": 36.04,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 36.04,
+          "end": 36.22,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 36.22,
+          "end": 36.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 36.4,
+          "end": 36.58,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 36.58,
+          "end": 36.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "file.",
+          "start": 36.68,
+          "end": 37.02,
+          "probability": 0.998
+        },
+        {
+          "word": "Double",
+          "start": 37.58,
+          "end": 38.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "-click",
+          "start": 38.14,
+          "end": 38.36,
+          "probability": 0.8525
+        },
+        {
+          "word": "on",
+          "start": 38.36,
+          "end": 38.54,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 38.54,
+          "end": 38.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "file",
+          "start": 38.64,
+          "end": 38.9,
+          "probability": 0.9614
+        },
+        {
+          "word": "name",
+          "start": 38.9,
+          "end": 39.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 39.16,
+          "end": 39.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "open.",
+          "start": 39.32,
+          "end": 39.64,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 40.38,
+      "end": 49.32,
+      "start_formatted": "00:00:40.380",
+      "end_formatted": "00:00:49.320",
+      "text": "Notice that the entity implements the event aware delegate by adding the events element. The events that are implemented by default are, added, changed, and removed.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 40.38,
+          "end": 40.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 40.94,
+          "end": 41.14,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 41.14,
+          "end": 41.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "entity",
+          "start": 41.28,
+          "end": 41.56,
+          "probability": 0.9785
+        },
+        {
+          "word": "implements",
+          "start": 41.56,
+          "end": 42.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 42.08,
+          "end": 42.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "event",
+          "start": 42.24,
+          "end": 42.48,
+          "probability": 0.5488
+        },
+        {
+          "word": "aware",
+          "start": 42.48,
+          "end": 42.8,
+          "probability": 0.2389
+        },
+        {
+          "word": "delegate",
+          "start": 42.8,
+          "end": 43.14,
+          "probability": 0.957
+        },
+        {
+          "word": "by",
+          "start": 43.14,
+          "end": 43.4,
+          "probability": 0.998
+        },
+        {
+          "word": "adding",
+          "start": 43.4,
+          "end": 43.7,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 43.7,
+          "end": 43.86,
+          "probability": 0.998
+        },
+        {
+          "word": "events",
+          "start": 43.86,
+          "end": 44.18,
+          "probability": 0.8369
+        },
+        {
+          "word": "element.",
+          "start": 44.18,
+          "end": 44.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "The",
+          "start": 44.86,
+          "end": 45.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "events",
+          "start": 45.22,
+          "end": 45.56,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 45.56,
+          "end": 45.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 45.72,
+          "end": 45.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "implemented",
+          "start": 45.84,
+          "end": 46.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 46.28,
+          "end": 46.48,
+          "probability": 0.999
+        },
+        {
+          "word": "default",
+          "start": 46.48,
+          "end": 46.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "are,",
+          "start": 46.84,
+          "end": 47.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "added,",
+          "start": 47.34,
+          "end": 47.72,
+          "probability": 0.939
+        },
+        {
+          "word": "changed,",
+          "start": 47.98,
+          "end": 48.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 48.68,
+          "end": 48.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "removed.",
+          "start": 48.92,
+          "end": 49.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 49.66,
+      "end": 58.92,
+      "start_formatted": "00:00:49.660",
+      "end_formatted": "00:00:58.920",
+      "text": "Also, a custom event was configured called Bank Account Flagged. Examine the bank account entity in the data dictionary. Navigate to the bank account entity.",
+      "words": [
+        {
+          "word": "Also,",
+          "start": 49.66,
+          "end": 50.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 50.42,
+          "end": 50.68,
+          "probability": 0.998
+        },
+        {
+          "word": "custom",
+          "start": 50.68,
+          "end": 50.98,
+          "probability": 0.9912
+        },
+        {
+          "word": "event",
+          "start": 50.98,
+          "end": 51.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "was",
+          "start": 51.26,
+          "end": 51.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "configured",
+          "start": 51.5,
+          "end": 51.94,
+          "probability": 0.999
+        },
+        {
+          "word": "called",
+          "start": 51.94,
+          "end": 52.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Bank",
+          "start": 52.28,
+          "end": 52.56,
+          "probability": 0.5483
+        },
+        {
+          "word": "Account",
+          "start": 52.56,
+          "end": 52.86,
+          "probability": 0.6313
+        },
+        {
+          "word": "Flagged.",
+          "start": 52.86,
+          "end": 53.44,
+          "probability": 0.8135
+        },
+        {
+          "word": "Examine",
+          "start": 54.1,
+          "end": 54.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 54.66,
+          "end": 54.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "bank",
+          "start": 54.76,
+          "end": 55.0,
+          "probability": 0.8057
+        },
+        {
+          "word": "account",
+          "start": 55.0,
+          "end": 55.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "entity",
+          "start": 55.3,
+          "end": 55.6,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 55.6,
+          "end": 55.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 55.76,
+          "end": 55.84,
+          "probability": 0.999
+        },
+        {
+          "word": "data",
+          "start": 55.84,
+          "end": 56.06,
+          "probability": 0.8843
+        },
+        {
+          "word": "dictionary.",
+          "start": 56.06,
+          "end": 56.58,
+          "probability": 0.9893
+        },
+        {
+          "word": "Navigate",
+          "start": 57.2,
+          "end": 57.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 57.76,
+          "end": 57.88,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 57.88,
+          "end": 57.98,
+          "probability": 0.999
+        },
+        {
+          "word": "bank",
+          "start": 57.98,
+          "end": 58.24,
+          "probability": 0.936
+        },
+        {
+          "word": "account",
+          "start": 58.24,
+          "end": 58.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "entity.",
+          "start": 58.52,
+          "end": 58.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 58.92,
+      "end": 63.94,
+      "start_formatted": "00:00:58.920",
+      "end_formatted": "00:01:03.940",
+      "text": "Click the data entities link. Click the bank account link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 58.92,
+          "end": 59.9,
+          "probability": 0.7866
+        },
+        {
+          "word": "the",
+          "start": 59.9,
+          "end": 60.08,
+          "probability": 0.9922
+        },
+        {
+          "word": "data",
+          "start": 60.08,
+          "end": 60.3,
+          "probability": 0.1997
+        },
+        {
+          "word": "entities",
+          "start": 60.3,
+          "end": 60.72,
+          "probability": 0.8032
+        },
+        {
+          "word": "link.",
+          "start": 60.72,
+          "end": 61.1,
+          "probability": 0.9736
+        },
+        {
+          "word": "Click",
+          "start": 62.38,
+          "end": 62.98,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 62.98,
+          "end": 63.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "bank",
+          "start": 63.14,
+          "end": 63.34,
+          "probability": 0.8584
+        },
+        {
+          "word": "account",
+          "start": 63.34,
+          "end": 63.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "link.",
+          "start": 63.62,
+          "end": 63.94,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 65.66,
+      "end": 69.46,
+      "start_formatted": "00:01:05.660",
+      "end_formatted": "00:01:09.460",
+      "text": "Observe that the bank account entity delegates to event aware and other delegates.",
+      "words": [
+        {
+          "word": "Observe",
+          "start": 65.66,
+          "end": 66.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "that",
+          "start": 66.26,
+          "end": 66.38,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 66.38,
+          "end": 66.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "bank",
+          "start": 66.5,
+          "end": 66.74,
+          "probability": 0.9707
+        },
+        {
+          "word": "account",
+          "start": 66.74,
+          "end": 67.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "entity",
+          "start": 67.04,
+          "end": 67.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "delegates",
+          "start": 67.38,
+          "end": 67.76,
+          "probability": 0.9639
+        },
+        {
+          "word": "to",
+          "start": 67.76,
+          "end": 68.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "event",
+          "start": 68.02,
+          "end": 68.3,
+          "probability": 0.6631
+        },
+        {
+          "word": "aware",
+          "start": 68.3,
+          "end": 68.56,
+          "probability": 0.7207
+        },
+        {
+          "word": "and",
+          "start": 68.56,
+          "end": 68.74,
+          "probability": 0.6562
+        },
+        {
+          "word": "other",
+          "start": 68.74,
+          "end": 68.88,
+          "probability": 0.9863
+        },
+        {
+          "word": "delegates.",
+          "start": 68.88,
+          "end": 69.46,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 69.86,
+      "end": 77.78,
+      "start_formatted": "00:01:09.860",
+      "end_formatted": "00:01:17.780",
+      "text": "Under Messaging Events is the list of messaging events. Bank account flagged, bank account added, bank account changed, bank account removed.",
+      "words": [
+        {
+          "word": "Under",
+          "start": 69.86,
+          "end": 70.28,
+          "probability": 0.9902
+        },
+        {
+          "word": "Messaging",
+          "start": 70.28,
+          "end": 70.72,
+          "probability": 0.6719
+        },
+        {
+          "word": "Events",
+          "start": 70.72,
+          "end": 70.98,
+          "probability": 0.5693
+        },
+        {
+          "word": "is",
+          "start": 70.98,
+          "end": 71.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "the",
+          "start": 71.22,
+          "end": 71.34,
+          "probability": 0.9917
+        },
+        {
+          "word": "list",
+          "start": 71.34,
+          "end": 71.54,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 71.54,
+          "end": 71.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "messaging",
+          "start": 71.7,
+          "end": 72.1,
+          "probability": 0.917
+        },
+        {
+          "word": "events.",
+          "start": 72.1,
+          "end": 72.54,
+          "probability": 0.999
+        },
+        {
+          "word": "Bank",
+          "start": 72.72,
+          "end": 73.02,
+          "probability": 0.814
+        },
+        {
+          "word": "account",
+          "start": 73.02,
+          "end": 73.34,
+          "probability": 0.7661
+        },
+        {
+          "word": "flagged,",
+          "start": 73.34,
+          "end": 73.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "bank",
+          "start": 74.04,
+          "end": 74.44,
+          "probability": 0.9282
+        },
+        {
+          "word": "account",
+          "start": 74.44,
+          "end": 74.74,
+          "probability": 1.0
+        },
+        {
+          "word": "added,",
+          "start": 74.74,
+          "end": 75.02,
+          "probability": 0.999
+        },
+        {
+          "word": "bank",
+          "start": 75.32,
+          "end": 75.68,
+          "probability": 0.999
+        },
+        {
+          "word": "account",
+          "start": 75.68,
+          "end": 75.98,
+          "probability": 1.0
+        },
+        {
+          "word": "changed,",
+          "start": 75.98,
+          "end": 76.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "bank",
+          "start": 76.78,
+          "end": 77.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "account",
+          "start": 77.04,
+          "end": 77.34,
+          "probability": 1.0
+        },
+        {
+          "word": "removed.",
+          "start": 77.34,
+          "end": 77.78,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 78.46,
+      "end": 81.5,
+      "start_formatted": "00:01:18.460",
+      "end_formatted": "00:01:21.500",
+      "text": "The next messaging component to examine is the destination.",
+      "words": [
+        {
+          "word": "The",
+          "start": 78.46,
+          "end": 78.94,
+          "probability": 0.998
+        },
+        {
+          "word": "next",
+          "start": 78.94,
+          "end": 79.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "messaging",
+          "start": 79.16,
+          "end": 79.58,
+          "probability": 0.9927
+        },
+        {
+          "word": "component",
+          "start": 79.58,
+          "end": 80.08,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 80.08,
+          "end": 80.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "examine",
+          "start": 80.32,
+          "end": 80.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 80.7,
+          "end": 80.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 80.9,
+          "end": 81.02,
+          "probability": 1.0
+        },
+        {
+          "word": "destination.",
+          "start": 81.02,
+          "end": 81.5,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 81.5,
+      "end": 86.62,
+      "start_formatted": "00:01:21.500",
+      "end_formatted": "00:01:26.620",
+      "text": "Double-click the messaging config.xml file to view all the existing destinations.",
+      "words": [
+        {
+          "word": "Double",
+          "start": 81.5,
+          "end": 82.66,
+          "probability": 0.6631
+        },
+        {
+          "word": "-click",
+          "start": 82.66,
+          "end": 82.9,
+          "probability": 0.8486
+        },
+        {
+          "word": "the",
+          "start": 82.9,
+          "end": 83.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "messaging",
+          "start": 83.08,
+          "end": 83.48,
+          "probability": 0.6626
+        },
+        {
+          "word": "config",
+          "start": 83.48,
+          "end": 83.82,
+          "probability": 0.1389
+        },
+        {
+          "word": ".xml",
+          "start": 83.82,
+          "end": 84.64,
+          "probability": 0.9326
+        },
+        {
+          "word": "file",
+          "start": 84.64,
+          "end": 84.96,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 84.96,
+          "end": 85.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "view",
+          "start": 85.14,
+          "end": 85.32,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 85.32,
+          "end": 85.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 85.46,
+          "end": 85.58,
+          "probability": 0.9917
+        },
+        {
+          "word": "existing",
+          "start": 85.58,
+          "end": 86.0,
+          "probability": 0.999
+        },
+        {
+          "word": "destinations.",
+          "start": 86.0,
+          "end": 86.62,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 87.3,
+      "end": 89.96,
+      "start_formatted": "00:01:27.300",
+      "end_formatted": "00:01:29.960",
+      "text": "Select the bank account verification destination.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 87.3,
+          "end": 88.06,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 88.06,
+          "end": 88.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "bank",
+          "start": 88.2,
+          "end": 88.42,
+          "probability": 0.7036
+        },
+        {
+          "word": "account",
+          "start": 88.42,
+          "end": 88.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "verification",
+          "start": 88.66,
+          "end": 89.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "destination.",
+          "start": 89.28,
+          "end": 89.96,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 90.64,
+      "end": 93.5,
+      "start_formatted": "00:01:30.640",
+      "end_formatted": "00:01:33.500",
+      "text": "Examine the configuration for the required fields.",
+      "words": [
+        {
+          "word": "Examine",
+          "start": 90.64,
+          "end": 91.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 91.44,
+          "end": 91.56,
+          "probability": 0.9062
+        },
+        {
+          "word": "configuration",
+          "start": 91.56,
+          "end": 92.02,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 92.02,
+          "end": 92.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 92.42,
+          "end": 92.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "required",
+          "start": 92.54,
+          "end": 92.96,
+          "probability": 0.999
+        },
+        {
+          "word": "fields.",
+          "start": 92.96,
+          "end": 93.5,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 94.5,
+      "end": 99.74,
+      "start_formatted": "00:01:34.500",
+      "end_formatted": "00:01:39.740",
+      "text": "ID can be a number between 0 to 63. This destination is 13.",
+      "words": [
+        {
+          "word": "ID",
+          "start": 94.5,
+          "end": 95.2,
+          "probability": 0.73
+        },
+        {
+          "word": "can",
+          "start": 95.2,
+          "end": 95.86,
+          "probability": 0.5518
+        },
+        {
+          "word": "be",
+          "start": 95.86,
+          "end": 95.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 95.98,
+          "end": 96.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "number",
+          "start": 96.1,
+          "end": 96.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "between",
+          "start": 96.28,
+          "end": 96.62,
+          "probability": 0.998
+        },
+        {
+          "word": "0",
+          "start": 96.62,
+          "end": 96.92,
+          "probability": 0.9473
+        },
+        {
+          "word": "to",
+          "start": 96.92,
+          "end": 97.1,
+          "probability": 0.8901
+        },
+        {
+          "word": "63.",
+          "start": 97.1,
+          "end": 97.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "This",
+          "start": 98.18,
+          "end": 98.56,
+          "probability": 0.9775
+        },
+        {
+          "word": "destination",
+          "start": 98.56,
+          "end": 99.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 99.02,
+          "end": 99.34,
+          "probability": 0.999
+        },
+        {
+          "word": "13.",
+          "start": 99.34,
+          "end": 99.74,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 101.04,
+      "end": 103.16,
+      "start_formatted": "00:01:41.040",
+      "end_formatted": "00:01:43.160",
+      "text": "Name has to be a unique name.",
+      "words": [
+        {
+          "word": "Name",
+          "start": 101.04,
+          "end": 101.6,
+          "probability": 0.2317
+        },
+        {
+          "word": "has",
+          "start": 101.6,
+          "end": 102.08,
+          "probability": 0.1791
+        },
+        {
+          "word": "to",
+          "start": 102.08,
+          "end": 102.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 102.26,
+          "end": 102.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 102.36,
+          "end": 102.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "unique",
+          "start": 102.5,
+          "end": 102.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "name.",
+          "start": 102.76,
+          "end": 103.16,
+          "probability": 0.959
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 104.5,
+      "end": 105.42,
+      "start_formatted": "00:01:44.500",
+      "end_formatted": "00:01:45.420",
+      "text": "Transport plugin.",
+      "words": [
+        {
+          "word": "Transport",
+          "start": 104.5,
+          "end": 105.06,
+          "probability": 0.9404
+        },
+        {
+          "word": "plugin.",
+          "start": 105.06,
+          "end": 105.42,
+          "probability": 0.52
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 105.76,
+      "end": 112.4,
+      "start_formatted": "00:01:45.760",
+      "end_formatted": "00:01:52.400",
+      "text": "Configured to use the bank account verification transport plugin which will be examined in detail when the transport plugin is discussed.",
+      "words": [
+        {
+          "word": "Configured",
+          "start": 105.76,
+          "end": 106.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 106.32,
+          "end": 106.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "use",
+          "start": 106.44,
+          "end": 106.64,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 106.64,
+          "end": 106.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "bank",
+          "start": 106.8,
+          "end": 107.04,
+          "probability": 0.7729
+        },
+        {
+          "word": "account",
+          "start": 107.04,
+          "end": 107.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "verification",
+          "start": 107.26,
+          "end": 107.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "transport",
+          "start": 107.92,
+          "end": 108.58,
+          "probability": 0.9375
+        },
+        {
+          "word": "plugin",
+          "start": 108.58,
+          "end": 109.06,
+          "probability": 0.9243
+        },
+        {
+          "word": "which",
+          "start": 109.06,
+          "end": 109.28,
+          "probability": 0.8921
+        },
+        {
+          "word": "will",
+          "start": 109.28,
+          "end": 109.42,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 109.42,
+          "end": 109.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "examined",
+          "start": 109.58,
+          "end": 110.0,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 110.0,
+          "end": 110.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "detail",
+          "start": 110.2,
+          "end": 110.54,
+          "probability": 0.999
+        },
+        {
+          "word": "when",
+          "start": 110.54,
+          "end": 110.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 110.8,
+          "end": 110.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "transport",
+          "start": 110.9,
+          "end": 111.34,
+          "probability": 0.9316
+        },
+        {
+          "word": "plugin",
+          "start": 111.34,
+          "end": 111.78,
+          "probability": 0.9741
+        },
+        {
+          "word": "is",
+          "start": 111.78,
+          "end": 111.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "discussed.",
+          "start": 111.94,
+          "end": 112.4,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 113.68,
+      "end": 114.24,
+      "start_formatted": "00:01:53.680",
+      "end_formatted": "00:01:54.240",
+      "text": "Events.",
+      "words": [
+        {
+          "word": "Events.",
+          "start": 113.68,
+          "end": 114.24,
+          "probability": 0.8291
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 114.4,
+      "end": 121.9,
+      "start_formatted": "00:01:54.400",
+      "end_formatted": "00:02:01.900",
+      "text": "The destination can subscribe to 4 possible events, but this destination only subscribes to the bank account added and bank account changed events.",
+      "words": [
+        {
+          "word": "The",
+          "start": 114.4,
+          "end": 114.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "destination",
+          "start": 114.64,
+          "end": 115.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "can",
+          "start": 115.02,
+          "end": 115.44,
+          "probability": 0.999
+        },
+        {
+          "word": "subscribe",
+          "start": 115.44,
+          "end": 115.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 115.86,
+          "end": 116.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "4",
+          "start": 116.12,
+          "end": 116.32,
+          "probability": 0.293
+        },
+        {
+          "word": "possible",
+          "start": 116.32,
+          "end": 116.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "events,",
+          "start": 116.76,
+          "end": 117.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "but",
+          "start": 117.4,
+          "end": 117.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 117.68,
+          "end": 117.88,
+          "probability": 0.998
+        },
+        {
+          "word": "destination",
+          "start": 117.88,
+          "end": 118.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "only",
+          "start": 118.26,
+          "end": 118.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "subscribes",
+          "start": 118.68,
+          "end": 119.32,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 119.32,
+          "end": 119.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 119.46,
+          "end": 119.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "bank",
+          "start": 119.58,
+          "end": 119.84,
+          "probability": 0.9727
+        },
+        {
+          "word": "account",
+          "start": 119.84,
+          "end": 120.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "added",
+          "start": 120.08,
+          "end": 120.34,
+          "probability": 0.9937
+        },
+        {
+          "word": "and",
+          "start": 120.34,
+          "end": 120.52,
+          "probability": 0.7915
+        },
+        {
+          "word": "bank",
+          "start": 120.52,
+          "end": 120.8,
+          "probability": 0.9912
+        },
+        {
+          "word": "account",
+          "start": 120.8,
+          "end": 121.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "changed",
+          "start": 121.08,
+          "end": 121.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "events.",
+          "start": 121.48,
+          "end": 121.9,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 121.9,
+      "end": 126.96,
+      "start_formatted": "00:02:01.900",
+      "end_formatted": "00:02:06.960",
+      "text": "The remainder relevant fields will be discussed as needed through the remaining messaging lessons.",
+      "words": [
+        {
+          "word": "The",
+          "start": 121.9,
+          "end": 122.78,
+          "probability": 0.8955
+        },
+        {
+          "word": "remainder",
+          "start": 122.78,
+          "end": 123.18,
+          "probability": 0.5527
+        },
+        {
+          "word": "relevant",
+          "start": 123.18,
+          "end": 123.6,
+          "probability": 0.9219
+        },
+        {
+          "word": "fields",
+          "start": 123.6,
+          "end": 124.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 124.02,
+          "end": 124.26,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 124.26,
+          "end": 124.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "discussed",
+          "start": 124.42,
+          "end": 124.84,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 124.84,
+          "end": 125.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "needed",
+          "start": 125.08,
+          "end": 125.3,
+          "probability": 0.999
+        },
+        {
+          "word": "through",
+          "start": 125.3,
+          "end": 125.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 125.52,
+          "end": 125.68,
+          "probability": 0.999
+        },
+        {
+          "word": "remaining",
+          "start": 125.68,
+          "end": 126.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "messaging",
+          "start": 126.02,
+          "end": 126.48,
+          "probability": 0.9263
+        },
+        {
+          "word": "lessons.",
+          "start": 126.48,
+          "end": 126.96,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 127.56,
+      "end": 133.02,
+      "start_formatted": "00:02:07.560",
+      "end_formatted": "00:02:13.020",
+      "text": "In Training App, trigger a bank account verification message by adding a bank account to a contact.",
+      "words": [
+        {
+          "word": "In",
+          "start": 127.56,
+          "end": 128.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "Training",
+          "start": 128.12,
+          "end": 128.42,
+          "probability": 0.4043
+        },
+        {
+          "word": "App,",
+          "start": 128.42,
+          "end": 128.68,
+          "probability": 0.7021
+        },
+        {
+          "word": "trigger",
+          "start": 128.92,
+          "end": 129.2,
+          "probability": 0.9775
+        },
+        {
+          "word": "a",
+          "start": 129.2,
+          "end": 129.34,
+          "probability": 0.999
+        },
+        {
+          "word": "bank",
+          "start": 129.34,
+          "end": 129.56,
+          "probability": 0.7041
+        },
+        {
+          "word": "account",
+          "start": 129.56,
+          "end": 129.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "verification",
+          "start": 129.82,
+          "end": 130.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "message",
+          "start": 130.44,
+          "end": 131.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 131.04,
+          "end": 131.32,
+          "probability": 0.998
+        },
+        {
+          "word": "adding",
+          "start": 131.32,
+          "end": 131.64,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 131.64,
+          "end": 131.78,
+          "probability": 0.998
+        },
+        {
+          "word": "bank",
+          "start": 131.78,
+          "end": 132.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "account",
+          "start": 132.0,
+          "end": 132.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 132.32,
+          "end": 132.5,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 132.5,
+          "end": 132.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact.",
+          "start": 132.66,
+          "end": 133.02,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 133.5,
+      "end": 137.56,
+      "start_formatted": "00:02:13.500",
+      "end_formatted": "00:02:17.560",
+      "text": "Prior to triggering the message, perform the following administrative tasks.",
+      "words": [
+        {
+          "word": "Prior",
+          "start": 133.5,
+          "end": 133.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 133.94,
+          "end": 134.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "triggering",
+          "start": 134.18,
+          "end": 134.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 134.52,
+          "end": 134.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "message,",
+          "start": 134.72,
+          "end": 135.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "perform",
+          "start": 135.38,
+          "end": 135.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 135.78,
+          "end": 136.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "following",
+          "start": 136.0,
+          "end": 136.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "administrative",
+          "start": 136.34,
+          "end": 136.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "tasks.",
+          "start": 136.94,
+          "end": 137.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 138.32,
+      "end": 139.98,
+      "start_formatted": "00:02:18.320",
+      "end_formatted": "00:02:19.980",
+      "text": "Clear the message table.",
+      "words": [
+        {
+          "word": "Clear",
+          "start": 138.32,
+          "end": 139.08,
+          "probability": 0.9702
+        },
+        {
+          "word": "the",
+          "start": 139.08,
+          "end": 139.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "message",
+          "start": 139.26,
+          "end": 139.56,
+          "probability": 0.6577
+        },
+        {
+          "word": "table.",
+          "start": 139.56,
+          "end": 139.98,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 140.78,
+      "end": 142.8,
+      "start_formatted": "00:02:20.780",
+      "end_formatted": "00:02:22.800",
+      "text": "Clear the message history table.",
+      "words": [
+        {
+          "word": "Clear",
+          "start": 140.78,
+          "end": 141.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 141.54,
+          "end": 141.72,
+          "probability": 1.0
+        },
+        {
+          "word": "message",
+          "start": 141.72,
+          "end": 142.02,
+          "probability": 0.9849
+        },
+        {
+          "word": "history",
+          "start": 142.02,
+          "end": 142.4,
+          "probability": 0.999
+        },
+        {
+          "word": "table.",
+          "start": 142.4,
+          "end": 142.8,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 143.74,
+      "end": 147.2,
+      "start_formatted": "00:02:23.740",
+      "end_formatted": "00:02:27.200",
+      "text": "Ensure the bank account verification destination is started.",
+      "words": [
+        {
+          "word": "Ensure",
+          "start": 143.74,
+          "end": 144.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 144.5,
+          "end": 144.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "bank",
+          "start": 144.64,
+          "end": 144.92,
+          "probability": 0.9839
+        },
+        {
+          "word": "account",
+          "start": 144.92,
+          "end": 145.16,
+          "probability": 1.0
+        },
+        {
+          "word": "verification",
+          "start": 145.16,
+          "end": 145.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "destination",
+          "start": 145.8,
+          "end": 146.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 146.46,
+          "end": 146.86,
+          "probability": 0.9858
+        },
+        {
+          "word": "started.",
+          "start": 146.86,
+          "end": 147.2,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 147.8,
+      "end": 149.82,
+      "start_formatted": "00:02:27.800",
+      "end_formatted": "00:02:29.820",
+      "text": "Type the username for super user.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 147.8,
+          "end": 148.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 148.34,
+          "end": 148.5,
+          "probability": 1.0
+        },
+        {
+          "word": "username",
+          "start": 148.5,
+          "end": 148.88,
+          "probability": 0.9922
+        },
+        {
+          "word": "for",
+          "start": 148.88,
+          "end": 149.16,
+          "probability": 1.0
+        },
+        {
+          "word": "super",
+          "start": 149.16,
+          "end": 149.48,
+          "probability": 0.7212
+        },
+        {
+          "word": "user.",
+          "start": 149.48,
+          "end": 149.82,
+          "probability": 0.3386
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 150.32,
+      "end": 152.34,
+      "start_formatted": "00:02:30.320",
+      "end_formatted": "00:02:32.340",
+      "text": "Type the password for super user.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 150.32,
+          "end": 150.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 150.9,
+          "end": 151.06,
+          "probability": 1.0
+        },
+        {
+          "word": "password",
+          "start": 151.06,
+          "end": 151.42,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 151.42,
+          "end": 151.66,
+          "probability": 1.0
+        },
+        {
+          "word": "super",
+          "start": 151.66,
+          "end": 151.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "user.",
+          "start": 151.98,
+          "end": 152.34,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 153.32,
+      "end": 154.94,
+      "start_formatted": "00:02:33.320",
+      "end_formatted": "00:02:34.940",
+      "text": "Click the login button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 153.32,
+          "end": 154.08,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 154.08,
+          "end": 154.24,
+          "probability": 1.0
+        },
+        {
+          "word": "login",
+          "start": 154.24,
+          "end": 154.54,
+          "probability": 0.751
+        },
+        {
+          "word": "button.",
+          "start": 154.54,
+          "end": 154.94,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 156.08,
+      "end": 158.12,
+      "start_formatted": "00:02:36.080",
+      "end_formatted": "00:02:38.120",
+      "text": "Click the administration link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 156.08,
+          "end": 156.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 156.84,
+          "end": 157.02,
+          "probability": 1.0
+        },
+        {
+          "word": "administration",
+          "start": 157.02,
+          "end": 157.52,
+          "probability": 0.9854
+        },
+        {
+          "word": "link.",
+          "start": 157.52,
+          "end": 158.12,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 159.14,
+      "end": 161.58,
+      "start_formatted": "00:02:39.140",
+      "end_formatted": "00:02:41.580",
+      "text": "Click the training, messaging link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 159.14,
+          "end": 159.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 159.9,
+          "end": 160.06,
+          "probability": 1.0
+        },
+        {
+          "word": "training,",
+          "start": 160.06,
+          "end": 160.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "messaging",
+          "start": 160.62,
+          "end": 161.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "link.",
+          "start": 161.16,
+          "end": 161.58,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 162.0,
+      "end": 163.68,
+      "start_formatted": "00:02:42.000",
+      "end_formatted": "00:02:43.680",
+      "text": "Click the select all box.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 162.0,
+          "end": 162.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 162.64,
+          "end": 162.82,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 162.82,
+          "end": 163.12,
+          "probability": 0.9512
+        },
+        {
+          "word": "all",
+          "start": 163.12,
+          "end": 163.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "box.",
+          "start": 163.32,
+          "end": 163.68,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 164.72,
+      "end": 167.2,
+      "start_formatted": "00:02:44.720",
+      "end_formatted": "00:02:47.200",
+      "text": "Click the skip selected messages button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 164.72,
+          "end": 165.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 165.48,
+          "end": 165.64,
+          "probability": 1.0
+        },
+        {
+          "word": "skip",
+          "start": 165.64,
+          "end": 165.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "selected",
+          "start": 165.88,
+          "end": 166.34,
+          "probability": 0.999
+        },
+        {
+          "word": "messages",
+          "start": 166.34,
+          "end": 166.76,
+          "probability": 1.0
+        },
+        {
+          "word": "button.",
+          "start": 166.76,
+          "end": 167.2,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 167.2,
+      "end": 168.74,
+      "start_formatted": "00:02:47.200",
+      "end_formatted": "00:02:48.740",
+      "text": "Click OK.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 167.2,
+          "end": 168.32,
+          "probability": 0.8901
+        },
+        {
+          "word": "OK.",
+          "start": 168.32,
+          "end": 168.74,
+          "probability": 0.7881
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 170.2,
+      "end": 172.64,
+      "start_formatted": "00:02:50.200",
+      "end_formatted": "00:02:52.640",
+      "text": "Click the message history table link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 170.2,
+          "end": 171.06,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 171.06,
+          "end": 171.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "message",
+          "start": 171.2,
+          "end": 171.46,
+          "probability": 0.1348
+        },
+        {
+          "word": "history",
+          "start": 171.46,
+          "end": 171.9,
+          "probability": 0.981
+        },
+        {
+          "word": "table",
+          "start": 171.9,
+          "end": 172.24,
+          "probability": 0.9683
+        },
+        {
+          "word": "link.",
+          "start": 172.24,
+          "end": 172.64,
+          "probability": 0.9849
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 173.7,
+      "end": 175.02,
+      "start_formatted": "00:02:53.700",
+      "end_formatted": "00:02:55.020",
+      "text": "Click the select all box.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 173.55,
+          "end": 173.98,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 173.98,
+          "end": 174.14,
+          "probability": 0.9922
+        },
+        {
+          "word": "select",
+          "start": 174.14,
+          "end": 174.42,
+          "probability": 0.3003
+        },
+        {
+          "word": "all",
+          "start": 174.42,
+          "end": 174.64,
+          "probability": 0.9478
+        },
+        {
+          "word": "box.",
+          "start": 174.64,
+          "end": 175.02,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 176.7,
+      "end": 178.9,
+      "start_formatted": "00:02:56.700",
+      "end_formatted": "00:02:58.900",
+      "text": "Click the delete selected message histories button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 176.45,
+          "end": 176.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 176.88,
+          "end": 177.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "delete",
+          "start": 177.04,
+          "end": 177.32,
+          "probability": 0.897
+        },
+        {
+          "word": "selected",
+          "start": 177.32,
+          "end": 177.78,
+          "probability": 0.9727
+        },
+        {
+          "word": "message",
+          "start": 177.78,
+          "end": 178.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "histories",
+          "start": 178.14,
+          "end": 178.54,
+          "probability": 0.9795
+        },
+        {
+          "word": "button.",
+          "start": 178.54,
+          "end": 178.9,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 179.82,
+      "end": 180.98,
+      "start_formatted": "00:02:59.820",
+      "end_formatted": "00:03:00.980",
+      "text": "Click OK.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 179.82,
+          "end": 180.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "OK.",
+          "start": 180.6,
+          "end": 180.98,
+          "probability": 0.9619
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 182.54,
+      "end": 185.02,
+      "start_formatted": "00:03:02.540",
+      "end_formatted": "00:03:05.020",
+      "text": "Click the message administration link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 182.54,
+          "end": 183.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 183.4,
+          "end": 183.56,
+          "probability": 0.998
+        },
+        {
+          "word": "message",
+          "start": 183.56,
+          "end": 183.88,
+          "probability": 0.9775
+        },
+        {
+          "word": "administration",
+          "start": 183.88,
+          "end": 184.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "link.",
+          "start": 184.48,
+          "end": 185.02,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 185.6,
+      "end": 189.9,
+      "start_formatted": "00:03:05.600",
+      "end_formatted": "00:03:09.900",
+      "text": "Note, the bank account verification destination is currently suspended.",
+      "words": [
+        {
+          "word": "Note,",
+          "start": 185.6,
+          "end": 186.3,
+          "probability": 0.5981
+        },
+        {
+          "word": "the",
+          "start": 186.54,
+          "end": 186.82,
+          "probability": 0.98
+        },
+        {
+          "word": "bank",
+          "start": 186.82,
+          "end": 187.14,
+          "probability": 0.9521
+        },
+        {
+          "word": "account",
+          "start": 187.14,
+          "end": 187.38,
+          "probability": 0.999
+        },
+        {
+          "word": "verification",
+          "start": 187.38,
+          "end": 188.0,
+          "probability": 0.999
+        },
+        {
+          "word": "destination",
+          "start": 188.0,
+          "end": 188.6,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 188.6,
+          "end": 189.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "currently",
+          "start": 189.06,
+          "end": 189.36,
+          "probability": 0.999
+        },
+        {
+          "word": "suspended.",
+          "start": 189.36,
+          "end": 189.9,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 190.38,
+      "end": 193.12,
+      "start_formatted": "00:03:10.380",
+      "end_formatted": "00:03:13.120",
+      "text": "Select the bank account verification destination.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 190.38,
+          "end": 191.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 191.1,
+          "end": 191.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "bank",
+          "start": 191.26,
+          "end": 191.46,
+          "probability": 0.9829
+        },
+        {
+          "word": "account",
+          "start": 191.46,
+          "end": 191.72,
+          "probability": 0.999
+        },
+        {
+          "word": "verification",
+          "start": 191.72,
+          "end": 192.34,
+          "probability": 0.999
+        },
+        {
+          "word": "destination.",
+          "start": 192.34,
+          "end": 193.12,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 193.84,
+      "end": 195.5,
+      "start_formatted": "00:03:13.840",
+      "end_formatted": "00:03:15.500",
+      "text": "Click the resume button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 193.84,
+          "end": 194.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 194.66,
+          "end": 194.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "resume",
+          "start": 194.8,
+          "end": 195.14,
+          "probability": 0.8794
+        },
+        {
+          "word": "button.",
+          "start": 195.14,
+          "end": 195.5,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 196.76,
+      "end": 198.32,
+      "start_formatted": "00:03:16.760",
+      "end_formatted": "00:03:18.320",
+      "text": "Click the search button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 196.76,
+          "end": 197.52,
+          "probability": 0.8369
+        },
+        {
+          "word": "the",
+          "start": 197.52,
+          "end": 197.7,
+          "probability": 0.9902
+        },
+        {
+          "word": "search",
+          "start": 197.7,
+          "end": 197.92,
+          "probability": 0.3677
+        },
+        {
+          "word": "button.",
+          "start": 197.92,
+          "end": 198.32,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 199.6,
+      "end": 201.46,
+      "start_formatted": "00:03:19.600",
+      "end_formatted": "00:03:21.460",
+      "text": "Search for Brandi Amante.",
+      "words": [
+        {
+          "word": "Search",
+          "start": 199.6,
+          "end": 200.36,
+          "probability": 0.9648
+        },
+        {
+          "word": "for",
+          "start": 200.36,
+          "end": 200.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "Brandi",
+          "start": 200.62,
+          "end": 201.08,
+          "probability": 0.6699
+        },
+        {
+          "word": "Amante.",
+          "start": 201.08,
+          "end": 201.46,
+          "probability": 0.7617
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 201.8,
+      "end": 203.82,
+      "start_formatted": "00:03:21.800",
+      "end_formatted": "00:03:23.820",
+      "text": "Type the last name in the search field.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 201.8,
+          "end": 202.24,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 202.24,
+          "end": 202.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "last",
+          "start": 202.4,
+          "end": 202.66,
+          "probability": 0.9609
+        },
+        {
+          "word": "name",
+          "start": 202.66,
+          "end": 202.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "in",
+          "start": 202.92,
+          "end": 203.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 203.06,
+          "end": 203.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "search",
+          "start": 203.16,
+          "end": 203.42,
+          "probability": 0.9507
+        },
+        {
+          "word": "field.",
+          "start": 203.42,
+          "end": 203.82,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 204.24,
+      "end": 205.64,
+      "start_formatted": "00:03:24.240",
+      "end_formatted": "00:03:25.640",
+      "text": "Click the search button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 204.24,
+          "end": 204.88,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 204.88,
+          "end": 205.02,
+          "probability": 0.998
+        },
+        {
+          "word": "search",
+          "start": 205.02,
+          "end": 205.26,
+          "probability": 0.896
+        },
+        {
+          "word": "button.",
+          "start": 205.26,
+          "end": 205.64,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 206.78,
+      "end": 210.02,
+      "start_formatted": "00:03:26.780",
+      "end_formatted": "00:03:30.020",
+      "text": "In the search results, select the contact link.",
+      "words": [
+        {
+          "word": "In",
+          "start": 206.78,
+          "end": 207.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 207.54,
+          "end": 207.66,
+          "probability": 0.981
+        },
+        {
+          "word": "search",
+          "start": 207.66,
+          "end": 207.9,
+          "probability": 0.98
+        },
+        {
+          "word": "results,",
+          "start": 207.9,
+          "end": 208.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "select",
+          "start": 208.66,
+          "end": 209.06,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 209.06,
+          "end": 209.26,
+          "probability": 0.998
+        },
+        {
+          "word": "contact",
+          "start": 209.26,
+          "end": 209.6,
+          "probability": 0.6685
+        },
+        {
+          "word": "link.",
+          "start": 209.6,
+          "end": 210.02,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 210.56,
+      "end": 212.3,
+      "start_formatted": "00:03:30.560",
+      "end_formatted": "00:03:32.300",
+      "text": "Click the details link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 210.56,
+          "end": 211.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 211.32,
+          "end": 211.48,
+          "probability": 0.999
+        },
+        {
+          "word": "details",
+          "start": 211.48,
+          "end": 211.92,
+          "probability": 0.9487
+        },
+        {
+          "word": "link.",
+          "start": 211.92,
+          "end": 212.3,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 213.4,
+      "end": 215.3,
+      "start_formatted": "00:03:33.400",
+      "end_formatted": "00:03:35.300",
+      "text": "Click the bank accounts link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 213.4,
+          "end": 214.16,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 214.16,
+          "end": 214.32,
+          "probability": 0.998
+        },
+        {
+          "word": "bank",
+          "start": 214.32,
+          "end": 214.54,
+          "probability": 0.9165
+        },
+        {
+          "word": "accounts",
+          "start": 214.54,
+          "end": 214.92,
+          "probability": 0.9751
+        },
+        {
+          "word": "link.",
+          "start": 214.92,
+          "end": 215.3,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 216.2,
+      "end": 217.7,
+      "start_formatted": "00:03:36.200",
+      "end_formatted": "00:03:37.700",
+      "text": "Click the edit button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 216.2,
+          "end": 216.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 216.96,
+          "end": 217.16,
+          "probability": 0.998
+        },
+        {
+          "word": "edit",
+          "start": 217.16,
+          "end": 217.34,
+          "probability": 0.9277
+        },
+        {
+          "word": "button.",
+          "start": 217.34,
+          "end": 217.7,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 219.04,
+      "end": 220.46,
+      "start_formatted": "00:03:39.040",
+      "end_formatted": "00:03:40.460",
+      "text": "Click the add button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 219.04,
+          "end": 219.72,
+          "probability": 0.7285
+        },
+        {
+          "word": "the",
+          "start": 219.72,
+          "end": 219.92,
+          "probability": 0.9878
+        },
+        {
+          "word": "add",
+          "start": 219.92,
+          "end": 220.12,
+          "probability": 0.2693
+        },
+        {
+          "word": "button.",
+          "start": 220.12,
+          "end": 220.46,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 221.28,
+      "end": 221.62,
+      "start_formatted": "00:03:41.280",
+      "end_formatted": "00:03:41.620",
+      "text": "Click the add button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 221.28,
+          "end": 221.62,
+          "probability": 0.0011
+        },
+        {
+          "word": "the",
+          "start": 221.62,
+          "end": 221.62,
+          "probability": 0.9287
+        },
+        {
+          "word": "add",
+          "start": 221.62,
+          "end": 221.62,
+          "probability": 0.0041
+        },
+        {
+          "word": "button.",
+          "start": 221.62,
+          "end": 221.62,
+          "probability": 0.9336
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 221.74,
+      "end": 223.16,
+      "start_formatted": "00:03:41.740",
+      "end_formatted": "00:03:43.160",
+      "text": "Type the bank name.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 221.74,
+          "end": 222.42,
+          "probability": 0.8447
+        },
+        {
+          "word": "the",
+          "start": 222.42,
+          "end": 222.56,
+          "probability": 0.9868
+        },
+        {
+          "word": "bank",
+          "start": 222.56,
+          "end": 222.84,
+          "probability": 0.9614
+        },
+        {
+          "word": "name.",
+          "start": 222.84,
+          "end": 223.16,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 229.46,
+      "end": 231.06,
+      "start_formatted": "00:03:49.460",
+      "end_formatted": "00:03:51.060",
+      "text": "Type the routing number.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 229.46,
+          "end": 230.14,
+          "probability": 0.8984
+        },
+        {
+          "word": "the",
+          "start": 230.14,
+          "end": 230.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "routing",
+          "start": 230.32,
+          "end": 230.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "number.",
+          "start": 230.64,
+          "end": 231.06,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 233.16,
+      "end": 234.36,
+      "start_formatted": "00:03:53.160",
+      "end_formatted": "00:03:54.360",
+      "text": "Type the routing number.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 233.16,
+          "end": 233.84,
+          "probability": 0.957
+        },
+        {
+          "word": "the",
+          "start": 233.84,
+          "end": 234.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "routing",
+          "start": 234.04,
+          "end": 234.36,
+          "probability": 0.0002
+        },
+        {
+          "word": "number.",
+          "start": 234.36,
+          "end": 234.36,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 234.36,
+      "end": 234.64,
+      "start_formatted": "00:03:54.360",
+      "end_formatted": "00:03:54.640",
+      "text": "Type the account number.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 234.36,
+          "end": 234.36,
+          "probability": 0.7886
+        },
+        {
+          "word": "the",
+          "start": 234.36,
+          "end": 234.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "account",
+          "start": 234.36,
+          "end": 234.36,
+          "probability": 0.9888
+        },
+        {
+          "word": "number.",
+          "start": 234.36,
+          "end": 234.64,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 238.24,
+      "end": 239.62,
+      "start_formatted": "00:03:58.240",
+      "end_formatted": "00:03:59.620",
+      "text": "Type the account type.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 238.24,
+          "end": 239.0,
+          "probability": 0.0002
+        },
+        {
+          "word": "the",
+          "start": 239.0,
+          "end": 239.0,
+          "probability": 0.0148
+        },
+        {
+          "word": "account",
+          "start": 239.0,
+          "end": 239.24,
+          "probability": 0.2139
+        },
+        {
+          "word": "type.",
+          "start": 239.24,
+          "end": 239.62,
+          "probability": 0.9507
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 241.02,
+      "end": 242.58,
+      "start_formatted": "00:04:01.020",
+      "end_formatted": "00:04:02.580",
+      "text": "Click the account type.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 241.02,
+          "end": 241.78,
+          "probability": 0.201
+        },
+        {
+          "word": "the",
+          "start": 241.78,
+          "end": 242.0,
+          "probability": 0.8672
+        },
+        {
+          "word": "account",
+          "start": 242.0,
+          "end": 242.28,
+          "probability": 0.0639
+        },
+        {
+          "word": "type.",
+          "start": 242.28,
+          "end": 242.58,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 242.58,
+      "end": 242.66,
+      "start_formatted": "00:04:02.580",
+      "end_formatted": "00:04:02.660",
+      "text": "Type the account type.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 242.58,
+          "end": 242.58,
+          "probability": 0.0181
+        },
+        {
+          "word": "the",
+          "start": 242.58,
+          "end": 242.58,
+          "probability": 0.6533
+        },
+        {
+          "word": "account",
+          "start": 242.58,
+          "end": 242.58,
+          "probability": 0.437
+        },
+        {
+          "word": "type.",
+          "start": 242.58,
+          "end": 242.66,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 243.74,
+      "end": 245.36,
+      "start_formatted": "00:04:03.740",
+      "end_formatted": "00:04:05.360",
+      "text": "Click the update button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 243.74,
+          "end": 244.5,
+          "probability": 0.5825
+        },
+        {
+          "word": "the",
+          "start": 244.5,
+          "end": 244.68,
+          "probability": 0.9502
+        },
+        {
+          "word": "update",
+          "start": 244.68,
+          "end": 244.98,
+          "probability": 0.6025
+        },
+        {
+          "word": "button.",
+          "start": 244.98,
+          "end": 245.36,
+          "probability": 0.9297
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 249.0,
+      "end": 258.28,
+      "start_formatted": "00:04:09.000",
+      "end_formatted": "00:04:18.280",
+      "text": "Click the update button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 249.0,
+          "end": 249.76,
+          "probability": 0.0178
+        },
+        {
+          "word": "the",
+          "start": 249.76,
+          "end": 250.52,
+          "probability": 0.6636
+        },
+        {
+          "word": "update",
+          "start": 250.52,
+          "end": 256.7,
+          "probability": 0.1392
+        },
+        {
+          "word": "button.",
+          "start": 256.7,
+          "end": 258.28,
+          "probability": 0.7554
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 258.28,
+      "end": 276.74,
+      "start_formatted": "00:04:18.280",
+      "end_formatted": "00:04:36.740",
+      "text": "Click theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "Click",
+          "start": 258.28,
+          "end": 259.52,
+          "probability": 0.0
+        },
+        {
+          "word": "theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 259.52,
+          "end": 276.74,
+          "probability": 0.9175
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 276.74,
+      "end": 280.76,
+      "start_formatted": "00:04:36.740",
+      "end_formatted": "00:04:40.760",
+      "text": "The payload was transformed by replacing the token with the actual age of the message.",
+      "words": [
+        {
+          "word": "The",
+          "start": 276.74,
+          "end": 276.9,
+          "probability": 0.7861
+        },
+        {
+          "word": "payload",
+          "start": 276.9,
+          "end": 277.24,
+          "probability": 0.9121
+        },
+        {
+          "word": "was",
+          "start": 277.24,
+          "end": 277.46,
+          "probability": 0.998
+        },
+        {
+          "word": "transformed",
+          "start": 277.46,
+          "end": 278.02,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 278.02,
+          "end": 278.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "replacing",
+          "start": 278.3,
+          "end": 278.76,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 278.76,
+          "end": 278.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "token",
+          "start": 278.96,
+          "end": 279.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "with",
+          "start": 279.24,
+          "end": 279.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 279.44,
+          "end": 279.58,
+          "probability": 0.998
+        },
+        {
+          "word": "actual",
+          "start": 279.58,
+          "end": 279.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "age",
+          "start": 279.92,
+          "end": 280.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 280.18,
+          "end": 280.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 280.32,
+          "end": 280.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "message.",
+          "start": 280.4,
+          "end": 280.76,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 281.3,
+      "end": 284.44,
+      "start_formatted": "00:04:41.300",
+      "end_formatted": "00:04:44.440",
+      "text": "Also, a sender ref ID field was added to the payload.",
+      "words": [
+        {
+          "word": "Also,",
+          "start": 281.3,
+          "end": 281.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 282.04,
+          "end": 282.2,
+          "probability": 0.9917
+        },
+        {
+          "word": "sender",
+          "start": 282.2,
+          "end": 282.52,
+          "probability": 0.8613
+        },
+        {
+          "word": "ref",
+          "start": 282.52,
+          "end": 282.72,
+          "probability": 0.6816
+        },
+        {
+          "word": "ID",
+          "start": 282.72,
+          "end": 282.9,
+          "probability": 0.3345
+        },
+        {
+          "word": "field",
+          "start": 282.9,
+          "end": 283.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "was",
+          "start": 283.32,
+          "end": 283.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "added",
+          "start": 283.54,
+          "end": 283.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 283.76,
+          "end": 283.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 283.92,
+          "end": 284.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "payload.",
+          "start": 284.04,
+          "end": 284.44,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 285.38,
+      "end": 287.56,
+      "start_formatted": "00:04:45.380",
+      "end_formatted": "00:04:47.560",
+      "text": "Stage 4, the message was sent.",
+      "words": [
+        {
+          "word": "Stage",
+          "start": 285.38,
+          "end": 285.94,
+          "probability": 0.9658
+        },
+        {
+          "word": "4,",
+          "start": 285.94,
+          "end": 286.3,
+          "probability": 0.856
+        },
+        {
+          "word": "the",
+          "start": 286.5,
+          "end": 286.74,
+          "probability": 0.959
+        },
+        {
+          "word": "message",
+          "start": 286.74,
+          "end": 287.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "was",
+          "start": 287.02,
+          "end": 287.28,
+          "probability": 1.0
+        },
+        {
+          "word": "sent.",
+          "start": 287.28,
+          "end": 287.56,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 288.32,
+      "end": 292.42,
+      "start_formatted": "00:04:48.320",
+      "end_formatted": "00:04:52.420",
+      "text": "Stage 5, the message was acknowledged and the verified field was updated.",
+      "words": [
+        {
+          "word": "Stage",
+          "start": 288.32,
+          "end": 288.88,
+          "probability": 0.998
+        },
+        {
+          "word": "5,",
+          "start": 288.88,
+          "end": 289.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 289.44,
+          "end": 289.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "message",
+          "start": 289.68,
+          "end": 289.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 289.96,
+          "end": 290.18,
+          "probability": 1.0
+        },
+        {
+          "word": "acknowledged",
+          "start": 290.18,
+          "end": 290.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 290.58,
+          "end": 290.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 290.82,
+          "end": 290.92,
+          "probability": 1.0
+        },
+        {
+          "word": "verified",
+          "start": 290.92,
+          "end": 291.28,
+          "probability": 0.9814
+        },
+        {
+          "word": "field",
+          "start": 291.28,
+          "end": 291.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 291.76,
+          "end": 292.02,
+          "probability": 1.0
+        },
+        {
+          "word": "updated.",
+          "start": 292.02,
+          "end": 292.42,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 292.74,
+      "end": 295.06,
+      "start_formatted": "00:04:52.740",
+      "end_formatted": "00:04:55.060",
+      "text": "This is an example of synchronous acknowledgement.",
+      "words": [
+        {
+          "word": "This",
+          "start": 292.74,
+          "end": 293.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 293.16,
+          "end": 293.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 293.3,
+          "end": 293.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "example",
+          "start": 293.42,
+          "end": 293.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 293.8,
+          "end": 294.0,
+          "probability": 1.0
+        },
+        {
+          "word": "synchronous",
+          "start": 294.0,
+          "end": 294.44,
+          "probability": 0.9878
+        },
+        {
+          "word": "acknowledgement.",
+          "start": 294.44,
+          "end": 295.06,
+          "probability": 0.8906
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 295.72,
+      "end": 299.7,
+      "start_formatted": "00:04:55.720",
+      "end_formatted": "00:04:59.700",
+      "text": "In Training App, confirm the updated status of the new bank account.",
+      "words": [
+        {
+          "word": "In",
+          "start": 295.72,
+          "end": 296.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Training",
+          "start": 296.28,
+          "end": 296.6,
+          "probability": 0.4692
+        },
+        {
+          "word": "App,",
+          "start": 296.6,
+          "end": 296.92,
+          "probability": 0.5767
+        },
+        {
+          "word": "confirm",
+          "start": 297.14,
+          "end": 297.58,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 297.58,
+          "end": 297.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "updated",
+          "start": 297.8,
+          "end": 298.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "status",
+          "start": 298.2,
+          "end": 298.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 298.56,
+          "end": 298.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 298.76,
+          "end": 298.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 298.86,
+          "end": 299.02,
+          "probability": 0.9854
+        },
+        {
+          "word": "bank",
+          "start": 299.02,
+          "end": 299.26,
+          "probability": 0.9912
+        },
+        {
+          "word": "account.",
+          "start": 299.26,
+          "end": 299.7,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 300.24,
+      "end": 303.84,
+      "start_formatted": "00:05:00.240",
+      "end_formatted": "00:05:03.840",
+      "text": "Note, the screen needs to be refreshed to see the updated status.",
+      "words": [
+        {
+          "word": "Note,",
+          "start": 300.24,
+          "end": 300.78,
+          "probability": 0.8433
+        },
+        {
+          "word": "the",
+          "start": 301.0,
+          "end": 301.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen",
+          "start": 301.24,
+          "end": 301.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "needs",
+          "start": 301.52,
+          "end": 301.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 301.82,
+          "end": 301.96,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 301.96,
+          "end": 302.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "refreshed",
+          "start": 302.1,
+          "end": 302.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 302.5,
+          "end": 302.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 302.72,
+          "end": 302.88,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 302.88,
+          "end": 303.02,
+          "probability": 0.999
+        },
+        {
+          "word": "updated",
+          "start": 303.02,
+          "end": 303.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "status.",
+          "start": 303.4,
+          "end": 303.84,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 303.84,
+      "end": 307.4,
+      "start_formatted": "00:05:03.840",
+      "end_formatted": "00:05:07.400",
+      "text": "Refresh the screen by clicking on the Verification Check button.",
+      "words": [
+        {
+          "word": "Refresh",
+          "start": 303.84,
+          "end": 304.78,
+          "probability": 0.9297
+        },
+        {
+          "word": "the",
+          "start": 304.78,
+          "end": 304.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "screen",
+          "start": 304.9,
+          "end": 305.18,
+          "probability": 0.9907
+        },
+        {
+          "word": "by",
+          "start": 305.18,
+          "end": 305.44,
+          "probability": 0.998
+        },
+        {
+          "word": "clicking",
+          "start": 305.44,
+          "end": 305.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 305.72,
+          "end": 305.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 305.92,
+          "end": 306.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "Verification",
+          "start": 306.02,
+          "end": 306.7,
+          "probability": 0.8008
+        },
+        {
+          "word": "Check",
+          "start": 306.7,
+          "end": 307.02,
+          "probability": 0.5791
+        },
+        {
+          "word": "button.",
+          "start": 307.02,
+          "end": 307.4,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 308.54,
+      "end": 310.64,
+      "start_formatted": "00:05:08.540",
+      "end_formatted": "00:05:10.640",
+      "text": "Observe that the status is now verified.",
+      "words": [
+        {
+          "word": "Observe",
+          "start": 308.54,
+          "end": 309.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "that",
+          "start": 309.14,
+          "end": 309.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 309.28,
+          "end": 309.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "status",
+          "start": 309.38,
+          "end": 309.68,
+          "probability": 0.9512
+        },
+        {
+          "word": "is",
+          "start": 309.68,
+          "end": 309.92,
+          "probability": 0.998
+        },
+        {
+          "word": "now",
+          "start": 309.92,
+          "end": 310.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "verified.",
+          "start": 310.12,
+          "end": 310.64,
+          "probability": 0.7114
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 311.22,
+      "end": 316.5,
+      "start_formatted": "00:05:11.220",
+      "end_formatted": "00:05:16.500",
+      "text": "To determine the status of the message in Training App, navigate to the Training, Messaging screen.",
+      "words": [
+        {
+          "word": "To",
+          "start": 311.22,
+          "end": 311.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "determine",
+          "start": 311.82,
+          "end": 312.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 312.18,
+          "end": 312.4,
+          "probability": 0.999
+        },
+        {
+          "word": "status",
+          "start": 312.4,
+          "end": 312.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "of",
+          "start": 312.68,
+          "end": 312.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 312.86,
+          "end": 312.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "message",
+          "start": 312.96,
+          "end": 313.26,
+          "probability": 0.6079
+        },
+        {
+          "word": "in",
+          "start": 313.26,
+          "end": 313.46,
+          "probability": 0.5386
+        },
+        {
+          "word": "Training",
+          "start": 313.46,
+          "end": 313.72,
+          "probability": 0.5435
+        },
+        {
+          "word": "App,",
+          "start": 313.72,
+          "end": 314.04,
+          "probability": 0.6172
+        },
+        {
+          "word": "navigate",
+          "start": 314.22,
+          "end": 314.66,
+          "probability": 0.98
+        },
+        {
+          "word": "to",
+          "start": 314.66,
+          "end": 314.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 314.9,
+          "end": 315.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "Training,",
+          "start": 315.0,
+          "end": 315.32,
+          "probability": 0.9355
+        },
+        {
+          "word": "Messaging",
+          "start": 315.52,
+          "end": 316.16,
+          "probability": 0.9863
+        },
+        {
+          "word": "screen.",
+          "start": 316.16,
+          "end": 316.5,
+          "probability": 0.9507
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "start": 317.02,
+      "end": 318.86,
+      "start_formatted": "00:05:17.020",
+      "end_formatted": "00:05:18.860",
+      "text": "Click the Administration link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 317.02,
+          "end": 317.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 317.62,
+          "end": 317.78,
+          "probability": 0.999
+        },
+        {
+          "word": "Administration",
+          "start": 317.78,
+          "end": 318.28,
+          "probability": 0.9482
+        },
+        {
+          "word": "link.",
+          "start": 318.28,
+          "end": 318.86,
+          "probability": 0.9575
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "start": 319.48,
+      "end": 321.72,
+      "start_formatted": "00:05:19.480",
+      "end_formatted": "00:05:21.720",
+      "text": "Click the Training, Messaging link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 319.48,
+          "end": 320.06,
+          "probability": 0.9746
+        },
+        {
+          "word": "the",
+          "start": 320.06,
+          "end": 320.22,
+          "probability": 1.0
+        },
+        {
+          "word": "Training,",
+          "start": 320.22,
+          "end": 320.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "Messaging",
+          "start": 320.78,
+          "end": 321.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "link.",
+          "start": 321.38,
+          "end": 321.72,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 322.28,
+      "end": 325.16,
+      "start_formatted": "00:05:22.280",
+      "end_formatted": "00:05:25.160",
+      "text": "Why isn't the new message displayed in the message table?",
+      "words": [
+        {
+          "word": "Why",
+          "start": 322.28,
+          "end": 322.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "isn't",
+          "start": 322.84,
+          "end": 323.06,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 323.06,
+          "end": 323.16,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 323.16,
+          "end": 323.32,
+          "probability": 0.9893
+        },
+        {
+          "word": "message",
+          "start": 323.32,
+          "end": 323.68,
+          "probability": 0.9863
+        },
+        {
+          "word": "displayed",
+          "start": 323.68,
+          "end": 324.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 324.18,
+          "end": 324.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 324.34,
+          "end": 324.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "message",
+          "start": 324.44,
+          "end": 324.8,
+          "probability": 0.5146
+        },
+        {
+          "word": "table?",
+          "start": 324.8,
+          "end": 325.16,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "start": 325.4,
+      "end": 329.86,
+      "start_formatted": "00:05:25.400",
+      "end_formatted": "00:05:29.860",
+      "text": "This is because the message has already been acknowledged and moved to the Message History table.",
+      "words": [
+        {
+          "word": "This",
+          "start": 325.4,
+          "end": 325.9,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 325.9,
+          "end": 326.04,
+          "probability": 1.0
+        },
+        {
+          "word": "because",
+          "start": 326.04,
+          "end": 326.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 326.3,
+          "end": 326.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "message",
+          "start": 326.52,
+          "end": 326.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 326.82,
+          "end": 327.08,
+          "probability": 1.0
+        },
+        {
+          "word": "already",
+          "start": 327.08,
+          "end": 327.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "been",
+          "start": 327.42,
+          "end": 327.62,
+          "probability": 1.0
+        },
+        {
+          "word": "acknowledged",
+          "start": 327.62,
+          "end": 328.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 328.0,
+          "end": 328.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "moved",
+          "start": 328.26,
+          "end": 328.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 328.5,
+          "end": 328.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 328.64,
+          "end": 328.78,
+          "probability": 1.0
+        },
+        {
+          "word": "Message",
+          "start": 328.78,
+          "end": 329.12,
+          "probability": 0.7451
+        },
+        {
+          "word": "History",
+          "start": 329.12,
+          "end": 329.5,
+          "probability": 0.9512
+        },
+        {
+          "word": "table.",
+          "start": 329.5,
+          "end": 329.86,
+          "probability": 0.9614
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "start": 330.48,
+      "end": 332.68,
+      "start_formatted": "00:05:30.480",
+      "end_formatted": "00:05:32.680",
+      "text": "Click the Message History table link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 330.48,
+          "end": 331.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 331.08,
+          "end": 331.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "Message",
+          "start": 331.24,
+          "end": 331.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "History",
+          "start": 331.52,
+          "end": 331.92,
+          "probability": 0.999
+        },
+        {
+          "word": "table",
+          "start": 331.92,
+          "end": 332.3,
+          "probability": 0.9673
+        },
+        {
+          "word": "link.",
+          "start": 332.3,
+          "end": 332.68,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "start": 333.34,
+      "end": 335.88,
+      "start_formatted": "00:05:33.340",
+      "end_formatted": "00:05:35.880",
+      "text": "Note, the acknowledged message in the table.",
+      "words": [
+        {
+          "word": "Note,",
+          "start": 333.34,
+          "end": 333.9,
+          "probability": 0.7617
+        },
+        {
+          "word": "the",
+          "start": 334.16,
+          "end": 334.4,
+          "probability": 0.9868
+        },
+        {
+          "word": "acknowledged",
+          "start": 334.4,
+          "end": 334.82,
+          "probability": 0.9224
+        },
+        {
+          "word": "message",
+          "start": 334.82,
+          "end": 335.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 335.28,
+          "end": 335.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 335.48,
+          "end": 335.56,
+          "probability": 0.999
+        },
+        {
+          "word": "table.",
+          "start": 335.56,
+          "end": 335.88,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "start": 336.38,
+      "end": 339.72,
+      "start_formatted": "00:05:36.380",
+      "end_formatted": "00:05:39.720",
+      "text": "This ends the examine an event aware entity and destination demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 336.38,
+          "end": 336.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "ends",
+          "start": 336.94,
+          "end": 337.16,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 337.16,
+          "end": 337.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "examine",
+          "start": 337.34,
+          "end": 337.74,
+          "probability": 0.8081
+        },
+        {
+          "word": "an",
+          "start": 337.74,
+          "end": 337.9,
+          "probability": 0.6313
+        },
+        {
+          "word": "event",
+          "start": 337.9,
+          "end": 338.12,
+          "probability": 0.9897
+        },
+        {
+          "word": "aware",
+          "start": 338.12,
+          "end": 338.4,
+          "probability": 0.8198
+        },
+        {
+          "word": "entity",
+          "start": 338.4,
+          "end": 338.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "and",
+          "start": 338.68,
+          "end": 338.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "destination",
+          "start": 338.9,
+          "end": 339.4,
+          "probability": 0.998
+        },
+        {
+          "word": "demonstration.",
+          "start": 339.4,
+          "end": 339.72,
+          "probability": 0.9956
+        }
+      ]
+    }
+  ]
+}

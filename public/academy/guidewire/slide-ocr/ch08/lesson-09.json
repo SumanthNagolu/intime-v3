@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-09",
+    "slide_count": 43,
+    "slides_with_text": 37,
+    "total_words": 2113,
+    "avg_confidence": 84.94,
+    "processing_time_seconds": 18.82,
+    "extracted_at": "2026-02-13T12:23:27.311456"
+  },
+  "full_text": "Concepts of Revisioning Contact and Location Information\n\nLesson\nobjectives\n\n¢ Describe the shared and revisioned data\nbetween account and policy\n\n¢ Describe future dated, back dated, and\ncurrent dated contact behavior\n\n¢ Explain revisioned location information\n\ni Review: PolicyPeriod Ga\n\n¢ APolicyPeriod is one \"version\" of the policy\n* Has effective date and expiration date\n\n* Model time (calendar time) is the actual real-world time when policies are created\nor jobs are bound\npolicy second teen driver renewal\n\ncreated auto added added (premium changed)\n04/20/19 07/20/19 10/20/19 04/20/20\n\nJ s270 | $450 J $920 1 $990\n\n== =o) a2)\n1 2\n\n3\n\n3 PolicyPeriods and 1 PolicyPeriod and\n1 PolicyTerm: 1 PolicyTerm:\n04/20/19 — 04/20/20 04/20/20 - 04/20/21\n\ni Contacts and locations are shared Gi\n\n* Contact and location information is eee\nshared between accounts and policies\n\n* Benefits of sharing information are: I T\n+ Avoiding data re-entry and errors Contact Location\nPolicy\n\nAccount\n\n* Allowing the same contact to play multiple\nroles on the account and policy, such as\naccount holder or named insured\n\ndean\n\nPorn\n\nContact Location\n¢ Associating Contact with other entities such\n\nas Location or Vehicles LOA\n% %\n\ni Information can change Gi\n\nPolicyCenter supports sharing and revisioning information\n\n¢ Revision: Information that is part of policy contract on an issued PolicyPeriod\nshould be revisioned\n\n* Sometimes we are interested in information as it was at a given point in time\n* When a Policy is issued, we want to keep a version of it at that point in time\n* It can change anytime a job is executed on it\n\n¢ Share: Information can be kept at the Account level so it can be shared, to avoid\nduplication\n\n* Sometimes we are interested in most up-to-date contact info\n\n* People move, get married and change their names, get new drivers licenses, and so on\n\ni When do you need contact revision?\n\n¢ Example: A policy is bound and policy contract is written...\n¢ But after two months, contact calls to change the name\n\n* No other objects on the policy need to change\n\n* Only the name needs to be updated for future transactions\n\n02/01/2019 ifeeoel eee\nModel time\n\n(Calendar time)\nifeoel Mary @@O} mary Doe\nSmith-Doe\n\ni Some fields on contact need to be changed Gi\n\nJob can pick up current contact data from Account\n\nAccount Policy\nfeoel coe\n02/01/2019 - Submission A= A=\nf | ee\n04/01/2019 - Contact name te ty m= ‘|\nchanged\nUpdated contact name\n05/01/2019 — Policy change job fe e el eee\npicks up contact info from A=\naccount\n\nPicks up most recent contact\ninformation for change\n\ni Data inside and outside PolicyPeriod graph Gi\n\nLives only on Account Lives on both Policy and Account\n\nShared but not revisioned because _— Shared and revisioned because we need to\nwe do not need to know how data know when it changed\n\nhas varied over time\n\nWhen data changes, change is Change is made to objects on the Policy\nmade to the Account only\n\nHistory is not available History is available\n\nSome data (such as contact name) resides inside as well as outside PolicyPeriod\ngraph because it is needed at all times\n\ni Demonstration G\n\nContact Data Synchronization — Account to\n—_ Policy\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Changes to a policy can be complicated Gi\n\nFor example, consider a contact Jane Smith who is born in 1967 and gets an annual\nPA policy from 01/01/2019 - 01/01/2020\n* On the same date, a BOP submission is also created for Jane Smith (Current dated on the\nsame account)\n* After two months — Contact calls to say that she is getting married in one week (future dated)\n+ Change last name and marital status\n+ Add another driver and rerate the policy\n¢ After three months — Contact calls to correct her birth year (back dated change)\n+ Effective from the beginning of the policy\n\ni To handle changes to current contact data\n\n¢ At the beginning of a job, PolicyCenter checks if contact data is:\nCurrent:\nLast update of contact <= Job Eff Date (Job is not in future)\n\nSynced to Account data throughout job\nModify contact’s last update time\n\n* Contacts are always synced to account for submissions and issuances\n\ni To handle a future dated change\n« At the beginning of a job, PolicyCenter checks if contact data is:\nFuture dated:\nCurrent date < Job Eff Date\n\n{\n\nCopy down from Account contact\n\nAccount and Policy not synced during job\n\nContact data changes — creates a work item for the batch process\nApply Pending Account Data Updates\n\nAutomatically updates account-level contact data on job date\n\n* Contact’s last update time is set each time the account level contact information\ngets modified\n\ni To handle a back dated change Gi\n\nAt the beginning of a job, PolicyCenter checks if contact data is:\n\nBack dated:\nLast update of contact > Job Eff Date\n\nUse policy-level data and make changes at policy level\nonly\n\nFor contact changes:\n\nPolicyCenter creates activities suggesting changes at\naccount level\n\nCreates notes to specify the changes\n\ni Revisioned and non-revisioned contact fields Gi\n\nLastUpdatedTime\n\nFirstName (synced)\nLastName (synced)\nLicenseState (synced)\nLicenseNum (synced)\nA—-B A has foreignkey to B\nA—-B Aextends B\nA—*B A has 0 or more Bs\n\ni Example: Future dated and back dated change Gi\n\n. Policy as of Account / Policy as of\nModel time\n(Calendar time) 01/01/19 — 02/28/19 03/01/19 - 01/01/20\n\nJane Smith, Single, 4/1/1967 Jane Smith, Single, 4/1/1967\n\nChange on 02/22/19: Contact |\ngetting married on 03/01/19 e\n(future dated)\n\nPA Submission\n01/01/19 - 01/01/20\n\nbis\na\nq\na\n\nWork item created Jane Smith, Single, 4/1/1967 Jane Doe, Married, 4/1/1967\n03/01/19 Acct contact if eee ]\n[ea] Apply Pending Account info updated\n\nData Updates\n\nChange on 03/15/19:\nEdit contact’s birth year\n(back-dated change)\n\nenlia\n\nJane Smith, Single, 4/1/1965 Jane Doe, Married, 4/1/1965\n\n3\n\ni Example in UI: Create submission Gi\n\nContacts\n\nRoles | Addresses\n\nAccount File Contacts\n\nmols\n\nContact Detai\n\nContact Detail | Roles | Addresses | Associ person\nFirst name Jane\nPerson\nLastname it\nFirst name Jane smith\nDate of Birth 04/01/1967\nLastname Smith\nMarital it\nDate of Birth 04/01/1967 \" Single\nMarital Status single\n\nPolicy Terms\n\n# > Product > Status > Dates Effective >\n\nIn Force 01/01/2019 - 01/01/2020\nIn Force 01/01/2019 - 01/01/2020\n\n1105166608 Personal Auto\n\n8187466350 Businessowners\n\ni Future dated Policy Change — will marry on 03/01/19\n\n. Account File Contacts\nDrivers\n\nDriver Details\n\nae Account\n\na Contacts\n\n_ 02/22/19\n\nSingle\n\nsane\n\nEe] Policy\nwoe Contacts\n\n02/22/19 B\n\n04/01/1967\n\nPolicy\nContacts\n03/01/19\n\nBack dated policy change\n\nEdit birth year on 03/15/2019\n\nStart Policy Change\nEffective Date > 01/01/2019 io}\nDescription Update ith year\n\n|\n\nPrimary Named Insured Jane Smith\ncontact Beat | oles | Addresses\n\nEdit contact info\n\n[sane\n\n| smith\nJosonssef\nSingle .\n\nPolicy Change\n\nContacts\n\nContact Detail | Roles | Addresses\n\nContacts\n\n[on]\n\n(< 03/01/2019)\n\nPolicy Contact\n= (>= 03/01/2019)\n\nGi\n\nAccount File contaclh oe °)\n=| /\n\nActive > Name > Role >\n\nYes John Doe Oriver\n\nContact detail | Roles | Addresses | Associat\n\nPerson\n\nJane\n\nDoe\n\n04/01/1967\n\nMarital status Married\n\nAccount Contact\n\nat\n\ni Activities and notes created on the account\n\n&\n\no/\n\n@;\n\n.\n\nCurrent Activities\n\nDue Date >\n\nNotes\nInfo\n\nAuthor:\n\nTopi\n\nSecurity Level:\n\nRelated T\n\nSubject ©\nContact Jane Doe was changed\n\nContact Jane Doe was changed\n\nAlice Applegate\n\nUnrestricted\n\n~- Policy : 1105166608\n\nPriority >\nHigh\nHigh\n\nDetails\n\nMar 15, 2019 7:45 PM\nContact changes for Jane Doe\n\nChanged Date of Birth on Primary Named Insured from '04/01/1967 12:00 AM’ to '04/01/1965 12:00 AM.\n\ni Demonstration G\n\nRevisioned contact data —\n—_ Future dated and back dated policy changes\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — Why do you need revisioned fields on contacts or locations?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — Why do you need revisioned fields on contacts or locations?\n\n¢\n4\n¢\n\nRevisioned fields are required on contacts or locations when some information is\nconsidered part of the policy contract and thus cannot be changed once the policy is\nbound and the contract written. If the field is revisioned, it can be changed on the\naccount level even after the policy is bound. The information is updated on the\naccount and can be obtained by policies for future jobs.\n\nSS Se ee eee eo\n\nQuestion G\n\n,- — lrue or false: Contact data is always synced to account during\n\noo submission and issuance.\n\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,7- — lue or false: Contact data is always synced to account during\n\nFa submission and issuance\n\n¢\n\nTrue.\n\nSS Se ee eee eo\n\nQuestion G\n\n,- — lrueor false: During a back dated policy change, contact data is copied\noo from policy to account.\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,- — lrueor false: During a back dated policy change, contact data is copied\nFa from policy to account.\n\nFalse. Contact data is not copied from policy to account for a back dated policy\nchange.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — How does PolicyCenter handle back dated changes on contact data?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — How does PolicyCenter handle back dated changes on contact data?\n¢\n4\n¢\n\nPolicyCenter creates activities and notes on the account specifying the changes made\nto the policy. A user can decide whether to apply the changes or not at the account\nlevel. The changes must be applied manually.\n\nSS Se ee eee eo\n\ni Student exercise\n\nConcepts of Revisioning Contact and Location\nInformation\n\ni Locations are shared\n\n¢ Location information is shared\nbetween accounts and policies\n\n¢ Benefits of sharing information are:\n* Avoiding data re-entry and errors\n\n* Allowing the same location to be used on\nmultiple policies\n\nGi\n\nlame Account\nLocation |\n\nLocation\n\nPolicy\n\nlate\n\ni Information can change Gi\n\nPolicyCenter supports sharing and revisioning information\n\n¢ Revision: Information that is part of policy contract on an issued PolicyPeriod\nshould be revisioned\n\n* Sometimes we are interested in information as it was at a given point in time\n* When a Policy is issued, we want to keep a version of it at that point in time\n* It can change anytime a job is executed on it\n\n¢ Share: Information can be kept at the Account level so it can be shared, to avoid\nduplication\n\n* Sometimes we are interested in most up-to-date contact info\n\ni Location information Gi\n\nLocation information includes:\n\n¢ Basic location information such as address, city and state location name and\nphone\n\n* Policy-specific information such as tax location\n\ni Location revisioning\n\nlimi Locations are shared cr\n\nAccount location Policy location revisioned\n(field by field)\n\n* Location information is stored at account and policy levels\n¢ Location information is revisioned on a field-by-field basis\n* Configuration user can define what information to revision\n¢ Location information that is part of policy contract is revisioned\n\n¢ In draft jobs, policy and account location information is always synchronized\n\ni Changing account location information Gi\n\nChanging account location information affects:\n\n* Pending Policy Transactions — these policy transactions always display up-to-\ndate account level information\n\n* Quoted Policy Transactions — a policy transaction is quoted but not bound and a\nrevisioned field on account location changed, a validation error occurs at bind time\nand it needs to requote\n\n* Bound Policies or Completed Policy Transactions — each bound policy\ntransaction gets copy of synchronized location information at time of binding\n\n¢ New Policy Transactions — locations on these policy transactions always display\nthe current location information\n\ni Location configuration\n\n* Location related entities that can be extended are:\n\n* PolicyLocation\n\n* AccountLocation\n\n* Line of business specific locations such as BOPLocation, IMLocation, and CPLocation\n¢ User can configure:\n\n« Which fields are revisioned on PolicyLocation or AccountLocation\n\n* On which jobs and when location information is synchronized\n\nExample: revisioned location fields\n\nPolicyLocation\nAddressL1 (synced)\n\nAddressL2 (synced)\nCity (synced)\nState (synced)\n\nLocationNum\n\nA—>B A has foreignkey to B\nA—>B Aextends B\n—B Ahas 0 or more Bs\n\nLesson\nobjectives ¢« Describe the shared and revisioned data\nreview between account and policy\n\n¢ Describe future dated, back dated, and\ncurrent dated contact behavior\n¢ Explain revisioned location information",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Concepts of Revisioning Contact and Location Information",
+      "word_count": 7,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the shared and revisioned data\nbetween account and policy\n\n¢ Describe future dated, back dated, and\ncurrent dated contact behavior\n\n¢ Explain revisioned location information",
+      "word_count": 29,
+      "avg_confidence": 89.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Review: PolicyPeriod Ga\n\n¢ APolicyPeriod is one \"version\" of the policy\n* Has effective date and expiration date\n\n* Model time (calendar time) is the actual real-world time when policies are created\nor jobs are bound\npolicy second teen driver renewal\n\ncreated auto added added (premium changed)\n04/20/19 07/20/19 10/20/19 04/20/20\n\nJ s270 | $450 J $920 1 $990\n\n== =o) a2)\n1 2\n\n3\n\n3 PolicyPeriods and 1 PolicyPeriod and\n1 PolicyTerm: 1 PolicyTerm:\n04/20/19 — 04/20/20 04/20/20 - 04/20/21",
+      "word_count": 82,
+      "avg_confidence": 87.09,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Contacts and locations are shared Gi\n\n* Contact and location information is eee\nshared between accounts and policies\n\n* Benefits of sharing information are: I T\n+ Avoiding data re-entry and errors Contact Location\nPolicy\n\nAccount\n\n* Allowing the same contact to play multiple\nroles on the account and policy, such as\naccount holder or named insured\n\ndean\n\nPorn\n\nContact Location\n¢ Associating Contact with other entities such\n\nas Location or Vehicles LOA\n% %",
+      "word_count": 76,
+      "avg_confidence": 87.68,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Information can change Gi\n\nPolicyCenter supports sharing and revisioning information\n\n¢ Revision: Information that is part of policy contract on an issued PolicyPeriod\nshould be revisioned\n\n* Sometimes we are interested in information as it was at a given point in time\n* When a Policy is issued, we want to keep a version of it at that point in time\n* It can change anytime a job is executed on it\n\n¢ Share: Information can be kept at the Account level so it can be shared, to avoid\nduplication\n\n* Sometimes we are interested in most up-to-date contact info\n\n* People move, get married and change their names, get new drivers licenses, and so on",
+      "word_count": 117,
+      "avg_confidence": 90.79,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i When do you need contact revision?\n\n¢ Example: A policy is bound and policy contract is written...\n¢ But after two months, contact calls to change the name\n\n* No other objects on the policy need to change\n\n* Only the name needs to be updated for future transactions\n\n02/01/2019 ifeeoel eee\nModel time\n\n(Calendar time)\nifeoel Mary @@O} mary Doe\nSmith-Doe",
+      "word_count": 63,
+      "avg_confidence": 87.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Some fields on contact need to be changed Gi\n\nJob can pick up current contact data from Account\n\nAccount Policy\nfeoel coe\n02/01/2019 - Submission A= A=\nf | ee\n04/01/2019 - Contact name te ty m= ‘|\nchanged\nUpdated contact name\n05/01/2019 — Policy change job fe e el eee\npicks up contact info from A=\naccount\n\nPicks up most recent contact\ninformation for change",
+      "word_count": 67,
+      "avg_confidence": 82.91,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Data inside and outside PolicyPeriod graph Gi\n\nLives only on Account Lives on both Policy and Account\n\nShared but not revisioned because _— Shared and revisioned because we need to\nwe do not need to know how data know when it changed\n\nhas varied over time\n\nWhen data changes, change is Change is made to objects on the Policy\nmade to the Account only\n\nHistory is not available History is available\n\nSome data (such as contact name) resides inside as well as outside PolicyPeriod\ngraph because it is needed at all times",
+      "word_count": 93,
+      "avg_confidence": 93.38,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Demonstration G\n\nContact Data Synchronization — Account to\n—_ Policy\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 41,
+      "avg_confidence": 90.2,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Changes to a policy can be complicated Gi\n\nFor example, consider a contact Jane Smith who is born in 1967 and gets an annual\nPA policy from 01/01/2019 - 01/01/2020\n* On the same date, a BOP submission is also created for Jane Smith (Current dated on the\nsame account)\n* After two months — Contact calls to say that she is getting married in one week (future dated)\n+ Change last name and marital status\n+ Add another driver and rerate the policy\n¢ After three months — Contact calls to correct her birth year (back dated change)\n+ Effective from the beginning of the policy",
+      "word_count": 108,
+      "avg_confidence": 91.99,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i To handle changes to current contact data\n\n¢ At the beginning of a job, PolicyCenter checks if contact data is:\nCurrent:\nLast update of contact <= Job Eff Date (Job is not in future)\n\nSynced to Account data throughout job\nModify contact’s last update time\n\n* Contacts are always synced to account for submissions and issuances",
+      "word_count": 57,
+      "avg_confidence": 92.54,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i To handle a future dated change\n« At the beginning of a job, PolicyCenter checks if contact data is:\nFuture dated:\nCurrent date < Job Eff Date\n\n{\n\nCopy down from Account contact\n\nAccount and Policy not synced during job\n\nContact data changes — creates a work item for the batch process\nApply Pending Account Data Updates\n\nAutomatically updates account-level contact data on job date\n\n* Contact’s last update time is set each time the account level contact information\ngets modified",
+      "word_count": 82,
+      "avg_confidence": 90.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i To handle a back dated change Gi\n\nAt the beginning of a job, PolicyCenter checks if contact data is:\n\nBack dated:\nLast update of contact > Job Eff Date\n\nUse policy-level data and make changes at policy level\nonly\n\nFor contact changes:\n\nPolicyCenter creates activities suggesting changes at\naccount level\n\nCreates notes to specify the changes",
+      "word_count": 57,
+      "avg_confidence": 93.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Revisioned and non-revisioned contact fields Gi\n\nLastUpdatedTime\n\nFirstName (synced)\nLastName (synced)\nLicenseState (synced)\nLicenseNum (synced)\nA—-B A has foreignkey to B\nA—-B Aextends B\nA—*B A has 0 or more Bs",
+      "word_count": 32,
+      "avg_confidence": 82.81,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Example: Future dated and back dated change Gi\n\n. Policy as of Account / Policy as of\nModel time\n(Calendar time) 01/01/19 — 02/28/19 03/01/19 - 01/01/20\n\nJane Smith, Single, 4/1/1967 Jane Smith, Single, 4/1/1967\n\nChange on 02/22/19: Contact |\ngetting married on 03/01/19 e\n(future dated)\n\nPA Submission\n01/01/19 - 01/01/20\n\nbis\na\nq\na\n\nWork item created Jane Smith, Single, 4/1/1967 Jane Doe, Married, 4/1/1967\n03/01/19 Acct contact if eee ]\n[ea] Apply Pending Account info updated\n\nData Updates\n\nChange on 03/15/19:\nEdit contact’s birth year\n(back-dated change)\n\nenlia\n\nJane Smith, Single, 4/1/1965 Jane Doe, Married, 4/1/1965\n\n3",
+      "word_count": 101,
+      "avg_confidence": 87.32,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i Example in UI: Create submission Gi\n\nContacts\n\nRoles | Addresses\n\nAccount File Contacts\n\nmols\n\nContact Detai\n\nContact Detail | Roles | Addresses | Associ person\nFirst name Jane\nPerson\nLastname it\nFirst name Jane smith\nDate of Birth 04/01/1967\nLastname Smith\nMarital it\nDate of Birth 04/01/1967 \" Single\nMarital Status single\n\nPolicy Terms\n\n# > Product > Status > Dates Effective >\n\nIn Force 01/01/2019 - 01/01/2020\nIn Force 01/01/2019 - 01/01/2020\n\n1105166608 Personal Auto\n\n8187466350 Businessowners",
+      "word_count": 79,
+      "avg_confidence": 83.58,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Future dated Policy Change — will marry on 03/01/19\n\n. Account File Contacts\nDrivers\n\nDriver Details\n\nae Account\n\na Contacts\n\n_ 02/22/19\n\nSingle\n\nsane\n\nEe] Policy\nwoe Contacts\n\n02/22/19 B\n\n04/01/1967\n\nPolicy\nContacts\n03/01/19",
+      "word_count": 35,
+      "avg_confidence": 83.37,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Back dated policy change\n\nEdit birth year on 03/15/2019\n\nStart Policy Change\nEffective Date > 01/01/2019 io}\nDescription Update ith year\n\n|\n\nPrimary Named Insured Jane Smith\ncontact Beat | oles | Addresses\n\nEdit contact info\n\n[sane\n\n| smith\nJosonssef\nSingle .\n\nPolicy Change\n\nContacts\n\nContact Detail | Roles | Addresses\n\nContacts\n\n[on]\n\n(< 03/01/2019)\n\nPolicy Contact\n= (>= 03/01/2019)\n\nGi\n\nAccount File contaclh oe °)\n=| /\n\nActive > Name > Role >\n\nYes John Doe Oriver\n\nContact detail | Roles | Addresses | Associat\n\nPerson\n\nJane\n\nDoe\n\n04/01/1967\n\nMarital status Married\n\nAccount Contact\n\nat",
+      "word_count": 96,
+      "avg_confidence": 76.03,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Activities and notes created on the account\n\n&\n\no/\n\n@;\n\n.\n\nCurrent Activities\n\nDue Date >\n\nNotes\nInfo\n\nAuthor:\n\nTopi\n\nSecurity Level:\n\nRelated T\n\nSubject ©\nContact Jane Doe was changed\n\nContact Jane Doe was changed\n\nAlice Applegate\n\nUnrestricted\n\n~- Policy : 1105166608\n\nPriority >\nHigh\nHigh\n\nDetails\n\nMar 15, 2019 7:45 PM\nContact changes for Jane Doe\n\nChanged Date of Birth on Primary Named Insured from '04/01/1967 12:00 AM’ to '04/01/1965 12:00 AM.",
+      "word_count": 75,
+      "avg_confidence": 84.79,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Demonstration G\n\nRevisioned contact data —\n—_ Future dated and back dated policy changes\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 45,
+      "avg_confidence": 92.02,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question G\n\n,~ — Why do you need revisioned fields on contacts or locations?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 23,
+      "avg_confidence": 65.88,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer Gi\n\n,~ — Why do you need revisioned fields on contacts or locations?\n\n¢\n4\n¢\n\nRevisioned fields are required on contacts or locations when some information is\nconsidered part of the policy contract and thus cannot be changed once the policy is\nbound and the contract written. If the field is revisioned, it can be changed on the\naccount level even after the policy is bound. The information is updated on the\naccount and can be obtained by policies for future jobs.\n\nSS Se ee eee eo",
+      "word_count": 89,
+      "avg_confidence": 87.96,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question G\n\n,- — lrue or false: Contact data is always synced to account during\n\noo submission and issuance.\n\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 26,
+      "avg_confidence": 71.81,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer Gi\n\n,7- — lue or false: Contact data is always synced to account during\n\nFa submission and issuance\n\n¢\n\nTrue.\n\nSS Se ee eee eo",
+      "word_count": 26,
+      "avg_confidence": 69.32,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question G\n\n,- — lrueor false: During a back dated policy change, contact data is copied\noo from policy to account.\n\nSS oe ee oe oe oo",
+      "word_count": 27,
+      "avg_confidence": 69.89,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer Gi\n\n,- — lrueor false: During a back dated policy change, contact data is copied\nFa from policy to account.\n\nFalse. Contact data is not copied from policy to account for a back dated policy\nchange.\n\nSS Se ee eee eo",
+      "word_count": 42,
+      "avg_confidence": 78.45,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question G\n\n,~ — How does PolicyCenter handle back dated changes on contact data?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 23,
+      "avg_confidence": 65.92,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer Gi\n\n,~ — How does PolicyCenter handle back dated changes on contact data?\n¢\n4\n¢\n\nPolicyCenter creates activities and notes on the account specifying the changes made\nto the policy. A user can decide whether to apply the changes or not at the account\nlevel. The changes must be applied manually.\n\nSS Se ee eee eo",
+      "word_count": 58,
+      "avg_confidence": 83.82,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "i Student exercise\n\nConcepts of Revisioning Contact and Location\nInformation",
+      "word_count": 10,
+      "avg_confidence": 89.27,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "i Locations are shared\n\n¢ Location information is shared\nbetween accounts and policies\n\n¢ Benefits of sharing information are:\n* Avoiding data re-entry and errors\n\n* Allowing the same location to be used on\nmultiple policies\n\nGi\n\nlame Account\nLocation |\n\nLocation\n\nPolicy\n\nlate",
+      "word_count": 44,
+      "avg_confidence": 84.18,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "i Information can change Gi\n\nPolicyCenter supports sharing and revisioning information\n\n¢ Revision: Information that is part of policy contract on an issued PolicyPeriod\nshould be revisioned\n\n* Sometimes we are interested in information as it was at a given point in time\n* When a Policy is issued, we want to keep a version of it at that point in time\n* It can change anytime a job is executed on it\n\n¢ Share: Information can be kept at the Account level so it can be shared, to avoid\nduplication\n\n* Sometimes we are interested in most up-to-date contact info",
+      "word_count": 101,
+      "avg_confidence": 90.47,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "i Location information Gi\n\nLocation information includes:\n\n¢ Basic location information such as address, city and state location name and\nphone\n\n* Policy-specific information such as tax location",
+      "word_count": 28,
+      "avg_confidence": 85.86,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "i Location revisioning\n\nlimi Locations are shared cr\n\nAccount location Policy location revisioned\n(field by field)\n\n* Location information is stored at account and policy levels\n¢ Location information is revisioned on a field-by-field basis\n* Configuration user can define what information to revision\n¢ Location information that is part of policy contract is revisioned\n\n¢ In draft jobs, policy and account location information is always synchronized",
+      "word_count": 67,
+      "avg_confidence": 88.25,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "i Changing account location information Gi\n\nChanging account location information affects:\n\n* Pending Policy Transactions — these policy transactions always display up-to-\ndate account level information\n\n* Quoted Policy Transactions — a policy transaction is quoted but not bound and a\nrevisioned field on account location changed, a validation error occurs at bind time\nand it needs to requote\n\n* Bound Policies or Completed Policy Transactions — each bound policy\ntransaction gets copy of synchronized location information at time of binding\n\n¢ New Policy Transactions — locations on these policy transactions always display\nthe current location information",
+      "word_count": 97,
+      "avg_confidence": 92.59,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "i Location configuration\n\n* Location related entities that can be extended are:\n\n* PolicyLocation\n\n* AccountLocation\n\n* Line of business specific locations such as BOPLocation, IMLocation, and CPLocation\n¢ User can configure:\n\n« Which fields are revisioned on PolicyLocation or AccountLocation\n\n* On which jobs and when location information is synchronized",
+      "word_count": 51,
+      "avg_confidence": 84.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Example: revisioned location fields\n\nPolicyLocation\nAddressL1 (synced)\n\nAddressL2 (synced)\nCity (synced)\nState (synced)\n\nLocationNum\n\nA—>B A has foreignkey to B\nA—>B Aextends B\n—B Ahas 0 or more Bs",
+      "word_count": 29,
+      "avg_confidence": 81.48,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Lesson\nobjectives ¢« Describe the shared and revisioned data\nreview between account and policy\n\n¢ Describe future dated, back dated, and\ncurrent dated contact behavior\n¢ Explain revisioned location information",
+      "word_count": 30,
+      "avg_confidence": 91.03,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

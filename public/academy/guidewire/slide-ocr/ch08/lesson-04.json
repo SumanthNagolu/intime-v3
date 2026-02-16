@@ -1,0 +1,445 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-04",
+    "slide_count": 39,
+    "slides_with_text": 33,
+    "total_words": 1257,
+    "avg_confidence": 82.77,
+    "processing_time_seconds": 14.69,
+    "extracted_at": "2026-02-13T12:22:11.370686"
+  },
+  "full_text": "Contacts and Locations\n\nLesson\nobjectives\n\n¢ Describe contacts and contact roles\n¢ Configure contact roles\n¢ Describe and configure locations\n\ni Contacts\n\n¢ Acontact is a person or a company\n\n¢« Acontact may need to be contacted for\npolicy information\n\n¢ Contacts can be:\n\n* Created on account and reused on policy\n* Created on policy\n\nGi\n\nface)\n\nAccount\n|\nContact\nv\n\ni Contacts and Contact Roles\n\nAccount File Contacts page lists all contacts on an account\nPolicy may have some or all of the Account contacts\n\nSome contact information is shared across PolicyPeriods and some is\nPolicyPeriod specific\n\nContacts are identified by the role they fill\n\n* One contact can fill multiple roles on the account and policy\n\ni Demonstration G\n\nContact overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Contact roles for Accounts and Policies Gi\n\nPrimary subtypes [LQQQeViiernrersivyry PolicyContactRole\n\nPolicyNamedinsured\n\nNo correspondence\n\nwith PolicyContactRole\nAccountContactRole can correspond to\n\nmany PolicyContactRole\n\nI Contact role behavior patterns in PolicyCenter G\n\n¢ Normal\n« Array of contacts connected to an entity (additionalNamedIinsured)\n¢ Singleton\n* One and only one contact connected to an entity (BillingContact)\n¢ Simple Details\n* One contact with array of details (Additionallnsured)\n¢ Join Details\n\n* Details join contact to another entity (Driver)\n\ni Policy contact roles in default configuration G\n\nNamed Insured Normal Policy Period\nPrimary Named Insured Singleton Policy Period\nSecondary Named Singleton Policy Period\nInsured\nLocation Named Insured _—_ Join Details Policy Period\n\nAdditional Insured Simple Details Policy Line\n\nBilling Contact Singleton Policy Period\n\nDriver Join Details PA Line\n\nAdditional Interest Join Details Policy Period\n\nOwner Officer Normal WC Line\n\nLabor Client Simple Details WC Line\n\nLabor Contractor Simple Details WC Line\n\ni Example policy contact role pattern G&G\n\nAdditional Insured contact follows a Simple Details pattern\n\nAdditional Insureds\n\n= Name\n\nType\"\n\nEverReady Rentals | Controlling interest\n\nEveready Rentals | Townhouse Associations\n\nEveready Rentals | Managers or Lessors of Premises\n\nContact has multiple types of Additionallnsured roles\n\ni Contact configuration plugin\n\n¢ Implements IContactConfigPlugin\n¢ Example: ContactConfigPlugin, WC7ContactConfigPlugin\n« Registered in config/plugin/registry/IContactConfigPlugin\n* Configures the Contact entity\n* Maps PolicyContactRole to AccountContactRole\n* Controls contact subtypes allowed for each role\n* Disables roles by setting first argument to false\n¢ Syntax:\n\n* new ContactConfig( enable, { contactType }, AccountContactRole , { PolicyContactRole1,\nPolicyContactRole2, ...})\n\ni Extending the contact role data model\n\n¢ Contact role entities that are extendable include:\n* PolicyContactRole and AccountContactRole\n¢ All other roles in the default configuration\n* You can define roles for:\n* Person or\n* Company or\n* Both\n* Roles can be disabled when not needed\n\ni Strategy to configure a new contact role G&G\n\n¢ For acontact role that does not exist in base application:\n+ Add anew contact role and\n* Configure it to follow the implementation of an existing contact role\n\n* Compare desired behavior of contact to roles in base application and find role with\nmost similar behavior:\n\n* How many of them can be created?\n\n* How the match attaches to other roles or objects?\n\ni Adding new contact role Gi\n\n* New contact roles can be configured by defining new subtypes of\nPolicyContactRole and AccountContactRole\n\n* Steps to extend these entities:\n\nN Oa PF WN DR\n\nAdd extension file (*_Ext.eti) that defines the new subtype\n\nModify the registered Contact Config Plugin file to map new subtypes to each other\nAdd display keys as needed\n\nCreate entity name for new contact role\n\nReference display name as needed\n\nModify PCFs and Gosu classes as needed\n\nRestart server to load new entities and entity names\n\ni Demonstration G\n\nCreate a new contact role — Audit\n— Contact\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — Name the plugin that maps the AccountContactRole to the\no PolicyContactRole in the default application.\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — Name the plugin that maps the AccountContactRole to the\noo PolicyContactRole in the default application.\n\nContactConfigPlugin\n\nSS Se ee eee eo\n\nQuestion G\n\n,- — Name the types of contact pattems available that occur in the base\n¢ configuration of PolicyCenter.\n\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,- — Name the types of contact patterns available that occur in the base\noo configuration of PolicyCenter.\n¢\n\nNormal, Singleton, Simple Details, Join Details.\n\nSS Se ee eee eo\n\ni Student exercise\n\nContacts and Locations\n\nLocation overview\n\ni Locations\n\n¢ Alocation is a physical location which\nmay be referenced on a policy\n\n« Locations can be:\n* Created on account and reused on policy\n* Created on policy\n\n——F\n\nLocation Policy |\n\nLocation\n\n|\n\ni Location numbering\n\n« System assigns each location a sequential number\n\n« AccountLocation and PolicyLocation are numbered separately\n\n* Stored in LocationNum field\n¢ LocationNum can be configured based on how a carrier wants to number and\n\nrenumber locations within policies\n\nAccountLocation\n\nLocationNum\n1,2,3,4,5\n\nPolicyLocation\n\n01/01/18 Submission\nwith account\nLocationNum 1, 3, 5\n\nLocations renumbered\nLocationNum 1, 2, 3\n\ni Demonstration G\n\nLocation overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni LOB specific location types\n\n* Subtypes of PolicyLine entity have associated location type\n\n¢ LOB location types have foreign key Location, that points to PolicyLocation\n\nCommercialPropertyLine\nInlandMarineLine\n\n1 ||\nll\n\ni Creating a new account location Gi\n\nTo add a new AccountLocation to the account, call the newLocation() method on\naccount\n\n© AccountBaseEnhancement.gsx x |\n\n176 © static function createAccountForContact (contact : Contact) : Account {\n\n177 var account = new Account (contact.Bundle)\n\n178 account. changeAccountHolderTo (contact)\n\n179 if (contact.PrimaryAddress != null) {\n\n120\n\n181 } ase\n\n209 9 function createPrimaryLocationFromMainContact() : AccountLocation {\n210 if (this.PrimaryLocation != null) {\n\n211 return this.PrimaryLocation\n\n212 }\n\n213\n\n215 copyPrimaryAddressInformationloAccountLocation (accountLocation)\n216 this.PrimaryLocation = accountLocation\n\n217 return accountLocation\n\n218 A 3}\n\ni Creating a new policy location G&G\n\n« Add anew PolicyLocation using newLocation method on PolicyPeriod\n\n+ newLocation() or\n\n« newLocation(acctLoc : AccountLocation)\n\nwhere:\n\nacctLoc - existing AccountLocation to which the new policy location is associated with\n(© PersonalVehicleEnhancement.gsx x |\n\n96\n97\n98\n99\n100\n101\n102\n103\n\nvar policyLoc = policyLocs.first()\n\npolicyLoc = this.PolicyPeriod.newLocation (acctLoc)\n\nfor(var tc in policyLoc.TerritoryCodes)\ntc.fillWithFirst()\n\nQuestion G\n\n,- — What is LocationNum?\ny ¢\nr\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — What is LocationNum?\n\n¢\n4\n¢\n\nLocationNum is the field that stores the sequential location number for account and\npolicies.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Howare locations numbered between accounts and policies?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — Howare locations numbered between accounts and policies?\n\n¢\n4\n¢\n\nLocations are numbered separately between accounts and policies using\nLocationNum field.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~- — Which lines of business in the base configuration have extendable\n\no location related entities?\n\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n,~ — Which lines of business in the base configuration have extendable\noo location related entities?\n¢\n\nInland Marine, Commercial Property and Buessinessowners\n\nSS Se ee eee eo\n\nLesson\nobjectives ¢ Describe contacts and contact roles\nreview ¢ Configure contact roles\n\n¢ Describe and configure locations",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Contacts and Locations",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe contacts and contact roles\n¢ Configure contact roles\n¢ Describe and configure locations",
+      "word_count": 17,
+      "avg_confidence": 83.65,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Contacts\n\n¢ Acontact is a person or a company\n\n¢« Acontact may need to be contacted for\npolicy information\n\n¢ Contacts can be:\n\n* Created on account and reused on policy\n* Created on policy\n\nGi\n\nface)\n\nAccount\n|\nContact\nv",
+      "word_count": 42,
+      "avg_confidence": 84.62,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Contacts and Contact Roles\n\nAccount File Contacts page lists all contacts on an account\nPolicy may have some or all of the Account contacts\n\nSome contact information is shared across PolicyPeriods and some is\nPolicyPeriod specific\n\nContacts are identified by the role they fill\n\n* One contact can fill multiple roles on the account and policy",
+      "word_count": 57,
+      "avg_confidence": 94.04,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Demonstration G\n\nContact overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Contact roles for Accounts and Policies Gi\n\nPrimary subtypes [LQQQeViiernrersivyry PolicyContactRole\n\nPolicyNamedinsured\n\nNo correspondence\n\nwith PolicyContactRole\nAccountContactRole can correspond to\n\nmany PolicyContactRole",
+      "word_count": 23,
+      "avg_confidence": 88.36,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "I Contact role behavior patterns in PolicyCenter G\n\n¢ Normal\n« Array of contacts connected to an entity (additionalNamedIinsured)\n¢ Singleton\n* One and only one contact connected to an entity (BillingContact)\n¢ Simple Details\n* One contact with array of details (Additionallnsured)\n¢ Join Details\n\n* Details join contact to another entity (Driver)",
+      "word_count": 54,
+      "avg_confidence": 84.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Policy contact roles in default configuration G\n\nNamed Insured Normal Policy Period\nPrimary Named Insured Singleton Policy Period\nSecondary Named Singleton Policy Period\nInsured\nLocation Named Insured _—_ Join Details Policy Period\n\nAdditional Insured Simple Details Policy Line\n\nBilling Contact Singleton Policy Period\n\nDriver Join Details PA Line\n\nAdditional Interest Join Details Policy Period\n\nOwner Officer Normal WC Line\n\nLabor Client Simple Details WC Line\n\nLabor Contractor Simple Details WC Line",
+      "word_count": 72,
+      "avg_confidence": 93.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Example policy contact role pattern G&G\n\nAdditional Insured contact follows a Simple Details pattern\n\nAdditional Insureds\n\n= Name\n\nType\"\n\nEverReady Rentals | Controlling interest\n\nEveready Rentals | Townhouse Associations\n\nEveready Rentals | Managers or Lessors of Premises\n\nContact has multiple types of Additionallnsured roles",
+      "word_count": 45,
+      "avg_confidence": 79.63,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Contact configuration plugin\n\n¢ Implements IContactConfigPlugin\n¢ Example: ContactConfigPlugin, WC7ContactConfigPlugin\n« Registered in config/plugin/registry/IContactConfigPlugin\n* Configures the Contact entity\n* Maps PolicyContactRole to AccountContactRole\n* Controls contact subtypes allowed for each role\n* Disables roles by setting first argument to false\n¢ Syntax:\n\n* new ContactConfig( enable, { contactType }, AccountContactRole , { PolicyContactRole1,\nPolicyContactRole2, ...})",
+      "word_count": 57,
+      "avg_confidence": 85.05,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Extending the contact role data model\n\n¢ Contact role entities that are extendable include:\n* PolicyContactRole and AccountContactRole\n¢ All other roles in the default configuration\n* You can define roles for:\n* Person or\n* Company or\n* Both\n* Roles can be disabled when not needed",
+      "word_count": 49,
+      "avg_confidence": 85.63,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Strategy to configure a new contact role G&G\n\n¢ For acontact role that does not exist in base application:\n+ Add anew contact role and\n* Configure it to follow the implementation of an existing contact role\n\n* Compare desired behavior of contact to roles in base application and find role with\nmost similar behavior:\n\n* How many of them can be created?\n\n* How the match attaches to other roles or objects?",
+      "word_count": 74,
+      "avg_confidence": 88.58,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Adding new contact role Gi\n\n* New contact roles can be configured by defining new subtypes of\nPolicyContactRole and AccountContactRole\n\n* Steps to extend these entities:\n\nN Oa PF WN DR\n\nAdd extension file (*_Ext.eti) that defines the new subtype\n\nModify the registered Contact Config Plugin file to map new subtypes to each other\nAdd display keys as needed\n\nCreate entity name for new contact role\n\nReference display name as needed\n\nModify PCFs and Gosu classes as needed\n\nRestart server to load new entities and entity names",
+      "word_count": 88,
+      "avg_confidence": 90.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Demonstration G\n\nCreate a new contact role — Audit\n— Contact\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 42,
+      "avg_confidence": 93.45,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question G\n\n,~ — Name the plugin that maps the AccountContactRole to the\no PolicyContactRole in the default application.\n\nSS oe ee oe oe oo",
+      "word_count": 25,
+      "avg_confidence": 71.52,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer G\n\n,~ — Name the plugin that maps the AccountContactRole to the\noo PolicyContactRole in the default application.\n\nContactConfigPlugin\n\nSS Se ee eee eo",
+      "word_count": 25,
+      "avg_confidence": 73.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n,- — Name the types of contact pattems available that occur in the base\n¢ configuration of PolicyCenter.\n\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 28,
+      "avg_confidence": 70.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer G\n\n,- — Name the types of contact patterns available that occur in the base\noo configuration of PolicyCenter.\n¢\n\nNormal, Singleton, Simple Details, Join Details.\n\nSS Se ee eee eo",
+      "word_count": 32,
+      "avg_confidence": 76.21,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Student exercise\n\nContacts and Locations",
+      "word_count": 6,
+      "avg_confidence": 86.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Location overview",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "i Locations\n\n¢ Alocation is a physical location which\nmay be referenced on a policy\n\n« Locations can be:\n* Created on account and reused on policy\n* Created on policy\n\n——F\n\nLocation Policy |\n\nLocation\n\n|",
+      "word_count": 37,
+      "avg_confidence": 86.17,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "i Location numbering\n\n« System assigns each location a sequential number\n\n« AccountLocation and PolicyLocation are numbered separately\n\n* Stored in LocationNum field\n¢ LocationNum can be configured based on how a carrier wants to number and\n\nrenumber locations within policies\n\nAccountLocation\n\nLocationNum\n1,2,3,4,5\n\nPolicyLocation\n\n01/01/18 Submission\nwith account\nLocationNum 1, 3, 5\n\nLocations renumbered\nLocationNum 1, 2, 3",
+      "word_count": 59,
+      "avg_confidence": 87.95,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "i Demonstration G\n\nLocation overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.69,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "i LOB specific location types\n\n* Subtypes of PolicyLine entity have associated location type\n\n¢ LOB location types have foreign key Location, that points to PolicyLocation\n\nCommercialPropertyLine\nInlandMarineLine\n\n1 ||\nll",
+      "word_count": 31,
+      "avg_confidence": 82.55,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "i Creating a new account location Gi\n\nTo add a new AccountLocation to the account, call the newLocation() method on\naccount\n\n© AccountBaseEnhancement.gsx x |\n\n176 © static function createAccountForContact (contact : Contact) : Account {\n\n177 var account = new Account (contact.Bundle)\n\n178 account. changeAccountHolderTo (contact)\n\n179 if (contact.PrimaryAddress != null) {\n\n120\n\n181 } ase\n\n209 9 function createPrimaryLocationFromMainContact() : AccountLocation {\n210 if (this.PrimaryLocation != null) {\n\n211 return this.PrimaryLocation\n\n212 }\n\n213\n\n215 copyPrimaryAddressInformationloAccountLocation (accountLocation)\n216 this.PrimaryLocation = accountLocation\n\n217 return accountLocation\n\n218 A 3}",
+      "word_count": 89,
+      "avg_confidence": 83.34,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "i Creating a new policy location G&G\n\n« Add anew PolicyLocation using newLocation method on PolicyPeriod\n\n+ newLocation() or\n\n« newLocation(acctLoc : AccountLocation)\n\nwhere:\n\nacctLoc - existing AccountLocation to which the new policy location is associated with\n(© PersonalVehicleEnhancement.gsx x |\n\n96\n97\n98\n99\n100\n101\n102\n103\n\nvar policyLoc = policyLocs.first()\n\npolicyLoc = this.PolicyPeriod.newLocation (acctLoc)\n\nfor(var tc in policyLoc.TerritoryCodes)\ntc.fillWithFirst()",
+      "word_count": 62,
+      "avg_confidence": 87.22,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question G\n\n,- — What is LocationNum?\ny ¢\nr\n\nSS oe ee oe oe oo",
+      "word_count": 16,
+      "avg_confidence": 54.69,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer G\n\n,~ — What is LocationNum?\n\n¢\n4\n¢\n\nLocationNum is the field that stores the sequential location number for account and\npolicies.\n\nSS Se ee eee eo",
+      "word_count": 29,
+      "avg_confidence": 74.13,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question G\n\n,~ — Howare locations numbered between accounts and policies?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 20,
+      "avg_confidence": 61.86,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer G\n\n,~ — Howare locations numbered between accounts and policies?\n\n¢\n4\n¢\n\nLocations are numbered separately between accounts and policies using\nLocationNum field.\n\nSS Se ee eee eo",
+      "word_count": 30,
+      "avg_confidence": 75.34,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Question G\n\n,~- — Which lines of business in the base configuration have extendable\n\no location related entities?\n\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 25,
+      "avg_confidence": 69.67,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Answer G\n\n,~ — Which lines of business in the base configuration have extendable\noo location related entities?\n¢\n\nInland Marine, Commercial Property and Buessinessowners\n\nSS Se ee eee eo",
+      "word_count": 30,
+      "avg_confidence": 75.66,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Lesson\nobjectives ¢ Describe contacts and contact roles\nreview ¢ Configure contact roles\n\n¢ Describe and configure locations",
+      "word_count": 18,
+      "avg_confidence": 84.22,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

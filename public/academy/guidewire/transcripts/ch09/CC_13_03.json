@@ -1,0 +1,4176 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_13_03.mp4",
+    "video_stem": "CC_13_03",
+    "duration_seconds": 195.5,
+    "duration_formatted": "00:03:15.500",
+    "segment_count": 18,
+    "word_count": 663,
+    "avg_confidence": 0.9307,
+    "transcription_time_seconds": 24.45,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:43:30.264894"
+  },
+  "full_text": "Now I'm going to add the type criterion that I configured in the last demo to the user interface, specifically, the activity search page. The first thing to do is create a display key for the criterion. The label it displays should read activity type. Now I'll collapse this node. And take a look at the activity search page. As you can see, there are two main elements. The input set on the left is for required criteria. Remember that you must specify at least one criterion from this group. Also, Guidewire does not support adding a new required criterion. The input set on the right is for optional criteria. I will add my new criterion here. So I double click to navigate to that input set. In the tool box, I start searching for type key input. When type key input appears, I click it. I drop the new type key input immediately below priority. Immediately, some errors appear. I will configure the widget and the errors will be cleared. Users should, obviously, be able to pick a value to search on. So I set the value of the editable property to true. I'll give the widget an ID. And set its label to the display key I created. Finally, I'll set the value of the widget to the type of the activity. Setting the value automatically sets the value type. To test my work, I'll start the Claim Center server. When the server is started, I navigate to Claim Center. And log in as Andy Applegate. On the activity search screen, I'll search for activities assigned to my group, whose type is general. When I search, a number of activities are found. This concludes the Modifying Claim Center search screens demonstration. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of the neck of the neck of the neck of the neck of the neck of the neck of the neck of the neck of neck neck of neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.78,
+      "end": 21.04,
+      "start_formatted": "00:00:00.780",
+      "end_formatted": "00:00:21.040",
+      "text": "Now I'm going to add the type criterion that I configured in the last demo to the user interface, specifically, the activity search page. The first thing to do is create a display key for the criterion. The label it displays should read activity type.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 0.78,
+          "end": 1.32,
+          "probability": 0.9614
+        },
+        {
+          "word": "I'm",
+          "start": 1.32,
+          "end": 1.52,
+          "probability": 0.9731
+        },
+        {
+          "word": "going",
+          "start": 1.52,
+          "end": 1.7,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 1.7,
+          "end": 1.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "add",
+          "start": 1.86,
+          "end": 2.02,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 2.02,
+          "end": 2.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "type",
+          "start": 2.14,
+          "end": 2.36,
+          "probability": 0.9414
+        },
+        {
+          "word": "criterion",
+          "start": 2.36,
+          "end": 2.88,
+          "probability": 0.7959
+        },
+        {
+          "word": "that",
+          "start": 2.88,
+          "end": 3.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "I",
+          "start": 3.16,
+          "end": 3.28,
+          "probability": 0.9922
+        },
+        {
+          "word": "configured",
+          "start": 3.28,
+          "end": 3.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 3.74,
+          "end": 3.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 3.96,
+          "end": 4.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "last",
+          "start": 4.04,
+          "end": 4.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "demo",
+          "start": 4.3,
+          "end": 4.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 4.62,
+          "end": 4.82,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 4.82,
+          "end": 4.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "user",
+          "start": 4.94,
+          "end": 5.26,
+          "probability": 0.9204
+        },
+        {
+          "word": "interface,",
+          "start": 5.26,
+          "end": 5.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "specifically,",
+          "start": 6.08,
+          "end": 6.68,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 7.0,
+          "end": 7.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "activity",
+          "start": 7.24,
+          "end": 7.66,
+          "probability": 0.5859
+        },
+        {
+          "word": "search",
+          "start": 7.66,
+          "end": 8.02,
+          "probability": 0.9805
+        },
+        {
+          "word": "page.",
+          "start": 8.02,
+          "end": 8.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 8.88,
+          "end": 9.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "first",
+          "start": 9.4,
+          "end": 9.66,
+          "probability": 0.998
+        },
+        {
+          "word": "thing",
+          "start": 9.66,
+          "end": 9.82,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 9.82,
+          "end": 9.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "do",
+          "start": 9.96,
+          "end": 10.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 10.12,
+          "end": 10.32,
+          "probability": 0.998
+        },
+        {
+          "word": "create",
+          "start": 10.32,
+          "end": 10.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 10.64,
+          "end": 10.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "display",
+          "start": 10.82,
+          "end": 11.12,
+          "probability": 0.9336
+        },
+        {
+          "word": "key",
+          "start": 11.12,
+          "end": 11.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 11.34,
+          "end": 11.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 11.54,
+          "end": 11.66,
+          "probability": 0.999
+        },
+        {
+          "word": "criterion.",
+          "start": 11.66,
+          "end": 12.2,
+          "probability": 0.9683
+        },
+        {
+          "word": "The",
+          "start": 18.26,
+          "end": 18.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "label",
+          "start": 18.8,
+          "end": 19.1,
+          "probability": 0.9907
+        },
+        {
+          "word": "it",
+          "start": 19.1,
+          "end": 19.3,
+          "probability": 0.9907
+        },
+        {
+          "word": "displays",
+          "start": 19.3,
+          "end": 19.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "should",
+          "start": 19.66,
+          "end": 19.92,
+          "probability": 0.999
+        },
+        {
+          "word": "read",
+          "start": 19.92,
+          "end": 20.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "activity",
+          "start": 20.18,
+          "end": 20.6,
+          "probability": 0.6763
+        },
+        {
+          "word": "type.",
+          "start": 20.6,
+          "end": 21.04,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 41.2,
+      "end": 42.86,
+      "start_formatted": "00:00:41.200",
+      "end_formatted": "00:00:42.860",
+      "text": "Now I'll collapse this node.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 41.2,
+          "end": 41.66,
+          "probability": 0.9092
+        },
+        {
+          "word": "I'll",
+          "start": 41.66,
+          "end": 41.86,
+          "probability": 0.9639
+        },
+        {
+          "word": "collapse",
+          "start": 41.86,
+          "end": 42.24,
+          "probability": 0.978
+        },
+        {
+          "word": "this",
+          "start": 42.24,
+          "end": 42.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "node.",
+          "start": 42.52,
+          "end": 42.86,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 44.16,
+      "end": 46.6,
+      "start_formatted": "00:00:44.160",
+      "end_formatted": "00:00:46.600",
+      "text": "And take a look at the activity search page.",
+      "words": [
+        {
+          "word": "And",
+          "start": 44.16,
+          "end": 44.62,
+          "probability": 0.7998
+        },
+        {
+          "word": "take",
+          "start": 44.62,
+          "end": 44.84,
+          "probability": 0.9888
+        },
+        {
+          "word": "a",
+          "start": 44.84,
+          "end": 44.94,
+          "probability": 0.998
+        },
+        {
+          "word": "look",
+          "start": 44.94,
+          "end": 45.1,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 45.1,
+          "end": 45.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 45.24,
+          "end": 45.34,
+          "probability": 0.9927
+        },
+        {
+          "word": "activity",
+          "start": 45.34,
+          "end": 45.76,
+          "probability": 0.6787
+        },
+        {
+          "word": "search",
+          "start": 45.76,
+          "end": 46.1,
+          "probability": 0.9854
+        },
+        {
+          "word": "page.",
+          "start": 46.1,
+          "end": 46.6,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 57.92,
+      "end": 59.98,
+      "start_formatted": "00:00:57.920",
+      "end_formatted": "00:00:59.980",
+      "text": "As you can see, there are two main elements.",
+      "words": [
+        {
+          "word": "As",
+          "start": 57.92,
+          "end": 58.38,
+          "probability": 0.9683
+        },
+        {
+          "word": "you",
+          "start": 58.38,
+          "end": 58.5,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 58.5,
+          "end": 58.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "see,",
+          "start": 58.66,
+          "end": 58.98,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 59.14,
+          "end": 59.38,
+          "probability": 0.9736
+        },
+        {
+          "word": "are",
+          "start": 59.38,
+          "end": 59.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "two",
+          "start": 59.5,
+          "end": 59.68,
+          "probability": 0.8584
+        },
+        {
+          "word": "main",
+          "start": 59.68,
+          "end": 59.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "elements.",
+          "start": 59.94,
+          "end": 59.98,
+          "probability": 0.1242
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 62.14,
+      "end": 74.02,
+      "start_formatted": "00:01:02.140",
+      "end_formatted": "00:01:14.020",
+      "text": "The input set on the left is for required criteria. Remember that you must specify at least one criterion from this group. Also, Guidewire does not support adding a new required criterion.",
+      "words": [
+        {
+          "word": "The",
+          "start": 62.14,
+          "end": 62.76,
+          "probability": 0.0031
+        },
+        {
+          "word": "input",
+          "start": 62.76,
+          "end": 63.38,
+          "probability": 0.8564
+        },
+        {
+          "word": "set",
+          "start": 63.38,
+          "end": 63.72,
+          "probability": 0.938
+        },
+        {
+          "word": "on",
+          "start": 63.72,
+          "end": 63.86,
+          "probability": 0.9663
+        },
+        {
+          "word": "the",
+          "start": 63.86,
+          "end": 63.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "left",
+          "start": 63.96,
+          "end": 64.16,
+          "probability": 0.98
+        },
+        {
+          "word": "is",
+          "start": 64.16,
+          "end": 64.36,
+          "probability": 0.9893
+        },
+        {
+          "word": "for",
+          "start": 64.36,
+          "end": 64.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "required",
+          "start": 64.52,
+          "end": 64.92,
+          "probability": 0.8066
+        },
+        {
+          "word": "criteria.",
+          "start": 64.92,
+          "end": 65.54,
+          "probability": 0.9902
+        },
+        {
+          "word": "Remember",
+          "start": 66.0,
+          "end": 66.46,
+          "probability": 0.9844
+        },
+        {
+          "word": "that",
+          "start": 66.46,
+          "end": 66.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "you",
+          "start": 66.7,
+          "end": 66.82,
+          "probability": 0.998
+        },
+        {
+          "word": "must",
+          "start": 66.82,
+          "end": 67.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "specify",
+          "start": 67.0,
+          "end": 67.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "at",
+          "start": 67.48,
+          "end": 67.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "least",
+          "start": 67.76,
+          "end": 67.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "one",
+          "start": 67.94,
+          "end": 68.2,
+          "probability": 0.9204
+        },
+        {
+          "word": "criterion",
+          "start": 68.2,
+          "end": 68.74,
+          "probability": 0.9771
+        },
+        {
+          "word": "from",
+          "start": 68.74,
+          "end": 69.08,
+          "probability": 0.9932
+        },
+        {
+          "word": "this",
+          "start": 69.08,
+          "end": 69.26,
+          "probability": 0.998
+        },
+        {
+          "word": "group.",
+          "start": 69.26,
+          "end": 69.6,
+          "probability": 0.998
+        },
+        {
+          "word": "Also,",
+          "start": 70.1,
+          "end": 70.5,
+          "probability": 0.979
+        },
+        {
+          "word": "Guidewire",
+          "start": 70.88,
+          "end": 71.4,
+          "probability": 0.9434
+        },
+        {
+          "word": "does",
+          "start": 71.4,
+          "end": 71.58,
+          "probability": 0.9922
+        },
+        {
+          "word": "not",
+          "start": 71.58,
+          "end": 71.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "support",
+          "start": 71.8,
+          "end": 72.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "adding",
+          "start": 72.18,
+          "end": 72.48,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 72.48,
+          "end": 72.66,
+          "probability": 0.9888
+        },
+        {
+          "word": "new",
+          "start": 72.66,
+          "end": 72.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "required",
+          "start": 72.82,
+          "end": 73.34,
+          "probability": 0.9878
+        },
+        {
+          "word": "criterion.",
+          "start": 73.34,
+          "end": 74.02,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 74.76,
+      "end": 83.14,
+      "start_formatted": "00:01:14.760",
+      "end_formatted": "00:01:23.140",
+      "text": "The input set on the right is for optional criteria. I will add my new criterion here. So I double click to navigate to that input set.",
+      "words": [
+        {
+          "word": "The",
+          "start": 74.76,
+          "end": 75.38,
+          "probability": 0.9902
+        },
+        {
+          "word": "input",
+          "start": 75.38,
+          "end": 75.7,
+          "probability": 0.9526
+        },
+        {
+          "word": "set",
+          "start": 75.7,
+          "end": 76.02,
+          "probability": 0.9927
+        },
+        {
+          "word": "on",
+          "start": 76.02,
+          "end": 76.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 76.16,
+          "end": 76.24,
+          "probability": 0.999
+        },
+        {
+          "word": "right",
+          "start": 76.24,
+          "end": 76.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 76.4,
+          "end": 76.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "for",
+          "start": 76.6,
+          "end": 76.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "optional",
+          "start": 76.78,
+          "end": 77.12,
+          "probability": 0.9673
+        },
+        {
+          "word": "criteria.",
+          "start": 77.12,
+          "end": 77.72,
+          "probability": 0.9829
+        },
+        {
+          "word": "I",
+          "start": 78.08,
+          "end": 78.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "will",
+          "start": 78.48,
+          "end": 78.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "add",
+          "start": 78.62,
+          "end": 78.82,
+          "probability": 0.999
+        },
+        {
+          "word": "my",
+          "start": 78.82,
+          "end": 79.0,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 79.0,
+          "end": 79.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "criterion",
+          "start": 79.2,
+          "end": 79.76,
+          "probability": 0.9795
+        },
+        {
+          "word": "here.",
+          "start": 79.76,
+          "end": 80.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "So",
+          "start": 80.38,
+          "end": 80.84,
+          "probability": 0.9849
+        },
+        {
+          "word": "I",
+          "start": 80.84,
+          "end": 80.98,
+          "probability": 0.9258
+        },
+        {
+          "word": "double",
+          "start": 80.98,
+          "end": 81.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "click",
+          "start": 81.24,
+          "end": 81.52,
+          "probability": 0.4941
+        },
+        {
+          "word": "to",
+          "start": 81.52,
+          "end": 81.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "navigate",
+          "start": 81.7,
+          "end": 82.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 82.06,
+          "end": 82.32,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 82.32,
+          "end": 82.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "input",
+          "start": 82.48,
+          "end": 82.8,
+          "probability": 0.978
+        },
+        {
+          "word": "set.",
+          "start": 82.8,
+          "end": 83.14,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 83.78,
+      "end": 90.3,
+      "start_formatted": "00:01:23.780",
+      "end_formatted": "00:01:30.300",
+      "text": "In the tool box, I start searching for type key input. When type key input appears, I click it.",
+      "words": [
+        {
+          "word": "In",
+          "start": 83.78,
+          "end": 84.34,
+          "probability": 0.9541
+        },
+        {
+          "word": "the",
+          "start": 84.34,
+          "end": 84.46,
+          "probability": 0.998
+        },
+        {
+          "word": "tool",
+          "start": 84.46,
+          "end": 84.7,
+          "probability": 0.2157
+        },
+        {
+          "word": "box,",
+          "start": 84.7,
+          "end": 85.16,
+          "probability": 0.9507
+        },
+        {
+          "word": "I",
+          "start": 85.38,
+          "end": 85.58,
+          "probability": 0.9858
+        },
+        {
+          "word": "start",
+          "start": 85.58,
+          "end": 85.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "searching",
+          "start": 85.88,
+          "end": 86.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 86.24,
+          "end": 86.44,
+          "probability": 0.998
+        },
+        {
+          "word": "type",
+          "start": 86.44,
+          "end": 86.7,
+          "probability": 0.5718
+        },
+        {
+          "word": "key",
+          "start": 86.7,
+          "end": 86.92,
+          "probability": 0.8975
+        },
+        {
+          "word": "input.",
+          "start": 86.92,
+          "end": 87.34,
+          "probability": 0.9893
+        },
+        {
+          "word": "When",
+          "start": 87.7,
+          "end": 88.16,
+          "probability": 0.9897
+        },
+        {
+          "word": "type",
+          "start": 88.16,
+          "end": 88.4,
+          "probability": 0.9404
+        },
+        {
+          "word": "key",
+          "start": 88.4,
+          "end": 88.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "input",
+          "start": 88.62,
+          "end": 88.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "appears,",
+          "start": 88.9,
+          "end": 89.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 89.6,
+          "end": 89.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "click",
+          "start": 89.82,
+          "end": 90.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "it.",
+          "start": 90.06,
+          "end": 90.3,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 91.02,
+      "end": 100.06,
+      "start_formatted": "00:01:31.020",
+      "end_formatted": "00:01:40.060",
+      "text": "I drop the new type key input immediately below priority. Immediately, some errors appear. I will configure the widget and the errors will be cleared.",
+      "words": [
+        {
+          "word": "I",
+          "start": 91.02,
+          "end": 91.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "drop",
+          "start": 91.58,
+          "end": 91.88,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 91.88,
+          "end": 92.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 92.06,
+          "end": 92.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "type",
+          "start": 92.18,
+          "end": 92.42,
+          "probability": 0.9878
+        },
+        {
+          "word": "key",
+          "start": 92.42,
+          "end": 92.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "input",
+          "start": 92.64,
+          "end": 92.92,
+          "probability": 0.98
+        },
+        {
+          "word": "immediately",
+          "start": 92.92,
+          "end": 93.36,
+          "probability": 0.9937
+        },
+        {
+          "word": "below",
+          "start": 93.36,
+          "end": 93.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "priority.",
+          "start": 93.76,
+          "end": 94.42,
+          "probability": 0.9614
+        },
+        {
+          "word": "Immediately,",
+          "start": 94.98,
+          "end": 95.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "some",
+          "start": 95.9,
+          "end": 96.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "errors",
+          "start": 96.2,
+          "end": 96.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "appear.",
+          "start": 96.5,
+          "end": 96.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 97.28,
+          "end": 97.64,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 97.64,
+          "end": 97.8,
+          "probability": 0.9893
+        },
+        {
+          "word": "configure",
+          "start": 97.8,
+          "end": 98.24,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 98.24,
+          "end": 98.5,
+          "probability": 0.999
+        },
+        {
+          "word": "widget",
+          "start": 98.5,
+          "end": 98.74,
+          "probability": 0.9946
+        },
+        {
+          "word": "and",
+          "start": 98.74,
+          "end": 98.92,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 98.92,
+          "end": 99.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "errors",
+          "start": 99.04,
+          "end": 99.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 99.38,
+          "end": 99.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 99.56,
+          "end": 99.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "cleared.",
+          "start": 99.7,
+          "end": 100.06,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 100.68,
+      "end": 107.82,
+      "start_formatted": "00:01:40.680",
+      "end_formatted": "00:01:47.820",
+      "text": "Users should, obviously, be able to pick a value to search on. So I set the value of the editable property to true.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 100.68,
+          "end": 101.24,
+          "probability": 0.9932
+        },
+        {
+          "word": "should,",
+          "start": 101.24,
+          "end": 101.6,
+          "probability": 0.999
+        },
+        {
+          "word": "obviously,",
+          "start": 101.74,
+          "end": 102.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "be",
+          "start": 102.64,
+          "end": 102.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "able",
+          "start": 102.88,
+          "end": 103.12,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 103.12,
+          "end": 103.28,
+          "probability": 0.999
+        },
+        {
+          "word": "pick",
+          "start": 103.28,
+          "end": 103.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 103.44,
+          "end": 103.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "value",
+          "start": 103.58,
+          "end": 103.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 103.88,
+          "end": 104.06,
+          "probability": 0.999
+        },
+        {
+          "word": "search",
+          "start": 104.06,
+          "end": 104.34,
+          "probability": 0.9888
+        },
+        {
+          "word": "on.",
+          "start": 104.34,
+          "end": 104.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "So",
+          "start": 104.94,
+          "end": 105.42,
+          "probability": 0.9883
+        },
+        {
+          "word": "I",
+          "start": 105.42,
+          "end": 105.56,
+          "probability": 0.958
+        },
+        {
+          "word": "set",
+          "start": 105.56,
+          "end": 105.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 105.76,
+          "end": 105.88,
+          "probability": 0.999
+        },
+        {
+          "word": "value",
+          "start": 105.88,
+          "end": 106.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 106.18,
+          "end": 106.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 106.36,
+          "end": 106.46,
+          "probability": 0.9937
+        },
+        {
+          "word": "editable",
+          "start": 106.46,
+          "end": 106.92,
+          "probability": 0.9551
+        },
+        {
+          "word": "property",
+          "start": 106.92,
+          "end": 107.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 107.38,
+          "end": 107.6,
+          "probability": 0.998
+        },
+        {
+          "word": "true.",
+          "start": 107.6,
+          "end": 107.82,
+          "probability": 0.7173
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 108.48,
+      "end": 116.58,
+      "start_formatted": "00:01:48.480",
+      "end_formatted": "00:01:56.580",
+      "text": "I'll give the widget an ID. And set its label to the display key I created.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 108.48,
+          "end": 108.94,
+          "probability": 0.9707
+        },
+        {
+          "word": "give",
+          "start": 108.94,
+          "end": 109.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 109.1,
+          "end": 109.22,
+          "probability": 0.9912
+        },
+        {
+          "word": "widget",
+          "start": 109.22,
+          "end": 109.44,
+          "probability": 0.9775
+        },
+        {
+          "word": "an",
+          "start": 109.44,
+          "end": 109.6,
+          "probability": 0.979
+        },
+        {
+          "word": "ID.",
+          "start": 109.6,
+          "end": 109.88,
+          "probability": 0.8594
+        },
+        {
+          "word": "And",
+          "start": 113.88,
+          "end": 114.34,
+          "probability": 0.8481
+        },
+        {
+          "word": "set",
+          "start": 114.34,
+          "end": 114.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "its",
+          "start": 114.58,
+          "end": 114.76,
+          "probability": 0.8477
+        },
+        {
+          "word": "label",
+          "start": 114.76,
+          "end": 115.06,
+          "probability": 0.834
+        },
+        {
+          "word": "to",
+          "start": 115.06,
+          "end": 115.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 115.26,
+          "end": 115.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "display",
+          "start": 115.38,
+          "end": 115.74,
+          "probability": 0.8848
+        },
+        {
+          "word": "key",
+          "start": 115.74,
+          "end": 115.94,
+          "probability": 0.98
+        },
+        {
+          "word": "I",
+          "start": 115.94,
+          "end": 116.16,
+          "probability": 0.9761
+        },
+        {
+          "word": "created.",
+          "start": 116.16,
+          "end": 116.58,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 134.44,
+      "end": 137.82,
+      "start_formatted": "00:02:14.440",
+      "end_formatted": "00:02:17.820",
+      "text": "Finally, I'll set the value of the widget to the type of the activity.",
+      "words": [
+        {
+          "word": "Finally,",
+          "start": 134.44,
+          "end": 134.88,
+          "probability": 0.9722
+        },
+        {
+          "word": "I'll",
+          "start": 135.14,
+          "end": 135.4,
+          "probability": 0.9883
+        },
+        {
+          "word": "set",
+          "start": 135.4,
+          "end": 135.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 135.56,
+          "end": 135.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "value",
+          "start": 135.7,
+          "end": 135.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 135.98,
+          "end": 136.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 136.18,
+          "end": 136.28,
+          "probability": 0.9897
+        },
+        {
+          "word": "widget",
+          "start": 136.28,
+          "end": 136.54,
+          "probability": 0.9697
+        },
+        {
+          "word": "to",
+          "start": 136.54,
+          "end": 136.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 136.72,
+          "end": 136.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "type",
+          "start": 136.84,
+          "end": 137.08,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 137.08,
+          "end": 137.2,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 137.2,
+          "end": 137.34,
+          "probability": 0.9878
+        },
+        {
+          "word": "activity.",
+          "start": 137.34,
+          "end": 137.82,
+          "probability": 0.9395
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 147.78,
+      "end": 154.28,
+      "start_formatted": "00:02:27.780",
+      "end_formatted": "00:02:34.280",
+      "text": "Setting the value automatically sets the value type. To test my work, I'll start the Claim Center server.",
+      "words": [
+        {
+          "word": "Setting",
+          "start": 147.78,
+          "end": 148.42,
+          "probability": 0.9028
+        },
+        {
+          "word": "the",
+          "start": 148.42,
+          "end": 148.6,
+          "probability": 0.9854
+        },
+        {
+          "word": "value",
+          "start": 148.6,
+          "end": 148.92,
+          "probability": 0.9819
+        },
+        {
+          "word": "automatically",
+          "start": 148.92,
+          "end": 149.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "sets",
+          "start": 149.48,
+          "end": 149.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 149.92,
+          "end": 150.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "value",
+          "start": 150.12,
+          "end": 150.44,
+          "probability": 0.978
+        },
+        {
+          "word": "type.",
+          "start": 150.44,
+          "end": 150.8,
+          "probability": 0.9922
+        },
+        {
+          "word": "To",
+          "start": 151.14,
+          "end": 151.64,
+          "probability": 0.9878
+        },
+        {
+          "word": "test",
+          "start": 151.64,
+          "end": 151.9,
+          "probability": 0.998
+        },
+        {
+          "word": "my",
+          "start": 151.9,
+          "end": 152.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "work,",
+          "start": 152.08,
+          "end": 152.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "I'll",
+          "start": 152.6,
+          "end": 152.86,
+          "probability": 0.9912
+        },
+        {
+          "word": "start",
+          "start": 152.86,
+          "end": 153.12,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 153.12,
+          "end": 153.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Claim",
+          "start": 153.28,
+          "end": 153.54,
+          "probability": 0.9082
+        },
+        {
+          "word": "Center",
+          "start": 153.54,
+          "end": 153.88,
+          "probability": 0.8999
+        },
+        {
+          "word": "server.",
+          "start": 153.88,
+          "end": 154.28,
+          "probability": 0.8716
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 157.14,
+      "end": 163.2,
+      "start_formatted": "00:02:37.140",
+      "end_formatted": "00:02:43.200",
+      "text": "When the server is started, I navigate to Claim Center. And log in as Andy Applegate.",
+      "words": [
+        {
+          "word": "When",
+          "start": 157.14,
+          "end": 157.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 157.78,
+          "end": 157.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "server",
+          "start": 157.88,
+          "end": 158.16,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 158.16,
+          "end": 158.34,
+          "probability": 0.9829
+        },
+        {
+          "word": "started,",
+          "start": 158.34,
+          "end": 158.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 158.96,
+          "end": 159.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "navigate",
+          "start": 159.16,
+          "end": 159.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 159.54,
+          "end": 159.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "Claim",
+          "start": 159.78,
+          "end": 160.04,
+          "probability": 0.9756
+        },
+        {
+          "word": "Center.",
+          "start": 160.04,
+          "end": 160.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "And",
+          "start": 160.98,
+          "end": 161.62,
+          "probability": 0.9321
+        },
+        {
+          "word": "log",
+          "start": 161.62,
+          "end": 161.92,
+          "probability": 0.5073
+        },
+        {
+          "word": "in",
+          "start": 161.92,
+          "end": 162.08,
+          "probability": 0.9741
+        },
+        {
+          "word": "as",
+          "start": 162.08,
+          "end": 162.2,
+          "probability": 0.9883
+        },
+        {
+          "word": "Andy",
+          "start": 162.2,
+          "end": 162.54,
+          "probability": 0.9463
+        },
+        {
+          "word": "Applegate.",
+          "start": 162.54,
+          "end": 163.2,
+          "probability": 0.9028
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 175.38,
+      "end": 184.54,
+      "start_formatted": "00:02:55.380",
+      "end_formatted": "00:03:04.540",
+      "text": "On the activity search screen, I'll search for activities assigned to my group, whose type is general.",
+      "words": [
+        {
+          "word": "On",
+          "start": 175.38,
+          "end": 176.12,
+          "probability": 0.8364
+        },
+        {
+          "word": "the",
+          "start": 176.12,
+          "end": 176.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "activity",
+          "start": 176.26,
+          "end": 176.68,
+          "probability": 0.4231
+        },
+        {
+          "word": "search",
+          "start": 176.68,
+          "end": 177.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "screen,",
+          "start": 177.06,
+          "end": 177.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "I'll",
+          "start": 177.7,
+          "end": 180.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "search",
+          "start": 180.26,
+          "end": 180.52,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 180.52,
+          "end": 180.72,
+          "probability": 1.0
+        },
+        {
+          "word": "activities",
+          "start": 180.72,
+          "end": 181.2,
+          "probability": 0.9932
+        },
+        {
+          "word": "assigned",
+          "start": 181.2,
+          "end": 181.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 181.7,
+          "end": 181.84,
+          "probability": 1.0
+        },
+        {
+          "word": "my",
+          "start": 181.84,
+          "end": 182.0,
+          "probability": 1.0
+        },
+        {
+          "word": "group,",
+          "start": 182.0,
+          "end": 182.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "whose",
+          "start": 182.4,
+          "end": 183.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "type",
+          "start": 183.74,
+          "end": 183.98,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 183.98,
+          "end": 184.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "general.",
+          "start": 184.18,
+          "end": 184.54,
+          "probability": 0.8047
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 186.0,
+      "end": 195.16,
+      "start_formatted": "00:03:06.000",
+      "end_formatted": "00:03:15.160",
+      "text": "When I search, a number of activities are found. This concludes the Modifying Claim Center search screens demonstration.",
+      "words": [
+        {
+          "word": "When",
+          "start": 186.0,
+          "end": 186.74,
+          "probability": 0.7451
+        },
+        {
+          "word": "I",
+          "start": 186.74,
+          "end": 186.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "search,",
+          "start": 186.86,
+          "end": 187.24,
+          "probability": 0.9048
+        },
+        {
+          "word": "a",
+          "start": 187.54,
+          "end": 189.64,
+          "probability": 0.9604
+        },
+        {
+          "word": "number",
+          "start": 189.64,
+          "end": 189.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 189.88,
+          "end": 190.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "activities",
+          "start": 190.08,
+          "end": 190.52,
+          "probability": 0.9937
+        },
+        {
+          "word": "are",
+          "start": 190.52,
+          "end": 190.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "found.",
+          "start": 190.8,
+          "end": 191.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 191.52,
+          "end": 192.08,
+          "probability": 0.998
+        },
+        {
+          "word": "concludes",
+          "start": 192.08,
+          "end": 192.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 192.5,
+          "end": 192.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "Modifying",
+          "start": 192.68,
+          "end": 193.2,
+          "probability": 0.835
+        },
+        {
+          "word": "Claim",
+          "start": 193.2,
+          "end": 193.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "Center",
+          "start": 193.54,
+          "end": 193.9,
+          "probability": 0.238
+        },
+        {
+          "word": "search",
+          "start": 193.9,
+          "end": 194.22,
+          "probability": 0.3831
+        },
+        {
+          "word": "screens",
+          "start": 194.22,
+          "end": 194.62,
+          "probability": 0.8657
+        },
+        {
+          "word": "demonstration.",
+          "start": 194.62,
+          "end": 195.16,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 195.16,
+      "end": 195.34,
+      "start_formatted": "00:03:15.160",
+      "end_formatted": "00:03:15.340",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.0001
+        },
+        {
+          "word": "of",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.1749
+        },
+        {
+          "word": "Filogy",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.2681
+        },
+        {
+          "word": "of",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.4751
+        },
+        {
+          "word": "Filogy",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.4407
+        },
+        {
+          "word": "of",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.5859
+        },
+        {
+          "word": "Filogy",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.49
+        },
+        {
+          "word": "of",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.6875
+        },
+        {
+          "word": "Filogy",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.5557
+        },
+        {
+          "word": "of",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.7661
+        },
+        {
+          "word": "Filogy",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.6509
+        },
+        {
+          "word": "of",
+          "start": 195.16,
+          "end": 195.16,
+          "probability": 0.8208
+        },
+        {
+          "word": "Filogy",
+          "start": 195.16,
+          "end": 195.22,
+          "probability": 0.7383
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.8477
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.7959
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.873
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.834
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.8843
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.874
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.8979
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.8848
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9062
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9121
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9165
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9243
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9214
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9385
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9253
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9419
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9302
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9468
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9341
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9512
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9331
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9541
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9385
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.958
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9404
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.96
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9419
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9634
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9424
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9644
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9443
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9429
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9668
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9424
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9668
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9414
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9683
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9434
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9688
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9448
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9429
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9443
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9712
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9438
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9722
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9424
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9736
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9434
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9429
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9736
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9443
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9434
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9741
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9434
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9438
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9434
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.978
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9482
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.978
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.978
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9482
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9507
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.98
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9512
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9502
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9507
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9512
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9521
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9521
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9531
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9551
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9546
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.22,
+          "end": 195.22,
+          "probability": 0.9585
+        },
+        {
+          "word": "Filogy",
+          "start": 195.22,
+          "end": 195.24,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 195.24,
+          "end": 195.24,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 195.24,
+          "end": 195.34,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 195.34,
+      "end": 195.52,
+      "start_formatted": "00:03:15.340",
+      "end_formatted": "00:03:15.520",
+      "text": "of the neck of the neck of the neck of the neck of the neck of the neck of the neck of the neck of neck neck of neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck neck",
+      "words": [
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.0104
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.1952
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.0002
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.0434
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.6152
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.4829
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.1177
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.8447
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.8086
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.2025
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9004
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9116
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.3105
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9272
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9497
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.4229
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9399
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9653
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.4988
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9492
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.5996
+        },
+        {
+          "word": "the",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9561
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.6841
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.0027
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.0129
+        },
+        {
+          "word": "of",
+          "start": 195.34,
+          "end": 195.34,
+          "probability": 0.7549
+        },
+        {
+          "word": "neck",
+          "start": 195.34,
+          "end": 195.42,
+          "probability": 0.022
+        },
+        {
+          "word": "neck",
+          "start": 195.42,
+          "end": 195.42,
+          "probability": 0.1705
+        },
+        {
+          "word": "neck",
+          "start": 195.42,
+          "end": 195.44,
+          "probability": 0.0285
+        },
+        {
+          "word": "neck",
+          "start": 195.44,
+          "end": 195.48,
+          "probability": 0.0646
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.2252
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.4919
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.6802
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.791
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.8535
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.8901
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9165
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9375
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9492
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9551
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9619
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9663
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9697
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9727
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9741
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9761
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.978
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.979
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.98
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9805
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9819
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9829
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9839
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9839
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9849
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9854
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9858
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9863
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9868
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9878
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9878
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9883
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9883
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9893
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9893
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9893
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.48,
+          "probability": 0.9893
+        },
+        {
+          "word": "neck",
+          "start": 195.48,
+          "end": 195.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "neck",
+          "start": 195.5,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9893
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "neck",
+          "start": 195.52,
+          "end": 195.52,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 195.5,
+      "end": 195.5,
+      "start_formatted": "00:03:15.500",
+      "end_formatted": "00:03:15.500",
+      "text": "",
+      "words": []
+    }
+  ]
+}

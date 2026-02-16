@@ -1,0 +1,3610 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_15_02.mp4",
+    "video_stem": "Billing_15_02",
+    "duration_seconds": 157.8,
+    "duration_formatted": "00:02:37.800",
+    "segment_count": 90,
+    "word_count": 459,
+    "avg_confidence": 0.9697,
+    "transcription_time_seconds": 21.16,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:06:31.394775"
+  },
+  "full_text": "In this demonstration, we take a look at the return premium plan that influenced the allocation of policy credits in the previous demonstration. Return premium plans are located with the other plans on the administration tab. I click the arrow icon. Now I select return premium plans on the business settings submenu. Currently, there is only one plan, the default return premium plan, which is shipped with BillingCenter. Let's take a look at it. First, we see the eligible items field. This setting specifies which positive items will be paid during credit allocation. On this plan, the only items that are eligible to be paid by a credit are ones that have the same payer and belong to the same policy period and same charge pattern as the credit being allocated. Notice the plan has two return premium handling schemes. Each of these defines the rules for allocating credit. Each name field entry corresponds to a billing instruction type, with the exception of the exception of the other context. So the scheme name cancellation is used for charges from a cancellation billing instruction. The other scheme is used for charges that do not match any other scheme. Every return premium plan must have a scheme named other, which serves as the catch-all scheme. For example, this return premium plan has no scheme that is specifically for policy change, so the other scheme will be used. The other scheme uses the proportional method. This is the scheme BillingCenter used when applying the credit of $300 in the previous demonstration. As we saw, the $300 was allocated proportionally over the eligible invoice items. The cancellation scheme uses the cancellation scheme. The cancellation scheme uses the last to first method. This means for all cancellation billing instructions, BillingCenter will allocate credits starting with most recent eligible items, which are those having the latest placement date. The when to allocate field controls when credit allocation will take place. Both schemes specify on receipt. As we observed in the previous demo, the credit was allocated as soon as BillingCenter received the billing request. Let's go back to the list of return premium plans. BillingCenter is shipped with a default return premium plan. You can modify it directly or clone it to modify a copy of the plan. However, the important thing to remember is the return premium plan with a priority of 1 is the only active return premium plan for the billing system. Whenever a new policy is issued, the active plan is automatically associated with a new policy period. Making a different plan active does not affect existing policy periods. This concludes our short demonstration on return premium plans. Films Films   Films Films     Films   Films               Films Films                     Films Films Films Films Films                           ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 27.3,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:27.300",
+      "text": "In this demonstration, we take a look at the return premium plan that influenced the allocation of policy credits in the previous demonstration. Return premium plans are located with the other plans on the administration tab. I click the arrow icon. Now I select return premium plans on the business settings submenu. Currently, there is only one plan, the default return premium plan, which is shipped with BillingCenter. Let's take a look at it.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.1,
+          "probability": 0.9458
+        },
+        {
+          "word": "this",
+          "start": 0.1,
+          "end": 0.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "demonstration,",
+          "start": 0.26,
+          "end": 0.92,
+          "probability": 0.9912
+        },
+        {
+          "word": "we",
+          "start": 1.34,
+          "end": 1.56,
+          "probability": 0.9946
+        },
+        {
+          "word": "take",
+          "start": 1.56,
+          "end": 1.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 1.78,
+          "end": 1.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "look",
+          "start": 1.92,
+          "end": 2.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 2.06,
+          "end": 2.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 2.18,
+          "end": 2.28,
+          "probability": 0.998
+        },
+        {
+          "word": "return",
+          "start": 2.28,
+          "end": 2.58,
+          "probability": 0.7129
+        },
+        {
+          "word": "premium",
+          "start": 2.58,
+          "end": 3.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "plan",
+          "start": 3.02,
+          "end": 3.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 3.34,
+          "end": 3.56,
+          "probability": 0.998
+        },
+        {
+          "word": "influenced",
+          "start": 3.56,
+          "end": 4.06,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 4.06,
+          "end": 4.28,
+          "probability": 0.999
+        },
+        {
+          "word": "allocation",
+          "start": 4.28,
+          "end": 4.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 4.76,
+          "end": 5.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 5.02,
+          "end": 5.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "credits",
+          "start": 5.48,
+          "end": 5.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 5.9,
+          "end": 6.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 6.1,
+          "end": 6.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "previous",
+          "start": 6.18,
+          "end": 6.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "demonstration.",
+          "start": 6.58,
+          "end": 7.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Return",
+          "start": 7.96,
+          "end": 8.56,
+          "probability": 0.9941
+        },
+        {
+          "word": "premium",
+          "start": 8.56,
+          "end": 9.06,
+          "probability": 0.9751
+        },
+        {
+          "word": "plans",
+          "start": 9.06,
+          "end": 9.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 9.52,
+          "end": 9.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "located",
+          "start": 9.74,
+          "end": 10.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 10.18,
+          "end": 10.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 10.4,
+          "end": 10.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "other",
+          "start": 10.52,
+          "end": 10.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "plans",
+          "start": 10.7,
+          "end": 11.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 11.1,
+          "end": 11.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 11.3,
+          "end": 11.42,
+          "probability": 0.999
+        },
+        {
+          "word": "administration",
+          "start": 11.42,
+          "end": 11.92,
+          "probability": 0.5557
+        },
+        {
+          "word": "tab.",
+          "start": 11.92,
+          "end": 12.48,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 12.78,
+          "end": 13.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "click",
+          "start": 13.08,
+          "end": 13.32,
+          "probability": 0.9585
+        },
+        {
+          "word": "the",
+          "start": 13.32,
+          "end": 13.5,
+          "probability": 0.999
+        },
+        {
+          "word": "arrow",
+          "start": 13.5,
+          "end": 13.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "icon.",
+          "start": 13.76,
+          "end": 14.4,
+          "probability": 0.999
+        },
+        {
+          "word": "Now",
+          "start": 14.82,
+          "end": 15.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 15.34,
+          "end": 15.5,
+          "probability": 0.981
+        },
+        {
+          "word": "select",
+          "start": 15.5,
+          "end": 15.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "return",
+          "start": 15.88,
+          "end": 16.2,
+          "probability": 0.8623
+        },
+        {
+          "word": "premium",
+          "start": 16.2,
+          "end": 16.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "plans",
+          "start": 16.68,
+          "end": 17.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 17.14,
+          "end": 17.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 17.32,
+          "end": 17.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "business",
+          "start": 17.44,
+          "end": 17.76,
+          "probability": 0.9463
+        },
+        {
+          "word": "settings",
+          "start": 17.76,
+          "end": 18.16,
+          "probability": 0.9932
+        },
+        {
+          "word": "submenu.",
+          "start": 18.16,
+          "end": 18.88,
+          "probability": 0.8506
+        },
+        {
+          "word": "Currently,",
+          "start": 19.48,
+          "end": 20.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "there",
+          "start": 20.42,
+          "end": 20.66,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 20.66,
+          "end": 20.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 20.8,
+          "end": 21.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 21.1,
+          "end": 21.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "plan,",
+          "start": 21.36,
+          "end": 21.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 22.0,
+          "end": 22.24,
+          "probability": 0.999
+        },
+        {
+          "word": "default",
+          "start": 22.24,
+          "end": 22.56,
+          "probability": 0.999
+        },
+        {
+          "word": "return",
+          "start": 22.56,
+          "end": 22.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "premium",
+          "start": 22.92,
+          "end": 23.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "plan,",
+          "start": 23.42,
+          "end": 23.94,
+          "probability": 1.0
+        },
+        {
+          "word": "which",
+          "start": 24.18,
+          "end": 24.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 24.44,
+          "end": 24.58,
+          "probability": 1.0
+        },
+        {
+          "word": "shipped",
+          "start": 24.58,
+          "end": 24.8,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 24.8,
+          "end": 24.98,
+          "probability": 1.0
+        },
+        {
+          "word": "BillingCenter.",
+          "start": 24.98,
+          "end": 25.74,
+          "probability": 0.707
+        },
+        {
+          "word": "Let's",
+          "start": 26.08,
+          "end": 26.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "take",
+          "start": 26.48,
+          "end": 26.68,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 26.68,
+          "end": 26.8,
+          "probability": 1.0
+        },
+        {
+          "word": "look",
+          "start": 26.8,
+          "end": 26.96,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 26.96,
+          "end": 27.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "it.",
+          "start": 27.1,
+          "end": 27.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 28.24,
+      "end": 57.24,
+      "start_formatted": "00:00:28.240",
+      "end_formatted": "00:00:57.240",
+      "text": "First, we see the eligible items field. This setting specifies which positive items will be paid during credit allocation. On this plan, the only items that are eligible to be paid by a credit are ones that have the same payer and belong to the same policy period and same charge pattern as the credit being allocated. Notice the plan has two return premium handling schemes. Each of these defines the rules for allocating credit. Each name field entry corresponds to a billing instruction type, with the",
+      "words": [
+        {
+          "word": "First,",
+          "start": 28.24,
+          "end": 28.76,
+          "probability": 0.9673
+        },
+        {
+          "word": "we",
+          "start": 29.04,
+          "end": 29.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "see",
+          "start": 29.24,
+          "end": 29.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 29.44,
+          "end": 29.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "eligible",
+          "start": 29.6,
+          "end": 29.96,
+          "probability": 0.5273
+        },
+        {
+          "word": "items",
+          "start": 29.96,
+          "end": 30.42,
+          "probability": 0.998
+        },
+        {
+          "word": "field.",
+          "start": 30.42,
+          "end": 30.88,
+          "probability": 0.998
+        },
+        {
+          "word": "This",
+          "start": 31.12,
+          "end": 31.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "setting",
+          "start": 31.56,
+          "end": 31.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "specifies",
+          "start": 31.86,
+          "end": 32.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 32.52,
+          "end": 32.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "positive",
+          "start": 32.78,
+          "end": 33.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "items",
+          "start": 33.2,
+          "end": 33.58,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 33.58,
+          "end": 33.8,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 33.8,
+          "end": 33.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "paid",
+          "start": 33.94,
+          "end": 34.22,
+          "probability": 0.999
+        },
+        {
+          "word": "during",
+          "start": 34.22,
+          "end": 34.44,
+          "probability": 1.0
+        },
+        {
+          "word": "credit",
+          "start": 34.44,
+          "end": 34.8,
+          "probability": 0.999
+        },
+        {
+          "word": "allocation.",
+          "start": 34.8,
+          "end": 35.34,
+          "probability": 1.0
+        },
+        {
+          "word": "On",
+          "start": 35.82,
+          "end": 36.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 36.06,
+          "end": 36.24,
+          "probability": 1.0
+        },
+        {
+          "word": "plan,",
+          "start": 36.24,
+          "end": 36.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 36.88,
+          "end": 37.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 37.14,
+          "end": 37.36,
+          "probability": 1.0
+        },
+        {
+          "word": "items",
+          "start": 37.36,
+          "end": 37.78,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 37.78,
+          "end": 37.98,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 37.98,
+          "end": 38.12,
+          "probability": 1.0
+        },
+        {
+          "word": "eligible",
+          "start": 38.12,
+          "end": 38.48,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 38.48,
+          "end": 38.74,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 38.74,
+          "end": 38.88,
+          "probability": 0.999
+        },
+        {
+          "word": "paid",
+          "start": 38.88,
+          "end": 39.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 39.16,
+          "end": 39.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 39.32,
+          "end": 39.5,
+          "probability": 0.9873
+        },
+        {
+          "word": "credit",
+          "start": 39.5,
+          "end": 39.68,
+          "probability": 0.9727
+        },
+        {
+          "word": "are",
+          "start": 39.68,
+          "end": 39.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "ones",
+          "start": 39.88,
+          "end": 40.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 40.1,
+          "end": 40.3,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 40.3,
+          "end": 40.48,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 40.48,
+          "end": 40.62,
+          "probability": 0.999
+        },
+        {
+          "word": "same",
+          "start": 40.62,
+          "end": 40.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "payer",
+          "start": 40.86,
+          "end": 41.14,
+          "probability": 0.9727
+        },
+        {
+          "word": "and",
+          "start": 41.14,
+          "end": 41.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "belong",
+          "start": 41.3,
+          "end": 41.62,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 41.62,
+          "end": 41.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 41.8,
+          "end": 41.94,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 41.94,
+          "end": 42.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 42.18,
+          "end": 42.64,
+          "probability": 0.999
+        },
+        {
+          "word": "period",
+          "start": 42.64,
+          "end": 43.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 43.02,
+          "end": 43.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 43.3,
+          "end": 43.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "charge",
+          "start": 43.56,
+          "end": 43.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "pattern",
+          "start": 43.9,
+          "end": 44.3,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 44.3,
+          "end": 44.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 44.46,
+          "end": 44.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "credit",
+          "start": 44.58,
+          "end": 44.84,
+          "probability": 0.999
+        },
+        {
+          "word": "being",
+          "start": 44.84,
+          "end": 45.12,
+          "probability": 1.0
+        },
+        {
+          "word": "allocated.",
+          "start": 45.12,
+          "end": 45.64,
+          "probability": 1.0
+        },
+        {
+          "word": "Notice",
+          "start": 46.22,
+          "end": 46.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 46.74,
+          "end": 46.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "plan",
+          "start": 46.94,
+          "end": 47.2,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 47.2,
+          "end": 47.44,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 47.44,
+          "end": 47.66,
+          "probability": 0.9829
+        },
+        {
+          "word": "return",
+          "start": 47.66,
+          "end": 48.1,
+          "probability": 0.9868
+        },
+        {
+          "word": "premium",
+          "start": 48.1,
+          "end": 48.58,
+          "probability": 0.999
+        },
+        {
+          "word": "handling",
+          "start": 48.58,
+          "end": 49.04,
+          "probability": 0.998
+        },
+        {
+          "word": "schemes.",
+          "start": 49.04,
+          "end": 49.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "Each",
+          "start": 50.02,
+          "end": 50.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 50.38,
+          "end": 50.5,
+          "probability": 1.0
+        },
+        {
+          "word": "these",
+          "start": 50.5,
+          "end": 50.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "defines",
+          "start": 50.68,
+          "end": 51.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 51.06,
+          "end": 51.26,
+          "probability": 1.0
+        },
+        {
+          "word": "rules",
+          "start": 51.26,
+          "end": 51.58,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 51.58,
+          "end": 51.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "allocating",
+          "start": 51.84,
+          "end": 52.46,
+          "probability": 1.0
+        },
+        {
+          "word": "credit.",
+          "start": 52.46,
+          "end": 52.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "Each",
+          "start": 53.08,
+          "end": 53.56,
+          "probability": 0.998
+        },
+        {
+          "word": "name",
+          "start": 53.56,
+          "end": 53.86,
+          "probability": 0.9517
+        },
+        {
+          "word": "field",
+          "start": 53.86,
+          "end": 54.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "entry",
+          "start": 54.18,
+          "end": 54.54,
+          "probability": 0.999
+        },
+        {
+          "word": "corresponds",
+          "start": 54.54,
+          "end": 55.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 55.0,
+          "end": 55.36,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 55.36,
+          "end": 55.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "billing",
+          "start": 55.46,
+          "end": 55.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "instruction",
+          "start": 55.68,
+          "end": 56.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "type,",
+          "start": 56.24,
+          "end": 56.72,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 56.9,
+          "end": 57.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 57.1,
+          "end": 57.24,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 57.3,
+      "end": 80.94,
+      "start_formatted": "00:00:57.300",
+      "end_formatted": "00:01:20.940",
+      "text": "exception of the exception of the other context. So the scheme name cancellation is used for charges from a cancellation billing instruction. The other scheme is used for charges that do not match any other scheme. Every return premium plan must have a scheme named other, which serves as the catch-all scheme. For example, this return premium plan has no scheme that is specifically for policy change, so the other scheme will be used.",
+      "words": [
+        {
+          "word": "exception",
+          "start": 57.3,
+          "end": 57.64,
+          "probability": 0.9678
+        },
+        {
+          "word": "of",
+          "start": 57.64,
+          "end": 57.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 57.88,
+          "end": 57.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "exception",
+          "start": 57.98,
+          "end": 58.12,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 58.12,
+          "end": 58.12,
+          "probability": 0.6689
+        },
+        {
+          "word": "the",
+          "start": 58.12,
+          "end": 58.12,
+          "probability": 0.8799
+        },
+        {
+          "word": "other",
+          "start": 58.12,
+          "end": 58.16,
+          "probability": 0.853
+        },
+        {
+          "word": "context.",
+          "start": 58.16,
+          "end": 58.74,
+          "probability": 0.9741
+        },
+        {
+          "word": "So",
+          "start": 59.04,
+          "end": 59.48,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 59.48,
+          "end": 59.64,
+          "probability": 0.9341
+        },
+        {
+          "word": "scheme",
+          "start": 59.64,
+          "end": 59.94,
+          "probability": 0.9785
+        },
+        {
+          "word": "name",
+          "start": 59.94,
+          "end": 60.2,
+          "probability": 0.5664
+        },
+        {
+          "word": "cancellation",
+          "start": 60.2,
+          "end": 60.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 60.66,
+          "end": 61.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 61.14,
+          "end": 61.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 61.4,
+          "end": 61.56,
+          "probability": 0.999
+        },
+        {
+          "word": "charges",
+          "start": 61.56,
+          "end": 61.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "from",
+          "start": 61.98,
+          "end": 62.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 62.24,
+          "end": 62.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "cancellation",
+          "start": 62.34,
+          "end": 62.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "billing",
+          "start": 62.88,
+          "end": 63.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "instruction.",
+          "start": 63.26,
+          "end": 63.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 64.28,
+          "end": 64.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "other",
+          "start": 64.78,
+          "end": 64.98,
+          "probability": 0.9854
+        },
+        {
+          "word": "scheme",
+          "start": 64.98,
+          "end": 65.32,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 65.32,
+          "end": 65.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "used",
+          "start": 65.58,
+          "end": 65.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 65.82,
+          "end": 65.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "charges",
+          "start": 65.98,
+          "end": 66.4,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 66.4,
+          "end": 66.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "do",
+          "start": 66.68,
+          "end": 66.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 66.84,
+          "end": 67.06,
+          "probability": 0.998
+        },
+        {
+          "word": "match",
+          "start": 67.06,
+          "end": 67.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 67.36,
+          "end": 67.54,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 67.54,
+          "end": 67.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "scheme.",
+          "start": 67.76,
+          "end": 68.18,
+          "probability": 0.999
+        },
+        {
+          "word": "Every",
+          "start": 68.56,
+          "end": 68.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "return",
+          "start": 68.94,
+          "end": 69.32,
+          "probability": 0.9702
+        },
+        {
+          "word": "premium",
+          "start": 69.32,
+          "end": 69.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "plan",
+          "start": 69.72,
+          "end": 70.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "must",
+          "start": 70.04,
+          "end": 70.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 70.34,
+          "end": 70.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 70.5,
+          "end": 70.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "scheme",
+          "start": 70.6,
+          "end": 70.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "named",
+          "start": 70.88,
+          "end": 71.26,
+          "probability": 0.998
+        },
+        {
+          "word": "other,",
+          "start": 71.26,
+          "end": 71.52,
+          "probability": 0.9048
+        },
+        {
+          "word": "which",
+          "start": 71.78,
+          "end": 72.0,
+          "probability": 1.0
+        },
+        {
+          "word": "serves",
+          "start": 72.0,
+          "end": 72.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 72.26,
+          "end": 72.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 72.46,
+          "end": 72.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "catch",
+          "start": 72.58,
+          "end": 72.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "-all",
+          "start": 72.9,
+          "end": 73.06,
+          "probability": 0.9575
+        },
+        {
+          "word": "scheme.",
+          "start": 73.06,
+          "end": 73.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 73.7,
+          "end": 74.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 74.18,
+          "end": 74.6,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 75.0,
+          "end": 75.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "return",
+          "start": 75.24,
+          "end": 75.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "premium",
+          "start": 75.6,
+          "end": 76.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "plan",
+          "start": 76.02,
+          "end": 76.36,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 76.36,
+          "end": 76.58,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 76.58,
+          "end": 76.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "scheme",
+          "start": 76.76,
+          "end": 77.08,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 77.08,
+          "end": 77.24,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 77.24,
+          "end": 77.38,
+          "probability": 0.999
+        },
+        {
+          "word": "specifically",
+          "start": 77.38,
+          "end": 77.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 77.88,
+          "end": 78.18,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 78.18,
+          "end": 78.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "change,",
+          "start": 78.64,
+          "end": 79.14,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 79.34,
+          "end": 79.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 79.56,
+          "end": 79.72,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 79.72,
+          "end": 79.9,
+          "probability": 0.999
+        },
+        {
+          "word": "scheme",
+          "start": 79.9,
+          "end": 80.2,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 80.2,
+          "end": 80.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 80.38,
+          "end": 80.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "used.",
+          "start": 80.52,
+          "end": 80.94,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 80.94,
+      "end": 95.38,
+      "start_formatted": "00:01:20.940",
+      "end_formatted": "00:01:35.380",
+      "text": "The other scheme uses the proportional method. This is the scheme BillingCenter used when applying the credit of $300 in the previous demonstration. As we saw, the $300 was allocated proportionally over the eligible invoice items.",
+      "words": [
+        {
+          "word": "The",
+          "start": 80.94,
+          "end": 81.66,
+          "probability": 0.9688
+        },
+        {
+          "word": "other",
+          "start": 81.66,
+          "end": 81.9,
+          "probability": 0.9775
+        },
+        {
+          "word": "scheme",
+          "start": 81.9,
+          "end": 82.2,
+          "probability": 0.998
+        },
+        {
+          "word": "uses",
+          "start": 82.2,
+          "end": 82.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 82.5,
+          "end": 82.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "proportional",
+          "start": 82.72,
+          "end": 83.2,
+          "probability": 0.9717
+        },
+        {
+          "word": "method.",
+          "start": 83.2,
+          "end": 83.68,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 84.0,
+          "end": 84.44,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 84.44,
+          "end": 84.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 84.58,
+          "end": 84.72,
+          "probability": 1.0
+        },
+        {
+          "word": "scheme",
+          "start": 84.72,
+          "end": 85.04,
+          "probability": 0.9673
+        },
+        {
+          "word": "BillingCenter",
+          "start": 85.04,
+          "end": 85.72,
+          "probability": 0.6445
+        },
+        {
+          "word": "used",
+          "start": 85.72,
+          "end": 86.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 86.04,
+          "end": 86.24,
+          "probability": 1.0
+        },
+        {
+          "word": "applying",
+          "start": 86.24,
+          "end": 86.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 86.58,
+          "end": 86.74,
+          "probability": 1.0
+        },
+        {
+          "word": "credit",
+          "start": 86.74,
+          "end": 87.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 87.02,
+          "end": 87.2,
+          "probability": 1.0
+        },
+        {
+          "word": "$300",
+          "start": 87.2,
+          "end": 87.7,
+          "probability": 0.9927
+        },
+        {
+          "word": "in",
+          "start": 87.7,
+          "end": 88.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 88.26,
+          "end": 88.36,
+          "probability": 1.0
+        },
+        {
+          "word": "previous",
+          "start": 88.36,
+          "end": 88.76,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration.",
+          "start": 88.76,
+          "end": 89.48,
+          "probability": 1.0
+        },
+        {
+          "word": "As",
+          "start": 89.92,
+          "end": 90.28,
+          "probability": 1.0
+        },
+        {
+          "word": "we",
+          "start": 90.28,
+          "end": 90.4,
+          "probability": 1.0
+        },
+        {
+          "word": "saw,",
+          "start": 90.4,
+          "end": 90.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 90.92,
+          "end": 91.12,
+          "probability": 1.0
+        },
+        {
+          "word": "$300",
+          "start": 91.12,
+          "end": 91.64,
+          "probability": 1.0
+        },
+        {
+          "word": "was",
+          "start": 91.64,
+          "end": 92.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "allocated",
+          "start": 92.28,
+          "end": 92.84,
+          "probability": 1.0
+        },
+        {
+          "word": "proportionally",
+          "start": 92.84,
+          "end": 93.58,
+          "probability": 0.999
+        },
+        {
+          "word": "over",
+          "start": 93.58,
+          "end": 93.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 93.8,
+          "end": 93.98,
+          "probability": 1.0
+        },
+        {
+          "word": "eligible",
+          "start": 93.98,
+          "end": 94.44,
+          "probability": 0.998
+        },
+        {
+          "word": "invoice",
+          "start": 94.44,
+          "end": 94.98,
+          "probability": 0.999
+        },
+        {
+          "word": "items.",
+          "start": 94.98,
+          "end": 95.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 95.38,
+      "end": 108.92,
+      "start_formatted": "00:01:35.380",
+      "end_formatted": "00:01:48.920",
+      "text": "The cancellation scheme uses the cancellation scheme. The cancellation scheme uses the last to first method. This means for all cancellation billing instructions, BillingCenter will allocate credits starting with most recent eligible items, which are those having the latest placement date.",
+      "words": [
+        {
+          "word": "The",
+          "start": 95.38,
+          "end": 96.38,
+          "probability": 0.9326
+        },
+        {
+          "word": "cancellation",
+          "start": 96.38,
+          "end": 96.82,
+          "probability": 0.8989
+        },
+        {
+          "word": "scheme",
+          "start": 96.82,
+          "end": 97.36,
+          "probability": 0.998
+        },
+        {
+          "word": "uses",
+          "start": 97.36,
+          "end": 97.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 97.74,
+          "end": 97.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "cancellation",
+          "start": 97.98,
+          "end": 98.24,
+          "probability": 0.0
+        },
+        {
+          "word": "scheme.",
+          "start": 98.24,
+          "end": 98.24,
+          "probability": 0.0222
+        },
+        {
+          "word": "The",
+          "start": 98.24,
+          "end": 98.24,
+          "probability": 0.1602
+        },
+        {
+          "word": "cancellation",
+          "start": 98.24,
+          "end": 98.24,
+          "probability": 0.7505
+        },
+        {
+          "word": "scheme",
+          "start": 98.24,
+          "end": 98.24,
+          "probability": 0.8687
+        },
+        {
+          "word": "uses",
+          "start": 98.24,
+          "end": 98.24,
+          "probability": 0.7021
+        },
+        {
+          "word": "the",
+          "start": 98.24,
+          "end": 98.24,
+          "probability": 0.9653
+        },
+        {
+          "word": "last",
+          "start": 98.24,
+          "end": 98.24,
+          "probability": 0.9014
+        },
+        {
+          "word": "to",
+          "start": 98.24,
+          "end": 98.42,
+          "probability": 0.5454
+        },
+        {
+          "word": "first",
+          "start": 98.42,
+          "end": 98.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "method.",
+          "start": 98.64,
+          "end": 99.02,
+          "probability": 0.998
+        },
+        {
+          "word": "This",
+          "start": 99.36,
+          "end": 99.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "means",
+          "start": 99.76,
+          "end": 100.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 100.0,
+          "end": 100.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "all",
+          "start": 100.22,
+          "end": 100.42,
+          "probability": 0.998
+        },
+        {
+          "word": "cancellation",
+          "start": 100.42,
+          "end": 101.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "billing",
+          "start": 101.04,
+          "end": 101.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "instructions,",
+          "start": 101.4,
+          "end": 102.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "BillingCenter",
+          "start": 102.56,
+          "end": 103.14,
+          "probability": 0.6367
+        },
+        {
+          "word": "will",
+          "start": 103.14,
+          "end": 103.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "allocate",
+          "start": 103.38,
+          "end": 103.82,
+          "probability": 0.998
+        },
+        {
+          "word": "credits",
+          "start": 103.82,
+          "end": 104.32,
+          "probability": 0.7671
+        },
+        {
+          "word": "starting",
+          "start": 104.32,
+          "end": 104.66,
+          "probability": 0.9912
+        },
+        {
+          "word": "with",
+          "start": 104.66,
+          "end": 104.86,
+          "probability": 0.999
+        },
+        {
+          "word": "most",
+          "start": 104.86,
+          "end": 105.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "recent",
+          "start": 105.14,
+          "end": 105.5,
+          "probability": 0.9878
+        },
+        {
+          "word": "eligible",
+          "start": 105.5,
+          "end": 105.9,
+          "probability": 0.998
+        },
+        {
+          "word": "items,",
+          "start": 105.9,
+          "end": 106.4,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 106.7,
+          "end": 106.92,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 106.92,
+          "end": 107.04,
+          "probability": 1.0
+        },
+        {
+          "word": "those",
+          "start": 107.04,
+          "end": 107.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "having",
+          "start": 107.24,
+          "end": 107.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 107.54,
+          "end": 107.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "latest",
+          "start": 107.7,
+          "end": 108.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "placement",
+          "start": 108.02,
+          "end": 108.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "date.",
+          "start": 108.5,
+          "end": 108.92,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 109.3,
+      "end": 122.14,
+      "start_formatted": "00:01:49.300",
+      "end_formatted": "00:02:02.140",
+      "text": "The when to allocate field controls when credit allocation will take place. Both schemes specify on receipt. As we observed in the previous demo, the credit was allocated as soon as BillingCenter received the billing request.",
+      "words": [
+        {
+          "word": "The",
+          "start": 109.3,
+          "end": 109.78,
+          "probability": 0.9868
+        },
+        {
+          "word": "when",
+          "start": 109.78,
+          "end": 109.96,
+          "probability": 0.8374
+        },
+        {
+          "word": "to",
+          "start": 109.96,
+          "end": 110.12,
+          "probability": 0.9658
+        },
+        {
+          "word": "allocate",
+          "start": 110.12,
+          "end": 110.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "field",
+          "start": 110.56,
+          "end": 110.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "controls",
+          "start": 110.9,
+          "end": 111.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "when",
+          "start": 111.4,
+          "end": 111.68,
+          "probability": 0.998
+        },
+        {
+          "word": "credit",
+          "start": 111.68,
+          "end": 112.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "allocation",
+          "start": 112.04,
+          "end": 112.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 112.6,
+          "end": 112.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "take",
+          "start": 112.88,
+          "end": 113.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "place.",
+          "start": 113.12,
+          "end": 113.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "Both",
+          "start": 113.86,
+          "end": 114.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "schemes",
+          "start": 114.22,
+          "end": 114.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "specify",
+          "start": 114.6,
+          "end": 115.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 115.12,
+          "end": 115.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "receipt.",
+          "start": 115.42,
+          "end": 115.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "As",
+          "start": 116.06,
+          "end": 116.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 116.48,
+          "end": 116.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "observed",
+          "start": 116.6,
+          "end": 117.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 117.0,
+          "end": 117.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 117.16,
+          "end": 117.26,
+          "probability": 0.999
+        },
+        {
+          "word": "previous",
+          "start": 117.26,
+          "end": 117.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "demo,",
+          "start": 117.66,
+          "end": 118.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 118.36,
+          "end": 118.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "credit",
+          "start": 118.54,
+          "end": 118.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 118.8,
+          "end": 119.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "allocated",
+          "start": 119.04,
+          "end": 119.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 119.56,
+          "end": 119.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "soon",
+          "start": 119.82,
+          "end": 119.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 119.98,
+          "end": 120.12,
+          "probability": 0.999
+        },
+        {
+          "word": "BillingCenter",
+          "start": 120.12,
+          "end": 120.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "received",
+          "start": 120.76,
+          "end": 121.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 121.18,
+          "end": 121.32,
+          "probability": 0.999
+        },
+        {
+          "word": "billing",
+          "start": 121.32,
+          "end": 121.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "request.",
+          "start": 121.58,
+          "end": 122.14,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 122.7,
+      "end": 142.14,
+      "start_formatted": "00:02:02.700",
+      "end_formatted": "00:02:22.140",
+      "text": "Let's go back to the list of return premium plans. BillingCenter is shipped with a default return premium plan. You can modify it directly or clone it to modify a copy of the plan. However, the important thing to remember is the return premium plan with a priority of 1 is the only active return premium plan for the billing system.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 122.7,
+          "end": 123.22,
+          "probability": 0.9873
+        },
+        {
+          "word": "go",
+          "start": 123.22,
+          "end": 123.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "back",
+          "start": 123.38,
+          "end": 123.66,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 123.66,
+          "end": 123.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 123.8,
+          "end": 123.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "list",
+          "start": 123.92,
+          "end": 124.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 124.16,
+          "end": 124.34,
+          "probability": 1.0
+        },
+        {
+          "word": "return",
+          "start": 124.34,
+          "end": 124.68,
+          "probability": 0.6777
+        },
+        {
+          "word": "premium",
+          "start": 124.68,
+          "end": 125.12,
+          "probability": 0.998
+        },
+        {
+          "word": "plans.",
+          "start": 125.12,
+          "end": 125.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "BillingCenter",
+          "start": 127.14,
+          "end": 127.66,
+          "probability": 0.7441
+        },
+        {
+          "word": "is",
+          "start": 127.66,
+          "end": 127.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "shipped",
+          "start": 127.84,
+          "end": 128.06,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 128.06,
+          "end": 128.24,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 128.24,
+          "end": 128.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "default",
+          "start": 128.36,
+          "end": 128.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "return",
+          "start": 128.68,
+          "end": 129.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "premium",
+          "start": 129.02,
+          "end": 129.46,
+          "probability": 1.0
+        },
+        {
+          "word": "plan.",
+          "start": 129.46,
+          "end": 129.86,
+          "probability": 1.0
+        },
+        {
+          "word": "You",
+          "start": 130.18,
+          "end": 130.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 130.52,
+          "end": 130.7,
+          "probability": 1.0
+        },
+        {
+          "word": "modify",
+          "start": 130.7,
+          "end": 131.08,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 131.08,
+          "end": 131.34,
+          "probability": 1.0
+        },
+        {
+          "word": "directly",
+          "start": 131.34,
+          "end": 131.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 131.72,
+          "end": 131.92,
+          "probability": 1.0
+        },
+        {
+          "word": "clone",
+          "start": 131.92,
+          "end": 132.2,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 132.2,
+          "end": 132.34,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 132.34,
+          "end": 132.48,
+          "probability": 1.0
+        },
+        {
+          "word": "modify",
+          "start": 132.48,
+          "end": 132.84,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 132.84,
+          "end": 133.1,
+          "probability": 1.0
+        },
+        {
+          "word": "copy",
+          "start": 133.1,
+          "end": 133.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 133.38,
+          "end": 133.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 133.54,
+          "end": 133.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "plan.",
+          "start": 133.64,
+          "end": 134.0,
+          "probability": 1.0
+        },
+        {
+          "word": "However,",
+          "start": 134.3,
+          "end": 134.82,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 135.2,
+          "end": 135.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "important",
+          "start": 135.42,
+          "end": 135.84,
+          "probability": 1.0
+        },
+        {
+          "word": "thing",
+          "start": 135.84,
+          "end": 136.06,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 136.06,
+          "end": 136.22,
+          "probability": 1.0
+        },
+        {
+          "word": "remember",
+          "start": 136.22,
+          "end": 136.56,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 136.56,
+          "end": 136.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 136.76,
+          "end": 136.88,
+          "probability": 0.999
+        },
+        {
+          "word": "return",
+          "start": 136.88,
+          "end": 137.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "premium",
+          "start": 137.22,
+          "end": 137.66,
+          "probability": 1.0
+        },
+        {
+          "word": "plan",
+          "start": 137.66,
+          "end": 138.02,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 138.02,
+          "end": 138.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 138.2,
+          "end": 138.3,
+          "probability": 0.4453
+        },
+        {
+          "word": "priority",
+          "start": 138.3,
+          "end": 138.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 138.72,
+          "end": 138.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "1",
+          "start": 138.92,
+          "end": 139.06,
+          "probability": 0.3621
+        },
+        {
+          "word": "is",
+          "start": 139.06,
+          "end": 139.2,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 139.2,
+          "end": 139.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 139.32,
+          "end": 139.52,
+          "probability": 1.0
+        },
+        {
+          "word": "active",
+          "start": 139.52,
+          "end": 139.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "return",
+          "start": 139.9,
+          "end": 140.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "premium",
+          "start": 140.32,
+          "end": 140.72,
+          "probability": 1.0
+        },
+        {
+          "word": "plan",
+          "start": 140.72,
+          "end": 141.08,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 141.08,
+          "end": 141.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 141.28,
+          "end": 141.42,
+          "probability": 0.999
+        },
+        {
+          "word": "billing",
+          "start": 141.42,
+          "end": 141.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "system.",
+          "start": 141.68,
+          "end": 142.14,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 142.14,
+      "end": 156.54,
+      "start_formatted": "00:02:22.140",
+      "end_formatted": "00:02:36.540",
+      "text": "Whenever a new policy is issued, the active plan is automatically associated with a new policy period. Making a different plan active does not affect existing policy periods. This concludes our short demonstration on return premium plans.",
+      "words": [
+        {
+          "word": "Whenever",
+          "start": 142.14,
+          "end": 142.92,
+          "probability": 0.9565
+        },
+        {
+          "word": "a",
+          "start": 142.92,
+          "end": 143.16,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 143.16,
+          "end": 143.28,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 143.28,
+          "end": 143.74,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 143.74,
+          "end": 143.98,
+          "probability": 1.0
+        },
+        {
+          "word": "issued,",
+          "start": 143.98,
+          "end": 144.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 144.62,
+          "end": 144.78,
+          "probability": 1.0
+        },
+        {
+          "word": "active",
+          "start": 144.78,
+          "end": 145.12,
+          "probability": 0.9736
+        },
+        {
+          "word": "plan",
+          "start": 145.12,
+          "end": 145.5,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 145.5,
+          "end": 145.7,
+          "probability": 1.0
+        },
+        {
+          "word": "automatically",
+          "start": 145.7,
+          "end": 146.24,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 146.24,
+          "end": 146.94,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 146.94,
+          "end": 147.2,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 147.2,
+          "end": 147.32,
+          "probability": 0.9424
+        },
+        {
+          "word": "new",
+          "start": 147.32,
+          "end": 147.48,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 147.48,
+          "end": 147.94,
+          "probability": 1.0
+        },
+        {
+          "word": "period.",
+          "start": 147.94,
+          "end": 148.4,
+          "probability": 1.0
+        },
+        {
+          "word": "Making",
+          "start": 148.74,
+          "end": 149.2,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 149.2,
+          "end": 149.36,
+          "probability": 1.0
+        },
+        {
+          "word": "different",
+          "start": 149.36,
+          "end": 149.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "plan",
+          "start": 149.6,
+          "end": 149.92,
+          "probability": 1.0
+        },
+        {
+          "word": "active",
+          "start": 149.92,
+          "end": 150.3,
+          "probability": 0.999
+        },
+        {
+          "word": "does",
+          "start": 150.3,
+          "end": 150.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 150.58,
+          "end": 150.8,
+          "probability": 1.0
+        },
+        {
+          "word": "affect",
+          "start": 150.8,
+          "end": 151.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "existing",
+          "start": 151.1,
+          "end": 151.6,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 151.6,
+          "end": 152.14,
+          "probability": 1.0
+        },
+        {
+          "word": "periods.",
+          "start": 152.14,
+          "end": 152.72,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 153.0,
+          "end": 153.42,
+          "probability": 1.0
+        },
+        {
+          "word": "concludes",
+          "start": 153.42,
+          "end": 153.82,
+          "probability": 1.0
+        },
+        {
+          "word": "our",
+          "start": 153.82,
+          "end": 154.04,
+          "probability": 1.0
+        },
+        {
+          "word": "short",
+          "start": 154.04,
+          "end": 154.32,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 154.32,
+          "end": 154.92,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 154.92,
+          "end": 155.24,
+          "probability": 1.0
+        },
+        {
+          "word": "return",
+          "start": 155.24,
+          "end": 155.54,
+          "probability": 0.9521
+        },
+        {
+          "word": "premium",
+          "start": 155.54,
+          "end": 156.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "plans.",
+          "start": 156.0,
+          "end": 156.54,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 156.54,
+      "end": 156.62,
+      "start_formatted": "00:02:36.540",
+      "end_formatted": "00:02:36.620",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 156.54,
+          "end": 156.62,
+          "probability": 0.2468
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 156.62,
+      "end": 156.8,
+      "start_formatted": "00:02:36.620",
+      "end_formatted": "00:02:36.800",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 156.62,
+          "end": 156.8,
+          "probability": 0.5
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 156.8,
+      "end": 156.8,
+      "start_formatted": "00:02:36.800",
+      "end_formatted": "00:02:36.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 11,
+      "start": 156.8,
+      "end": 156.8,
+      "start_formatted": "00:02:36.800",
+      "end_formatted": "00:02:36.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 12,
+      "start": 156.8,
+      "end": 156.84,
+      "start_formatted": "00:02:36.800",
+      "end_formatted": "00:02:36.840",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 156.8,
+          "end": 156.84,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 156.84,
+      "end": 156.88,
+      "start_formatted": "00:02:36.840",
+      "end_formatted": "00:02:36.880",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 156.84,
+          "end": 156.88,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 156.88,
+      "end": 156.88,
+      "start_formatted": "00:02:36.880",
+      "end_formatted": "00:02:36.880",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 15,
+      "start": 156.88,
+      "end": 156.88,
+      "start_formatted": "00:02:36.880",
+      "end_formatted": "00:02:36.880",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 16,
+      "start": 156.88,
+      "end": 156.88,
+      "start_formatted": "00:02:36.880",
+      "end_formatted": "00:02:36.880",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 17,
+      "start": 156.88,
+      "end": 156.88,
+      "start_formatted": "00:02:36.880",
+      "end_formatted": "00:02:36.880",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 18,
+      "start": 156.88,
+      "end": 156.96,
+      "start_formatted": "00:02:36.880",
+      "end_formatted": "00:02:36.960",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 156.88,
+          "end": 156.96,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 156.96,
+      "end": 156.96,
+      "start_formatted": "00:02:36.960",
+      "end_formatted": "00:02:36.960",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 156.96,
+      "end": 156.96,
+      "start_formatted": "00:02:36.960",
+      "end_formatted": "00:02:36.960",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 156.96,
+      "end": 157.22,
+      "start_formatted": "00:02:36.960",
+      "end_formatted": "00:02:37.220",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 156.96,
+          "end": 157.22,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 33,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 157.22,
+      "end": 157.22,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.220",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 157.22,
+      "end": 157.4,
+      "start_formatted": "00:02:37.220",
+      "end_formatted": "00:02:37.400",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 157.22,
+          "end": 157.4,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 157.4,
+      "end": 157.54,
+      "start_formatted": "00:02:37.400",
+      "end_formatted": "00:02:37.540",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 157.4,
+          "end": 157.54,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 42,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 43,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 44,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 45,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 46,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 47,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 48,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 49,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 50,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 51,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 52,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 53,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 54,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 55,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 56,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 57,
+      "start": 157.54,
+      "end": 157.54,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.540",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 58,
+      "start": 157.54,
+      "end": 157.62,
+      "start_formatted": "00:02:37.540",
+      "end_formatted": "00:02:37.620",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 157.54,
+          "end": 157.62,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 157.62,
+      "end": 157.66,
+      "start_formatted": "00:02:37.620",
+      "end_formatted": "00:02:37.660",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 157.62,
+          "end": 157.66,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 157.66,
+      "end": 157.7,
+      "start_formatted": "00:02:37.660",
+      "end_formatted": "00:02:37.700",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 157.66,
+          "end": 157.7,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 157.7,
+      "end": 157.76,
+      "start_formatted": "00:02:37.700",
+      "end_formatted": "00:02:37.760",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 157.7,
+          "end": 157.76,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 157.76,
+      "end": 157.8,
+      "start_formatted": "00:02:37.760",
+      "end_formatted": "00:02:37.800",
+      "text": "Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 157.76,
+          "end": 157.8,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 64,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 65,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 66,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 67,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 68,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 69,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 70,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 71,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 72,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 73,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 74,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 75,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 76,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 77,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 78,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 79,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 80,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 81,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 82,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 83,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 84,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 85,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 86,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 87,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 88,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 89,
+      "start": 157.8,
+      "end": 157.8,
+      "start_formatted": "00:02:37.800",
+      "end_formatted": "00:02:37.800",
+      "text": "",
+      "words": []
+    }
+  ]
+}

@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-17",
+    "slide_count": 32,
+    "slides_with_text": 31,
+    "total_words": 1949,
+    "avg_confidence": 86.47,
+    "processing_time_seconds": 16.32,
+    "extracted_at": "2026-02-13T12:15:59.335546"
+  },
+  "full_text": "Billing at the Account Level\n\nLesson\nobjectives\n\n¢ Explain how BillingCenter implements\naccount-level billing\n\n¢ Differentiate between account-level billing and\npolicy-level billing including how BillingCenter:\n\n+ Handles invoice streams\n\n+ Determines invoice dates and invoice item\nplacement dates\n\n+ Manages unapplied money\n\nAccount-level and policy-level\nbilling compared\n\nSetting the context Gi\n\nMarcus\nBusiness We have some customers\n\nAnalyst\n\nwith more than one policy\nwho want to be billed ona\nsingle invoice each month.\n\nZhang \\=)S4\nBilling Clerk ‘2\n\nAccount-level billing\nprovides a simple\nsolution for those\n\ncustomers.\n\nReview: Policy-level billing G\nPolicy-level billing\n\na ‘=| Monthly\n| | invoice\nAccount Policy A (monthly) | for Policy aA |\ner) Monthly\n\ninvoice stream\nPolicy B (monthly) 2s! for Policy B\n\nPolicy-level billing versus account-level billing Ga\nPolicy-level billing\n\na =| Monthly\n| =| invoice\nAccount Policy A (monthly) [- | for Polley a |\ner) Monthly\n\ninvoice stream\nPolicy B (monthly) 2s! for Policy B\n\nAccount-level billing\n\nrh E Monthly\n[\") invoice stream\n- for all policies of\nAccount Policy X (monthly) monthly-compatible\nzal periodicity\n\nPolicy Y (monthly)\n\n| Account-level billing: View and modify billing level =\n\n1 of 4\n\nAccount Details\n\n‘Account Basics\n\nAccount #\n\n‘Account Name\nType\n\nParent Account\ncurrency\n\nDoing Business As\n\nSegment\nCreation Date\nService Te\n\nSecurity Zone\n\nContact info\nPrimary Contact,\n\nAddress\n\nPhone\n\nEmail\n\n‘Company Type\n\nOrganizational Type\n\nDEM00230\n‘Adelchi Sagese\n\nInsured\n\nuso\n\n07/26/2018\n\n‘Adelchi Sagese\n\n3790 Shinn Ave\nHookstown, PA 15050\n\nas73.2151\n\nAccount Totals\nTotal Unbilled\nTotal Currently Billed\nTotal Past Due\n\nTotal outstanding\n\nPolicy Totals\n\nTotal Unbilled\n\n‘Total Past Due\n\nTotal outstanding\nTotal Paid\n\nTotal value\n\nUnapplied Funds\nUnapplied Amount\n\nSuspense item Amount\n\ncollateral\n\nCollateral status\n\nPayment allocation\n\ncompli\n\n$2,134.00, Plan\n\nFix ill Date/Oue Date\n\n1g Dates\nMonthly Policies\nDay of Month\n$2,134.00 | Weekly Policies\nDay of Week\nEvery Other Week Policies\nAnchor Date\n‘Twice Per Month Policies\nFist invoice Day of Month\n\n‘Second invoice Day of\nMonth\n\n= | Send invoices By\n\n+ | Payment instrument\n\neve\n\nP01\n\nBill Date\n\nTuesday\n\n(01/01/2009\n\n15\n\nEmail\n\nResponsive\n\n‘Account-Level Billi\n\nDisabled\n\nAccount-level billing: Two monthly policies Ga\n\n2 of 4\nThe account has two monthly policies\n\nFl fi (BB Policy# Hoo1-asacese-1 scouts sours?)\nPolicy Summary\n\nOverview\n\nInsured\n\nPolicy Lifetime 1 Year (Aug 2, 2018)\nEffective Dates 08/02/2018 - 08/02/2019\nCancellation Status Open\n\nDelinquencies Oin 12 months\n\nUW Company\n\nFinancials\n\n@ This policy is paid at the account level.\n\nFY & B olicy# paoi-asacese-1 sccoun oouoirs[?*]\n\nPolicy Summary\n\nOverview\n\nInsured\n\nPolicy Lifetime 1 Year (Aug 2, 2018)\nEffective Dates 08/02/2018 - 08/02/2019\nCancellation Status Open\n\nDelinquencies 0 in 12 months\n\nUW Company\n\nFinancials\n\n@ This policy is paid at the account level.\n\nAccount-level billing: Invoice stream\n\n3 of 4\nAccount Details\n\n‘Account Basics\n‘Account # DEM00230\n\n‘Account Name Adelchi Sagese\n\nInvoicing Dates\n\nMonthly Policies\n\nWeekly Policies\nDay of Week Tuesday\nEvery Other Week Policies\n\nAnchor Date 01/01/2009\n\nTwice Per Month Policies\n\nFirst Invoice Day of Month = 1.\nSecond Invoice Day of 15,\nMonth\n\nGi\n\n2) Name Adelchisagese Accounte DEM00230 Aug, 2018,\n\nInvoice Streams\n\nInvoice Stream Monthly, =\n\nPeriodicity Monthly\n\n&\ninvoice Stream > fi :\n\n&\n\n>\n\nInvoice Days\n\nDefault Day of Month 5\n\nPayment Instrument\n\nDefault Responsive\nLead Time\nDefault a\n\nFix Bill Date/Due Date\n\nDefault Bill Date\n\nUnapplied Fund Selection\n\nUnapplied Fund Default\n\n| Account-level billing: Invoice stream and invoices 7\n4o0f4\n\nQ) Name adele sagese Account# DEM00230 Aug?\n\nInvoice 10/05/2018)\n\nInvoice Streams\n\nOL rice (09/05/2018)\n\nInvoice Stream > i) BBL tovoice (osrsr2018)\n| Monthly '\n'\nfe\ntnvoice Stream ‘Monthly: Invoice Information Amounts (as of bill date).\nPeriodicity Monthly 7 einoate 09/05/2018 “Amount Due on Previous\n1] invoice\nnie bos a je oajasn01e vontchanee\n14 staus Planned\netal sy oftonth 5 Total Amount Due\n| |p Adtoc No\nPayment Instrument 4\n‘ i ine ite Invoice Items. ~\nDefault Responsive i Invoice Items View Line items By\n| | Placement Date > Policy Category > BillingInstruction > Description Product > Amount >\nLead Time | | o7/oey201e PAOL-ASAGESE-1 Tanes Policy Issuance Time Personal Auto $96.00\notal a | | crea HOOLASAGESE Taxes Pollcylssuance One-Time ‘Homeowners —_—5.00\nrjospz018 PROL-ASAGESE-1 Policylsuance Down Payment PersonalAuto $1000\nFill ate/Due Date 5 07/0672038 HODL-ASAGESE-| Policylssuance Down Payment Homeowners $98.40\nDefauit iloate Total 34030\n\nLUnapplied Fund Selection\n\nBoth policies on same set of invoices\n\nUnapplied Fund Default\n\nDemonstration G\n\n—_. Add a third policy to an account with\n— account-level billing\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nPeriodicity and payment interval Ga\n\nMarcus | notice invoice streams have\n\nBusiness i “ i Ai nit/?\nAnalyst ) ~ something called “periodicity”. Is\n\nperiodicity related to the payment\ninterval on a payment plan?\n\n\\ Zhang \\j Sey,\nBilling Clerk\n\n‘ Those terms are related.\nBillingCenter uses the payment\ninterval to select an invoice\nstream with a compatible\nperiodicity.\n\nPeriodicity and anchor dates for an invoice stream [5\n\nPayment interval _ Invoice stream periodicity Related account settings\n(payment plan)\n\nMonthly Monthly\nEvery Other Month\n\nQuarterly\n\nEvery Four Months\n\nEvery Six Months\n\nEvery Year\n\nEvery Other Year\n\nInvoice Day of Month\n\nEvery Week Every Week Day of Week\n=e eOlin- mle Every Other Week Anchor Date\n\nTwice Per Month Twice Per Month First Day of Month\nSecond Day of Month\n\n| Handling policies with different periodicities Ga\n¢ Monthly stream handles monthly and payment intervals greater than a month\n\n* Separate invoice streams are required for payment intervals of less than a month\n\nvee [v9]\n\nAccount Policy A\n(quarterly)\n\nPolicy B Monthly invoice\n(monthly) stream\n\n[°\")\n\nPolicy C\n\nfyyaakly\\\n\nWeekly invoice\nstream\n\nReview: Placement dates, invoice item placement [5\n\nAn invoice item is placed on the first invoice with a date => the item placement date\n\nInvoice items © GE” ©am=D © aD © aD\nPlacement dates \\ Nov \\ Dec \\ \\\nInvoices = = = =\n> > > >\n@® @o @® @®\n\n| Assigning placement dates in account-level billing [5\n\n* Down payment placement date is determined by payment plan settings\n¢ Installment placement dates and invoice dates determined by account settings\n\nPlacement Date Invoice Bill Date\nDown Payment Amount & Placement Date _ 07/13/2018\nDown Payment % 10\ninvoiced 25 8 (E)\n‘na Before 2 | 1/0/2018\nPolicy Effective Date 3) 32/01/2018\nPayment plan 4 J o1/o1/2019\n02/01/2019\n03/01/2019\nInvoicing Dates 04/01/2019 Invoices\nMonthly Policies 05/01/2019\nDay of Month 1 06/01/2019\nWeekly Policies\nAccount __ bayofweek Friday\nEvery Other Week Policies .\nAnchor Date 01/01/2009 mein oops Invoice\nstream\n\nDefault Day of Month = 1\n\n‘SESE\n\nCutoff dates for placing items on invoices\n\n¢ The payment plan specifies an invoice\nitem cutoff date that applies to\naccount-level billing\n\n* This setting determines the\ninvoice items can be placed\non a given invoice\n\n¢« Example:\n\nPlacement date:\nJun 15\n\n—_=—\n\ninvoice item\n\nPolicy-Level Billing\n\nFix Bill Date/Due Date & Bill Date\nItem Placement Cutoff Date\n\n‘Account-Level Billing/Agency Billing\n\nGi\n\nFor policy-level\nbilling, cutoff date\nis always the\n\nFix Bill Date/Due Date This is set at the account level. same as Fix Bill\n\nItem Placement Cutoff Date Bill Date\n\nIf cutoff date is —  |®&\n\nDue Date\n\nBill Date\n\ninvoice\n\nIf cutoff date is\n—\n\ninvoice\n\nDate/Due Date\n\nBill Date: Jun 10\nDue Date: Jun 21\n\nBill Date: Jul 10\nDue Date: Jul 21\n\nQuestion G\n\n_— — Suppose the Item Placement Cutoff Date on a payment plan has a value\nY of Due Date. How does the setting impact invoice items on a policy that\n: uses the payment plan?\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gl\n\n_~ — Suppose the Item Placement Cutoff Date on a payment plan has a value\nY of Due Date. How does the setting impact invoice items on a policy that\n: uses the payment plan?\n\nIf account-level billing is being used, each invoice item will be placed on the earliest\ninvoice whose due date comes on or after the invoice item’s placement date. If policy-\nlevel billing is being used, the setting is ignored.\n\n~- SSS 5S 555555 5-5 =--=\n\nQuestion G\n\n,~ — Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly.\n\na. How many invoice streams does the account have?\n\nb. If the account switches to policy-level billing, will the number of\ninvoice streams be changed?\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gl\n\n,— — Suppose an account with accountevel billing has three policies: a\nY monthly, a yearly, and a weekly.\n\na. How many invoice streams does the account have?\n\nb. If the account switches to policy-level billing, will the number of\ninvoice streams be changed?\n\na. Two. Monthly and yearly use the same invoice stream; weekly requires a\nsecond invoice stream.\n\nb. Yes. The number of invoice streams will be either three (one for each policy)\nor four (one for each policy plus a monthly one for existing account-level\ncharges such as a late fee).\n\n~- SSS 5S 555555 5-5 =--=\n\nAccount-level billing uses only one\nunapplied fund\n\nSingle unapplied fund Gi\n\nMarcus\nBusiness\n\nAnalyst) ~ When a customer makes a\npayment, where does BillingCenter\nput the money initially?\n\nZhang \\=)S4\nBilling Clerk ‘2\n\nWith account-level billing,\nthere is a single unapplied\nfund, Default Unapplied.\n\n| Only 1 unapplied fund for account-level billing Ga\n\nAll payments pass through Default Unapplied p\n\nolicy A\n\nPolicy B\na\n@) ne = e ‘]\n&|\npayment uneatita Account ABC\n\nPolicy C\n\nDirect Bill Payment screen shows 1 unappliedfund [5\n\nQName adelchisagese Account# DEM00230 Aug 7, 2018\n\nDirect Bill Payment [Horo sunmay\n\nExecute Without Distribution\n\n‘Account Payment Details This Payment\nSelected account # 11000000053 Payment instrument > | Cash EBD | vaitavie\nSelected Account Name Adelchi Sagese Description Distributed\nPayment In Suspense\nReceived Date 08/07/2018 Collateral\nAmount. * $ | 0.00 ns 7 Remaining\n\nSingle unapplied\nea |-—_—_—————— Single unapplie\nPreview Distribution\n\ni Distribution\n\nGroup By Invoice > | Aggregate Byltem ~ | SortBy Invoice Date | GoTo# | co clear |\n\nItem Policy Period # —_Invoice# Invoice Bill Date Invoice DueDate Owner Payer Amount —_Unpaid Amount Amount To Apply\n\nNo data to display\n\nQuestion G\n\n,~ — Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly. How many unapplied funds does the\naccount have?\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gl\n\n,~ — Suppose an account with accountevel billing has three policies: a\nY monthly, a yearly, and a weekly. How many unapplied funds does the\n¢ account have?\n\nOne. Account-Level billing will only ever have one unapplied fund.\n\n~- SSS 5S 555555 5-5 =--=\n\nQuestion G\n\n_— — |dentify all the valid combinations of billing level and unapplied fund:\n\na a) Account-level billing with a single unapplied fund\nb) Account-level billing with separate unapplied fund for\neach policy\n\nc) Policy-level billing with a single unapplied fund\n\nd) Policy-level billing with a separate unapplied fund for\neach policy\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gl\n\n_— — |dentify all the valid combinations of billing level and unapplied fund:\na) Account-level billing with a single unapplied fund\nb) Account-level billing with separate unapplied fund for\n\neach policy\n\nc) Policy-level billing with a single unapplied fund\n\nd) Policy-level billing with a separate unapplied fund for\neach policy\n\n(a), (c), and (d) are valid combinations. However, c is rarely used because the primary\nreason for using policy-level billing is the ability to keep unapplied funds at the policy\nlevel.\n\n~- SSS 5S 555555 5-5 =--=\n\nLesson\nobjectives\nreview\n\nExplain how BillingCenter implements\naccount-level billing\n\nDifferentiate between account-level billing and\npolicy-level billing including how BillingCenter:\n\n+ Handles invoice streams\n\n+ Determines invoice dates and invoice item\n\nplacement dates\n\n+ Manages unapplied money\n\nStudent exercise\n\nModify bill dates",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Billing at the Account Level",
+      "word_count": 5,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Explain how BillingCenter implements\naccount-level billing\n\n¢ Differentiate between account-level billing and\npolicy-level billing including how BillingCenter:\n\n+ Handles invoice streams\n\n+ Determines invoice dates and invoice item\nplacement dates\n\n+ Manages unapplied money",
+      "word_count": 37,
+      "avg_confidence": 91.11,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Account-level and policy-level\nbilling compared",
+      "word_count": 5,
+      "avg_confidence": 93.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Setting the context Gi\n\nMarcus\nBusiness We have some customers\n\nAnalyst\n\nwith more than one policy\nwho want to be billed ona\nsingle invoice each month.\n\nZhang \\=)S4\nBilling Clerk ‘2\n\nAccount-level billing\nprovides a simple\nsolution for those\n\ncustomers.",
+      "word_count": 40,
+      "avg_confidence": 91.2,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Review: Policy-level billing G\nPolicy-level billing\n\na ‘=| Monthly\n| | invoice\nAccount Policy A (monthly) | for Policy aA |\ner) Monthly\n\ninvoice stream\nPolicy B (monthly) 2s! for Policy B",
+      "word_count": 32,
+      "avg_confidence": 81.81,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Policy-level billing versus account-level billing Ga\nPolicy-level billing\n\na =| Monthly\n| =| invoice\nAccount Policy A (monthly) [- | for Polley a |\ner) Monthly\n\ninvoice stream\nPolicy B (monthly) 2s! for Policy B\n\nAccount-level billing\n\nrh E Monthly\n[\") invoice stream\n- for all policies of\nAccount Policy X (monthly) monthly-compatible\nzal periodicity\n\nPolicy Y (monthly)",
+      "word_count": 58,
+      "avg_confidence": 84.05,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Account-level billing: View and modify billing level =\n\n1 of 4\n\nAccount Details\n\n‘Account Basics\n\nAccount #\n\n‘Account Name\nType\n\nParent Account\ncurrency\n\nDoing Business As\n\nSegment\nCreation Date\nService Te\n\nSecurity Zone\n\nContact info\nPrimary Contact,\n\nAddress\n\nPhone\n\nEmail\n\n‘Company Type\n\nOrganizational Type\n\nDEM00230\n‘Adelchi Sagese\n\nInsured\n\nuso\n\n07/26/2018\n\n‘Adelchi Sagese\n\n3790 Shinn Ave\nHookstown, PA 15050\n\nas73.2151\n\nAccount Totals\nTotal Unbilled\nTotal Currently Billed\nTotal Past Due\n\nTotal outstanding\n\nPolicy Totals\n\nTotal Unbilled\n\n‘Total Past Due\n\nTotal outstanding\nTotal Paid\n\nTotal value\n\nUnapplied Funds\nUnapplied Amount\n\nSuspense item Amount\n\ncollateral\n\nCollateral status\n\nPayment allocation\n\ncompli\n\n$2,134.00, Plan\n\nFix ill Date/Oue Date\n\n1g Dates\nMonthly Policies\nDay of Month\n$2,134.00 | Weekly Policies\nDay of Week\nEvery Other Week Policies\nAnchor Date\n‘Twice Per Month Policies\nFist invoice Day of Month\n\n‘Second invoice Day of\nMonth\n\n= | Send invoices By\n\n+ | Payment instrument\n\neve\n\nP01\n\nBill Date\n\nTuesday\n\n(01/01/2009\n\n15\n\nEmail\n\nResponsive\n\n‘Account-Level Billi\n\nDisabled",
+      "word_count": 159,
+      "avg_confidence": 79.24,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Account-level billing: Two monthly policies Ga\n\n2 of 4\nThe account has two monthly policies\n\nFl fi (BB Policy# Hoo1-asacese-1 scouts sours?)\nPolicy Summary\n\nOverview\n\nInsured\n\nPolicy Lifetime 1 Year (Aug 2, 2018)\nEffective Dates 08/02/2018 - 08/02/2019\nCancellation Status Open\n\nDelinquencies Oin 12 months\n\nUW Company\n\nFinancials\n\n@ This policy is paid at the account level.\n\nFY & B olicy# paoi-asacese-1 sccoun oouoirs[?*]\n\nPolicy Summary\n\nOverview\n\nInsured\n\nPolicy Lifetime 1 Year (Aug 2, 2018)\nEffective Dates 08/02/2018 - 08/02/2019\nCancellation Status Open\n\nDelinquencies 0 in 12 months\n\nUW Company\n\nFinancials\n\n@ This policy is paid at the account level.",
+      "word_count": 100,
+      "avg_confidence": 85.28,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Account-level billing: Invoice stream\n\n3 of 4\nAccount Details\n\n‘Account Basics\n‘Account # DEM00230\n\n‘Account Name Adelchi Sagese\n\nInvoicing Dates\n\nMonthly Policies\n\nWeekly Policies\nDay of Week Tuesday\nEvery Other Week Policies\n\nAnchor Date 01/01/2009\n\nTwice Per Month Policies\n\nFirst Invoice Day of Month = 1.\nSecond Invoice Day of 15,\nMonth\n\nGi\n\n2) Name Adelchisagese Accounte DEM00230 Aug, 2018,\n\nInvoice Streams\n\nInvoice Stream Monthly, =\n\nPeriodicity Monthly\n\n&\ninvoice Stream > fi :\n\n&\n\n>\n\nInvoice Days\n\nDefault Day of Month 5\n\nPayment Instrument\n\nDefault Responsive\nLead Time\nDefault a\n\nFix Bill Date/Due Date\n\nDefault Bill Date\n\nUnapplied Fund Selection\n\nUnapplied Fund Default",
+      "word_count": 104,
+      "avg_confidence": 83.18,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Account-level billing: Invoice stream and invoices 7\n4o0f4\n\nQ) Name adele sagese Account# DEM00230 Aug?\n\nInvoice 10/05/2018)\n\nInvoice Streams\n\nOL rice (09/05/2018)\n\nInvoice Stream > i) BBL tovoice (osrsr2018)\n| Monthly '\n'\nfe\ntnvoice Stream ‘Monthly: Invoice Information Amounts (as of bill date).\nPeriodicity Monthly 7 einoate 09/05/2018 “Amount Due on Previous\n1] invoice\nnie bos a je oajasn01e vontchanee\n14 staus Planned\netal sy oftonth 5 Total Amount Due\n| |p Adtoc No\nPayment Instrument 4\n‘ i ine ite Invoice Items. ~\nDefault Responsive i Invoice Items View Line items By\n| | Placement Date > Policy Category > BillingInstruction > Description Product > Amount >\nLead Time | | o7/oey201e PAOL-ASAGESE-1 Tanes Policy Issuance Time Personal Auto $96.00\notal a | | crea HOOLASAGESE Taxes Pollcylssuance One-Time ‘Homeowners —_—5.00\nrjospz018 PROL-ASAGESE-1 Policylsuance Down Payment PersonalAuto $1000\nFill ate/Due Date 5 07/0672038 HODL-ASAGESE-| Policylssuance Down Payment Homeowners $98.40\nDefauit iloate Total 34030\n\nLUnapplied Fund Selection\n\nBoth policies on same set of invoices\n\nUnapplied Fund Default",
+      "word_count": 169,
+      "avg_confidence": 61.85,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Demonstration G\n\n—_. Add a third policy to an account with\n— account-level billing\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 44,
+      "avg_confidence": 92.18,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Periodicity and payment interval Ga\n\nMarcus | notice invoice streams have\n\nBusiness i “ i Ai nit/?\nAnalyst ) ~ something called “periodicity”. Is\n\nperiodicity related to the payment\ninterval on a payment plan?\n\n\\ Zhang \\j Sey,\nBilling Clerk\n\n‘ Those terms are related.\nBillingCenter uses the payment\ninterval to select an invoice\nstream with a compatible\nperiodicity.",
+      "word_count": 59,
+      "avg_confidence": 87.07,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Periodicity and anchor dates for an invoice stream [5\n\nPayment interval _ Invoice stream periodicity Related account settings\n(payment plan)\n\nMonthly Monthly\nEvery Other Month\n\nQuarterly\n\nEvery Four Months\n\nEvery Six Months\n\nEvery Year\n\nEvery Other Year\n\nInvoice Day of Month\n\nEvery Week Every Week Day of Week\n=e eOlin- mle Every Other Week Anchor Date\n\nTwice Per Month Twice Per Month First Day of Month\nSecond Day of Month",
+      "word_count": 70,
+      "avg_confidence": 90.32,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Handling policies with different periodicities Ga\n¢ Monthly stream handles monthly and payment intervals greater than a month\n\n* Separate invoice streams are required for payment intervals of less than a month\n\nvee [v9]\n\nAccount Policy A\n(quarterly)\n\nPolicy B Monthly invoice\n(monthly) stream\n\n[°\")\n\nPolicy C\n\nfyyaakly\\\n\nWeekly invoice\nstream",
+      "word_count": 52,
+      "avg_confidence": 89.52,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Review: Placement dates, invoice item placement [5\n\nAn invoice item is placed on the first invoice with a date => the item placement date\n\nInvoice items © GE” ©am=D © aD © aD\nPlacement dates \\ Nov \\ Dec \\ \\\nInvoices = = = =\n> > > >\n@® @o @® @®",
+      "word_count": 54,
+      "avg_confidence": 79.67,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Assigning placement dates in account-level billing [5\n\n* Down payment placement date is determined by payment plan settings\n¢ Installment placement dates and invoice dates determined by account settings\n\nPlacement Date Invoice Bill Date\nDown Payment Amount & Placement Date _ 07/13/2018\nDown Payment % 10\ninvoiced 25 8 (E)\n‘na Before 2 | 1/0/2018\nPolicy Effective Date 3) 32/01/2018\nPayment plan 4 J o1/o1/2019\n02/01/2019\n03/01/2019\nInvoicing Dates 04/01/2019 Invoices\nMonthly Policies 05/01/2019\nDay of Month 1 06/01/2019\nWeekly Policies\nAccount __ bayofweek Friday\nEvery Other Week Policies .\nAnchor Date 01/01/2009 mein oops Invoice\nstream\n\nDefault Day of Month = 1\n\n‘SESE",
+      "word_count": 105,
+      "avg_confidence": 84.21,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Cutoff dates for placing items on invoices\n\n¢ The payment plan specifies an invoice\nitem cutoff date that applies to\naccount-level billing\n\n* This setting determines the\ninvoice items can be placed\non a given invoice\n\n¢« Example:\n\nPlacement date:\nJun 15\n\n—_=—\n\ninvoice item\n\nPolicy-Level Billing\n\nFix Bill Date/Due Date & Bill Date\nItem Placement Cutoff Date\n\n‘Account-Level Billing/Agency Billing\n\nGi\n\nFor policy-level\nbilling, cutoff date\nis always the\n\nFix Bill Date/Due Date This is set at the account level. same as Fix Bill\n\nItem Placement Cutoff Date Bill Date\n\nIf cutoff date is —  |®&\n\nDue Date\n\nBill Date\n\ninvoice\n\nIf cutoff date is\n—\n\ninvoice\n\nDate/Due Date\n\nBill Date: Jun 10\nDue Date: Jun 21\n\nBill Date: Jul 10\nDue Date: Jul 21",
+      "word_count": 126,
+      "avg_confidence": 88.88,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question G\n\n_— — Suppose the Item Placement Cutoff Date on a payment plan has a value\nY of Due Date. How does the setting impact invoice items on a policy that\n: uses the payment plan?\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 41,
+      "avg_confidence": 87.41,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer Gl\n\n_~ — Suppose the Item Placement Cutoff Date on a payment plan has a value\nY of Due Date. How does the setting impact invoice items on a policy that\n: uses the payment plan?\n\nIf account-level billing is being used, each invoice item will be placed on the earliest\ninvoice whose due date comes on or after the invoice item’s placement date. If policy-\nlevel billing is being used, the setting is ignored.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 82,
+      "avg_confidence": 91.08,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n,~ — Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly.\n\na. How many invoice streams does the account have?\n\nb. If the account switches to policy-level billing, will the number of\ninvoice streams be changed?\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 50,
+      "avg_confidence": 84.27,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer Gl\n\n,— — Suppose an account with accountevel billing has three policies: a\nY monthly, a yearly, and a weekly.\n\na. How many invoice streams does the account have?\n\nb. If the account switches to policy-level billing, will the number of\ninvoice streams be changed?\n\na. Two. Monthly and yearly use the same invoice stream; weekly requires a\nsecond invoice stream.\n\nb. Yes. The number of invoice streams will be either three (one for each policy)\nor four (one for each policy plus a monthly one for existing account-level\ncharges such as a late fee).\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 102,
+      "avg_confidence": 88.43,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Account-level billing uses only one\nunapplied fund",
+      "word_count": 7,
+      "avg_confidence": 94.57,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Single unapplied fund Gi\n\nMarcus\nBusiness\n\nAnalyst) ~ When a customer makes a\npayment, where does BillingCenter\nput the money initially?\n\nZhang \\=)S4\nBilling Clerk ‘2\n\nWith account-level billing,\nthere is a single unapplied\nfund, Default Unapplied.",
+      "word_count": 37,
+      "avg_confidence": 89.86,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Only 1 unapplied fund for account-level billing Ga\n\nAll payments pass through Default Unapplied p\n\nolicy A\n\nPolicy B\na\n@) ne = e ‘]\n&|\npayment uneatita Account ABC\n\nPolicy C",
+      "word_count": 33,
+      "avg_confidence": 78.26,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Direct Bill Payment screen shows 1 unappliedfund [5\n\nQName adelchisagese Account# DEM00230 Aug 7, 2018\n\nDirect Bill Payment [Horo sunmay\n\nExecute Without Distribution\n\n‘Account Payment Details This Payment\nSelected account # 11000000053 Payment instrument > | Cash EBD | vaitavie\nSelected Account Name Adelchi Sagese Description Distributed\nPayment In Suspense\nReceived Date 08/07/2018 Collateral\nAmount. * $ | 0.00 ns 7 Remaining\n\nSingle unapplied\nea |-—_—_—————— Single unapplie\nPreview Distribution\n\ni Distribution\n\nGroup By Invoice > | Aggregate Byltem ~ | SortBy Invoice Date | GoTo# | co clear |\n\nItem Policy Period # —_Invoice# Invoice Bill Date Invoice DueDate Owner Payer Amount —_Unpaid Amount Amount To Apply\n\nNo data to display",
+      "word_count": 112,
+      "avg_confidence": 71.3,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question G\n\n,~ — Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly. How many unapplied funds does the\naccount have?\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 33,
+      "avg_confidence": 84.06,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer Gl\n\n,~ — Suppose an account with accountevel billing has three policies: a\nY monthly, a yearly, and a weekly. How many unapplied funds does the\n¢ account have?\n\nOne. Account-Level billing will only ever have one unapplied fund.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 46,
+      "avg_confidence": 84.07,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question G\n\n_— — |dentify all the valid combinations of billing level and unapplied fund:\n\na a) Account-level billing with a single unapplied fund\nb) Account-level billing with separate unapplied fund for\neach policy\n\nc) Policy-level billing with a single unapplied fund\n\nd) Policy-level billing with a separate unapplied fund for\neach policy\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 57,
+      "avg_confidence": 88.98,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer Gl\n\n_— — |dentify all the valid combinations of billing level and unapplied fund:\na) Account-level billing with a single unapplied fund\nb) Account-level billing with separate unapplied fund for\n\neach policy\n\nc) Policy-level billing with a single unapplied fund\n\nd) Policy-level billing with a separate unapplied fund for\neach policy\n\n(a), (c), and (d) are valid combinations. However, c is rarely used because the primary\nreason for using policy-level billing is the ability to keep unapplied funds at the policy\nlevel.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 89,
+      "avg_confidence": 90.65,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Lesson\nobjectives\nreview\n\nExplain how BillingCenter implements\naccount-level billing\n\nDifferentiate between account-level billing and\npolicy-level billing including how BillingCenter:\n\n+ Handles invoice streams\n\n+ Determines invoice dates and invoice item\n\nplacement dates\n\n+ Manages unapplied money",
+      "word_count": 36,
+      "avg_confidence": 93.67,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Student exercise\n\nModify bill dates",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    }
+  ]
+}

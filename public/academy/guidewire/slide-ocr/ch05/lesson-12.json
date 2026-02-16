@@ -1,0 +1,302 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-12",
+    "slide_count": 26,
+    "slides_with_text": 24,
+    "total_words": 1001,
+    "avg_confidence": 83.45,
+    "processing_time_seconds": 10.09,
+    "extracted_at": "2026-02-13T12:11:17.406519"
+  },
+  "full_text": "Constraining payments — financial holds\n\nLesson\nobjectives\n\n* Describe how financial holds prevent\npayments against claim costs\n\n* Describe what conditions make a claim\nCoverage in Question (CIQ)\n\n¢ Describe how object maturity affects\npayments\n\nSometimes, we are unsure if a claim should be paid or STS SH 4\nnot. Several conditions need to be verified before a claim\nis paid. For example, the claim must be for a covered\nloss and the event must have occurred when the policy\nwas in force. There are also some data completion\nrequirements that affect the payment of a claim.\n\nWe need ClaimCenter to manage these requirement\nautomatically to reduce the risk of overpayments.\n\n| Constraining claim costs payments fa\n\n¢ Maturity level (review)\n+ Claims and exposures must be at ability to pay before any payments are made\n+ Maturity levels can prevent all payments (costs and expenses)\n\n+ Maturity levels are data driven; all required data must be valid to move forward to ability to pay\n\n¢ Business based conditions that affect payment\n+ The insurer is unsure that the claim is for a covered event\n* The insurer is unsure that the policy was in force at the time of the event\n+ The insured is simply reporting the incident with no intention of being paid\n\n+ The policy cannot be verified\n\n¢ ClaimCenter uses financial holds functionality to allow for these conditions\n\n| Financial holds G\n\nFinancial holds mark a claim so that no indemnity (cost) payments can be made\n\nDifferent than keeping a claim from reaching ability to pay\n+ Financial holds allow expense payments (case management, etc.)\n\n+ Not reaching ability to pay restricts all payments (expense and indemnity)\n\nThe base application has three defined conditions that result in financial holds\n* Coverage in Question (CIQ)\n* Claim Incident Only\n\n* Claim Policy Unverified\nFinancial hold status is not a stored value\n\nFinancial hold conditions are evaluated for every financial transaction\n\nAn\n\nExpense\npayment\n\n| How financial holds work (13\nis initiated\n\ncshe |. <= Expense\n\nFinancial\nHold\n\n|\n~~\n\nUser Warning:\nAre You Sure?\n\n<¢)\n\nGi\n\n| How financial holds work es) Gi\n\nUser Warning:\nAre You Sure?\n\nExpense ) — ef of\nreve |. a “Ss\n\nis initiated\n\nfa\n\nFinancial\nHold\n\npayment (v)\nPayment\n\nA\n\n| How financial holds work «crs Gi\n\nUser Warning:\nAre You Sure?\n\nAn ») ee\nExpense <4 =—/=||\npoment | © r=)\n\nExpense\n\ncshe\n\nA Cost\npayment\nis initiated\n\nFinancial srr\n\nHold\n\nCost\n\n| Financial holds conditions — Coverage in Question [j\n\n¢ The insurer isn’t sure about coverage for an event\n\n« Automatic conditions ClQ:\n+ Loss date is before the policy’s effective date\n+ Loss date is after the policy’s expiration date ?\n\n+ Status on the policy is other than In Force or Archived\n« May be set manually\n* Once set, only a supervisor or manager may reset it\n\n¢ The Claim UI has an icon to indicate CIQ\n\n| Financial holds conditions — Incident only i\n\n¢ The insurer receives claim information, but it turns out not to be a claim\n\n+ Example: Employer reports an injury, but before it is certain to become a claim\n« May not be clear initially, so some expenses were incurred (medical reports)\n¢ Financial holds allow payment of expenses but not indemnity costs\n\n¢ Incident Only is a property on the Claim Status screen and the New Claim Wizard\n\n| Financial holds conditions — Unverified policy fa\n\n¢« Howare policies created in ClaimCenter\n\n+ Policy information is copied from a policy system at claim creation\n\n+ Accustomer service representative can create a policy in ClaimCenter\n« What causes a policy to be unverified\n\n+ Apolicy created in ClaimCenter is considered unverified\n\n+ A policy that is changed in ClaimCenter is considered unverified\n\n¢ Financial holds are applied to all unverified policies\n\n| Demonstration G\n\nFinancial Holds\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise G\n\nConstraining payments — financial holds\nactivity\n\nQuestion G\n\n_~ — What claim condition prevents any type of payment against an\n\nx exposure?\n¢\n\nen\n\nAnswer\n\n_~ — What claim condition prevents any type of payment against an\n\nx exposure?\n¢\n\nMaturity level (claim and exposure must be at ability to pay for any payment to be\nmade).\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n,~ — What are some conditions that cause an unverified policy?\n\n4\n¢\n¢\n\nen\n\nAnswer a\n\n_~ — What are some conditions that cause an unverified policy?\n\n¢\n¢\n¢\n\n* Apolicy is changed in ClaimCenter\n\n* Apolicy is created in ClaimCenter\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n_- — Whatare some conditions that result in automatic CIQ?\n\n4\n¢\n¢\n\nen\n\nAnswer a\n\n_— — What are some conditions that result in automatic CIQ?\n\n¢\n¢\n¢\n\n* Loss date is before the policy’s effective date,\n* Loss date is after the policy’s expiration date,\n\n* Status on the policy is other than In Force or Archived.\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n_~ — What is constrained if a policy is under financial holds?\n\n4\n¢\n¢\n\nen\n\nAnswer a\n\n_~ — What is constrained if a policy is under financial holds?\n\n¢\n¢\n¢\n\nAll cost type payments (expenses are allowed).\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n_— — Ifyou reset the value that caused the CIQ, is CIQ removed?\n\n4\n¢\n¢\n\nen\n\nAnswer a\n\n_— — Ifyou reset the value that caused the CIQ, is CIQ removed?\n\n¢\n¢\n¢\n\nNo. Only a supervisor or someone with the correct permissions can remove CIQ\nmanually.\n\nBoD DD DD DS SSS oe\n\nLesson\nobj ectives * Describe how financial holds prevent\nreview payments against claim costs\n\n* Describe what conditions make a claim\nCoverage in Question (CIQ)\n\n¢ Describe how object maturity affects\npayments",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Constraining payments — financial holds",
+      "word_count": 5,
+      "avg_confidence": 92.71,
+      "image_size": {
+        "width": 1280,
+        "height": 557
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Describe how financial holds prevent\npayments against claim costs\n\n* Describe what conditions make a claim\nCoverage in Question (CIQ)\n\n¢ Describe how object maturity affects\npayments",
+      "word_count": 30,
+      "avg_confidence": 89.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Sometimes, we are unsure if a claim should be paid or STS SH 4\nnot. Several conditions need to be verified before a claim\nis paid. For example, the claim must be for a covered\nloss and the event must have occurred when the policy\nwas in force. There are also some data completion\nrequirements that affect the payment of a claim.\n\nWe need ClaimCenter to manage these requirement\nautomatically to reduce the risk of overpayments.",
+      "word_count": 76,
+      "avg_confidence": 94.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Constraining claim costs payments fa\n\n¢ Maturity level (review)\n+ Claims and exposures must be at ability to pay before any payments are made\n+ Maturity levels can prevent all payments (costs and expenses)\n\n+ Maturity levels are data driven; all required data must be valid to move forward to ability to pay\n\n¢ Business based conditions that affect payment\n+ The insurer is unsure that the claim is for a covered event\n* The insurer is unsure that the policy was in force at the time of the event\n+ The insured is simply reporting the incident with no intention of being paid\n\n+ The policy cannot be verified\n\n¢ ClaimCenter uses financial holds functionality to allow for these conditions",
+      "word_count": 122,
+      "avg_confidence": 91.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Financial holds G\n\nFinancial holds mark a claim so that no indemnity (cost) payments can be made\n\nDifferent than keeping a claim from reaching ability to pay\n+ Financial holds allow expense payments (case management, etc.)\n\n+ Not reaching ability to pay restricts all payments (expense and indemnity)\n\nThe base application has three defined conditions that result in financial holds\n* Coverage in Question (CIQ)\n* Claim Incident Only\n\n* Claim Policy Unverified\nFinancial hold status is not a stored value\n\nFinancial hold conditions are evaluated for every financial transaction",
+      "word_count": 91,
+      "avg_confidence": 91.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "An\n\nExpense\npayment\n\n| How financial holds work (13\nis initiated\n\ncshe |. <= Expense\n\nFinancial\nHold\n\n|\n~~\n\nUser Warning:\nAre You Sure?\n\n<¢)\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 81.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| How financial holds work es) Gi\n\nUser Warning:\nAre You Sure?\n\nExpense ) — ef of\nreve |. a “Ss\n\nis initiated\n\nfa\n\nFinancial\nHold\n\npayment (v)\nPayment\n\nA",
+      "word_count": 30,
+      "avg_confidence": 77.09,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| How financial holds work «crs Gi\n\nUser Warning:\nAre You Sure?\n\nAn ») ee\nExpense <4 =—/=||\npoment | © r=)\n\nExpense\n\ncshe\n\nA Cost\npayment\nis initiated\n\nFinancial srr\n\nHold\n\nCost",
+      "word_count": 33,
+      "avg_confidence": 78.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Financial holds conditions — Coverage in Question [j\n\n¢ The insurer isn’t sure about coverage for an event\n\n« Automatic conditions ClQ:\n+ Loss date is before the policy’s effective date\n+ Loss date is after the policy’s expiration date ?\n\n+ Status on the policy is other than In Force or Archived\n« May be set manually\n* Once set, only a supervisor or manager may reset it\n\n¢ The Claim UI has an icon to indicate CIQ",
+      "word_count": 80,
+      "avg_confidence": 89.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Financial holds conditions — Incident only i\n\n¢ The insurer receives claim information, but it turns out not to be a claim\n\n+ Example: Employer reports an injury, but before it is certain to become a claim\n« May not be clear initially, so some expenses were incurred (medical reports)\n¢ Financial holds allow payment of expenses but not indemnity costs\n\n¢ Incident Only is a property on the Claim Status screen and the New Claim Wizard",
+      "word_count": 78,
+      "avg_confidence": 91.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Financial holds conditions — Unverified policy fa\n\n¢« Howare policies created in ClaimCenter\n\n+ Policy information is copied from a policy system at claim creation\n\n+ Accustomer service representative can create a policy in ClaimCenter\n« What causes a policy to be unverified\n\n+ Apolicy created in ClaimCenter is considered unverified\n\n+ A policy that is changed in ClaimCenter is considered unverified\n\n¢ Financial holds are applied to all unverified policies",
+      "word_count": 72,
+      "avg_confidence": 89.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Demonstration G\n\nFinancial Holds\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.35,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Student exercise G\n\nConstraining payments — financial holds\nactivity",
+      "word_count": 10,
+      "avg_confidence": 91.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Question G\n\n_~ — What claim condition prevents any type of payment against an\n\nx exposure?\n¢\n\nen",
+      "word_count": 18,
+      "avg_confidence": 81.16,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Answer\n\n_~ — What claim condition prevents any type of payment against an\n\nx exposure?\n¢\n\nMaturity level (claim and exposure must be at ability to pay for any payment to be\nmade).\n\nBoD DD DD DS SSS oe",
+      "word_count": 39,
+      "avg_confidence": 80.35,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question G\n\n,~ — What are some conditions that cause an unverified policy?\n\n4\n¢\n¢\n\nen",
+      "word_count": 17,
+      "avg_confidence": 76.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer a\n\n_~ — What are some conditions that cause an unverified policy?\n\n¢\n¢\n¢\n\n* Apolicy is changed in ClaimCenter\n\n* Apolicy is created in ClaimCenter\n\nBoD DD DD DS SSS oe",
+      "word_count": 34,
+      "avg_confidence": 68.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question G\n\n_- — Whatare some conditions that result in automatic CIQ?\n\n4\n¢\n¢\n\nen",
+      "word_count": 16,
+      "avg_confidence": 72.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer a\n\n_— — What are some conditions that result in automatic CIQ?\n\n¢\n¢\n¢\n\n* Loss date is before the policy’s effective date,\n* Loss date is after the policy’s expiration date,\n\n* Status on the policy is other than In Force or Archived.\n\nBoD DD DD DS SSS oe",
+      "word_count": 52,
+      "avg_confidence": 74.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n_~ — What is constrained if a policy is under financial holds?\n\n4\n¢\n¢\n\nen",
+      "word_count": 18,
+      "avg_confidence": 72.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer a\n\n_~ — What is constrained if a policy is under financial holds?\n\n¢\n¢\n¢\n\nAll cost type payments (expenses are allowed).\n\nBoD DD DD DS SSS oe",
+      "word_count": 30,
+      "avg_confidence": 70.72,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question G\n\n_— — Ifyou reset the value that caused the CIQ, is CIQ removed?\n\n4\n¢\n¢\n\nen",
+      "word_count": 19,
+      "avg_confidence": 74.45,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer a\n\n_— — Ifyou reset the value that caused the CIQ, is CIQ removed?\n\n¢\n¢\n¢\n\nNo. Only a supervisor or someone with the correct permissions can remove CIQ\nmanually.\n\nBoD DD DD DS SSS oe",
+      "word_count": 38,
+      "avg_confidence": 75.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Lesson\nobj ectives * Describe how financial holds prevent\nreview payments against claim costs\n\n* Describe what conditions make a claim\nCoverage in Question (CIQ)\n\n¢ Describe how object maturity affects\npayments",
+      "word_count": 32,
+      "avg_confidence": 89.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

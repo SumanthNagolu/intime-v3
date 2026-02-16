@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-07",
+    "slide_count": 35,
+    "slides_with_text": 28,
+    "total_words": 2179,
+    "avg_confidence": 84.47,
+    "processing_time_seconds": 14.88,
+    "extracted_at": "2026-02-15T18:20:27.092852"
+  },
+  "full_text": "Integration Views\n\nLesson\nobjectives\n\n¢ Define the purpose of Integration Views\n\nConfigure an Integration View schema,\nmapping, and filter\n\nGenerate JSON output\n\nGenerate XML output\n\n| Why use an Integration View?\n\n¢ Produce external views of the\nGuidewire domain model\n\n* Schemas and mappings are explicitly\nnamed and versioned\n\n+ Different versions of the same schema\nand/or mappings can co-exist\n\n¢ Output format is explicitly designed in\nthe schema\n\n¢ Simple design approach\n\n¢ Define the output schema first and then\nmap the data to that output\n\nGi\n\nSs s\nes\n\nExternal\nView\n{\n\n}-06-20T04:00:00.0002\",\n\nm Andy\",\n“primaryAddress™ : {\nTaddressType” : “home”\n}\n)\n\n| Integration View components Gi\n\n¢ An Integration View has the following\n\ncomponents: _ Ni configuration » 1% config ) [5 integration\n* Schemas\n. > apis\n+ AJSON Schema defines the structure of the data Eu filterstmta\n* Can be targeted by multiple mappings & address_minimel-1.0.9ql\n2 contact_details-1.0.gql\n* Mappings @ contactnote_details-1.0.gql\n—>v mappings.tmn.ta\n+ Describes how to transform a given source object such as an entity if) address-1.0.mapping,json\ninto a JSON or XML document that conforms to that schema & contact-1.0.mapping,json\n. ‘§ contactnote-1.0.mapping,json\n+ Targets a single JSON Schema == vB schemas\n> ppl fi Kk\n+ Filters ie\n* Optional GraphQL-style filters that whitelist the fields to actually {, address-1.0.schema,json\n\n4 atts init ntact-1.0.schs j\nmaterialize and serialize oes pean\n4) contactnote-1.0.schema,json\n\n+ These include virtual fields\n\n| Use case Gi\n\n\"general\",\n\n¢ Export the following contact sear eee eee 1. Define the schemas\n\nian Andy has discovered @ serious data entry issue\",\n\ndata in either JSON or XML pe ree » Create the necessary\nformat: “ete ay he ace tome, schema files to define the\n* Name “Willian Andy has a new Licence™ structure of the data\n\n* Date of Birth 2. Define the mappings\n\n+ Create the necessary\nmapping files to define the\ndomain fields to export\n\n3. Define the filters\n\n* Create the filter files to\nexport a subset of contact\ndata\n\n+ Gender\n* Primary address and its fields ts seieste\n* Contact notes and its fields\n\n« Export a subset of data\n+ Without contact notes 1\n\n* Contact notes only\n\n| Create a JSON Schema Gi\n\n* Create a new package under integration.schemas\n\n+ config.integration.schemas.<company_code>.<product_code>\n\n* Create a new file with the following syntax:\n\n7 A 7 > pl fi k\n\n« <mechanism>- {version} .schema. json oe Famewor\n\nv irn.ta\n address-1.0.schema,json\n4) contact-1.0.schema,json\n\n4} contactnote-1.0.schema,json\n\n6 contact-1.0.schema,json\n\n{\n\n\"$schema\": \"http: //json-schema.org/draft-04/schema#\",\n\"definitions\": {}\n\n}\n\n| Supported data types\n\n« JSON natively defines a small set of primitive types: string, boolean, numbers\n\n(which are interpreted as doubles), object, and array\n\n« JSON Schema (and Swagger) define an integer type, which is a number with a decimal\n\ncomponent of .0\n\n« JSON Schema (and Swagger) has a format property to describe more complex\ndata types: dates, numeric types that require a higher level of precision, binary\n\ndata, and so forth\n\n*« Custom x-gw-type property is added to map Guidewire internal types in cases\nwhere a format would be ambiguous, such as: typekeys, MonetaryAmount and\n\nCurrencyAmount\n\nType\n\nFormat\n\nx-gw-type Standard\n\nstring\nstring\n\nstring\n\ngw-money\ngw-money\n\n<none>\n\ngw.pl.currency.MonetaryAmount Guidewire\ngw.api.financials.currencyAmount Guidewire\n\n<any typekey>.* type Guidewire\n\nGi\n\n| Add schema definitions\n\n* Each definition must\ndefine its name, type,\nand properties\n\n* By default, JSON\nSchema properties are\nnot nullable\n\n* On output, null properties\non JsonObject are omitted\n\nGi\n\n\"$schema\" : \"http: //json-schema.org/draft-04/schema#\",\n\"x-gw-import\" : {\n\n\"address\" : \"trn.ta.address-1.0\",\n\"contactnote\" : \"trn.ta.contactnote-1.0\"\nle\n\"definitions\" : {\n\n\"ContactDetails\" : {\n\"type\" : \"object\",\n\"properties\" : {\n\"Name\" : {\n\"type\" : \"string\"\nlh\n\"DateOfBirth\" : {\n\"type\" : \"string\",\n\"format' \"date-time\"\n\"Gender\" : {\n\"type\" : \"string\",\n\"x-gw-type\" : \"typekey.GenderType\"\n}\n\n| Schema file import Gi\n\n* Schema import provides a mechanism for reuse of schemas, by creating a shared\nschema for common pieces and then importing that schema in order to reference\nits types\n\n¢ If Aimports B, definitions in A and B that have the same name are still two different types\n\n1 {\n\"$schema\" : \"http://json-schema.org/draft-04/schema#\",\n—> \"x-gw-import\" : {\n4 \"address\" : \"trn.ta.address-1.0\",\ns \"contactnote” : \"trn.ta.contactnote-1.0\"\n\nhe\n\n2 \"PrimaryAddress\" : {\n—p>: \"$ref\" : \"address#/definitions/AddressDetails”\n\n—>:\n\n| Create a mapping file\n\n* Create a new package under integration.mappings\n\nGi\n\n* config.integration.mappings .<company_code>.<product_code>\n\n* Create a new file with the following syntax:\n\n* <mechanism>-{version}.mapping. json\n\n4} contact-1.0.mapping,json |\n\n=>\n>\n\ni\n\n\"schemaName\" : \"trn.ta.contact-1.0\",\n\"import\" : {\n\"address\" : \"trn.ta.address-1.0\",\n\n\"contactnote\" : \"trn.ta.contactnote-1.\n\nje\n\"mappers\" : {...}\n\nv\n\ntrn.ta\n4) address-1.0.mapping,json\n4) contact-1.0.mapping,json\n4) contactnote-1.0.mapping,json\n\n| Add mappers to the mapping file\n\nEach mapper must\ndefine its:\n\nName\nschemaDefinition\nroot\n\nproperties\n\n+ The properties on an\nintegration mapper must\ncorrespond to properties\non the associated JSON\nschema definition\n\n+ Define how to get the value\nfor that property\n\n—pP27\n\n\"mappers\" : {\n\"ContactDetails” : {\n\"schemaDefinition\" : \"ContactDetails\",\n\"root\" : \"entity.ABContact\",\n\"properties\" : {\n\n“ABContact.DisplayName\"\n\n\"DateOfBirth” : {\n\"path\" : \"(ABContact as ABPerson) .DateOfBirth”,\n\"predicate\" : \"ABContact typeis ABPerson”\n\n(ABContact as ABPerson) .Gender\",\n\"predicate\" : \"ABContact typeis ABPerson\"\n\nye\n\n\"PrimaryAddress\": {\n\"path\" : \"ABContact.PrimaryAddress\",\n\"mapper\" : \"address#/mappers/AddressDetails\"\n\nMe\n\n\"ContactNotes\" : {\n\n\"ABContact.ContactNotes\",\n\n+ \"contactnote#/mappers/ContactNloteDetails\"\n\n| Filters G\n\n+ Filters make use of a simplified version : ! =\nof GraphQL syntax to describe the sch » pong « Pama\ndata to be fetched\n\n5 4\n\n* Serves as a whitelist of the properties that\n\nshould be included for a given invocation of\na mapping file\n\n¢ Allows reuse of a more complete\nf a\nschema/mapping for use cases that\nonly require a subset of that data aS\n\n+ Reduces implementation and maintenance « secuoseireht + saoso-a2-oer04;00100,0008\",\ncosts “Gender” : \"M\",\n\nName\" : \"William Andy\",\n\"PrimaryAddress™ : {\n\"AddressType” : “home”\n}\niB\n\n| Create a filter Gi\n\n* Create a new package under integration.filters\n* config.integration.filters.<company_code>.<product_code>\n\n* Create a new file with the following syntax:\naddress_minimal-1.0.gql\n\ncontact_details-1.0.gql\n\ncontactnote_details-1.0.gql\n\n« <mechanism>-{version}.gql\n\n@ contact_details-1.0.gql * | 2 contactnote_details-1.0.9q1\ni TE\nName, 2 ContactNotes {\nDateOfBirth, 3 ContactNoteType,\nGender, 4 Confidential,\nPrimaryAddress { s Subject,\n> ¢ AddressType Body\n\n} }\n\nil Eee |\n\n| Fragments Gi\n\n¢« AGraphQL feature that allow you to  adddress_rninimal- 1.0.94)\nquery a fragment that can be applied —! «  cetmarynadvesst\nto a given object | ++-addressParts\n¢ Useful in cases where the same sub-object —>: panacea. arts\ntype appears within multiple places in the ,\ndata you want to fetch 8 }\n—> fragment addressParts on Address {\n* For example, a Contact may have both AddressType\nPrimaryAddress and AllAddresses cael\nproperties that map to the same Address }\ntype\n\n+ Define the set of properties you want from an\nAddress once, as a fragment\n\n+ Reference that fragment in each context that\nyou want that same set of properties\n\n| Generate wrapper classes\n\n1. Add the fully-qualified name of the\nschema(s) in the codegen-\n\nschemas.txt file in schemas package\n\n2. From the Server drop-down in Studio,\nselect JsonSchemaCodegen\n\n* Execute by selecting Run ‘Server’ icon\n\n3. Generated wrapper classes will be\nunder\n\nconfiguration.srce.jsonschema\n\nGi\n\ntrn.ta.contact-1.0\ntrn.ta.contactnote-1.0\ntrn.ta.address-1.0\n\n2 codegen-schemas.tt\n\nBuild Run Tools VCS Wind:\n\n[i> Edit Configurations...\n(B TestServer\n\n[B Dropps\n\n[Server\n\nj=) JsonSchemaCodegen\n\nv Biljsonschema\n> Bil sita.contactv1_0\nv Bitmte\n\nv Ei address.vi_0\n© AddressDetails\nv Bai contactv1_0\n© ContactDetails\n© ContactUpdate\nv Emi contactnotev1_0\n© ContactNoteDetails\n\n| Example 1 — JSON Output\n\nDIR KH ewNP\n\n3\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\nuses gw.api.json.JsonConfigAccess\n\n// Query for Contact\n\nvar queryObj = Query.make (ABContact)\nPublicID, Relop. Equals, \"ab:5\")\n\nqueryObj.. compare (\nvar targetObj =\n// Create IsonMapper object\n\n“Contactliotes™ : [ {\n“Body” : “William Andy has more questions related to data privacy\",\n“ContactiioteType” : “general”,\n“Subject” : “William Andy has an inguiry™ iy |\net\n\"Body\" : “William Andy has many general questions\",\n“ContactNotelype” : “general”,\n“Subject” : “William Andy has questions”\ndie\n“DaceogBirth™\n“Gender” : “M\",\n“Name” : \"William Andy\",\n“Primaryaddress” : {\nvaddressLinel” : \"345 Fir Lane,\nvAddressType” : \"hone\",\n\"City\" : “La Canada”,\n“PostalCode” : \"91352\",\n“State” : \"CAT\n\n'1980~08-06T04:00:00.0002\",\n\nvar jsonMapper = JsonConfigAccess.getMapper(\"trn.ta.contact-1.0\", \"ContactDetails\")\n\n// Create TransformResult object\n\nvar transformResult = jsonMapper.transform0bject (targetObj)\n\n// Create outpul\n\nvar payloadJSON = transformResult.toPrettyJsonString()\n\nprint (payloadJSON)\n\nExample 2 — XML Output\n\nOptionally generate XSD\n\n+ Execute gwb genExternalSchemas in command prompt window\n+ Default output directory\n\n<app>\\modules\\configuration\\build\\external-schemas\n\n13\n—> 16\n\nas\n\nvar payloadXML = transformResult.toxmlString()\nprint (payloadXML)\n\n‘ceontactloreDetatla>\n‘eboappaitiiam Andy as many gteerel questionsc/B0ay>\n‘Ccontactictetypengeseraic/Coneactictetype>\n\n‘cSunyeceowillian Rody hav queationsc/Subyect>\n“/fontactionedetasia>\n\n‘entacetotebetatla>\n‘cboapWiiiam Andy has discovered « serious data entry semvec/Bodi>\n‘ContactioceTypenproblenc/ContactioteType>\n\n‘chubyeceo¥Willian Rady reported an iamvec/Subyect>\n“/Contacetotedetaiia>\n\n‘GlaneDWil tam Aadyc/tane>\n\n‘cinta Canancreiey>\n‘cSeavercnc/seate>\ncyreinaryaaaress>\n<fecanannenation\n\nGi\n\ncontactnote XSD\n\nant contact dachema\n\nPom versie\n\n‘argwtianespacen\"ntp://guldevire.com/esd/tentacontactnote 1.0\"\n\nclesertrorsbefantte\"qalstsea\"\n\n| Example 3 — Filtered JSON output G\n\n2 uses gw.api.database.Query\n\n2 uses gw.api.database.Relop\n\n3 uses gw.api.json.JsonConfighccess\n\n4 uses gw.api.json.mapping. JsonMappingOptions\nG // Query for Contact\n\nvar queryObj = Query.make(ABContact)\n\n// Create JsonMapper object\nvar jsonMapper = JsonConfigAccess.getMapper(\"trn.ta.contact-1.0\", \"ContactDetails\")\n\n// Create JsonMappingOptions object\n\nvar mappingOpts = new JsonMappingOptions()\nmappingOpts.withFilter(\"trn.ta.contact_details-1.0\"\n\n// Create TransformResult object\n\nvar transformResult = jsonMapper.transformObject (targetOb3, mappingOpts)\n\n// Create output\n\nvar payloadJSON = transformResult.toPrettyJsonString()\n\nprint (payloadJSON) {\n\n“DateOfBirth” : \"1980-08-06T04:00:00.0002\",\n\"Gender\" : \"M\",\n\"Name\" : \"William Andy\",\n\"PrimaryAddress” : {\n“AddressType\" : “home”\n\n| Schema file combination\n\n* Schema combination provides a\n\nmechanism for reuse of schemas\n\n* Ability to create a schema that logically\nextends and overrides one or more other\n\nschemas\n\n* If Acombines [B, C] listed in that order in\n\nthe combine property\n+ Contents of B are merged on top of C\n\n+ Contents of A are merged on top of the\ncombined schema\n\n+ Similar names are merged together to produce a single definition\n\n* Combination cannot remove definitions\n\n* Original schemas are not touched\n\nYBa integration\napis\n\nfitertmnte\nmappings ay |\n\neve\n\n> Bademo.ta\n> Bl gw.plframework\nv Da sita\n\ncontact-1,0.schemajzon\n\n\"$schema\" : \"http://json-schema.org/draft-04/schema#\",\n\"x-gw-combine\" : [\n\"trn.ta.contact-1.0\"\nI,\n“definitions” : {\n\"ContactDetails” : {\n\"type\" : \"object\",\n\"properties\" : {\n\"AssignedUser\" : {\n\"$ref\" : \"#/definitions/AssignedUser\"\n}\n}\nh\n\"AssignedUser\" : {\n\"type\" : \"object\",\n\"properties\" : {\n\"DisplayName\" : {\n\"type\" : \"string\"\n\n| Mapper file combination\n\n* Mapper combination provides a\nmechanism for reuse of mappers\n\n* Combination rules used for schemas apply\n\nto mappers\n\nv Bil integration\n> Bil apis\n> Eu filters.tmn.ta\nv Ea mappings\n> Bl demota\n\nGi\n\n\"schemaName\" : \"si.ta.contact-1.0\",\n\n\"combine\" : [\n\"trn.ta.contact-1.0\"\n\nly\n\n\"mappers\" : {\n\n\"ContactDetails\" : {\n\"schemaDefinition\" : \"ContactDetails\",\n\"root\" : “entity.ABContact\",\n\"properties\" : {\n\"AssignedUser\" : {\n\"path\" : \"ABContact.AssignedUser\",\n\"mapper\" : \"#/mappers/AssignedUser\"\n}\n}\nye\n\"AssignedUser\" : {\n\"schemaDefinition\" : \"AssignedUser\",\n\"root\" : “entity.User\",\n\"properties\" : {\n\"DisplayName\" : {\n\"path\" : \"User.DisplayName\"\n\n| Example 4 -— JSON output using combination =\n\n3 // Create JsonMapper object\n\n—Pio var jsonMapper = JsonConfigAccess.getMapper(\"si.ta.contact-1.0\", \"ContactDetails\")\n\nJSON Output\n> “Assignedvser™ = {\n\n“Contactiiores™ = [ {\n\"Body\" : “William Andy hes more questions related to date privacy\",\n“ContactlioteType” : “general\n“Subject” : \"Willian Andy has an inquiry”\nwt\n“Body” : “William Andy has many general questions\",\n“ContactNoteType” : “general\n\"Subject\" : \"Willian Andy has questions”\nMi\n“DaveOfBirch™ : *1980-08-06T04:00:00.0002\",\n\"Gender\" : “M\",\n“Maritalscatus\" : “married”,\nWane\" : “Willian Andy\",\n“PrimaryAddress” = (\n“AddressLinel™ : \"34S Fir Lane\",\n“AddressType” : \"hone\",\n“City” : “La Canada\",\n“PostalCode : \"91352\",\nState\" : \"CAT\n\n| Demonstration G\nCreate a User Integration View\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — inorder to generate JSON wrapper classes, you must: (Select three)\n\n¢\no A) Add anew Run/Debug configuration whose main class is defined as:\ncom. guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\n\nF) Add the schema fully qualified name to the codegen-schemas.txt.\n\nwv\n\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegen Tool.\n\nRestart the server after wrapper classes are created.\n\n~ a=\n\nSeo e Soe esses see see\n\nAnswer Gi\n\n_- — Inorder to generate JSON wrapper classes, you must: (Select three)\n\nv7 “ A) Add anew Run/Debug configuration whose main class is defined as:\ncom.guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\n\nF) Add the schema fully qualified name to the codegen-schemas.txt.\n\nwv\n\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegenTool.\n\nRestart the server after wrapper classes are created.\n\nThe correct answers are A, D, and F.\n\nSoo eS eee soe ese ese\n\nQuestion\n\n/- — *-gw-type Is added in a JSON schema to map Guidewire internal types\nPa in cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\n\nSeo e Soe esses see see\n\nGi\n\nAnswer\n\n/- — X-gw-type Is added in a JSON schema to map Guidewire internal types\nPa in cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\n\nTrue\n\nSoo eS eee soe ese ese\n\nGi\n\nLesson\nobjectives ¢ Define the purpose of Integration Views\n\nreview ¢ Configure an Integration View schema,\nmapping, and filter\n* Generate JSON output\n* Generate XML output\n\n| Student exercise\n\nCreate a Contact Integration View",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Integration Views",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Define the purpose of Integration Views\n\nConfigure an Integration View schema,\nmapping, and filter\n\nGenerate JSON output\n\nGenerate XML output",
+      "word_count": 23,
+      "avg_confidence": 94.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Why use an Integration View?\n\n¢ Produce external views of the\nGuidewire domain model\n\n* Schemas and mappings are explicitly\nnamed and versioned\n\n+ Different versions of the same schema\nand/or mappings can co-exist\n\n¢ Output format is explicitly designed in\nthe schema\n\n¢ Simple design approach\n\n¢ Define the output schema first and then\nmap the data to that output\n\nGi\n\nSs s\nes\n\nExternal\nView\n{\n\n}-06-20T04:00:00.0002\",\n\nm Andy\",\n“primaryAddress™ : {\nTaddressType” : “home”\n}\n)",
+      "word_count": 80,
+      "avg_confidence": 82.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Integration View components Gi\n\n¢ An Integration View has the following\n\ncomponents: _ Ni configuration » 1% config ) [5 integration\n* Schemas\n. > apis\n+ AJSON Schema defines the structure of the data Eu filterstmta\n* Can be targeted by multiple mappings & address_minimel-1.0.9ql\n2 contact_details-1.0.gql\n* Mappings @ contactnote_details-1.0.gql\n—>v mappings.tmn.ta\n+ Describes how to transform a given source object such as an entity if) address-1.0.mapping,json\ninto a JSON or XML document that conforms to that schema & contact-1.0.mapping,json\n. ‘§ contactnote-1.0.mapping,json\n+ Targets a single JSON Schema == vB schemas\n> ppl fi Kk\n+ Filters ie\n* Optional GraphQL-style filters that whitelist the fields to actually {, address-1.0.schema,json\n\n4 atts init ntact-1.0.schs j\nmaterialize and serialize oes pean\n4) contactnote-1.0.schema,json\n\n+ These include virtual fields",
+      "word_count": 131,
+      "avg_confidence": 76.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Use case Gi\n\n\"general\",\n\n¢ Export the following contact sear eee eee 1. Define the schemas\n\nian Andy has discovered @ serious data entry issue\",\n\ndata in either JSON or XML pe ree » Create the necessary\nformat: “ete ay he ace tome, schema files to define the\n* Name “Willian Andy has a new Licence™ structure of the data\n\n* Date of Birth 2. Define the mappings\n\n+ Create the necessary\nmapping files to define the\ndomain fields to export\n\n3. Define the filters\n\n* Create the filter files to\nexport a subset of contact\ndata\n\n+ Gender\n* Primary address and its fields ts seieste\n* Contact notes and its fields\n\n« Export a subset of data\n+ Without contact notes 1\n\n* Contact notes only",
+      "word_count": 129,
+      "avg_confidence": 80.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Create a JSON Schema Gi\n\n* Create a new package under integration.schemas\n\n+ config.integration.schemas.<company_code>.<product_code>\n\n* Create a new file with the following syntax:\n\n7 A 7 > pl fi k\n\n« <mechanism>- {version} .schema. json oe Famewor\n\nv irn.ta\n address-1.0.schema,json\n4) contact-1.0.schema,json\n\n4} contactnote-1.0.schema,json\n\n6 contact-1.0.schema,json\n\n{\n\n\"$schema\": \"http: //json-schema.org/draft-04/schema#\",\n\"definitions\": {}\n\n}",
+      "word_count": 54,
+      "avg_confidence": 73.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Supported data types\n\n« JSON natively defines a small set of primitive types: string, boolean, numbers\n\n(which are interpreted as doubles), object, and array\n\n« JSON Schema (and Swagger) define an integer type, which is a number with a decimal\n\ncomponent of .0\n\n« JSON Schema (and Swagger) has a format property to describe more complex\ndata types: dates, numeric types that require a higher level of precision, binary\n\ndata, and so forth\n\n*« Custom x-gw-type property is added to map Guidewire internal types in cases\nwhere a format would be ambiguous, such as: typekeys, MonetaryAmount and\n\nCurrencyAmount\n\nType\n\nFormat\n\nx-gw-type Standard\n\nstring\nstring\n\nstring\n\ngw-money\ngw-money\n\n<none>\n\ngw.pl.currency.MonetaryAmount Guidewire\ngw.api.financials.currencyAmount Guidewire\n\n<any typekey>.* type Guidewire\n\nGi",
+      "word_count": 118,
+      "avg_confidence": 90.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Add schema definitions\n\n* Each definition must\ndefine its name, type,\nand properties\n\n* By default, JSON\nSchema properties are\nnot nullable\n\n* On output, null properties\non JsonObject are omitted\n\nGi\n\n\"$schema\" : \"http: //json-schema.org/draft-04/schema#\",\n\"x-gw-import\" : {\n\n\"address\" : \"trn.ta.address-1.0\",\n\"contactnote\" : \"trn.ta.contactnote-1.0\"\nle\n\"definitions\" : {\n\n\"ContactDetails\" : {\n\"type\" : \"object\",\n\"properties\" : {\n\"Name\" : {\n\"type\" : \"string\"\nlh\n\"DateOfBirth\" : {\n\"type\" : \"string\",\n\"format' \"date-time\"\n\"Gender\" : {\n\"type\" : \"string\",\n\"x-gw-type\" : \"typekey.GenderType\"\n}",
+      "word_count": 84,
+      "avg_confidence": 79.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Schema file import Gi\n\n* Schema import provides a mechanism for reuse of schemas, by creating a shared\nschema for common pieces and then importing that schema in order to reference\nits types\n\n¢ If Aimports B, definitions in A and B that have the same name are still two different types\n\n1 {\n\"$schema\" : \"http://json-schema.org/draft-04/schema#\",\n—> \"x-gw-import\" : {\n4 \"address\" : \"trn.ta.address-1.0\",\ns \"contactnote” : \"trn.ta.contactnote-1.0\"\n\nhe\n\n2 \"PrimaryAddress\" : {\n—p>: \"$ref\" : \"address#/definitions/AddressDetails”\n\n—>:",
+      "word_count": 80,
+      "avg_confidence": 86.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Create a mapping file\n\n* Create a new package under integration.mappings\n\nGi\n\n* config.integration.mappings .<company_code>.<product_code>\n\n* Create a new file with the following syntax:\n\n* <mechanism>-{version}.mapping. json\n\n4} contact-1.0.mapping,json |\n\n=>\n>\n\ni\n\n\"schemaName\" : \"trn.ta.contact-1.0\",\n\"import\" : {\n\"address\" : \"trn.ta.address-1.0\",\n\n\"contactnote\" : \"trn.ta.contactnote-1.\n\nje\n\"mappers\" : {...}\n\nv\n\ntrn.ta\n4) address-1.0.mapping,json\n4) contact-1.0.mapping,json\n4) contactnote-1.0.mapping,json",
+      "word_count": 58,
+      "avg_confidence": 80.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Add mappers to the mapping file\n\nEach mapper must\ndefine its:\n\nName\nschemaDefinition\nroot\n\nproperties\n\n+ The properties on an\nintegration mapper must\ncorrespond to properties\non the associated JSON\nschema definition\n\n+ Define how to get the value\nfor that property\n\n—pP27\n\n\"mappers\" : {\n\"ContactDetails” : {\n\"schemaDefinition\" : \"ContactDetails\",\n\"root\" : \"entity.ABContact\",\n\"properties\" : {\n\n“ABContact.DisplayName\"\n\n\"DateOfBirth” : {\n\"path\" : \"(ABContact as ABPerson) .DateOfBirth”,\n\"predicate\" : \"ABContact typeis ABPerson”\n\n(ABContact as ABPerson) .Gender\",\n\"predicate\" : \"ABContact typeis ABPerson\"\n\nye\n\n\"PrimaryAddress\": {\n\"path\" : \"ABContact.PrimaryAddress\",\n\"mapper\" : \"address#/mappers/AddressDetails\"\n\nMe\n\n\"ContactNotes\" : {\n\n\"ABContact.ContactNotes\",\n\n+ \"contactnote#/mappers/ContactNloteDetails\"",
+      "word_count": 99,
+      "avg_confidence": 80.52,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Filters G\n\n+ Filters make use of a simplified version : ! =\nof GraphQL syntax to describe the sch » pong « Pama\ndata to be fetched\n\n5 4\n\n* Serves as a whitelist of the properties that\n\nshould be included for a given invocation of\na mapping file\n\n¢ Allows reuse of a more complete\nf a\nschema/mapping for use cases that\nonly require a subset of that data aS\n\n+ Reduces implementation and maintenance « secuoseireht + saoso-a2-oer04;00100,0008\",\ncosts “Gender” : \"M\",\n\nName\" : \"William Andy\",\n\"PrimaryAddress™ : {\n\"AddressType” : “home”\n}\niB",
+      "word_count": 98,
+      "avg_confidence": 82.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Create a filter Gi\n\n* Create a new package under integration.filters\n* config.integration.filters.<company_code>.<product_code>\n\n* Create a new file with the following syntax:\naddress_minimal-1.0.gql\n\ncontact_details-1.0.gql\n\ncontactnote_details-1.0.gql\n\n« <mechanism>-{version}.gql\n\n@ contact_details-1.0.gql * | 2 contactnote_details-1.0.9q1\ni TE\nName, 2 ContactNotes {\nDateOfBirth, 3 ContactNoteType,\nGender, 4 Confidential,\nPrimaryAddress { s Subject,\n> ¢ AddressType Body\n\n} }\n\nil Eee |",
+      "word_count": 59,
+      "avg_confidence": 76.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Fragments Gi\n\n¢« AGraphQL feature that allow you to  adddress_rninimal- 1.0.94)\nquery a fragment that can be applied —! «  cetmarynadvesst\nto a given object | ++-addressParts\n¢ Useful in cases where the same sub-object —>: panacea. arts\ntype appears within multiple places in the ,\ndata you want to fetch 8 }\n—> fragment addressParts on Address {\n* For example, a Contact may have both AddressType\nPrimaryAddress and AllAddresses cael\nproperties that map to the same Address }\ntype\n\n+ Define the set of properties you want from an\nAddress once, as a fragment\n\n+ Reference that fragment in each context that\nyou want that same set of properties",
+      "word_count": 112,
+      "avg_confidence": 87.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Generate wrapper classes\n\n1. Add the fully-qualified name of the\nschema(s) in the codegen-\n\nschemas.txt file in schemas package\n\n2. From the Server drop-down in Studio,\nselect JsonSchemaCodegen\n\n* Execute by selecting Run ‘Server’ icon\n\n3. Generated wrapper classes will be\nunder\n\nconfiguration.srce.jsonschema\n\nGi\n\ntrn.ta.contact-1.0\ntrn.ta.contactnote-1.0\ntrn.ta.address-1.0\n\n2 codegen-schemas.tt\n\nBuild Run Tools VCS Wind:\n\n[i> Edit Configurations...\n(B TestServer\n\n[B Dropps\n\n[Server\n\nj=) JsonSchemaCodegen\n\nv Biljsonschema\n> Bil sita.contactv1_0\nv Bitmte\n\nv Ei address.vi_0\n© AddressDetails\nv Bai contactv1_0\n© ContactDetails\n© ContactUpdate\nv Emi contactnotev1_0\n© ContactNoteDetails",
+      "word_count": 89,
+      "avg_confidence": 77.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Example 1 — JSON Output\n\nDIR KH ewNP\n\n3\n\nuses gw.api.database.Query\nuses gw.api.database.Relop\nuses gw.api.json.JsonConfigAccess\n\n// Query for Contact\n\nvar queryObj = Query.make (ABContact)\nPublicID, Relop. Equals, \"ab:5\")\n\nqueryObj.. compare (\nvar targetObj =\n// Create IsonMapper object\n\n“Contactliotes™ : [ {\n“Body” : “William Andy has more questions related to data privacy\",\n“ContactiioteType” : “general”,\n“Subject” : “William Andy has an inguiry™ iy |\net\n\"Body\" : “William Andy has many general questions\",\n“ContactNotelype” : “general”,\n“Subject” : “William Andy has questions”\ndie\n“DaceogBirth™\n“Gender” : “M\",\n“Name” : \"William Andy\",\n“Primaryaddress” : {\nvaddressLinel” : \"345 Fir Lane,\nvAddressType” : \"hone\",\n\"City\" : “La Canada”,\n“PostalCode” : \"91352\",\n“State” : \"CAT\n\n'1980~08-06T04:00:00.0002\",\n\nvar jsonMapper = JsonConfigAccess.getMapper(\"trn.ta.contact-1.0\", \"ContactDetails\")\n\n// Create TransformResult object\n\nvar transformResult = jsonMapper.transform0bject (targetObj)\n\n// Create outpul\n\nvar payloadJSON = transformResult.toPrettyJsonString()\n\nprint (payloadJSON)",
+      "word_count": 138,
+      "avg_confidence": 76.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Example 2 — XML Output\n\nOptionally generate XSD\n\n+ Execute gwb genExternalSchemas in command prompt window\n+ Default output directory\n\n<app>\\modules\\configuration\\build\\external-schemas\n\n13\n—> 16\n\nas\n\nvar payloadXML = transformResult.toxmlString()\nprint (payloadXML)\n\n‘ceontactloreDetatla>\n‘eboappaitiiam Andy as many gteerel questionsc/B0ay>\n‘Ccontactictetypengeseraic/Coneactictetype>\n\n‘cSunyeceowillian Rody hav queationsc/Subyect>\n“/fontactionedetasia>\n\n‘entacetotebetatla>\n‘cboapWiiiam Andy has discovered « serious data entry semvec/Bodi>\n‘ContactioceTypenproblenc/ContactioteType>\n\n‘chubyeceo¥Willian Rady reported an iamvec/Subyect>\n“/Contacetotedetaiia>\n\n‘GlaneDWil tam Aadyc/tane>\n\n‘cinta Canancreiey>\n‘cSeavercnc/seate>\ncyreinaryaaaress>\n<fecanannenation\n\nGi\n\ncontactnote XSD\n\nant contact dachema\n\nPom versie\n\n‘argwtianespacen\"ntp://guldevire.com/esd/tentacontactnote 1.0\"\n\nclesertrorsbefantte\"qalstsea\"",
+      "word_count": 80,
+      "avg_confidence": 69.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Example 3 — Filtered JSON output G\n\n2 uses gw.api.database.Query\n\n2 uses gw.api.database.Relop\n\n3 uses gw.api.json.JsonConfighccess\n\n4 uses gw.api.json.mapping. JsonMappingOptions\nG // Query for Contact\n\nvar queryObj = Query.make(ABContact)\n\n// Create JsonMapper object\nvar jsonMapper = JsonConfigAccess.getMapper(\"trn.ta.contact-1.0\", \"ContactDetails\")\n\n// Create JsonMappingOptions object\n\nvar mappingOpts = new JsonMappingOptions()\nmappingOpts.withFilter(\"trn.ta.contact_details-1.0\"\n\n// Create TransformResult object\n\nvar transformResult = jsonMapper.transformObject (targetOb3, mappingOpts)\n\n// Create output\n\nvar payloadJSON = transformResult.toPrettyJsonString()\n\nprint (payloadJSON) {\n\n“DateOfBirth” : \"1980-08-06T04:00:00.0002\",\n\"Gender\" : \"M\",\n\"Name\" : \"William Andy\",\n\"PrimaryAddress” : {\n“AddressType\" : “home”",
+      "word_count": 85,
+      "avg_confidence": 82.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Schema file combination\n\n* Schema combination provides a\n\nmechanism for reuse of schemas\n\n* Ability to create a schema that logically\nextends and overrides one or more other\n\nschemas\n\n* If Acombines [B, C] listed in that order in\n\nthe combine property\n+ Contents of B are merged on top of C\n\n+ Contents of A are merged on top of the\ncombined schema\n\n+ Similar names are merged together to produce a single definition\n\n* Combination cannot remove definitions\n\n* Original schemas are not touched\n\nYBa integration\napis\n\nfitertmnte\nmappings ay |\n\neve\n\n> Bademo.ta\n> Bl gw.plframework\nv Da sita\n\ncontact-1,0.schemajzon\n\n\"$schema\" : \"http://json-schema.org/draft-04/schema#\",\n\"x-gw-combine\" : [\n\"trn.ta.contact-1.0\"\nI,\n“definitions” : {\n\"ContactDetails” : {\n\"type\" : \"object\",\n\"properties\" : {\n\"AssignedUser\" : {\n\"$ref\" : \"#/definitions/AssignedUser\"\n}\n}\nh\n\"AssignedUser\" : {\n\"type\" : \"object\",\n\"properties\" : {\n\"DisplayName\" : {\n\"type\" : \"string\"",
+      "word_count": 148,
+      "avg_confidence": 80.69,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Mapper file combination\n\n* Mapper combination provides a\nmechanism for reuse of mappers\n\n* Combination rules used for schemas apply\n\nto mappers\n\nv Bil integration\n> Bil apis\n> Eu filters.tmn.ta\nv Ea mappings\n> Bl demota\n\nGi\n\n\"schemaName\" : \"si.ta.contact-1.0\",\n\n\"combine\" : [\n\"trn.ta.contact-1.0\"\n\nly\n\n\"mappers\" : {\n\n\"ContactDetails\" : {\n\"schemaDefinition\" : \"ContactDetails\",\n\"root\" : “entity.ABContact\",\n\"properties\" : {\n\"AssignedUser\" : {\n\"path\" : \"ABContact.AssignedUser\",\n\"mapper\" : \"#/mappers/AssignedUser\"\n}\n}\nye\n\"AssignedUser\" : {\n\"schemaDefinition\" : \"AssignedUser\",\n\"root\" : “entity.User\",\n\"properties\" : {\n\"DisplayName\" : {\n\"path\" : \"User.DisplayName\"",
+      "word_count": 92,
+      "avg_confidence": 75.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Example 4 -— JSON output using combination =\n\n3 // Create JsonMapper object\n\n—Pio var jsonMapper = JsonConfigAccess.getMapper(\"si.ta.contact-1.0\", \"ContactDetails\")\n\nJSON Output\n> “Assignedvser™ = {\n\n“Contactiiores™ = [ {\n\"Body\" : “William Andy hes more questions related to date privacy\",\n“ContactlioteType” : “general\n“Subject” : \"Willian Andy has an inquiry”\nwt\n“Body” : “William Andy has many general questions\",\n“ContactNoteType” : “general\n\"Subject\" : \"Willian Andy has questions”\nMi\n“DaveOfBirch™ : *1980-08-06T04:00:00.0002\",\n\"Gender\" : “M\",\n“Maritalscatus\" : “married”,\nWane\" : “Willian Andy\",\n“PrimaryAddress” = (\n“AddressLinel™ : \"34S Fir Lane\",\n“AddressType” : \"hone\",\n“City” : “La Canada\",\n“PostalCode : \"91352\",\nState\" : \"CAT",
+      "word_count": 104,
+      "avg_confidence": 70.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Demonstration G\nCreate a User Integration View\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.47,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n_— — inorder to generate JSON wrapper classes, you must: (Select three)\n\n¢\no A) Add anew Run/Debug configuration whose main class is defined as:\ncom. guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\n\nF) Add the schema fully qualified name to the codegen-schemas.txt.\n\nwv\n\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegen Tool.\n\nRestart the server after wrapper classes are created.\n\n~ a=\n\nSeo e Soe esses see see",
+      "word_count": 79,
+      "avg_confidence": 87.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer Gi\n\n_- — Inorder to generate JSON wrapper classes, you must: (Select three)\n\nv7 “ A) Add anew Run/Debug configuration whose main class is defined as:\ncom.guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\n\nF) Add the schema fully qualified name to the codegen-schemas.txt.\n\nwv\n\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegenTool.\n\nRestart the server after wrapper classes are created.\n\nThe correct answers are A, D, and F.\n\nSoo eS eee soe ese ese",
+      "word_count": 83,
+      "avg_confidence": 84.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n/- — *-gw-type Is added in a JSON schema to map Guidewire internal types\nPa in cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\n\nSeo e Soe esses see see\n\nGi",
+      "word_count": 40,
+      "avg_confidence": 83.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\n/- — X-gw-type Is added in a JSON schema to map Guidewire internal types\nPa in cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\n\nTrue\n\nSoo eS eee soe ese ese\n\nGi",
+      "word_count": 41,
+      "avg_confidence": 79.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Lesson\nobjectives ¢ Define the purpose of Integration Views\n\nreview ¢ Configure an Integration View schema,\nmapping, and filter\n* Generate JSON output\n* Generate XML output",
+      "word_count": 27,
+      "avg_confidence": 87.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Student exercise\n\nCreate a Contact Integration View",
+      "word_count": 8,
+      "avg_confidence": 95.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

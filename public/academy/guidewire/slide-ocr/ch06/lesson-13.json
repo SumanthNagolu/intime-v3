@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-13",
+    "slide_count": 29,
+    "slides_with_text": 24,
+    "total_words": 1227,
+    "avg_confidence": 86.12,
+    "processing_time_seconds": 12.78,
+    "extracted_at": "2026-02-13T12:14:48.689186"
+  },
+  "full_text": "Using Trouble Tickets to Resolve Issues\n\nLesson\nobjectives ¢ Describe the lifecycle of a trouble ticket\n\n¢ Explain how trouble tickets are used to track\nand resolve issues\n\n* Create a trouble ticket with holds and\nassociated activities\n\n« Modify and close trouble tickets\n\ni Avoiding delinquency Gi\n\nBusiness\n\nAnalyst \\, = Is there a way to resolve an issue\n: before a delinquency occurs?\n\nSuppose a customer warns us\na the payment will be late .\n\nZhang \\}\nBilling Clerk\n\nAvoiding delinquency\nmakes sense for everyone.\nTrouble tickets are often\nused to place a hold on\ndelinquency processing.\n\n| Trouble tickets\n\n¢ Atrouble ticket is a mechanism for tracking and resolving issues in\nBillingCenter\n\n¢ Allows multiple users to track and escalate an issue\n\n* Can be used to hold automatic processing\n\n* Can be escalated automatically if trouble ticket is not closed within the expected time\nTrouble ticket lifecycle\n\ndue date escalation date\n\ne=9—_____________|____- ges\n1\n\nCreated by a user or a business rule Flagged in UI Holds released\n\n* Holds placed (optional)\n\n¢ Assigned to an owner\n\ni A trouble ticket has an owner and related entities Gi\n\n« Atrouble ticket has an eee\nowner, who is responsible lao account\nfor ensuring the trouble\nticket is closed\n\n* Owner can be explicitly or [v9] policy\nautomatically assigned when @\ntrouble ticket is created | A'S\n* Atrouble ticket is usually 3) . OOO] Policy\nassociated with an account, owner trouble ticket als Period\npolicy, policy period, and/or =\n\nproducer @\nproducer\n\n| Trouble ticket holds\n\n¢ Atrouble ticket hold blocks automated system behavior while\nbilling problems are investigated and corrected\n\n« Examples: delinquency, invoice sending, disbursements (refunds)\n¢ Holds are automatically released\n\n« When the trouble ticket is closed, or\n\n« When their release dates are reached If they have a release date\n\n¢ You can edit trouble ticket holds\n\nRelated Entities | Notes | Activities | Transactions | Holds\n\nHold Release Date\n\n+ Add or remove holds\n\n« Add, remove, or modify release dates\n\nInvoice / Statement Sending\n\nDelinquency 11/30/2018\n\ni A trouble ticket scenario Gi\n\nAshley\nPolicyholder\n\nss\n\n| just received an overdue notice,\nbut | reduced my coverage last\nweek and I’m waiting for an\nadjusted bill.\n\nZhang i\nBilling Clerk Wes\n\n| can help you. Meanwhile,\nI'll put a temporary hold on\nyour billing until we resolve\n\nthe issue.\n\ni Demonstration G\n\nCreate a trouble ticket\n= Place holds on delinquency and invoice\nsending\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Maintaining a trouble ticket\n\n* You can edit an open trouble ticket at\n\nany time\n* You can add/remove:\n* Related entities\n* Transactions (for reference only)\n* Holds\n\ne You can create new notes and\nactivities\n\n¢ You cannot edit or reopen\na closed trouble ticket\n\nTrouble Ticket [sw roubierickes |)\n\n‘Trouble Ticket Information\n\nTicket Number 11000000000\nType ‘Customer Complaint\nSubject ‘Change in coverage for DEM00S70\nAssigned To Jane Sweeny (Operations)\nCreated By Super User\nDate Opened 95/05/2019\nDue Date 05/07/2019\nEscalation Date 05/08/2019\nPriority High\n\n‘open\n\nName >\nDEMO0S70\nBAOL-BHOTELS-1\n\nClick to edit Trouble\n\nTicket Information fields\n\nClose\n\nDetailed Description\n\nPolicyholder removed one car from commercial\nauto policy. Bill needs to be adjusted. Placing holds\n‘onbilling and delinquency.\n\nEach tab has its own\nset of edit buttons\n\ni An activity is a reminder to do something Gi\n\n¢ Activities enable you to split a trouble ticket into assignable tasks\n¢ Activities can be assigned (to others or yourself) or shared\n\n¢ Like trouble tickets, activities have a priority, a due date, and an escalation date\n\n5),\n— | KA * Closing the trouble ticket changes\n\nActivity\nstatus of all open associated\n\nactivities to Complete\n\nActivity Info\n‘Subject Remove late fee\nDescription Policy: BAO1-BHOTELS\n\nip See detailed description on trouble ticket Open activities are on this trouble ticket. Click OK to close the ticket and its\n\nactivities.\n\nPriority High\n\n7 ® OK Cancel\nDue Date 05/17/2019\nEscalation Date 05/31/2019\nAssigned to Dan Henson (Headquarters)\n\nStatus Open\n\ni Removing a late fee\n\nAshley @\nolonoaeg ¥ Thanks, Zhang.\nJust one more thing —please\n\n\"7 > remove the late fee.\n\nSure. | can do\nthat for you.\n\nZhang\nBilling Clerk\n\ni Demonstration G\n\nAdd an activity to remove late fee\n—= Close the trouble ticket\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_- — Whatare the primary entities that can be associated with a trouble ticket?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nAnswer Gi\n\n_- — Whatare the primary entities that can be associated with a trouble ticket?\n\n¢\noo Account, producer, policy, and policy period.\n\nSoe ee ee eee Soo eSeoe Ss\n\nQuestion\n\n_— — Whatis the result of associating an entity with a trouble ticket?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nAnswer Gi\n\n_- — Whatis the result of associating an entity with a trouble ticket?\n¢\noo An alert is displayed on the summary screen of the associated entity (if you select both\nthe policy and policy period, you will see two alerts on the Policy Summary screen).\n\nAlso, any trouble ticket holds are applied to entities in the set of related entities.\n\nSoe ee ee eee Soo eSeoe Ss\n\nQuestion\n\n_— — !fa trouble ticket hold is placed on invoice sending, what happens on the\nY bill date of a related invoice?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi\n\nAnswer\n\n_— — !fa trouble ticket hold is placed on invoice sending, what happens on the\n7 bill date of a related invoice?\n\nOn the bill date, the invoice status is changed to Carried Forward and the invoice\nitems are moved to the next planned invoice.\n\n¢\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi\n\nQuestion\n\n_- — fahold is placed on delinquency and the trouble ticket is subsequently\n¢ closed, what happens to incomplete delinquency events with target\n¢ 5\ndates in the past?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi\n\nAnswer\n\n_- — 'fahold is placed on delinquency and the trouble ticket is subsequently\n¢ closed, what happens to incomplete delinquency events with target\n¢ S\ndates in the past?\n\nThe target dates of those events are adjusted to occur in the future.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi\n\nQuestion\n\n_- — Why is it advisable to complete all associated activities before you close\n¢ a trouble ticket?\n\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nGi\n\nAnswer\n\n_- — Why is it advisable to complete all associated activities before you close\n7 a trouble ticket?\n¢\nEach activity represents a task that needs to be done. If an activity is not completed,\n\nthis is an indication of a task that has not been completed.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi\n\nLesson\nobjectives ¢ Describe the lifecycle of a trouble ticket\n\nreview ¢ Explain how trouble tickets are used to track\nand resolve issues\n* Create a trouble ticket with holds and\nassociated activities\n« Modify and close trouble tickets\n\ni Student exercise\n\nUse a trouble ticket to hold a\ndelinquency",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Using Trouble Tickets to Resolve Issues",
+      "word_count": 6,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe the lifecycle of a trouble ticket\n\n¢ Explain how trouble tickets are used to track\nand resolve issues\n\n* Create a trouble ticket with holds and\nassociated activities\n\n« Modify and close trouble tickets",
+      "word_count": 38,
+      "avg_confidence": 89.55,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Avoiding delinquency Gi\n\nBusiness\n\nAnalyst \\, = Is there a way to resolve an issue\n: before a delinquency occurs?\n\nSuppose a customer warns us\na the payment will be late .\n\nZhang \\}\nBilling Clerk\n\nAvoiding delinquency\nmakes sense for everyone.\nTrouble tickets are often\nused to place a hold on\ndelinquency processing.",
+      "word_count": 55,
+      "avg_confidence": 88.28,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Trouble tickets\n\n¢ Atrouble ticket is a mechanism for tracking and resolving issues in\nBillingCenter\n\n¢ Allows multiple users to track and escalate an issue\n\n* Can be used to hold automatic processing\n\n* Can be escalated automatically if trouble ticket is not closed within the expected time\nTrouble ticket lifecycle\n\ndue date escalation date\n\ne=9—_____________|____- ges\n1\n\nCreated by a user or a business rule Flagged in UI Holds released\n\n* Holds placed (optional)\n\n¢ Assigned to an owner",
+      "word_count": 81,
+      "avg_confidence": 87.65,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i A trouble ticket has an owner and related entities Gi\n\n« Atrouble ticket has an eee\nowner, who is responsible lao account\nfor ensuring the trouble\nticket is closed\n\n* Owner can be explicitly or [v9] policy\nautomatically assigned when @\ntrouble ticket is created | A'S\n* Atrouble ticket is usually 3) . OOO] Policy\nassociated with an account, owner trouble ticket als Period\npolicy, policy period, and/or =\n\nproducer @\nproducer",
+      "word_count": 74,
+      "avg_confidence": 83.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Trouble ticket holds\n\n¢ Atrouble ticket hold blocks automated system behavior while\nbilling problems are investigated and corrected\n\n« Examples: delinquency, invoice sending, disbursements (refunds)\n¢ Holds are automatically released\n\n« When the trouble ticket is closed, or\n\n« When their release dates are reached If they have a release date\n\n¢ You can edit trouble ticket holds\n\nRelated Entities | Notes | Activities | Transactions | Holds\n\nHold Release Date\n\n+ Add or remove holds\n\n« Add, remove, or modify release dates\n\nInvoice / Statement Sending\n\nDelinquency 11/30/2018",
+      "word_count": 90,
+      "avg_confidence": 87.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i A trouble ticket scenario Gi\n\nAshley\nPolicyholder\n\nss\n\n| just received an overdue notice,\nbut | reduced my coverage last\nweek and I’m waiting for an\nadjusted bill.\n\nZhang i\nBilling Clerk Wes\n\n| can help you. Meanwhile,\nI'll put a temporary hold on\nyour billing until we resolve\n\nthe issue.",
+      "word_count": 52,
+      "avg_confidence": 87.26,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Demonstration G\n\nCreate a trouble ticket\n= Place holds on delinquency and invoice\nsending\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 45,
+      "avg_confidence": 93.51,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Maintaining a trouble ticket\n\n* You can edit an open trouble ticket at\n\nany time\n* You can add/remove:\n* Related entities\n* Transactions (for reference only)\n* Holds\n\ne You can create new notes and\nactivities\n\n¢ You cannot edit or reopen\na closed trouble ticket\n\nTrouble Ticket [sw roubierickes |)\n\n‘Trouble Ticket Information\n\nTicket Number 11000000000\nType ‘Customer Complaint\nSubject ‘Change in coverage for DEM00S70\nAssigned To Jane Sweeny (Operations)\nCreated By Super User\nDate Opened 95/05/2019\nDue Date 05/07/2019\nEscalation Date 05/08/2019\nPriority High\n\n‘open\n\nName >\nDEMO0S70\nBAOL-BHOTELS-1\n\nClick to edit Trouble\n\nTicket Information fields\n\nClose\n\nDetailed Description\n\nPolicyholder removed one car from commercial\nauto policy. Bill needs to be adjusted. Placing holds\n‘onbilling and delinquency.\n\nEach tab has its own\nset of edit buttons",
+      "word_count": 130,
+      "avg_confidence": 86.2,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i An activity is a reminder to do something Gi\n\n¢ Activities enable you to split a trouble ticket into assignable tasks\n¢ Activities can be assigned (to others or yourself) or shared\n\n¢ Like trouble tickets, activities have a priority, a due date, and an escalation date\n\n5),\n— | KA * Closing the trouble ticket changes\n\nActivity\nstatus of all open associated\n\nactivities to Complete\n\nActivity Info\n‘Subject Remove late fee\nDescription Policy: BAO1-BHOTELS\n\nip See detailed description on trouble ticket Open activities are on this trouble ticket. Click OK to close the ticket and its\n\nactivities.\n\nPriority High\n\n7 ® OK Cancel\nDue Date 05/17/2019\nEscalation Date 05/31/2019\nAssigned to Dan Henson (Headquarters)\n\nStatus Open",
+      "word_count": 118,
+      "avg_confidence": 89.14,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Removing a late fee\n\nAshley @\nolonoaeg ¥ Thanks, Zhang.\nJust one more thing —please\n\n\"7 > remove the late fee.\n\nSure. | can do\nthat for you.\n\nZhang\nBilling Clerk",
+      "word_count": 32,
+      "avg_confidence": 88.97,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Demonstration G\n\nAdd an activity to remove late fee\n—= Close the trouble ticket\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 45,
+      "avg_confidence": 92.64,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question G\n\n_- — Whatare the primary entities that can be associated with a trouble ticket?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe",
+      "word_count": 26,
+      "avg_confidence": 78.08,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer Gi\n\n_- — Whatare the primary entities that can be associated with a trouble ticket?\n\n¢\noo Account, producer, policy, and policy period.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "word_count": 31,
+      "avg_confidence": 78.72,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n_— — Whatis the result of associating an entity with a trouble ticket?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe",
+      "word_count": 24,
+      "avg_confidence": 77.42,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer Gi\n\n_- — Whatis the result of associating an entity with a trouble ticket?\n¢\noo An alert is displayed on the summary screen of the associated entity (if you select both\nthe policy and policy period, you will see two alerts on the Policy Summary screen).\n\nAlso, any trouble ticket holds are applied to entities in the set of related entities.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "word_count": 70,
+      "avg_confidence": 88.94,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_— — !fa trouble ticket hold is placed on invoice sending, what happens on the\nY bill date of a related invoice?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "word_count": 31,
+      "avg_confidence": 75.9,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n_— — !fa trouble ticket hold is placed on invoice sending, what happens on the\n7 bill date of a related invoice?\n\nOn the bill date, the invoice status is changed to Carried Forward and the invoice\nitems are moved to the next planned invoice.\n\n¢\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi",
+      "word_count": 55,
+      "avg_confidence": 84.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n_- — fahold is placed on delinquency and the trouble ticket is subsequently\n¢ closed, what happens to incomplete delinquency events with target\n¢ 5\ndates in the past?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "word_count": 38,
+      "avg_confidence": 77.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n_- — 'fahold is placed on delinquency and the trouble ticket is subsequently\n¢ closed, what happens to incomplete delinquency events with target\n¢ S\ndates in the past?\n\nThe target dates of those events are adjusted to occur in the future.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi",
+      "word_count": 51,
+      "avg_confidence": 84.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n_- — Why is it advisable to complete all associated activities before you close\n¢ a trouble ticket?\n\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "word_count": 29,
+      "avg_confidence": 77.03,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n_- — Why is it advisable to complete all associated activities before you close\n7 a trouble ticket?\n¢\nEach activity represents a task that needs to be done. If an activity is not completed,\n\nthis is an indication of a task that has not been completed.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi",
+      "word_count": 56,
+      "avg_confidence": 86.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Lesson\nobjectives ¢ Describe the lifecycle of a trouble ticket\n\nreview ¢ Explain how trouble tickets are used to track\nand resolve issues\n* Create a trouble ticket with holds and\nassociated activities\n« Modify and close trouble tickets",
+      "word_count": 39,
+      "avg_confidence": 89.69,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "i Student exercise\n\nUse a trouble ticket to hold a\ndelinquency",
+      "word_count": 11,
+      "avg_confidence": 88.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

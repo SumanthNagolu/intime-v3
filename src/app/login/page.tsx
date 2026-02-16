@@ -62,7 +62,7 @@ const PORTALS: Array<{
     color: 'text-charcoal-600',
     bgColor: 'hover:bg-charcoal-50',
     borderColor: 'hover:border-charcoal-500',
-    redirectPath: '/talent/portal',
+    redirectPath: '/employee/recruiting/talent',
   },
   {
     id: 'academy',

@@ -1,0 +1,445 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-08",
+    "slide_count": 39,
+    "slides_with_text": 34,
+    "total_words": 1680,
+    "avg_confidence": 85.0,
+    "processing_time_seconds": 12.68,
+    "extracted_at": "2026-02-15T18:16:49.861553"
+  },
+  "full_text": "Configuring Claim Contacts\n\nLesson\nobjectives\n\n¢ Configure contact roles\n¢ Configure claim contact widgets in the user\ninterface\n\nContacts and roles\n\n| Contacts: review Gi\n\nAcontact is any person, company, or place related to a claim.\n\nContact\n\n° L »<\n2: iS\n\nClaimant Reporter Doctor Auto Repair Shop Hospital Court\n\nLocal versus linked contacts G\n\nLocal Contacts - Linked Contacts\nClaim Oe po-no2ia1 = Claim 000-00-002003 * — Claim 000-00-002006\n\n: Xl, : sh\n. 2D, . eH,\na TZ es ded fo : Ges fare : Ges fare\nStanley Poole (Witness) = pr. Matt Sawyer (1) \" Dr.MattSawyer Express Auto\n\nClaimCenter\n\nObjects in & : & =z\nClaimCenter cas wecedecces : a\nObjects in\nContactManager w v try)\nlo entry) L\n7} o_o)\n© =\n\n: Express Auto\nContact Manager ' Dr. Matt Sawyer\n\n| Roles Gi\n\n¢ Every contact associated with a claim has one or more roles that identify its\nrelationship to the claim\n\n« Examples: Doctor, Witness, Claimant, Adjuster, Judge, Hospital, Repair Shop...\n* Contacts on multiple claims may have different roles on each claim\n\n* The contact’s role is specific to the claim\n\n| Subtypes of contact\n\nContact\nPrimary Primary Address\nSubtypes Primary Phone\nFirst Name\n\nLast Name\n\nSecondary\nSubtypes\n\nPrimary Address\nPrimary Phone\nFirst Name\n\nLast Name\n\nLaw License #\nSpecialty\n\nAttorney\n\nGi\n\nPrimary Address\nPrimary Phone\n\nPrimary Address Primary Address\n\nPrimary Phone Primary Phone\nName Name\nEmployees\n\nPrimary Address\nPrimary Phone\nName\nVenueType\n\nPrimary Address Primary Address\n\nAssembly\n\nPrimary Phone Primary Phone\nName Room Name\nEmployees Venue Type\nTowing License # Room #\nCapacity\n\n| Contact role data model Gi\n\nContact Role Data Model in the UI.\n\nRoles\nRelated To Role <\n(3) 3rd Party Vehicle - Bo Simpson Claimant\n(4) 3rd Party Bodily Injury- Bo Simpson Claimant\nBo Simpson, Moderate Fracture Injured Party\n1990 Mazda 626 (7FDG745 / California) Driver\nPerson\n\nName Bo Simpson\n\n| Contact role data model: Claim and Contact Gi\n\nContact Role Data Model in the UI: Contact.\n\nRoles\n\nRelated To Role\n(3) 3rd Party Vehicle-Bo Simpson Claimant\n(4) 3rd Party Bodily Injury- 80 Simpson Claimant\n\nBo Simpson, Moderate Fracture Injured Party Stores fundamental\n1990 Mazda 626 (7FG745 /California) Driver information about a\n\nclaim\nPerson\n\nStores fundamental\ninformation about a\ncontact\n\n| Contact role data model: ClaimContact Gi\nContact Role Data Model in the UI: ClaimContact.\n\nRoles\nRelated To Role\n\nClaimContact (3) 3rd PartyVehicle-Bo Simpson —_— Claimant\n(4) 3rd Party Bodily Injury- Bo Simpson Claimant\n\nGo Simpson, Moderate Fracture Injured Party\n\n1990 Mazda 626 (7FDG745 / California) Driver\n\nContacts Array\n\nBo Simpson\n\nLinks contact to a claim and\nits role(s) on the claim\n\n| Contact role data model: ClaimContactRole Gi\nContact Role Data Model in the UI: ClaimContact Role.\n\nRoles\nRelated To\n(3) 3rd Party Vehicle-B0 Simpson ff Claimant\n(4) 3rd Party Bodily injury - Bo Simpsoiff Claimant\nBo Simpson, Moderate Fracture Injured Party\n1990 Mazda 626 (7FDG745 / California) Driver\n\nPerson ClaimContact\n\nName Bo Simpson Role\n\nRoles Array\n\nIdentifies role(s)\n\nClaimContactRole contact has on claim\n\n| Contact role data model: ClaimContactRoleOWner [j\nContact Role Data Model in the UI: ClaimContactRoleOwner.\n\nRoles\nRelated To Role\n\n(3) 3rd Party Vehicle-B0 Simpson [Claimant\n(4) 3rd Party Bodily Injury - Bo Simpsonf§{ Claimant\nBo Simpson, Moderate Fracture Injured Party\n\n1990 Mazda 626 (7FDG745 / California) f[ Driver\n\nClaimContact\n\nPerson\n\nRole Owner\nName Bo Simpson at\n* Contact\nPerson — Company - Place\n*\nOwning ClaimContactRoleOwner\n\nClaimContactRole\n\n| Configuring contact roles\n\nThe ContactRole typelist lists all contact roles.\n\n‘YShowAlly)\n\nElement Code\n> typefilter specialhandli.\n¢ AU_EXT\ntypecode checkpayee\ntypecode negcontact\ntypecode claimant\n\ntypecode other\n\nCheck Payee\nNegotiation\nClaimant\nOther\n\nPriority\n\nlol\n\nName\n\nname\n\ndesc\nidentifierCode\npriority\nretired\n\nE) contactRoletti W) 32\n\nValue\nAU_EXT\nAdministrative Law Judge\nAdministrative Law Judge\n\n| Configuring contact role categories G\n\nThe ContactRoleCategory typelist enables filtering on the contacts list view.\n\nContactRoleCategory.ttx\n|i categoyY [fl — |VshowAllvy pe =\nElement Code Name _| Priority\nY typelistexten: ContactRoleC..._Used for grou...\n> typecode primary Primary roles. | 1\n> typecode secondary | Secondary rol...) 2\n> typecode vendor Vendors 3\n\nY typecode litigation Litigation roles} 4\n\nContacts\nName Roles Contact Prohibited? > Phone > Pinoy roles\nMike's Auto detaling shop Service Vendor No 579-628-7456 23154\n\n“Former” roles.\n\nBasics | Addresses | Related Contacts | Reviews\n\n| Categorizing roles\n\nEach typecode in the\nContactRoleCategory typelist is\nassociated with one or more typecode in\nthe ContactRole (category) typelist.\n\n* These determine which roles appear in\nwhich filter in the Contacts screen\n\n‘Ada Existing Contact al\n\nName + Roles\n\nStan -\nNawton | Claimant, Covered Party, Driver, Injured Party\nBo -\n\nSimpson f Claimant, Driver, Injured Party\n\nElement\n\nY typelistextension\nY typecode\n\ncategory\ncategory\ncategory\ncategory\ncategory\ncategory\ncategory\n\n> typecode\n\nCode Name Priority\nContactRoleCateg... Used for groupin..\n\nreporter\naltcontact\nTecoverypa)\n‘checkpayee]\n‘secondary\n\nPrimary roles 1\nContactRole\nContactRole\nContactRole\nContactRole\nContactRole\nContactRole\nContactRole\nSecondaryroles 2\n\nPrimary roles 7\n\nContact Prohibited? > Phone > Address >\n\n818-446-\n1206\n\n818-446-\n1206\n\n619-275-\n2346\n\n287\nKensington\nRd. #1\n\n8356\nMountain\nView Rd.\n\n435 Duarte\nAve\n\ncity =\n\n‘South\nPasadena\n\nSan |\nBemadino\n\nArcadia\n\n| Contact role type constraints [a\n\nWhich subtypes can have this role?\n\n7] Role: Primary Physician\n2 Role: Primary Physician\n\n| Entity role constraints\n\n¢« How many contacts can\nhave this role?\n\n¢ Which entities can own\nthis role?\n\n« Which loss types can be\nassociated with this role?\n\nPerson\n\non °: 2 Role: Driver\n\n» 2\n\nVehicle Incident\n\nVehicle Incident\n\nA O84 &\n\nVehicle Incident Auto © Shop\n\nQe Yow Driver\n\nFixed Property Incident\n\nRole: Driver\n\n| Configuring contact role type constraints G\n\nContact role constraints are configured in entityroleconstraints-config.xml.\n\nThe role “casemgmtco” can only be\nassigned to a Company\n\n<ContactRoleTypeConstraint contactRoleCode=\"casemgmtco\" contactSubtype=\"Company\"/>\n<ContactRoleTypeConstraint contactRoleCode=\"casemgr\" contactSubtype=\"Person\"/>\n\n<ContactRoleTypeConstraint contactRoleCod laimant\" contactSubtype=\"Person\">\n\nry\" entityRef=\"Exposure\"/>\n\nClaimants ..-except that a Company may be a\nmust be Claimant for an Exposure\nPersons...\n\n| Configuring entity role constraints G\n\nEntity role constraints are also configured in entityroleconstraints-config.xml.\n\nEntityRef: A Claim can\nhave a claimant\n\n<EntityRoleConstraint>\n\n<RoleConstraint constraintType=\"Exclusive\"/> <— Cherara er tate One\n\n<RoleConstraint constraintType=\"Required\"> . . .\n<AdditionalInfo propertyName=\"LossType\" value=\"\"C\"/>  <am (claimant is required for\n\n</RoleConstraint> os\n\n<RoleConstraint constraintType=\"Prohibited\">\n<AdditionalInfo propertyName=\"LossType\" value:\n<AdditionalInfo propertyName=\"LossType\" val\n<AdditionalInfo propertyName=\"LossType\" value:\n\n</RoleConstraint>\n\n</RoleRef>\n\n'AUTO\" />\n\n0 ...out prohibited for Auto\nPR\"/> <j ,\ncael Property, and GL\n\n| Demonstration G\n\nAdding a Claim Contact Role\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Claim contact widgets Gi\n\n1. Select contacts already associated with the claim\n2. Add a new contact\n4 3. Search the address book for an existing contact\n\nFred Cole\n\nKaren Egertson\nBill Henderson\nMark Henderson\n\n2 New Person\n\n3\n\n| Types of claim contact widget\n\nTwo types:\n\n* Claim Contact Cell — used in list views\n\n* Claim Contact Input — used in detail views\n\nToobox  stuctxe\n\n© List Views\n\nY Common App Cells\nB claim associations Cell\n\nICD Code\n\nDescription\n\nProvider Name\n\naMedicalDiagnosisiCDCode\n\n[aMedicalDia..\n\nProvider Name” >\n\nCarlos Jiminez >\n\nPrimary Counsel\n\n| Claim contact widget basic properties\n\nPrimary Counsel\nPlaintiff Attorney\n\nPlaintiff Law Firm\n\nClaim Contact Input\nY Basic properties\ndlaim*\neditable\niat\nlabel\nfequired\nvalue*\nvalueRange*\nv Advanced properties\n\nThe claim with which the\ncontact is associated\n\ntrue\n‘Counsel_PlaintiffAttorney\n\nDisplayKey. get (\"NVV.Matter. SubView.MatterGeneral . Counsel. Plaintiffattorney\")\n\nThe claim contact the\nwidget refers to\n\nClaim contact widget properties: Gi\nValueRange and ValueType\n\nPrimary Counsel |\n\nsenses —— —_——]\n\nPlaintiff Law Firm\n\nvalue*\nvalueRange*\nv Advanced properties\n\nMatter.Claim.RelatedAttorneyArray\n\nvalueType entity. Attorney\n\nWhere the values for the What type of entity\nwidget can be drawn from the widget can hold\n\nRelatedAdjudicatorArray Derived array returning Adjudicator (virtual property)”\n\nRelatedAttorneyArrayj Derived array returning Attorney\n\nRelatedAutoRepairShopArray Derived array returning AutoRepairShop (virtual property)”\n\n| Claim contact widget advanced properties: G\nnewContactMenu\n\n¢« The newContactMenu property determines\nwhat the widget’s menu displays\n\n{Term ReportedBy...\n(TermHowReported.... Claim.HowReported\n\n* ClaimNewPersonOnlyPickerMenultemSet only\nallows persons to be selected\n\n* ClaimNewContactPickerMenultemSet allows all newContociens Caren PesononyPekeenahenset\ncontact types to be selected —7\n* This is the default if nothing is entered maported By\nA ClaimNewCompanyOnlyPickerMenultemSet How Reported Phone\nFull list of A claimNewContactPickerMenultemSet Name + (mone\npicker menus El claimNewDoctorOnlyPickerMenultemSet a —\n\n(You can also —p i claimNewPersonOnlyPickerMenultemSet\nconfigure Ei claimNewRepairShopOnlyPickerMenultemSet\nnew menus) hl claimnewServiceRequestSpecialistPickerMenultemSet\nEi claimNewTowingOnlyPickerMenultemSet\nA ClaimNewVendorOnlyPickerMenultemSet\n\n‘Search\n\nView Contact Details\n\n| Demonstration G\n\nAdding a Claim Contact Widget\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — What is the difference between a contact type and a contact role?\n\n¢\n¢\n4\n\nSS SS SSS Se SH SSS Se\n\nAnswer\n\n_— — What is the difference between a contact type and a contact role?\n¢\n\n¢\n7\n\nThe correct answer is type and subtype are object types in the data model. Contact\nroles identify the contact’s relationship to the claim or exposure.\n\nSS SS Se SS SH SH Se\n\nQuestion G\n\n,— — What is the difference between a contact role type constraint and an\n¢ entity role constraint?\n\n¢\n4\n\nSS SS SSS Se SH SSS Se\n\nAnswer G\n\n_— — What is the difference between a contact role type constraint and an\n¢ entity role constraint?\n\n¢\n7\n\nThe correct answer is contract role type constraints determine which subtypes of the\ncontact entity can have the role. Entity role constraints determines what entities can\n“own” the role, and how many contacts with the role are allowed on the entity.\n\nSS SS Se SS SH SH Se\n\nQuestion G\n\n_— — !fyou need to add a claim contact to a detail view, which widget type\nY should you use?\n\nSS SS SSS Se SH SSS Se\n\nAnswer G\n\n_— — 'fyou need to add a claim contact to a detail view, which widget type\nY should you use?\n\nThe correct answer is a claim contact input.\n\nSS SS Se SS SH SH Se\n\nLesson\nobjectives ¢ Configure contact roles\n\nreview * Configure claim contact widgets in the user\ninterface\n\n| Student exercise\n\nAdding a Claim Contact Role",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Claim Contacts",
+      "word_count": 3,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 549
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Configure contact roles\n¢ Configure claim contact widgets in the user\ninterface",
+      "word_count": 15,
+      "avg_confidence": 88.33,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Contacts and roles",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Contacts: review Gi\n\nAcontact is any person, company, or place related to a claim.\n\nContact\n\n° L »<\n2: iS\n\nClaimant Reporter Doctor Auto Repair Shop Hospital Court",
+      "word_count": 29,
+      "avg_confidence": 85.57,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Local versus linked contacts G\n\nLocal Contacts - Linked Contacts\nClaim Oe po-no2ia1 = Claim 000-00-002003 * — Claim 000-00-002006\n\n: Xl, : sh\n. 2D, . eH,\na TZ es ded fo : Ges fare : Ges fare\nStanley Poole (Witness) = pr. Matt Sawyer (1) \" Dr.MattSawyer Express Auto\n\nClaimCenter\n\nObjects in & : & =z\nClaimCenter cas wecedecces : a\nObjects in\nContactManager w v try)\nlo entry) L\n7} o_o)\n© =\n\n: Express Auto\nContact Manager ' Dr. Matt Sawyer",
+      "word_count": 85,
+      "avg_confidence": 66.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Roles Gi\n\n¢ Every contact associated with a claim has one or more roles that identify its\nrelationship to the claim\n\n« Examples: Doctor, Witness, Claimant, Adjuster, Judge, Hospital, Repair Shop...\n* Contacts on multiple claims may have different roles on each claim\n\n* The contact’s role is specific to the claim",
+      "word_count": 53,
+      "avg_confidence": 90.11,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Subtypes of contact\n\nContact\nPrimary Primary Address\nSubtypes Primary Phone\nFirst Name\n\nLast Name\n\nSecondary\nSubtypes\n\nPrimary Address\nPrimary Phone\nFirst Name\n\nLast Name\n\nLaw License #\nSpecialty\n\nAttorney\n\nGi\n\nPrimary Address\nPrimary Phone\n\nPrimary Address Primary Address\n\nPrimary Phone Primary Phone\nName Name\nEmployees\n\nPrimary Address\nPrimary Phone\nName\nVenueType\n\nPrimary Address Primary Address\n\nAssembly\n\nPrimary Phone Primary Phone\nName Room Name\nEmployees Venue Type\nTowing License # Room #\nCapacity",
+      "word_count": 73,
+      "avg_confidence": 94.47,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Contact role data model Gi\n\nContact Role Data Model in the UI.\n\nRoles\nRelated To Role <\n(3) 3rd Party Vehicle - Bo Simpson Claimant\n(4) 3rd Party Bodily Injury- Bo Simpson Claimant\nBo Simpson, Moderate Fracture Injured Party\n1990 Mazda 626 (7FDG745 / California) Driver\nPerson\n\nName Bo Simpson",
+      "word_count": 51,
+      "avg_confidence": 90.69,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Contact role data model: Claim and Contact Gi\n\nContact Role Data Model in the UI: Contact.\n\nRoles\n\nRelated To Role\n(3) 3rd Party Vehicle-Bo Simpson Claimant\n(4) 3rd Party Bodily Injury- 80 Simpson Claimant\n\nBo Simpson, Moderate Fracture Injured Party Stores fundamental\n1990 Mazda 626 (7FG745 /California) Driver information about a\n\nclaim\nPerson\n\nStores fundamental\ninformation about a\ncontact",
+      "word_count": 60,
+      "avg_confidence": 82.8,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Contact role data model: ClaimContact Gi\nContact Role Data Model in the UI: ClaimContact.\n\nRoles\nRelated To Role\n\nClaimContact (3) 3rd PartyVehicle-Bo Simpson —_— Claimant\n(4) 3rd Party Bodily Injury- Bo Simpson Claimant\n\nGo Simpson, Moderate Fracture Injured Party\n\n1990 Mazda 626 (7FDG745 / California) Driver\n\nContacts Array\n\nBo Simpson\n\nLinks contact to a claim and\nits role(s) on the claim",
+      "word_count": 62,
+      "avg_confidence": 86.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Contact role data model: ClaimContactRole Gi\nContact Role Data Model in the UI: ClaimContact Role.\n\nRoles\nRelated To\n(3) 3rd Party Vehicle-B0 Simpson ff Claimant\n(4) 3rd Party Bodily injury - Bo Simpsoiff Claimant\nBo Simpson, Moderate Fracture Injured Party\n1990 Mazda 626 (7FDG745 / California) Driver\n\nPerson ClaimContact\n\nName Bo Simpson Role\n\nRoles Array\n\nIdentifies role(s)\n\nClaimContactRole contact has on claim",
+      "word_count": 63,
+      "avg_confidence": 87.32,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Contact role data model: ClaimContactRoleOWner [j\nContact Role Data Model in the UI: ClaimContactRoleOwner.\n\nRoles\nRelated To Role\n\n(3) 3rd Party Vehicle-B0 Simpson [Claimant\n(4) 3rd Party Bodily Injury - Bo Simpsonf§{ Claimant\nBo Simpson, Moderate Fracture Injured Party\n\n1990 Mazda 626 (7FDG745 / California) f[ Driver\n\nClaimContact\n\nPerson\n\nRole Owner\nName Bo Simpson at\n* Contact\nPerson — Company - Place\n*\nOwning ClaimContactRoleOwner\n\nClaimContactRole",
+      "word_count": 67,
+      "avg_confidence": 84.23,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Configuring contact roles\n\nThe ContactRole typelist lists all contact roles.\n\n‘YShowAlly)\n\nElement Code\n> typefilter specialhandli.\n¢ AU_EXT\ntypecode checkpayee\ntypecode negcontact\ntypecode claimant\n\ntypecode other\n\nCheck Payee\nNegotiation\nClaimant\nOther\n\nPriority\n\nlol\n\nName\n\nname\n\ndesc\nidentifierCode\npriority\nretired\n\nE) contactRoletti W) 32\n\nValue\nAU_EXT\nAdministrative Law Judge\nAdministrative Law Judge",
+      "word_count": 52,
+      "avg_confidence": 88.26,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Configuring contact role categories G\n\nThe ContactRoleCategory typelist enables filtering on the contacts list view.\n\nContactRoleCategory.ttx\n|i categoyY [fl — |VshowAllvy pe =\nElement Code Name _| Priority\nY typelistexten: ContactRoleC..._Used for grou...\n> typecode primary Primary roles. | 1\n> typecode secondary | Secondary rol...) 2\n> typecode vendor Vendors 3\n\nY typecode litigation Litigation roles} 4\n\nContacts\nName Roles Contact Prohibited? > Phone > Pinoy roles\nMike's Auto detaling shop Service Vendor No 579-628-7456 23154\n\n“Former” roles.\n\nBasics | Addresses | Related Contacts | Reviews",
+      "word_count": 88,
+      "avg_confidence": 77.77,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Categorizing roles\n\nEach typecode in the\nContactRoleCategory typelist is\nassociated with one or more typecode in\nthe ContactRole (category) typelist.\n\n* These determine which roles appear in\nwhich filter in the Contacts screen\n\n‘Ada Existing Contact al\n\nName + Roles\n\nStan -\nNawton | Claimant, Covered Party, Driver, Injured Party\nBo -\n\nSimpson f Claimant, Driver, Injured Party\n\nElement\n\nY typelistextension\nY typecode\n\ncategory\ncategory\ncategory\ncategory\ncategory\ncategory\ncategory\n\n> typecode\n\nCode Name Priority\nContactRoleCateg... Used for groupin..\n\nreporter\naltcontact\nTecoverypa)\n‘checkpayee]\n‘secondary\n\nPrimary roles 1\nContactRole\nContactRole\nContactRole\nContactRole\nContactRole\nContactRole\nContactRole\nSecondaryroles 2\n\nPrimary roles 7\n\nContact Prohibited? > Phone > Address >\n\n818-446-\n1206\n\n818-446-\n1206\n\n619-275-\n2346\n\n287\nKensington\nRd. #1\n\n8356\nMountain\nView Rd.\n\n435 Duarte\nAve\n\ncity =\n\n‘South\nPasadena\n\nSan |\nBemadino\n\nArcadia",
+      "word_count": 132,
+      "avg_confidence": 80.17,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Contact role type constraints [a\n\nWhich subtypes can have this role?\n\n7] Role: Primary Physician\n2 Role: Primary Physician",
+      "word_count": 20,
+      "avg_confidence": 87.65,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Entity role constraints\n\n¢« How many contacts can\nhave this role?\n\n¢ Which entities can own\nthis role?\n\n« Which loss types can be\nassociated with this role?\n\nPerson\n\non °: 2 Role: Driver\n\n» 2\n\nVehicle Incident\n\nVehicle Incident\n\nA O84 &\n\nVehicle Incident Auto © Shop\n\nQe Yow Driver\n\nFixed Property Incident\n\nRole: Driver",
+      "word_count": 57,
+      "avg_confidence": 85.87,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Configuring contact role type constraints G\n\nContact role constraints are configured in entityroleconstraints-config.xml.\n\nThe role “casemgmtco” can only be\nassigned to a Company\n\n<ContactRoleTypeConstraint contactRoleCode=\"casemgmtco\" contactSubtype=\"Company\"/>\n<ContactRoleTypeConstraint contactRoleCode=\"casemgr\" contactSubtype=\"Person\"/>\n\n<ContactRoleTypeConstraint contactRoleCod laimant\" contactSubtype=\"Person\">\n\nry\" entityRef=\"Exposure\"/>\n\nClaimants ..-except that a Company may be a\nmust be Claimant for an Exposure\nPersons...",
+      "word_count": 51,
+      "avg_confidence": 90.45,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Configuring entity role constraints G\n\nEntity role constraints are also configured in entityroleconstraints-config.xml.\n\nEntityRef: A Claim can\nhave a claimant\n\n<EntityRoleConstraint>\n\n<RoleConstraint constraintType=\"Exclusive\"/> <— Cherara er tate One\n\n<RoleConstraint constraintType=\"Required\"> . . .\n<AdditionalInfo propertyName=\"LossType\" value=\"\"C\"/>  <am (claimant is required for\n\n</RoleConstraint> os\n\n<RoleConstraint constraintType=\"Prohibited\">\n<AdditionalInfo propertyName=\"LossType\" value:\n<AdditionalInfo propertyName=\"LossType\" val\n<AdditionalInfo propertyName=\"LossType\" value:\n\n</RoleConstraint>\n\n</RoleRef>\n\n'AUTO\" />\n\n0 ...out prohibited for Auto\nPR\"/> <j ,\ncael Property, and GL",
+      "word_count": 71,
+      "avg_confidence": 77.42,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Demonstration G\n\nAdding a Claim Contact Role\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.32,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Claim contact widgets Gi\n\n1. Select contacts already associated with the claim\n2. Add a new contact\n4 3. Search the address book for an existing contact\n\nFred Cole\n\nKaren Egertson\nBill Henderson\nMark Henderson\n\n2 New Person\n\n3",
+      "word_count": 40,
+      "avg_confidence": 94.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Types of claim contact widget\n\nTwo types:\n\n* Claim Contact Cell — used in list views\n\n* Claim Contact Input — used in detail views\n\nToobox  stuctxe\n\n© List Views\n\nY Common App Cells\nB claim associations Cell\n\nICD Code\n\nDescription\n\nProvider Name\n\naMedicalDiagnosisiCDCode\n\n[aMedicalDia..\n\nProvider Name” >\n\nCarlos Jiminez >\n\nPrimary Counsel",
+      "word_count": 54,
+      "avg_confidence": 81.35,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Claim contact widget basic properties\n\nPrimary Counsel\nPlaintiff Attorney\n\nPlaintiff Law Firm\n\nClaim Contact Input\nY Basic properties\ndlaim*\neditable\niat\nlabel\nfequired\nvalue*\nvalueRange*\nv Advanced properties\n\nThe claim with which the\ncontact is associated\n\ntrue\n‘Counsel_PlaintiffAttorney\n\nDisplayKey. get (\"NVV.Matter. SubView.MatterGeneral . Counsel. Plaintiffattorney\")\n\nThe claim contact the\nwidget refers to",
+      "word_count": 53,
+      "avg_confidence": 84.27,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Claim contact widget properties: Gi\nValueRange and ValueType\n\nPrimary Counsel |\n\nsenses —— —_——]\n\nPlaintiff Law Firm\n\nvalue*\nvalueRange*\nv Advanced properties\n\nMatter.Claim.RelatedAttorneyArray\n\nvalueType entity. Attorney\n\nWhere the values for the What type of entity\nwidget can be drawn from the widget can hold\n\nRelatedAdjudicatorArray Derived array returning Adjudicator (virtual property)”\n\nRelatedAttorneyArrayj Derived array returning Attorney\n\nRelatedAutoRepairShopArray Derived array returning AutoRepairShop (virtual property)”",
+      "word_count": 63,
+      "avg_confidence": 85.52,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Claim contact widget advanced properties: G\nnewContactMenu\n\n¢« The newContactMenu property determines\nwhat the widget’s menu displays\n\n{Term ReportedBy...\n(TermHowReported.... Claim.HowReported\n\n* ClaimNewPersonOnlyPickerMenultemSet only\nallows persons to be selected\n\n* ClaimNewContactPickerMenultemSet allows all newContociens Caren PesononyPekeenahenset\ncontact types to be selected —7\n* This is the default if nothing is entered maported By\nA ClaimNewCompanyOnlyPickerMenultemSet How Reported Phone\nFull list of A claimNewContactPickerMenultemSet Name + (mone\npicker menus El claimNewDoctorOnlyPickerMenultemSet a —\n\n(You can also —p i claimNewPersonOnlyPickerMenultemSet\nconfigure Ei claimNewRepairShopOnlyPickerMenultemSet\nnew menus) hl claimnewServiceRequestSpecialistPickerMenultemSet\nEi claimNewTowingOnlyPickerMenultemSet\nA ClaimNewVendorOnlyPickerMenultemSet\n\n‘Search\n\nView Contact Details",
+      "word_count": 94,
+      "avg_confidence": 79.34,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Demonstration G\n\nAdding a Claim Contact Widget\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n_— — What is the difference between a contact type and a contact role?\n\n¢\n¢\n4\n\nSS SS SSS Se SH SSS Se",
+      "word_count": 26,
+      "avg_confidence": 66.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\n_— — What is the difference between a contact type and a contact role?\n¢\n\n¢\n7\n\nThe correct answer is type and subtype are object types in the data model. Contact\nroles identify the contact’s relationship to the claim or exposure.\n\nSS SS Se SS SH SH Se",
+      "word_count": 50,
+      "avg_confidence": 79.64,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question G\n\n,— — What is the difference between a contact role type constraint and an\n¢ entity role constraint?\n\n¢\n4\n\nSS SS SSS Se SH SSS Se",
+      "word_count": 29,
+      "avg_confidence": 69.14,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer G\n\n_— — What is the difference between a contact role type constraint and an\n¢ entity role constraint?\n\n¢\n7\n\nThe correct answer is contract role type constraints determine which subtypes of the\ncontact entity can have the role. Entity role constraints determines what entities can\n“own” the role, and how many contacts with the role are allowed on the entity.\n\nSS SS Se SS SH SH Se",
+      "word_count": 70,
+      "avg_confidence": 84.36,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question G\n\n_— — !fyou need to add a claim contact to a detail view, which widget type\nY should you use?\n\nSS SS SSS Se SH SSS Se",
+      "word_count": 29,
+      "avg_confidence": 69.28,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer G\n\n_— — 'fyou need to add a claim contact to a detail view, which widget type\nY should you use?\n\nThe correct answer is a claim contact input.\n\nSS SS Se SS SH SH Se",
+      "word_count": 37,
+      "avg_confidence": 74.19,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Lesson\nobjectives ¢ Configure contact roles\n\nreview * Configure claim contact widgets in the user\ninterface",
+      "word_count": 16,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "| Student exercise\n\nAdding a Claim Contact Role",
+      "word_count": 8,
+      "avg_confidence": 95.78,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

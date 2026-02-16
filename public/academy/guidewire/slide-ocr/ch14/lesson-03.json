@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "chapter": "ch14",
+    "chapter_title": "Rating Configuration",
+    "lesson": "lesson-03",
+    "slide_count": 24,
+    "slides_with_text": 22,
+    "total_words": 797,
+    "avg_confidence": 87.84,
+    "processing_time_seconds": 7.06,
+    "extracted_at": "2026-02-15T18:24:43.803232"
+  },
+  "full_text": "Rating Engine Configuration\n\nLesson\nobjectives ¢ Describe the rating engine classes and\n\nmethods\n* Configure the rating engine to calculate costs\n\nfor the policy\n\nRating engine classes and\nmethods\n\n| Default Rating Engine\n\nL\n\nIRatingPlugin AbstractRatingEngine\nA\n\nPCRatingPlugin PARatingEngine CPRatingEngine\n\nCalculates costs\n\n| General rating process Gi\n\n1. Get slices\n\n¢ Find all dates on which anything changes in a branch and get the policy line versions (slices)\n2. Rate slices\n\n* Create CostData objects for items to be rated in slice mode (rate all or only changed slices)\n3. Merge equal CostData objects\n\n« Use the KeyValues() property to compare\n4. Prorate certain CostData objects\n\n« Update the amount field\n5. Rate in window mode\n\n* Create CostData objects that may depend on sums of other CostData objects\n\n6. Build Costs from resulting CostData obiects and persist Costs\n\n| Slice mode G\n\n« Jobs change policy data across effective time\n« Anew version (slice) is created each time the job edits a policy period\n¢ In slice mode you view policy data as of a specific date in effective time\n\n* When you request objects on the policy in slice mode, PolicyCenter automatically gets the\ncorrect version of each object as of a certain date\n\nAuto 1 Limit Cost 600/300 (720/360 «660\n\nAuto 2 Limit Cost 720/360 ‘fo 360\n\n# Format: TermAmount/Amount\n\n| Which costs can be rated in slice mode?\n\n¢ Costs that can be pro-rated based on date\n¢ Cost associated is linear, increases with time\n\n« For example, adding a vehicle or a coverage increases the premium\n\n| Window Mode G\n\nIn window mode, all versions (slices) of policy data across all dates in effective time\ncan be viewed\n\nEffective Time | 1/1 — 3/31 4/1 - 6/30 Total Tax (10%)\n\nPremium\n\n1020 102\n\n# Format: TermAmount/Amount\n\n| Which costs can be rated in window mode? Gi\n\n¢ Costs that cannot be prorated based on dates\n\n* Costs that are based on CostDatas created in slice mode and are usually ,\ncalculated at the end of rating . Example: discounts, taxes, flat rates, and minimum\npremium\n\n| AbstractRatingEngine & AbstractRatingEngineBase [5\n\n« AbstractRatingEngine class\n\n* Serves as a base for all LOBs in default configuration\n\n« Provides a list of methods that must be overridden by the subclasses\n¢ AbstractRatingEngineBase class\n\n« Extend it only when rating multi-line policies one slice at a time\n\n¢ Determines if rating should be calculated from the start of period or from the change date\nforward\n\n¢ Provides utility methods for prorating and merging costs\n\n] Methods you must override (1 of 2)\n\n* existingSliceModeCosts()\n\n* Called when rating only from change date forward\n\n« Finds any existing slice-mode costs and creates representative CostData objects\n* createCostDataForCosts()\n\n* Creates appropriate CostData subclass and returns it\n\n* Takes cost entity instance as argument\n* rateSlice()\n\n« Rates PolicyLine viewed as a slice on a specified slice date\n\n* Create costs for each type of premium with rating algorithms\n\n] Methods you must override (2 of 2) G\n\n* rateWindow()\n* Rates all the window-mode costs for the PolicyLine\n\n* Creates costs that depend on the sum of the previous slice costs or span the entire period and\nrates them just once\n\n| Rate something\n\nDetermine the start, end and rating dates\nCreate a new CostData object\n\nRating algorithm\n* Set the basis\n¢ Set the base rate\n¢ Look up factors (optional)\n* Calculate the adjusted rate\n* Calculate the term amount\n\nAdd the CostData to the array\n\n| Demonstration G\n\nRating engine configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,~ — What costs can be rated in slice mode?\n4\n4\n4\n\nseo eooce Sse Sbeese505\n\nAnswer\n\n,~ — What costs can be rated in slice mode?\n\n¢\nor Costs that can be pro-rated based on date and are linear.\n\nse sSeSo SoS Se See ese\n\nQuestion\n\n,~ — What costs can be rated in window mode?\n4\n4\n4\n\nseo eooce Sse Sbeese505\n\nAnswer\n\n,- — What costs can be rated in window mode?\n\n¢\nor Costs that cannot be pro-rated based on dates and normally based on CostDatas\n\ncreated in slice mode.\n\nse sSeSo SoS Se See ese\n\nQuestion\n\n,~ — What method can be called to copy standard columns to actual\no columns?\n\nseo eooce Sse Sbeese505\n\nAnswer\n\n,~ — What method can be called to copy standard columns to actual\no columns?\n\ncopyStandardColumnsToActualColumns()\n\nse sSeSo SoS Se See ese\n\nLesson\nobjectives ¢ Describe the rating engine classes and\n\nI methods\nreview * Configure the rating engine to calculate costs\nfor the policy\n\n| Student exercise\n\nRating engine configuration",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Rating Engine Configuration",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe the rating engine classes and\n\nmethods\n* Configure the rating engine to calculate costs\n\nfor the policy",
+      "word_count": 21,
+      "avg_confidence": 89.24,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Rating engine classes and\nmethods",
+      "word_count": 5,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Default Rating Engine\n\nL\n\nIRatingPlugin AbstractRatingEngine\nA\n\nPCRatingPlugin PARatingEngine CPRatingEngine\n\nCalculates costs",
+      "word_count": 13,
+      "avg_confidence": 80.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| General rating process Gi\n\n1. Get slices\n\n¢ Find all dates on which anything changes in a branch and get the policy line versions (slices)\n2. Rate slices\n\n* Create CostData objects for items to be rated in slice mode (rate all or only changed slices)\n3. Merge equal CostData objects\n\n« Use the KeyValues() property to compare\n4. Prorate certain CostData objects\n\n« Update the amount field\n5. Rate in window mode\n\n* Create CostData objects that may depend on sums of other CostData objects\n\n6. Build Costs from resulting CostData obiects and persist Costs",
+      "word_count": 97,
+      "avg_confidence": 91.03,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Slice mode G\n\n« Jobs change policy data across effective time\n« Anew version (slice) is created each time the job edits a policy period\n¢ In slice mode you view policy data as of a specific date in effective time\n\n* When you request objects on the policy in slice mode, PolicyCenter automatically gets the\ncorrect version of each object as of a certain date\n\nAuto 1 Limit Cost 600/300 (720/360 «660\n\nAuto 2 Limit Cost 720/360 ‘fo 360\n\n# Format: TermAmount/Amount",
+      "word_count": 84,
+      "avg_confidence": 86.69,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Which costs can be rated in slice mode?\n\n¢ Costs that can be pro-rated based on date\n¢ Cost associated is linear, increases with time\n\n« For example, adding a vehicle or a coverage increases the premium",
+      "word_count": 38,
+      "avg_confidence": 90.68,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Window Mode G\n\nIn window mode, all versions (slices) of policy data across all dates in effective time\ncan be viewed\n\nEffective Time | 1/1 — 3/31 4/1 - 6/30 Total Tax (10%)\n\nPremium\n\n1020 102\n\n# Format: TermAmount/Amount",
+      "word_count": 40,
+      "avg_confidence": 90.88,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Which costs can be rated in window mode? Gi\n\n¢ Costs that cannot be prorated based on dates\n\n* Costs that are based on CostDatas created in slice mode and are usually ,\ncalculated at the end of rating . Example: discounts, taxes, flat rates, and minimum\npremium",
+      "word_count": 49,
+      "avg_confidence": 91.98,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| AbstractRatingEngine & AbstractRatingEngineBase [5\n\n« AbstractRatingEngine class\n\n* Serves as a base for all LOBs in default configuration\n\n« Provides a list of methods that must be overridden by the subclasses\n¢ AbstractRatingEngineBase class\n\n« Extend it only when rating multi-line policies one slice at a time\n\n¢ Determines if rating should be calculated from the start of period or from the change date\nforward\n\n¢ Provides utility methods for prorating and merging costs",
+      "word_count": 75,
+      "avg_confidence": 88.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "] Methods you must override (1 of 2)\n\n* existingSliceModeCosts()\n\n* Called when rating only from change date forward\n\n« Finds any existing slice-mode costs and creates representative CostData objects\n* createCostDataForCosts()\n\n* Creates appropriate CostData subclass and returns it\n\n* Takes cost entity instance as argument\n* rateSlice()\n\n« Rates PolicyLine viewed as a slice on a specified slice date\n\n* Create costs for each type of premium with rating algorithms",
+      "word_count": 72,
+      "avg_confidence": 88.78,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "] Methods you must override (2 of 2) G\n\n* rateWindow()\n* Rates all the window-mode costs for the PolicyLine\n\n* Creates costs that depend on the sum of the previous slice costs or span the entire period and\nrates them just once",
+      "word_count": 43,
+      "avg_confidence": 89.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Rate something\n\nDetermine the start, end and rating dates\nCreate a new CostData object\n\nRating algorithm\n* Set the basis\n¢ Set the base rate\n¢ Look up factors (optional)\n* Calculate the adjusted rate\n* Calculate the term amount\n\nAdd the CostData to the array",
+      "word_count": 47,
+      "avg_confidence": 89.85,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Demonstration G\n\nRating engine configuration\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Question\n\n,~ — What costs can be rated in slice mode?\n4\n4\n4\n\nseo eooce Sse Sbeese505",
+      "word_count": 18,
+      "avg_confidence": 78.38,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Answer\n\n,~ — What costs can be rated in slice mode?\n\n¢\nor Costs that can be pro-rated based on date and are linear.\n\nse sSeSo SoS Se See ese",
+      "word_count": 30,
+      "avg_confidence": 80.54,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question\n\n,~ — What costs can be rated in window mode?\n4\n4\n4\n\nseo eooce Sse Sbeese505",
+      "word_count": 18,
+      "avg_confidence": 77.81,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer\n\n,- — What costs can be rated in window mode?\n\n¢\nor Costs that cannot be pro-rated based on dates and normally based on CostDatas\n\ncreated in slice mode.\n\nse sSeSo SoS Se See ese",
+      "word_count": 36,
+      "avg_confidence": 83.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question\n\n,~ — What method can be called to copy standard columns to actual\no columns?\n\nseo eooce Sse Sbeese505",
+      "word_count": 20,
+      "avg_confidence": 85.17,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\n,~ — What method can be called to copy standard columns to actual\no columns?\n\ncopyStandardColumnsToActualColumns()\n\nse sSeSo SoS Se See ese",
+      "word_count": 23,
+      "avg_confidence": 76.48,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Lesson\nobjectives ¢ Describe the rating engine classes and\n\nI methods\nreview * Configure the rating engine to calculate costs\nfor the policy",
+      "word_count": 23,
+      "avg_confidence": 89.83,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Student exercise\n\nRating engine configuration",
+      "word_count": 6,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

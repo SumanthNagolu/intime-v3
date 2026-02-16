@@ -1,0 +1,2049 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_14_01.mp4",
+    "video_stem": "CC_14_01",
+    "duration_seconds": 146.36,
+    "duration_formatted": "00:02:26.360",
+    "segment_count": 26,
+    "word_count": 295,
+    "avg_confidence": 0.9218,
+    "transcription_time_seconds": 14.13,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:43:44.400585"
+  },
+  "full_text": "I am logged into ClaimCenter as Andy Applegate, and I am going to navigate to a claim. In the sidebar, I click the history link. ClaimCenter displays an uneditable list of significant actions and events in the history of the claim, including every time a user has viewed the claim. I'll create a new legal matter. The only field I must fill in is the name of the matter. Now when I return to the history list, The creation of the new matter appears on the list, as does a record showing that the matter has been assigned. Now I'll close the matter. A reason for closing is required. Closing the matter also appears on the history list. Now I'll create a check. The check will be to the claimant Bo Simpson. The payment is made against the medical expense line associated with Mr. Simpson. This is a final payment and it will pay out the full amount of the reserve. Check creation does not appear on the history list. In fact, the creation of a new object generally does not appear on the history list. However, if I stop, transfer, and transfer, I'll create a new account. I'll create a new object to the history list. This does appear on the history list. A limited set of items appear automatically in the history list. The set of items that appear is defined by the history type type list. There are 23 history types in the base configuration, which between them cover most circumstances that would require a history record. Nonetheless, the list is extendable and you can add custom history record types as needed, which is the subject of the next demonstration. This concludes the history records demonstration. This concludes the history records demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.12,
+      "end": 8.68,
+      "start_formatted": "00:00:01.120",
+      "end_formatted": "00:00:08.680",
+      "text": "I am logged into ClaimCenter as Andy Applegate, and I am going to navigate to a claim. In the sidebar, I click the history link.",
+      "words": [
+        {
+          "word": "I",
+          "start": 1.12,
+          "end": 1.64,
+          "probability": 0.9731
+        },
+        {
+          "word": "am",
+          "start": 1.64,
+          "end": 1.78,
+          "probability": 0.9727
+        },
+        {
+          "word": "logged",
+          "start": 1.78,
+          "end": 2.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "into",
+          "start": 2.06,
+          "end": 2.3,
+          "probability": 0.8848
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 2.3,
+          "end": 3.0,
+          "probability": 0.7241
+        },
+        {
+          "word": "as",
+          "start": 3.0,
+          "end": 3.16,
+          "probability": 0.9712
+        },
+        {
+          "word": "Andy",
+          "start": 3.16,
+          "end": 3.46,
+          "probability": 0.9351
+        },
+        {
+          "word": "Applegate,",
+          "start": 3.46,
+          "end": 4.08,
+          "probability": 0.9746
+        },
+        {
+          "word": "and",
+          "start": 4.2,
+          "end": 4.42,
+          "probability": 0.9795
+        },
+        {
+          "word": "I",
+          "start": 4.42,
+          "end": 4.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "am",
+          "start": 4.56,
+          "end": 4.66,
+          "probability": 0.9785
+        },
+        {
+          "word": "going",
+          "start": 4.66,
+          "end": 4.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 4.84,
+          "end": 4.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "navigate",
+          "start": 4.98,
+          "end": 5.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 5.34,
+          "end": 5.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 5.6,
+          "end": 5.72,
+          "probability": 0.9888
+        },
+        {
+          "word": "claim.",
+          "start": 5.72,
+          "end": 6.0,
+          "probability": 0.8809
+        },
+        {
+          "word": "In",
+          "start": 6.3,
+          "end": 6.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 6.72,
+          "end": 6.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "sidebar,",
+          "start": 6.82,
+          "end": 7.28,
+          "probability": 0.9453
+        },
+        {
+          "word": "I",
+          "start": 7.44,
+          "end": 7.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "click",
+          "start": 7.64,
+          "end": 7.9,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 7.9,
+          "end": 8.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "history",
+          "start": 8.06,
+          "end": 8.34,
+          "probability": 0.52
+        },
+        {
+          "word": "link.",
+          "start": 8.34,
+          "end": 8.68,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 10.24,
+      "end": 19.66,
+      "start_formatted": "00:00:10.240",
+      "end_formatted": "00:00:19.660",
+      "text": "ClaimCenter displays an uneditable list of significant actions and events in the history of the claim, including every time a user has viewed the claim. I'll create a new legal matter.",
+      "words": [
+        {
+          "word": "ClaimCenter",
+          "start": 10.24,
+          "end": 10.76,
+          "probability": 0.9805
+        },
+        {
+          "word": "displays",
+          "start": 10.76,
+          "end": 11.18,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 11.18,
+          "end": 11.46,
+          "probability": 0.9951
+        },
+        {
+          "word": "uneditable",
+          "start": 11.46,
+          "end": 11.96,
+          "probability": 0.9902
+        },
+        {
+          "word": "list",
+          "start": 11.96,
+          "end": 12.26,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 12.26,
+          "end": 12.42,
+          "probability": 0.999
+        },
+        {
+          "word": "significant",
+          "start": 12.42,
+          "end": 12.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "actions",
+          "start": 12.94,
+          "end": 13.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 13.42,
+          "end": 13.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "events",
+          "start": 13.7,
+          "end": 14.02,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 14.02,
+          "end": 14.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 14.18,
+          "end": 14.28,
+          "probability": 0.999
+        },
+        {
+          "word": "history",
+          "start": 14.28,
+          "end": 14.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 14.6,
+          "end": 14.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 14.76,
+          "end": 14.84,
+          "probability": 0.999
+        },
+        {
+          "word": "claim,",
+          "start": 14.84,
+          "end": 15.18,
+          "probability": 0.9912
+        },
+        {
+          "word": "including",
+          "start": 15.38,
+          "end": 15.84,
+          "probability": 0.9907
+        },
+        {
+          "word": "every",
+          "start": 15.84,
+          "end": 16.14,
+          "probability": 0.9937
+        },
+        {
+          "word": "time",
+          "start": 16.14,
+          "end": 16.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 16.36,
+          "end": 16.54,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 16.54,
+          "end": 16.78,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 16.78,
+          "end": 17.02,
+          "probability": 0.999
+        },
+        {
+          "word": "viewed",
+          "start": 17.02,
+          "end": 17.24,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 17.24,
+          "end": 17.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim.",
+          "start": 17.4,
+          "end": 17.7,
+          "probability": 0.998
+        },
+        {
+          "word": "I'll",
+          "start": 18.02,
+          "end": 18.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "create",
+          "start": 18.5,
+          "end": 18.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 18.78,
+          "end": 18.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 18.94,
+          "end": 19.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "legal",
+          "start": 19.04,
+          "end": 19.34,
+          "probability": 0.9897
+        },
+        {
+          "word": "matter.",
+          "start": 19.34,
+          "end": 19.66,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 23.6,
+      "end": 26.26,
+      "start_formatted": "00:00:23.600",
+      "end_formatted": "00:00:26.260",
+      "text": "The only field I must fill in is the name of the matter.",
+      "words": [
+        {
+          "word": "The",
+          "start": 23.6,
+          "end": 24.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "only",
+          "start": 24.12,
+          "end": 24.34,
+          "probability": 0.999
+        },
+        {
+          "word": "field",
+          "start": 24.34,
+          "end": 24.68,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 24.68,
+          "end": 24.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "must",
+          "start": 24.8,
+          "end": 24.98,
+          "probability": 0.998
+        },
+        {
+          "word": "fill",
+          "start": 24.98,
+          "end": 25.22,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 25.22,
+          "end": 25.34,
+          "probability": 0.9902
+        },
+        {
+          "word": "is",
+          "start": 25.34,
+          "end": 25.46,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 25.46,
+          "end": 25.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "name",
+          "start": 25.56,
+          "end": 25.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 25.74,
+          "end": 25.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 25.86,
+          "end": 25.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "matter.",
+          "start": 25.96,
+          "end": 26.26,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 32.9,
+      "end": 35.1,
+      "start_formatted": "00:00:32.900",
+      "end_formatted": "00:00:35.100",
+      "text": "Now when I return to the history list,",
+      "words": [
+        {
+          "word": "Now",
+          "start": 32.9,
+          "end": 33.42,
+          "probability": 0.9121
+        },
+        {
+          "word": "when",
+          "start": 33.42,
+          "end": 33.62,
+          "probability": 0.9536
+        },
+        {
+          "word": "I",
+          "start": 33.62,
+          "end": 33.74,
+          "probability": 0.9863
+        },
+        {
+          "word": "return",
+          "start": 33.74,
+          "end": 34.08,
+          "probability": 0.9702
+        },
+        {
+          "word": "to",
+          "start": 34.08,
+          "end": 34.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 34.24,
+          "end": 34.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "history",
+          "start": 34.34,
+          "end": 34.66,
+          "probability": 0.7568
+        },
+        {
+          "word": "list,",
+          "start": 34.66,
+          "end": 35.1,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 36.52,
+      "end": 39.18,
+      "start_formatted": "00:00:36.520",
+      "end_formatted": "00:00:39.180",
+      "text": "The creation of the new matter appears on the list,",
+      "words": [
+        {
+          "word": "The",
+          "start": 36.52,
+          "end": 37.04,
+          "probability": 0.0536
+        },
+        {
+          "word": "creation",
+          "start": 37.04,
+          "end": 37.46,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 37.46,
+          "end": 37.66,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 37.66,
+          "end": 37.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "new",
+          "start": 37.76,
+          "end": 37.9,
+          "probability": 0.9878
+        },
+        {
+          "word": "matter",
+          "start": 37.9,
+          "end": 38.16,
+          "probability": 0.9829
+        },
+        {
+          "word": "appears",
+          "start": 38.16,
+          "end": 38.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 38.58,
+          "end": 38.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 38.76,
+          "end": 38.84,
+          "probability": 0.9878
+        },
+        {
+          "word": "list,",
+          "start": 38.84,
+          "end": 39.18,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 39.32,
+      "end": 42.1,
+      "start_formatted": "00:00:39.320",
+      "end_formatted": "00:00:42.100",
+      "text": "as does a record showing that the matter has been assigned.",
+      "words": [
+        {
+          "word": "as",
+          "start": 39.32,
+          "end": 39.84,
+          "probability": 0.8481
+        },
+        {
+          "word": "does",
+          "start": 39.84,
+          "end": 40.02,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 40.02,
+          "end": 40.2,
+          "probability": 0.7637
+        },
+        {
+          "word": "record",
+          "start": 40.2,
+          "end": 40.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "showing",
+          "start": 40.46,
+          "end": 40.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 40.78,
+          "end": 41.0,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 41.0,
+          "end": 41.1,
+          "probability": 0.9888
+        },
+        {
+          "word": "matter",
+          "start": 41.1,
+          "end": 41.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "has",
+          "start": 41.36,
+          "end": 41.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "been",
+          "start": 41.52,
+          "end": 41.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "assigned.",
+          "start": 41.66,
+          "end": 42.1,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 42.48,
+      "end": 43.94,
+      "start_formatted": "00:00:42.480",
+      "end_formatted": "00:00:43.940",
+      "text": "Now I'll close the matter.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 42.48,
+          "end": 42.94,
+          "probability": 0.9844
+        },
+        {
+          "word": "I'll",
+          "start": 42.94,
+          "end": 43.16,
+          "probability": 0.9512
+        },
+        {
+          "word": "close",
+          "start": 43.16,
+          "end": 43.44,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 43.44,
+          "end": 43.64,
+          "probability": 0.998
+        },
+        {
+          "word": "matter.",
+          "start": 43.64,
+          "end": 43.94,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 50.58,
+      "end": 52.78,
+      "start_formatted": "00:00:50.580",
+      "end_formatted": "00:00:52.780",
+      "text": "A reason for closing is required.",
+      "words": [
+        {
+          "word": "A",
+          "start": 50.58,
+          "end": 51.1,
+          "probability": 0.9834
+        },
+        {
+          "word": "reason",
+          "start": 51.1,
+          "end": 51.42,
+          "probability": 0.9868
+        },
+        {
+          "word": "for",
+          "start": 51.42,
+          "end": 51.62,
+          "probability": 0.998
+        },
+        {
+          "word": "closing",
+          "start": 51.62,
+          "end": 51.96,
+          "probability": 0.978
+        },
+        {
+          "word": "is",
+          "start": 51.96,
+          "end": 52.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "required.",
+          "start": 52.2,
+          "end": 52.78,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 59.4,
+      "end": 62.2,
+      "start_formatted": "00:00:59.400",
+      "end_formatted": "00:01:02.200",
+      "text": "Closing the matter also appears on the history list.",
+      "words": [
+        {
+          "word": "Closing",
+          "start": 59.4,
+          "end": 59.96,
+          "probability": 0.9727
+        },
+        {
+          "word": "the",
+          "start": 59.96,
+          "end": 60.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "matter",
+          "start": 60.1,
+          "end": 60.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "also",
+          "start": 60.38,
+          "end": 60.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "appears",
+          "start": 60.8,
+          "end": 61.24,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 61.24,
+          "end": 61.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 61.44,
+          "end": 61.54,
+          "probability": 0.999
+        },
+        {
+          "word": "history",
+          "start": 61.54,
+          "end": 61.8,
+          "probability": 0.8608
+        },
+        {
+          "word": "list.",
+          "start": 61.8,
+          "end": 62.2,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 62.54,
+      "end": 63.98,
+      "start_formatted": "00:01:02.540",
+      "end_formatted": "00:01:03.980",
+      "text": "Now I'll create a check.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 62.54,
+          "end": 63.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "I'll",
+          "start": 63.1,
+          "end": 63.32,
+          "probability": 0.9863
+        },
+        {
+          "word": "create",
+          "start": 63.32,
+          "end": 63.6,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 63.6,
+          "end": 63.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "check.",
+          "start": 63.82,
+          "end": 63.98,
+          "probability": 0.9116
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 68.6,
+      "end": 70.3,
+      "start_formatted": "00:01:08.600",
+      "end_formatted": "00:01:10.300",
+      "text": "The check will be to the claimant Bo Simpson.",
+      "words": [
+        {
+          "word": "The",
+          "start": 68.34,
+          "end": 68.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "check",
+          "start": 68.62,
+          "end": 68.86,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 68.86,
+          "end": 69.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 69.0,
+          "end": 69.14,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 69.14,
+          "end": 69.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 69.28,
+          "end": 69.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "claimant",
+          "start": 69.4,
+          "end": 69.8,
+          "probability": 0.979
+        },
+        {
+          "word": "Bo",
+          "start": 69.8,
+          "end": 69.94,
+          "probability": 0.7153
+        },
+        {
+          "word": "Simpson.",
+          "start": 69.94,
+          "end": 70.3,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 74.5,
+      "end": 78.36,
+      "start_formatted": "00:01:14.500",
+      "end_formatted": "00:01:18.360",
+      "text": "The payment is made against the medical expense line associated with Mr. Simpson.",
+      "words": [
+        {
+          "word": "The",
+          "start": 74.26,
+          "end": 74.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "payment",
+          "start": 74.54,
+          "end": 74.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 74.82,
+          "end": 75.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "made",
+          "start": 75.06,
+          "end": 75.24,
+          "probability": 0.999
+        },
+        {
+          "word": "against",
+          "start": 75.24,
+          "end": 75.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 75.52,
+          "end": 75.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "medical",
+          "start": 75.68,
+          "end": 75.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "expense",
+          "start": 75.94,
+          "end": 76.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "line",
+          "start": 76.34,
+          "end": 76.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "associated",
+          "start": 76.72,
+          "end": 77.26,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 77.26,
+          "end": 77.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "Mr.",
+          "start": 77.62,
+          "end": 77.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "Simpson.",
+          "start": 78.16,
+          "end": 78.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 78.36,
+      "end": 83.96,
+      "start_formatted": "00:01:18.360",
+      "end_formatted": "00:01:23.960",
+      "text": "This is a final payment and it will pay out the full amount of the reserve.",
+      "words": [
+        {
+          "word": "This",
+          "start": 78.36,
+          "end": 79.38,
+          "probability": 0.7988
+        },
+        {
+          "word": "is",
+          "start": 79.38,
+          "end": 79.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 79.52,
+          "end": 79.62,
+          "probability": 0.6802
+        },
+        {
+          "word": "final",
+          "start": 79.62,
+          "end": 79.9,
+          "probability": 0.9771
+        },
+        {
+          "word": "payment",
+          "start": 79.9,
+          "end": 80.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 80.38,
+          "end": 82.16,
+          "probability": 0.2625
+        },
+        {
+          "word": "it",
+          "start": 82.16,
+          "end": 82.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "will",
+          "start": 82.3,
+          "end": 82.42,
+          "probability": 0.998
+        },
+        {
+          "word": "pay",
+          "start": 82.42,
+          "end": 82.62,
+          "probability": 0.999
+        },
+        {
+          "word": "out",
+          "start": 82.62,
+          "end": 82.78,
+          "probability": 0.9512
+        },
+        {
+          "word": "the",
+          "start": 82.78,
+          "end": 82.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "full",
+          "start": 82.92,
+          "end": 83.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "amount",
+          "start": 83.1,
+          "end": 83.32,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 83.32,
+          "end": 83.48,
+          "probability": 0.9639
+        },
+        {
+          "word": "the",
+          "start": 83.48,
+          "end": 83.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "reserve.",
+          "start": 83.56,
+          "end": 83.96,
+          "probability": 0.9365
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 93.12,
+      "end": 95.92,
+      "start_formatted": "00:01:33.120",
+      "end_formatted": "00:01:35.920",
+      "text": "Check creation does not appear on the history list.",
+      "words": [
+        {
+          "word": "Check",
+          "start": 93.12,
+          "end": 93.66,
+          "probability": 0.9492
+        },
+        {
+          "word": "creation",
+          "start": 93.66,
+          "end": 94.18,
+          "probability": 0.6602
+        },
+        {
+          "word": "does",
+          "start": 94.18,
+          "end": 94.44,
+          "probability": 0.9897
+        },
+        {
+          "word": "not",
+          "start": 94.44,
+          "end": 94.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "appear",
+          "start": 94.66,
+          "end": 94.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 94.98,
+          "end": 95.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 95.16,
+          "end": 95.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "history",
+          "start": 95.26,
+          "end": 95.54,
+          "probability": 0.877
+        },
+        {
+          "word": "list.",
+          "start": 95.54,
+          "end": 95.92,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 96.16,
+      "end": 100.78,
+      "start_formatted": "00:01:36.160",
+      "end_formatted": "00:01:40.780",
+      "text": "In fact, the creation of a new object generally does not appear on the history list.",
+      "words": [
+        {
+          "word": "In",
+          "start": 96.16,
+          "end": 96.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "fact,",
+          "start": 96.54,
+          "end": 96.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 97.18,
+          "end": 97.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "creation",
+          "start": 97.34,
+          "end": 97.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 97.76,
+          "end": 97.96,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 97.96,
+          "end": 98.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "new",
+          "start": 98.06,
+          "end": 98.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "object",
+          "start": 98.22,
+          "end": 98.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "generally",
+          "start": 98.64,
+          "end": 99.02,
+          "probability": 0.9922
+        },
+        {
+          "word": "does",
+          "start": 99.02,
+          "end": 99.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "not",
+          "start": 99.34,
+          "end": 99.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "appear",
+          "start": 99.54,
+          "end": 99.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 99.82,
+          "end": 99.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 99.98,
+          "end": 100.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "history",
+          "start": 100.08,
+          "end": 100.36,
+          "probability": 0.9912
+        },
+        {
+          "word": "list.",
+          "start": 100.36,
+          "end": 100.78,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 101.18,
+      "end": 108.34,
+      "start_formatted": "00:01:41.180",
+      "end_formatted": "00:01:48.340",
+      "text": "However, if I stop, transfer, and transfer, I'll create a new account.",
+      "words": [
+        {
+          "word": "However,",
+          "start": 101.18,
+          "end": 101.72,
+          "probability": 0.9917
+        },
+        {
+          "word": "if",
+          "start": 102.18,
+          "end": 107.1,
+          "probability": 0.8691
+        },
+        {
+          "word": "I",
+          "start": 107.1,
+          "end": 107.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "stop,",
+          "start": 107.22,
+          "end": 107.68,
+          "probability": 0.9561
+        },
+        {
+          "word": "transfer,",
+          "start": 107.82,
+          "end": 108.34,
+          "probability": 0.8569
+        },
+        {
+          "word": "and",
+          "start": 108.34,
+          "end": 108.34,
+          "probability": 0.1886
+        },
+        {
+          "word": "transfer,",
+          "start": 108.34,
+          "end": 108.34,
+          "probability": 0.0739
+        },
+        {
+          "word": "I'll",
+          "start": 108.34,
+          "end": 108.34,
+          "probability": 0.2905
+        },
+        {
+          "word": "create",
+          "start": 108.34,
+          "end": 108.34,
+          "probability": 0.004
+        },
+        {
+          "word": "a",
+          "start": 108.34,
+          "end": 108.34,
+          "probability": 0.5396
+        },
+        {
+          "word": "new",
+          "start": 108.34,
+          "end": 108.34,
+          "probability": 0.6328
+        },
+        {
+          "word": "account.",
+          "start": 108.34,
+          "end": 108.34,
+          "probability": 0.0184
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 115.32,
+      "end": 117.16,
+      "start_formatted": "00:01:55.320",
+      "end_formatted": "00:01:57.160",
+      "text": "I'll create a new object to the history list.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 115.32,
+          "end": 115.92,
+          "probability": 0.0174
+        },
+        {
+          "word": "create",
+          "start": 115.92,
+          "end": 116.52,
+          "probability": 0.0052
+        },
+        {
+          "word": "a",
+          "start": 116.52,
+          "end": 117.1,
+          "probability": 0.6138
+        },
+        {
+          "word": "new",
+          "start": 117.1,
+          "end": 117.1,
+          "probability": 0.0314
+        },
+        {
+          "word": "object",
+          "start": 117.1,
+          "end": 117.1,
+          "probability": 0.0009
+        },
+        {
+          "word": "to",
+          "start": 117.1,
+          "end": 117.14,
+          "probability": 0.1073
+        },
+        {
+          "word": "the",
+          "start": 117.14,
+          "end": 117.14,
+          "probability": 0.0733
+        },
+        {
+          "word": "history",
+          "start": 117.14,
+          "end": 117.14,
+          "probability": 0.0309
+        },
+        {
+          "word": "list.",
+          "start": 117.14,
+          "end": 117.16,
+          "probability": 0.2307
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 118.54,
+      "end": 120.64,
+      "start_formatted": "00:01:58.540",
+      "end_formatted": "00:02:00.640",
+      "text": "This does appear on the history list.",
+      "words": [
+        {
+          "word": "This",
+          "start": 118.54,
+          "end": 119.14,
+          "probability": 0.2542
+        },
+        {
+          "word": "does",
+          "start": 119.14,
+          "end": 119.38,
+          "probability": 0.7656
+        },
+        {
+          "word": "appear",
+          "start": 119.38,
+          "end": 119.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 119.74,
+          "end": 119.92,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 119.92,
+          "end": 120.02,
+          "probability": 0.9902
+        },
+        {
+          "word": "history",
+          "start": 120.02,
+          "end": 120.3,
+          "probability": 0.8481
+        },
+        {
+          "word": "list.",
+          "start": 120.3,
+          "end": 120.64,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 120.94,
+      "end": 124.3,
+      "start_formatted": "00:02:00.940",
+      "end_formatted": "00:02:04.300",
+      "text": "A limited set of items appear automatically in the history list.",
+      "words": [
+        {
+          "word": "A",
+          "start": 120.94,
+          "end": 121.38,
+          "probability": 0.9541
+        },
+        {
+          "word": "limited",
+          "start": 121.38,
+          "end": 121.68,
+          "probability": 0.9907
+        },
+        {
+          "word": "set",
+          "start": 121.68,
+          "end": 121.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 121.94,
+          "end": 122.08,
+          "probability": 0.999
+        },
+        {
+          "word": "items",
+          "start": 122.08,
+          "end": 122.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "appear",
+          "start": 122.38,
+          "end": 122.7,
+          "probability": 0.9678
+        },
+        {
+          "word": "automatically",
+          "start": 122.7,
+          "end": 123.26,
+          "probability": 0.9927
+        },
+        {
+          "word": "in",
+          "start": 123.26,
+          "end": 123.52,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 123.52,
+          "end": 123.62,
+          "probability": 0.9907
+        },
+        {
+          "word": "history",
+          "start": 123.62,
+          "end": 123.92,
+          "probability": 0.9761
+        },
+        {
+          "word": "list.",
+          "start": 123.92,
+          "end": 124.3,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 124.66,
+      "end": 128.5,
+      "start_formatted": "00:02:04.660",
+      "end_formatted": "00:02:08.500",
+      "text": "The set of items that appear is defined by the history type type list.",
+      "words": [
+        {
+          "word": "The",
+          "start": 124.66,
+          "end": 125.18,
+          "probability": 0.9697
+        },
+        {
+          "word": "set",
+          "start": 125.18,
+          "end": 125.38,
+          "probability": 0.98
+        },
+        {
+          "word": "of",
+          "start": 125.38,
+          "end": 125.52,
+          "probability": 0.998
+        },
+        {
+          "word": "items",
+          "start": 125.52,
+          "end": 125.86,
+          "probability": 0.9849
+        },
+        {
+          "word": "that",
+          "start": 125.86,
+          "end": 126.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "appear",
+          "start": 126.06,
+          "end": 126.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 126.36,
+          "end": 126.54,
+          "probability": 0.9883
+        },
+        {
+          "word": "defined",
+          "start": 126.54,
+          "end": 126.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "by",
+          "start": 126.88,
+          "end": 127.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 127.06,
+          "end": 127.2,
+          "probability": 0.9912
+        },
+        {
+          "word": "history",
+          "start": 127.2,
+          "end": 127.52,
+          "probability": 0.7896
+        },
+        {
+          "word": "type",
+          "start": 127.52,
+          "end": 127.86,
+          "probability": 0.9644
+        },
+        {
+          "word": "type",
+          "start": 127.86,
+          "end": 128.08,
+          "probability": 0.9629
+        },
+        {
+          "word": "list.",
+          "start": 128.08,
+          "end": 128.5,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 128.5,
+      "end": 134.46,
+      "start_formatted": "00:02:08.500",
+      "end_formatted": "00:02:14.460",
+      "text": "There are 23 history types in the base configuration, which between them cover most circumstances",
+      "words": [
+        {
+          "word": "There",
+          "start": 128.5,
+          "end": 129.48,
+          "probability": 0.916
+        },
+        {
+          "word": "are",
+          "start": 129.48,
+          "end": 129.6,
+          "probability": 0.999
+        },
+        {
+          "word": "23",
+          "start": 129.6,
+          "end": 130.0,
+          "probability": 0.9839
+        },
+        {
+          "word": "history",
+          "start": 130.0,
+          "end": 130.42,
+          "probability": 0.8901
+        },
+        {
+          "word": "types",
+          "start": 130.42,
+          "end": 130.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 130.78,
+          "end": 130.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 130.98,
+          "end": 131.06,
+          "probability": 0.9907
+        },
+        {
+          "word": "base",
+          "start": 131.06,
+          "end": 131.32,
+          "probability": 0.96
+        },
+        {
+          "word": "configuration,",
+          "start": 131.32,
+          "end": 132.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "which",
+          "start": 132.46,
+          "end": 132.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "between",
+          "start": 132.68,
+          "end": 132.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "them",
+          "start": 132.98,
+          "end": 133.2,
+          "probability": 0.9888
+        },
+        {
+          "word": "cover",
+          "start": 133.2,
+          "end": 133.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "most",
+          "start": 133.5,
+          "end": 133.76,
+          "probability": 0.999
+        },
+        {
+          "word": "circumstances",
+          "start": 133.76,
+          "end": 134.46,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 134.46,
+      "end": 136.22,
+      "start_formatted": "00:02:14.460",
+      "end_formatted": "00:02:16.220",
+      "text": "that would require a history record.",
+      "words": [
+        {
+          "word": "that",
+          "start": 134.46,
+          "end": 134.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "would",
+          "start": 134.8,
+          "end": 134.92,
+          "probability": 0.998
+        },
+        {
+          "word": "require",
+          "start": 134.92,
+          "end": 135.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 135.36,
+          "end": 135.52,
+          "probability": 0.9873
+        },
+        {
+          "word": "history",
+          "start": 135.52,
+          "end": 135.8,
+          "probability": 0.9814
+        },
+        {
+          "word": "record.",
+          "start": 135.8,
+          "end": 136.22,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 136.52,
+      "end": 141.34,
+      "start_formatted": "00:02:16.520",
+      "end_formatted": "00:02:21.340",
+      "text": "Nonetheless, the list is extendable and you can add custom history record types as needed,",
+      "words": [
+        {
+          "word": "Nonetheless,",
+          "start": 136.52,
+          "end": 137.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 137.54,
+          "end": 137.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "list",
+          "start": 137.74,
+          "end": 137.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 137.92,
+          "end": 138.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "extendable",
+          "start": 138.12,
+          "end": 138.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "and",
+          "start": 138.7,
+          "end": 138.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "you",
+          "start": 138.88,
+          "end": 138.98,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 138.98,
+          "end": 139.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 139.14,
+          "end": 139.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "custom",
+          "start": 139.34,
+          "end": 139.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "history",
+          "start": 139.74,
+          "end": 140.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "record",
+          "start": 140.12,
+          "end": 140.5,
+          "probability": 0.999
+        },
+        {
+          "word": "types",
+          "start": 140.5,
+          "end": 140.84,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 140.84,
+          "end": 141.02,
+          "probability": 0.998
+        },
+        {
+          "word": "needed,",
+          "start": 141.02,
+          "end": 141.34,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 141.58,
+      "end": 143.66,
+      "start_formatted": "00:02:21.580",
+      "end_formatted": "00:02:23.660",
+      "text": "which is the subject of the next demonstration.",
+      "words": [
+        {
+          "word": "which",
+          "start": 141.58,
+          "end": 141.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 141.8,
+          "end": 141.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 141.92,
+          "end": 142.08,
+          "probability": 0.999
+        },
+        {
+          "word": "subject",
+          "start": 142.08,
+          "end": 142.42,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 142.42,
+          "end": 142.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 142.64,
+          "end": 142.72,
+          "probability": 0.9941
+        },
+        {
+          "word": "next",
+          "start": 142.72,
+          "end": 142.94,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration.",
+          "start": 142.94,
+          "end": 143.66,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 143.66,
+      "end": 146.3,
+      "start_formatted": "00:02:23.660",
+      "end_formatted": "00:02:26.300",
+      "text": "This concludes the history records demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 143.66,
+          "end": 144.64,
+          "probability": 0.9673
+        },
+        {
+          "word": "concludes",
+          "start": 144.64,
+          "end": 145.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 145.1,
+          "end": 145.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "history",
+          "start": 145.32,
+          "end": 145.62,
+          "probability": 0.8745
+        },
+        {
+          "word": "records",
+          "start": 145.62,
+          "end": 146.1,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration.",
+          "start": 146.1,
+          "end": 146.3,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 146.3,
+      "end": 146.36,
+      "start_formatted": "00:02:26.300",
+      "end_formatted": "00:02:26.360",
+      "text": "This concludes the history records demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 146.3,
+          "end": 146.3,
+          "probability": 0.1091
+        },
+        {
+          "word": "concludes",
+          "start": 146.3,
+          "end": 146.3,
+          "probability": 0.8921
+        },
+        {
+          "word": "the",
+          "start": 146.3,
+          "end": 146.3,
+          "probability": 0.9775
+        },
+        {
+          "word": "history",
+          "start": 146.3,
+          "end": 146.3,
+          "probability": 0.9692
+        },
+        {
+          "word": "records",
+          "start": 146.3,
+          "end": 146.3,
+          "probability": 0.9902
+        },
+        {
+          "word": "demonstration.",
+          "start": 146.3,
+          "end": 146.36,
+          "probability": 0.9951
+        }
+      ]
+    }
+  ]
+}

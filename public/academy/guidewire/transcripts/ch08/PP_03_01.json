@@ -1,0 +1,2165 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_03_01.mp4",
+    "video_stem": "PP_03_01",
+    "duration_seconds": 160.44,
+    "duration_formatted": "00:02:40.440",
+    "segment_count": 13,
+    "word_count": 329,
+    "avg_confidence": 0.9117,
+    "transcription_time_seconds": 8.38,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:25:11.877044"
+  },
+  "full_text": "In PolicyCenter Studio, open the Submission Wizard PCF file, which is associated with the submission job. The submission wizard has dependent steps in certain orders and independent steps. Each step points to a screen. If CanEdit evaluates to true, the submission job can be edited. If CanVisit evaluates to true, the job can be viewed. A bound submission is not editable but viewable. When CountIsWork is set to true, the edited wizard can be viewed. A bound submission is not editable but viewable. The wizard step is listed as unsaved work if navigating away without saving. The title for the group of independent steps is set at the wizard level. For example, Tools. There are also other key properties for the submission wizard, such as, Info Bar. Menu Actions. Tab Bar. The entry points and variables define the signature used by other widgets to navigate to the wizard. There could be multiple signatures for the entry points. Open Account File Underscore Summary.PCF. Double-click to go to the Open Policy Transactions section. Click the Transaction Number cell. The action is set to JobForward.Go. Control-click on JobForward. Select the line of code for submission. In the action field, Control-click on Go to Submission Wizard. In Job Helper, the GoSA function calls SubmissionWizard.Go to navigate to the Submission Wizard. Log into Policy Center as Alice Applegate. Open a Submission in Draft Mode. Note the different sections in the Submission Wizard. Navigate away from the wizard without saving after a change. Click the Unsaved Work icon at the top right. The wizard step is listed as Unsaved Work because the counts as Work is set to True in SubmissionWizard.PCF. Clicking on the link takes you to the step. Locate and enforce policy. Click on the Policy link. Go to the Independent Step, Policy Transactions. Find the bound submission. Click the Bound Submission. Click the Bound Submission. Click View Policy Transactions. The bound submission is not editable. This ends the overview for JobWizard demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "In PolicyCenter Studio, open the Submission Wizard PCF file, which is associated with the submission job. The submission wizard has dependent steps in certain orders and independent steps. Each step points to a screen. If CanEdit evaluates to true, the submission job can be edited. If CanVisit evaluates to true, the job can be viewed. A bound submission is not editable but viewable. When CountIsWork is set to true, the edited wizard can be viewed. A bound submission is not editable but viewable.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 1.0,
+          "probability": 0.9014
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 1.0,
+          "end": 1.84,
+          "probability": 0.7041
+        },
+        {
+          "word": "Studio,",
+          "start": 1.84,
+          "end": 2.26,
+          "probability": 0.8052
+        },
+        {
+          "word": "open",
+          "start": 2.62,
+          "end": 2.96,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 2.96,
+          "end": 3.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "Submission",
+          "start": 3.1,
+          "end": 3.54,
+          "probability": 0.9141
+        },
+        {
+          "word": "Wizard",
+          "start": 3.54,
+          "end": 3.92,
+          "probability": 0.6387
+        },
+        {
+          "word": "PCF",
+          "start": 3.92,
+          "end": 4.58,
+          "probability": 0.9541
+        },
+        {
+          "word": "file,",
+          "start": 4.58,
+          "end": 4.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "which",
+          "start": 5.14,
+          "end": 5.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 5.44,
+          "end": 5.6,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 5.6,
+          "end": 6.22,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 6.22,
+          "end": 6.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 6.48,
+          "end": 6.6,
+          "probability": 0.9541
+        },
+        {
+          "word": "submission",
+          "start": 6.6,
+          "end": 7.02,
+          "probability": 0.5093
+        },
+        {
+          "word": "job.",
+          "start": 7.02,
+          "end": 7.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "The",
+          "start": 7.74,
+          "end": 8.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "submission",
+          "start": 8.08,
+          "end": 8.48,
+          "probability": 0.4678
+        },
+        {
+          "word": "wizard",
+          "start": 8.48,
+          "end": 8.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "has",
+          "start": 8.86,
+          "end": 9.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "dependent",
+          "start": 9.18,
+          "end": 9.58,
+          "probability": 0.9463
+        },
+        {
+          "word": "steps",
+          "start": 9.58,
+          "end": 10.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "in",
+          "start": 10.02,
+          "end": 10.34,
+          "probability": 0.999
+        },
+        {
+          "word": "certain",
+          "start": 10.34,
+          "end": 10.64,
+          "probability": 0.999
+        },
+        {
+          "word": "orders",
+          "start": 10.64,
+          "end": 11.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 11.06,
+          "end": 11.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "independent",
+          "start": 11.36,
+          "end": 11.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "steps.",
+          "start": 11.82,
+          "end": 12.4,
+          "probability": 0.999
+        },
+        {
+          "word": "Each",
+          "start": 12.76,
+          "end": 13.16,
+          "probability": 0.999
+        },
+        {
+          "word": "step",
+          "start": 13.16,
+          "end": 13.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "points",
+          "start": 13.46,
+          "end": 13.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 13.86,
+          "end": 14.06,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 14.06,
+          "end": 14.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "screen.",
+          "start": 14.2,
+          "end": 14.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "If",
+          "start": 14.76,
+          "end": 15.44,
+          "probability": 0.9146
+        },
+        {
+          "word": "CanEdit",
+          "start": 15.44,
+          "end": 15.94,
+          "probability": 0.8652
+        },
+        {
+          "word": "evaluates",
+          "start": 15.94,
+          "end": 16.7,
+          "probability": 0.9648
+        },
+        {
+          "word": "to",
+          "start": 16.7,
+          "end": 16.88,
+          "probability": 0.999
+        },
+        {
+          "word": "true,",
+          "start": 16.88,
+          "end": 17.12,
+          "probability": 0.6094
+        },
+        {
+          "word": "the",
+          "start": 17.38,
+          "end": 17.62,
+          "probability": 0.998
+        },
+        {
+          "word": "submission",
+          "start": 17.62,
+          "end": 18.04,
+          "probability": 0.9878
+        },
+        {
+          "word": "job",
+          "start": 18.04,
+          "end": 18.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 18.46,
+          "end": 18.7,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 18.7,
+          "end": 18.88,
+          "probability": 1.0
+        },
+        {
+          "word": "edited.",
+          "start": 18.88,
+          "end": 19.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "If",
+          "start": 19.58,
+          "end": 20.02,
+          "probability": 0.999
+        },
+        {
+          "word": "CanVisit",
+          "start": 20.02,
+          "end": 20.64,
+          "probability": 0.9849
+        },
+        {
+          "word": "evaluates",
+          "start": 20.64,
+          "end": 21.36,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 21.36,
+          "end": 21.52,
+          "probability": 1.0
+        },
+        {
+          "word": "true,",
+          "start": 21.52,
+          "end": 21.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 22.08,
+          "end": 22.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "job",
+          "start": 22.28,
+          "end": 22.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 22.54,
+          "end": 22.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 22.78,
+          "end": 22.94,
+          "probability": 1.0
+        },
+        {
+          "word": "viewed.",
+          "start": 22.94,
+          "end": 23.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "A",
+          "start": 23.6,
+          "end": 23.98,
+          "probability": 0.9595
+        },
+        {
+          "word": "bound",
+          "start": 23.98,
+          "end": 24.2,
+          "probability": 0.9155
+        },
+        {
+          "word": "submission",
+          "start": 24.2,
+          "end": 24.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 24.62,
+          "end": 25.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 25.0,
+          "end": 25.24,
+          "probability": 0.999
+        },
+        {
+          "word": "editable",
+          "start": 25.24,
+          "end": 25.78,
+          "probability": 0.999
+        },
+        {
+          "word": "but",
+          "start": 25.78,
+          "end": 26.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "viewable.",
+          "start": 26.02,
+          "end": 26.52,
+          "probability": 0.999
+        },
+        {
+          "word": "When",
+          "start": 26.98,
+          "end": 27.34,
+          "probability": 0.9751
+        },
+        {
+          "word": "CountIsWork",
+          "start": 27.34,
+          "end": 27.94,
+          "probability": 0.6045
+        },
+        {
+          "word": "is",
+          "start": 27.94,
+          "end": 28.16,
+          "probability": 0.9839
+        },
+        {
+          "word": "set",
+          "start": 28.16,
+          "end": 28.38,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 28.38,
+          "end": 28.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "true,",
+          "start": 28.54,
+          "end": 28.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 29.1,
+          "end": 29.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "edited",
+          "start": 29.3,
+          "end": 29.66,
+          "probability": 0.958
+        },
+        {
+          "word": "wizard",
+          "start": 29.66,
+          "end": 29.94,
+          "probability": 0.8599
+        },
+        {
+          "word": "can",
+          "start": 29.94,
+          "end": 29.98,
+          "probability": 0.2323
+        },
+        {
+          "word": "be",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.9116
+        },
+        {
+          "word": "viewed.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.447
+        },
+        {
+          "word": "A",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.0567
+        },
+        {
+          "word": "bound",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.6699
+        },
+        {
+          "word": "submission",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.9595
+        },
+        {
+          "word": "is",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.9199
+        },
+        {
+          "word": "not",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.874
+        },
+        {
+          "word": "editable",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 1.0
+        },
+        {
+          "word": "but",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.9585
+        },
+        {
+          "word": "viewable.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 48.82,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:48.820",
+      "text": "The wizard step is listed as unsaved work if navigating away without saving. The title for the group of independent steps is set at the wizard level. For example, Tools. There are also other key properties for the submission wizard, such as, Info Bar. Menu Actions. Tab Bar.",
+      "words": [
+        {
+          "word": "The",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.4429
+        },
+        {
+          "word": "wizard",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.6885
+        },
+        {
+          "word": "step",
+          "start": 29.98,
+          "end": 30.4,
+          "probability": 0.9561
+        },
+        {
+          "word": "is",
+          "start": 30.4,
+          "end": 30.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "listed",
+          "start": 30.6,
+          "end": 30.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "as",
+          "start": 30.92,
+          "end": 31.2,
+          "probability": 0.998
+        },
+        {
+          "word": "unsaved",
+          "start": 31.2,
+          "end": 31.72,
+          "probability": 0.8174
+        },
+        {
+          "word": "work",
+          "start": 31.72,
+          "end": 32.0,
+          "probability": 0.9858
+        },
+        {
+          "word": "if",
+          "start": 32.0,
+          "end": 32.2,
+          "probability": 0.9824
+        },
+        {
+          "word": "navigating",
+          "start": 32.2,
+          "end": 32.7,
+          "probability": 0.978
+        },
+        {
+          "word": "away",
+          "start": 32.7,
+          "end": 33.04,
+          "probability": 0.9106
+        },
+        {
+          "word": "without",
+          "start": 33.04,
+          "end": 33.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "saving.",
+          "start": 33.34,
+          "end": 33.86,
+          "probability": 0.9902
+        },
+        {
+          "word": "The",
+          "start": 34.18,
+          "end": 34.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "title",
+          "start": 34.62,
+          "end": 34.92,
+          "probability": 0.9775
+        },
+        {
+          "word": "for",
+          "start": 34.92,
+          "end": 35.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 35.18,
+          "end": 35.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "group",
+          "start": 35.3,
+          "end": 35.52,
+          "probability": 0.9194
+        },
+        {
+          "word": "of",
+          "start": 35.52,
+          "end": 35.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "independent",
+          "start": 35.72,
+          "end": 36.24,
+          "probability": 0.9512
+        },
+        {
+          "word": "steps",
+          "start": 36.24,
+          "end": 36.66,
+          "probability": 0.9644
+        },
+        {
+          "word": "is",
+          "start": 36.66,
+          "end": 36.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "set",
+          "start": 36.94,
+          "end": 37.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "at",
+          "start": 37.18,
+          "end": 37.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 37.32,
+          "end": 37.44,
+          "probability": 0.9937
+        },
+        {
+          "word": "wizard",
+          "start": 37.44,
+          "end": 37.78,
+          "probability": 0.9409
+        },
+        {
+          "word": "level.",
+          "start": 37.78,
+          "end": 38.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "For",
+          "start": 38.44,
+          "end": 38.9,
+          "probability": 0.9668
+        },
+        {
+          "word": "example,",
+          "start": 38.9,
+          "end": 39.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "Tools.",
+          "start": 39.72,
+          "end": 40.04,
+          "probability": 0.4382
+        },
+        {
+          "word": "There",
+          "start": 40.46,
+          "end": 40.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "are",
+          "start": 40.92,
+          "end": 41.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "also",
+          "start": 41.1,
+          "end": 41.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "other",
+          "start": 41.42,
+          "end": 41.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "key",
+          "start": 41.76,
+          "end": 41.98,
+          "probability": 0.9922
+        },
+        {
+          "word": "properties",
+          "start": 41.98,
+          "end": 42.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 42.42,
+          "end": 42.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 42.7,
+          "end": 42.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "submission",
+          "start": 42.84,
+          "end": 43.26,
+          "probability": 0.6045
+        },
+        {
+          "word": "wizard,",
+          "start": 43.26,
+          "end": 43.76,
+          "probability": 0.9834
+        },
+        {
+          "word": "such",
+          "start": 44.0,
+          "end": 44.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "as,",
+          "start": 44.4,
+          "end": 44.84,
+          "probability": 0.999
+        },
+        {
+          "word": "Info",
+          "start": 45.0,
+          "end": 45.5,
+          "probability": 0.8755
+        },
+        {
+          "word": "Bar.",
+          "start": 45.5,
+          "end": 45.78,
+          "probability": 0.4858
+        },
+        {
+          "word": "Menu",
+          "start": 46.12,
+          "end": 46.64,
+          "probability": 0.9204
+        },
+        {
+          "word": "Actions.",
+          "start": 46.64,
+          "end": 47.28,
+          "probability": 0.958
+        },
+        {
+          "word": "Tab",
+          "start": 47.82,
+          "end": 48.46,
+          "probability": 0.9736
+        },
+        {
+          "word": "Bar.",
+          "start": 48.46,
+          "end": 48.82,
+          "probability": 0.8896
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 51.56,
+      "end": 57.28,
+      "start_formatted": "00:00:51.560",
+      "end_formatted": "00:00:57.280",
+      "text": "The entry points and variables define the signature used by other widgets to navigate to the wizard.",
+      "words": [
+        {
+          "word": "The",
+          "start": 51.56,
+          "end": 52.2,
+          "probability": 0.9878
+        },
+        {
+          "word": "entry",
+          "start": 52.2,
+          "end": 52.52,
+          "probability": 0.9629
+        },
+        {
+          "word": "points",
+          "start": 52.52,
+          "end": 52.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 52.92,
+          "end": 53.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "variables",
+          "start": 53.18,
+          "end": 53.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "define",
+          "start": 53.64,
+          "end": 54.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 54.1,
+          "end": 54.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "signature",
+          "start": 54.34,
+          "end": 54.78,
+          "probability": 0.9902
+        },
+        {
+          "word": "used",
+          "start": 54.78,
+          "end": 55.14,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 55.14,
+          "end": 55.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "other",
+          "start": 55.34,
+          "end": 55.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "widgets",
+          "start": 55.58,
+          "end": 55.88,
+          "probability": 0.9868
+        },
+        {
+          "word": "to",
+          "start": 55.88,
+          "end": 56.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "navigate",
+          "start": 56.16,
+          "end": 56.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 56.56,
+          "end": 56.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 56.84,
+          "end": 56.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "wizard.",
+          "start": 56.96,
+          "end": 57.28,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 58.78,
+      "end": 69.84,
+      "start_formatted": "00:00:58.780",
+      "end_formatted": "00:01:09.840",
+      "text": "There could be multiple signatures for the entry points. Open Account File Underscore Summary.PCF. Double-click to go to the Open Policy Transactions section.",
+      "words": [
+        {
+          "word": "There",
+          "start": 58.78,
+          "end": 59.5,
+          "probability": 0.9429
+        },
+        {
+          "word": "could",
+          "start": 59.5,
+          "end": 59.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "be",
+          "start": 59.66,
+          "end": 59.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "multiple",
+          "start": 59.82,
+          "end": 60.18,
+          "probability": 0.998
+        },
+        {
+          "word": "signatures",
+          "start": 60.18,
+          "end": 60.74,
+          "probability": 0.9888
+        },
+        {
+          "word": "for",
+          "start": 60.74,
+          "end": 61.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 61.08,
+          "end": 61.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "entry",
+          "start": 61.22,
+          "end": 61.58,
+          "probability": 0.9766
+        },
+        {
+          "word": "points.",
+          "start": 61.58,
+          "end": 62.04,
+          "probability": 0.998
+        },
+        {
+          "word": "Open",
+          "start": 62.6,
+          "end": 62.8,
+          "probability": 0.9595
+        },
+        {
+          "word": "Account",
+          "start": 62.8,
+          "end": 63.12,
+          "probability": 0.1956
+        },
+        {
+          "word": "File",
+          "start": 63.12,
+          "end": 63.56,
+          "probability": 0.8921
+        },
+        {
+          "word": "Underscore",
+          "start": 63.56,
+          "end": 64.26,
+          "probability": 0.9385
+        },
+        {
+          "word": "Summary",
+          "start": 64.26,
+          "end": 64.78,
+          "probability": 0.9946
+        },
+        {
+          "word": ".PCF.",
+          "start": 64.78,
+          "end": 65.96,
+          "probability": 0.8354
+        },
+        {
+          "word": "Double",
+          "start": 66.18,
+          "end": 66.66,
+          "probability": 0.998
+        },
+        {
+          "word": "-click",
+          "start": 66.66,
+          "end": 66.98,
+          "probability": 0.8545
+        },
+        {
+          "word": "to",
+          "start": 66.98,
+          "end": 67.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "go",
+          "start": 67.22,
+          "end": 67.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 67.4,
+          "end": 67.62,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 67.62,
+          "end": 67.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "Open",
+          "start": 67.76,
+          "end": 68.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "Policy",
+          "start": 68.04,
+          "end": 68.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "Transactions",
+          "start": 68.58,
+          "end": 69.32,
+          "probability": 0.771
+        },
+        {
+          "word": "section.",
+          "start": 69.32,
+          "end": 69.84,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 71.44,
+      "end": 73.66,
+      "start_formatted": "00:01:11.440",
+      "end_formatted": "00:01:13.660",
+      "text": "Click the Transaction Number cell.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 71.44,
+          "end": 72.16,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 72.16,
+          "end": 72.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "Transaction",
+          "start": 72.34,
+          "end": 73.02,
+          "probability": 0.8232
+        },
+        {
+          "word": "Number",
+          "start": 73.02,
+          "end": 73.3,
+          "probability": 0.9585
+        },
+        {
+          "word": "cell.",
+          "start": 73.3,
+          "end": 73.66,
+          "probability": 0.5942
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 75.14,
+      "end": 80.28,
+      "start_formatted": "00:01:15.140",
+      "end_formatted": "00:01:20.280",
+      "text": "The action is set to JobForward.Go. Control-click on JobForward.",
+      "words": [
+        {
+          "word": "The",
+          "start": 75.14,
+          "end": 75.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "action",
+          "start": 75.86,
+          "end": 76.2,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 76.2,
+          "end": 76.42,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 76.42,
+          "end": 76.64,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 76.64,
+          "end": 76.8,
+          "probability": 1.0
+        },
+        {
+          "word": "JobForward",
+          "start": 76.8,
+          "end": 77.66,
+          "probability": 0.8247
+        },
+        {
+          "word": ".Go.",
+          "start": 77.66,
+          "end": 78.12,
+          "probability": 0.9639
+        },
+        {
+          "word": "Control",
+          "start": 78.42,
+          "end": 78.92,
+          "probability": 0.8628
+        },
+        {
+          "word": "-click",
+          "start": 78.92,
+          "end": 79.26,
+          "probability": 0.9541
+        },
+        {
+          "word": "on",
+          "start": 79.26,
+          "end": 79.54,
+          "probability": 0.999
+        },
+        {
+          "word": "JobForward.",
+          "start": 79.54,
+          "end": 80.28,
+          "probability": 0.9751
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 82.82,
+      "end": 89.24,
+      "start_formatted": "00:01:22.820",
+      "end_formatted": "00:01:29.240",
+      "text": "Select the line of code for submission. In the action field, Control-click on Go to Submission Wizard.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 82.82,
+          "end": 83.48,
+          "probability": 0.9409
+        },
+        {
+          "word": "the",
+          "start": 83.48,
+          "end": 83.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "line",
+          "start": 83.76,
+          "end": 84.02,
+          "probability": 0.9536
+        },
+        {
+          "word": "of",
+          "start": 84.02,
+          "end": 84.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "code",
+          "start": 84.18,
+          "end": 84.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 84.46,
+          "end": 84.66,
+          "probability": 0.999
+        },
+        {
+          "word": "submission.",
+          "start": 84.66,
+          "end": 85.1,
+          "probability": 0.8853
+        },
+        {
+          "word": "In",
+          "start": 85.5,
+          "end": 85.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 85.86,
+          "end": 85.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "action",
+          "start": 85.98,
+          "end": 86.34,
+          "probability": 0.4382
+        },
+        {
+          "word": "field,",
+          "start": 86.34,
+          "end": 86.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "Control",
+          "start": 87.12,
+          "end": 87.4,
+          "probability": 0.458
+        },
+        {
+          "word": "-click",
+          "start": 87.4,
+          "end": 87.74,
+          "probability": 0.6216
+        },
+        {
+          "word": "on",
+          "start": 87.74,
+          "end": 87.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "Go",
+          "start": 87.96,
+          "end": 88.16,
+          "probability": 0.8325
+        },
+        {
+          "word": "to",
+          "start": 88.16,
+          "end": 88.36,
+          "probability": 0.9487
+        },
+        {
+          "word": "Submission",
+          "start": 88.36,
+          "end": 88.86,
+          "probability": 0.9443
+        },
+        {
+          "word": "Wizard.",
+          "start": 88.86,
+          "end": 89.24,
+          "probability": 0.9619
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 90.9,
+      "end": 97.06,
+      "start_formatted": "00:01:30.900",
+      "end_formatted": "00:01:37.060",
+      "text": "In Job Helper, the GoSA function calls SubmissionWizard.Go to navigate to the Submission Wizard.",
+      "words": [
+        {
+          "word": "In",
+          "start": 90.9,
+          "end": 91.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "Job",
+          "start": 91.56,
+          "end": 91.84,
+          "probability": 0.9536
+        },
+        {
+          "word": "Helper,",
+          "start": 91.84,
+          "end": 92.22,
+          "probability": 0.9277
+        },
+        {
+          "word": "the",
+          "start": 92.44,
+          "end": 92.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "GoSA",
+          "start": 92.66,
+          "end": 92.96,
+          "probability": 0.2177
+        },
+        {
+          "word": "function",
+          "start": 92.96,
+          "end": 93.3,
+          "probability": 0.9893
+        },
+        {
+          "word": "calls",
+          "start": 93.3,
+          "end": 93.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "SubmissionWizard",
+          "start": 93.82,
+          "end": 94.74,
+          "probability": 0.894
+        },
+        {
+          "word": ".Go",
+          "start": 94.74,
+          "end": 95.2,
+          "probability": 0.8296
+        },
+        {
+          "word": "to",
+          "start": 95.2,
+          "end": 95.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "navigate",
+          "start": 95.4,
+          "end": 95.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "to",
+          "start": 95.78,
+          "end": 96.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 96.08,
+          "end": 96.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "Submission",
+          "start": 96.18,
+          "end": 96.68,
+          "probability": 0.876
+        },
+        {
+          "word": "Wizard.",
+          "start": 96.68,
+          "end": 97.06,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 97.06,
+      "end": 105.72,
+      "start_formatted": "00:01:37.060",
+      "end_formatted": "00:01:45.720",
+      "text": "Log into Policy Center as Alice Applegate. Open a Submission in Draft Mode. Note the different sections in the Submission Wizard.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 97.06,
+          "end": 98.04,
+          "probability": 0.9102
+        },
+        {
+          "word": "into",
+          "start": 98.04,
+          "end": 98.34,
+          "probability": 0.7139
+        },
+        {
+          "word": "Policy",
+          "start": 98.34,
+          "end": 98.8,
+          "probability": 0.9565
+        },
+        {
+          "word": "Center",
+          "start": 98.8,
+          "end": 99.2,
+          "probability": 0.8311
+        },
+        {
+          "word": "as",
+          "start": 99.2,
+          "end": 99.48,
+          "probability": 0.9648
+        },
+        {
+          "word": "Alice",
+          "start": 99.48,
+          "end": 99.88,
+          "probability": 0.9282
+        },
+        {
+          "word": "Applegate.",
+          "start": 99.88,
+          "end": 100.46,
+          "probability": 0.9946
+        },
+        {
+          "word": "Open",
+          "start": 100.68,
+          "end": 101.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 101.18,
+          "end": 101.34,
+          "probability": 0.9595
+        },
+        {
+          "word": "Submission",
+          "start": 101.34,
+          "end": 101.74,
+          "probability": 0.7305
+        },
+        {
+          "word": "in",
+          "start": 101.74,
+          "end": 102.06,
+          "probability": 0.9712
+        },
+        {
+          "word": "Draft",
+          "start": 102.06,
+          "end": 102.36,
+          "probability": 0.8877
+        },
+        {
+          "word": "Mode.",
+          "start": 102.36,
+          "end": 102.7,
+          "probability": 0.583
+        },
+        {
+          "word": "Note",
+          "start": 102.96,
+          "end": 103.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 103.42,
+          "end": 103.58,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 103.58,
+          "end": 103.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "sections",
+          "start": 103.92,
+          "end": 104.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "in",
+          "start": 104.4,
+          "end": 104.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 104.74,
+          "end": 104.86,
+          "probability": 0.9839
+        },
+        {
+          "word": "Submission",
+          "start": 104.86,
+          "end": 105.34,
+          "probability": 0.959
+        },
+        {
+          "word": "Wizard.",
+          "start": 105.34,
+          "end": 105.72,
+          "probability": 0.9258
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 108.0,
+      "end": 115.94,
+      "start_formatted": "00:01:48.000",
+      "end_formatted": "00:01:55.940",
+      "text": "Navigate away from the wizard without saving after a change. Click the Unsaved Work icon at the top right.",
+      "words": [
+        {
+          "word": "Navigate",
+          "start": 108.0,
+          "end": 108.68,
+          "probability": 0.998
+        },
+        {
+          "word": "away",
+          "start": 108.68,
+          "end": 108.92,
+          "probability": 0.9741
+        },
+        {
+          "word": "from",
+          "start": 108.92,
+          "end": 109.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 109.22,
+          "end": 109.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "wizard",
+          "start": 109.36,
+          "end": 109.66,
+          "probability": 0.6235
+        },
+        {
+          "word": "without",
+          "start": 109.66,
+          "end": 109.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "saving",
+          "start": 109.94,
+          "end": 110.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "after",
+          "start": 110.44,
+          "end": 110.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 110.84,
+          "end": 111.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "change.",
+          "start": 111.0,
+          "end": 111.4,
+          "probability": 0.9951
+        },
+        {
+          "word": "Click",
+          "start": 112.98,
+          "end": 113.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 113.66,
+          "end": 113.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "Unsaved",
+          "start": 113.82,
+          "end": 114.34,
+          "probability": 0.7988
+        },
+        {
+          "word": "Work",
+          "start": 114.34,
+          "end": 114.6,
+          "probability": 0.8145
+        },
+        {
+          "word": "icon",
+          "start": 114.6,
+          "end": 115.06,
+          "probability": 0.9888
+        },
+        {
+          "word": "at",
+          "start": 115.06,
+          "end": 115.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 115.3,
+          "end": 115.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "top",
+          "start": 115.4,
+          "end": 115.62,
+          "probability": 0.9883
+        },
+        {
+          "word": "right.",
+          "start": 115.62,
+          "end": 115.94,
+          "probability": 0.957
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 118.32,
+      "end": 128.12,
+      "start_formatted": "00:01:58.320",
+      "end_formatted": "00:02:08.120",
+      "text": "The wizard step is listed as Unsaved Work because the counts as Work is set to True in SubmissionWizard.PCF. Clicking on the link takes you to the step.",
+      "words": [
+        {
+          "word": "The",
+          "start": 118.32,
+          "end": 118.94,
+          "probability": 0.8882
+        },
+        {
+          "word": "wizard",
+          "start": 118.94,
+          "end": 119.26,
+          "probability": 0.6729
+        },
+        {
+          "word": "step",
+          "start": 119.26,
+          "end": 119.58,
+          "probability": 0.9341
+        },
+        {
+          "word": "is",
+          "start": 119.58,
+          "end": 119.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "listed",
+          "start": 119.84,
+          "end": 120.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "as",
+          "start": 120.18,
+          "end": 120.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "Unsaved",
+          "start": 120.46,
+          "end": 121.06,
+          "probability": 0.5376
+        },
+        {
+          "word": "Work",
+          "start": 121.06,
+          "end": 121.3,
+          "probability": 0.4421
+        },
+        {
+          "word": "because",
+          "start": 121.3,
+          "end": 121.64,
+          "probability": 0.9639
+        },
+        {
+          "word": "the",
+          "start": 121.64,
+          "end": 121.88,
+          "probability": 0.978
+        },
+        {
+          "word": "counts",
+          "start": 121.88,
+          "end": 122.18,
+          "probability": 0.5308
+        },
+        {
+          "word": "as",
+          "start": 122.18,
+          "end": 122.42,
+          "probability": 0.9834
+        },
+        {
+          "word": "Work",
+          "start": 122.42,
+          "end": 122.64,
+          "probability": 0.3108
+        },
+        {
+          "word": "is",
+          "start": 122.64,
+          "end": 122.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "set",
+          "start": 122.86,
+          "end": 123.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 123.1,
+          "end": 123.26,
+          "probability": 0.9956
+        },
+        {
+          "word": "True",
+          "start": 123.26,
+          "end": 123.48,
+          "probability": 0.3481
+        },
+        {
+          "word": "in",
+          "start": 123.48,
+          "end": 123.74,
+          "probability": 0.9756
+        },
+        {
+          "word": "SubmissionWizard",
+          "start": 123.74,
+          "end": 124.68,
+          "probability": 0.875
+        },
+        {
+          "word": ".PCF.",
+          "start": 124.68,
+          "end": 125.66,
+          "probability": 0.8223
+        },
+        {
+          "word": "Clicking",
+          "start": 125.9,
+          "end": 126.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "on",
+          "start": 126.52,
+          "end": 126.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 126.64,
+          "end": 126.76,
+          "probability": 0.998
+        },
+        {
+          "word": "link",
+          "start": 126.76,
+          "end": 126.98,
+          "probability": 0.96
+        },
+        {
+          "word": "takes",
+          "start": 126.98,
+          "end": 127.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "you",
+          "start": 127.28,
+          "end": 127.48,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 127.48,
+          "end": 127.62,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 127.62,
+          "end": 127.8,
+          "probability": 0.9814
+        },
+        {
+          "word": "step.",
+          "start": 127.8,
+          "end": 128.12,
+          "probability": 0.9614
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 130.08,
+      "end": 144.96,
+      "start_formatted": "00:02:10.080",
+      "end_formatted": "00:02:24.960",
+      "text": "Locate and enforce policy. Click on the Policy link. Go to the Independent Step, Policy Transactions. Find the bound submission.",
+      "words": [
+        {
+          "word": "Locate",
+          "start": 130.08,
+          "end": 130.7,
+          "probability": 0.9922
+        },
+        {
+          "word": "and",
+          "start": 130.7,
+          "end": 130.86,
+          "probability": 0.5547
+        },
+        {
+          "word": "enforce",
+          "start": 130.86,
+          "end": 131.26,
+          "probability": 0.583
+        },
+        {
+          "word": "policy.",
+          "start": 131.26,
+          "end": 131.88,
+          "probability": 0.7456
+        },
+        {
+          "word": "Click",
+          "start": 134.14,
+          "end": 134.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "on",
+          "start": 134.76,
+          "end": 135.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 135.0,
+          "end": 135.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "Policy",
+          "start": 135.14,
+          "end": 135.54,
+          "probability": 0.4543
+        },
+        {
+          "word": "link.",
+          "start": 135.54,
+          "end": 135.96,
+          "probability": 0.8423
+        },
+        {
+          "word": "Go",
+          "start": 137.9,
+          "end": 138.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 138.52,
+          "end": 138.74,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 138.74,
+          "end": 138.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "Independent",
+          "start": 138.88,
+          "end": 139.32,
+          "probability": 0.446
+        },
+        {
+          "word": "Step,",
+          "start": 139.32,
+          "end": 139.88,
+          "probability": 0.4712
+        },
+        {
+          "word": "Policy",
+          "start": 140.08,
+          "end": 140.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "Transactions.",
+          "start": 140.62,
+          "end": 141.48,
+          "probability": 0.9561
+        },
+        {
+          "word": "Find",
+          "start": 143.36,
+          "end": 143.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 143.98,
+          "end": 144.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "bound",
+          "start": 144.16,
+          "end": 144.42,
+          "probability": 0.6167
+        },
+        {
+          "word": "submission.",
+          "start": 144.42,
+          "end": 144.96,
+          "probability": 0.9565
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 147.26,
+      "end": 160.44,
+      "start_formatted": "00:02:27.260",
+      "end_formatted": "00:02:40.440",
+      "text": "Click the Bound Submission. Click the Bound Submission. Click View Policy Transactions. The bound submission is not editable. This ends the overview for JobWizard demonstration.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 147.26,
+          "end": 147.92,
+          "probability": 0.9365
+        },
+        {
+          "word": "the",
+          "start": 147.92,
+          "end": 148.12,
+          "probability": 0.9766
+        },
+        {
+          "word": "Bound",
+          "start": 148.12,
+          "end": 148.44,
+          "probability": 0.6924
+        },
+        {
+          "word": "Submission.",
+          "start": 148.44,
+          "end": 149.02,
+          "probability": 0.8672
+        },
+        {
+          "word": "Click",
+          "start": 151.14,
+          "end": 151.8,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 151.8,
+          "end": 152.02,
+          "probability": 0.0019
+        },
+        {
+          "word": "Bound",
+          "start": 152.02,
+          "end": 152.06,
+          "probability": 0.9814
+        },
+        {
+          "word": "Submission.",
+          "start": 152.06,
+          "end": 152.06,
+          "probability": 0.9756
+        },
+        {
+          "word": "Click",
+          "start": 152.06,
+          "end": 152.06,
+          "probability": 0.9575
+        },
+        {
+          "word": "View",
+          "start": 152.06,
+          "end": 152.06,
+          "probability": 0.853
+        },
+        {
+          "word": "Policy",
+          "start": 152.06,
+          "end": 152.56,
+          "probability": 0.9819
+        },
+        {
+          "word": "Transactions.",
+          "start": 152.56,
+          "end": 153.4,
+          "probability": 0.9834
+        },
+        {
+          "word": "The",
+          "start": 154.84,
+          "end": 155.5,
+          "probability": 0.9912
+        },
+        {
+          "word": "bound",
+          "start": 155.5,
+          "end": 155.74,
+          "probability": 0.2739
+        },
+        {
+          "word": "submission",
+          "start": 155.74,
+          "end": 156.22,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 156.22,
+          "end": 156.56,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 156.56,
+          "end": 156.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "editable.",
+          "start": 156.8,
+          "end": 157.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "This",
+          "start": 157.66,
+          "end": 158.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "ends",
+          "start": 158.32,
+          "end": 158.56,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 158.56,
+          "end": 158.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "overview",
+          "start": 158.76,
+          "end": 159.24,
+          "probability": 0.9502
+        },
+        {
+          "word": "for",
+          "start": 159.24,
+          "end": 159.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "JobWizard",
+          "start": 159.56,
+          "end": 160.2,
+          "probability": 0.6709
+        },
+        {
+          "word": "demonstration.",
+          "start": 160.2,
+          "end": 160.44,
+          "probability": 0.6738
+        }
+      ]
+    }
+  ]
+}

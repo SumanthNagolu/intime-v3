@@ -1,0 +1,181 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-05",
+    "slide_count": 15,
+    "slides_with_text": 14,
+    "total_words": 847,
+    "avg_confidence": 85.72,
+    "processing_time_seconds": 6.1,
+    "extracted_at": "2026-02-15T18:19:56.098211"
+  },
+  "full_text": "Gosu Templates\n\nLesson\nobjectives\n\nUse Gosu Templates to extract data for any type\nof text format\n\n| Gosu Template Gi\n\nau .\n(publicID),(bankName) publicID,ab:68\nab:68,FastCash — G& —> bankName,FastCash\n\nGosu\nTemplate\n\n« AGosu Template generates dynamic, formatted text, based on input parameters\n« Always evaluates to a string\n\n« Accepts any number of input parameters\n\n¢ Evaluates parameters and derived values into text\n\n¢ Supports scriptlet syntax for API calls and control of flow\n\n| Steps to create a Gosu Template Gi\n\n* To create a new Gosu Template: See\n\nGosu Program [Ei New Gosu Template x\n¢ Right-click the parent package © eet —> Name: |BankAccountDataTemplate\n+ Select New > Gosu Template @ GxModa : OK] {Cancel\n\n+ Provide a name for the template See Soviet\n\n+ <entity/description>Template\n\n¢ All Gosu Template files have a .gst extension\n\n@® BankAccountDataTemplate.gst |\n\na <#@ params(contactID : String, aBankAccount : BankAccount) #>\ncontact, ${contact1D}\nbankName , ${aBankAccount .BankName}\n\n4 routingNumber, ${aBankAccount.RoutingNumber}\n\n5 accountNumber, ${aBankAccount .AccountNumber}\naccountType, ${aBankAccount .AccountType}\n<# if (aBankAccount.AccountType == BankAccountType.TC_SAVINGS) { &>\nageOfMessage ,<@¢ageOfMessageInSecondsté>\n\n3 <t) &>\n\n| Gosu Template syntax: parameters Gi\n\n@ BankAccountDataTemplate.gst\n\nbankName , ${aBankAccount.BankName}\nroutingNumber , ${aBankAccount.RoutingNumber}\naccountNumber , ${aBankAccount.AccountNumber}\naccountType ,${aBankAccount.AccountType}\n7 <8 if (aBankAccount.AccountType == BankAccountType.TC_ SAVINGS) { &>\n8 ageOfMessage ,<@@ageOfMessageInSeconds@é@>\n<% } &>\n\n¢ Input parameter declaration syntax\n* <%@ params ( paraml : type, param2 : type, ..) %>\n\n¢ White space and line breaks are rendered in the Gosu Templates\n\n| Gosu Template syntax: expressions Gi\n\n@ BankAccountDataTemplate.gst |\n: String, aBankAccount : BankAccount) %>\n\n3 5 BankAccount . BankName}\n4 routingitumber, ${aBankAccount.RoutingNumber}\n5 accountNumber , ${aBankAccount.AccountNumber}\naccountType , ${aBankAccount .AccountType}\n<® if (aBankAccount.AccountType == BankAccountType. TC SAVINGS) { %>\nageOfMessage ,<@@ageOfMessageInSecondst@@>\n<t } >\n\n* Template expression syntax\n* ${param1} orf <%= paraml %>\n* Static text is outside of a template expression, template parameter, or template\nscriptlet\n* contact, is treated as static text\n¢ For example, if contactID is ab:5, this renders as contact,ab:5\n\n| Gosu Template syntax: scriptlets Gi\n\n@ BankAccountDataTemplate.gst |\n\n1 <8@ params(contactID : String, aBankAccount : BankAccount) %>\n2 contact ,${contactID}\n3 bankName , ${aBankAccount.BankName}\nroutingNumber , ${aBankAccount.RoutingNumber}\naccountNumber , ${aBankAccount.AccountNumber}\naccountType , ${aBankAccount .AccountType}\n\n¢ Evaluate scriptlet syntax\n* <% if (something=true) { %> .. <% } %>\n\n¢ Text within <% and %> compiled and evaluated as Gosu code at run-time\n\n* Scoped within scriptlet tags, e.g. conditional logic, variable assignments, loops,\netc.\n\n| Generating String output using Gosu Template Gi\n\ncontact, ab:9\nbankliane, ACME Credit Union\nuses gw.api.database.Query routinglfumber, 123-999\n; accountiiunber, 112233468\nuses gw.api.database.Relop cceounstype, checking\nuses trainingapp.messaging. bank. BankAccountDataTemplate\nbanidiane, ACME Credit Union\n\nvar queryOb} = Query.make(ABPerson) routinglfumber, 225-999\nqueryOb}. compare (ABPerson#PublicID, Relop.Zquals, \"ab:98\") accountiiumber, 554433221\naccountType, savings\n\nvar targetPerson = queryObj. select () .AtMostOneRow See ee seas omiessayeraseconde>\n\nfor(bankAccount in targetPerson.BankAccounts) {\n=> 10 var payload = BankAccountDataTemplate. renderToString(targetPerson.PublicID, bankAccount)\nprint (payload)\n12 }\nSyntax: var payload = TemplateName. renderToString (paramList)\n* TemplateName: the Gosu Template class name\n\n* TemplateName.renderToString(paramList): returns a serialized string\n\n| Deploy code changes Gi\n\nNew Gosu Template Modified Gosu Template\n\nBME Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nIW, Debug ‘Server’ Shift+F9\nKE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+ Shift+F9\n\n7m Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nFREY tools ves Window Help\nD> Run ‘Server’\n@& Debug ‘Server’\nW Run ‘Server’ with Coverage\nD> Run...\nWE Debug...\n7 Attach to Local Process...\n[> Edit Configurations...\n2B] Import Test Results\nIl Stop ‘Server’\nEF show Running List\nStop Background Processes\n\n| Demonstration G\n\nOutput a String payload\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — |dentify if each statement about Gosu Templates is True or False.\n\n4\n, A\nB\nCc\n\nIt can take any number of input values.\n\nIt can make use of conditional statements and for loops.\n\nwv\n\nIt can include values from both the object that triggered the message event and\nobjects related to the triggering object.\n\nD\n\nz=\n\nIt can be used only for message payload generation.\n\nSe Soe Se sees esse ese\n\nAnswer\n\n_— — |dentify if each statement about Gosu Templates is True or False.\n\nY\n, A\nB\nCc\n\nwere\n\nD\n\nz=\n\nCc\n\nww\n\nSoo eS oe ese Sse ese\n\nD)\n\nIt can take any number of input values.\nIt can make use of conditional statements and for loops.\n\nIt can include values from both the object that triggered the message event and\nobjects related to the triggering object.\n\nIt can be used only for message payload generation.\nTrue\nTrue\n\nTrue - Gosu Templates can do this either by having the related objects passed to it\nor by having the triggering object passed to it and using its foreign keys to\nnavigate to the related objects\n\nFalse\n\nLesson\nobjectives Use Gosu Templates to extract data for any type\nrevi eW of text format\n\n| Student exercise\n\nGenerate a String message payload",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Gosu Templates",
+      "word_count": 2,
+      "avg_confidence": 94.5,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nUse Gosu Templates to extract data for any type\nof text format",
+      "word_count": 14,
+      "avg_confidence": 95.43,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Gosu Template Gi\n\nau .\n(publicID),(bankName) publicID,ab:68\nab:68,FastCash — G& —> bankName,FastCash\n\nGosu\nTemplate\n\n« AGosu Template generates dynamic, formatted text, based on input parameters\n« Always evaluates to a string\n\n« Accepts any number of input parameters\n\n¢ Evaluates parameters and derived values into text\n\n¢ Supports scriptlet syntax for API calls and control of flow",
+      "word_count": 58,
+      "avg_confidence": 84.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Steps to create a Gosu Template Gi\n\n* To create a new Gosu Template: See\n\nGosu Program [Ei New Gosu Template x\n¢ Right-click the parent package © eet —> Name: |BankAccountDataTemplate\n+ Select New > Gosu Template @ GxModa : OK] {Cancel\n\n+ Provide a name for the template See Soviet\n\n+ <entity/description>Template\n\n¢ All Gosu Template files have a .gst extension\n\n@® BankAccountDataTemplate.gst |\n\na <#@ params(contactID : String, aBankAccount : BankAccount) #>\ncontact, ${contact1D}\nbankName , ${aBankAccount .BankName}\n\n4 routingNumber, ${aBankAccount.RoutingNumber}\n\n5 accountNumber, ${aBankAccount .AccountNumber}\naccountType, ${aBankAccount .AccountType}\n<# if (aBankAccount.AccountType == BankAccountType.TC_SAVINGS) { &>\nageOfMessage ,<@¢ageOfMessageInSecondsté>\n\n3 <t) &>",
+      "word_count": 104,
+      "avg_confidence": 75.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Gosu Template syntax: parameters Gi\n\n@ BankAccountDataTemplate.gst\n\nbankName , ${aBankAccount.BankName}\nroutingNumber , ${aBankAccount.RoutingNumber}\naccountNumber , ${aBankAccount.AccountNumber}\naccountType ,${aBankAccount.AccountType}\n7 <8 if (aBankAccount.AccountType == BankAccountType.TC_ SAVINGS) { &>\n8 ageOfMessage ,<@@ageOfMessageInSeconds@é@>\n<% } &>\n\n¢ Input parameter declaration syntax\n* <%@ params ( paraml : type, param2 : type, ..) %>\n\n¢ White space and line breaks are rendered in the Gosu Templates",
+      "word_count": 63,
+      "avg_confidence": 79.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Gosu Template syntax: expressions Gi\n\n@ BankAccountDataTemplate.gst |\n: String, aBankAccount : BankAccount) %>\n\n3 5 BankAccount . BankName}\n4 routingitumber, ${aBankAccount.RoutingNumber}\n5 accountNumber , ${aBankAccount.AccountNumber}\naccountType , ${aBankAccount .AccountType}\n<® if (aBankAccount.AccountType == BankAccountType. TC SAVINGS) { %>\nageOfMessage ,<@@ageOfMessageInSecondst@@>\n<t } >\n\n* Template expression syntax\n* ${param1} orf <%= paraml %>\n* Static text is outside of a template expression, template parameter, or template\nscriptlet\n* contact, is treated as static text\n¢ For example, if contactID is ab:5, this renders as contact,ab:5",
+      "word_count": 87,
+      "avg_confidence": 78.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Gosu Template syntax: scriptlets Gi\n\n@ BankAccountDataTemplate.gst |\n\n1 <8@ params(contactID : String, aBankAccount : BankAccount) %>\n2 contact ,${contactID}\n3 bankName , ${aBankAccount.BankName}\nroutingNumber , ${aBankAccount.RoutingNumber}\naccountNumber , ${aBankAccount.AccountNumber}\naccountType , ${aBankAccount .AccountType}\n\n¢ Evaluate scriptlet syntax\n* <% if (something=true) { %> .. <% } %>\n\n¢ Text within <% and %> compiled and evaluated as Gosu code at run-time\n\n* Scoped within scriptlet tags, e.g. conditional logic, variable assignments, loops,\netc.",
+      "word_count": 75,
+      "avg_confidence": 77.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Generating String output using Gosu Template Gi\n\ncontact, ab:9\nbankliane, ACME Credit Union\nuses gw.api.database.Query routinglfumber, 123-999\n; accountiiunber, 112233468\nuses gw.api.database.Relop cceounstype, checking\nuses trainingapp.messaging. bank. BankAccountDataTemplate\nbanidiane, ACME Credit Union\n\nvar queryOb} = Query.make(ABPerson) routinglfumber, 225-999\nqueryOb}. compare (ABPerson#PublicID, Relop.Zquals, \"ab:98\") accountiiumber, 554433221\naccountType, savings\n\nvar targetPerson = queryObj. select () .AtMostOneRow See ee seas omiessayeraseconde>\n\nfor(bankAccount in targetPerson.BankAccounts) {\n=> 10 var payload = BankAccountDataTemplate. renderToString(targetPerson.PublicID, bankAccount)\nprint (payload)\n12 }\nSyntax: var payload = TemplateName. renderToString (paramList)\n* TemplateName: the Gosu Template class name\n\n* TemplateName.renderToString(paramList): returns a serialized string",
+      "word_count": 95,
+      "avg_confidence": 76.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Deploy code changes Gi\n\nNew Gosu Template Modified Gosu Template\n\nBME Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nIW, Debug ‘Server’ Shift+F9\nKE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+ Shift+F9\n\n7m Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nFREY tools ves Window Help\nD> Run ‘Server’\n@& Debug ‘Server’\nW Run ‘Server’ with Coverage\nD> Run...\nWE Debug...\n7 Attach to Local Process...\n[> Edit Configurations...\n2B] Import Test Results\nIl Stop ‘Server’\nEF show Running List\nStop Background Processes",
+      "word_count": 95,
+      "avg_confidence": 76.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Demonstration G\n\nOutput a String payload\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Question G\n\n_— — |dentify if each statement about Gosu Templates is True or False.\n\n4\n, A\nB\nCc\n\nIt can take any number of input values.\n\nIt can make use of conditional statements and for loops.\n\nwv\n\nIt can include values from both the object that triggered the message event and\nobjects related to the triggering object.\n\nD\n\nz=\n\nIt can be used only for message payload generation.\n\nSe Soe Se sees esse ese",
+      "word_count": 76,
+      "avg_confidence": 88.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Answer\n\n_— — |dentify if each statement about Gosu Templates is True or False.\n\nY\n, A\nB\nCc\n\nwere\n\nD\n\nz=\n\nCc\n\nww\n\nSoo eS oe ese Sse ese\n\nD)\n\nIt can take any number of input values.\nIt can make use of conditional statements and for loops.\n\nIt can include values from both the object that triggered the message event and\nobjects related to the triggering object.\n\nIt can be used only for message payload generation.\nTrue\nTrue\n\nTrue - Gosu Templates can do this either by having the related objects passed to it\nor by having the triggering object passed to it and using its foreign keys to\nnavigate to the related objects\n\nFalse",
+      "word_count": 117,
+      "avg_confidence": 89.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Lesson\nobjectives Use Gosu Templates to extract data for any type\nrevi eW of text format",
+      "word_count": 16,
+      "avg_confidence": 92.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Student exercise\n\nGenerate a String message payload",
+      "word_count": 8,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

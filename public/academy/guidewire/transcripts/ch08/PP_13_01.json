@@ -1,0 +1,2782 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_13_01.mp4",
+    "video_stem": "PP_13_01",
+    "duration_seconds": 196.3,
+    "duration_formatted": "00:03:16.300",
+    "segment_count": 22,
+    "word_count": 417,
+    "avg_confidence": 0.8948,
+    "transcription_time_seconds": 17.36,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:31:05.159439"
+  },
+  "full_text": "In this demo, we will walk through the job lifecycle and show you some of the special job components in Studio. Jobs can be started by users, through the Actions menu. For example, start a new submission from the account. The job entity and its subtypes are instantiated by the screen that calls the job wizard. For example, selecting a product on the new submission screen. It forwards to the submission wizard. Open Studio. In newSubmission.PCF, double-click to open. The select button's action property calls newSubmissionUtil.Create1Submission. In the function, it creates the submission object and forwards to the submission wizard. In a policy file's Actions menu. Different actions are available depending on the state of the policy. For example, change policy. On the Start Policy Change screen, it initializes the policy change object. Click the Next button. It forwards to the button. It forwards to the policy change wizard. In Studio, open Start Policy Change.PCF. Go to the Variables tab. The new policy change object is created here. Let's examine the Next button element. It forwards to the Policy Change wizard. The job wizard.PCF. Go to the Job Wizard.PCF. Go to the Variables tab. The Job Wizard Helper class provides functionality for the job wizards. Its Gozu enhancement can be configured to add more functionality. In the Job Wizard, select any job step. Open the PCF file for the screen. Open the PCF file for the screen. In each job wizard, there is a set of relevant buttons. Select a mode. Let's open the button set for Policy Change. The button's visibility is based on the CAN methods in Job Process classes. For example, the Edit Policy Transaction button. The CAN methods return a Job Conditions object, which checks for error conditions. The buttons call business logic such as Edit Policy Transaction, Request Quote on object in the context. The job process and its subclasses, Submission Process, Policy Change Process, Renew Process, etc. contain methods for processing the job. Open Cancellation Process. The job process methods can call Workflows. In Finish Send Notices, it starts the workflow complete cancellations. Go to Config Workflows. Open the workflow. It waits to issue the cancellation on the cancellation date or ends the process if the cancellation is rescinded. Workflows can also call Job Process methods. In the bound step of the workflow, it calls Cancellation Process.issue cancellation from workflow. Job ends when the branch is bound, issued, withdrawn, or discarded. This is the end of demonstration for Job Life Cycle. ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "In this demo, we will walk through the job lifecycle and show you some of the special job components in Studio. Jobs can be started by users, through the Actions menu. For example, start a new submission from the account. The job entity and its subtypes are instantiated by the screen that calls the job wizard. For example, selecting a product on the new submission screen. It forwards to the submission wizard. Open Studio. In newSubmission.PCF, double-click to open.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.7461
+        },
+        {
+          "word": "this",
+          "start": 0.0,
+          "end": 0.16,
+          "probability": 0.979
+        },
+        {
+          "word": "demo,",
+          "start": 0.16,
+          "end": 0.44,
+          "probability": 0.9839
+        },
+        {
+          "word": "we",
+          "start": 0.68,
+          "end": 0.88,
+          "probability": 0.9893
+        },
+        {
+          "word": "will",
+          "start": 0.88,
+          "end": 1.04,
+          "probability": 0.9893
+        },
+        {
+          "word": "walk",
+          "start": 1.04,
+          "end": 1.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "through",
+          "start": 1.28,
+          "end": 1.42,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 1.42,
+          "end": 1.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "job",
+          "start": 1.56,
+          "end": 1.82,
+          "probability": 0.8291
+        },
+        {
+          "word": "lifecycle",
+          "start": 1.82,
+          "end": 2.22,
+          "probability": 0.6611
+        },
+        {
+          "word": "and",
+          "start": 2.22,
+          "end": 2.6,
+          "probability": 0.9873
+        },
+        {
+          "word": "show",
+          "start": 2.6,
+          "end": 2.82,
+          "probability": 0.998
+        },
+        {
+          "word": "you",
+          "start": 2.82,
+          "end": 2.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "some",
+          "start": 2.98,
+          "end": 3.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 3.16,
+          "end": 3.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 3.28,
+          "end": 3.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "special",
+          "start": 3.4,
+          "end": 3.7,
+          "probability": 0.9722
+        },
+        {
+          "word": "job",
+          "start": 3.7,
+          "end": 4.02,
+          "probability": 0.9521
+        },
+        {
+          "word": "components",
+          "start": 4.02,
+          "end": 4.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 4.6,
+          "end": 4.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "Studio.",
+          "start": 4.82,
+          "end": 5.16,
+          "probability": 0.9043
+        },
+        {
+          "word": "Jobs",
+          "start": 5.64,
+          "end": 6.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "can",
+          "start": 6.1,
+          "end": 6.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 6.3,
+          "end": 6.44,
+          "probability": 0.998
+        },
+        {
+          "word": "started",
+          "start": 6.44,
+          "end": 6.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "by",
+          "start": 6.74,
+          "end": 6.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "users,",
+          "start": 6.96,
+          "end": 7.44,
+          "probability": 0.9473
+        },
+        {
+          "word": "through",
+          "start": 7.64,
+          "end": 7.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 7.88,
+          "end": 8.04,
+          "probability": 0.999
+        },
+        {
+          "word": "Actions",
+          "start": 8.04,
+          "end": 8.48,
+          "probability": 0.8398
+        },
+        {
+          "word": "menu.",
+          "start": 8.48,
+          "end": 8.8,
+          "probability": 0.957
+        },
+        {
+          "word": "For",
+          "start": 9.26,
+          "end": 9.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "example,",
+          "start": 9.66,
+          "end": 10.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "start",
+          "start": 10.46,
+          "end": 10.78,
+          "probability": 0.6797
+        },
+        {
+          "word": "a",
+          "start": 10.78,
+          "end": 10.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 10.9,
+          "end": 11.04,
+          "probability": 0.9551
+        },
+        {
+          "word": "submission",
+          "start": 11.04,
+          "end": 11.42,
+          "probability": 0.9082
+        },
+        {
+          "word": "from",
+          "start": 11.42,
+          "end": 11.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 11.72,
+          "end": 11.88,
+          "probability": 0.998
+        },
+        {
+          "word": "account.",
+          "start": 11.88,
+          "end": 12.26,
+          "probability": 0.9551
+        },
+        {
+          "word": "The",
+          "start": 12.92,
+          "end": 13.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "job",
+          "start": 13.5,
+          "end": 13.78,
+          "probability": 0.8628
+        },
+        {
+          "word": "entity",
+          "start": 13.78,
+          "end": 14.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "and",
+          "start": 14.06,
+          "end": 14.3,
+          "probability": 0.9907
+        },
+        {
+          "word": "its",
+          "start": 14.3,
+          "end": 14.46,
+          "probability": 0.959
+        },
+        {
+          "word": "subtypes",
+          "start": 14.46,
+          "end": 14.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "are",
+          "start": 14.98,
+          "end": 15.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "instantiated",
+          "start": 15.12,
+          "end": 15.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 15.92,
+          "end": 16.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 16.08,
+          "end": 16.24,
+          "probability": 0.999
+        },
+        {
+          "word": "screen",
+          "start": 16.24,
+          "end": 16.54,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 16.54,
+          "end": 16.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "calls",
+          "start": 16.74,
+          "end": 17.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 17.1,
+          "end": 17.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "job",
+          "start": 17.24,
+          "end": 17.5,
+          "probability": 0.5317
+        },
+        {
+          "word": "wizard.",
+          "start": 17.5,
+          "end": 17.84,
+          "probability": 0.939
+        },
+        {
+          "word": "For",
+          "start": 18.26,
+          "end": 18.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "example,",
+          "start": 18.58,
+          "end": 19.02,
+          "probability": 0.998
+        },
+        {
+          "word": "selecting",
+          "start": 19.4,
+          "end": 19.9,
+          "probability": 0.9893
+        },
+        {
+          "word": "a",
+          "start": 19.9,
+          "end": 20.12,
+          "probability": 0.999
+        },
+        {
+          "word": "product",
+          "start": 20.12,
+          "end": 20.44,
+          "probability": 0.9712
+        },
+        {
+          "word": "on",
+          "start": 20.44,
+          "end": 20.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 20.7,
+          "end": 20.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "new",
+          "start": 20.82,
+          "end": 20.96,
+          "probability": 0.585
+        },
+        {
+          "word": "submission",
+          "start": 20.96,
+          "end": 21.42,
+          "probability": 0.937
+        },
+        {
+          "word": "screen.",
+          "start": 21.42,
+          "end": 21.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "It",
+          "start": 22.86,
+          "end": 23.44,
+          "probability": 0.9814
+        },
+        {
+          "word": "forwards",
+          "start": 23.44,
+          "end": 23.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 23.8,
+          "end": 24.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 24.04,
+          "end": 24.2,
+          "probability": 0.998
+        },
+        {
+          "word": "submission",
+          "start": 24.2,
+          "end": 24.6,
+          "probability": 0.6914
+        },
+        {
+          "word": "wizard.",
+          "start": 24.6,
+          "end": 25.04,
+          "probability": 0.9834
+        },
+        {
+          "word": "Open",
+          "start": 25.66,
+          "end": 26.24,
+          "probability": 0.9761
+        },
+        {
+          "word": "Studio.",
+          "start": 26.24,
+          "end": 26.68,
+          "probability": 0.978
+        },
+        {
+          "word": "In",
+          "start": 27.14,
+          "end": 27.4,
+          "probability": 0.9854
+        },
+        {
+          "word": "newSubmission",
+          "start": 27.4,
+          "end": 28.0,
+          "probability": 0.6499
+        },
+        {
+          "word": ".PCF,",
+          "start": 28.0,
+          "end": 28.92,
+          "probability": 0.8472
+        },
+        {
+          "word": "double",
+          "start": 29.08,
+          "end": 29.42,
+          "probability": 0.9795
+        },
+        {
+          "word": "-click",
+          "start": 29.42,
+          "end": 29.68,
+          "probability": 0.8711
+        },
+        {
+          "word": "to",
+          "start": 29.68,
+          "end": 29.84,
+          "probability": 0.9907
+        },
+        {
+          "word": "open.",
+          "start": 29.84,
+          "end": 29.98,
+          "probability": 0.6387
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 32.1,
+      "end": 44.86,
+      "start_formatted": "00:00:32.100",
+      "end_formatted": "00:00:44.860",
+      "text": "The select button's action property calls newSubmissionUtil.Create1Submission. In the function, it creates the submission object and forwards to the submission wizard. In a policy file's Actions menu.",
+      "words": [
+        {
+          "word": "The",
+          "start": 32.1,
+          "end": 32.82,
+          "probability": 0.1962
+        },
+        {
+          "word": "select",
+          "start": 32.82,
+          "end": 33.2,
+          "probability": 0.269
+        },
+        {
+          "word": "button's",
+          "start": 33.2,
+          "end": 33.76,
+          "probability": 0.8662
+        },
+        {
+          "word": "action",
+          "start": 33.76,
+          "end": 34.06,
+          "probability": 0.874
+        },
+        {
+          "word": "property",
+          "start": 34.06,
+          "end": 34.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "calls",
+          "start": 34.52,
+          "end": 34.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "newSubmissionUtil",
+          "start": 34.94,
+          "end": 36.06,
+          "probability": 0.751
+        },
+        {
+          "word": ".Create1Submission.",
+          "start": 36.06,
+          "end": 37.4,
+          "probability": 0.8706
+        },
+        {
+          "word": "In",
+          "start": 37.4,
+          "end": 38.1,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 38.1,
+          "end": 38.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "function,",
+          "start": 38.22,
+          "end": 38.54,
+          "probability": 0.9883
+        },
+        {
+          "word": "it",
+          "start": 38.88,
+          "end": 39.12,
+          "probability": 0.9893
+        },
+        {
+          "word": "creates",
+          "start": 39.12,
+          "end": 39.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 39.56,
+          "end": 39.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "submission",
+          "start": 39.7,
+          "end": 40.1,
+          "probability": 0.7437
+        },
+        {
+          "word": "object",
+          "start": 40.1,
+          "end": 40.52,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 40.52,
+          "end": 40.78,
+          "probability": 0.5762
+        },
+        {
+          "word": "forwards",
+          "start": 40.78,
+          "end": 41.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 41.1,
+          "end": 41.38,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 41.38,
+          "end": 41.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "submission",
+          "start": 41.52,
+          "end": 41.92,
+          "probability": 0.688
+        },
+        {
+          "word": "wizard.",
+          "start": 41.92,
+          "end": 42.32,
+          "probability": 0.9492
+        },
+        {
+          "word": "In",
+          "start": 42.66,
+          "end": 43.06,
+          "probability": 0.9766
+        },
+        {
+          "word": "a",
+          "start": 43.06,
+          "end": 43.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "policy",
+          "start": 43.18,
+          "end": 43.58,
+          "probability": 0.8608
+        },
+        {
+          "word": "file's",
+          "start": 43.58,
+          "end": 44.12,
+          "probability": 0.7246
+        },
+        {
+          "word": "Actions",
+          "start": 44.12,
+          "end": 44.48,
+          "probability": 0.5864
+        },
+        {
+          "word": "menu.",
+          "start": 44.48,
+          "end": 44.86,
+          "probability": 0.9585
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 46.68,
+      "end": 59.1,
+      "start_formatted": "00:00:46.680",
+      "end_formatted": "00:00:59.100",
+      "text": "Different actions are available depending on the state of the policy. For example, change policy. On the Start Policy Change screen, it initializes the policy change object. Click the Next button.",
+      "words": [
+        {
+          "word": "Different",
+          "start": 46.68,
+          "end": 47.4,
+          "probability": 0.9717
+        },
+        {
+          "word": "actions",
+          "start": 47.4,
+          "end": 47.76,
+          "probability": 0.7305
+        },
+        {
+          "word": "are",
+          "start": 47.76,
+          "end": 48.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 48.04,
+          "end": 48.48,
+          "probability": 0.999
+        },
+        {
+          "word": "depending",
+          "start": 48.48,
+          "end": 48.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "on",
+          "start": 48.84,
+          "end": 49.16,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 49.16,
+          "end": 49.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "state",
+          "start": 49.26,
+          "end": 49.5,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 49.5,
+          "end": 49.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 49.64,
+          "end": 49.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "policy.",
+          "start": 49.74,
+          "end": 50.2,
+          "probability": 0.9814
+        },
+        {
+          "word": "For",
+          "start": 50.6,
+          "end": 50.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "example,",
+          "start": 50.88,
+          "end": 51.28,
+          "probability": 0.9941
+        },
+        {
+          "word": "change",
+          "start": 51.7,
+          "end": 51.98,
+          "probability": 0.3171
+        },
+        {
+          "word": "policy.",
+          "start": 51.98,
+          "end": 52.56,
+          "probability": 0.9233
+        },
+        {
+          "word": "On",
+          "start": 52.9,
+          "end": 53.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 53.4,
+          "end": 53.5,
+          "probability": 0.998
+        },
+        {
+          "word": "Start",
+          "start": 53.5,
+          "end": 53.72,
+          "probability": 0.6357
+        },
+        {
+          "word": "Policy",
+          "start": 53.72,
+          "end": 54.18,
+          "probability": 0.7583
+        },
+        {
+          "word": "Change",
+          "start": 54.18,
+          "end": 54.54,
+          "probability": 0.9277
+        },
+        {
+          "word": "screen,",
+          "start": 54.54,
+          "end": 54.96,
+          "probability": 0.9897
+        },
+        {
+          "word": "it",
+          "start": 55.2,
+          "end": 55.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "initializes",
+          "start": 55.44,
+          "end": 56.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 56.08,
+          "end": 56.28,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 56.28,
+          "end": 56.7,
+          "probability": 0.8281
+        },
+        {
+          "word": "change",
+          "start": 56.7,
+          "end": 57.04,
+          "probability": 0.9844
+        },
+        {
+          "word": "object.",
+          "start": 57.04,
+          "end": 57.56,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 57.84,
+          "end": 58.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 58.28,
+          "end": 58.44,
+          "probability": 0.9907
+        },
+        {
+          "word": "Next",
+          "start": 58.44,
+          "end": 58.66,
+          "probability": 0.5547
+        },
+        {
+          "word": "button.",
+          "start": 58.66,
+          "end": 59.1,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 59.1,
+      "end": 67.78,
+      "start_formatted": "00:00:59.100",
+      "end_formatted": "00:01:07.780",
+      "text": "It forwards to the button. It forwards to the policy change wizard. In Studio, open Start Policy Change.PCF. Go to the Variables tab.",
+      "words": [
+        {
+          "word": "It",
+          "start": 59.1,
+          "end": 59.9,
+          "probability": 0.7339
+        },
+        {
+          "word": "forwards",
+          "start": 59.9,
+          "end": 60.28,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 60.28,
+          "end": 60.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 60.52,
+          "end": 60.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "button.",
+          "start": 60.62,
+          "end": 61.04,
+          "probability": 0.0
+        },
+        {
+          "word": "It",
+          "start": 61.04,
+          "end": 61.04,
+          "probability": 0.5308
+        },
+        {
+          "word": "forwards",
+          "start": 61.04,
+          "end": 61.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 61.04,
+          "end": 61.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 61.04,
+          "end": 61.04,
+          "probability": 0.9912
+        },
+        {
+          "word": "policy",
+          "start": 61.04,
+          "end": 61.04,
+          "probability": 0.5488
+        },
+        {
+          "word": "change",
+          "start": 61.04,
+          "end": 61.4,
+          "probability": 0.9263
+        },
+        {
+          "word": "wizard.",
+          "start": 61.4,
+          "end": 61.74,
+          "probability": 0.9678
+        },
+        {
+          "word": "In",
+          "start": 62.28,
+          "end": 62.82,
+          "probability": 0.9556
+        },
+        {
+          "word": "Studio,",
+          "start": 62.82,
+          "end": 63.24,
+          "probability": 0.6362
+        },
+        {
+          "word": "open",
+          "start": 63.54,
+          "end": 63.88,
+          "probability": 0.9502
+        },
+        {
+          "word": "Start",
+          "start": 63.88,
+          "end": 64.22,
+          "probability": 0.2468
+        },
+        {
+          "word": "Policy",
+          "start": 64.22,
+          "end": 64.66,
+          "probability": 0.3093
+        },
+        {
+          "word": "Change",
+          "start": 64.66,
+          "end": 65.04,
+          "probability": 0.2739
+        },
+        {
+          "word": ".PCF.",
+          "start": 65.04,
+          "end": 66.1,
+          "probability": 0.7021
+        },
+        {
+          "word": "Go",
+          "start": 66.3,
+          "end": 66.68,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 66.68,
+          "end": 66.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 66.84,
+          "end": 66.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Variables",
+          "start": 66.96,
+          "end": 67.52,
+          "probability": 0.7832
+        },
+        {
+          "word": "tab.",
+          "start": 67.52,
+          "end": 67.78,
+          "probability": 0.9668
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 72.1,
+      "end": 79.6,
+      "start_formatted": "00:01:12.100",
+      "end_formatted": "00:01:19.600",
+      "text": "The new policy change object is created here. Let's examine the Next button element. It forwards to the Policy Change wizard.",
+      "words": [
+        {
+          "word": "The",
+          "start": 71.84,
+          "end": 72.22,
+          "probability": 0.9849
+        },
+        {
+          "word": "new",
+          "start": 72.22,
+          "end": 72.38,
+          "probability": 0.9702
+        },
+        {
+          "word": "policy",
+          "start": 72.38,
+          "end": 72.84,
+          "probability": 0.7129
+        },
+        {
+          "word": "change",
+          "start": 72.84,
+          "end": 73.2,
+          "probability": 0.9927
+        },
+        {
+          "word": "object",
+          "start": 73.2,
+          "end": 73.62,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 73.62,
+          "end": 73.9,
+          "probability": 0.998
+        },
+        {
+          "word": "created",
+          "start": 73.9,
+          "end": 74.32,
+          "probability": 0.999
+        },
+        {
+          "word": "here.",
+          "start": 74.32,
+          "end": 74.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "Let's",
+          "start": 74.9,
+          "end": 75.4,
+          "probability": 0.9902
+        },
+        {
+          "word": "examine",
+          "start": 75.4,
+          "end": 75.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 75.78,
+          "end": 75.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "Next",
+          "start": 75.94,
+          "end": 76.16,
+          "probability": 0.1398
+        },
+        {
+          "word": "button",
+          "start": 76.16,
+          "end": 76.42,
+          "probability": 0.4919
+        },
+        {
+          "word": "element.",
+          "start": 76.42,
+          "end": 76.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "It",
+          "start": 77.26,
+          "end": 77.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "forwards",
+          "start": 77.74,
+          "end": 78.12,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 78.12,
+          "end": 78.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 78.32,
+          "end": 78.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "Policy",
+          "start": 78.44,
+          "end": 78.84,
+          "probability": 0.0481
+        },
+        {
+          "word": "Change",
+          "start": 78.84,
+          "end": 79.24,
+          "probability": 0.9189
+        },
+        {
+          "word": "wizard.",
+          "start": 79.24,
+          "end": 79.6,
+          "probability": 0.5977
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 84.68,
+      "end": 107.0,
+      "start_formatted": "00:01:24.680",
+      "end_formatted": "00:01:47.000",
+      "text": "The job wizard.PCF. Go to the Job Wizard.PCF. Go to the Variables tab. The Job Wizard Helper class provides functionality for the job wizards. Its Gozu enhancement can be configured to add more functionality. In the Job Wizard, select any job step.",
+      "words": [
+        {
+          "word": "The",
+          "start": 84.68,
+          "end": 85.32,
+          "probability": 0.8745
+        },
+        {
+          "word": "job",
+          "start": 85.32,
+          "end": 85.6,
+          "probability": 0.3479
+        },
+        {
+          "word": "wizard",
+          "start": 85.6,
+          "end": 85.88,
+          "probability": 0.0187
+        },
+        {
+          "word": ".PCF.",
+          "start": 85.88,
+          "end": 94.04,
+          "probability": 0.3284
+        },
+        {
+          "word": "Go",
+          "start": 94.36,
+          "end": 94.36,
+          "probability": 0.0166
+        },
+        {
+          "word": "to",
+          "start": 94.36,
+          "end": 94.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 94.56,
+          "end": 94.68,
+          "probability": 0.9907
+        },
+        {
+          "word": "Job",
+          "start": 94.68,
+          "end": 94.88,
+          "probability": 0.0
+        },
+        {
+          "word": "Wizard",
+          "start": 94.88,
+          "end": 94.88,
+          "probability": 0.5073
+        },
+        {
+          "word": ".PCF.",
+          "start": 94.88,
+          "end": 94.88,
+          "probability": 0.6465
+        },
+        {
+          "word": "Go",
+          "start": 94.88,
+          "end": 94.88,
+          "probability": 0.4546
+        },
+        {
+          "word": "to",
+          "start": 94.88,
+          "end": 94.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 94.88,
+          "end": 94.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "Variables",
+          "start": 94.88,
+          "end": 95.24,
+          "probability": 0.8477
+        },
+        {
+          "word": "tab.",
+          "start": 95.24,
+          "end": 95.48,
+          "probability": 0.979
+        },
+        {
+          "word": "The",
+          "start": 95.88,
+          "end": 96.26,
+          "probability": 0.9736
+        },
+        {
+          "word": "Job",
+          "start": 96.26,
+          "end": 96.52,
+          "probability": 0.8755
+        },
+        {
+          "word": "Wizard",
+          "start": 96.52,
+          "end": 96.82,
+          "probability": 0.9512
+        },
+        {
+          "word": "Helper",
+          "start": 96.82,
+          "end": 97.18,
+          "probability": 0.8477
+        },
+        {
+          "word": "class",
+          "start": 97.18,
+          "end": 97.5,
+          "probability": 0.9404
+        },
+        {
+          "word": "provides",
+          "start": 97.5,
+          "end": 97.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "functionality",
+          "start": 97.94,
+          "end": 98.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 98.5,
+          "end": 98.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 98.94,
+          "end": 99.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "job",
+          "start": 99.06,
+          "end": 99.32,
+          "probability": 0.9683
+        },
+        {
+          "word": "wizards.",
+          "start": 99.32,
+          "end": 99.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "Its",
+          "start": 100.14,
+          "end": 100.66,
+          "probability": 0.9189
+        },
+        {
+          "word": "Gozu",
+          "start": 100.66,
+          "end": 101.0,
+          "probability": 0.5688
+        },
+        {
+          "word": "enhancement",
+          "start": 101.0,
+          "end": 101.52,
+          "probability": 0.8779
+        },
+        {
+          "word": "can",
+          "start": 101.52,
+          "end": 101.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "be",
+          "start": 101.88,
+          "end": 102.02,
+          "probability": 0.999
+        },
+        {
+          "word": "configured",
+          "start": 102.02,
+          "end": 102.5,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 102.5,
+          "end": 102.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "add",
+          "start": 102.72,
+          "end": 102.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "more",
+          "start": 102.9,
+          "end": 103.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "functionality.",
+          "start": 103.12,
+          "end": 103.82,
+          "probability": 0.999
+        },
+        {
+          "word": "In",
+          "start": 104.28,
+          "end": 104.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 104.64,
+          "end": 104.74,
+          "probability": 0.999
+        },
+        {
+          "word": "Job",
+          "start": 104.74,
+          "end": 105.0,
+          "probability": 0.6323
+        },
+        {
+          "word": "Wizard,",
+          "start": 105.0,
+          "end": 105.3,
+          "probability": 0.9531
+        },
+        {
+          "word": "select",
+          "start": 105.66,
+          "end": 106.06,
+          "probability": 0.9775
+        },
+        {
+          "word": "any",
+          "start": 106.06,
+          "end": 106.36,
+          "probability": 0.9873
+        },
+        {
+          "word": "job",
+          "start": 106.36,
+          "end": 106.66,
+          "probability": 0.9014
+        },
+        {
+          "word": "step.",
+          "start": 106.66,
+          "end": 107.0,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 108.16,
+      "end": 110.46,
+      "start_formatted": "00:01:48.160",
+      "end_formatted": "00:01:50.460",
+      "text": "Open the PCF file for the screen.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 108.16,
+          "end": 108.74,
+          "probability": 0.9785
+        },
+        {
+          "word": "the",
+          "start": 108.74,
+          "end": 108.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "PCF",
+          "start": 108.88,
+          "end": 109.5,
+          "probability": 0.9438
+        },
+        {
+          "word": "file",
+          "start": 109.5,
+          "end": 109.8,
+          "probability": 0.9839
+        },
+        {
+          "word": "for",
+          "start": 109.8,
+          "end": 109.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 109.98,
+          "end": 110.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "screen.",
+          "start": 110.1,
+          "end": 110.46,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 111.94,
+      "end": 112.52,
+      "start_formatted": "00:01:51.940",
+      "end_formatted": "00:01:52.520",
+      "text": "Open the PCF file for the screen.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 111.94,
+          "end": 112.52,
+          "probability": 0.0
+        },
+        {
+          "word": "the",
+          "start": 112.52,
+          "end": 112.52,
+          "probability": 0.6855
+        },
+        {
+          "word": "PCF",
+          "start": 112.52,
+          "end": 112.52,
+          "probability": 0.6851
+        },
+        {
+          "word": "file",
+          "start": 112.52,
+          "end": 112.52,
+          "probability": 0.6523
+        },
+        {
+          "word": "for",
+          "start": 112.52,
+          "end": 112.52,
+          "probability": 0.7588
+        },
+        {
+          "word": "the",
+          "start": 112.52,
+          "end": 112.52,
+          "probability": 0.9473
+        },
+        {
+          "word": "screen.",
+          "start": 112.52,
+          "end": 112.52,
+          "probability": 0.9019
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 112.52,
+      "end": 117.0,
+      "start_formatted": "00:01:52.520",
+      "end_formatted": "00:01:57.000",
+      "text": "In each job wizard, there is a set of relevant buttons. Select a mode.",
+      "words": [
+        {
+          "word": "In",
+          "start": 112.52,
+          "end": 112.52,
+          "probability": 0.9658
+        },
+        {
+          "word": "each",
+          "start": 112.52,
+          "end": 112.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "job",
+          "start": 112.74,
+          "end": 113.02,
+          "probability": 0.9048
+        },
+        {
+          "word": "wizard,",
+          "start": 113.02,
+          "end": 113.38,
+          "probability": 0.9731
+        },
+        {
+          "word": "there",
+          "start": 113.62,
+          "end": 113.82,
+          "probability": 0.9888
+        },
+        {
+          "word": "is",
+          "start": 113.82,
+          "end": 113.98,
+          "probability": 0.9839
+        },
+        {
+          "word": "a",
+          "start": 113.98,
+          "end": 114.08,
+          "probability": 0.9888
+        },
+        {
+          "word": "set",
+          "start": 114.08,
+          "end": 114.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 114.28,
+          "end": 114.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "relevant",
+          "start": 114.42,
+          "end": 114.8,
+          "probability": 0.9824
+        },
+        {
+          "word": "buttons.",
+          "start": 114.8,
+          "end": 115.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "Select",
+          "start": 115.98,
+          "end": 116.56,
+          "probability": 0.9775
+        },
+        {
+          "word": "a",
+          "start": 116.56,
+          "end": 116.76,
+          "probability": 0.9771
+        },
+        {
+          "word": "mode.",
+          "start": 116.76,
+          "end": 117.0,
+          "probability": 0.8726
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 119.84,
+      "end": 122.34,
+      "start_formatted": "00:01:59.840",
+      "end_formatted": "00:02:02.340",
+      "text": "Let's open the button set for Policy Change.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 119.84,
+          "end": 120.42,
+          "probability": 0.9551
+        },
+        {
+          "word": "open",
+          "start": 120.42,
+          "end": 120.72,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 120.72,
+          "end": 120.86,
+          "probability": 0.9907
+        },
+        {
+          "word": "button",
+          "start": 120.86,
+          "end": 121.12,
+          "probability": 0.9004
+        },
+        {
+          "word": "set",
+          "start": 121.12,
+          "end": 121.4,
+          "probability": 0.9653
+        },
+        {
+          "word": "for",
+          "start": 121.4,
+          "end": 121.56,
+          "probability": 0.998
+        },
+        {
+          "word": "Policy",
+          "start": 121.56,
+          "end": 121.98,
+          "probability": 0.3428
+        },
+        {
+          "word": "Change.",
+          "start": 121.98,
+          "end": 122.34,
+          "probability": 0.6406
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 123.4,
+      "end": 143.16,
+      "start_formatted": "00:02:03.400",
+      "end_formatted": "00:02:23.160",
+      "text": "The button's visibility is based on the CAN methods in Job Process classes. For example, the Edit Policy Transaction button. The CAN methods return a Job Conditions object, which checks for error conditions. The buttons call business logic such as Edit Policy Transaction, Request Quote on object in the context.",
+      "words": [
+        {
+          "word": "The",
+          "start": 123.4,
+          "end": 124.08,
+          "probability": 0.7715
+        },
+        {
+          "word": "button's",
+          "start": 124.08,
+          "end": 124.48,
+          "probability": 0.9336
+        },
+        {
+          "word": "visibility",
+          "start": 124.48,
+          "end": 124.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 124.98,
+          "end": 125.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "based",
+          "start": 125.34,
+          "end": 125.62,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 125.62,
+          "end": 125.78,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 125.78,
+          "end": 125.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "CAN",
+          "start": 125.86,
+          "end": 126.0,
+          "probability": 0.7979
+        },
+        {
+          "word": "methods",
+          "start": 126.0,
+          "end": 126.32,
+          "probability": 0.9546
+        },
+        {
+          "word": "in",
+          "start": 126.32,
+          "end": 126.56,
+          "probability": 0.9731
+        },
+        {
+          "word": "Job",
+          "start": 126.56,
+          "end": 126.76,
+          "probability": 0.3796
+        },
+        {
+          "word": "Process",
+          "start": 126.76,
+          "end": 127.2,
+          "probability": 0.5508
+        },
+        {
+          "word": "classes.",
+          "start": 127.2,
+          "end": 127.84,
+          "probability": 0.8745
+        },
+        {
+          "word": "For",
+          "start": 128.12,
+          "end": 128.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "example,",
+          "start": 128.5,
+          "end": 128.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 129.32,
+          "end": 129.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "Edit",
+          "start": 129.44,
+          "end": 129.66,
+          "probability": 0.8379
+        },
+        {
+          "word": "Policy",
+          "start": 129.66,
+          "end": 130.1,
+          "probability": 0.9648
+        },
+        {
+          "word": "Transaction",
+          "start": 130.1,
+          "end": 130.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "button.",
+          "start": 130.88,
+          "end": 131.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "The",
+          "start": 131.64,
+          "end": 132.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "CAN",
+          "start": 132.32,
+          "end": 132.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "methods",
+          "start": 132.46,
+          "end": 132.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "return",
+          "start": 132.8,
+          "end": 133.16,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 133.16,
+          "end": 133.32,
+          "probability": 0.999
+        },
+        {
+          "word": "Job",
+          "start": 133.32,
+          "end": 133.58,
+          "probability": 0.6821
+        },
+        {
+          "word": "Conditions",
+          "start": 133.58,
+          "end": 134.12,
+          "probability": 0.916
+        },
+        {
+          "word": "object,",
+          "start": 134.12,
+          "end": 134.54,
+          "probability": 0.9585
+        },
+        {
+          "word": "which",
+          "start": 134.86,
+          "end": 135.12,
+          "probability": 0.999
+        },
+        {
+          "word": "checks",
+          "start": 135.12,
+          "end": 135.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 135.42,
+          "end": 135.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "error",
+          "start": 135.62,
+          "end": 135.9,
+          "probability": 0.812
+        },
+        {
+          "word": "conditions.",
+          "start": 135.9,
+          "end": 136.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "The",
+          "start": 136.78,
+          "end": 137.36,
+          "probability": 0.998
+        },
+        {
+          "word": "buttons",
+          "start": 137.36,
+          "end": 137.64,
+          "probability": 0.9746
+        },
+        {
+          "word": "call",
+          "start": 137.64,
+          "end": 137.98,
+          "probability": 0.9922
+        },
+        {
+          "word": "business",
+          "start": 137.98,
+          "end": 138.32,
+          "probability": 0.8735
+        },
+        {
+          "word": "logic",
+          "start": 138.32,
+          "end": 138.8,
+          "probability": 0.9863
+        },
+        {
+          "word": "such",
+          "start": 138.8,
+          "end": 139.08,
+          "probability": 0.9785
+        },
+        {
+          "word": "as",
+          "start": 139.08,
+          "end": 139.26,
+          "probability": 0.999
+        },
+        {
+          "word": "Edit",
+          "start": 139.26,
+          "end": 139.46,
+          "probability": 0.9595
+        },
+        {
+          "word": "Policy",
+          "start": 139.46,
+          "end": 139.98,
+          "probability": 0.9902
+        },
+        {
+          "word": "Transaction,",
+          "start": 139.98,
+          "end": 140.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "Request",
+          "start": 141.0,
+          "end": 141.56,
+          "probability": 0.9214
+        },
+        {
+          "word": "Quote",
+          "start": 141.56,
+          "end": 141.84,
+          "probability": 0.915
+        },
+        {
+          "word": "on",
+          "start": 141.84,
+          "end": 141.96,
+          "probability": 0.6372
+        },
+        {
+          "word": "object",
+          "start": 141.96,
+          "end": 142.32,
+          "probability": 0.4272
+        },
+        {
+          "word": "in",
+          "start": 142.32,
+          "end": 142.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 142.52,
+          "end": 142.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "context.",
+          "start": 142.6,
+          "end": 143.16,
+          "probability": 0.981
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 143.16,
+      "end": 153.78,
+      "start_formatted": "00:02:23.160",
+      "end_formatted": "00:02:33.780",
+      "text": "The job process and its subclasses, Submission Process, Policy Change Process, Renew Process, etc. contain methods for processing the job.",
+      "words": [
+        {
+          "word": "The",
+          "start": 143.16,
+          "end": 144.24,
+          "probability": 0.7954
+        },
+        {
+          "word": "job",
+          "start": 144.24,
+          "end": 144.48,
+          "probability": 0.7002
+        },
+        {
+          "word": "process",
+          "start": 144.48,
+          "end": 144.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "and",
+          "start": 144.96,
+          "end": 145.22,
+          "probability": 0.9019
+        },
+        {
+          "word": "its",
+          "start": 145.22,
+          "end": 145.36,
+          "probability": 0.9756
+        },
+        {
+          "word": "subclasses,",
+          "start": 145.36,
+          "end": 146.32,
+          "probability": 0.9204
+        },
+        {
+          "word": "Submission",
+          "start": 146.32,
+          "end": 146.94,
+          "probability": 0.8184
+        },
+        {
+          "word": "Process,",
+          "start": 146.94,
+          "end": 147.42,
+          "probability": 0.4712
+        },
+        {
+          "word": "Policy",
+          "start": 147.8,
+          "end": 148.3,
+          "probability": 0.9941
+        },
+        {
+          "word": "Change",
+          "start": 148.3,
+          "end": 148.66,
+          "probability": 0.9561
+        },
+        {
+          "word": "Process,",
+          "start": 148.66,
+          "end": 149.2,
+          "probability": 0.9883
+        },
+        {
+          "word": "Renew",
+          "start": 149.52,
+          "end": 149.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "Process,",
+          "start": 149.94,
+          "end": 150.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "etc.",
+          "start": 150.74,
+          "end": 151.08,
+          "probability": 0.9834
+        },
+        {
+          "word": "contain",
+          "start": 151.72,
+          "end": 151.98,
+          "probability": 0.9541
+        },
+        {
+          "word": "methods",
+          "start": 151.98,
+          "end": 152.38,
+          "probability": 0.9922
+        },
+        {
+          "word": "for",
+          "start": 152.38,
+          "end": 152.64,
+          "probability": 0.999
+        },
+        {
+          "word": "processing",
+          "start": 152.64,
+          "end": 153.2,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 153.2,
+          "end": 153.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "job.",
+          "start": 153.42,
+          "end": 153.78,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 154.04,
+      "end": 155.74,
+      "start_formatted": "00:02:34.040",
+      "end_formatted": "00:02:35.740",
+      "text": "Open Cancellation Process.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 154.04,
+          "end": 154.56,
+          "probability": 0.9585
+        },
+        {
+          "word": "Cancellation",
+          "start": 154.56,
+          "end": 155.34,
+          "probability": 0.9351
+        },
+        {
+          "word": "Process.",
+          "start": 155.34,
+          "end": 155.74,
+          "probability": 0.8945
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 158.16,
+      "end": 165.2,
+      "start_formatted": "00:02:38.160",
+      "end_formatted": "00:02:45.200",
+      "text": "The job process methods can call Workflows. In Finish Send Notices, it starts the workflow complete cancellations.",
+      "words": [
+        {
+          "word": "The",
+          "start": 157.96,
+          "end": 158.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "job",
+          "start": 158.36,
+          "end": 158.62,
+          "probability": 0.9082
+        },
+        {
+          "word": "process",
+          "start": 158.62,
+          "end": 159.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "methods",
+          "start": 159.02,
+          "end": 159.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "can",
+          "start": 159.46,
+          "end": 159.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "call",
+          "start": 159.7,
+          "end": 160.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "Workflows.",
+          "start": 160.0,
+          "end": 160.52,
+          "probability": 0.6523
+        },
+        {
+          "word": "In",
+          "start": 160.92,
+          "end": 161.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "Finish",
+          "start": 161.38,
+          "end": 161.66,
+          "probability": 0.9478
+        },
+        {
+          "word": "Send",
+          "start": 161.66,
+          "end": 161.92,
+          "probability": 0.8335
+        },
+        {
+          "word": "Notices,",
+          "start": 161.92,
+          "end": 162.48,
+          "probability": 0.9541
+        },
+        {
+          "word": "it",
+          "start": 162.68,
+          "end": 162.94,
+          "probability": 0.9888
+        },
+        {
+          "word": "starts",
+          "start": 162.94,
+          "end": 163.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 163.28,
+          "end": 163.46,
+          "probability": 0.9888
+        },
+        {
+          "word": "workflow",
+          "start": 163.46,
+          "end": 163.86,
+          "probability": 0.8193
+        },
+        {
+          "word": "complete",
+          "start": 163.86,
+          "end": 164.36,
+          "probability": 0.6025
+        },
+        {
+          "word": "cancellations.",
+          "start": 164.36,
+          "end": 165.2,
+          "probability": 0.9131
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 165.62,
+      "end": 167.56,
+      "start_formatted": "00:02:45.620",
+      "end_formatted": "00:02:47.560",
+      "text": "Go to Config Workflows.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 165.62,
+          "end": 166.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 166.14,
+          "end": 166.3,
+          "probability": 0.998
+        },
+        {
+          "word": "Config",
+          "start": 166.3,
+          "end": 166.7,
+          "probability": 0.8564
+        },
+        {
+          "word": "Workflows.",
+          "start": 166.7,
+          "end": 167.56,
+          "probability": 0.6621
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 169.3,
+      "end": 170.66,
+      "start_formatted": "00:02:49.300",
+      "end_formatted": "00:02:50.660",
+      "text": "Open the workflow.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 169.3,
+          "end": 170.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 170.1,
+          "end": 170.22,
+          "probability": 0.9883
+        },
+        {
+          "word": "workflow.",
+          "start": 170.22,
+          "end": 170.66,
+          "probability": 0.8896
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 173.26,
+      "end": 179.3,
+      "start_formatted": "00:02:53.260",
+      "end_formatted": "00:02:59.300",
+      "text": "It waits to issue the cancellation on the cancellation date or ends the process if the cancellation is rescinded.",
+      "words": [
+        {
+          "word": "It",
+          "start": 173.26,
+          "end": 173.88,
+          "probability": 0.9346
+        },
+        {
+          "word": "waits",
+          "start": 173.88,
+          "end": 174.16,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 174.16,
+          "end": 174.36,
+          "probability": 0.999
+        },
+        {
+          "word": "issue",
+          "start": 174.36,
+          "end": 174.66,
+          "probability": 0.9785
+        },
+        {
+          "word": "the",
+          "start": 174.66,
+          "end": 174.82,
+          "probability": 0.998
+        },
+        {
+          "word": "cancellation",
+          "start": 174.82,
+          "end": 175.26,
+          "probability": 0.9771
+        },
+        {
+          "word": "on",
+          "start": 175.26,
+          "end": 175.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 175.64,
+          "end": 175.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "cancellation",
+          "start": 175.74,
+          "end": 176.24,
+          "probability": 0.9561
+        },
+        {
+          "word": "date",
+          "start": 176.24,
+          "end": 176.62,
+          "probability": 0.9932
+        },
+        {
+          "word": "or",
+          "start": 176.62,
+          "end": 176.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "ends",
+          "start": 176.74,
+          "end": 176.96,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 176.96,
+          "end": 177.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "process",
+          "start": 177.12,
+          "end": 177.52,
+          "probability": 0.998
+        },
+        {
+          "word": "if",
+          "start": 177.52,
+          "end": 177.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 177.76,
+          "end": 177.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "cancellation",
+          "start": 177.88,
+          "end": 178.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 178.32,
+          "end": 178.72,
+          "probability": 0.999
+        },
+        {
+          "word": "rescinded.",
+          "start": 178.72,
+          "end": 179.3,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 179.78,
+      "end": 182.54,
+      "start_formatted": "00:02:59.780",
+      "end_formatted": "00:03:02.540",
+      "text": "Workflows can also call Job Process methods.",
+      "words": [
+        {
+          "word": "Workflows",
+          "start": 179.78,
+          "end": 180.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "can",
+          "start": 180.4,
+          "end": 180.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 180.6,
+          "end": 180.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "call",
+          "start": 180.92,
+          "end": 181.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "Job",
+          "start": 181.28,
+          "end": 181.62,
+          "probability": 0.0916
+        },
+        {
+          "word": "Process",
+          "start": 181.62,
+          "end": 182.06,
+          "probability": 0.3831
+        },
+        {
+          "word": "methods.",
+          "start": 182.06,
+          "end": 182.54,
+          "probability": 0.2578
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 182.9,
+      "end": 188.6,
+      "start_formatted": "00:03:02.900",
+      "end_formatted": "00:03:08.600",
+      "text": "In the bound step of the workflow, it calls Cancellation Process.issue cancellation from workflow.",
+      "words": [
+        {
+          "word": "In",
+          "start": 182.9,
+          "end": 183.26,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 183.26,
+          "end": 183.36,
+          "probability": 0.998
+        },
+        {
+          "word": "bound",
+          "start": 183.36,
+          "end": 183.6,
+          "probability": 0.7534
+        },
+        {
+          "word": "step",
+          "start": 183.6,
+          "end": 183.9,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 183.9,
+          "end": 184.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 184.1,
+          "end": 184.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "workflow,",
+          "start": 184.2,
+          "end": 184.64,
+          "probability": 0.9082
+        },
+        {
+          "word": "it",
+          "start": 184.96,
+          "end": 185.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "calls",
+          "start": 185.14,
+          "end": 185.44,
+          "probability": 0.999
+        },
+        {
+          "word": "Cancellation",
+          "start": 185.44,
+          "end": 186.16,
+          "probability": 0.8286
+        },
+        {
+          "word": "Process",
+          "start": 186.16,
+          "end": 186.52,
+          "probability": 0.2688
+        },
+        {
+          "word": ".issue",
+          "start": 186.52,
+          "end": 187.22,
+          "probability": 0.7412
+        },
+        {
+          "word": "cancellation",
+          "start": 187.22,
+          "end": 187.68,
+          "probability": 0.4841
+        },
+        {
+          "word": "from",
+          "start": 187.68,
+          "end": 188.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "workflow.",
+          "start": 188.1,
+          "end": 188.6,
+          "probability": 0.9409
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 189.02,
+      "end": 193.32,
+      "start_formatted": "00:03:09.020",
+      "end_formatted": "00:03:13.320",
+      "text": "Job ends when the branch is bound, issued, withdrawn, or discarded.",
+      "words": [
+        {
+          "word": "Job",
+          "start": 189.02,
+          "end": 189.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "ends",
+          "start": 189.56,
+          "end": 189.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "when",
+          "start": 189.78,
+          "end": 189.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 189.96,
+          "end": 190.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "branch",
+          "start": 190.1,
+          "end": 190.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 190.4,
+          "end": 190.58,
+          "probability": 0.999
+        },
+        {
+          "word": "bound,",
+          "start": 190.58,
+          "end": 190.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "issued,",
+          "start": 191.12,
+          "end": 191.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "withdrawn,",
+          "start": 191.82,
+          "end": 192.28,
+          "probability": 0.998
+        },
+        {
+          "word": "or",
+          "start": 192.6,
+          "end": 192.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "discarded.",
+          "start": 192.82,
+          "end": 193.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 193.7,
+      "end": 196.32,
+      "start_formatted": "00:03:13.700",
+      "end_formatted": "00:03:16.320",
+      "text": "This is the end of demonstration for Job Life Cycle.",
+      "words": [
+        {
+          "word": "This",
+          "start": 193.7,
+          "end": 194.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 194.12,
+          "end": 194.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 194.22,
+          "end": 194.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "end",
+          "start": 194.34,
+          "end": 194.54,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 194.54,
+          "end": 194.66,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 194.66,
+          "end": 195.22,
+          "probability": 0.9897
+        },
+        {
+          "word": "for",
+          "start": 195.22,
+          "end": 195.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "Job",
+          "start": 195.52,
+          "end": 195.84,
+          "probability": 0.8682
+        },
+        {
+          "word": "Life",
+          "start": 195.84,
+          "end": 196.08,
+          "probability": 0.9561
+        },
+        {
+          "word": "Cycle.",
+          "start": 196.08,
+          "end": 196.32,
+          "probability": 0.8604
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 196.3,
+      "end": 196.3,
+      "start_formatted": "00:03:16.300",
+      "end_formatted": "00:03:16.300",
+      "text": "",
+      "words": []
+    }
+  ]
+}

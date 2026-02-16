@@ -1,0 +1,5777 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_policy_06_01.mp4",
+    "video_stem": "In_policy_06_01",
+    "duration_seconds": 369.36,
+    "duration_formatted": "00:06:09.360",
+    "segment_count": 28,
+    "word_count": 909,
+    "avg_confidence": 0.9538,
+    "transcription_time_seconds": 20.83,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:41:27.270712"
+  },
+  "full_text": "As an underwriter. To create a personal auto submission in the base application, start from a person account, for example, Ray Newton. Click Actions. Select New Submission. On the New Submission screen, you will define the organization and producer code, if different from the default, or in the case of risk reservation. You can choose to create a single or multiple policies. Click Multiple. Selecting Multiple allows you to enter the number of submissions you want to create. The default limit is 5 submissions but it is a configurable parameter. This will be useful when the account holder wants to create multiple personal auto policies. Let's select Single again. Click the quote type drop down. There are two options. Full Application gathers the complete set of information needed to apply for a bindable quote. Quick Quote gathers the minimal information needed to generate a quote and can be converted to a full application later. Let's select Full Application. You can also select a different default based state or effective date if needed. Select Personal Auto from the product list. On the Offering screen, click Offering Selection. Select an offering which has predefined product details targeted for different types of customers. Click the Back and Next button or the Step link on the left to navigate within the submission. Let's click Next. On the Qualification page, answers to the questions will pre-qualify or reject the application. Click Yes for the question Any drivers with convictions for moving traffic violations within the past three years? It displays the text box to capture the explanation. Next, enter the policy contract details. On the Policy Info screen, you can edit the primary named insured by clicking the link on the name. Click Cancel to go back to the Policy Info screen. Click the down arrow to change the primary named insured to another contact. The policy address can be similarly changed. Policy details include the term type, effective date, expiration date, and written date, etc., which appear on the right can be edited. The producer of record and underwriting company can be edited. Click Next to go to the Drivers screen. You must add at least one driver. Click Add. You can create a new driver or select an existing driver, for example, Ray Newton. Enter all the required fields. Click the Roles tab. Enter the year first licensed. This will be pre-populated if the driver has been used before. You must select the number of accidents and violations for both the policy level and account level. If not set now, you will get a validation error while trying to bind the policy. You can come back to the screen and fix it then. Click Next to go to the Vehicles screen. This is where you add the vehicles to be insured. Click Create Vehicle. Enter the Vehicle VIN. The vehicle cost new is $25,000. The license state must match the default base state. If you want to change the base state of the submission, update the garage date location. Assign drivers to vehicles. Use Ray Newton 100%. Click Next to go to the Coverages screen. A coverage is protection from a specific risk. The coverages are available as configured in the product model. You can select a different term for a coverage, for example, the Auto Liability Package. Let's add the collision coverage that protects the selected vehicle. Go to the Additional Coverages tab. Add the Rental Car Loss of Use coverage. Go to the Exclusions and Conditions tab. An exclusion defines a risk that is explicitly not protected. A condition is policy provision that defines required behaviors for the carrier and insured. Click Add Exclusion or Condition. Click Search. Select Exclude Custom Equipment. Click Add Selected Exclusions and Conditions. Click Next to the Risk Analysis screen. The Underwriter Issues tab is where any underwriting issues that might affect quote and binding of the submission can be viewed, approved, or rejected. You can manage any contingencies, prior policies, claims, losses, etc. on these tabs. Click Next to go to the Policy Review screen. After reviewing all the policy data for this submission, click the Quote button. The Quote screen displays the total cost for the submission on a read-only Quote screen. It displays the breakdown of the premiums by vehicle at the bottom. Click Next to the Forms link on the left. The Forms screen displays the forms that will be included in the policy contract. Click the Payment link. The Payment screen appears after quoting, but before issuing the policy. This is where the desired billing and payment methods retrieved from the billing system are selected. Let's take a look at the buttons for the submission. At any point, you can save the policy data by clicking Save Draft, create a new version of the policy, or close the submission by selecting one of the options, Withdraw Transaction, Decline, or Not Taken. You can do several things after quoting, including editing, binding or issuing the policy. Click Bind Options. There are two bind options. Bind only will bind the policy without issuing it. For example, the insurer needs additional documents before the policy can be issued. Let's select Issue Policy, which binds the policy first and then issues it immediately. Click OK to continue. Now you have successfully created a personal auto policy. A confirmation can be seen with several quick links for you to navigate to the next desired scenario.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 0.72,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:00.720",
+      "text": "As an underwriter.",
+      "words": [
+        {
+          "word": "As",
+          "start": 0.0,
+          "end": 0.14,
+          "probability": 0.1299
+        },
+        {
+          "word": "an",
+          "start": 0.14,
+          "end": 0.26,
+          "probability": 0.8735
+        },
+        {
+          "word": "underwriter.",
+          "start": 0.26,
+          "end": 0.72,
+          "probability": 0.813
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 3.0,
+      "end": 9.56,
+      "start_formatted": "00:00:03.000",
+      "end_formatted": "00:00:09.560",
+      "text": "To create a personal auto submission in the base application, start from a person account, for example, Ray Newton.",
+      "words": [
+        {
+          "word": "To",
+          "start": 3.0,
+          "end": 3.58,
+          "probability": 0.9507
+        },
+        {
+          "word": "create",
+          "start": 3.58,
+          "end": 3.84,
+          "probability": 0.9922
+        },
+        {
+          "word": "a",
+          "start": 3.84,
+          "end": 4.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "personal",
+          "start": 4.0,
+          "end": 4.28,
+          "probability": 0.8325
+        },
+        {
+          "word": "auto",
+          "start": 4.28,
+          "end": 4.54,
+          "probability": 0.9321
+        },
+        {
+          "word": "submission",
+          "start": 4.54,
+          "end": 4.92,
+          "probability": 0.688
+        },
+        {
+          "word": "in",
+          "start": 4.92,
+          "end": 5.18,
+          "probability": 0.9736
+        },
+        {
+          "word": "the",
+          "start": 5.18,
+          "end": 5.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "base",
+          "start": 5.28,
+          "end": 5.48,
+          "probability": 0.8584
+        },
+        {
+          "word": "application,",
+          "start": 5.48,
+          "end": 6.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "start",
+          "start": 6.48,
+          "end": 6.84,
+          "probability": 0.9858
+        },
+        {
+          "word": "from",
+          "start": 6.84,
+          "end": 7.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 7.06,
+          "end": 7.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "person",
+          "start": 7.2,
+          "end": 7.46,
+          "probability": 0.5161
+        },
+        {
+          "word": "account,",
+          "start": 7.46,
+          "end": 7.9,
+          "probability": 0.9883
+        },
+        {
+          "word": "for",
+          "start": 8.08,
+          "end": 8.36,
+          "probability": 0.8481
+        },
+        {
+          "word": "example,",
+          "start": 8.36,
+          "end": 8.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "Ray",
+          "start": 9.06,
+          "end": 9.3,
+          "probability": 0.9023
+        },
+        {
+          "word": "Newton.",
+          "start": 9.3,
+          "end": 9.56,
+          "probability": 0.9453
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 15.2,
+      "end": 16.28,
+      "start_formatted": "00:00:15.200",
+      "end_formatted": "00:00:16.280",
+      "text": "Click Actions.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 15.2,
+          "end": 15.78,
+          "probability": 0.979
+        },
+        {
+          "word": "Actions.",
+          "start": 15.78,
+          "end": 16.28,
+          "probability": 0.8809
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 19.08,
+      "end": 20.28,
+      "start_formatted": "00:00:19.080",
+      "end_formatted": "00:00:20.280",
+      "text": "Select New Submission.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 19.08,
+          "end": 19.66,
+          "probability": 0.9849
+        },
+        {
+          "word": "New",
+          "start": 19.66,
+          "end": 19.8,
+          "probability": 0.9053
+        },
+        {
+          "word": "Submission.",
+          "start": 19.8,
+          "end": 20.28,
+          "probability": 0.9146
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 22.9,
+      "end": 47.68,
+      "start_formatted": "00:00:22.900",
+      "end_formatted": "00:00:47.680",
+      "text": "On the New Submission screen, you will define the organization and producer code, if different from the default, or in the case of risk reservation. You can choose to create a single or multiple policies. Click Multiple. Selecting Multiple allows you to enter the number of submissions you want to create. The default limit is 5 submissions but it is a configurable parameter. This will be useful when the account holder wants to create multiple personal auto policies.",
+      "words": [
+        {
+          "word": "On",
+          "start": 22.9,
+          "end": 23.42,
+          "probability": 0.9194
+        },
+        {
+          "word": "the",
+          "start": 23.42,
+          "end": 23.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "New",
+          "start": 23.52,
+          "end": 23.64,
+          "probability": 0.3472
+        },
+        {
+          "word": "Submission",
+          "start": 23.64,
+          "end": 24.1,
+          "probability": 0.9443
+        },
+        {
+          "word": "screen,",
+          "start": 24.1,
+          "end": 24.44,
+          "probability": 0.9443
+        },
+        {
+          "word": "you",
+          "start": 24.74,
+          "end": 24.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "will",
+          "start": 24.98,
+          "end": 25.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "define",
+          "start": 25.12,
+          "end": 25.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 25.5,
+          "end": 25.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "organization",
+          "start": 25.66,
+          "end": 26.1,
+          "probability": 0.6924
+        },
+        {
+          "word": "and",
+          "start": 26.1,
+          "end": 26.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "producer",
+          "start": 26.52,
+          "end": 26.84,
+          "probability": 0.9761
+        },
+        {
+          "word": "code,",
+          "start": 26.84,
+          "end": 27.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "if",
+          "start": 27.4,
+          "end": 27.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "different",
+          "start": 27.7,
+          "end": 28.0,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 28.0,
+          "end": 28.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 28.18,
+          "end": 28.3,
+          "probability": 0.999
+        },
+        {
+          "word": "default,",
+          "start": 28.3,
+          "end": 28.66,
+          "probability": 0.9873
+        },
+        {
+          "word": "or",
+          "start": 28.84,
+          "end": 29.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "in",
+          "start": 29.1,
+          "end": 29.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 29.22,
+          "end": 29.3,
+          "probability": 0.998
+        },
+        {
+          "word": "case",
+          "start": 29.3,
+          "end": 29.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 29.52,
+          "end": 29.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "risk",
+          "start": 29.68,
+          "end": 29.9,
+          "probability": 0.4587
+        },
+        {
+          "word": "reservation.",
+          "start": 29.9,
+          "end": 30.42,
+          "probability": 0.9771
+        },
+        {
+          "word": "You",
+          "start": 30.86,
+          "end": 31.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 31.28,
+          "end": 31.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "choose",
+          "start": 31.44,
+          "end": 31.66,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 31.66,
+          "end": 31.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 31.82,
+          "end": 32.08,
+          "probability": 0.981
+        },
+        {
+          "word": "a",
+          "start": 32.08,
+          "end": 32.22,
+          "probability": 0.894
+        },
+        {
+          "word": "single",
+          "start": 32.22,
+          "end": 32.48,
+          "probability": 0.8911
+        },
+        {
+          "word": "or",
+          "start": 32.48,
+          "end": 32.68,
+          "probability": 0.998
+        },
+        {
+          "word": "multiple",
+          "start": 32.68,
+          "end": 32.98,
+          "probability": 0.9922
+        },
+        {
+          "word": "policies.",
+          "start": 32.98,
+          "end": 33.58,
+          "probability": 0.9561
+        },
+        {
+          "word": "Click",
+          "start": 33.92,
+          "end": 34.34,
+          "probability": 0.9829
+        },
+        {
+          "word": "Multiple.",
+          "start": 34.34,
+          "end": 34.72,
+          "probability": 0.6055
+        },
+        {
+          "word": "Selecting",
+          "start": 35.34,
+          "end": 35.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "Multiple",
+          "start": 35.86,
+          "end": 36.12,
+          "probability": 0.8618
+        },
+        {
+          "word": "allows",
+          "start": 36.12,
+          "end": 36.6,
+          "probability": 0.998
+        },
+        {
+          "word": "you",
+          "start": 36.6,
+          "end": 36.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 36.82,
+          "end": 36.96,
+          "probability": 0.999
+        },
+        {
+          "word": "enter",
+          "start": 36.96,
+          "end": 37.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 37.18,
+          "end": 37.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "number",
+          "start": 37.3,
+          "end": 37.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 37.52,
+          "end": 37.7,
+          "probability": 1.0
+        },
+        {
+          "word": "submissions",
+          "start": 37.7,
+          "end": 38.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "you",
+          "start": 38.1,
+          "end": 38.34,
+          "probability": 0.999
+        },
+        {
+          "word": "want",
+          "start": 38.34,
+          "end": 38.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 38.52,
+          "end": 38.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "create.",
+          "start": 38.66,
+          "end": 39.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 39.32,
+          "end": 39.72,
+          "probability": 0.999
+        },
+        {
+          "word": "default",
+          "start": 39.72,
+          "end": 40.02,
+          "probability": 0.9819
+        },
+        {
+          "word": "limit",
+          "start": 40.02,
+          "end": 40.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 40.26,
+          "end": 40.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "5",
+          "start": 40.44,
+          "end": 40.7,
+          "probability": 0.7988
+        },
+        {
+          "word": "submissions",
+          "start": 40.7,
+          "end": 41.24,
+          "probability": 0.9922
+        },
+        {
+          "word": "but",
+          "start": 41.24,
+          "end": 41.54,
+          "probability": 0.916
+        },
+        {
+          "word": "it",
+          "start": 41.54,
+          "end": 41.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 41.66,
+          "end": 41.76,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 41.76,
+          "end": 41.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "configurable",
+          "start": 41.86,
+          "end": 42.56,
+          "probability": 0.9946
+        },
+        {
+          "word": "parameter.",
+          "start": 42.56,
+          "end": 43.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 43.34,
+          "end": 43.74,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 43.74,
+          "end": 43.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 43.88,
+          "end": 44.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "useful",
+          "start": 44.02,
+          "end": 44.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 44.4,
+          "end": 44.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 44.66,
+          "end": 44.78,
+          "probability": 0.999
+        },
+        {
+          "word": "account",
+          "start": 44.78,
+          "end": 45.02,
+          "probability": 0.96
+        },
+        {
+          "word": "holder",
+          "start": 45.02,
+          "end": 45.34,
+          "probability": 0.9717
+        },
+        {
+          "word": "wants",
+          "start": 45.34,
+          "end": 45.62,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 45.62,
+          "end": 45.78,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 45.78,
+          "end": 46.08,
+          "probability": 0.999
+        },
+        {
+          "word": "multiple",
+          "start": 46.08,
+          "end": 46.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "personal",
+          "start": 46.44,
+          "end": 46.88,
+          "probability": 0.9546
+        },
+        {
+          "word": "auto",
+          "start": 46.88,
+          "end": 47.12,
+          "probability": 0.9341
+        },
+        {
+          "word": "policies.",
+          "start": 47.12,
+          "end": 47.68,
+          "probability": 0.8945
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 47.68,
+      "end": 51.68,
+      "start_formatted": "00:00:47.680",
+      "end_formatted": "00:00:51.680",
+      "text": "Let's select Single again. Click the quote type drop down.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 47.68,
+          "end": 48.52,
+          "probability": 0.8491
+        },
+        {
+          "word": "select",
+          "start": 48.52,
+          "end": 48.78,
+          "probability": 0.9575
+        },
+        {
+          "word": "Single",
+          "start": 48.78,
+          "end": 49.12,
+          "probability": 0.3157
+        },
+        {
+          "word": "again.",
+          "start": 49.12,
+          "end": 49.44,
+          "probability": 0.979
+        },
+        {
+          "word": "Click",
+          "start": 49.98,
+          "end": 50.56,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 50.56,
+          "end": 50.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "quote",
+          "start": 50.7,
+          "end": 50.9,
+          "probability": 0.2886
+        },
+        {
+          "word": "type",
+          "start": 50.9,
+          "end": 51.14,
+          "probability": 0.9688
+        },
+        {
+          "word": "drop",
+          "start": 51.14,
+          "end": 51.38,
+          "probability": 0.6167
+        },
+        {
+          "word": "down.",
+          "start": 51.38,
+          "end": 51.68,
+          "probability": 0.4395
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 53.86,
+      "end": 66.24,
+      "start_formatted": "00:00:53.860",
+      "end_formatted": "00:01:06.240",
+      "text": "There are two options. Full Application gathers the complete set of information needed to apply for a bindable quote. Quick Quote gathers the minimal information needed to generate a quote and can be converted to a full application later.",
+      "words": [
+        {
+          "word": "There",
+          "start": 53.86,
+          "end": 54.46,
+          "probability": 0.9751
+        },
+        {
+          "word": "are",
+          "start": 54.46,
+          "end": 54.58,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 54.58,
+          "end": 54.74,
+          "probability": 0.9229
+        },
+        {
+          "word": "options.",
+          "start": 54.74,
+          "end": 55.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Full",
+          "start": 55.56,
+          "end": 55.98,
+          "probability": 0.9663
+        },
+        {
+          "word": "Application",
+          "start": 55.98,
+          "end": 56.46,
+          "probability": 0.384
+        },
+        {
+          "word": "gathers",
+          "start": 56.46,
+          "end": 56.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 56.98,
+          "end": 57.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "complete",
+          "start": 57.16,
+          "end": 57.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "set",
+          "start": 57.52,
+          "end": 57.76,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 57.76,
+          "end": 57.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "information",
+          "start": 57.92,
+          "end": 58.38,
+          "probability": 0.998
+        },
+        {
+          "word": "needed",
+          "start": 58.38,
+          "end": 58.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 58.74,
+          "end": 58.92,
+          "probability": 0.999
+        },
+        {
+          "word": "apply",
+          "start": 58.92,
+          "end": 59.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 59.24,
+          "end": 59.44,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 59.44,
+          "end": 59.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "bindable",
+          "start": 59.58,
+          "end": 60.02,
+          "probability": 0.9883
+        },
+        {
+          "word": "quote.",
+          "start": 60.02,
+          "end": 60.4,
+          "probability": 0.9868
+        },
+        {
+          "word": "Quick",
+          "start": 60.96,
+          "end": 61.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "Quote",
+          "start": 61.18,
+          "end": 61.46,
+          "probability": 0.939
+        },
+        {
+          "word": "gathers",
+          "start": 61.46,
+          "end": 61.82,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 61.82,
+          "end": 61.98,
+          "probability": 0.998
+        },
+        {
+          "word": "minimal",
+          "start": 61.98,
+          "end": 62.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "information",
+          "start": 62.2,
+          "end": 62.82,
+          "probability": 0.999
+        },
+        {
+          "word": "needed",
+          "start": 62.82,
+          "end": 63.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 63.18,
+          "end": 63.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "generate",
+          "start": 63.34,
+          "end": 63.66,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 63.66,
+          "end": 63.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "quote",
+          "start": 63.86,
+          "end": 64.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 64.06,
+          "end": 64.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "can",
+          "start": 64.22,
+          "end": 64.36,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 64.36,
+          "end": 64.48,
+          "probability": 0.999
+        },
+        {
+          "word": "converted",
+          "start": 64.48,
+          "end": 64.94,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 64.94,
+          "end": 65.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 65.12,
+          "end": 65.24,
+          "probability": 0.998
+        },
+        {
+          "word": "full",
+          "start": 65.24,
+          "end": 65.4,
+          "probability": 0.8975
+        },
+        {
+          "word": "application",
+          "start": 65.4,
+          "end": 65.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "later.",
+          "start": 65.92,
+          "end": 66.24,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 66.66,
+      "end": 74.9,
+      "start_formatted": "00:01:06.660",
+      "end_formatted": "00:01:14.900",
+      "text": "Let's select Full Application. You can also select a different default based state or effective date if needed. Select Personal Auto from the product list.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 66.66,
+          "end": 67.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "select",
+          "start": 67.1,
+          "end": 67.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "Full",
+          "start": 67.36,
+          "end": 67.52,
+          "probability": 0.9478
+        },
+        {
+          "word": "Application.",
+          "start": 67.52,
+          "end": 68.02,
+          "probability": 0.9717
+        },
+        {
+          "word": "You",
+          "start": 68.5,
+          "end": 69.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "can",
+          "start": 69.0,
+          "end": 69.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "also",
+          "start": 69.14,
+          "end": 69.38,
+          "probability": 0.999
+        },
+        {
+          "word": "select",
+          "start": 69.38,
+          "end": 69.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 69.74,
+          "end": 69.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "different",
+          "start": 69.88,
+          "end": 70.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "default",
+          "start": 70.12,
+          "end": 70.5,
+          "probability": 0.9502
+        },
+        {
+          "word": "based",
+          "start": 70.5,
+          "end": 70.82,
+          "probability": 0.2183
+        },
+        {
+          "word": "state",
+          "start": 70.82,
+          "end": 71.12,
+          "probability": 0.9526
+        },
+        {
+          "word": "or",
+          "start": 71.12,
+          "end": 71.28,
+          "probability": 0.9941
+        },
+        {
+          "word": "effective",
+          "start": 71.28,
+          "end": 71.64,
+          "probability": 0.979
+        },
+        {
+          "word": "date",
+          "start": 71.64,
+          "end": 71.94,
+          "probability": 0.9873
+        },
+        {
+          "word": "if",
+          "start": 71.94,
+          "end": 72.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "needed.",
+          "start": 72.12,
+          "end": 72.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Select",
+          "start": 72.74,
+          "end": 73.28,
+          "probability": 0.9941
+        },
+        {
+          "word": "Personal",
+          "start": 73.28,
+          "end": 73.64,
+          "probability": 0.9639
+        },
+        {
+          "word": "Auto",
+          "start": 73.64,
+          "end": 73.88,
+          "probability": 0.9429
+        },
+        {
+          "word": "from",
+          "start": 73.88,
+          "end": 74.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 74.08,
+          "end": 74.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "product",
+          "start": 74.22,
+          "end": 74.52,
+          "probability": 0.6616
+        },
+        {
+          "word": "list.",
+          "start": 74.52,
+          "end": 74.9,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 74.9,
+      "end": 78.26,
+      "start_formatted": "00:01:14.900",
+      "end_formatted": "00:01:18.260",
+      "text": "On the Offering screen, click Offering Selection.",
+      "words": [
+        {
+          "word": "On",
+          "start": 74.9,
+          "end": 75.78,
+          "probability": 0.9072
+        },
+        {
+          "word": "the",
+          "start": 75.78,
+          "end": 75.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Offering",
+          "start": 75.92,
+          "end": 76.32,
+          "probability": 0.3879
+        },
+        {
+          "word": "screen,",
+          "start": 76.32,
+          "end": 76.7,
+          "probability": 0.873
+        },
+        {
+          "word": "click",
+          "start": 77.02,
+          "end": 77.34,
+          "probability": 0.9839
+        },
+        {
+          "word": "Offering",
+          "start": 77.34,
+          "end": 77.72,
+          "probability": 0.9463
+        },
+        {
+          "word": "Selection.",
+          "start": 77.72,
+          "end": 78.26,
+          "probability": 0.959
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 79.28,
+      "end": 90.0,
+      "start_formatted": "00:01:19.280",
+      "end_formatted": "00:01:30.000",
+      "text": "Select an offering which has predefined product details targeted for different types of customers. Click the Back and Next button or the Step link on the left to navigate within the submission. Let's click Next.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 79.28,
+          "end": 79.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "an",
+          "start": 79.84,
+          "end": 80.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "offering",
+          "start": 80.0,
+          "end": 80.28,
+          "probability": 0.9873
+        },
+        {
+          "word": "which",
+          "start": 80.28,
+          "end": 80.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 80.52,
+          "end": 80.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "predefined",
+          "start": 80.72,
+          "end": 81.26,
+          "probability": 0.8574
+        },
+        {
+          "word": "product",
+          "start": 81.26,
+          "end": 81.7,
+          "probability": 0.998
+        },
+        {
+          "word": "details",
+          "start": 81.7,
+          "end": 82.2,
+          "probability": 1.0
+        },
+        {
+          "word": "targeted",
+          "start": 82.2,
+          "end": 82.68,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 82.68,
+          "end": 82.88,
+          "probability": 1.0
+        },
+        {
+          "word": "different",
+          "start": 82.88,
+          "end": 83.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "types",
+          "start": 83.16,
+          "end": 83.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 83.42,
+          "end": 83.62,
+          "probability": 1.0
+        },
+        {
+          "word": "customers.",
+          "start": 83.62,
+          "end": 84.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "Click",
+          "start": 84.48,
+          "end": 84.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 84.9,
+          "end": 85.04,
+          "probability": 0.999
+        },
+        {
+          "word": "Back",
+          "start": 85.04,
+          "end": 85.26,
+          "probability": 0.8423
+        },
+        {
+          "word": "and",
+          "start": 85.26,
+          "end": 85.44,
+          "probability": 0.897
+        },
+        {
+          "word": "Next",
+          "start": 85.44,
+          "end": 85.66,
+          "probability": 0.999
+        },
+        {
+          "word": "button",
+          "start": 85.66,
+          "end": 86.02,
+          "probability": 0.998
+        },
+        {
+          "word": "or",
+          "start": 86.02,
+          "end": 86.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 86.2,
+          "end": 86.34,
+          "probability": 1.0
+        },
+        {
+          "word": "Step",
+          "start": 86.34,
+          "end": 86.6,
+          "probability": 0.4514
+        },
+        {
+          "word": "link",
+          "start": 86.6,
+          "end": 86.76,
+          "probability": 0.9136
+        },
+        {
+          "word": "on",
+          "start": 86.76,
+          "end": 86.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 86.96,
+          "end": 87.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "left",
+          "start": 87.04,
+          "end": 87.26,
+          "probability": 0.9741
+        },
+        {
+          "word": "to",
+          "start": 87.26,
+          "end": 87.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigate",
+          "start": 87.42,
+          "end": 87.74,
+          "probability": 0.999
+        },
+        {
+          "word": "within",
+          "start": 87.74,
+          "end": 88.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 88.06,
+          "end": 88.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "submission.",
+          "start": 88.24,
+          "end": 88.66,
+          "probability": 0.9756
+        },
+        {
+          "word": "Let's",
+          "start": 89.1,
+          "end": 89.48,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 89.48,
+          "end": 89.7,
+          "probability": 0.9878
+        },
+        {
+          "word": "Next.",
+          "start": 89.7,
+          "end": 90.0,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 90.0,
+      "end": 97.3,
+      "start_formatted": "00:01:30.000",
+      "end_formatted": "00:01:37.300",
+      "text": "On the Qualification page, answers to the questions will pre-qualify or reject the application. Click Yes for the question",
+      "words": [
+        {
+          "word": "On",
+          "start": 90.0,
+          "end": 90.76,
+          "probability": 0.3203
+        },
+        {
+          "word": "the",
+          "start": 90.76,
+          "end": 90.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "Qualification",
+          "start": 90.86,
+          "end": 91.5,
+          "probability": 0.5713
+        },
+        {
+          "word": "page,",
+          "start": 91.5,
+          "end": 91.82,
+          "probability": 0.9238
+        },
+        {
+          "word": "answers",
+          "start": 92.12,
+          "end": 92.54,
+          "probability": 0.8901
+        },
+        {
+          "word": "to",
+          "start": 92.54,
+          "end": 92.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 92.76,
+          "end": 92.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "questions",
+          "start": 92.88,
+          "end": 93.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "will",
+          "start": 93.28,
+          "end": 93.54,
+          "probability": 0.998
+        },
+        {
+          "word": "pre",
+          "start": 93.54,
+          "end": 93.8,
+          "probability": 0.9756
+        },
+        {
+          "word": "-qualify",
+          "start": 93.8,
+          "end": 94.26,
+          "probability": 0.9375
+        },
+        {
+          "word": "or",
+          "start": 94.26,
+          "end": 94.46,
+          "probability": 0.9888
+        },
+        {
+          "word": "reject",
+          "start": 94.46,
+          "end": 94.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 94.88,
+          "end": 95.04,
+          "probability": 0.999
+        },
+        {
+          "word": "application.",
+          "start": 95.04,
+          "end": 95.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "Click",
+          "start": 96.3,
+          "end": 96.46,
+          "probability": 0.9761
+        },
+        {
+          "word": "Yes",
+          "start": 96.46,
+          "end": 96.66,
+          "probability": 0.4912
+        },
+        {
+          "word": "for",
+          "start": 96.66,
+          "end": 96.84,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 96.84,
+          "end": 96.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "question",
+          "start": 96.94,
+          "end": 97.3,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 97.3,
+      "end": 101.66,
+      "start_formatted": "00:01:37.300",
+      "end_formatted": "00:01:41.660",
+      "text": "Any drivers with convictions for moving traffic violations within the past three years?",
+      "words": [
+        {
+          "word": "Any",
+          "start": 97.3,
+          "end": 97.5,
+          "probability": 0.3127
+        },
+        {
+          "word": "drivers",
+          "start": 97.5,
+          "end": 97.92,
+          "probability": 0.8003
+        },
+        {
+          "word": "with",
+          "start": 97.92,
+          "end": 98.18,
+          "probability": 0.999
+        },
+        {
+          "word": "convictions",
+          "start": 98.18,
+          "end": 98.64,
+          "probability": 0.9829
+        },
+        {
+          "word": "for",
+          "start": 98.64,
+          "end": 98.98,
+          "probability": 0.9917
+        },
+        {
+          "word": "moving",
+          "start": 98.98,
+          "end": 99.24,
+          "probability": 0.9897
+        },
+        {
+          "word": "traffic",
+          "start": 99.24,
+          "end": 99.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "violations",
+          "start": 99.62,
+          "end": 100.3,
+          "probability": 0.998
+        },
+        {
+          "word": "within",
+          "start": 100.3,
+          "end": 100.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 100.62,
+          "end": 100.8,
+          "probability": 0.999
+        },
+        {
+          "word": "past",
+          "start": 100.8,
+          "end": 101.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "three",
+          "start": 101.08,
+          "end": 101.3,
+          "probability": 0.6289
+        },
+        {
+          "word": "years?",
+          "start": 101.3,
+          "end": 101.66,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 102.02,
+      "end": 105.04,
+      "start_formatted": "00:01:42.020",
+      "end_formatted": "00:01:45.040",
+      "text": "It displays the text box to capture the explanation.",
+      "words": [
+        {
+          "word": "It",
+          "start": 102.02,
+          "end": 102.62,
+          "probability": 0.9678
+        },
+        {
+          "word": "displays",
+          "start": 102.62,
+          "end": 103.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 103.04,
+          "end": 103.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "text",
+          "start": 103.26,
+          "end": 103.5,
+          "probability": 0.9849
+        },
+        {
+          "word": "box",
+          "start": 103.5,
+          "end": 103.78,
+          "probability": 0.7847
+        },
+        {
+          "word": "to",
+          "start": 103.78,
+          "end": 103.98,
+          "probability": 0.998
+        },
+        {
+          "word": "capture",
+          "start": 103.98,
+          "end": 104.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 104.3,
+          "end": 104.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "explanation.",
+          "start": 104.46,
+          "end": 105.04,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 111.04,
+      "end": 113.9,
+      "start_formatted": "00:01:51.040",
+      "end_formatted": "00:01:53.900",
+      "text": "Next, enter the policy contract details.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 111.04,
+          "end": 111.66,
+          "probability": 0.9692
+        },
+        {
+          "word": "enter",
+          "start": 111.96,
+          "end": 112.24,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 112.24,
+          "end": 112.38,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 112.38,
+          "end": 112.8,
+          "probability": 0.8213
+        },
+        {
+          "word": "contract",
+          "start": 112.8,
+          "end": 113.22,
+          "probability": 0.9741
+        },
+        {
+          "word": "details.",
+          "start": 113.22,
+          "end": 113.9,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 114.84,
+      "end": 131.4,
+      "start_formatted": "00:01:54.840",
+      "end_formatted": "00:02:11.400",
+      "text": "On the Policy Info screen, you can edit the primary named insured by clicking the link on the name. Click Cancel to go back to the Policy Info screen. Click the down arrow to change the primary named insured to another contact. The policy address can be similarly changed.",
+      "words": [
+        {
+          "word": "On",
+          "start": 114.84,
+          "end": 115.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 115.46,
+          "end": 115.56,
+          "probability": 1.0
+        },
+        {
+          "word": "Policy",
+          "start": 115.56,
+          "end": 115.92,
+          "probability": 0.3545
+        },
+        {
+          "word": "Info",
+          "start": 115.92,
+          "end": 116.32,
+          "probability": 0.9775
+        },
+        {
+          "word": "screen,",
+          "start": 116.32,
+          "end": 116.64,
+          "probability": 0.9292
+        },
+        {
+          "word": "you",
+          "start": 116.94,
+          "end": 117.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 117.16,
+          "end": 117.28,
+          "probability": 1.0
+        },
+        {
+          "word": "edit",
+          "start": 117.28,
+          "end": 117.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 117.48,
+          "end": 117.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "primary",
+          "start": 117.6,
+          "end": 118.0,
+          "probability": 0.9219
+        },
+        {
+          "word": "named",
+          "start": 118.0,
+          "end": 118.34,
+          "probability": 0.9678
+        },
+        {
+          "word": "insured",
+          "start": 118.34,
+          "end": 118.76,
+          "probability": 0.9248
+        },
+        {
+          "word": "by",
+          "start": 118.76,
+          "end": 118.94,
+          "probability": 0.999
+        },
+        {
+          "word": "clicking",
+          "start": 118.94,
+          "end": 119.24,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 119.24,
+          "end": 119.4,
+          "probability": 0.998
+        },
+        {
+          "word": "link",
+          "start": 119.4,
+          "end": 119.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 119.58,
+          "end": 119.76,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 119.76,
+          "end": 119.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "name.",
+          "start": 119.86,
+          "end": 120.14,
+          "probability": 0.9868
+        },
+        {
+          "word": "Click",
+          "start": 120.56,
+          "end": 121.14,
+          "probability": 0.998
+        },
+        {
+          "word": "Cancel",
+          "start": 121.14,
+          "end": 121.54,
+          "probability": 0.9336
+        },
+        {
+          "word": "to",
+          "start": 121.54,
+          "end": 121.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "go",
+          "start": 121.68,
+          "end": 121.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 121.82,
+          "end": 122.06,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 122.06,
+          "end": 122.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 122.2,
+          "end": 122.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Policy",
+          "start": 122.3,
+          "end": 122.66,
+          "probability": 0.7925
+        },
+        {
+          "word": "Info",
+          "start": 122.66,
+          "end": 123.04,
+          "probability": 1.0
+        },
+        {
+          "word": "screen.",
+          "start": 123.04,
+          "end": 123.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "Click",
+          "start": 124.58,
+          "end": 125.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 125.2,
+          "end": 125.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "down",
+          "start": 125.34,
+          "end": 125.5,
+          "probability": 0.98
+        },
+        {
+          "word": "arrow",
+          "start": 125.5,
+          "end": 125.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 125.7,
+          "end": 125.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "change",
+          "start": 125.9,
+          "end": 126.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 126.2,
+          "end": 126.4,
+          "probability": 1.0
+        },
+        {
+          "word": "primary",
+          "start": 126.4,
+          "end": 126.8,
+          "probability": 0.9873
+        },
+        {
+          "word": "named",
+          "start": 126.8,
+          "end": 127.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "insured",
+          "start": 127.14,
+          "end": 127.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 127.56,
+          "end": 127.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "another",
+          "start": 127.72,
+          "end": 127.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact.",
+          "start": 127.98,
+          "end": 128.4,
+          "probability": 0.9897
+        },
+        {
+          "word": "The",
+          "start": 128.88,
+          "end": 129.26,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 129.26,
+          "end": 129.66,
+          "probability": 0.9819
+        },
+        {
+          "word": "address",
+          "start": 129.66,
+          "end": 129.98,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 129.98,
+          "end": 130.28,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 130.28,
+          "end": 130.42,
+          "probability": 1.0
+        },
+        {
+          "word": "similarly",
+          "start": 130.42,
+          "end": 130.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "changed.",
+          "start": 130.8,
+          "end": 131.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 132.0,
+      "end": 145.84,
+      "start_formatted": "00:02:12.000",
+      "end_formatted": "00:02:25.840",
+      "text": "Policy details include the term type, effective date, expiration date, and written date, etc., which appear on the right can be edited. The producer of record and underwriting company can be edited. Click Next to go to the Drivers screen.",
+      "words": [
+        {
+          "word": "Policy",
+          "start": 132.0,
+          "end": 132.56,
+          "probability": 0.9487
+        },
+        {
+          "word": "details",
+          "start": 132.56,
+          "end": 133.06,
+          "probability": 0.9399
+        },
+        {
+          "word": "include",
+          "start": 133.06,
+          "end": 133.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 133.5,
+          "end": 133.66,
+          "probability": 0.9805
+        },
+        {
+          "word": "term",
+          "start": 133.66,
+          "end": 133.92,
+          "probability": 0.8101
+        },
+        {
+          "word": "type,",
+          "start": 133.92,
+          "end": 134.28,
+          "probability": 0.9814
+        },
+        {
+          "word": "effective",
+          "start": 134.5,
+          "end": 134.92,
+          "probability": 0.9805
+        },
+        {
+          "word": "date,",
+          "start": 134.92,
+          "end": 135.28,
+          "probability": 0.998
+        },
+        {
+          "word": "expiration",
+          "start": 135.58,
+          "end": 136.12,
+          "probability": 0.9946
+        },
+        {
+          "word": "date,",
+          "start": 136.12,
+          "end": 136.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 136.78,
+          "end": 137.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "written",
+          "start": 137.04,
+          "end": 137.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "date,",
+          "start": 137.26,
+          "end": 137.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "etc.,",
+          "start": 137.88,
+          "end": 138.68,
+          "probability": 0.7891
+        },
+        {
+          "word": "which",
+          "start": 138.68,
+          "end": 138.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "appear",
+          "start": 138.92,
+          "end": 139.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 139.24,
+          "end": 139.38,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 139.38,
+          "end": 139.5,
+          "probability": 0.999
+        },
+        {
+          "word": "right",
+          "start": 139.5,
+          "end": 139.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 139.72,
+          "end": 139.9,
+          "probability": 0.9478
+        },
+        {
+          "word": "be",
+          "start": 139.9,
+          "end": 140.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "edited.",
+          "start": 140.06,
+          "end": 140.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 140.68,
+          "end": 141.02,
+          "probability": 0.9849
+        },
+        {
+          "word": "producer",
+          "start": 141.02,
+          "end": 141.36,
+          "probability": 0.9111
+        },
+        {
+          "word": "of",
+          "start": 141.36,
+          "end": 141.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "record",
+          "start": 141.58,
+          "end": 141.84,
+          "probability": 0.8994
+        },
+        {
+          "word": "and",
+          "start": 141.84,
+          "end": 142.0,
+          "probability": 0.9741
+        },
+        {
+          "word": "underwriting",
+          "start": 142.0,
+          "end": 142.48,
+          "probability": 0.998
+        },
+        {
+          "word": "company",
+          "start": 142.48,
+          "end": 142.88,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 142.88,
+          "end": 143.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 143.1,
+          "end": 143.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "edited.",
+          "start": 143.24,
+          "end": 143.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Click",
+          "start": 143.92,
+          "end": 144.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "Next",
+          "start": 144.34,
+          "end": 144.54,
+          "probability": 0.7422
+        },
+        {
+          "word": "to",
+          "start": 144.54,
+          "end": 144.72,
+          "probability": 0.999
+        },
+        {
+          "word": "go",
+          "start": 144.72,
+          "end": 144.84,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 144.84,
+          "end": 144.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 144.96,
+          "end": 145.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "Drivers",
+          "start": 145.08,
+          "end": 145.52,
+          "probability": 0.6045
+        },
+        {
+          "word": "screen.",
+          "start": 145.52,
+          "end": 145.84,
+          "probability": 0.9287
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 146.72,
+      "end": 149.72,
+      "start_formatted": "00:02:26.720",
+      "end_formatted": "00:02:29.720",
+      "text": "You must add at least one driver. Click Add.",
+      "words": [
+        {
+          "word": "You",
+          "start": 146.72,
+          "end": 147.28,
+          "probability": 0.8916
+        },
+        {
+          "word": "must",
+          "start": 147.28,
+          "end": 147.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "add",
+          "start": 147.5,
+          "end": 147.68,
+          "probability": 0.9795
+        },
+        {
+          "word": "at",
+          "start": 147.68,
+          "end": 147.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "least",
+          "start": 147.82,
+          "end": 147.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "one",
+          "start": 147.96,
+          "end": 148.22,
+          "probability": 0.9624
+        },
+        {
+          "word": "driver.",
+          "start": 148.22,
+          "end": 148.62,
+          "probability": 0.9434
+        },
+        {
+          "word": "Click",
+          "start": 149.02,
+          "end": 149.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "Add.",
+          "start": 149.44,
+          "end": 149.72,
+          "probability": 0.4856
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 150.68,
+      "end": 165.24,
+      "start_formatted": "00:02:30.680",
+      "end_formatted": "00:02:45.240",
+      "text": "You can create a new driver or select an existing driver, for example, Ray Newton. Enter all the required fields. Click the Roles tab. Enter the year first licensed. This will be pre-populated if the driver has been used before.",
+      "words": [
+        {
+          "word": "You",
+          "start": 150.68,
+          "end": 151.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 151.24,
+          "end": 151.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 151.42,
+          "end": 151.7,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 151.7,
+          "end": 151.86,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 151.86,
+          "end": 152.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "driver",
+          "start": 152.0,
+          "end": 152.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "or",
+          "start": 152.36,
+          "end": 152.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "select",
+          "start": 152.6,
+          "end": 152.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 152.9,
+          "end": 153.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "existing",
+          "start": 153.06,
+          "end": 153.44,
+          "probability": 0.999
+        },
+        {
+          "word": "driver,",
+          "start": 153.44,
+          "end": 153.94,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 154.12,
+          "end": 154.4,
+          "probability": 0.9639
+        },
+        {
+          "word": "example,",
+          "start": 154.4,
+          "end": 154.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "Ray",
+          "start": 155.14,
+          "end": 155.34,
+          "probability": 0.9688
+        },
+        {
+          "word": "Newton.",
+          "start": 155.34,
+          "end": 155.6,
+          "probability": 0.9487
+        },
+        {
+          "word": "Enter",
+          "start": 156.08,
+          "end": 156.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "all",
+          "start": 156.64,
+          "end": 156.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 156.84,
+          "end": 156.98,
+          "probability": 0.999
+        },
+        {
+          "word": "required",
+          "start": 156.98,
+          "end": 157.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "fields.",
+          "start": 157.42,
+          "end": 158.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "Click",
+          "start": 158.34,
+          "end": 158.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 158.78,
+          "end": 158.94,
+          "probability": 0.999
+        },
+        {
+          "word": "Roles",
+          "start": 158.94,
+          "end": 159.18,
+          "probability": 0.8818
+        },
+        {
+          "word": "tab.",
+          "start": 159.18,
+          "end": 159.5,
+          "probability": 0.9922
+        },
+        {
+          "word": "Enter",
+          "start": 160.12,
+          "end": 160.68,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 160.68,
+          "end": 160.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "year",
+          "start": 160.82,
+          "end": 161.02,
+          "probability": 0.7075
+        },
+        {
+          "word": "first",
+          "start": 161.02,
+          "end": 161.32,
+          "probability": 0.8438
+        },
+        {
+          "word": "licensed.",
+          "start": 161.32,
+          "end": 161.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "This",
+          "start": 162.12,
+          "end": 162.52,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 162.52,
+          "end": 162.66,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 162.66,
+          "end": 162.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "pre",
+          "start": 162.82,
+          "end": 163.04,
+          "probability": 0.9512
+        },
+        {
+          "word": "-populated",
+          "start": 163.04,
+          "end": 163.56,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 163.56,
+          "end": 163.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 163.74,
+          "end": 163.86,
+          "probability": 1.0
+        },
+        {
+          "word": "driver",
+          "start": 163.86,
+          "end": 164.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 164.18,
+          "end": 164.4,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 164.4,
+          "end": 164.54,
+          "probability": 1.0
+        },
+        {
+          "word": "used",
+          "start": 164.54,
+          "end": 164.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "before.",
+          "start": 164.84,
+          "end": 165.24,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 165.84,
+      "end": 180.06,
+      "start_formatted": "00:02:45.840",
+      "end_formatted": "00:03:00.060",
+      "text": "You must select the number of accidents and violations for both the policy level and account level. If not set now, you will get a validation error while trying to bind the policy. You can come back to the screen and fix it then. Click Next to go to the Vehicles screen.",
+      "words": [
+        {
+          "word": "You",
+          "start": 165.84,
+          "end": 166.32,
+          "probability": 0.8569
+        },
+        {
+          "word": "must",
+          "start": 166.32,
+          "end": 166.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "select",
+          "start": 166.56,
+          "end": 166.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 166.88,
+          "end": 167.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "number",
+          "start": 167.04,
+          "end": 167.26,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 167.26,
+          "end": 167.48,
+          "probability": 0.999
+        },
+        {
+          "word": "accidents",
+          "start": 167.48,
+          "end": 167.78,
+          "probability": 0.9829
+        },
+        {
+          "word": "and",
+          "start": 167.78,
+          "end": 168.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "violations",
+          "start": 168.06,
+          "end": 168.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 168.58,
+          "end": 168.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "both",
+          "start": 168.9,
+          "end": 169.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 169.08,
+          "end": 169.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy",
+          "start": 169.24,
+          "end": 169.64,
+          "probability": 0.9185
+        },
+        {
+          "word": "level",
+          "start": 169.64,
+          "end": 169.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 169.96,
+          "end": 170.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "account",
+          "start": 170.16,
+          "end": 170.42,
+          "probability": 0.9805
+        },
+        {
+          "word": "level.",
+          "start": 170.42,
+          "end": 170.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "If",
+          "start": 171.04,
+          "end": 171.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "not",
+          "start": 171.48,
+          "end": 171.7,
+          "probability": 0.9897
+        },
+        {
+          "word": "set",
+          "start": 171.7,
+          "end": 171.92,
+          "probability": 0.9746
+        },
+        {
+          "word": "now,",
+          "start": 171.92,
+          "end": 172.16,
+          "probability": 0.98
+        },
+        {
+          "word": "you",
+          "start": 172.4,
+          "end": 172.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "will",
+          "start": 172.6,
+          "end": 172.72,
+          "probability": 0.998
+        },
+        {
+          "word": "get",
+          "start": 172.72,
+          "end": 172.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 172.86,
+          "end": 173.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "validation",
+          "start": 173.0,
+          "end": 173.38,
+          "probability": 0.9746
+        },
+        {
+          "word": "error",
+          "start": 173.38,
+          "end": 173.74,
+          "probability": 0.999
+        },
+        {
+          "word": "while",
+          "start": 173.74,
+          "end": 173.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "trying",
+          "start": 173.96,
+          "end": 174.2,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 174.2,
+          "end": 174.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "bind",
+          "start": 174.36,
+          "end": 174.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 174.6,
+          "end": 174.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy.",
+          "start": 174.74,
+          "end": 175.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "You",
+          "start": 175.46,
+          "end": 175.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 175.78,
+          "end": 175.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "come",
+          "start": 175.96,
+          "end": 176.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "back",
+          "start": 176.14,
+          "end": 176.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 176.36,
+          "end": 176.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 176.54,
+          "end": 176.66,
+          "probability": 0.998
+        },
+        {
+          "word": "screen",
+          "start": 176.66,
+          "end": 176.96,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 176.96,
+          "end": 177.14,
+          "probability": 0.999
+        },
+        {
+          "word": "fix",
+          "start": 177.14,
+          "end": 177.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "it",
+          "start": 177.38,
+          "end": 177.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "then.",
+          "start": 177.54,
+          "end": 177.78,
+          "probability": 0.9785
+        },
+        {
+          "word": "Click",
+          "start": 178.14,
+          "end": 178.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "Next",
+          "start": 178.58,
+          "end": 178.78,
+          "probability": 0.5278
+        },
+        {
+          "word": "to",
+          "start": 178.78,
+          "end": 178.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "go",
+          "start": 178.96,
+          "end": 179.08,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 179.08,
+          "end": 179.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 179.18,
+          "end": 179.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "Vehicles",
+          "start": 179.3,
+          "end": 179.72,
+          "probability": 0.7939
+        },
+        {
+          "word": "screen.",
+          "start": 179.72,
+          "end": 180.06,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 183.24,
+      "end": 198.46,
+      "start_formatted": "00:03:03.240",
+      "end_formatted": "00:03:18.460",
+      "text": "This is where you add the vehicles to be insured. Click Create Vehicle. Enter the Vehicle VIN. The vehicle cost new is $25,000. The license state must match the default base state.",
+      "words": [
+        {
+          "word": "This",
+          "start": 183.24,
+          "end": 183.9,
+          "probability": 0.9487
+        },
+        {
+          "word": "is",
+          "start": 183.9,
+          "end": 184.04,
+          "probability": 0.999
+        },
+        {
+          "word": "where",
+          "start": 184.04,
+          "end": 184.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 184.18,
+          "end": 184.32,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 184.32,
+          "end": 184.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 184.5,
+          "end": 184.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "vehicles",
+          "start": 184.64,
+          "end": 185.02,
+          "probability": 0.981
+        },
+        {
+          "word": "to",
+          "start": 185.02,
+          "end": 185.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 185.22,
+          "end": 185.34,
+          "probability": 0.998
+        },
+        {
+          "word": "insured.",
+          "start": 185.34,
+          "end": 185.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "Click",
+          "start": 186.24,
+          "end": 186.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "Create",
+          "start": 186.62,
+          "end": 186.96,
+          "probability": 0.625
+        },
+        {
+          "word": "Vehicle.",
+          "start": 186.96,
+          "end": 187.48,
+          "probability": 0.958
+        },
+        {
+          "word": "Enter",
+          "start": 187.76,
+          "end": 188.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 188.34,
+          "end": 188.5,
+          "probability": 0.998
+        },
+        {
+          "word": "Vehicle",
+          "start": 188.5,
+          "end": 188.86,
+          "probability": 0.7578
+        },
+        {
+          "word": "VIN.",
+          "start": 188.86,
+          "end": 189.16,
+          "probability": 0.9668
+        },
+        {
+          "word": "The",
+          "start": 190.82,
+          "end": 191.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "vehicle",
+          "start": 191.48,
+          "end": 191.82,
+          "probability": 0.5869
+        },
+        {
+          "word": "cost",
+          "start": 191.82,
+          "end": 192.1,
+          "probability": 0.9067
+        },
+        {
+          "word": "new",
+          "start": 192.1,
+          "end": 192.28,
+          "probability": 0.855
+        },
+        {
+          "word": "is",
+          "start": 192.28,
+          "end": 192.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "$25",
+          "start": 192.42,
+          "end": 192.82,
+          "probability": 0.9902
+        },
+        {
+          "word": ",000.",
+          "start": 192.82,
+          "end": 193.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "The",
+          "start": 195.48,
+          "end": 196.14,
+          "probability": 0.998
+        },
+        {
+          "word": "license",
+          "start": 196.14,
+          "end": 196.48,
+          "probability": 0.7236
+        },
+        {
+          "word": "state",
+          "start": 196.48,
+          "end": 196.8,
+          "probability": 0.957
+        },
+        {
+          "word": "must",
+          "start": 196.8,
+          "end": 197.06,
+          "probability": 1.0
+        },
+        {
+          "word": "match",
+          "start": 197.06,
+          "end": 197.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 197.32,
+          "end": 197.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "default",
+          "start": 197.5,
+          "end": 197.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "base",
+          "start": 197.84,
+          "end": 198.14,
+          "probability": 0.9834
+        },
+        {
+          "word": "state.",
+          "start": 198.14,
+          "end": 198.46,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 203.18,
+      "end": 226.4,
+      "start_formatted": "00:03:23.180",
+      "end_formatted": "00:03:46.400",
+      "text": "If you want to change the base state of the submission, update the garage date location. Assign drivers to vehicles. Use Ray Newton 100%. Click Next to go to the Coverages screen. A coverage is protection from a specific risk. The coverages are available as configured in the product model. You can select a different term for a coverage, for example, the Auto Liability Package.",
+      "words": [
+        {
+          "word": "If",
+          "start": 203.18,
+          "end": 203.74,
+          "probability": 0.792
+        },
+        {
+          "word": "you",
+          "start": 203.74,
+          "end": 203.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "want",
+          "start": 203.86,
+          "end": 204.02,
+          "probability": 0.7759
+        },
+        {
+          "word": "to",
+          "start": 204.02,
+          "end": 204.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "change",
+          "start": 204.14,
+          "end": 204.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 204.38,
+          "end": 204.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "base",
+          "start": 204.6,
+          "end": 204.84,
+          "probability": 0.9761
+        },
+        {
+          "word": "state",
+          "start": 204.84,
+          "end": 205.08,
+          "probability": 0.9741
+        },
+        {
+          "word": "of",
+          "start": 205.08,
+          "end": 205.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 205.26,
+          "end": 205.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "submission,",
+          "start": 205.36,
+          "end": 205.8,
+          "probability": 0.981
+        },
+        {
+          "word": "update",
+          "start": 206.08,
+          "end": 206.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 206.48,
+          "end": 206.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "garage",
+          "start": 206.66,
+          "end": 206.94,
+          "probability": 0.6826
+        },
+        {
+          "word": "date",
+          "start": 206.94,
+          "end": 207.16,
+          "probability": 0.1353
+        },
+        {
+          "word": "location.",
+          "start": 207.16,
+          "end": 207.74,
+          "probability": 0.9688
+        },
+        {
+          "word": "Assign",
+          "start": 208.16,
+          "end": 208.72,
+          "probability": 0.9858
+        },
+        {
+          "word": "drivers",
+          "start": 208.72,
+          "end": 209.12,
+          "probability": 0.9556
+        },
+        {
+          "word": "to",
+          "start": 209.12,
+          "end": 209.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "vehicles.",
+          "start": 209.34,
+          "end": 209.8,
+          "probability": 0.9868
+        },
+        {
+          "word": "Use",
+          "start": 210.32,
+          "end": 210.8,
+          "probability": 0.98
+        },
+        {
+          "word": "Ray",
+          "start": 210.8,
+          "end": 210.98,
+          "probability": 0.936
+        },
+        {
+          "word": "Newton",
+          "start": 210.98,
+          "end": 211.22,
+          "probability": 0.5112
+        },
+        {
+          "word": "100%.",
+          "start": 211.22,
+          "end": 212.1,
+          "probability": 0.9453
+        },
+        {
+          "word": "Click",
+          "start": 212.1,
+          "end": 213.02,
+          "probability": 0.9912
+        },
+        {
+          "word": "Next",
+          "start": 213.02,
+          "end": 213.2,
+          "probability": 0.6489
+        },
+        {
+          "word": "to",
+          "start": 213.2,
+          "end": 213.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "go",
+          "start": 213.4,
+          "end": 213.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 213.52,
+          "end": 213.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 213.64,
+          "end": 213.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "Coverages",
+          "start": 213.76,
+          "end": 214.24,
+          "probability": 0.7031
+        },
+        {
+          "word": "screen.",
+          "start": 214.24,
+          "end": 214.56,
+          "probability": 0.9912
+        },
+        {
+          "word": "A",
+          "start": 215.08,
+          "end": 215.52,
+          "probability": 0.9893
+        },
+        {
+          "word": "coverage",
+          "start": 215.52,
+          "end": 215.84,
+          "probability": 0.9688
+        },
+        {
+          "word": "is",
+          "start": 215.84,
+          "end": 216.02,
+          "probability": 0.9893
+        },
+        {
+          "word": "protection",
+          "start": 216.02,
+          "end": 216.4,
+          "probability": 0.9634
+        },
+        {
+          "word": "from",
+          "start": 216.4,
+          "end": 216.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 216.7,
+          "end": 216.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "specific",
+          "start": 216.82,
+          "end": 217.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "risk.",
+          "start": 217.24,
+          "end": 217.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 218.02,
+          "end": 218.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "coverages",
+          "start": 218.32,
+          "end": 218.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "are",
+          "start": 218.82,
+          "end": 218.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 218.96,
+          "end": 219.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "as",
+          "start": 219.34,
+          "end": 219.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "configured",
+          "start": 219.56,
+          "end": 219.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 219.96,
+          "end": 220.16,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 220.16,
+          "end": 220.26,
+          "probability": 0.998
+        },
+        {
+          "word": "product",
+          "start": 220.26,
+          "end": 220.58,
+          "probability": 0.9507
+        },
+        {
+          "word": "model.",
+          "start": 220.58,
+          "end": 221.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "You",
+          "start": 221.36,
+          "end": 221.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 221.72,
+          "end": 221.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "select",
+          "start": 221.88,
+          "end": 222.18,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 222.18,
+          "end": 222.34,
+          "probability": 0.998
+        },
+        {
+          "word": "different",
+          "start": 222.34,
+          "end": 222.56,
+          "probability": 0.998
+        },
+        {
+          "word": "term",
+          "start": 222.56,
+          "end": 222.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 222.88,
+          "end": 223.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 223.12,
+          "end": 223.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "coverage,",
+          "start": 223.22,
+          "end": 223.68,
+          "probability": 0.9839
+        },
+        {
+          "word": "for",
+          "start": 223.9,
+          "end": 224.16,
+          "probability": 0.938
+        },
+        {
+          "word": "example,",
+          "start": 224.16,
+          "end": 224.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 224.86,
+          "end": 225.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "Auto",
+          "start": 225.08,
+          "end": 225.28,
+          "probability": 0.3203
+        },
+        {
+          "word": "Liability",
+          "start": 225.28,
+          "end": 225.86,
+          "probability": 0.9438
+        },
+        {
+          "word": "Package.",
+          "start": 225.86,
+          "end": 226.4,
+          "probability": 0.7905
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 226.4,
+      "end": 254.7,
+      "start_formatted": "00:03:46.400",
+      "end_formatted": "00:04:14.700",
+      "text": "Let's add the collision coverage that protects the selected vehicle. Go to the Additional Coverages tab. Add the Rental Car Loss of Use coverage. Go to the Exclusions and Conditions tab. An exclusion defines a risk that is explicitly not protected. A condition is policy provision that defines required behaviors for the carrier and insured. Click Add Exclusion or Condition. Click Search.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 226.4,
+          "end": 227.16,
+          "probability": 0.9692
+        },
+        {
+          "word": "add",
+          "start": 227.16,
+          "end": 227.32,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 227.32,
+          "end": 227.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "collision",
+          "start": 227.44,
+          "end": 227.78,
+          "probability": 0.9263
+        },
+        {
+          "word": "coverage",
+          "start": 227.78,
+          "end": 228.18,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 228.18,
+          "end": 228.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "protects",
+          "start": 228.46,
+          "end": 228.96,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 228.96,
+          "end": 229.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "selected",
+          "start": 229.18,
+          "end": 229.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "vehicle.",
+          "start": 229.58,
+          "end": 230.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Go",
+          "start": 230.52,
+          "end": 231.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 231.02,
+          "end": 231.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 231.18,
+          "end": 231.3,
+          "probability": 0.998
+        },
+        {
+          "word": "Additional",
+          "start": 231.3,
+          "end": 231.64,
+          "probability": 0.6978
+        },
+        {
+          "word": "Coverages",
+          "start": 231.64,
+          "end": 232.26,
+          "probability": 0.7227
+        },
+        {
+          "word": "tab.",
+          "start": 232.26,
+          "end": 232.54,
+          "probability": 0.9873
+        },
+        {
+          "word": "Add",
+          "start": 234.42,
+          "end": 235.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 235.1,
+          "end": 235.24,
+          "probability": 0.999
+        },
+        {
+          "word": "Rental",
+          "start": 235.24,
+          "end": 235.5,
+          "probability": 0.7842
+        },
+        {
+          "word": "Car",
+          "start": 235.5,
+          "end": 235.74,
+          "probability": 0.7671
+        },
+        {
+          "word": "Loss",
+          "start": 235.74,
+          "end": 236.08,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 236.08,
+          "end": 236.2,
+          "probability": 0.877
+        },
+        {
+          "word": "Use",
+          "start": 236.2,
+          "end": 236.44,
+          "probability": 0.9785
+        },
+        {
+          "word": "coverage.",
+          "start": 236.44,
+          "end": 236.84,
+          "probability": 0.832
+        },
+        {
+          "word": "Go",
+          "start": 238.5,
+          "end": 239.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 239.18,
+          "end": 239.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 239.32,
+          "end": 239.44,
+          "probability": 0.999
+        },
+        {
+          "word": "Exclusions",
+          "start": 239.44,
+          "end": 240.06,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 240.06,
+          "end": 240.2,
+          "probability": 0.854
+        },
+        {
+          "word": "Conditions",
+          "start": 240.2,
+          "end": 240.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "tab.",
+          "start": 240.74,
+          "end": 241.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "An",
+          "start": 242.52,
+          "end": 243.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "exclusion",
+          "start": 243.2,
+          "end": 243.62,
+          "probability": 0.978
+        },
+        {
+          "word": "defines",
+          "start": 243.62,
+          "end": 243.96,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 243.96,
+          "end": 244.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "risk",
+          "start": 244.28,
+          "end": 244.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 244.5,
+          "end": 244.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 244.66,
+          "end": 244.78,
+          "probability": 0.999
+        },
+        {
+          "word": "explicitly",
+          "start": 244.78,
+          "end": 245.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 245.3,
+          "end": 245.62,
+          "probability": 0.999
+        },
+        {
+          "word": "protected.",
+          "start": 245.62,
+          "end": 246.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "A",
+          "start": 246.44,
+          "end": 246.8,
+          "probability": 0.998
+        },
+        {
+          "word": "condition",
+          "start": 246.8,
+          "end": 247.14,
+          "probability": 0.9858
+        },
+        {
+          "word": "is",
+          "start": 247.14,
+          "end": 247.36,
+          "probability": 0.9688
+        },
+        {
+          "word": "policy",
+          "start": 247.36,
+          "end": 247.76,
+          "probability": 0.8823
+        },
+        {
+          "word": "provision",
+          "start": 247.76,
+          "end": 248.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "that",
+          "start": 248.24,
+          "end": 248.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "defines",
+          "start": 248.42,
+          "end": 248.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "required",
+          "start": 248.84,
+          "end": 249.34,
+          "probability": 0.998
+        },
+        {
+          "word": "behaviors",
+          "start": 249.34,
+          "end": 249.82,
+          "probability": 0.978
+        },
+        {
+          "word": "for",
+          "start": 249.82,
+          "end": 250.08,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 250.08,
+          "end": 250.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "carrier",
+          "start": 250.18,
+          "end": 250.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 250.52,
+          "end": 250.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "insured.",
+          "start": 250.68,
+          "end": 251.2,
+          "probability": 0.9883
+        },
+        {
+          "word": "Click",
+          "start": 251.48,
+          "end": 251.96,
+          "probability": 0.998
+        },
+        {
+          "word": "Add",
+          "start": 251.96,
+          "end": 252.14,
+          "probability": 0.9683
+        },
+        {
+          "word": "Exclusion",
+          "start": 252.14,
+          "end": 252.68,
+          "probability": 0.9668
+        },
+        {
+          "word": "or",
+          "start": 252.68,
+          "end": 252.82,
+          "probability": 0.998
+        },
+        {
+          "word": "Condition.",
+          "start": 252.82,
+          "end": 253.32,
+          "probability": 0.9927
+        },
+        {
+          "word": "Click",
+          "start": 253.74,
+          "end": 254.36,
+          "probability": 0.999
+        },
+        {
+          "word": "Search.",
+          "start": 254.36,
+          "end": 254.7,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 257.56,
+      "end": 267.94,
+      "start_formatted": "00:04:17.560",
+      "end_formatted": "00:04:27.940",
+      "text": "Select Exclude Custom Equipment. Click Add Selected Exclusions and Conditions. Click Next to the Risk Analysis screen.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 257.56,
+          "end": 258.48,
+          "probability": 0.9038
+        },
+        {
+          "word": "Exclude",
+          "start": 258.48,
+          "end": 258.94,
+          "probability": 0.7803
+        },
+        {
+          "word": "Custom",
+          "start": 258.94,
+          "end": 259.24,
+          "probability": 0.7598
+        },
+        {
+          "word": "Equipment.",
+          "start": 259.24,
+          "end": 259.86,
+          "probability": 0.9829
+        },
+        {
+          "word": "Click",
+          "start": 261.42,
+          "end": 262.34,
+          "probability": 0.9927
+        },
+        {
+          "word": "Add",
+          "start": 262.34,
+          "end": 262.54,
+          "probability": 0.8887
+        },
+        {
+          "word": "Selected",
+          "start": 262.54,
+          "end": 263.06,
+          "probability": 0.915
+        },
+        {
+          "word": "Exclusions",
+          "start": 263.06,
+          "end": 263.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 263.64,
+          "end": 263.78,
+          "probability": 0.8652
+        },
+        {
+          "word": "Conditions.",
+          "start": 263.78,
+          "end": 264.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "Click",
+          "start": 265.42,
+          "end": 266.34,
+          "probability": 0.9912
+        },
+        {
+          "word": "Next",
+          "start": 266.34,
+          "end": 266.56,
+          "probability": 0.5659
+        },
+        {
+          "word": "to",
+          "start": 266.56,
+          "end": 266.7,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 266.7,
+          "end": 266.8,
+          "probability": 0.999
+        },
+        {
+          "word": "Risk",
+          "start": 266.8,
+          "end": 267.04,
+          "probability": 0.9766
+        },
+        {
+          "word": "Analysis",
+          "start": 267.04,
+          "end": 267.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "screen.",
+          "start": 267.5,
+          "end": 267.94,
+          "probability": 0.9473
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 269.7,
+      "end": 287.02,
+      "start_formatted": "00:04:29.700",
+      "end_formatted": "00:04:47.020",
+      "text": "The Underwriter Issues tab is where any underwriting issues that might affect quote and binding of the submission can be viewed, approved, or rejected. You can manage any contingencies, prior policies, claims, losses, etc. on these tabs. Click Next to go to the Policy Review screen.",
+      "words": [
+        {
+          "word": "The",
+          "start": 269.7,
+          "end": 270.34,
+          "probability": 0.9395
+        },
+        {
+          "word": "Underwriter",
+          "start": 270.34,
+          "end": 270.86,
+          "probability": 0.8838
+        },
+        {
+          "word": "Issues",
+          "start": 270.86,
+          "end": 271.26,
+          "probability": 0.9795
+        },
+        {
+          "word": "tab",
+          "start": 271.26,
+          "end": 271.48,
+          "probability": 0.938
+        },
+        {
+          "word": "is",
+          "start": 271.48,
+          "end": 271.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "where",
+          "start": 271.68,
+          "end": 271.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "any",
+          "start": 271.88,
+          "end": 272.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "underwriting",
+          "start": 272.06,
+          "end": 272.6,
+          "probability": 0.9888
+        },
+        {
+          "word": "issues",
+          "start": 272.6,
+          "end": 272.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 272.98,
+          "end": 273.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "might",
+          "start": 273.2,
+          "end": 273.36,
+          "probability": 0.999
+        },
+        {
+          "word": "affect",
+          "start": 273.36,
+          "end": 273.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "quote",
+          "start": 273.66,
+          "end": 273.92,
+          "probability": 0.9497
+        },
+        {
+          "word": "and",
+          "start": 273.92,
+          "end": 274.1,
+          "probability": 0.9282
+        },
+        {
+          "word": "binding",
+          "start": 274.1,
+          "end": 274.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 274.42,
+          "end": 274.58,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 274.58,
+          "end": 274.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "submission",
+          "start": 274.7,
+          "end": 275.08,
+          "probability": 0.9932
+        },
+        {
+          "word": "can",
+          "start": 275.08,
+          "end": 275.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "be",
+          "start": 275.32,
+          "end": 275.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "viewed,",
+          "start": 275.46,
+          "end": 275.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "approved,",
+          "start": 276.12,
+          "end": 276.62,
+          "probability": 0.999
+        },
+        {
+          "word": "or",
+          "start": 276.82,
+          "end": 277.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "rejected.",
+          "start": 277.02,
+          "end": 277.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "You",
+          "start": 277.8,
+          "end": 278.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "can",
+          "start": 278.12,
+          "end": 278.28,
+          "probability": 1.0
+        },
+        {
+          "word": "manage",
+          "start": 278.28,
+          "end": 278.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "any",
+          "start": 278.6,
+          "end": 278.8,
+          "probability": 0.999
+        },
+        {
+          "word": "contingencies,",
+          "start": 278.8,
+          "end": 279.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "prior",
+          "start": 279.62,
+          "end": 280.2,
+          "probability": 0.9878
+        },
+        {
+          "word": "policies,",
+          "start": 280.2,
+          "end": 280.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "claims,",
+          "start": 281.02,
+          "end": 281.54,
+          "probability": 0.998
+        },
+        {
+          "word": "losses,",
+          "start": 281.84,
+          "end": 282.4,
+          "probability": 0.998
+        },
+        {
+          "word": "etc.",
+          "start": 282.74,
+          "end": 283.08,
+          "probability": 0.9746
+        },
+        {
+          "word": "on",
+          "start": 283.48,
+          "end": 283.66,
+          "probability": 0.978
+        },
+        {
+          "word": "these",
+          "start": 283.66,
+          "end": 283.84,
+          "probability": 0.999
+        },
+        {
+          "word": "tabs.",
+          "start": 283.84,
+          "end": 284.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "Click",
+          "start": 284.54,
+          "end": 285.02,
+          "probability": 0.9907
+        },
+        {
+          "word": "Next",
+          "start": 285.02,
+          "end": 285.22,
+          "probability": 0.7271
+        },
+        {
+          "word": "to",
+          "start": 285.22,
+          "end": 285.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "go",
+          "start": 285.4,
+          "end": 285.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 285.52,
+          "end": 285.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 285.64,
+          "end": 285.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "Policy",
+          "start": 285.74,
+          "end": 286.18,
+          "probability": 0.8618
+        },
+        {
+          "word": "Review",
+          "start": 286.18,
+          "end": 286.58,
+          "probability": 0.9863
+        },
+        {
+          "word": "screen.",
+          "start": 286.58,
+          "end": 287.02,
+          "probability": 0.8237
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 288.36,
+      "end": 309.42,
+      "start_formatted": "00:04:48.360",
+      "end_formatted": "00:05:09.420",
+      "text": "After reviewing all the policy data for this submission, click the Quote button. The Quote screen displays the total cost for the submission on a read-only Quote screen. It displays the breakdown of the premiums by vehicle at the bottom. Click Next to the Forms link on the left. The Forms screen displays the forms that will be included in the policy contract. Click the Payment link.",
+      "words": [
+        {
+          "word": "After",
+          "start": 288.36,
+          "end": 288.92,
+          "probability": 0.7935
+        },
+        {
+          "word": "reviewing",
+          "start": 288.92,
+          "end": 289.34,
+          "probability": 0.9956
+        },
+        {
+          "word": "all",
+          "start": 289.34,
+          "end": 289.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 289.56,
+          "end": 289.7,
+          "probability": 0.9922
+        },
+        {
+          "word": "policy",
+          "start": 289.7,
+          "end": 290.08,
+          "probability": 0.9717
+        },
+        {
+          "word": "data",
+          "start": 290.08,
+          "end": 290.38,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 290.38,
+          "end": 290.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 290.58,
+          "end": 290.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "submission,",
+          "start": 290.76,
+          "end": 291.2,
+          "probability": 0.9912
+        },
+        {
+          "word": "click",
+          "start": 291.48,
+          "end": 291.78,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 291.78,
+          "end": 291.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Quote",
+          "start": 291.94,
+          "end": 292.16,
+          "probability": 0.6187
+        },
+        {
+          "word": "button.",
+          "start": 292.16,
+          "end": 292.46,
+          "probability": 0.9751
+        },
+        {
+          "word": "The",
+          "start": 293.0,
+          "end": 293.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "Quote",
+          "start": 293.56,
+          "end": 293.82,
+          "probability": 0.8931
+        },
+        {
+          "word": "screen",
+          "start": 293.82,
+          "end": 294.06,
+          "probability": 0.9219
+        },
+        {
+          "word": "displays",
+          "start": 294.06,
+          "end": 294.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 294.46,
+          "end": 294.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "total",
+          "start": 294.7,
+          "end": 294.94,
+          "probability": 0.9873
+        },
+        {
+          "word": "cost",
+          "start": 294.94,
+          "end": 295.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 295.28,
+          "end": 295.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 295.48,
+          "end": 295.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "submission",
+          "start": 295.6,
+          "end": 295.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "on",
+          "start": 295.96,
+          "end": 296.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 296.16,
+          "end": 296.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "read",
+          "start": 296.26,
+          "end": 296.48,
+          "probability": 0.647
+        },
+        {
+          "word": "-only",
+          "start": 296.48,
+          "end": 296.72,
+          "probability": 0.9624
+        },
+        {
+          "word": "Quote",
+          "start": 296.72,
+          "end": 297.02,
+          "probability": 0.7837
+        },
+        {
+          "word": "screen.",
+          "start": 297.02,
+          "end": 297.34,
+          "probability": 0.9648
+        },
+        {
+          "word": "It",
+          "start": 297.76,
+          "end": 298.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "displays",
+          "start": 298.08,
+          "end": 298.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 298.5,
+          "end": 298.74,
+          "probability": 0.999
+        },
+        {
+          "word": "breakdown",
+          "start": 298.74,
+          "end": 299.06,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 299.06,
+          "end": 299.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 299.32,
+          "end": 299.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "premiums",
+          "start": 299.42,
+          "end": 299.98,
+          "probability": 0.9263
+        },
+        {
+          "word": "by",
+          "start": 299.98,
+          "end": 300.12,
+          "probability": 0.9766
+        },
+        {
+          "word": "vehicle",
+          "start": 300.12,
+          "end": 300.5,
+          "probability": 0.9873
+        },
+        {
+          "word": "at",
+          "start": 300.5,
+          "end": 300.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 300.68,
+          "end": 300.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "bottom.",
+          "start": 300.76,
+          "end": 301.04,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 301.48,
+          "end": 301.86,
+          "probability": 0.9897
+        },
+        {
+          "word": "Next",
+          "start": 301.86,
+          "end": 302.08,
+          "probability": 0.7681
+        },
+        {
+          "word": "to",
+          "start": 302.08,
+          "end": 302.24,
+          "probability": 0.0323
+        },
+        {
+          "word": "the",
+          "start": 302.24,
+          "end": 302.38,
+          "probability": 0.9536
+        },
+        {
+          "word": "Forms",
+          "start": 302.38,
+          "end": 302.76,
+          "probability": 0.9316
+        },
+        {
+          "word": "link",
+          "start": 302.76,
+          "end": 302.96,
+          "probability": 0.9531
+        },
+        {
+          "word": "on",
+          "start": 302.96,
+          "end": 303.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 303.14,
+          "end": 303.22,
+          "probability": 0.999
+        },
+        {
+          "word": "left.",
+          "start": 303.22,
+          "end": 303.5,
+          "probability": 0.9824
+        },
+        {
+          "word": "The",
+          "start": 303.94,
+          "end": 304.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "Forms",
+          "start": 304.48,
+          "end": 304.88,
+          "probability": 0.8994
+        },
+        {
+          "word": "screen",
+          "start": 304.88,
+          "end": 305.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "displays",
+          "start": 305.06,
+          "end": 305.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 305.4,
+          "end": 305.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "forms",
+          "start": 305.66,
+          "end": 305.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "that",
+          "start": 305.94,
+          "end": 306.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 306.14,
+          "end": 306.26,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 306.26,
+          "end": 306.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "included",
+          "start": 306.38,
+          "end": 306.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 306.76,
+          "end": 306.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 306.92,
+          "end": 307.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 307.02,
+          "end": 307.4,
+          "probability": 0.9102
+        },
+        {
+          "word": "contract.",
+          "start": 307.4,
+          "end": 307.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "Click",
+          "start": 308.3,
+          "end": 308.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 308.7,
+          "end": 308.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "Payment",
+          "start": 308.86,
+          "end": 309.2,
+          "probability": 0.958
+        },
+        {
+          "word": "link.",
+          "start": 309.2,
+          "end": 309.42,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 311.42,
+      "end": 335.22,
+      "start_formatted": "00:05:11.420",
+      "end_formatted": "00:05:35.220",
+      "text": "The Payment screen appears after quoting, but before issuing the policy. This is where the desired billing and payment methods retrieved from the billing system are selected. Let's take a look at the buttons for the submission. At any point, you can save the policy data by clicking Save Draft, create a new version of the policy, or close the submission by selecting one of the options, Withdraw Transaction, Decline, or Not Taken.",
+      "words": [
+        {
+          "word": "The",
+          "start": 311.42,
+          "end": 311.96,
+          "probability": 0.8774
+        },
+        {
+          "word": "Payment",
+          "start": 311.96,
+          "end": 312.34,
+          "probability": 0.6265
+        },
+        {
+          "word": "screen",
+          "start": 312.34,
+          "end": 312.56,
+          "probability": 0.8647
+        },
+        {
+          "word": "appears",
+          "start": 312.56,
+          "end": 313.0,
+          "probability": 0.998
+        },
+        {
+          "word": "after",
+          "start": 313.0,
+          "end": 313.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "quoting,",
+          "start": 313.32,
+          "end": 313.72,
+          "probability": 0.9321
+        },
+        {
+          "word": "but",
+          "start": 313.94,
+          "end": 314.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "before",
+          "start": 314.26,
+          "end": 314.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "issuing",
+          "start": 314.6,
+          "end": 314.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 314.94,
+          "end": 315.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy.",
+          "start": 315.16,
+          "end": 315.54,
+          "probability": 0.9512
+        },
+        {
+          "word": "This",
+          "start": 315.96,
+          "end": 316.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 316.28,
+          "end": 316.42,
+          "probability": 0.999
+        },
+        {
+          "word": "where",
+          "start": 316.42,
+          "end": 316.56,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 316.56,
+          "end": 316.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "desired",
+          "start": 316.7,
+          "end": 317.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "billing",
+          "start": 317.06,
+          "end": 317.34,
+          "probability": 0.9849
+        },
+        {
+          "word": "and",
+          "start": 317.34,
+          "end": 317.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "payment",
+          "start": 317.54,
+          "end": 317.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "methods",
+          "start": 317.86,
+          "end": 318.24,
+          "probability": 0.999
+        },
+        {
+          "word": "retrieved",
+          "start": 318.24,
+          "end": 318.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 318.72,
+          "end": 318.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 318.88,
+          "end": 318.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "billing",
+          "start": 318.98,
+          "end": 319.2,
+          "probability": 0.9492
+        },
+        {
+          "word": "system",
+          "start": 319.2,
+          "end": 319.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 319.6,
+          "end": 319.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "selected.",
+          "start": 319.78,
+          "end": 320.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "Let's",
+          "start": 320.54,
+          "end": 321.02,
+          "probability": 0.9902
+        },
+        {
+          "word": "take",
+          "start": 321.02,
+          "end": 321.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 321.2,
+          "end": 321.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "look",
+          "start": 321.34,
+          "end": 321.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 321.46,
+          "end": 321.62,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 321.62,
+          "end": 321.72,
+          "probability": 0.999
+        },
+        {
+          "word": "buttons",
+          "start": 321.72,
+          "end": 322.0,
+          "probability": 0.9917
+        },
+        {
+          "word": "for",
+          "start": 322.0,
+          "end": 322.22,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 322.22,
+          "end": 322.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "submission.",
+          "start": 322.3,
+          "end": 322.7,
+          "probability": 0.9297
+        },
+        {
+          "word": "At",
+          "start": 323.14,
+          "end": 323.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "any",
+          "start": 323.52,
+          "end": 323.7,
+          "probability": 0.999
+        },
+        {
+          "word": "point,",
+          "start": 323.7,
+          "end": 324.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "you",
+          "start": 324.24,
+          "end": 324.46,
+          "probability": 0.9937
+        },
+        {
+          "word": "can",
+          "start": 324.46,
+          "end": 324.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "save",
+          "start": 324.6,
+          "end": 324.86,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 324.86,
+          "end": 325.0,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 325.0,
+          "end": 325.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "data",
+          "start": 325.42,
+          "end": 325.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 325.72,
+          "end": 325.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "clicking",
+          "start": 325.94,
+          "end": 326.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "Save",
+          "start": 326.26,
+          "end": 326.56,
+          "probability": 0.7065
+        },
+        {
+          "word": "Draft,",
+          "start": 326.56,
+          "end": 327.02,
+          "probability": 0.9346
+        },
+        {
+          "word": "create",
+          "start": 327.22,
+          "end": 327.68,
+          "probability": 0.875
+        },
+        {
+          "word": "a",
+          "start": 327.68,
+          "end": 327.8,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 327.8,
+          "end": 327.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "version",
+          "start": 327.94,
+          "end": 328.3,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 328.3,
+          "end": 328.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 328.46,
+          "end": 328.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy,",
+          "start": 328.56,
+          "end": 329.02,
+          "probability": 0.9917
+        },
+        {
+          "word": "or",
+          "start": 329.22,
+          "end": 329.46,
+          "probability": 0.999
+        },
+        {
+          "word": "close",
+          "start": 329.46,
+          "end": 329.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 329.76,
+          "end": 329.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "submission",
+          "start": 329.92,
+          "end": 330.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "by",
+          "start": 330.28,
+          "end": 330.54,
+          "probability": 0.998
+        },
+        {
+          "word": "selecting",
+          "start": 330.54,
+          "end": 330.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 330.98,
+          "end": 331.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 331.22,
+          "end": 331.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 331.32,
+          "end": 331.44,
+          "probability": 0.999
+        },
+        {
+          "word": "options,",
+          "start": 331.44,
+          "end": 331.9,
+          "probability": 0.999
+        },
+        {
+          "word": "Withdraw",
+          "start": 332.12,
+          "end": 332.6,
+          "probability": 0.8955
+        },
+        {
+          "word": "Transaction,",
+          "start": 332.6,
+          "end": 333.38,
+          "probability": 0.9531
+        },
+        {
+          "word": "Decline,",
+          "start": 333.58,
+          "end": 334.2,
+          "probability": 0.9863
+        },
+        {
+          "word": "or",
+          "start": 334.34,
+          "end": 334.6,
+          "probability": 0.9805
+        },
+        {
+          "word": "Not",
+          "start": 334.6,
+          "end": 334.76,
+          "probability": 0.9878
+        },
+        {
+          "word": "Taken.",
+          "start": 334.76,
+          "end": 335.22,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 335.88,
+      "end": 359.16,
+      "start_formatted": "00:05:35.880",
+      "end_formatted": "00:05:59.160",
+      "text": "You can do several things after quoting, including editing, binding or issuing the policy. Click Bind Options. There are two bind options. Bind only will bind the policy without issuing it. For example, the insurer needs additional documents before the policy can be issued. Let's select Issue Policy, which binds the policy first and then issues it immediately. Click OK to continue.",
+      "words": [
+        {
+          "word": "You",
+          "start": 335.88,
+          "end": 336.52,
+          "probability": 0.9756
+        },
+        {
+          "word": "can",
+          "start": 336.52,
+          "end": 336.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "do",
+          "start": 336.68,
+          "end": 336.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "several",
+          "start": 336.82,
+          "end": 337.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "things",
+          "start": 337.12,
+          "end": 337.42,
+          "probability": 0.999
+        },
+        {
+          "word": "after",
+          "start": 337.42,
+          "end": 337.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "quoting,",
+          "start": 337.72,
+          "end": 338.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "including",
+          "start": 338.38,
+          "end": 338.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "editing,",
+          "start": 338.86,
+          "end": 339.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "binding",
+          "start": 339.6,
+          "end": 339.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 339.94,
+          "end": 340.18,
+          "probability": 0.9434
+        },
+        {
+          "word": "issuing",
+          "start": 340.18,
+          "end": 340.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 340.48,
+          "end": 340.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy.",
+          "start": 340.66,
+          "end": 341.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "Click",
+          "start": 341.42,
+          "end": 341.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "Bind",
+          "start": 341.86,
+          "end": 342.18,
+          "probability": 0.8525
+        },
+        {
+          "word": "Options.",
+          "start": 342.18,
+          "end": 342.6,
+          "probability": 0.8857
+        },
+        {
+          "word": "There",
+          "start": 343.08,
+          "end": 343.58,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 343.58,
+          "end": 343.72,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 343.72,
+          "end": 343.9,
+          "probability": 0.9551
+        },
+        {
+          "word": "bind",
+          "start": 343.9,
+          "end": 344.18,
+          "probability": 0.9185
+        },
+        {
+          "word": "options.",
+          "start": 344.18,
+          "end": 344.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "Bind",
+          "start": 345.08,
+          "end": 345.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "only",
+          "start": 345.58,
+          "end": 345.78,
+          "probability": 0.4832
+        },
+        {
+          "word": "will",
+          "start": 345.78,
+          "end": 345.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "bind",
+          "start": 345.98,
+          "end": 346.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 346.24,
+          "end": 346.38,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 346.38,
+          "end": 346.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "without",
+          "start": 346.78,
+          "end": 347.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "issuing",
+          "start": 347.06,
+          "end": 347.46,
+          "probability": 1.0
+        },
+        {
+          "word": "it.",
+          "start": 347.46,
+          "end": 347.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 347.96,
+          "end": 348.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 348.28,
+          "end": 348.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 349.02,
+          "end": 349.2,
+          "probability": 0.998
+        },
+        {
+          "word": "insurer",
+          "start": 349.2,
+          "end": 349.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "needs",
+          "start": 349.6,
+          "end": 349.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "additional",
+          "start": 349.86,
+          "end": 350.22,
+          "probability": 1.0
+        },
+        {
+          "word": "documents",
+          "start": 350.22,
+          "end": 350.78,
+          "probability": 1.0
+        },
+        {
+          "word": "before",
+          "start": 350.78,
+          "end": 351.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 351.1,
+          "end": 351.3,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 351.3,
+          "end": 351.68,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 351.68,
+          "end": 351.88,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 351.88,
+          "end": 352.0,
+          "probability": 1.0
+        },
+        {
+          "word": "issued.",
+          "start": 352.0,
+          "end": 352.28,
+          "probability": 1.0
+        },
+        {
+          "word": "Let's",
+          "start": 352.6,
+          "end": 353.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "select",
+          "start": 353.1,
+          "end": 353.32,
+          "probability": 0.998
+        },
+        {
+          "word": "Issue",
+          "start": 353.32,
+          "end": 353.64,
+          "probability": 0.98
+        },
+        {
+          "word": "Policy,",
+          "start": 353.64,
+          "end": 354.06,
+          "probability": 0.9067
+        },
+        {
+          "word": "which",
+          "start": 354.32,
+          "end": 354.6,
+          "probability": 1.0
+        },
+        {
+          "word": "binds",
+          "start": 354.6,
+          "end": 354.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 354.88,
+          "end": 355.1,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 355.1,
+          "end": 355.5,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 355.5,
+          "end": 355.82,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 355.82,
+          "end": 356.0,
+          "probability": 1.0
+        },
+        {
+          "word": "then",
+          "start": 356.0,
+          "end": 356.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "issues",
+          "start": 356.14,
+          "end": 356.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 356.42,
+          "end": 356.6,
+          "probability": 1.0
+        },
+        {
+          "word": "immediately.",
+          "start": 356.6,
+          "end": 357.06,
+          "probability": 1.0
+        },
+        {
+          "word": "Click",
+          "start": 357.6,
+          "end": 358.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "OK",
+          "start": 358.2,
+          "end": 358.46,
+          "probability": 0.9819
+        },
+        {
+          "word": "to",
+          "start": 358.46,
+          "end": 358.74,
+          "probability": 1.0
+        },
+        {
+          "word": "continue.",
+          "start": 358.74,
+          "end": 359.16,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 361.54,
+      "end": 369.36,
+      "start_formatted": "00:06:01.540",
+      "end_formatted": "00:06:09.360",
+      "text": "Now you have successfully created a personal auto policy. A confirmation can be seen with several quick links for you to navigate to the next desired scenario.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 361.54,
+          "end": 362.04,
+          "probability": 0.4971
+        },
+        {
+          "word": "you",
+          "start": 362.04,
+          "end": 362.24,
+          "probability": 0.9399
+        },
+        {
+          "word": "have",
+          "start": 362.24,
+          "end": 362.4,
+          "probability": 0.9907
+        },
+        {
+          "word": "successfully",
+          "start": 362.4,
+          "end": 362.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "created",
+          "start": 362.98,
+          "end": 363.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 363.4,
+          "end": 363.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "personal",
+          "start": 363.58,
+          "end": 363.9,
+          "probability": 0.7983
+        },
+        {
+          "word": "auto",
+          "start": 363.9,
+          "end": 364.14,
+          "probability": 0.896
+        },
+        {
+          "word": "policy.",
+          "start": 364.14,
+          "end": 364.68,
+          "probability": 0.978
+        },
+        {
+          "word": "A",
+          "start": 365.0,
+          "end": 365.36,
+          "probability": 0.9883
+        },
+        {
+          "word": "confirmation",
+          "start": 365.36,
+          "end": 365.8,
+          "probability": 0.9883
+        },
+        {
+          "word": "can",
+          "start": 365.8,
+          "end": 366.2,
+          "probability": 0.9946
+        },
+        {
+          "word": "be",
+          "start": 366.2,
+          "end": 366.34,
+          "probability": 0.999
+        },
+        {
+          "word": "seen",
+          "start": 366.34,
+          "end": 366.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 366.58,
+          "end": 366.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "several",
+          "start": 366.74,
+          "end": 367.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "quick",
+          "start": 367.0,
+          "end": 367.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "links",
+          "start": 367.28,
+          "end": 367.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 367.6,
+          "end": 367.78,
+          "probability": 0.9917
+        },
+        {
+          "word": "you",
+          "start": 367.78,
+          "end": 367.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 367.88,
+          "end": 368.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "navigate",
+          "start": 368.0,
+          "end": 368.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 368.34,
+          "end": 368.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 368.56,
+          "end": 368.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "next",
+          "start": 368.66,
+          "end": 368.84,
+          "probability": 0.9854
+        },
+        {
+          "word": "desired",
+          "start": 368.84,
+          "end": 369.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "scenario.",
+          "start": 369.24,
+          "end": 369.36,
+          "probability": 0.0745
+        }
+      ]
+    }
+  ]
+}

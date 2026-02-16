@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-04",
+    "slide_count": 27,
+    "slides_with_text": 27,
+    "total_words": 1252,
+    "avg_confidence": 88.07,
+    "processing_time_seconds": 14.05,
+    "extracted_at": "2026-02-13T12:03:49.247109"
+  },
+  "full_text": "Product Model Introduction\n\nLesson\nobjectives\n\n¢ Describe the purpose of a product model\n\n* Explain where coverages and availability fit\ninto the product model\n\n¢ Describe the Product Designer used to\nupdate the product model\n\n¢ Describe the Guidewire Advanced Product\nDesigner (APD) used to create a new product\nquickly\n\n| Learner story — product model Gi\n\nDarren\nInsurance\nProduct Manager\n\n| need to know how to build our products quickly\nusing PolicyCenter to ensure speed to market.\nHow are products organized in PolicyCenter?\n\n| Learner story — product model Gi\n\nMarcus\nBusiness\nAnalyst\n\nWhat types of policy information can | specify in\nmy business requirements for the product model?\n\n| The product model Gi\n\n¢ The product model is the “backbone” of PolicyCenter\n¢ The product model is where risk is defined through the product's configuration\n\n¢ Business logic, underwriting rules, forms, and rating are configured after you\nconfigure the product model\n\n¢ PolicyCenter comes with several lines of business, provided as reference examples\n\n| Examples of policy file information Ga\n\n¢« Whatlines of « Whatcoveragescan  ¢ Whatare the\nbusiness (LOB) are you add for each coverage terms?\navailable for a product LOB? (Limits or deductibles)\n\n= lig\n\nPersonal auto Collision\nBtinaeyuy | Deductible:$500\n\nn Limit: $2000\n\nBusiness owners Bodily injury\n\n| Base configuration templates Gi\n\n¢ Lines of business:\n\n. Product Name Product Description S Status +\nBusinessowners, Commercial Businessowners Business Owners Available\nAuto, Commercial Property, Commercial Auto Commercial Auto Available\nGeneral Liability, Homeowners, Commercial Package © CommercialPackage Available\nInland Marine, Workers: ; ; .\n\n. Commercial Property | Commercial Property _—_ Available\nCompensation and Personal Auto i a ;\n\nGeneral Liability General Liability Available\n\n¢ Product examples: Commercial Homeowners Homeowners Available\n\nPackage, Commercial Property Inland Marine Inland Marine Available\n\nWorkers' Compensation Workers' Compensation Available\n\nPersonal Auto Personal Auto Available\n\n| Product details\n\n« As you move through a\nsubmission, specifics\nabout the product are\nseen\n\n¢ These specifics are\nwhat you configure in\nthe product model\n\nGi\n\n[Fi submission (Draft) fay Homeowners Eff. 09/19/2018 RayNewton Account # C000143542\n\nQualification\n\nPolicy Type * | Dwelling 4\nCoverage Form * [<none> ¥\nHOP Pre-Qualification Ho2\nee Ho3\n}o you have a dog? Hos\nIs this property vacant? Yes (@)No\nWho occupies this dwelling? | <none>  ¥\n\nDoyou havea swimming pool? (©) Yes (@) No\n\n| Rating-relevant information in the product model Gi\n\nYou can also include information about modifiers and auditing timelines\n\nWhen can you\n\nInclude modifiers such as multi-\naudit the policy?\n\ncar discounts or schedule credits\n\n2\n[\"**} [ode ,\n\nBodily injury\n\n| Learner story - coverages\n\n{\nDarren\nInsurance\nProduct Manager\n\ni\n\nWhere are the coverages? We think in terms of\nforms that make up coverages.\n\n| Learner story - coverages\n\nMarcus\nBusiness\nAnalyst\n\nIf | want to write a requirement for a specific\ncoverage, how would | do it?\nHow does PolicyCenter set up coverages?\n\n| The product model Gi\n\nQuestion Sets\n\nPolicy Line\n\nModifiers\n\n“Clauses” are\ncoverages,\nexclusions,\n\nreece conditions\n* Availability #00seneceecennenecenenensenne\n\nProduct model with examples\n\nAvailability\n\nPolicy Line\n\nExclusions Conditions Coverage\n\nerrr PerreriTe\n\notk ”\nClauses” are\n\ncoverages,\now exclusions,\nPee conditions\n\n* Availability\n\nProduct Description = Status 7\n\nProduct Name >\n\nBusinessowners Business Owners Available\n‘Commercial Auto Commercial Auto Available\nCommercial Package Commercial Package Available\nCommercial Property Commercial Property Available\nGeneral Liability General Liability Available\nHomeowners Homeowners Available\nInland Marine Inland Marine Available\n\nWorkers' Compensation Workers’ Compensation Available\n\nPersonal Auto Available\n\nAdditional Coverages | Exclusions and Cor\n\nCoverages tions\n\nCoverages applied to all vehicles in California\n\nGiabitity - Bodily injury and Property Damage\nfemenes Ee]\n\nmedical Payments\n\nMedical Limit * | 5,000\n\n| Availability\n\nClauses” are\ncoverages,\nexclusions,\nconditions\n\nPolicy Line\n\ni\nAvailability means that a\ncomponent either appears or does\nnot appear in the live application\n\nThe availability of a product,\ncoverage, or coverage terms is\nbased on different factors\n\n+ Start and end effective dates\n+ Industry code\n\n+ Underwriting company\n\n+ Policy transaction type\n\n+ Jurisdiction\n\n+ Policy Type\n\n| Learner story — product designer Gi\n\n‘\n\nDarren\nInsurance ‘J\n\ni\n\nProduct Manager ;\nDoes my programming team need to program\n\nall of these details? How do you access the\nproduct model?\n\n| Learner story — product designer\n\nMarci |\nConfiguration Yas\nDeveloper _.\n\nHow can | update or change the product model?\n\n| Product model access Gi\n\n¢ PolicyCenter has a tool called Product Designer which you can use to configure the\nproduct model\n\n« Remember, business logic, underwriting rules, forms and rating are configured after\nthe product model is configured\n\n| Learner story - Advanced Product Designer Gi\n\n| have heard that now there is a\nway to create and launch more\nnew products in less time directly in\nPolicyCenter.\n\nA\nYes. With Guidewire Advanced Configuration ey\nDeveloper\n\nProduct Designer, you will be\nable to automatically generate\ncode for product which formerly\nrequired manual development.\n\n| Learner story - Advanced Product Designer Gi\n\nMarci\nConfiguration &\nDeveloper\n\nIn fact, Advanced Product Designer (APD) is more than\njust a product modeling tool. Using APD, you can define\na new product and auto-generate product artifacts,\nincluding all needed entities and Page Configuration\nFormat (PCF) files to support policy transactions.\n\nWhat is Advanced Product Designer (APD)? Gi\n\nThe APD is a business tool that helps insurers:\n¢ Design insurance product based on business requirements using Xmind\n* Supports subclause relationships\n¢ Simulate policy transactions for that insurance product in PolicyCenter\n¢ Auto-generate the product artifacts for PolicyCenter such as:\n* Entity Model\n« Product Model\n« User Interface components (PCFs)\n¢ Quickly build and launch product to adapt quickly to market needs\n\n¢ Facilitate business-level product discussions with stakeholders\n\nAdvanced Product Designer versus Product Designer Gi\n\n« Add New Products ¢ Add Offerings\n\n« Add New Policy Lines « Add Question Sets\n\n+ Add New Clauses: coverages, ¢ Add Modifiers\ncoverage terms, coverage term ¢ Add code to perform an action when\noptions, conditions, and exclusions a clause is added or removed\n\n¢ Enhance availability\n« Enhance existence\n\n¢ Enhance default values\n\nQuestion\n\n_~ — Explain the purpose of the product model in terms of products, policies\nx and coverages.\n\nSoS oD DD DDS De Say\n\nGi\n\nAnswer Gi\n\n_~ — Explain the purpose of the product model in terms of products, policies\nx and coverages.\n\nThe product model is the model that describes how products and policies, including\ncoverages and coverage terms, are configured in your version of PolicyCenter. The\nbusiness needs of your organization drive the product model.\n\nSop DD DD SDSS oe\n\nQuestion\n\n,~ — Astakeholder insists that the underwriting rules be configured in the\nx product model. Does this request make sense, based on what you have\nlearned in this lesson? Why or why not?\n\nSoS oD DD DDS De Say\n\nGi\n\nAnswer Gi\n\n,~ — Astakeholder insists that the underwriting rules be configured in the\nx product model. Does this request make sense, based on what you have\n: learned in this lesson? Why or why not?\n\nThis request does not make sense because the underwriting rules are not configured\nwithin the product model. Underwriting rules are configured outside of the product\nmodel.\n\nSop DD DD SDSS oe\n\nLesson\n\nobjectives ¢ Describe the purpose of a product model\nreview * Explain where coverages and availability fit\n\ninto the product model\n\n¢ Describe the Product Designer used to\nupdate the product model\n\n¢ Describe the Guidewire Advanced Product\nDesigner (APD) used to create a new product\nquickly\n\n| Student exercise Gi\n\nProduct Model Introduction - Matching exercise",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Product Model Introduction",
+      "word_count": 3,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the purpose of a product model\n\n* Explain where coverages and availability fit\ninto the product model\n\n¢ Describe the Product Designer used to\nupdate the product model\n\n¢ Describe the Guidewire Advanced Product\nDesigner (APD) used to create a new product\nquickly",
+      "word_count": 47,
+      "avg_confidence": 91.09,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Learner story — product model Gi\n\nDarren\nInsurance\nProduct Manager\n\n| need to know how to build our products quickly\nusing PolicyCenter to ensure speed to market.\nHow are products organized in PolicyCenter?",
+      "word_count": 34,
+      "avg_confidence": 93.26,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Learner story — product model Gi\n\nMarcus\nBusiness\nAnalyst\n\nWhat types of policy information can | specify in\nmy business requirements for the product model?",
+      "word_count": 26,
+      "avg_confidence": 92.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| The product model Gi\n\n¢ The product model is the “backbone” of PolicyCenter\n¢ The product model is where risk is defined through the product's configuration\n\n¢ Business logic, underwriting rules, forms, and rating are configured after you\nconfigure the product model\n\n¢ PolicyCenter comes with several lines of business, provided as reference examples",
+      "word_count": 55,
+      "avg_confidence": 89.16,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Examples of policy file information Ga\n\n¢« Whatlines of « Whatcoveragescan  ¢ Whatare the\nbusiness (LOB) are you add for each coverage terms?\navailable for a product LOB? (Limits or deductibles)\n\n= lig\n\nPersonal auto Collision\nBtinaeyuy | Deductible:$500\n\nn Limit: $2000\n\nBusiness owners Bodily injury",
+      "word_count": 47,
+      "avg_confidence": 85.91,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Base configuration templates Gi\n\n¢ Lines of business:\n\n. Product Name Product Description S Status +\nBusinessowners, Commercial Businessowners Business Owners Available\nAuto, Commercial Property, Commercial Auto Commercial Auto Available\nGeneral Liability, Homeowners, Commercial Package © CommercialPackage Available\nInland Marine, Workers: ; ; .\n\n. Commercial Property | Commercial Property _—_ Available\nCompensation and Personal Auto i a ;\n\nGeneral Liability General Liability Available\n\n¢ Product examples: Commercial Homeowners Homeowners Available\n\nPackage, Commercial Property Inland Marine Inland Marine Available\n\nWorkers' Compensation Workers' Compensation Available\n\nPersonal Auto Personal Auto Available",
+      "word_count": 90,
+      "avg_confidence": 82.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Product details\n\n« As you move through a\nsubmission, specifics\nabout the product are\nseen\n\n¢ These specifics are\nwhat you configure in\nthe product model\n\nGi\n\n[Fi submission (Draft) fay Homeowners Eff. 09/19/2018 RayNewton Account # C000143542\n\nQualification\n\nPolicy Type * | Dwelling 4\nCoverage Form * [<none> ¥\nHOP Pre-Qualification Ho2\nee Ho3\n}o you have a dog? Hos\nIs this property vacant? Yes (@)No\nWho occupies this dwelling? | <none>  ¥\n\nDoyou havea swimming pool? (©) Yes (@) No",
+      "word_count": 83,
+      "avg_confidence": 77.16,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Rating-relevant information in the product model Gi\n\nYou can also include information about modifiers and auditing timelines\n\nWhen can you\n\nInclude modifiers such as multi-\naudit the policy?\n\ncar discounts or schedule credits\n\n2\n[\"**} [ode ,\n\nBodily injury",
+      "word_count": 40,
+      "avg_confidence": 88.78,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Learner story - coverages\n\n{\nDarren\nInsurance\nProduct Manager\n\ni\n\nWhere are the coverages? We think in terms of\nforms that make up coverages.",
+      "word_count": 25,
+      "avg_confidence": 92.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Learner story - coverages\n\nMarcus\nBusiness\nAnalyst\n\nIf | want to write a requirement for a specific\ncoverage, how would | do it?\nHow does PolicyCenter set up coverages?",
+      "word_count": 30,
+      "avg_confidence": 93.84,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| The product model Gi\n\nQuestion Sets\n\nPolicy Line\n\nModifiers\n\n“Clauses” are\ncoverages,\nexclusions,\n\nreece conditions\n* Availability #00seneceecennenecenenensenne",
+      "word_count": 19,
+      "avg_confidence": 91.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Product model with examples\n\nAvailability\n\nPolicy Line\n\nExclusions Conditions Coverage\n\nerrr PerreriTe\n\notk ”\nClauses” are\n\ncoverages,\now exclusions,\nPee conditions\n\n* Availability\n\nProduct Description = Status 7\n\nProduct Name >\n\nBusinessowners Business Owners Available\n‘Commercial Auto Commercial Auto Available\nCommercial Package Commercial Package Available\nCommercial Property Commercial Property Available\nGeneral Liability General Liability Available\nHomeowners Homeowners Available\nInland Marine Inland Marine Available\n\nWorkers' Compensation Workers’ Compensation Available\n\nPersonal Auto Available\n\nAdditional Coverages | Exclusions and Cor\n\nCoverages tions\n\nCoverages applied to all vehicles in California\n\nGiabitity - Bodily injury and Property Damage\nfemenes Ee]\n\nmedical Payments\n\nMedical Limit * | 5,000",
+      "word_count": 102,
+      "avg_confidence": 82.34,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Availability\n\nClauses” are\ncoverages,\nexclusions,\nconditions\n\nPolicy Line\n\ni\nAvailability means that a\ncomponent either appears or does\nnot appear in the live application\n\nThe availability of a product,\ncoverage, or coverage terms is\nbased on different factors\n\n+ Start and end effective dates\n+ Industry code\n\n+ Underwriting company\n\n+ Policy transaction type\n\n+ Jurisdiction\n\n+ Policy Type",
+      "word_count": 60,
+      "avg_confidence": 91.33,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Learner story — product designer Gi\n\n‘\n\nDarren\nInsurance ‘J\n\ni\n\nProduct Manager ;\nDoes my programming team need to program\n\nall of these details? How do you access the\nproduct model?",
+      "word_count": 33,
+      "avg_confidence": 88.33,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Learner story — product designer\n\nMarci |\nConfiguration Yas\nDeveloper _.\n\nHow can | update or change the product model?",
+      "word_count": 21,
+      "avg_confidence": 87.9,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Product model access Gi\n\n¢ PolicyCenter has a tool called Product Designer which you can use to configure the\nproduct model\n\n« Remember, business logic, underwriting rules, forms and rating are configured after\nthe product model is configured",
+      "word_count": 39,
+      "avg_confidence": 91.49,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Learner story - Advanced Product Designer Gi\n\n| have heard that now there is a\nway to create and launch more\nnew products in less time directly in\nPolicyCenter.\n\nA\nYes. With Guidewire Advanced Configuration ey\nDeveloper\n\nProduct Designer, you will be\nable to automatically generate\ncode for product which formerly\nrequired manual development.",
+      "word_count": 55,
+      "avg_confidence": 93.47,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Learner story - Advanced Product Designer Gi\n\nMarci\nConfiguration &\nDeveloper\n\nIn fact, Advanced Product Designer (APD) is more than\njust a product modeling tool. Using APD, you can define\na new product and auto-generate product artifacts,\nincluding all needed entities and Page Configuration\nFormat (PCF) files to support policy transactions.",
+      "word_count": 52,
+      "avg_confidence": 92.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "What is Advanced Product Designer (APD)? Gi\n\nThe APD is a business tool that helps insurers:\n¢ Design insurance product based on business requirements using Xmind\n* Supports subclause relationships\n¢ Simulate policy transactions for that insurance product in PolicyCenter\n¢ Auto-generate the product artifacts for PolicyCenter such as:\n* Entity Model\n« Product Model\n« User Interface components (PCFs)\n¢ Quickly build and launch product to adapt quickly to market needs\n\n¢ Facilitate business-level product discussions with stakeholders",
+      "word_count": 79,
+      "avg_confidence": 88.15,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Advanced Product Designer versus Product Designer Gi\n\n« Add New Products ¢ Add Offerings\n\n« Add New Policy Lines « Add Question Sets\n\n+ Add New Clauses: coverages, ¢ Add Modifiers\ncoverage terms, coverage term ¢ Add code to perform an action when\noptions, conditions, and exclusions a clause is added or removed\n\n¢ Enhance availability\n« Enhance existence\n\n¢ Enhance default values",
+      "word_count": 63,
+      "avg_confidence": 83.13,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_~ — Explain the purpose of the product model in terms of products, policies\nx and coverages.\n\nSoS oD DD DDS De Say\n\nGi",
+      "word_count": 25,
+      "avg_confidence": 71.7,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\n_~ — Explain the purpose of the product model in terms of products, policies\nx and coverages.\n\nThe product model is the model that describes how products and policies, including\ncoverages and coverage terms, are configured in your version of PolicyCenter. The\nbusiness needs of your organization drive the product model.\n\nSop DD DD SDSS oe",
+      "word_count": 58,
+      "avg_confidence": 85.93,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n,~ — Astakeholder insists that the underwriting rules be configured in the\nx product model. Does this request make sense, based on what you have\nlearned in this lesson? Why or why not?\n\nSoS oD DD DDS De Say\n\nGi",
+      "word_count": 41,
+      "avg_confidence": 80.09,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer Gi\n\n,~ — Astakeholder insists that the underwriting rules be configured in the\nx product model. Does this request make sense, based on what you have\n: learned in this lesson? Why or why not?\n\nThis request does not make sense because the underwriting rules are not configured\nwithin the product model. Underwriting rules are configured outside of the product\nmodel.\n\nSop DD DD SDSS oe",
+      "word_count": 67,
+      "avg_confidence": 86.78,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Lesson\n\nobjectives ¢ Describe the purpose of a product model\nreview * Explain where coverages and availability fit\n\ninto the product model\n\n¢ Describe the Product Designer used to\nupdate the product model\n\n¢ Describe the Guidewire Advanced Product\nDesigner (APD) used to create a new product\nquickly",
+      "word_count": 48,
+      "avg_confidence": 91.19,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Student exercise Gi\n\nProduct Model Introduction - Matching exercise",
+      "word_count": 10,
+      "avg_confidence": 89.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

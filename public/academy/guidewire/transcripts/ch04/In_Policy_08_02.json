@@ -1,0 +1,3770 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_08_02.mp4",
+    "video_stem": "In_Policy_08_02",
+    "duration_seconds": 213.26,
+    "duration_formatted": "00:03:33.260",
+    "segment_count": 35,
+    "word_count": 565,
+    "avg_confidence": 0.9512,
+    "transcription_time_seconds": 20.1,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:29:30.342530"
+  },
+  "full_text": "When multiple policy transactions are started and based on the same policy period, it may create a preemption situation. The first job that finishes preempts all other jobs, as the jobs that try to complete later do not have the changes made by the job that finishes first. We will walk through an example with a policy of your choice. From the policy file, Start a Policy Change. Go to PA Coverages. Change the Comprehensive Deductible from 1000 to 250. Click Save Draft to save the changes. Do not issue this policy change job, but go back to the same policy file. Start another policy change. Start another policy change. This warning does not indicate that a preemption will necessarily occur, or that it already occurred. Go to PA Coverages. Change the Comprehensive Deductible from 1000 to 500 this time. We will finish this policy change. Click Quote. Issue the policy change. Since this job finishes first, it preempts the other open policy change job. It offers a link to go to the unfinished policy job created earlier. The preemption warning message and the handle preemption button appear on every page of the open policy change. Go to Policy Review. Expand the tree structure on the Differences tab, which compares the current policy change job with the existing policy data that it is based on. As you can see, it displays the existing policy's comprehensive deductible as 1000, which is prior to the other issued policy change, so it is not based on the most up-to-date policy data. You must handle the preemption before you can continue the policy change process. On the Handle Preemptions page, it compares the existing policy that the current job is based on with the other policy change job that has completed earlier. Expand the tree structure. Review the data. There are several options here. The Apply All Changes button allows you to apply changes from the job that finishes first. The Withdraw button discards the current job. The Decide Later button saves the draft and returns to the Policy Review screen. Let's click Apply All Changes. It goes back to the Differences tab on Policy Review, which compares the data to the policy review. The Preemptions tab pairs the current policy change job with the existing policy data that it is based on. Expand the tree structure. After applying all changes, the existing policy has been updated to the most recent data. This is the end of the demonstration of preemption. Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Fil ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 22.44,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:22.440",
+      "text": "When multiple policy transactions are started and based on the same policy period, it may create a preemption situation. The first job that finishes preempts all other jobs, as the jobs that try to complete later do not have the changes made by the job that finishes first. We will walk through an example with a policy of your choice. From the policy file, Start a Policy Change.",
+      "words": [
+        {
+          "word": "When",
+          "start": 0.0,
+          "end": 0.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "multiple",
+          "start": 0.56,
+          "end": 0.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy",
+          "start": 0.94,
+          "end": 1.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "transactions",
+          "start": 1.48,
+          "end": 1.94,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 1.94,
+          "end": 2.44,
+          "probability": 1.0
+        },
+        {
+          "word": "started",
+          "start": 2.44,
+          "end": 2.78,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 2.78,
+          "end": 2.98,
+          "probability": 1.0
+        },
+        {
+          "word": "based",
+          "start": 2.98,
+          "end": 3.26,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 3.26,
+          "end": 3.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 3.42,
+          "end": 3.52,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 3.52,
+          "end": 3.76,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 3.76,
+          "end": 4.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "period,",
+          "start": 4.22,
+          "end": 4.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 4.94,
+          "end": 5.16,
+          "probability": 1.0
+        },
+        {
+          "word": "may",
+          "start": 5.16,
+          "end": 5.34,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 5.34,
+          "end": 5.7,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 5.7,
+          "end": 5.86,
+          "probability": 1.0
+        },
+        {
+          "word": "preemption",
+          "start": 5.86,
+          "end": 6.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "situation.",
+          "start": 6.28,
+          "end": 7.0,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 7.42,
+          "end": 7.96,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 7.96,
+          "end": 8.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "job",
+          "start": 8.24,
+          "end": 8.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 8.48,
+          "end": 8.68,
+          "probability": 1.0
+        },
+        {
+          "word": "finishes",
+          "start": 8.68,
+          "end": 9.08,
+          "probability": 1.0
+        },
+        {
+          "word": "preempts",
+          "start": 9.08,
+          "end": 9.7,
+          "probability": 0.9946
+        },
+        {
+          "word": "all",
+          "start": 9.7,
+          "end": 9.88,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 9.88,
+          "end": 10.08,
+          "probability": 1.0
+        },
+        {
+          "word": "jobs,",
+          "start": 10.08,
+          "end": 10.56,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 10.74,
+          "end": 10.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 10.98,
+          "end": 11.1,
+          "probability": 1.0
+        },
+        {
+          "word": "jobs",
+          "start": 11.1,
+          "end": 11.38,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 11.38,
+          "end": 11.58,
+          "probability": 1.0
+        },
+        {
+          "word": "try",
+          "start": 11.58,
+          "end": 11.76,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 11.76,
+          "end": 11.92,
+          "probability": 1.0
+        },
+        {
+          "word": "complete",
+          "start": 11.92,
+          "end": 12.32,
+          "probability": 0.999
+        },
+        {
+          "word": "later",
+          "start": 12.32,
+          "end": 12.6,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 12.6,
+          "end": 12.78,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 12.78,
+          "end": 12.96,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 12.96,
+          "end": 13.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 13.12,
+          "end": 13.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes",
+          "start": 13.26,
+          "end": 13.64,
+          "probability": 1.0
+        },
+        {
+          "word": "made",
+          "start": 13.64,
+          "end": 13.92,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 13.92,
+          "end": 14.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 14.08,
+          "end": 14.22,
+          "probability": 1.0
+        },
+        {
+          "word": "job",
+          "start": 14.22,
+          "end": 14.5,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 14.5,
+          "end": 14.7,
+          "probability": 1.0
+        },
+        {
+          "word": "finishes",
+          "start": 14.7,
+          "end": 15.14,
+          "probability": 1.0
+        },
+        {
+          "word": "first.",
+          "start": 15.14,
+          "end": 15.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "We",
+          "start": 16.02,
+          "end": 16.52,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 16.52,
+          "end": 16.66,
+          "probability": 1.0
+        },
+        {
+          "word": "walk",
+          "start": 16.66,
+          "end": 16.86,
+          "probability": 1.0
+        },
+        {
+          "word": "through",
+          "start": 16.86,
+          "end": 17.08,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 17.08,
+          "end": 17.24,
+          "probability": 1.0
+        },
+        {
+          "word": "example",
+          "start": 17.24,
+          "end": 17.62,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 17.62,
+          "end": 17.82,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 17.82,
+          "end": 17.94,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 17.94,
+          "end": 18.34,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 18.34,
+          "end": 18.54,
+          "probability": 1.0
+        },
+        {
+          "word": "your",
+          "start": 18.54,
+          "end": 18.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "choice.",
+          "start": 18.7,
+          "end": 19.16,
+          "probability": 1.0
+        },
+        {
+          "word": "From",
+          "start": 19.42,
+          "end": 19.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 19.78,
+          "end": 19.9,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 19.9,
+          "end": 20.34,
+          "probability": 0.8506
+        },
+        {
+          "word": "file,",
+          "start": 20.34,
+          "end": 20.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "Start",
+          "start": 21.12,
+          "end": 21.36,
+          "probability": 0.3096
+        },
+        {
+          "word": "a",
+          "start": 21.36,
+          "end": 21.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "Policy",
+          "start": 21.54,
+          "end": 21.94,
+          "probability": 0.792
+        },
+        {
+          "word": "Change.",
+          "start": 21.94,
+          "end": 22.44,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 35.34,
+      "end": 37.04,
+      "start_formatted": "00:00:35.340",
+      "end_formatted": "00:00:37.040",
+      "text": "Go to PA Coverages.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 35.34,
+          "end": 35.9,
+          "probability": 0.9644
+        },
+        {
+          "word": "to",
+          "start": 35.9,
+          "end": 36.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "PA",
+          "start": 36.04,
+          "end": 36.3,
+          "probability": 0.9028
+        },
+        {
+          "word": "Coverages.",
+          "start": 36.3,
+          "end": 37.04,
+          "probability": 0.7266
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 40.66,
+      "end": 44.36,
+      "start_formatted": "00:00:40.660",
+      "end_formatted": "00:00:44.360",
+      "text": "Change the Comprehensive Deductible from 1000 to 250.",
+      "words": [
+        {
+          "word": "Change",
+          "start": 40.66,
+          "end": 41.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 41.22,
+          "end": 41.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "Comprehensive",
+          "start": 41.38,
+          "end": 42.06,
+          "probability": 0.8354
+        },
+        {
+          "word": "Deductible",
+          "start": 42.06,
+          "end": 42.68,
+          "probability": 0.9468
+        },
+        {
+          "word": "from",
+          "start": 42.68,
+          "end": 42.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "1000",
+          "start": 42.88,
+          "end": 43.4,
+          "probability": 0.4377
+        },
+        {
+          "word": "to",
+          "start": 43.4,
+          "end": 43.64,
+          "probability": 0.9756
+        },
+        {
+          "word": "250.",
+          "start": 43.64,
+          "end": 44.36,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 48.7,
+      "end": 50.78,
+      "start_formatted": "00:00:48.700",
+      "end_formatted": "00:00:50.780",
+      "text": "Click Save Draft to save the changes.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 48.7,
+          "end": 49.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "Save",
+          "start": 49.26,
+          "end": 49.52,
+          "probability": 0.8496
+        },
+        {
+          "word": "Draft",
+          "start": 49.52,
+          "end": 49.86,
+          "probability": 0.9814
+        },
+        {
+          "word": "to",
+          "start": 49.86,
+          "end": 50.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "save",
+          "start": 50.04,
+          "end": 50.24,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 50.24,
+          "end": 50.36,
+          "probability": 0.998
+        },
+        {
+          "word": "changes.",
+          "start": 50.36,
+          "end": 50.78,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 52.72,
+      "end": 57.56,
+      "start_formatted": "00:00:52.720",
+      "end_formatted": "00:00:57.560",
+      "text": "Do not issue this policy change job, but go back to the same policy file.",
+      "words": [
+        {
+          "word": "Do",
+          "start": 52.72,
+          "end": 53.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "not",
+          "start": 53.28,
+          "end": 53.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "issue",
+          "start": 53.48,
+          "end": 53.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "this",
+          "start": 53.76,
+          "end": 53.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 53.96,
+          "end": 54.42,
+          "probability": 0.8101
+        },
+        {
+          "word": "change",
+          "start": 54.42,
+          "end": 54.82,
+          "probability": 0.9854
+        },
+        {
+          "word": "job,",
+          "start": 54.82,
+          "end": 55.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "but",
+          "start": 55.42,
+          "end": 55.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "go",
+          "start": 55.66,
+          "end": 55.82,
+          "probability": 0.998
+        },
+        {
+          "word": "back",
+          "start": 55.82,
+          "end": 56.06,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 56.06,
+          "end": 56.24,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 56.24,
+          "end": 56.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "same",
+          "start": 56.36,
+          "end": 56.6,
+          "probability": 0.9927
+        },
+        {
+          "word": "policy",
+          "start": 56.6,
+          "end": 57.04,
+          "probability": 0.9741
+        },
+        {
+          "word": "file.",
+          "start": 57.04,
+          "end": 57.56,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 57.56,
+      "end": 60.04,
+      "start_formatted": "00:00:57.560",
+      "end_formatted": "00:01:00.040",
+      "text": "Start another policy change.",
+      "words": [
+        {
+          "word": "Start",
+          "start": 57.56,
+          "end": 58.66,
+          "probability": 0.9648
+        },
+        {
+          "word": "another",
+          "start": 58.66,
+          "end": 58.92,
+          "probability": 0.9907
+        },
+        {
+          "word": "policy",
+          "start": 58.92,
+          "end": 59.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "change.",
+          "start": 59.48,
+          "end": 60.04,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 61.22,
+      "end": 62.02,
+      "start_formatted": "00:01:01.220",
+      "end_formatted": "00:01:02.020",
+      "text": "Start another policy change.",
+      "words": [
+        {
+          "word": "Start",
+          "start": 61.22,
+          "end": 62.02,
+          "probability": 0.0006
+        },
+        {
+          "word": "another",
+          "start": 62.02,
+          "end": 62.02,
+          "probability": 0.9702
+        },
+        {
+          "word": "policy",
+          "start": 62.02,
+          "end": 62.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "change.",
+          "start": 62.02,
+          "end": 62.02,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 65.56,
+      "end": 71.16,
+      "start_formatted": "00:01:05.560",
+      "end_formatted": "00:01:11.160",
+      "text": "This warning does not indicate that a preemption will necessarily occur, or that it already occurred.",
+      "words": [
+        {
+          "word": "This",
+          "start": 65.56,
+          "end": 66.36,
+          "probability": 0.96
+        },
+        {
+          "word": "warning",
+          "start": 66.36,
+          "end": 66.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "does",
+          "start": 66.68,
+          "end": 66.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 66.9,
+          "end": 67.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "indicate",
+          "start": 67.1,
+          "end": 67.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 67.5,
+          "end": 67.76,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 67.76,
+          "end": 67.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "preemption",
+          "start": 67.88,
+          "end": 68.3,
+          "probability": 0.9907
+        },
+        {
+          "word": "will",
+          "start": 68.3,
+          "end": 68.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "necessarily",
+          "start": 68.54,
+          "end": 69.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "occur,",
+          "start": 69.08,
+          "end": 69.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 69.84,
+          "end": 70.06,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 70.06,
+          "end": 70.2,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 70.2,
+          "end": 70.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "already",
+          "start": 70.34,
+          "end": 70.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "occurred.",
+          "start": 70.68,
+          "end": 71.16,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 74.54,
+      "end": 76.46,
+      "start_formatted": "00:01:14.540",
+      "end_formatted": "00:01:16.460",
+      "text": "Go to PA Coverages.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 74.54,
+          "end": 75.34,
+          "probability": 0.9854
+        },
+        {
+          "word": "to",
+          "start": 75.34,
+          "end": 75.48,
+          "probability": 1.0
+        },
+        {
+          "word": "PA",
+          "start": 75.48,
+          "end": 75.74,
+          "probability": 0.978
+        },
+        {
+          "word": "Coverages.",
+          "start": 75.74,
+          "end": 76.46,
+          "probability": 0.6904
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 78.9,
+      "end": 83.34,
+      "start_formatted": "00:01:18.900",
+      "end_formatted": "00:01:23.340",
+      "text": "Change the Comprehensive Deductible from 1000 to 500 this time.",
+      "words": [
+        {
+          "word": "Change",
+          "start": 78.9,
+          "end": 79.7,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 79.7,
+          "end": 79.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "Comprehensive",
+          "start": 79.88,
+          "end": 80.56,
+          "probability": 0.7202
+        },
+        {
+          "word": "Deductible",
+          "start": 80.56,
+          "end": 81.18,
+          "probability": 0.9648
+        },
+        {
+          "word": "from",
+          "start": 81.18,
+          "end": 81.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "1000",
+          "start": 81.38,
+          "end": 81.92,
+          "probability": 0.2542
+        },
+        {
+          "word": "to",
+          "start": 81.92,
+          "end": 82.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "500",
+          "start": 82.14,
+          "end": 82.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "this",
+          "start": 82.58,
+          "end": 82.94,
+          "probability": 0.998
+        },
+        {
+          "word": "time.",
+          "start": 82.94,
+          "end": 83.34,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 87.18,
+      "end": 89.78,
+      "start_formatted": "00:01:27.180",
+      "end_formatted": "00:01:29.780",
+      "text": "We will finish this policy change.",
+      "words": [
+        {
+          "word": "We",
+          "start": 87.18,
+          "end": 87.98,
+          "probability": 0.8892
+        },
+        {
+          "word": "will",
+          "start": 87.98,
+          "end": 88.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "finish",
+          "start": 88.16,
+          "end": 88.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "this",
+          "start": 88.48,
+          "end": 88.74,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 88.74,
+          "end": 89.22,
+          "probability": 0.9624
+        },
+        {
+          "word": "change.",
+          "start": 89.22,
+          "end": 89.78,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 90.08,
+      "end": 90.88,
+      "start_formatted": "00:01:30.080",
+      "end_formatted": "00:01:30.880",
+      "text": "Click Quote.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 90.08,
+          "end": 90.46,
+          "probability": 0.9917
+        },
+        {
+          "word": "Quote.",
+          "start": 90.46,
+          "end": 90.88,
+          "probability": 0.6826
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 91.48,
+      "end": 93.36,
+      "start_formatted": "00:01:31.480",
+      "end_formatted": "00:01:33.360",
+      "text": "Issue the policy change.",
+      "words": [
+        {
+          "word": "Issue",
+          "start": 91.48,
+          "end": 92.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 92.28,
+          "end": 92.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 92.4,
+          "end": 92.82,
+          "probability": 0.9741
+        },
+        {
+          "word": "change.",
+          "start": 92.82,
+          "end": 93.36,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 99.26,
+      "end": 104.32,
+      "start_formatted": "00:01:39.260",
+      "end_formatted": "00:01:44.320",
+      "text": "Since this job finishes first, it preempts the other open policy change job.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 99.26,
+          "end": 100.06,
+          "probability": 0.9531
+        },
+        {
+          "word": "this",
+          "start": 100.06,
+          "end": 100.3,
+          "probability": 0.999
+        },
+        {
+          "word": "job",
+          "start": 100.3,
+          "end": 100.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "finishes",
+          "start": 100.58,
+          "end": 100.98,
+          "probability": 0.999
+        },
+        {
+          "word": "first,",
+          "start": 100.98,
+          "end": 101.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 101.76,
+          "end": 101.96,
+          "probability": 0.999
+        },
+        {
+          "word": "preempts",
+          "start": 101.96,
+          "end": 102.38,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 102.38,
+          "end": 102.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "other",
+          "start": 102.5,
+          "end": 102.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "open",
+          "start": 102.7,
+          "end": 103.04,
+          "probability": 0.8853
+        },
+        {
+          "word": "policy",
+          "start": 103.04,
+          "end": 103.5,
+          "probability": 0.9937
+        },
+        {
+          "word": "change",
+          "start": 103.5,
+          "end": 103.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "job.",
+          "start": 103.9,
+          "end": 104.32,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 104.32,
+      "end": 108.38,
+      "start_formatted": "00:01:44.320",
+      "end_formatted": "00:01:48.380",
+      "text": "It offers a link to go to the unfinished policy job created earlier.",
+      "words": [
+        {
+          "word": "It",
+          "start": 104.32,
+          "end": 104.9,
+          "probability": 0.8726
+        },
+        {
+          "word": "offers",
+          "start": 104.9,
+          "end": 105.22,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 105.22,
+          "end": 105.42,
+          "probability": 0.8643
+        },
+        {
+          "word": "link",
+          "start": 105.42,
+          "end": 105.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 105.62,
+          "end": 105.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "go",
+          "start": 105.76,
+          "end": 105.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 105.9,
+          "end": 106.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 106.06,
+          "end": 106.2,
+          "probability": 0.998
+        },
+        {
+          "word": "unfinished",
+          "start": 106.2,
+          "end": 106.6,
+          "probability": 0.9624
+        },
+        {
+          "word": "policy",
+          "start": 106.6,
+          "end": 107.1,
+          "probability": 0.98
+        },
+        {
+          "word": "job",
+          "start": 107.1,
+          "end": 107.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "created",
+          "start": 107.46,
+          "end": 107.9,
+          "probability": 0.999
+        },
+        {
+          "word": "earlier.",
+          "start": 107.9,
+          "end": 108.38,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 108.88,
+      "end": 114.62,
+      "start_formatted": "00:01:48.880",
+      "end_formatted": "00:01:54.620",
+      "text": "The preemption warning message and the handle preemption button appear on every page of the open policy change.",
+      "words": [
+        {
+          "word": "The",
+          "start": 108.88,
+          "end": 109.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "preemption",
+          "start": 109.48,
+          "end": 109.96,
+          "probability": 0.9092
+        },
+        {
+          "word": "warning",
+          "start": 109.96,
+          "end": 110.34,
+          "probability": 0.9937
+        },
+        {
+          "word": "message",
+          "start": 110.34,
+          "end": 110.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 110.8,
+          "end": 111.0,
+          "probability": 0.834
+        },
+        {
+          "word": "the",
+          "start": 111.0,
+          "end": 111.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "handle",
+          "start": 111.1,
+          "end": 111.38,
+          "probability": 0.644
+        },
+        {
+          "word": "preemption",
+          "start": 111.38,
+          "end": 111.9,
+          "probability": 0.9795
+        },
+        {
+          "word": "button",
+          "start": 111.9,
+          "end": 112.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "appear",
+          "start": 112.26,
+          "end": 112.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 112.62,
+          "end": 112.8,
+          "probability": 0.999
+        },
+        {
+          "word": "every",
+          "start": 112.8,
+          "end": 112.98,
+          "probability": 0.999
+        },
+        {
+          "word": "page",
+          "start": 112.98,
+          "end": 113.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 113.26,
+          "end": 113.42,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 113.42,
+          "end": 113.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "open",
+          "start": 113.52,
+          "end": 113.8,
+          "probability": 0.7554
+        },
+        {
+          "word": "policy",
+          "start": 113.8,
+          "end": 114.26,
+          "probability": 0.9375
+        },
+        {
+          "word": "change.",
+          "start": 114.26,
+          "end": 114.62,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 115.08,
+      "end": 116.38,
+      "start_formatted": "00:01:55.080",
+      "end_formatted": "00:01:56.380",
+      "text": "Go to Policy Review.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 115.08,
+          "end": 115.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 115.38,
+          "end": 115.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "Policy",
+          "start": 115.52,
+          "end": 115.94,
+          "probability": 0.5151
+        },
+        {
+          "word": "Review.",
+          "start": 115.94,
+          "end": 116.38,
+          "probability": 0.9419
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 117.28,
+      "end": 124.88,
+      "start_formatted": "00:01:57.280",
+      "end_formatted": "00:02:04.880",
+      "text": "Expand the tree structure on the Differences tab, which compares the current policy change job with the existing policy data that it is based on.",
+      "words": [
+        {
+          "word": "Expand",
+          "start": 117.28,
+          "end": 117.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 117.88,
+          "end": 118.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "tree",
+          "start": 118.0,
+          "end": 118.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "structure",
+          "start": 118.2,
+          "end": 118.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 118.58,
+          "end": 118.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 118.82,
+          "end": 118.92,
+          "probability": 1.0
+        },
+        {
+          "word": "Differences",
+          "start": 118.92,
+          "end": 119.46,
+          "probability": 0.917
+        },
+        {
+          "word": "tab,",
+          "start": 119.46,
+          "end": 119.82,
+          "probability": 0.9878
+        },
+        {
+          "word": "which",
+          "start": 120.04,
+          "end": 120.28,
+          "probability": 0.999
+        },
+        {
+          "word": "compares",
+          "start": 120.28,
+          "end": 120.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 120.7,
+          "end": 120.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "current",
+          "start": 120.9,
+          "end": 121.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 121.16,
+          "end": 121.66,
+          "probability": 0.9907
+        },
+        {
+          "word": "change",
+          "start": 121.66,
+          "end": 122.02,
+          "probability": 0.998
+        },
+        {
+          "word": "job",
+          "start": 122.02,
+          "end": 122.3,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 122.3,
+          "end": 122.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 122.5,
+          "end": 122.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "existing",
+          "start": 122.64,
+          "end": 123.08,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 123.08,
+          "end": 123.54,
+          "probability": 0.999
+        },
+        {
+          "word": "data",
+          "start": 123.54,
+          "end": 123.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 123.84,
+          "end": 124.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 124.02,
+          "end": 124.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 124.14,
+          "end": 124.28,
+          "probability": 0.999
+        },
+        {
+          "word": "based",
+          "start": 124.28,
+          "end": 124.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "on.",
+          "start": 124.54,
+          "end": 124.88,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 132.58,
+      "end": 143.74,
+      "start_formatted": "00:02:12.580",
+      "end_formatted": "00:02:23.740",
+      "text": "As you can see, it displays the existing policy's comprehensive deductible as 1000, which is prior to the other issued policy change, so it is not based on the most up-to-date policy data.",
+      "words": [
+        {
+          "word": "As",
+          "start": 132.58,
+          "end": 133.06,
+          "probability": 0.8936
+        },
+        {
+          "word": "you",
+          "start": 133.06,
+          "end": 133.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 133.18,
+          "end": 133.36,
+          "probability": 0.999
+        },
+        {
+          "word": "see,",
+          "start": 133.36,
+          "end": 133.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 133.86,
+          "end": 134.06,
+          "probability": 0.9946
+        },
+        {
+          "word": "displays",
+          "start": 134.06,
+          "end": 134.44,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 134.44,
+          "end": 134.66,
+          "probability": 0.999
+        },
+        {
+          "word": "existing",
+          "start": 134.66,
+          "end": 135.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy's",
+          "start": 135.06,
+          "end": 135.8,
+          "probability": 0.9604
+        },
+        {
+          "word": "comprehensive",
+          "start": 135.8,
+          "end": 136.4,
+          "probability": 0.9438
+        },
+        {
+          "word": "deductible",
+          "start": 136.4,
+          "end": 137.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "as",
+          "start": 137.08,
+          "end": 137.26,
+          "probability": 0.9727
+        },
+        {
+          "word": "1000,",
+          "start": 137.26,
+          "end": 137.82,
+          "probability": 0.4102
+        },
+        {
+          "word": "which",
+          "start": 138.18,
+          "end": 138.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "is",
+          "start": 138.42,
+          "end": 138.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "prior",
+          "start": 138.56,
+          "end": 138.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 138.84,
+          "end": 139.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 139.06,
+          "end": 139.2,
+          "probability": 0.999
+        },
+        {
+          "word": "other",
+          "start": 139.2,
+          "end": 139.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "issued",
+          "start": 139.4,
+          "end": 139.76,
+          "probability": 0.9897
+        },
+        {
+          "word": "policy",
+          "start": 139.76,
+          "end": 140.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "change,",
+          "start": 140.16,
+          "end": 140.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 140.88,
+          "end": 141.16,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 141.16,
+          "end": 141.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 141.3,
+          "end": 141.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 141.42,
+          "end": 141.62,
+          "probability": 0.999
+        },
+        {
+          "word": "based",
+          "start": 141.62,
+          "end": 141.88,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 141.88,
+          "end": 142.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 142.06,
+          "end": 142.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "most",
+          "start": 142.16,
+          "end": 142.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "up",
+          "start": 142.4,
+          "end": 142.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "-to",
+          "start": 142.58,
+          "end": 142.68,
+          "probability": 0.9854
+        },
+        {
+          "word": "-date",
+          "start": 142.68,
+          "end": 142.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 142.88,
+          "end": 143.34,
+          "probability": 0.999
+        },
+        {
+          "word": "data.",
+          "start": 143.34,
+          "end": 143.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 143.74,
+      "end": 148.46,
+      "start_formatted": "00:02:23.740",
+      "end_formatted": "00:02:28.460",
+      "text": "You must handle the preemption before you can continue the policy change process.",
+      "words": [
+        {
+          "word": "You",
+          "start": 143.74,
+          "end": 144.64,
+          "probability": 0.9561
+        },
+        {
+          "word": "must",
+          "start": 144.64,
+          "end": 144.88,
+          "probability": 0.999
+        },
+        {
+          "word": "handle",
+          "start": 144.88,
+          "end": 145.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 145.2,
+          "end": 145.36,
+          "probability": 0.999
+        },
+        {
+          "word": "preemption",
+          "start": 145.36,
+          "end": 145.78,
+          "probability": 0.9883
+        },
+        {
+          "word": "before",
+          "start": 145.78,
+          "end": 146.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 146.12,
+          "end": 146.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 146.34,
+          "end": 146.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "continue",
+          "start": 146.52,
+          "end": 146.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 146.94,
+          "end": 147.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 147.12,
+          "end": 147.54,
+          "probability": 0.9741
+        },
+        {
+          "word": "change",
+          "start": 147.54,
+          "end": 147.86,
+          "probability": 0.999
+        },
+        {
+          "word": "process.",
+          "start": 147.86,
+          "end": 148.46,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 151.74,
+      "end": 159.62,
+      "start_formatted": "00:02:31.740",
+      "end_formatted": "00:02:39.620",
+      "text": "On the Handle Preemptions page, it compares the existing policy that the current job is based on with the other policy change job that has completed earlier.",
+      "words": [
+        {
+          "word": "On",
+          "start": 151.45,
+          "end": 151.76,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 151.76,
+          "end": 151.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "Handle",
+          "start": 151.88,
+          "end": 152.22,
+          "probability": 0.7686
+        },
+        {
+          "word": "Preemptions",
+          "start": 152.22,
+          "end": 152.88,
+          "probability": 0.9082
+        },
+        {
+          "word": "page,",
+          "start": 152.88,
+          "end": 153.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 153.48,
+          "end": 153.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "compares",
+          "start": 153.68,
+          "end": 154.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 154.04,
+          "end": 154.26,
+          "probability": 1.0
+        },
+        {
+          "word": "existing",
+          "start": 154.26,
+          "end": 154.66,
+          "probability": 0.9819
+        },
+        {
+          "word": "policy",
+          "start": 154.66,
+          "end": 155.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 155.12,
+          "end": 155.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 155.36,
+          "end": 155.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "current",
+          "start": 155.48,
+          "end": 155.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "job",
+          "start": 155.74,
+          "end": 156.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 156.0,
+          "end": 156.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "based",
+          "start": 156.22,
+          "end": 156.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 156.5,
+          "end": 156.68,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 156.68,
+          "end": 156.84,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 156.84,
+          "end": 156.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "other",
+          "start": 156.96,
+          "end": 157.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 157.14,
+          "end": 157.64,
+          "probability": 0.999
+        },
+        {
+          "word": "change",
+          "start": 157.64,
+          "end": 158.0,
+          "probability": 0.7607
+        },
+        {
+          "word": "job",
+          "start": 158.0,
+          "end": 158.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 158.34,
+          "end": 158.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 158.54,
+          "end": 158.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "completed",
+          "start": 158.72,
+          "end": 159.14,
+          "probability": 0.999
+        },
+        {
+          "word": "earlier.",
+          "start": 159.14,
+          "end": 159.62,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 160.0,
+      "end": 161.48,
+      "start_formatted": "00:02:40.000",
+      "end_formatted": "00:02:41.480",
+      "text": "Expand the tree structure.",
+      "words": [
+        {
+          "word": "Expand",
+          "start": 160.0,
+          "end": 160.62,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 160.62,
+          "end": 160.74,
+          "probability": 0.999
+        },
+        {
+          "word": "tree",
+          "start": 160.74,
+          "end": 160.94,
+          "probability": 0.9404
+        },
+        {
+          "word": "structure.",
+          "start": 160.94,
+          "end": 161.48,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 169.28,
+      "end": 170.4,
+      "start_formatted": "00:02:49.280",
+      "end_formatted": "00:02:50.400",
+      "text": "Review the data.",
+      "words": [
+        {
+          "word": "Review",
+          "start": 169.28,
+          "end": 169.92,
+          "probability": 0.9038
+        },
+        {
+          "word": "the",
+          "start": 169.92,
+          "end": 170.16,
+          "probability": 0.998
+        },
+        {
+          "word": "data.",
+          "start": 170.16,
+          "end": 170.4,
+          "probability": 0.9116
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 170.7,
+      "end": 172.34,
+      "start_formatted": "00:02:50.700",
+      "end_formatted": "00:02:52.340",
+      "text": "There are several options here.",
+      "words": [
+        {
+          "word": "There",
+          "start": 170.7,
+          "end": 171.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 171.08,
+          "end": 171.22,
+          "probability": 1.0
+        },
+        {
+          "word": "several",
+          "start": 171.22,
+          "end": 171.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "options",
+          "start": 171.54,
+          "end": 172.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "here.",
+          "start": 172.0,
+          "end": 172.34,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 172.6,
+      "end": 177.4,
+      "start_formatted": "00:02:52.600",
+      "end_formatted": "00:02:57.400",
+      "text": "The Apply All Changes button allows you to apply changes from the job that finishes first.",
+      "words": [
+        {
+          "word": "The",
+          "start": 172.6,
+          "end": 172.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Apply",
+          "start": 172.96,
+          "end": 173.28,
+          "probability": 0.9302
+        },
+        {
+          "word": "All",
+          "start": 173.28,
+          "end": 173.48,
+          "probability": 0.8643
+        },
+        {
+          "word": "Changes",
+          "start": 173.48,
+          "end": 173.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "button",
+          "start": 173.94,
+          "end": 174.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "allows",
+          "start": 174.18,
+          "end": 174.6,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 174.6,
+          "end": 174.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 174.82,
+          "end": 174.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "apply",
+          "start": 174.96,
+          "end": 175.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "changes",
+          "start": 175.28,
+          "end": 175.74,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 175.74,
+          "end": 175.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 175.96,
+          "end": 176.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "job",
+          "start": 176.08,
+          "end": 176.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 176.34,
+          "end": 176.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "finishes",
+          "start": 176.54,
+          "end": 176.9,
+          "probability": 1.0
+        },
+        {
+          "word": "first.",
+          "start": 176.9,
+          "end": 177.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 177.72,
+      "end": 180.16,
+      "start_formatted": "00:02:57.720",
+      "end_formatted": "00:03:00.160",
+      "text": "The Withdraw button discards the current job.",
+      "words": [
+        {
+          "word": "The",
+          "start": 177.72,
+          "end": 178.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Withdraw",
+          "start": 178.06,
+          "end": 178.42,
+          "probability": 0.9912
+        },
+        {
+          "word": "button",
+          "start": 178.42,
+          "end": 178.8,
+          "probability": 0.999
+        },
+        {
+          "word": "discards",
+          "start": 178.8,
+          "end": 179.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 179.32,
+          "end": 179.5,
+          "probability": 1.0
+        },
+        {
+          "word": "current",
+          "start": 179.5,
+          "end": 179.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "job.",
+          "start": 179.78,
+          "end": 180.16,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 180.44,
+      "end": 184.5,
+      "start_formatted": "00:03:00.440",
+      "end_formatted": "00:03:04.500",
+      "text": "The Decide Later button saves the draft and returns to the Policy Review screen.",
+      "words": [
+        {
+          "word": "The",
+          "start": 180.44,
+          "end": 180.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "Decide",
+          "start": 180.78,
+          "end": 181.18,
+          "probability": 0.998
+        },
+        {
+          "word": "Later",
+          "start": 181.18,
+          "end": 181.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "button",
+          "start": 181.4,
+          "end": 181.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "saves",
+          "start": 181.72,
+          "end": 182.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 182.04,
+          "end": 182.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "draft",
+          "start": 182.22,
+          "end": 182.5,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 182.5,
+          "end": 182.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "returns",
+          "start": 182.7,
+          "end": 183.12,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 183.12,
+          "end": 183.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 183.3,
+          "end": 183.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "Policy",
+          "start": 183.42,
+          "end": 183.8,
+          "probability": 0.8301
+        },
+        {
+          "word": "Review",
+          "start": 183.8,
+          "end": 184.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "screen.",
+          "start": 184.12,
+          "end": 184.5,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 184.92,
+      "end": 186.76,
+      "start_formatted": "00:03:04.920",
+      "end_formatted": "00:03:06.760",
+      "text": "Let's click Apply All Changes.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 184.92,
+          "end": 185.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "click",
+          "start": 185.36,
+          "end": 185.56,
+          "probability": 0.9907
+        },
+        {
+          "word": "Apply",
+          "start": 185.56,
+          "end": 185.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "All",
+          "start": 185.86,
+          "end": 186.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "Changes.",
+          "start": 186.14,
+          "end": 186.76,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 187.26,
+      "end": 191.46,
+      "start_formatted": "00:03:07.260",
+      "end_formatted": "00:03:11.460",
+      "text": "It goes back to the Differences tab on Policy Review, which compares the data to the policy review.",
+      "words": [
+        {
+          "word": "It",
+          "start": 187.26,
+          "end": 187.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "goes",
+          "start": 187.9,
+          "end": 188.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 188.14,
+          "end": 188.4,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 188.4,
+          "end": 188.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 188.56,
+          "end": 188.7,
+          "probability": 1.0
+        },
+        {
+          "word": "Differences",
+          "start": 188.7,
+          "end": 189.18,
+          "probability": 0.9526
+        },
+        {
+          "word": "tab",
+          "start": 189.18,
+          "end": 189.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "on",
+          "start": 189.44,
+          "end": 189.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "Policy",
+          "start": 189.74,
+          "end": 190.14,
+          "probability": 0.9751
+        },
+        {
+          "word": "Review,",
+          "start": 190.14,
+          "end": 190.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "which",
+          "start": 190.9,
+          "end": 191.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "compares",
+          "start": 191.18,
+          "end": 191.46,
+          "probability": 0.5347
+        },
+        {
+          "word": "the",
+          "start": 191.46,
+          "end": 191.46,
+          "probability": 0.1416
+        },
+        {
+          "word": "data",
+          "start": 191.46,
+          "end": 191.46,
+          "probability": 0.0828
+        },
+        {
+          "word": "to",
+          "start": 191.46,
+          "end": 191.46,
+          "probability": 0.1847
+        },
+        {
+          "word": "the",
+          "start": 191.46,
+          "end": 191.46,
+          "probability": 0.5938
+        },
+        {
+          "word": "policy",
+          "start": 191.46,
+          "end": 191.46,
+          "probability": 0.0865
+        },
+        {
+          "word": "review.",
+          "start": 191.46,
+          "end": 191.46,
+          "probability": 0.8447
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 191.46,
+      "end": 195.76,
+      "start_formatted": "00:03:11.460",
+      "end_formatted": "00:03:15.760",
+      "text": "The Preemptions tab pairs the current policy change job with the existing policy data that it is based on.",
+      "words": [
+        {
+          "word": "The",
+          "start": 191.46,
+          "end": 191.46,
+          "probability": 0.0645
+        },
+        {
+          "word": "Preemptions",
+          "start": 191.46,
+          "end": 191.64,
+          "probability": 0.0371
+        },
+        {
+          "word": "tab",
+          "start": 191.64,
+          "end": 191.64,
+          "probability": 0.0012
+        },
+        {
+          "word": "pairs",
+          "start": 191.64,
+          "end": 191.64,
+          "probability": 0.2859
+        },
+        {
+          "word": "the",
+          "start": 191.64,
+          "end": 191.78,
+          "probability": 0.9814
+        },
+        {
+          "word": "current",
+          "start": 191.78,
+          "end": 192.02,
+          "probability": 0.9673
+        },
+        {
+          "word": "policy",
+          "start": 192.02,
+          "end": 192.5,
+          "probability": 0.917
+        },
+        {
+          "word": "change",
+          "start": 192.5,
+          "end": 192.86,
+          "probability": 0.9824
+        },
+        {
+          "word": "job",
+          "start": 192.86,
+          "end": 193.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "with",
+          "start": 193.18,
+          "end": 193.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 193.38,
+          "end": 193.5,
+          "probability": 0.98
+        },
+        {
+          "word": "existing",
+          "start": 193.5,
+          "end": 193.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy",
+          "start": 193.94,
+          "end": 194.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "data",
+          "start": 194.4,
+          "end": 194.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "that",
+          "start": 194.72,
+          "end": 194.9,
+          "probability": 0.9766
+        },
+        {
+          "word": "it",
+          "start": 194.9,
+          "end": 195.02,
+          "probability": 0.9805
+        },
+        {
+          "word": "is",
+          "start": 195.02,
+          "end": 195.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "based",
+          "start": 195.14,
+          "end": 195.42,
+          "probability": 0.999
+        },
+        {
+          "word": "on.",
+          "start": 195.42,
+          "end": 195.76,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 196.16,
+      "end": 197.52,
+      "start_formatted": "00:03:16.160",
+      "end_formatted": "00:03:17.520",
+      "text": "Expand the tree structure.",
+      "words": [
+        {
+          "word": "Expand",
+          "start": 196.16,
+          "end": 196.72,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 196.72,
+          "end": 196.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "tree",
+          "start": 196.82,
+          "end": 197.04,
+          "probability": 0.8594
+        },
+        {
+          "word": "structure.",
+          "start": 197.04,
+          "end": 197.52,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 205.36,
+      "end": 210.62,
+      "start_formatted": "00:03:25.360",
+      "end_formatted": "00:03:30.620",
+      "text": "After applying all changes, the existing policy has been updated to the most recent data.",
+      "words": [
+        {
+          "word": "After",
+          "start": 205.36,
+          "end": 205.92,
+          "probability": 0.9443
+        },
+        {
+          "word": "applying",
+          "start": 205.92,
+          "end": 206.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "all",
+          "start": 206.36,
+          "end": 206.6,
+          "probability": 0.9932
+        },
+        {
+          "word": "changes,",
+          "start": 206.6,
+          "end": 207.1,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 207.44,
+          "end": 207.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "existing",
+          "start": 207.66,
+          "end": 208.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "policy",
+          "start": 208.08,
+          "end": 208.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "has",
+          "start": 208.58,
+          "end": 208.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "been",
+          "start": 208.86,
+          "end": 209.0,
+          "probability": 0.999
+        },
+        {
+          "word": "updated",
+          "start": 209.0,
+          "end": 209.44,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 209.44,
+          "end": 209.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 209.62,
+          "end": 209.74,
+          "probability": 0.9927
+        },
+        {
+          "word": "most",
+          "start": 209.74,
+          "end": 209.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "recent",
+          "start": 209.94,
+          "end": 210.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "data.",
+          "start": 210.3,
+          "end": 210.62,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 210.92,
+      "end": 213.26,
+      "start_formatted": "00:03:30.920",
+      "end_formatted": "00:03:33.260",
+      "text": "This is the end of the demonstration of preemption.",
+      "words": [
+        {
+          "word": "This",
+          "start": 210.92,
+          "end": 211.3,
+          "probability": 0.9917
+        },
+        {
+          "word": "is",
+          "start": 211.3,
+          "end": 211.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 211.42,
+          "end": 211.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "end",
+          "start": 211.54,
+          "end": 211.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 211.74,
+          "end": 211.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 211.84,
+          "end": 211.94,
+          "probability": 0.9805
+        },
+        {
+          "word": "demonstration",
+          "start": 211.94,
+          "end": 212.5,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 212.5,
+          "end": 212.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "preemption.",
+          "start": 212.78,
+          "end": 213.26,
+          "probability": 0.6582
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 213.26,
+      "end": 213.28,
+      "start_formatted": "00:03:33.260",
+      "end_formatted": "00:03:33.280",
+      "text": "Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Fil",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.08
+        },
+        {
+          "word": "the",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.1631
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.4529
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.79
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.4692
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.7705
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.4951
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.8408
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.6035
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.8804
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.7891
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9072
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.8765
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9268
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9297
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9492
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9521
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.958
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9678
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9727
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9707
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9761
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9756
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.98
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9771
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.26,
+          "end": 213.26,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.26,
+          "end": 213.28,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "Fil",
+          "start": 213.28,
+          "end": 213.28,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 213.26,
+      "end": 213.26,
+      "start_formatted": "00:03:33.260",
+      "end_formatted": "00:03:33.260",
+      "text": "",
+      "words": []
+    }
+  ]
+}

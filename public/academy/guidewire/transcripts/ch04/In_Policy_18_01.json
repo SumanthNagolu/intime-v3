@@ -1,0 +1,5392 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_18_01.mp4",
+    "video_stem": "In_Policy_18_01",
+    "duration_seconds": 319.18,
+    "duration_formatted": "00:05:19.180",
+    "segment_count": 31,
+    "word_count": 844,
+    "avg_confidence": 0.9553,
+    "transcription_time_seconds": 25.9,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:35:20.547125"
+  },
+  "full_text": "The purpose of this demo is to show how to work with coverages in Product Designer. Product Designer is used to view and configure coverages for PolicyCenter. Coverages are associated with policy lines, so let's look at these. Click Policy Lines. For the purposes of this demo, we'll look at the Business Owners line, also known as BOP. Click Business Owners line. Next, let's look at the coverages for this line. Click Coverages. This screen lists the coverages for this line. Notice that the columns show us the name of each coverage, the unique code assigned to that coverage, and the coverage category. The last column shows the covered object associated with each coverage. The term covered object is synonymous with coverable. Next, let's look at the details of one of the coverages. Click the Burglary and Robbery coverage. Notice that the covered object for this coverage is BOPlication. Once a coverage has been created, the covered object cannot be changed. The Existence field is currently set to Electable. This means that the coverage will not be selected by default, but it can be selected. Select the down arrow to show the other options. First, let's talk about the required value. This means that the coverage will automatically be added to the submission and cannot be unselected. Select Required. Click the down arrow again. Next, let's talk about the suggested value. This means that the coverage will automatically be added to the submission, like required, but it can be unselected. Select Suggested. Click the down arrow again. That brings us to the Defined by Script setting. This means that a developer can write a GOSA script to determine the existence of this coverage dynamically. Select that setting. Notice that the Advanced section automatically expands to show a few fields for this coverage. We're not going to talk about the initialization or removal script fields right now, but more information is available in the Policy Center documentation. I just want to point out the existence script field. If you have existence logic that needs to be determined dynamically, you can write GOSA code here to handle those types of requirements. We don't need to do that for this coverage, so I'll just set it back to Electable. Select Electable. Now let's look at the Category field. This coverage is using the Crime category. Categories are used to create logical groupings of coverages. Also, these categories are used in the Policy Center screens to group coverages. Let's look at categories for the Business Owners line. Here's the list of categories. Notice that each category has a name and a code. Let's add a new category. Click Add. This is the Add Category screen. Set the code to BOPTestCat underscore ext. And the name to Test Category. And then save the category. Click OK. Now that we have a new category, we need to validate it. Click Validate. Notice that there are no validation errors. Next, let's add a new coverage. Click Add. This is the Add Coverage screen. Set the code to BOPTestCov underscore ext. Set the name to Test Coverage. Next, let's set the category for this coverage. Click the down arrow. Select Test Category. Next, we'll select the covered object. Click the down arrow. Select Business Owners line. The covered object type defaults to Business Owners Cove, so we don't need to make any changes to that field. Also, the Available Date field defaults to the current date, so we just leave this as is. Click OK. Next, let's validate the coverage just to be sure everything is good. Click Validate. No validation errors. Next, let's talk about change lists. It's important to realize that the changes we have been making to the product model have been recorded in a change list. This makes it easy to review the changes before we make them permanent. To view these changes, click the changes icon. Notice that the Test Coverage and Test Category we created are listed here. Since these were created for this demo, we'll revert those changes. First, let's revert the coverage change. Click on Test Coverage. Now the change list is empty. This concludes the demonstration. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 9.06,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:09.060",
+      "text": "The purpose of this demo is to show how to work with coverages in Product Designer. Product Designer is used to view and configure coverages for PolicyCenter.",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.0,
+          "end": 0.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "purpose",
+          "start": 0.62,
+          "end": 0.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "of",
+          "start": 0.96,
+          "end": 1.16,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 1.16,
+          "end": 1.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "demo",
+          "start": 1.3,
+          "end": 1.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 1.6,
+          "end": 1.8,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 1.8,
+          "end": 1.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "show",
+          "start": 1.92,
+          "end": 2.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "how",
+          "start": 2.14,
+          "end": 2.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 2.36,
+          "end": 2.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "work",
+          "start": 2.48,
+          "end": 2.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 2.72,
+          "end": 2.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "coverages",
+          "start": 2.94,
+          "end": 3.46,
+          "probability": 0.9863
+        },
+        {
+          "word": "in",
+          "start": 3.46,
+          "end": 3.64,
+          "probability": 0.9116
+        },
+        {
+          "word": "Product",
+          "start": 3.64,
+          "end": 3.9,
+          "probability": 0.9282
+        },
+        {
+          "word": "Designer.",
+          "start": 3.9,
+          "end": 4.34,
+          "probability": 0.9932
+        },
+        {
+          "word": "Product",
+          "start": 5.06,
+          "end": 5.62,
+          "probability": 0.9932
+        },
+        {
+          "word": "Designer",
+          "start": 5.62,
+          "end": 5.96,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 5.96,
+          "end": 6.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 6.18,
+          "end": 6.42,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 6.42,
+          "end": 6.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "view",
+          "start": 6.56,
+          "end": 6.8,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 6.8,
+          "end": 7.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "configure",
+          "start": 7.06,
+          "end": 7.48,
+          "probability": 0.999
+        },
+        {
+          "word": "coverages",
+          "start": 7.48,
+          "end": 8.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 8.04,
+          "end": 8.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "PolicyCenter.",
+          "start": 8.22,
+          "end": 9.06,
+          "probability": 0.6475
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 9.88,
+      "end": 15.2,
+      "start_formatted": "00:00:09.880",
+      "end_formatted": "00:00:15.200",
+      "text": "Coverages are associated with policy lines, so let's look at these. Click Policy Lines.",
+      "words": [
+        {
+          "word": "Coverages",
+          "start": 9.88,
+          "end": 10.44,
+          "probability": 0.9746
+        },
+        {
+          "word": "are",
+          "start": 10.44,
+          "end": 10.56,
+          "probability": 0.999
+        },
+        {
+          "word": "associated",
+          "start": 10.56,
+          "end": 11.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 11.08,
+          "end": 11.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 11.32,
+          "end": 11.76,
+          "probability": 0.7583
+        },
+        {
+          "word": "lines,",
+          "start": 11.76,
+          "end": 12.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "so",
+          "start": 12.36,
+          "end": 12.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "let's",
+          "start": 12.68,
+          "end": 12.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "look",
+          "start": 12.94,
+          "end": 13.12,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 13.12,
+          "end": 13.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "these.",
+          "start": 13.26,
+          "end": 13.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "Click",
+          "start": 13.86,
+          "end": 14.28,
+          "probability": 0.9868
+        },
+        {
+          "word": "Policy",
+          "start": 14.28,
+          "end": 14.68,
+          "probability": 0.8301
+        },
+        {
+          "word": "Lines.",
+          "start": 14.68,
+          "end": 15.2,
+          "probability": 0.9434
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 15.72,
+      "end": 22.9,
+      "start_formatted": "00:00:15.720",
+      "end_formatted": "00:00:22.900",
+      "text": "For the purposes of this demo, we'll look at the Business Owners line, also known as BOP. Click Business Owners line.",
+      "words": [
+        {
+          "word": "For",
+          "start": 15.72,
+          "end": 16.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 16.28,
+          "end": 16.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "purposes",
+          "start": 16.4,
+          "end": 16.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 16.8,
+          "end": 17.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 17.04,
+          "end": 17.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "demo,",
+          "start": 17.2,
+          "end": 17.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "we'll",
+          "start": 17.72,
+          "end": 18.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "look",
+          "start": 18.02,
+          "end": 18.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "at",
+          "start": 18.2,
+          "end": 18.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 18.32,
+          "end": 18.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "Business",
+          "start": 18.44,
+          "end": 18.68,
+          "probability": 0.8457
+        },
+        {
+          "word": "Owners",
+          "start": 18.68,
+          "end": 19.12,
+          "probability": 0.8047
+        },
+        {
+          "word": "line,",
+          "start": 19.12,
+          "end": 19.44,
+          "probability": 0.7271
+        },
+        {
+          "word": "also",
+          "start": 19.64,
+          "end": 20.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "known",
+          "start": 20.3,
+          "end": 20.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "as",
+          "start": 20.54,
+          "end": 20.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "BOP.",
+          "start": 20.76,
+          "end": 21.06,
+          "probability": 0.9004
+        },
+        {
+          "word": "Click",
+          "start": 21.34,
+          "end": 21.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "Business",
+          "start": 21.82,
+          "end": 22.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "Owners",
+          "start": 22.12,
+          "end": 22.58,
+          "probability": 0.9824
+        },
+        {
+          "word": "line.",
+          "start": 22.58,
+          "end": 22.9,
+          "probability": 0.7583
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 23.68,
+      "end": 28.16,
+      "start_formatted": "00:00:23.680",
+      "end_formatted": "00:00:28.160",
+      "text": "Next, let's look at the coverages for this line. Click Coverages.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 23.68,
+          "end": 24.24,
+          "probability": 0.999
+        },
+        {
+          "word": "let's",
+          "start": 24.46,
+          "end": 24.86,
+          "probability": 0.999
+        },
+        {
+          "word": "look",
+          "start": 24.86,
+          "end": 25.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 25.02,
+          "end": 25.16,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 25.16,
+          "end": 25.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverages",
+          "start": 25.26,
+          "end": 25.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 25.74,
+          "end": 25.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 25.9,
+          "end": 26.08,
+          "probability": 1.0
+        },
+        {
+          "word": "line.",
+          "start": 26.08,
+          "end": 26.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "Click",
+          "start": 26.98,
+          "end": 27.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "Coverages.",
+          "start": 27.54,
+          "end": 28.16,
+          "probability": 0.9136
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 31.06,
+      "end": 40.5,
+      "start_formatted": "00:00:31.060",
+      "end_formatted": "00:00:40.500",
+      "text": "This screen lists the coverages for this line. Notice that the columns show us the name of each coverage, the unique code assigned to that coverage, and the coverage category.",
+      "words": [
+        {
+          "word": "This",
+          "start": 31.06,
+          "end": 31.66,
+          "probability": 0.9312
+        },
+        {
+          "word": "screen",
+          "start": 31.66,
+          "end": 31.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "lists",
+          "start": 31.92,
+          "end": 32.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 32.14,
+          "end": 32.36,
+          "probability": 0.998
+        },
+        {
+          "word": "coverages",
+          "start": 32.36,
+          "end": 32.84,
+          "probability": 0.9893
+        },
+        {
+          "word": "for",
+          "start": 32.84,
+          "end": 33.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 33.0,
+          "end": 33.18,
+          "probability": 0.999
+        },
+        {
+          "word": "line.",
+          "start": 33.18,
+          "end": 33.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "Notice",
+          "start": 34.2,
+          "end": 34.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "that",
+          "start": 34.8,
+          "end": 34.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 34.98,
+          "end": 35.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "columns",
+          "start": 35.08,
+          "end": 35.42,
+          "probability": 0.9932
+        },
+        {
+          "word": "show",
+          "start": 35.42,
+          "end": 35.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "us",
+          "start": 35.7,
+          "end": 35.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 35.88,
+          "end": 36.0,
+          "probability": 0.9932
+        },
+        {
+          "word": "name",
+          "start": 36.0,
+          "end": 36.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 36.2,
+          "end": 36.36,
+          "probability": 0.998
+        },
+        {
+          "word": "each",
+          "start": 36.36,
+          "end": 36.52,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage,",
+          "start": 36.52,
+          "end": 36.9,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 37.16,
+          "end": 37.38,
+          "probability": 0.9751
+        },
+        {
+          "word": "unique",
+          "start": 37.38,
+          "end": 37.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "code",
+          "start": 37.66,
+          "end": 37.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "assigned",
+          "start": 37.96,
+          "end": 38.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 38.28,
+          "end": 38.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 38.44,
+          "end": 38.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "coverage,",
+          "start": 38.62,
+          "end": 39.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "and",
+          "start": 39.28,
+          "end": 39.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 39.5,
+          "end": 39.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "coverage",
+          "start": 39.62,
+          "end": 39.94,
+          "probability": 0.8296
+        },
+        {
+          "word": "category.",
+          "start": 39.94,
+          "end": 40.5,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 41.12,
+      "end": 48.06,
+      "start_formatted": "00:00:41.120",
+      "end_formatted": "00:00:48.060",
+      "text": "The last column shows the covered object associated with each coverage. The term covered object is synonymous with coverable.",
+      "words": [
+        {
+          "word": "The",
+          "start": 41.12,
+          "end": 41.72,
+          "probability": 0.9912
+        },
+        {
+          "word": "last",
+          "start": 41.72,
+          "end": 41.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "column",
+          "start": 41.98,
+          "end": 42.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "shows",
+          "start": 42.34,
+          "end": 42.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 42.66,
+          "end": 42.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "covered",
+          "start": 42.88,
+          "end": 43.16,
+          "probability": 0.9468
+        },
+        {
+          "word": "object",
+          "start": 43.16,
+          "end": 43.52,
+          "probability": 0.998
+        },
+        {
+          "word": "associated",
+          "start": 43.52,
+          "end": 44.02,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 44.02,
+          "end": 44.34,
+          "probability": 0.999
+        },
+        {
+          "word": "each",
+          "start": 44.34,
+          "end": 44.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage.",
+          "start": 44.52,
+          "end": 44.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "The",
+          "start": 45.26,
+          "end": 45.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "term",
+          "start": 45.6,
+          "end": 45.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "covered",
+          "start": 45.86,
+          "end": 46.18,
+          "probability": 0.6479
+        },
+        {
+          "word": "object",
+          "start": 46.18,
+          "end": 46.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 46.5,
+          "end": 46.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "synonymous",
+          "start": 46.8,
+          "end": 47.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 47.28,
+          "end": 47.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverable.",
+          "start": 47.54,
+          "end": 48.06,
+          "probability": 0.8926
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 48.8,
+      "end": 55.02,
+      "start_formatted": "00:00:48.800",
+      "end_formatted": "00:00:55.020",
+      "text": "Next, let's look at the details of one of the coverages. Click the Burglary and Robbery coverage.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 48.8,
+          "end": 49.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "let's",
+          "start": 49.64,
+          "end": 50.04,
+          "probability": 0.9893
+        },
+        {
+          "word": "look",
+          "start": 50.04,
+          "end": 50.2,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 50.2,
+          "end": 50.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 50.32,
+          "end": 50.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "details",
+          "start": 50.44,
+          "end": 50.84,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 50.84,
+          "end": 51.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "one",
+          "start": 51.04,
+          "end": 51.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "of",
+          "start": 51.18,
+          "end": 51.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 51.28,
+          "end": 51.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "coverages.",
+          "start": 51.4,
+          "end": 52.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "Click",
+          "start": 52.84,
+          "end": 53.44,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 53.44,
+          "end": 53.6,
+          "probability": 0.9829
+        },
+        {
+          "word": "Burglary",
+          "start": 53.6,
+          "end": 54.06,
+          "probability": 0.7505
+        },
+        {
+          "word": "and",
+          "start": 54.06,
+          "end": 54.22,
+          "probability": 0.7217
+        },
+        {
+          "word": "Robbery",
+          "start": 54.22,
+          "end": 54.66,
+          "probability": 0.917
+        },
+        {
+          "word": "coverage.",
+          "start": 54.66,
+          "end": 55.02,
+          "probability": 0.7158
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 57.08,
+      "end": 64.54,
+      "start_formatted": "00:00:57.080",
+      "end_formatted": "00:01:04.540",
+      "text": "Notice that the covered object for this coverage is BOPlication. Once a coverage has been created, the covered object cannot be changed.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 57.08,
+          "end": 57.64,
+          "probability": 0.9609
+        },
+        {
+          "word": "that",
+          "start": 57.64,
+          "end": 57.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 57.86,
+          "end": 57.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "covered",
+          "start": 57.98,
+          "end": 58.26,
+          "probability": 0.7686
+        },
+        {
+          "word": "object",
+          "start": 58.26,
+          "end": 58.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 58.56,
+          "end": 58.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 58.86,
+          "end": 59.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "coverage",
+          "start": 59.04,
+          "end": 59.38,
+          "probability": 0.8901
+        },
+        {
+          "word": "is",
+          "start": 59.38,
+          "end": 59.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "BOPlication.",
+          "start": 59.62,
+          "end": 60.34,
+          "probability": 0.6719
+        },
+        {
+          "word": "Once",
+          "start": 60.64,
+          "end": 61.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 61.1,
+          "end": 61.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "coverage",
+          "start": 61.24,
+          "end": 61.56,
+          "probability": 0.9697
+        },
+        {
+          "word": "has",
+          "start": 61.56,
+          "end": 61.82,
+          "probability": 0.999
+        },
+        {
+          "word": "been",
+          "start": 61.82,
+          "end": 61.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "created,",
+          "start": 61.96,
+          "end": 62.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 62.64,
+          "end": 62.86,
+          "probability": 0.998
+        },
+        {
+          "word": "covered",
+          "start": 62.86,
+          "end": 63.14,
+          "probability": 0.9814
+        },
+        {
+          "word": "object",
+          "start": 63.14,
+          "end": 63.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "cannot",
+          "start": 63.58,
+          "end": 63.84,
+          "probability": 0.9907
+        },
+        {
+          "word": "be",
+          "start": 63.84,
+          "end": 64.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "changed.",
+          "start": 64.08,
+          "end": 64.54,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 65.12,
+      "end": 72.58,
+      "start_formatted": "00:01:05.120",
+      "end_formatted": "00:01:12.580",
+      "text": "The Existence field is currently set to Electable. This means that the coverage will not be selected by default, but it can be selected.",
+      "words": [
+        {
+          "word": "The",
+          "start": 65.12,
+          "end": 65.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "Existence",
+          "start": 65.68,
+          "end": 66.22,
+          "probability": 0.8486
+        },
+        {
+          "word": "field",
+          "start": 66.22,
+          "end": 66.54,
+          "probability": 0.978
+        },
+        {
+          "word": "is",
+          "start": 66.54,
+          "end": 66.76,
+          "probability": 0.999
+        },
+        {
+          "word": "currently",
+          "start": 66.76,
+          "end": 67.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "set",
+          "start": 67.04,
+          "end": 67.32,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 67.32,
+          "end": 67.48,
+          "probability": 0.999
+        },
+        {
+          "word": "Electable.",
+          "start": 67.48,
+          "end": 67.94,
+          "probability": 0.9326
+        },
+        {
+          "word": "This",
+          "start": 68.22,
+          "end": 68.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "means",
+          "start": 68.64,
+          "end": 68.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 68.9,
+          "end": 69.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 69.14,
+          "end": 69.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "coverage",
+          "start": 69.26,
+          "end": 69.58,
+          "probability": 0.9922
+        },
+        {
+          "word": "will",
+          "start": 69.58,
+          "end": 69.8,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 69.8,
+          "end": 69.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "be",
+          "start": 69.98,
+          "end": 70.18,
+          "probability": 0.999
+        },
+        {
+          "word": "selected",
+          "start": 70.18,
+          "end": 70.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "by",
+          "start": 70.58,
+          "end": 70.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "default,",
+          "start": 70.82,
+          "end": 71.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "but",
+          "start": 71.5,
+          "end": 71.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 71.78,
+          "end": 71.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 71.88,
+          "end": 72.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 72.0,
+          "end": 72.14,
+          "probability": 0.999
+        },
+        {
+          "word": "selected.",
+          "start": 72.14,
+          "end": 72.58,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 73.48,
+      "end": 84.58,
+      "start_formatted": "00:01:13.480",
+      "end_formatted": "00:01:24.580",
+      "text": "Select the down arrow to show the other options. First, let's talk about the required value. This means that the coverage will automatically be added to the submission and cannot be unselected.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 73.48,
+          "end": 74.0,
+          "probability": 0.0169
+        },
+        {
+          "word": "the",
+          "start": 74.0,
+          "end": 74.08,
+          "probability": 0.0728
+        },
+        {
+          "word": "down",
+          "start": 74.08,
+          "end": 74.24,
+          "probability": 0.4329
+        },
+        {
+          "word": "arrow",
+          "start": 74.24,
+          "end": 74.48,
+          "probability": 0.9785
+        },
+        {
+          "word": "to",
+          "start": 74.48,
+          "end": 74.66,
+          "probability": 0.7583
+        },
+        {
+          "word": "show",
+          "start": 74.66,
+          "end": 74.84,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 74.84,
+          "end": 75.02,
+          "probability": 0.9639
+        },
+        {
+          "word": "other",
+          "start": 75.02,
+          "end": 75.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "options.",
+          "start": 75.22,
+          "end": 75.74,
+          "probability": 0.9907
+        },
+        {
+          "word": "First,",
+          "start": 77.68,
+          "end": 78.2,
+          "probability": 0.8491
+        },
+        {
+          "word": "let's",
+          "start": 78.46,
+          "end": 78.8,
+          "probability": 0.9824
+        },
+        {
+          "word": "talk",
+          "start": 78.8,
+          "end": 78.98,
+          "probability": 0.998
+        },
+        {
+          "word": "about",
+          "start": 78.98,
+          "end": 79.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 79.24,
+          "end": 79.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "required",
+          "start": 79.38,
+          "end": 79.74,
+          "probability": 0.6182
+        },
+        {
+          "word": "value.",
+          "start": 79.74,
+          "end": 80.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "This",
+          "start": 80.48,
+          "end": 80.9,
+          "probability": 0.9849
+        },
+        {
+          "word": "means",
+          "start": 80.9,
+          "end": 81.14,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 81.14,
+          "end": 81.4,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 81.4,
+          "end": 81.52,
+          "probability": 0.9844
+        },
+        {
+          "word": "coverage",
+          "start": 81.52,
+          "end": 81.84,
+          "probability": 0.9624
+        },
+        {
+          "word": "will",
+          "start": 81.84,
+          "end": 82.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "automatically",
+          "start": 82.12,
+          "end": 82.6,
+          "probability": 0.939
+        },
+        {
+          "word": "be",
+          "start": 82.6,
+          "end": 82.9,
+          "probability": 0.998
+        },
+        {
+          "word": "added",
+          "start": 82.9,
+          "end": 83.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 83.1,
+          "end": 83.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 83.28,
+          "end": 83.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "submission",
+          "start": 83.42,
+          "end": 83.8,
+          "probability": 0.981
+        },
+        {
+          "word": "and",
+          "start": 83.8,
+          "end": 84.0,
+          "probability": 0.9873
+        },
+        {
+          "word": "cannot",
+          "start": 84.0,
+          "end": 84.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "be",
+          "start": 84.22,
+          "end": 84.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "unselected.",
+          "start": 84.46,
+          "end": 84.72,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 85.52,
+      "end": 101.82,
+      "start_formatted": "00:01:25.520",
+      "end_formatted": "00:01:41.820",
+      "text": "Select Required. Click the down arrow again. Next, let's talk about the suggested value. This means that the coverage will automatically be added to the submission, like required, but it can be unselected. Select Suggested.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 85.52,
+          "end": 86.04,
+          "probability": 0.9839
+        },
+        {
+          "word": "Required.",
+          "start": 86.04,
+          "end": 86.56,
+          "probability": 0.7373
+        },
+        {
+          "word": "Click",
+          "start": 87.14,
+          "end": 87.66,
+          "probability": 0.9463
+        },
+        {
+          "word": "the",
+          "start": 87.66,
+          "end": 87.8,
+          "probability": 0.9937
+        },
+        {
+          "word": "down",
+          "start": 87.8,
+          "end": 87.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "arrow",
+          "start": 87.98,
+          "end": 88.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "again.",
+          "start": 88.24,
+          "end": 88.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "Next,",
+          "start": 91.62,
+          "end": 92.14,
+          "probability": 0.9888
+        },
+        {
+          "word": "let's",
+          "start": 92.38,
+          "end": 92.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "talk",
+          "start": 92.74,
+          "end": 92.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "about",
+          "start": 92.92,
+          "end": 93.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 93.18,
+          "end": 93.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "suggested",
+          "start": 93.34,
+          "end": 93.78,
+          "probability": 0.6343
+        },
+        {
+          "word": "value.",
+          "start": 93.78,
+          "end": 94.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "This",
+          "start": 94.56,
+          "end": 94.94,
+          "probability": 0.9917
+        },
+        {
+          "word": "means",
+          "start": 94.94,
+          "end": 95.18,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 95.18,
+          "end": 95.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 95.4,
+          "end": 95.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "coverage",
+          "start": 95.52,
+          "end": 95.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 95.84,
+          "end": 96.1,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 96.1,
+          "end": 96.58,
+          "probability": 0.9873
+        },
+        {
+          "word": "be",
+          "start": 96.58,
+          "end": 96.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "added",
+          "start": 96.9,
+          "end": 97.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 97.1,
+          "end": 97.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 97.26,
+          "end": 97.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "submission,",
+          "start": 97.38,
+          "end": 97.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "like",
+          "start": 98.04,
+          "end": 98.32,
+          "probability": 0.9917
+        },
+        {
+          "word": "required,",
+          "start": 98.32,
+          "end": 98.76,
+          "probability": 0.438
+        },
+        {
+          "word": "but",
+          "start": 99.02,
+          "end": 99.3,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 99.3,
+          "end": 99.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "can",
+          "start": 99.42,
+          "end": 99.58,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 99.58,
+          "end": 99.7,
+          "probability": 0.998
+        },
+        {
+          "word": "unselected.",
+          "start": 99.7,
+          "end": 100.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "Select",
+          "start": 100.68,
+          "end": 101.2,
+          "probability": 0.9897
+        },
+        {
+          "word": "Suggested.",
+          "start": 101.2,
+          "end": 101.82,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 101.82,
+      "end": 103.6,
+      "start_formatted": "00:01:41.820",
+      "end_formatted": "00:01:43.600",
+      "text": "Click the down arrow again.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 101.82,
+          "end": 102.56,
+          "probability": 0.9209
+        },
+        {
+          "word": "the",
+          "start": 102.56,
+          "end": 102.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "down",
+          "start": 102.72,
+          "end": 102.9,
+          "probability": 0.9893
+        },
+        {
+          "word": "arrow",
+          "start": 102.9,
+          "end": 103.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "again.",
+          "start": 103.16,
+          "end": 103.6,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 106.26,
+      "end": 115.46,
+      "start_formatted": "00:01:46.260",
+      "end_formatted": "00:01:55.460",
+      "text": "That brings us to the Defined by Script setting. This means that a developer can write a GOSA script to determine the existence of this coverage dynamically. Select that setting.",
+      "words": [
+        {
+          "word": "That",
+          "start": 106.26,
+          "end": 106.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "brings",
+          "start": 106.78,
+          "end": 107.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "us",
+          "start": 107.04,
+          "end": 107.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 107.22,
+          "end": 107.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 107.34,
+          "end": 107.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "Defined",
+          "start": 107.46,
+          "end": 107.86,
+          "probability": 0.668
+        },
+        {
+          "word": "by",
+          "start": 107.86,
+          "end": 108.04,
+          "probability": 0.9287
+        },
+        {
+          "word": "Script",
+          "start": 108.04,
+          "end": 108.36,
+          "probability": 0.4321
+        },
+        {
+          "word": "setting.",
+          "start": 108.36,
+          "end": 108.7,
+          "probability": 0.9644
+        },
+        {
+          "word": "This",
+          "start": 109.02,
+          "end": 109.42,
+          "probability": 0.998
+        },
+        {
+          "word": "means",
+          "start": 109.42,
+          "end": 109.68,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 109.68,
+          "end": 109.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 109.9,
+          "end": 110.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "developer",
+          "start": 110.02,
+          "end": 110.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "can",
+          "start": 110.38,
+          "end": 110.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "write",
+          "start": 110.62,
+          "end": 110.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 110.82,
+          "end": 110.98,
+          "probability": 0.9819
+        },
+        {
+          "word": "GOSA",
+          "start": 110.98,
+          "end": 111.3,
+          "probability": 0.9424
+        },
+        {
+          "word": "script",
+          "start": 111.3,
+          "end": 111.54,
+          "probability": 0.9897
+        },
+        {
+          "word": "to",
+          "start": 111.54,
+          "end": 111.72,
+          "probability": 0.999
+        },
+        {
+          "word": "determine",
+          "start": 111.72,
+          "end": 112.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 112.06,
+          "end": 112.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "existence",
+          "start": 112.26,
+          "end": 112.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 112.62,
+          "end": 112.88,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 112.88,
+          "end": 113.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "coverage",
+          "start": 113.06,
+          "end": 113.42,
+          "probability": 0.9863
+        },
+        {
+          "word": "dynamically.",
+          "start": 113.42,
+          "end": 113.98,
+          "probability": 0.999
+        },
+        {
+          "word": "Select",
+          "start": 114.38,
+          "end": 114.9,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 114.9,
+          "end": 115.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "setting.",
+          "start": 115.14,
+          "end": 115.46,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 116.16,
+      "end": 128.56,
+      "start_formatted": "00:01:56.160",
+      "end_formatted": "00:02:08.560",
+      "text": "Notice that the Advanced section automatically expands to show a few fields for this coverage. We're not going to talk about the initialization or removal script fields right now, but more information is available in the Policy Center documentation.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 116.16,
+          "end": 116.68,
+          "probability": 0.9819
+        },
+        {
+          "word": "that",
+          "start": 116.68,
+          "end": 116.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 116.88,
+          "end": 117.0,
+          "probability": 0.998
+        },
+        {
+          "word": "Advanced",
+          "start": 117.0,
+          "end": 117.38,
+          "probability": 0.4441
+        },
+        {
+          "word": "section",
+          "start": 117.38,
+          "end": 117.8,
+          "probability": 0.9385
+        },
+        {
+          "word": "automatically",
+          "start": 117.8,
+          "end": 118.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "expands",
+          "start": 118.28,
+          "end": 118.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 118.84,
+          "end": 119.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "show",
+          "start": 119.06,
+          "end": 119.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 119.24,
+          "end": 119.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "few",
+          "start": 119.36,
+          "end": 119.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "fields",
+          "start": 119.52,
+          "end": 119.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 119.86,
+          "end": 120.04,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 120.04,
+          "end": 120.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage.",
+          "start": 120.22,
+          "end": 120.58,
+          "probability": 0.9922
+        },
+        {
+          "word": "We're",
+          "start": 120.96,
+          "end": 121.38,
+          "probability": 0.9062
+        },
+        {
+          "word": "not",
+          "start": 121.38,
+          "end": 121.54,
+          "probability": 0.999
+        },
+        {
+          "word": "going",
+          "start": 121.54,
+          "end": 121.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 121.78,
+          "end": 121.92,
+          "probability": 0.999
+        },
+        {
+          "word": "talk",
+          "start": 121.92,
+          "end": 122.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 122.16,
+          "end": 122.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 122.4,
+          "end": 122.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "initialization",
+          "start": 122.56,
+          "end": 123.2,
+          "probability": 0.8462
+        },
+        {
+          "word": "or",
+          "start": 123.2,
+          "end": 123.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "removal",
+          "start": 123.44,
+          "end": 123.82,
+          "probability": 0.9751
+        },
+        {
+          "word": "script",
+          "start": 123.82,
+          "end": 124.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "fields",
+          "start": 124.14,
+          "end": 124.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "right",
+          "start": 124.6,
+          "end": 124.82,
+          "probability": 0.999
+        },
+        {
+          "word": "now,",
+          "start": 124.82,
+          "end": 125.18,
+          "probability": 1.0
+        },
+        {
+          "word": "but",
+          "start": 125.4,
+          "end": 125.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "more",
+          "start": 125.68,
+          "end": 125.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "information",
+          "start": 125.88,
+          "end": 126.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 126.36,
+          "end": 126.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 126.62,
+          "end": 126.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 126.98,
+          "end": 127.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 127.18,
+          "end": 127.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "Policy",
+          "start": 127.28,
+          "end": 127.64,
+          "probability": 0.9238
+        },
+        {
+          "word": "Center",
+          "start": 127.64,
+          "end": 127.98,
+          "probability": 0.9609
+        },
+        {
+          "word": "documentation.",
+          "start": 127.98,
+          "end": 128.56,
+          "probability": 0.9634
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 129.04,
+      "end": 138.58,
+      "start_formatted": "00:02:09.040",
+      "end_formatted": "00:02:18.580",
+      "text": "I just want to point out the existence script field. If you have existence logic that needs to be determined dynamically, you can write GOSA code here to handle those types of requirements.",
+      "words": [
+        {
+          "word": "I",
+          "start": 129.04,
+          "end": 129.5,
+          "probability": 0.8271
+        },
+        {
+          "word": "just",
+          "start": 129.5,
+          "end": 129.72,
+          "probability": 0.9849
+        },
+        {
+          "word": "want",
+          "start": 129.72,
+          "end": 129.88,
+          "probability": 0.938
+        },
+        {
+          "word": "to",
+          "start": 129.88,
+          "end": 130.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "point",
+          "start": 130.0,
+          "end": 130.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "out",
+          "start": 130.24,
+          "end": 130.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 130.42,
+          "end": 130.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "existence",
+          "start": 130.58,
+          "end": 130.96,
+          "probability": 0.4712
+        },
+        {
+          "word": "script",
+          "start": 130.96,
+          "end": 131.38,
+          "probability": 0.9785
+        },
+        {
+          "word": "field.",
+          "start": 131.38,
+          "end": 131.8,
+          "probability": 0.998
+        },
+        {
+          "word": "If",
+          "start": 132.1,
+          "end": 132.5,
+          "probability": 0.9912
+        },
+        {
+          "word": "you",
+          "start": 132.5,
+          "end": 132.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 132.6,
+          "end": 132.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "existence",
+          "start": 132.78,
+          "end": 133.22,
+          "probability": 0.979
+        },
+        {
+          "word": "logic",
+          "start": 133.22,
+          "end": 133.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 133.62,
+          "end": 133.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "needs",
+          "start": 133.82,
+          "end": 134.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 134.02,
+          "end": 134.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 134.16,
+          "end": 134.3,
+          "probability": 0.999
+        },
+        {
+          "word": "determined",
+          "start": 134.3,
+          "end": 134.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "dynamically,",
+          "start": 134.7,
+          "end": 135.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "you",
+          "start": 135.68,
+          "end": 135.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "can",
+          "start": 135.9,
+          "end": 136.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "write",
+          "start": 136.04,
+          "end": 136.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "GOSA",
+          "start": 136.28,
+          "end": 136.62,
+          "probability": 0.8882
+        },
+        {
+          "word": "code",
+          "start": 136.62,
+          "end": 136.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "here",
+          "start": 136.82,
+          "end": 137.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 137.02,
+          "end": 137.16,
+          "probability": 0.998
+        },
+        {
+          "word": "handle",
+          "start": 137.16,
+          "end": 137.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "those",
+          "start": 137.42,
+          "end": 137.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "types",
+          "start": 137.64,
+          "end": 137.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 137.88,
+          "end": 138.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "requirements.",
+          "start": 138.08,
+          "end": 138.58,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 138.58,
+      "end": 145.28,
+      "start_formatted": "00:02:18.580",
+      "end_formatted": "00:02:25.280",
+      "text": "We don't need to do that for this coverage, so I'll just set it back to Electable. Select Electable.",
+      "words": [
+        {
+          "word": "We",
+          "start": 138.58,
+          "end": 139.72,
+          "probability": 0.9702
+        },
+        {
+          "word": "don't",
+          "start": 139.72,
+          "end": 139.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "need",
+          "start": 139.94,
+          "end": 140.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 140.08,
+          "end": 140.22,
+          "probability": 0.999
+        },
+        {
+          "word": "do",
+          "start": 140.22,
+          "end": 140.34,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 140.34,
+          "end": 140.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 140.54,
+          "end": 140.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 140.68,
+          "end": 140.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage,",
+          "start": 140.86,
+          "end": 141.26,
+          "probability": 0.9922
+        },
+        {
+          "word": "so",
+          "start": 141.46,
+          "end": 141.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "I'll",
+          "start": 141.76,
+          "end": 141.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "just",
+          "start": 141.98,
+          "end": 142.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "set",
+          "start": 142.18,
+          "end": 142.4,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 142.4,
+          "end": 142.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 142.52,
+          "end": 142.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 142.74,
+          "end": 142.9,
+          "probability": 1.0
+        },
+        {
+          "word": "Electable.",
+          "start": 142.9,
+          "end": 143.4,
+          "probability": 0.8359
+        },
+        {
+          "word": "Select",
+          "start": 144.14,
+          "end": 144.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "Electable.",
+          "start": 144.72,
+          "end": 145.28,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 148.34,
+      "end": 156.8,
+      "start_formatted": "00:02:28.340",
+      "end_formatted": "00:02:36.800",
+      "text": "Now let's look at the Category field. This coverage is using the Crime category. Categories are used to create logical groupings of coverages.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 148.34,
+          "end": 148.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "let's",
+          "start": 148.92,
+          "end": 149.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "look",
+          "start": 149.26,
+          "end": 149.44,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 149.44,
+          "end": 149.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 149.56,
+          "end": 149.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "Category",
+          "start": 149.68,
+          "end": 150.08,
+          "probability": 0.8447
+        },
+        {
+          "word": "field.",
+          "start": 150.08,
+          "end": 150.52,
+          "probability": 0.9922
+        },
+        {
+          "word": "This",
+          "start": 150.82,
+          "end": 151.26,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 151.26,
+          "end": 151.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 151.6,
+          "end": 151.9,
+          "probability": 1.0
+        },
+        {
+          "word": "using",
+          "start": 151.9,
+          "end": 152.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 152.18,
+          "end": 152.32,
+          "probability": 1.0
+        },
+        {
+          "word": "Crime",
+          "start": 152.32,
+          "end": 152.58,
+          "probability": 0.9341
+        },
+        {
+          "word": "category.",
+          "start": 152.58,
+          "end": 153.08,
+          "probability": 0.9185
+        },
+        {
+          "word": "Categories",
+          "start": 153.7,
+          "end": 154.28,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 154.28,
+          "end": 154.42,
+          "probability": 1.0
+        },
+        {
+          "word": "used",
+          "start": 154.42,
+          "end": 154.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 154.68,
+          "end": 154.82,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 154.82,
+          "end": 155.12,
+          "probability": 1.0
+        },
+        {
+          "word": "logical",
+          "start": 155.12,
+          "end": 155.58,
+          "probability": 0.999
+        },
+        {
+          "word": "groupings",
+          "start": 155.58,
+          "end": 156.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 156.04,
+          "end": 156.18,
+          "probability": 1.0
+        },
+        {
+          "word": "coverages.",
+          "start": 156.18,
+          "end": 156.8,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 156.8,
+      "end": 165.16,
+      "start_formatted": "00:02:36.800",
+      "end_formatted": "00:02:45.160",
+      "text": "Also, these categories are used in the Policy Center screens to group coverages. Let's look at categories for the Business Owners line.",
+      "words": [
+        {
+          "word": "Also,",
+          "start": 156.8,
+          "end": 157.62,
+          "probability": 0.9565
+        },
+        {
+          "word": "these",
+          "start": 157.9,
+          "end": 158.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "categories",
+          "start": 158.26,
+          "end": 158.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "are",
+          "start": 158.78,
+          "end": 159.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "used",
+          "start": 159.02,
+          "end": 159.3,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 159.3,
+          "end": 159.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 159.44,
+          "end": 159.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "Policy",
+          "start": 159.54,
+          "end": 159.9,
+          "probability": 0.7896
+        },
+        {
+          "word": "Center",
+          "start": 159.9,
+          "end": 160.26,
+          "probability": 0.9727
+        },
+        {
+          "word": "screens",
+          "start": 160.26,
+          "end": 160.68,
+          "probability": 0.9697
+        },
+        {
+          "word": "to",
+          "start": 160.68,
+          "end": 160.88,
+          "probability": 0.999
+        },
+        {
+          "word": "group",
+          "start": 160.88,
+          "end": 161.14,
+          "probability": 0.9883
+        },
+        {
+          "word": "coverages.",
+          "start": 161.14,
+          "end": 161.8,
+          "probability": 0.9927
+        },
+        {
+          "word": "Let's",
+          "start": 162.32,
+          "end": 162.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "look",
+          "start": 162.96,
+          "end": 163.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "at",
+          "start": 163.1,
+          "end": 163.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "categories",
+          "start": 163.26,
+          "end": 163.72,
+          "probability": 0.8096
+        },
+        {
+          "word": "for",
+          "start": 163.72,
+          "end": 164.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 164.04,
+          "end": 164.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "Business",
+          "start": 164.16,
+          "end": 164.44,
+          "probability": 0.7373
+        },
+        {
+          "word": "Owners",
+          "start": 164.44,
+          "end": 164.84,
+          "probability": 0.9287
+        },
+        {
+          "word": "line.",
+          "start": 164.84,
+          "end": 165.16,
+          "probability": 0.9668
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 166.44,
+      "end": 174.0,
+      "start_formatted": "00:02:46.440",
+      "end_formatted": "00:02:54.000",
+      "text": "Here's the list of categories. Notice that each category has a name and a code. Let's add a new category. Click Add.",
+      "words": [
+        {
+          "word": "Here's",
+          "start": 166.44,
+          "end": 167.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 167.08,
+          "end": 167.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "list",
+          "start": 167.2,
+          "end": 167.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 167.4,
+          "end": 167.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "categories.",
+          "start": 167.56,
+          "end": 168.06,
+          "probability": 0.9785
+        },
+        {
+          "word": "Notice",
+          "start": 168.4,
+          "end": 168.9,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 168.9,
+          "end": 169.1,
+          "probability": 0.999
+        },
+        {
+          "word": "each",
+          "start": 169.1,
+          "end": 169.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "category",
+          "start": 169.28,
+          "end": 169.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "has",
+          "start": 169.66,
+          "end": 170.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 170.04,
+          "end": 170.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "name",
+          "start": 170.14,
+          "end": 170.34,
+          "probability": 0.9917
+        },
+        {
+          "word": "and",
+          "start": 170.34,
+          "end": 170.46,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 170.46,
+          "end": 170.54,
+          "probability": 0.998
+        },
+        {
+          "word": "code.",
+          "start": 170.54,
+          "end": 170.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "Let's",
+          "start": 171.32,
+          "end": 171.96,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 171.96,
+          "end": 172.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 172.1,
+          "end": 172.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 172.2,
+          "end": 172.36,
+          "probability": 0.998
+        },
+        {
+          "word": "category.",
+          "start": 172.36,
+          "end": 172.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "Click",
+          "start": 173.24,
+          "end": 173.7,
+          "probability": 0.998
+        },
+        {
+          "word": "Add.",
+          "start": 173.7,
+          "end": 174.0,
+          "probability": 0.79
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 175.44,
+      "end": 186.4,
+      "start_formatted": "00:02:55.440",
+      "end_formatted": "00:03:06.400",
+      "text": "This is the Add Category screen. Set the code to BOPTestCat underscore ext. And the name to Test Category. And then save the category. Click OK.",
+      "words": [
+        {
+          "word": "This",
+          "start": 175.44,
+          "end": 176.0,
+          "probability": 0.9473
+        },
+        {
+          "word": "is",
+          "start": 176.0,
+          "end": 176.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 176.16,
+          "end": 176.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Add",
+          "start": 176.3,
+          "end": 176.5,
+          "probability": 0.542
+        },
+        {
+          "word": "Category",
+          "start": 176.5,
+          "end": 176.98,
+          "probability": 0.9419
+        },
+        {
+          "word": "screen.",
+          "start": 176.98,
+          "end": 177.44,
+          "probability": 0.9717
+        },
+        {
+          "word": "Set",
+          "start": 177.94,
+          "end": 178.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 178.5,
+          "end": 178.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "code",
+          "start": 178.64,
+          "end": 178.84,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 178.84,
+          "end": 178.98,
+          "probability": 0.999
+        },
+        {
+          "word": "BOPTestCat",
+          "start": 178.98,
+          "end": 179.74,
+          "probability": 0.6602
+        },
+        {
+          "word": "underscore",
+          "start": 179.74,
+          "end": 179.94,
+          "probability": 0.3081
+        },
+        {
+          "word": "ext.",
+          "start": 179.94,
+          "end": 180.6,
+          "probability": 0.6299
+        },
+        {
+          "word": "And",
+          "start": 181.18,
+          "end": 181.74,
+          "probability": 0.9512
+        },
+        {
+          "word": "the",
+          "start": 181.74,
+          "end": 181.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "name",
+          "start": 181.86,
+          "end": 182.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 182.04,
+          "end": 182.18,
+          "probability": 1.0
+        },
+        {
+          "word": "Test",
+          "start": 182.18,
+          "end": 182.46,
+          "probability": 0.8853
+        },
+        {
+          "word": "Category.",
+          "start": 182.46,
+          "end": 183.0,
+          "probability": 0.8701
+        },
+        {
+          "word": "And",
+          "start": 183.62,
+          "end": 184.18,
+          "probability": 0.999
+        },
+        {
+          "word": "then",
+          "start": 184.18,
+          "end": 184.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "save",
+          "start": 184.36,
+          "end": 184.64,
+          "probability": 0.9585
+        },
+        {
+          "word": "the",
+          "start": 184.64,
+          "end": 184.8,
+          "probability": 1.0
+        },
+        {
+          "word": "category.",
+          "start": 184.8,
+          "end": 185.28,
+          "probability": 0.978
+        },
+        {
+          "word": "Click",
+          "start": 185.64,
+          "end": 186.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "OK.",
+          "start": 186.12,
+          "end": 186.4,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 187.82,
+      "end": 192.68,
+      "start_formatted": "00:03:07.820",
+      "end_formatted": "00:03:12.680",
+      "text": "Now that we have a new category, we need to validate it. Click Validate.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 187.82,
+          "end": 188.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 188.38,
+          "end": 188.56,
+          "probability": 1.0
+        },
+        {
+          "word": "we",
+          "start": 188.56,
+          "end": 188.68,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 188.68,
+          "end": 188.86,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 188.86,
+          "end": 188.96,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 188.96,
+          "end": 189.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "category,",
+          "start": 189.1,
+          "end": 189.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "we",
+          "start": 189.88,
+          "end": 190.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "need",
+          "start": 190.1,
+          "end": 190.26,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 190.26,
+          "end": 190.42,
+          "probability": 1.0
+        },
+        {
+          "word": "validate",
+          "start": 190.42,
+          "end": 190.78,
+          "probability": 0.999
+        },
+        {
+          "word": "it.",
+          "start": 190.78,
+          "end": 191.06,
+          "probability": 1.0
+        },
+        {
+          "word": "Click",
+          "start": 191.52,
+          "end": 192.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "Validate.",
+          "start": 192.08,
+          "end": 192.68,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 195.78,
+      "end": 203.82,
+      "start_formatted": "00:03:15.780",
+      "end_formatted": "00:03:23.820",
+      "text": "Notice that there are no validation errors. Next, let's add a new coverage. Click Add.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 195.78,
+          "end": 196.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 196.34,
+          "end": 196.54,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 196.54,
+          "end": 196.68,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 196.68,
+          "end": 196.78,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 196.78,
+          "end": 196.96,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 196.96,
+          "end": 197.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "errors.",
+          "start": 197.46,
+          "end": 197.96,
+          "probability": 1.0
+        },
+        {
+          "word": "Next,",
+          "start": 198.78,
+          "end": 199.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "let's",
+          "start": 199.56,
+          "end": 199.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 199.94,
+          "end": 200.06,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 200.06,
+          "end": 200.16,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 200.16,
+          "end": 200.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage.",
+          "start": 200.3,
+          "end": 200.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "Click",
+          "start": 202.98,
+          "end": 203.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Add.",
+          "start": 203.54,
+          "end": 203.82,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 207.06,
+      "end": 219.86,
+      "start_formatted": "00:03:27.060",
+      "end_formatted": "00:03:39.860",
+      "text": "This is the Add Coverage screen. Set the code to BOPTestCov underscore ext. Set the name to Test Coverage. Next, let's set the category for this coverage. Click the down arrow.",
+      "words": [
+        {
+          "word": "This",
+          "start": 207.06,
+          "end": 207.74,
+          "probability": 0.8838
+        },
+        {
+          "word": "is",
+          "start": 207.74,
+          "end": 207.9,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 207.9,
+          "end": 208.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "Add",
+          "start": 208.04,
+          "end": 208.24,
+          "probability": 0.3916
+        },
+        {
+          "word": "Coverage",
+          "start": 208.24,
+          "end": 208.68,
+          "probability": 0.9106
+        },
+        {
+          "word": "screen.",
+          "start": 208.68,
+          "end": 209.08,
+          "probability": 0.9717
+        },
+        {
+          "word": "Set",
+          "start": 209.48,
+          "end": 210.12,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 210.12,
+          "end": 210.24,
+          "probability": 0.998
+        },
+        {
+          "word": "code",
+          "start": 210.24,
+          "end": 210.44,
+          "probability": 0.9692
+        },
+        {
+          "word": "to",
+          "start": 210.44,
+          "end": 210.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "BOPTestCov",
+          "start": 210.6,
+          "end": 211.32,
+          "probability": 0.52
+        },
+        {
+          "word": "underscore",
+          "start": 211.32,
+          "end": 211.54,
+          "probability": 0.0276
+        },
+        {
+          "word": "ext.",
+          "start": 211.54,
+          "end": 212.18,
+          "probability": 0.5625
+        },
+        {
+          "word": "Set",
+          "start": 212.8,
+          "end": 213.44,
+          "probability": 0.981
+        },
+        {
+          "word": "the",
+          "start": 213.44,
+          "end": 213.58,
+          "probability": 0.998
+        },
+        {
+          "word": "name",
+          "start": 213.58,
+          "end": 213.74,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 213.74,
+          "end": 213.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "Test",
+          "start": 213.9,
+          "end": 214.16,
+          "probability": 0.6929
+        },
+        {
+          "word": "Coverage.",
+          "start": 214.16,
+          "end": 214.64,
+          "probability": 0.8643
+        },
+        {
+          "word": "Next,",
+          "start": 215.18,
+          "end": 215.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "let's",
+          "start": 216.08,
+          "end": 216.5,
+          "probability": 0.9854
+        },
+        {
+          "word": "set",
+          "start": 216.5,
+          "end": 216.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 216.62,
+          "end": 216.76,
+          "probability": 0.999
+        },
+        {
+          "word": "category",
+          "start": 216.76,
+          "end": 217.1,
+          "probability": 0.9248
+        },
+        {
+          "word": "for",
+          "start": 217.1,
+          "end": 217.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 217.44,
+          "end": 217.64,
+          "probability": 0.998
+        },
+        {
+          "word": "coverage.",
+          "start": 217.64,
+          "end": 218.08,
+          "probability": 0.9736
+        },
+        {
+          "word": "Click",
+          "start": 218.62,
+          "end": 219.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 219.18,
+          "end": 219.34,
+          "probability": 0.998
+        },
+        {
+          "word": "down",
+          "start": 219.34,
+          "end": 219.5,
+          "probability": 0.9575
+        },
+        {
+          "word": "arrow.",
+          "start": 219.5,
+          "end": 219.86,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 222.8,
+      "end": 230.76,
+      "start_formatted": "00:03:42.800",
+      "end_formatted": "00:03:50.760",
+      "text": "Select Test Category. Next, we'll select the covered object. Click the down arrow.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 222.8,
+          "end": 223.48,
+          "probability": 0.9854
+        },
+        {
+          "word": "Test",
+          "start": 223.48,
+          "end": 223.72,
+          "probability": 0.959
+        },
+        {
+          "word": "Category.",
+          "start": 223.72,
+          "end": 224.22,
+          "probability": 0.9614
+        },
+        {
+          "word": "Next,",
+          "start": 226.86,
+          "end": 227.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "we'll",
+          "start": 227.82,
+          "end": 228.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "select",
+          "start": 228.12,
+          "end": 228.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 228.46,
+          "end": 228.6,
+          "probability": 0.999
+        },
+        {
+          "word": "covered",
+          "start": 228.6,
+          "end": 228.88,
+          "probability": 0.9185
+        },
+        {
+          "word": "object.",
+          "start": 228.88,
+          "end": 229.3,
+          "probability": 0.998
+        },
+        {
+          "word": "Click",
+          "start": 229.6,
+          "end": 230.06,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 230.06,
+          "end": 230.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "down",
+          "start": 230.22,
+          "end": 230.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "arrow.",
+          "start": 230.38,
+          "end": 230.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 233.68,
+      "end": 250.58,
+      "start_formatted": "00:03:53.680",
+      "end_formatted": "00:04:10.580",
+      "text": "Select Business Owners line. The covered object type defaults to Business Owners Cove, so we don't need to make any changes to that field. Also, the Available Date field defaults to the current date, so we just leave this as is. Click OK.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 233.68,
+          "end": 234.24,
+          "probability": 0.8496
+        },
+        {
+          "word": "Business",
+          "start": 234.24,
+          "end": 234.54,
+          "probability": 0.4976
+        },
+        {
+          "word": "Owners",
+          "start": 234.54,
+          "end": 234.98,
+          "probability": 0.6631
+        },
+        {
+          "word": "line.",
+          "start": 234.98,
+          "end": 235.3,
+          "probability": 0.54
+        },
+        {
+          "word": "The",
+          "start": 237.56,
+          "end": 238.12,
+          "probability": 0.9805
+        },
+        {
+          "word": "covered",
+          "start": 238.12,
+          "end": 238.4,
+          "probability": 0.895
+        },
+        {
+          "word": "object",
+          "start": 238.4,
+          "end": 238.82,
+          "probability": 0.957
+        },
+        {
+          "word": "type",
+          "start": 238.82,
+          "end": 239.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "defaults",
+          "start": 239.14,
+          "end": 239.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 239.7,
+          "end": 239.84,
+          "probability": 0.999
+        },
+        {
+          "word": "Business",
+          "start": 239.84,
+          "end": 240.12,
+          "probability": 0.749
+        },
+        {
+          "word": "Owners",
+          "start": 240.12,
+          "end": 240.58,
+          "probability": 0.8311
+        },
+        {
+          "word": "Cove,",
+          "start": 240.58,
+          "end": 240.92,
+          "probability": 0.7021
+        },
+        {
+          "word": "so",
+          "start": 241.1,
+          "end": 241.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "we",
+          "start": 241.38,
+          "end": 241.52,
+          "probability": 0.998
+        },
+        {
+          "word": "don't",
+          "start": 241.52,
+          "end": 241.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "need",
+          "start": 241.72,
+          "end": 241.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 241.9,
+          "end": 242.04,
+          "probability": 0.999
+        },
+        {
+          "word": "make",
+          "start": 242.04,
+          "end": 242.2,
+          "probability": 0.998
+        },
+        {
+          "word": "any",
+          "start": 242.2,
+          "end": 242.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "changes",
+          "start": 242.38,
+          "end": 242.78,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 242.78,
+          "end": 242.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 242.98,
+          "end": 243.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "field.",
+          "start": 243.18,
+          "end": 243.54,
+          "probability": 0.998
+        },
+        {
+          "word": "Also,",
+          "start": 243.9,
+          "end": 244.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 244.7,
+          "end": 244.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "Available",
+          "start": 244.94,
+          "end": 245.38,
+          "probability": 0.7324
+        },
+        {
+          "word": "Date",
+          "start": 245.38,
+          "end": 245.62,
+          "probability": 0.9043
+        },
+        {
+          "word": "field",
+          "start": 245.62,
+          "end": 245.96,
+          "probability": 0.9756
+        },
+        {
+          "word": "defaults",
+          "start": 245.96,
+          "end": 246.52,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 246.52,
+          "end": 246.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 246.66,
+          "end": 246.78,
+          "probability": 0.9917
+        },
+        {
+          "word": "current",
+          "start": 246.78,
+          "end": 247.02,
+          "probability": 0.9126
+        },
+        {
+          "word": "date,",
+          "start": 247.02,
+          "end": 247.32,
+          "probability": 0.9902
+        },
+        {
+          "word": "so",
+          "start": 247.52,
+          "end": 247.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 247.8,
+          "end": 247.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "just",
+          "start": 247.94,
+          "end": 248.14,
+          "probability": 0.998
+        },
+        {
+          "word": "leave",
+          "start": 248.14,
+          "end": 248.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "this",
+          "start": 248.34,
+          "end": 248.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "as",
+          "start": 248.6,
+          "end": 248.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "is.",
+          "start": 248.82,
+          "end": 249.1,
+          "probability": 0.9185
+        },
+        {
+          "word": "Click",
+          "start": 250.0,
+          "end": 250.3,
+          "probability": 0.9849
+        },
+        {
+          "word": "OK.",
+          "start": 250.3,
+          "end": 250.58,
+          "probability": 0.9023
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 253.98,
+      "end": 261.06,
+      "start_formatted": "00:04:13.980",
+      "end_formatted": "00:04:21.060",
+      "text": "Next, let's validate the coverage just to be sure everything is good. Click Validate. No validation errors.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 253.98,
+          "end": 254.58,
+          "probability": 0.9028
+        },
+        {
+          "word": "let's",
+          "start": 254.88,
+          "end": 255.22,
+          "probability": 0.98
+        },
+        {
+          "word": "validate",
+          "start": 255.22,
+          "end": 255.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 255.56,
+          "end": 255.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "coverage",
+          "start": 255.76,
+          "end": 256.14,
+          "probability": 0.9751
+        },
+        {
+          "word": "just",
+          "start": 256.14,
+          "end": 256.38,
+          "probability": 0.978
+        },
+        {
+          "word": "to",
+          "start": 256.38,
+          "end": 256.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 256.5,
+          "end": 256.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "sure",
+          "start": 256.62,
+          "end": 256.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "everything",
+          "start": 256.8,
+          "end": 257.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 257.16,
+          "end": 257.4,
+          "probability": 0.999
+        },
+        {
+          "word": "good.",
+          "start": 257.4,
+          "end": 257.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "Click",
+          "start": 257.96,
+          "end": 258.44,
+          "probability": 0.9917
+        },
+        {
+          "word": "Validate.",
+          "start": 258.44,
+          "end": 259.06,
+          "probability": 0.7983
+        },
+        {
+          "word": "No",
+          "start": 259.42,
+          "end": 260.0,
+          "probability": 0.9893
+        },
+        {
+          "word": "validation",
+          "start": 260.0,
+          "end": 260.52,
+          "probability": 0.937
+        },
+        {
+          "word": "errors.",
+          "start": 260.52,
+          "end": 261.06,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 261.74,
+      "end": 273.58,
+      "start_formatted": "00:04:21.740",
+      "end_formatted": "00:04:33.580",
+      "text": "Next, let's talk about change lists. It's important to realize that the changes we have been making to the product model have been recorded in a change list. This makes it easy to review the changes before we make them permanent.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 261.74,
+          "end": 262.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "let's",
+          "start": 262.58,
+          "end": 262.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "talk",
+          "start": 262.92,
+          "end": 263.1,
+          "probability": 0.999
+        },
+        {
+          "word": "about",
+          "start": 263.1,
+          "end": 263.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "change",
+          "start": 263.4,
+          "end": 263.7,
+          "probability": 0.75
+        },
+        {
+          "word": "lists.",
+          "start": 263.7,
+          "end": 264.06,
+          "probability": 0.9834
+        },
+        {
+          "word": "It's",
+          "start": 264.48,
+          "end": 264.8,
+          "probability": 0.9937
+        },
+        {
+          "word": "important",
+          "start": 264.8,
+          "end": 265.18,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 265.18,
+          "end": 265.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "realize",
+          "start": 265.4,
+          "end": 265.72,
+          "probability": 0.9839
+        },
+        {
+          "word": "that",
+          "start": 265.72,
+          "end": 266.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 266.02,
+          "end": 266.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "changes",
+          "start": 266.16,
+          "end": 266.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 266.54,
+          "end": 266.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "have",
+          "start": 266.78,
+          "end": 266.9,
+          "probability": 0.9946
+        },
+        {
+          "word": "been",
+          "start": 266.9,
+          "end": 267.06,
+          "probability": 0.999
+        },
+        {
+          "word": "making",
+          "start": 267.06,
+          "end": 267.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 267.3,
+          "end": 267.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 267.48,
+          "end": 267.6,
+          "probability": 0.998
+        },
+        {
+          "word": "product",
+          "start": 267.6,
+          "end": 267.94,
+          "probability": 0.9424
+        },
+        {
+          "word": "model",
+          "start": 267.94,
+          "end": 268.3,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 268.3,
+          "end": 268.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "been",
+          "start": 268.52,
+          "end": 268.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "recorded",
+          "start": 268.66,
+          "end": 269.06,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 269.06,
+          "end": 269.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 269.22,
+          "end": 269.32,
+          "probability": 0.998
+        },
+        {
+          "word": "change",
+          "start": 269.32,
+          "end": 269.6,
+          "probability": 0.9722
+        },
+        {
+          "word": "list.",
+          "start": 269.6,
+          "end": 269.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "This",
+          "start": 270.22,
+          "end": 270.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "makes",
+          "start": 270.64,
+          "end": 270.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 270.86,
+          "end": 271.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "easy",
+          "start": 271.06,
+          "end": 271.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 271.26,
+          "end": 271.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "review",
+          "start": 271.44,
+          "end": 271.7,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 271.7,
+          "end": 271.88,
+          "probability": 0.999
+        },
+        {
+          "word": "changes",
+          "start": 271.88,
+          "end": 272.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "before",
+          "start": 272.26,
+          "end": 272.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 272.58,
+          "end": 272.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "make",
+          "start": 272.86,
+          "end": 273.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "them",
+          "start": 273.06,
+          "end": 273.2,
+          "probability": 0.998
+        },
+        {
+          "word": "permanent.",
+          "start": 273.2,
+          "end": 273.58,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 273.58,
+      "end": 293.6,
+      "start_formatted": "00:04:33.580",
+      "end_formatted": "00:04:53.600",
+      "text": "To view these changes, click the changes icon. Notice that the Test Coverage and Test Category we created are listed here. Since these were created for this demo, we'll revert those changes. First, let's revert the coverage change. Click on Test Coverage.",
+      "words": [
+        {
+          "word": "To",
+          "start": 273.58,
+          "end": 274.7,
+          "probability": 0.9468
+        },
+        {
+          "word": "view",
+          "start": 274.7,
+          "end": 274.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "these",
+          "start": 274.9,
+          "end": 275.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "changes,",
+          "start": 275.1,
+          "end": 275.54,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 275.8,
+          "end": 276.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 276.08,
+          "end": 276.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "changes",
+          "start": 276.24,
+          "end": 276.58,
+          "probability": 0.3965
+        },
+        {
+          "word": "icon.",
+          "start": 276.58,
+          "end": 277.1,
+          "probability": 0.998
+        },
+        {
+          "word": "Notice",
+          "start": 280.64,
+          "end": 281.22,
+          "probability": 0.9937
+        },
+        {
+          "word": "that",
+          "start": 281.22,
+          "end": 281.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 281.4,
+          "end": 281.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "Test",
+          "start": 281.52,
+          "end": 281.74,
+          "probability": 0.1665
+        },
+        {
+          "word": "Coverage",
+          "start": 281.74,
+          "end": 282.1,
+          "probability": 0.8926
+        },
+        {
+          "word": "and",
+          "start": 282.1,
+          "end": 282.3,
+          "probability": 0.9917
+        },
+        {
+          "word": "Test",
+          "start": 282.3,
+          "end": 282.58,
+          "probability": 0.8965
+        },
+        {
+          "word": "Category",
+          "start": 282.58,
+          "end": 283.02,
+          "probability": 0.877
+        },
+        {
+          "word": "we",
+          "start": 283.02,
+          "end": 283.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "created",
+          "start": 283.22,
+          "end": 283.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 283.56,
+          "end": 283.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "listed",
+          "start": 283.76,
+          "end": 284.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "here.",
+          "start": 284.06,
+          "end": 284.4,
+          "probability": 0.999
+        },
+        {
+          "word": "Since",
+          "start": 284.68,
+          "end": 285.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "these",
+          "start": 285.18,
+          "end": 285.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "were",
+          "start": 285.4,
+          "end": 285.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "created",
+          "start": 285.66,
+          "end": 286.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 286.02,
+          "end": 286.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 286.22,
+          "end": 286.42,
+          "probability": 0.998
+        },
+        {
+          "word": "demo,",
+          "start": 286.42,
+          "end": 286.74,
+          "probability": 0.9937
+        },
+        {
+          "word": "we'll",
+          "start": 286.96,
+          "end": 287.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "revert",
+          "start": 287.24,
+          "end": 287.56,
+          "probability": 0.999
+        },
+        {
+          "word": "those",
+          "start": 287.56,
+          "end": 287.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "changes.",
+          "start": 287.78,
+          "end": 288.18,
+          "probability": 0.999
+        },
+        {
+          "word": "First,",
+          "start": 288.9,
+          "end": 289.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "let's",
+          "start": 289.74,
+          "end": 290.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "revert",
+          "start": 290.1,
+          "end": 290.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 290.4,
+          "end": 290.54,
+          "probability": 0.998
+        },
+        {
+          "word": "coverage",
+          "start": 290.54,
+          "end": 290.9,
+          "probability": 0.6519
+        },
+        {
+          "word": "change.",
+          "start": 290.9,
+          "end": 291.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "Click",
+          "start": 292.04,
+          "end": 292.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "on",
+          "start": 292.62,
+          "end": 292.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "Test",
+          "start": 292.82,
+          "end": 293.08,
+          "probability": 0.8892
+        },
+        {
+          "word": "Coverage.",
+          "start": 293.08,
+          "end": 293.6,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 310.38,
+      "end": 319.08,
+      "start_formatted": "00:05:10.380",
+      "end_formatted": "00:05:19.080",
+      "text": "Now the change list is empty. This concludes the demonstration.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 310.38,
+          "end": 311.2,
+          "probability": 0.0028
+        },
+        {
+          "word": "the",
+          "start": 311.2,
+          "end": 312.02,
+          "probability": 0.3174
+        },
+        {
+          "word": "change",
+          "start": 312.02,
+          "end": 316.18,
+          "probability": 0.1798
+        },
+        {
+          "word": "list",
+          "start": 316.18,
+          "end": 316.48,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 316.48,
+          "end": 316.7,
+          "probability": 0.9795
+        },
+        {
+          "word": "empty.",
+          "start": 316.7,
+          "end": 317.0,
+          "probability": 0.9536
+        },
+        {
+          "word": "This",
+          "start": 317.44,
+          "end": 318.02,
+          "probability": 0.9507
+        },
+        {
+          "word": "concludes",
+          "start": 318.02,
+          "end": 318.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 318.42,
+          "end": 318.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "demonstration.",
+          "start": 318.66,
+          "end": 319.08,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 319.08,
+      "end": 319.2,
+      "start_formatted": "00:05:19.080",
+      "end_formatted": "00:05:19.200",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 319.08,
+          "end": 319.08,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 319.08,
+          "end": 319.1,
+          "probability": 0.1387
+        },
+        {
+          "word": "Filogy",
+          "start": 319.1,
+          "end": 319.18,
+          "probability": 0.3723
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.5869
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.4958
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.7197
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.5737
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.8247
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.73
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.8901
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.8496
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9287
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9062
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9326
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9492
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9668
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9727
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9653
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9766
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9731
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9805
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.98
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9839
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9849
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9854
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9858
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9907
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9868
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 319.18,
+          "end": 319.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "Filogy",
+          "start": 319.18,
+          "end": 319.2,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 319.18,
+      "end": 319.18,
+      "start_formatted": "00:05:19.180",
+      "end_formatted": "00:05:19.180",
+      "text": "",
+      "words": []
+    }
+  ]
+}

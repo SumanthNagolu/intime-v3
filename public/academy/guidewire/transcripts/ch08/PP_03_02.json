@@ -1,0 +1,2293 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_03_02.mp4",
+    "video_stem": "PP_03_02",
+    "duration_seconds": 141.64,
+    "duration_formatted": "00:02:21.640",
+    "segment_count": 24,
+    "word_count": 334,
+    "avg_confidence": 0.916,
+    "transcription_time_seconds": 8.36,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:25:20.242011"
+  },
+  "full_text": "In Studio, open the SubmissionWizard.PCF file. It has a list of JobWizard steps, each of which is linked to a screen with the content. The JobWizard steps can be grouped together using WizardStepGroup. The PolicyContract is a group of steps and has a label. It contains a JobWizard step for policy info and a WizardStepSetRef pointing to a WizardStepSet. The WizardStepSet refuses modes to group different set of steps based on line of business. Selecting a different mode displays the WizardStepSet for that line of business. You can double-click to open it. The Dependent Steps are an ordered list of JobWizard steps, each of which maps to a single screen. Some steps may not be accessible until a given step is complete. The order effects where the Back and Next buttons navigate to. Each JobWizard step specifies the title of the screen. Control-click in the Screen property to visit the PCF file. The screen contains the Content, Wizard Buttons and Toolbars. The JobWizard toolbar contains Back and Next buttons to navigate through the JobWizard as well as other buttons relevant to the current step. Click the Mode for the WizardButtons. Select the appropriate JobType to display the WizardButtons for it. Go back to SubmissionWizard.PCF. The Tools section at the bottom contains the Independent Steps. Double-click to open the WizardStepSet for the Tools menu. They do not have a logical order and can be accessed at any time, regardless of what steps have been completed in the JobWizard. Click one of the steps. Each step has the Independent property set to True. The label and icon for the Independent Steps are set at the JobWizard level. Log into PolicyCenter as Alice Applegate. Open a Draft Submission. The Policy Contract is a JobWizard group and the Child Steps are indented. The Back and Next buttons navigate based on the order of Wizard Steps. Each step points to a different screen. This is the end of Overview for JobWizardState. This is the end of Overview for JobWizardState.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 11.84,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:11.840",
+      "text": "In Studio, open the SubmissionWizard.PCF file. It has a list of JobWizard steps, each of which is linked to a screen with the content. The JobWizard steps can be grouped together using WizardStepGroup.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.44,
+          "probability": 0.9927
+        },
+        {
+          "word": "Studio,",
+          "start": 0.44,
+          "end": 0.8,
+          "probability": 0.813
+        },
+        {
+          "word": "open",
+          "start": 1.12,
+          "end": 1.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 1.44,
+          "end": 1.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "SubmissionWizard",
+          "start": 1.56,
+          "end": 2.32,
+          "probability": 0.6807
+        },
+        {
+          "word": ".PCF",
+          "start": 2.32,
+          "end": 2.9,
+          "probability": 0.6216
+        },
+        {
+          "word": "file.",
+          "start": 2.9,
+          "end": 3.26,
+          "probability": 0.9805
+        },
+        {
+          "word": "It",
+          "start": 3.56,
+          "end": 3.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "has",
+          "start": 3.88,
+          "end": 4.04,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 4.04,
+          "end": 4.14,
+          "probability": 0.998
+        },
+        {
+          "word": "list",
+          "start": 4.14,
+          "end": 4.36,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 4.36,
+          "end": 4.48,
+          "probability": 0.999
+        },
+        {
+          "word": "JobWizard",
+          "start": 4.48,
+          "end": 5.06,
+          "probability": 0.7603
+        },
+        {
+          "word": "steps,",
+          "start": 5.06,
+          "end": 5.32,
+          "probability": 0.7632
+        },
+        {
+          "word": "each",
+          "start": 5.7,
+          "end": 5.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 5.98,
+          "end": 6.1,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 6.1,
+          "end": 6.26,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 6.26,
+          "end": 6.4,
+          "probability": 0.998
+        },
+        {
+          "word": "linked",
+          "start": 6.4,
+          "end": 6.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 6.64,
+          "end": 6.78,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 6.78,
+          "end": 6.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "screen",
+          "start": 6.9,
+          "end": 7.2,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 7.2,
+          "end": 7.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 7.44,
+          "end": 7.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "content.",
+          "start": 7.54,
+          "end": 7.86,
+          "probability": 0.9922
+        },
+        {
+          "word": "The",
+          "start": 8.34,
+          "end": 8.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "JobWizard",
+          "start": 8.7,
+          "end": 9.3,
+          "probability": 0.9814
+        },
+        {
+          "word": "steps",
+          "start": 9.3,
+          "end": 9.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "can",
+          "start": 9.52,
+          "end": 9.86,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 9.86,
+          "end": 10.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "grouped",
+          "start": 10.0,
+          "end": 10.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "together",
+          "start": 10.26,
+          "end": 10.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "using",
+          "start": 10.6,
+          "end": 10.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "WizardStepGroup.",
+          "start": 10.92,
+          "end": 11.84,
+          "probability": 0.5483
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 14.12,
+      "end": 22.66,
+      "start_formatted": "00:00:14.120",
+      "end_formatted": "00:00:22.660",
+      "text": "The PolicyContract is a group of steps and has a label. It contains a JobWizard step for policy info and a WizardStepSetRef pointing to a WizardStepSet.",
+      "words": [
+        {
+          "word": "The",
+          "start": 14.12,
+          "end": 14.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "PolicyContract",
+          "start": 14.68,
+          "end": 15.24,
+          "probability": 0.8179
+        },
+        {
+          "word": "is",
+          "start": 15.24,
+          "end": 15.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 15.42,
+          "end": 15.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "group",
+          "start": 15.54,
+          "end": 15.76,
+          "probability": 0.9536
+        },
+        {
+          "word": "of",
+          "start": 15.76,
+          "end": 15.94,
+          "probability": 0.999
+        },
+        {
+          "word": "steps",
+          "start": 15.94,
+          "end": 16.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "and",
+          "start": 16.16,
+          "end": 16.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "has",
+          "start": 16.38,
+          "end": 16.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 16.54,
+          "end": 16.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "label.",
+          "start": 16.66,
+          "end": 16.94,
+          "probability": 0.9727
+        },
+        {
+          "word": "It",
+          "start": 17.24,
+          "end": 17.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "contains",
+          "start": 17.58,
+          "end": 17.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 17.96,
+          "end": 18.12,
+          "probability": 0.998
+        },
+        {
+          "word": "JobWizard",
+          "start": 18.12,
+          "end": 18.7,
+          "probability": 0.9575
+        },
+        {
+          "word": "step",
+          "start": 18.7,
+          "end": 18.94,
+          "probability": 0.7646
+        },
+        {
+          "word": "for",
+          "start": 18.94,
+          "end": 19.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "policy",
+          "start": 19.16,
+          "end": 19.6,
+          "probability": 0.585
+        },
+        {
+          "word": "info",
+          "start": 19.6,
+          "end": 19.88,
+          "probability": 0.9614
+        },
+        {
+          "word": "and",
+          "start": 19.88,
+          "end": 20.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 20.06,
+          "end": 20.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "WizardStepSetRef",
+          "start": 20.14,
+          "end": 21.24,
+          "probability": 0.8521
+        },
+        {
+          "word": "pointing",
+          "start": 21.24,
+          "end": 21.56,
+          "probability": 0.9741
+        },
+        {
+          "word": "to",
+          "start": 21.56,
+          "end": 21.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 21.74,
+          "end": 21.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "WizardStepSet.",
+          "start": 21.86,
+          "end": 22.66,
+          "probability": 0.9663
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 25.4,
+      "end": 29.8,
+      "start_formatted": "00:00:25.400",
+      "end_formatted": "00:00:29.800",
+      "text": "The WizardStepSet refuses modes to group different set of steps based on line of business.",
+      "words": [
+        {
+          "word": "The",
+          "start": 25.4,
+          "end": 25.9,
+          "probability": 0.8657
+        },
+        {
+          "word": "WizardStepSet",
+          "start": 25.9,
+          "end": 26.4,
+          "probability": 0.2869
+        },
+        {
+          "word": "refuses",
+          "start": 26.4,
+          "end": 26.9,
+          "probability": 0.9541
+        },
+        {
+          "word": "modes",
+          "start": 26.9,
+          "end": 27.24,
+          "probability": 0.9717
+        },
+        {
+          "word": "to",
+          "start": 27.24,
+          "end": 27.42,
+          "probability": 0.998
+        },
+        {
+          "word": "group",
+          "start": 27.42,
+          "end": 27.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "different",
+          "start": 27.64,
+          "end": 27.96,
+          "probability": 0.9834
+        },
+        {
+          "word": "set",
+          "start": 27.96,
+          "end": 28.2,
+          "probability": 0.8652
+        },
+        {
+          "word": "of",
+          "start": 28.2,
+          "end": 28.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "steps",
+          "start": 28.36,
+          "end": 28.62,
+          "probability": 0.9487
+        },
+        {
+          "word": "based",
+          "start": 28.62,
+          "end": 28.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "on",
+          "start": 28.98,
+          "end": 29.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "line",
+          "start": 29.18,
+          "end": 29.32,
+          "probability": 0.8325
+        },
+        {
+          "word": "of",
+          "start": 29.32,
+          "end": 29.46,
+          "probability": 0.9111
+        },
+        {
+          "word": "business.",
+          "start": 29.46,
+          "end": 29.8,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 32.82,
+      "end": 38.38,
+      "start_formatted": "00:00:32.820",
+      "end_formatted": "00:00:38.380",
+      "text": "Selecting a different mode displays the WizardStepSet for that line of business. You can double-click to open it.",
+      "words": [
+        {
+          "word": "Selecting",
+          "start": 32.82,
+          "end": 33.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 33.32,
+          "end": 33.42,
+          "probability": 0.998
+        },
+        {
+          "word": "different",
+          "start": 33.42,
+          "end": 33.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "mode",
+          "start": 33.66,
+          "end": 33.94,
+          "probability": 0.9756
+        },
+        {
+          "word": "displays",
+          "start": 33.94,
+          "end": 34.32,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 34.32,
+          "end": 34.52,
+          "probability": 0.9917
+        },
+        {
+          "word": "WizardStepSet",
+          "start": 34.52,
+          "end": 35.26,
+          "probability": 0.8735
+        },
+        {
+          "word": "for",
+          "start": 35.26,
+          "end": 35.48,
+          "probability": 0.9761
+        },
+        {
+          "word": "that",
+          "start": 35.48,
+          "end": 35.66,
+          "probability": 0.998
+        },
+        {
+          "word": "line",
+          "start": 35.66,
+          "end": 35.86,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 35.86,
+          "end": 36.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "business.",
+          "start": 36.0,
+          "end": 36.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "You",
+          "start": 36.72,
+          "end": 37.08,
+          "probability": 0.9907
+        },
+        {
+          "word": "can",
+          "start": 37.08,
+          "end": 37.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "double",
+          "start": 37.24,
+          "end": 37.48,
+          "probability": 0.9814
+        },
+        {
+          "word": "-click",
+          "start": 37.48,
+          "end": 37.7,
+          "probability": 0.834
+        },
+        {
+          "word": "to",
+          "start": 37.7,
+          "end": 37.92,
+          "probability": 0.998
+        },
+        {
+          "word": "open",
+          "start": 37.92,
+          "end": 38.2,
+          "probability": 0.998
+        },
+        {
+          "word": "it.",
+          "start": 38.2,
+          "end": 38.38,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 40.86,
+      "end": 49.82,
+      "start_formatted": "00:00:40.860",
+      "end_formatted": "00:00:49.820",
+      "text": "The Dependent Steps are an ordered list of JobWizard steps, each of which maps to a single screen. Some steps may not be accessible until a given step is complete.",
+      "words": [
+        {
+          "word": "The",
+          "start": 40.86,
+          "end": 41.36,
+          "probability": 0.979
+        },
+        {
+          "word": "Dependent",
+          "start": 41.36,
+          "end": 41.86,
+          "probability": 0.7886
+        },
+        {
+          "word": "Steps",
+          "start": 41.86,
+          "end": 42.16,
+          "probability": 0.666
+        },
+        {
+          "word": "are",
+          "start": 42.16,
+          "end": 42.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "an",
+          "start": 42.26,
+          "end": 42.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "ordered",
+          "start": 42.38,
+          "end": 42.58,
+          "probability": 0.9854
+        },
+        {
+          "word": "list",
+          "start": 42.58,
+          "end": 42.8,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 42.8,
+          "end": 42.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "JobWizard",
+          "start": 42.94,
+          "end": 43.5,
+          "probability": 0.7979
+        },
+        {
+          "word": "steps,",
+          "start": 43.5,
+          "end": 43.84,
+          "probability": 0.1963
+        },
+        {
+          "word": "each",
+          "start": 44.14,
+          "end": 44.4,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 44.4,
+          "end": 44.54,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 44.54,
+          "end": 44.72,
+          "probability": 0.999
+        },
+        {
+          "word": "maps",
+          "start": 44.72,
+          "end": 44.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 44.96,
+          "end": 45.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 45.14,
+          "end": 45.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "single",
+          "start": 45.26,
+          "end": 45.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "screen.",
+          "start": 45.54,
+          "end": 45.9,
+          "probability": 0.9868
+        },
+        {
+          "word": "Some",
+          "start": 46.3,
+          "end": 46.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "steps",
+          "start": 46.8,
+          "end": 47.12,
+          "probability": 0.915
+        },
+        {
+          "word": "may",
+          "start": 47.12,
+          "end": 47.34,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 47.34,
+          "end": 47.54,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 47.54,
+          "end": 47.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "accessible",
+          "start": 47.72,
+          "end": 48.18,
+          "probability": 0.9917
+        },
+        {
+          "word": "until",
+          "start": 48.18,
+          "end": 48.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 48.48,
+          "end": 48.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "given",
+          "start": 48.66,
+          "end": 48.88,
+          "probability": 0.998
+        },
+        {
+          "word": "step",
+          "start": 48.88,
+          "end": 49.16,
+          "probability": 0.9458
+        },
+        {
+          "word": "is",
+          "start": 49.16,
+          "end": 49.38,
+          "probability": 0.999
+        },
+        {
+          "word": "complete.",
+          "start": 49.38,
+          "end": 49.82,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 49.82,
+      "end": 53.3,
+      "start_formatted": "00:00:49.820",
+      "end_formatted": "00:00:53.300",
+      "text": "The order effects where the Back and Next buttons navigate to.",
+      "words": [
+        {
+          "word": "The",
+          "start": 49.82,
+          "end": 50.56,
+          "probability": 0.6543
+        },
+        {
+          "word": "order",
+          "start": 50.56,
+          "end": 50.8,
+          "probability": 0.8916
+        },
+        {
+          "word": "effects",
+          "start": 50.8,
+          "end": 51.2,
+          "probability": 0.666
+        },
+        {
+          "word": "where",
+          "start": 51.2,
+          "end": 51.36,
+          "probability": 0.9399
+        },
+        {
+          "word": "the",
+          "start": 51.36,
+          "end": 51.5,
+          "probability": 0.9912
+        },
+        {
+          "word": "Back",
+          "start": 51.5,
+          "end": 51.72,
+          "probability": 0.3921
+        },
+        {
+          "word": "and",
+          "start": 51.72,
+          "end": 51.88,
+          "probability": 0.8643
+        },
+        {
+          "word": "Next",
+          "start": 51.88,
+          "end": 52.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "buttons",
+          "start": 52.16,
+          "end": 52.52,
+          "probability": 0.9673
+        },
+        {
+          "word": "navigate",
+          "start": 52.52,
+          "end": 52.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "to.",
+          "start": 52.94,
+          "end": 53.3,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 55.2,
+      "end": 62.1,
+      "start_formatted": "00:00:55.200",
+      "end_formatted": "00:01:02.100",
+      "text": "Each JobWizard step specifies the title of the screen. Control-click in the Screen property to visit the PCF file.",
+      "words": [
+        {
+          "word": "Each",
+          "start": 55.2,
+          "end": 55.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "JobWizard",
+          "start": 55.8,
+          "end": 56.4,
+          "probability": 0.6416
+        },
+        {
+          "word": "step",
+          "start": 56.4,
+          "end": 56.66,
+          "probability": 0.9556
+        },
+        {
+          "word": "specifies",
+          "start": 56.66,
+          "end": 57.32,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 57.32,
+          "end": 57.5,
+          "probability": 0.999
+        },
+        {
+          "word": "title",
+          "start": 57.5,
+          "end": 57.76,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 57.76,
+          "end": 57.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 57.94,
+          "end": 58.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen.",
+          "start": 58.02,
+          "end": 58.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "Control",
+          "start": 58.78,
+          "end": 59.26,
+          "probability": 0.7124
+        },
+        {
+          "word": "-click",
+          "start": 59.26,
+          "end": 59.6,
+          "probability": 0.7266
+        },
+        {
+          "word": "in",
+          "start": 59.6,
+          "end": 59.78,
+          "probability": 0.9673
+        },
+        {
+          "word": "the",
+          "start": 59.78,
+          "end": 59.86,
+          "probability": 0.998
+        },
+        {
+          "word": "Screen",
+          "start": 59.86,
+          "end": 60.1,
+          "probability": 0.6362
+        },
+        {
+          "word": "property",
+          "start": 60.1,
+          "end": 60.54,
+          "probability": 0.9224
+        },
+        {
+          "word": "to",
+          "start": 60.54,
+          "end": 60.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "visit",
+          "start": 60.76,
+          "end": 60.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 60.98,
+          "end": 61.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "PCF",
+          "start": 61.16,
+          "end": 61.72,
+          "probability": 0.9443
+        },
+        {
+          "word": "file.",
+          "start": 61.72,
+          "end": 62.1,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 64.48,
+      "end": 75.14,
+      "start_formatted": "00:01:04.480",
+      "end_formatted": "00:01:15.140",
+      "text": "The screen contains the Content, Wizard Buttons and Toolbars. The JobWizard toolbar contains Back and Next buttons to navigate through the JobWizard as well as other buttons relevant to the current step.",
+      "words": [
+        {
+          "word": "The",
+          "start": 64.48,
+          "end": 65.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "screen",
+          "start": 65.08,
+          "end": 65.36,
+          "probability": 0.9702
+        },
+        {
+          "word": "contains",
+          "start": 65.36,
+          "end": 65.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 65.86,
+          "end": 66.0,
+          "probability": 0.998
+        },
+        {
+          "word": "Content,",
+          "start": 66.0,
+          "end": 66.36,
+          "probability": 0.561
+        },
+        {
+          "word": "Wizard",
+          "start": 66.68,
+          "end": 67.06,
+          "probability": 0.9453
+        },
+        {
+          "word": "Buttons",
+          "start": 67.06,
+          "end": 67.46,
+          "probability": 0.6572
+        },
+        {
+          "word": "and",
+          "start": 67.46,
+          "end": 67.64,
+          "probability": 0.8691
+        },
+        {
+          "word": "Toolbars.",
+          "start": 67.64,
+          "end": 68.16,
+          "probability": 0.9561
+        },
+        {
+          "word": "The",
+          "start": 68.5,
+          "end": 68.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "JobWizard",
+          "start": 68.88,
+          "end": 69.5,
+          "probability": 0.9443
+        },
+        {
+          "word": "toolbar",
+          "start": 69.5,
+          "end": 69.82,
+          "probability": 0.5933
+        },
+        {
+          "word": "contains",
+          "start": 69.82,
+          "end": 70.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "Back",
+          "start": 70.34,
+          "end": 70.64,
+          "probability": 0.9678
+        },
+        {
+          "word": "and",
+          "start": 70.64,
+          "end": 70.84,
+          "probability": 0.9575
+        },
+        {
+          "word": "Next",
+          "start": 70.84,
+          "end": 71.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "buttons",
+          "start": 71.08,
+          "end": 71.44,
+          "probability": 0.8174
+        },
+        {
+          "word": "to",
+          "start": 71.44,
+          "end": 71.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "navigate",
+          "start": 71.64,
+          "end": 71.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "through",
+          "start": 71.94,
+          "end": 72.2,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 72.2,
+          "end": 72.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "JobWizard",
+          "start": 72.34,
+          "end": 72.9,
+          "probability": 0.8862
+        },
+        {
+          "word": "as",
+          "start": 72.9,
+          "end": 73.1,
+          "probability": 0.9619
+        },
+        {
+          "word": "well",
+          "start": 73.1,
+          "end": 73.26,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 73.26,
+          "end": 73.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "other",
+          "start": 73.44,
+          "end": 73.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "buttons",
+          "start": 73.6,
+          "end": 73.92,
+          "probability": 0.9858
+        },
+        {
+          "word": "relevant",
+          "start": 73.92,
+          "end": 74.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 74.32,
+          "end": 74.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 74.52,
+          "end": 74.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "current",
+          "start": 74.62,
+          "end": 74.84,
+          "probability": 0.9341
+        },
+        {
+          "word": "step.",
+          "start": 74.84,
+          "end": 75.14,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 75.7,
+      "end": 77.54,
+      "start_formatted": "00:01:15.700",
+      "end_formatted": "00:01:17.540",
+      "text": "Click the Mode for the WizardButtons.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 75.7,
+          "end": 76.18,
+          "probability": 0.5718
+        },
+        {
+          "word": "the",
+          "start": 76.18,
+          "end": 76.34,
+          "probability": 0.9912
+        },
+        {
+          "word": "Mode",
+          "start": 76.34,
+          "end": 76.52,
+          "probability": 0.1953
+        },
+        {
+          "word": "for",
+          "start": 76.52,
+          "end": 76.68,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 76.68,
+          "end": 76.8,
+          "probability": 0.9893
+        },
+        {
+          "word": "WizardButtons.",
+          "start": 76.8,
+          "end": 77.54,
+          "probability": 0.5986
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 80.16,
+      "end": 83.62,
+      "start_formatted": "00:01:20.160",
+      "end_formatted": "00:01:23.620",
+      "text": "Select the appropriate JobType to display the WizardButtons for it.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 80.16,
+          "end": 80.64,
+          "probability": 0.9814
+        },
+        {
+          "word": "the",
+          "start": 80.64,
+          "end": 80.8,
+          "probability": 0.998
+        },
+        {
+          "word": "appropriate",
+          "start": 80.8,
+          "end": 81.26,
+          "probability": 0.959
+        },
+        {
+          "word": "JobType",
+          "start": 81.26,
+          "end": 81.94,
+          "probability": 0.6074
+        },
+        {
+          "word": "to",
+          "start": 81.94,
+          "end": 82.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "display",
+          "start": 82.06,
+          "end": 82.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 82.38,
+          "end": 82.58,
+          "probability": 0.9922
+        },
+        {
+          "word": "WizardButtons",
+          "start": 82.58,
+          "end": 83.24,
+          "probability": 0.9248
+        },
+        {
+          "word": "for",
+          "start": 83.24,
+          "end": 83.44,
+          "probability": 0.9727
+        },
+        {
+          "word": "it.",
+          "start": 83.44,
+          "end": 83.62,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 86.38,
+      "end": 88.14,
+      "start_formatted": "00:01:26.380",
+      "end_formatted": "00:01:28.140",
+      "text": "Go back to SubmissionWizard.PCF.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 86.38,
+          "end": 86.86,
+          "probability": 0.9878
+        },
+        {
+          "word": "back",
+          "start": 86.86,
+          "end": 87.04,
+          "probability": 0.9819
+        },
+        {
+          "word": "to",
+          "start": 87.04,
+          "end": 87.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "SubmissionWizard",
+          "start": 87.2,
+          "end": 87.98,
+          "probability": 0.9102
+        },
+        {
+          "word": ".PCF.",
+          "start": 87.98,
+          "end": 88.22,
+          "probability": 0.7686
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 90.16,
+      "end": 93.5,
+      "start_formatted": "00:01:30.160",
+      "end_formatted": "00:01:33.500",
+      "text": "The Tools section at the bottom contains the Independent Steps.",
+      "words": [
+        {
+          "word": "The",
+          "start": 90.16,
+          "end": 90.64,
+          "probability": 0.9902
+        },
+        {
+          "word": "Tools",
+          "start": 90.64,
+          "end": 90.88,
+          "probability": 0.8999
+        },
+        {
+          "word": "section",
+          "start": 90.88,
+          "end": 91.24,
+          "probability": 0.9492
+        },
+        {
+          "word": "at",
+          "start": 91.24,
+          "end": 91.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 91.42,
+          "end": 91.52,
+          "probability": 0.998
+        },
+        {
+          "word": "bottom",
+          "start": 91.52,
+          "end": 91.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "contains",
+          "start": 91.76,
+          "end": 92.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 92.28,
+          "end": 92.46,
+          "probability": 0.998
+        },
+        {
+          "word": "Independent",
+          "start": 92.46,
+          "end": 92.94,
+          "probability": 0.3352
+        },
+        {
+          "word": "Steps.",
+          "start": 92.94,
+          "end": 93.5,
+          "probability": 0.7988
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 95.6,
+      "end": 98.58,
+      "start_formatted": "00:01:35.600",
+      "end_formatted": "00:01:38.580",
+      "text": "Double-click to open the WizardStepSet for the Tools menu.",
+      "words": [
+        {
+          "word": "Double",
+          "start": 95.6,
+          "end": 96.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "-click",
+          "start": 96.08,
+          "end": 96.26,
+          "probability": 0.8647
+        },
+        {
+          "word": "to",
+          "start": 96.26,
+          "end": 96.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "open",
+          "start": 96.46,
+          "end": 96.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 96.7,
+          "end": 96.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "WizardStepSet",
+          "start": 96.84,
+          "end": 97.6,
+          "probability": 0.3931
+        },
+        {
+          "word": "for",
+          "start": 97.6,
+          "end": 97.8,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 97.8,
+          "end": 97.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "Tools",
+          "start": 97.94,
+          "end": 98.2,
+          "probability": 0.9531
+        },
+        {
+          "word": "menu.",
+          "start": 98.2,
+          "end": 98.58,
+          "probability": 0.876
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 100.9,
+      "end": 107.44,
+      "start_formatted": "00:01:40.900",
+      "end_formatted": "00:01:47.440",
+      "text": "They do not have a logical order and can be accessed at any time, regardless of what steps have been completed in the JobWizard.",
+      "words": [
+        {
+          "word": "They",
+          "start": 100.9,
+          "end": 101.34,
+          "probability": 0.8022
+        },
+        {
+          "word": "do",
+          "start": 101.34,
+          "end": 101.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "not",
+          "start": 101.52,
+          "end": 101.7,
+          "probability": 0.9946
+        },
+        {
+          "word": "have",
+          "start": 101.7,
+          "end": 101.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 101.88,
+          "end": 102.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "logical",
+          "start": 102.0,
+          "end": 102.34,
+          "probability": 0.981
+        },
+        {
+          "word": "order",
+          "start": 102.34,
+          "end": 102.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 102.66,
+          "end": 102.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "can",
+          "start": 102.86,
+          "end": 102.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 102.98,
+          "end": 103.12,
+          "probability": 0.999
+        },
+        {
+          "word": "accessed",
+          "start": 103.12,
+          "end": 103.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "at",
+          "start": 103.56,
+          "end": 103.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "any",
+          "start": 103.76,
+          "end": 103.92,
+          "probability": 0.9751
+        },
+        {
+          "word": "time,",
+          "start": 103.92,
+          "end": 104.34,
+          "probability": 0.999
+        },
+        {
+          "word": "regardless",
+          "start": 104.54,
+          "end": 105.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 105.02,
+          "end": 105.28,
+          "probability": 0.999
+        },
+        {
+          "word": "what",
+          "start": 105.28,
+          "end": 105.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "steps",
+          "start": 105.46,
+          "end": 105.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "have",
+          "start": 105.76,
+          "end": 105.96,
+          "probability": 0.998
+        },
+        {
+          "word": "been",
+          "start": 105.96,
+          "end": 106.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "completed",
+          "start": 106.12,
+          "end": 106.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 106.58,
+          "end": 106.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 106.74,
+          "end": 106.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "JobWizard.",
+          "start": 106.82,
+          "end": 107.44,
+          "probability": 0.5063
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 107.76,
+      "end": 108.92,
+      "start_formatted": "00:01:47.760",
+      "end_formatted": "00:01:48.920",
+      "text": "Click one of the steps.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 107.76,
+          "end": 108.2,
+          "probability": 0.9858
+        },
+        {
+          "word": "one",
+          "start": 108.2,
+          "end": 108.36,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 108.36,
+          "end": 108.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 108.46,
+          "end": 108.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "steps.",
+          "start": 108.58,
+          "end": 108.92,
+          "probability": 0.9502
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 111.22,
+      "end": 113.86,
+      "start_formatted": "00:01:51.220",
+      "end_formatted": "00:01:53.860",
+      "text": "Each step has the Independent property set to True.",
+      "words": [
+        {
+          "word": "Each",
+          "start": 111.22,
+          "end": 111.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "step",
+          "start": 111.66,
+          "end": 111.92,
+          "probability": 0.9663
+        },
+        {
+          "word": "has",
+          "start": 111.92,
+          "end": 112.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 112.12,
+          "end": 112.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "Independent",
+          "start": 112.26,
+          "end": 112.72,
+          "probability": 0.1819
+        },
+        {
+          "word": "property",
+          "start": 112.72,
+          "end": 113.18,
+          "probability": 0.8931
+        },
+        {
+          "word": "set",
+          "start": 113.18,
+          "end": 113.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 113.46,
+          "end": 113.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "True.",
+          "start": 113.66,
+          "end": 113.86,
+          "probability": 0.4585
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 114.26,
+      "end": 118.04,
+      "start_formatted": "00:01:54.260",
+      "end_formatted": "00:01:58.040",
+      "text": "The label and icon for the Independent Steps are set at the JobWizard level.",
+      "words": [
+        {
+          "word": "The",
+          "start": 114.26,
+          "end": 114.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "label",
+          "start": 114.6,
+          "end": 114.88,
+          "probability": 0.9019
+        },
+        {
+          "word": "and",
+          "start": 114.88,
+          "end": 115.04,
+          "probability": 0.9902
+        },
+        {
+          "word": "icon",
+          "start": 115.04,
+          "end": 115.34,
+          "probability": 0.9907
+        },
+        {
+          "word": "for",
+          "start": 115.34,
+          "end": 115.56,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 115.56,
+          "end": 115.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "Independent",
+          "start": 115.7,
+          "end": 116.16,
+          "probability": 0.5918
+        },
+        {
+          "word": "Steps",
+          "start": 116.16,
+          "end": 116.7,
+          "probability": 0.582
+        },
+        {
+          "word": "are",
+          "start": 116.7,
+          "end": 116.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "set",
+          "start": 116.8,
+          "end": 116.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "at",
+          "start": 116.98,
+          "end": 117.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 117.1,
+          "end": 117.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "JobWizard",
+          "start": 117.18,
+          "end": 117.76,
+          "probability": 0.9741
+        },
+        {
+          "word": "level.",
+          "start": 117.76,
+          "end": 118.04,
+          "probability": 0.9644
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 120.62,
+      "end": 123.18,
+      "start_formatted": "00:02:00.620",
+      "end_formatted": "00:02:03.180",
+      "text": "Log into PolicyCenter as Alice Applegate.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 120.62,
+          "end": 121.18,
+          "probability": 0.9062
+        },
+        {
+          "word": "into",
+          "start": 121.18,
+          "end": 121.42,
+          "probability": 0.6216
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 121.42,
+          "end": 122.22,
+          "probability": 0.6548
+        },
+        {
+          "word": "as",
+          "start": 122.22,
+          "end": 122.38,
+          "probability": 0.957
+        },
+        {
+          "word": "Alice",
+          "start": 122.38,
+          "end": 122.64,
+          "probability": 0.9414
+        },
+        {
+          "word": "Applegate.",
+          "start": 122.64,
+          "end": 123.18,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 123.4,
+      "end": 124.72,
+      "start_formatted": "00:02:03.400",
+      "end_formatted": "00:02:04.720",
+      "text": "Open a Draft Submission.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 123.4,
+          "end": 123.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 123.86,
+          "end": 124.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "Draft",
+          "start": 124.02,
+          "end": 124.24,
+          "probability": 0.6143
+        },
+        {
+          "word": "Submission.",
+          "start": 124.24,
+          "end": 124.72,
+          "probability": 0.7993
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 125.08,
+      "end": 128.98,
+      "start_formatted": "00:02:05.080",
+      "end_formatted": "00:02:08.980",
+      "text": "The Policy Contract is a JobWizard group and the Child Steps are indented.",
+      "words": [
+        {
+          "word": "The",
+          "start": 125.08,
+          "end": 125.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Policy",
+          "start": 125.44,
+          "end": 125.84,
+          "probability": 0.6318
+        },
+        {
+          "word": "Contract",
+          "start": 125.84,
+          "end": 126.24,
+          "probability": 0.6445
+        },
+        {
+          "word": "is",
+          "start": 126.24,
+          "end": 126.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 126.58,
+          "end": 126.68,
+          "probability": 0.998
+        },
+        {
+          "word": "JobWizard",
+          "start": 126.68,
+          "end": 127.22,
+          "probability": 0.6738
+        },
+        {
+          "word": "group",
+          "start": 127.22,
+          "end": 127.44,
+          "probability": 0.7881
+        },
+        {
+          "word": "and",
+          "start": 127.44,
+          "end": 127.64,
+          "probability": 0.958
+        },
+        {
+          "word": "the",
+          "start": 127.64,
+          "end": 127.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "Child",
+          "start": 127.74,
+          "end": 128.04,
+          "probability": 0.2976
+        },
+        {
+          "word": "Steps",
+          "start": 128.04,
+          "end": 128.42,
+          "probability": 0.7295
+        },
+        {
+          "word": "are",
+          "start": 128.42,
+          "end": 128.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "indented.",
+          "start": 128.54,
+          "end": 128.98,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 130.86,
+      "end": 134.52,
+      "start_formatted": "00:02:10.860",
+      "end_formatted": "00:02:14.520",
+      "text": "The Back and Next buttons navigate based on the order of Wizard Steps.",
+      "words": [
+        {
+          "word": "The",
+          "start": 130.86,
+          "end": 131.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "Back",
+          "start": 131.42,
+          "end": 131.66,
+          "probability": 0.814
+        },
+        {
+          "word": "and",
+          "start": 131.66,
+          "end": 131.82,
+          "probability": 0.9614
+        },
+        {
+          "word": "Next",
+          "start": 131.82,
+          "end": 132.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "buttons",
+          "start": 132.02,
+          "end": 132.36,
+          "probability": 0.8491
+        },
+        {
+          "word": "navigate",
+          "start": 132.36,
+          "end": 132.74,
+          "probability": 0.9937
+        },
+        {
+          "word": "based",
+          "start": 132.74,
+          "end": 133.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 133.14,
+          "end": 133.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 133.28,
+          "end": 133.38,
+          "probability": 0.998
+        },
+        {
+          "word": "order",
+          "start": 133.38,
+          "end": 133.6,
+          "probability": 0.9189
+        },
+        {
+          "word": "of",
+          "start": 133.6,
+          "end": 133.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "Wizard",
+          "start": 133.82,
+          "end": 134.04,
+          "probability": 0.4912
+        },
+        {
+          "word": "Steps.",
+          "start": 134.04,
+          "end": 134.52,
+          "probability": 0.8574
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 134.74,
+      "end": 136.6,
+      "start_formatted": "00:02:14.740",
+      "end_formatted": "00:02:16.600",
+      "text": "Each step points to a different screen.",
+      "words": [
+        {
+          "word": "Each",
+          "start": 134.74,
+          "end": 135.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "step",
+          "start": 135.14,
+          "end": 135.4,
+          "probability": 0.7085
+        },
+        {
+          "word": "points",
+          "start": 135.4,
+          "end": 135.72,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 135.72,
+          "end": 135.88,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 135.88,
+          "end": 135.98,
+          "probability": 0.998
+        },
+        {
+          "word": "different",
+          "start": 135.98,
+          "end": 136.2,
+          "probability": 0.998
+        },
+        {
+          "word": "screen.",
+          "start": 136.2,
+          "end": 136.6,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 139.32,
+      "end": 141.36,
+      "start_formatted": "00:02:19.320",
+      "end_formatted": "00:02:21.360",
+      "text": "This is the end of Overview for JobWizardState.",
+      "words": [
+        {
+          "word": "This",
+          "start": 139.32,
+          "end": 139.76,
+          "probability": 0.8252
+        },
+        {
+          "word": "is",
+          "start": 139.76,
+          "end": 139.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 139.92,
+          "end": 140.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "end",
+          "start": 140.06,
+          "end": 140.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 140.22,
+          "end": 140.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "Overview",
+          "start": 140.34,
+          "end": 140.72,
+          "probability": 0.5859
+        },
+        {
+          "word": "for",
+          "start": 140.72,
+          "end": 140.94,
+          "probability": 0.9409
+        },
+        {
+          "word": "JobWizardState.",
+          "start": 140.94,
+          "end": 141.36,
+          "probability": 0.4648
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 141.36,
+      "end": 141.64,
+      "start_formatted": "00:02:21.360",
+      "end_formatted": "00:02:21.640",
+      "text": "This is the end of Overview for JobWizardState.",
+      "words": [
+        {
+          "word": "This",
+          "start": 141.36,
+          "end": 141.36,
+          "probability": 0.0173
+        },
+        {
+          "word": "is",
+          "start": 141.36,
+          "end": 141.36,
+          "probability": 0.7666
+        },
+        {
+          "word": "the",
+          "start": 141.36,
+          "end": 141.36,
+          "probability": 0.6934
+        },
+        {
+          "word": "end",
+          "start": 141.36,
+          "end": 141.36,
+          "probability": 0.9185
+        },
+        {
+          "word": "of",
+          "start": 141.36,
+          "end": 141.36,
+          "probability": 0.9585
+        },
+        {
+          "word": "Overview",
+          "start": 141.36,
+          "end": 141.36,
+          "probability": 0.9316
+        },
+        {
+          "word": "for",
+          "start": 141.36,
+          "end": 141.36,
+          "probability": 0.8535
+        },
+        {
+          "word": "JobWizardState.",
+          "start": 141.36,
+          "end": 141.64,
+          "probability": 0.9702
+        }
+      ]
+    }
+  ]
+}

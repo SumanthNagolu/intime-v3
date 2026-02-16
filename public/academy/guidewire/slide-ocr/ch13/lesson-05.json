@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "chapter": "ch13",
+    "chapter_title": "Rating Introduction",
+    "lesson": "lesson-05",
+    "slide_count": 17,
+    "slides_with_text": 15,
+    "total_words": 501,
+    "avg_confidence": 86.5,
+    "processing_time_seconds": 4.67,
+    "extracted_at": "2026-02-15T18:24:17.431057"
+  },
+  "full_text": "Rate Routines and Parameter Sets\n\nLesson\nobjectives\n\nAccess rate routines in the PolicyCenter user\ninterface\n\nIdentify the parts of a rate routine\n\nAccess parameter sets in the PolicyCenter\nuser interface\n\nIdentify the parts of a parameter set\n\n| Rate routines i\n\nRating Analyst What is a rate routine and what is it\nused for in PolicyCenter?\n\nA rate routine defines steps (ene a\nfor calculating a cost for purailise)\ncoverage, taxes, and other 37\ncosts on a policy. I'll show\nyou more about rate |\n\nroutines.\n\n| Rating user story : Rate routines fa\n\n.\n\nQuote m>> -\n\nRating Engine\n\n[ G d Rate routines\n\nSet up Rate Routines As an actuary or rating analyst,!_ The Rate Routines in\nwant to enter the rate routines PolicyCenter represent the rating\ninto the Rating Engine. (algorithm) used to calculate each\n\npremium or cost\n\n| Rate routine structure i\n\n¢ Arate routine has one or more\ninstruction that makes up the rating\nalgorithm\n\n* Each instruction is made up of one or\nmore steps\n\n¢ The rate routine steps may include\nmathematical operators, conditionals\nand assignments that work on the\nrate table lookups\n\n| Demonstration G\n\nRate routines\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Whatis the purpose of a rate routine?\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n_- — Whatis the purpose of a rate routine?\n\n¢\noe The rate routine provides a way to define the rating algorithm for the rating engine.\n\nSS oe ooo ee oe oOoOe SoD\n\n| About parameter sets i\n\nJulia\nImplementation {\nArchitect\n\nNext, let’s talk about\n.\nY y parameter sets.\n\nKalani °\nRating Analyst Ve\n\nYes, | see that parameter\nsets are connected to\nrate routines. Please tell\nme more about these.\n\n| Parameter sets and the rate routine\n\n¢« Aparameter set enables users to\ndefine the information available for use\nwithin a rate routine.\n* Each rate routine uses a parameter set\n\n* Parameter sets determine the contextual\ninformation that is passed to a rate routine\nat run-time\n\n* Parameter sets can be defined for a policy\nline or remain generic\n\n¢ Parameter sets are pre-defined\n\n| Demonstration G\n\nParameter sets\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,- — Howmany parameter sets are associated with a rate routine?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n,- — Howmany parameter sets are associated with a rate routine?\n\nyy One.\n\nSS oe ooo ee oe oOoOe SoD\n\nLesson\nobjectives\nreview\n\nAccess rate routines in the PolicyCenter user\ninterface\n\nIdentify the parts of a rate routine\n\nAccess parameter sets in the PolicyCenter\nuser interface\n\nIdentify the parts of a parameter set\n\n| Student exercise\n\nRate routines and parameter sets",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Rate Routines and Parameter Sets",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nAccess rate routines in the PolicyCenter user\ninterface\n\nIdentify the parts of a rate routine\n\nAccess parameter sets in the PolicyCenter\nuser interface\n\nIdentify the parts of a parameter set",
+      "word_count": 32,
+      "avg_confidence": 95.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Rate routines i\n\nRating Analyst What is a rate routine and what is it\nused for in PolicyCenter?\n\nA rate routine defines steps (ene a\nfor calculating a cost for purailise)\ncoverage, taxes, and other 37\ncosts on a policy. I'll show\nyou more about rate |\n\nroutines.",
+      "word_count": 49,
+      "avg_confidence": 86.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Rating user story : Rate routines fa\n\n.\n\nQuote m>> -\n\nRating Engine\n\n[ G d Rate routines\n\nSet up Rate Routines As an actuary or rating analyst,!_ The Rate Routines in\nwant to enter the rate routines PolicyCenter represent the rating\ninto the Rating Engine. (algorithm) used to calculate each\n\npremium or cost",
+      "word_count": 55,
+      "avg_confidence": 91.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Rate routine structure i\n\n¢ Arate routine has one or more\ninstruction that makes up the rating\nalgorithm\n\n* Each instruction is made up of one or\nmore steps\n\n¢ The rate routine steps may include\nmathematical operators, conditionals\nand assignments that work on the\nrate table lookups",
+      "word_count": 49,
+      "avg_confidence": 89.72,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Demonstration G\n\nRate routines\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Question\n\n_- — Whatis the purpose of a rate routine?\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 19,
+      "avg_confidence": 64.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Answer\n\n_- — Whatis the purpose of a rate routine?\n\n¢\noe The rate routine provides a way to define the rating algorithm for the rating engine.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 34,
+      "avg_confidence": 76.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| About parameter sets i\n\nJulia\nImplementation {\nArchitect\n\nNext, let’s talk about\n.\nY y parameter sets.\n\nKalani °\nRating Analyst Ve\n\nYes, | see that parameter\nsets are connected to\nrate routines. Please tell\nme more about these.",
+      "word_count": 40,
+      "avg_confidence": 88.45,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Parameter sets and the rate routine\n\n¢« Aparameter set enables users to\ndefine the information available for use\nwithin a rate routine.\n* Each rate routine uses a parameter set\n\n* Parameter sets determine the contextual\ninformation that is passed to a rate routine\nat run-time\n\n* Parameter sets can be defined for a policy\nline or remain generic\n\n¢ Parameter sets are pre-defined",
+      "word_count": 65,
+      "avg_confidence": 90.66,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Demonstration G\n\nParameter sets\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Question\n\n,- — Howmany parameter sets are associated with a rate routine?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 21,
+      "avg_confidence": 69.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Answer\n\n,- — Howmany parameter sets are associated with a rate routine?\n\nyy One.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 21,
+      "avg_confidence": 66.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Lesson\nobjectives\nreview\n\nAccess rate routines in the PolicyCenter user\ninterface\n\nIdentify the parts of a rate routine\n\nAccess parameter sets in the PolicyCenter\nuser interface\n\nIdentify the parts of a parameter set",
+      "word_count": 33,
+      "avg_confidence": 95.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Student exercise\n\nRate routines and parameter sets",
+      "word_count": 8,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

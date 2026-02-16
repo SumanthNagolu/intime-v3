@@ -20,12 +20,18 @@ import {
 import { useRouter } from 'next/navigation'
 import {
   Search,
+  Bell,
   Briefcase,
   Building2,
+  Calendar,
+  CheckCircle2,
+  Clock,
   FileText,
   Handshake,
   Inbox,
+  Mail,
   Moon,
+  Phone,
   Plus,
   Settings,
   LayoutDashboard,
@@ -190,8 +196,33 @@ function CommandPaletteDialog({
         icon: Inbox,
         shortcut: 'G I',
         category: 'navigation',
-        action: () => router.push('/inbox'),
-        keywords: ['work', 'tasks', 'notifications'],
+        action: () => router.push('/employee/inbox'),
+        keywords: ['work', 'tasks', 'notifications', 'todo'],
+      },
+      // Quick inbox actions
+      {
+        id: 'inbox-overdue',
+        label: 'View Overdue Items',
+        icon: Clock,
+        category: 'actions',
+        action: () => router.push('/employee/inbox?dueBy=overdue'),
+        keywords: ['overdue', 'late', 'urgent', 'inbox'],
+      },
+      {
+        id: 'inbox-today',
+        label: 'View Today\'s Items',
+        icon: Calendar,
+        category: 'actions',
+        action: () => router.push('/employee/inbox?dueBy=today'),
+        keywords: ['today', 'due', 'inbox'],
+      },
+      {
+        id: 'inbox-approvals',
+        label: 'View Pending Approvals',
+        icon: CheckCircle2,
+        category: 'actions',
+        action: () => router.push('/employee/inbox?type=approval'),
+        keywords: ['approvals', 'approve', 'review', 'inbox'],
       },
       // Admin
       {
@@ -233,6 +264,41 @@ function CommandPaletteDialog({
           keywords: ['new', 'add', schema.type],
         })
       ),
+      // Quick Actions
+      {
+        id: 'action-compose-email',
+        label: 'Compose Email',
+        icon: Mail,
+        shortcut: 'C E',
+        category: 'actions',
+        action: () => console.log('Compose email - to be implemented'),
+        keywords: ['email', 'send', 'message', 'compose'],
+      },
+      {
+        id: 'action-log-call',
+        label: 'Log a Call',
+        icon: Phone,
+        category: 'actions',
+        action: () => console.log('Log call - to be implemented'),
+        keywords: ['call', 'phone', 'log', 'activity'],
+      },
+      {
+        id: 'action-schedule-meeting',
+        label: 'Schedule Meeting',
+        icon: Calendar,
+        category: 'actions',
+        action: () => console.log('Schedule meeting - to be implemented'),
+        keywords: ['meeting', 'calendar', 'schedule', 'interview'],
+      },
+      {
+        id: 'action-create-activity',
+        label: 'Create Activity',
+        icon: Bell,
+        shortcut: 'C A',
+        category: 'actions',
+        action: () => router.push('/employee/activities/new'),
+        keywords: ['activity', 'task', 'follow-up', 'reminder'],
+      },
       // Settings
       {
         id: 'toggle-theme',

@@ -1,0 +1,390 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-02",
+    "slide_count": 34,
+    "slides_with_text": 34,
+    "total_words": 1489,
+    "avg_confidence": 86.3,
+    "processing_time_seconds": 15.8,
+    "extracted_at": "2026-02-13T12:03:26.585398"
+  },
+  "full_text": "Policy Transactions\n\nv071822.1\n\nLesson\nOo bj ectives ¢ Describe the types of policy transactions\n\n* Describe how PolicyCenter represents\npolicies\n\n* View policy transactions\n\n* View policies on a specific date\n\nSimone EI\niE On a daily basis, | do policy associated work, like\n\nf creating a new policy or changing policies mid-term.\n\n| need to know how to do my job using the\n\nsoftware’s capabilities.\n\nIn order to write accurate\nrequirements, | need to know exactly\nhow policy transactions work.\n\nFor example, what if | had to write a\nrequirement describing a change to\nthe cancellation of a transaction?\nWhere would | start?\n\nMarcus\nBusiness\nAnalyst\n\n| Policy transactions Gi\n\nPolicy Change\n\nS_> Renewal\n\nNot renewed\n\nPolicy\ncreated\n\nExpires\n\nCancellation\n\nReinstatement Rewrite\n\n| Life span of a policy Gi\n\nEffective Expiration Expiration\ndate date date\n\neee ES\n\nSys\n\n¢ The length of time a policy is in force is determined by the effective date (start\ndate) and expiration date (end date)\n\n* The time between these two dates is the policy term (e.g., six months, one year)\n* The period of time when the policy is in effect\n\n¢ During the life of the policy, one or more transactions can occur that changes the\npolicy\n\nGi\n\n| Policy period — Guidewire terminology\n\nPolicy Effective Expiration\ndate\n\nv\n\nchange’ date\n\nNY\n\n12:01 AM March 1, 2018\n\nv\n\n¢ The policy term and the policy period are not the same thing\n\n¢ There can be multiple periods within a term\n¢ The multiple periods in a single term are called split periods\n\n| Submissions\n\nSubmission\n[° e 4\nPolicy term\n\n¢« Asubmission is a transaction that creates a policy\n\n* Qualifying candidate\n\n* Obtaining one or more quotes\n\n* Binding and issuing policy when an acceptable quote is found\n* Most do not end with a policy being issued\n\n* Applicant may not qualify\n\ne May not be an acceptable quote\n\n| Policy change\n\nPolicy change\n\n¢« Apolicy change changes the policy prior to the expiration date\n* Some of the changes may be:\n\n* Coverables added to or removed from a policy\n\n* Coverages added to or removed from coverables\n\n* Coverage terms modified\n\n| Renewals Gi\n\nNo renewal (expires es\nRenewal term\n\n¢« Arenewal creates a new policy for another term, at the end of the policy term\n\n+ May involve changes to coverables, coverages or premium\n\n¢ If not renewed, the policy expires\n\n| Cancellations\n\nCancellation\n\n¢« Acancellation ends the policy before its expiration date\n* Could be initiated by insured\n\n* They found a better price elsewhere\n* Could be initiated by insurer\n\n* Insured may not have paid premiums\n\n| Reinstatements\n\nCancellation Reinstatement\n\nEffective date\n\n¢« Areinstatement restores a cancelled policy with its original terms\n* Cancellation and reinstatement always have same effective date\n* No lapse in coverage\n\n* Can occur when the issue causing cancellation has been rectified\n\n* For example, insured pays overdue premiums\n\n| Rewrites Gi\n\nCancellation Rewrite\n\n“A ES\n\nNew policy term\n\nA rewrite creates a new policy from an existing policy\n\n* Typically performed when an error occured and the original policy does not reflect the\noriginal policy’s intent\n\n« New set of policy forms showing correct information is required\n\n+ Rewrites are insurer-specific; there is no universal definition of what might cause a rewrite\n\nJ Mid-term rewrites\nCancellation Rewrite\nCl ey\n\nPolicy term\n\n“summeeeeeeeeee\n\nNew policy term\n\n¢« Amid-term rewrite replaces a portion of the original term and allows you to\nrewrite the policy through to the original policy end date or to a new end date\n\n« May create a lapse in coverage\n\n| Rewrite new account\n\nRewrite\n(om\nSource account\n. Policy term\n\nRewritten to target account\n\nNew policy term\n\n* Takes data from an existing policy and creates a new policy with a new policy number in a\nnew account\n\n¢ Rewrites policy to a new target account\n\n¢ Rewrites only canceled or expired policies to a new account\n\n¢ Policy terms can have a gap between them\n\n| Review: Policy transactions Gi\n\nPolicy Change\n\nS_> Renewal\n\nNot renewed\n\nExpires\n\nPolicy\ncreated\n\nCancellation\n\nReinstatement Rewrite\n\nAudits Gi\n\nPremium Premium\nreport report Final audit\n\n¢ Audits are line of business (LOB) specific\n\n¢ Asubmission creates a policy with a premium based on estimated information\n(such as the insured's revenue)\n\n¢ Apremium report collects the actual data periodically within the policy term\n* Can change policy premium\n\n¢ A final audit may occur at the end of the term to ensure the policy does not reflect\nestimated data\n\nMarci\nConfiguration\nDeveloper _.\n\n| hear the term “policy job” a lot. What is the\nrelationship between transactions and jobs?\n\n| Jobs\n\noo . oo .\nPolicy Policy\ntransaction job\n\n¢ Policy Transactions are represented in PolicyCenter by Jobs\n« Essentially \"job\" and \"policy transaction\" are synonymous\n\n* “Policy Transaction” and “Transaction” are used in the user interface, while “Job” is used\nthroughout the configuration\n\n¢ Jobs coordinate all of the work associated with creating and modifying a policy\n\n| Things that define job logic Gi\n\naby\n\nJob Processes Workflows Wizards\n\nsit\ni\n\ney\n\nProduct model Rules External systems\n\n| Initiating jobs\n\nJobs can be started in three ways:\n\n{_]\n+ By users through the Actions menu @ ] —>\n=\n\n* By external systems through APIs r\n\n* Through PolicyCenter batch processes\n\n©\n\nGi\n\nNew Policy Transaction\n‘change Policy\ncancel Policy\n\nRenew Policy\n\nMarci\nConfiguration\n\nDeveloper\n\nHow are policies represented in PolicyCenter?\n\n| History of a policy Gi\n\nPolicy Second Teen driver Renewal\ncreated auto added added (premium changed)\n04/20/18 07/20/18 10/20/18 04/20/19\n\n$450 J $920 $990\n\nJ $270 J\nCo) = sc s= tea 2)\n\nPolicies often change over time\n* Coverables and coverages are added or removed\n« When a policy is renewed, rates (and therefore premiums) may change\n\n* Policy may be canceled (and possibly reinstated)\n\n| PolicyPeriods G\n\n¢ APolicyPeriod is one \"version\" of the policy\n* Has an effective date and an expiration date\n* Model time is the actual real-world time when policies are created or jobs are bound\nModel 4/20/18 7/20/18 10/20/18 04/20/19\n\nSS Se + scone at $450\n| See 2) + teen driver $920\nSS _ 2) BSL) rerewai soo\n\n3 versions, so 3 PolicyPeriods: 1 PP and 1 PT:\n1 PolicyTerm: 04/20/18 — 04/20/19 04/20/19 — 04/20/20\n\n| Transaction dates\n\nTransaction dates Gi\n4/20/18 7/20/18 10/20/18 04/20/19\n\n[ve] Policy term: Policy term:\n\n04/20/18 — 04/20/19 04/20/19 — 04/20/20\n« When job becomes effective, it changes nature of policy\n\n* Each job has a transaction effective date\n\n¢ Transaction generally applies until end of the policy term\n\nTanya\n\nCustomer\n\nService\nRepresentative\n\nHow can | view the policy transactions?\n\n| View policy transactions Gi\n\n* Click the policy transactions link on the account or policy pages to view the details\n« Account File\n\n* Summary page lists the open policy transactions related to the account\n\n* Policy Transactions page lists all the transactions on the account\n¢ Policy File\n\n* Summary page has two sections: pending and completed policy transactions\n\n* Policy Transactions page lists all the transactions on the policy\n+ Multiple transactions can be selected and compared\n\nType + Effective Date > Transaction Status > Current Status\nPolicy Change 01/22/2018 Bound In Force\n\nPolicy Change 01/22/2018 Draft Draft\n\n| Viewing policy on a specific date\n\nEnter a date in the selector on the policy\nfile left menu to view the policy\ninformation on that date\n\nQuestion\n\n_~ — 'satransaction a job? Explain.\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say\n\nAnswer\n\n¢\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nIs a transaction a job? Explain.\n\nThe term \"policy transaction\" is typical in the industry and is used in the user interface.\nThe term \"job\" is used in the data model, in user interface configuration, and in\nbusiness rules.\n\nQuestion\n\n,~ — Acustomer calls and wants a new policy for another term at the end of\n¢ policy term. What transaction is the customer asking for?\n\n¢\n¢\n\nSoS oD DD DDS De Say\n\nGi\n\nAnswer\n\n¢\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nAcustomer calls and wants a new policy for another term, at the end of\npolicy term. What transaction is the customer asking for?\n\nThe customer wants a renewal.\n\nGi\n\nQuestion\n\n,~ — Acustomer wants a new coverage on an existing policy. What\nx transaction will best suit this need?\n\nSoS oD DD DDS De Say\n\nAnswer Gi\n\n,~ — Acustomer wants a new coverage on an existing policy. What\nx transaction will best suit this need?\n\nA policy change is the most obvious transaction in this case. However, a rewrite may\nbe needed depending on the coverage details.\n\nSop DD DD SDSS oe\n\nLesson\nOo bj ectives ¢ Describe the types of policy transactions\n\nreview * Describe how PolicyCenter represents\npolicies\n* View policy transactions\n* View policies on a specific date",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Policy Transactions\n\nv071822.1",
+      "word_count": 3,
+      "avg_confidence": 89.0,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nOo bj ectives ¢ Describe the types of policy transactions\n\n* Describe how PolicyCenter represents\npolicies\n\n* View policy transactions\n\n* View policies on a specific date",
+      "word_count": 28,
+      "avg_confidence": 82.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Simone EI\niE On a daily basis, | do policy associated work, like\n\nf creating a new policy or changing policies mid-term.\n\n| need to know how to do my job using the\n\nsoftware’s capabilities.\n\nIn order to write accurate\nrequirements, | need to know exactly\nhow policy transactions work.\n\nFor example, what if | had to write a\nrequirement describing a change to\nthe cancellation of a transaction?\nWhere would | start?\n\nMarcus\nBusiness\nAnalyst",
+      "word_count": 76,
+      "avg_confidence": 92.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Policy transactions Gi\n\nPolicy Change\n\nS_> Renewal\n\nNot renewed\n\nPolicy\ncreated\n\nExpires\n\nCancellation\n\nReinstatement Rewrite",
+      "word_count": 16,
+      "avg_confidence": 89.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Life span of a policy Gi\n\nEffective Expiration Expiration\ndate date date\n\neee ES\n\nSys\n\n¢ The length of time a policy is in force is determined by the effective date (start\ndate) and expiration date (end date)\n\n* The time between these two dates is the policy term (e.g., six months, one year)\n* The period of time when the policy is in effect\n\n¢ During the life of the policy, one or more transactions can occur that changes the\npolicy",
+      "word_count": 83,
+      "avg_confidence": 90.39,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Gi\n\n| Policy period — Guidewire terminology\n\nPolicy Effective Expiration\ndate\n\nv\n\nchange’ date\n\nNY\n\n12:01 AM March 1, 2018\n\nv\n\n¢ The policy term and the policy period are not the same thing\n\n¢ There can be multiple periods within a term\n¢ The multiple periods in a single term are called split periods",
+      "word_count": 55,
+      "avg_confidence": 88.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Submissions\n\nSubmission\n[° e 4\nPolicy term\n\n¢« Asubmission is a transaction that creates a policy\n\n* Qualifying candidate\n\n* Obtaining one or more quotes\n\n* Binding and issuing policy when an acceptable quote is found\n* Most do not end with a policy being issued\n\n* Applicant may not qualify\n\ne May not be an acceptable quote",
+      "word_count": 59,
+      "avg_confidence": 88.31,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Policy change\n\nPolicy change\n\n¢« Apolicy change changes the policy prior to the expiration date\n* Some of the changes may be:\n\n* Coverables added to or removed from a policy\n\n* Coverages added to or removed from coverables\n\n* Coverage terms modified",
+      "word_count": 44,
+      "avg_confidence": 91.98,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Renewals Gi\n\nNo renewal (expires es\nRenewal term\n\n¢« Arenewal creates a new policy for another term, at the end of the policy term\n\n+ May involve changes to coverables, coverages or premium\n\n¢ If not renewed, the policy expires",
+      "word_count": 41,
+      "avg_confidence": 86.15,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Cancellations\n\nCancellation\n\n¢« Acancellation ends the policy before its expiration date\n* Could be initiated by insured\n\n* They found a better price elsewhere\n* Could be initiated by insurer\n\n* Insured may not have paid premiums",
+      "word_count": 38,
+      "avg_confidence": 89.13,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Reinstatements\n\nCancellation Reinstatement\n\nEffective date\n\n¢« Areinstatement restores a cancelled policy with its original terms\n* Cancellation and reinstatement always have same effective date\n* No lapse in coverage\n\n* Can occur when the issue causing cancellation has been rectified\n\n* For example, insured pays overdue premiums",
+      "word_count": 48,
+      "avg_confidence": 89.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Rewrites Gi\n\nCancellation Rewrite\n\n“A ES\n\nNew policy term\n\nA rewrite creates a new policy from an existing policy\n\n* Typically performed when an error occured and the original policy does not reflect the\noriginal policy’s intent\n\n« New set of policy forms showing correct information is required\n\n+ Rewrites are insurer-specific; there is no universal definition of what might cause a rewrite",
+      "word_count": 64,
+      "avg_confidence": 88.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "J Mid-term rewrites\nCancellation Rewrite\nCl ey\n\nPolicy term\n\n“summeeeeeeeeee\n\nNew policy term\n\n¢« Amid-term rewrite replaces a portion of the original term and allows you to\nrewrite the policy through to the original policy end date or to a new end date\n\n« May create a lapse in coverage",
+      "word_count": 50,
+      "avg_confidence": 88.7,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Rewrite new account\n\nRewrite\n(om\nSource account\n. Policy term\n\nRewritten to target account\n\nNew policy term\n\n* Takes data from an existing policy and creates a new policy with a new policy number in a\nnew account\n\n¢ Rewrites policy to a new target account\n\n¢ Rewrites only canceled or expired policies to a new account\n\n¢ Policy terms can have a gap between them",
+      "word_count": 67,
+      "avg_confidence": 90.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Review: Policy transactions Gi\n\nPolicy Change\n\nS_> Renewal\n\nNot renewed\n\nExpires\n\nPolicy\ncreated\n\nCancellation\n\nReinstatement Rewrite",
+      "word_count": 17,
+      "avg_confidence": 89.75,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Audits Gi\n\nPremium Premium\nreport report Final audit\n\n¢ Audits are line of business (LOB) specific\n\n¢ Asubmission creates a policy with a premium based on estimated information\n(such as the insured's revenue)\n\n¢ Apremium report collects the actual data periodically within the policy term\n* Can change policy premium\n\n¢ A final audit may occur at the end of the term to ensure the policy does not reflect\nestimated data",
+      "word_count": 71,
+      "avg_confidence": 88.94,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Marci\nConfiguration\nDeveloper _.\n\n| hear the term “policy job” a lot. What is the\nrelationship between transactions and jobs?",
+      "word_count": 20,
+      "avg_confidence": 92.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Jobs\n\noo . oo .\nPolicy Policy\ntransaction job\n\n¢ Policy Transactions are represented in PolicyCenter by Jobs\n« Essentially \"job\" and \"policy transaction\" are synonymous\n\n* “Policy Transaction” and “Transaction” are used in the user interface, while “Job” is used\nthroughout the configuration\n\n¢ Jobs coordinate all of the work associated with creating and modifying a policy",
+      "word_count": 59,
+      "avg_confidence": 90.29,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Things that define job logic Gi\n\naby\n\nJob Processes Workflows Wizards\n\nsit\ni\n\ney\n\nProduct model Rules External systems",
+      "word_count": 20,
+      "avg_confidence": 80.85,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Initiating jobs\n\nJobs can be started in three ways:\n\n{_]\n+ By users through the Actions menu @ ] —>\n=\n\n* By external systems through APIs r\n\n* Through PolicyCenter batch processes\n\n©\n\nGi\n\nNew Policy Transaction\n‘change Policy\ncancel Policy\n\nRenew Policy",
+      "word_count": 45,
+      "avg_confidence": 81.49,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Marci\nConfiguration\n\nDeveloper\n\nHow are policies represented in PolicyCenter?",
+      "word_count": 9,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| History of a policy Gi\n\nPolicy Second Teen driver Renewal\ncreated auto added added (premium changed)\n04/20/18 07/20/18 10/20/18 04/20/19\n\n$450 J $920 $990\n\nJ $270 J\nCo) = sc s= tea 2)\n\nPolicies often change over time\n* Coverables and coverages are added or removed\n« When a policy is renewed, rates (and therefore premiums) may change\n\n* Policy may be canceled (and possibly reinstated)",
+      "word_count": 67,
+      "avg_confidence": 86.45,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| PolicyPeriods G\n\n¢ APolicyPeriod is one \"version\" of the policy\n* Has an effective date and an expiration date\n* Model time is the actual real-world time when policies are created or jobs are bound\nModel 4/20/18 7/20/18 10/20/18 04/20/19\n\nSS Se + scone at $450\n| See 2) + teen driver $920\nSS _ 2) BSL) rerewai soo\n\n3 versions, so 3 PolicyPeriods: 1 PP and 1 PT:\n1 PolicyTerm: 04/20/18 — 04/20/19 04/20/19 — 04/20/20",
+      "word_count": 78,
+      "avg_confidence": 82.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Transaction dates\n\nTransaction dates Gi\n4/20/18 7/20/18 10/20/18 04/20/19\n\n[ve] Policy term: Policy term:\n\n04/20/18 — 04/20/19 04/20/19 — 04/20/20\n« When job becomes effective, it changes nature of policy\n\n* Each job has a transaction effective date\n\n¢ Transaction generally applies until end of the policy term",
+      "word_count": 49,
+      "avg_confidence": 89.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Tanya\n\nCustomer\n\nService\nRepresentative\n\nHow can | view the policy transactions?",
+      "word_count": 11,
+      "avg_confidence": 92.83,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| View policy transactions Gi\n\n* Click the policy transactions link on the account or policy pages to view the details\n« Account File\n\n* Summary page lists the open policy transactions related to the account\n\n* Policy Transactions page lists all the transactions on the account\n¢ Policy File\n\n* Summary page has two sections: pending and completed policy transactions\n\n* Policy Transactions page lists all the transactions on the policy\n+ Multiple transactions can be selected and compared\n\nType + Effective Date > Transaction Status > Current Status\nPolicy Change 01/22/2018 Bound In Force\n\nPolicy Change 01/22/2018 Draft Draft",
+      "word_count": 101,
+      "avg_confidence": 88.78,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Viewing policy on a specific date\n\nEnter a date in the selector on the policy\nfile left menu to view the policy\ninformation on that date",
+      "word_count": 27,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question\n\n_~ — 'satransaction a job? Explain.\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "word_count": 16,
+      "avg_confidence": 51.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer\n\n¢\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nIs a transaction a job? Explain.\n\nThe term \"policy transaction\" is typical in the industry and is used in the user interface.\nThe term \"job\" is used in the data model, in user interface configuration, and in\nbusiness rules.",
+      "word_count": 49,
+      "avg_confidence": 84.98,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question\n\n,~ — Acustomer calls and wants a new policy for another term at the end of\n¢ policy term. What transaction is the customer asking for?\n\n¢\n¢\n\nSoS oD DD DDS De Say\n\nGi",
+      "word_count": 36,
+      "avg_confidence": 77.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer\n\n¢\n¢\n¢\n¢\n\nSop DD DD SDSS oe\n\nAcustomer calls and wants a new policy for another term, at the end of\npolicy term. What transaction is the customer asking for?\n\nThe customer wants a renewal.\n\nGi",
+      "word_count": 39,
+      "avg_confidence": 81.95,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n,~ — Acustomer wants a new coverage on an existing policy. What\nx transaction will best suit this need?\n\nSoS oD DD DDS De Say",
+      "word_count": 26,
+      "avg_confidence": 73.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer Gi\n\n,~ — Acustomer wants a new coverage on an existing policy. What\nx transaction will best suit this need?\n\nA policy change is the most obvious transaction in this case. However, a rewrite may\nbe needed depending on the coverage details.\n\nSop DD DD SDSS oe",
+      "word_count": 48,
+      "avg_confidence": 81.36,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Lesson\nOo bj ectives ¢ Describe the types of policy transactions\n\nreview * Describe how PolicyCenter represents\npolicies\n* View policy transactions\n* View policies on a specific date",
+      "word_count": 29,
+      "avg_confidence": 83.31,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

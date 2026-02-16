@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-14",
+    "slide_count": 25,
+    "slides_with_text": 21,
+    "total_words": 1167,
+    "avg_confidence": 86.25,
+    "processing_time_seconds": 8.22,
+    "extracted_at": "2026-02-15T18:18:12.083154"
+  },
+  "full_text": "Configuring Claim History\n\nLesson\nobjectives\n\nExplain claim history functionality\nCreate custom claim history types\nCreate custom claim history records\nTrack individual field changes in Gosu\n\nHistory records\n\n| Demonstration G\n\nHistory records\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Claim history\n\n¢ Is an uneditable record of important events and actions taken on the claim\n\nGi\n\nIncludes obvious actions such as edits\n\n« Also includes more trivial events such as viewing the claim\n\nHistory\n\nall\nType Related To\nViewed Entire claim\nViewed Entire claim\nFlagged Entire claim\n\nDatachange Entire claim\n\nUser\nAndy Applegate\nAndy Applegate\nSystem User\n\nSuper User\n\nBe\nEvent Time Stamp > Description Link\n08/03/2018 10:57 AM\n08/01/2018 4:40 PM\n\n08/01/2018 4:30PM —_Flag set: Overdue high priority activity: Review coverage in question\n08/01/2018 4:13PM Coverage is in question for this claim\n\n| History record\n\n* Is an entry in the claim history, documenting a single recordable claim action or\n\nevent\n\n* Every history record has these\n\nfields:\n* Type\n* Related To\n* User\n\n« Event Time Stamp\n\nHistory\n\nAll\nType Related To\nViewed Entire claim\n\n* These fields are optional:\n\n* Description\n* Link\n\nUser Event Time Stamp +\nAndy Applegate 08/03/2018 10:57 AM\n\nDescription\n\nGi\n\n| Claim history type\n\nIs the claim event causing the history record to be created\n\n+ Example: Closing a claim is an event which produces a history record of\ntype “Closed”\n\nHistory screen has a history type filter\n\n+ Can search for history events of a particular type\n\nClaimCenter comes with standard history types which trigger\nautomatically created claim history records\n\n+ Standard events include editing, assigning, viewing, approvals, and so\non\n\n+ Some events are not included in history in the base application, such as\ncreating activities and creating reserves\n\nClaimCenter may be configured to have custom history types\n\n+ This defines additional events which are added to the claim history\n\nHistory\n\nGi\n\nAll\n\nall\nActivity due date changed\nActivity escalation date moved\nApproval or Rejection\nArchived\n\nAssigned\n\nCatastrophe warning\n\nCheck deleted\n\nCheck stopped\n\nCheck transferred\n\nCheck voided\n\nClosed\n\nCustom\n\nFlagged\n\nImported\n\nLitigated\n\nOpened\n\nPolicy edited\n\nPolicy selected or refreshed\nReferred\n\n| HistoryType typelist G\n\n* Can be viewed in the Data Dictionary or Studio lvisoonpers\n* Cannot be edited sis area-ony fe\n\nVoshowaly) ee =\n\nName Pio\n\n‘Typecodes pecode assignment | Assigned\nfanoroval [Approval or Rejection [A referral was approvediejected true pecode reopened Reopened\narchived Avchived [Claim was archived rue ypecode flagged Flagged. «= 1\nassionment [Assigned Claim, exposure or subrogation was assigned rue pecode impc Imported\ncatastrophe | Catastrophe warning [Catastrophe warning true lypecods .\nasckadees  [Onesk dees cneck was aeetes we ppecde pliseleted Poe sete. 2\ncheckstonned [Check stopped [A check was stopped true code esclationnud | Activity escal\nchecktansterced [Check transferred [A check was transferred to another claim rue chedtvoided\ncheckvoided [Check voided [A check was voided rue checistopped Check stopped\nclosed Closed (aim, exposure, or subrogation was closed eve checkdeleted Check deleted\ncustom (Custom [A custom history event happened, see CustomType for details eve checkransferr.. Check transte\ndelayed [Activity due date changed | Due date on an activity was changed true 1 panel\nescalaicnand [Activiy escalation date moved] The escalation date on an actviy was changed true lypecodscatasvophe | atastonhe ~ | 1\nagoed Flagged [Claim tagged indicator status was changed eve pecodd retened | Referned\nmao Imported [aim or exposure was imported tve pecode reserveceated Reserve creat. 1\ninoated Liigatea Claim was ligated eve code cust Custom\nfonened Opened [A new claim or exposure was opened rue ‘ypecode polc Policyedited -1\npolcyedied [Poly edited The policy was edited, and thus marked unvertied rue yecode approval | Approval or R\n\nQuestion\n\n,- — Whatis a ClaimCenter claim history record?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse\n\nAnswer Gi\n\n,- — Whatis a ClaimCenter claim history record?\ny ¢\n¢\nThe correct answer is an uneditable record of some important event or action taken on\nthe claim.\n\nSoe ee eon eee Soe e ese Ss\n\nQuestion\n\n_- — !fno active rules write claim history records, will any claim history\n¢ records be written?\n\n¢\n¢\n\nSS eee eee ee Soo e Sse\n\nAnswer\n\n_- — !fno active rules write claim history records, will any claim history\nY records be written?\n¢\n\nThe correct answer is yes, the base history types are automatically tracked, and do\nnot depend on rules.\n\nSoe ee eon eee Soe e ese Ss\n\n| Creating custom claim history types\n\n¢ Must be added to CustomHistoryType typelist\n\n* Defines history events that may be tracked by configured rules\n\n¢ Many custom history types are predefined in the base application\n\n* You can add new custom history types\n\nElement\n\ntypelistextension\n\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\n\nCode\nCustomHistoryType\nante\newner\nExport\nDataChange\ncreate_recovery_bill\ncatastrophe\nemail\n\nwarning\n\nName\n\nCustom history event type...\n\nAuto: No fault rating\nExposure with no reserves\nExported to mainframe\nData change\n\nCreate recovery bill\nGuidewire catastrophe rul...\nEmail sent\n\nWarning\n\n“Name” property appears\nin the “type” column on the\nClaim History screen.\n\n| Recording custom history events Gi\n\n* Create a preupdate rule that captures the history condition\n\n¢ The action uses the createCustomHistoryEvent () method on Claim\n\n¢ Syntax: Claim.createCustomHistoryEvent(CustomHistory Type. TC_CustomHistoryType, Text)\n* Claim is the claim to which you are adding a history record\n* CustomHistoryType is the history type\n* Textis the text to be displayed in the history record’s description column (on the screen)\n\nUSES:\n\nCONDITION (exposure : entity.Exposure) :\n\nreturn exposure.ReserveLines.length == 0\n\nACTION (exposure : entity.Exposure, actions : gw.rules.Action):\n\n| Testing fields for changes\n\n¢« Use the isFieldChanged () method\n° Syntax:\n* entity.isFieldChanged(entity#field) or entity.isFieldChanged(field)\n\n« Returns boolean\n\nCONDITION (claim : entity.Claim):\nreturn claim.isCoverageInQuestionFactorsNotEmpty ()\n\nor flaim.isFieldChanged (\"CoverageInQuestion\")\n\n| Finding original field values\n\nGi\n\n¢ To determine the original value of a changed field, use the getoriginalvValue ()\nmethod\n\n¢ Syntax\nentity.getOriginalValue(entity#field) or entity.getOriginalValue(field)\n\nReturns an ordinary object\n\nNeed to cast the result in order\nto get the display name\n\n| Demonstration G\n\nCustom history records\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — |sit possible to define new types of history events?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse\n\nAnswer\n\n_— — |sit possible to define new types of history events?\ny ¢\n¢\nThe correct answer is yes, by adding them to the CustomHistoryType typelist and\ncreating rules to record them.\n\nSoe ee eon eee Soe e ese Ss\n\n| Student exercise\n\nTrack changes to salvage status\n\nPlease complete the lab called Track changes to salvage\n\n@ Ga=D\noe = status in the Student Workbook\n@ aD\n\nnl\n\nLesson\nobjectives\nreview\n\nExplain claim history functionality\nCreate custom claim history types\nCreate custom claim history records\nTrack individual field changes in Gosu",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Claim History",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nExplain claim history functionality\nCreate custom claim history types\nCreate custom claim history records\nTrack individual field changes in Gosu",
+      "word_count": 22,
+      "avg_confidence": 95.59,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "History records",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Demonstration G\n\nHistory records\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.51,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Claim history\n\n¢ Is an uneditable record of important events and actions taken on the claim\n\nGi\n\nIncludes obvious actions such as edits\n\n« Also includes more trivial events such as viewing the claim\n\nHistory\n\nall\nType Related To\nViewed Entire claim\nViewed Entire claim\nFlagged Entire claim\n\nDatachange Entire claim\n\nUser\nAndy Applegate\nAndy Applegate\nSystem User\n\nSuper User\n\nBe\nEvent Time Stamp > Description Link\n08/03/2018 10:57 AM\n08/01/2018 4:40 PM\n\n08/01/2018 4:30PM —_Flag set: Overdue high priority activity: Review coverage in question\n08/01/2018 4:13PM Coverage is in question for this claim",
+      "word_count": 95,
+      "avg_confidence": 88.26,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| History record\n\n* Is an entry in the claim history, documenting a single recordable claim action or\n\nevent\n\n* Every history record has these\n\nfields:\n* Type\n* Related To\n* User\n\n« Event Time Stamp\n\nHistory\n\nAll\nType Related To\nViewed Entire claim\n\n* These fields are optional:\n\n* Description\n* Link\n\nUser Event Time Stamp +\nAndy Applegate 08/03/2018 10:57 AM\n\nDescription\n\nGi",
+      "word_count": 66,
+      "avg_confidence": 83.64,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Claim history type\n\nIs the claim event causing the history record to be created\n\n+ Example: Closing a claim is an event which produces a history record of\ntype “Closed”\n\nHistory screen has a history type filter\n\n+ Can search for history events of a particular type\n\nClaimCenter comes with standard history types which trigger\nautomatically created claim history records\n\n+ Standard events include editing, assigning, viewing, approvals, and so\non\n\n+ Some events are not included in history in the base application, such as\ncreating activities and creating reserves\n\nClaimCenter may be configured to have custom history types\n\n+ This defines additional events which are added to the claim history\n\nHistory\n\nGi\n\nAll\n\nall\nActivity due date changed\nActivity escalation date moved\nApproval or Rejection\nArchived\n\nAssigned\n\nCatastrophe warning\n\nCheck deleted\n\nCheck stopped\n\nCheck transferred\n\nCheck voided\n\nClosed\n\nCustom\n\nFlagged\n\nImported\n\nLitigated\n\nOpened\n\nPolicy edited\n\nPolicy selected or refreshed\nReferred",
+      "word_count": 152,
+      "avg_confidence": 94.7,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| HistoryType typelist G\n\n* Can be viewed in the Data Dictionary or Studio lvisoonpers\n* Cannot be edited sis area-ony fe\n\nVoshowaly) ee =\n\nName Pio\n\n‘Typecodes pecode assignment | Assigned\nfanoroval [Approval or Rejection [A referral was approvediejected true pecode reopened Reopened\narchived Avchived [Claim was archived rue ypecode flagged Flagged. «= 1\nassionment [Assigned Claim, exposure or subrogation was assigned rue pecode impc Imported\ncatastrophe | Catastrophe warning [Catastrophe warning true lypecods .\nasckadees  [Onesk dees cneck was aeetes we ppecde pliseleted Poe sete. 2\ncheckstonned [Check stopped [A check was stopped true code esclationnud | Activity escal\nchecktansterced [Check transferred [A check was transferred to another claim rue chedtvoided\ncheckvoided [Check voided [A check was voided rue checistopped Check stopped\nclosed Closed (aim, exposure, or subrogation was closed eve checkdeleted Check deleted\ncustom (Custom [A custom history event happened, see CustomType for details eve checkransferr.. Check transte\ndelayed [Activity due date changed | Due date on an activity was changed true 1 panel\nescalaicnand [Activiy escalation date moved] The escalation date on an actviy was changed true lypecodscatasvophe | atastonhe ~ | 1\nagoed Flagged [Claim tagged indicator status was changed eve pecodd retened | Referned\nmao Imported [aim or exposure was imported tve pecode reserveceated Reserve creat. 1\ninoated Liigatea Claim was ligated eve code cust Custom\nfonened Opened [A new claim or exposure was opened rue ‘ypecode polc Policyedited -1\npolcyedied [Poly edited The policy was edited, and thus marked unvertied rue yecode approval | Approval or R",
+      "word_count": 254,
+      "avg_confidence": 69.09,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Question\n\n,- — Whatis a ClaimCenter claim history record?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse",
+      "word_count": 19,
+      "avg_confidence": 64.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Answer Gi\n\n,- — Whatis a ClaimCenter claim history record?\ny ¢\n¢\nThe correct answer is an uneditable record of some important event or action taken on\nthe claim.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 38,
+      "avg_confidence": 83.97,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Question\n\n_- — !fno active rules write claim history records, will any claim history\n¢ records be written?\n\n¢\n¢\n\nSS eee eee ee Soo e Sse",
+      "word_count": 27,
+      "avg_confidence": 70.29,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Answer\n\n_- — !fno active rules write claim history records, will any claim history\nY records be written?\n¢\n\nThe correct answer is yes, the base history types are automatically tracked, and do\nnot depend on rules.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 45,
+      "avg_confidence": 84.28,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Creating custom claim history types\n\n¢ Must be added to CustomHistoryType typelist\n\n* Defines history events that may be tracked by configured rules\n\n¢ Many custom history types are predefined in the base application\n\n* You can add new custom history types\n\nElement\n\ntypelistextension\n\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\n\nCode\nCustomHistoryType\nante\newner\nExport\nDataChange\ncreate_recovery_bill\ncatastrophe\nemail\n\nwarning\n\nName\n\nCustom history event type...\n\nAuto: No fault rating\nExposure with no reserves\nExported to mainframe\nData change\n\nCreate recovery bill\nGuidewire catastrophe rul...\nEmail sent\n\nWarning\n\n“Name” property appears\nin the “type” column on the\nClaim History screen.",
+      "word_count": 102,
+      "avg_confidence": 90.93,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Recording custom history events Gi\n\n* Create a preupdate rule that captures the history condition\n\n¢ The action uses the createCustomHistoryEvent () method on Claim\n\n¢ Syntax: Claim.createCustomHistoryEvent(CustomHistory Type. TC_CustomHistoryType, Text)\n* Claim is the claim to which you are adding a history record\n* CustomHistoryType is the history type\n* Textis the text to be displayed in the history record’s description column (on the screen)\n\nUSES:\n\nCONDITION (exposure : entity.Exposure) :\n\nreturn exposure.ReserveLines.length == 0\n\nACTION (exposure : entity.Exposure, actions : gw.rules.Action):",
+      "word_count": 84,
+      "avg_confidence": 88.72,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Testing fields for changes\n\n¢« Use the isFieldChanged () method\n° Syntax:\n* entity.isFieldChanged(entity#field) or entity.isFieldChanged(field)\n\n« Returns boolean\n\nCONDITION (claim : entity.Claim):\nreturn claim.isCoverageInQuestionFactorsNotEmpty ()\n\nor flaim.isFieldChanged (\"CoverageInQuestion\")",
+      "word_count": 30,
+      "avg_confidence": 79.1,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Finding original field values\n\nGi\n\n¢ To determine the original value of a changed field, use the getoriginalvValue ()\nmethod\n\n¢ Syntax\nentity.getOriginalValue(entity#field) or entity.getOriginalValue(field)\n\nReturns an ordinary object\n\nNeed to cast the result in order\nto get the display name",
+      "word_count": 42,
+      "avg_confidence": 91.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Demonstration G\n\nCustom history records\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.53,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_— — |sit possible to define new types of history events?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse",
+      "word_count": 22,
+      "avg_confidence": 66.45,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n_— — |sit possible to define new types of history events?\ny ¢\n¢\nThe correct answer is yes, by adding them to the CustomHistoryType typelist and\ncreating rules to record them.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 41,
+      "avg_confidence": 83.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Student exercise\n\nTrack changes to salvage status\n\nPlease complete the lab called Track changes to salvage\n\n@ Ga=D\noe = status in the Student Workbook\n@ aD\n\nnl",
+      "word_count": 29,
+      "avg_confidence": 89.94,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Lesson\nobjectives\nreview\n\nExplain claim history functionality\nCreate custom claim history types\nCreate custom claim history records\nTrack individual field changes in Gosu",
+      "word_count": 23,
+      "avg_confidence": 95.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

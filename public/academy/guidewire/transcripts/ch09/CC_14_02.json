@@ -1,0 +1,1691 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_14_02.mp4",
+    "video_stem": "CC_14_02",
+    "duration_seconds": 156.66,
+    "duration_formatted": "00:02:36.660",
+    "segment_count": 19,
+    "word_count": 246,
+    "avg_confidence": 0.961,
+    "transcription_time_seconds": 8.99,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:43:53.395060"
+  },
+  "full_text": "The most common use cases for adding custom history types are tracking specific claim situations, like a claim with over a certain number of notes, and tracking changes to specific fields. Succeed Insurance requires that, when the loss cause field on a claim changes, a history event be created. This should be easily searchable for later data analysis. A few custom history types are already present in the base configuration. Data change in particular seems to meet this need, but, for searchability, I will create a new custom history type. I set the two required variables, the code, and the name. I'll also set the description field. I'll leave the rest at default values. Now let's look at the claim pre-update rules. I see an existing rule which might partially meet the requirement. So I open it and take a look. As expected, it uses the data change custom history type. I will change that. To test the rule, I reload the changed classes. When the classes are reloaded, I switch to Claim Center in the browser. And log in as Andy Applegate. I navigate to the Robert Farley claim. On the loss details page, I change the loss cause field from collision with motor vehicle, to collision with fixed object. When I navigate to the history page, the expected custom history item is displayed at the top of the history list. This concludes the custom history records demonstration. This concludes the custom history records demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.76,
+      "end": 21.7,
+      "start_formatted": "00:00:00.760",
+      "end_formatted": "00:00:21.700",
+      "text": "The most common use cases for adding custom history types are tracking specific claim situations, like a claim with over a certain number of notes, and tracking changes to specific fields. Succeed Insurance requires that, when the loss cause field on a claim changes, a history event be created. This should be easily searchable for later data analysis.",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.76,
+          "end": 1.36,
+          "probability": 0.9702
+        },
+        {
+          "word": "most",
+          "start": 1.36,
+          "end": 1.58,
+          "probability": 0.998
+        },
+        {
+          "word": "common",
+          "start": 1.58,
+          "end": 1.88,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 1.88,
+          "end": 2.12,
+          "probability": 0.9902
+        },
+        {
+          "word": "cases",
+          "start": 2.12,
+          "end": 2.5,
+          "probability": 0.9434
+        },
+        {
+          "word": "for",
+          "start": 2.5,
+          "end": 2.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "adding",
+          "start": 2.72,
+          "end": 3.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "custom",
+          "start": 3.0,
+          "end": 3.38,
+          "probability": 0.9561
+        },
+        {
+          "word": "history",
+          "start": 3.38,
+          "end": 3.8,
+          "probability": 0.9844
+        },
+        {
+          "word": "types",
+          "start": 3.8,
+          "end": 4.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "are",
+          "start": 4.14,
+          "end": 4.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "tracking",
+          "start": 4.32,
+          "end": 4.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "specific",
+          "start": 4.66,
+          "end": 5.26,
+          "probability": 0.998
+        },
+        {
+          "word": "claim",
+          "start": 5.26,
+          "end": 5.62,
+          "probability": 0.8467
+        },
+        {
+          "word": "situations,",
+          "start": 5.62,
+          "end": 6.32,
+          "probability": 0.998
+        },
+        {
+          "word": "like",
+          "start": 6.68,
+          "end": 6.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 6.9,
+          "end": 7.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 7.04,
+          "end": 7.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "with",
+          "start": 7.28,
+          "end": 7.44,
+          "probability": 0.9722
+        },
+        {
+          "word": "over",
+          "start": 7.44,
+          "end": 7.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 7.64,
+          "end": 7.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "certain",
+          "start": 7.82,
+          "end": 8.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "number",
+          "start": 8.04,
+          "end": 8.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 8.34,
+          "end": 8.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "notes,",
+          "start": 8.52,
+          "end": 8.88,
+          "probability": 0.9263
+        },
+        {
+          "word": "and",
+          "start": 9.1,
+          "end": 9.3,
+          "probability": 0.999
+        },
+        {
+          "word": "tracking",
+          "start": 9.3,
+          "end": 9.62,
+          "probability": 0.999
+        },
+        {
+          "word": "changes",
+          "start": 9.62,
+          "end": 10.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 10.12,
+          "end": 10.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "specific",
+          "start": 10.34,
+          "end": 10.78,
+          "probability": 0.999
+        },
+        {
+          "word": "fields.",
+          "start": 10.78,
+          "end": 11.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "Succeed",
+          "start": 12.08,
+          "end": 12.68,
+          "probability": 0.9746
+        },
+        {
+          "word": "Insurance",
+          "start": 12.68,
+          "end": 12.98,
+          "probability": 0.4392
+        },
+        {
+          "word": "requires",
+          "start": 12.98,
+          "end": 13.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "that,",
+          "start": 13.58,
+          "end": 14.0,
+          "probability": 0.999
+        },
+        {
+          "word": "when",
+          "start": 14.14,
+          "end": 14.38,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 14.38,
+          "end": 14.48,
+          "probability": 0.8325
+        },
+        {
+          "word": "loss",
+          "start": 14.48,
+          "end": 14.8,
+          "probability": 0.2007
+        },
+        {
+          "word": "cause",
+          "start": 14.8,
+          "end": 15.12,
+          "probability": 0.5146
+        },
+        {
+          "word": "field",
+          "start": 15.12,
+          "end": 15.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 15.46,
+          "end": 15.62,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 15.62,
+          "end": 15.72,
+          "probability": 0.9717
+        },
+        {
+          "word": "claim",
+          "start": 15.72,
+          "end": 16.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "changes,",
+          "start": 16.0,
+          "end": 16.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 16.84,
+          "end": 17.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "history",
+          "start": 17.06,
+          "end": 17.44,
+          "probability": 0.9722
+        },
+        {
+          "word": "event",
+          "start": 17.44,
+          "end": 17.76,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 17.76,
+          "end": 17.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "created.",
+          "start": 17.94,
+          "end": 18.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 18.7,
+          "end": 19.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "should",
+          "start": 19.08,
+          "end": 19.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 19.26,
+          "end": 19.42,
+          "probability": 0.998
+        },
+        {
+          "word": "easily",
+          "start": 19.42,
+          "end": 19.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "searchable",
+          "start": 19.84,
+          "end": 20.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 20.4,
+          "end": 20.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "later",
+          "start": 20.58,
+          "end": 20.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "data",
+          "start": 20.88,
+          "end": 21.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "analysis.",
+          "start": 21.16,
+          "end": 21.7,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 25.36,
+      "end": 36.92,
+      "start_formatted": "00:00:25.360",
+      "end_formatted": "00:00:36.920",
+      "text": "A few custom history types are already present in the base configuration. Data change in particular seems to meet this need, but, for searchability, I will create a new custom history type.",
+      "words": [
+        {
+          "word": "A",
+          "start": 25.36,
+          "end": 26.04,
+          "probability": 0.959
+        },
+        {
+          "word": "few",
+          "start": 26.04,
+          "end": 26.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "custom",
+          "start": 26.24,
+          "end": 26.6,
+          "probability": 0.8955
+        },
+        {
+          "word": "history",
+          "start": 26.6,
+          "end": 26.96,
+          "probability": 0.9893
+        },
+        {
+          "word": "types",
+          "start": 26.96,
+          "end": 27.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 27.32,
+          "end": 27.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "already",
+          "start": 27.48,
+          "end": 27.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "present",
+          "start": 27.88,
+          "end": 28.28,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 28.28,
+          "end": 28.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 28.48,
+          "end": 28.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "base",
+          "start": 28.56,
+          "end": 28.78,
+          "probability": 0.9844
+        },
+        {
+          "word": "configuration.",
+          "start": 28.78,
+          "end": 29.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "Data",
+          "start": 29.98,
+          "end": 30.46,
+          "probability": 0.9834
+        },
+        {
+          "word": "change",
+          "start": 30.46,
+          "end": 30.84,
+          "probability": 0.8608
+        },
+        {
+          "word": "in",
+          "start": 30.84,
+          "end": 31.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "particular",
+          "start": 31.0,
+          "end": 31.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "seems",
+          "start": 31.44,
+          "end": 31.8,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 31.8,
+          "end": 31.98,
+          "probability": 1.0
+        },
+        {
+          "word": "meet",
+          "start": 31.98,
+          "end": 32.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 32.18,
+          "end": 32.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "need,",
+          "start": 32.4,
+          "end": 32.74,
+          "probability": 0.999
+        },
+        {
+          "word": "but,",
+          "start": 32.9,
+          "end": 33.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 33.44,
+          "end": 33.7,
+          "probability": 0.998
+        },
+        {
+          "word": "searchability,",
+          "start": 33.7,
+          "end": 34.44,
+          "probability": 0.9717
+        },
+        {
+          "word": "I",
+          "start": 34.7,
+          "end": 34.94,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 34.94,
+          "end": 35.08,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 35.08,
+          "end": 35.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 35.44,
+          "end": 35.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 35.6,
+          "end": 35.74,
+          "probability": 0.999
+        },
+        {
+          "word": "custom",
+          "start": 35.74,
+          "end": 36.1,
+          "probability": 0.9922
+        },
+        {
+          "word": "history",
+          "start": 36.1,
+          "end": 36.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "type.",
+          "start": 36.5,
+          "end": 36.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 39.54,
+      "end": 48.76,
+      "start_formatted": "00:00:39.540",
+      "end_formatted": "00:00:48.760",
+      "text": "I set the two required variables, the code, and the name.",
+      "words": [
+        {
+          "word": "I",
+          "start": 39.54,
+          "end": 40.22,
+          "probability": 0.999
+        },
+        {
+          "word": "set",
+          "start": 40.22,
+          "end": 40.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 40.46,
+          "end": 40.58,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 40.58,
+          "end": 40.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "required",
+          "start": 40.76,
+          "end": 41.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "variables,",
+          "start": 41.3,
+          "end": 41.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 42.18,
+          "end": 42.36,
+          "probability": 0.999
+        },
+        {
+          "word": "code,",
+          "start": 42.36,
+          "end": 42.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "and",
+          "start": 42.76,
+          "end": 48.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 48.38,
+          "end": 48.5,
+          "probability": 1.0
+        },
+        {
+          "word": "name.",
+          "start": 48.5,
+          "end": 48.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 58.44,
+      "end": 60.74,
+      "start_formatted": "00:00:58.440",
+      "end_formatted": "00:01:00.740",
+      "text": "I'll also set the description field.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 58.44,
+          "end": 59.04,
+          "probability": 0.9883
+        },
+        {
+          "word": "also",
+          "start": 59.04,
+          "end": 59.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "set",
+          "start": 59.34,
+          "end": 59.62,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 59.62,
+          "end": 59.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "description",
+          "start": 59.76,
+          "end": 60.16,
+          "probability": 0.7466
+        },
+        {
+          "word": "field.",
+          "start": 60.16,
+          "end": 60.74,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 69.68,
+      "end": 71.88,
+      "start_formatted": "00:01:09.680",
+      "end_formatted": "00:01:11.880",
+      "text": "I'll leave the rest at default values.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 69.68,
+          "end": 70.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "leave",
+          "start": 70.28,
+          "end": 70.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 70.44,
+          "end": 70.58,
+          "probability": 0.998
+        },
+        {
+          "word": "rest",
+          "start": 70.58,
+          "end": 70.8,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 70.8,
+          "end": 70.96,
+          "probability": 0.9585
+        },
+        {
+          "word": "default",
+          "start": 70.96,
+          "end": 71.26,
+          "probability": 0.9702
+        },
+        {
+          "word": "values.",
+          "start": 71.26,
+          "end": 71.88,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 73.3,
+      "end": 75.8,
+      "start_formatted": "00:01:13.300",
+      "end_formatted": "00:01:15.800",
+      "text": "Now let's look at the claim pre-update rules.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 73.3,
+          "end": 73.9,
+          "probability": 0.9912
+        },
+        {
+          "word": "let's",
+          "start": 73.9,
+          "end": 74.22,
+          "probability": 0.9863
+        },
+        {
+          "word": "look",
+          "start": 74.22,
+          "end": 74.4,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 74.4,
+          "end": 74.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 74.5,
+          "end": 74.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 74.6,
+          "end": 74.88,
+          "probability": 0.769
+        },
+        {
+          "word": "pre",
+          "start": 74.88,
+          "end": 75.16,
+          "probability": 0.9688
+        },
+        {
+          "word": "-update",
+          "start": 75.16,
+          "end": 75.46,
+          "probability": 0.9751
+        },
+        {
+          "word": "rules.",
+          "start": 75.46,
+          "end": 75.8,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 84.32,
+      "end": 90.14,
+      "start_formatted": "00:01:24.320",
+      "end_formatted": "00:01:30.140",
+      "text": "I see an existing rule which might partially meet the requirement. So I open it and take a look.",
+      "words": [
+        {
+          "word": "I",
+          "start": 84.32,
+          "end": 84.94,
+          "probability": 0.9575
+        },
+        {
+          "word": "see",
+          "start": 84.94,
+          "end": 85.14,
+          "probability": 0.9937
+        },
+        {
+          "word": "an",
+          "start": 85.14,
+          "end": 85.32,
+          "probability": 0.9927
+        },
+        {
+          "word": "existing",
+          "start": 85.32,
+          "end": 85.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "rule",
+          "start": 85.72,
+          "end": 86.06,
+          "probability": 0.9717
+        },
+        {
+          "word": "which",
+          "start": 86.06,
+          "end": 86.3,
+          "probability": 0.9644
+        },
+        {
+          "word": "might",
+          "start": 86.3,
+          "end": 86.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "partially",
+          "start": 86.5,
+          "end": 86.96,
+          "probability": 0.9897
+        },
+        {
+          "word": "meet",
+          "start": 86.96,
+          "end": 87.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 87.24,
+          "end": 87.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "requirement.",
+          "start": 87.36,
+          "end": 87.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "So",
+          "start": 88.28,
+          "end": 88.84,
+          "probability": 0.9717
+        },
+        {
+          "word": "I",
+          "start": 88.84,
+          "end": 88.98,
+          "probability": 0.918
+        },
+        {
+          "word": "open",
+          "start": 88.98,
+          "end": 89.3,
+          "probability": 0.9932
+        },
+        {
+          "word": "it",
+          "start": 89.3,
+          "end": 89.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "and",
+          "start": 89.44,
+          "end": 89.56,
+          "probability": 0.9878
+        },
+        {
+          "word": "take",
+          "start": 89.56,
+          "end": 89.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 89.74,
+          "end": 89.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "look.",
+          "start": 89.88,
+          "end": 90.14,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 91.64,
+      "end": 97.1,
+      "start_formatted": "00:01:31.640",
+      "end_formatted": "00:01:37.100",
+      "text": "As expected, it uses the data change custom history type. I will change that.",
+      "words": [
+        {
+          "word": "As",
+          "start": 91.64,
+          "end": 92.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "expected,",
+          "start": 92.26,
+          "end": 92.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "it",
+          "start": 93.06,
+          "end": 93.24,
+          "probability": 0.9854
+        },
+        {
+          "word": "uses",
+          "start": 93.24,
+          "end": 93.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 93.52,
+          "end": 93.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "data",
+          "start": 93.74,
+          "end": 93.98,
+          "probability": 0.4438
+        },
+        {
+          "word": "change",
+          "start": 93.98,
+          "end": 94.32,
+          "probability": 0.9087
+        },
+        {
+          "word": "custom",
+          "start": 94.32,
+          "end": 94.72,
+          "probability": 0.9609
+        },
+        {
+          "word": "history",
+          "start": 94.72,
+          "end": 95.14,
+          "probability": 0.9888
+        },
+        {
+          "word": "type.",
+          "start": 95.14,
+          "end": 95.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 95.82,
+          "end": 96.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "will",
+          "start": 96.2,
+          "end": 96.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "change",
+          "start": 96.38,
+          "end": 96.74,
+          "probability": 0.999
+        },
+        {
+          "word": "that.",
+          "start": 96.74,
+          "end": 97.1,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 106.78,
+      "end": 109.84,
+      "start_formatted": "00:01:46.780",
+      "end_formatted": "00:01:49.840",
+      "text": "To test the rule, I reload the changed classes.",
+      "words": [
+        {
+          "word": "To",
+          "start": 106.78,
+          "end": 107.34,
+          "probability": 0.9653
+        },
+        {
+          "word": "test",
+          "start": 107.34,
+          "end": 107.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 107.58,
+          "end": 107.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "rule,",
+          "start": 107.72,
+          "end": 108.0,
+          "probability": 0.9717
+        },
+        {
+          "word": "I",
+          "start": 108.22,
+          "end": 108.42,
+          "probability": 0.9946
+        },
+        {
+          "word": "reload",
+          "start": 108.42,
+          "end": 108.82,
+          "probability": 0.9712
+        },
+        {
+          "word": "the",
+          "start": 108.82,
+          "end": 109.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "changed",
+          "start": 109.04,
+          "end": 109.36,
+          "probability": 0.9531
+        },
+        {
+          "word": "classes.",
+          "start": 109.36,
+          "end": 109.84,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 112.82,
+      "end": 116.62,
+      "start_formatted": "00:01:52.820",
+      "end_formatted": "00:01:56.620",
+      "text": "When the classes are reloaded, I switch to Claim Center in the browser.",
+      "words": [
+        {
+          "word": "When",
+          "start": 112.82,
+          "end": 113.38,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 113.38,
+          "end": 113.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "classes",
+          "start": 113.46,
+          "end": 113.8,
+          "probability": 0.9917
+        },
+        {
+          "word": "are",
+          "start": 113.8,
+          "end": 114.0,
+          "probability": 0.999
+        },
+        {
+          "word": "reloaded,",
+          "start": 114.0,
+          "end": 114.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "I",
+          "start": 114.72,
+          "end": 114.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "switch",
+          "start": 114.92,
+          "end": 115.18,
+          "probability": 0.978
+        },
+        {
+          "word": "to",
+          "start": 115.18,
+          "end": 115.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "Claim",
+          "start": 115.38,
+          "end": 115.64,
+          "probability": 0.8892
+        },
+        {
+          "word": "Center",
+          "start": 115.64,
+          "end": 116.0,
+          "probability": 0.8208
+        },
+        {
+          "word": "in",
+          "start": 116.0,
+          "end": 116.14,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 116.14,
+          "end": 116.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "browser.",
+          "start": 116.22,
+          "end": 116.62,
+          "probability": 0.9658
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 117.16,
+      "end": 119.3,
+      "start_formatted": "00:01:57.160",
+      "end_formatted": "00:01:59.300",
+      "text": "And log in as Andy Applegate.",
+      "words": [
+        {
+          "word": "And",
+          "start": 117.16,
+          "end": 117.72,
+          "probability": 0.8511
+        },
+        {
+          "word": "log",
+          "start": 117.72,
+          "end": 118.02,
+          "probability": 0.3613
+        },
+        {
+          "word": "in",
+          "start": 118.02,
+          "end": 118.16,
+          "probability": 0.9634
+        },
+        {
+          "word": "as",
+          "start": 118.16,
+          "end": 118.3,
+          "probability": 0.9844
+        },
+        {
+          "word": "Andy",
+          "start": 118.3,
+          "end": 118.64,
+          "probability": 0.9175
+        },
+        {
+          "word": "Applegate.",
+          "start": 118.64,
+          "end": 119.3,
+          "probability": 0.9521
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 129.0,
+      "end": 131.54,
+      "start_formatted": "00:02:09.000",
+      "end_formatted": "00:02:11.540",
+      "text": "I navigate to the Robert Farley claim.",
+      "words": [
+        {
+          "word": "I",
+          "start": 129.0,
+          "end": 129.68,
+          "probability": 0.9868
+        },
+        {
+          "word": "navigate",
+          "start": 129.68,
+          "end": 130.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 130.06,
+          "end": 130.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 130.38,
+          "end": 130.46,
+          "probability": 0.999
+        },
+        {
+          "word": "Robert",
+          "start": 130.46,
+          "end": 130.74,
+          "probability": 0.9937
+        },
+        {
+          "word": "Farley",
+          "start": 130.74,
+          "end": 131.2,
+          "probability": 0.9282
+        },
+        {
+          "word": "claim.",
+          "start": 131.2,
+          "end": 131.54,
+          "probability": 0.814
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 132.54,
+      "end": 134.5,
+      "start_formatted": "00:02:12.540",
+      "end_formatted": "00:02:14.500",
+      "text": "On the loss details page,",
+      "words": [
+        {
+          "word": "On",
+          "start": 132.54,
+          "end": 133.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 133.22,
+          "end": 133.32,
+          "probability": 1.0
+        },
+        {
+          "word": "loss",
+          "start": 133.32,
+          "end": 133.56,
+          "probability": 0.5708
+        },
+        {
+          "word": "details",
+          "start": 133.56,
+          "end": 133.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "page,",
+          "start": 133.96,
+          "end": 134.5,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 135.82,
+      "end": 139.56,
+      "start_formatted": "00:02:15.820",
+      "end_formatted": "00:02:19.560",
+      "text": "I change the loss cause field from collision with motor vehicle,",
+      "words": [
+        {
+          "word": "I",
+          "start": 135.82,
+          "end": 136.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "change",
+          "start": 136.5,
+          "end": 136.86,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 136.86,
+          "end": 137.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "loss",
+          "start": 137.04,
+          "end": 137.32,
+          "probability": 0.9888
+        },
+        {
+          "word": "cause",
+          "start": 137.32,
+          "end": 137.66,
+          "probability": 0.9829
+        },
+        {
+          "word": "field",
+          "start": 137.66,
+          "end": 137.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 137.94,
+          "end": 138.14,
+          "probability": 0.999
+        },
+        {
+          "word": "collision",
+          "start": 138.14,
+          "end": 138.54,
+          "probability": 0.9756
+        },
+        {
+          "word": "with",
+          "start": 138.54,
+          "end": 138.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "motor",
+          "start": 138.82,
+          "end": 139.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "vehicle,",
+          "start": 139.08,
+          "end": 139.56,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 139.58,
+      "end": 141.72,
+      "start_formatted": "00:02:19.580",
+      "end_formatted": "00:02:21.720",
+      "text": "to collision with fixed object.",
+      "words": [
+        {
+          "word": "to",
+          "start": 139.58,
+          "end": 140.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "collision",
+          "start": 140.36,
+          "end": 140.72,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 140.72,
+          "end": 141.0,
+          "probability": 1.0
+        },
+        {
+          "word": "fixed",
+          "start": 141.0,
+          "end": 141.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "object.",
+          "start": 141.28,
+          "end": 141.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 145.8,
+      "end": 148.18,
+      "start_formatted": "00:02:25.800",
+      "end_formatted": "00:02:28.180",
+      "text": "When I navigate to the history page,",
+      "words": [
+        {
+          "word": "When",
+          "start": 145.8,
+          "end": 146.44,
+          "probability": 0.8325
+        },
+        {
+          "word": "I",
+          "start": 146.44,
+          "end": 146.54,
+          "probability": 0.9814
+        },
+        {
+          "word": "navigate",
+          "start": 146.54,
+          "end": 146.94,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 146.94,
+          "end": 147.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 147.28,
+          "end": 147.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "history",
+          "start": 147.4,
+          "end": 147.72,
+          "probability": 0.5718
+        },
+        {
+          "word": "page,",
+          "start": 147.72,
+          "end": 148.18,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 149.36,
+      "end": 153.64,
+      "start_formatted": "00:02:29.360",
+      "end_formatted": "00:02:33.640",
+      "text": "the expected custom history item is displayed at the top of the history list.",
+      "words": [
+        {
+          "word": "the",
+          "start": 149.36,
+          "end": 150.0,
+          "probability": 0.9551
+        },
+        {
+          "word": "expected",
+          "start": 150.0,
+          "end": 150.48,
+          "probability": 0.9746
+        },
+        {
+          "word": "custom",
+          "start": 150.48,
+          "end": 150.88,
+          "probability": 0.8984
+        },
+        {
+          "word": "history",
+          "start": 150.88,
+          "end": 151.28,
+          "probability": 0.9863
+        },
+        {
+          "word": "item",
+          "start": 151.28,
+          "end": 151.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 151.6,
+          "end": 151.76,
+          "probability": 0.998
+        },
+        {
+          "word": "displayed",
+          "start": 151.76,
+          "end": 152.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 152.18,
+          "end": 152.36,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 152.36,
+          "end": 152.46,
+          "probability": 0.999
+        },
+        {
+          "word": "top",
+          "start": 152.46,
+          "end": 152.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 152.68,
+          "end": 152.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 152.82,
+          "end": 152.92,
+          "probability": 0.9746
+        },
+        {
+          "word": "history",
+          "start": 152.92,
+          "end": 153.24,
+          "probability": 0.9507
+        },
+        {
+          "word": "list.",
+          "start": 153.24,
+          "end": 153.64,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 153.64,
+      "end": 156.62,
+      "start_formatted": "00:02:33.640",
+      "end_formatted": "00:02:36.620",
+      "text": "This concludes the custom history records demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 153.64,
+          "end": 154.5,
+          "probability": 0.9668
+        },
+        {
+          "word": "concludes",
+          "start": 154.5,
+          "end": 154.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 154.94,
+          "end": 155.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "custom",
+          "start": 155.18,
+          "end": 155.5,
+          "probability": 0.8691
+        },
+        {
+          "word": "history",
+          "start": 155.5,
+          "end": 155.9,
+          "probability": 0.999
+        },
+        {
+          "word": "records",
+          "start": 155.9,
+          "end": 156.38,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration.",
+          "start": 156.38,
+          "end": 156.62,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 156.62,
+      "end": 156.66,
+      "start_formatted": "00:02:36.620",
+      "end_formatted": "00:02:36.660",
+      "text": "This concludes the custom history records demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 156.62,
+          "end": 156.62,
+          "probability": 0.0661
+        },
+        {
+          "word": "concludes",
+          "start": 156.62,
+          "end": 156.62,
+          "probability": 0.5503
+        },
+        {
+          "word": "the",
+          "start": 156.62,
+          "end": 156.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "custom",
+          "start": 156.62,
+          "end": 156.62,
+          "probability": 0.9849
+        },
+        {
+          "word": "history",
+          "start": 156.62,
+          "end": 156.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "records",
+          "start": 156.62,
+          "end": 156.62,
+          "probability": 0.98
+        },
+        {
+          "word": "demonstration.",
+          "start": 156.62,
+          "end": 156.66,
+          "probability": 0.979
+        }
+      ]
+    }
+  ]
+}

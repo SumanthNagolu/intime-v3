@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-08",
+    "slide_count": 31,
+    "slides_with_text": 28,
+    "total_words": 875,
+    "avg_confidence": 84.25,
+    "processing_time_seconds": 12.28,
+    "extracted_at": "2026-02-13T12:04:34.496535"
+  },
+  "full_text": "Renewals\n\nLesson\nobjectives\n\n¢ Describe the renewal process in PolicyCenter\nat a high level\n\n¢ Describe a simple business renewal flow\n\n¢ Explain how pre-renewal works in\nPolicyCenter\n\nMarci\nConfiguration\nDeveloper\n\n| need to know how renewal works so | can\nconfigure PolicyCenter in a way that fits the\nclient’s requirements.\n\n| Renewals\n\neoe\n\nNew policy term\n\n¢ The renewal process begins before the current term expires\n¢ Renewals extend policies into a new term\n\n¢« Renewals are configurable\n\n| Starting renewals\n\nAutomatic I ; [4\nManual Sg\n\nNew policy term\n\n* Commonly starts automatically (default)\n\n« May be started manually\n\n| Processing renewals G\n\nAutomatic\nManual\n\nNew policy term\n\n¢ Fully automatic renewal by the renewal workflow\n\n* Some renewals may be referred for end user review\n\n| End results of a renewal job\n\n(rl tal E\n\nRenewed\nNon-renewed\nNot taken\n\nNew policy term\n\n¢ Renewed: policy continues for another term\n¢ Non-renewed: insurer decides not to renew\n\n¢ Not taken: insured chose not to renew\n\n| Renewal wizard: user interface renewal i\n\n++\no+\n\nNew Policy Pp = ane .\n. Edit View Billing Bind\nbisinreninl > [EZ contract fed Quotec » | rome » info [lag Renewal\nenew\n\n¢ Used for manual renewals\n\n¢ Used for referred renewals (policy will change on renewal)\n\nMarcus\nBusiness\nAnalyst\n\nWhat if | need to override the automated\nrenewal? Can | enter a pre-renewal direction to\nput the expiring term into automated\nnon-renewal or manual renewal?\n\nGi\n\nMarci\nConfiguration\n\nDeveloper _. .\nThe requirement | have says to configure a pre-\n\nrenewal direction, but | don’t know how that\n| d works in the base configuration.\n\n‘ie\n\n| Pre-renewal direction i\n\nRenewed\neo4 Non-renewed\nNot taken\n\nNew policy term\n\nAuser can override the default Automated Renewal by entering a pre-renewal\ndirection in the expiring term which puts the renewing term into Automated Non-\nRenewal or Manual Renewal.\n\n| Pre-renewal direction i\n\n¢ Pre-renewal direction is specified in PolicyCenter as a special set of instructions\ndetailing how to renew the policy\n\n* Generally, the pre-renewal will be non-renew, not taken or referred\n\n¢ Apolicy can have only one active pre-renewal direction\n\n| Demonstration G\n\nPre-renewal direction\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nStarting a renewal manually\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nInterrupted renewal\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nAutomated renewal i\n\nRenewal Workflow workflows\n\nReaches effective\n\nAutomatic date of the new term\n\nHas pre-\nrenewal\ndirection\n\nEdit Policy\nTransaction\n(optional)\n\nOF Quoted\n\n———>\nChanges\n\nRenewed\n\nIssue now\n\nQuestion\n\n_~ — What are the three ways that a renewal job can end?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say\n\nAnswer\n\nae What are the three ways that a renewal job can end?\n\n¢\n¢\n\nRenewed, non-renewal (when the insurer chooses not to renew the policy) or not\ntaken (when the insured chooses not to renew the policy).\n\nSop DD DD SDSS oe\n\nQuestion G\n\n,— — Under what two circumstances is the renewal wizard typically used?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say\n\nAnswer a\n\n,~ — Under what two circumstances is the renewal wizard typically used?\n\n¢\n¢\n¢\n\nThe renewal wizard is typically used when the renewal is started manually or when the\npolicy must be changed at renewal time.\n\nSop DD DD SDSS oe\n\nQuestion\n\n,~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\ntimes out.\n\nSoS oD DD DDS De Say\n\nGi\n\nAnswer\n\n/~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\n: times out.\n\nThe renewal flow does time out, and the renewal term is Not Taken.\n\nSop DD DD SDSS oe\n\nGi\n\nQuestion\n\n,~ — How many pre-renewal directions can a policy have?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say\n\nAnswer\n\n,~ — How many pre-renewal directions can a policy have?\n\n¢\n¢\n¢\n\nA policy may have any number of pre-renewal directions, but there is only one active\npre-renewal renewal direction at a time .\n\nSop DD DD SDSS oe\n\nQuestion\n\n,~ — When should you not create a pre-renewal direction?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say\n\nAnswer\n\n,~ — When should you not create a pre-renewal direction?\n¢\n\n¢\n¢\n\nYou should not create a pre-renewal direction if you want to renew the policy and do\nnot need human review of the job while it's being executed.\n\nSop DD DD SDSS oe\n\nLesson\nobj ectives * Describe the renewal process in PolicyCenter\nreview at a high level\n\n¢ Describe a simple business renewal flow\n¢ Explain how pre-renewal works in\nPolicyCenter\n\n| Student exercise\n\nRenewals",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Renewals",
+      "word_count": 1,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the renewal process in PolicyCenter\nat a high level\n\n¢ Describe a simple business renewal flow\n\n¢ Explain how pre-renewal works in\nPolicyCenter",
+      "word_count": 27,
+      "avg_confidence": 87.07,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Marci\nConfiguration\nDeveloper\n\n| need to know how renewal works so | can\nconfigure PolicyCenter in a way that fits the\nclient’s requirements.",
+      "word_count": 23,
+      "avg_confidence": 94.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Renewals\n\neoe\n\nNew policy term\n\n¢ The renewal process begins before the current term expires\n¢ Renewals extend policies into a new term\n\n¢« Renewals are configurable",
+      "word_count": 28,
+      "avg_confidence": 86.97,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Starting renewals\n\nAutomatic I ; [4\nManual Sg\n\nNew policy term\n\n* Commonly starts automatically (default)\n\n« May be started manually",
+      "word_count": 22,
+      "avg_confidence": 81.55,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Processing renewals G\n\nAutomatic\nManual\n\nNew policy term\n\n¢ Fully automatic renewal by the renewal workflow\n\n* Some renewals may be referred for end user review",
+      "word_count": 27,
+      "avg_confidence": 90.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| End results of a renewal job\n\n(rl tal E\n\nRenewed\nNon-renewed\nNot taken\n\nNew policy term\n\n¢ Renewed: policy continues for another term\n¢ Non-renewed: insurer decides not to renew\n\n¢ Not taken: insured chose not to renew",
+      "word_count": 39,
+      "avg_confidence": 83.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Renewal wizard: user interface renewal i\n\n++\no+\n\nNew Policy Pp = ane .\n. Edit View Billing Bind\nbisinreninl > [EZ contract fed Quotec » | rome » info [lag Renewal\nenew\n\n¢ Used for manual renewals\n\n¢ Used for referred renewals (policy will change on renewal)",
+      "word_count": 49,
+      "avg_confidence": 78.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Marcus\nBusiness\nAnalyst\n\nWhat if | need to override the automated\nrenewal? Can | enter a pre-renewal direction to\nput the expiring term into automated\nnon-renewal or manual renewal?",
+      "word_count": 29,
+      "avg_confidence": 94.6,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Gi\n\nMarci\nConfiguration\n\nDeveloper _. .\nThe requirement | have says to configure a pre-\n\nrenewal direction, but | don’t know how that\n| d works in the base configuration.\n\n‘ie",
+      "word_count": 31,
+      "avg_confidence": 87.97,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Pre-renewal direction i\n\nRenewed\neo4 Non-renewed\nNot taken\n\nNew policy term\n\nAuser can override the default Automated Renewal by entering a pre-renewal\ndirection in the expiring term which puts the renewing term into Automated Non-\nRenewal or Manual Renewal.",
+      "word_count": 40,
+      "avg_confidence": 90.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Pre-renewal direction i\n\n¢ Pre-renewal direction is specified in PolicyCenter as a special set of instructions\ndetailing how to renew the policy\n\n* Generally, the pre-renewal will be non-renew, not taken or referred\n\n¢ Apolicy can have only one active pre-renewal direction",
+      "word_count": 43,
+      "avg_confidence": 88.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Demonstration G\n\nPre-renewal direction\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.29,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Demonstration G\n\nStarting a renewal manually\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\n\nInterrupted renewal\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.37,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Automated renewal i\n\nRenewal Workflow workflows\n\nReaches effective\n\nAutomatic date of the new term\n\nHas pre-\nrenewal\ndirection\n\nEdit Policy\nTransaction\n(optional)\n\nOF Quoted\n\n———>\nChanges\n\nRenewed\n\nIssue now",
+      "word_count": 29,
+      "avg_confidence": 92.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n_~ — What are the three ways that a renewal job can end?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "word_count": 23,
+      "avg_confidence": 60.08,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\nae What are the three ways that a renewal job can end?\n\n¢\n¢\n\nRenewed, non-renewal (when the insurer chooses not to renew the policy) or not\ntaken (when the insured chooses not to renew the policy).\n\nSop DD DD SDSS oe",
+      "word_count": 43,
+      "avg_confidence": 84.27,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n,— — Under what two circumstances is the renewal wizard typically used?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "word_count": 23,
+      "avg_confidence": 65.24,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer a\n\n,~ — Under what two circumstances is the renewal wizard typically used?\n\n¢\n¢\n¢\n\nThe renewal wizard is typically used when the renewal is started manually or when the\npolicy must be changed at renewal time.\n\nSop DD DD SDSS oe",
+      "word_count": 44,
+      "avg_confidence": 82.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n,~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\ntimes out.\n\nSoS oD DD DDS De Say\n\nGi",
+      "word_count": 37,
+      "avg_confidence": 77.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n/~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\n: times out.\n\nThe renewal flow does time out, and the renewal term is Not Taken.\n\nSop DD DD SDSS oe\n\nGi",
+      "word_count": 50,
+      "avg_confidence": 83.75,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n,~ — How many pre-renewal directions can a policy have?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "word_count": 20,
+      "avg_confidence": 60.45,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n,~ — How many pre-renewal directions can a policy have?\n\n¢\n¢\n¢\n\nA policy may have any number of pre-renewal directions, but there is only one active\npre-renewal renewal direction at a time .\n\nSop DD DD SDSS oe",
+      "word_count": 41,
+      "avg_confidence": 77.33,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question\n\n,~ — When should you not create a pre-renewal direction?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "word_count": 20,
+      "avg_confidence": 62.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer\n\n,~ — When should you not create a pre-renewal direction?\n¢\n\n¢\n¢\n\nYou should not create a pre-renewal direction if you want to renew the policy and do\nnot need human review of the job while it's being executed.\n\nSop DD DD SDSS oe",
+      "word_count": 46,
+      "avg_confidence": 83.25,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Lesson\nobj ectives * Describe the renewal process in PolicyCenter\nreview at a high level\n\n¢ Describe a simple business renewal flow\n¢ Explain how pre-renewal works in\nPolicyCenter",
+      "word_count": 29,
+      "avg_confidence": 88.21,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Student exercise\n\nRenewals",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

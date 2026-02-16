@@ -56,3 +56,15 @@ tmp1
 .claude/mcp-presets/
 *.backup.*
 .env.local.backup.*
+# Academy training assets (too large for git)
+public/academy/guidewire/videos/
+public/academy/guidewire/slides/
+public/academy/guidewire/guide-extracts/
+public/academy/guidewire/guides/
+public/academy/guidewire/slides-original/
+
+# RAG knowledge base (heavy files)
+data/rag-knowledge-base/embeddings.json
+data/rag-knowledge-base/embeddings.bin
+data/rag-knowledge-base/embeddings-ids.json
+data/rag-knowledge-base/chunks.json

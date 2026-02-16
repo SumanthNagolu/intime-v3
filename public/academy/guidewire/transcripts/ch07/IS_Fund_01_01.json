@@ -1,0 +1,2810 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "filename": "IS_Fund_01_01.mp4",
+    "video_stem": "IS_Fund_01_01",
+    "duration_seconds": 164.04,
+    "duration_formatted": "00:02:44.040",
+    "segment_count": 29,
+    "word_count": 416,
+    "avg_confidence": 0.9404,
+    "transcription_time_seconds": 10.63,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:10:32.448877"
+  },
+  "full_text": "All Guidewire applications are typically installed to a c colon backslash guidewire directory. However, the education installers use c colon backslash gwxx to avoid conflict with development installations. We will use the GWB command to execute different Gradle tasks. The GWB command with the tasks parameter allows us to view a list of all the task parameters the GWB command allows. Press Return. The Run Server command lets us start the Guidewire application server. Conversely, the Stop Server command lets us end the server process. The GWB Studio command starts Guidewire Studio, where we configure Guidewire applications. The GWB Gen Data Dictionary and GWB Gosu doc commands generate documentation that we can use to help understand the current configuration of the application. Notice here the different Gradle task sections and Gradle tasks most frequently used in the application. The used by developers, Run Server, Stop Server, Studio, and Gen Data Dictionary. Now let's take a look at Guidewire Studio. Studio has several important components. The menus and toolbars let you carry out various commands. The navigation bar helps navigate through the project and open files for editing. It also shows the physical location of the file on the file system. Entity names and localizations help to control what appears on the screen when the application is viewed in different languages. Extensions and metadata contain the data model the application uses to store and manipulate data. The page configuration files define how the application appears on the user's screen. Plugins are one way the application can interface with other applications. GOSA rule sets allow you to control the application's behavior in a fairly straightforward manner. Field validators provide country-specific formats for things like phone numbers and postal codes. The GSRC node contains programmatic files written in the GOSA language. The editor is where you create and modify the code. The properties editor is where you edit the properties of various objects. In development mode, the database will automatically be upgraded during server startup, incorporating any changes that have been made. The run and debug buttons will always execute the selected configuration. Click the debug button. Seeing insurance suite application ready in the log indicates that the server has been successfully started. Which application that shows started will change according to which insurance suite application you are using for configuration. Even though it says Contact Manager, here in this example, we are using Training App, which is based on Contact Manager. This is the end of this demonstration. ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 25.58,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:25.580",
+      "text": "All Guidewire applications are typically installed to a c colon backslash guidewire directory. However, the education installers use c colon backslash gwxx to avoid conflict with development installations. We will use the GWB command to execute different Gradle tasks. The GWB command with the tasks parameter allows us to view a list of all the task parameters the GWB command allows. Press Return.",
+      "words": [
+        {
+          "word": "All",
+          "start": 0.0,
+          "end": 0.52,
+          "probability": 0.936
+        },
+        {
+          "word": "Guidewire",
+          "start": 0.52,
+          "end": 1.04,
+          "probability": 0.8384
+        },
+        {
+          "word": "applications",
+          "start": 1.04,
+          "end": 1.62,
+          "probability": 0.9438
+        },
+        {
+          "word": "are",
+          "start": 1.62,
+          "end": 1.92,
+          "probability": 0.999
+        },
+        {
+          "word": "typically",
+          "start": 1.92,
+          "end": 2.24,
+          "probability": 0.999
+        },
+        {
+          "word": "installed",
+          "start": 2.24,
+          "end": 2.76,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 2.76,
+          "end": 2.96,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 2.96,
+          "end": 3.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "c",
+          "start": 3.1,
+          "end": 3.24,
+          "probability": 0.3596
+        },
+        {
+          "word": "colon",
+          "start": 3.24,
+          "end": 3.52,
+          "probability": 0.1796
+        },
+        {
+          "word": "backslash",
+          "start": 3.52,
+          "end": 4.28,
+          "probability": 0.9761
+        },
+        {
+          "word": "guidewire",
+          "start": 4.28,
+          "end": 4.86,
+          "probability": 0.6855
+        },
+        {
+          "word": "directory.",
+          "start": 4.86,
+          "end": 5.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "However,",
+          "start": 5.7,
+          "end": 6.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 6.64,
+          "end": 6.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "education",
+          "start": 6.76,
+          "end": 7.22,
+          "probability": 0.73
+        },
+        {
+          "word": "installers",
+          "start": 7.22,
+          "end": 7.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "use",
+          "start": 7.92,
+          "end": 8.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "c",
+          "start": 8.14,
+          "end": 8.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "colon",
+          "start": 8.36,
+          "end": 8.64,
+          "probability": 0.9834
+        },
+        {
+          "word": "backslash",
+          "start": 8.64,
+          "end": 9.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "gwxx",
+          "start": 9.28,
+          "end": 10.16,
+          "probability": 0.6382
+        },
+        {
+          "word": "to",
+          "start": 10.16,
+          "end": 10.46,
+          "probability": 0.98
+        },
+        {
+          "word": "avoid",
+          "start": 10.46,
+          "end": 10.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "conflict",
+          "start": 10.8,
+          "end": 11.28,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 11.28,
+          "end": 11.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "development",
+          "start": 11.56,
+          "end": 12.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "installations.",
+          "start": 12.02,
+          "end": 12.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "We",
+          "start": 13.0,
+          "end": 13.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 13.64,
+          "end": 13.8,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 13.8,
+          "end": 14.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 14.02,
+          "end": 14.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "GWB",
+          "start": 14.18,
+          "end": 14.86,
+          "probability": 0.7432
+        },
+        {
+          "word": "command",
+          "start": 14.86,
+          "end": 15.18,
+          "probability": 0.981
+        },
+        {
+          "word": "to",
+          "start": 15.18,
+          "end": 15.48,
+          "probability": 0.999
+        },
+        {
+          "word": "execute",
+          "start": 15.48,
+          "end": 15.9,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 15.9,
+          "end": 16.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Gradle",
+          "start": 16.24,
+          "end": 16.64,
+          "probability": 0.7695
+        },
+        {
+          "word": "tasks.",
+          "start": 16.64,
+          "end": 17.04,
+          "probability": 0.9595
+        },
+        {
+          "word": "The",
+          "start": 17.68,
+          "end": 17.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "GWB",
+          "start": 17.94,
+          "end": 18.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "command",
+          "start": 18.66,
+          "end": 18.98,
+          "probability": 0.9902
+        },
+        {
+          "word": "with",
+          "start": 18.98,
+          "end": 19.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 19.2,
+          "end": 19.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "tasks",
+          "start": 19.32,
+          "end": 19.6,
+          "probability": 0.7969
+        },
+        {
+          "word": "parameter",
+          "start": 19.6,
+          "end": 20.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "allows",
+          "start": 20.08,
+          "end": 20.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "us",
+          "start": 20.46,
+          "end": 20.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 20.7,
+          "end": 20.82,
+          "probability": 0.998
+        },
+        {
+          "word": "view",
+          "start": 20.82,
+          "end": 21.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 21.0,
+          "end": 21.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "list",
+          "start": 21.18,
+          "end": 21.34,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 21.34,
+          "end": 21.5,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 21.5,
+          "end": 21.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 21.62,
+          "end": 21.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "task",
+          "start": 21.76,
+          "end": 22.06,
+          "probability": 0.979
+        },
+        {
+          "word": "parameters",
+          "start": 22.06,
+          "end": 22.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 22.58,
+          "end": 22.82,
+          "probability": 0.9805
+        },
+        {
+          "word": "GWB",
+          "start": 22.82,
+          "end": 23.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "command",
+          "start": 23.52,
+          "end": 23.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "allows.",
+          "start": 23.74,
+          "end": 24.26,
+          "probability": 0.999
+        },
+        {
+          "word": "Press",
+          "start": 24.62,
+          "end": 25.26,
+          "probability": 0.9917
+        },
+        {
+          "word": "Return.",
+          "start": 25.26,
+          "end": 25.58,
+          "probability": 0.4712
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 26.5,
+      "end": 55.56,
+      "start_formatted": "00:00:26.500",
+      "end_formatted": "00:00:55.560",
+      "text": "The Run Server command lets us start the Guidewire application server. Conversely, the Stop Server command lets us end the server process. The GWB Studio command starts Guidewire Studio, where we configure Guidewire applications. The GWB Gen Data Dictionary and GWB Gosu doc commands generate documentation that we can use to help understand the current configuration of the application. Notice here the different Gradle task sections and Gradle tasks most frequently used in the application.",
+      "words": [
+        {
+          "word": "The",
+          "start": 26.5,
+          "end": 27.14,
+          "probability": 0.7993
+        },
+        {
+          "word": "Run",
+          "start": 27.14,
+          "end": 27.34,
+          "probability": 0.3918
+        },
+        {
+          "word": "Server",
+          "start": 27.34,
+          "end": 27.64,
+          "probability": 0.4329
+        },
+        {
+          "word": "command",
+          "start": 27.64,
+          "end": 27.98,
+          "probability": 0.9624
+        },
+        {
+          "word": "lets",
+          "start": 27.98,
+          "end": 28.26,
+          "probability": 0.9688
+        },
+        {
+          "word": "us",
+          "start": 28.26,
+          "end": 28.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "start",
+          "start": 28.44,
+          "end": 28.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 28.74,
+          "end": 28.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "Guidewire",
+          "start": 28.88,
+          "end": 29.38,
+          "probability": 0.9053
+        },
+        {
+          "word": "application",
+          "start": 29.38,
+          "end": 29.96,
+          "probability": 0.769
+        },
+        {
+          "word": "server.",
+          "start": 29.96,
+          "end": 30.4,
+          "probability": 0.9751
+        },
+        {
+          "word": "Conversely,",
+          "start": 30.98,
+          "end": 31.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 31.8,
+          "end": 32.06,
+          "probability": 0.9478
+        },
+        {
+          "word": "Stop",
+          "start": 32.06,
+          "end": 32.3,
+          "probability": 0.9883
+        },
+        {
+          "word": "Server",
+          "start": 32.3,
+          "end": 32.64,
+          "probability": 0.9785
+        },
+        {
+          "word": "command",
+          "start": 32.64,
+          "end": 33.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "lets",
+          "start": 33.0,
+          "end": 33.26,
+          "probability": 0.9858
+        },
+        {
+          "word": "us",
+          "start": 33.26,
+          "end": 33.4,
+          "probability": 0.999
+        },
+        {
+          "word": "end",
+          "start": 33.4,
+          "end": 33.6,
+          "probability": 0.9761
+        },
+        {
+          "word": "the",
+          "start": 33.6,
+          "end": 33.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "server",
+          "start": 33.74,
+          "end": 34.0,
+          "probability": 0.9839
+        },
+        {
+          "word": "process.",
+          "start": 34.0,
+          "end": 34.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 34.82,
+          "end": 35.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "GWB",
+          "start": 35.46,
+          "end": 36.12,
+          "probability": 0.9692
+        },
+        {
+          "word": "Studio",
+          "start": 36.12,
+          "end": 36.44,
+          "probability": 0.9565
+        },
+        {
+          "word": "command",
+          "start": 36.44,
+          "end": 37.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "starts",
+          "start": 37.04,
+          "end": 37.64,
+          "probability": 0.751
+        },
+        {
+          "word": "Guidewire",
+          "start": 37.64,
+          "end": 38.26,
+          "probability": 0.9917
+        },
+        {
+          "word": "Studio,",
+          "start": 38.26,
+          "end": 38.62,
+          "probability": 0.9536
+        },
+        {
+          "word": "where",
+          "start": 38.98,
+          "end": 39.24,
+          "probability": 0.998
+        },
+        {
+          "word": "we",
+          "start": 39.24,
+          "end": 39.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "configure",
+          "start": 39.4,
+          "end": 39.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "Guidewire",
+          "start": 39.84,
+          "end": 40.4,
+          "probability": 0.9453
+        },
+        {
+          "word": "applications.",
+          "start": 40.4,
+          "end": 41.06,
+          "probability": 0.9614
+        },
+        {
+          "word": "The",
+          "start": 41.42,
+          "end": 42.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "GWB",
+          "start": 42.06,
+          "end": 42.76,
+          "probability": 0.9824
+        },
+        {
+          "word": "Gen",
+          "start": 42.76,
+          "end": 42.98,
+          "probability": 0.8457
+        },
+        {
+          "word": "Data",
+          "start": 42.98,
+          "end": 43.22,
+          "probability": 0.8799
+        },
+        {
+          "word": "Dictionary",
+          "start": 43.22,
+          "end": 43.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 43.88,
+          "end": 44.26,
+          "probability": 0.8354
+        },
+        {
+          "word": "GWB",
+          "start": 44.26,
+          "end": 44.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "Gosu",
+          "start": 44.98,
+          "end": 45.3,
+          "probability": 0.4697
+        },
+        {
+          "word": "doc",
+          "start": 45.3,
+          "end": 45.48,
+          "probability": 0.2268
+        },
+        {
+          "word": "commands",
+          "start": 45.48,
+          "end": 46.0,
+          "probability": 0.9854
+        },
+        {
+          "word": "generate",
+          "start": 46.0,
+          "end": 46.58,
+          "probability": 0.9512
+        },
+        {
+          "word": "documentation",
+          "start": 46.58,
+          "end": 47.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 47.18,
+          "end": 47.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "we",
+          "start": 47.6,
+          "end": 47.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 47.74,
+          "end": 47.88,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 47.88,
+          "end": 48.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 48.08,
+          "end": 48.24,
+          "probability": 0.998
+        },
+        {
+          "word": "help",
+          "start": 48.24,
+          "end": 48.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "understand",
+          "start": 48.46,
+          "end": 48.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 48.92,
+          "end": 49.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "current",
+          "start": 49.14,
+          "end": 49.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "configuration",
+          "start": 49.4,
+          "end": 49.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 49.96,
+          "end": 50.26,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 50.26,
+          "end": 50.36,
+          "probability": 0.999
+        },
+        {
+          "word": "application.",
+          "start": 50.36,
+          "end": 50.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "Notice",
+          "start": 51.46,
+          "end": 51.92,
+          "probability": 0.9849
+        },
+        {
+          "word": "here",
+          "start": 51.92,
+          "end": 52.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 52.08,
+          "end": 52.24,
+          "probability": 0.9902
+        },
+        {
+          "word": "different",
+          "start": 52.24,
+          "end": 52.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "Gradle",
+          "start": 52.5,
+          "end": 52.86,
+          "probability": 0.8672
+        },
+        {
+          "word": "task",
+          "start": 52.86,
+          "end": 53.16,
+          "probability": 0.5137
+        },
+        {
+          "word": "sections",
+          "start": 53.16,
+          "end": 53.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "and",
+          "start": 53.66,
+          "end": 53.88,
+          "probability": 0.9858
+        },
+        {
+          "word": "Gradle",
+          "start": 53.88,
+          "end": 54.2,
+          "probability": 0.9844
+        },
+        {
+          "word": "tasks",
+          "start": 54.2,
+          "end": 54.52,
+          "probability": 0.9785
+        },
+        {
+          "word": "most",
+          "start": 54.52,
+          "end": 54.8,
+          "probability": 0.9854
+        },
+        {
+          "word": "frequently",
+          "start": 54.8,
+          "end": 55.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 55.28,
+          "end": 55.56,
+          "probability": 0.9106
+        },
+        {
+          "word": "in",
+          "start": 55.56,
+          "end": 55.56,
+          "probability": 0.5239
+        },
+        {
+          "word": "the",
+          "start": 55.56,
+          "end": 55.56,
+          "probability": 0.4961
+        },
+        {
+          "word": "application.",
+          "start": 55.56,
+          "end": 55.56,
+          "probability": 0.1354
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 55.56,
+      "end": 55.6,
+      "start_formatted": "00:00:55.560",
+      "end_formatted": "00:00:55.600",
+      "text": "The",
+      "words": [
+        {
+          "word": "The",
+          "start": 55.56,
+          "end": 55.6,
+          "probability": 0.0008
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 55.6,
+      "end": 60.76,
+      "start_formatted": "00:00:55.600",
+      "end_formatted": "00:01:00.760",
+      "text": "used by developers, Run Server, Stop Server, Studio, and Gen Data Dictionary.",
+      "words": [
+        {
+          "word": "used",
+          "start": 55.6,
+          "end": 55.6,
+          "probability": 0.0007
+        },
+        {
+          "word": "by",
+          "start": 55.6,
+          "end": 55.82,
+          "probability": 0.9346
+        },
+        {
+          "word": "developers,",
+          "start": 55.82,
+          "end": 56.32,
+          "probability": 0.9126
+        },
+        {
+          "word": "Run",
+          "start": 56.58,
+          "end": 56.9,
+          "probability": 0.6855
+        },
+        {
+          "word": "Server,",
+          "start": 56.9,
+          "end": 57.26,
+          "probability": 0.519
+        },
+        {
+          "word": "Stop",
+          "start": 57.52,
+          "end": 57.86,
+          "probability": 0.9844
+        },
+        {
+          "word": "Server,",
+          "start": 57.86,
+          "end": 58.32,
+          "probability": 0.9146
+        },
+        {
+          "word": "Studio,",
+          "start": 58.56,
+          "end": 59.02,
+          "probability": 0.9878
+        },
+        {
+          "word": "and",
+          "start": 59.34,
+          "end": 59.64,
+          "probability": 0.9868
+        },
+        {
+          "word": "Gen",
+          "start": 59.64,
+          "end": 59.82,
+          "probability": 0.7139
+        },
+        {
+          "word": "Data",
+          "start": 59.82,
+          "end": 60.06,
+          "probability": 0.4019
+        },
+        {
+          "word": "Dictionary.",
+          "start": 60.06,
+          "end": 60.76,
+          "probability": 0.9683
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 61.72,
+      "end": 78.64,
+      "start_formatted": "00:01:01.720",
+      "end_formatted": "00:01:18.640",
+      "text": "Now let's take a look at Guidewire Studio. Studio has several important components. The menus and toolbars let you carry out various commands. The navigation bar helps navigate through the project and open files for editing. It also shows the physical location of the file on the file system.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 61.72,
+          "end": 62.32,
+          "probability": 0.9893
+        },
+        {
+          "word": "let's",
+          "start": 62.32,
+          "end": 62.62,
+          "probability": 0.9648
+        },
+        {
+          "word": "take",
+          "start": 62.62,
+          "end": 62.82,
+          "probability": 0.9902
+        },
+        {
+          "word": "a",
+          "start": 62.82,
+          "end": 62.94,
+          "probability": 0.999
+        },
+        {
+          "word": "look",
+          "start": 62.94,
+          "end": 63.1,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 63.1,
+          "end": 63.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "Guidewire",
+          "start": 63.22,
+          "end": 63.8,
+          "probability": 0.9551
+        },
+        {
+          "word": "Studio.",
+          "start": 63.8,
+          "end": 64.18,
+          "probability": 0.9624
+        },
+        {
+          "word": "Studio",
+          "start": 64.74,
+          "end": 65.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "has",
+          "start": 65.22,
+          "end": 65.5,
+          "probability": 0.999
+        },
+        {
+          "word": "several",
+          "start": 65.5,
+          "end": 65.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "important",
+          "start": 65.8,
+          "end": 66.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "components.",
+          "start": 66.26,
+          "end": 66.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 67.12,
+          "end": 67.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "menus",
+          "start": 67.7,
+          "end": 67.94,
+          "probability": 0.9678
+        },
+        {
+          "word": "and",
+          "start": 67.94,
+          "end": 68.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "toolbars",
+          "start": 68.14,
+          "end": 68.64,
+          "probability": 0.959
+        },
+        {
+          "word": "let",
+          "start": 68.64,
+          "end": 68.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "you",
+          "start": 68.86,
+          "end": 69.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "carry",
+          "start": 69.06,
+          "end": 69.3,
+          "probability": 0.999
+        },
+        {
+          "word": "out",
+          "start": 69.3,
+          "end": 69.52,
+          "probability": 0.998
+        },
+        {
+          "word": "various",
+          "start": 69.52,
+          "end": 69.86,
+          "probability": 0.999
+        },
+        {
+          "word": "commands.",
+          "start": 69.86,
+          "end": 70.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 70.66,
+          "end": 71.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "navigation",
+          "start": 71.04,
+          "end": 71.42,
+          "probability": 0.8496
+        },
+        {
+          "word": "bar",
+          "start": 71.42,
+          "end": 71.86,
+          "probability": 0.999
+        },
+        {
+          "word": "helps",
+          "start": 71.86,
+          "end": 72.22,
+          "probability": 0.998
+        },
+        {
+          "word": "navigate",
+          "start": 72.22,
+          "end": 72.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "through",
+          "start": 72.58,
+          "end": 72.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 72.82,
+          "end": 72.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "project",
+          "start": 72.98,
+          "end": 73.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 73.38,
+          "end": 73.58,
+          "probability": 0.9883
+        },
+        {
+          "word": "open",
+          "start": 73.58,
+          "end": 73.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "files",
+          "start": 73.84,
+          "end": 74.24,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 74.24,
+          "end": 74.5,
+          "probability": 0.999
+        },
+        {
+          "word": "editing.",
+          "start": 74.5,
+          "end": 74.8,
+          "probability": 0.999
+        },
+        {
+          "word": "It",
+          "start": 75.06,
+          "end": 75.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "also",
+          "start": 75.48,
+          "end": 75.7,
+          "probability": 0.999
+        },
+        {
+          "word": "shows",
+          "start": 75.7,
+          "end": 76.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 76.02,
+          "end": 76.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "physical",
+          "start": 76.2,
+          "end": 76.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "location",
+          "start": 76.52,
+          "end": 77.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 77.06,
+          "end": 77.26,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 77.26,
+          "end": 77.38,
+          "probability": 0.999
+        },
+        {
+          "word": "file",
+          "start": 77.38,
+          "end": 77.64,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 77.64,
+          "end": 77.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 77.82,
+          "end": 77.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "file",
+          "start": 77.92,
+          "end": 78.2,
+          "probability": 0.9287
+        },
+        {
+          "word": "system.",
+          "start": 78.2,
+          "end": 78.64,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 78.64,
+      "end": 83.74,
+      "start_formatted": "00:01:18.640",
+      "end_formatted": "00:01:23.740",
+      "text": "Entity names and localizations help to control what appears on the screen when the application",
+      "words": [
+        {
+          "word": "Entity",
+          "start": 78.64,
+          "end": 79.76,
+          "probability": 0.936
+        },
+        {
+          "word": "names",
+          "start": 79.76,
+          "end": 80.02,
+          "probability": 0.9604
+        },
+        {
+          "word": "and",
+          "start": 80.02,
+          "end": 80.2,
+          "probability": 0.9932
+        },
+        {
+          "word": "localizations",
+          "start": 80.2,
+          "end": 80.9,
+          "probability": 0.9902
+        },
+        {
+          "word": "help",
+          "start": 80.9,
+          "end": 81.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 81.26,
+          "end": 81.42,
+          "probability": 0.998
+        },
+        {
+          "word": "control",
+          "start": 81.42,
+          "end": 81.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "what",
+          "start": 81.72,
+          "end": 81.94,
+          "probability": 0.999
+        },
+        {
+          "word": "appears",
+          "start": 81.94,
+          "end": 82.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 82.3,
+          "end": 82.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 82.48,
+          "end": 82.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen",
+          "start": 82.58,
+          "end": 82.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 82.86,
+          "end": 83.1,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 83.1,
+          "end": 83.22,
+          "probability": 0.999
+        },
+        {
+          "word": "application",
+          "start": 83.22,
+          "end": 83.74,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 83.74,
+      "end": 85.24,
+      "start_formatted": "00:01:23.740",
+      "end_formatted": "00:01:25.240",
+      "text": "is viewed in different languages.",
+      "words": [
+        {
+          "word": "is",
+          "start": 83.74,
+          "end": 83.98,
+          "probability": 0.999
+        },
+        {
+          "word": "viewed",
+          "start": 83.98,
+          "end": 84.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 84.24,
+          "end": 84.42,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 84.42,
+          "end": 84.7,
+          "probability": 0.999
+        },
+        {
+          "word": "languages.",
+          "start": 84.7,
+          "end": 85.24,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 86.04,
+      "end": 91.38,
+      "start_formatted": "00:01:26.040",
+      "end_formatted": "00:01:31.380",
+      "text": "Extensions and metadata contain the data model the application uses to store and manipulate",
+      "words": [
+        {
+          "word": "Extensions",
+          "start": 86.04,
+          "end": 86.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "and",
+          "start": 86.64,
+          "end": 86.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "metadata",
+          "start": 86.82,
+          "end": 87.24,
+          "probability": 0.9033
+        },
+        {
+          "word": "contain",
+          "start": 87.24,
+          "end": 87.98,
+          "probability": 0.7979
+        },
+        {
+          "word": "the",
+          "start": 87.98,
+          "end": 88.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "data",
+          "start": 88.3,
+          "end": 88.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "model",
+          "start": 88.58,
+          "end": 88.92,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 88.92,
+          "end": 89.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "application",
+          "start": 89.12,
+          "end": 89.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "uses",
+          "start": 89.74,
+          "end": 90.28,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 90.28,
+          "end": 90.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "store",
+          "start": 90.52,
+          "end": 90.82,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 90.82,
+          "end": 90.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "manipulate",
+          "start": 90.96,
+          "end": 91.38,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 91.38,
+      "end": 91.78,
+      "start_formatted": "00:01:31.380",
+      "end_formatted": "00:01:31.780",
+      "text": "data.",
+      "words": [
+        {
+          "word": "data.",
+          "start": 91.38,
+          "end": 91.78,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 92.28,
+      "end": 98.22,
+      "start_formatted": "00:01:32.280",
+      "end_formatted": "00:01:38.220",
+      "text": "The page configuration files define how the application appears on the user's screen.",
+      "words": [
+        {
+          "word": "The",
+          "start": 92.28,
+          "end": 92.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "page",
+          "start": 92.68,
+          "end": 92.92,
+          "probability": 0.895
+        },
+        {
+          "word": "configuration",
+          "start": 92.92,
+          "end": 93.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "files",
+          "start": 93.52,
+          "end": 94.22,
+          "probability": 0.998
+        },
+        {
+          "word": "define",
+          "start": 94.22,
+          "end": 95.84,
+          "probability": 0.2357
+        },
+        {
+          "word": "how",
+          "start": 95.84,
+          "end": 96.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 96.14,
+          "end": 96.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "application",
+          "start": 96.28,
+          "end": 96.8,
+          "probability": 0.999
+        },
+        {
+          "word": "appears",
+          "start": 96.8,
+          "end": 97.2,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 97.2,
+          "end": 97.38,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 97.38,
+          "end": 97.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "user's",
+          "start": 97.46,
+          "end": 97.88,
+          "probability": 0.9785
+        },
+        {
+          "word": "screen.",
+          "start": 97.88,
+          "end": 98.22,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 98.82,
+      "end": 102.56,
+      "start_formatted": "00:01:38.820",
+      "end_formatted": "00:01:42.560",
+      "text": "Plugins are one way the application can interface with other applications.",
+      "words": [
+        {
+          "word": "Plugins",
+          "start": 98.82,
+          "end": 99.42,
+          "probability": 0.9434
+        },
+        {
+          "word": "are",
+          "start": 99.42,
+          "end": 99.58,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 99.58,
+          "end": 99.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "way",
+          "start": 99.8,
+          "end": 100.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 100.02,
+          "end": 100.18,
+          "probability": 0.998
+        },
+        {
+          "word": "application",
+          "start": 100.18,
+          "end": 100.72,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 100.72,
+          "end": 101.0,
+          "probability": 0.999
+        },
+        {
+          "word": "interface",
+          "start": 101.0,
+          "end": 101.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 101.34,
+          "end": 101.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "other",
+          "start": 101.6,
+          "end": 101.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "applications.",
+          "start": 101.82,
+          "end": 102.56,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 103.4,
+      "end": 108.02,
+      "start_formatted": "00:01:43.400",
+      "end_formatted": "00:01:48.020",
+      "text": "GOSA rule sets allow you to control the application's behavior in a fairly straightforward manner.",
+      "words": [
+        {
+          "word": "GOSA",
+          "start": 103.4,
+          "end": 103.7,
+          "probability": 0.9268
+        },
+        {
+          "word": "rule",
+          "start": 103.7,
+          "end": 103.86,
+          "probability": 0.5737
+        },
+        {
+          "word": "sets",
+          "start": 103.86,
+          "end": 104.14,
+          "probability": 0.9658
+        },
+        {
+          "word": "allow",
+          "start": 104.14,
+          "end": 104.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "you",
+          "start": 104.38,
+          "end": 104.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 104.62,
+          "end": 104.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "control",
+          "start": 104.76,
+          "end": 105.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 105.08,
+          "end": 105.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "application's",
+          "start": 105.26,
+          "end": 105.98,
+          "probability": 0.9907
+        },
+        {
+          "word": "behavior",
+          "start": 105.98,
+          "end": 106.34,
+          "probability": 0.9854
+        },
+        {
+          "word": "in",
+          "start": 106.34,
+          "end": 106.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 106.6,
+          "end": 106.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "fairly",
+          "start": 106.7,
+          "end": 106.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "straightforward",
+          "start": 106.96,
+          "end": 107.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "manner.",
+          "start": 107.48,
+          "end": 108.02,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 108.64,
+      "end": 113.5,
+      "start_formatted": "00:01:48.640",
+      "end_formatted": "00:01:53.500",
+      "text": "Field validators provide country-specific formats for things like phone numbers and postal",
+      "words": [
+        {
+          "word": "Field",
+          "start": 108.64,
+          "end": 109.16,
+          "probability": 0.9458
+        },
+        {
+          "word": "validators",
+          "start": 109.16,
+          "end": 109.8,
+          "probability": 0.9668
+        },
+        {
+          "word": "provide",
+          "start": 109.8,
+          "end": 110.2,
+          "probability": 0.998
+        },
+        {
+          "word": "country",
+          "start": 110.2,
+          "end": 110.56,
+          "probability": 0.9712
+        },
+        {
+          "word": "-specific",
+          "start": 110.56,
+          "end": 110.94,
+          "probability": 0.8232
+        },
+        {
+          "word": "formats",
+          "start": 110.94,
+          "end": 111.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 111.64,
+          "end": 111.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "things",
+          "start": 111.84,
+          "end": 112.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "like",
+          "start": 112.08,
+          "end": 112.34,
+          "probability": 0.999
+        },
+        {
+          "word": "phone",
+          "start": 112.34,
+          "end": 112.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "numbers",
+          "start": 112.62,
+          "end": 112.92,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 112.92,
+          "end": 113.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "postal",
+          "start": 113.12,
+          "end": 113.5,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 113.5,
+      "end": 113.96,
+      "start_formatted": "00:01:53.500",
+      "end_formatted": "00:01:53.960",
+      "text": "codes.",
+      "words": [
+        {
+          "word": "codes.",
+          "start": 113.5,
+          "end": 113.96,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 114.78,
+      "end": 118.68,
+      "start_formatted": "00:01:54.780",
+      "end_formatted": "00:01:58.680",
+      "text": "The GSRC node contains programmatic files written in the GOSA language.",
+      "words": [
+        {
+          "word": "The",
+          "start": 114.52,
+          "end": 114.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "GSRC",
+          "start": 114.82,
+          "end": 115.58,
+          "probability": 0.957
+        },
+        {
+          "word": "node",
+          "start": 115.58,
+          "end": 115.84,
+          "probability": 0.957
+        },
+        {
+          "word": "contains",
+          "start": 115.84,
+          "end": 116.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "programmatic",
+          "start": 116.3,
+          "end": 117.0,
+          "probability": 0.9863
+        },
+        {
+          "word": "files",
+          "start": 117.0,
+          "end": 117.38,
+          "probability": 0.999
+        },
+        {
+          "word": "written",
+          "start": 117.38,
+          "end": 117.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 117.66,
+          "end": 117.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 117.82,
+          "end": 117.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "GOSA",
+          "start": 117.92,
+          "end": 118.26,
+          "probability": 0.9453
+        },
+        {
+          "word": "language.",
+          "start": 118.26,
+          "end": 118.68,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 119.48,
+      "end": 121.62,
+      "start_formatted": "00:01:59.480",
+      "end_formatted": "00:02:01.620",
+      "text": "The editor is where you create and modify the code.",
+      "words": [
+        {
+          "word": "The",
+          "start": 119.24,
+          "end": 119.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "editor",
+          "start": 119.54,
+          "end": 119.8,
+          "probability": 0.4705
+        },
+        {
+          "word": "is",
+          "start": 119.8,
+          "end": 120.0,
+          "probability": 0.999
+        },
+        {
+          "word": "where",
+          "start": 120.0,
+          "end": 120.14,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 120.14,
+          "end": 120.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 120.3,
+          "end": 120.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 120.56,
+          "end": 120.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "modify",
+          "start": 120.74,
+          "end": 121.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 121.12,
+          "end": 121.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "code.",
+          "start": 121.3,
+          "end": 121.62,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 122.0,
+      "end": 125.42,
+      "start_formatted": "00:02:02.000",
+      "end_formatted": "00:02:05.420",
+      "text": "The properties editor is where you edit the properties of various objects.",
+      "words": [
+        {
+          "word": "The",
+          "start": 122.0,
+          "end": 122.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "properties",
+          "start": 122.4,
+          "end": 122.84,
+          "probability": 0.6709
+        },
+        {
+          "word": "editor",
+          "start": 122.84,
+          "end": 123.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 123.12,
+          "end": 123.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "where",
+          "start": 123.34,
+          "end": 123.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "you",
+          "start": 123.48,
+          "end": 123.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "edit",
+          "start": 123.62,
+          "end": 123.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 123.84,
+          "end": 123.96,
+          "probability": 0.999
+        },
+        {
+          "word": "properties",
+          "start": 123.96,
+          "end": 124.32,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 124.32,
+          "end": 124.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "various",
+          "start": 124.54,
+          "end": 124.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "objects.",
+          "start": 124.84,
+          "end": 125.42,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 126.38,
+      "end": 131.54,
+      "start_formatted": "00:02:06.380",
+      "end_formatted": "00:02:11.540",
+      "text": "In development mode, the database will automatically be upgraded during server startup, incorporating",
+      "words": [
+        {
+          "word": "In",
+          "start": 126.1,
+          "end": 126.4,
+          "probability": 0.998
+        },
+        {
+          "word": "development",
+          "start": 126.4,
+          "end": 126.82,
+          "probability": 0.9067
+        },
+        {
+          "word": "mode,",
+          "start": 126.82,
+          "end": 127.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 127.42,
+          "end": 127.62,
+          "probability": 0.998
+        },
+        {
+          "word": "database",
+          "start": 127.62,
+          "end": 127.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 127.96,
+          "end": 128.26,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 128.26,
+          "end": 128.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "be",
+          "start": 128.76,
+          "end": 129.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "upgraded",
+          "start": 129.04,
+          "end": 129.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "during",
+          "start": 129.48,
+          "end": 129.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "server",
+          "start": 129.74,
+          "end": 130.1,
+          "probability": 0.8682
+        },
+        {
+          "word": "startup,",
+          "start": 130.1,
+          "end": 130.56,
+          "probability": 0.9238
+        },
+        {
+          "word": "incorporating",
+          "start": 130.92,
+          "end": 131.54,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 131.54,
+      "end": 133.0,
+      "start_formatted": "00:02:11.540",
+      "end_formatted": "00:02:13.000",
+      "text": "any changes that have been made.",
+      "words": [
+        {
+          "word": "any",
+          "start": 131.54,
+          "end": 131.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes",
+          "start": 131.78,
+          "end": 132.22,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 132.22,
+          "end": 132.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 132.44,
+          "end": 132.54,
+          "probability": 0.999
+        },
+        {
+          "word": "been",
+          "start": 132.54,
+          "end": 132.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "made.",
+          "start": 132.68,
+          "end": 133.0,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 133.3,
+      "end": 136.9,
+      "start_formatted": "00:02:13.300",
+      "end_formatted": "00:02:16.900",
+      "text": "The run and debug buttons will always execute the selected configuration.",
+      "words": [
+        {
+          "word": "The",
+          "start": 133.3,
+          "end": 133.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "run",
+          "start": 133.62,
+          "end": 133.8,
+          "probability": 0.5156
+        },
+        {
+          "word": "and",
+          "start": 133.8,
+          "end": 133.96,
+          "probability": 0.9282
+        },
+        {
+          "word": "debug",
+          "start": 133.96,
+          "end": 134.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "buttons",
+          "start": 134.24,
+          "end": 134.64,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 134.64,
+          "end": 134.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "always",
+          "start": 134.84,
+          "end": 135.14,
+          "probability": 0.999
+        },
+        {
+          "word": "execute",
+          "start": 135.14,
+          "end": 135.6,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 135.6,
+          "end": 135.78,
+          "probability": 0.999
+        },
+        {
+          "word": "selected",
+          "start": 135.78,
+          "end": 136.16,
+          "probability": 0.999
+        },
+        {
+          "word": "configuration.",
+          "start": 136.16,
+          "end": 136.9,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 137.74,
+      "end": 139.2,
+      "start_formatted": "00:02:17.740",
+      "end_formatted": "00:02:19.200",
+      "text": "Click the debug button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 137.74,
+          "end": 138.36,
+          "probability": 0.8457
+        },
+        {
+          "word": "the",
+          "start": 138.36,
+          "end": 138.54,
+          "probability": 0.9814
+        },
+        {
+          "word": "debug",
+          "start": 138.54,
+          "end": 138.82,
+          "probability": 0.4207
+        },
+        {
+          "word": "button.",
+          "start": 138.82,
+          "end": 139.2,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 141.88,
+      "end": 147.3,
+      "start_formatted": "00:02:21.880",
+      "end_formatted": "00:02:27.300",
+      "text": "Seeing insurance suite application ready in the log indicates that the server has been",
+      "words": [
+        {
+          "word": "Seeing",
+          "start": 141.88,
+          "end": 142.5,
+          "probability": 0.8833
+        },
+        {
+          "word": "insurance",
+          "start": 142.5,
+          "end": 143.12,
+          "probability": 0.1899
+        },
+        {
+          "word": "suite",
+          "start": 143.12,
+          "end": 143.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "application",
+          "start": 143.5,
+          "end": 144.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "ready",
+          "start": 144.18,
+          "end": 144.74,
+          "probability": 0.6606
+        },
+        {
+          "word": "in",
+          "start": 144.74,
+          "end": 145.22,
+          "probability": 0.9326
+        },
+        {
+          "word": "the",
+          "start": 145.22,
+          "end": 145.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "log",
+          "start": 145.32,
+          "end": 145.66,
+          "probability": 0.9829
+        },
+        {
+          "word": "indicates",
+          "start": 145.66,
+          "end": 146.22,
+          "probability": 0.9443
+        },
+        {
+          "word": "that",
+          "start": 146.22,
+          "end": 146.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 146.6,
+          "end": 146.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "server",
+          "start": 146.7,
+          "end": 146.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "has",
+          "start": 146.96,
+          "end": 147.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "been",
+          "start": 147.16,
+          "end": 147.3,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 147.3,
+      "end": 148.38,
+      "start_formatted": "00:02:27.300",
+      "end_formatted": "00:02:28.380",
+      "text": "successfully started.",
+      "words": [
+        {
+          "word": "successfully",
+          "start": 147.3,
+          "end": 147.92,
+          "probability": 0.998
+        },
+        {
+          "word": "started.",
+          "start": 147.92,
+          "end": 148.38,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 148.68,
+      "end": 153.16,
+      "start_formatted": "00:02:28.680",
+      "end_formatted": "00:02:33.160",
+      "text": "Which application that shows started will change according to which insurance suite application",
+      "words": [
+        {
+          "word": "Which",
+          "start": 148.68,
+          "end": 149.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "application",
+          "start": 149.1,
+          "end": 149.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 149.66,
+          "end": 149.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "shows",
+          "start": 149.9,
+          "end": 150.16,
+          "probability": 0.9053
+        },
+        {
+          "word": "started",
+          "start": 150.16,
+          "end": 150.48,
+          "probability": 0.9849
+        },
+        {
+          "word": "will",
+          "start": 150.48,
+          "end": 150.74,
+          "probability": 0.998
+        },
+        {
+          "word": "change",
+          "start": 150.74,
+          "end": 151.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "according",
+          "start": 151.08,
+          "end": 151.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 151.44,
+          "end": 151.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 151.62,
+          "end": 151.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "insurance",
+          "start": 151.84,
+          "end": 152.28,
+          "probability": 0.9722
+        },
+        {
+          "word": "suite",
+          "start": 152.28,
+          "end": 152.64,
+          "probability": 0.999
+        },
+        {
+          "word": "application",
+          "start": 152.64,
+          "end": 153.16,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 153.16,
+      "end": 154.68,
+      "start_formatted": "00:02:33.160",
+      "end_formatted": "00:02:34.680",
+      "text": "you are using for configuration.",
+      "words": [
+        {
+          "word": "you",
+          "start": 153.16,
+          "end": 153.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "are",
+          "start": 153.44,
+          "end": 153.54,
+          "probability": 0.9888
+        },
+        {
+          "word": "using",
+          "start": 153.54,
+          "end": 153.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 153.8,
+          "end": 154.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "configuration.",
+          "start": 154.02,
+          "end": 154.68,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 155.1,
+      "end": 160.28,
+      "start_formatted": "00:02:35.100",
+      "end_formatted": "00:02:40.280",
+      "text": "Even though it says Contact Manager, here in this example, we are using Training App, which",
+      "words": [
+        {
+          "word": "Even",
+          "start": 155.1,
+          "end": 155.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "though",
+          "start": 155.52,
+          "end": 155.66,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 155.66,
+          "end": 155.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "says",
+          "start": 155.82,
+          "end": 156.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "Contact",
+          "start": 156.08,
+          "end": 156.48,
+          "probability": 0.3469
+        },
+        {
+          "word": "Manager,",
+          "start": 156.48,
+          "end": 157.1,
+          "probability": 0.9419
+        },
+        {
+          "word": "here",
+          "start": 157.3,
+          "end": 157.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 157.6,
+          "end": 157.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 157.74,
+          "end": 157.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 157.92,
+          "end": 158.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "we",
+          "start": 158.56,
+          "end": 158.82,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 158.82,
+          "end": 158.92,
+          "probability": 0.9863
+        },
+        {
+          "word": "using",
+          "start": 158.92,
+          "end": 159.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Training",
+          "start": 159.22,
+          "end": 159.54,
+          "probability": 0.7856
+        },
+        {
+          "word": "App,",
+          "start": 159.54,
+          "end": 159.86,
+          "probability": 0.5566
+        },
+        {
+          "word": "which",
+          "start": 160.0,
+          "end": 160.28,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 160.28,
+      "end": 161.74,
+      "start_formatted": "00:02:40.280",
+      "end_formatted": "00:02:41.740",
+      "text": "is based on Contact Manager.",
+      "words": [
+        {
+          "word": "is",
+          "start": 160.28,
+          "end": 160.46,
+          "probability": 0.7495
+        },
+        {
+          "word": "based",
+          "start": 160.46,
+          "end": 160.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "on",
+          "start": 160.64,
+          "end": 160.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "Contact",
+          "start": 160.82,
+          "end": 161.18,
+          "probability": 0.3599
+        },
+        {
+          "word": "Manager.",
+          "start": 161.18,
+          "end": 161.74,
+          "probability": 0.9346
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 162.5,
+      "end": 163.84,
+      "start_formatted": "00:02:42.500",
+      "end_formatted": "00:02:43.840",
+      "text": "This is the end of this demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 162.5,
+          "end": 162.86,
+          "probability": 0.9873
+        },
+        {
+          "word": "is",
+          "start": 162.86,
+          "end": 163.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 163.0,
+          "end": 163.14,
+          "probability": 0.999
+        },
+        {
+          "word": "end",
+          "start": 163.14,
+          "end": 163.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 163.28,
+          "end": 163.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 163.4,
+          "end": 163.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "demonstration.",
+          "start": 163.58,
+          "end": 163.84,
+          "probability": 0.9722
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 164.04,
+      "end": 164.04,
+      "start_formatted": "00:02:44.040",
+      "end_formatted": "00:02:44.040",
+      "text": "",
+      "words": []
+    }
+  ]
+}

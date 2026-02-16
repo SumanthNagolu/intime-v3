@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-16",
+    "slide_count": 29,
+    "slides_with_text": 27,
+    "total_words": 1557,
+    "avg_confidence": 86.64,
+    "processing_time_seconds": 9.94,
+    "extracted_at": "2026-02-15T18:18:37.832433"
+  },
+  "full_text": "Business Rules — Activities\n\nLesson\nobjectives\n\n¢ Explain the role of business activity rules in\nClaimCenter\n\n« Write business activity rules to create\nactivities, set fields, and add history records\n\n| Activities review G\n¢ An activity is a task or unit of work involved in handling a claim (a to do list)\n¢ In ClaimCenter, activities are used to track the completion of tasks\n\n¢ Activities are created and assigned to groups and users to complete\n\nActivities\nAllopen 7\nvy Due + Priority > Subject Claim >\n5) 04/10/2018 High Review coverage in question 235-53-425888\n5) 04/10/2018 High Review coverage in question 235-53-425891\ny 08/06/2018 High Follow up with vendor - work not accepted in 225-52-365889\ntimely manner\n\n08/11/2018 High Send reservation of rights letter 235-53-365870\n\n| Business activity rules G\n¢ Business activity rules are used to automatically create activities\n¢ Business activity rule definitions control when and what activities are created\n\n¢ Creating the rules requires only limited knowledge of the Guidewire data model\n\n[Fi Claimcenter Desktop |~ Claim|~ Search| Address Book |* Dashboard Team Administration |~ @\nActivity Rules [cs | [ ore + J stow rites ERA aaeesen\nO unstats Stats 2 | vesion | Vad Wiegerentty © Wggeracon = | Acton Type toss Type | Paty Type | Juric\n\nsosed oF cam ception ala au\n\nStaged oF aime Reet tor exception al al all\n\nsaged oF Claim ceeation Generate Activity (contact insured)\n\n| Business activity rules\n\n* Can automatically create activities and history records\n* Can also change the value of fields on an object (claim or exposure)\n¢ Enable quick response to changing business needs without coding\n« Are managed in the ClaimCenter administration UI\n* Can be deployed immediately, without server downtime\n\n(\n\n| Business activity rule user interface G\n\n* Navigate to Administration > Business Settings > Business Rules > Activity\nRules\n\n* Can filter to show specific rules\n* Can add, clone, export and import rules\n\n¢ Filters for a specific jurisdiction return jurisdiction where the value is All in addition\nto the jurisdiction\n\nActivity Rules\n\nAvailability Any hd\n\n| Rule definition: basics (1 012\n\nGi\n\nEvery rule must have a: Rule: CLW01000 - Contact insured < >\n* Name Version [0+ (tages) ©\n* Description ‘Staged by su on 07/12/2018. View History\n\nName CLW01000 - Contact insured\n+ Trigger entity Description Remind claim owner to contact the insured for all new non-WC claims\n\n+ The entity for which a rule executes\n\n* Options include claim, exposure,\ncheckset, recoveryset, reserveset,\n\nand recoveryreserveset ‘Trigger Action\nEnabled\n\nTrigger Entity\n\nApplies To\n\nClaim\n\nCreation\n\nYes\n\n| Rule definition: basics 2012\n\nEvery rule must have a:\n\n¢ Trigger action\n\n* The event which causes the rule to\nfire\n\n* Options include creation, update,\nand exception\n\n+ Action is tied to the trigger entity\n\n« Enabled status\n\nGi\n\nRule: CLW01000 - Contact insured < >\nWetsion: | 0+ (stagea) +\n\n‘Staged by su on 07/12/2018. View History\n\nName\n\nDescription\n\nTrigger Entity\nTrigger Action\n\nEnabled\n\nApplies To\n\n‘CLWO01000 - Contact insured\n\nRemind claim owner to contact the insured for all new non-WC claims\n\nClaim\nCreation\n\nYes\n\n| Rule definition: Applies To\n\n¢ Rules can apply to All types or to\nSelected types\n\n* Click the Selected radio button to see and\nselect values\n\n* Selecting a value limits what the rule is\napplied to\n\n* Can apply any combination of:\n* Loss type\n* Policy type\n+ Jurisdiction\n\nApplies To\nLoss Type\n\nPolicy Type\n\nClaim Jurisdiction\n\n@ all © Selected\nAll @ Selected\n‘Commercial Auto\n‘Commercial Package\n‘Commercial Property\n\nFarmowners\n\n@ all © Selected\n\nBusinessowners\n\n| Rule definition: rule variables\n\n¢ Variables that make reading rule Rule Variables\nconditions simpler [220 |\n* Can be based on any data accessible bite\n\nfrom the rule’s trigger entity\n\nDescription\n\nClaimant's birthday\n\n| Rule Definition: Rule Condition\n\nCriteria (one or more) which\ndetermine when a rule applies\n\n* None selected means the rule\n\nactions are run for all candidates\nmeeting the trigger and Applies to\nrequirements\nCriteria can be joined by AND,\nOR, or some combination\n\nConditions have access to\ndata in the triggering entity\n\nUse type-down to select\nattributes\n\nRule Condition\nDisplay Rule Conditions\n\n* © None\n\n© Yes\n\nNo\n\n© All of the following criteria must be true (AND)\nAt least one of the following criteria must be true (OR)\nThe following combination of criteria must evaluate to true (AND/OR)\n\nAdd\n\nLeft Expression\nbirthdate\n\nclaim.LossCause\n\nOperation Right Expression\n< | 01/01/2000 @\n\n“Collision with motor vehic! |}\n\n| Rule Definition: Actions\n\n¢ Consist of one or more changes the\n\nActions define what is done to\ncandidates that pass the conditions\ntest\n\nrule can make\n\nCan include one or more of:\n* Generate an activity\n* Seta field value\n\n* Generate a history record\n\nActions\n\nSequence Action Type >\n\nGenerate\n\nHistory Event\n3 Set Field\n4 Set Field\n\nDescription =\n\nHistory Type : Data change\n\nclaim.Si€scalateSIU = Util.currentDate()\nclaim.SiUStatus = SIUStatus.TC_UNDER_INVESTIGATION\n\n| Action - Add Activity\n\n¢ Rule creator must specify the Activity Pattern\n\n¢ Other attributes are taken from the Activity Pattern\n\n* Can be overridden by rule creator\n\nParameters\n\n‘Action Type\n\nActivity\n\nGenerate Activity Ss\n\n‘Special Investigation Claim Escalation\nClaim\n\nAutoAssign\n\nNo Restrictions\n\nUrgent\n\nTop\n\n‘Special Investigation Claim Escalation\n\nClaim has been escalated to the SIU team for investigation\n\nTarget Date\n\nDays (Formula) 2\nHours (Formula) °\n\nStart Point ‘Activity creation date\nInclude Days Business days\n\n| Action - Set a Field Value\n\nFi\n¢ Rule creator must specify:\n* The field to set\n\n* The value to set\n\n« Whether to set a new value for a field that already has a value (“Set Only If Field Is Blank”)\n\nParameters\n\n‘Action Type Set Field\n\nSet Only if Field Is Blank Yes (@)No\n\nField claim.Claim. siEscalateSiUdate | Edit,\n\nValue (Formula) Util.currentDate()\n\n| Action — Add a History Record Gi\n\n¢ History records timestamp\nsignificant actions\n\n¢ Rule creator must specify:\n* The type of history event\n¢ Adescription of the history event\n¢ Related To, which is only Claim\n\nParameters\n\nAction Type\n\nType\n\nRelated To\n\nDescription (Text)\n\n¢ History types include:\n* Activity due date change\n* Approval or rejection\n* Policy edited\n+ Reserve created\n\n« And soon\n\nGenerate History Event +\n\nData change .\nClaim -\n\nClaim has been escalated to the SIU team\n\n| Demonstration G\n\n—_. Creating Activities with business activity\n— rules\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise G\n\nCreating Activities with business activity\nrules\n\n| Migrating business activity rules Ga\n\n* Create and test in a development environment, then migrate to the production\nenvironment\n\n¢ Business activity rules can be created in the production environment\n\n¢ Useful for urgent situations like catastrophe management\n\nA Gi\n== =o=\n\nDevelopment Business Rule Production\nServer Server\n\n| Business activity rule life cycle G\n\nOn Development server:\n\n« Draft — Business rule has been\n\ncreated but may not yet be\ncomplete or tested\n\n« Staged — Business rule has\nbeen tested and is ready for\ndeployment\n\nOn Production server:\n\n« Approved — Business rule is\nready for deployment\n\n* Deployed — rule is executing\n\nRule: CERO2000 - At least one activity for claim owner\n\nActivity Rules\n\n[) Run Status\n\nName >\n\nCERO2000 - At least one activity for\nclaim owner\n\nCER03000 - At least one activity for\nexposure owner\n\n| Exporting, downloading, and importing rules G\n\n¢ On the Activity Rules page, you export and import rules\n‘Add 31 nul\n\nImport from File\n\nTrigger Action > Action Type Export Selected Type Policy Tyr\nException Generate Activity (general_reminde Export All all\nException Generate Activity (general_reminde £able Selected all\n\nDisable Selected\nCreation Generate Activity (contact_insured) At all\n\nImport/Export Status\n* On the Import/Export Status cons Ee\n\npage, you download the Started By > StartTime > Rule Type > Source File > Progress Status\nrules for import in another Mocemiocseny\nenvironment Exports\n\nStarted By S  StartTime > Rule Type > Rules\n\n‘System Admin 08/03/2018 ActivityRule = 1\n\n11:47 AM\n\nQuestion\n\na What two types of objects can business activity rules create?\n4\n¢\n\nen\n\nAnswer\n\na What two types of objects can business activity rules create?\n4\n¢\n\nThe correct answers are activities and history records\n\nSS See See ease angen ses\n\nQuestion\n\n,— — What two restrictions are mandatory on a business activity rule?\n\n¢\n4\n¢\n\nen\n\nAnswer\n\n,— — What two restrictions are mandatory on a business activity rule?\n\n¢\n4\n¢\n\nThe correct answers are:\nTrigger entity (restricts the business rule to respond to a specific entity)\nTrigger action (restricts the business rule to respond to creation, or update action)\n\nSS See See ease angen ses\n\nQuestion\n\n_— — What does setting the Rule Condition to None accomplish?\n\n¢\n4\n¢\n\nen\n\nAnswer\n\n,— — What does setting the Rule Condition to None accomplish?\n, ¢\n¢\nThe correct answer is setting the Rule Condition to None means that all entities which\nmeet the Trigger Entity, the Trigger Action, and any Applies To values will be\nprocessed by this rule.\n\nSS See See ease angen ses\n\nLesson\nobjectives * Explain the role of business activity rules in\nreview ClaimCenter\n\n« Write business activity rules to create\nactivities, set fields, and add history records",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Business Rules — Activities",
+      "word_count": 4,
+      "avg_confidence": 93.8,
+      "image_size": {
+        "width": 1280,
+        "height": 543
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Explain the role of business activity rules in\nClaimCenter\n\n« Write business activity rules to create\nactivities, set fields, and add history records",
+      "word_count": 26,
+      "avg_confidence": 89.58,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Activities review G\n¢ An activity is a task or unit of work involved in handling a claim (a to do list)\n¢ In ClaimCenter, activities are used to track the completion of tasks\n\n¢ Activities are created and assigned to groups and users to complete\n\nActivities\nAllopen 7\nvy Due + Priority > Subject Claim >\n5) 04/10/2018 High Review coverage in question 235-53-425888\n5) 04/10/2018 High Review coverage in question 235-53-425891\ny 08/06/2018 High Follow up with vendor - work not accepted in 225-52-365889\ntimely manner\n\n08/11/2018 High Send reservation of rights letter 235-53-365870",
+      "word_count": 97,
+      "avg_confidence": 87.61,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Business activity rules G\n¢ Business activity rules are used to automatically create activities\n¢ Business activity rule definitions control when and what activities are created\n\n¢ Creating the rules requires only limited knowledge of the Guidewire data model\n\n[Fi Claimcenter Desktop |~ Claim|~ Search| Address Book |* Dashboard Team Administration |~ @\nActivity Rules [cs | [ ore + J stow rites ERA aaeesen\nO unstats Stats 2 | vesion | Vad Wiegerentty © Wggeracon = | Acton Type toss Type | Paty Type | Juric\n\nsosed oF cam ception ala au\n\nStaged oF aime Reet tor exception al al all\n\nsaged oF Claim ceeation Generate Activity (contact insured)",
+      "word_count": 111,
+      "avg_confidence": 65.69,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Business activity rules\n\n* Can automatically create activities and history records\n* Can also change the value of fields on an object (claim or exposure)\n¢ Enable quick response to changing business needs without coding\n« Are managed in the ClaimCenter administration UI\n* Can be deployed immediately, without server downtime\n\n(",
+      "word_count": 53,
+      "avg_confidence": 89.36,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Business activity rule user interface G\n\n* Navigate to Administration > Business Settings > Business Rules > Activity\nRules\n\n* Can filter to show specific rules\n* Can add, clone, export and import rules\n\n¢ Filters for a specific jurisdiction return jurisdiction where the value is All in addition\nto the jurisdiction\n\nActivity Rules\n\nAvailability Any hd",
+      "word_count": 58,
+      "avg_confidence": 89.57,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Rule definition: basics (1 012\n\nGi\n\nEvery rule must have a: Rule: CLW01000 - Contact insured < >\n* Name Version [0+ (tages) ©\n* Description ‘Staged by su on 07/12/2018. View History\n\nName CLW01000 - Contact insured\n+ Trigger entity Description Remind claim owner to contact the insured for all new non-WC claims\n\n+ The entity for which a rule executes\n\n* Options include claim, exposure,\ncheckset, recoveryset, reserveset,\n\nand recoveryreserveset ‘Trigger Action\nEnabled\n\nTrigger Entity\n\nApplies To\n\nClaim\n\nCreation\n\nYes",
+      "word_count": 83,
+      "avg_confidence": 82.87,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Rule definition: basics 2012\n\nEvery rule must have a:\n\n¢ Trigger action\n\n* The event which causes the rule to\nfire\n\n* Options include creation, update,\nand exception\n\n+ Action is tied to the trigger entity\n\n« Enabled status\n\nGi\n\nRule: CLW01000 - Contact insured < >\nWetsion: | 0+ (stagea) +\n\n‘Staged by su on 07/12/2018. View History\n\nName\n\nDescription\n\nTrigger Entity\nTrigger Action\n\nEnabled\n\nApplies To\n\n‘CLWO01000 - Contact insured\n\nRemind claim owner to contact the insured for all new non-WC claims\n\nClaim\nCreation\n\nYes",
+      "word_count": 88,
+      "avg_confidence": 85.23,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Rule definition: Applies To\n\n¢ Rules can apply to All types or to\nSelected types\n\n* Click the Selected radio button to see and\nselect values\n\n* Selecting a value limits what the rule is\napplied to\n\n* Can apply any combination of:\n* Loss type\n* Policy type\n+ Jurisdiction\n\nApplies To\nLoss Type\n\nPolicy Type\n\nClaim Jurisdiction\n\n@ all © Selected\nAll @ Selected\n‘Commercial Auto\n‘Commercial Package\n‘Commercial Property\n\nFarmowners\n\n@ all © Selected\n\nBusinessowners",
+      "word_count": 79,
+      "avg_confidence": 87.28,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Rule definition: rule variables\n\n¢ Variables that make reading rule Rule Variables\nconditions simpler [220 |\n* Can be based on any data accessible bite\n\nfrom the rule’s trigger entity\n\nDescription\n\nClaimant's birthday",
+      "word_count": 34,
+      "avg_confidence": 87.69,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Rule Definition: Rule Condition\n\nCriteria (one or more) which\ndetermine when a rule applies\n\n* None selected means the rule\n\nactions are run for all candidates\nmeeting the trigger and Applies to\nrequirements\nCriteria can be joined by AND,\nOR, or some combination\n\nConditions have access to\ndata in the triggering entity\n\nUse type-down to select\nattributes\n\nRule Condition\nDisplay Rule Conditions\n\n* © None\n\n© Yes\n\nNo\n\n© All of the following criteria must be true (AND)\nAt least one of the following criteria must be true (OR)\nThe following combination of criteria must evaluate to true (AND/OR)\n\nAdd\n\nLeft Expression\nbirthdate\n\nclaim.LossCause\n\nOperation Right Expression\n< | 01/01/2000 @\n\n“Collision with motor vehic! |}",
+      "word_count": 117,
+      "avg_confidence": 90.1,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Rule Definition: Actions\n\n¢ Consist of one or more changes the\n\nActions define what is done to\ncandidates that pass the conditions\ntest\n\nrule can make\n\nCan include one or more of:\n* Generate an activity\n* Seta field value\n\n* Generate a history record\n\nActions\n\nSequence Action Type >\n\nGenerate\n\nHistory Event\n3 Set Field\n4 Set Field\n\nDescription =\n\nHistory Type : Data change\n\nclaim.Si€scalateSIU = Util.currentDate()\nclaim.SiUStatus = SIUStatus.TC_UNDER_INVESTIGATION",
+      "word_count": 73,
+      "avg_confidence": 86.82,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Action - Add Activity\n\n¢ Rule creator must specify the Activity Pattern\n\n¢ Other attributes are taken from the Activity Pattern\n\n* Can be overridden by rule creator\n\nParameters\n\n‘Action Type\n\nActivity\n\nGenerate Activity Ss\n\n‘Special Investigation Claim Escalation\nClaim\n\nAutoAssign\n\nNo Restrictions\n\nUrgent\n\nTop\n\n‘Special Investigation Claim Escalation\n\nClaim has been escalated to the SIU team for investigation\n\nTarget Date\n\nDays (Formula) 2\nHours (Formula) °\n\nStart Point ‘Activity creation date\nInclude Days Business days",
+      "word_count": 77,
+      "avg_confidence": 84.03,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Action - Set a Field Value\n\nFi\n¢ Rule creator must specify:\n* The field to set\n\n* The value to set\n\n« Whether to set a new value for a field that already has a value (“Set Only If Field Is Blank”)\n\nParameters\n\n‘Action Type Set Field\n\nSet Only if Field Is Blank Yes (@)No\n\nField claim.Claim. siEscalateSiUdate | Edit,\n\nValue (Formula) Util.currentDate()",
+      "word_count": 65,
+      "avg_confidence": 86.06,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Action — Add a History Record Gi\n\n¢ History records timestamp\nsignificant actions\n\n¢ Rule creator must specify:\n* The type of history event\n¢ Adescription of the history event\n¢ Related To, which is only Claim\n\nParameters\n\nAction Type\n\nType\n\nRelated To\n\nDescription (Text)\n\n¢ History types include:\n* Activity due date change\n* Approval or rejection\n* Policy edited\n+ Reserve created\n\n« And soon\n\nGenerate History Event +\n\nData change .\nClaim -\n\nClaim has been escalated to the SIU team",
+      "word_count": 85,
+      "avg_confidence": 84.93,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Demonstration G\n\n—_. Creating Activities with business activity\n— rules\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 41,
+      "avg_confidence": 92.34,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Student exercise G\n\nCreating Activities with business activity\nrules",
+      "word_count": 10,
+      "avg_confidence": 91.18,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Migrating business activity rules Ga\n\n* Create and test in a development environment, then migrate to the production\nenvironment\n\n¢ Business activity rules can be created in the production environment\n\n¢ Useful for urgent situations like catastrophe management\n\nA Gi\n== =o=\n\nDevelopment Business Rule Production\nServer Server",
+      "word_count": 49,
+      "avg_confidence": 87.58,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Business activity rule life cycle G\n\nOn Development server:\n\n« Draft — Business rule has been\n\ncreated but may not yet be\ncomplete or tested\n\n« Staged — Business rule has\nbeen tested and is ready for\ndeployment\n\nOn Production server:\n\n« Approved — Business rule is\nready for deployment\n\n* Deployed — rule is executing\n\nRule: CERO2000 - At least one activity for claim owner\n\nActivity Rules\n\n[) Run Status\n\nName >\n\nCERO2000 - At least one activity for\nclaim owner\n\nCER03000 - At least one activity for\nexposure owner",
+      "word_count": 92,
+      "avg_confidence": 89.24,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Exporting, downloading, and importing rules G\n\n¢ On the Activity Rules page, you export and import rules\n‘Add 31 nul\n\nImport from File\n\nTrigger Action > Action Type Export Selected Type Policy Tyr\nException Generate Activity (general_reminde Export All all\nException Generate Activity (general_reminde £able Selected all\n\nDisable Selected\nCreation Generate Activity (contact_insured) At all\n\nImport/Export Status\n* On the Import/Export Status cons Ee\n\npage, you download the Started By > StartTime > Rule Type > Source File > Progress Status\nrules for import in another Mocemiocseny\nenvironment Exports\n\nStarted By S  StartTime > Rule Type > Rules\n\n‘System Admin 08/03/2018 ActivityRule = 1\n\n11:47 AM",
+      "word_count": 107,
+      "avg_confidence": 78.83,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\na What two types of objects can business activity rules create?\n4\n¢\n\nen",
+      "word_count": 15,
+      "avg_confidence": 83.59,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer\n\na What two types of objects can business activity rules create?\n4\n¢\n\nThe correct answers are activities and history records\n\nSS See See ease angen ses",
+      "word_count": 28,
+      "avg_confidence": 85.96,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question\n\n,— — What two restrictions are mandatory on a business activity rule?\n\n¢\n4\n¢\n\nen",
+      "word_count": 17,
+      "avg_confidence": 81.05,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer\n\n,— — What two restrictions are mandatory on a business activity rule?\n\n¢\n4\n¢\n\nThe correct answers are:\nTrigger entity (restricts the business rule to respond to a specific entity)\nTrigger action (restricts the business rule to respond to creation, or update action)\n\nSS See See ease angen ses",
+      "word_count": 51,
+      "avg_confidence": 89.12,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n_— — What does setting the Rule Condition to None accomplish?\n\n¢\n4\n¢\n\nen",
+      "word_count": 16,
+      "avg_confidence": 80.78,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer\n\n,— — What does setting the Rule Condition to None accomplish?\n, ¢\n¢\nThe correct answer is setting the Rule Condition to None means that all entities which\nmeet the Trigger Entity, the Trigger Action, and any Applies To values will be\nprocessed by this rule.\n\nSS See See ease angen ses",
+      "word_count": 54,
+      "avg_confidence": 91.08,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Lesson\nobjectives * Explain the role of business activity rules in\nreview ClaimCenter\n\n« Write business activity rules to create\nactivities, set fields, and add history records",
+      "word_count": 27,
+      "avg_confidence": 89.56,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

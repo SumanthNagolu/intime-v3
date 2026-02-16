@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-06",
+    "slide_count": 31,
+    "slides_with_text": 28,
+    "total_words": 1450,
+    "avg_confidence": 86.48,
+    "processing_time_seconds": 10.06,
+    "extracted_at": "2026-02-15T18:16:18.518809"
+  },
+  "full_text": "Writing Claim and Exposure Validation Rules\n\nLesson\nobjectives\n\n¢ Describe the ClaimCenter validation model\n¢ Write validation rules for claims and\nexposures\n\n| How ClaimCenter validates data Gi\n\n* Two ways:\n¢ Validation by field ensures that data is of valid type, range, and so on\n* Validation by rules manages and enforces object maturity\n\n¢ Both occur when an object is updated\n\n[ © iP Code :'10013-123' is not properly formatted: ZIP Code must be a five- or nine-digit postal code\n\n2IP Code | 10013-1234 || Responsible Parties\n\nParty Classification Strategy = Liability%* =\nFred Jonesi518039234058 | Insured  ¥ | Pursueagainst Insurer + %\n\n‘Stan Newton <none> > Utilize Collection Agency > %\n\nClaim Total: $0 008,\n\"Validation Results\n\nValidation Results\n\n| Validation by fields G\n\n¢ Widgets enforce data type\n¢ Validation expressions ensure that data is of correct format, range, and so on\n\n« Warning and error messages appear on the current screen\n\n{ @ ZIP Code :'10013-123' is not properly formatted: ZIP Code must be a five- or nine-digit postal code\n\nZIP Code [ 10013-123#\n\nvalidationExpression “gw. api.contact .AddressAutocompleteUtil.validate (addressOwner.AddressDelegate, \"PostalCode\",\n\ngw.api.address .AddressCountrySettings.getSettings (addressOwner.SelectedCountry) . PostalCodeLabel)\n\n(Can be arbitrarily complex)\n\nValidation rule sets i\n\nshowing validatable entities\n\n| What can be validated\n\n¢ Any entity that utilizes the Validatable delegate\n\n¢ Provides two interfaces, ValidatablelnternalMethods\nand ValidatablePublicMethods\n\n¢ There are several Validatable entities in the\nClaimCenter base configuration\n\nFBivaiidatabe et\n\nThis isa read-only file\nhaha 'Y’show All v\nElement\n\nValidatable delegate\n\n#) ActivityValidationRules\n\n#) ClaimClosedValidationRules\n\n4) ClaimReopenedValidationRules\n#) ClaimValidationRules\n\n#) ContactValidationRules\n\n#) ExposureClosedValidationRules\n#) ExposureReopenedValidationRules\n) ExposureValidationRules\n\n©) GroupValidationRules\n\n#) MatterClosedValidationRules\n‘@) MatterReopenedValidationRules\n#) MatterValidationRules\n\n#) PersonValidationRules\n\n®) PolicyValidationRules\n\n#) RegionValidationRules\n\n#) RlAgreementValidationRules\n*) RiTransactionSetValidationRules\n*#) ServiceRequestStatementValidationRules\n#) ServiceRequestValidationRules\n‘®) subrogationValidationRules\n\n®) TransactionSetValidationRules\n©) UserValidationRules\n\n| Validation by rules Gi\n\n¢ Rules prevent values from being saved which are inappropriate to the entity's\ncurrent maturity level\n\n¢ Use “reject” methods to provide warning and error messages to the user\n\n« Warning and error messages appear in a Validation Results worksheet in the lower part of the\nscreen\n\nAf (totalexpliability > 100) {\nclaim. reject (T¢_NEWLOSS,\n\"(rwleNumber)\\: Total Liability Percentage for ...\", null, null)\n\nTRESpOAsible Parties EZ\n\nParty Classification > Strategy\nFred Jonesi5i8029224058 | Insured > | | Pursue against Insurer +\n‘tan Newton <none> > | | Utilize Collection Agency >\nClaim Total: 120.0%\n\nValidation Results\n\nValidation Results\n\nanother page\n\n| ValidationLevel\n\n¢ Typelist that provides a set of maturity levels for claims and exposures\n\n* The base configuration provides five validation levels\n\n¢ In order, they are:\n\nloadsave — entity loaded from an external\nFNOL system*\n\nnewloss — entity newly entered by an agent*\n\niso — entity ready to send to ISO (the Insurance\nServices Office) (fraud prevention)\n\nexternal — entity ready to send to external\nsystems\n\npayment — entity is ready for payment to\nclaimants*\n\nfie) ValidationLevel.ttx\n\nal typecode V\n\nYshowAly ig = =\n\nElement Code Name Zesty\n\nValid for ISO 250\nSend to external sy... 200\n\ntypecode —_iso\ntypecode\n\nexternal\nloi\n\n* These three validation levels are “final” and cannot be edited or deleted.\n\n| How ClaimCenter uses validation levels Gi\n\nValidatable entities have an actual or implied ValidationLevel\n\nEntities are validated whenever a user or process attempts to save them\n* Validates minimum data completeness and correctness at each maturity level\n« Ensures that entities do not move “backwards” through the process\n\nEntities are promoted through the Validation Levels\n\nPrevents save if changes do not meet standards for the current level of validation\n\n| Validation can prevent saving\n\ncounty = Kern\nstate =CA\nlevel = 3\n\ncounty = null\nstate =CA\nlevel = 2\n\nLevel 3-\n== County is\n& required\n\nCounty present —\nPromote to Level 3\n\nCounty missing —\net |]\nDO NOT SAVE\n\n| Entities are promoted to the highest possible maturity level Gi\n\nLevel 3 - Level 4-\no= County is e= Inspection\n& required & must be done\ncounty = null\n\nstate = CA ea at\ninspection = done County missing —\n\nlevel = 2 DO NOT PROMOTE\n\ncounty = Kern\nstate = CA\ninspection = done\nlevel = 24\n\nCounty present — Inspection done —\nPROMOTE PROMOTE\n\n| Related objects can trigger validation Gi\n\n¢ Updating some objects with a foreign key (child) relationship to a Validatable\nobject can cause the object to be validated\n\n* Caused by a property, triggersValidation, on the array that implements the parent relationship\n\nArrays\n\nAccess array key for ClaimAccess\nThe access control objects for this claim.\nTciaimen\n\nActivities aray key for Activity — (exgonsbie (oot\nme = This is a read-only file.\n\nThe activities for this claim\n\n[ely VsnowAlv) ob = Zh Caimex\n\nElement, Primary Value _| Secondary Value Name Value\na cos \" arrayentity\n\n| Errors and warnings Gi\n\n¢ Errors prevent an object from being promoted to and saved at a given level, and\ndisplay an explanatory message\n\n¢ Warnings permit promotion and saving, but display a cautionary message\n\nError Error message\n\nValidationfResults\n\nValidaion Results\n\nThere are 2 Messages on another page\n\n| © |cuv07000: Total Liability Percentage for Adverse Parties must not exceed 100%. Currently, 120.0%\nB ICLVo8000 - Warning: Total of Expected Recovery exceeds 100%\n\nWarning Warning message\n\nConfiguring validation\n\nentity.reject() methods Ga\n\nCan be used for both warnings and errors.\n\nAf_(totalexpbiability > 100) (\nlain. resect (fc NEWLOSS,\n(zuleNumber}\\: Total Liability Percentage for ...\", null, null)|\n\nValidation Results\n\nValidation Results\n\ne(null, null,\n\n| Demonstration G\nWriting Claim and Exposure Validation Rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — Inwhat two ways does ClaimCenter validate data?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese\n\nAnswer\n\n,— — Inwhat two ways does ClaimCenter validate data?\n\n¢\n7\n\n“ The correct answer is that validation by field ensures that data is of valid type, range,\n\nand so on, while validation by rules manages and enforces object maturity.\n\nSS eeesee seen ee ese\n\nQuestion\n\ni i i?\n,— — When are claims and exposures validated?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese\n\nAnswer\n\ni i i?\n,— — When are claims and exposures validated?\n\n¢\n7\n¢\n\nThe correct answer is when an attempt is made to save them.\n\nSS eeesee seen ee ese\n\n| entity.reject() method\n\n* Syntax:\nentity.reject(errorLevel, errorMessage,\nwarnLevel, warnMessage)\n* Parameters:\n* errorLevel = validation level to display an error message\n* errorMessage = error message to display\n* warnLevel = validation level to display a warning message\n\n* warnMessage = warning message to display\n\n+ Either errorLevel and errorMessage, or warnLevel and warnMessage, must be\nnon-null\n\n* Both pairs can be non-null\n\n* errorLevel should be a higher maturity level than warnLevel\n\n| entity.rejectField() method G\n\n* Indicates a problem with a particular field, displays a warning or error message and highlights\nthe field in the UI\n\n* Syntax:\n\nentity.rejectField(strRelativeFieldPath,\nerrorLevel, errorMessage,\n\nwarnLevel, warnMessage)\nNew Parameter:\ne strRelativeFieldPath = the path from the root object of this rule to the field failing validation\n\nclaim. rejectField(\"FaultRating\",TC_NEWLOSS,\n\"{ruleName}\\: The Fault Rating must be determin...\", null, null)\n\n| entity.rejectSubField() method Ga\n\n¢ Highlights fields on related objects (such as those on an array or a foreign key)\n« May require navigation to a page for the related object field (which will be highlighted)\n¢ If so, a link will be available in the Validation Results worksheet\n\n¢ Syntax:\n\nentity.rejectSubField(relatedObject, strRelativeFieldPath,\nerrorLevel, errorMessage,\n\nwarnLevel, warnMessage)\n« New Parameter:\n¢ relatedObject — the sub-object on which the reject field is found\n\nclaim.rejectSubField(exp, \"OtherCoverageDet\",\nTC_NEWLOSS, \"Please provide information about claimant's ot...\",\nnull, null)\n\nValidation rules\n\nMost of the logic is usually in the condition clause\n\n* Selects entities that should be rejected\n\n¢ You can put additional logic into the action clause\n\nUSES:\nuses gw.api.locale.DisplayKey\nCONDITION (claim : entity.Claim):\n\nreturn claim.Evaluations.where(\\evaluation -> evaluation.isChanged()).hasMatch\n(\\evaluation -> {\n\nvar liabilities = {evaluation.InsuredLiability, evaluation.ClaimantLiability,\nevaluation. OtherLiability}\nreturn liabilities.where(\\liability -> liability != null).sum() > 100\n»\nACTION (claim : entity.Claim, actions : gw.rules.Action) :\n\nclaim. reject (claim.ValidationLevel, \"Total liability percentage of evaluation canno...\n\n, null, null)\nEND\n\nQuestion\n\n,— — What method would you use to reject a claim or exposure and indicate a\n: specific field in that object?\n\n7\n¢\n\nSS Seeoesese sees ee ese\n\nGi\n\nAnswer\n\n_— — What method would you use to reject a claim or exposure and indicate a\n: specific field in that object?\n\n7\n¢\n\nThe correct answer is entity.rejectField().\n\nSS eeesee seen ee ese\n\nGi\n\n| Student exercise\n\nValidation for claim fields\n\n| Student exercise\n\nChallenge requirement:\nValidation for exposure lists\n\nLesson\nobjectives ¢ Describe the ClaimCenter validation model\nreview ¢ Write validation rules for claims and\n\nexposures",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Writing Claim and Exposure Validation Rules",
+      "word_count": 6,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the ClaimCenter validation model\n¢ Write validation rules for claims and\nexposures",
+      "word_count": 16,
+      "avg_confidence": 87.38,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| How ClaimCenter validates data Gi\n\n* Two ways:\n¢ Validation by field ensures that data is of valid type, range, and so on\n* Validation by rules manages and enforces object maturity\n\n¢ Both occur when an object is updated\n\n[ © iP Code :'10013-123' is not properly formatted: ZIP Code must be a five- or nine-digit postal code\n\n2IP Code | 10013-1234 || Responsible Parties\n\nParty Classification Strategy = Liability%* =\nFred Jonesi518039234058 | Insured  ¥ | Pursueagainst Insurer + %\n\n‘Stan Newton <none> > Utilize Collection Agency > %\n\nClaim Total: $0 008,\n\"Validation Results\n\nValidation Results",
+      "word_count": 100,
+      "avg_confidence": 78.21,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Validation by fields G\n\n¢ Widgets enforce data type\n¢ Validation expressions ensure that data is of correct format, range, and so on\n\n« Warning and error messages appear on the current screen\n\n{ @ ZIP Code :'10013-123' is not properly formatted: ZIP Code must be a five- or nine-digit postal code\n\nZIP Code [ 10013-123#\n\nvalidationExpression “gw. api.contact .AddressAutocompleteUtil.validate (addressOwner.AddressDelegate, \"PostalCode\",\n\ngw.api.address .AddressCountrySettings.getSettings (addressOwner.SelectedCountry) . PostalCodeLabel)\n\n(Can be arbitrarily complex)",
+      "word_count": 72,
+      "avg_confidence": 86.44,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Validation rule sets i\n\nshowing validatable entities\n\n| What can be validated\n\n¢ Any entity that utilizes the Validatable delegate\n\n¢ Provides two interfaces, ValidatablelnternalMethods\nand ValidatablePublicMethods\n\n¢ There are several Validatable entities in the\nClaimCenter base configuration\n\nFBivaiidatabe et\n\nThis isa read-only file\nhaha 'Y’show All v\nElement\n\nValidatable delegate\n\n#) ActivityValidationRules\n\n#) ClaimClosedValidationRules\n\n4) ClaimReopenedValidationRules\n#) ClaimValidationRules\n\n#) ContactValidationRules\n\n#) ExposureClosedValidationRules\n#) ExposureReopenedValidationRules\n) ExposureValidationRules\n\n©) GroupValidationRules\n\n#) MatterClosedValidationRules\n‘@) MatterReopenedValidationRules\n#) MatterValidationRules\n\n#) PersonValidationRules\n\n®) PolicyValidationRules\n\n#) RegionValidationRules\n\n#) RlAgreementValidationRules\n*) RiTransactionSetValidationRules\n*#) ServiceRequestStatementValidationRules\n#) ServiceRequestValidationRules\n‘®) subrogationValidationRules\n\n®) TransactionSetValidationRules\n©) UserValidationRules",
+      "word_count": 95,
+      "avg_confidence": 73.13,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Validation by rules Gi\n\n¢ Rules prevent values from being saved which are inappropriate to the entity's\ncurrent maturity level\n\n¢ Use “reject” methods to provide warning and error messages to the user\n\n« Warning and error messages appear in a Validation Results worksheet in the lower part of the\nscreen\n\nAf (totalexpliability > 100) {\nclaim. reject (T¢_NEWLOSS,\n\"(rwleNumber)\\: Total Liability Percentage for ...\", null, null)\n\nTRESpOAsible Parties EZ\n\nParty Classification > Strategy\nFred Jonesi5i8029224058 | Insured > | | Pursue against Insurer +\n‘tan Newton <none> > | | Utilize Collection Agency >\nClaim Total: 120.0%\n\nValidation Results\n\nValidation Results\n\nanother page",
+      "word_count": 105,
+      "avg_confidence": 79.09,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| ValidationLevel\n\n¢ Typelist that provides a set of maturity levels for claims and exposures\n\n* The base configuration provides five validation levels\n\n¢ In order, they are:\n\nloadsave — entity loaded from an external\nFNOL system*\n\nnewloss — entity newly entered by an agent*\n\niso — entity ready to send to ISO (the Insurance\nServices Office) (fraud prevention)\n\nexternal — entity ready to send to external\nsystems\n\npayment — entity is ready for payment to\nclaimants*\n\nfie) ValidationLevel.ttx\n\nal typecode V\n\nYshowAly ig = =\n\nElement Code Name Zesty\n\nValid for ISO 250\nSend to external sy... 200\n\ntypecode —_iso\ntypecode\n\nexternal\nloi\n\n* These three validation levels are “final” and cannot be edited or deleted.",
+      "word_count": 117,
+      "avg_confidence": 87.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| How ClaimCenter uses validation levels Gi\n\nValidatable entities have an actual or implied ValidationLevel\n\nEntities are validated whenever a user or process attempts to save them\n* Validates minimum data completeness and correctness at each maturity level\n« Ensures that entities do not move “backwards” through the process\n\nEntities are promoted through the Validation Levels\n\nPrevents save if changes do not meet standards for the current level of validation",
+      "word_count": 70,
+      "avg_confidence": 91.04,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Validation can prevent saving\n\ncounty = Kern\nstate =CA\nlevel = 3\n\ncounty = null\nstate =CA\nlevel = 2\n\nLevel 3-\n== County is\n& required\n\nCounty present —\nPromote to Level 3\n\nCounty missing —\net |]\nDO NOT SAVE",
+      "word_count": 43,
+      "avg_confidence": 88.3,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Entities are promoted to the highest possible maturity level Gi\n\nLevel 3 - Level 4-\no= County is e= Inspection\n& required & must be done\ncounty = null\n\nstate = CA ea at\ninspection = done County missing —\n\nlevel = 2 DO NOT PROMOTE\n\ncounty = Kern\nstate = CA\ninspection = done\nlevel = 24\n\nCounty present — Inspection done —\nPROMOTE PROMOTE",
+      "word_count": 67,
+      "avg_confidence": 81.82,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Related objects can trigger validation Gi\n\n¢ Updating some objects with a foreign key (child) relationship to a Validatable\nobject can cause the object to be validated\n\n* Caused by a property, triggersValidation, on the array that implements the parent relationship\n\nArrays\n\nAccess array key for ClaimAccess\nThe access control objects for this claim.\nTciaimen\n\nActivities aray key for Activity — (exgonsbie (oot\nme = This is a read-only file.\n\nThe activities for this claim\n\n[ely VsnowAlv) ob = Zh Caimex\n\nElement, Primary Value _| Secondary Value Name Value\na cos \" arrayentity",
+      "word_count": 94,
+      "avg_confidence": 83.97,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Errors and warnings Gi\n\n¢ Errors prevent an object from being promoted to and saved at a given level, and\ndisplay an explanatory message\n\n¢ Warnings permit promotion and saving, but display a cautionary message\n\nError Error message\n\nValidationfResults\n\nValidaion Results\n\nThere are 2 Messages on another page\n\n| © |cuv07000: Total Liability Percentage for Adverse Parties must not exceed 100%. Currently, 120.0%\nB ICLVo8000 - Warning: Total of Expected Recovery exceeds 100%\n\nWarning Warning message",
+      "word_count": 77,
+      "avg_confidence": 88.58,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Configuring validation",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "entity.reject() methods Ga\n\nCan be used for both warnings and errors.\n\nAf_(totalexpbiability > 100) (\nlain. resect (fc NEWLOSS,\n(zuleNumber}\\: Total Liability Percentage for ...\", null, null)|\n\nValidation Results\n\nValidation Results\n\ne(null, null,",
+      "word_count": 33,
+      "avg_confidence": 84.97,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Demonstration G\nWriting Claim and Exposure Validation Rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 93.85,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n_— — Inwhat two ways does ClaimCenter validate data?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese",
+      "word_count": 18,
+      "avg_confidence": 80.36,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n,— — Inwhat two ways does ClaimCenter validate data?\n\n¢\n7\n\n“ The correct answer is that validation by field ensures that data is of valid type, range,\n\nand so on, while validation by rules manages and enforces object maturity.\n\nSS eeesee seen ee ese",
+      "word_count": 46,
+      "avg_confidence": 88.71,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\ni i i?\n,— — When are claims and exposures validated?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese",
+      "word_count": 20,
+      "avg_confidence": 77.12,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\ni i i?\n,— — When are claims and exposures validated?\n\n¢\n7\n¢\n\nThe correct answer is when an attempt is made to save them.\n\nSS eeesee seen ee ese",
+      "word_count": 32,
+      "avg_confidence": 81.76,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| entity.reject() method\n\n* Syntax:\nentity.reject(errorLevel, errorMessage,\nwarnLevel, warnMessage)\n* Parameters:\n* errorLevel = validation level to display an error message\n* errorMessage = error message to display\n* warnLevel = validation level to display a warning message\n\n* warnMessage = warning message to display\n\n+ Either errorLevel and errorMessage, or warnLevel and warnMessage, must be\nnon-null\n\n* Both pairs can be non-null\n\n* errorLevel should be a higher maturity level than warnLevel",
+      "word_count": 73,
+      "avg_confidence": 89.8,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| entity.rejectField() method G\n\n* Indicates a problem with a particular field, displays a warning or error message and highlights\nthe field in the UI\n\n* Syntax:\n\nentity.rejectField(strRelativeFieldPath,\nerrorLevel, errorMessage,\n\nwarnLevel, warnMessage)\nNew Parameter:\ne strRelativeFieldPath = the path from the root object of this rule to the field failing validation\n\nclaim. rejectField(\"FaultRating\",TC_NEWLOSS,\n\"{ruleName}\\: The Fault Rating must be determin...\", null, null)",
+      "word_count": 62,
+      "avg_confidence": 87.1,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| entity.rejectSubField() method Ga\n\n¢ Highlights fields on related objects (such as those on an array or a foreign key)\n« May require navigation to a page for the related object field (which will be highlighted)\n¢ If so, a link will be available in the Validation Results worksheet\n\n¢ Syntax:\n\nentity.rejectSubField(relatedObject, strRelativeFieldPath,\nerrorLevel, errorMessage,\n\nwarnLevel, warnMessage)\n« New Parameter:\n¢ relatedObject — the sub-object on which the reject field is found\n\nclaim.rejectSubField(exp, \"OtherCoverageDet\",\nTC_NEWLOSS, \"Please provide information about claimant's ot...\",\nnull, null)",
+      "word_count": 83,
+      "avg_confidence": 86.25,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Validation rules\n\nMost of the logic is usually in the condition clause\n\n* Selects entities that should be rejected\n\n¢ You can put additional logic into the action clause\n\nUSES:\nuses gw.api.locale.DisplayKey\nCONDITION (claim : entity.Claim):\n\nreturn claim.Evaluations.where(\\evaluation -> evaluation.isChanged()).hasMatch\n(\\evaluation -> {\n\nvar liabilities = {evaluation.InsuredLiability, evaluation.ClaimantLiability,\nevaluation. OtherLiability}\nreturn liabilities.where(\\liability -> liability != null).sum() > 100\n»\nACTION (claim : entity.Claim, actions : gw.rules.Action) :\n\nclaim. reject (claim.ValidationLevel, \"Total liability percentage of evaluation canno...\n\n, null, null)\nEND",
+      "word_count": 80,
+      "avg_confidence": 87.91,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n,— — What method would you use to reject a claim or exposure and indicate a\n: specific field in that object?\n\n7\n¢\n\nSS Seeoesese sees ee ese\n\nGi",
+      "word_count": 31,
+      "avg_confidence": 87.69,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n_— — What method would you use to reject a claim or exposure and indicate a\n: specific field in that object?\n\n7\n¢\n\nThe correct answer is entity.rejectField().\n\nSS eeesee seen ee ese\n\nGi",
+      "word_count": 36,
+      "avg_confidence": 84.72,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Student exercise\n\nValidation for claim fields",
+      "word_count": 7,
+      "avg_confidence": 88.38,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Student exercise\n\nChallenge requirement:\nValidation for exposure lists",
+      "word_count": 9,
+      "avg_confidence": 89.8,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Lesson\nobjectives ¢ Describe the ClaimCenter validation model\nreview ¢ Write validation rules for claims and\n\nexposures",
+      "word_count": 17,
+      "avg_confidence": 87.82,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    }
+  ]
+}

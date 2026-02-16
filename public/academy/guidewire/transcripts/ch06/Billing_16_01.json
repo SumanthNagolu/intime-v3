@@ -1,0 +1,5255 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "filename": "Billing_16_01.mp4",
+    "video_stem": "Billing_16_01",
+    "duration_seconds": 263.32,
+    "duration_formatted": "00:04:23.320",
+    "segment_count": 25,
+    "word_count": 828,
+    "avg_confidence": 0.9531,
+    "transcription_time_seconds": 25.3,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:07:27.544626"
+  },
+  "full_text": "This demonstration shows how to process a manual disbursement in BillingCenter. Here's the Snyder & Associates account, which has a commercial package policy. The customer has sent a payment for $11,000. The money was already allocated to fully pay the policy. But the amount of the payment was greater than the amount billed, leaving $1,902 remaining in the unapplied fund for the policy. BillingCenter will automatically disburse the money in the next few days. However, the policyholder has requested that the payment will be paid for the policy. BillingCenter has requested a refund for the remaining money as soon as possible. I'm going to create a manual disbursement right now so there's no delay. I click the Actions menu button. And I select Disbursement from the New Transaction submenu. This opens the account disbursement wizard. First, I need to select the unapplied fund that holds the money I plan to disburse. I select the designated unapplied fund for the policy. Next, I enter the amount of the disbursement. I type $1902 in the amount field. I'll make the payment date the same as the current billing system date. Now I need to select a reason for the disbursement. I select Overpayment. The Pay Info fields on the screen are correct as is. There are no changes needed. I click Next. Step 2 is the disbursement confirmation step. I visually verify the disbursement amount and due date before clicking Finish. Now, let's look at the disbursement we just created in the Disbursements screen. I click the Disbursements link in the sidebar. The new disbursement is already selected. I immediately notice the disbursement has a status of Approved. It was automatically approved by the system. At this point, the disbursement is ready to be sent, but it has not been sent yet. It is waiting for the disbursement batch process to run. While we are on the disbursements screen, let's see what actions are available for the disbursement. I'll click Edit to go into Edit Mode. The Reject button is available. We know the disbursement was automatically approved by the system. However, if a mistake had been made, I can reject the disbursement and create a new one later if required. Notice there's a second Reject button. This button does more than simply change the status of the disbursement to Rejected. It also causes Billing Center to create a trouble ticket with a hold on automatic disbursements. I would click this button if there were a problem with the account such that no disbursements should be issued until the problem is resolved. The hold will not be released until the trouble ticket is closed. But no changes are needed at this time, so I click Cancel. Normally, an approved disbursement is not sent until the disbursement batch process runs at its scheduled time. For the purpose of this demo, I'll switch to SuperUser to manually run the disbursement batch process so that we can see the results. I'll look for the disbursement batch process and click Run. On the disbursements screen, we can see the results. The batch process has set the Date Issued field to Today's date and changed the status to Sent. Also, the payment status is now Draft, indicating a request for payment has been sent to a third-party payment system. Let's return to Edit Mode to learn what actions we can perform on a sent disbursement. Both Reject buttons are disabled. A sent disbursement cannot be rejected. However, the Void button is now available. This button allows me to void a disbursement after it has been sent. If the customer does not receive the money for some reason such as a bank error or the wrong payee address, I can void the disbursement and create a new one. Voiding is not necessary here, so I simply click Cancel. Now, I'll go back to the account summary. Here I see Total Unapplied is now empty. The overpayment has been fully disbursed to the customer. This concludes our demonstration on manual disbursements. This concludes our demonstration on manual disbursements. Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films Thank you.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "This demonstration shows how to process a manual disbursement in BillingCenter. Here's the Snyder & Associates account, which has a commercial package policy. The customer has sent a payment for $11,000. The money was already allocated to fully pay the policy. But the amount of the payment was greater than the amount billed, leaving $1,902 remaining in the unapplied fund for the policy. BillingCenter will automatically disburse the money in the next few days. However, the policyholder has requested that the payment will be paid for the policy.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 0.14,
+          "probability": 0.8936
+        },
+        {
+          "word": "demonstration",
+          "start": 0.14,
+          "end": 0.7,
+          "probability": 0.9917
+        },
+        {
+          "word": "shows",
+          "start": 0.7,
+          "end": 1.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "how",
+          "start": 1.12,
+          "end": 1.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 1.32,
+          "end": 1.42,
+          "probability": 0.999
+        },
+        {
+          "word": "process",
+          "start": 1.42,
+          "end": 1.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 1.8,
+          "end": 2.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "manual",
+          "start": 2.04,
+          "end": 2.32,
+          "probability": 0.939
+        },
+        {
+          "word": "disbursement",
+          "start": 2.32,
+          "end": 3.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 3.04,
+          "end": 3.18,
+          "probability": 0.9492
+        },
+        {
+          "word": "BillingCenter.",
+          "start": 3.18,
+          "end": 3.86,
+          "probability": 0.7173
+        },
+        {
+          "word": "Here's",
+          "start": 4.38,
+          "end": 4.9,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 4.9,
+          "end": 5.04,
+          "probability": 0.9912
+        },
+        {
+          "word": "Snyder",
+          "start": 5.04,
+          "end": 5.4,
+          "probability": 0.96
+        },
+        {
+          "word": "&",
+          "start": 5.4,
+          "end": 5.52,
+          "probability": 0.7417
+        },
+        {
+          "word": "Associates",
+          "start": 5.52,
+          "end": 6.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "account,",
+          "start": 6.12,
+          "end": 6.46,
+          "probability": 0.9497
+        },
+        {
+          "word": "which",
+          "start": 6.72,
+          "end": 7.0,
+          "probability": 0.998
+        },
+        {
+          "word": "has",
+          "start": 7.0,
+          "end": 7.14,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 7.14,
+          "end": 7.26,
+          "probability": 0.999
+        },
+        {
+          "word": "commercial",
+          "start": 7.26,
+          "end": 7.6,
+          "probability": 0.9419
+        },
+        {
+          "word": "package",
+          "start": 7.6,
+          "end": 8.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy.",
+          "start": 8.02,
+          "end": 8.62,
+          "probability": 0.999
+        },
+        {
+          "word": "The",
+          "start": 9.1,
+          "end": 9.62,
+          "probability": 0.9873
+        },
+        {
+          "word": "customer",
+          "start": 9.62,
+          "end": 10.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "has",
+          "start": 10.0,
+          "end": 10.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "sent",
+          "start": 10.28,
+          "end": 10.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 10.46,
+          "end": 10.56,
+          "probability": 0.999
+        },
+        {
+          "word": "payment",
+          "start": 10.56,
+          "end": 10.82,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 10.82,
+          "end": 11.04,
+          "probability": 0.999
+        },
+        {
+          "word": "$11",
+          "start": 11.04,
+          "end": 11.36,
+          "probability": 0.9844
+        },
+        {
+          "word": ",000.",
+          "start": 11.36,
+          "end": 11.78,
+          "probability": 0.9873
+        },
+        {
+          "word": "The",
+          "start": 12.5,
+          "end": 13.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "money",
+          "start": 13.02,
+          "end": 13.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "was",
+          "start": 13.2,
+          "end": 13.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "already",
+          "start": 13.4,
+          "end": 13.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "allocated",
+          "start": 13.72,
+          "end": 14.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 14.22,
+          "end": 14.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "fully",
+          "start": 14.42,
+          "end": 14.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "pay",
+          "start": 14.68,
+          "end": 14.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 14.88,
+          "end": 15.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy.",
+          "start": 15.02,
+          "end": 15.46,
+          "probability": 0.999
+        },
+        {
+          "word": "But",
+          "start": 15.86,
+          "end": 16.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 16.38,
+          "end": 16.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "amount",
+          "start": 16.52,
+          "end": 16.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 16.78,
+          "end": 16.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 16.94,
+          "end": 17.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "payment",
+          "start": 17.06,
+          "end": 17.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "was",
+          "start": 17.32,
+          "end": 17.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "greater",
+          "start": 17.56,
+          "end": 17.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "than",
+          "start": 17.8,
+          "end": 18.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 18.0,
+          "end": 18.12,
+          "probability": 0.999
+        },
+        {
+          "word": "amount",
+          "start": 18.12,
+          "end": 18.38,
+          "probability": 0.999
+        },
+        {
+          "word": "billed,",
+          "start": 18.38,
+          "end": 18.84,
+          "probability": 0.9941
+        },
+        {
+          "word": "leaving",
+          "start": 19.04,
+          "end": 19.36,
+          "probability": 0.998
+        },
+        {
+          "word": "$1",
+          "start": 19.36,
+          "end": 19.74,
+          "probability": 0.9473
+        },
+        {
+          "word": ",902",
+          "start": 19.74,
+          "end": 20.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "remaining",
+          "start": 20.76,
+          "end": 21.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 21.52,
+          "end": 21.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 21.72,
+          "end": 21.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "unapplied",
+          "start": 21.82,
+          "end": 22.36,
+          "probability": 0.9805
+        },
+        {
+          "word": "fund",
+          "start": 22.36,
+          "end": 22.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 22.62,
+          "end": 22.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 22.82,
+          "end": 22.92,
+          "probability": 0.998
+        },
+        {
+          "word": "policy.",
+          "start": 22.92,
+          "end": 23.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "BillingCenter",
+          "start": 24.14,
+          "end": 24.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "will",
+          "start": 24.66,
+          "end": 24.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "automatically",
+          "start": 24.86,
+          "end": 25.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "disburse",
+          "start": 25.34,
+          "end": 25.76,
+          "probability": 0.8662
+        },
+        {
+          "word": "the",
+          "start": 25.76,
+          "end": 26.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "money",
+          "start": 26.02,
+          "end": 26.24,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 26.24,
+          "end": 26.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 26.4,
+          "end": 26.48,
+          "probability": 0.999
+        },
+        {
+          "word": "next",
+          "start": 26.48,
+          "end": 26.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "few",
+          "start": 26.66,
+          "end": 26.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "days.",
+          "start": 26.88,
+          "end": 27.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "However,",
+          "start": 27.64,
+          "end": 28.1,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 28.42,
+          "end": 28.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "policyholder",
+          "start": 28.62,
+          "end": 29.32,
+          "probability": 0.915
+        },
+        {
+          "word": "has",
+          "start": 29.32,
+          "end": 29.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "requested",
+          "start": 29.58,
+          "end": 29.92,
+          "probability": 0.7686
+        },
+        {
+          "word": "that",
+          "start": 29.92,
+          "end": 29.98,
+          "probability": 0.1578
+        },
+        {
+          "word": "the",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2593
+        },
+        {
+          "word": "payment",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.041
+        },
+        {
+          "word": "will",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2035
+        },
+        {
+          "word": "be",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.4341
+        },
+        {
+          "word": "paid",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.0641
+        },
+        {
+          "word": "for",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2866
+        },
+        {
+          "word": "the",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2837
+        },
+        {
+          "word": "policy.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1587
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 58.24,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:58.240",
+      "text": "BillingCenter has requested a refund for the remaining money as soon as possible. I'm going to create a manual disbursement right now so there's no delay. I click the Actions menu button. And I select Disbursement from the New Transaction submenu. This opens the account disbursement wizard. First, I need to select the unapplied fund that holds the money I plan to disburse. I select the designated unapplied fund for the policy.",
+      "words": [
+        {
+          "word": "BillingCenter",
+          "start": 29.98,
+          "end": 30.14,
+          "probability": 0.0045
+        },
+        {
+          "word": "has",
+          "start": 30.14,
+          "end": 30.14,
+          "probability": 0.1425
+        },
+        {
+          "word": "requested",
+          "start": 30.14,
+          "end": 30.14,
+          "probability": 0.038
+        },
+        {
+          "word": "a",
+          "start": 30.14,
+          "end": 30.24,
+          "probability": 0.9907
+        },
+        {
+          "word": "refund",
+          "start": 30.24,
+          "end": 30.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 30.54,
+          "end": 30.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 30.76,
+          "end": 30.86,
+          "probability": 0.9912
+        },
+        {
+          "word": "remaining",
+          "start": 30.86,
+          "end": 31.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "money",
+          "start": 31.2,
+          "end": 31.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "as",
+          "start": 31.52,
+          "end": 31.74,
+          "probability": 0.9722
+        },
+        {
+          "word": "soon",
+          "start": 31.74,
+          "end": 31.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "as",
+          "start": 31.92,
+          "end": 32.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "possible.",
+          "start": 32.02,
+          "end": 32.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "I'm",
+          "start": 32.92,
+          "end": 33.4,
+          "probability": 0.9678
+        },
+        {
+          "word": "going",
+          "start": 33.4,
+          "end": 33.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 33.6,
+          "end": 33.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "create",
+          "start": 33.76,
+          "end": 34.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 34.02,
+          "end": 34.18,
+          "probability": 0.9912
+        },
+        {
+          "word": "manual",
+          "start": 34.18,
+          "end": 34.42,
+          "probability": 0.8672
+        },
+        {
+          "word": "disbursement",
+          "start": 34.42,
+          "end": 35.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "right",
+          "start": 35.18,
+          "end": 35.36,
+          "probability": 0.9883
+        },
+        {
+          "word": "now",
+          "start": 35.36,
+          "end": 35.58,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 35.58,
+          "end": 35.78,
+          "probability": 0.9458
+        },
+        {
+          "word": "there's",
+          "start": 35.78,
+          "end": 36.02,
+          "probability": 0.9834
+        },
+        {
+          "word": "no",
+          "start": 36.02,
+          "end": 36.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "delay.",
+          "start": 36.16,
+          "end": 36.5,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 37.14,
+          "end": 37.62,
+          "probability": 0.9854
+        },
+        {
+          "word": "click",
+          "start": 37.62,
+          "end": 37.84,
+          "probability": 0.8223
+        },
+        {
+          "word": "the",
+          "start": 37.84,
+          "end": 38.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "Actions",
+          "start": 38.04,
+          "end": 38.44,
+          "probability": 0.8105
+        },
+        {
+          "word": "menu",
+          "start": 38.44,
+          "end": 38.68,
+          "probability": 0.7354
+        },
+        {
+          "word": "button.",
+          "start": 38.68,
+          "end": 39.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "And",
+          "start": 41.2,
+          "end": 41.68,
+          "probability": 0.854
+        },
+        {
+          "word": "I",
+          "start": 41.68,
+          "end": 41.82,
+          "probability": 0.98
+        },
+        {
+          "word": "select",
+          "start": 41.82,
+          "end": 42.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "Disbursement",
+          "start": 42.18,
+          "end": 42.82,
+          "probability": 0.895
+        },
+        {
+          "word": "from",
+          "start": 42.82,
+          "end": 42.98,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 42.98,
+          "end": 43.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "New",
+          "start": 43.1,
+          "end": 43.2,
+          "probability": 0.6265
+        },
+        {
+          "word": "Transaction",
+          "start": 43.2,
+          "end": 43.88,
+          "probability": 0.7935
+        },
+        {
+          "word": "submenu.",
+          "start": 43.88,
+          "end": 44.46,
+          "probability": 0.9072
+        },
+        {
+          "word": "This",
+          "start": 45.78,
+          "end": 46.26,
+          "probability": 0.9932
+        },
+        {
+          "word": "opens",
+          "start": 46.26,
+          "end": 46.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 46.54,
+          "end": 46.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "account",
+          "start": 46.74,
+          "end": 47.04,
+          "probability": 0.5356
+        },
+        {
+          "word": "disbursement",
+          "start": 47.04,
+          "end": 47.72,
+          "probability": 0.981
+        },
+        {
+          "word": "wizard.",
+          "start": 47.72,
+          "end": 48.0,
+          "probability": 0.9868
+        },
+        {
+          "word": "First,",
+          "start": 48.46,
+          "end": 48.94,
+          "probability": 0.9834
+        },
+        {
+          "word": "I",
+          "start": 49.14,
+          "end": 49.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "need",
+          "start": 49.38,
+          "end": 49.54,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 49.54,
+          "end": 49.68,
+          "probability": 0.998
+        },
+        {
+          "word": "select",
+          "start": 49.68,
+          "end": 49.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 49.98,
+          "end": 50.16,
+          "probability": 0.998
+        },
+        {
+          "word": "unapplied",
+          "start": 50.16,
+          "end": 50.68,
+          "probability": 0.9209
+        },
+        {
+          "word": "fund",
+          "start": 50.68,
+          "end": 50.92,
+          "probability": 0.9907
+        },
+        {
+          "word": "that",
+          "start": 50.92,
+          "end": 51.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "holds",
+          "start": 51.08,
+          "end": 51.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 51.34,
+          "end": 51.5,
+          "probability": 0.998
+        },
+        {
+          "word": "money",
+          "start": 51.5,
+          "end": 51.68,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 51.68,
+          "end": 51.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "plan",
+          "start": 51.88,
+          "end": 52.12,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 52.12,
+          "end": 52.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "disburse.",
+          "start": 52.32,
+          "end": 52.66,
+          "probability": 0.9238
+        },
+        {
+          "word": "I",
+          "start": 55.22,
+          "end": 55.7,
+          "probability": 0.9893
+        },
+        {
+          "word": "select",
+          "start": 55.7,
+          "end": 56.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 56.1,
+          "end": 56.24,
+          "probability": 0.998
+        },
+        {
+          "word": "designated",
+          "start": 56.24,
+          "end": 56.68,
+          "probability": 0.959
+        },
+        {
+          "word": "unapplied",
+          "start": 56.68,
+          "end": 57.28,
+          "probability": 0.9751
+        },
+        {
+          "word": "fund",
+          "start": 57.28,
+          "end": 57.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 57.54,
+          "end": 57.68,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 57.68,
+          "end": 57.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy.",
+          "start": 57.8,
+          "end": 58.24,
+          "probability": 0.9849
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.98,
+      "end": 71.82,
+      "start_formatted": "00:00:59.980",
+      "end_formatted": "00:01:11.820",
+      "text": "Next, I enter the amount of the disbursement. I type $1902 in the amount field. I'll make the payment date the same as the current billing system date.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 59.98,
+          "end": 60.4,
+          "probability": 0.9785
+        },
+        {
+          "word": "I",
+          "start": 60.66,
+          "end": 60.84,
+          "probability": 0.9893
+        },
+        {
+          "word": "enter",
+          "start": 60.84,
+          "end": 61.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 61.1,
+          "end": 61.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "amount",
+          "start": 61.22,
+          "end": 61.48,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 61.48,
+          "end": 61.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 61.62,
+          "end": 61.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "disbursement.",
+          "start": 61.74,
+          "end": 62.42,
+          "probability": 0.9819
+        },
+        {
+          "word": "I",
+          "start": 64.04,
+          "end": 64.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "type",
+          "start": 64.6,
+          "end": 64.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "$1902",
+          "start": 64.92,
+          "end": 66.18,
+          "probability": 0.8228
+        },
+        {
+          "word": "in",
+          "start": 66.18,
+          "end": 66.76,
+          "probability": 0.9805
+        },
+        {
+          "word": "the",
+          "start": 66.76,
+          "end": 66.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "amount",
+          "start": 66.86,
+          "end": 67.08,
+          "probability": 0.688
+        },
+        {
+          "word": "field.",
+          "start": 67.08,
+          "end": 67.46,
+          "probability": 0.998
+        },
+        {
+          "word": "I'll",
+          "start": 68.5,
+          "end": 69.06,
+          "probability": 0.9922
+        },
+        {
+          "word": "make",
+          "start": 69.06,
+          "end": 69.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 69.24,
+          "end": 69.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "payment",
+          "start": 69.36,
+          "end": 69.66,
+          "probability": 0.9717
+        },
+        {
+          "word": "date",
+          "start": 69.66,
+          "end": 69.9,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 69.9,
+          "end": 70.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "same",
+          "start": 70.08,
+          "end": 70.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 70.26,
+          "end": 70.44,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 70.44,
+          "end": 70.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "current",
+          "start": 70.56,
+          "end": 70.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "billing",
+          "start": 70.84,
+          "end": 71.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "system",
+          "start": 71.12,
+          "end": 71.52,
+          "probability": 0.998
+        },
+        {
+          "word": "date.",
+          "start": 71.52,
+          "end": 71.82,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 78.68,
+      "end": 84.7,
+      "start_formatted": "00:01:18.680",
+      "end_formatted": "00:01:24.700",
+      "text": "Now I need to select a reason for the disbursement. I select Overpayment.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 78.68,
+          "end": 79.24,
+          "probability": 0.9653
+        },
+        {
+          "word": "I",
+          "start": 79.24,
+          "end": 79.4,
+          "probability": 0.9673
+        },
+        {
+          "word": "need",
+          "start": 79.4,
+          "end": 79.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 79.58,
+          "end": 79.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "select",
+          "start": 79.74,
+          "end": 80.04,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 80.04,
+          "end": 80.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "reason",
+          "start": 80.2,
+          "end": 80.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "for",
+          "start": 80.48,
+          "end": 80.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 80.68,
+          "end": 80.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "disbursement.",
+          "start": 80.78,
+          "end": 81.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 83.04,
+          "end": 83.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "select",
+          "start": 83.6,
+          "end": 84.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "Overpayment.",
+          "start": 84.0,
+          "end": 84.7,
+          "probability": 0.7695
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 86.96,
+      "end": 93.24,
+      "start_formatted": "00:01:26.960",
+      "end_formatted": "00:01:33.240",
+      "text": "The Pay Info fields on the screen are correct as is. There are no changes needed. I click Next.",
+      "words": [
+        {
+          "word": "The",
+          "start": 86.96,
+          "end": 87.6,
+          "probability": 0.9712
+        },
+        {
+          "word": "Pay",
+          "start": 87.6,
+          "end": 87.86,
+          "probability": 0.3613
+        },
+        {
+          "word": "Info",
+          "start": 87.86,
+          "end": 88.3,
+          "probability": 0.8105
+        },
+        {
+          "word": "fields",
+          "start": 88.3,
+          "end": 88.64,
+          "probability": 0.9868
+        },
+        {
+          "word": "on",
+          "start": 88.64,
+          "end": 88.8,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 88.8,
+          "end": 88.92,
+          "probability": 0.6001
+        },
+        {
+          "word": "screen",
+          "start": 88.92,
+          "end": 89.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 89.2,
+          "end": 89.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "correct",
+          "start": 89.4,
+          "end": 89.72,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 89.72,
+          "end": 89.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "is.",
+          "start": 89.9,
+          "end": 90.18,
+          "probability": 0.9761
+        },
+        {
+          "word": "There",
+          "start": 90.44,
+          "end": 90.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 90.82,
+          "end": 90.94,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 90.94,
+          "end": 91.08,
+          "probability": 0.999
+        },
+        {
+          "word": "changes",
+          "start": 91.08,
+          "end": 91.48,
+          "probability": 0.999
+        },
+        {
+          "word": "needed.",
+          "start": 91.48,
+          "end": 91.82,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 92.26,
+          "end": 92.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "click",
+          "start": 92.7,
+          "end": 92.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "Next.",
+          "start": 92.92,
+          "end": 93.24,
+          "probability": 0.9536
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 96.2,
+      "end": 103.22,
+      "start_formatted": "00:01:36.200",
+      "end_formatted": "00:01:43.220",
+      "text": "Step 2 is the disbursement confirmation step. I visually verify the disbursement amount and due date before clicking Finish.",
+      "words": [
+        {
+          "word": "Step",
+          "start": 96.2,
+          "end": 96.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "2",
+          "start": 96.84,
+          "end": 97.06,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 97.06,
+          "end": 97.22,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 97.22,
+          "end": 97.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "disbursement",
+          "start": 97.32,
+          "end": 98.0,
+          "probability": 0.7124
+        },
+        {
+          "word": "confirmation",
+          "start": 98.0,
+          "end": 98.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "step.",
+          "start": 98.42,
+          "end": 98.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 99.34,
+          "end": 99.7,
+          "probability": 0.999
+        },
+        {
+          "word": "visually",
+          "start": 99.7,
+          "end": 100.08,
+          "probability": 0.998
+        },
+        {
+          "word": "verify",
+          "start": 100.08,
+          "end": 100.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 100.54,
+          "end": 100.76,
+          "probability": 1.0
+        },
+        {
+          "word": "disbursement",
+          "start": 100.76,
+          "end": 101.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "amount",
+          "start": 101.4,
+          "end": 101.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 101.64,
+          "end": 101.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "due",
+          "start": 101.9,
+          "end": 102.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "date",
+          "start": 102.0,
+          "end": 102.22,
+          "probability": 1.0
+        },
+        {
+          "word": "before",
+          "start": 102.22,
+          "end": 102.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "clicking",
+          "start": 102.5,
+          "end": 102.92,
+          "probability": 0.999
+        },
+        {
+          "word": "Finish.",
+          "start": 102.92,
+          "end": 103.22,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 105.0,
+      "end": 112.06,
+      "start_formatted": "00:01:45.000",
+      "end_formatted": "00:01:52.060",
+      "text": "Now, let's look at the disbursement we just created in the Disbursements screen. I click the Disbursements link in the sidebar.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 105.0,
+          "end": 105.52,
+          "probability": 0.9141
+        },
+        {
+          "word": "let's",
+          "start": 105.78,
+          "end": 106.12,
+          "probability": 0.9717
+        },
+        {
+          "word": "look",
+          "start": 106.12,
+          "end": 106.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "at",
+          "start": 106.28,
+          "end": 106.42,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 106.42,
+          "end": 106.52,
+          "probability": 0.998
+        },
+        {
+          "word": "disbursement",
+          "start": 106.52,
+          "end": 107.18,
+          "probability": 0.958
+        },
+        {
+          "word": "we",
+          "start": 107.18,
+          "end": 107.32,
+          "probability": 0.9888
+        },
+        {
+          "word": "just",
+          "start": 107.32,
+          "end": 107.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "created",
+          "start": 107.6,
+          "end": 108.0,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 108.0,
+          "end": 108.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 108.18,
+          "end": 108.28,
+          "probability": 0.9907
+        },
+        {
+          "word": "Disbursements",
+          "start": 108.28,
+          "end": 108.94,
+          "probability": 0.8516
+        },
+        {
+          "word": "screen.",
+          "start": 108.94,
+          "end": 109.22,
+          "probability": 0.9756
+        },
+        {
+          "word": "I",
+          "start": 109.68,
+          "end": 110.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "click",
+          "start": 110.02,
+          "end": 110.22,
+          "probability": 0.9277
+        },
+        {
+          "word": "the",
+          "start": 110.22,
+          "end": 110.38,
+          "probability": 0.9858
+        },
+        {
+          "word": "Disbursements",
+          "start": 110.38,
+          "end": 111.08,
+          "probability": 0.9541
+        },
+        {
+          "word": "link",
+          "start": 111.08,
+          "end": 111.3,
+          "probability": 0.9819
+        },
+        {
+          "word": "in",
+          "start": 111.3,
+          "end": 111.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 111.48,
+          "end": 111.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "sidebar.",
+          "start": 111.56,
+          "end": 112.06,
+          "probability": 0.9629
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 113.32,
+      "end": 129.94,
+      "start_formatted": "00:01:53.320",
+      "end_formatted": "00:02:09.940",
+      "text": "The new disbursement is already selected. I immediately notice the disbursement has a status of Approved. It was automatically approved by the system. At this point, the disbursement is ready to be sent, but it has not been sent yet. It is waiting for the disbursement batch process to run.",
+      "words": [
+        {
+          "word": "The",
+          "start": 113.32,
+          "end": 113.84,
+          "probability": 0.9849
+        },
+        {
+          "word": "new",
+          "start": 113.84,
+          "end": 114.0,
+          "probability": 0.9009
+        },
+        {
+          "word": "disbursement",
+          "start": 114.0,
+          "end": 114.64,
+          "probability": 0.981
+        },
+        {
+          "word": "is",
+          "start": 114.64,
+          "end": 114.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "already",
+          "start": 114.76,
+          "end": 115.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "selected.",
+          "start": 115.08,
+          "end": 115.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 116.06,
+          "end": 116.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "immediately",
+          "start": 116.54,
+          "end": 117.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "notice",
+          "start": 117.0,
+          "end": 117.38,
+          "probability": 0.9399
+        },
+        {
+          "word": "the",
+          "start": 117.38,
+          "end": 117.56,
+          "probability": 0.9814
+        },
+        {
+          "word": "disbursement",
+          "start": 117.56,
+          "end": 118.2,
+          "probability": 0.9775
+        },
+        {
+          "word": "has",
+          "start": 118.2,
+          "end": 118.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 118.36,
+          "end": 118.48,
+          "probability": 0.9854
+        },
+        {
+          "word": "status",
+          "start": 118.48,
+          "end": 118.78,
+          "probability": 0.9722
+        },
+        {
+          "word": "of",
+          "start": 118.78,
+          "end": 118.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "Approved.",
+          "start": 118.94,
+          "end": 119.5,
+          "probability": 0.7891
+        },
+        {
+          "word": "It",
+          "start": 119.72,
+          "end": 120.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "was",
+          "start": 120.08,
+          "end": 120.24,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 120.24,
+          "end": 120.74,
+          "probability": 0.9907
+        },
+        {
+          "word": "approved",
+          "start": 120.74,
+          "end": 121.22,
+          "probability": 0.9927
+        },
+        {
+          "word": "by",
+          "start": 121.22,
+          "end": 121.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 121.46,
+          "end": 121.58,
+          "probability": 0.999
+        },
+        {
+          "word": "system.",
+          "start": 121.58,
+          "end": 121.9,
+          "probability": 0.9844
+        },
+        {
+          "word": "At",
+          "start": 122.36,
+          "end": 122.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 122.88,
+          "end": 123.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "point,",
+          "start": 123.06,
+          "end": 123.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 123.54,
+          "end": 123.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "disbursement",
+          "start": 123.8,
+          "end": 124.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 124.38,
+          "end": 124.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "ready",
+          "start": 124.5,
+          "end": 124.7,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 124.7,
+          "end": 124.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 124.84,
+          "end": 124.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "sent,",
+          "start": 124.98,
+          "end": 125.3,
+          "probability": 0.998
+        },
+        {
+          "word": "but",
+          "start": 125.46,
+          "end": 125.76,
+          "probability": 0.998
+        },
+        {
+          "word": "it",
+          "start": 125.76,
+          "end": 125.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "has",
+          "start": 125.86,
+          "end": 125.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "not",
+          "start": 125.98,
+          "end": 126.16,
+          "probability": 0.999
+        },
+        {
+          "word": "been",
+          "start": 126.16,
+          "end": 126.4,
+          "probability": 0.999
+        },
+        {
+          "word": "sent",
+          "start": 126.4,
+          "end": 126.66,
+          "probability": 0.998
+        },
+        {
+          "word": "yet.",
+          "start": 126.66,
+          "end": 126.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "It",
+          "start": 127.22,
+          "end": 127.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 127.54,
+          "end": 127.68,
+          "probability": 0.999
+        },
+        {
+          "word": "waiting",
+          "start": 127.68,
+          "end": 127.94,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 127.94,
+          "end": 128.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 128.14,
+          "end": 128.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "disbursement",
+          "start": 128.26,
+          "end": 128.82,
+          "probability": 0.9722
+        },
+        {
+          "word": "batch",
+          "start": 128.82,
+          "end": 129.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "process",
+          "start": 129.04,
+          "end": 129.46,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 129.46,
+          "end": 129.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "run.",
+          "start": 129.68,
+          "end": 129.94,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 131.98,
+      "end": 139.54,
+      "start_formatted": "00:02:11.980",
+      "end_formatted": "00:02:19.540",
+      "text": "While we are on the disbursements screen, let's see what actions are available for the disbursement. I'll click Edit to go into Edit Mode.",
+      "words": [
+        {
+          "word": "While",
+          "start": 131.98,
+          "end": 132.46,
+          "probability": 0.8906
+        },
+        {
+          "word": "we",
+          "start": 132.46,
+          "end": 132.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 132.64,
+          "end": 132.8,
+          "probability": 0.9937
+        },
+        {
+          "word": "on",
+          "start": 132.8,
+          "end": 132.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 132.94,
+          "end": 133.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "disbursements",
+          "start": 133.02,
+          "end": 133.64,
+          "probability": 0.8228
+        },
+        {
+          "word": "screen,",
+          "start": 133.64,
+          "end": 133.98,
+          "probability": 0.9858
+        },
+        {
+          "word": "let's",
+          "start": 134.28,
+          "end": 134.66,
+          "probability": 0.9805
+        },
+        {
+          "word": "see",
+          "start": 134.66,
+          "end": 134.82,
+          "probability": 0.999
+        },
+        {
+          "word": "what",
+          "start": 134.82,
+          "end": 135.04,
+          "probability": 0.999
+        },
+        {
+          "word": "actions",
+          "start": 135.04,
+          "end": 135.36,
+          "probability": 0.9888
+        },
+        {
+          "word": "are",
+          "start": 135.36,
+          "end": 135.56,
+          "probability": 0.999
+        },
+        {
+          "word": "available",
+          "start": 135.56,
+          "end": 135.92,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 135.92,
+          "end": 136.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 136.16,
+          "end": 136.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "disbursement.",
+          "start": 136.3,
+          "end": 136.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "I'll",
+          "start": 137.34,
+          "end": 137.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 137.82,
+          "end": 138.08,
+          "probability": 0.9902
+        },
+        {
+          "word": "Edit",
+          "start": 138.08,
+          "end": 138.28,
+          "probability": 0.5684
+        },
+        {
+          "word": "to",
+          "start": 138.28,
+          "end": 138.7,
+          "probability": 0.6211
+        },
+        {
+          "word": "go",
+          "start": 138.7,
+          "end": 138.82,
+          "probability": 0.998
+        },
+        {
+          "word": "into",
+          "start": 138.82,
+          "end": 139.04,
+          "probability": 0.9897
+        },
+        {
+          "word": "Edit",
+          "start": 139.04,
+          "end": 139.26,
+          "probability": 0.6665
+        },
+        {
+          "word": "Mode.",
+          "start": 139.26,
+          "end": 139.54,
+          "probability": 0.5029
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 141.48,
+      "end": 152.86,
+      "start_formatted": "00:02:21.480",
+      "end_formatted": "00:02:32.860",
+      "text": "The Reject button is available. We know the disbursement was automatically approved by the system. However, if a mistake had been made, I can reject the disbursement and create a new one later if required.",
+      "words": [
+        {
+          "word": "The",
+          "start": 141.48,
+          "end": 142.06,
+          "probability": 0.8486
+        },
+        {
+          "word": "Reject",
+          "start": 142.06,
+          "end": 142.46,
+          "probability": 0.7583
+        },
+        {
+          "word": "button",
+          "start": 142.46,
+          "end": 142.76,
+          "probability": 0.9771
+        },
+        {
+          "word": "is",
+          "start": 142.76,
+          "end": 142.94,
+          "probability": 0.999
+        },
+        {
+          "word": "available.",
+          "start": 142.94,
+          "end": 143.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "We",
+          "start": 143.7,
+          "end": 144.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "know",
+          "start": 144.02,
+          "end": 144.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 144.18,
+          "end": 144.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "disbursement",
+          "start": 144.32,
+          "end": 144.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "was",
+          "start": 144.94,
+          "end": 145.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "automatically",
+          "start": 145.12,
+          "end": 145.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "approved",
+          "start": 145.6,
+          "end": 146.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 146.12,
+          "end": 146.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 146.32,
+          "end": 146.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "system.",
+          "start": 146.46,
+          "end": 146.8,
+          "probability": 0.9927
+        },
+        {
+          "word": "However,",
+          "start": 147.16,
+          "end": 147.66,
+          "probability": 0.998
+        },
+        {
+          "word": "if",
+          "start": 147.96,
+          "end": 148.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 148.2,
+          "end": 148.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "mistake",
+          "start": 148.28,
+          "end": 148.6,
+          "probability": 0.999
+        },
+        {
+          "word": "had",
+          "start": 148.6,
+          "end": 148.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "been",
+          "start": 148.82,
+          "end": 148.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "made,",
+          "start": 148.96,
+          "end": 149.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 149.44,
+          "end": 149.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 149.64,
+          "end": 149.82,
+          "probability": 0.999
+        },
+        {
+          "word": "reject",
+          "start": 149.82,
+          "end": 150.12,
+          "probability": 0.9805
+        },
+        {
+          "word": "the",
+          "start": 150.12,
+          "end": 150.32,
+          "probability": 0.998
+        },
+        {
+          "word": "disbursement",
+          "start": 150.32,
+          "end": 150.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 150.94,
+          "end": 151.06,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 151.06,
+          "end": 151.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 151.34,
+          "end": 151.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 151.48,
+          "end": 151.62,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 151.62,
+          "end": 151.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "later",
+          "start": 151.92,
+          "end": 152.16,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 152.16,
+          "end": 152.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "required.",
+          "start": 152.36,
+          "end": 152.86,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 154.16,
+      "end": 165.34,
+      "start_formatted": "00:02:34.160",
+      "end_formatted": "00:02:45.340",
+      "text": "Notice there's a second Reject button. This button does more than simply change the status of the disbursement to Rejected. It also causes Billing Center to create a trouble ticket with a hold on automatic disbursements.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 154.16,
+          "end": 154.64,
+          "probability": 0.8271
+        },
+        {
+          "word": "there's",
+          "start": 154.64,
+          "end": 154.92,
+          "probability": 0.9731
+        },
+        {
+          "word": "a",
+          "start": 154.92,
+          "end": 155.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "second",
+          "start": 155.02,
+          "end": 155.26,
+          "probability": 0.9653
+        },
+        {
+          "word": "Reject",
+          "start": 155.26,
+          "end": 155.66,
+          "probability": 0.6196
+        },
+        {
+          "word": "button.",
+          "start": 155.66,
+          "end": 156.0,
+          "probability": 0.9663
+        },
+        {
+          "word": "This",
+          "start": 156.36,
+          "end": 156.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "button",
+          "start": 156.8,
+          "end": 157.08,
+          "probability": 0.999
+        },
+        {
+          "word": "does",
+          "start": 157.08,
+          "end": 157.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "more",
+          "start": 157.28,
+          "end": 157.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "than",
+          "start": 157.5,
+          "end": 157.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "simply",
+          "start": 157.66,
+          "end": 158.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "change",
+          "start": 158.02,
+          "end": 158.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 158.4,
+          "end": 158.58,
+          "probability": 0.999
+        },
+        {
+          "word": "status",
+          "start": 158.58,
+          "end": 158.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 158.86,
+          "end": 159.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 159.06,
+          "end": 159.16,
+          "probability": 0.999
+        },
+        {
+          "word": "disbursement",
+          "start": 159.16,
+          "end": 159.76,
+          "probability": 0.9849
+        },
+        {
+          "word": "to",
+          "start": 159.76,
+          "end": 159.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "Rejected.",
+          "start": 159.9,
+          "end": 160.44,
+          "probability": 0.9409
+        },
+        {
+          "word": "It",
+          "start": 160.68,
+          "end": 161.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "also",
+          "start": 161.06,
+          "end": 161.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "causes",
+          "start": 161.28,
+          "end": 161.74,
+          "probability": 0.999
+        },
+        {
+          "word": "Billing",
+          "start": 161.74,
+          "end": 162.1,
+          "probability": 0.9619
+        },
+        {
+          "word": "Center",
+          "start": 162.1,
+          "end": 162.32,
+          "probability": 0.8457
+        },
+        {
+          "word": "to",
+          "start": 162.32,
+          "end": 162.52,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 162.52,
+          "end": 162.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 162.76,
+          "end": 162.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "trouble",
+          "start": 162.92,
+          "end": 163.16,
+          "probability": 0.8691
+        },
+        {
+          "word": "ticket",
+          "start": 163.16,
+          "end": 163.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 163.44,
+          "end": 163.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 163.68,
+          "end": 163.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "hold",
+          "start": 163.8,
+          "end": 163.98,
+          "probability": 0.9819
+        },
+        {
+          "word": "on",
+          "start": 163.98,
+          "end": 164.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "automatic",
+          "start": 164.18,
+          "end": 164.6,
+          "probability": 0.8628
+        },
+        {
+          "word": "disbursements.",
+          "start": 164.6,
+          "end": 165.34,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 165.34,
+      "end": 175.36,
+      "start_formatted": "00:02:45.340",
+      "end_formatted": "00:02:55.360",
+      "text": "I would click this button if there were a problem with the account such that no disbursements should be issued until the problem is resolved. The hold will not be released until the trouble ticket is closed.",
+      "words": [
+        {
+          "word": "I",
+          "start": 165.34,
+          "end": 166.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "would",
+          "start": 166.16,
+          "end": 166.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 166.32,
+          "end": 166.54,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 166.54,
+          "end": 166.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "button",
+          "start": 166.74,
+          "end": 167.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 167.02,
+          "end": 167.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "there",
+          "start": 167.22,
+          "end": 167.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "were",
+          "start": 167.36,
+          "end": 167.48,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 167.48,
+          "end": 167.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "problem",
+          "start": 167.6,
+          "end": 167.88,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 167.88,
+          "end": 168.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 168.1,
+          "end": 168.22,
+          "probability": 1.0
+        },
+        {
+          "word": "account",
+          "start": 168.22,
+          "end": 168.54,
+          "probability": 0.9307
+        },
+        {
+          "word": "such",
+          "start": 168.54,
+          "end": 168.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 168.78,
+          "end": 169.02,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 169.02,
+          "end": 169.2,
+          "probability": 0.999
+        },
+        {
+          "word": "disbursements",
+          "start": 169.2,
+          "end": 169.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "should",
+          "start": 169.88,
+          "end": 170.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 170.04,
+          "end": 170.18,
+          "probability": 1.0
+        },
+        {
+          "word": "issued",
+          "start": 170.18,
+          "end": 170.42,
+          "probability": 1.0
+        },
+        {
+          "word": "until",
+          "start": 170.42,
+          "end": 170.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 170.68,
+          "end": 170.86,
+          "probability": 1.0
+        },
+        {
+          "word": "problem",
+          "start": 170.86,
+          "end": 171.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 171.2,
+          "end": 171.4,
+          "probability": 1.0
+        },
+        {
+          "word": "resolved.",
+          "start": 171.4,
+          "end": 171.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 172.28,
+          "end": 172.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "hold",
+          "start": 172.66,
+          "end": 172.84,
+          "probability": 0.9849
+        },
+        {
+          "word": "will",
+          "start": 172.84,
+          "end": 173.0,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 173.0,
+          "end": 173.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 173.2,
+          "end": 173.38,
+          "probability": 1.0
+        },
+        {
+          "word": "released",
+          "start": 173.38,
+          "end": 173.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "until",
+          "start": 173.7,
+          "end": 173.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 173.98,
+          "end": 174.18,
+          "probability": 1.0
+        },
+        {
+          "word": "trouble",
+          "start": 174.18,
+          "end": 174.42,
+          "probability": 0.9795
+        },
+        {
+          "word": "ticket",
+          "start": 174.42,
+          "end": 174.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 174.74,
+          "end": 174.96,
+          "probability": 1.0
+        },
+        {
+          "word": "closed.",
+          "start": 174.96,
+          "end": 175.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 177.6,
+      "end": 181.0,
+      "start_formatted": "00:02:57.600",
+      "end_formatted": "00:03:01.000",
+      "text": "But no changes are needed at this time, so I click Cancel.",
+      "words": [
+        {
+          "word": "But",
+          "start": 177.6,
+          "end": 178.08,
+          "probability": 0.999
+        },
+        {
+          "word": "no",
+          "start": 178.08,
+          "end": 178.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes",
+          "start": 178.26,
+          "end": 178.64,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 178.64,
+          "end": 178.86,
+          "probability": 1.0
+        },
+        {
+          "word": "needed",
+          "start": 178.86,
+          "end": 179.06,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 179.06,
+          "end": 179.26,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 179.26,
+          "end": 179.42,
+          "probability": 1.0
+        },
+        {
+          "word": "time,",
+          "start": 179.42,
+          "end": 179.72,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 179.9,
+          "end": 180.18,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 180.18,
+          "end": 180.3,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 180.3,
+          "end": 180.54,
+          "probability": 0.999
+        },
+        {
+          "word": "Cancel.",
+          "start": 180.54,
+          "end": 181.0,
+          "probability": 0.7422
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 182.34,
+      "end": 195.2,
+      "start_formatted": "00:03:02.340",
+      "end_formatted": "00:03:15.200",
+      "text": "Normally, an approved disbursement is not sent until the disbursement batch process runs at its scheduled time. For the purpose of this demo, I'll switch to SuperUser to manually run the disbursement batch process so that we can see the results.",
+      "words": [
+        {
+          "word": "Normally,",
+          "start": 182.34,
+          "end": 182.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 183.06,
+          "end": 183.28,
+          "probability": 1.0
+        },
+        {
+          "word": "approved",
+          "start": 183.28,
+          "end": 183.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "disbursement",
+          "start": 183.64,
+          "end": 184.28,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 184.28,
+          "end": 184.42,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 184.42,
+          "end": 184.6,
+          "probability": 1.0
+        },
+        {
+          "word": "sent",
+          "start": 184.6,
+          "end": 184.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "until",
+          "start": 184.84,
+          "end": 185.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 185.12,
+          "end": 185.3,
+          "probability": 1.0
+        },
+        {
+          "word": "disbursement",
+          "start": 185.3,
+          "end": 185.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "batch",
+          "start": 185.96,
+          "end": 186.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "process",
+          "start": 186.16,
+          "end": 186.62,
+          "probability": 1.0
+        },
+        {
+          "word": "runs",
+          "start": 186.62,
+          "end": 186.9,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 186.9,
+          "end": 187.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "its",
+          "start": 187.06,
+          "end": 187.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "scheduled",
+          "start": 187.22,
+          "end": 187.6,
+          "probability": 1.0
+        },
+        {
+          "word": "time.",
+          "start": 187.6,
+          "end": 187.98,
+          "probability": 1.0
+        },
+        {
+          "word": "For",
+          "start": 188.44,
+          "end": 188.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 188.92,
+          "end": 189.04,
+          "probability": 1.0
+        },
+        {
+          "word": "purpose",
+          "start": 189.04,
+          "end": 189.32,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 189.32,
+          "end": 189.54,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 189.54,
+          "end": 189.7,
+          "probability": 1.0
+        },
+        {
+          "word": "demo,",
+          "start": 189.7,
+          "end": 190.02,
+          "probability": 1.0
+        },
+        {
+          "word": "I'll",
+          "start": 190.24,
+          "end": 190.52,
+          "probability": 1.0
+        },
+        {
+          "word": "switch",
+          "start": 190.52,
+          "end": 190.8,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 190.8,
+          "end": 191.0,
+          "probability": 1.0
+        },
+        {
+          "word": "SuperUser",
+          "start": 191.0,
+          "end": 191.6,
+          "probability": 0.77
+        },
+        {
+          "word": "to",
+          "start": 191.6,
+          "end": 191.76,
+          "probability": 1.0
+        },
+        {
+          "word": "manually",
+          "start": 191.76,
+          "end": 192.12,
+          "probability": 1.0
+        },
+        {
+          "word": "run",
+          "start": 192.12,
+          "end": 192.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 192.38,
+          "end": 192.52,
+          "probability": 1.0
+        },
+        {
+          "word": "disbursement",
+          "start": 192.52,
+          "end": 193.14,
+          "probability": 1.0
+        },
+        {
+          "word": "batch",
+          "start": 193.14,
+          "end": 193.34,
+          "probability": 1.0
+        },
+        {
+          "word": "process",
+          "start": 193.34,
+          "end": 193.76,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 193.76,
+          "end": 194.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 194.06,
+          "end": 194.2,
+          "probability": 1.0
+        },
+        {
+          "word": "we",
+          "start": 194.2,
+          "end": 194.3,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 194.3,
+          "end": 194.46,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 194.46,
+          "end": 194.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 194.62,
+          "end": 194.74,
+          "probability": 1.0
+        },
+        {
+          "word": "results.",
+          "start": 194.74,
+          "end": 195.2,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 195.78,
+      "end": 198.62,
+      "start_formatted": "00:03:15.780",
+      "end_formatted": "00:03:18.620",
+      "text": "I'll look for the disbursement batch process and click Run.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 195.78,
+          "end": 196.26,
+          "probability": 0.9512
+        },
+        {
+          "word": "look",
+          "start": 196.26,
+          "end": 196.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "for",
+          "start": 196.42,
+          "end": 196.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 196.58,
+          "end": 196.7,
+          "probability": 0.9937
+        },
+        {
+          "word": "disbursement",
+          "start": 196.7,
+          "end": 197.26,
+          "probability": 0.9009
+        },
+        {
+          "word": "batch",
+          "start": 197.26,
+          "end": 197.46,
+          "probability": 0.9683
+        },
+        {
+          "word": "process",
+          "start": 197.46,
+          "end": 197.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 197.88,
+          "end": 198.12,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 198.12,
+          "end": 198.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "Run.",
+          "start": 198.32,
+          "end": 198.62,
+          "probability": 0.4028
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 202.1,
+      "end": 217.44,
+      "start_formatted": "00:03:22.100",
+      "end_formatted": "00:03:37.440",
+      "text": "On the disbursements screen, we can see the results. The batch process has set the Date Issued field to Today's date and changed the status to Sent. Also, the payment status is now Draft, indicating a request for payment has been sent to a third-party payment system.",
+      "words": [
+        {
+          "word": "On",
+          "start": 202.1,
+          "end": 202.58,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 202.58,
+          "end": 202.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "disbursements",
+          "start": 202.68,
+          "end": 203.28,
+          "probability": 0.8213
+        },
+        {
+          "word": "screen,",
+          "start": 203.28,
+          "end": 203.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "we",
+          "start": 203.9,
+          "end": 204.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 204.12,
+          "end": 204.26,
+          "probability": 0.998
+        },
+        {
+          "word": "see",
+          "start": 204.26,
+          "end": 204.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 204.44,
+          "end": 204.56,
+          "probability": 0.998
+        },
+        {
+          "word": "results.",
+          "start": 204.56,
+          "end": 205.0,
+          "probability": 0.9922
+        },
+        {
+          "word": "The",
+          "start": 205.52,
+          "end": 206.0,
+          "probability": 0.9932
+        },
+        {
+          "word": "batch",
+          "start": 206.0,
+          "end": 206.24,
+          "probability": 0.9814
+        },
+        {
+          "word": "process",
+          "start": 206.24,
+          "end": 206.7,
+          "probability": 0.998
+        },
+        {
+          "word": "has",
+          "start": 206.7,
+          "end": 206.96,
+          "probability": 0.998
+        },
+        {
+          "word": "set",
+          "start": 206.96,
+          "end": 207.16,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 207.16,
+          "end": 207.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "Date",
+          "start": 207.28,
+          "end": 207.48,
+          "probability": 0.3262
+        },
+        {
+          "word": "Issued",
+          "start": 207.48,
+          "end": 207.82,
+          "probability": 0.7671
+        },
+        {
+          "word": "field",
+          "start": 207.82,
+          "end": 208.06,
+          "probability": 0.9771
+        },
+        {
+          "word": "to",
+          "start": 208.06,
+          "end": 208.24,
+          "probability": 0.998
+        },
+        {
+          "word": "Today's",
+          "start": 208.24,
+          "end": 208.6,
+          "probability": 0.6782
+        },
+        {
+          "word": "date",
+          "start": 208.6,
+          "end": 208.76,
+          "probability": 0.7622
+        },
+        {
+          "word": "and",
+          "start": 208.76,
+          "end": 208.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "changed",
+          "start": 208.94,
+          "end": 209.28,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 209.28,
+          "end": 209.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "status",
+          "start": 209.44,
+          "end": 209.74,
+          "probability": 0.9092
+        },
+        {
+          "word": "to",
+          "start": 209.74,
+          "end": 210.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "Sent.",
+          "start": 210.0,
+          "end": 210.2,
+          "probability": 0.7656
+        },
+        {
+          "word": "Also,",
+          "start": 210.9,
+          "end": 211.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 211.66,
+          "end": 211.9,
+          "probability": 0.9927
+        },
+        {
+          "word": "payment",
+          "start": 211.9,
+          "end": 212.2,
+          "probability": 0.5581
+        },
+        {
+          "word": "status",
+          "start": 212.2,
+          "end": 212.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 212.56,
+          "end": 212.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "now",
+          "start": 212.8,
+          "end": 213.0,
+          "probability": 0.9023
+        },
+        {
+          "word": "Draft,",
+          "start": 213.0,
+          "end": 213.4,
+          "probability": 0.9287
+        },
+        {
+          "word": "indicating",
+          "start": 213.6,
+          "end": 214.12,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 214.12,
+          "end": 214.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "request",
+          "start": 214.34,
+          "end": 214.7,
+          "probability": 0.7124
+        },
+        {
+          "word": "for",
+          "start": 214.7,
+          "end": 214.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "payment",
+          "start": 214.9,
+          "end": 215.22,
+          "probability": 0.9849
+        },
+        {
+          "word": "has",
+          "start": 215.22,
+          "end": 215.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "been",
+          "start": 215.44,
+          "end": 215.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "sent",
+          "start": 215.6,
+          "end": 215.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 215.86,
+          "end": 216.0,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 216.0,
+          "end": 216.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "third",
+          "start": 216.14,
+          "end": 216.3,
+          "probability": 0.8286
+        },
+        {
+          "word": "-party",
+          "start": 216.3,
+          "end": 216.66,
+          "probability": 0.915
+        },
+        {
+          "word": "payment",
+          "start": 216.66,
+          "end": 216.98,
+          "probability": 0.9614
+        },
+        {
+          "word": "system.",
+          "start": 216.98,
+          "end": 217.44,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 217.94,
+      "end": 222.1,
+      "start_formatted": "00:03:37.940",
+      "end_formatted": "00:03:42.100",
+      "text": "Let's return to Edit Mode to learn what actions we can perform on a sent disbursement.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 217.94,
+          "end": 218.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "return",
+          "start": 218.42,
+          "end": 218.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 218.68,
+          "end": 218.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "Edit",
+          "start": 218.9,
+          "end": 219.1,
+          "probability": 0.6147
+        },
+        {
+          "word": "Mode",
+          "start": 219.1,
+          "end": 219.28,
+          "probability": 0.6035
+        },
+        {
+          "word": "to",
+          "start": 219.28,
+          "end": 219.46,
+          "probability": 0.999
+        },
+        {
+          "word": "learn",
+          "start": 219.46,
+          "end": 219.64,
+          "probability": 0.999
+        },
+        {
+          "word": "what",
+          "start": 219.64,
+          "end": 219.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "actions",
+          "start": 219.84,
+          "end": 220.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "we",
+          "start": 220.16,
+          "end": 220.34,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 220.34,
+          "end": 220.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "perform",
+          "start": 220.52,
+          "end": 220.9,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 220.9,
+          "end": 221.1,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 221.1,
+          "end": 221.26,
+          "probability": 0.9829
+        },
+        {
+          "word": "sent",
+          "start": 221.26,
+          "end": 221.38,
+          "probability": 0.7129
+        },
+        {
+          "word": "disbursement.",
+          "start": 221.38,
+          "end": 222.1,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 223.42,
+      "end": 242.66,
+      "start_formatted": "00:03:43.420",
+      "end_formatted": "00:04:02.660",
+      "text": "Both Reject buttons are disabled. A sent disbursement cannot be rejected. However, the Void button is now available. This button allows me to void a disbursement after it has been sent. If the customer does not receive the money for some reason such as a bank error or the wrong payee address, I can void the disbursement and create a new one.",
+      "words": [
+        {
+          "word": "Both",
+          "start": 223.42,
+          "end": 223.94,
+          "probability": 0.9756
+        },
+        {
+          "word": "Reject",
+          "start": 223.94,
+          "end": 224.42,
+          "probability": 0.6323
+        },
+        {
+          "word": "buttons",
+          "start": 224.42,
+          "end": 224.74,
+          "probability": 0.9814
+        },
+        {
+          "word": "are",
+          "start": 224.74,
+          "end": 224.9,
+          "probability": 1.0
+        },
+        {
+          "word": "disabled.",
+          "start": 224.9,
+          "end": 225.38,
+          "probability": 0.9927
+        },
+        {
+          "word": "A",
+          "start": 225.76,
+          "end": 226.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "sent",
+          "start": 226.16,
+          "end": 226.34,
+          "probability": 0.7061
+        },
+        {
+          "word": "disbursement",
+          "start": 226.34,
+          "end": 227.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "cannot",
+          "start": 227.0,
+          "end": 227.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "be",
+          "start": 227.24,
+          "end": 227.5,
+          "probability": 1.0
+        },
+        {
+          "word": "rejected.",
+          "start": 227.5,
+          "end": 227.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "However,",
+          "start": 228.54,
+          "end": 229.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 229.38,
+          "end": 229.6,
+          "probability": 0.998
+        },
+        {
+          "word": "Void",
+          "start": 229.6,
+          "end": 229.86,
+          "probability": 0.752
+        },
+        {
+          "word": "button",
+          "start": 229.86,
+          "end": 230.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 230.08,
+          "end": 230.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "now",
+          "start": 230.24,
+          "end": 230.42,
+          "probability": 0.999
+        },
+        {
+          "word": "available.",
+          "start": 230.42,
+          "end": 230.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 231.22,
+          "end": 231.64,
+          "probability": 0.999
+        },
+        {
+          "word": "button",
+          "start": 231.64,
+          "end": 231.92,
+          "probability": 0.999
+        },
+        {
+          "word": "allows",
+          "start": 231.92,
+          "end": 232.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "me",
+          "start": 232.26,
+          "end": 232.44,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 232.44,
+          "end": 232.56,
+          "probability": 0.999
+        },
+        {
+          "word": "void",
+          "start": 232.56,
+          "end": 232.78,
+          "probability": 0.9805
+        },
+        {
+          "word": "a",
+          "start": 232.78,
+          "end": 232.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "disbursement",
+          "start": 232.9,
+          "end": 233.56,
+          "probability": 1.0
+        },
+        {
+          "word": "after",
+          "start": 233.56,
+          "end": 233.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 233.76,
+          "end": 233.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 233.94,
+          "end": 234.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "been",
+          "start": 234.06,
+          "end": 234.18,
+          "probability": 1.0
+        },
+        {
+          "word": "sent.",
+          "start": 234.18,
+          "end": 234.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "If",
+          "start": 234.76,
+          "end": 235.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 235.16,
+          "end": 235.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "customer",
+          "start": 235.28,
+          "end": 235.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "does",
+          "start": 235.66,
+          "end": 235.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 235.92,
+          "end": 236.12,
+          "probability": 1.0
+        },
+        {
+          "word": "receive",
+          "start": 236.12,
+          "end": 236.48,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 236.48,
+          "end": 236.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "money",
+          "start": 236.64,
+          "end": 236.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 236.84,
+          "end": 237.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "some",
+          "start": 237.04,
+          "end": 237.24,
+          "probability": 1.0
+        },
+        {
+          "word": "reason",
+          "start": 237.24,
+          "end": 237.56,
+          "probability": 0.8901
+        },
+        {
+          "word": "such",
+          "start": 237.56,
+          "end": 237.82,
+          "probability": 0.9756
+        },
+        {
+          "word": "as",
+          "start": 237.82,
+          "end": 238.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 238.0,
+          "end": 238.1,
+          "probability": 0.999
+        },
+        {
+          "word": "bank",
+          "start": 238.1,
+          "end": 238.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "error",
+          "start": 238.28,
+          "end": 238.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "or",
+          "start": 238.56,
+          "end": 238.76,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 238.76,
+          "end": 238.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "wrong",
+          "start": 238.88,
+          "end": 239.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "payee",
+          "start": 239.12,
+          "end": 239.56,
+          "probability": 0.9927
+        },
+        {
+          "word": "address,",
+          "start": 239.56,
+          "end": 239.9,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 240.2,
+          "end": 240.4,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 240.4,
+          "end": 240.56,
+          "probability": 1.0
+        },
+        {
+          "word": "void",
+          "start": 240.56,
+          "end": 240.82,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 240.82,
+          "end": 241.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "disbursement",
+          "start": 241.0,
+          "end": 241.62,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 241.62,
+          "end": 241.76,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 241.76,
+          "end": 242.06,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 242.06,
+          "end": 242.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 242.18,
+          "end": 242.32,
+          "probability": 1.0
+        },
+        {
+          "word": "one.",
+          "start": 242.32,
+          "end": 242.66,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 243.96,
+      "end": 247.54,
+      "start_formatted": "00:04:03.960",
+      "end_formatted": "00:04:07.540",
+      "text": "Voiding is not necessary here, so I simply click Cancel.",
+      "words": [
+        {
+          "word": "Voiding",
+          "start": 243.96,
+          "end": 244.56,
+          "probability": 0.9775
+        },
+        {
+          "word": "is",
+          "start": 244.56,
+          "end": 244.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "not",
+          "start": 244.72,
+          "end": 244.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "necessary",
+          "start": 244.9,
+          "end": 245.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "here,",
+          "start": 245.46,
+          "end": 245.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "so",
+          "start": 246.04,
+          "end": 246.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 246.36,
+          "end": 246.5,
+          "probability": 0.9805
+        },
+        {
+          "word": "simply",
+          "start": 246.5,
+          "end": 246.78,
+          "probability": 0.998
+        },
+        {
+          "word": "click",
+          "start": 246.78,
+          "end": 247.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "Cancel.",
+          "start": 247.08,
+          "end": 247.54,
+          "probability": 0.729
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 249.5,
+      "end": 251.84,
+      "start_formatted": "00:04:09.500",
+      "end_formatted": "00:04:11.840",
+      "text": "Now, I'll go back to the account summary.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 249.5,
+          "end": 250.1,
+          "probability": 0.998
+        },
+        {
+          "word": "I'll",
+          "start": 250.32,
+          "end": 250.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "go",
+          "start": 250.58,
+          "end": 250.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 250.7,
+          "end": 250.92,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 250.92,
+          "end": 251.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 251.06,
+          "end": 251.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "account",
+          "start": 251.18,
+          "end": 251.46,
+          "probability": 0.894
+        },
+        {
+          "word": "summary.",
+          "start": 251.46,
+          "end": 251.84,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 253.32,
+      "end": 258.86,
+      "start_formatted": "00:04:13.320",
+      "end_formatted": "00:04:18.860",
+      "text": "Here I see Total Unapplied is now empty. The overpayment has been fully disbursed to the customer.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 253.32,
+          "end": 253.92,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 253.92,
+          "end": 254.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "see",
+          "start": 254.04,
+          "end": 254.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Total",
+          "start": 254.28,
+          "end": 254.58,
+          "probability": 0.4409
+        },
+        {
+          "word": "Unapplied",
+          "start": 254.58,
+          "end": 255.14,
+          "probability": 0.7842
+        },
+        {
+          "word": "is",
+          "start": 255.14,
+          "end": 255.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "now",
+          "start": 255.32,
+          "end": 255.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "empty.",
+          "start": 255.48,
+          "end": 255.86,
+          "probability": 0.9902
+        },
+        {
+          "word": "The",
+          "start": 256.16,
+          "end": 256.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "overpayment",
+          "start": 256.52,
+          "end": 257.14,
+          "probability": 0.9878
+        },
+        {
+          "word": "has",
+          "start": 257.14,
+          "end": 257.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "been",
+          "start": 257.3,
+          "end": 257.44,
+          "probability": 1.0
+        },
+        {
+          "word": "fully",
+          "start": 257.44,
+          "end": 257.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "disbursed",
+          "start": 257.74,
+          "end": 258.22,
+          "probability": 0.7197
+        },
+        {
+          "word": "to",
+          "start": 258.22,
+          "end": 258.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 258.38,
+          "end": 258.48,
+          "probability": 1.0
+        },
+        {
+          "word": "customer.",
+          "start": 258.48,
+          "end": 258.86,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 258.86,
+      "end": 261.86,
+      "start_formatted": "00:04:18.860",
+      "end_formatted": "00:04:21.860",
+      "text": "This concludes our demonstration on manual disbursements.",
+      "words": [
+        {
+          "word": "This",
+          "start": 258.86,
+          "end": 259.88,
+          "probability": 0.8242
+        },
+        {
+          "word": "concludes",
+          "start": 259.88,
+          "end": 260.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "our",
+          "start": 260.3,
+          "end": 260.52,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration",
+          "start": 260.52,
+          "end": 261.04,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 261.04,
+          "end": 261.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "manual",
+          "start": 261.36,
+          "end": 261.66,
+          "probability": 0.9165
+        },
+        {
+          "word": "disbursements.",
+          "start": 261.66,
+          "end": 261.98,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 262.38,
+      "end": 262.48,
+      "start_formatted": "00:04:22.380",
+      "end_formatted": "00:04:22.480",
+      "text": "This concludes our demonstration on manual disbursements.",
+      "words": [
+        {
+          "word": "This",
+          "start": 262.38,
+          "end": 262.38,
+          "probability": 0.0372
+        },
+        {
+          "word": "concludes",
+          "start": 262.38,
+          "end": 262.38,
+          "probability": 0.8755
+        },
+        {
+          "word": "our",
+          "start": 262.38,
+          "end": 262.38,
+          "probability": 0.9805
+        },
+        {
+          "word": "demonstration",
+          "start": 262.38,
+          "end": 262.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "on",
+          "start": 262.38,
+          "end": 262.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "manual",
+          "start": 262.38,
+          "end": 262.38,
+          "probability": 0.9795
+        },
+        {
+          "word": "disbursements.",
+          "start": 262.38,
+          "end": 262.48,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 262.48,
+      "end": 263.3,
+      "start_formatted": "00:04:22.480",
+      "end_formatted": "00:04:23.300",
+      "text": "Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films of Films",
+      "words": [
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.2532
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.0278
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.5005
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.6562
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.8926
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.7476
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9648
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.8252
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.8677
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.8867
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9077
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9189
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9292
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9351
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9385
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9419
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9482
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9502
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9526
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9556
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9575
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9595
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.96
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9614
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9619
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9634
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9648
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9644
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9653
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9653
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9663
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9663
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9663
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9683
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9688
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9678
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.48,
+          "end": 262.48,
+          "probability": 0.9688
+        },
+        {
+          "word": "Films",
+          "start": 262.48,
+          "end": 262.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9697
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9697
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9702
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9707
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9697
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9702
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9702
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9717
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9727
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9722
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9727
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9741
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.5,
+          "end": 262.5,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.5,
+          "end": 262.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.54,
+          "end": 262.62,
+          "probability": 0.9731
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9727
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9731
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9727
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9727
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9731
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9746
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9746
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9736
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9741
+        },
+        {
+          "word": "Films",
+          "start": 262.62,
+          "end": 262.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 262.62,
+          "end": 262.8,
+          "probability": 0.9746
+        },
+        {
+          "word": "Films",
+          "start": 262.8,
+          "end": 263.3,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 263.3,
+      "end": 263.32,
+      "start_formatted": "00:04:23.300",
+      "end_formatted": "00:04:23.320",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 263.3,
+          "end": 263.3,
+          "probability": 0.1643
+        },
+        {
+          "word": "you.",
+          "start": 263.3,
+          "end": 263.32,
+          "probability": 0.998
+        }
+      ]
+    }
+  ]
+}

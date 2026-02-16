@@ -1,0 +1,3827 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_13_02.mp4",
+    "video_stem": "CC_13_02",
+    "duration_seconds": 167.66,
+    "duration_formatted": "00:02:47.660",
+    "segment_count": 97,
+    "word_count": 484,
+    "avg_confidence": 0.9194,
+    "transcription_time_seconds": 27.94,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:43:05.811240"
+  },
+  "full_text": "Succeed Insurance employees occasionally need to search for activities of a particular type, such as litigation or approval activities. This capability is not present on the activity search screen in the base configuration, so I will add it. I'll log out of ClaimCenter and navigate to Guidewire Studio. If I look at the activity entity, I see that type is a type key, referring to the activity type type list. Now I'll add that type list to the activity search criteria entity. Activity search criteria is a read-only, or final, file. I will have to extend the file to add the new search criterion. I need to add a new type key element. Its name is activity type, with the SI suffix for succeed insurance. It refers to the activity type type list. And it is not a required value, so I will set NULL OK to true. Finally I'll give it a quick description. Finally I'll give it a quick description. Now I'll navigate to search config.xml. Under the existing activity search criteria, I add a new criterion element. The property is the type code I added, activity type underscore SI. Next, I'll add a target property. This is the property whose value must be matched in the type list, which is type. The match type is EQ, signifying that it must be an exact match to the type list. Before I add the new search criterion to the user interface, which is the subject of the next demo, I will regenerate the SOAP files. So I stop the server. In a command prompt window, I navigate to the Claim Center home directory. Here I type the GWB command that starts the SOAP generation. This concludes the configuring search criteria demonstration. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy  neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of    so                                                                          ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.9,
+      "end": 28.76,
+      "start_formatted": "00:00:00.900",
+      "end_formatted": "00:00:28.760",
+      "text": "Succeed Insurance employees occasionally need to search for activities of a particular type, such as litigation or approval activities. This capability is not present on the activity search screen in the base configuration, so I will add it. I'll log out of ClaimCenter and navigate to Guidewire Studio. If I look at the activity entity,",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 0.9,
+          "end": 1.62,
+          "probability": 0.9746
+        },
+        {
+          "word": "Insurance",
+          "start": 1.62,
+          "end": 2.0,
+          "probability": 0.4822
+        },
+        {
+          "word": "employees",
+          "start": 2.0,
+          "end": 2.58,
+          "probability": 0.9194
+        },
+        {
+          "word": "occasionally",
+          "start": 2.58,
+          "end": 3.18,
+          "probability": 0.9932
+        },
+        {
+          "word": "need",
+          "start": 3.18,
+          "end": 3.54,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 3.54,
+          "end": 3.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "search",
+          "start": 3.66,
+          "end": 3.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 3.88,
+          "end": 4.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "activities",
+          "start": 4.08,
+          "end": 4.54,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 4.54,
+          "end": 4.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 4.82,
+          "end": 4.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "particular",
+          "start": 4.9,
+          "end": 5.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "type,",
+          "start": 5.3,
+          "end": 5.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "such",
+          "start": 5.96,
+          "end": 6.26,
+          "probability": 0.9829
+        },
+        {
+          "word": "as",
+          "start": 6.26,
+          "end": 6.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "litigation",
+          "start": 6.42,
+          "end": 6.7,
+          "probability": 0.9268
+        },
+        {
+          "word": "or",
+          "start": 6.7,
+          "end": 7.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "approval",
+          "start": 7.18,
+          "end": 7.58,
+          "probability": 0.9907
+        },
+        {
+          "word": "activities.",
+          "start": 7.58,
+          "end": 8.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "This",
+          "start": 11.08,
+          "end": 11.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "capability",
+          "start": 11.8,
+          "end": 12.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 12.3,
+          "end": 12.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 12.7,
+          "end": 12.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "present",
+          "start": 12.88,
+          "end": 13.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 13.28,
+          "end": 13.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 13.5,
+          "end": 13.62,
+          "probability": 0.998
+        },
+        {
+          "word": "activity",
+          "start": 13.62,
+          "end": 14.06,
+          "probability": 0.4824
+        },
+        {
+          "word": "search",
+          "start": 14.06,
+          "end": 14.42,
+          "probability": 0.9888
+        },
+        {
+          "word": "screen",
+          "start": 14.42,
+          "end": 14.8,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 14.8,
+          "end": 14.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 14.96,
+          "end": 15.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "base",
+          "start": 15.04,
+          "end": 15.3,
+          "probability": 0.9526
+        },
+        {
+          "word": "configuration,",
+          "start": 15.3,
+          "end": 16.04,
+          "probability": 0.998
+        },
+        {
+          "word": "so",
+          "start": 16.4,
+          "end": 16.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 16.66,
+          "end": 16.84,
+          "probability": 0.9932
+        },
+        {
+          "word": "will",
+          "start": 16.84,
+          "end": 16.98,
+          "probability": 0.9844
+        },
+        {
+          "word": "add",
+          "start": 16.98,
+          "end": 17.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "it.",
+          "start": 17.18,
+          "end": 17.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "I'll",
+          "start": 17.78,
+          "end": 18.32,
+          "probability": 0.9868
+        },
+        {
+          "word": "log",
+          "start": 18.32,
+          "end": 18.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "out",
+          "start": 18.5,
+          "end": 18.68,
+          "probability": 0.9644
+        },
+        {
+          "word": "of",
+          "start": 18.68,
+          "end": 18.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 18.82,
+          "end": 19.56,
+          "probability": 0.729
+        },
+        {
+          "word": "and",
+          "start": 19.56,
+          "end": 21.24,
+          "probability": 0.5664
+        },
+        {
+          "word": "navigate",
+          "start": 21.24,
+          "end": 21.66,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 21.66,
+          "end": 21.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "Guidewire",
+          "start": 21.94,
+          "end": 22.46,
+          "probability": 0.9746
+        },
+        {
+          "word": "Studio.",
+          "start": 22.46,
+          "end": 22.84,
+          "probability": 0.9331
+        },
+        {
+          "word": "If",
+          "start": 26.64,
+          "end": 27.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 27.36,
+          "end": 27.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "look",
+          "start": 27.46,
+          "end": 27.64,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 27.64,
+          "end": 27.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 27.76,
+          "end": 27.86,
+          "probability": 0.999
+        },
+        {
+          "word": "activity",
+          "start": 27.86,
+          "end": 28.24,
+          "probability": 0.8613
+        },
+        {
+          "word": "entity,",
+          "start": 28.24,
+          "end": 28.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 33.4,
+      "end": 55.82,
+      "start_formatted": "00:00:33.400",
+      "end_formatted": "00:00:55.820",
+      "text": "I see that type is a type key, referring to the activity type type list. Now I'll add that type list to the activity search criteria entity. Activity search criteria is a read-only, or final, file. I will have to extend the file to add the new search criterion.",
+      "words": [
+        {
+          "word": "I",
+          "start": 33.4,
+          "end": 33.9,
+          "probability": 0.9458
+        },
+        {
+          "word": "see",
+          "start": 33.9,
+          "end": 34.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "that",
+          "start": 34.1,
+          "end": 34.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "type",
+          "start": 34.32,
+          "end": 34.54,
+          "probability": 0.8652
+        },
+        {
+          "word": "is",
+          "start": 34.54,
+          "end": 34.72,
+          "probability": 0.9443
+        },
+        {
+          "word": "a",
+          "start": 34.72,
+          "end": 34.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "type",
+          "start": 34.84,
+          "end": 35.08,
+          "probability": 0.9087
+        },
+        {
+          "word": "key,",
+          "start": 35.08,
+          "end": 35.34,
+          "probability": 0.9824
+        },
+        {
+          "word": "referring",
+          "start": 35.52,
+          "end": 35.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 35.96,
+          "end": 36.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 36.14,
+          "end": 36.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "activity",
+          "start": 36.28,
+          "end": 36.74,
+          "probability": 0.7676
+        },
+        {
+          "word": "type",
+          "start": 36.74,
+          "end": 37.14,
+          "probability": 0.9644
+        },
+        {
+          "word": "type",
+          "start": 37.14,
+          "end": 37.36,
+          "probability": 0.9087
+        },
+        {
+          "word": "list.",
+          "start": 37.36,
+          "end": 37.78,
+          "probability": 0.9897
+        },
+        {
+          "word": "Now",
+          "start": 38.18,
+          "end": 38.68,
+          "probability": 0.9893
+        },
+        {
+          "word": "I'll",
+          "start": 38.68,
+          "end": 38.88,
+          "probability": 0.9805
+        },
+        {
+          "word": "add",
+          "start": 38.88,
+          "end": 39.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 39.08,
+          "end": 39.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "type",
+          "start": 39.28,
+          "end": 39.58,
+          "probability": 0.981
+        },
+        {
+          "word": "list",
+          "start": 39.58,
+          "end": 39.78,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 39.78,
+          "end": 39.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 39.94,
+          "end": 40.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "activity",
+          "start": 40.06,
+          "end": 40.5,
+          "probability": 0.6787
+        },
+        {
+          "word": "search",
+          "start": 40.5,
+          "end": 40.86,
+          "probability": 0.9448
+        },
+        {
+          "word": "criteria",
+          "start": 40.86,
+          "end": 41.52,
+          "probability": 0.9917
+        },
+        {
+          "word": "entity.",
+          "start": 41.52,
+          "end": 42.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "Activity",
+          "start": 48.32,
+          "end": 48.82,
+          "probability": 0.9854
+        },
+        {
+          "word": "search",
+          "start": 48.82,
+          "end": 49.1,
+          "probability": 0.9141
+        },
+        {
+          "word": "criteria",
+          "start": 49.1,
+          "end": 49.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 49.66,
+          "end": 49.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 49.96,
+          "end": 50.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "read",
+          "start": 50.06,
+          "end": 50.26,
+          "probability": 0.9658
+        },
+        {
+          "word": "-only,",
+          "start": 50.26,
+          "end": 50.6,
+          "probability": 0.8843
+        },
+        {
+          "word": "or",
+          "start": 50.6,
+          "end": 51.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "final,",
+          "start": 51.02,
+          "end": 51.42,
+          "probability": 0.9766
+        },
+        {
+          "word": "file.",
+          "start": 51.64,
+          "end": 52.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 52.52,
+          "end": 53.02,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 53.02,
+          "end": 53.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "have",
+          "start": 53.2,
+          "end": 53.36,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 53.36,
+          "end": 53.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "extend",
+          "start": 53.5,
+          "end": 53.86,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 53.86,
+          "end": 54.02,
+          "probability": 0.9756
+        },
+        {
+          "word": "file",
+          "start": 54.02,
+          "end": 54.22,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 54.22,
+          "end": 54.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "add",
+          "start": 54.36,
+          "end": 54.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 54.54,
+          "end": 54.68,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 54.68,
+          "end": 54.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "search",
+          "start": 54.84,
+          "end": 55.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "criterion.",
+          "start": 55.16,
+          "end": 55.82,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 61.28,
+      "end": 87.92,
+      "start_formatted": "00:01:01.280",
+      "end_formatted": "00:01:27.920",
+      "text": "I need to add a new type key element. Its name is activity type, with the SI suffix for succeed insurance. It refers to the activity type type list. And it is not a required value, so I will set NULL OK to true.",
+      "words": [
+        {
+          "word": "I",
+          "start": 61.28,
+          "end": 61.78,
+          "probability": 0.9717
+        },
+        {
+          "word": "need",
+          "start": 61.78,
+          "end": 61.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 61.94,
+          "end": 62.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "add",
+          "start": 62.08,
+          "end": 62.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 62.26,
+          "end": 62.36,
+          "probability": 0.9902
+        },
+        {
+          "word": "new",
+          "start": 62.36,
+          "end": 62.5,
+          "probability": 0.9736
+        },
+        {
+          "word": "type",
+          "start": 62.5,
+          "end": 62.78,
+          "probability": 0.6978
+        },
+        {
+          "word": "key",
+          "start": 62.78,
+          "end": 62.98,
+          "probability": 0.9131
+        },
+        {
+          "word": "element.",
+          "start": 62.98,
+          "end": 63.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "Its",
+          "start": 67.48,
+          "end": 67.98,
+          "probability": 0.8916
+        },
+        {
+          "word": "name",
+          "start": 67.98,
+          "end": 68.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "is",
+          "start": 68.22,
+          "end": 68.38,
+          "probability": 0.998
+        },
+        {
+          "word": "activity",
+          "start": 68.38,
+          "end": 68.76,
+          "probability": 0.4688
+        },
+        {
+          "word": "type,",
+          "start": 68.76,
+          "end": 69.18,
+          "probability": 0.6597
+        },
+        {
+          "word": "with",
+          "start": 69.38,
+          "end": 69.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 69.62,
+          "end": 69.76,
+          "probability": 0.9795
+        },
+        {
+          "word": "SI",
+          "start": 69.76,
+          "end": 70.06,
+          "probability": 0.6821
+        },
+        {
+          "word": "suffix",
+          "start": 70.06,
+          "end": 70.54,
+          "probability": 0.9849
+        },
+        {
+          "word": "for",
+          "start": 70.54,
+          "end": 70.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "succeed",
+          "start": 70.72,
+          "end": 71.08,
+          "probability": 0.468
+        },
+        {
+          "word": "insurance.",
+          "start": 71.08,
+          "end": 71.6,
+          "probability": 0.8486
+        },
+        {
+          "word": "It",
+          "start": 75.4,
+          "end": 75.9,
+          "probability": 0.9922
+        },
+        {
+          "word": "refers",
+          "start": 75.9,
+          "end": 76.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 76.22,
+          "end": 76.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 76.44,
+          "end": 76.56,
+          "probability": 0.9937
+        },
+        {
+          "word": "activity",
+          "start": 76.56,
+          "end": 77.02,
+          "probability": 0.8594
+        },
+        {
+          "word": "type",
+          "start": 77.02,
+          "end": 77.42,
+          "probability": 0.9731
+        },
+        {
+          "word": "type",
+          "start": 77.42,
+          "end": 77.62,
+          "probability": 0.9692
+        },
+        {
+          "word": "list.",
+          "start": 77.62,
+          "end": 78.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "And",
+          "start": 84.02,
+          "end": 84.52,
+          "probability": 0.9434
+        },
+        {
+          "word": "it",
+          "start": 84.52,
+          "end": 84.64,
+          "probability": 0.9819
+        },
+        {
+          "word": "is",
+          "start": 84.64,
+          "end": 84.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "not",
+          "start": 84.78,
+          "end": 84.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 84.94,
+          "end": 85.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "required",
+          "start": 85.06,
+          "end": 85.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "value,",
+          "start": 85.5,
+          "end": 85.98,
+          "probability": 0.998
+        },
+        {
+          "word": "so",
+          "start": 86.24,
+          "end": 86.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "I",
+          "start": 86.52,
+          "end": 86.64,
+          "probability": 0.9902
+        },
+        {
+          "word": "will",
+          "start": 86.64,
+          "end": 86.8,
+          "probability": 0.9883
+        },
+        {
+          "word": "set",
+          "start": 86.8,
+          "end": 87.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "NULL",
+          "start": 87.04,
+          "end": 87.28,
+          "probability": 0.8096
+        },
+        {
+          "word": "OK",
+          "start": 87.28,
+          "end": 87.46,
+          "probability": 0.6646
+        },
+        {
+          "word": "to",
+          "start": 87.46,
+          "end": 87.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "true.",
+          "start": 87.72,
+          "end": 87.92,
+          "probability": 0.4441
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 88.76,
+      "end": 90.72,
+      "start_formatted": "00:01:28.760",
+      "end_formatted": "00:01:30.720",
+      "text": "Finally I'll give it a quick description.",
+      "words": [
+        {
+          "word": "Finally",
+          "start": 88.76,
+          "end": 89.34,
+          "probability": 0.9878
+        },
+        {
+          "word": "I'll",
+          "start": 89.34,
+          "end": 89.6,
+          "probability": 0.8691
+        },
+        {
+          "word": "give",
+          "start": 89.6,
+          "end": 89.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "it",
+          "start": 89.74,
+          "end": 89.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 89.86,
+          "end": 89.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "quick",
+          "start": 89.96,
+          "end": 90.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "description.",
+          "start": 90.18,
+          "end": 90.72,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 91.46,
+      "end": 96.98,
+      "start_formatted": "00:01:31.460",
+      "end_formatted": "00:01:36.980",
+      "text": "Finally I'll give it a quick description.",
+      "words": [
+        {
+          "word": "Finally",
+          "start": 91.46,
+          "end": 91.48,
+          "probability": 0.0
+        },
+        {
+          "word": "I'll",
+          "start": 91.48,
+          "end": 96.98,
+          "probability": 0.8936
+        },
+        {
+          "word": "give",
+          "start": 96.98,
+          "end": 96.98,
+          "probability": 0.0217
+        },
+        {
+          "word": "it",
+          "start": 96.98,
+          "end": 96.98,
+          "probability": 0.9785
+        },
+        {
+          "word": "a",
+          "start": 96.98,
+          "end": 96.98,
+          "probability": 0.9639
+        },
+        {
+          "word": "quick",
+          "start": 96.98,
+          "end": 96.98,
+          "probability": 0.9795
+        },
+        {
+          "word": "description.",
+          "start": 96.98,
+          "end": 96.98,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 98.1,
+      "end": 101.16,
+      "start_formatted": "00:01:38.100",
+      "end_formatted": "00:01:41.160",
+      "text": "Now I'll navigate to search config.xml.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 98.1,
+          "end": 98.74,
+          "probability": 0.9365
+        },
+        {
+          "word": "I'll",
+          "start": 98.74,
+          "end": 98.94,
+          "probability": 0.9883
+        },
+        {
+          "word": "navigate",
+          "start": 98.94,
+          "end": 99.28,
+          "probability": 0.9829
+        },
+        {
+          "word": "to",
+          "start": 99.28,
+          "end": 99.54,
+          "probability": 0.9897
+        },
+        {
+          "word": "search",
+          "start": 99.54,
+          "end": 99.82,
+          "probability": 0.6455
+        },
+        {
+          "word": "config",
+          "start": 99.82,
+          "end": 100.14,
+          "probability": 0.1996
+        },
+        {
+          "word": ".xml.",
+          "start": 100.14,
+          "end": 101.16,
+          "probability": 0.8989
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 104.32,
+      "end": 109.94,
+      "start_formatted": "00:01:44.320",
+      "end_formatted": "00:01:49.940",
+      "text": "Under the existing activity search criteria, I add a new criterion element.",
+      "words": [
+        {
+          "word": "Under",
+          "start": 104.32,
+          "end": 104.96,
+          "probability": 0.9707
+        },
+        {
+          "word": "the",
+          "start": 104.96,
+          "end": 105.1,
+          "probability": 0.9902
+        },
+        {
+          "word": "existing",
+          "start": 105.1,
+          "end": 105.54,
+          "probability": 0.873
+        },
+        {
+          "word": "activity",
+          "start": 105.54,
+          "end": 106.04,
+          "probability": 0.8296
+        },
+        {
+          "word": "search",
+          "start": 106.04,
+          "end": 106.4,
+          "probability": 0.9648
+        },
+        {
+          "word": "criteria,",
+          "start": 106.4,
+          "end": 107.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "I",
+          "start": 107.34,
+          "end": 108.38,
+          "probability": 0.979
+        },
+        {
+          "word": "add",
+          "start": 108.38,
+          "end": 108.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "a",
+          "start": 108.56,
+          "end": 108.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "new",
+          "start": 108.64,
+          "end": 108.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "criterion",
+          "start": 108.76,
+          "end": 109.3,
+          "probability": 0.9492
+        },
+        {
+          "word": "element.",
+          "start": 109.3,
+          "end": 109.94,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 113.12,
+      "end": 116.94,
+      "start_formatted": "00:01:53.120",
+      "end_formatted": "00:01:56.940",
+      "text": "The property is the type code I added, activity type underscore SI.",
+      "words": [
+        {
+          "word": "The",
+          "start": 113.12,
+          "end": 113.66,
+          "probability": 0.9429
+        },
+        {
+          "word": "property",
+          "start": 113.66,
+          "end": 114.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "is",
+          "start": 114.06,
+          "end": 114.26,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 114.26,
+          "end": 114.36,
+          "probability": 0.998
+        },
+        {
+          "word": "type",
+          "start": 114.36,
+          "end": 114.62,
+          "probability": 0.9561
+        },
+        {
+          "word": "code",
+          "start": 114.62,
+          "end": 114.86,
+          "probability": 0.9829
+        },
+        {
+          "word": "I",
+          "start": 114.86,
+          "end": 115.02,
+          "probability": 0.9697
+        },
+        {
+          "word": "added,",
+          "start": 115.02,
+          "end": 115.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "activity",
+          "start": 115.58,
+          "end": 116.04,
+          "probability": 0.7583
+        },
+        {
+          "word": "type",
+          "start": 116.04,
+          "end": 116.48,
+          "probability": 0.6484
+        },
+        {
+          "word": "underscore",
+          "start": 116.48,
+          "end": 116.84,
+          "probability": 0.9087
+        },
+        {
+          "word": "SI.",
+          "start": 116.84,
+          "end": 117.11,
+          "probability": 0.5205
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 122.62,
+      "end": 124.82,
+      "start_formatted": "00:02:02.620",
+      "end_formatted": "00:02:04.820",
+      "text": "Next, I'll add a target property.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 122.62,
+          "end": 123.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "I'll",
+          "start": 123.42,
+          "end": 123.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "add",
+          "start": 123.66,
+          "end": 123.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 123.82,
+          "end": 123.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "target",
+          "start": 123.9,
+          "end": 124.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "property.",
+          "start": 124.24,
+          "end": 124.82,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 126.28,
+      "end": 130.56,
+      "start_formatted": "00:02:06.280",
+      "end_formatted": "00:02:10.560",
+      "text": "This is the property whose value must be matched in the type list, which is type.",
+      "words": [
+        {
+          "word": "This",
+          "start": 126.28,
+          "end": 126.82,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 126.82,
+          "end": 126.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 126.96,
+          "end": 127.08,
+          "probability": 0.999
+        },
+        {
+          "word": "property",
+          "start": 127.08,
+          "end": 127.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "whose",
+          "start": 127.5,
+          "end": 127.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "value",
+          "start": 127.78,
+          "end": 128.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "must",
+          "start": 128.1,
+          "end": 128.32,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 128.32,
+          "end": 128.48,
+          "probability": 1.0
+        },
+        {
+          "word": "matched",
+          "start": 128.48,
+          "end": 128.78,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 128.78,
+          "end": 128.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 128.96,
+          "end": 129.04,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 129.04,
+          "end": 129.3,
+          "probability": 0.9512
+        },
+        {
+          "word": "list,",
+          "start": 129.3,
+          "end": 129.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "which",
+          "start": 129.84,
+          "end": 130.1,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 130.1,
+          "end": 130.24,
+          "probability": 1.0
+        },
+        {
+          "word": "type.",
+          "start": 130.24,
+          "end": 130.56,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 131.1,
+      "end": 136.2,
+      "start_formatted": "00:02:11.100",
+      "end_formatted": "00:02:16.200",
+      "text": "The match type is EQ, signifying that it must be an exact match to the type list.",
+      "words": [
+        {
+          "word": "The",
+          "start": 131.1,
+          "end": 131.62,
+          "probability": 0.9658
+        },
+        {
+          "word": "match",
+          "start": 131.62,
+          "end": 131.9,
+          "probability": 0.874
+        },
+        {
+          "word": "type",
+          "start": 131.9,
+          "end": 132.16,
+          "probability": 0.9741
+        },
+        {
+          "word": "is",
+          "start": 132.16,
+          "end": 132.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "EQ,",
+          "start": 132.36,
+          "end": 132.7,
+          "probability": 0.6318
+        },
+        {
+          "word": "signifying",
+          "start": 133.1,
+          "end": 133.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 133.8,
+          "end": 133.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 133.98,
+          "end": 134.1,
+          "probability": 0.998
+        },
+        {
+          "word": "must",
+          "start": 134.1,
+          "end": 134.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 134.3,
+          "end": 134.44,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 134.44,
+          "end": 134.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "exact",
+          "start": 134.58,
+          "end": 134.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "match",
+          "start": 134.92,
+          "end": 135.22,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 135.22,
+          "end": 135.46,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 135.46,
+          "end": 135.58,
+          "probability": 0.999
+        },
+        {
+          "word": "type",
+          "start": 135.58,
+          "end": 135.86,
+          "probability": 0.9336
+        },
+        {
+          "word": "list.",
+          "start": 135.86,
+          "end": 136.2,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 137.3,
+      "end": 146.28,
+      "start_formatted": "00:02:17.300",
+      "end_formatted": "00:02:26.280",
+      "text": "Before I add the new search criterion to the user interface, which is the subject of the next demo, I will regenerate the SOAP files. So I stop the server.",
+      "words": [
+        {
+          "word": "Before",
+          "start": 137.3,
+          "end": 137.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 137.82,
+          "end": 137.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "add",
+          "start": 137.98,
+          "end": 138.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 138.14,
+          "end": 138.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "new",
+          "start": 138.24,
+          "end": 138.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "search",
+          "start": 138.38,
+          "end": 138.68,
+          "probability": 0.9634
+        },
+        {
+          "word": "criterion",
+          "start": 138.68,
+          "end": 139.28,
+          "probability": 0.9629
+        },
+        {
+          "word": "to",
+          "start": 139.28,
+          "end": 139.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 139.52,
+          "end": 139.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 139.64,
+          "end": 139.98,
+          "probability": 0.9619
+        },
+        {
+          "word": "interface,",
+          "start": 139.98,
+          "end": 140.58,
+          "probability": 0.998
+        },
+        {
+          "word": "which",
+          "start": 140.84,
+          "end": 141.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 141.1,
+          "end": 141.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 141.22,
+          "end": 141.36,
+          "probability": 0.999
+        },
+        {
+          "word": "subject",
+          "start": 141.36,
+          "end": 141.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 141.7,
+          "end": 141.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 141.9,
+          "end": 142.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "next",
+          "start": 142.0,
+          "end": 142.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "demo,",
+          "start": 142.2,
+          "end": 142.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 142.8,
+          "end": 143.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 143.02,
+          "end": 143.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "regenerate",
+          "start": 143.2,
+          "end": 143.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 143.74,
+          "end": 143.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "SOAP",
+          "start": 143.86,
+          "end": 144.16,
+          "probability": 0.9482
+        },
+        {
+          "word": "files.",
+          "start": 144.16,
+          "end": 144.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "So",
+          "start": 144.94,
+          "end": 145.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 145.34,
+          "end": 145.5,
+          "probability": 0.9658
+        },
+        {
+          "word": "stop",
+          "start": 145.5,
+          "end": 145.78,
+          "probability": 0.9761
+        },
+        {
+          "word": "the",
+          "start": 145.78,
+          "end": 145.94,
+          "probability": 0.999
+        },
+        {
+          "word": "server.",
+          "start": 145.94,
+          "end": 146.28,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 146.28,
+      "end": 151.0,
+      "start_formatted": "00:02:26.280",
+      "end_formatted": "00:02:31.000",
+      "text": "In a command prompt window, I navigate to the Claim Center home directory.",
+      "words": [
+        {
+          "word": "In",
+          "start": 146.28,
+          "end": 147.18,
+          "probability": 0.9458
+        },
+        {
+          "word": "a",
+          "start": 147.18,
+          "end": 147.28,
+          "probability": 0.9761
+        },
+        {
+          "word": "command",
+          "start": 147.28,
+          "end": 147.6,
+          "probability": 0.7808
+        },
+        {
+          "word": "prompt",
+          "start": 147.6,
+          "end": 148.02,
+          "probability": 0.9883
+        },
+        {
+          "word": "window,",
+          "start": 148.02,
+          "end": 148.44,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 148.66,
+          "end": 148.86,
+          "probability": 0.9868
+        },
+        {
+          "word": "navigate",
+          "start": 148.86,
+          "end": 149.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 149.28,
+          "end": 149.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 149.5,
+          "end": 149.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "Claim",
+          "start": 149.62,
+          "end": 149.92,
+          "probability": 0.8057
+        },
+        {
+          "word": "Center",
+          "start": 149.92,
+          "end": 150.26,
+          "probability": 0.7646
+        },
+        {
+          "word": "home",
+          "start": 150.26,
+          "end": 150.54,
+          "probability": 0.5884
+        },
+        {
+          "word": "directory.",
+          "start": 150.54,
+          "end": 151.0,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 156.58,
+      "end": 160.1,
+      "start_formatted": "00:02:36.580",
+      "end_formatted": "00:02:40.100",
+      "text": "Here I type the GWB command that starts the SOAP generation.",
+      "words": [
+        {
+          "word": "Here",
+          "start": 156.58,
+          "end": 157.18,
+          "probability": 0.981
+        },
+        {
+          "word": "I",
+          "start": 157.18,
+          "end": 157.3,
+          "probability": 0.9819
+        },
+        {
+          "word": "type",
+          "start": 157.3,
+          "end": 157.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 157.54,
+          "end": 157.7,
+          "probability": 0.9902
+        },
+        {
+          "word": "GWB",
+          "start": 157.7,
+          "end": 158.4,
+          "probability": 0.8848
+        },
+        {
+          "word": "command",
+          "start": 158.4,
+          "end": 158.68,
+          "probability": 0.9858
+        },
+        {
+          "word": "that",
+          "start": 158.68,
+          "end": 158.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "starts",
+          "start": 158.88,
+          "end": 159.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 159.24,
+          "end": 159.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "SOAP",
+          "start": 159.42,
+          "end": 159.68,
+          "probability": 0.9492
+        },
+        {
+          "word": "generation.",
+          "start": 159.68,
+          "end": 160.1,
+          "probability": 0.9629
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 163.76,
+      "end": 167.32,
+      "start_formatted": "00:02:43.760",
+      "end_formatted": "00:02:47.320",
+      "text": "This concludes the configuring search criteria demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 163.76,
+          "end": 164.7,
+          "probability": 0.8853
+        },
+        {
+          "word": "concludes",
+          "start": 164.7,
+          "end": 165.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 165.16,
+          "end": 165.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "configuring",
+          "start": 165.36,
+          "end": 165.9,
+          "probability": 0.9092
+        },
+        {
+          "word": "search",
+          "start": 165.9,
+          "end": 166.2,
+          "probability": 0.9648
+        },
+        {
+          "word": "criteria",
+          "start": 166.2,
+          "end": 166.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "demonstration.",
+          "start": 166.84,
+          "end": 167.32,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 167.32,
+      "end": 167.52,
+      "start_formatted": "00:02:47.320",
+      "end_formatted": "00:02:47.520",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.0001
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.2079
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.2537
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.4985
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.4502
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.6147
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.5249
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.7095
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.6504
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.7773
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.7666
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.8232
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.8477
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.8511
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.8867
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.876
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9092
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.8887
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9355
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9028
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.939
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9126
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9521
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9219
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.957
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9243
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9302
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9648
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.936
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9678
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.938
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.939
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9429
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9736
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9434
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9458
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9443
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.978
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9492
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9785
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.98
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.981
+        },
+        {
+          "word": "of",
+          "start": 167.32,
+          "end": 167.32,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 167.32,
+          "end": 167.34,
+          "probability": 0.9805
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9458
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9463
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9492
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 167.34,
+          "end": 167.34,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 167.34,
+          "end": 167.36,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 167.36,
+          "end": 167.36,
+          "probability": 0.9492
+        },
+        {
+          "word": "Filogy",
+          "start": 167.36,
+          "end": 167.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 167.36,
+          "end": 167.36,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 167.36,
+          "end": 167.36,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 167.36,
+          "end": 167.36,
+          "probability": 0.9492
+        },
+        {
+          "word": "Filogy",
+          "start": 167.36,
+          "end": 167.38,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9497
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9502
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9517
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9521
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9531
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9521
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9526
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9531
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9541
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9531
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9565
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9585
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.959
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.38,
+          "end": 167.38,
+          "probability": 0.9604
+        },
+        {
+          "word": "Filogy",
+          "start": 167.38,
+          "end": 167.5,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 167.5,
+          "end": 167.52,
+          "probability": 0.96
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9609
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9609
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9614
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9634
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9619
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9624
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9644
+        },
+        {
+          "word": "Filogy",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 167.52,
+      "end": 167.52,
+      "start_formatted": "00:02:47.520",
+      "end_formatted": "00:02:47.520",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 17,
+      "start": 167.52,
+      "end": 167.58,
+      "start_formatted": "00:02:47.520",
+      "end_formatted": "00:02:47.580",
+      "text": "neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of",
+      "words": [
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.0024
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.7388
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.0138
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.7568
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.0713
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.7959
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.2029
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.8218
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.3521
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.8364
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.4758
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.854
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.585
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.8672
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.6416
+        },
+        {
+          "word": "of",
+          "start": 167.52,
+          "end": 167.52,
+          "probability": 0.8726
+        },
+        {
+          "word": "neck",
+          "start": 167.52,
+          "end": 167.58,
+          "probability": 0.689
+        },
+        {
+          "word": "of",
+          "start": 167.58,
+          "end": 167.58,
+          "probability": 0.8804
+        },
+        {
+          "word": "neck",
+          "start": 167.58,
+          "end": 167.58,
+          "probability": 0.7441
+        },
+        {
+          "word": "of",
+          "start": 167.58,
+          "end": 167.58,
+          "probability": 0.8882
+        },
+        {
+          "word": "neck",
+          "start": 167.58,
+          "end": 167.58,
+          "probability": 0.772
+        },
+        {
+          "word": "of",
+          "start": 167.58,
+          "end": 167.58,
+          "probability": 0.8892
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 167.58,
+      "end": 167.66,
+      "start_formatted": "00:02:47.580",
+      "end_formatted": "00:02:47.660",
+      "text": "neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of neck of",
+      "words": [
+        {
+          "word": "neck",
+          "start": 167.58,
+          "end": 167.62,
+          "probability": 0.7983
+        },
+        {
+          "word": "of",
+          "start": 167.62,
+          "end": 167.66,
+          "probability": 0.8955
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8198
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9004
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8301
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9004
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8467
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9043
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.855
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9082
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8608
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9082
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8691
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9106
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8779
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9141
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.877
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.916
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8843
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9199
+        },
+        {
+          "word": "neck",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.8848
+        },
+        {
+          "word": "of",
+          "start": 167.66,
+          "end": 167.66,
+          "probability": 0.9219
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 167.66,
+      "end": 167.66,
+      "start_formatted": "00:02:47.660",
+      "end_formatted": "00:02:47.660",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 167.66,
+      "end": 167.66,
+      "start_formatted": "00:02:47.660",
+      "end_formatted": "00:02:47.660",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 167.66,
+      "end": 167.66,
+      "start_formatted": "00:02:47.660",
+      "end_formatted": "00:02:47.660",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 167.66,
+      "end": 167.68,
+      "start_formatted": "00:02:47.660",
+      "end_formatted": "00:02:47.680",
+      "text": "so",
+      "words": [
+        {
+          "word": "so",
+          "start": 167.66,
+          "end": 167.68,
+          "probability": 0.0094
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 33,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 38,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 42,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 43,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 44,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 45,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 46,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 47,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 48,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 49,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 50,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 51,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 52,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 53,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 54,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 55,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 56,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 57,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 58,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 59,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 60,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 61,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 62,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 63,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 64,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 65,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 66,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 67,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 68,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 69,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 70,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 71,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 72,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 73,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 74,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 75,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 76,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 77,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 78,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 79,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 80,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 81,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 82,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 83,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 84,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 85,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 86,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 87,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 88,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 89,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 90,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 91,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 92,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 93,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 94,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 95,
+      "start": 167.68,
+      "end": 167.68,
+      "start_formatted": "00:02:47.680",
+      "end_formatted": "00:02:47.680",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 96,
+      "start": 167.66,
+      "end": 167.66,
+      "start_formatted": "00:02:47.660",
+      "end_formatted": "00:02:47.660",
+      "text": "",
+      "words": []
+    }
+  ]
+}

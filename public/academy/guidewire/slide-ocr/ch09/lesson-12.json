@@ -1,0 +1,610 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-12",
+    "slide_count": 54,
+    "slides_with_text": 49,
+    "total_words": 2439,
+    "avg_confidence": 86.21,
+    "processing_time_seconds": 19.25,
+    "extracted_at": "2026-02-15T18:17:48.058325"
+  },
+  "full_text": "Configuring Vendor Services\n\nLesson\nobjectives\n\n¢ Configure services\n¢ Activate and configure straight-through\ninvoice processing (STIP)\n\n| Demonstration G\n\nServices and service requests\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Review: services and service requests i\n\n¢ Aservice is any action that can be * Aservice request summarizes the\n\nrequested from a third-party vendor instruction sent to the vendor detailing\nor internal provider the service to be performed\n« Examples include medical services, * Every service request is associated with\ntowing, auto rental, construction services exactly one claim and one service type\nfor fire restoration...\nMedical\nService\nType\n\n1 * (Ag 1 1\nTowi\nClaim Service 0 caval Type\n\nRequest\n\nOther service types\n\n| Review: creating service requests Gi\n\nService requests can be created.\n\n* During claim creation\n\nStep 4 of 5: Services\n\n« Later, using the Actions menu\n\nNew ww\nNote\nEmail\nMatter\nEvaluation\n\nNegotiation\n\n| Review: service request types Gi\n\n« The service request type determines the lifecycle of the service request\n* Lifecycle is managed by a state handler specific to the service request type\n\n« Inthe base application, there are four\nservice request types:\n\n* Quote only Services\n\n* Quote and perform service Type > Status Services > Ref# >  AssignedTo > Next Action\n\n¥ Related To: Claim\n= Serve ont DE ite ore\n¢ Unmanaged service B Ol!) 101 Andy Applegate Approve quote\n\nB @L!) 1002 ‘Andy Applegate Submit request\n\n¢ Implemented through typelist\n\nServiceRequestKind\n\n| Service definitions (conceptual) Gi\n\n* Services are defined in a tree- Service\n. : Definitions\nlike hierarchy\n\nService\n\n* The base configuration allows Category\n\nservices to be placed in\nservice categories or Service\nsubcategories, or “stand Subcategory\n\nalone”\n. . . Service\n¢ For integration with\n\nContactManager, use the Service\nsame services definitions for\nboth applications Service\n\nService\n\n| Vendor service tree (conceptual) Gi\n\n* Each service type must be defined in\nthe file vendorservicetree.xml Root\n\n: . Node\n* Defines a hierarchy of services\n« Each service has Zero or one parent “oo ™~\nservices\na : Leaf\n+ Aservice with no parent is called a root node Node\nNode\n\n* Each service has zero to many child\n\nservices mwom™\n\n+ Aservice with no child is called a /Jeaf node\nLeaf Leaf\nNode Node\n\nvendorservicetree.xml Gi\n\n. . Sixml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"@S<import>\nEach service has: <epecialistservice publicid\"ave:aga\"> |\n<Code>accomm</Code>\n\n* A public-id <Description displayKey=\"true\">Services . Accommodation .Description</Description>\n<Niame displayKey=\"true\">Services .Acconmodation.Name</Name>\n<Parent/>\n\n* Acode </specialistservice>\n\n<SpecialistService public-id=\"syg:acc_alt\">\n<Active>true</Active>\n\n* One or more descriptions <code>aqsonmaltasconm</Code>\n\n* An optional parent SESE Se\n\n* (Optional children are not </specialistservice>\n\n<specialistservice public-ide\"axa:auk'>\ndefined in the parent node) paninanatenyninwenead\n<bescription displaykey=\"true\">Services Auto.Desoription</Description>\n<None displaykey=\"true\">Services Auto. None</Wame>\n<tarent/>\n</specialistservice>\n\n| Service details (conceptual)\n\n* Services are linked to service request\ntypes using the file Service\nvendorservicedetails.xml, Type\nwhich lists specialist service types\n\n* Each SpecialistService with no child\nmust have at least one linked Request Incident\nServiceRequestKind Kind Type\n\n* Each SpecialistService with no parent\nmust have at least one linked\nIncidentType\n\nRequest Incident\n* ServiceRequestKinds are generally defined Kind Type\nbefore IncidentTypes\n\n| vendorservicedetails.xml — request kinds Gi\n\nSpecialistServiceCompatibleServiceRequestkKind defines handling of service\nrequests.\n\nkexml version=\"1.0\"7>\n\n<: ort>\nes Exact name from the\n\n<SpecialistServiceCompatibleServiceRequestKind public-id=\"ce:1\"> t 7 .\n[tine suocenndeereieeciinm | ____> SeiceRequestkind ypelist\n\n</SpecialistServiceCompatibleServiceRequestKind> ee eee sere ng gp Exact Service id from the file\nvendorservicetree.xml\n\n| vendorservicedetails.xml — incident kinds Gi\n\nSpecialistServiceCompatiblelncidentKind defines incident subtypes applicable to a\ngiven service type.\n\nExact name of the incident type.\n\nExact service id from the file\nvendorservicetree.xml\n\nLinking the vendor service tree to the vendor\n\nservice details\n\n<Description displayKey~\"truc\">Services Auto. Descripese\nane displayKey=\"true\">Services -Auto.Name</Nane>\n<Parent/>\n\n[ee .\n\n<Code>autoinsprepair</Code>\n\n‘<Description displayney=\"true\">services Auto. inepectionnepaix.pescription</Description>\n\n‘lane displayKey~\"true\">services Auto. InspectionRepaiz .ane</Mane>\n\nParent public-id~\"svo:aut\"/>\n\nPominsenne—————— a\n\nI fopsctatiessoreice pbite wiry\ncaacreesereee/astrres\n\naut_ins_aud\">|\n\n~ S2----...\n=<, -\n==\n<escription displayKey-\"truc\">Services Auto. AudicBquipnent Descrip me MMDgge:\n‘ane displaykey=\"true\">Services Auto. Audic®quipment .Nanec/Nane>\nSparent publicwide*avoiaut ine\"/>\n/specialiatservice>\n\n<Code>autoinsprepairaudio</Code>\n\nription>\n\n“=\n\nvendorservicetree.xml\n\n=I\n\n[sos See agp SF\nont Type>¥cbi lePropertyIncident</IncidentType>\n\n<IncidentType>Mobi lePropertyIncident</Incidenttype>\nService public-id=\"sve:con\"/>\n</specialistServicecompatibletncidentType>\n<SpecialistServiceCompatibletncidentType public-id=\"co:5\">\n<IncidentType>PropertyIncident</IncidentType>\n\nwins ioss/Kind\nMPP] <service public-id-\"ave\n\nwut ina aud\"/> |\n<TapecialistServicecompatibleservicehequestKind>\n<SpecialistserviceCompatibleServiceRequestKind public-id=\"oo:37\">\n\nvendorservicedetails.xml\n\n| Two important notes Gi\n\n« When you have finished editing and importing vendorservicetree.xml and\nvendorservicedetails.xml, you must restart ClaimCenter (and\nContactManager in the case of vendorservicetree. xml) for the changes to\ntake effect.\n\n¢ Ifyou add a child node to a node whose service type has previously been\nassigned to any service providers, then importing vendorservicetree.xml will\ncause errors which must be corrected.\n\n| Service request history G\n\nChanges to a service request are recorded and displayed on the History tab of the\nServices screen.\n\nServices\nType > Status Service# > Ref# > AssignedTo > Next Action Action Owner >\n‘Claim\n& Ol!) 1001 Andy Applegate Approve quote ‘Andy Applegate\n13) @(!) 1002 Andy Applegate Submit request Andy Applegate\n\nDetails | History | Activities | Documents | Notes | Messages\n\nDate > Change initiator > Description > a\n08/01/2018 4:13PM Super User Created services\n08/01/2018 12:00AM Super User ‘Added quote abc-123 for $1,400.00\n\n07/31/2018 12:00AM Super User Requested service from vendor\n\n| Creating service request history Gi\n\nService request history is created using the ServiceRequest. recordChange ()\nmethod.\n\n* recordChange (description : String, operation\nServiceRequestOperation statement : ServiceRequestStatement ,\ninitiator : Contact )\n\n+ Returns a ServiceRequestChange object, which provides the history record, with fields populated to\nindicate the changes made\n\nserviceRequest . recordChange (DisplayKey. get (\"Web.ServiceRequest . StateTransition.Description\n.UnmanagedServiceRequestCreated\"), null, null, User.util.CurrentUser.Contact)\n\n| Service request metrics in the base application\n\nGi\n\n¢ ClaimCenter provides six measurements on the status and timeliness of service\nrequests in the Metrics section of the Services screen\n\n¢ Only the Metrics relevant to a given service request are displayed\n\nMetrics\n\nStatus\nx]\ni)\ni]\n\nMetric Value Target\n\nResponse Time 9 hours 4hours\n\nQuote Timeliness Completedontime 9 hours\nNumber Of Delays 0 tv)\n\nCycle Time 9 hours\n\n| Adding service request metrics\n1. Create a subtype for the new metric\n2. Add the new metric to the implementation class\n\n3. Test the changes\nFor full details, see the Guidewire ClaimCenter Configuration Guide.\n\n| Demonstration G\n\nConfiguring services\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — When and where can service requests be created?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505\n\nAnswer\n\n,~ — When and where can service requests be created?\n\n¢\n74\ng The correct answers are:\n¢ During claim creation, in the New Claim Wizard\n* After the claim has been created, from the Actions menu\n\nse sSeSo SSeS SSeS e ee sSHeS\n\nQuestion G\n\n,~ — Whatare the types of Service Request in the base application?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505\n\nAnswer\n\n,~ — Whatare the types of Service Request in the base application?\n\n¢\n74\n\n¢ The correct answers are:\n* Quote Only\n¢ Service Only\n* Quote and Perform Service\n« Unmanaged Service (for Auto First and Final only)\n\nse sSeSo SSeS SSeS e ee sSHeS\n\nQuestion G\n\n_~ — 'fyou need to add a new service type, what files must you modify?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505\n\nAnswer\n\n,~ — 'fyou need to add a new service type, what files must you modify?\n\n¢\n\n74\ng The correct answer is vendorservicetree.xml and vendorservicedetails.xml.\n\nse sSeSo SSeS SSeS e ee sSHeS\n\nQuestion G\n\n--- After modifying the files, what must you do for the new service type to be\noo available?\n\nsSesoeooce SSeS Seee5b505\n\nAnswer a\n\n—— After modifying the files, what must you do for the new service type to be\noo available?\n\nThe correct answer is import the data from the files in the ClaimCenter\n(and ContactManager) administrator user interfaces.\n\nse sSeSo SSeS SSeS e ee sSHeS\n\nConfiguring Straight-Through\nInvoice Processing (STIP)\n\n| Straight-through invoice processing (STIP) Gi\n\n« Automates the approval and payment of many routine invoices\n\n« Payments can be made against Reserve Lines, at either the Claim or the\nExposure level\n\n= 3807\n\n| Helper classes Gi\n\n¢ STIP is implemented using State Transition Helper classes\n¢ Two helper classes in the base application:\n* InvoiceAutoApprovalHelper manages automatic approvals\n* InvoiceAutoPaymentHelper manages automatic payments\n* To change the criteria for automatic processing, change the implementation of the\nhelper classes\nv vendormanagement\n© InvoiceAutoApprovalHelper\n(3) InvoiceAutoApproveAutoPayPlugin\n\n‘C | InvoiceAutoPaymentHelper\n© ServiceRequestMetricLimitFinderlmpl\n\n| Helper methods Gi\n\nEach helper has four required methods:\n\n* getRelevantInvoices () returns a list of invoices to be processed\n+ Inthe base application, returns invoices waiting to be approved or paid\n\n« For each invoice returned by getRelevant Invoices, getFailedToQualifyReasons ()\nreturns a list of reasons why the invoice cannot be processed\n\n* performAction() —if getFailedToQualifyReasons () returns an empty list, processes the\nInvoice\n* InvoiceAutoApprovalHelper marks the invoice as approved\n* InvoiceAutoPaymentHelper creates a check and marks the invoice as paid\n\n¢ registerFailure() —if the list of reasons is not empty, creates (or updates) an activity to\n\nmanually process the invoice\n\n+ Activity patterns in the base application are INVOICE NOT AUTO APPROVED and\nINVOICE NOT AUTO PAID\n\n+ Activity includes the list of reasons not processed\n\n| Plugin Gi\n\nThe helpers are instantiated by a plugin.\n\n* The plugin provided in the base configuration is the InvoiceAutoApproveAutoPayPlugin\n\npackage gw.plugin.vendormanagement\n\nuses java-util.bist\n\n@Export\nclass InvoiceAuto&pproveAutoPayPlugin implements IInvoiceautoProcessingPlugin {\n\nk gu.plugin. vendormanagement. InvoiceAutomatioStateTransitionHelper)s to be app.\n\noverride property get Statetransitionlelpers(): List<invoicenutomaticstatetransitionterper> ff\nreturn {\nrnvoicenutoApprovallelper. Instance,\nInvoiceAutoPaymentHelper. Instance\n}\n\n| STIP in the UI Gi\n\nOn the Invoices tab, when the user clicks the button to pay an invoice which was not\npreviously approved, ClaimCenter invokes the invoice automatic processor.\n\nServices\n\n| Details | History | Activities | Documents | Notes | invoices | Messages\n\nBy\n\nInvoice Ref# > Attention > Submitted Date > Amount > Status > Description > Check# $ CheckAmount  CheckStatus >\n\nDetails\n\nWithdraw\n\nice waiting for payment\n\n| Processor Gi\n\n« When invoices enter the system, either manually or through an integration, a\n“processor” is invoked\n\n* This occurs after any regular Gosu rules are run on the invoice\n¢ Runs independently of the bundle which creates the invoice\n¢ Any prior work by the user is not affected\n¢ Inthe provided implementation, the processor uses each helper as a “checklist”\n\n« Each of a series of potential failure reasons is checked against each invoice associated with\nthe service request\n\n¢ If none of the failure reasons match the invoice, the action, such as approval or\npayment, is automatically performed\n\n| Permissions Gi\n\nThe permissions and authority limits of the user who inputs an invoice are used in\ndetermining whether the invoice can be automatically approved and paid.\n\nAdjuster. vp«\n\nBasics Users\n\nRole\nName Adjuster\nDescription Base permissions for an adjuster\n\nmy [>\n\nPermission + Code Description\n\nClose claims claimclose _ Permission to close a claim\n\nClose exposures expclose Permission to close an exposure\nClose matters ttrclose Permission to close matters on a claim\n\nCreate activities actcreate Permission to create new activities\n\n| Possible configurations to STIP\n\nTurning STIP off\n¢ STIP is turned on by default in the base configuration\nChanging criteria for automatic processing of invoices\nChanging criteria for which invoices may be automatically processed\nChanging what kinds of processing are automated\n\n| Turning STIP off\n\n* STIP is implemented using the InvoiceAutoProcessingPlugin\n\nGi\n\n« In the base application, this is implemented using InvoiceAutoApproveAutoPayPlugin\n\n¢ To turn STIP off, deregister or disable the plugin\n\n| 1 nvoiceAutoProcessingPlugin.gwp * |\n\nName:\n\n==\n\n+E)\n\nInvoiceAutoProcessingPlugin|\n\nInvoiceAutoProcessingPlugin\n\nplugin.vendormanagement.l\n\nAutoApproveAutoPayPlugin]\n\nGosu Class:\nEnvironment:\n\nServer:\n\ngw.plugin.vendormanagement InvoiceAutoApproveAute\n\n| Changing criteria for automatic processing of invoices [5\n\n* To change the criteria for which invoices will be automatically approved or paid,\nedit the getFailedToQualifyReasons () method of the relevant helper\n\n¢ Add, edit, or delete clauses of the form\n\nif(criterion_for_failure) {\nfailurereasons.add(\"failure_text\")\n}\noverride protected function getFailedtoqualifyReasons (invoice: SexviceRequest invoice): List<string> (\n\nvar serviceRequest = invoice.ServiceRequest\nvar claim = serviceRequest.claim\n\nvar failureReasons: List<string> = {}\n\nif (claim.state == Claimstate.7C_ CLOSED) {\nfailureReasons.add(\"The Claim is closed\")\n\n}\n\nif (claim.s1ustatus == SIUStatus.7C_UNDER_INVESTIGATION) {\nfailureReasons.add(\"There is an active SIU investigation\")\n\n}\n\n| Changing the maximum amount that can be Gi\nauto-approved\n\n* InvoiceAutoApprovalHelper has a property that maps currencies to the\nlargest amount that can be automatically approved\n\nstatic property get SmallAmountThresholds(): Map<Currency, BigDecimal> {\nreturn {\nCurrency. 7C_CAD -> 600bd,\nCurrency. 7C_USD -> 500bd\n,\n}\n\n* The last “if clause of getFailedToQualifyReasons in\nInvoiceAutoApprovalHelper rejects invoices that exceed this amount\n\nelse if (invoice.Amount.Amount > smallaAmountThreshold) {\nfailureReasons.add(\"The amount is too high\")\nn\n\n¢ To change the maximum amount that can be auto-approved, modify the\nSmallAmountThresholds property\n\n| Changing criteria for which invoices can be Gi\nautomatically processed\n\nTo change which invoices are considered for automatic approval or payment, modify\nthe getRelevant Invoices () method of the relevant helper.\n\n* The method must return List<ServiceRequest Invoice> to be consumed by the\ngetFailedToQualifyReasons method\noverride function getRelevantInvoices (invoices: List<ServiceRequestInvoice>): List<ServiceRequestInvoice> {\n\nreturn invoices.where(\\ invoice -> invoice. IsWaitingForApproval)\n\n}\n\n| Changing the kinds of processing that are Gi\nautomated\n\nTo change the kinds of processing automated by STIP, edit the\nStateTransitionHelpers property of InvoiceAutoApproveAutoPayPlugin.\n\n* Comment out one of the existing helpers\n\n* Create and add your own helper\n+ NOTE: Do this with extreme caution\n\noverride property get StateTransitionHelpers(): List<InvoiceAutomaticStateTransitionHelper> {\nreturn {\nInvoiceAutoApprovalHelper. Instance,\nInvoiceAutoPaymentHelper. Instance\n}\n\nil\n\n| Demonstration G\n\nStraight-through invoice processing\n— (STIP)\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — What do State Transition Helper classes enable?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505\n\nAnswer a\n\n,~ — What do State Transition Helper classes enable?\n\n¢\noO The correct answer is Straight-Through Invoice Processing (STIP).\n\nse sSeSo SSeS SSeS e ee sSHeS\n\nQuestion G\n\n_~ — 'faninvoice comes into the system through a vendor portal, what\n¢ provides the approval limits for STIP?\n\n4\n¢\n\nsSesoeooce SSeS Seee5b505\n\nAnswer a\n\n,~ — faninvoice comes into the system through a vendor portal, what\n¢ provides the approval limits for STIP?\n\n74\n¢\n\nThe correct answer is:\n\nThe web service that accepts the invoice is associated with a user, whose permissions\nenable that web service.\n\nThe approval limits are those of that user.\n\nse sSeSo SSeS SSeS e ee sSHeS\n\n| Student exercise\n\nAdding services\n\n| Student exercise\n\nDisable automatic approval\nof flagged claims\n\nLesson\nobj ectives ¢ Configure services\n\nreview ¢ Activate and configure straight-through\ninvoice processing (STIP)",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Vendor Services",
+      "word_count": 3,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Configure services\n¢ Activate and configure straight-through\ninvoice processing (STIP)",
+      "word_count": 13,
+      "avg_confidence": 86.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Demonstration G\n\nServices and service requests\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.62,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Review: services and service requests i\n\n¢ Aservice is any action that can be * Aservice request summarizes the\n\nrequested from a third-party vendor instruction sent to the vendor detailing\nor internal provider the service to be performed\n« Examples include medical services, * Every service request is associated with\ntowing, auto rental, construction services exactly one claim and one service type\nfor fire restoration...\nMedical\nService\nType\n\n1 * (Ag 1 1\nTowi\nClaim Service 0 caval Type\n\nRequest\n\nOther service types",
+      "word_count": 84,
+      "avg_confidence": 89.3,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Review: creating service requests Gi\n\nService requests can be created.\n\n* During claim creation\n\nStep 4 of 5: Services\n\n« Later, using the Actions menu\n\nNew ww\nNote\nEmail\nMatter\nEvaluation\n\nNegotiation",
+      "word_count": 33,
+      "avg_confidence": 89.6,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Review: service request types Gi\n\n« The service request type determines the lifecycle of the service request\n* Lifecycle is managed by a state handler specific to the service request type\n\n« Inthe base application, there are four\nservice request types:\n\n* Quote only Services\n\n* Quote and perform service Type > Status Services > Ref# >  AssignedTo > Next Action\n\n¥ Related To: Claim\n= Serve ont DE ite ore\n¢ Unmanaged service B Ol!) 101 Andy Applegate Approve quote\n\nB @L!) 1002 ‘Andy Applegate Submit request\n\n¢ Implemented through typelist\n\nServiceRequestKind",
+      "word_count": 94,
+      "avg_confidence": 80.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Service definitions (conceptual) Gi\n\n* Services are defined in a tree- Service\n. : Definitions\nlike hierarchy\n\nService\n\n* The base configuration allows Category\n\nservices to be placed in\nservice categories or Service\nsubcategories, or “stand Subcategory\n\nalone”\n. . . Service\n¢ For integration with\n\nContactManager, use the Service\nsame services definitions for\nboth applications Service\n\nService",
+      "word_count": 59,
+      "avg_confidence": 85.12,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Vendor service tree (conceptual) Gi\n\n* Each service type must be defined in\nthe file vendorservicetree.xml Root\n\n: . Node\n* Defines a hierarchy of services\n« Each service has Zero or one parent “oo ™~\nservices\na : Leaf\n+ Aservice with no parent is called a root node Node\nNode\n\n* Each service has zero to many child\n\nservices mwom™\n\n+ Aservice with no child is called a /Jeaf node\nLeaf Leaf\nNode Node",
+      "word_count": 77,
+      "avg_confidence": 85.96,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "vendorservicetree.xml Gi\n\n. . Sixml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"@S<import>\nEach service has: <epecialistservice publicid\"ave:aga\"> |\n<Code>accomm</Code>\n\n* A public-id <Description displayKey=\"true\">Services . Accommodation .Description</Description>\n<Niame displayKey=\"true\">Services .Acconmodation.Name</Name>\n<Parent/>\n\n* Acode </specialistservice>\n\n<SpecialistService public-id=\"syg:acc_alt\">\n<Active>true</Active>\n\n* One or more descriptions <code>aqsonmaltasconm</Code>\n\n* An optional parent SESE Se\n\n* (Optional children are not </specialistservice>\n\n<specialistservice public-ide\"axa:auk'>\ndefined in the parent node) paninanatenyninwenead\n<bescription displaykey=\"true\">Services Auto.Desoription</Description>\n<None displaykey=\"true\">Services Auto. None</Wame>\n<tarent/>\n</specialistservice>",
+      "word_count": 68,
+      "avg_confidence": 66.67,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Service details (conceptual)\n\n* Services are linked to service request\ntypes using the file Service\nvendorservicedetails.xml, Type\nwhich lists specialist service types\n\n* Each SpecialistService with no child\nmust have at least one linked Request Incident\nServiceRequestKind Kind Type\n\n* Each SpecialistService with no parent\nmust have at least one linked\nIncidentType\n\nRequest Incident\n* ServiceRequestKinds are generally defined Kind Type\nbefore IncidentTypes",
+      "word_count": 64,
+      "avg_confidence": 91.02,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| vendorservicedetails.xml — request kinds Gi\n\nSpecialistServiceCompatibleServiceRequestkKind defines handling of service\nrequests.\n\nkexml version=\"1.0\"7>\n\n<: ort>\nes Exact name from the\n\n<SpecialistServiceCompatibleServiceRequestKind public-id=\"ce:1\"> t 7 .\n[tine suocenndeereieeciinm | ____> SeiceRequestkind ypelist\n\n</SpecialistServiceCompatibleServiceRequestKind> ee eee sere ng gp Exact Service id from the file\nvendorservicetree.xml",
+      "word_count": 45,
+      "avg_confidence": 71.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| vendorservicedetails.xml — incident kinds Gi\n\nSpecialistServiceCompatiblelncidentKind defines incident subtypes applicable to a\ngiven service type.\n\nExact name of the incident type.\n\nExact service id from the file\nvendorservicetree.xml",
+      "word_count": 29,
+      "avg_confidence": 91.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Linking the vendor service tree to the vendor\n\nservice details\n\n<Description displayKey~\"truc\">Services Auto. Descripese\nane displayKey=\"true\">Services -Auto.Name</Nane>\n<Parent/>\n\n[ee .\n\n<Code>autoinsprepair</Code>\n\n‘<Description displayney=\"true\">services Auto. inepectionnepaix.pescription</Description>\n\n‘lane displayKey~\"true\">services Auto. InspectionRepaiz .ane</Mane>\n\nParent public-id~\"svo:aut\"/>\n\nPominsenne—————— a\n\nI fopsctatiessoreice pbite wiry\ncaacreesereee/astrres\n\naut_ins_aud\">|\n\n~ S2----...\n=<, -\n==\n<escription displayKey-\"truc\">Services Auto. AudicBquipnent Descrip me MMDgge:\n‘ane displaykey=\"true\">Services Auto. Audic®quipment .Nanec/Nane>\nSparent publicwide*avoiaut ine\"/>\n/specialiatservice>\n\n<Code>autoinsprepairaudio</Code>\n\nription>\n\n“=\n\nvendorservicetree.xml\n\n=I\n\n[sos See agp SF\nont Type>¥cbi lePropertyIncident</IncidentType>\n\n<IncidentType>Mobi lePropertyIncident</Incidenttype>\nService public-id=\"sve:con\"/>\n</specialistServicecompatibletncidentType>\n<SpecialistServiceCompatibletncidentType public-id=\"co:5\">\n<IncidentType>PropertyIncident</IncidentType>\n\nwins ioss/Kind\nMPP] <service public-id-\"ave\n\nwut ina aud\"/> |\n<TapecialistServicecompatibleservicehequestKind>\n<SpecialistserviceCompatibleServiceRequestKind public-id=\"oo:37\">\n\nvendorservicedetails.xml",
+      "word_count": 94,
+      "avg_confidence": 57.69,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Two important notes Gi\n\n« When you have finished editing and importing vendorservicetree.xml and\nvendorservicedetails.xml, you must restart ClaimCenter (and\nContactManager in the case of vendorservicetree. xml) for the changes to\ntake effect.\n\n¢ Ifyou add a child node to a node whose service type has previously been\nassigned to any service providers, then importing vendorservicetree.xml will\ncause errors which must be corrected.",
+      "word_count": 64,
+      "avg_confidence": 90.95,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Service request history G\n\nChanges to a service request are recorded and displayed on the History tab of the\nServices screen.\n\nServices\nType > Status Service# > Ref# > AssignedTo > Next Action Action Owner >\n‘Claim\n& Ol!) 1001 Andy Applegate Approve quote ‘Andy Applegate\n13) @(!) 1002 Andy Applegate Submit request Andy Applegate\n\nDetails | History | Activities | Documents | Notes | Messages\n\nDate > Change initiator > Description > a\n08/01/2018 4:13PM Super User Created services\n08/01/2018 12:00AM Super User ‘Added quote abc-123 for $1,400.00\n\n07/31/2018 12:00AM Super User Requested service from vendor",
+      "word_count": 98,
+      "avg_confidence": 81.57,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Creating service request history Gi\n\nService request history is created using the ServiceRequest. recordChange ()\nmethod.\n\n* recordChange (description : String, operation\nServiceRequestOperation statement : ServiceRequestStatement ,\ninitiator : Contact )\n\n+ Returns a ServiceRequestChange object, which provides the history record, with fields populated to\nindicate the changes made\n\nserviceRequest . recordChange (DisplayKey. get (\"Web.ServiceRequest . StateTransition.Description\n.UnmanagedServiceRequestCreated\"), null, null, User.util.CurrentUser.Contact)",
+      "word_count": 62,
+      "avg_confidence": 84.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Service request metrics in the base application\n\nGi\n\n¢ ClaimCenter provides six measurements on the status and timeliness of service\nrequests in the Metrics section of the Services screen\n\n¢ Only the Metrics relevant to a given service request are displayed\n\nMetrics\n\nStatus\nx]\ni)\ni]\n\nMetric Value Target\n\nResponse Time 9 hours 4hours\n\nQuote Timeliness Completedontime 9 hours\nNumber Of Delays 0 tv)\n\nCycle Time 9 hours",
+      "word_count": 69,
+      "avg_confidence": 86.51,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Adding service request metrics\n1. Create a subtype for the new metric\n2. Add the new metric to the implementation class\n\n3. Test the changes\nFor full details, see the Guidewire ClaimCenter Configuration Guide.",
+      "word_count": 35,
+      "avg_confidence": 95.37,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Demonstration G\n\nConfiguring services\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question G\n\n,~ — When and where can service requests be created?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 18,
+      "avg_confidence": 80.07,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer\n\n,~ — When and where can service requests be created?\n\n¢\n74\ng The correct answers are:\n¢ During claim creation, in the New Claim Wizard\n* After the claim has been created, from the Actions menu\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 45,
+      "avg_confidence": 87.65,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question G\n\n,~ — Whatare the types of Service Request in the base application?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 20,
+      "avg_confidence": 80.71,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer\n\n,~ — Whatare the types of Service Request in the base application?\n\n¢\n74\n\n¢ The correct answers are:\n* Quote Only\n¢ Service Only\n* Quote and Perform Service\n« Unmanaged Service (for Auto First and Final only)\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 47,
+      "avg_confidence": 83.58,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question G\n\n_~ — 'fyou need to add a new service type, what files must you modify?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 23,
+      "avg_confidence": 81.5,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer\n\n,~ — 'fyou need to add a new service type, what files must you modify?\n\n¢\n\n74\ng The correct answer is vendorservicetree.xml and vendorservicedetails.xml.\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 33,
+      "avg_confidence": 83.88,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question G\n\n--- After modifying the files, what must you do for the new service type to be\noo available?\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 23,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer a\n\n—— After modifying the files, what must you do for the new service type to be\noo available?\n\nThe correct answer is import the data from the files in the ClaimCenter\n(and ContactManager) administrator user interfaces.\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 45,
+      "avg_confidence": 91.81,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Configuring Straight-Through\nInvoice Processing (STIP)",
+      "word_count": 5,
+      "avg_confidence": 92.6,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "| Straight-through invoice processing (STIP) Gi\n\n« Automates the approval and payment of many routine invoices\n\n« Payments can be made against Reserve Lines, at either the Claim or the\nExposure level\n\n= 3807",
+      "word_count": 34,
+      "avg_confidence": 86.56,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "| Helper classes Gi\n\n¢ STIP is implemented using State Transition Helper classes\n¢ Two helper classes in the base application:\n* InvoiceAutoApprovalHelper manages automatic approvals\n* InvoiceAutoPaymentHelper manages automatic payments\n* To change the criteria for automatic processing, change the implementation of the\nhelper classes\nv vendormanagement\n© InvoiceAutoApprovalHelper\n(3) InvoiceAutoApproveAutoPayPlugin\n\n‘C | InvoiceAutoPaymentHelper\n© ServiceRequestMetricLimitFinderlmpl",
+      "word_count": 57,
+      "avg_confidence": 85.88,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "| Helper methods Gi\n\nEach helper has four required methods:\n\n* getRelevantInvoices () returns a list of invoices to be processed\n+ Inthe base application, returns invoices waiting to be approved or paid\n\n« For each invoice returned by getRelevant Invoices, getFailedToQualifyReasons ()\nreturns a list of reasons why the invoice cannot be processed\n\n* performAction() —if getFailedToQualifyReasons () returns an empty list, processes the\nInvoice\n* InvoiceAutoApprovalHelper marks the invoice as approved\n* InvoiceAutoPaymentHelper creates a check and marks the invoice as paid\n\n¢ registerFailure() —if the list of reasons is not empty, creates (or updates) an activity to\n\nmanually process the invoice\n\n+ Activity patterns in the base application are INVOICE NOT AUTO APPROVED and\nINVOICE NOT AUTO PAID\n\n+ Activity includes the list of reasons not processed",
+      "word_count": 130,
+      "avg_confidence": 88.95,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Plugin Gi\n\nThe helpers are instantiated by a plugin.\n\n* The plugin provided in the base configuration is the InvoiceAutoApproveAutoPayPlugin\n\npackage gw.plugin.vendormanagement\n\nuses java-util.bist\n\n@Export\nclass InvoiceAuto&pproveAutoPayPlugin implements IInvoiceautoProcessingPlugin {\n\nk gu.plugin. vendormanagement. InvoiceAutomatioStateTransitionHelper)s to be app.\n\noverride property get Statetransitionlelpers(): List<invoicenutomaticstatetransitionterper> ff\nreturn {\nrnvoicenutoApprovallelper. Instance,\nInvoiceAutoPaymentHelper. Instance\n}",
+      "word_count": 51,
+      "avg_confidence": 76.38,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "| STIP in the UI Gi\n\nOn the Invoices tab, when the user clicks the button to pay an invoice which was not\npreviously approved, ClaimCenter invokes the invoice automatic processor.\n\nServices\n\n| Details | History | Activities | Documents | Notes | invoices | Messages\n\nBy\n\nInvoice Ref# > Attention > Submitted Date > Amount > Status > Description > Check# $ CheckAmount  CheckStatus >\n\nDetails\n\nWithdraw\n\nice waiting for payment",
+      "word_count": 72,
+      "avg_confidence": 85.74,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Processor Gi\n\n« When invoices enter the system, either manually or through an integration, a\n“processor” is invoked\n\n* This occurs after any regular Gosu rules are run on the invoice\n¢ Runs independently of the bundle which creates the invoice\n¢ Any prior work by the user is not affected\n¢ Inthe provided implementation, the processor uses each helper as a “checklist”\n\n« Each of a series of potential failure reasons is checked against each invoice associated with\nthe service request\n\n¢ If none of the failure reasons match the invoice, the action, such as approval or\npayment, is automatically performed",
+      "word_count": 103,
+      "avg_confidence": 88.92,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "| Permissions Gi\n\nThe permissions and authority limits of the user who inputs an invoice are used in\ndetermining whether the invoice can be automatically approved and paid.\n\nAdjuster. vp«\n\nBasics Users\n\nRole\nName Adjuster\nDescription Base permissions for an adjuster\n\nmy [>\n\nPermission + Code Description\n\nClose claims claimclose _ Permission to close a claim\n\nClose exposures expclose Permission to close an exposure\nClose matters ttrclose Permission to close matters on a claim\n\nCreate activities actcreate Permission to create new activities",
+      "word_count": 82,
+      "avg_confidence": 87.04,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "| Possible configurations to STIP\n\nTurning STIP off\n¢ STIP is turned on by default in the base configuration\nChanging criteria for automatic processing of invoices\nChanging criteria for which invoices may be automatically processed\nChanging what kinds of processing are automated",
+      "word_count": 42,
+      "avg_confidence": 93.43,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "| Turning STIP off\n\n* STIP is implemented using the InvoiceAutoProcessingPlugin\n\nGi\n\n« In the base application, this is implemented using InvoiceAutoApproveAutoPayPlugin\n\n¢ To turn STIP off, deregister or disable the plugin\n\n| 1 nvoiceAutoProcessingPlugin.gwp * |\n\nName:\n\n==\n\n+E)\n\nInvoiceAutoProcessingPlugin|\n\nInvoiceAutoProcessingPlugin\n\nplugin.vendormanagement.l\n\nAutoApproveAutoPayPlugin]\n\nGosu Class:\nEnvironment:\n\nServer:\n\ngw.plugin.vendormanagement InvoiceAutoApproveAute",
+      "word_count": 50,
+      "avg_confidence": 78.08,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "| Changing criteria for automatic processing of invoices [5\n\n* To change the criteria for which invoices will be automatically approved or paid,\nedit the getFailedToQualifyReasons () method of the relevant helper\n\n¢ Add, edit, or delete clauses of the form\n\nif(criterion_for_failure) {\nfailurereasons.add(\"failure_text\")\n}\noverride protected function getFailedtoqualifyReasons (invoice: SexviceRequest invoice): List<string> (\n\nvar serviceRequest = invoice.ServiceRequest\nvar claim = serviceRequest.claim\n\nvar failureReasons: List<string> = {}\n\nif (claim.state == Claimstate.7C_ CLOSED) {\nfailureReasons.add(\"The Claim is closed\")\n\n}\n\nif (claim.s1ustatus == SIUStatus.7C_UNDER_INVESTIGATION) {\nfailureReasons.add(\"There is an active SIU investigation\")\n\n}",
+      "word_count": 90,
+      "avg_confidence": 86.69,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "| Changing the maximum amount that can be Gi\nauto-approved\n\n* InvoiceAutoApprovalHelper has a property that maps currencies to the\nlargest amount that can be automatically approved\n\nstatic property get SmallAmountThresholds(): Map<Currency, BigDecimal> {\nreturn {\nCurrency. 7C_CAD -> 600bd,\nCurrency. 7C_USD -> 500bd\n,\n}\n\n* The last “if clause of getFailedToQualifyReasons in\nInvoiceAutoApprovalHelper rejects invoices that exceed this amount\n\nelse if (invoice.Amount.Amount > smallaAmountThreshold) {\nfailureReasons.add(\"The amount is too high\")\nn\n\n¢ To change the maximum amount that can be auto-approved, modify the\nSmallAmountThresholds property",
+      "word_count": 87,
+      "avg_confidence": 84.57,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "| Changing criteria for which invoices can be Gi\nautomatically processed\n\nTo change which invoices are considered for automatic approval or payment, modify\nthe getRelevant Invoices () method of the relevant helper.\n\n* The method must return List<ServiceRequest Invoice> to be consumed by the\ngetFailedToQualifyReasons method\noverride function getRelevantInvoices (invoices: List<ServiceRequestInvoice>): List<ServiceRequestInvoice> {\n\nreturn invoices.where(\\ invoice -> invoice. IsWaitingForApproval)\n\n}",
+      "word_count": 60,
+      "avg_confidence": 85.9,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "| Changing the kinds of processing that are Gi\nautomated\n\nTo change the kinds of processing automated by STIP, edit the\nStateTransitionHelpers property of InvoiceAutoApproveAutoPayPlugin.\n\n* Comment out one of the existing helpers\n\n* Create and add your own helper\n+ NOTE: Do this with extreme caution\n\noverride property get StateTransitionHelpers(): List<InvoiceAutomaticStateTransitionHelper> {\nreturn {\nInvoiceAutoApprovalHelper. Instance,\nInvoiceAutoPaymentHelper. Instance\n}\n\nil",
+      "word_count": 61,
+      "avg_confidence": 91.54,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "| Demonstration G\n\nStraight-through invoice processing\n— (STIP)\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 94.29,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-46.png",
+      "slide_number": 46,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-47.png",
+      "slide_number": 47,
+      "text": "Question G\n\n,~ — What do State Transition Helper classes enable?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 17,
+      "avg_confidence": 79.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-48.png",
+      "slide_number": 48,
+      "text": "Answer a\n\n,~ — What do State Transition Helper classes enable?\n\n¢\noO The correct answer is Straight-Through Invoice Processing (STIP).\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 28,
+      "avg_confidence": 84.1,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-49.png",
+      "slide_number": 49,
+      "text": "Question G\n\n_~ — 'faninvoice comes into the system through a vendor portal, what\n¢ provides the approval limits for STIP?\n\n4\n¢\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 26,
+      "avg_confidence": 78.3,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-50.png",
+      "slide_number": 50,
+      "text": "Answer a\n\n,~ — faninvoice comes into the system through a vendor portal, what\n¢ provides the approval limits for STIP?\n\n74\n¢\n\nThe correct answer is:\n\nThe web service that accepts the invoice is associated with a user, whose permissions\nenable that web service.\n\nThe approval limits are those of that user.\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 60,
+      "avg_confidence": 89.1,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-51.png",
+      "slide_number": 51,
+      "text": "| Student exercise\n\nAdding services",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-52.png",
+      "slide_number": 52,
+      "text": "| Student exercise\n\nDisable automatic approval\nof flagged claims",
+      "word_count": 9,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-53.png",
+      "slide_number": 53,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-54.png",
+      "slide_number": 54,
+      "text": "Lesson\nobj ectives ¢ Configure services\n\nreview ¢ Activate and configure straight-through\ninvoice processing (STIP)",
+      "word_count": 15,
+      "avg_confidence": 87.4,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

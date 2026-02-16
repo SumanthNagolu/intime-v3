@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-18",
+    "slide_count": 22,
+    "slides_with_text": 20,
+    "total_words": 669,
+    "avg_confidence": 88.6,
+    "processing_time_seconds": 8.74,
+    "extracted_at": "2026-02-13T12:06:30.407125"
+  },
+  "full_text": "Coverage Terms\n\nLesson\nobjectives\n\n¢ List examples of coverage terms\n¢ Describe generic schedules\n\nMarcus\n\nBusiness\nAnalyst\n\nf\nt\n1 y\n) }\n\nCoverages are important to our business.\nHow do | define limits, deductibles, or other\naspects of a coverage?\n\n| Coverage terms Gi\n\n*« Acoverage term is a value that\nmeasures or further defines a specific\ncoverage\n\n* Common examples: deductibles and\nlimits\n\n« Acoverage can have zero, one or\nmany terms attached to it\n\n| Coverage term attributes Gi\n\nTerm type What is the user interface convention for Drop-down list\nselecting the value of the term? Direct\nOption\nPackage\nTypekey\nGeneric\n\nModel type What does the value measure Field\nLimit\nDeductible\nCoinsurance\nExclusions\nOther\n\n| Coverage tables and coverage terms\n\nCoverage table\n\nDwelling\n\n| Coverage term columns Gi\n\n* Acoverage table has a set number of\ncolumns for each term type\n\nCPBuildingCov\n¢ Fora coverage, the number of coverage\n\n| | | | | terms is limited to the number of columns\nfor that type\n- - - - - * Configuration developers can add columns\nand extend the table\n\n| Mapping coverage terms to columns\n\nAdd Term\n\nCode* BAGlass\n\nName* $100 glass deductible\nTerm Type* Option v\nRequired ia]\nColumn* ChoiceTerm2 M\nAvailable Date* | 6/16/14 CB\n\nCoverage table\n\n| Demonstration G\n\nCoverage terms in the product model\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| want to list detailed information about an\ninsured’s coverables, for example, a list of all\njewelry in a homeowner’s policy. How do | do\nthat, and how does it relate to coverage terms?\n\nGeneric Schedules\n\n¢ Schedules are lists of detailed information about an\ninsured’s coverables\n\n« Examples\n+ Personal property in a homeowner's policy\n+ Authorized workers in a workers’ compensation policy\n* Generic schedules\n\n« Use the generic schedule data model that stores information\nin a generic way\n\n* Can be easily created and edited using Product Designer\n\n* Can be declaratively defined in product model XML files\n\n| Types of schedules\n\n* Schedules\n* Capture information per scheduled item\n« Not used directly for rating\n« Usually included in forms\n\n¢« Schedules with coverage terms\n* Capture information per scheduled item\n\n* Each scheduled item includes one or more coverages\nthat can affect rating\n\n+ Each coverage includes one or more coverage terms\n\n| Steps to add generic schedules to a line of business [Fj\n\n* Create Generic Schedule Data Model for the line\n\n* Configure scheduled clauses and properties in the product model, using Product\nDesigner\n\n* (Optional) Configure the schedule user interface if you want to change how it looks\nand operates\n\n| Configure generic schedules in Product Designer [\n\n« Add the scheduled coverage for the schedules s\nchedule\n\nproperties\n\n* Select the covered object and scheduled covered object type\n\n* Define Schedule Properties to capture information for the\nscheduled items\n\nScheduled coverage\n\n| Configure generic schedules in Product Designer [\n\n* (Optional) Add the scheduled item coverage for\n\n5 Schedule\nschedules with coverage terms\n\nproperties\n\n* Select the item covered object and scheduled item covered\nobject type\n\n* Define the coverage terms\n* Go back to the scheduled coverage\n\n* On the Schedule page, add a link to the scheduled item\ncoverage\n\nScheduled item\ncoverage\n\nScheduled coverage\n[optional] 9\n\n| Demonstration G\n\nGeneric schedules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,— — What is a coverage term?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n,~ — What is a coverage term?\n\n¢\n¢\n¢\n\nA coverage term is a value that measures or further defines a specific coverage.\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobjectives\n\n: ist examples of coverage terms\nreview * Describe generic schedules\n\n| Student exercise\n\nCoverage terms",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Coverage Terms",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ List examples of coverage terms\n¢ Describe generic schedules",
+      "word_count": 12,
+      "avg_confidence": 85.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Marcus\n\nBusiness\nAnalyst\n\nf\nt\n1 y\n) }\n\nCoverages are important to our business.\nHow do | define limits, deductibles, or other\naspects of a coverage?",
+      "word_count": 27,
+      "avg_confidence": 82.93,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Coverage terms Gi\n\n*« Acoverage term is a value that\nmeasures or further defines a specific\ncoverage\n\n* Common examples: deductibles and\nlimits\n\n« Acoverage can have zero, one or\nmany terms attached to it",
+      "word_count": 36,
+      "avg_confidence": 89.51,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Coverage term attributes Gi\n\nTerm type What is the user interface convention for Drop-down list\nselecting the value of the term? Direct\nOption\nPackage\nTypekey\nGeneric\n\nModel type What does the value measure Field\nLimit\nDeductible\nCoinsurance\nExclusions\nOther",
+      "word_count": 40,
+      "avg_confidence": 93.58,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Coverage tables and coverage terms\n\nCoverage table\n\nDwelling",
+      "word_count": 9,
+      "avg_confidence": 95.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Coverage term columns Gi\n\n* Acoverage table has a set number of\ncolumns for each term type\n\nCPBuildingCov\n¢ Fora coverage, the number of coverage\n\n| | | | | terms is limited to the number of columns\nfor that type\n- - - - - * Configuration developers can add columns\nand extend the table",
+      "word_count": 57,
+      "avg_confidence": 84.87,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Mapping coverage terms to columns\n\nAdd Term\n\nCode* BAGlass\n\nName* $100 glass deductible\nTerm Type* Option v\nRequired ia]\nColumn* ChoiceTerm2 M\nAvailable Date* | 6/16/14 CB\n\nCoverage table",
+      "word_count": 30,
+      "avg_confidence": 86.57,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Demonstration G\n\nCoverage terms in the product model\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 95.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| want to list detailed information about an\ninsured’s coverables, for example, a list of all\njewelry in a homeowner’s policy. How do | do\nthat, and how does it relate to coverage terms?",
+      "word_count": 34,
+      "avg_confidence": 93.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Generic Schedules\n\n¢ Schedules are lists of detailed information about an\ninsured’s coverables\n\n« Examples\n+ Personal property in a homeowner's policy\n+ Authorized workers in a workers’ compensation policy\n* Generic schedules\n\n« Use the generic schedule data model that stores information\nin a generic way\n\n* Can be easily created and edited using Product Designer\n\n* Can be declaratively defined in product model XML files",
+      "word_count": 67,
+      "avg_confidence": 88.36,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Types of schedules\n\n* Schedules\n* Capture information per scheduled item\n« Not used directly for rating\n« Usually included in forms\n\n¢« Schedules with coverage terms\n* Capture information per scheduled item\n\n* Each scheduled item includes one or more coverages\nthat can affect rating\n\n+ Each coverage includes one or more coverage terms",
+      "word_count": 56,
+      "avg_confidence": 89.57,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Steps to add generic schedules to a line of business [Fj\n\n* Create Generic Schedule Data Model for the line\n\n* Configure scheduled clauses and properties in the product model, using Product\nDesigner\n\n* (Optional) Configure the schedule user interface if you want to change how it looks\nand operates",
+      "word_count": 51,
+      "avg_confidence": 92.22,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Configure generic schedules in Product Designer [\n\n« Add the scheduled coverage for the schedules s\nchedule\n\nproperties\n\n* Select the covered object and scheduled covered object type\n\n* Define Schedule Properties to capture information for the\nscheduled items\n\nScheduled coverage",
+      "word_count": 42,
+      "avg_confidence": 88.42,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Configure generic schedules in Product Designer [\n\n* (Optional) Add the scheduled item coverage for\n\n5 Schedule\nschedules with coverage terms\n\nproperties\n\n* Select the item covered object and scheduled item covered\nobject type\n\n* Define the coverage terms\n* Go back to the scheduled coverage\n\n* On the Schedule page, add a link to the scheduled item\ncoverage\n\nScheduled item\ncoverage\n\nScheduled coverage\n[optional] 9",
+      "word_count": 67,
+      "avg_confidence": 89.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\n\nGeneric schedules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.4,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question\n\n,— — What is a coverage term?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 17,
+      "avg_confidence": 63.71,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer\n\n,~ — What is a coverage term?\n\n¢\n¢\n¢\n\nA coverage term is a value that measures or further defines a specific coverage.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 30,
+      "avg_confidence": 78.63,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Lesson\nobjectives\n\n: ist examples of coverage terms\nreview * Describe generic schedules",
+      "word_count": 13,
+      "avg_confidence": 86.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Student exercise\n\nCoverage terms",
+      "word_count": 5,
+      "avg_confidence": 95.83,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

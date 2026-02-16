@@ -1,0 +1,456 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-05",
+    "slide_count": 40,
+    "slides_with_text": 35,
+    "total_words": 1567,
+    "avg_confidence": 84.14,
+    "processing_time_seconds": 16.08,
+    "extracted_at": "2026-02-13T12:17:49.449908"
+  },
+  "full_text": "Atomic Widgets\n\nLesson\nobjectives\n\n+ Create atomic widgets\n- Bind an atomic widget to the data model\n\n- Create and modify widget labels\n\n| Atomic widgets\n\n« Anatomic widget is a graphical user\ninterface element that is non-divisible\n\n« Anatomic widget displays individual\ndata values and/or executes individual\nactions\n\n¢ Input and cell widgets bind data values\n\n« Data values often associated with root\nobjects, query objects, or related objects\n\nAddresses\n\n[Address type >\n\nBusiness 1 Main Street, Santa Monica, CA90401\n\nBilling 101d Harbor Lane, Marina Del Rey, CA 90282\n\nAddress Detail\n\nHome\nHome\nUnited states\n\n345 Fir Lane\n\nCalifornia\n\nZIP Code 91352-8888 (2)\n\n| Display keys and widgets G\n\n¢ Widgets often include a label rendered with them in the UI\n\n« It's a recommended practice to use Display Keys to display static text in the UI\n¢ Display Keys support easy text reusability\n\nSummary\n\nBasic Information\n\nName Eric Andy\n\nPublic ab98\n\nEmail\n\ncreated On 06/19/2088\n\nPrimary Address\n\nDisplaying values from the\ndatabase\n\n| Review: Entities G\nDatabase Application Server\n\ngenerated Java class\n\nABContact\n\nName\nABContact\nXML PubliclD mp | AEContact\nCreateTime Name\n\nPublicID\nCreateTime\n\nab_abcontact\n\nPane [Panic | ceieTine |\n\nGosu code\n\n©\n\nRoot object (1 of 6) G\n\nDatabase User Interface\n\nApplication Server\n\nGB ascontactsummaryDv.pct *\n\nab_abcontact\n\nBasic Information\n\nPubliciD CreateTime\nName |anABContact.DisplayName_\nBurlingame ab:78 05/27/2016 ian ana es\nSaab Created On ||\nAlbertson's ab:61 03/16/2016 Assigned User | anABContactAssignedser Bl\nHealth South ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy\n\nRoot object (2 of 6) G\n\nDatabase User Interface\n\nApplication Server\n\nGB ascontactsummaryDv.pct *\n\nab_abcontact\n\nBasic Information\n\nPublicID CreateTime\nName [anASContact DisplayName\nBurlingame ab:78 05/27/2016 ian ana es\nSaab Created On ||\nAlbertson's abet oat62016 pasnedtver [ostonoaanineatie\nHealth South —_ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\nL@\n\nRoot object (3 of 6) G\n\nDatabase User Interface\n\nApplication Server\n\nGB ascontactsummaryDv.pct *\n\nab_abcontact\n\nPublicID CreateTime DisplayName = Express Auto Basic Information\nublicID = absample:2 fete UR\nBurlingame ab:78 05/27/2016 reateTime = 04/19/2016 eee ——\nSaab . Greatedon [Zita lech\nAlbertson's ab:61 03/16/2016 AssignedUser = 1 Assigned User | anABContactAssignedUser SA)\nHealth South ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy\n\nRoot object (4 of 6) G\n\n. . .\nDatabase Application Server : User Interface\n: )\n. |ABContactSummaryDV.pet *\nab_abcontact :\nPublicID CreateTime DisplayName = Express Auto : Basic Information\nublicID = absample:2 : fete UR\nBurlingame ab:78 05/27/2016 reateTime = 04/19/2016 ue ou [anABContact PublicID -\nSaab . du 1 Created On Jole =)\nAssignedUser =\nAlbertson's ab:61 03/16/2016 9 Assigned User | anABContactAssignedUser Pi}\nHealth South ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy\n\nRoot object (5 of 6) G\n\n. . .\nDatabase Application Server: User Interface\n:\nplapcontace . BascontactsummaryOv.pct *\nab_abcontac' : Rta,\nPublicID CreateTime DisplayName = Express Auto : Basic Information ° “eee,\nublicID = absample:2 : fete (aascomaDaaianane® | 7 4\ni E Le\nBurlingame ab:78 05/27/2016 reateTime = 04/19/2016 a encanta POD 8 ™ G\nSaab . du 1 Created On Jole =) A\nAssignedUser = °\nAlbertson's ab:61 03/16/2016 9 Assigned User | anABContactAssignedUser pal, # ®\nHealth South —_ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy\n\nRoot object (6 of 6) G\n\nBurlingame\nSaab\n\nAlbertson's\nHealth South\n\nDatabase\n\nab_abcontact\n\nPublicID\n\nab:78\n\nab:61\nab:73\n\nCreateTime\n\n05/27/2016\n\n03/16/2016\n04/18/2016\n\nApplication Server User Interface\n\nBascontactsumparyDv.pct *\n\nnt 5\nDisplayName = Express Auto Basic Information “se were,\n7 [mansConsabapaynom”]\nublicID = absample:2 Name [anABContact DisplayNande’ ° *\n\nPublic ID fanacontactPubiD 16 ®f\n\nCreated On Jebus\n\nreate Time = 04/19/2016\nAssignedUser = 1\n\nassoneavser _anABConacsinede\n\nPrimary Address\n\nBasic Information\n\nName\n\ngenerated Java class\n\ncy\n\nPublic ID\n\nCreated On\n\nAssigned User\n\n| Dot notation\n\nDot notation is a Gosu language syntax used to identify data objects and\n\nproperties\n\n* Starts with object and ends with field,\n\nrelated object, or related array\nRelies on data model\n\n« Not used to configure\ndata model\n\n* Available for User Interface\nconfiguration and Gosu classes\n\nStudio offers smart suggestion\n\nExamples include data fields,\nobject collections, and methods\n\nGi\n\nABContact (ab_abcontact) (delegates to Co!\n> Description\n\nFields\n\nAssignedUser ‘orci ke\nAssigned use\n\nto.User (ecenabi)” Goasatie” (wr\n\nreferredCurrency type key to Curency | fxsona” gon\n\nPI\nThe contact's preferred currency.\n\nArrays\n\nBankAccounts array key for BankAccount | (exponabie)” one\n\nBank accounts\nanABContact.FaxPhone\n\n| Dot notation syntax\n\n« Referencing data field on given object\n\n* object.field\nanABContact\n\nanABContact.FaxPhone\n\n¢ Referencing field on related object\n\n* object.foreignKey.field\nanABContact (User object)\n\nanABContact.AssignedUser.JobTitle\n\n| Dot notation examples\n\n* Referencing array on given object\n* object.array\nanABContact (array of BankAccount objects)\n\n_—\n\nanABContact.BankAccounts\n\n* Referencing field at subtype level\n* (object as subtype).field\nanABContact\n\n(anABContact as ABPerson).DateOfBirth\n\nDemonstrations\n\n| User Story — Social Media (Part B) (1 of 2) G\n\n“We want to store Social Media information about the contacts.”\n— Insurance Company Business Analysts\n\nGi TriningApp Search |~ Contact | Zo\n\nPerson: William Andy\n\nSummary\nBasics || si Media || Analysis\n\nLast Social Activity\n\nEnrolled in Social Media ves\nFriendbook http:/friendbook.com/williamandy\nchirp vwww.chirp.com/wandy\n\n105\n\nDec 11,2018 12:00 AM\n\n| User Story — Social Media (Part B) (2 of 2) G\n\nRecall that we have already implemented the required data model changes in the\nprevious Extending The Data Model lesson, and now we are going to make the\nnecessary user interface changes to display the new fields\n\nExtend the Data Model\nand the user interface to\ndisplay these widgets\n\nSummar\n\n| Demonstration G\n\nSocial Media (Part B) - Analysis\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nSocial Media (Part B) - Implementation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nSocial Media (Part B) - Change element\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — What must you specify in a widget's \"value\" property?\n\n¢\n¢\n¢\n\nSS SSS SHS SS FH\n\nAnswer\n\n_- — What must you specify in a widget's \"value\" property?\n\n4\n: “ You must specify the field in the data model that the widget is bound to.\n\nSS SSS SHS se FH\n\nQuestion\n\n,~— — When would you see the keyword \"as\" in the value property?\n\n¢\n¢\n¢\n\nSS SSS SHS SS FH\n\nAnswer G\n\nan When would you see the keyword \"as\" in the value property?\n\n¢\n¢\n\nYou would see the \"as\" when the container's base object is subtyped, and the field to\nwhich the widget must be bound is at one of the subtype levels.\n\nSS SSS SHS se FH\n\nQuestion\n\nan What is a display key?\n¢\n¢\n\nSS SSS SHS SS FH\n\nAnswer\n\nan What is a display key?\n: “ Adisplay key is an abstract display value referenced by a widget's label property.\nIt can have one or more language-specific values, and when the UI is rendered, the\n\nvalue matching the user’s language is used.\n\nSS SSS SHS se FH\n\nQuestion\n\n—— Ifyou create a widget and specify only the ID, name, and label, is the\nA widget visible? Editable? Required?\n\nSS SSS SHS SS FH\n\nGi\n\nAnswer\n\n—— Ifyou Create a widget and specify only the ID, name, and label, is the\nY widget visible? Editable? Required?\n\nThe widget will be visible, not editable, and not required.\n\nSS SSS SHS se FH\n\nGi\n\nQuestion\n\n,- — The screenshot shows a standard input widget. The customer requires\n\nA a\"long\" date format. How could you implement this requirement?\n\n¢\n\nSS SSS SHS SS FH\n\nGi\n\nAnswer G\n\n,- — The screenshot shows a standard input widget. The customer requires\n\nY along\" date format. How could you implement this requirement?\n\n¢\n\nYou would need to configure the date input widget’s date format property. Setting this\nproperty to “long” will provide the desired behavior.\n\nSS SSS SHS se FH\n\nQuestion\n\n_- — For the object \"myContact\" of type ABContact,\n\n¢\n¢ A)\n\nB)\nCc)\nD)\n\nSS SSS SHS SS FH\n\nPreferred currency?\nNotes?\n\n2 what is the dot notation for the object's:\n\nLevel of experience of myContact's assigned user?\n\nMobile phone (if it is a person)\n\nUser (ab_user)\n> Description\n\nFields\n\nBackupUser\nRetums the backup user for this user\n\nExperienceLevel\nExperience level of the user.\n\nJobTitle 255) cexpenabi\nUsers job title.\n\nGi\n\nABContact (ab_abcontact) (delegates to}\n> Description\n\nFields\nAssignedUser foreign ke (eoonabie” (oasabe\nAssigned user\n\nFaxPhone (exponable)” (loadabie)’ — (wrtabie)\nFax number associated with the contact\n\nPreferredCurrency typ (ese\nThe contact’ preferred currency\n\nArrays\n\nContactNotes array key (exsonabe)”\nNotes\n\nABPerson (subtype of ABContact)\n> Description\n\nCellPhone ) _(exoorabiey” oadabie)” (writable)\nMobile phone number associated with the contact\nDateOfBirth Me (experabe)” Goadabie)” (wrtabie\nDate of birth\n\nAnswer G\n\n_- — For the object \"myContact\" of type ABContact,\n2 what is the dot notation for the object's:\n\nA) Preferred currency?\n\nB) Notes?\n\n¢\n¢\n\nC) Level of experience of myContact's assigned user?\nD) Mobile phone (if it is a person)\n\nThe correct responses are:\n\nA) myContact.PreferredCurrency\n\nB) myContact.ContactNotes\n\nc) myContact.AssignedUser.ExperienceLevel\n\nSS SSS SHS se FH\n\nD) (myContact as ABPerson).CellPhone\n\nLesson\nobjectives + Create atomic widgets\n\nreview - Bind an atomic widget to the data model\n\n- Create and modify widget labels\n\n| Student exercise\n\nAtomic Widgets",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Atomic Widgets",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n+ Create atomic widgets\n- Bind an atomic widget to the data model\n\n- Create and modify widget labels",
+      "word_count": 21,
+      "avg_confidence": 92.52,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Atomic widgets\n\n« Anatomic widget is a graphical user\ninterface element that is non-divisible\n\n« Anatomic widget displays individual\ndata values and/or executes individual\nactions\n\n¢ Input and cell widgets bind data values\n\n« Data values often associated with root\nobjects, query objects, or related objects\n\nAddresses\n\n[Address type >\n\nBusiness 1 Main Street, Santa Monica, CA90401\n\nBilling 101d Harbor Lane, Marina Del Rey, CA 90282\n\nAddress Detail\n\nHome\nHome\nUnited states\n\n345 Fir Lane\n\nCalifornia\n\nZIP Code 91352-8888 (2)",
+      "word_count": 81,
+      "avg_confidence": 82.49,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Display keys and widgets G\n\n¢ Widgets often include a label rendered with them in the UI\n\n« It's a recommended practice to use Display Keys to display static text in the UI\n¢ Display Keys support easy text reusability\n\nSummary\n\nBasic Information\n\nName Eric Andy\n\nPublic ab98\n\nEmail\n\ncreated On 06/19/2088\n\nPrimary Address",
+      "word_count": 55,
+      "avg_confidence": 84.83,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Displaying values from the\ndatabase",
+      "word_count": 5,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Review: Entities G\nDatabase Application Server\n\ngenerated Java class\n\nABContact\n\nName\nABContact\nXML PubliclD mp | AEContact\nCreateTime Name\n\nPublicID\nCreateTime\n\nab_abcontact\n\nPane [Panic | ceieTine |\n\nGosu code\n\n©",
+      "word_count": 31,
+      "avg_confidence": 85.81,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Root object (1 of 6) G\n\nDatabase User Interface\n\nApplication Server\n\nGB ascontactsummaryDv.pct *\n\nab_abcontact\n\nBasic Information\n\nPubliciD CreateTime\nName |anABContact.DisplayName_\nBurlingame ab:78 05/27/2016 ian ana es\nSaab Created On ||\nAlbertson's ab:61 03/16/2016 Assigned User | anABContactAssignedser Bl\nHealth South ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy",
+      "word_count": 49,
+      "avg_confidence": 77.66,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Root object (2 of 6) G\n\nDatabase User Interface\n\nApplication Server\n\nGB ascontactsummaryDv.pct *\n\nab_abcontact\n\nBasic Information\n\nPublicID CreateTime\nName [anASContact DisplayName\nBurlingame ab:78 05/27/2016 ian ana es\nSaab Created On ||\nAlbertson's abet oat62016 pasnedtver [ostonoaanineatie\nHealth South —_ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\nL@",
+      "word_count": 47,
+      "avg_confidence": 82.43,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Root object (3 of 6) G\n\nDatabase User Interface\n\nApplication Server\n\nGB ascontactsummaryDv.pct *\n\nab_abcontact\n\nPublicID CreateTime DisplayName = Express Auto Basic Information\nublicID = absample:2 fete UR\nBurlingame ab:78 05/27/2016 reateTime = 04/19/2016 eee ——\nSaab . Greatedon [Zita lech\nAlbertson's ab:61 03/16/2016 AssignedUser = 1 Assigned User | anABContactAssignedUser SA)\nHealth South ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy",
+      "word_count": 62,
+      "avg_confidence": 79.94,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Root object (4 of 6) G\n\n. . .\nDatabase Application Server : User Interface\n: )\n. |ABContactSummaryDV.pet *\nab_abcontact :\nPublicID CreateTime DisplayName = Express Auto : Basic Information\nublicID = absample:2 : fete UR\nBurlingame ab:78 05/27/2016 reateTime = 04/19/2016 ue ou [anABContact PublicID -\nSaab . du 1 Created On Jole =)\nAssignedUser =\nAlbertson's ab:61 03/16/2016 9 Assigned User | anABContactAssignedUser Pi}\nHealth South ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy",
+      "word_count": 77,
+      "avg_confidence": 76.95,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Root object (5 of 6) G\n\n. . .\nDatabase Application Server: User Interface\n:\nplapcontace . BascontactsummaryOv.pct *\nab_abcontac' : Rta,\nPublicID CreateTime DisplayName = Express Auto : Basic Information ° “eee,\nublicID = absample:2 : fete (aascomaDaaianane® | 7 4\ni E Le\nBurlingame ab:78 05/27/2016 reateTime = 04/19/2016 a encanta POD 8 ™ G\nSaab . du 1 Created On Jole =) A\nAssignedUser = °\nAlbertson's ab:61 03/16/2016 9 Assigned User | anABContactAssignedUser pal, # ®\nHealth South —_ab:73 04/18/2016 Primary Address\n\ngenerated Java class\n\ncy",
+      "word_count": 90,
+      "avg_confidence": 74.62,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Root object (6 of 6) G\n\nBurlingame\nSaab\n\nAlbertson's\nHealth South\n\nDatabase\n\nab_abcontact\n\nPublicID\n\nab:78\n\nab:61\nab:73\n\nCreateTime\n\n05/27/2016\n\n03/16/2016\n04/18/2016\n\nApplication Server User Interface\n\nBascontactsumparyDv.pct *\n\nnt 5\nDisplayName = Express Auto Basic Information “se were,\n7 [mansConsabapaynom”]\nublicID = absample:2 Name [anABContact DisplayNande’ ° *\n\nPublic ID fanacontactPubiD 16 ®f\n\nCreated On Jebus\n\nreate Time = 04/19/2016\nAssignedUser = 1\n\nassoneavser _anABConacsinede\n\nPrimary Address\n\nBasic Information\n\nName\n\ngenerated Java class\n\ncy\n\nPublic ID\n\nCreated On\n\nAssigned User",
+      "word_count": 79,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Dot notation\n\nDot notation is a Gosu language syntax used to identify data objects and\n\nproperties\n\n* Starts with object and ends with field,\n\nrelated object, or related array\nRelies on data model\n\n« Not used to configure\ndata model\n\n* Available for User Interface\nconfiguration and Gosu classes\n\nStudio offers smart suggestion\n\nExamples include data fields,\nobject collections, and methods\n\nGi\n\nABContact (ab_abcontact) (delegates to Co!\n> Description\n\nFields\n\nAssignedUser ‘orci ke\nAssigned use\n\nto.User (ecenabi)” Goasatie” (wr\n\nreferredCurrency type key to Curency | fxsona” gon\n\nPI\nThe contact's preferred currency.\n\nArrays\n\nBankAccounts array key for BankAccount | (exponabie)” one\n\nBank accounts\nanABContact.FaxPhone",
+      "word_count": 105,
+      "avg_confidence": 84.41,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Dot notation syntax\n\n« Referencing data field on given object\n\n* object.field\nanABContact\n\nanABContact.FaxPhone\n\n¢ Referencing field on related object\n\n* object.foreignKey.field\nanABContact (User object)\n\nanABContact.AssignedUser.JobTitle",
+      "word_count": 27,
+      "avg_confidence": 88.48,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Dot notation examples\n\n* Referencing array on given object\n* object.array\nanABContact (array of BankAccount objects)\n\n_—\n\nanABContact.BankAccounts\n\n* Referencing field at subtype level\n* (object as subtype).field\nanABContact\n\n(anABContact as ABPerson).DateOfBirth",
+      "word_count": 33,
+      "avg_confidence": 88.91,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Demonstrations",
+      "word_count": 1,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| User Story — Social Media (Part B) (1 of 2) G\n\n“We want to store Social Media information about the contacts.”\n— Insurance Company Business Analysts\n\nGi TriningApp Search |~ Contact | Zo\n\nPerson: William Andy\n\nSummary\nBasics || si Media || Analysis\n\nLast Social Activity\n\nEnrolled in Social Media ves\nFriendbook http:/friendbook.com/williamandy\nchirp vwww.chirp.com/wandy\n\n105\n\nDec 11,2018 12:00 AM",
+      "word_count": 61,
+      "avg_confidence": 83.16,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| User Story — Social Media (Part B) (2 of 2) G\n\nRecall that we have already implemented the required data model changes in the\nprevious Extending The Data Model lesson, and now we are going to make the\nnecessary user interface changes to display the new fields\n\nExtend the Data Model\nand the user interface to\ndisplay these widgets\n\nSummar",
+      "word_count": 61,
+      "avg_confidence": 94.59,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Demonstration G\n\nSocial Media (Part B) - Analysis\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 94.51,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Demonstration G\n\nSocial Media (Part B) - Implementation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 94.59,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Demonstration G\n\nSocial Media (Part B) - Change element\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 40,
+      "avg_confidence": 93.67,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n_- — What must you specify in a widget's \"value\" property?\n\n¢\n¢\n¢\n\nSS SSS SHS SS FH",
+      "word_count": 20,
+      "avg_confidence": 69.1,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer\n\n_- — What must you specify in a widget's \"value\" property?\n\n4\n: “ You must specify the field in the data model that the widget is bound to.\n\nSS SSS SHS se FH",
+      "word_count": 35,
+      "avg_confidence": 77.54,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question\n\n,~— — When would you see the keyword \"as\" in the value property?\n\n¢\n¢\n¢\n\nSS SSS SHS SS FH",
+      "word_count": 22,
+      "avg_confidence": 70.83,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer G\n\nan When would you see the keyword \"as\" in the value property?\n\n¢\n¢\n\nYou would see the \"as\" when the container's base object is subtyped, and the field to\nwhich the widget must be bound is at one of the subtype levels.\n\nSS SSS SHS se FH",
+      "word_count": 50,
+      "avg_confidence": 83.9,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question\n\nan What is a display key?\n¢\n¢\n\nSS SSS SHS SS FH",
+      "word_count": 14,
+      "avg_confidence": 59.8,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer\n\nan What is a display key?\n: “ Adisplay key is an abstract display value referenced by a widget's label property.\nIt can have one or more language-specific values, and when the UI is rendered, the\n\nvalue matching the user’s language is used.\n\nSS SSS SHS se FH",
+      "word_count": 49,
+      "avg_confidence": 83.61,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question\n\n—— Ifyou create a widget and specify only the ID, name, and label, is the\nA widget visible? Editable? Required?\n\nSS SSS SHS SS FH\n\nGi",
+      "word_count": 27,
+      "avg_confidence": 74.46,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer\n\n—— Ifyou Create a widget and specify only the ID, name, and label, is the\nY widget visible? Editable? Required?\n\nThe widget will be visible, not editable, and not required.\n\nSS SSS SHS se FH\n\nGi",
+      "word_count": 37,
+      "avg_confidence": 79.87,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question\n\n,- — The screenshot shows a standard input widget. The customer requires\n\nA a\"long\" date format. How could you implement this requirement?\n\n¢\n\nSS SSS SHS SS FH\n\nGi",
+      "word_count": 30,
+      "avg_confidence": 75.06,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer G\n\n,- — The screenshot shows a standard input widget. The customer requires\n\nY along\" date format. How could you implement this requirement?\n\n¢\n\nYou would need to configure the date input widget’s date format property. Setting this\nproperty to “long” will provide the desired behavior.\n\nSS SSS SHS se FH",
+      "word_count": 52,
+      "avg_confidence": 83.36,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Question\n\n_- — For the object \"myContact\" of type ABContact,\n\n¢\n¢ A)\n\nB)\nCc)\nD)\n\nSS SSS SHS SS FH\n\nPreferred currency?\nNotes?\n\n2 what is the dot notation for the object's:\n\nLevel of experience of myContact's assigned user?\n\nMobile phone (if it is a person)\n\nUser (ab_user)\n> Description\n\nFields\n\nBackupUser\nRetums the backup user for this user\n\nExperienceLevel\nExperience level of the user.\n\nJobTitle 255) cexpenabi\nUsers job title.\n\nGi\n\nABContact (ab_abcontact) (delegates to}\n> Description\n\nFields\nAssignedUser foreign ke (eoonabie” (oasabe\nAssigned user\n\nFaxPhone (exponable)” (loadabie)’ — (wrtabie)\nFax number associated with the contact\n\nPreferredCurrency typ (ese\nThe contact’ preferred currency\n\nArrays\n\nContactNotes array key (exsonabe)”\nNotes\n\nABPerson (subtype of ABContact)\n> Description\n\nCellPhone ) _(exoorabiey” oadabie)” (writable)\nMobile phone number associated with the contact\nDateOfBirth Me (experabe)” Goadabie)” (wrtabie\nDate of birth",
+      "word_count": 137,
+      "avg_confidence": 79.58,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Answer G\n\n_- — For the object \"myContact\" of type ABContact,\n2 what is the dot notation for the object's:\n\nA) Preferred currency?\n\nB) Notes?\n\n¢\n¢\n\nC) Level of experience of myContact's assigned user?\nD) Mobile phone (if it is a person)\n\nThe correct responses are:\n\nA) myContact.PreferredCurrency\n\nB) myContact.ContactNotes\n\nc) myContact.AssignedUser.ExperienceLevel\n\nSS SSS SHS se FH\n\nD) (myContact as ABPerson).CellPhone",
+      "word_count": 62,
+      "avg_confidence": 84.67,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Lesson\nobjectives + Create atomic widgets\n\nreview - Bind an atomic widget to the data model\n\n- Create and modify widget labels",
+      "word_count": 22,
+      "avg_confidence": 92.5,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "| Student exercise\n\nAtomic Widgets",
+      "word_count": 5,
+      "avg_confidence": 91.83,
+      "image_size": {
+        "width": 1280,
+        "height": 667
+      }
+    }
+  ]
+}

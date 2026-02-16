@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-04",
+    "slide_count": 32,
+    "slides_with_text": 29,
+    "total_words": 1349,
+    "avg_confidence": 86.32,
+    "processing_time_seconds": 13.11,
+    "extracted_at": "2026-02-13T12:17:33.364539"
+  },
+  "full_text": "The User Interface Architecture\n\nLesson\nobjectives\n\nDescribe the user interface architecture for\nGuidewire applications\n\nDescribe the kinds of PCF files\n\nOpen and edit PCF files\n\nDeploy PCF files\n\n| Guidewire application UI framework\n\nPCF Element\nHF\n| Widget _ Location |\n\nDisplayable elements of the user Navigable places in the application that\ninterface rendered into HTML a user or the application itself can\nnavigate to\n\n* The PCF (Page Configuration Format) object model is a proprietary application\nframework used to create all Guidewire end-user interfaces\n\n¢ By using the Studio Page Configuration (PCF) editor, you can modify an existing\nPCF file or add a new PCF file and graphically build and manage its elements\n\n| Atomic widgets\n\n-——_—__,\nget _bocaton\n|\n\ninterface\n\n* displays individual data value\n\nMP. Anatomic widget is the smallest building block of the user\nCell\n/Button\n\n* executes individual action\n\n| Container widgets i\n\n—_——_———_\n\n| Widget | Location\n—\n\n¢ Acontainer widget is a collection of\natomic widgets and/or other\ncontainer widgets\n\n* Organizes data and functionality into\nlogical groups\n\n| Primary container widgets fa\n\num —_\n\n| Widget\n—_——\n\nreusable view that organizes\natomic widgets\n\n} A primary container is a\n\n| Detail View Panels G\n— lo -0) * Focus on a single record\n\nDetails\n\n@ | Phone wadireses | SankAccouns * Typically, but can be more than one\n¢ Allow the user to...\n\nwiliam andy\n\n7 2 + View an existing record\nPerson: Witla Andy a * Create a new record\nDetails + Edit a record\n\n——E * Columns help organize atomic\nwidgets to display a related\ninformation\n\n* Screens and secondary views can\nreference\n\n¢ Often referred to as \"Detail View\"\n\nJ List View Panels G\n\nPersoninfo | Phone &Addresses | Bank Accounts (0.0)\n\nVerification Check )\nan mpg 6 [pees Personinfo | Phone&Addresses | Bank Accounts oO\n\nACME Credit Union 123-987 345678900\n\nNationalBank 745-222 232323566 Add\nBank Name” Routing Number* Account Number ‘Account Type*\nACME Credit Union 123-987 345678900 Checking\nNational Bank 745-222 232323566 Checking +\n\n¢ Table organizes information that allows the user to view information about multiple\nrecords at the same time\n\n« Uses asmall number of atomic widgets to display the most relevant information\n¢ Screens and secondary views can reference\n¢ Often referred to as \"List View\"\n\n| Input Sets io\n\noO\nPerson nfo | Phone &Addresses | BankAccounts om + Set of atomic widgets grouped together\n* Could be reused together\n\n* Common visibility / editability condition could be\n\nName\n\nFulltime Wiliams Any applied across multiple widgets\n\nPret Snonee = * The input set could be targeted with a partial\nFirst Name william page update to improve UI performance\nMedleNome + Input Sets fit some attributes of the primary\nLast Name * | Andy containers\n\nSufi snone> ~ + They can contain atomic widgets and organize\n‘texinfo them into logical groups\n\nTaxiD « BUT:\n\nTax Filing Status <none> + Input Sets must be embedded into Detail View\nDate of Birth 5 Panels\n\nGender <none> * Cannot be referenced by secondary views\nMarital Status <none> * Cannot have a toolbar directly associated with\n\nthem\n\n| Secondary container widgets fa\n“PCF Element\n\n\" List Detail Panel A secondary container\norganizes primary\n\nDEA J containers\n\nDetail View A primary container is a\n\nTEEN |- reusable view that\n\n| organizes atomic widgets\n\n| Secondary containers Gi\n\nDetails\n¢« ACard is a collection of cards, with\n\neach card containing Detail Views or\n\nson info | Phone &Addresses | BankAccounts\n\nName\n\nList Views villam andy\nAddresses _ List Detail Panel _\nwat\nadd r a-\nand) address Type\n+ AList Detail Panel contains a top List ating 1044 Harbor Lane Marina Del Rey, A 86252\n\nView and a bottom view panel that\ndisplay data about the selected list\nitem\n\n| Top-level container widget\n\nScreen Screen is the top-level container that organizes\n+ secondary and primary containers\n_ List Detail Panel _ A secondary container organizes\n(card primary containers\nListView A primary container is a reusable view\n\nthat organizes atomic widgets\n\n| Screen G\n\nEvery atomic widget, primary view, and secondary view is contained (directly or\nindirectly) in a screen.\n\nPersone Wiliam Andy Screen\n\nSummary\n\nBasics | Social Media | Analysis\n\nBasic information Flag Entries\n\nView  DateFlagged > Reason > Date Unflagged >\n\nName william Andy\nPublic ID abs\nCreated On 06/19/2018\n\nAssigned User\n\ny Address\n\n345 FirLane\nLa Canada, CA 91352\n\nHome\n\n| Review: Container widget hierarchy Gi\n\n* Screen\n* Top-level container that organizes secondary and\nprimary containers\n\nt + Referenced by locations: Page, Wizard, Popup,\nWorksheet\n\n* Secondary containers\n\n* Collections of primary containers organized for\nusability\n\n* Could also contain other secondary containers\n\n¢ Primary containers\netal View + A reusable view that organizes atomic widgets\n\n* In certain cases, a Detail View could also contain a\n| un | List View Panel\n\n« Atomic widgets\n+ Individual elements of data and/or functionality\n\n| Locations i\neect\n\n————_—_—___\n| Widget\n— —_\n\n¢ Alocation is a PCF element that a user can\nnavigate to\n\n¢ Locations themselves do not define any visual\ncontent, but they can contain screens that do\n\n¢ Locations can use system permissions to\ncontrol what the users can see/access in the\napplication\n\n| PCF hierarchy review\n\n————_—_—___\n| Widget\n——,\n\n:\n\nExample user story\n\n| User Story — Person Info tab\n\ngApP\n\nSearch |¥ Contact |\n\nPerson: william Andy\n\nDetails\n\nGender\n\nMarital status\n\nDate of Birth\n\nPerson nfo | Phone&Addresses | Bank Accounts\n\nAfter reviewing the out-of-the-\nbox (OOTB) UI layout, the\ninsurance company wants to\nimplement a few minor\nchanges on the Details\nscreen’s Person Info tab.\n\nwilliam Andy\n\nwilliam\n\nMove the Date of birth\n\nandy widget below the Marital\nStatus Widget\n\nse —_! Add a horizontal divider\n\nse between Tax Filing Status\n\nsinge and Gender widgets\n\n08/02/1979\n\n| Demonstration G\n\nPerson Info Tab\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — Define the broad purpose for each element category:\n\n¢\no A) Atomic widgets\n\nB) Container widgets\n\nC) Locations\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD\n\nAnswer a\n\n_— — Define the broad purpose for each element category:\n\n¢\noY” A) Atomic widgets\n\nB) Container widgets\n\nC) Locations\n\nThe correct responses are:\nA) Atomic widgets display individual elements of data and/or functionality.\nB) Container widgets group atomic widgets into logical groups.\n\nC) Locations define how users move from one place in the application to the next.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion\n\n_— — What does a PCF file define?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD\n\nAnswer\n\n_— — What does a PCF file define?\n\n¢\noY” APCF file defines a container widget or location and its contents.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion\n\n_- — What does each PCF editor convention mean?\n\n¢\no A) Acontainer widget shaded light blue\n\nB) Alight green line\nC) Ared background\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD\n\nAnswer a\n\n_— — What does each PCF editor convention mean?\n\n¢\noY” A) Acontainer widget shaded light blue\n\nB) Alight green line\nC) Ared background\n\nThe correct responses are:\n\nA) The container widget is referenced by the current PCF file and Its contents are\ncontained in another file\n\nB) For the currently selected widget tool, a new widget of that type will be placed in\nthe current location.\n\nC) The PCF file has an error in it.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion\n\n_- — Howdo you deploy PCF changes?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD\n\nAnswer a\n\n_- — Howdo you deploy PCF changes?\n¢\noY” You can restart the server. Restarting the server reloads PCF files at startup. A more\nefficient approach for development is to Reload the PCF files. With internal tools\nenabled, you can use the ALT+SHIFT+L keystroke to reload the PCF files. You can\nalso log in with an administrator user account and reload PCF files from the Internal\nTools Reload page.\n\nSOOO ODDDSDoOODDODOoOoS\n\nLesson\nobjectives\nreview\n\nDescribe the user interface architecture for\nGuidewire applications\n\nDescribe the kinds of PCF files\n\nOpen and edit PCF files\n\nDeploy PCF files\n\n| Student exercise\n\nThe user interface architecture",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "The User Interface Architecture",
+      "word_count": 4,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nDescribe the user interface architecture for\nGuidewire applications\n\nDescribe the kinds of PCF files\n\nOpen and edit PCF files\n\nDeploy PCF files",
+      "word_count": 24,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Guidewire application UI framework\n\nPCF Element\nHF\n| Widget _ Location |\n\nDisplayable elements of the user Navigable places in the application that\ninterface rendered into HTML a user or the application itself can\nnavigate to\n\n* The PCF (Page Configuration Format) object model is a proprietary application\nframework used to create all Guidewire end-user interfaces\n\n¢ By using the Studio Page Configuration (PCF) editor, you can modify an existing\nPCF file or add a new PCF file and graphically build and manage its elements",
+      "word_count": 86,
+      "avg_confidence": 88.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Atomic widgets\n\n-——_—__,\nget _bocaton\n|\n\ninterface\n\n* displays individual data value\n\nMP. Anatomic widget is the smallest building block of the user\nCell\n/Button\n\n* executes individual action",
+      "word_count": 30,
+      "avg_confidence": 78.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Container widgets i\n\n—_——_———_\n\n| Widget | Location\n—\n\n¢ Acontainer widget is a collection of\natomic widgets and/or other\ncontainer widgets\n\n* Organizes data and functionality into\nlogical groups",
+      "word_count": 31,
+      "avg_confidence": 80.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Primary container widgets fa\n\num —_\n\n| Widget\n—_——\n\nreusable view that organizes\natomic widgets\n\n} A primary container is a",
+      "word_count": 22,
+      "avg_confidence": 75.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Detail View Panels G\n— lo -0) * Focus on a single record\n\nDetails\n\n@ | Phone wadireses | SankAccouns * Typically, but can be more than one\n¢ Allow the user to...\n\nwiliam andy\n\n7 2 + View an existing record\nPerson: Witla Andy a * Create a new record\nDetails + Edit a record\n\n——E * Columns help organize atomic\nwidgets to display a related\ninformation\n\n* Screens and secondary views can\nreference\n\n¢ Often referred to as \"Detail View\"",
+      "word_count": 83,
+      "avg_confidence": 82.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "J List View Panels G\n\nPersoninfo | Phone &Addresses | Bank Accounts (0.0)\n\nVerification Check )\nan mpg 6 [pees Personinfo | Phone&Addresses | Bank Accounts oO\n\nACME Credit Union 123-987 345678900\n\nNationalBank 745-222 232323566 Add\nBank Name” Routing Number* Account Number ‘Account Type*\nACME Credit Union 123-987 345678900 Checking\nNational Bank 745-222 232323566 Checking +\n\n¢ Table organizes information that allows the user to view information about multiple\nrecords at the same time\n\n« Uses asmall number of atomic widgets to display the most relevant information\n¢ Screens and secondary views can reference\n¢ Often referred to as \"List View\"",
+      "word_count": 101,
+      "avg_confidence": 78.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Input Sets io\n\noO\nPerson nfo | Phone &Addresses | BankAccounts om + Set of atomic widgets grouped together\n* Could be reused together\n\n* Common visibility / editability condition could be\n\nName\n\nFulltime Wiliams Any applied across multiple widgets\n\nPret Snonee = * The input set could be targeted with a partial\nFirst Name william page update to improve UI performance\nMedleNome + Input Sets fit some attributes of the primary\nLast Name * | Andy containers\n\nSufi snone> ~ + They can contain atomic widgets and organize\n‘texinfo them into logical groups\n\nTaxiD « BUT:\n\nTax Filing Status <none> + Input Sets must be embedded into Detail View\nDate of Birth 5 Panels\n\nGender <none> * Cannot be referenced by secondary views\nMarital Status <none> * Cannot have a toolbar directly associated with\n\nthem",
+      "word_count": 137,
+      "avg_confidence": 85.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Secondary container widgets fa\n“PCF Element\n\n\" List Detail Panel A secondary container\norganizes primary\n\nDEA J containers\n\nDetail View A primary container is a\n\nTEEN |- reusable view that\n\n| organizes atomic widgets",
+      "word_count": 35,
+      "avg_confidence": 75.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Secondary containers Gi\n\nDetails\n¢« ACard is a collection of cards, with\n\neach card containing Detail Views or\n\nson info | Phone &Addresses | BankAccounts\n\nName\n\nList Views villam andy\nAddresses _ List Detail Panel _\nwat\nadd r a-\nand) address Type\n+ AList Detail Panel contains a top List ating 1044 Harbor Lane Marina Del Rey, A 86252\n\nView and a bottom view panel that\ndisplay data about the selected list\nitem",
+      "word_count": 75,
+      "avg_confidence": 81.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Top-level container widget\n\nScreen Screen is the top-level container that organizes\n+ secondary and primary containers\n_ List Detail Panel _ A secondary container organizes\n(card primary containers\nListView A primary container is a reusable view\n\nthat organizes atomic widgets",
+      "word_count": 41,
+      "avg_confidence": 88.23,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Screen G\n\nEvery atomic widget, primary view, and secondary view is contained (directly or\nindirectly) in a screen.\n\nPersone Wiliam Andy Screen\n\nSummary\n\nBasics | Social Media | Analysis\n\nBasic information Flag Entries\n\nView  DateFlagged > Reason > Date Unflagged >\n\nName william Andy\nPublic ID abs\nCreated On 06/19/2018\n\nAssigned User\n\ny Address\n\n345 FirLane\nLa Canada, CA 91352\n\nHome",
+      "word_count": 62,
+      "avg_confidence": 80.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Review: Container widget hierarchy Gi\n\n* Screen\n* Top-level container that organizes secondary and\nprimary containers\n\nt + Referenced by locations: Page, Wizard, Popup,\nWorksheet\n\n* Secondary containers\n\n* Collections of primary containers organized for\nusability\n\n* Could also contain other secondary containers\n\n¢ Primary containers\netal View + A reusable view that organizes atomic widgets\n\n* In certain cases, a Detail View could also contain a\n| un | List View Panel\n\n« Atomic widgets\n+ Individual elements of data and/or functionality",
+      "word_count": 84,
+      "avg_confidence": 86.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Locations i\neect\n\n————_—_—___\n| Widget\n— —_\n\n¢ Alocation is a PCF element that a user can\nnavigate to\n\n¢ Locations themselves do not define any visual\ncontent, but they can contain screens that do\n\n¢ Locations can use system permissions to\ncontrol what the users can see/access in the\napplication",
+      "word_count": 53,
+      "avg_confidence": 83.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| PCF hierarchy review\n\n————_—_—___\n| Widget\n——,\n\n:",
+      "word_count": 9,
+      "avg_confidence": 67.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Example user story",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| User Story — Person Info tab\n\ngApP\n\nSearch |¥ Contact |\n\nPerson: william Andy\n\nDetails\n\nGender\n\nMarital status\n\nDate of Birth\n\nPerson nfo | Phone&Addresses | Bank Accounts\n\nAfter reviewing the out-of-the-\nbox (OOTB) UI layout, the\ninsurance company wants to\nimplement a few minor\nchanges on the Details\nscreen’s Person Info tab.\n\nwilliam Andy\n\nwilliam\n\nMove the Date of birth\n\nandy widget below the Marital\nStatus Widget\n\nse —_! Add a horizontal divider\n\nse between Tax Filing Status\n\nsinge and Gender widgets\n\n08/02/1979",
+      "word_count": 85,
+      "avg_confidence": 88.12,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Demonstration G\n\nPerson Info Tab\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\n_— — Define the broad purpose for each element category:\n\n¢\no A) Atomic widgets\n\nB) Container widgets\n\nC) Locations\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "word_count": 23,
+      "avg_confidence": 88.76,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer a\n\n_— — Define the broad purpose for each element category:\n\n¢\noY” A) Atomic widgets\n\nB) Container widgets\n\nC) Locations\n\nThe correct responses are:\nA) Atomic widgets display individual elements of data and/or functionality.\nB) Container widgets group atomic widgets into logical groups.\n\nC) Locations define how users move from one place in the application to the next.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 62,
+      "avg_confidence": 92.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question\n\n_— — What does a PCF file define?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "word_count": 14,
+      "avg_confidence": 78.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer\n\n_— — What does a PCF file define?\n\n¢\noY” APCF file defines a container widget or location and its contents.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 24,
+      "avg_confidence": 88.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n_- — What does each PCF editor convention mean?\n\n¢\no A) Acontainer widget shaded light blue\n\nB) Alight green line\nC) Ared background\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "word_count": 27,
+      "avg_confidence": 86.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer a\n\n_— — What does each PCF editor convention mean?\n\n¢\noY” A) Acontainer widget shaded light blue\n\nB) Alight green line\nC) Ared background\n\nThe correct responses are:\n\nA) The container widget is referenced by the current PCF file and Its contents are\ncontained in another file\n\nB) For the currently selected widget tool, a new widget of that type will be placed in\nthe current location.\n\nC) The PCF file has an error in it.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 80,
+      "avg_confidence": 91.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question\n\n_- — Howdo you deploy PCF changes?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "word_count": 13,
+      "avg_confidence": 76.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer a\n\n_- — Howdo you deploy PCF changes?\n¢\noY” You can restart the server. Restarting the server reloads PCF files at startup. A more\nefficient approach for development is to Reload the PCF files. With internal tools\nenabled, you can use the ALT+SHIFT+L keystroke to reload the PCF files. You can\nalso log in with an administrator user account and reload PCF files from the Internal\nTools Reload page.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 73,
+      "avg_confidence": 92.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Lesson\nobjectives\nreview\n\nDescribe the user interface architecture for\nGuidewire applications\n\nDescribe the kinds of PCF files\n\nOpen and edit PCF files\n\nDeploy PCF files",
+      "word_count": 25,
+      "avg_confidence": 95.76,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "| Student exercise\n\nThe user interface architecture",
+      "word_count": 7,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

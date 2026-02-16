@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-03",
+    "slide_count": 24,
+    "slides_with_text": 23,
+    "total_words": 861,
+    "avg_confidence": 85.99,
+    "processing_time_seconds": 9.13,
+    "extracted_at": "2026-02-13T12:09:02.061694"
+  },
+  "full_text": "Organizational Structure\n\nLesson\nobjectives\n\n¢ Describe the role that Users, Groups, and\nRegions have in managing claims\n\n* Create Users, Groups, and Regions using the\nClaimCenter user interface (Ul)\n\n* Describe how Regions affect assignment of\nclaims to a group and user\n\nSucceed Insurance has a very specific\norganization structure that fits the way we\ndo business. | need to know how that\ntranslates to the ClaimCenter organization.\n\nMarcus\nBusiness\nAnalyst\n\n| Basic organizational structure\n\n¢ Groups\n* Organize the insurer’s employees\n+ Users available to handle claims\n* Can have users (people) as members\n* Can have child groups\n* Often mirror the insurer's organizational structure\n\n+ For example, a main office has departments that contain\ndivisional offices that control local offices\n\n« Users\n+ People permitted to log into ClaimCenter\n+ Involved in the claim settling process\n+ May be assigned work\n+ Belong to at least one group\n\n| Users\n\n* Credentials\n\n* Roles\n\n« Authority Limits\n\n* Location Information\n* Group membership\n* Experience Level\n\n+ Attributes\n\nUsers are characterized by:\n\n| Groups Gi\n\nGroups generally contain users that perform similar\ntasks\n\nAre hierarchical\nMust have only one parent group\n\nSupport various ClaimCenter functions\n+ Automatic assignment logic\n+ Access\n\n+ Supervisor and manager functions\n\nGroups can be organized around particular lines\nof business (auto, workers comp, property, and so on)\n\nGroups can have regions (geographic areas)\n\n| Users in groups & sendy Beebe G\n\n@\nSes _—_— +4 Casey Evans\n‘ e\n»e x = Terry Martel\nWC Adjusters c=) :\n\n“virtual” group @ «©@ -—8 Terry Martel\n\nOn\neo <«—_ @ sessie Hickman\nWestern Fraud WC a)\nWestern Adjusters 4\nRegional :\nAdjusters\né $ -—8 Jessie Hickman\na0n. 6\n@ P— Charlie Marr\nSacramento =\n\nWC Adjusters\n\n| Assignment G&G\n\n¢ The act of selecting an owner for an assignable object\n\n+ ClaimCenter assigns objects which have associated work to groups and users\n\n¢ Six types of assignable objects in the base application:\n\nAQ FG Bm A\n\n2) “~% 2) i\"\n\nAe sesh\n\nclaim exposure activity service matter subrogation\nrequest\n\n| The outcome of assignment G&G\n\nUpon completion of assignment,\n\nassignable objects are: Exposure Matter\n« Assigned to a group os\n« Assigned to a user in that group SS subroga tion\nClaim\n° a useriGrouy, a)\n\nActivity\nquest\n\n| Regions and Types G\n\n:\n\n¢ Aregion is a geographic area\n\n* Geographic areas that groups may cover\nTexas\n\nad\nbe\n\n* Can be defined by states, provinces, counties,\ncities, zip codes\n\n* Not inherited by child groups\n\n¢ Used in selecting groups for assignments\n\n« Atype defines the type of work the group performs\n* Workers’ Compensation Group\n« Fraud Group\n\n* Subrogation Group\n\n| Organization structure and assignment G\n\n¢ Users, groups, and regions are used in the assignment of Claim objects\n¢ The assignment engine is rule-based\n\n¢ During assignment:\n+ Groups narrow down assignments by group type @r<«\n\n<0\n\neen\n\n+ Regions narrow down assignment to eligible groups L. ‘Cal\nwe\n\n+ Auser is selected from the group\n\n@\na)\n\n| Selecting a group by location\n\nDS, DS,\n\nDS,\n\nGi\n\nTexas\n\nlevel: state\n\ncontains:\nTexas\n\nHarris County\nlevel: county\ncontains:\nHouston, Pasadena....\n\nEastern Harris County\nlevel: postal code\ncontains:\n\n77089, 77034, 77044, ...\n\n| Group attributes used in assignment G\n\nMidwest Normal Southeast Medical\nAuto Adjusters WC Adjusters\n\n@@ @@\n\noe oe\n\nsen eee\n\n¢\nay *\" G3 wc\nType (SS) mB) Normal Type Medical\n\nRegions: Regions: | 4\n\n| When and how does assignment occur?\n\nAssignment occurs when:\n+ An object (claim, exposure, and so on) is created\n+ An object is reassigned\n\nThe owner can be:\n+ Specified explicitly\n* Chosen through assignment rules\n\nAssignments are made to a Group and a User\n\nDuring Claim creation\n+ The claim is assigned\n+ Any created activities are assigned\n+ Any created exposures are assigned\n\n| Demonstration G\n\nRegions, groups, and users\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nUsers and groups\n\nLesson\nobjectives ¢ Describe the role that Users, Groups, and\nreview Regions have in managing claims\n\n* Create Users, Groups, and Regions using the\nClaimCenter user interface (Ul)\n\n* Describe how Regions affect assignment of\nclaims to a group and user\n\nQuestion G\n\n_~ — Whatare the two basic building blocks of the ClaimCenter organizational\na structure?\n\nSOD DODD DOO OoDOoOoOoOD\n\nAnswer [a\n\n,~ — What are the two basic building blocks of the ClaimCenter organizational\nra structure?\n¢\n\nUsers and Groups\n\nSOOO ODDD DDO ODODDOD DOOD\n\nQuestion G\n\n,~ — When does object assignment happen?\n\n4\n¢\n¢\n\nSOD DODD DOO OoDOoOoOoOD\n\nAnswer\n\nane When does object assignment happen?\n\n¢\n¢\n\nObject creation and manual object reassignment\n\nSOOO ODDD DDO ODODDOD DOOD\n\nQuestion G\n\n,~ — What are the six (6) assignable objects in a ClaimCenter base\na configuration?\n¢\n\nSOD DODD DOO OoDOoOoOoOD\n\nAnswer\n\n— — Whatare the six (6) assignable objects in a ClaimCenter base\n\nconfiguration?\n¢\n\n1.Claim\n2.Exposure\n\n3. Activity\n4.Service\n5.Matter\n6.Subrogation\n\nSOOO ODDD DDO ODODDOD DOOD",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Organizational Structure",
+      "word_count": 2,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 557
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the role that Users, Groups, and\nRegions have in managing claims\n\n* Create Users, Groups, and Regions using the\nClaimCenter user interface (Ul)\n\n* Describe how Regions affect assignment of\nclaims to a group and user",
+      "word_count": 40,
+      "avg_confidence": 89.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Succeed Insurance has a very specific\norganization structure that fits the way we\ndo business. | need to know how that\ntranslates to the ClaimCenter organization.\n\nMarcus\nBusiness\nAnalyst",
+      "word_count": 29,
+      "avg_confidence": 94.15,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Basic organizational structure\n\n¢ Groups\n* Organize the insurer’s employees\n+ Users available to handle claims\n* Can have users (people) as members\n* Can have child groups\n* Often mirror the insurer's organizational structure\n\n+ For example, a main office has departments that contain\ndivisional offices that control local offices\n\n« Users\n+ People permitted to log into ClaimCenter\n+ Involved in the claim settling process\n+ May be assigned work\n+ Belong to at least one group",
+      "word_count": 80,
+      "avg_confidence": 89.43,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Users\n\n* Credentials\n\n* Roles\n\n« Authority Limits\n\n* Location Information\n* Group membership\n* Experience Level\n\n+ Attributes\n\nUsers are characterized by:",
+      "word_count": 24,
+      "avg_confidence": 85.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Groups Gi\n\nGroups generally contain users that perform similar\ntasks\n\nAre hierarchical\nMust have only one parent group\n\nSupport various ClaimCenter functions\n+ Automatic assignment logic\n+ Access\n\n+ Supervisor and manager functions\n\nGroups can be organized around particular lines\nof business (auto, workers comp, property, and so on)\n\nGroups can have regions (geographic areas)",
+      "word_count": 56,
+      "avg_confidence": 93.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Users in groups & sendy Beebe G\n\n@\nSes _—_— +4 Casey Evans\n‘ e\n»e x = Terry Martel\nWC Adjusters c=) :\n\n“virtual” group @ «©@ -—8 Terry Martel\n\nOn\neo <«—_ @ sessie Hickman\nWestern Fraud WC a)\nWestern Adjusters 4\nRegional :\nAdjusters\né $ -—8 Jessie Hickman\na0n. 6\n@ P— Charlie Marr\nSacramento =\n\nWC Adjusters",
+      "word_count": 63,
+      "avg_confidence": 75.4,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Assignment G&G\n\n¢ The act of selecting an owner for an assignable object\n\n+ ClaimCenter assigns objects which have associated work to groups and users\n\n¢ Six types of assignable objects in the base application:\n\nAQ FG Bm A\n\n2) “~% 2) i\"\n\nAe sesh\n\nclaim exposure activity service matter subrogation\nrequest",
+      "word_count": 53,
+      "avg_confidence": 81.16,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| The outcome of assignment G&G\n\nUpon completion of assignment,\n\nassignable objects are: Exposure Matter\n« Assigned to a group os\n« Assigned to a user in that group SS subroga tion\nClaim\n° a useriGrouy, a)\n\nActivity\nquest",
+      "word_count": 39,
+      "avg_confidence": 84.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Regions and Types G\n\n:\n\n¢ Aregion is a geographic area\n\n* Geographic areas that groups may cover\nTexas\n\nad\nbe\n\n* Can be defined by states, provinces, counties,\ncities, zip codes\n\n* Not inherited by child groups\n\n¢ Used in selecting groups for assignments\n\n« Atype defines the type of work the group performs\n* Workers’ Compensation Group\n« Fraud Group\n\n* Subrogation Group",
+      "word_count": 66,
+      "avg_confidence": 86.23,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Organization structure and assignment G\n\n¢ Users, groups, and regions are used in the assignment of Claim objects\n¢ The assignment engine is rule-based\n\n¢ During assignment:\n+ Groups narrow down assignments by group type @r<«\n\n<0\n\neen\n\n+ Regions narrow down assignment to eligible groups L. ‘Cal\nwe\n\n+ Auser is selected from the group\n\n@\na)",
+      "word_count": 59,
+      "avg_confidence": 84.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Selecting a group by location\n\nDS, DS,\n\nDS,\n\nGi\n\nTexas\n\nlevel: state\n\ncontains:\nTexas\n\nHarris County\nlevel: county\ncontains:\nHouston, Pasadena....\n\nEastern Harris County\nlevel: postal code\ncontains:\n\n77089, 77034, 77044, ...",
+      "word_count": 33,
+      "avg_confidence": 89.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Group attributes used in assignment G\n\nMidwest Normal Southeast Medical\nAuto Adjusters WC Adjusters\n\n@@ @@\n\noe oe\n\nsen eee\n\n¢\nay *\" G3 wc\nType (SS) mB) Normal Type Medical\n\nRegions: Regions: | 4",
+      "word_count": 36,
+      "avg_confidence": 76.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| When and how does assignment occur?\n\nAssignment occurs when:\n+ An object (claim, exposure, and so on) is created\n+ An object is reassigned\n\nThe owner can be:\n+ Specified explicitly\n* Chosen through assignment rules\n\nAssignments are made to a Group and a User\n\nDuring Claim creation\n+ The claim is assigned\n+ Any created activities are assigned\n+ Any created exposures are assigned",
+      "word_count": 66,
+      "avg_confidence": 92.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Demonstration G\n\nRegions, groups, and users\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Student exercise\n\nUsers and groups",
+      "word_count": 6,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Lesson\nobjectives ¢ Describe the role that Users, Groups, and\nreview Regions have in managing claims\n\n* Create Users, Groups, and Regions using the\nClaimCenter user interface (Ul)\n\n* Describe how Regions affect assignment of\nclaims to a group and user",
+      "word_count": 41,
+      "avg_confidence": 90.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question G\n\n_~ — Whatare the two basic building blocks of the ClaimCenter organizational\na structure?\n\nSOD DODD DOO OoDOoOoOoOD",
+      "word_count": 20,
+      "avg_confidence": 81.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer [a\n\n,~ — What are the two basic building blocks of the ClaimCenter organizational\nra structure?\n¢\n\nUsers and Groups\n\nSOOO ODDD DDO ODODDOD DOOD",
+      "word_count": 26,
+      "avg_confidence": 72.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n,~ — When does object assignment happen?\n\n4\n¢\n¢\n\nSOD DODD DOO OoDOoOoOoOD",
+      "word_count": 16,
+      "avg_confidence": 76.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\nane When does object assignment happen?\n\n¢\n¢\n\nObject creation and manual object reassignment\n\nSOOO ODDD DDO ODODDOD DOOD",
+      "word_count": 20,
+      "avg_confidence": 82.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question G\n\n,~ — What are the six (6) assignable objects in a ClaimCenter base\na configuration?\n¢\n\nSOD DODD DOO OoDOoOoOoOD",
+      "word_count": 22,
+      "avg_confidence": 81.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer\n\n— — Whatare the six (6) assignable objects in a ClaimCenter base\n\nconfiguration?\n¢\n\n1.Claim\n2.Exposure\n\n3. Activity\n4.Service\n5.Matter\n6.Subrogation\n\nSOOO ODDD DDO ODODDOD DOOD",
+      "word_count": 27,
+      "avg_confidence": 84.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

@@ -77,7 +77,7 @@ export const settingsRouter = router({
       company_size: z.string().max(50).optional().nullable(),
       website: z.string().url().optional().nullable().or(z.literal('')),
       email: z.string().email().optional().nullable().or(z.literal('')),
-      phone: z.string().max(50).optional().nullable(),
+      phone: z.string().max(20).regex(/^[\d\s+\-()]*$/, 'Invalid phone number format').optional().nullable(),
       timezone: z.string().max(100).optional(),
       locale: z.string().max(20).optional(),
 
@@ -135,8 +135,8 @@ export const settingsRouter = router({
 
       // NEW: Contact Info
       contact_info: z.object({
-        main_phone: z.string().optional().nullable(),
-        fax: z.string().optional().nullable(),
+        main_phone: z.string().max(20).regex(/^[\d\s+\-()]*$/, 'Invalid phone number format').optional().nullable(),
+        fax: z.string().max(20).regex(/^[\d\s+\-()]*$/, 'Invalid fax number format').optional().nullable(),
         general_email: z.string().email().optional().nullable().or(z.literal('')),
         support_email: z.string().email().optional().nullable().or(z.literal('')),
         hr_email: z.string().email().optional().nullable().or(z.literal('')),

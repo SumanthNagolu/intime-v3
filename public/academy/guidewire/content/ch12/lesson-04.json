@@ -1,0 +1,1090 @@
+{
+  "lessonId": "ch12-l04",
+  "chapterId": 12,
+  "chapterSlug": "ch12",
+  "lessonNumber": 4,
+  "title": "Finalizing and Generating Product from APD in policycenter",
+  "sourceFile": "Finalizing and Generating Product from APD in policycenter.docx",
+  "sourceFolder": null,
+  "totalSlides": 1,
+  "estimatedMinutes": 20,
+  "slides": [
+    {
+      "slideNumber": 1,
+      "title": "",
+      "bodyParagraphs": [
+        {
+          "text": "Product Finalization Overview",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "After you have refined and enhanced the insurance product, you are ready to finalize the",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "product in Policycenter.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Finalization is the phase where the visualized product is used to generate the artifacts",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "needed for Policycenter including user interface elements, product model, and entities.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The result is an installed product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Step 1",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Adding and Reviewing Metadata",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "1. Add metadata to all elements in the product model tree.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "a. Ensure that they follow Guidewire suggested standards, or standards agreed",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "upon by the project team members.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "2. Review all content.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "step 2",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Setting the Package Name for the Generated Product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Line Gosu Files",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Set the APDProductLinesGosuPackage script parameter.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "step 3",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Validating and Generating the Product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "1. Validate the product definition.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "2. Generate the product code to create the product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "3. Restart PolicyCenter.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Product Metadata",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Metadata is visible if the Product Design Mode is Designer or above.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The fields labeled (*PD) are metadata fields.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• You must add metadata in all the fields labeled (*PD) for product generation.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "These fields are not required to visualize the product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The metadata includes business descriptions and short names.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The product model is not valid until all metadata has been entered-",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Product Metadata: Short Name (*PD)",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "In Product Design Mode as Developer, the Product Definition screens display the Short",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Name (*PD) fields. These fields must be filled in before generating the product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Clauses and clause terms",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Line, risk object, and exposure",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Attributes",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Typelists",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Typelist options",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Finalize",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "PolicyCenter",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Code Identifier",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Entity names",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Column names",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Typelist names",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Typecodes",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "After finalizing the product, short names translate into entity names, column names, typelists, typecodes, and so on in PolicyCenter Studio.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "https://education.guidewire.com/content-server/secure/045D6714034EE7IF66137466A9B0377E55D41E3C73BA8D0514370B4C53E2E92B85D5836674B545B/media/86996452/V13/lesson-4-a-finalizing-and-generating-product-from-apd-in-policy-center-scorm/scormcontent/assets/MindMap_SN.png",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Adding Short Names:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "You can add short names by:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Setting Default additional fields? toyeswhile importing a mind map, to automatically",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "create the (*PD)fields.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o The default short names are created automatically by concatenating the labels.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o If the label is longer than the allowed character limit, a default short name is",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "created. These defaulted values must be updated before finalizing the product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Defining short names in the mind map.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o For all topics with markers (except product and product line) in the mind map,",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "short names can be specified in a label.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o The label becomes the Short Name (*PD) in PolicyCenter.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Adding Short Name (*PD) values in the visualized product screens directly.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Short Name (*PD) Requirements:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "The Short Name (*PD) fields:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Must start with an uppercase letter and must include only letters, digits, S or",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Cannot have spaces",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Must be unique - Uniqueness of short name depends on the type of object",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o Clauses and clause category - Must be unique within the product line",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o Clause terms - Must be unique within the parent clause",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o Risk objects and exposures - Attributes within the same risk object or exposure",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "must be unique",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Typelist names must be unique",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o In the Developer mode, the short names for the drop-down lists can be",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "specified in the Typelist (*PD) field",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Cannot be Java or Gosu keywords, anda few database keywords",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Have character limits that are enforced in the user interface",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "o If you import a mind map or template where short names exceed the character",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "limits, the short names are truncated",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Reference:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "For more details on this topic, refer to the Guidewire Documentation site and search for Metadata.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Best Practices for Adding Short Names:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Create short names that follow best-practice naming conventions agreed upon by the",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "organization or team.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "ENTITY NAME\t\tENTITY ATTRIBUTE\t\tTYPELIST\t  TYPECODE",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Entity declaration names must begin with a capital letter, with the first letter of each",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "ntimal word capitalized.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Fornew product model entities that are generated using Advanced Product Designer,",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "short names should not be appended with the _ Ext suffix-",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Do not append with Line Prefix, as the entities get appended with Line Prefix after",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "code generation.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Example:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Entity short name: SimpleSmallBusiness",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Generated entity: SSBSimpleSmallBusiness, where SSB is Line Prefix",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Steps to Manually Add Metadata in the Visualized Product Screens",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Exercise:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Add short names to the visualized product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Demonstration:  Product Metadata Short Name.mp4",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Getting Ready for Product Generation",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Before starting the product generation:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "1.Set Product Design Mode to Developer.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Product can be generated only in the Developer mode.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "2.Define the Gosu package that will contain the Gosu classes for the product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "lines.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The APDProductLinesGosuPackage script parameter defines the package in",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "which PolicyCenter generates Gosu files for your product lines.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The default value is ext.lob, and the package is created in gsrc.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "3.(Optionally) If it is not already there, move the product to the PolicyCenter",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "instance where it will be generated, tested, and deployed.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Steps to Set APDProductLinesGosuPackage Script Parameter",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Steps to Move Product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Validate and Generate Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "After adding metadata, you are ready to validate and generate the product, and are ready to",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "deploy it onto the Guidewire Cloud Platform.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "You can validate and generate product in:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "An instance of PolicyCenter that runs on your local machine",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Policycenter running on the Guidewire Cloud Platform",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The product model is not valid until all metadata has been entered-",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Generate Product Code Locally, and Deploy Product onto Guidewire Cloud Platform",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Following illustration shows the process for generating the product code on a local",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "instance of Policycenter , and then deploying the generated product onto Guidewire Cloud",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Platform to various PolicyCenter instances, such as Dev 1, Dev 2, and so on.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "https://education.guidewire.com/content-server/secure/045D6714034EE7IF66137466A9B0377E55D41E3C73BA8D0514370B4C53E2E92B85D5836674B545B/media/86996452/V13/lesson-4-a-finalizing-and-generating-product-from-apd-in-policy-center-scorm/scormcontent/assets/Finalization_on_Local_Machine_Final_v2.png",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Exercise:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Validate and generate the Simple small Business product on your local machine.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Demonstration: Validate and Generate Product.mp4",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Generate, and Deploy Product on Guidewire Cloud Platform",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "The following illustration shows the process for generating and deploying a product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "directly on Guidewire Cloud Platform to various Policycenter instances, such as Dev 1, Dev",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "2, and so on.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "https://education.guidewire.com/content-server/secure/045D6714034EE7IF66137466A9B0377E55D41E3C73BA8D0514370B4C53E2E92B85D5836674B545B/media/86996452/V13/lesson-4-a-finalizing-and-generating-product-from-apd-in-policy-center-scorm/scormcontent/assets/Finalization_on_GWCP_Final.png",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Demonstration: Validate and Generate Product 2.mp4",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Installed Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "The code generation process generates the artifacts needed for Policycenter including:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• User interface elements (page configuration files)",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Product model",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• Entity model",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Generating a product creates files in the config and gsrc directory of PolicyCenter.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "For more details on this topic, refer to the Guidewire Documentation site and search for Generated product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "files.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Visualization Items Excluded from the Generated Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "The following parts of the visualized product are not generated into the product:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The rate in pricing",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Event data",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Editions containing the product model properties and subclause (parent-child",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "clause) relationships",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Risk Details in the Installed Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "In the installed product, the Risk Details screen layout uses certain rules for displaying",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "risk objects, exposures, and coverages.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Reference:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "To view rules for displaying risk objects, exposures, and coverages in the installed product, refer to",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "the Guidewire Documentation site and search for Displaying Risk Details in generated product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Regenerating Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "After generatingyour product, you can continue product development in Guidewire Studio",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "and Product Designer while simultaneously making changes in Advanced Product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Designer.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "To update the installed product, you need to regenerate it.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "When you click Generate Product Code, Advanced Product Designer displays a warning for",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "certain types of modified files, that will be ovetwritten if proceeded with regeneration.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Reference.",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "For more details on the types of files affected during product regeneration, refer to the Guidewire",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Documentation site and search for Regenerating the product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Loading Editions into the Installed Product",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Editions contain the product model properties and subclause (parent-child clause)",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "relationships. After generating the product, you can load editions into that product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Editions Lifecycle and Management",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "https://education.guidewire.com/content-server/secure/045D6714034EE7IF66137466A9B0377E55D41E3C73BA8D0514370B4C53E2E92B85D5836674B545B/media/86996452/V13/lesson-4-a-finalizing-and-generating-product-from-apd-in-policy-center-scorm/scormcontent/assets/Editions_Lifecycle_Management_v1.png",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "You create editions in the visualized product line.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The product template contains all the editions.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "The editions are stored in the Policycenter database after loading the product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "template into the installed product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "With editions, you can make changes to the product model properties and to",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "the subclause relationships in an installed product, without restarting the",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "server.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "For example, making a coverage unavailable or changing the parent of a clause.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Structural changes require regenerating the product code and restarting the",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "server.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "For example, adding a new coverage, adding anew field, changing the name of",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "a risk object, and so on.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Note:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Even though you can make these structural changes while editing a particular",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "edition, the structural changes apply to all editions.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Loading Editions",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Editions are loaded from the product template into an installed product. Loading editions is a two-step process:",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Preload editions - All the editions from the product template are loaded, but",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "are not used yet.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Activate editions - Editions are active and are used in policy transactions.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• In a production server, you cannot activate preloaded editions if there are",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "issues requiring attention in the product template.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "• In a development or test senrer, you can choose to activate the preloaded",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "editions even if the product template contains issues requiring attention. You",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "can control this with the APDBlockInvalidEditionsInDev script parameter.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Load editions to an installed product",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Exercise:",
+          "level": 0,
+          "bold": true
+        },
+        {
+          "text": "Load the editions in the Simple Small Business installed product.",
+          "level": 0,
+          "bold": false
+        },
+        {
+          "text": "Demonstration:  Installed product.mp4",
+          "level": 0,
+          "bold": true
+        }
+      ],
+      "notes": "",
+      "hasTable": false,
+      "hasChart": false,
+      "hasImage": false,
+      "tableData": null,
+      "mediaReferences": []
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Accessing Advanced.mp4",
+      "path": "/academy/guidewire/videos/ch12/Accessing Advanced.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Adding pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Adding pricing.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Advance product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Advance product.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "Creating Editions.mp4",
+      "path": "/academy/guidewire/videos/ch12/Creating Editions.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "Demonstration Modeling Clauses and Clause Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Demonstration Modeling Clauses and Clause Terms.mp4"
+    },
+    {
+      "index": 6,
+      "filename": "Documenting General Information about the Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting General Information about the Product.mp4"
+    },
+    {
+      "index": 7,
+      "filename": "Documenting Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Pricing.mp4"
+    },
+    {
+      "index": 8,
+      "filename": "Documenting Risk Assessment Details.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Risk Assessment Details.mp4"
+    },
+    {
+      "index": 9,
+      "filename": "Enhancing Drop-down .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Drop-down .mp4"
+    },
+    {
+      "index": 10,
+      "filename": "Enhancing Product Model .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model .mp4"
+    },
+    {
+      "index": 11,
+      "filename": "Enhancing Product Model Properties .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model Properties .mp4"
+    },
+    {
+      "index": 12,
+      "filename": "Installed product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Installed product.mp4"
+    },
+    {
+      "index": 13,
+      "filename": "Modeling Attributes.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Attributes.mp4"
+    },
+    {
+      "index": 14,
+      "filename": "Modeling Clauses and Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Clauses and Terms.mp4"
+    },
+    {
+      "index": 15,
+      "filename": "Modeling Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Pricing.mp4"
+    },
+    {
+      "index": 16,
+      "filename": "Modeling Product, Product Line, and General Information Demo.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Product, Product Line, and General Information Demo.mp4"
+    },
+    {
+      "index": 17,
+      "filename": "Modeling Risk Objects and Exposures.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Risk Objects and Exposures.mp4"
+    },
+    {
+      "index": 18,
+      "filename": "Modeling Schedules.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Schedules.mp4"
+    },
+    {
+      "index": 19,
+      "filename": "Product Metadata Short Name.mp4",
+      "path": "/academy/guidewire/videos/ch12/Product Metadata Short Name.mp4"
+    },
+    {
+      "index": 20,
+      "filename": "Validate and Generate Product 2.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product 2.mp4"
+    },
+    {
+      "index": 21,
+      "filename": "Validate and Generate Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product.mp4"
+    },
+    {
+      "index": 22,
+      "filename": "Visualized Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Visualized Product.mp4"
+    }
+  ],
+  "hasNotes": false,
+  "hasTables": false,
+  "hasImages": false
+}

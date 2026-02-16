@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-21",
+    "slide_count": 16,
+    "slides_with_text": 15,
+    "total_words": 445,
+    "avg_confidence": 87.45,
+    "processing_time_seconds": 5.21,
+    "extracted_at": "2026-02-13T12:06:55.022180"
+  },
+  "full_text": "Modifiers\n\nLesson\nobjectives\n\n¢ Describe the role of modifiers in policy ratings\n\n¢ Describe the different types of modifiers\n\n« Work with different modifiers within\nPolicyCenter\n\nDalia\nUnderwriter {\n\nt \\\n\n| need to apply a factor or a list of factors\nto adjust the premium that the rating\nengine calculates.\n\n| Rate modifier Gi\n\n¢ Isa value that the rating engine uses\nPOY to justify the policy premium, or some\nQO portion of the policy premium\n* Captures information relevant to\n(4/7 = pricing that are not necessarily tied to\nspecific coverage or coverables\n\nGi\n\n¢ Affects the rating of coverages\n\n* Creates an instance of a modifier\nthat affects the cost of a policy\n\n| Demonstration G\nCreating basic modifiers\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nDalia\nUnderwriter\n\nWhat is schedule rate modifier and how\ndo | create one?\n\n| Schedule rate modifier Gi\n\neetEa,\nSg “+\n@ Sg\na A\na s\na a\n: a\na a\nCA)- : :\ns a\n% .\n%, Pad\n\n“unnnt®\n\nUse them for factors such as management, property, and other intangibles that you\ncannot quantify as part of the submission.\n\n| RateFactor typelist Gi\n\nffi) RateFactorType.ttx x\nim typecode & | (SZshow al\n\nRate factors must be listed in the RateFactorType typelist before they can be added\nto a schedule rate in Product Designer\n\nQuestion\n\n,- — For the Personal Auto policy line, why are there two possible values for a\n¢ modifier’s \"modifier type\"?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi\n\nAnswer Gi\n\n,- — For the Personal Auto policy line, why are there two possible values for a\nx modifier’s \"modifier type\"?\n¢\n\nIn Personal Auto, a modifier can be associated with the policy line or to a specific\nvehicle. When creating the modifier, you specify a modifier type to denote if it is policy\nline level (PAModifier) or vehicle level (PAVehicleModifier).\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n,~ — When do you need to add values to the RateFactorType typelist?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhen do you need to add values to the RateFactorType typelist?\n\nYou need to add typecodes to the RateFactorType typelist when you create a\nschedule rate modifier and the desired rate factors don't already exist.\n\nLesson\nobjectives ¢ Describe the role of modifiers in policy ratings\n\nI ¢ Describe the different types of modifiers\nreview ¢ Work with different modifiers within\n\nPolicyCenter\n\n| Student exercise\n\nModifiers",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Modifiers",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the role of modifiers in policy ratings\n\n¢ Describe the different types of modifiers\n\n« Work with different modifiers within\nPolicyCenter",
+      "word_count": 25,
+      "avg_confidence": 87.56,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Dalia\nUnderwriter {\n\nt \\\n\n| need to apply a factor or a list of factors\nto adjust the premium that the rating\nengine calculates.",
+      "word_count": 25,
+      "avg_confidence": 93.32,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Rate modifier Gi\n\n¢ Isa value that the rating engine uses\nPOY to justify the policy premium, or some\nQO portion of the policy premium\n* Captures information relevant to\n(4/7 = pricing that are not necessarily tied to\nspecific coverage or coverables",
+      "word_count": 44,
+      "avg_confidence": 83.95,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Gi\n\n¢ Affects the rating of coverages\n\n* Creates an instance of a modifier\nthat affects the cost of a policy",
+      "word_count": 21,
+      "avg_confidence": 88.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Demonstration G\nCreating basic modifiers\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.53,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Dalia\nUnderwriter\n\nWhat is schedule rate modifier and how\ndo | create one?",
+      "word_count": 13,
+      "avg_confidence": 95.14,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Schedule rate modifier Gi\n\neetEa,\nSg “+\n@ Sg\na A\na s\na a\n: a\na a\nCA)- : :\ns a\n% .\n%, Pad\n\n“unnnt®\n\nUse them for factors such as management, property, and other intangibles that you\ncannot quantify as part of the submission.",
+      "word_count": 50,
+      "avg_confidence": 72.47,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| RateFactor typelist Gi\n\nffi) RateFactorType.ttx x\nim typecode & | (SZshow al\n\nRate factors must be listed in the RateFactorType typelist before they can be added\nto a schedule rate in Product Designer",
+      "word_count": 34,
+      "avg_confidence": 85.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Question\n\n,- — For the Personal Auto policy line, why are there two possible values for a\n¢ modifier’s \"modifier type\"?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "word_count": 30,
+      "avg_confidence": 80.96,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Answer Gi\n\n,- — For the Personal Auto policy line, why are there two possible values for a\nx modifier’s \"modifier type\"?\n¢\n\nIn Personal Auto, a modifier can be associated with the policy line or to a specific\nvehicle. When creating the modifier, you specify a modifier type to denote if it is policy\nline level (PAModifier) or vehicle level (PAVehicleModifier).\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 67,
+      "avg_confidence": 88.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Question\n\n,~ — When do you need to add values to the RateFactorType typelist?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 23,
+      "avg_confidence": 74.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Answer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhen do you need to add values to the RateFactorType typelist?\n\nYou need to add typecodes to the RateFactorType typelist when you create a\nschedule rate modifier and the desired rate factors don't already exist.",
+      "word_count": 45,
+      "avg_confidence": 88.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Lesson\nobjectives ¢ Describe the role of modifiers in policy ratings\n\nI ¢ Describe the different types of modifiers\nreview ¢ Work with different modifiers within\n\nPolicyCenter",
+      "word_count": 27,
+      "avg_confidence": 87.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Student exercise\n\nModifiers",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-07",
+    "slide_count": 24,
+    "slides_with_text": 22,
+    "total_words": 989,
+    "avg_confidence": 91.24,
+    "processing_time_seconds": 12.13,
+    "extracted_at": "2026-02-13T12:04:22.211199"
+  },
+  "full_text": "Policy Changes and Preemption\n\nLesson\nobjectives\n\nPerform a policy change\n\nChange the effective date of a policy change\nInterpret policy transaction graphs\n\nDescribe preemption behavior\n\nHandle preemptions\n\nDahlia\nUnderwriter\n\nHow do ! change a policy using the application?\nAlso, what does the application do if | make\nmultiple changes to a policy?\n\n| Policy Change i\n\n« Achange transaction, or\npolicy change, changes a\npolicy term prior to its\nexpiration date\n\neoe\n\n* Changes might mean:\n\n* Coverables are added to or\nremoved from the policy\n\n* Coverages are added to or\nremoved from coverables\n\n* Coverage terms are modified\n\n| Demonstration G\n\nPolicy change\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Edit the effective date of an unbound policy change [5\n\n¢ An effective date can be edited after a\npolicy change has started, before it is\nissued\n\nCoton. 2 (Draft) > Personal Auto\n\nAccount File S\n\nr\nPolicy File -\n\n¢ After the policy change is issued, Create r =\nanother policy change transaction is\nrequired if the effective date of the\npolicy data needs to be changed\n\nagain.\n\nNew Note\nNew Document >\n\nNew Activity >\n\nEdit\nCopy Data\nArchiving\n\nEnable/Disable\n\n| The effective date is edited on the policy change fa\n\nEditing this policy transaction will invalidate the current quote and may\n\nrequire re-approval by underwriting. Are you sure you want to continue?\n\nMay require UW approval ka Cancel\n\n‘\n\nPolicy Change Summary\n\nEffective Date *] 11/01/2018\n\nDescription Car purchase delayed by month\n\nThe effective date of a policy change transaction must be within the boundaries of\nthe same policy term.\n\nDarren\nInsurance\nProduct Manager\n\n| need to make sure our full team knows how\npreemptions work. Can you show an example?\n\n| Simple scenarios Gi\n\nPolicy comes Policy renewed\ninto effect or expires\n\nBound: 1/20\nEff: 1/20\n\nBound: 3/07\nEff: 4/01\n\nBound: 5/18\nEff: 5/10\n\nBound: 7/01 _—\nEf 7/20 Ca\n\nScenarios remain simple when:\n* Transactions are executed in sequence (B starts only after A finishes)\n\n* Transactions become effective in sequence (B becomes effective after A)\n\n| Base periods i\n\nPolicy comes Policy renewed\ninto effect or expires\nSubmission Base for change 1\nChange 1 L\nSubmission\nChange 1 base for change 2\nChange 2 L\n\nMost policy transactions modify a copy of an existing PolicyPeriod\n\n* This period is known as the \"base period\" for that transaction\n\n| What may lead to Preemptions? fa\n\nPolicy comes Policy renewed\ninto effect or expires\nSubmission | [PTs Ai\nChange\nChange\n\nPreemption is a phenomenon which occurs when two transactions have been\ninitiated from the same base period\n\n* This occurs when a new transaction is started while another transaction is still in progress\n\n| Preempting job fa\n\nPolicy comes Policy renewed\ninto effect or expires\n\nSubmission\nChange\n\nPreempted ie >|\nchange\n\nWhen two or more jobs are started from same base period, the first job to be bound\npreempts (wins out over) all other jobs\n\n* Losing jobs must be modified to handle preemption\n\n| Demonstration G\n\nPreemption\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Preemption warning: Policy change fa\n\nPolicy comes Policy renewed\ninto effect or expires\nSubmission |. i\nChange\nChange\n\nStart Policy Change\n\nWarning: There is another open policy change for this policy period. You may want to\nwait for that change to be completed before proceeding with this change.\n\n| Preempting transaction Gi\n\nPolicy comes Policy renewed\ninto effect or expires\n\nSubmission\n\nPolicy Change Bound\n\nYour Policy Change (#0001498086) has been bound.\n\n| Preempted transaction i\n\nPolicy comes Policy renewed\ninto effect or expires\n\nsubmissio\n\nn\nchange\n\nchange\n\nOfferings\n\nOffering Selection\n\nHandling preemptions G\n\nYou can either apply all\nchanges or withdraw the\nchange transaction\n\nTransaction\n\nOfferings\n\nYour Policy Change was preempted by Policy Change 0001606720. You will need to\nhandle these preemptions before continuing.\n\nHandle Preemptions\n\n‘Change was preempted by the transactions below. Please view these changes and decide\ncontinue your Policy Change with these changes applied or to withdraw your Policy Change.\n\nPolicy Change 0001606720\n\nComparing Existing Policy and Policy Change: 0001606720\n\nItem Existing Policy Policy Change: 0001606720\n\n= Vehicles\n\n= 2001 Acura RSXin California\n\nColor Red Yellow\n\n| Applying all changes from preempting job fa\n\nPolicy comes Policy renewed\ninto effect or expires\n\nSubmission | [C71\nChange | EET ETTC\nChange ENN HTUCKEEEAR\n\npy -by-\n\nIf all changes from preempting job are applied, then the period created from the\npreempting (winning) transaction becomes the base period for the preempted\n(losing) transaction\n\nQuestion G\n\n_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\ny A)\nB)\nC)\nD)\nE)\nF)\n\nSoS oD DD DDS De Say\n\nIt can be started manually.\n\nIt can only be executed from an existing policy.\nIt requires you to identify the producer of record.\nIt can be withdrawn.\n\nIt can be declined.\n\nIt requires a new quote to be generated.\n\nAnswer\n\nGi\n\n_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\nD. Both E. Both F. Both\n\n7 A) Itcan be started manually.\n\nI B) Itcan only be executed from an existing policy.\n1\n\nI C) Itrequires you to identify the producer of record.\nI\n\nI D)_ Itcan be withdrawn.\n\n| E) lItcan be declined.\n\ni F) lItrequires a new quote to be generated.\n\n1\n\n1\n\n' A. Both B. Change C. Submission\n\n!\n\nI\n\n1\n\nLesson\nobjectives\nreview\n\nPerform a policy change\n\nChange the effective date of a policy change\nInterpret policy transaction graphs\n\nDescribe preemption behavior\n\nHandle preemptions\n\n| Student exercise\n\nPolicy Changes and Preemptions —\nChanging an existing policy",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Policy Changes and Preemption",
+      "word_count": 4,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nPerform a policy change\n\nChange the effective date of a policy change\nInterpret policy transaction graphs\n\nDescribe preemption behavior\n\nHandle preemptions",
+      "word_count": 23,
+      "avg_confidence": 95.22,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Dahlia\nUnderwriter\n\nHow do ! change a policy using the application?\nAlso, what does the application do if | make\nmultiple changes to a policy?",
+      "word_count": 25,
+      "avg_confidence": 94.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Policy Change i\n\n« Achange transaction, or\npolicy change, changes a\npolicy term prior to its\nexpiration date\n\neoe\n\n* Changes might mean:\n\n* Coverables are added to or\nremoved from the policy\n\n* Coverages are added to or\nremoved from coverables\n\n* Coverage terms are modified",
+      "word_count": 48,
+      "avg_confidence": 88.66,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Demonstration G\n\nPolicy change\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.4,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Edit the effective date of an unbound policy change [5\n\n¢ An effective date can be edited after a\npolicy change has started, before it is\nissued\n\nCoton. 2 (Draft) > Personal Auto\n\nAccount File S\n\nr\nPolicy File -\n\n¢ After the policy change is issued, Create r =\nanother policy change transaction is\nrequired if the effective date of the\npolicy data needs to be changed\n\nagain.\n\nNew Note\nNew Document >\n\nNew Activity >\n\nEdit\nCopy Data\nArchiving\n\nEnable/Disable",
+      "word_count": 83,
+      "avg_confidence": 84.99,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| The effective date is edited on the policy change fa\n\nEditing this policy transaction will invalidate the current quote and may\n\nrequire re-approval by underwriting. Are you sure you want to continue?\n\nMay require UW approval ka Cancel\n\n‘\n\nPolicy Change Summary\n\nEffective Date *] 11/01/2018\n\nDescription Car purchase delayed by month\n\nThe effective date of a policy change transaction must be within the boundaries of\nthe same policy term.",
+      "word_count": 71,
+      "avg_confidence": 93.07,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Darren\nInsurance\nProduct Manager\n\n| need to make sure our full team knows how\npreemptions work. Can you show an example?",
+      "word_count": 21,
+      "avg_confidence": 94.59,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Simple scenarios Gi\n\nPolicy comes Policy renewed\ninto effect or expires\n\nBound: 1/20\nEff: 1/20\n\nBound: 3/07\nEff: 4/01\n\nBound: 5/18\nEff: 5/10\n\nBound: 7/01 _—\nEf 7/20 Ca\n\nScenarios remain simple when:\n* Transactions are executed in sequence (B starts only after A finishes)\n\n* Transactions become effective in sequence (B becomes effective after A)",
+      "word_count": 57,
+      "avg_confidence": 88.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Base periods i\n\nPolicy comes Policy renewed\ninto effect or expires\nSubmission Base for change 1\nChange 1 L\nSubmission\nChange 1 base for change 2\nChange 2 L\n\nMost policy transactions modify a copy of an existing PolicyPeriod\n\n* This period is known as the \"base period\" for that transaction",
+      "word_count": 52,
+      "avg_confidence": 91.75,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| What may lead to Preemptions? fa\n\nPolicy comes Policy renewed\ninto effect or expires\nSubmission | [PTs Ai\nChange\nChange\n\nPreemption is a phenomenon which occurs when two transactions have been\ninitiated from the same base period\n\n* This occurs when a new transaction is started while another transaction is still in progress",
+      "word_count": 54,
+      "avg_confidence": 90.72,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Preempting job fa\n\nPolicy comes Policy renewed\ninto effect or expires\n\nSubmission\nChange\n\nPreempted ie >|\nchange\n\nWhen two or more jobs are started from same base period, the first job to be bound\npreempts (wins out over) all other jobs\n\n* Losing jobs must be modified to handle preemption",
+      "word_count": 51,
+      "avg_confidence": 91.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\n\nPreemption\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Preemption warning: Policy change fa\n\nPolicy comes Policy renewed\ninto effect or expires\nSubmission |. i\nChange\nChange\n\nStart Policy Change\n\nWarning: There is another open policy change for this policy period. You may want to\nwait for that change to be completed before proceeding with this change.",
+      "word_count": 49,
+      "avg_confidence": 92.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Preempting transaction Gi\n\nPolicy comes Policy renewed\ninto effect or expires\n\nSubmission\n\nPolicy Change Bound\n\nYour Policy Change (#0001498086) has been bound.",
+      "word_count": 23,
+      "avg_confidence": 92.38,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Preempted transaction i\n\nPolicy comes Policy renewed\ninto effect or expires\n\nsubmissio\n\nn\nchange\n\nchange\n\nOfferings\n\nOffering Selection",
+      "word_count": 19,
+      "avg_confidence": 91.18,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Handling preemptions G\n\nYou can either apply all\nchanges or withdraw the\nchange transaction\n\nTransaction\n\nOfferings\n\nYour Policy Change was preempted by Policy Change 0001606720. You will need to\nhandle these preemptions before continuing.\n\nHandle Preemptions\n\n‘Change was preempted by the transactions below. Please view these changes and decide\ncontinue your Policy Change with these changes applied or to withdraw your Policy Change.\n\nPolicy Change 0001606720\n\nComparing Existing Policy and Policy Change: 0001606720\n\nItem Existing Policy Policy Change: 0001606720\n\n= Vehicles\n\n= 2001 Acura RSXin California\n\nColor Red Yellow",
+      "word_count": 89,
+      "avg_confidence": 90.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Applying all changes from preempting job fa\n\nPolicy comes Policy renewed\ninto effect or expires\n\nSubmission | [C71\nChange | EET ETTC\nChange ENN HTUCKEEEAR\n\npy -by-\n\nIf all changes from preempting job are applied, then the period created from the\npreempting (winning) transaction becomes the base period for the preempted\n(losing) transaction",
+      "word_count": 54,
+      "avg_confidence": 87.57,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\ny A)\nB)\nC)\nD)\nE)\nF)\n\nSoS oD DD DDS De Say\n\nIt can be started manually.\n\nIt can only be executed from an existing policy.\nIt requires you to identify the producer of record.\nIt can be withdrawn.\n\nIt can be declined.\n\nIt requires a new quote to be generated.",
+      "word_count": 74,
+      "avg_confidence": 86.8,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\nGi\n\n_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\nD. Both E. Both F. Both\n\n7 A) Itcan be started manually.\n\nI B) Itcan only be executed from an existing policy.\n1\n\nI C) Itrequires you to identify the producer of record.\nI\n\nI D)_ Itcan be withdrawn.\n\n| E) lItcan be declined.\n\ni F) lItrequires a new quote to be generated.\n\n1\n\n1\n\n' A. Both B. Change C. Submission\n\n!\n\nI\n\n1",
+      "word_count": 87,
+      "avg_confidence": 76.84,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Lesson\nobjectives\nreview\n\nPerform a policy change\n\nChange the effective date of a policy change\nInterpret policy transaction graphs\n\nDescribe preemption behavior\n\nHandle preemptions",
+      "word_count": 24,
+      "avg_confidence": 95.29,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Student exercise\n\nPolicy Changes and Preemptions —\nChanging an existing policy",
+      "word_count": 12,
+      "avg_confidence": 94.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { EntityNavigationProvider } from '@/lib/navigation/EntityNavigationContext'
 import { UserRoleProvider } from '@/lib/contexts/UserRoleContext'
 import { BrandingProvider } from '@/components/providers/BrandingProvider'
+import { AIProvider } from '@/components/providers/AIProvider'
 import { getServerCaller } from '@/server/trpc/server-caller'
 import { type UserRole } from '@/lib/auth/client'
 import { ReactNode } from 'react'
@@ -45,7 +46,9 @@ export default async function EmployeeLayout({ children }: { children: ReactNode
     <UserRoleProvider role={userRole}>
       <BrandingProvider>
         <EntityNavigationProvider>
-          {children}
+          <AIProvider>
+            {children}
+          </AIProvider>
         </EntityNavigationProvider>
       </BrandingProvider>
     </UserRoleProvider>

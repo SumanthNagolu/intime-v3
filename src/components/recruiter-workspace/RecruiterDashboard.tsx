@@ -12,6 +12,7 @@ import {
   QualityMetricsWidget,
   UpcomingCalendarWidget,
   RecentWinsWidget,
+  AISuggestionsWidget,
 } from './widgets'
 import { RefreshCw, Settings, Plus } from 'lucide-react'
 import { trpc } from '@/lib/trpc/client'
@@ -99,6 +100,7 @@ export function RecruiterDashboard({ userName = 'Recruiter', initialData }: Recr
 
         {/* Right Column */}
         <div className="space-y-6">
+          <AISuggestionsWidget />
           <AccountPortfolioWidget initialData={initialData?.accountHealth as Parameters<typeof AccountPortfolioWidget>[0]['initialData']} />
           <QualityMetricsWidget initialData={initialData?.qualityMetrics as Parameters<typeof QualityMetricsWidget>[0]['initialData']} />
           <UpcomingCalendarWidget initialData={initialData?.upcomingInterviews as Parameters<typeof UpcomingCalendarWidget>[0]['initialData']} />

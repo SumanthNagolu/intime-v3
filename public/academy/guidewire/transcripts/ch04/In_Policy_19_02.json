@@ -1,0 +1,5635 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_19_02 .mp4",
+    "video_stem": "In_Policy_19_02",
+    "duration_seconds": 408.52,
+    "duration_formatted": "00:06:48.520",
+    "segment_count": 116,
+    "word_count": 731,
+    "avg_confidence": 0.9245,
+    "transcription_time_seconds": 22.92,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:36:12.769302"
+  },
+  "full_text": "In this demo, we will use the Homeowners Policy Line to learn more about generic schedules. To go to the Homeowners Line Coverage page, click Policy Lines, then Homeowners Line, then Coverages. Scroll down and click the Scheduled Personal Property Coverage. The Scheduled Personal Property is a Scheduled Coverage. Notice that this coverage has two pages that are not found in other coverages. Let's look at the Scheduled Properties page first. It contains field definitions to capture information for scheduled items, for example, item description. Next, let's look at the Scheduled page. On the Scheduled page is a link to another coverage HOP-Line Scheduled Cov item. It is a Scheduled item coverage used to set coverage terms, such as limit and deductibles used for rating purposes. Let's examine the Scheduled Personal Property in the application. Login is Alice Applegate. Next, open an existing Homeowners Submission. Click the down arrow next to Policy. This is the Homeowners Submission. Go to the Coverages page. Click Optional Coverages. Select the Scheduled Personal Property coverage. Click Add. The left columns map to the Scheduled Properties defined in the Schedule Coverages. The right side coverage term columns, for example, limit and deductible, are derived from the Scheduled Item Coverage. Next, we'll create new schedules with coverage terms in Product Designer. Now, we're back in Product Designer. Go to the Homeowners Line Coverages page. Now, we'll add the new schedule. Click Add. This is the Add Coverage page. Enter the code. Enter the name. Click the drop-down. Select Optional Coverages. Click the drop-down for Covered Object. From this list we can select any regular covered object. This is for a dwelling, so select Hop Dwelling. Next, click the drop-down for the Covered Object Type. Select Hop Dwelling Schedule Cove. After selecting the Scheduled Covered Object Type, two additional fields are displayed to further define the schedules. Enter a schedule code. Click OK. Notice the error message. This means that we need to define the schedule properties. Let's do that now. Click Schedule Properties. Next, we'll add Schedule Properties for the description of the item and the quantity. Click Add. This is the Add Property to Schedule screen. First we'll add the Description property. Enter the code for the Description property. And then the name. Next, we need to specify the type of this property. Click the drop-down. Since the Description property will hold text, select String Call 1. Click OK to save the property. Validate the changes. No validation errors. So let's add the Quantity Schedule property. Return to the Schedule Property page. Click Add. Enter the code. And the name. Quantity should be a numeric value. Click the drop-down to see what is available. There are two possibilities for this. Int Call 1 and Pass Int Call 1. Int Call 1 would allow the user to enter negative or positive numbers for the quantity. That really doesn't make sense when we need to know how many of an item they have. The Pass Int Call 1 will only allow positive numbers which makes sense for this. Select Pass Int Call 1. Click OK. Validate the changes. Again, no validation errors. So return to the Schedule properties. Click the Schedule page. Next, we need to set the most descriptive property field. Recall that we have description and quantity. Let's use description. Click the drop-down. Select description. Notice there are no Schedule terms available. Next, we'll fix that. Click Coverages. Click Add. Enter the code. And the name. Click the drop-down. Select Optional Coverages. Click the drop-down for Covered Object. Select the Hopdwell Schedule Cove item. The Covered Object type is selected automatically. Click OK. Click Terms. Click Add. This is the Add Term screen. Enter the code. And the name. Click the Term Type drop-down. We could use Direct, Option, or Package for this depending on the business requirements. However, to keep it simple for this demonstration we'll select Direct. Click the drop-down for the value type. Again, the value type depends on the business requirements. But we'll just use money for this. Click OK. Click the drop-down for Model Type. And select Limit. Validate the changes. No validation errors, so return to Coverages. Scroll down and click the Scheduled Coverage. Click the Schedule page. Click Select Item Coverage. Select the Scheduled Item Coverage. That completes the new schedule. This concludes the demonstration. This concludes the demonstration.  ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 4.56,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:04.560",
+      "text": "In this demo, we will use the Homeowners Policy Line to learn more about generic schedules.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.26,
+          "probability": 0.9761
+        },
+        {
+          "word": "this",
+          "start": 0.26,
+          "end": 0.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "demo,",
+          "start": 0.42,
+          "end": 0.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "we",
+          "start": 0.96,
+          "end": 1.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "will",
+          "start": 1.18,
+          "end": 1.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "use",
+          "start": 1.34,
+          "end": 1.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 1.58,
+          "end": 1.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "Homeowners",
+          "start": 1.7,
+          "end": 2.1,
+          "probability": 0.6035
+        },
+        {
+          "word": "Policy",
+          "start": 2.1,
+          "end": 2.54,
+          "probability": 0.5532
+        },
+        {
+          "word": "Line",
+          "start": 2.54,
+          "end": 2.82,
+          "probability": 0.7007
+        },
+        {
+          "word": "to",
+          "start": 2.82,
+          "end": 3.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "learn",
+          "start": 3.0,
+          "end": 3.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "more",
+          "start": 3.2,
+          "end": 3.44,
+          "probability": 0.998
+        },
+        {
+          "word": "about",
+          "start": 3.44,
+          "end": 3.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "generic",
+          "start": 3.72,
+          "end": 4.06,
+          "probability": 0.8394
+        },
+        {
+          "word": "schedules.",
+          "start": 4.06,
+          "end": 4.56,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 5.2,
+      "end": 15.1,
+      "start_formatted": "00:00:05.200",
+      "end_formatted": "00:00:15.100",
+      "text": "To go to the Homeowners Line Coverage page, click Policy Lines, then Homeowners Line, then Coverages.",
+      "words": [
+        {
+          "word": "To",
+          "start": 5.2,
+          "end": 5.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "go",
+          "start": 5.76,
+          "end": 5.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 5.9,
+          "end": 6.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 6.04,
+          "end": 6.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "Homeowners",
+          "start": 6.14,
+          "end": 6.56,
+          "probability": 0.9365
+        },
+        {
+          "word": "Line",
+          "start": 6.56,
+          "end": 6.86,
+          "probability": 0.9248
+        },
+        {
+          "word": "Coverage",
+          "start": 6.86,
+          "end": 7.28,
+          "probability": 0.7354
+        },
+        {
+          "word": "page,",
+          "start": 7.28,
+          "end": 7.66,
+          "probability": 0.9453
+        },
+        {
+          "word": "click",
+          "start": 7.9,
+          "end": 8.38,
+          "probability": 0.9824
+        },
+        {
+          "word": "Policy",
+          "start": 8.38,
+          "end": 8.76,
+          "probability": 0.8291
+        },
+        {
+          "word": "Lines,",
+          "start": 8.76,
+          "end": 9.32,
+          "probability": 0.9912
+        },
+        {
+          "word": "then",
+          "start": 9.48,
+          "end": 10.34,
+          "probability": 0.9927
+        },
+        {
+          "word": "Homeowners",
+          "start": 10.34,
+          "end": 10.82,
+          "probability": 0.9746
+        },
+        {
+          "word": "Line,",
+          "start": 10.82,
+          "end": 11.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "then",
+          "start": 11.32,
+          "end": 14.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "Coverages.",
+          "start": 14.44,
+          "end": 15.1,
+          "probability": 0.9238
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 18.22,
+      "end": 21.36,
+      "start_formatted": "00:00:18.220",
+      "end_formatted": "00:00:21.360",
+      "text": "Scroll down and click the Scheduled Personal Property Coverage.",
+      "words": [
+        {
+          "word": "Scroll",
+          "start": 18.22,
+          "end": 18.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "down",
+          "start": 18.82,
+          "end": 19.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 19.08,
+          "end": 19.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "click",
+          "start": 19.26,
+          "end": 19.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 19.48,
+          "end": 19.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "Scheduled",
+          "start": 19.62,
+          "end": 20.08,
+          "probability": 0.9668
+        },
+        {
+          "word": "Personal",
+          "start": 20.08,
+          "end": 20.4,
+          "probability": 0.9619
+        },
+        {
+          "word": "Property",
+          "start": 20.4,
+          "end": 20.96,
+          "probability": 0.9863
+        },
+        {
+          "word": "Coverage.",
+          "start": 20.96,
+          "end": 21.36,
+          "probability": 0.8252
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 22.12,
+      "end": 25.18,
+      "start_formatted": "00:00:22.120",
+      "end_formatted": "00:00:25.180",
+      "text": "The Scheduled Personal Property is a Scheduled Coverage.",
+      "words": [
+        {
+          "word": "The",
+          "start": 22.12,
+          "end": 22.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "Scheduled",
+          "start": 22.72,
+          "end": 23.16,
+          "probability": 0.9355
+        },
+        {
+          "word": "Personal",
+          "start": 23.16,
+          "end": 23.46,
+          "probability": 0.9854
+        },
+        {
+          "word": "Property",
+          "start": 23.46,
+          "end": 23.96,
+          "probability": 0.936
+        },
+        {
+          "word": "is",
+          "start": 23.96,
+          "end": 24.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 24.16,
+          "end": 24.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Scheduled",
+          "start": 24.28,
+          "end": 24.74,
+          "probability": 0.7373
+        },
+        {
+          "word": "Coverage.",
+          "start": 24.74,
+          "end": 25.18,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 25.82,
+      "end": 29.74,
+      "start_formatted": "00:00:25.820",
+      "end_formatted": "00:00:29.740",
+      "text": "Notice that this coverage has two pages that are not found in other coverages.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 25.82,
+          "end": 26.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 26.42,
+          "end": 26.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 26.6,
+          "end": 26.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "coverage",
+          "start": 26.8,
+          "end": 27.16,
+          "probability": 0.9697
+        },
+        {
+          "word": "has",
+          "start": 27.16,
+          "end": 27.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 27.44,
+          "end": 27.62,
+          "probability": 0.8984
+        },
+        {
+          "word": "pages",
+          "start": 27.62,
+          "end": 27.98,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 27.98,
+          "end": 28.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 28.2,
+          "end": 28.3,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 28.3,
+          "end": 28.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "found",
+          "start": 28.46,
+          "end": 28.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 28.8,
+          "end": 28.98,
+          "probability": 0.9897
+        },
+        {
+          "word": "other",
+          "start": 28.98,
+          "end": 29.12,
+          "probability": 0.8022
+        },
+        {
+          "word": "coverages.",
+          "start": 29.12,
+          "end": 29.74,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 30.0,
+      "end": 32.98,
+      "start_formatted": "00:00:30.000",
+      "end_formatted": "00:00:32.980",
+      "text": "Let's look at the Scheduled Properties page first.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 30.0,
+          "end": 30.84,
+          "probability": 0.9863
+        },
+        {
+          "word": "look",
+          "start": 30.84,
+          "end": 31.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "at",
+          "start": 31.0,
+          "end": 31.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 31.14,
+          "end": 31.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "Scheduled",
+          "start": 31.24,
+          "end": 31.66,
+          "probability": 0.4375
+        },
+        {
+          "word": "Properties",
+          "start": 31.66,
+          "end": 32.16,
+          "probability": 0.9795
+        },
+        {
+          "word": "page",
+          "start": 32.16,
+          "end": 32.44,
+          "probability": 0.9741
+        },
+        {
+          "word": "first.",
+          "start": 32.44,
+          "end": 32.98,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 34.16,
+      "end": 40.32,
+      "start_formatted": "00:00:34.160",
+      "end_formatted": "00:00:40.320",
+      "text": "It contains field definitions to capture information for scheduled items, for example, item description.",
+      "words": [
+        {
+          "word": "It",
+          "start": 34.16,
+          "end": 34.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "contains",
+          "start": 34.8,
+          "end": 35.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "field",
+          "start": 35.22,
+          "end": 35.54,
+          "probability": 0.9502
+        },
+        {
+          "word": "definitions",
+          "start": 35.54,
+          "end": 36.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 36.02,
+          "end": 36.32,
+          "probability": 0.998
+        },
+        {
+          "word": "capture",
+          "start": 36.32,
+          "end": 36.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "information",
+          "start": 36.64,
+          "end": 37.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 37.16,
+          "end": 37.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "scheduled",
+          "start": 37.44,
+          "end": 37.88,
+          "probability": 0.8589
+        },
+        {
+          "word": "items,",
+          "start": 37.88,
+          "end": 38.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 38.54,
+          "end": 38.84,
+          "probability": 0.8672
+        },
+        {
+          "word": "example,",
+          "start": 38.84,
+          "end": 39.24,
+          "probability": 0.998
+        },
+        {
+          "word": "item",
+          "start": 39.52,
+          "end": 39.86,
+          "probability": 0.6753
+        },
+        {
+          "word": "description.",
+          "start": 39.86,
+          "end": 40.32,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 41.04,
+      "end": 43.5,
+      "start_formatted": "00:00:41.040",
+      "end_formatted": "00:00:43.500",
+      "text": "Next, let's look at the Scheduled page.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 41.04,
+          "end": 41.68,
+          "probability": 0.998
+        },
+        {
+          "word": "let's",
+          "start": 41.92,
+          "end": 42.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "look",
+          "start": 42.32,
+          "end": 42.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 42.48,
+          "end": 42.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 42.62,
+          "end": 42.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "Scheduled",
+          "start": 42.74,
+          "end": 43.14,
+          "probability": 0.5879
+        },
+        {
+          "word": "page.",
+          "start": 43.14,
+          "end": 43.5,
+          "probability": 0.792
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 44.94,
+      "end": 49.32,
+      "start_formatted": "00:00:44.940",
+      "end_formatted": "00:00:49.320",
+      "text": "On the Scheduled page is a link to another coverage HOP-Line Scheduled Cov item.",
+      "words": [
+        {
+          "word": "On",
+          "start": 44.94,
+          "end": 45.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 45.58,
+          "end": 45.68,
+          "probability": 0.999
+        },
+        {
+          "word": "Scheduled",
+          "start": 45.68,
+          "end": 46.08,
+          "probability": 0.9434
+        },
+        {
+          "word": "page",
+          "start": 46.08,
+          "end": 46.28,
+          "probability": 0.9873
+        },
+        {
+          "word": "is",
+          "start": 46.28,
+          "end": 46.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 46.5,
+          "end": 46.62,
+          "probability": 0.998
+        },
+        {
+          "word": "link",
+          "start": 46.62,
+          "end": 46.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 46.78,
+          "end": 46.92,
+          "probability": 0.999
+        },
+        {
+          "word": "another",
+          "start": 46.92,
+          "end": 47.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "coverage",
+          "start": 47.18,
+          "end": 47.6,
+          "probability": 0.458
+        },
+        {
+          "word": "HOP",
+          "start": 47.6,
+          "end": 48.16,
+          "probability": 0.8828
+        },
+        {
+          "word": "-Line",
+          "start": 48.16,
+          "end": 48.42,
+          "probability": 0.604
+        },
+        {
+          "word": "Scheduled",
+          "start": 48.42,
+          "end": 48.86,
+          "probability": 0.5278
+        },
+        {
+          "word": "Cov",
+          "start": 48.86,
+          "end": 49.12,
+          "probability": 0.5093
+        },
+        {
+          "word": "item.",
+          "start": 49.12,
+          "end": 49.32,
+          "probability": 0.9375
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 49.66,
+      "end": 55.68,
+      "start_formatted": "00:00:49.660",
+      "end_formatted": "00:00:55.680",
+      "text": "It is a Scheduled item coverage used to set coverage terms, such as limit and deductibles used for rating purposes.",
+      "words": [
+        {
+          "word": "It",
+          "start": 49.66,
+          "end": 49.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 49.98,
+          "end": 50.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 50.1,
+          "end": 50.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "Scheduled",
+          "start": 50.22,
+          "end": 50.66,
+          "probability": 0.7891
+        },
+        {
+          "word": "item",
+          "start": 50.66,
+          "end": 50.92,
+          "probability": 0.3391
+        },
+        {
+          "word": "coverage",
+          "start": 50.92,
+          "end": 51.3,
+          "probability": 0.9775
+        },
+        {
+          "word": "used",
+          "start": 51.3,
+          "end": 51.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 51.64,
+          "end": 51.8,
+          "probability": 0.999
+        },
+        {
+          "word": "set",
+          "start": 51.8,
+          "end": 52.02,
+          "probability": 0.999
+        },
+        {
+          "word": "coverage",
+          "start": 52.02,
+          "end": 52.42,
+          "probability": 0.98
+        },
+        {
+          "word": "terms,",
+          "start": 52.42,
+          "end": 52.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "such",
+          "start": 53.06,
+          "end": 53.38,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 53.38,
+          "end": 53.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "limit",
+          "start": 53.54,
+          "end": 53.78,
+          "probability": 0.9229
+        },
+        {
+          "word": "and",
+          "start": 53.78,
+          "end": 53.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "deductibles",
+          "start": 53.94,
+          "end": 54.5,
+          "probability": 0.998
+        },
+        {
+          "word": "used",
+          "start": 54.5,
+          "end": 54.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "for",
+          "start": 54.76,
+          "end": 54.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "rating",
+          "start": 54.94,
+          "end": 55.2,
+          "probability": 0.9756
+        },
+        {
+          "word": "purposes.",
+          "start": 55.2,
+          "end": 55.68,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 56.32,
+      "end": 59.6,
+      "start_formatted": "00:00:56.320",
+      "end_formatted": "00:00:59.600",
+      "text": "Let's examine the Scheduled Personal Property in the application.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 56.32,
+          "end": 56.96,
+          "probability": 0.999
+        },
+        {
+          "word": "examine",
+          "start": 56.96,
+          "end": 57.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 57.34,
+          "end": 57.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "Scheduled",
+          "start": 57.5,
+          "end": 57.94,
+          "probability": 0.8901
+        },
+        {
+          "word": "Personal",
+          "start": 57.94,
+          "end": 58.28,
+          "probability": 0.8784
+        },
+        {
+          "word": "Property",
+          "start": 58.28,
+          "end": 58.8,
+          "probability": 0.2373
+        },
+        {
+          "word": "in",
+          "start": 58.8,
+          "end": 58.96,
+          "probability": 0.7856
+        },
+        {
+          "word": "the",
+          "start": 58.96,
+          "end": 59.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "application.",
+          "start": 59.08,
+          "end": 59.6,
+          "probability": 0.9746
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 60.0,
+      "end": 62.02,
+      "start_formatted": "00:01:00.000",
+      "end_formatted": "00:01:02.020",
+      "text": "Login is Alice Applegate.",
+      "words": [
+        {
+          "word": "Login",
+          "start": 60.0,
+          "end": 61.04,
+          "probability": 0.8408
+        },
+        {
+          "word": "is",
+          "start": 61.04,
+          "end": 61.16,
+          "probability": 0.5425
+        },
+        {
+          "word": "Alice",
+          "start": 61.16,
+          "end": 61.44,
+          "probability": 0.8555
+        },
+        {
+          "word": "Applegate.",
+          "start": 61.44,
+          "end": 62.02,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 64.42,
+      "end": 67.34,
+      "start_formatted": "00:01:04.420",
+      "end_formatted": "00:01:07.340",
+      "text": "Next, open an existing Homeowners Submission.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 64.42,
+          "end": 65.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "open",
+          "start": 65.4,
+          "end": 65.74,
+          "probability": 0.9634
+        },
+        {
+          "word": "an",
+          "start": 65.74,
+          "end": 65.88,
+          "probability": 0.9917
+        },
+        {
+          "word": "existing",
+          "start": 65.88,
+          "end": 66.28,
+          "probability": 0.9404
+        },
+        {
+          "word": "Homeowners",
+          "start": 66.28,
+          "end": 66.82,
+          "probability": 0.3845
+        },
+        {
+          "word": "Submission.",
+          "start": 66.82,
+          "end": 67.34,
+          "probability": 0.8379
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 67.8,
+      "end": 69.86,
+      "start_formatted": "00:01:07.800",
+      "end_formatted": "00:01:09.860",
+      "text": "Click the down arrow next to Policy.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 67.8,
+          "end": 68.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 68.52,
+          "end": 68.66,
+          "probability": 0.9917
+        },
+        {
+          "word": "down",
+          "start": 68.66,
+          "end": 68.84,
+          "probability": 0.9092
+        },
+        {
+          "word": "arrow",
+          "start": 68.84,
+          "end": 69.1,
+          "probability": 0.9741
+        },
+        {
+          "word": "next",
+          "start": 69.1,
+          "end": 69.32,
+          "probability": 0.9731
+        },
+        {
+          "word": "to",
+          "start": 69.32,
+          "end": 69.5,
+          "probability": 0.999
+        },
+        {
+          "word": "Policy.",
+          "start": 69.5,
+          "end": 69.86,
+          "probability": 0.6606
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 71.9,
+      "end": 73.86,
+      "start_formatted": "00:01:11.900",
+      "end_formatted": "00:01:13.860",
+      "text": "This is the Homeowners Submission.",
+      "words": [
+        {
+          "word": "This",
+          "start": 71.9,
+          "end": 72.62,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 72.62,
+          "end": 72.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 72.76,
+          "end": 72.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "Homeowners",
+          "start": 72.88,
+          "end": 73.32,
+          "probability": 0.9141
+        },
+        {
+          "word": "Submission.",
+          "start": 73.32,
+          "end": 73.86,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 75.86,
+      "end": 78.08,
+      "start_formatted": "00:01:15.860",
+      "end_formatted": "00:01:18.080",
+      "text": "Go to the Coverages page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 75.86,
+          "end": 76.88,
+          "probability": 0.9355
+        },
+        {
+          "word": "to",
+          "start": 76.88,
+          "end": 77.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 77.04,
+          "end": 77.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "Coverages",
+          "start": 77.14,
+          "end": 77.64,
+          "probability": 0.7178
+        },
+        {
+          "word": "page.",
+          "start": 77.64,
+          "end": 78.08,
+          "probability": 0.9692
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 80.12,
+      "end": 82.26,
+      "start_formatted": "00:01:20.120",
+      "end_formatted": "00:01:22.260",
+      "text": "Click Optional Coverages.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 80.12,
+          "end": 81.14,
+          "probability": 0.9927
+        },
+        {
+          "word": "Optional",
+          "start": 81.14,
+          "end": 81.62,
+          "probability": 0.9229
+        },
+        {
+          "word": "Coverages.",
+          "start": 81.62,
+          "end": 82.26,
+          "probability": 0.8027
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 84.38,
+      "end": 87.18,
+      "start_formatted": "00:01:24.380",
+      "end_formatted": "00:01:27.180",
+      "text": "Select the Scheduled Personal Property coverage.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 84.38,
+          "end": 85.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 85.4,
+          "end": 85.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "Scheduled",
+          "start": 85.56,
+          "end": 85.96,
+          "probability": 0.9121
+        },
+        {
+          "word": "Personal",
+          "start": 85.96,
+          "end": 86.28,
+          "probability": 0.9341
+        },
+        {
+          "word": "Property",
+          "start": 86.28,
+          "end": 86.8,
+          "probability": 0.9683
+        },
+        {
+          "word": "coverage.",
+          "start": 86.8,
+          "end": 87.18,
+          "probability": 0.5293
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 88.52,
+      "end": 89.82,
+      "start_formatted": "00:01:28.520",
+      "end_formatted": "00:01:29.820",
+      "text": "Click Add.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 88.52,
+          "end": 89.54,
+          "probability": 0.998
+        },
+        {
+          "word": "Add.",
+          "start": 89.54,
+          "end": 89.82,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 92.86,
+      "end": 97.2,
+      "start_formatted": "00:01:32.860",
+      "end_formatted": "00:01:37.200",
+      "text": "The left columns map to the Scheduled Properties defined in the Schedule Coverages.",
+      "words": [
+        {
+          "word": "The",
+          "start": 92.86,
+          "end": 93.5,
+          "probability": 0.9238
+        },
+        {
+          "word": "left",
+          "start": 93.5,
+          "end": 93.76,
+          "probability": 0.9766
+        },
+        {
+          "word": "columns",
+          "start": 93.76,
+          "end": 94.18,
+          "probability": 0.9756
+        },
+        {
+          "word": "map",
+          "start": 94.18,
+          "end": 94.42,
+          "probability": 0.9736
+        },
+        {
+          "word": "to",
+          "start": 94.42,
+          "end": 94.56,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 94.56,
+          "end": 94.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "Scheduled",
+          "start": 94.68,
+          "end": 95.08,
+          "probability": 0.1465
+        },
+        {
+          "word": "Properties",
+          "start": 95.08,
+          "end": 95.58,
+          "probability": 0.7769
+        },
+        {
+          "word": "defined",
+          "start": 95.58,
+          "end": 95.9,
+          "probability": 0.9741
+        },
+        {
+          "word": "in",
+          "start": 95.9,
+          "end": 96.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 96.12,
+          "end": 96.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "Schedule",
+          "start": 96.18,
+          "end": 96.62,
+          "probability": 0.9409
+        },
+        {
+          "word": "Coverages.",
+          "start": 96.62,
+          "end": 97.2,
+          "probability": 0.8662
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 97.6,
+      "end": 103.88,
+      "start_formatted": "00:01:37.600",
+      "end_formatted": "00:01:43.880",
+      "text": "The right side coverage term columns, for example, limit and deductible, are derived from the Scheduled Item Coverage.",
+      "words": [
+        {
+          "word": "The",
+          "start": 97.6,
+          "end": 98.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "right",
+          "start": 98.18,
+          "end": 98.36,
+          "probability": 0.9243
+        },
+        {
+          "word": "side",
+          "start": 98.36,
+          "end": 98.62,
+          "probability": 0.5605
+        },
+        {
+          "word": "coverage",
+          "start": 98.62,
+          "end": 99.02,
+          "probability": 0.603
+        },
+        {
+          "word": "term",
+          "start": 99.02,
+          "end": 99.34,
+          "probability": 0.9648
+        },
+        {
+          "word": "columns,",
+          "start": 99.34,
+          "end": 99.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "for",
+          "start": 99.88,
+          "end": 100.3,
+          "probability": 0.627
+        },
+        {
+          "word": "example,",
+          "start": 100.3,
+          "end": 100.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "limit",
+          "start": 100.86,
+          "end": 101.04,
+          "probability": 0.2374
+        },
+        {
+          "word": "and",
+          "start": 101.04,
+          "end": 101.18,
+          "probability": 0.9775
+        },
+        {
+          "word": "deductible,",
+          "start": 101.18,
+          "end": 101.72,
+          "probability": 0.9912
+        },
+        {
+          "word": "are",
+          "start": 102.04,
+          "end": 102.1,
+          "probability": 0.998
+        },
+        {
+          "word": "derived",
+          "start": 102.1,
+          "end": 102.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 102.46,
+          "end": 102.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 102.7,
+          "end": 102.82,
+          "probability": 0.998
+        },
+        {
+          "word": "Scheduled",
+          "start": 102.82,
+          "end": 103.26,
+          "probability": 0.9014
+        },
+        {
+          "word": "Item",
+          "start": 103.26,
+          "end": 103.46,
+          "probability": 0.9248
+        },
+        {
+          "word": "Coverage.",
+          "start": 103.46,
+          "end": 103.88,
+          "probability": 0.8516
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 104.92,
+      "end": 109.0,
+      "start_formatted": "00:01:44.920",
+      "end_formatted": "00:01:49.000",
+      "text": "Next, we'll create new schedules with coverage terms in Product Designer.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 104.92,
+          "end": 105.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "we'll",
+          "start": 105.82,
+          "end": 106.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "create",
+          "start": 106.1,
+          "end": 106.4,
+          "probability": 0.9902
+        },
+        {
+          "word": "new",
+          "start": 106.4,
+          "end": 106.64,
+          "probability": 0.9731
+        },
+        {
+          "word": "schedules",
+          "start": 106.64,
+          "end": 107.0,
+          "probability": 0.6963
+        },
+        {
+          "word": "with",
+          "start": 107.0,
+          "end": 107.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "coverage",
+          "start": 107.32,
+          "end": 107.66,
+          "probability": 0.9233
+        },
+        {
+          "word": "terms",
+          "start": 107.66,
+          "end": 108.06,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 108.06,
+          "end": 108.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "Product",
+          "start": 108.3,
+          "end": 108.6,
+          "probability": 0.9702
+        },
+        {
+          "word": "Designer.",
+          "start": 108.6,
+          "end": 109.0,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 109.0,
+      "end": 111.92,
+      "start_formatted": "00:01:49.000",
+      "end_formatted": "00:01:51.920",
+      "text": "Now, we're back in Product Designer.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 109.0,
+          "end": 110.18,
+          "probability": 0.8662
+        },
+        {
+          "word": "we're",
+          "start": 110.48,
+          "end": 110.82,
+          "probability": 0.9707
+        },
+        {
+          "word": "back",
+          "start": 110.82,
+          "end": 111.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "in",
+          "start": 111.04,
+          "end": 111.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "Product",
+          "start": 111.22,
+          "end": 111.52,
+          "probability": 0.7441
+        },
+        {
+          "word": "Designer.",
+          "start": 111.52,
+          "end": 111.92,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 112.48,
+      "end": 114.92,
+      "start_formatted": "00:01:52.480",
+      "end_formatted": "00:01:54.920",
+      "text": "Go to the Homeowners Line Coverages page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 112.48,
+          "end": 113.04,
+          "probability": 0.9829
+        },
+        {
+          "word": "to",
+          "start": 113.04,
+          "end": 113.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 113.2,
+          "end": 113.3,
+          "probability": 0.9878
+        },
+        {
+          "word": "Homeowners",
+          "start": 113.3,
+          "end": 113.74,
+          "probability": 0.6919
+        },
+        {
+          "word": "Line",
+          "start": 113.74,
+          "end": 114.02,
+          "probability": 0.4363
+        },
+        {
+          "word": "Coverages",
+          "start": 114.02,
+          "end": 114.6,
+          "probability": 0.7305
+        },
+        {
+          "word": "page.",
+          "start": 114.6,
+          "end": 114.92,
+          "probability": 0.939
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 116.68,
+      "end": 118.62,
+      "start_formatted": "00:01:56.680",
+      "end_formatted": "00:01:58.620",
+      "text": "Now, we'll add the new schedule.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 116.68,
+          "end": 117.34,
+          "probability": 0.978
+        },
+        {
+          "word": "we'll",
+          "start": 117.62,
+          "end": 117.92,
+          "probability": 0.9897
+        },
+        {
+          "word": "add",
+          "start": 117.92,
+          "end": 118.02,
+          "probability": 0.98
+        },
+        {
+          "word": "the",
+          "start": 118.02,
+          "end": 118.14,
+          "probability": 0.9565
+        },
+        {
+          "word": "new",
+          "start": 118.14,
+          "end": 118.26,
+          "probability": 0.9199
+        },
+        {
+          "word": "schedule.",
+          "start": 118.26,
+          "end": 118.62,
+          "probability": 0.811
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 119.24,
+      "end": 120.1,
+      "start_formatted": "00:01:59.240",
+      "end_formatted": "00:02:00.100",
+      "text": "Click Add.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 119.24,
+          "end": 119.84,
+          "probability": 0.9917
+        },
+        {
+          "word": "Add.",
+          "start": 119.84,
+          "end": 120.1,
+          "probability": 0.6753
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 123.3,
+      "end": 125.2,
+      "start_formatted": "00:02:03.300",
+      "end_formatted": "00:02:05.200",
+      "text": "This is the Add Coverage page.",
+      "words": [
+        {
+          "word": "This",
+          "start": 123.3,
+          "end": 123.96,
+          "probability": 0.9834
+        },
+        {
+          "word": "is",
+          "start": 123.96,
+          "end": 124.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 124.12,
+          "end": 124.26,
+          "probability": 0.999
+        },
+        {
+          "word": "Add",
+          "start": 124.26,
+          "end": 124.46,
+          "probability": 0.6851
+        },
+        {
+          "word": "Coverage",
+          "start": 124.46,
+          "end": 124.84,
+          "probability": 0.9355
+        },
+        {
+          "word": "page.",
+          "start": 124.84,
+          "end": 125.2,
+          "probability": 0.9595
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 125.2,
+      "end": 126.74,
+      "start_formatted": "00:02:05.200",
+      "end_formatted": "00:02:06.740",
+      "text": "Enter the code.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 125.2,
+          "end": 126.26,
+          "probability": 0.8989
+        },
+        {
+          "word": "the",
+          "start": 126.26,
+          "end": 126.42,
+          "probability": 0.9897
+        },
+        {
+          "word": "code.",
+          "start": 126.42,
+          "end": 126.74,
+          "probability": 0.7896
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 127.26,
+      "end": 128.38,
+      "start_formatted": "00:02:07.260",
+      "end_formatted": "00:02:08.380",
+      "text": "Enter the name.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 127.26,
+          "end": 127.9,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 127.9,
+          "end": 128.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "name.",
+          "start": 128.06,
+          "end": 128.38,
+          "probability": 0.9673
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 128.94,
+      "end": 130.3,
+      "start_formatted": "00:02:08.940",
+      "end_formatted": "00:02:10.300",
+      "text": "Click the drop-down.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 128.94,
+          "end": 129.54,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 129.54,
+          "end": 129.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "drop",
+          "start": 129.7,
+          "end": 129.94,
+          "probability": 0.7329
+        },
+        {
+          "word": "-down.",
+          "start": 129.94,
+          "end": 130.3,
+          "probability": 0.8394
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 133.28,
+      "end": 134.98,
+      "start_formatted": "00:02:13.280",
+      "end_formatted": "00:02:14.980",
+      "text": "Select Optional Coverages.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 133.28,
+          "end": 133.92,
+          "probability": 0.9863
+        },
+        {
+          "word": "Optional",
+          "start": 133.92,
+          "end": 134.38,
+          "probability": 0.6982
+        },
+        {
+          "word": "Coverages.",
+          "start": 134.38,
+          "end": 134.98,
+          "probability": 0.7139
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 137.32,
+      "end": 139.38,
+      "start_formatted": "00:02:17.320",
+      "end_formatted": "00:02:19.380",
+      "text": "Click the drop-down for Covered Object.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 137.32,
+          "end": 137.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 137.96,
+          "end": 138.1,
+          "probability": 0.998
+        },
+        {
+          "word": "drop",
+          "start": 138.1,
+          "end": 138.36,
+          "probability": 0.9634
+        },
+        {
+          "word": "-down",
+          "start": 138.36,
+          "end": 138.62,
+          "probability": 0.9844
+        },
+        {
+          "word": "for",
+          "start": 138.62,
+          "end": 138.8,
+          "probability": 0.9932
+        },
+        {
+          "word": "Covered",
+          "start": 138.8,
+          "end": 139.16,
+          "probability": 0.9097
+        },
+        {
+          "word": "Object.",
+          "start": 139.16,
+          "end": 139.38,
+          "probability": 0.8423
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 141.46,
+      "end": 144.52,
+      "start_formatted": "00:02:21.460",
+      "end_formatted": "00:02:24.520",
+      "text": "From this list we can select any regular covered object.",
+      "words": [
+        {
+          "word": "From",
+          "start": 141.46,
+          "end": 142.1,
+          "probability": 0.9946
+        },
+        {
+          "word": "this",
+          "start": 142.1,
+          "end": 142.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "list",
+          "start": 142.26,
+          "end": 142.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "we",
+          "start": 142.52,
+          "end": 142.68,
+          "probability": 0.9106
+        },
+        {
+          "word": "can",
+          "start": 142.68,
+          "end": 142.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "select",
+          "start": 142.84,
+          "end": 143.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "any",
+          "start": 143.14,
+          "end": 143.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "regular",
+          "start": 143.38,
+          "end": 143.76,
+          "probability": 0.9834
+        },
+        {
+          "word": "covered",
+          "start": 143.76,
+          "end": 144.1,
+          "probability": 0.9492
+        },
+        {
+          "word": "object.",
+          "start": 144.1,
+          "end": 144.52,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 144.84,
+      "end": 147.56,
+      "start_formatted": "00:02:24.840",
+      "end_formatted": "00:02:27.560",
+      "text": "This is for a dwelling, so select Hop Dwelling.",
+      "words": [
+        {
+          "word": "This",
+          "start": 144.84,
+          "end": 145.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 145.28,
+          "end": 145.42,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 145.42,
+          "end": 145.56,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 145.56,
+          "end": 145.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "dwelling,",
+          "start": 145.68,
+          "end": 146.02,
+          "probability": 0.9556
+        },
+        {
+          "word": "so",
+          "start": 146.32,
+          "end": 146.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "select",
+          "start": 146.66,
+          "end": 147.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "Hop",
+          "start": 147.04,
+          "end": 147.24,
+          "probability": 0.7725
+        },
+        {
+          "word": "Dwelling.",
+          "start": 147.24,
+          "end": 147.56,
+          "probability": 0.6445
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 148.4,
+      "end": 151.54,
+      "start_formatted": "00:02:28.400",
+      "end_formatted": "00:02:31.540",
+      "text": "Next, click the drop-down for the Covered Object Type.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 148.4,
+          "end": 149.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "click",
+          "start": 149.3,
+          "end": 149.62,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 149.62,
+          "end": 149.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "drop",
+          "start": 149.78,
+          "end": 150.02,
+          "probability": 0.9902
+        },
+        {
+          "word": "-down",
+          "start": 150.02,
+          "end": 150.28,
+          "probability": 0.9912
+        },
+        {
+          "word": "for",
+          "start": 150.28,
+          "end": 150.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 150.48,
+          "end": 150.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "Covered",
+          "start": 150.58,
+          "end": 150.92,
+          "probability": 0.7622
+        },
+        {
+          "word": "Object",
+          "start": 150.92,
+          "end": 151.16,
+          "probability": 0.98
+        },
+        {
+          "word": "Type.",
+          "start": 151.16,
+          "end": 151.54,
+          "probability": 0.6206
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 152.56,
+      "end": 154.72,
+      "start_formatted": "00:02:32.560",
+      "end_formatted": "00:02:34.720",
+      "text": "Select Hop Dwelling Schedule Cove.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 152.56,
+          "end": 153.3,
+          "probability": 0.8042
+        },
+        {
+          "word": "Hop",
+          "start": 153.3,
+          "end": 153.52,
+          "probability": 0.2549
+        },
+        {
+          "word": "Dwelling",
+          "start": 153.52,
+          "end": 153.92,
+          "probability": 0.5342
+        },
+        {
+          "word": "Schedule",
+          "start": 153.92,
+          "end": 154.38,
+          "probability": 0.9463
+        },
+        {
+          "word": "Cove.",
+          "start": 154.38,
+          "end": 154.72,
+          "probability": 0.7339
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 157.14,
+      "end": 162.74,
+      "start_formatted": "00:02:37.140",
+      "end_formatted": "00:02:42.740",
+      "text": "After selecting the Scheduled Covered Object Type, two additional fields are displayed to further define the schedules.",
+      "words": [
+        {
+          "word": "After",
+          "start": 156.97,
+          "end": 157.34,
+          "probability": 0.9863
+        },
+        {
+          "word": "selecting",
+          "start": 157.34,
+          "end": 157.82,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 157.82,
+          "end": 158.02,
+          "probability": 0.998
+        },
+        {
+          "word": "Scheduled",
+          "start": 158.02,
+          "end": 158.48,
+          "probability": 0.7793
+        },
+        {
+          "word": "Covered",
+          "start": 158.48,
+          "end": 158.9,
+          "probability": 0.9102
+        },
+        {
+          "word": "Object",
+          "start": 158.9,
+          "end": 159.1,
+          "probability": 0.8506
+        },
+        {
+          "word": "Type,",
+          "start": 159.1,
+          "end": 159.5,
+          "probability": 0.8599
+        },
+        {
+          "word": "two",
+          "start": 159.72,
+          "end": 159.96,
+          "probability": 0.8726
+        },
+        {
+          "word": "additional",
+          "start": 159.96,
+          "end": 160.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "fields",
+          "start": 160.38,
+          "end": 160.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "are",
+          "start": 160.8,
+          "end": 160.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed",
+          "start": 160.96,
+          "end": 161.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 161.36,
+          "end": 161.54,
+          "probability": 0.998
+        },
+        {
+          "word": "further",
+          "start": 161.54,
+          "end": 161.82,
+          "probability": 0.999
+        },
+        {
+          "word": "define",
+          "start": 161.82,
+          "end": 162.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 162.24,
+          "end": 162.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "schedules.",
+          "start": 162.42,
+          "end": 162.74,
+          "probability": 0.9048
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 163.46,
+      "end": 165.02,
+      "start_formatted": "00:02:43.460",
+      "end_formatted": "00:02:45.020",
+      "text": "Enter a schedule code.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 163.46,
+          "end": 164.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 164.06,
+          "end": 164.24,
+          "probability": 0.9775
+        },
+        {
+          "word": "schedule",
+          "start": 164.24,
+          "end": 164.54,
+          "probability": 0.542
+        },
+        {
+          "word": "code.",
+          "start": 164.54,
+          "end": 165.02,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 165.56,
+      "end": 166.52,
+      "start_formatted": "00:02:45.560",
+      "end_formatted": "00:02:46.520",
+      "text": "Click OK.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 165.56,
+          "end": 166.22,
+          "probability": 0.9927
+        },
+        {
+          "word": "OK.",
+          "start": 166.22,
+          "end": 166.52,
+          "probability": 0.8657
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 169.68,
+      "end": 171.2,
+      "start_formatted": "00:02:49.680",
+      "end_formatted": "00:02:51.200",
+      "text": "Notice the error message.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 169.68,
+          "end": 170.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 170.42,
+          "end": 170.6,
+          "probability": 0.999
+        },
+        {
+          "word": "error",
+          "start": 170.6,
+          "end": 170.8,
+          "probability": 0.9688
+        },
+        {
+          "word": "message.",
+          "start": 170.8,
+          "end": 171.2,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 171.5,
+      "end": 174.28,
+      "start_formatted": "00:02:51.500",
+      "end_formatted": "00:02:54.280",
+      "text": "This means that we need to define the schedule properties.",
+      "words": [
+        {
+          "word": "This",
+          "start": 171.5,
+          "end": 171.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "means",
+          "start": 171.94,
+          "end": 172.22,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 172.22,
+          "end": 172.4,
+          "probability": 0.998
+        },
+        {
+          "word": "we",
+          "start": 172.4,
+          "end": 172.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "need",
+          "start": 172.56,
+          "end": 172.76,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 172.76,
+          "end": 172.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "define",
+          "start": 172.92,
+          "end": 173.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 173.26,
+          "end": 173.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "schedule",
+          "start": 173.42,
+          "end": 173.74,
+          "probability": 0.8301
+        },
+        {
+          "word": "properties.",
+          "start": 173.74,
+          "end": 174.28,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 174.68,
+      "end": 175.78,
+      "start_formatted": "00:02:54.680",
+      "end_formatted": "00:02:55.780",
+      "text": "Let's do that now.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 174.68,
+          "end": 175.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "do",
+          "start": 175.16,
+          "end": 175.3,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 175.3,
+          "end": 175.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "now.",
+          "start": 175.5,
+          "end": 175.78,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 176.38,
+      "end": 178.02,
+      "start_formatted": "00:02:56.380",
+      "end_formatted": "00:02:58.020",
+      "text": "Click Schedule Properties.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 176.38,
+          "end": 177.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "Schedule",
+          "start": 177.02,
+          "end": 177.48,
+          "probability": 0.9692
+        },
+        {
+          "word": "Properties.",
+          "start": 177.48,
+          "end": 178.02,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 180.8,
+      "end": 184.82,
+      "start_formatted": "00:03:00.800",
+      "end_formatted": "00:03:04.820",
+      "text": "Next, we'll add Schedule Properties for the description of the item and the quantity.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 180.8,
+          "end": 181.36,
+          "probability": 0.9683
+        },
+        {
+          "word": "we'll",
+          "start": 181.64,
+          "end": 181.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "add",
+          "start": 181.9,
+          "end": 182.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "Schedule",
+          "start": 182.08,
+          "end": 182.54,
+          "probability": 0.6562
+        },
+        {
+          "word": "Properties",
+          "start": 182.54,
+          "end": 183.04,
+          "probability": 0.7114
+        },
+        {
+          "word": "for",
+          "start": 183.04,
+          "end": 183.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 183.18,
+          "end": 183.32,
+          "probability": 0.999
+        },
+        {
+          "word": "description",
+          "start": 183.32,
+          "end": 183.66,
+          "probability": 0.9312
+        },
+        {
+          "word": "of",
+          "start": 183.66,
+          "end": 183.88,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 183.88,
+          "end": 183.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "item",
+          "start": 183.98,
+          "end": 184.22,
+          "probability": 0.9458
+        },
+        {
+          "word": "and",
+          "start": 184.22,
+          "end": 184.38,
+          "probability": 0.9663
+        },
+        {
+          "word": "the",
+          "start": 184.38,
+          "end": 184.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "quantity.",
+          "start": 184.46,
+          "end": 184.82,
+          "probability": 0.9648
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 185.22,
+      "end": 185.96,
+      "start_formatted": "00:03:05.220",
+      "end_formatted": "00:03:05.960",
+      "text": "Click Add.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 185.22,
+          "end": 185.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "Add.",
+          "start": 185.68,
+          "end": 185.96,
+          "probability": 0.8091
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 189.16,
+      "end": 191.56,
+      "start_formatted": "00:03:09.160",
+      "end_formatted": "00:03:11.560",
+      "text": "This is the Add Property to Schedule screen.",
+      "words": [
+        {
+          "word": "This",
+          "start": 189.16,
+          "end": 189.72,
+          "probability": 0.9858
+        },
+        {
+          "word": "is",
+          "start": 189.72,
+          "end": 189.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 189.88,
+          "end": 190.02,
+          "probability": 0.999
+        },
+        {
+          "word": "Add",
+          "start": 190.02,
+          "end": 190.2,
+          "probability": 0.9199
+        },
+        {
+          "word": "Property",
+          "start": 190.2,
+          "end": 190.62,
+          "probability": 0.9111
+        },
+        {
+          "word": "to",
+          "start": 190.62,
+          "end": 190.84,
+          "probability": 0.998
+        },
+        {
+          "word": "Schedule",
+          "start": 190.84,
+          "end": 191.26,
+          "probability": 0.9795
+        },
+        {
+          "word": "screen.",
+          "start": 191.26,
+          "end": 191.56,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 191.96,
+      "end": 193.98,
+      "start_formatted": "00:03:11.960",
+      "end_formatted": "00:03:13.980",
+      "text": "First we'll add the Description property.",
+      "words": [
+        {
+          "word": "First",
+          "start": 191.96,
+          "end": 192.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "we'll",
+          "start": 192.5,
+          "end": 192.76,
+          "probability": 0.854
+        },
+        {
+          "word": "add",
+          "start": 192.76,
+          "end": 192.92,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 192.92,
+          "end": 193.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "Description",
+          "start": 193.04,
+          "end": 193.5,
+          "probability": 0.8276
+        },
+        {
+          "word": "property.",
+          "start": 193.5,
+          "end": 193.98,
+          "probability": 0.854
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 194.54,
+      "end": 196.8,
+      "start_formatted": "00:03:14.540",
+      "end_formatted": "00:03:16.800",
+      "text": "Enter the code for the Description property.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 194.54,
+          "end": 195.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 195.1,
+          "end": 195.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "code",
+          "start": 195.26,
+          "end": 195.52,
+          "probability": 0.937
+        },
+        {
+          "word": "for",
+          "start": 195.52,
+          "end": 195.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 195.72,
+          "end": 195.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "Description",
+          "start": 195.84,
+          "end": 196.3,
+          "probability": 0.8594
+        },
+        {
+          "word": "property.",
+          "start": 196.3,
+          "end": 196.8,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 197.24,
+      "end": 198.38,
+      "start_formatted": "00:03:17.240",
+      "end_formatted": "00:03:18.380",
+      "text": "And then the name.",
+      "words": [
+        {
+          "word": "And",
+          "start": 197.24,
+          "end": 197.8,
+          "probability": 0.9819
+        },
+        {
+          "word": "then",
+          "start": 197.8,
+          "end": 197.96,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 197.96,
+          "end": 198.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "name.",
+          "start": 198.08,
+          "end": 198.38,
+          "probability": 0.7759
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 199.1,
+      "end": 201.98,
+      "start_formatted": "00:03:19.100",
+      "end_formatted": "00:03:21.980",
+      "text": "Next, we need to specify the type of this property.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 199.1,
+          "end": 199.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 199.88,
+          "end": 200.14,
+          "probability": 0.999
+        },
+        {
+          "word": "need",
+          "start": 200.14,
+          "end": 200.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 200.28,
+          "end": 200.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "specify",
+          "start": 200.42,
+          "end": 200.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 200.84,
+          "end": 201.08,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 201.08,
+          "end": 201.26,
+          "probability": 0.9907
+        },
+        {
+          "word": "of",
+          "start": 201.26,
+          "end": 201.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 201.42,
+          "end": 201.58,
+          "probability": 0.999
+        },
+        {
+          "word": "property.",
+          "start": 201.58,
+          "end": 201.98,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 202.38,
+      "end": 203.48,
+      "start_formatted": "00:03:22.380",
+      "end_formatted": "00:03:23.480",
+      "text": "Click the drop-down.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 202.38,
+          "end": 202.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 202.8,
+          "end": 202.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "drop",
+          "start": 202.98,
+          "end": 203.2,
+          "probability": 0.7861
+        },
+        {
+          "word": "-down.",
+          "start": 203.2,
+          "end": 203.48,
+          "probability": 0.9067
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 204.22,
+      "end": 206.7,
+      "start_formatted": "00:03:24.220",
+      "end_formatted": "00:03:26.700",
+      "text": "Since the Description property will hold text,",
+      "words": [
+        {
+          "word": "Since",
+          "start": 204.22,
+          "end": 204.78,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 204.78,
+          "end": 204.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "Description",
+          "start": 204.98,
+          "end": 205.42,
+          "probability": 0.9839
+        },
+        {
+          "word": "property",
+          "start": 205.42,
+          "end": 205.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "will",
+          "start": 205.84,
+          "end": 206.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "hold",
+          "start": 206.08,
+          "end": 206.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "text,",
+          "start": 206.32,
+          "end": 206.7,
+          "probability": 0.9009
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 206.7,
+      "end": 208.32,
+      "start_formatted": "00:03:26.700",
+      "end_formatted": "00:03:28.320",
+      "text": "select String Call 1.",
+      "words": [
+        {
+          "word": "select",
+          "start": 206.7,
+          "end": 207.32,
+          "probability": 0.2386
+        },
+        {
+          "word": "String",
+          "start": 207.32,
+          "end": 207.72,
+          "probability": 0.5703
+        },
+        {
+          "word": "Call",
+          "start": 207.72,
+          "end": 207.98,
+          "probability": 0.06
+        },
+        {
+          "word": "1.",
+          "start": 207.98,
+          "end": 208.32,
+          "probability": 0.8149
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 208.76,
+      "end": 210.8,
+      "start_formatted": "00:03:28.760",
+      "end_formatted": "00:03:30.800",
+      "text": "Click OK to save the property.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 208.76,
+          "end": 209.5,
+          "probability": 0.9873
+        },
+        {
+          "word": "OK",
+          "start": 209.5,
+          "end": 209.78,
+          "probability": 0.8462
+        },
+        {
+          "word": "to",
+          "start": 209.78,
+          "end": 210.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "save",
+          "start": 210.02,
+          "end": 210.24,
+          "probability": 0.9785
+        },
+        {
+          "word": "the",
+          "start": 210.24,
+          "end": 210.38,
+          "probability": 0.999
+        },
+        {
+          "word": "property.",
+          "start": 210.38,
+          "end": 210.8,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 213.08,
+      "end": 214.44,
+      "start_formatted": "00:03:33.080",
+      "end_formatted": "00:03:34.440",
+      "text": "Validate the changes.",
+      "words": [
+        {
+          "word": "Validate",
+          "start": 213.08,
+          "end": 213.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 213.92,
+          "end": 214.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "changes.",
+          "start": 214.04,
+          "end": 214.44,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 216.9,
+      "end": 218.82,
+      "start_formatted": "00:03:36.900",
+      "end_formatted": "00:03:38.820",
+      "text": "No validation errors.",
+      "words": [
+        {
+          "word": "No",
+          "start": 216.9,
+          "end": 217.74,
+          "probability": 0.9883
+        },
+        {
+          "word": "validation",
+          "start": 217.74,
+          "end": 218.2,
+          "probability": 0.9897
+        },
+        {
+          "word": "errors.",
+          "start": 218.2,
+          "end": 218.82,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 219.28,
+      "end": 221.22,
+      "start_formatted": "00:03:39.280",
+      "end_formatted": "00:03:41.220",
+      "text": "So let's add the Quantity Schedule property.",
+      "words": [
+        {
+          "word": "So",
+          "start": 219.28,
+          "end": 219.36,
+          "probability": 0.9688
+        },
+        {
+          "word": "let's",
+          "start": 219.36,
+          "end": 219.64,
+          "probability": 0.9414
+        },
+        {
+          "word": "add",
+          "start": 219.64,
+          "end": 219.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 219.8,
+          "end": 219.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "Quantity",
+          "start": 219.94,
+          "end": 220.34,
+          "probability": 0.7734
+        },
+        {
+          "word": "Schedule",
+          "start": 220.34,
+          "end": 220.78,
+          "probability": 0.8721
+        },
+        {
+          "word": "property.",
+          "start": 220.78,
+          "end": 221.22,
+          "probability": 0.959
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 221.66,
+      "end": 224.08,
+      "start_formatted": "00:03:41.660",
+      "end_formatted": "00:03:44.080",
+      "text": "Return to the Schedule Property page.",
+      "words": [
+        {
+          "word": "Return",
+          "start": 221.66,
+          "end": 222.46,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 222.46,
+          "end": 222.68,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 222.68,
+          "end": 222.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "Schedule",
+          "start": 222.82,
+          "end": 223.24,
+          "probability": 0.9673
+        },
+        {
+          "word": "Property",
+          "start": 223.24,
+          "end": 223.66,
+          "probability": 0.2822
+        },
+        {
+          "word": "page.",
+          "start": 223.66,
+          "end": 224.08,
+          "probability": 0.9438
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 225.46,
+      "end": 226.58,
+      "start_formatted": "00:03:45.460",
+      "end_formatted": "00:03:46.580",
+      "text": "Click Add.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 225.46,
+          "end": 226.3,
+          "probability": 0.9932
+        },
+        {
+          "word": "Add.",
+          "start": 226.3,
+          "end": 226.58,
+          "probability": 0.8296
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 229.18,
+      "end": 230.5,
+      "start_formatted": "00:03:49.180",
+      "end_formatted": "00:03:50.500",
+      "text": "Enter the code.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 229.18,
+          "end": 230.02,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 230.02,
+          "end": 230.16,
+          "probability": 0.9927
+        },
+        {
+          "word": "code.",
+          "start": 230.16,
+          "end": 230.5,
+          "probability": 0.8521
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 230.96,
+      "end": 231.96,
+      "start_formatted": "00:03:50.960",
+      "end_formatted": "00:03:51.960",
+      "text": "And the name.",
+      "words": [
+        {
+          "word": "And",
+          "start": 230.96,
+          "end": 231.56,
+          "probability": 0.9067
+        },
+        {
+          "word": "the",
+          "start": 231.56,
+          "end": 231.7,
+          "probability": 0.9922
+        },
+        {
+          "word": "name.",
+          "start": 231.7,
+          "end": 231.96,
+          "probability": 0.8374
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 232.7,
+      "end": 234.62,
+      "start_formatted": "00:03:52.700",
+      "end_formatted": "00:03:54.620",
+      "text": "Quantity should be a numeric value.",
+      "words": [
+        {
+          "word": "Quantity",
+          "start": 232.7,
+          "end": 233.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "should",
+          "start": 233.48,
+          "end": 233.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "be",
+          "start": 233.6,
+          "end": 233.74,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 233.74,
+          "end": 233.84,
+          "probability": 0.9902
+        },
+        {
+          "word": "numeric",
+          "start": 233.84,
+          "end": 234.3,
+          "probability": 0.9824
+        },
+        {
+          "word": "value.",
+          "start": 234.3,
+          "end": 234.62,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 234.62,
+      "end": 237.14,
+      "start_formatted": "00:03:54.620",
+      "end_formatted": "00:03:57.140",
+      "text": "Click the drop-down to see what is available.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 234.62,
+          "end": 235.4,
+          "probability": 0.8301
+        },
+        {
+          "word": "the",
+          "start": 235.4,
+          "end": 235.58,
+          "probability": 0.9907
+        },
+        {
+          "word": "drop",
+          "start": 235.58,
+          "end": 235.8,
+          "probability": 0.8174
+        },
+        {
+          "word": "-down",
+          "start": 235.8,
+          "end": 236.04,
+          "probability": 0.7793
+        },
+        {
+          "word": "to",
+          "start": 236.04,
+          "end": 236.22,
+          "probability": 0.9927
+        },
+        {
+          "word": "see",
+          "start": 236.22,
+          "end": 236.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "what",
+          "start": 236.4,
+          "end": 236.58,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 236.58,
+          "end": 236.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "available.",
+          "start": 236.74,
+          "end": 237.14,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 237.8,
+      "end": 239.78,
+      "start_formatted": "00:03:57.800",
+      "end_formatted": "00:03:59.780",
+      "text": "There are two possibilities for this.",
+      "words": [
+        {
+          "word": "There",
+          "start": 237.8,
+          "end": 238.28,
+          "probability": 0.9814
+        },
+        {
+          "word": "are",
+          "start": 238.28,
+          "end": 238.42,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 238.42,
+          "end": 238.6,
+          "probability": 0.8687
+        },
+        {
+          "word": "possibilities",
+          "start": 238.6,
+          "end": 239.22,
+          "probability": 0.9907
+        },
+        {
+          "word": "for",
+          "start": 239.22,
+          "end": 239.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "this.",
+          "start": 239.48,
+          "end": 239.78,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 240.06,
+      "end": 241.92,
+      "start_formatted": "00:04:00.060",
+      "end_formatted": "00:04:01.920",
+      "text": "Int Call 1 and Pass Int Call 1.",
+      "words": [
+        {
+          "word": "Int",
+          "start": 240.06,
+          "end": 240.2,
+          "probability": 0.813
+        },
+        {
+          "word": "Call",
+          "start": 240.2,
+          "end": 240.48,
+          "probability": 0.0342
+        },
+        {
+          "word": "1",
+          "start": 240.48,
+          "end": 240.68,
+          "probability": 0.4673
+        },
+        {
+          "word": "and",
+          "start": 240.68,
+          "end": 240.88,
+          "probability": 0.9019
+        },
+        {
+          "word": "Pass",
+          "start": 240.88,
+          "end": 241.14,
+          "probability": 0.2046
+        },
+        {
+          "word": "Int",
+          "start": 241.14,
+          "end": 241.28,
+          "probability": 0.7358
+        },
+        {
+          "word": "Call",
+          "start": 241.28,
+          "end": 241.56,
+          "probability": 0.9692
+        },
+        {
+          "word": "1.",
+          "start": 241.56,
+          "end": 241.92,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 242.16,
+      "end": 246.26,
+      "start_formatted": "00:04:02.160",
+      "end_formatted": "00:04:06.260",
+      "text": "Int Call 1 would allow the user to enter negative or positive numbers for the quantity.",
+      "words": [
+        {
+          "word": "Int",
+          "start": 242.16,
+          "end": 242.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "Call",
+          "start": 242.62,
+          "end": 242.86,
+          "probability": 0.9565
+        },
+        {
+          "word": "1",
+          "start": 242.86,
+          "end": 243.1,
+          "probability": 0.9849
+        },
+        {
+          "word": "would",
+          "start": 243.1,
+          "end": 243.3,
+          "probability": 0.979
+        },
+        {
+          "word": "allow",
+          "start": 243.3,
+          "end": 243.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 243.54,
+          "end": 243.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "user",
+          "start": 243.72,
+          "end": 243.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 243.98,
+          "end": 244.18,
+          "probability": 0.999
+        },
+        {
+          "word": "enter",
+          "start": 244.18,
+          "end": 244.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "negative",
+          "start": 244.4,
+          "end": 244.7,
+          "probability": 0.9849
+        },
+        {
+          "word": "or",
+          "start": 244.7,
+          "end": 244.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "positive",
+          "start": 244.92,
+          "end": 245.26,
+          "probability": 0.998
+        },
+        {
+          "word": "numbers",
+          "start": 245.26,
+          "end": 245.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 245.58,
+          "end": 245.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 245.8,
+          "end": 245.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "quantity.",
+          "start": 245.92,
+          "end": 246.26,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 246.7,
+      "end": 250.2,
+      "start_formatted": "00:04:06.700",
+      "end_formatted": "00:04:10.200",
+      "text": "That really doesn't make sense when we need to know how many of an item they have.",
+      "words": [
+        {
+          "word": "That",
+          "start": 246.7,
+          "end": 247.12,
+          "probability": 0.9878
+        },
+        {
+          "word": "really",
+          "start": 247.12,
+          "end": 247.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "doesn't",
+          "start": 247.36,
+          "end": 247.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "make",
+          "start": 247.68,
+          "end": 247.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "sense",
+          "start": 247.88,
+          "end": 248.1,
+          "probability": 0.999
+        },
+        {
+          "word": "when",
+          "start": 248.1,
+          "end": 248.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "we",
+          "start": 248.3,
+          "end": 248.42,
+          "probability": 0.999
+        },
+        {
+          "word": "need",
+          "start": 248.42,
+          "end": 248.58,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 248.58,
+          "end": 248.72,
+          "probability": 0.998
+        },
+        {
+          "word": "know",
+          "start": 248.72,
+          "end": 248.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "how",
+          "start": 248.9,
+          "end": 249.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "many",
+          "start": 249.06,
+          "end": 249.28,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 249.28,
+          "end": 249.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 249.42,
+          "end": 249.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "item",
+          "start": 249.54,
+          "end": 249.74,
+          "probability": 0.9922
+        },
+        {
+          "word": "they",
+          "start": 249.74,
+          "end": 249.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "have.",
+          "start": 249.9,
+          "end": 250.2,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 250.5,
+      "end": 254.66,
+      "start_formatted": "00:04:10.500",
+      "end_formatted": "00:04:14.660",
+      "text": "The Pass Int Call 1 will only allow positive numbers which makes sense for this.",
+      "words": [
+        {
+          "word": "The",
+          "start": 250.5,
+          "end": 250.82,
+          "probability": 0.9849
+        },
+        {
+          "word": "Pass",
+          "start": 250.82,
+          "end": 251.12,
+          "probability": 0.8638
+        },
+        {
+          "word": "Int",
+          "start": 251.12,
+          "end": 251.28,
+          "probability": 0.9839
+        },
+        {
+          "word": "Call",
+          "start": 251.28,
+          "end": 251.52,
+          "probability": 0.9888
+        },
+        {
+          "word": "1",
+          "start": 251.52,
+          "end": 251.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "will",
+          "start": 251.74,
+          "end": 251.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "only",
+          "start": 251.94,
+          "end": 252.2,
+          "probability": 0.9917
+        },
+        {
+          "word": "allow",
+          "start": 252.2,
+          "end": 252.52,
+          "probability": 0.998
+        },
+        {
+          "word": "positive",
+          "start": 252.52,
+          "end": 253.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "numbers",
+          "start": 253.02,
+          "end": 253.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "which",
+          "start": 253.44,
+          "end": 253.7,
+          "probability": 0.9624
+        },
+        {
+          "word": "makes",
+          "start": 253.7,
+          "end": 253.96,
+          "probability": 0.8359
+        },
+        {
+          "word": "sense",
+          "start": 253.96,
+          "end": 254.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 254.24,
+          "end": 254.4,
+          "probability": 0.998
+        },
+        {
+          "word": "this.",
+          "start": 254.4,
+          "end": 254.66,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 255.02,
+      "end": 256.64,
+      "start_formatted": "00:04:15.020",
+      "end_formatted": "00:04:16.640",
+      "text": "Select Pass Int Call 1.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 255.02,
+          "end": 255.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "Pass",
+          "start": 255.5,
+          "end": 255.8,
+          "probability": 0.9365
+        },
+        {
+          "word": "Int",
+          "start": 255.8,
+          "end": 255.98,
+          "probability": 0.98
+        },
+        {
+          "word": "Call",
+          "start": 255.98,
+          "end": 256.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "1.",
+          "start": 256.24,
+          "end": 256.64,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 257.48,
+      "end": 258.26,
+      "start_formatted": "00:04:17.480",
+      "end_formatted": "00:04:18.260",
+      "text": "Click OK.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 257.48,
+          "end": 257.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "OK.",
+          "start": 257.96,
+          "end": 258.26,
+          "probability": 0.8628
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 261.22,
+      "end": 262.52,
+      "start_formatted": "00:04:21.220",
+      "end_formatted": "00:04:22.520",
+      "text": "Validate the changes.",
+      "words": [
+        {
+          "word": "Validate",
+          "start": 261.22,
+          "end": 262.02,
+          "probability": 0.9165
+        },
+        {
+          "word": "the",
+          "start": 262.02,
+          "end": 262.14,
+          "probability": 0.9912
+        },
+        {
+          "word": "changes.",
+          "start": 262.14,
+          "end": 262.52,
+          "probability": 0.9751
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 265.34,
+      "end": 267.72,
+      "start_formatted": "00:04:25.340",
+      "end_formatted": "00:04:27.720",
+      "text": "Again, no validation errors.",
+      "words": [
+        {
+          "word": "Again,",
+          "start": 265.34,
+          "end": 266.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "no",
+          "start": 266.4,
+          "end": 266.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "validation",
+          "start": 266.7,
+          "end": 267.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "errors.",
+          "start": 267.16,
+          "end": 267.72,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "start": 268.0,
+      "end": 269.86,
+      "start_formatted": "00:04:28.000",
+      "end_formatted": "00:04:29.860",
+      "text": "So return to the Schedule properties.",
+      "words": [
+        {
+          "word": "So",
+          "start": 268.0,
+          "end": 268.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "return",
+          "start": 268.28,
+          "end": 268.64,
+          "probability": 0.7847
+        },
+        {
+          "word": "to",
+          "start": 268.64,
+          "end": 268.86,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 268.86,
+          "end": 268.96,
+          "probability": 0.9927
+        },
+        {
+          "word": "Schedule",
+          "start": 268.96,
+          "end": 269.38,
+          "probability": 0.6841
+        },
+        {
+          "word": "properties.",
+          "start": 269.38,
+          "end": 269.86,
+          "probability": 0.4155
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "start": 270.48,
+      "end": 271.96,
+      "start_formatted": "00:04:30.480",
+      "end_formatted": "00:04:31.960",
+      "text": "Click the Schedule page.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 270.48,
+          "end": 271.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 271.1,
+          "end": 271.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "Schedule",
+          "start": 271.24,
+          "end": 271.66,
+          "probability": 0.8965
+        },
+        {
+          "word": "page.",
+          "start": 271.66,
+          "end": 271.96,
+          "probability": 0.958
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 274.66,
+      "end": 278.06,
+      "start_formatted": "00:04:34.660",
+      "end_formatted": "00:04:38.060",
+      "text": "Next, we need to set the most descriptive property field.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 274.66,
+          "end": 275.36,
+          "probability": 0.9678
+        },
+        {
+          "word": "we",
+          "start": 275.64,
+          "end": 275.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "need",
+          "start": 275.86,
+          "end": 276.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 276.0,
+          "end": 276.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "set",
+          "start": 276.12,
+          "end": 276.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 276.32,
+          "end": 276.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "most",
+          "start": 276.46,
+          "end": 276.66,
+          "probability": 0.7129
+        },
+        {
+          "word": "descriptive",
+          "start": 276.66,
+          "end": 277.08,
+          "probability": 0.959
+        },
+        {
+          "word": "property",
+          "start": 277.08,
+          "end": 277.6,
+          "probability": 0.9766
+        },
+        {
+          "word": "field.",
+          "start": 277.6,
+          "end": 278.06,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "start": 278.34,
+      "end": 280.4,
+      "start_formatted": "00:04:38.340",
+      "end_formatted": "00:04:40.400",
+      "text": "Recall that we have description and quantity.",
+      "words": [
+        {
+          "word": "Recall",
+          "start": 278.34,
+          "end": 278.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "that",
+          "start": 278.92,
+          "end": 279.06,
+          "probability": 0.9946
+        },
+        {
+          "word": "we",
+          "start": 279.06,
+          "end": 279.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 279.2,
+          "end": 279.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "description",
+          "start": 279.36,
+          "end": 279.76,
+          "probability": 0.7158
+        },
+        {
+          "word": "and",
+          "start": 279.76,
+          "end": 280.02,
+          "probability": 0.981
+        },
+        {
+          "word": "quantity.",
+          "start": 280.02,
+          "end": 280.4,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "start": 280.76,
+      "end": 281.96,
+      "start_formatted": "00:04:40.760",
+      "end_formatted": "00:04:41.960",
+      "text": "Let's use description.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 280.76,
+          "end": 281.3,
+          "probability": 0.9878
+        },
+        {
+          "word": "use",
+          "start": 281.3,
+          "end": 281.5,
+          "probability": 0.9902
+        },
+        {
+          "word": "description.",
+          "start": 281.5,
+          "end": 281.96,
+          "probability": 0.7559
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "start": 282.6,
+      "end": 283.98,
+      "start_formatted": "00:04:42.600",
+      "end_formatted": "00:04:43.980",
+      "text": "Click the drop-down.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 282.6,
+          "end": 283.24,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 283.24,
+          "end": 283.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "drop",
+          "start": 283.42,
+          "end": 283.64,
+          "probability": 0.7686
+        },
+        {
+          "word": "-down.",
+          "start": 283.64,
+          "end": 283.98,
+          "probability": 0.8184
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "start": 286.9,
+      "end": 288.04,
+      "start_formatted": "00:04:46.900",
+      "end_formatted": "00:04:48.040",
+      "text": "Select description.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 286.9,
+          "end": 287.6,
+          "probability": 0.9912
+        },
+        {
+          "word": "description.",
+          "start": 287.6,
+          "end": 288.04,
+          "probability": 0.8008
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "start": 290.88,
+      "end": 293.34,
+      "start_formatted": "00:04:50.880",
+      "end_formatted": "00:04:53.340",
+      "text": "Notice there are no Schedule terms available.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 290.88,
+          "end": 291.6,
+          "probability": 0.9688
+        },
+        {
+          "word": "there",
+          "start": 291.6,
+          "end": 291.82,
+          "probability": 0.9912
+        },
+        {
+          "word": "are",
+          "start": 291.82,
+          "end": 291.94,
+          "probability": 0.998
+        },
+        {
+          "word": "no",
+          "start": 291.94,
+          "end": 292.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "Schedule",
+          "start": 292.1,
+          "end": 292.56,
+          "probability": 0.5991
+        },
+        {
+          "word": "terms",
+          "start": 292.56,
+          "end": 292.84,
+          "probability": 0.3848
+        },
+        {
+          "word": "available.",
+          "start": 292.84,
+          "end": 293.34,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "start": 293.68,
+      "end": 295.26,
+      "start_formatted": "00:04:53.680",
+      "end_formatted": "00:04:55.260",
+      "text": "Next, we'll fix that.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 293.68,
+          "end": 294.24,
+          "probability": 0.9893
+        },
+        {
+          "word": "we'll",
+          "start": 294.48,
+          "end": 294.72,
+          "probability": 0.9854
+        },
+        {
+          "word": "fix",
+          "start": 294.72,
+          "end": 294.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "that.",
+          "start": 294.96,
+          "end": 295.26,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "start": 295.74,
+      "end": 297.0,
+      "start_formatted": "00:04:55.740",
+      "end_formatted": "00:04:57.000",
+      "text": "Click Coverages.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 295.74,
+          "end": 296.34,
+          "probability": 0.9912
+        },
+        {
+          "word": "Coverages.",
+          "start": 296.34,
+          "end": 297.0,
+          "probability": 0.7217
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "start": 299.54,
+      "end": 300.56,
+      "start_formatted": "00:04:59.540",
+      "end_formatted": "00:05:00.560",
+      "text": "Click Add.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 299.54,
+          "end": 300.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "Add.",
+          "start": 300.26,
+          "end": 300.56,
+          "probability": 0.9751
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "start": 303.24,
+      "end": 304.44,
+      "start_formatted": "00:05:03.240",
+      "end_formatted": "00:05:04.440",
+      "text": "Enter the code.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 303.24,
+          "end": 303.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 303.96,
+          "end": 304.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "code.",
+          "start": 304.1,
+          "end": 304.44,
+          "probability": 0.7793
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "start": 304.8,
+      "end": 305.8,
+      "start_formatted": "00:05:04.800",
+      "end_formatted": "00:05:05.800",
+      "text": "And the name.",
+      "words": [
+        {
+          "word": "And",
+          "start": 304.8,
+          "end": 305.36,
+          "probability": 0.9448
+        },
+        {
+          "word": "the",
+          "start": 305.36,
+          "end": 305.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "name.",
+          "start": 305.48,
+          "end": 305.8,
+          "probability": 0.918
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "start": 306.12,
+      "end": 307.36,
+      "start_formatted": "00:05:06.120",
+      "end_formatted": "00:05:07.360",
+      "text": "Click the drop-down.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 306.12,
+          "end": 306.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 306.6,
+          "end": 306.8,
+          "probability": 0.999
+        },
+        {
+          "word": "drop",
+          "start": 306.8,
+          "end": 307.0,
+          "probability": 0.7842
+        },
+        {
+          "word": "-down.",
+          "start": 307.0,
+          "end": 307.36,
+          "probability": 0.8721
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "start": 309.98,
+      "end": 311.78,
+      "start_formatted": "00:05:09.980",
+      "end_formatted": "00:05:11.780",
+      "text": "Select Optional Coverages.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 309.98,
+          "end": 310.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "Optional",
+          "start": 310.7,
+          "end": 311.2,
+          "probability": 0.9062
+        },
+        {
+          "word": "Coverages.",
+          "start": 311.2,
+          "end": 311.78,
+          "probability": 0.7949
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "start": 314.02,
+      "end": 316.28,
+      "start_formatted": "00:05:14.020",
+      "end_formatted": "00:05:16.280",
+      "text": "Click the drop-down for Covered Object.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 314.02,
+          "end": 314.82,
+          "probability": 0.9414
+        },
+        {
+          "word": "the",
+          "start": 314.82,
+          "end": 315.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "drop",
+          "start": 315.0,
+          "end": 315.24,
+          "probability": 0.7739
+        },
+        {
+          "word": "-down",
+          "start": 315.24,
+          "end": 315.46,
+          "probability": 0.8984
+        },
+        {
+          "word": "for",
+          "start": 315.46,
+          "end": 315.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "Covered",
+          "start": 315.66,
+          "end": 316.04,
+          "probability": 0.8638
+        },
+        {
+          "word": "Object.",
+          "start": 316.04,
+          "end": 316.28,
+          "probability": 0.792
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "start": 318.42,
+      "end": 320.82,
+      "start_formatted": "00:05:18.420",
+      "end_formatted": "00:05:20.820",
+      "text": "Select the Hopdwell Schedule Cove item.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 318.42,
+          "end": 319.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 319.22,
+          "end": 319.4,
+          "probability": 0.999
+        },
+        {
+          "word": "Hopdwell",
+          "start": 319.4,
+          "end": 319.84,
+          "probability": 0.5591
+        },
+        {
+          "word": "Schedule",
+          "start": 319.84,
+          "end": 320.34,
+          "probability": 0.8906
+        },
+        {
+          "word": "Cove",
+          "start": 320.34,
+          "end": 320.6,
+          "probability": 0.7861
+        },
+        {
+          "word": "item.",
+          "start": 320.6,
+          "end": 320.82,
+          "probability": 0.7314
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "start": 322.88,
+      "end": 325.3,
+      "start_formatted": "00:05:22.880",
+      "end_formatted": "00:05:25.300",
+      "text": "The Covered Object type is selected automatically.",
+      "words": [
+        {
+          "word": "The",
+          "start": 322.74,
+          "end": 323.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "Covered",
+          "start": 323.14,
+          "end": 323.54,
+          "probability": 0.7822
+        },
+        {
+          "word": "Object",
+          "start": 323.54,
+          "end": 323.8,
+          "probability": 0.9878
+        },
+        {
+          "word": "type",
+          "start": 323.8,
+          "end": 324.14,
+          "probability": 0.5752
+        },
+        {
+          "word": "is",
+          "start": 324.14,
+          "end": 324.32,
+          "probability": 0.999
+        },
+        {
+          "word": "selected",
+          "start": 324.32,
+          "end": 324.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "automatically.",
+          "start": 324.7,
+          "end": 325.3,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 90,
+      "start": 325.72,
+      "end": 326.52,
+      "start_formatted": "00:05:25.720",
+      "end_formatted": "00:05:26.520",
+      "text": "Click OK.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 325.72,
+          "end": 326.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "OK.",
+          "start": 326.22,
+          "end": 326.52,
+          "probability": 0.9702
+        }
+      ]
+    },
+    {
+      "id": 91,
+      "start": 329.64,
+      "end": 330.96,
+      "start_formatted": "00:05:29.640",
+      "end_formatted": "00:05:30.960",
+      "text": "Click Terms.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 329.64,
+          "end": 330.44,
+          "probability": 0.999
+        },
+        {
+          "word": "Terms.",
+          "start": 330.44,
+          "end": 330.96,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 92,
+      "start": 333.88,
+      "end": 334.76,
+      "start_formatted": "00:05:33.880",
+      "end_formatted": "00:05:34.760",
+      "text": "Click Add.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 333.88,
+          "end": 334.44,
+          "probability": 0.9072
+        },
+        {
+          "word": "Add.",
+          "start": 334.44,
+          "end": 334.76,
+          "probability": 0.5386
+        }
+      ]
+    },
+    {
+      "id": 93,
+      "start": 337.92,
+      "end": 339.62,
+      "start_formatted": "00:05:37.920",
+      "end_formatted": "00:05:39.620",
+      "text": "This is the Add Term screen.",
+      "words": [
+        {
+          "word": "This",
+          "start": 337.92,
+          "end": 338.48,
+          "probability": 0.9727
+        },
+        {
+          "word": "is",
+          "start": 338.48,
+          "end": 338.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 338.64,
+          "end": 338.78,
+          "probability": 0.998
+        },
+        {
+          "word": "Add",
+          "start": 338.78,
+          "end": 338.98,
+          "probability": 0.7427
+        },
+        {
+          "word": "Term",
+          "start": 338.98,
+          "end": 339.22,
+          "probability": 0.8774
+        },
+        {
+          "word": "screen.",
+          "start": 339.22,
+          "end": 339.62,
+          "probability": 0.9131
+        }
+      ]
+    },
+    {
+      "id": 94,
+      "start": 339.94,
+      "end": 340.82,
+      "start_formatted": "00:05:39.940",
+      "end_formatted": "00:05:40.820",
+      "text": "Enter the code.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 339.94,
+          "end": 340.34,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 340.34,
+          "end": 340.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "code.",
+          "start": 340.48,
+          "end": 340.82,
+          "probability": 0.8853
+        }
+      ]
+    },
+    {
+      "id": 95,
+      "start": 340.98,
+      "end": 341.66,
+      "start_formatted": "00:05:40.980",
+      "end_formatted": "00:05:41.660",
+      "text": "And the name.",
+      "words": [
+        {
+          "word": "And",
+          "start": 340.98,
+          "end": 341.26,
+          "probability": 0.7856
+        },
+        {
+          "word": "the",
+          "start": 341.26,
+          "end": 341.38,
+          "probability": 0.9893
+        },
+        {
+          "word": "name.",
+          "start": 341.38,
+          "end": 341.66,
+          "probability": 0.9424
+        }
+      ]
+    },
+    {
+      "id": 96,
+      "start": 342.28,
+      "end": 344.08,
+      "start_formatted": "00:05:42.280",
+      "end_formatted": "00:05:44.080",
+      "text": "Click the Term Type drop-down.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 342.28,
+          "end": 342.84,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 342.84,
+          "end": 343.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "Term",
+          "start": 343.02,
+          "end": 343.24,
+          "probability": 0.6611
+        },
+        {
+          "word": "Type",
+          "start": 343.24,
+          "end": 343.5,
+          "probability": 0.9072
+        },
+        {
+          "word": "drop",
+          "start": 343.5,
+          "end": 343.74,
+          "probability": 0.731
+        },
+        {
+          "word": "-down.",
+          "start": 343.74,
+          "end": 344.08,
+          "probability": 0.8281
+        }
+      ]
+    },
+    {
+      "id": 97,
+      "start": 346.4,
+      "end": 351.18,
+      "start_formatted": "00:05:46.400",
+      "end_formatted": "00:05:51.180",
+      "text": "We could use Direct, Option, or Package for this depending on the business requirements.",
+      "words": [
+        {
+          "word": "We",
+          "start": 346.4,
+          "end": 346.96,
+          "probability": 0.9902
+        },
+        {
+          "word": "could",
+          "start": 346.96,
+          "end": 347.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "use",
+          "start": 347.1,
+          "end": 347.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "Direct,",
+          "start": 347.32,
+          "end": 347.72,
+          "probability": 0.8452
+        },
+        {
+          "word": "Option,",
+          "start": 347.94,
+          "end": 348.38,
+          "probability": 0.959
+        },
+        {
+          "word": "or",
+          "start": 348.58,
+          "end": 348.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "Package",
+          "start": 348.82,
+          "end": 349.2,
+          "probability": 0.9819
+        },
+        {
+          "word": "for",
+          "start": 349.2,
+          "end": 349.34,
+          "probability": 0.9932
+        },
+        {
+          "word": "this",
+          "start": 349.34,
+          "end": 349.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "depending",
+          "start": 349.5,
+          "end": 349.84,
+          "probability": 0.979
+        },
+        {
+          "word": "on",
+          "start": 349.84,
+          "end": 350.1,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 350.1,
+          "end": 350.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "business",
+          "start": 350.2,
+          "end": 350.5,
+          "probability": 0.9502
+        },
+        {
+          "word": "requirements.",
+          "start": 350.5,
+          "end": 351.18,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 98,
+      "start": 351.46,
+      "end": 354.9,
+      "start_formatted": "00:05:51.460",
+      "end_formatted": "00:05:54.900",
+      "text": "However, to keep it simple for this demonstration we'll select Direct.",
+      "words": [
+        {
+          "word": "However,",
+          "start": 351.46,
+          "end": 351.84,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 352.1,
+          "end": 352.34,
+          "probability": 0.9917
+        },
+        {
+          "word": "keep",
+          "start": 352.34,
+          "end": 352.54,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 352.54,
+          "end": 352.72,
+          "probability": 0.998
+        },
+        {
+          "word": "simple",
+          "start": 352.72,
+          "end": 353.02,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 353.02,
+          "end": 353.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "this",
+          "start": 353.18,
+          "end": 353.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 353.36,
+          "end": 353.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "we'll",
+          "start": 353.92,
+          "end": 354.26,
+          "probability": 0.9248
+        },
+        {
+          "word": "select",
+          "start": 354.26,
+          "end": 354.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "Direct.",
+          "start": 354.58,
+          "end": 354.9,
+          "probability": 0.9243
+        }
+      ]
+    },
+    {
+      "id": 99,
+      "start": 355.72,
+      "end": 357.86,
+      "start_formatted": "00:05:55.720",
+      "end_formatted": "00:05:57.860",
+      "text": "Click the drop-down for the value type.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 355.72,
+          "end": 356.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 356.28,
+          "end": 356.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "drop",
+          "start": 356.44,
+          "end": 356.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "-down",
+          "start": 356.68,
+          "end": 356.94,
+          "probability": 0.9863
+        },
+        {
+          "word": "for",
+          "start": 356.94,
+          "end": 357.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 357.12,
+          "end": 357.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "value",
+          "start": 357.24,
+          "end": 357.54,
+          "probability": 0.6396
+        },
+        {
+          "word": "type.",
+          "start": 357.54,
+          "end": 357.86,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 100,
+      "start": 359.8,
+      "end": 363.26,
+      "start_formatted": "00:05:59.800",
+      "end_formatted": "00:06:03.260",
+      "text": "Again, the value type depends on the business requirements.",
+      "words": [
+        {
+          "word": "Again,",
+          "start": 359.8,
+          "end": 360.44,
+          "probability": 0.8506
+        },
+        {
+          "word": "the",
+          "start": 360.84,
+          "end": 361.04,
+          "probability": 0.9858
+        },
+        {
+          "word": "value",
+          "start": 361.04,
+          "end": 361.36,
+          "probability": 0.8438
+        },
+        {
+          "word": "type",
+          "start": 361.36,
+          "end": 361.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "depends",
+          "start": 361.62,
+          "end": 361.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "on",
+          "start": 361.98,
+          "end": 362.18,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 362.18,
+          "end": 362.3,
+          "probability": 0.9917
+        },
+        {
+          "word": "business",
+          "start": 362.3,
+          "end": 362.58,
+          "probability": 0.9722
+        },
+        {
+          "word": "requirements.",
+          "start": 362.58,
+          "end": 363.26,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "start": 363.74,
+      "end": 365.2,
+      "start_formatted": "00:06:03.740",
+      "end_formatted": "00:06:05.200",
+      "text": "But we'll just use money for this.",
+      "words": [
+        {
+          "word": "But",
+          "start": 363.74,
+          "end": 363.8,
+          "probability": 0.7554
+        },
+        {
+          "word": "we'll",
+          "start": 363.8,
+          "end": 364.06,
+          "probability": 0.9639
+        },
+        {
+          "word": "just",
+          "start": 364.06,
+          "end": 364.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "use",
+          "start": 364.28,
+          "end": 364.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "money",
+          "start": 364.5,
+          "end": 364.76,
+          "probability": 0.9307
+        },
+        {
+          "word": "for",
+          "start": 364.76,
+          "end": 364.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "this.",
+          "start": 364.94,
+          "end": 365.2,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "start": 365.72,
+      "end": 366.36,
+      "start_formatted": "00:06:05.720",
+      "end_formatted": "00:06:06.360",
+      "text": "Click OK.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 365.72,
+          "end": 366.04,
+          "probability": 0.9907
+        },
+        {
+          "word": "OK.",
+          "start": 366.04,
+          "end": 366.36,
+          "probability": 0.8315
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "start": 369.5,
+      "end": 371.62,
+      "start_formatted": "00:06:09.500",
+      "end_formatted": "00:06:11.620",
+      "text": "Click the drop-down for Model Type.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 369.5,
+          "end": 370.14,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 370.14,
+          "end": 370.3,
+          "probability": 0.9927
+        },
+        {
+          "word": "drop",
+          "start": 370.3,
+          "end": 370.54,
+          "probability": 0.7993
+        },
+        {
+          "word": "-down",
+          "start": 370.54,
+          "end": 370.8,
+          "probability": 0.7754
+        },
+        {
+          "word": "for",
+          "start": 370.8,
+          "end": 371.04,
+          "probability": 0.9854
+        },
+        {
+          "word": "Model",
+          "start": 371.04,
+          "end": 371.3,
+          "probability": 0.3816
+        },
+        {
+          "word": "Type.",
+          "start": 371.3,
+          "end": 371.62,
+          "probability": 0.7725
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "start": 373.54,
+      "end": 374.9,
+      "start_formatted": "00:06:13.540",
+      "end_formatted": "00:06:14.900",
+      "text": "And select Limit.",
+      "words": [
+        {
+          "word": "And",
+          "start": 373.54,
+          "end": 374.18,
+          "probability": 0.9062
+        },
+        {
+          "word": "select",
+          "start": 374.18,
+          "end": 374.54,
+          "probability": 0.9531
+        },
+        {
+          "word": "Limit.",
+          "start": 374.54,
+          "end": 374.9,
+          "probability": 0.9287
+        }
+      ]
+    },
+    {
+      "id": 105,
+      "start": 378.06,
+      "end": 379.18,
+      "start_formatted": "00:06:18.060",
+      "end_formatted": "00:06:19.180",
+      "text": "Validate the changes.",
+      "words": [
+        {
+          "word": "Validate",
+          "start": 378.06,
+          "end": 378.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 378.7,
+          "end": 378.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "changes.",
+          "start": 378.82,
+          "end": 379.18,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 106,
+      "start": 382.46,
+      "end": 385.32,
+      "start_formatted": "00:06:22.460",
+      "end_formatted": "00:06:25.320",
+      "text": "No validation errors, so return to Coverages.",
+      "words": [
+        {
+          "word": "No",
+          "start": 382.24,
+          "end": 382.56,
+          "probability": 0.9897
+        },
+        {
+          "word": "validation",
+          "start": 382.56,
+          "end": 383.04,
+          "probability": 0.9829
+        },
+        {
+          "word": "errors,",
+          "start": 383.04,
+          "end": 383.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "so",
+          "start": 383.88,
+          "end": 384.2,
+          "probability": 0.9917
+        },
+        {
+          "word": "return",
+          "start": 384.2,
+          "end": 384.5,
+          "probability": 0.9785
+        },
+        {
+          "word": "to",
+          "start": 384.5,
+          "end": 384.72,
+          "probability": 0.998
+        },
+        {
+          "word": "Coverages.",
+          "start": 384.72,
+          "end": 385.32,
+          "probability": 0.6289
+        }
+      ]
+    },
+    {
+      "id": 107,
+      "start": 385.32,
+      "end": 388.66,
+      "start_formatted": "00:06:25.320",
+      "end_formatted": "00:06:28.660",
+      "text": "Scroll down and click the Scheduled Coverage.",
+      "words": [
+        {
+          "word": "Scroll",
+          "start": 385.32,
+          "end": 386.86,
+          "probability": 0.8452
+        },
+        {
+          "word": "down",
+          "start": 386.86,
+          "end": 387.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 387.16,
+          "end": 387.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 387.36,
+          "end": 387.56,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 387.56,
+          "end": 387.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "Scheduled",
+          "start": 387.72,
+          "end": 388.18,
+          "probability": 0.75
+        },
+        {
+          "word": "Coverage.",
+          "start": 388.18,
+          "end": 388.66,
+          "probability": 0.9106
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "start": 390.92,
+      "end": 391.88,
+      "start_formatted": "00:06:30.920",
+      "end_formatted": "00:06:31.880",
+      "text": "Click the Schedule page.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 390.55,
+          "end": 390.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 390.94,
+          "end": 391.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "Schedule",
+          "start": 391.1,
+          "end": 391.5,
+          "probability": 0.957
+        },
+        {
+          "word": "page.",
+          "start": 391.5,
+          "end": 391.88,
+          "probability": 0.749
+        }
+      ]
+    },
+    {
+      "id": 109,
+      "start": 395.22,
+      "end": 396.42,
+      "start_formatted": "00:06:35.220",
+      "end_formatted": "00:06:36.420",
+      "text": "Click Select Item Coverage.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 394.83,
+          "end": 395.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "Select",
+          "start": 395.22,
+          "end": 395.56,
+          "probability": 0.9722
+        },
+        {
+          "word": "Item",
+          "start": 395.56,
+          "end": 395.88,
+          "probability": 0.9531
+        },
+        {
+          "word": "Coverage.",
+          "start": 395.88,
+          "end": 396.42,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 110,
+      "start": 398.74,
+      "end": 400.86,
+      "start_formatted": "00:06:38.740",
+      "end_formatted": "00:06:40.860",
+      "text": "Select the Scheduled Item Coverage.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 398.74,
+          "end": 399.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 399.52,
+          "end": 399.7,
+          "probability": 0.999
+        },
+        {
+          "word": "Scheduled",
+          "start": 399.7,
+          "end": 400.12,
+          "probability": 0.957
+        },
+        {
+          "word": "Item",
+          "start": 400.12,
+          "end": 400.34,
+          "probability": 0.9775
+        },
+        {
+          "word": "Coverage.",
+          "start": 400.34,
+          "end": 400.86,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 111,
+      "start": 403.42,
+      "end": 404.54,
+      "start_formatted": "00:06:43.420",
+      "end_formatted": "00:06:44.540",
+      "text": "That completes the new schedule.",
+      "words": [
+        {
+          "word": "That",
+          "start": 403.09,
+          "end": 403.48,
+          "probability": 0.9917
+        },
+        {
+          "word": "completes",
+          "start": 403.48,
+          "end": 403.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 403.86,
+          "end": 404.04,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 404.04,
+          "end": 404.18,
+          "probability": 0.9863
+        },
+        {
+          "word": "schedule.",
+          "start": 404.18,
+          "end": 404.54,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 112,
+      "start": 405.38,
+      "end": 406.38,
+      "start_formatted": "00:06:45.380",
+      "end_formatted": "00:06:46.380",
+      "text": "This concludes the demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 405.38,
+          "end": 405.74,
+          "probability": 0.5728
+        },
+        {
+          "word": "concludes",
+          "start": 405.74,
+          "end": 406.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 406.1,
+          "end": 406.28,
+          "probability": 0.9941
+        },
+        {
+          "word": "demonstration.",
+          "start": 406.28,
+          "end": 406.38,
+          "probability": 0.9014
+        }
+      ]
+    },
+    {
+      "id": 113,
+      "start": 406.38,
+      "end": 406.42,
+      "start_formatted": "00:06:46.380",
+      "end_formatted": "00:06:46.420",
+      "text": "This concludes the demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 406.38,
+          "end": 406.38,
+          "probability": 0.063
+        },
+        {
+          "word": "concludes",
+          "start": 406.38,
+          "end": 406.38,
+          "probability": 0.6367
+        },
+        {
+          "word": "the",
+          "start": 406.38,
+          "end": 406.38,
+          "probability": 0.9834
+        },
+        {
+          "word": "demonstration.",
+          "start": 406.38,
+          "end": 406.42,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 114,
+      "start": 406.42,
+      "end": 406.42,
+      "start_formatted": "00:06:46.420",
+      "end_formatted": "00:06:46.420",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 115,
+      "start": 408.52,
+      "end": 408.52,
+      "start_formatted": "00:06:48.520",
+      "end_formatted": "00:06:48.520",
+      "text": "",
+      "words": []
+    }
+  ]
+}

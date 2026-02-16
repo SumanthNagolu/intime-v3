@@ -1,0 +1,7239 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_11_01.mp4",
+    "video_stem": "IS_Claim_11_01",
+    "duration_seconds": 469.04,
+    "duration_formatted": "00:07:49.040",
+    "segment_count": 62,
+    "word_count": 1091,
+    "avg_confidence": 0.9681,
+    "transcription_time_seconds": 23.16,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:53:34.507834"
+  },
+  "full_text": "This demonstration shows how authority limits help constrain payments and transactions. It reviews the definition of a reserve limit and how the limit impacts a reserve change. Finally, it shows how to modify an authority limit to restrict what a user can do. First, a system administrator logs into ClaimCenter to look at a user's authority limits. She navigates to the administration screens. And then to the user's screen to search for the user's. Search for a specific user. She searches for user Andy Applegate by entering part of his user name into the search criteria. She opens the Andy Applegate user contact record from the search results. The basic information for Andy's user profile displays. To look at his authority limits, she clicks the authority limits tab. Andy's authority limits profile includes three authority limits. The first is for total pay. The second line of the profile limits. The second line of the profile limits the total reserves on a claim to $15,000. This means that if Andy creates or changes a reserve so that the total reserves on the claim exceed this threshold, the transaction will require approval. The third limit allows Andy to make payments that exceed reserves without approval as long as the payment amount is less than $1,000 over the reserve. The system administrator logs out of ClaimCenter. Now claims adjuster Andy Applegate logs into ClaimCenter. On the desktop claims screen, he locates and opens the Ray Newton claim. Notice on the summary screen that the grossing current is $18,400. That is the total reserves. That is the total reserves for this claim. Now Andy goes to the financial summary screen. Andy heard from the garage where Mr. Newton took his car, and the repair costs are higher than the reserve. Andy needs to increase the reserve, so he locates the auto body reserve line and clicks the menu button. He chooses Edit Reserve from the menu. He changes the value in the new available reserves field to $1,400. Notice that this increases the reserve amount by $1,000. Andy saves the change. The transaction created for the reserve change displays at the bottom of the financials transactions screen. Notice the status is pending approval. Even though the transaction amount was only $1,000, it will increase the claim total reserves over the limit of $15,000. Andy returns to the financials. Andy returns to the financials summary screen to see the impact of the reserve transaction. Notice that the net total incurred for the claim is still $18,400, because although Andy created a reserve change transaction, it is not yet approved, so it is not reflected in the total. Andy logs out of ClaimCenter. This section of the demo shows what happens when a user has no authority limit for a transaction, and also what happens when additional restrictions are added to a limit. The system administrator logs back into ClaimCenter to modify an existing authority limit profile. She navigates to the administration screens, and then to the user's search screen to search for Andy Applegate. She enters the first few characters of Andy's user name and clicks the search button. She opens the user contact record for Andy Applegate from the search results. She navigates to Andy's authority limits. She puts the screen in edit mode to modify his authority limit profile. Andy currently has the adjuster authority limit profile. The system administrator selects custom from the list of available profiles to create a custom profile for Andy. Notice that the custom profile has automatically picked up the limits from the adjuster profile previously assigned to Andy. Now these limits can be changed, and they will only apply to Andy. The system administrator selects the two payment related limits in the profile. And removes them from the profile. She modifies the remaining limit for ClaimTotal reserves by adding a policy type restriction to the limit. Now the limit only applies if the claim is associated with a business owner's policy. Finally, she saves the changes to create Andy's custom authority limit profile. Now the system administrator logs out of Claim Center. Andy Applegate logs back into Claim Center to test the authority limit changes. He locates the Ray Newton claim in his desktop claims view and opens it. From the claim summary screen, he navigates to the financial summary screen to review the claims reserves. Andy will increase the claim cost reserves for the first party vehicle exposure. He locates the reserve line and clicks on the menu button. He chooses Edit Reserve from the menu. He changes the amount for the new available reserves to $1,401. As soon as Andy navigates out of the new available reserves field, Claim Center calculates the amount of the reserve change and displays it in the change field. He saves the change to create a new reserve transaction. Notice the error message at the top of the screen. Andy does not have the authority to submit this reserve transaction for approval. When he modified the reserve line in the first part of the demo, the reserve authority limit was not restricted by policy type. Now that this restriction has been added, Claim Center simply does not allow him to create the transaction on a claim that has a policy type other than business owners. He cancels the reserve change. He returns to the financial summary screen. Andy will attempt to create a check. He locates the auto body reserve line for the first party vehicle exposure and clicks the menu button. Notice that the reserve line menu includes no check creation options. Andy tries another approach. From the actions menu, he looks at the new transaction options. Again, there is no check option, because Andy has no payment related authority limits. Andy logs out of Claim Center. Now the system administrator logs back into Claim Center to change Andy Applegate's authority limit profile again. She navigates to the administration screens. She clicks on the Users and Security menu link in the left pane. She enters the first few characters of Andy Applegate's username and searches for his user contact record. She opens the user contact record from the search results. She navigates to Andy's authority limits. Puts the screen in edit mode. And changes Andy's authority limit profile from custom back to adjuster. She verifies that the limits are correct, and saves the change. The system administrator logs out of Claim Center. This is the end of the authority limits demonstration. This is the end of the authority limits demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "This demonstration shows how authority limits help constrain payments and transactions. It reviews the definition of a reserve limit and how the limit impacts a reserve change. Finally, it shows how to modify an authority limit to restrict what a user can do. First, a system administrator logs into ClaimCenter to look at a user's authority limits. She navigates to the administration screens. And then to the user's screen to search for the user's.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 0.82,
+          "probability": 0.9233
+        },
+        {
+          "word": "demonstration",
+          "start": 0.82,
+          "end": 1.42,
+          "probability": 0.9946
+        },
+        {
+          "word": "shows",
+          "start": 1.42,
+          "end": 2.0,
+          "probability": 0.999
+        },
+        {
+          "word": "how",
+          "start": 2.0,
+          "end": 2.28,
+          "probability": 0.999
+        },
+        {
+          "word": "authority",
+          "start": 2.28,
+          "end": 2.76,
+          "probability": 0.9189
+        },
+        {
+          "word": "limits",
+          "start": 2.76,
+          "end": 3.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "help",
+          "start": 3.18,
+          "end": 3.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "constrain",
+          "start": 3.5,
+          "end": 4.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "payments",
+          "start": 4.12,
+          "end": 4.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 4.72,
+          "end": 4.98,
+          "probability": 0.998
+        },
+        {
+          "word": "transactions.",
+          "start": 4.98,
+          "end": 5.64,
+          "probability": 0.999
+        },
+        {
+          "word": "It",
+          "start": 6.04,
+          "end": 6.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "reviews",
+          "start": 6.52,
+          "end": 6.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 6.92,
+          "end": 7.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "definition",
+          "start": 7.16,
+          "end": 7.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 7.62,
+          "end": 7.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 7.96,
+          "end": 8.06,
+          "probability": 0.998
+        },
+        {
+          "word": "reserve",
+          "start": 8.06,
+          "end": 8.48,
+          "probability": 0.9888
+        },
+        {
+          "word": "limit",
+          "start": 8.48,
+          "end": 8.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 8.84,
+          "end": 9.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "how",
+          "start": 9.06,
+          "end": 9.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 9.26,
+          "end": 9.4,
+          "probability": 0.999
+        },
+        {
+          "word": "limit",
+          "start": 9.4,
+          "end": 9.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "impacts",
+          "start": 9.66,
+          "end": 10.14,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 10.14,
+          "end": 10.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserve",
+          "start": 10.32,
+          "end": 10.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "change.",
+          "start": 10.74,
+          "end": 11.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "Finally,",
+          "start": 11.6,
+          "end": 12.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 12.54,
+          "end": 12.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "shows",
+          "start": 12.76,
+          "end": 13.02,
+          "probability": 1.0
+        },
+        {
+          "word": "how",
+          "start": 13.02,
+          "end": 13.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 13.3,
+          "end": 13.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "modify",
+          "start": 13.48,
+          "end": 13.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 13.92,
+          "end": 14.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "authority",
+          "start": 14.2,
+          "end": 14.6,
+          "probability": 0.999
+        },
+        {
+          "word": "limit",
+          "start": 14.6,
+          "end": 14.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 14.98,
+          "end": 15.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "restrict",
+          "start": 15.2,
+          "end": 15.62,
+          "probability": 0.999
+        },
+        {
+          "word": "what",
+          "start": 15.62,
+          "end": 15.88,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 15.88,
+          "end": 16.0,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 16.0,
+          "end": 16.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 16.34,
+          "end": 16.62,
+          "probability": 1.0
+        },
+        {
+          "word": "do.",
+          "start": 16.62,
+          "end": 16.96,
+          "probability": 1.0
+        },
+        {
+          "word": "First,",
+          "start": 17.48,
+          "end": 18.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 18.42,
+          "end": 18.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "system",
+          "start": 18.7,
+          "end": 18.96,
+          "probability": 0.979
+        },
+        {
+          "word": "administrator",
+          "start": 18.96,
+          "end": 19.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "logs",
+          "start": 19.58,
+          "end": 20.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "into",
+          "start": 20.12,
+          "end": 20.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 20.42,
+          "end": 21.16,
+          "probability": 0.7471
+        },
+        {
+          "word": "to",
+          "start": 21.16,
+          "end": 21.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "look",
+          "start": 21.36,
+          "end": 21.6,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 21.6,
+          "end": 21.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 21.72,
+          "end": 21.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "user's",
+          "start": 21.8,
+          "end": 22.22,
+          "probability": 0.999
+        },
+        {
+          "word": "authority",
+          "start": 22.22,
+          "end": 22.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "limits.",
+          "start": 22.7,
+          "end": 23.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "She",
+          "start": 23.84,
+          "end": 24.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "navigates",
+          "start": 24.52,
+          "end": 25.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 25.2,
+          "end": 25.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 25.36,
+          "end": 25.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "administration",
+          "start": 25.5,
+          "end": 26.14,
+          "probability": 0.9478
+        },
+        {
+          "word": "screens.",
+          "start": 26.14,
+          "end": 26.98,
+          "probability": 0.8574
+        },
+        {
+          "word": "And",
+          "start": 27.42,
+          "end": 28.1,
+          "probability": 0.9634
+        },
+        {
+          "word": "then",
+          "start": 28.1,
+          "end": 28.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 28.3,
+          "end": 28.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 28.46,
+          "end": 28.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "user's",
+          "start": 28.6,
+          "end": 29.08,
+          "probability": 0.9585
+        },
+        {
+          "word": "screen",
+          "start": 29.08,
+          "end": 29.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 29.44,
+          "end": 29.7,
+          "probability": 0.9722
+        },
+        {
+          "word": "search",
+          "start": 29.7,
+          "end": 29.98,
+          "probability": 0.9849
+        },
+        {
+          "word": "for",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.4434
+        },
+        {
+          "word": "the",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1671
+        },
+        {
+          "word": "user's.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.3372
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.96,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.960",
+      "text": "Search for a specific user. She searches for user Andy Applegate by entering part of his user name into the search criteria. She opens the Andy Applegate user contact record from the search results. The basic information for Andy's user profile displays. To look at his authority limits, she clicks the authority limits tab. Andy's authority limits profile includes three authority limits. The first is for total pay.",
+      "words": [
+        {
+          "word": "Search",
+          "start": 29.98,
+          "end": 30.06,
+          "probability": 0.1505
+        },
+        {
+          "word": "for",
+          "start": 30.06,
+          "end": 30.22,
+          "probability": 0.957
+        },
+        {
+          "word": "a",
+          "start": 30.22,
+          "end": 30.34,
+          "probability": 0.9829
+        },
+        {
+          "word": "specific",
+          "start": 30.34,
+          "end": 30.82,
+          "probability": 0.9004
+        },
+        {
+          "word": "user.",
+          "start": 30.82,
+          "end": 31.3,
+          "probability": 0.9517
+        },
+        {
+          "word": "She",
+          "start": 32.08,
+          "end": 32.84,
+          "probability": 0.9893
+        },
+        {
+          "word": "searches",
+          "start": 32.84,
+          "end": 33.26,
+          "probability": 0.9927
+        },
+        {
+          "word": "for",
+          "start": 33.26,
+          "end": 33.5,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 33.5,
+          "end": 33.88,
+          "probability": 0.9365
+        },
+        {
+          "word": "Andy",
+          "start": 33.88,
+          "end": 34.26,
+          "probability": 0.9351
+        },
+        {
+          "word": "Applegate",
+          "start": 34.26,
+          "end": 34.92,
+          "probability": 0.9922
+        },
+        {
+          "word": "by",
+          "start": 34.92,
+          "end": 35.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "entering",
+          "start": 35.1,
+          "end": 35.52,
+          "probability": 0.998
+        },
+        {
+          "word": "part",
+          "start": 35.52,
+          "end": 35.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 35.92,
+          "end": 36.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 36.08,
+          "end": 36.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "user",
+          "start": 36.24,
+          "end": 36.58,
+          "probability": 0.4685
+        },
+        {
+          "word": "name",
+          "start": 36.58,
+          "end": 37.0,
+          "probability": 0.9907
+        },
+        {
+          "word": "into",
+          "start": 37.0,
+          "end": 37.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 37.28,
+          "end": 37.46,
+          "probability": 0.998
+        },
+        {
+          "word": "search",
+          "start": 37.46,
+          "end": 37.74,
+          "probability": 0.9775
+        },
+        {
+          "word": "criteria.",
+          "start": 37.74,
+          "end": 38.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "She",
+          "start": 38.94,
+          "end": 39.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "opens",
+          "start": 39.66,
+          "end": 40.1,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 40.1,
+          "end": 40.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "Andy",
+          "start": 40.28,
+          "end": 40.66,
+          "probability": 0.9844
+        },
+        {
+          "word": "Applegate",
+          "start": 40.66,
+          "end": 41.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "user",
+          "start": 41.3,
+          "end": 41.56,
+          "probability": 0.9448
+        },
+        {
+          "word": "contact",
+          "start": 41.56,
+          "end": 42.04,
+          "probability": 0.9927
+        },
+        {
+          "word": "record",
+          "start": 42.04,
+          "end": 42.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "from",
+          "start": 42.54,
+          "end": 42.78,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 42.78,
+          "end": 42.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "search",
+          "start": 42.94,
+          "end": 43.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "results.",
+          "start": 43.2,
+          "end": 43.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 44.48,
+          "end": 45.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "basic",
+          "start": 45.24,
+          "end": 45.58,
+          "probability": 0.9785
+        },
+        {
+          "word": "information",
+          "start": 45.58,
+          "end": 46.3,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 46.3,
+          "end": 46.72,
+          "probability": 0.998
+        },
+        {
+          "word": "Andy's",
+          "start": 46.72,
+          "end": 47.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "user",
+          "start": 47.3,
+          "end": 47.56,
+          "probability": 0.981
+        },
+        {
+          "word": "profile",
+          "start": 47.56,
+          "end": 48.06,
+          "probability": 0.998
+        },
+        {
+          "word": "displays.",
+          "start": 48.06,
+          "end": 48.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "To",
+          "start": 49.22,
+          "end": 49.66,
+          "probability": 0.9912
+        },
+        {
+          "word": "look",
+          "start": 49.66,
+          "end": 49.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "at",
+          "start": 49.9,
+          "end": 50.08,
+          "probability": 0.999
+        },
+        {
+          "word": "his",
+          "start": 50.08,
+          "end": 50.24,
+          "probability": 0.998
+        },
+        {
+          "word": "authority",
+          "start": 50.24,
+          "end": 50.64,
+          "probability": 0.874
+        },
+        {
+          "word": "limits,",
+          "start": 50.64,
+          "end": 51.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "she",
+          "start": 51.38,
+          "end": 51.66,
+          "probability": 0.9849
+        },
+        {
+          "word": "clicks",
+          "start": 51.66,
+          "end": 51.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 51.98,
+          "end": 52.18,
+          "probability": 0.998
+        },
+        {
+          "word": "authority",
+          "start": 52.18,
+          "end": 52.58,
+          "probability": 0.4055
+        },
+        {
+          "word": "limits",
+          "start": 52.58,
+          "end": 53.06,
+          "probability": 0.9858
+        },
+        {
+          "word": "tab.",
+          "start": 53.06,
+          "end": 53.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Andy's",
+          "start": 53.94,
+          "end": 54.7,
+          "probability": 0.9834
+        },
+        {
+          "word": "authority",
+          "start": 54.7,
+          "end": 55.06,
+          "probability": 0.8916
+        },
+        {
+          "word": "limits",
+          "start": 55.06,
+          "end": 55.54,
+          "probability": 0.9893
+        },
+        {
+          "word": "profile",
+          "start": 55.54,
+          "end": 56.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "includes",
+          "start": 56.12,
+          "end": 56.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "three",
+          "start": 56.64,
+          "end": 56.96,
+          "probability": 0.7554
+        },
+        {
+          "word": "authority",
+          "start": 56.96,
+          "end": 57.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "limits.",
+          "start": 57.54,
+          "end": 58.06,
+          "probability": 0.998
+        },
+        {
+          "word": "The",
+          "start": 58.34,
+          "end": 58.72,
+          "probability": 0.9795
+        },
+        {
+          "word": "first",
+          "start": 58.72,
+          "end": 59.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 59.0,
+          "end": 59.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 59.26,
+          "end": 59.48,
+          "probability": 0.999
+        },
+        {
+          "word": "total",
+          "start": 59.48,
+          "end": 59.8,
+          "probability": 0.9648
+        },
+        {
+          "word": "pay.",
+          "start": 59.8,
+          "end": 59.96,
+          "probability": 0.3086
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 73.6,
+      "end": 89.54,
+      "start_formatted": "00:01:13.600",
+      "end_formatted": "00:01:29.540",
+      "text": "The second line of the profile limits. The second line of the profile limits the total reserves on a claim to $15,000. This means that if Andy creates or changes a reserve so that the total reserves on the claim exceed this threshold, the transaction will require approval.",
+      "words": [
+        {
+          "word": "The",
+          "start": 73.6,
+          "end": 74.26,
+          "probability": 0.0081
+        },
+        {
+          "word": "second",
+          "start": 74.26,
+          "end": 74.92,
+          "probability": 0.9443
+        },
+        {
+          "word": "line",
+          "start": 74.92,
+          "end": 75.34,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 75.34,
+          "end": 75.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 75.58,
+          "end": 75.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "profile",
+          "start": 75.72,
+          "end": 76.16,
+          "probability": 0.9829
+        },
+        {
+          "word": "limits.",
+          "start": 76.16,
+          "end": 76.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 76.86,
+          "end": 76.86,
+          "probability": 0.936
+        },
+        {
+          "word": "second",
+          "start": 76.86,
+          "end": 76.86,
+          "probability": 0.1552
+        },
+        {
+          "word": "line",
+          "start": 76.86,
+          "end": 76.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 76.86,
+          "end": 76.86,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 76.86,
+          "end": 76.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "profile",
+          "start": 76.86,
+          "end": 76.86,
+          "probability": 0.9888
+        },
+        {
+          "word": "limits",
+          "start": 76.86,
+          "end": 76.86,
+          "probability": 0.957
+        },
+        {
+          "word": "the",
+          "start": 76.86,
+          "end": 76.92,
+          "probability": 0.6611
+        },
+        {
+          "word": "total",
+          "start": 76.92,
+          "end": 77.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "reserves",
+          "start": 77.22,
+          "end": 77.72,
+          "probability": 0.9888
+        },
+        {
+          "word": "on",
+          "start": 77.72,
+          "end": 78.12,
+          "probability": 0.9868
+        },
+        {
+          "word": "a",
+          "start": 78.12,
+          "end": 78.3,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 78.3,
+          "end": 78.56,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 78.56,
+          "end": 78.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "$15",
+          "start": 78.76,
+          "end": 79.26,
+          "probability": 0.957
+        },
+        {
+          "word": ",000.",
+          "start": 79.26,
+          "end": 79.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "This",
+          "start": 80.54,
+          "end": 81.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "means",
+          "start": 81.08,
+          "end": 81.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 81.36,
+          "end": 81.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "if",
+          "start": 81.66,
+          "end": 81.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "Andy",
+          "start": 81.84,
+          "end": 82.1,
+          "probability": 0.9707
+        },
+        {
+          "word": "creates",
+          "start": 82.1,
+          "end": 82.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "or",
+          "start": 82.56,
+          "end": 82.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes",
+          "start": 82.84,
+          "end": 83.22,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 83.22,
+          "end": 83.46,
+          "probability": 0.998
+        },
+        {
+          "word": "reserve",
+          "start": 83.46,
+          "end": 83.84,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 83.84,
+          "end": 84.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "that",
+          "start": 84.22,
+          "end": 84.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 84.44,
+          "end": 84.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "total",
+          "start": 84.58,
+          "end": 84.84,
+          "probability": 1.0
+        },
+        {
+          "word": "reserves",
+          "start": 84.84,
+          "end": 85.32,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 85.32,
+          "end": 85.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 85.62,
+          "end": 85.76,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 85.76,
+          "end": 86.04,
+          "probability": 0.999
+        },
+        {
+          "word": "exceed",
+          "start": 86.04,
+          "end": 86.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 86.5,
+          "end": 86.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "threshold,",
+          "start": 86.86,
+          "end": 87.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 87.5,
+          "end": 87.8,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 87.8,
+          "end": 88.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 88.18,
+          "end": 88.64,
+          "probability": 0.999
+        },
+        {
+          "word": "require",
+          "start": 88.64,
+          "end": 89.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "approval.",
+          "start": 89.06,
+          "end": 89.54,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.96,
+      "end": 119.44,
+      "start_formatted": "00:01:29.960",
+      "end_formatted": "00:01:59.440",
+      "text": "The third limit allows Andy to make payments that exceed reserves without approval as long as the payment amount is less than $1,000 over the reserve. The system administrator logs out of ClaimCenter. Now claims adjuster Andy Applegate logs into ClaimCenter. On the desktop claims screen, he locates and opens the Ray Newton claim. Notice on the summary screen that the grossing current is $18,400.",
+      "words": [
+        {
+          "word": "The",
+          "start": 89.96,
+          "end": 90.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "third",
+          "start": 90.66,
+          "end": 90.94,
+          "probability": 0.9795
+        },
+        {
+          "word": "limit",
+          "start": 90.94,
+          "end": 91.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "allows",
+          "start": 91.26,
+          "end": 91.7,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy",
+          "start": 91.7,
+          "end": 92.08,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 92.08,
+          "end": 92.36,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 92.36,
+          "end": 92.58,
+          "probability": 1.0
+        },
+        {
+          "word": "payments",
+          "start": 92.58,
+          "end": 93.1,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 93.1,
+          "end": 93.36,
+          "probability": 1.0
+        },
+        {
+          "word": "exceed",
+          "start": 93.36,
+          "end": 93.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserves",
+          "start": 93.8,
+          "end": 94.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "without",
+          "start": 94.24,
+          "end": 94.56,
+          "probability": 1.0
+        },
+        {
+          "word": "approval",
+          "start": 94.56,
+          "end": 95.1,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 95.1,
+          "end": 95.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "long",
+          "start": 95.36,
+          "end": 95.64,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 95.64,
+          "end": 95.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 95.92,
+          "end": 96.04,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 96.04,
+          "end": 96.44,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 96.44,
+          "end": 96.8,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 96.8,
+          "end": 97.1,
+          "probability": 1.0
+        },
+        {
+          "word": "less",
+          "start": 97.1,
+          "end": 97.34,
+          "probability": 1.0
+        },
+        {
+          "word": "than",
+          "start": 97.34,
+          "end": 97.56,
+          "probability": 1.0
+        },
+        {
+          "word": "$1",
+          "start": 97.56,
+          "end": 97.9,
+          "probability": 0.9932
+        },
+        {
+          "word": ",000",
+          "start": 97.9,
+          "end": 98.36,
+          "probability": 1.0
+        },
+        {
+          "word": "over",
+          "start": 98.36,
+          "end": 98.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 98.98,
+          "end": 99.16,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve.",
+          "start": 99.16,
+          "end": 99.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 100.16,
+          "end": 100.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "system",
+          "start": 100.7,
+          "end": 101.06,
+          "probability": 0.9375
+        },
+        {
+          "word": "administrator",
+          "start": 101.06,
+          "end": 101.66,
+          "probability": 1.0
+        },
+        {
+          "word": "logs",
+          "start": 101.66,
+          "end": 102.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 102.14,
+          "end": 102.4,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 102.4,
+          "end": 102.6,
+          "probability": 1.0
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 102.6,
+          "end": 103.5,
+          "probability": 0.7275
+        },
+        {
+          "word": "Now",
+          "start": 103.92,
+          "end": 104.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "claims",
+          "start": 104.6,
+          "end": 105.06,
+          "probability": 0.5747
+        },
+        {
+          "word": "adjuster",
+          "start": 105.06,
+          "end": 105.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "Andy",
+          "start": 105.6,
+          "end": 105.98,
+          "probability": 0.999
+        },
+        {
+          "word": "Applegate",
+          "start": 105.98,
+          "end": 106.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "logs",
+          "start": 106.6,
+          "end": 106.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "into",
+          "start": 106.98,
+          "end": 107.26,
+          "probability": 1.0
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 107.26,
+          "end": 108.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "On",
+          "start": 108.6,
+          "end": 109.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 109.08,
+          "end": 109.2,
+          "probability": 1.0
+        },
+        {
+          "word": "desktop",
+          "start": 109.2,
+          "end": 109.64,
+          "probability": 0.938
+        },
+        {
+          "word": "claims",
+          "start": 109.64,
+          "end": 110.26,
+          "probability": 0.9604
+        },
+        {
+          "word": "screen,",
+          "start": 110.26,
+          "end": 110.76,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 111.14,
+          "end": 111.46,
+          "probability": 1.0
+        },
+        {
+          "word": "locates",
+          "start": 111.46,
+          "end": 111.92,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 111.92,
+          "end": 112.14,
+          "probability": 1.0
+        },
+        {
+          "word": "opens",
+          "start": 112.14,
+          "end": 112.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 112.56,
+          "end": 112.76,
+          "probability": 1.0
+        },
+        {
+          "word": "Ray",
+          "start": 112.76,
+          "end": 113.0,
+          "probability": 0.9927
+        },
+        {
+          "word": "Newton",
+          "start": 113.0,
+          "end": 113.28,
+          "probability": 0.9849
+        },
+        {
+          "word": "claim.",
+          "start": 113.28,
+          "end": 113.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "Notice",
+          "start": 114.38,
+          "end": 115.14,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 115.14,
+          "end": 115.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 115.4,
+          "end": 115.52,
+          "probability": 1.0
+        },
+        {
+          "word": "summary",
+          "start": 115.52,
+          "end": 115.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen",
+          "start": 115.86,
+          "end": 116.28,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 116.28,
+          "end": 116.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 116.56,
+          "end": 116.72,
+          "probability": 1.0
+        },
+        {
+          "word": "grossing",
+          "start": 116.72,
+          "end": 117.26,
+          "probability": 0.5464
+        },
+        {
+          "word": "current",
+          "start": 117.26,
+          "end": 117.5,
+          "probability": 0.2085
+        },
+        {
+          "word": "is",
+          "start": 117.5,
+          "end": 117.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "$18",
+          "start": 117.66,
+          "end": 118.24,
+          "probability": 0.999
+        },
+        {
+          "word": ",400.",
+          "start": 118.24,
+          "end": 119.44,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 120.16,
+      "end": 148.58,
+      "start_formatted": "00:02:00.160",
+      "end_formatted": "00:02:28.580",
+      "text": "That is the total reserves. That is the total reserves for this claim. Now Andy goes to the financial summary screen. Andy heard from the garage where Mr. Newton took his car, and the repair costs are higher than the reserve. Andy needs to increase the reserve, so he locates the auto body reserve line and clicks the menu button. He chooses Edit Reserve from the menu. He changes the value in the new available reserves field to $1,400.",
+      "words": [
+        {
+          "word": "That",
+          "start": 120.16,
+          "end": 120.76,
+          "probability": 0.9551
+        },
+        {
+          "word": "is",
+          "start": 120.76,
+          "end": 120.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 120.94,
+          "end": 121.08,
+          "probability": 1.0
+        },
+        {
+          "word": "total",
+          "start": 121.08,
+          "end": 121.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "reserves.",
+          "start": 121.38,
+          "end": 121.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "That",
+          "start": 122.2,
+          "end": 122.2,
+          "probability": 0.0057
+        },
+        {
+          "word": "is",
+          "start": 122.2,
+          "end": 122.2,
+          "probability": 0.9224
+        },
+        {
+          "word": "the",
+          "start": 122.2,
+          "end": 122.2,
+          "probability": 0.9478
+        },
+        {
+          "word": "total",
+          "start": 122.2,
+          "end": 122.2,
+          "probability": 0.9619
+        },
+        {
+          "word": "reserves",
+          "start": 122.2,
+          "end": 122.2,
+          "probability": 0.981
+        },
+        {
+          "word": "for",
+          "start": 122.2,
+          "end": 122.2,
+          "probability": 0.9648
+        },
+        {
+          "word": "this",
+          "start": 122.2,
+          "end": 122.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim.",
+          "start": 122.42,
+          "end": 122.78,
+          "probability": 0.9922
+        },
+        {
+          "word": "Now",
+          "start": 123.26,
+          "end": 123.6,
+          "probability": 0.9756
+        },
+        {
+          "word": "Andy",
+          "start": 123.6,
+          "end": 123.92,
+          "probability": 0.8618
+        },
+        {
+          "word": "goes",
+          "start": 123.92,
+          "end": 124.22,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 124.22,
+          "end": 124.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 124.38,
+          "end": 124.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "financial",
+          "start": 124.5,
+          "end": 124.92,
+          "probability": 0.8779
+        },
+        {
+          "word": "summary",
+          "start": 124.92,
+          "end": 125.46,
+          "probability": 0.4919
+        },
+        {
+          "word": "screen.",
+          "start": 125.46,
+          "end": 126.0,
+          "probability": 0.998
+        },
+        {
+          "word": "Andy",
+          "start": 126.74,
+          "end": 127.34,
+          "probability": 0.9653
+        },
+        {
+          "word": "heard",
+          "start": 127.34,
+          "end": 127.64,
+          "probability": 0.9902
+        },
+        {
+          "word": "from",
+          "start": 127.64,
+          "end": 127.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 127.94,
+          "end": 128.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "garage",
+          "start": 128.06,
+          "end": 128.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "where",
+          "start": 128.4,
+          "end": 128.8,
+          "probability": 0.9766
+        },
+        {
+          "word": "Mr.",
+          "start": 128.8,
+          "end": 129.08,
+          "probability": 0.9834
+        },
+        {
+          "word": "Newton",
+          "start": 129.22,
+          "end": 129.4,
+          "probability": 0.9834
+        },
+        {
+          "word": "took",
+          "start": 129.4,
+          "end": 129.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "his",
+          "start": 129.66,
+          "end": 129.86,
+          "probability": 0.999
+        },
+        {
+          "word": "car,",
+          "start": 129.86,
+          "end": 130.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 130.44,
+          "end": 130.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 130.7,
+          "end": 130.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "repair",
+          "start": 130.8,
+          "end": 131.2,
+          "probability": 0.998
+        },
+        {
+          "word": "costs",
+          "start": 131.2,
+          "end": 131.68,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 131.68,
+          "end": 131.9,
+          "probability": 0.999
+        },
+        {
+          "word": "higher",
+          "start": 131.9,
+          "end": 132.2,
+          "probability": 0.999
+        },
+        {
+          "word": "than",
+          "start": 132.2,
+          "end": 132.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 132.46,
+          "end": 132.62,
+          "probability": 0.999
+        },
+        {
+          "word": "reserve.",
+          "start": 132.62,
+          "end": 133.06,
+          "probability": 0.9658
+        },
+        {
+          "word": "Andy",
+          "start": 133.36,
+          "end": 133.9,
+          "probability": 0.9912
+        },
+        {
+          "word": "needs",
+          "start": 133.9,
+          "end": 134.36,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 134.36,
+          "end": 134.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "increase",
+          "start": 134.54,
+          "end": 134.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 134.98,
+          "end": 135.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserve,",
+          "start": 135.2,
+          "end": 135.62,
+          "probability": 0.998
+        },
+        {
+          "word": "so",
+          "start": 135.9,
+          "end": 136.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "he",
+          "start": 136.2,
+          "end": 136.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "locates",
+          "start": 136.38,
+          "end": 136.88,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 136.88,
+          "end": 137.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "auto",
+          "start": 137.08,
+          "end": 137.38,
+          "probability": 0.9072
+        },
+        {
+          "word": "body",
+          "start": 137.38,
+          "end": 137.7,
+          "probability": 0.959
+        },
+        {
+          "word": "reserve",
+          "start": 137.7,
+          "end": 138.22,
+          "probability": 0.998
+        },
+        {
+          "word": "line",
+          "start": 138.22,
+          "end": 138.64,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 138.64,
+          "end": 138.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "clicks",
+          "start": 138.88,
+          "end": 139.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 139.18,
+          "end": 139.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "menu",
+          "start": 139.34,
+          "end": 139.62,
+          "probability": 0.9697
+        },
+        {
+          "word": "button.",
+          "start": 139.62,
+          "end": 139.96,
+          "probability": 0.999
+        },
+        {
+          "word": "He",
+          "start": 140.38,
+          "end": 140.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "chooses",
+          "start": 140.98,
+          "end": 141.4,
+          "probability": 0.999
+        },
+        {
+          "word": "Edit",
+          "start": 141.4,
+          "end": 141.66,
+          "probability": 0.3589
+        },
+        {
+          "word": "Reserve",
+          "start": 141.66,
+          "end": 142.14,
+          "probability": 0.8975
+        },
+        {
+          "word": "from",
+          "start": 142.14,
+          "end": 142.48,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 142.48,
+          "end": 142.6,
+          "probability": 0.999
+        },
+        {
+          "word": "menu.",
+          "start": 142.6,
+          "end": 142.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "He",
+          "start": 143.3,
+          "end": 143.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes",
+          "start": 143.9,
+          "end": 144.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 144.32,
+          "end": 144.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "value",
+          "start": 144.56,
+          "end": 144.9,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 144.9,
+          "end": 145.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 145.18,
+          "end": 145.28,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 145.28,
+          "end": 145.46,
+          "probability": 0.9258
+        },
+        {
+          "word": "available",
+          "start": 145.46,
+          "end": 145.9,
+          "probability": 0.895
+        },
+        {
+          "word": "reserves",
+          "start": 145.9,
+          "end": 146.46,
+          "probability": 0.9893
+        },
+        {
+          "word": "field",
+          "start": 146.46,
+          "end": 146.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 146.94,
+          "end": 147.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "$1",
+          "start": 147.14,
+          "end": 147.52,
+          "probability": 0.8647
+        },
+        {
+          "word": ",400.",
+          "start": 147.52,
+          "end": 148.58,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 150.18,
+      "end": 154.36,
+      "start_formatted": "00:02:30.180",
+      "end_formatted": "00:02:34.360",
+      "text": "Notice that this increases the reserve amount by $1,000.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 150.18,
+          "end": 150.96,
+          "probability": 0.9478
+        },
+        {
+          "word": "that",
+          "start": 150.96,
+          "end": 151.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 151.22,
+          "end": 151.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "increases",
+          "start": 151.46,
+          "end": 151.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 151.98,
+          "end": 152.3,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 152.3,
+          "end": 152.72,
+          "probability": 0.9141
+        },
+        {
+          "word": "amount",
+          "start": 152.72,
+          "end": 153.12,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 153.12,
+          "end": 153.4,
+          "probability": 1.0
+        },
+        {
+          "word": "$1",
+          "start": 153.4,
+          "end": 153.8,
+          "probability": 0.9482
+        },
+        {
+          "word": ",000.",
+          "start": 153.8,
+          "end": 154.36,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 155.26,
+      "end": 157.0,
+      "start_formatted": "00:02:35.260",
+      "end_formatted": "00:02:37.000",
+      "text": "Andy saves the change.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 155.26,
+          "end": 155.82,
+          "probability": 0.7114
+        },
+        {
+          "word": "saves",
+          "start": 155.82,
+          "end": 156.28,
+          "probability": 0.9507
+        },
+        {
+          "word": "the",
+          "start": 156.28,
+          "end": 156.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "change.",
+          "start": 156.5,
+          "end": 157.0,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 157.68,
+      "end": 175.94,
+      "start_formatted": "00:02:37.680",
+      "end_formatted": "00:02:55.940",
+      "text": "The transaction created for the reserve change displays at the bottom of the financials transactions screen. Notice the status is pending approval. Even though the transaction amount was only $1,000, it will increase the claim total reserves over the limit of $15,000.",
+      "words": [
+        {
+          "word": "The",
+          "start": 157.68,
+          "end": 158.46,
+          "probability": 0.999
+        },
+        {
+          "word": "transaction",
+          "start": 158.46,
+          "end": 159.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "created",
+          "start": 159.04,
+          "end": 159.58,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 159.58,
+          "end": 159.82,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 159.82,
+          "end": 159.96,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 159.96,
+          "end": 160.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "change",
+          "start": 160.42,
+          "end": 160.84,
+          "probability": 0.998
+        },
+        {
+          "word": "displays",
+          "start": 160.84,
+          "end": 161.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 161.4,
+          "end": 161.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 161.74,
+          "end": 161.86,
+          "probability": 1.0
+        },
+        {
+          "word": "bottom",
+          "start": 161.86,
+          "end": 162.12,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 162.12,
+          "end": 162.36,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 162.36,
+          "end": 162.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "financials",
+          "start": 162.5,
+          "end": 163.12,
+          "probability": 0.9189
+        },
+        {
+          "word": "transactions",
+          "start": 163.12,
+          "end": 163.74,
+          "probability": 0.5049
+        },
+        {
+          "word": "screen.",
+          "start": 163.74,
+          "end": 164.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "Notice",
+          "start": 164.72,
+          "end": 165.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 165.3,
+          "end": 165.5,
+          "probability": 1.0
+        },
+        {
+          "word": "status",
+          "start": 165.5,
+          "end": 165.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 165.88,
+          "end": 166.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "pending",
+          "start": 166.18,
+          "end": 166.48,
+          "probability": 0.7476
+        },
+        {
+          "word": "approval.",
+          "start": 166.48,
+          "end": 167.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "Even",
+          "start": 167.32,
+          "end": 167.82,
+          "probability": 0.999
+        },
+        {
+          "word": "though",
+          "start": 167.82,
+          "end": 168.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 168.02,
+          "end": 168.22,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 168.22,
+          "end": 168.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "amount",
+          "start": 168.78,
+          "end": 169.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "was",
+          "start": 169.12,
+          "end": 169.44,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 169.44,
+          "end": 169.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "$1",
+          "start": 169.84,
+          "end": 170.2,
+          "probability": 1.0
+        },
+        {
+          "word": ",000,",
+          "start": 170.2,
+          "end": 170.7,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 171.32,
+          "end": 171.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 171.58,
+          "end": 171.78,
+          "probability": 1.0
+        },
+        {
+          "word": "increase",
+          "start": 171.78,
+          "end": 172.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 172.3,
+          "end": 172.56,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 172.56,
+          "end": 172.9,
+          "probability": 0.9282
+        },
+        {
+          "word": "total",
+          "start": 172.9,
+          "end": 173.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserves",
+          "start": 173.28,
+          "end": 173.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "over",
+          "start": 173.8,
+          "end": 174.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 174.16,
+          "end": 174.32,
+          "probability": 1.0
+        },
+        {
+          "word": "limit",
+          "start": 174.32,
+          "end": 174.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 174.6,
+          "end": 174.8,
+          "probability": 1.0
+        },
+        {
+          "word": "$15",
+          "start": 174.8,
+          "end": 175.3,
+          "probability": 0.9824
+        },
+        {
+          "word": ",000.",
+          "start": 175.3,
+          "end": 175.94,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 176.9,
+      "end": 198.78,
+      "start_formatted": "00:02:56.900",
+      "end_formatted": "00:03:18.780",
+      "text": "Andy returns to the financials. Andy returns to the financials summary screen to see the impact of the reserve transaction. Notice that the net total incurred for the claim is still $18,400, because although Andy created a reserve change transaction, it is not yet approved, so it is not reflected in the total. Andy logs out of ClaimCenter.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 176.9,
+          "end": 177.46,
+          "probability": 0.894
+        },
+        {
+          "word": "returns",
+          "start": 177.46,
+          "end": 177.96,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 177.96,
+          "end": 178.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 178.2,
+          "end": 178.32,
+          "probability": 1.0
+        },
+        {
+          "word": "financials.",
+          "start": 178.32,
+          "end": 179.0,
+          "probability": 0.625
+        },
+        {
+          "word": "Andy",
+          "start": 179.22,
+          "end": 179.24,
+          "probability": 0.0
+        },
+        {
+          "word": "returns",
+          "start": 179.24,
+          "end": 179.24,
+          "probability": 0.1096
+        },
+        {
+          "word": "to",
+          "start": 179.24,
+          "end": 179.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 179.24,
+          "end": 179.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "financials",
+          "start": 179.24,
+          "end": 179.28,
+          "probability": 0.9092
+        },
+        {
+          "word": "summary",
+          "start": 179.28,
+          "end": 179.28,
+          "probability": 0.3972
+        },
+        {
+          "word": "screen",
+          "start": 179.28,
+          "end": 179.74,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 179.74,
+          "end": 180.02,
+          "probability": 0.9888
+        },
+        {
+          "word": "see",
+          "start": 180.02,
+          "end": 180.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 180.2,
+          "end": 180.36,
+          "probability": 1.0
+        },
+        {
+          "word": "impact",
+          "start": 180.36,
+          "end": 180.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 180.78,
+          "end": 181.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 181.0,
+          "end": 181.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "reserve",
+          "start": 181.12,
+          "end": 181.52,
+          "probability": 0.981
+        },
+        {
+          "word": "transaction.",
+          "start": 181.52,
+          "end": 182.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Notice",
+          "start": 182.96,
+          "end": 183.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 183.52,
+          "end": 183.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 183.76,
+          "end": 183.9,
+          "probability": 1.0
+        },
+        {
+          "word": "net",
+          "start": 183.9,
+          "end": 184.1,
+          "probability": 0.999
+        },
+        {
+          "word": "total",
+          "start": 184.1,
+          "end": 184.42,
+          "probability": 0.999
+        },
+        {
+          "word": "incurred",
+          "start": 184.42,
+          "end": 184.94,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 184.94,
+          "end": 185.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 185.1,
+          "end": 185.26,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 185.26,
+          "end": 185.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 185.6,
+          "end": 185.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "still",
+          "start": 185.88,
+          "end": 186.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "$18",
+          "start": 186.14,
+          "end": 186.7,
+          "probability": 0.9854
+        },
+        {
+          "word": ",400,",
+          "start": 186.7,
+          "end": 187.9,
+          "probability": 0.998
+        },
+        {
+          "word": "because",
+          "start": 187.9,
+          "end": 189.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "although",
+          "start": 189.08,
+          "end": 189.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy",
+          "start": 189.46,
+          "end": 189.86,
+          "probability": 0.999
+        },
+        {
+          "word": "created",
+          "start": 189.86,
+          "end": 190.36,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 190.36,
+          "end": 190.56,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 190.56,
+          "end": 190.98,
+          "probability": 0.998
+        },
+        {
+          "word": "change",
+          "start": 190.98,
+          "end": 191.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "transaction,",
+          "start": 191.5,
+          "end": 192.26,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 192.56,
+          "end": 192.84,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 192.84,
+          "end": 193.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 193.0,
+          "end": 193.22,
+          "probability": 1.0
+        },
+        {
+          "word": "yet",
+          "start": 193.22,
+          "end": 193.44,
+          "probability": 1.0
+        },
+        {
+          "word": "approved,",
+          "start": 193.44,
+          "end": 194.02,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 194.24,
+          "end": 194.48,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 194.48,
+          "end": 194.62,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 194.62,
+          "end": 194.76,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 194.76,
+          "end": 195.02,
+          "probability": 1.0
+        },
+        {
+          "word": "reflected",
+          "start": 195.02,
+          "end": 195.56,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 195.56,
+          "end": 195.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 195.84,
+          "end": 195.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "total.",
+          "start": 195.94,
+          "end": 196.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy",
+          "start": 196.48,
+          "end": 197.02,
+          "probability": 0.9922
+        },
+        {
+          "word": "logs",
+          "start": 197.02,
+          "end": 197.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "out",
+          "start": 197.44,
+          "end": 197.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 197.7,
+          "end": 197.9,
+          "probability": 1.0
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 197.9,
+          "end": 198.78,
+          "probability": 0.6714
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 198.78,
+      "end": 209.32,
+      "start_formatted": "00:03:18.780",
+      "end_formatted": "00:03:29.320",
+      "text": "This section of the demo shows what happens when a user has no authority limit for a transaction, and also what happens when additional restrictions are added to a limit.",
+      "words": [
+        {
+          "word": "This",
+          "start": 198.78,
+          "end": 199.8,
+          "probability": 0.9653
+        },
+        {
+          "word": "section",
+          "start": 199.8,
+          "end": 200.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 200.22,
+          "end": 200.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 200.52,
+          "end": 200.64,
+          "probability": 1.0
+        },
+        {
+          "word": "demo",
+          "start": 200.64,
+          "end": 200.94,
+          "probability": 0.998
+        },
+        {
+          "word": "shows",
+          "start": 200.94,
+          "end": 201.36,
+          "probability": 1.0
+        },
+        {
+          "word": "what",
+          "start": 201.36,
+          "end": 201.56,
+          "probability": 1.0
+        },
+        {
+          "word": "happens",
+          "start": 201.56,
+          "end": 201.98,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 201.98,
+          "end": 202.16,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 202.16,
+          "end": 202.28,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 202.28,
+          "end": 202.58,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 202.58,
+          "end": 202.84,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 202.84,
+          "end": 203.02,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 203.02,
+          "end": 203.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "limit",
+          "start": 203.5,
+          "end": 203.84,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 203.84,
+          "end": 204.1,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 204.1,
+          "end": 204.22,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction,",
+          "start": 204.22,
+          "end": 204.9,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 205.22,
+          "end": 205.5,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 205.5,
+          "end": 205.88,
+          "probability": 1.0
+        },
+        {
+          "word": "what",
+          "start": 205.88,
+          "end": 206.16,
+          "probability": 1.0
+        },
+        {
+          "word": "happens",
+          "start": 206.16,
+          "end": 206.56,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 206.56,
+          "end": 206.76,
+          "probability": 1.0
+        },
+        {
+          "word": "additional",
+          "start": 206.76,
+          "end": 207.18,
+          "probability": 1.0
+        },
+        {
+          "word": "restrictions",
+          "start": 207.18,
+          "end": 207.84,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 207.84,
+          "end": 208.34,
+          "probability": 1.0
+        },
+        {
+          "word": "added",
+          "start": 208.34,
+          "end": 208.62,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 208.62,
+          "end": 208.84,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 208.84,
+          "end": 209.02,
+          "probability": 1.0
+        },
+        {
+          "word": "limit.",
+          "start": 209.02,
+          "end": 209.32,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 209.6,
+      "end": 216.02,
+      "start_formatted": "00:03:29.600",
+      "end_formatted": "00:03:36.020",
+      "text": "The system administrator logs back into ClaimCenter to modify an existing authority limit profile.",
+      "words": [
+        {
+          "word": "The",
+          "start": 209.6,
+          "end": 210.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "system",
+          "start": 210.28,
+          "end": 210.62,
+          "probability": 0.9414
+        },
+        {
+          "word": "administrator",
+          "start": 210.62,
+          "end": 211.24,
+          "probability": 0.999
+        },
+        {
+          "word": "logs",
+          "start": 211.24,
+          "end": 211.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 211.74,
+          "end": 212.08,
+          "probability": 1.0
+        },
+        {
+          "word": "into",
+          "start": 212.08,
+          "end": 212.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 212.32,
+          "end": 213.06,
+          "probability": 0.73
+        },
+        {
+          "word": "to",
+          "start": 213.06,
+          "end": 213.26,
+          "probability": 1.0
+        },
+        {
+          "word": "modify",
+          "start": 213.26,
+          "end": 213.68,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 213.68,
+          "end": 214.02,
+          "probability": 1.0
+        },
+        {
+          "word": "existing",
+          "start": 214.02,
+          "end": 214.46,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 214.46,
+          "end": 214.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "limit",
+          "start": 214.96,
+          "end": 215.36,
+          "probability": 1.0
+        },
+        {
+          "word": "profile.",
+          "start": 215.36,
+          "end": 216.02,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 216.54,
+      "end": 219.62,
+      "start_formatted": "00:03:36.540",
+      "end_formatted": "00:03:39.620",
+      "text": "She navigates to the administration screens,",
+      "words": [
+        {
+          "word": "She",
+          "start": 216.54,
+          "end": 217.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigates",
+          "start": 217.22,
+          "end": 217.9,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 217.9,
+          "end": 218.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 218.08,
+          "end": 218.22,
+          "probability": 1.0
+        },
+        {
+          "word": "administration",
+          "start": 218.22,
+          "end": 218.82,
+          "probability": 0.9712
+        },
+        {
+          "word": "screens,",
+          "start": 218.82,
+          "end": 219.62,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 219.62,
+      "end": 223.62,
+      "start_formatted": "00:03:39.620",
+      "end_formatted": "00:03:43.620",
+      "text": "and then to the user's search screen to search for Andy Applegate.",
+      "words": [
+        {
+          "word": "and",
+          "start": 219.62,
+          "end": 220.84,
+          "probability": 0.4668
+        },
+        {
+          "word": "then",
+          "start": 220.84,
+          "end": 221.06,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 221.06,
+          "end": 221.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 221.22,
+          "end": 221.34,
+          "probability": 1.0
+        },
+        {
+          "word": "user's",
+          "start": 221.34,
+          "end": 221.8,
+          "probability": 0.9287
+        },
+        {
+          "word": "search",
+          "start": 221.8,
+          "end": 222.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "screen",
+          "start": 222.08,
+          "end": 222.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 222.52,
+          "end": 222.78,
+          "probability": 1.0
+        },
+        {
+          "word": "search",
+          "start": 222.78,
+          "end": 223.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 223.08,
+          "end": 223.32,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy",
+          "start": 223.32,
+          "end": 223.6,
+          "probability": 0.978
+        },
+        {
+          "word": "Applegate.",
+          "start": 223.6,
+          "end": 223.98,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 224.78,
+      "end": 230.42,
+      "start_formatted": "00:03:44.780",
+      "end_formatted": "00:03:50.420",
+      "text": "She enters the first few characters of Andy's user name and clicks the search button.",
+      "words": [
+        {
+          "word": "She",
+          "start": 224.78,
+          "end": 225.5,
+          "probability": 1.0
+        },
+        {
+          "word": "enters",
+          "start": 225.5,
+          "end": 225.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 225.88,
+          "end": 226.1,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 226.1,
+          "end": 226.38,
+          "probability": 1.0
+        },
+        {
+          "word": "few",
+          "start": 226.38,
+          "end": 226.7,
+          "probability": 1.0
+        },
+        {
+          "word": "characters",
+          "start": 226.7,
+          "end": 227.24,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 227.24,
+          "end": 227.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy's",
+          "start": 227.62,
+          "end": 228.16,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 228.16,
+          "end": 228.54,
+          "probability": 0.5034
+        },
+        {
+          "word": "name",
+          "start": 228.54,
+          "end": 228.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 228.92,
+          "end": 229.18,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 229.18,
+          "end": 229.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 229.5,
+          "end": 229.72,
+          "probability": 1.0
+        },
+        {
+          "word": "search",
+          "start": 229.72,
+          "end": 230.02,
+          "probability": 0.8916
+        },
+        {
+          "word": "button.",
+          "start": 230.02,
+          "end": 230.42,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 230.82,
+      "end": 236.06,
+      "start_formatted": "00:03:50.820",
+      "end_formatted": "00:03:56.060",
+      "text": "She opens the user contact record for Andy Applegate from the search results.",
+      "words": [
+        {
+          "word": "She",
+          "start": 230.82,
+          "end": 231.54,
+          "probability": 1.0
+        },
+        {
+          "word": "opens",
+          "start": 231.54,
+          "end": 231.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 231.98,
+          "end": 232.2,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 232.2,
+          "end": 232.52,
+          "probability": 0.998
+        },
+        {
+          "word": "contact",
+          "start": 232.52,
+          "end": 232.98,
+          "probability": 0.999
+        },
+        {
+          "word": "record",
+          "start": 232.98,
+          "end": 233.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 233.46,
+          "end": 233.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy",
+          "start": 233.72,
+          "end": 234.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "Applegate",
+          "start": 234.1,
+          "end": 234.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 234.74,
+          "end": 234.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 234.94,
+          "end": 235.1,
+          "probability": 1.0
+        },
+        {
+          "word": "search",
+          "start": 235.1,
+          "end": 235.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "results.",
+          "start": 235.42,
+          "end": 236.06,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 236.28,
+      "end": 239.3,
+      "start_formatted": "00:03:56.280",
+      "end_formatted": "00:03:59.300",
+      "text": "She navigates to Andy's authority limits.",
+      "words": [
+        {
+          "word": "She",
+          "start": 236.28,
+          "end": 237.04,
+          "probability": 1.0
+        },
+        {
+          "word": "navigates",
+          "start": 237.04,
+          "end": 237.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 237.72,
+          "end": 237.88,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy's",
+          "start": 237.88,
+          "end": 238.38,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 238.38,
+          "end": 238.78,
+          "probability": 0.8872
+        },
+        {
+          "word": "limits.",
+          "start": 238.78,
+          "end": 239.3,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 240.08,
+      "end": 244.3,
+      "start_formatted": "00:04:00.080",
+      "end_formatted": "00:04:04.300",
+      "text": "She puts the screen in edit mode to modify his authority limit profile.",
+      "words": [
+        {
+          "word": "She",
+          "start": 240.08,
+          "end": 240.8,
+          "probability": 0.9634
+        },
+        {
+          "word": "puts",
+          "start": 240.8,
+          "end": 241.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 241.1,
+          "end": 241.3,
+          "probability": 0.9229
+        },
+        {
+          "word": "screen",
+          "start": 241.3,
+          "end": 241.6,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 241.6,
+          "end": 241.84,
+          "probability": 1.0
+        },
+        {
+          "word": "edit",
+          "start": 241.84,
+          "end": 242.08,
+          "probability": 0.8379
+        },
+        {
+          "word": "mode",
+          "start": 242.08,
+          "end": 242.36,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 242.36,
+          "end": 242.58,
+          "probability": 1.0
+        },
+        {
+          "word": "modify",
+          "start": 242.58,
+          "end": 242.98,
+          "probability": 1.0
+        },
+        {
+          "word": "his",
+          "start": 242.98,
+          "end": 243.32,
+          "probability": 0.999
+        },
+        {
+          "word": "authority",
+          "start": 243.32,
+          "end": 243.76,
+          "probability": 0.8438
+        },
+        {
+          "word": "limit",
+          "start": 243.76,
+          "end": 244.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "profile.",
+          "start": 244.14,
+          "end": 244.5,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 245.44,
+      "end": 249.16,
+      "start_formatted": "00:04:05.440",
+      "end_formatted": "00:04:09.160",
+      "text": "Andy currently has the adjuster authority limit profile.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 245.44,
+          "end": 246.16,
+          "probability": 0.9663
+        },
+        {
+          "word": "currently",
+          "start": 246.16,
+          "end": 246.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 246.62,
+          "end": 247.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 247.04,
+          "end": 247.22,
+          "probability": 1.0
+        },
+        {
+          "word": "adjuster",
+          "start": 247.22,
+          "end": 247.72,
+          "probability": 0.9287
+        },
+        {
+          "word": "authority",
+          "start": 247.72,
+          "end": 248.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "limit",
+          "start": 248.14,
+          "end": 248.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "profile.",
+          "start": 248.52,
+          "end": 249.16,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 249.56,
+      "end": 256.34,
+      "start_formatted": "00:04:09.560",
+      "end_formatted": "00:04:16.340",
+      "text": "The system administrator selects custom from the list of available profiles to create a custom profile for Andy.",
+      "words": [
+        {
+          "word": "The",
+          "start": 249.56,
+          "end": 249.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "system",
+          "start": 249.94,
+          "end": 250.32,
+          "probability": 0.9834
+        },
+        {
+          "word": "administrator",
+          "start": 250.32,
+          "end": 250.88,
+          "probability": 1.0
+        },
+        {
+          "word": "selects",
+          "start": 250.88,
+          "end": 251.52,
+          "probability": 1.0
+        },
+        {
+          "word": "custom",
+          "start": 251.52,
+          "end": 251.88,
+          "probability": 0.9395
+        },
+        {
+          "word": "from",
+          "start": 251.88,
+          "end": 252.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 252.16,
+          "end": 252.32,
+          "probability": 1.0
+        },
+        {
+          "word": "list",
+          "start": 252.32,
+          "end": 252.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 252.66,
+          "end": 252.84,
+          "probability": 1.0
+        },
+        {
+          "word": "available",
+          "start": 252.84,
+          "end": 253.28,
+          "probability": 0.999
+        },
+        {
+          "word": "profiles",
+          "start": 253.28,
+          "end": 253.94,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 253.94,
+          "end": 254.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 254.22,
+          "end": 254.54,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 254.54,
+          "end": 254.74,
+          "probability": 1.0
+        },
+        {
+          "word": "custom",
+          "start": 254.74,
+          "end": 255.08,
+          "probability": 0.999
+        },
+        {
+          "word": "profile",
+          "start": 255.08,
+          "end": 255.72,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 255.72,
+          "end": 256.02,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy.",
+          "start": 256.02,
+          "end": 256.34,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 257.08,
+      "end": 264.36,
+      "start_formatted": "00:04:17.080",
+      "end_formatted": "00:04:24.360",
+      "text": "Notice that the custom profile has automatically picked up the limits from the adjuster profile previously assigned to Andy.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 257.08,
+          "end": 257.8,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 257.8,
+          "end": 258.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 258.06,
+          "end": 258.2,
+          "probability": 1.0
+        },
+        {
+          "word": "custom",
+          "start": 258.2,
+          "end": 258.54,
+          "probability": 0.999
+        },
+        {
+          "word": "profile",
+          "start": 258.54,
+          "end": 259.12,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 259.12,
+          "end": 259.46,
+          "probability": 1.0
+        },
+        {
+          "word": "automatically",
+          "start": 259.46,
+          "end": 260.0,
+          "probability": 1.0
+        },
+        {
+          "word": "picked",
+          "start": 260.0,
+          "end": 260.4,
+          "probability": 1.0
+        },
+        {
+          "word": "up",
+          "start": 260.4,
+          "end": 260.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 260.62,
+          "end": 260.78,
+          "probability": 1.0
+        },
+        {
+          "word": "limits",
+          "start": 260.78,
+          "end": 261.14,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 261.14,
+          "end": 261.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 261.38,
+          "end": 261.52,
+          "probability": 1.0
+        },
+        {
+          "word": "adjuster",
+          "start": 261.52,
+          "end": 262.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "profile",
+          "start": 262.04,
+          "end": 262.56,
+          "probability": 1.0
+        },
+        {
+          "word": "previously",
+          "start": 262.56,
+          "end": 263.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "assigned",
+          "start": 263.18,
+          "end": 263.82,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 263.82,
+          "end": 264.0,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy.",
+          "start": 264.0,
+          "end": 264.36,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 264.36,
+      "end": 269.04,
+      "start_formatted": "00:04:24.360",
+      "end_formatted": "00:04:29.040",
+      "text": "Now these limits can be changed, and they will only apply to Andy.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 264.36,
+          "end": 265.08,
+          "probability": 0.9873
+        },
+        {
+          "word": "these",
+          "start": 265.08,
+          "end": 265.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "limits",
+          "start": 265.38,
+          "end": 265.82,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 265.82,
+          "end": 266.08,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 266.08,
+          "end": 266.28,
+          "probability": 1.0
+        },
+        {
+          "word": "changed,",
+          "start": 266.28,
+          "end": 266.86,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 267.04,
+          "end": 267.3,
+          "probability": 1.0
+        },
+        {
+          "word": "they",
+          "start": 267.3,
+          "end": 267.46,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 267.46,
+          "end": 267.76,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 267.76,
+          "end": 268.1,
+          "probability": 1.0
+        },
+        {
+          "word": "apply",
+          "start": 268.1,
+          "end": 268.44,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 268.44,
+          "end": 268.68,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy.",
+          "start": 268.68,
+          "end": 269.04,
+          "probability": 0.8975
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 269.62,
+      "end": 274.42,
+      "start_formatted": "00:04:29.620",
+      "end_formatted": "00:04:34.420",
+      "text": "The system administrator selects the two payment related limits in the profile.",
+      "words": [
+        {
+          "word": "The",
+          "start": 269.62,
+          "end": 270.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "system",
+          "start": 270.2,
+          "end": 270.54,
+          "probability": 0.9409
+        },
+        {
+          "word": "administrator",
+          "start": 270.54,
+          "end": 271.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "selects",
+          "start": 271.14,
+          "end": 271.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 271.8,
+          "end": 271.94,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 271.94,
+          "end": 272.12,
+          "probability": 0.9805
+        },
+        {
+          "word": "payment",
+          "start": 272.12,
+          "end": 272.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "related",
+          "start": 272.58,
+          "end": 273.0,
+          "probability": 0.1259
+        },
+        {
+          "word": "limits",
+          "start": 273.0,
+          "end": 273.46,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 273.46,
+          "end": 273.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 273.72,
+          "end": 273.82,
+          "probability": 1.0
+        },
+        {
+          "word": "profile.",
+          "start": 273.82,
+          "end": 274.42,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 275.16,
+      "end": 277.54,
+      "start_formatted": "00:04:35.160",
+      "end_formatted": "00:04:37.540",
+      "text": "And removes them from the profile.",
+      "words": [
+        {
+          "word": "And",
+          "start": 275.16,
+          "end": 275.84,
+          "probability": 0.9854
+        },
+        {
+          "word": "removes",
+          "start": 275.84,
+          "end": 276.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "them",
+          "start": 276.28,
+          "end": 276.52,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 276.52,
+          "end": 276.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 276.78,
+          "end": 276.94,
+          "probability": 1.0
+        },
+        {
+          "word": "profile.",
+          "start": 276.94,
+          "end": 277.54,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 277.98,
+      "end": 284.7,
+      "start_formatted": "00:04:37.980",
+      "end_formatted": "00:04:44.700",
+      "text": "She modifies the remaining limit for ClaimTotal reserves by adding a policy type restriction to the limit.",
+      "words": [
+        {
+          "word": "She",
+          "start": 277.98,
+          "end": 278.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "modifies",
+          "start": 278.66,
+          "end": 279.26,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 279.26,
+          "end": 279.46,
+          "probability": 1.0
+        },
+        {
+          "word": "remaining",
+          "start": 279.46,
+          "end": 279.88,
+          "probability": 1.0
+        },
+        {
+          "word": "limit",
+          "start": 279.88,
+          "end": 280.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 280.28,
+          "end": 280.5,
+          "probability": 1.0
+        },
+        {
+          "word": "ClaimTotal",
+          "start": 280.5,
+          "end": 281.3,
+          "probability": 0.5132
+        },
+        {
+          "word": "reserves",
+          "start": 281.3,
+          "end": 281.74,
+          "probability": 0.3608
+        },
+        {
+          "word": "by",
+          "start": 281.74,
+          "end": 282.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "adding",
+          "start": 282.12,
+          "end": 282.42,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 282.42,
+          "end": 282.6,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 282.6,
+          "end": 283.08,
+          "probability": 0.9722
+        },
+        {
+          "word": "type",
+          "start": 283.08,
+          "end": 283.44,
+          "probability": 0.9604
+        },
+        {
+          "word": "restriction",
+          "start": 283.44,
+          "end": 284.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 284.0,
+          "end": 284.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 284.32,
+          "end": 284.42,
+          "probability": 1.0
+        },
+        {
+          "word": "limit.",
+          "start": 284.42,
+          "end": 284.7,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 285.04,
+      "end": 290.0,
+      "start_formatted": "00:04:45.040",
+      "end_formatted": "00:04:50.000",
+      "text": "Now the limit only applies if the claim is associated with a business owner's policy.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 285.04,
+          "end": 285.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 285.42,
+          "end": 285.58,
+          "probability": 1.0
+        },
+        {
+          "word": "limit",
+          "start": 285.58,
+          "end": 285.86,
+          "probability": 0.999
+        },
+        {
+          "word": "only",
+          "start": 285.86,
+          "end": 286.24,
+          "probability": 1.0
+        },
+        {
+          "word": "applies",
+          "start": 286.24,
+          "end": 286.74,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 286.74,
+          "end": 286.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 286.96,
+          "end": 287.08,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 287.08,
+          "end": 287.42,
+          "probability": 0.9912
+        },
+        {
+          "word": "is",
+          "start": 287.42,
+          "end": 287.64,
+          "probability": 1.0
+        },
+        {
+          "word": "associated",
+          "start": 287.64,
+          "end": 288.24,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 288.24,
+          "end": 288.54,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 288.54,
+          "end": 288.66,
+          "probability": 0.999
+        },
+        {
+          "word": "business",
+          "start": 288.66,
+          "end": 288.96,
+          "probability": 0.9814
+        },
+        {
+          "word": "owner's",
+          "start": 288.96,
+          "end": 289.5,
+          "probability": 0.9873
+        },
+        {
+          "word": "policy.",
+          "start": 289.5,
+          "end": 290.0,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 290.0,
+      "end": 296.28,
+      "start_formatted": "00:04:50.000",
+      "end_formatted": "00:04:56.280",
+      "text": "Finally, she saves the changes to create Andy's custom authority limit profile.",
+      "words": [
+        {
+          "word": "Finally,",
+          "start": 290.0,
+          "end": 291.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "she",
+          "start": 291.8,
+          "end": 292.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "saves",
+          "start": 292.06,
+          "end": 292.48,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 292.48,
+          "end": 292.66,
+          "probability": 1.0
+        },
+        {
+          "word": "changes",
+          "start": 292.66,
+          "end": 293.08,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 293.08,
+          "end": 293.34,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 293.34,
+          "end": 293.76,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy's",
+          "start": 293.76,
+          "end": 294.36,
+          "probability": 0.9688
+        },
+        {
+          "word": "custom",
+          "start": 294.36,
+          "end": 294.74,
+          "probability": 0.9531
+        },
+        {
+          "word": "authority",
+          "start": 294.74,
+          "end": 295.2,
+          "probability": 0.8965
+        },
+        {
+          "word": "limit",
+          "start": 295.2,
+          "end": 295.56,
+          "probability": 0.999
+        },
+        {
+          "word": "profile.",
+          "start": 295.56,
+          "end": 296.28,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 296.84,
+      "end": 300.4,
+      "start_formatted": "00:04:56.840",
+      "end_formatted": "00:05:00.400",
+      "text": "Now the system administrator logs out of Claim Center.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 296.84,
+          "end": 297.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 297.46,
+          "end": 297.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "system",
+          "start": 297.7,
+          "end": 298.02,
+          "probability": 0.9829
+        },
+        {
+          "word": "administrator",
+          "start": 298.02,
+          "end": 298.64,
+          "probability": 1.0
+        },
+        {
+          "word": "logs",
+          "start": 298.64,
+          "end": 299.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 299.1,
+          "end": 299.34,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 299.34,
+          "end": 299.56,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 299.56,
+          "end": 299.96,
+          "probability": 0.9668
+        },
+        {
+          "word": "Center.",
+          "start": 299.96,
+          "end": 300.4,
+          "probability": 0.9473
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 300.92,
+      "end": 305.94,
+      "start_formatted": "00:05:00.920",
+      "end_formatted": "00:05:05.940",
+      "text": "Andy Applegate logs back into Claim Center to test the authority limit changes.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 300.92,
+          "end": 301.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "Applegate",
+          "start": 301.6,
+          "end": 302.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "logs",
+          "start": 302.26,
+          "end": 302.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 302.66,
+          "end": 302.98,
+          "probability": 1.0
+        },
+        {
+          "word": "into",
+          "start": 302.98,
+          "end": 303.22,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 303.22,
+          "end": 303.58,
+          "probability": 1.0
+        },
+        {
+          "word": "Center",
+          "start": 303.58,
+          "end": 303.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 303.94,
+          "end": 304.16,
+          "probability": 1.0
+        },
+        {
+          "word": "test",
+          "start": 304.16,
+          "end": 304.48,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 304.48,
+          "end": 304.64,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 304.64,
+          "end": 305.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "limit",
+          "start": 305.06,
+          "end": 305.44,
+          "probability": 1.0
+        },
+        {
+          "word": "changes.",
+          "start": 305.44,
+          "end": 305.94,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 306.38,
+      "end": 311.46,
+      "start_formatted": "00:05:06.380",
+      "end_formatted": "00:05:11.460",
+      "text": "He locates the Ray Newton claim in his desktop claims view and opens it.",
+      "words": [
+        {
+          "word": "He",
+          "start": 306.38,
+          "end": 307.04,
+          "probability": 1.0
+        },
+        {
+          "word": "locates",
+          "start": 307.04,
+          "end": 307.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 307.56,
+          "end": 307.72,
+          "probability": 1.0
+        },
+        {
+          "word": "Ray",
+          "start": 307.72,
+          "end": 307.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "Newton",
+          "start": 307.94,
+          "end": 308.26,
+          "probability": 0.9844
+        },
+        {
+          "word": "claim",
+          "start": 308.26,
+          "end": 308.68,
+          "probability": 0.9902
+        },
+        {
+          "word": "in",
+          "start": 308.68,
+          "end": 308.9,
+          "probability": 1.0
+        },
+        {
+          "word": "his",
+          "start": 308.9,
+          "end": 309.08,
+          "probability": 1.0
+        },
+        {
+          "word": "desktop",
+          "start": 309.08,
+          "end": 309.52,
+          "probability": 0.8682
+        },
+        {
+          "word": "claims",
+          "start": 309.52,
+          "end": 310.06,
+          "probability": 0.5693
+        },
+        {
+          "word": "view",
+          "start": 310.06,
+          "end": 310.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 310.42,
+          "end": 310.7,
+          "probability": 1.0
+        },
+        {
+          "word": "opens",
+          "start": 310.7,
+          "end": 311.2,
+          "probability": 1.0
+        },
+        {
+          "word": "it.",
+          "start": 311.2,
+          "end": 311.46,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 312.1,
+      "end": 319.16,
+      "start_formatted": "00:05:12.100",
+      "end_formatted": "00:05:19.160",
+      "text": "From the claim summary screen, he navigates to the financial summary screen to review the claims reserves.",
+      "words": [
+        {
+          "word": "From",
+          "start": 312.1,
+          "end": 312.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 312.88,
+          "end": 313.02,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 313.02,
+          "end": 313.34,
+          "probability": 0.5508
+        },
+        {
+          "word": "summary",
+          "start": 313.34,
+          "end": 313.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen,",
+          "start": 313.74,
+          "end": 314.34,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 314.62,
+          "end": 314.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigates",
+          "start": 314.94,
+          "end": 315.58,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 315.58,
+          "end": 315.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 315.76,
+          "end": 315.88,
+          "probability": 1.0
+        },
+        {
+          "word": "financial",
+          "start": 315.88,
+          "end": 316.3,
+          "probability": 0.998
+        },
+        {
+          "word": "summary",
+          "start": 316.3,
+          "end": 316.82,
+          "probability": 0.9277
+        },
+        {
+          "word": "screen",
+          "start": 316.82,
+          "end": 317.3,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 317.3,
+          "end": 317.56,
+          "probability": 1.0
+        },
+        {
+          "word": "review",
+          "start": 317.56,
+          "end": 317.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 317.9,
+          "end": 318.18,
+          "probability": 1.0
+        },
+        {
+          "word": "claims",
+          "start": 318.18,
+          "end": 318.62,
+          "probability": 0.8359
+        },
+        {
+          "word": "reserves.",
+          "start": 318.62,
+          "end": 319.16,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 319.94,
+      "end": 325.3,
+      "start_formatted": "00:05:19.940",
+      "end_formatted": "00:05:25.300",
+      "text": "Andy will increase the claim cost reserves for the first party vehicle exposure.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 319.94,
+          "end": 320.66,
+          "probability": 0.9365
+        },
+        {
+          "word": "will",
+          "start": 320.66,
+          "end": 320.94,
+          "probability": 0.9941
+        },
+        {
+          "word": "increase",
+          "start": 320.94,
+          "end": 321.46,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 321.46,
+          "end": 321.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 321.72,
+          "end": 322.06,
+          "probability": 0.709
+        },
+        {
+          "word": "cost",
+          "start": 322.06,
+          "end": 322.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "reserves",
+          "start": 322.54,
+          "end": 322.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "for",
+          "start": 322.96,
+          "end": 323.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 323.32,
+          "end": 323.46,
+          "probability": 0.998
+        },
+        {
+          "word": "first",
+          "start": 323.46,
+          "end": 323.78,
+          "probability": 0.8965
+        },
+        {
+          "word": "party",
+          "start": 323.78,
+          "end": 324.22,
+          "probability": 0.4136
+        },
+        {
+          "word": "vehicle",
+          "start": 324.22,
+          "end": 324.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "exposure.",
+          "start": 324.68,
+          "end": 325.3,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 325.7,
+      "end": 329.02,
+      "start_formatted": "00:05:25.700",
+      "end_formatted": "00:05:29.020",
+      "text": "He locates the reserve line and clicks on the menu button.",
+      "words": [
+        {
+          "word": "He",
+          "start": 325.7,
+          "end": 326.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "locates",
+          "start": 326.06,
+          "end": 326.56,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 326.56,
+          "end": 326.72,
+          "probability": 0.999
+        },
+        {
+          "word": "reserve",
+          "start": 326.72,
+          "end": 327.12,
+          "probability": 0.9678
+        },
+        {
+          "word": "line",
+          "start": 327.12,
+          "end": 327.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 327.5,
+          "end": 327.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "clicks",
+          "start": 327.74,
+          "end": 328.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 328.06,
+          "end": 328.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 328.3,
+          "end": 328.4,
+          "probability": 0.999
+        },
+        {
+          "word": "menu",
+          "start": 328.4,
+          "end": 328.68,
+          "probability": 0.9033
+        },
+        {
+          "word": "button.",
+          "start": 328.68,
+          "end": 329.02,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 329.4,
+      "end": 331.86,
+      "start_formatted": "00:05:29.400",
+      "end_formatted": "00:05:31.860",
+      "text": "He chooses Edit Reserve from the menu.",
+      "words": [
+        {
+          "word": "He",
+          "start": 329.4,
+          "end": 329.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "chooses",
+          "start": 329.94,
+          "end": 330.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Edit",
+          "start": 330.38,
+          "end": 330.62,
+          "probability": 0.5176
+        },
+        {
+          "word": "Reserve",
+          "start": 330.62,
+          "end": 331.1,
+          "probability": 0.8579
+        },
+        {
+          "word": "from",
+          "start": 331.1,
+          "end": 331.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 331.44,
+          "end": 331.56,
+          "probability": 0.999
+        },
+        {
+          "word": "menu.",
+          "start": 331.56,
+          "end": 331.86,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 332.22,
+      "end": 337.58,
+      "start_formatted": "00:05:32.220",
+      "end_formatted": "00:05:37.580",
+      "text": "He changes the amount for the new available reserves to $1,401.",
+      "words": [
+        {
+          "word": "He",
+          "start": 332.22,
+          "end": 332.94,
+          "probability": 0.999
+        },
+        {
+          "word": "changes",
+          "start": 332.94,
+          "end": 333.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 333.36,
+          "end": 333.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "amount",
+          "start": 333.6,
+          "end": 333.86,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 333.86,
+          "end": 334.12,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 334.12,
+          "end": 334.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 334.24,
+          "end": 334.42,
+          "probability": 0.9775
+        },
+        {
+          "word": "available",
+          "start": 334.42,
+          "end": 334.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "reserves",
+          "start": 334.84,
+          "end": 335.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 335.34,
+          "end": 335.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "$1",
+          "start": 335.72,
+          "end": 336.12,
+          "probability": 0.8984
+        },
+        {
+          "word": ",401.",
+          "start": 336.12,
+          "end": 337.58,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 339.24,
+      "end": 343.6,
+      "start_formatted": "00:05:39.240",
+      "end_formatted": "00:05:43.600",
+      "text": "As soon as Andy navigates out of the new available reserves field,",
+      "words": [
+        {
+          "word": "As",
+          "start": 339.24,
+          "end": 339.9,
+          "probability": 0.9653
+        },
+        {
+          "word": "soon",
+          "start": 339.9,
+          "end": 340.2,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 340.2,
+          "end": 340.46,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy",
+          "start": 340.46,
+          "end": 340.76,
+          "probability": 0.9697
+        },
+        {
+          "word": "navigates",
+          "start": 340.76,
+          "end": 341.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 341.38,
+          "end": 341.58,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 341.58,
+          "end": 341.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 341.7,
+          "end": 341.82,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 341.82,
+          "end": 342.0,
+          "probability": 0.812
+        },
+        {
+          "word": "available",
+          "start": 342.0,
+          "end": 342.44,
+          "probability": 0.9673
+        },
+        {
+          "word": "reserves",
+          "start": 342.44,
+          "end": 342.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "field,",
+          "start": 342.86,
+          "end": 343.6,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 343.98,
+      "end": 349.38,
+      "start_formatted": "00:05:43.980",
+      "end_formatted": "00:05:49.380",
+      "text": "Claim Center calculates the amount of the reserve change and displays it in the change field.",
+      "words": [
+        {
+          "word": "Claim",
+          "start": 343.98,
+          "end": 344.28,
+          "probability": 0.957
+        },
+        {
+          "word": "Center",
+          "start": 344.28,
+          "end": 344.66,
+          "probability": 0.9648
+        },
+        {
+          "word": "calculates",
+          "start": 344.66,
+          "end": 345.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 345.46,
+          "end": 345.64,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 345.64,
+          "end": 345.92,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 345.92,
+          "end": 346.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 346.12,
+          "end": 346.26,
+          "probability": 0.999
+        },
+        {
+          "word": "reserve",
+          "start": 346.26,
+          "end": 346.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "change",
+          "start": 346.68,
+          "end": 347.1,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 347.1,
+          "end": 347.5,
+          "probability": 1.0
+        },
+        {
+          "word": "displays",
+          "start": 347.5,
+          "end": 347.94,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 347.94,
+          "end": 348.16,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 348.16,
+          "end": 348.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 348.32,
+          "end": 348.42,
+          "probability": 1.0
+        },
+        {
+          "word": "change",
+          "start": 348.42,
+          "end": 348.84,
+          "probability": 0.8604
+        },
+        {
+          "word": "field.",
+          "start": 348.84,
+          "end": 349.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 349.82,
+      "end": 353.62,
+      "start_formatted": "00:05:49.820",
+      "end_formatted": "00:05:53.620",
+      "text": "He saves the change to create a new reserve transaction.",
+      "words": [
+        {
+          "word": "He",
+          "start": 349.82,
+          "end": 350.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "saves",
+          "start": 350.42,
+          "end": 350.82,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 350.82,
+          "end": 350.98,
+          "probability": 1.0
+        },
+        {
+          "word": "change",
+          "start": 350.98,
+          "end": 351.42,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 351.42,
+          "end": 351.62,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 351.62,
+          "end": 351.98,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 351.98,
+          "end": 352.26,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 352.26,
+          "end": 352.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserve",
+          "start": 352.44,
+          "end": 352.86,
+          "probability": 0.999
+        },
+        {
+          "word": "transaction.",
+          "start": 352.86,
+          "end": 353.62,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 354.64,
+      "end": 357.7,
+      "start_formatted": "00:05:54.640",
+      "end_formatted": "00:05:57.700",
+      "text": "Notice the error message at the top of the screen.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 354.64,
+          "end": 355.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 355.3,
+          "end": 355.54,
+          "probability": 1.0
+        },
+        {
+          "word": "error",
+          "start": 355.54,
+          "end": 355.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "message",
+          "start": 355.84,
+          "end": 356.22,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 356.22,
+          "end": 356.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 356.56,
+          "end": 356.7,
+          "probability": 1.0
+        },
+        {
+          "word": "top",
+          "start": 356.7,
+          "end": 356.94,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 356.94,
+          "end": 357.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 357.1,
+          "end": 357.24,
+          "probability": 1.0
+        },
+        {
+          "word": "screen.",
+          "start": 357.24,
+          "end": 357.7,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 357.9,
+      "end": 362.68,
+      "start_formatted": "00:05:57.900",
+      "end_formatted": "00:06:02.680",
+      "text": "Andy does not have the authority to submit this reserve transaction for approval.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 357.9,
+          "end": 358.46,
+          "probability": 0.9863
+        },
+        {
+          "word": "does",
+          "start": 358.46,
+          "end": 358.78,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 358.78,
+          "end": 359.04,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 359.04,
+          "end": 359.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 359.3,
+          "end": 359.44,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 359.44,
+          "end": 359.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 359.86,
+          "end": 360.12,
+          "probability": 1.0
+        },
+        {
+          "word": "submit",
+          "start": 360.12,
+          "end": 360.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 360.46,
+          "end": 360.74,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 360.74,
+          "end": 361.2,
+          "probability": 0.998
+        },
+        {
+          "word": "transaction",
+          "start": 361.2,
+          "end": 361.84,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 361.84,
+          "end": 362.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "approval.",
+          "start": 362.2,
+          "end": 362.68,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 362.68,
+      "end": 370.26,
+      "start_formatted": "00:06:02.680",
+      "end_formatted": "00:06:10.260",
+      "text": "When he modified the reserve line in the first part of the demo, the reserve authority limit was not restricted by policy type.",
+      "words": [
+        {
+          "word": "When",
+          "start": 362.68,
+          "end": 363.3,
+          "probability": 0.9629
+        },
+        {
+          "word": "he",
+          "start": 363.3,
+          "end": 363.42,
+          "probability": 1.0
+        },
+        {
+          "word": "modified",
+          "start": 363.42,
+          "end": 363.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 363.9,
+          "end": 364.14,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 364.14,
+          "end": 364.48,
+          "probability": 0.9756
+        },
+        {
+          "word": "line",
+          "start": 364.48,
+          "end": 364.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 364.8,
+          "end": 365.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 365.0,
+          "end": 365.1,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 365.1,
+          "end": 365.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "part",
+          "start": 365.4,
+          "end": 365.7,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 365.7,
+          "end": 365.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 365.84,
+          "end": 365.94,
+          "probability": 1.0
+        },
+        {
+          "word": "demo,",
+          "start": 365.94,
+          "end": 366.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 366.54,
+          "end": 366.76,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 366.76,
+          "end": 367.08,
+          "probability": 0.9736
+        },
+        {
+          "word": "authority",
+          "start": 367.08,
+          "end": 367.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "limit",
+          "start": 367.58,
+          "end": 367.92,
+          "probability": 1.0
+        },
+        {
+          "word": "was",
+          "start": 367.92,
+          "end": 368.22,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 368.22,
+          "end": 368.46,
+          "probability": 1.0
+        },
+        {
+          "word": "restricted",
+          "start": 368.46,
+          "end": 369.02,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 369.02,
+          "end": 369.32,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 369.32,
+          "end": 369.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "type.",
+          "start": 369.84,
+          "end": 370.26,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 370.56,
+      "end": 380.04,
+      "start_formatted": "00:06:10.560",
+      "end_formatted": "00:06:20.040",
+      "text": "Now that this restriction has been added, Claim Center simply does not allow him to create the transaction on a claim that has a policy type other than business owners.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 370.56,
+          "end": 370.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 370.96,
+          "end": 371.2,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 371.2,
+          "end": 371.44,
+          "probability": 1.0
+        },
+        {
+          "word": "restriction",
+          "start": 371.44,
+          "end": 371.92,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 371.92,
+          "end": 372.28,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 372.28,
+          "end": 372.5,
+          "probability": 1.0
+        },
+        {
+          "word": "added,",
+          "start": 372.5,
+          "end": 372.88,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 373.16,
+          "end": 373.56,
+          "probability": 0.9688
+        },
+        {
+          "word": "Center",
+          "start": 373.56,
+          "end": 373.94,
+          "probability": 0.9219
+        },
+        {
+          "word": "simply",
+          "start": 373.94,
+          "end": 374.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "does",
+          "start": 374.44,
+          "end": 374.7,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 374.7,
+          "end": 374.96,
+          "probability": 1.0
+        },
+        {
+          "word": "allow",
+          "start": 374.96,
+          "end": 375.22,
+          "probability": 1.0
+        },
+        {
+          "word": "him",
+          "start": 375.22,
+          "end": 375.42,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 375.42,
+          "end": 375.58,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 375.58,
+          "end": 375.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 375.94,
+          "end": 376.16,
+          "probability": 1.0
+        },
+        {
+          "word": "transaction",
+          "start": 376.16,
+          "end": 376.74,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 376.74,
+          "end": 377.04,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 377.04,
+          "end": 377.16,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 377.16,
+          "end": 377.44,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 377.44,
+          "end": 377.66,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 377.66,
+          "end": 377.84,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 377.84,
+          "end": 377.94,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 377.94,
+          "end": 378.4,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 378.4,
+          "end": 378.8,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 378.8,
+          "end": 379.0,
+          "probability": 1.0
+        },
+        {
+          "word": "than",
+          "start": 379.0,
+          "end": 379.26,
+          "probability": 1.0
+        },
+        {
+          "word": "business",
+          "start": 379.26,
+          "end": 379.58,
+          "probability": 0.9766
+        },
+        {
+          "word": "owners.",
+          "start": 379.58,
+          "end": 380.04,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 380.44,
+      "end": 382.72,
+      "start_formatted": "00:06:20.440",
+      "end_formatted": "00:06:22.720",
+      "text": "He cancels the reserve change.",
+      "words": [
+        {
+          "word": "He",
+          "start": 380.44,
+          "end": 381.04,
+          "probability": 1.0
+        },
+        {
+          "word": "cancels",
+          "start": 381.04,
+          "end": 381.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 381.54,
+          "end": 381.7,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 381.7,
+          "end": 382.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "change.",
+          "start": 382.14,
+          "end": 382.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 383.14,
+      "end": 386.12,
+      "start_formatted": "00:06:23.140",
+      "end_formatted": "00:06:26.120",
+      "text": "He returns to the financial summary screen.",
+      "words": [
+        {
+          "word": "He",
+          "start": 383.14,
+          "end": 383.74,
+          "probability": 1.0
+        },
+        {
+          "word": "returns",
+          "start": 383.74,
+          "end": 384.2,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 384.2,
+          "end": 384.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 384.46,
+          "end": 384.58,
+          "probability": 1.0
+        },
+        {
+          "word": "financial",
+          "start": 384.58,
+          "end": 385.0,
+          "probability": 0.9409
+        },
+        {
+          "word": "summary",
+          "start": 385.0,
+          "end": 385.54,
+          "probability": 0.6392
+        },
+        {
+          "word": "screen.",
+          "start": 385.54,
+          "end": 386.12,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 387.02,
+      "end": 389.2,
+      "start_formatted": "00:06:27.020",
+      "end_formatted": "00:06:29.200",
+      "text": "Andy will attempt to create a check.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 387.02,
+          "end": 387.7,
+          "probability": 0.9106
+        },
+        {
+          "word": "will",
+          "start": 387.7,
+          "end": 387.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "attempt",
+          "start": 387.96,
+          "end": 388.24,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 388.24,
+          "end": 388.48,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 388.48,
+          "end": 388.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 388.76,
+          "end": 388.94,
+          "probability": 1.0
+        },
+        {
+          "word": "check.",
+          "start": 388.94,
+          "end": 389.2,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 389.52,
+      "end": 395.74,
+      "start_formatted": "00:06:29.520",
+      "end_formatted": "00:06:35.740",
+      "text": "He locates the auto body reserve line for the first party vehicle exposure and clicks the menu button.",
+      "words": [
+        {
+          "word": "He",
+          "start": 389.52,
+          "end": 389.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "locates",
+          "start": 389.8,
+          "end": 390.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 390.32,
+          "end": 390.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "auto",
+          "start": 390.52,
+          "end": 390.82,
+          "probability": 0.8296
+        },
+        {
+          "word": "body",
+          "start": 390.82,
+          "end": 391.22,
+          "probability": 0.9722
+        },
+        {
+          "word": "reserve",
+          "start": 391.22,
+          "end": 391.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "line",
+          "start": 391.64,
+          "end": 392.0,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 392.0,
+          "end": 392.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 392.26,
+          "end": 392.42,
+          "probability": 0.999
+        },
+        {
+          "word": "first",
+          "start": 392.42,
+          "end": 392.76,
+          "probability": 0.9824
+        },
+        {
+          "word": "party",
+          "start": 392.76,
+          "end": 393.2,
+          "probability": 0.6611
+        },
+        {
+          "word": "vehicle",
+          "start": 393.2,
+          "end": 393.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 393.66,
+          "end": 394.26,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 394.26,
+          "end": 394.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicks",
+          "start": 394.6,
+          "end": 394.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 394.94,
+          "end": 395.1,
+          "probability": 1.0
+        },
+        {
+          "word": "menu",
+          "start": 395.1,
+          "end": 395.36,
+          "probability": 0.9526
+        },
+        {
+          "word": "button.",
+          "start": 395.36,
+          "end": 395.74,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 396.3,
+      "end": 400.84,
+      "start_formatted": "00:06:36.300",
+      "end_formatted": "00:06:40.840",
+      "text": "Notice that the reserve line menu includes no check creation options.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 396.3,
+          "end": 396.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 396.98,
+          "end": 397.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 397.22,
+          "end": 397.38,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 397.38,
+          "end": 397.78,
+          "probability": 0.981
+        },
+        {
+          "word": "line",
+          "start": 397.78,
+          "end": 398.2,
+          "probability": 0.999
+        },
+        {
+          "word": "menu",
+          "start": 398.2,
+          "end": 398.54,
+          "probability": 1.0
+        },
+        {
+          "word": "includes",
+          "start": 398.54,
+          "end": 399.06,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 399.06,
+          "end": 399.32,
+          "probability": 0.9927
+        },
+        {
+          "word": "check",
+          "start": 399.32,
+          "end": 399.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "creation",
+          "start": 399.62,
+          "end": 400.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "options.",
+          "start": 400.1,
+          "end": 400.84,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 401.24,
+      "end": 403.4,
+      "start_formatted": "00:06:41.240",
+      "end_formatted": "00:06:43.400",
+      "text": "Andy tries another approach.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 401.24,
+          "end": 401.9,
+          "probability": 0.9844
+        },
+        {
+          "word": "tries",
+          "start": 401.9,
+          "end": 402.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "another",
+          "start": 402.34,
+          "end": 402.76,
+          "probability": 1.0
+        },
+        {
+          "word": "approach.",
+          "start": 402.76,
+          "end": 403.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 403.64,
+      "end": 407.12,
+      "start_formatted": "00:06:43.640",
+      "end_formatted": "00:06:47.120",
+      "text": "From the actions menu, he looks at the new transaction options.",
+      "words": [
+        {
+          "word": "From",
+          "start": 403.64,
+          "end": 403.92,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 403.92,
+          "end": 404.1,
+          "probability": 1.0
+        },
+        {
+          "word": "actions",
+          "start": 404.1,
+          "end": 404.54,
+          "probability": 0.8784
+        },
+        {
+          "word": "menu,",
+          "start": 404.54,
+          "end": 405.06,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 405.3,
+          "end": 405.58,
+          "probability": 0.998
+        },
+        {
+          "word": "looks",
+          "start": 405.58,
+          "end": 405.86,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 405.86,
+          "end": 406.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 406.06,
+          "end": 406.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 406.18,
+          "end": 406.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "transaction",
+          "start": 406.4,
+          "end": 406.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "options.",
+          "start": 406.98,
+          "end": 407.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 408.14,
+      "end": 413.92,
+      "start_formatted": "00:06:48.140",
+      "end_formatted": "00:06:53.920",
+      "text": "Again, there is no check option, because Andy has no payment related authority limits.",
+      "words": [
+        {
+          "word": "Again,",
+          "start": 408.14,
+          "end": 408.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 408.92,
+          "end": 409.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 409.18,
+          "end": 409.38,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 409.38,
+          "end": 409.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "check",
+          "start": 409.56,
+          "end": 409.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "option,",
+          "start": 409.84,
+          "end": 410.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 410.52,
+          "end": 410.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy",
+          "start": 410.88,
+          "end": 411.24,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 411.24,
+          "end": 411.56,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 411.56,
+          "end": 411.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 411.82,
+          "end": 412.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "related",
+          "start": 412.26,
+          "end": 412.68,
+          "probability": 0.4841
+        },
+        {
+          "word": "authority",
+          "start": 412.68,
+          "end": 413.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "limits.",
+          "start": 413.34,
+          "end": 413.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 413.92,
+      "end": 416.76,
+      "start_formatted": "00:06:53.920",
+      "end_formatted": "00:06:56.760",
+      "text": "Andy logs out of Claim Center.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 413.92,
+          "end": 415.06,
+          "probability": 0.9321
+        },
+        {
+          "word": "logs",
+          "start": 415.06,
+          "end": 415.5,
+          "probability": 0.9233
+        },
+        {
+          "word": "out",
+          "start": 415.5,
+          "end": 415.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 415.76,
+          "end": 415.94,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 415.94,
+          "end": 416.36,
+          "probability": 0.9883
+        },
+        {
+          "word": "Center.",
+          "start": 416.36,
+          "end": 416.76,
+          "probability": 0.9629
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 417.16,
+      "end": 424.44,
+      "start_formatted": "00:06:57.160",
+      "end_formatted": "00:07:04.440",
+      "text": "Now the system administrator logs back into Claim Center to change Andy Applegate's authority limit profile again.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 417.16,
+          "end": 417.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 417.9,
+          "end": 418.12,
+          "probability": 0.999
+        },
+        {
+          "word": "system",
+          "start": 418.12,
+          "end": 418.46,
+          "probability": 0.9336
+        },
+        {
+          "word": "administrator",
+          "start": 418.46,
+          "end": 419.08,
+          "probability": 1.0
+        },
+        {
+          "word": "logs",
+          "start": 419.08,
+          "end": 419.58,
+          "probability": 1.0
+        },
+        {
+          "word": "back",
+          "start": 419.58,
+          "end": 419.88,
+          "probability": 1.0
+        },
+        {
+          "word": "into",
+          "start": 419.88,
+          "end": 420.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "Claim",
+          "start": 420.14,
+          "end": 420.5,
+          "probability": 1.0
+        },
+        {
+          "word": "Center",
+          "start": 420.5,
+          "end": 420.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 420.88,
+          "end": 421.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "change",
+          "start": 421.1,
+          "end": 421.54,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy",
+          "start": 421.54,
+          "end": 421.92,
+          "probability": 0.999
+        },
+        {
+          "word": "Applegate's",
+          "start": 421.92,
+          "end": 422.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "authority",
+          "start": 422.7,
+          "end": 423.12,
+          "probability": 0.7695
+        },
+        {
+          "word": "limit",
+          "start": 423.12,
+          "end": 423.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "profile",
+          "start": 423.48,
+          "end": 424.02,
+          "probability": 1.0
+        },
+        {
+          "word": "again.",
+          "start": 424.02,
+          "end": 424.44,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 424.94,
+      "end": 428.04,
+      "start_formatted": "00:07:04.940",
+      "end_formatted": "00:07:08.040",
+      "text": "She navigates to the administration screens.",
+      "words": [
+        {
+          "word": "She",
+          "start": 424.94,
+          "end": 425.58,
+          "probability": 1.0
+        },
+        {
+          "word": "navigates",
+          "start": 425.58,
+          "end": 426.28,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 426.28,
+          "end": 426.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 426.44,
+          "end": 426.58,
+          "probability": 1.0
+        },
+        {
+          "word": "administration",
+          "start": 426.58,
+          "end": 427.24,
+          "probability": 0.9746
+        },
+        {
+          "word": "screens.",
+          "start": 427.24,
+          "end": 428.04,
+          "probability": 0.8369
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 428.52,
+      "end": 433.0,
+      "start_formatted": "00:07:08.520",
+      "end_formatted": "00:07:13.000",
+      "text": "She clicks on the Users and Security menu link in the left pane.",
+      "words": [
+        {
+          "word": "She",
+          "start": 428.52,
+          "end": 429.28,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 429.28,
+          "end": 429.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 429.64,
+          "end": 429.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 429.86,
+          "end": 429.98,
+          "probability": 1.0
+        },
+        {
+          "word": "Users",
+          "start": 429.98,
+          "end": 430.34,
+          "probability": 0.8369
+        },
+        {
+          "word": "and",
+          "start": 430.34,
+          "end": 430.66,
+          "probability": 0.8745
+        },
+        {
+          "word": "Security",
+          "start": 430.66,
+          "end": 431.2,
+          "probability": 0.9868
+        },
+        {
+          "word": "menu",
+          "start": 431.2,
+          "end": 431.64,
+          "probability": 0.9712
+        },
+        {
+          "word": "link",
+          "start": 431.64,
+          "end": 432.04,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 432.04,
+          "end": 432.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 432.2,
+          "end": 432.3,
+          "probability": 1.0
+        },
+        {
+          "word": "left",
+          "start": 432.3,
+          "end": 432.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "pane.",
+          "start": 432.58,
+          "end": 433.0,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 433.48,
+      "end": 440.56,
+      "start_formatted": "00:07:13.480",
+      "end_formatted": "00:07:20.560",
+      "text": "She enters the first few characters of Andy Applegate's username and searches for his user contact record.",
+      "words": [
+        {
+          "word": "She",
+          "start": 433.48,
+          "end": 434.24,
+          "probability": 1.0
+        },
+        {
+          "word": "enters",
+          "start": 434.24,
+          "end": 434.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 434.6,
+          "end": 434.82,
+          "probability": 1.0
+        },
+        {
+          "word": "first",
+          "start": 434.82,
+          "end": 435.1,
+          "probability": 1.0
+        },
+        {
+          "word": "few",
+          "start": 435.1,
+          "end": 435.42,
+          "probability": 1.0
+        },
+        {
+          "word": "characters",
+          "start": 435.42,
+          "end": 435.96,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 435.96,
+          "end": 436.34,
+          "probability": 1.0
+        },
+        {
+          "word": "Andy",
+          "start": 436.34,
+          "end": 436.72,
+          "probability": 1.0
+        },
+        {
+          "word": "Applegate's",
+          "start": 436.72,
+          "end": 437.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "username",
+          "start": 437.52,
+          "end": 438.04,
+          "probability": 0.9775
+        },
+        {
+          "word": "and",
+          "start": 438.04,
+          "end": 438.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "searches",
+          "start": 438.3,
+          "end": 438.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 438.68,
+          "end": 438.94,
+          "probability": 1.0
+        },
+        {
+          "word": "his",
+          "start": 438.94,
+          "end": 439.16,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 439.16,
+          "end": 439.54,
+          "probability": 0.9658
+        },
+        {
+          "word": "contact",
+          "start": 439.54,
+          "end": 439.98,
+          "probability": 0.999
+        },
+        {
+          "word": "record.",
+          "start": 439.98,
+          "end": 440.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 440.56,
+      "end": 445.16,
+      "start_formatted": "00:07:20.560",
+      "end_formatted": "00:07:25.160",
+      "text": "She opens the user contact record from the search results.",
+      "words": [
+        {
+          "word": "She",
+          "start": 440.56,
+          "end": 441.88,
+          "probability": 0.9619
+        },
+        {
+          "word": "opens",
+          "start": 441.88,
+          "end": 442.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 442.34,
+          "end": 442.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 442.54,
+          "end": 442.86,
+          "probability": 0.9526
+        },
+        {
+          "word": "contact",
+          "start": 442.86,
+          "end": 443.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "record",
+          "start": 443.32,
+          "end": 443.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 443.82,
+          "end": 444.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 444.06,
+          "end": 444.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "search",
+          "start": 444.2,
+          "end": 444.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "results.",
+          "start": 444.48,
+          "end": 445.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 445.82,
+      "end": 448.84,
+      "start_formatted": "00:07:25.820",
+      "end_formatted": "00:07:28.840",
+      "text": "She navigates to Andy's authority limits.",
+      "words": [
+        {
+          "word": "She",
+          "start": 445.82,
+          "end": 446.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigates",
+          "start": 446.58,
+          "end": 447.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 447.28,
+          "end": 447.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy's",
+          "start": 447.44,
+          "end": 447.92,
+          "probability": 0.9482
+        },
+        {
+          "word": "authority",
+          "start": 447.92,
+          "end": 448.28,
+          "probability": 0.6021
+        },
+        {
+          "word": "limits.",
+          "start": 448.28,
+          "end": 448.84,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 449.52,
+      "end": 451.9,
+      "start_formatted": "00:07:29.520",
+      "end_formatted": "00:07:31.900",
+      "text": "Puts the screen in edit mode.",
+      "words": [
+        {
+          "word": "Puts",
+          "start": 449.52,
+          "end": 450.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 450.36,
+          "end": 450.52,
+          "probability": 1.0
+        },
+        {
+          "word": "screen",
+          "start": 450.52,
+          "end": 450.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 450.9,
+          "end": 451.16,
+          "probability": 1.0
+        },
+        {
+          "word": "edit",
+          "start": 451.16,
+          "end": 451.44,
+          "probability": 0.9307
+        },
+        {
+          "word": "mode.",
+          "start": 451.44,
+          "end": 451.9,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 452.46,
+      "end": 457.4,
+      "start_formatted": "00:07:32.460",
+      "end_formatted": "00:07:37.400",
+      "text": "And changes Andy's authority limit profile from custom back to adjuster.",
+      "words": [
+        {
+          "word": "And",
+          "start": 452.46,
+          "end": 453.26,
+          "probability": 0.999
+        },
+        {
+          "word": "changes",
+          "start": 453.26,
+          "end": 453.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy's",
+          "start": 453.68,
+          "end": 454.28,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 454.28,
+          "end": 454.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "limit",
+          "start": 454.7,
+          "end": 455.08,
+          "probability": 0.9517
+        },
+        {
+          "word": "profile",
+          "start": 455.08,
+          "end": 455.64,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 455.64,
+          "end": 456.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "custom",
+          "start": 456.02,
+          "end": 456.4,
+          "probability": 0.9585
+        },
+        {
+          "word": "back",
+          "start": 456.4,
+          "end": 456.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 456.68,
+          "end": 456.86,
+          "probability": 1.0
+        },
+        {
+          "word": "adjuster.",
+          "start": 456.86,
+          "end": 457.4,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 457.9,
+      "end": 462.0,
+      "start_formatted": "00:07:37.900",
+      "end_formatted": "00:07:42.000",
+      "text": "She verifies that the limits are correct, and saves the change.",
+      "words": [
+        {
+          "word": "She",
+          "start": 457.9,
+          "end": 458.54,
+          "probability": 1.0
+        },
+        {
+          "word": "verifies",
+          "start": 458.54,
+          "end": 459.12,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 459.12,
+          "end": 459.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 459.32,
+          "end": 459.48,
+          "probability": 1.0
+        },
+        {
+          "word": "limits",
+          "start": 459.48,
+          "end": 459.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 459.84,
+          "end": 460.04,
+          "probability": 1.0
+        },
+        {
+          "word": "correct,",
+          "start": 460.04,
+          "end": 460.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 460.62,
+          "end": 460.9,
+          "probability": 1.0
+        },
+        {
+          "word": "saves",
+          "start": 460.9,
+          "end": 461.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 461.32,
+          "end": 461.48,
+          "probability": 0.998
+        },
+        {
+          "word": "change.",
+          "start": 461.48,
+          "end": 462.0,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 462.56,
+      "end": 465.94,
+      "start_formatted": "00:07:42.560",
+      "end_formatted": "00:07:45.940",
+      "text": "The system administrator logs out of Claim Center.",
+      "words": [
+        {
+          "word": "The",
+          "start": 462.56,
+          "end": 463.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "system",
+          "start": 463.24,
+          "end": 463.6,
+          "probability": 0.98
+        },
+        {
+          "word": "administrator",
+          "start": 463.6,
+          "end": 464.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "logs",
+          "start": 464.22,
+          "end": 464.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 464.66,
+          "end": 464.92,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 464.92,
+          "end": 465.12,
+          "probability": 1.0
+        },
+        {
+          "word": "Claim",
+          "start": 465.12,
+          "end": 465.52,
+          "probability": 0.7607
+        },
+        {
+          "word": "Center.",
+          "start": 465.52,
+          "end": 465.94,
+          "probability": 0.9287
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 466.58,
+      "end": 469.02,
+      "start_formatted": "00:07:46.580",
+      "end_formatted": "00:07:49.020",
+      "text": "This is the end of the authority limits demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 466.58,
+          "end": 467.02,
+          "probability": 0.8975
+        },
+        {
+          "word": "is",
+          "start": 467.02,
+          "end": 467.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 467.24,
+          "end": 467.4,
+          "probability": 0.999
+        },
+        {
+          "word": "end",
+          "start": 467.4,
+          "end": 467.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 467.64,
+          "end": 467.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 467.78,
+          "end": 467.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "authority",
+          "start": 467.92,
+          "end": 468.34,
+          "probability": 0.6021
+        },
+        {
+          "word": "limits",
+          "start": 468.34,
+          "end": 468.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "demonstration.",
+          "start": 468.8,
+          "end": 469.02,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 469.02,
+      "end": 469.04,
+      "start_formatted": "00:07:49.020",
+      "end_formatted": "00:07:49.040",
+      "text": "This is the end of the authority limits demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.0704
+        },
+        {
+          "word": "is",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.8242
+        },
+        {
+          "word": "the",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.8843
+        },
+        {
+          "word": "end",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.9897
+        },
+        {
+          "word": "of",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.9351
+        },
+        {
+          "word": "the",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.979
+        },
+        {
+          "word": "authority",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.98
+        },
+        {
+          "word": "limits",
+          "start": 469.02,
+          "end": 469.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "demonstration.",
+          "start": 469.02,
+          "end": 469.04,
+          "probability": 0.9878
+        }
+      ]
+    }
+  ]
+}

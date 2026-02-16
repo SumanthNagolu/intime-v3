@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-08",
+    "slide_count": 29,
+    "slides_with_text": 25,
+    "total_words": 1557,
+    "avg_confidence": 87.07,
+    "processing_time_seconds": 14.57,
+    "extracted_at": "2026-02-13T12:18:33.851559"
+  },
+  "full_text": "Introduction to Gosu\n\nLesson\nobjectives\n\n¢ Describe the ways that Guidewire\napplications use Gosu\n\n¢ Write Gosu using basic Gosu syntax\n\n* Describe Studio features that aid in the writing\nof Gosu\n\nUsing Gosu to configure the Application\nTier\n\nGuidewire Gosu\n\nGuidewire's programming language\n* Similar to Java and compatible with Java\n\n* Has elements of both procedural and object-oriented\nprogramming languages\n\nExecutes fundamental application behavior\nManages complex business processes\nExecutes hierarchical Gosu Rules\n\nSpecifies dynamic user interface behavior\n\nss GOSU\n\nGosu in Guidewire applications (1 of 3)\n\ni\n¢ Apply specific programming logic for ¢ Extend entity functionality with\ntesting a condition and performing programming logic as entity\n\nan action methods\n\n¢ Examples: ¢ Examples:\n\n¢ Event Fired Rules « ABCompany.maskTaxld()\n\n* Pre-update Rules returns a value with a mask for the first 5\n\ncharacters\n« Validation Rules\n\nGosu in Guidewire applications (2 of 3) fa\n\n¢ Programming logic that defines how ¢ Encapsulate data and code for a\n\nto display a name for an entity specific purpose or function\ninstance * Examples:\n+ Examples: + Utility helper classes for logging or string\n* Drop-down lists of contacts functions\n* DisplayName property of entity instance « Plugins for integrations with other\napplications\n\n@ ©\n\nGosu in Guidewire applications (3 of 3)\n\nRun custom business processes\nasynchronously, optionally with\nmultiple states that transition over time\nExamples:\n\n+ Renewal and cancelation workflows\n\nGosu Scratchpad\n\nHEED swine ep\n\nFle Edit View Navigate Code Codegen Analyze Refactor Build Run Tools VCS Window Help\n\nSoS Ea Tae su ale xOMAR\\S Hi [seve | > & 8 OY |? |O\nCoe eens . ‘BEC: Dit Users lit kasingh fi AppData fi Local fi Temp fi 3) © Gosu Scratchpad.gsp\nSave Project as Template | © osu Scratchpad » |\noe > xs 1@\n\n{DE Scripting Console Bi23 4\nre 5 bee trainingapp.base.queryvti\n‘sell Console A\n\n3 wer andsPerscn = goozyUEilsfinaPersoa (GontactID)\n\nDo not comple Ean Goss |\n\n—- 3 print (aBARPez=on.)\n\n© Wet Resources ‘Cel1Phone string\n\npoate Gutter © CeliPhoneCountry thonecount rycode\nGroony Console. P © CellPhoneExtension string\n\narea P % DateorBizth Date\n\nDebugging\n\nx\n\nP © FaretNanekangs\n© FormerNane\n\n9\na\n\nP & Gender\nfH % getceriPhone ()\nDebug 1 Server fH % getceriPhonecountry () Phonecountrycode\n&_ Debugger | FE] ConsolePress Ci Beriod fo cioose the selected (or first) suggestion and inset a dot afterwards” 3>:7\nGirFrames BE Variables\nSy © Connected to the target VM, adres: '127.0,0.1:64653,, transport: ‘socket’\nu\n7\n\nFrames are not avalable\n\nD-a:run | @ES:Debug “PS: TOD0 —_=Properties [Bl Terminal\n\nSmart completion\n\n1 Run\n2 Debug\n\n3 Run in Debug\nServer process\n\n4 Run (Server) in\ndebug mode\n\nArrays G\n\n<array/> on parent ¢ Entity enhancement ¢ Aset of values are of\nentity to array entity or Guidewire API the same type ina\n<foreignkey/> on single collection\narray entity to parent + Example\n\nentity ¢ Examples\n\n+ ABContact AllAddresses .\nExample property returns an * var a = new int[3]\n+ ABContact defines Address array + var b = new int[]\nFlagEntries array {1,2,3}\n\n*varc: int[] =\n{1,2,3}\n\nArray methods that require logic\n\n« Array methods include\n* Getting information about the array\n* Getting members of the array that match a given condition\n*« Some methods require an argument\n« Argument must be an expression of a condition, such as:\n¢ Returns true if any row in the array matches the condition\n« Returns the first row that matches the condition\n* Returns all rows that match the condition\n\n« Argument must be a Gosu block expression\n\nCommon array methods (1 of 2)\n\n¢ hasMatch (condition)\n* Determine if any element in an array matches a given condition\n* Syntax: array. hasMatch (\\ name -> conditionToMatch)\n* countWhere (condition)\n\n¢ Returns count of elements that match a given condition in an array\n¢ Syntax: array.countWhere(\\ name -> conditionToMatch)\n\nCommon array methods (2 of 2) fa\n\n¢ firstWhere (condition)\n¢ Retrieve the first element in an array that matches a given condition\n* Syntax: array. firstWhere (\\ name -> conditionToMatch)\n¢ where (condition)\n\n« Retrieves a target array that consists of all the members of a source array that match a given\ncondition\n\n¢ Syntax: array.where(\\ name -> conditionToMatch)\n\nBlocks argument expression Gi\nORORO)\n\nvar notes = someNotes.where( \\ note ->\n\n@ note.ContactNoteType == typekey.ContactNoteType.TC_GENERAL)\n\n¢ Ablock is an expression of logic passed to a method as an argument\n« Some array methods require conditions using a block\n¢ The block consists of four parts:\n\n1. \\, which identifies that the following is a block\n\n2. Anelement name representing each element of the array\n3. ->, which identifies the start of the condition\n4\n\nA condition, which relates to the element\n\nAbout rational numbers Gi\n\nRounding large decimal numbers is often required when numbers scale to infinity\n(i.e. 1/3 = 0.3333333333...), however, the rounding will produce data errors over\ntime as the numbers are used in other calculations (data loss)\n\ngw.util.Rational has an infinite scale which allows you to preserve whatever\nvalue is placed in it\n\ngw.util.money and gw.util.science store numbers as Rationals. This means\nusing and testing data with those libraries becomes easier and more accurate\n\nArithmetic operators can be applied to rational numbers using the following syntax:\nRational.add(i)\n\nRational.subtract(i)\n\nRational.multiply(i)\n\nRational.divide(i)\n\nRational.class in Gosu =\n\n© gw.uta,\n\n11 Project\n\npublic gw.util.Rational invert() ( /* compiled code */ }\n\npublic gw.util.Rational abs() ( /* compile\n\npublic gy.util.Rational pow (int exponent)\n\nST rsvucture\n\n@rationalcoercer.class (gosu-core-api-1.14.10.jar\\gw\\lang\\pazser\\coercers)\n@racionaitrig.ciass (gosu-core-api-precompiled-1.14.10.jar\\gw\\utéi\\science)\n(GavseractbataPreparationAlgorithm.class (cc-10.0.0.jaz\\com\\guidewize\\cc\\system\\webservices\\dataExtraction)\n(Geaseoperationalstat.class (perfdownload-analyzer-10.7.2.Jar\\com\\guidewire\\pl\\perfdownload\\plat form\\analyzer\\ interna:\n(GabstractconfigurationAwareLookup.class (1og4j-core-2.7.jaz\\org\\apache\\ logging\\ 1og43\\core\\ Lookup)\n(@Govjectoperationalzostat.class (perfdownload-analyzer~10.7.3.jaz\\con\\guidewire\\pl\\perfdownload\\platform\\analyzer\\intd\n(GovjectoperationalLockstat.class (perfdownload-analyzer-10.7.3.Jar\\com\\guidewire\\pl\\perfdownload\\plat form\\analyzer\\ ii\n@ rapleorindexoperationaliostat class (perfdownload-analyzer-10.7.3.3ar\\com\\guidewire\\pl\\perfdownload\\plat form\\analy:\n@ rapieorindexoperationalLockstat.class (perfdownload-analyzer-10.7.3. jar\\com\\guidewire\\p1\\perfdownload\\plat form\\anal\n\n@ rabieorindexoperationalstatsReader.class_ (per Sdownload-col lector10.7.3. jar\\com\\guidewire\\pl\\perfdowntoad\\piatform\\q\n\nUsing rational numbers Gi\n\n¢ Examples of declaring Rational literals:\n\n//prints 31476765859979876 / 10000000000000000\nvar myRational= Rational.get (3.147676585997987798798)\n\nprint (myRational)\n\n//prints 1/3\n\nvar rationalFraction = Rational.get(1,3)\nprint (rationalFraction)\n\n//prints 3/12\n\nvar rationalString = Rational.get (\"3/12\")\n\nprint (rationalString)\n\nDemonstration G\nGosu Examples\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — Inthe screenshot shown here, what is the array method to return the\n¢ number of objects in the ContactNotes array? What is the value?\n\n¢\n¢\n\nGt F Search | ntact | ¥\n\nActions, Person: William Andy\n\nSummary Notes\n\nDetails Contact Note Contact Note Type > Subject a\n\n2018-06-19: William Andy has many general qu..\n\n‘Addresses (3)\n\n2018-06-19: william Andy has a new phone number\n\nMS SS\n\nAnswer\n\nSe\n\nGi\n\n~ ~ Inthe screenshot shown here, what is the array method to return the\n\nnumber of objects in the ContactNotes array? What is the value?\n\nEi TriningApp Search ¥\n\nsummary\n\nDetails\n\n‘Addresses (3)\n\nNotes (5)\n\nSocial Media\n\nContact | ¥\n\nNotes\n\nContact Note Contact Note Type > Subject FI\n2018-06\n\nWilliam Andy\n\nhas many general qu.\n\nin his new lic...\n\ncovered ase...\n\nvar count = array.length or array.Count.\n\nThe total number of elements in the ContactNotes array is 5.\n\nQuestion G\n\n~ ~ Inthe screenshot shown here, what is the expression to return the count\nof notes that are regarding a problem? What is the count value?\n\n¢\n\n<\n\nG Ar Search +\nActions Person: William Andy\n\nsummary Notes\n\nDetails Contact Note Contact Note Type > Subject [=]\n\nliam Andy has many general qu...\n\n‘Addresses (3)\n\n: William Andy has a new phone number\nNotes (5) liam Andy has more questions...\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...\n\nAnswer Gi\n\n_— — Inthe screenshot shown here, what is the expression to return the count\n¢ of notes that are regarding a problem? What is the count value?\n\n“ Gi TriningApp Search |¥ Contact |\n\n‘Actions Per\n\nsummary Notes\n\nDetails\n\nContact Note Contact Note Type > Subject Fe]\n\n1s many general QU...\n\nphone number\n\nNotes (5) questions...\n\nSocial Media 2018-06-19: William Andy has discovered ase...\n\nvar countNotes = notes.countWhere( \\ note ->\nnote.ContactNoteType == typekey.ContactNoteType.TC_ PROBLEM)\n\nig\n1\nI\nI\nI\n1\nI\n1 Addresses (3)\nI\nI\n1\n1\nI\nI\n1\n' The total number of elements in the ContactNotes array is 1.\n\nQuestion G\n\n_— — Inthe screenshot shown here, what is an expression to retum an array of\nContactNotes where the note was created after January 31, 2014?\n\nG rs Search |v ntact |~\nsummary Notes\n\nContact Note Contact Note Type S Subject B\n2018-06-19: William Andy has many general qu...\n\n2018-06-19: william Andy has a new phone number\n\nNotes (5) 2018-06-19: William Andy has more questions...\n\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...\n\nMS SS\n\nAnswer G\n\n_— — Inthe screenshot shown here, what is an expression to retum an array of\n¢ ContactNotes where the note was created after January 31, 2014?\n\nGi TrainingApp Search |¥ Contact |\n\nPerson: William Andy\n\nsummary Notes\n\nDetails Contact Note Type ‘Subject a\n\nny general qu...\n\n‘Addresses (3)\n\n‘ew phone number\nNotes (5) Fe questions ..\nhis new lc...\n\n‘Social Media s discovered a se...\n\nvar filteredNotes = notes.where( \\ note -> note.CreateTime >=\n\"02/01/2014™.toDate() )\n\nSe\n\nLesson\nobj ectives ¢ Describe the ways that Guidewire\nreview applications use Gosu\n\n¢ Write Gosu using basic Gosu syntax\n¢ Describe Studio features that aid in the writing\nof Gosu\n\nStudent exercise\n\nIntroduction to Gosu",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to Gosu",
+      "word_count": 3,
+      "avg_confidence": 93.75,
+      "image_size": {
+        "width": 1280,
+        "height": 549
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the ways that Guidewire\napplications use Gosu\n\n¢ Write Gosu using basic Gosu syntax\n\n* Describe Studio features that aid in the writing\nof Gosu",
+      "word_count": 29,
+      "avg_confidence": 90.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Using Gosu to configure the Application\nTier",
+      "word_count": 7,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Guidewire Gosu\n\nGuidewire's programming language\n* Similar to Java and compatible with Java\n\n* Has elements of both procedural and object-oriented\nprogramming languages\n\nExecutes fundamental application behavior\nManages complex business processes\nExecutes hierarchical Gosu Rules\n\nSpecifies dynamic user interface behavior\n\nss GOSU",
+      "word_count": 42,
+      "avg_confidence": 91.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Gosu in Guidewire applications (1 of 3)\n\ni\n¢ Apply specific programming logic for ¢ Extend entity functionality with\ntesting a condition and performing programming logic as entity\n\nan action methods\n\n¢ Examples: ¢ Examples:\n\n¢ Event Fired Rules « ABCompany.maskTaxld()\n\n* Pre-update Rules returns a value with a mask for the first 5\n\ncharacters\n« Validation Rules",
+      "word_count": 58,
+      "avg_confidence": 84.43,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Gosu in Guidewire applications (2 of 3) fa\n\n¢ Programming logic that defines how ¢ Encapsulate data and code for a\n\nto display a name for an entity specific purpose or function\ninstance * Examples:\n+ Examples: + Utility helper classes for logging or string\n* Drop-down lists of contacts functions\n* DisplayName property of entity instance « Plugins for integrations with other\napplications\n\n@ ©",
+      "word_count": 66,
+      "avg_confidence": 87.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Gosu in Guidewire applications (3 of 3)\n\nRun custom business processes\nasynchronously, optionally with\nmultiple states that transition over time\nExamples:\n\n+ Renewal and cancelation workflows",
+      "word_count": 26,
+      "avg_confidence": 93.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Gosu Scratchpad\n\nHEED swine ep\n\nFle Edit View Navigate Code Codegen Analyze Refactor Build Run Tools VCS Window Help\n\nSoS Ea Tae su ale xOMAR\\S Hi [seve | > & 8 OY |? |O\nCoe eens . ‘BEC: Dit Users lit kasingh fi AppData fi Local fi Temp fi 3) © Gosu Scratchpad.gsp\nSave Project as Template | © osu Scratchpad » |\noe > xs 1@\n\n{DE Scripting Console Bi23 4\nre 5 bee trainingapp.base.queryvti\n‘sell Console A\n\n3 wer andsPerscn = goozyUEilsfinaPersoa (GontactID)\n\nDo not comple Ean Goss |\n\n—- 3 print (aBARPez=on.)\n\n© Wet Resources ‘Cel1Phone string\n\npoate Gutter © CeliPhoneCountry thonecount rycode\nGroony Console. P © CellPhoneExtension string\n\narea P % DateorBizth Date\n\nDebugging\n\nx\n\nP © FaretNanekangs\n© FormerNane\n\n9\na\n\nP & Gender\nfH % getceriPhone ()\nDebug 1 Server fH % getceriPhonecountry () Phonecountrycode\n&_ Debugger | FE] ConsolePress Ci Beriod fo cioose the selected (or first) suggestion and inset a dot afterwards” 3>:7\nGirFrames BE Variables\nSy © Connected to the target VM, adres: '127.0,0.1:64653,, transport: ‘socket’\nu\n7\n\nFrames are not avalable\n\nD-a:run | @ES:Debug “PS: TOD0 —_=Properties [Bl Terminal\n\nSmart completion\n\n1 Run\n2 Debug\n\n3 Run in Debug\nServer process\n\n4 Run (Server) in\ndebug mode",
+      "word_count": 207,
+      "avg_confidence": 60.72,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Arrays G\n\n<array/> on parent ¢ Entity enhancement ¢ Aset of values are of\nentity to array entity or Guidewire API the same type ina\n<foreignkey/> on single collection\narray entity to parent + Example\n\nentity ¢ Examples\n\n+ ABContact AllAddresses .\nExample property returns an * var a = new int[3]\n+ ABContact defines Address array + var b = new int[]\nFlagEntries array {1,2,3}\n\n*varc: int[] =\n{1,2,3}",
+      "word_count": 70,
+      "avg_confidence": 86.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Array methods that require logic\n\n« Array methods include\n* Getting information about the array\n* Getting members of the array that match a given condition\n*« Some methods require an argument\n« Argument must be an expression of a condition, such as:\n¢ Returns true if any row in the array matches the condition\n« Returns the first row that matches the condition\n* Returns all rows that match the condition\n\n« Argument must be a Gosu block expression",
+      "word_count": 80,
+      "avg_confidence": 89.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Common array methods (1 of 2)\n\n¢ hasMatch (condition)\n* Determine if any element in an array matches a given condition\n* Syntax: array. hasMatch (\\ name -> conditionToMatch)\n* countWhere (condition)\n\n¢ Returns count of elements that match a given condition in an array\n¢ Syntax: array.countWhere(\\ name -> conditionToMatch)",
+      "word_count": 51,
+      "avg_confidence": 86.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Common array methods (2 of 2) fa\n\n¢ firstWhere (condition)\n¢ Retrieve the first element in an array that matches a given condition\n* Syntax: array. firstWhere (\\ name -> conditionToMatch)\n¢ where (condition)\n\n« Retrieves a target array that consists of all the members of a source array that match a given\ncondition\n\n¢ Syntax: array.where(\\ name -> conditionToMatch)",
+      "word_count": 60,
+      "avg_confidence": 87.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Blocks argument expression Gi\nORORO)\n\nvar notes = someNotes.where( \\ note ->\n\n@ note.ContactNoteType == typekey.ContactNoteType.TC_GENERAL)\n\n¢ Ablock is an expression of logic passed to a method as an argument\n« Some array methods require conditions using a block\n¢ The block consists of four parts:\n\n1. \\, which identifies that the following is a block\n\n2. Anelement name representing each element of the array\n3. ->, which identifies the start of the condition\n4\n\nA condition, which relates to the element",
+      "word_count": 82,
+      "avg_confidence": 88.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "About rational numbers Gi\n\nRounding large decimal numbers is often required when numbers scale to infinity\n(i.e. 1/3 = 0.3333333333...), however, the rounding will produce data errors over\ntime as the numbers are used in other calculations (data loss)\n\ngw.util.Rational has an infinite scale which allows you to preserve whatever\nvalue is placed in it\n\ngw.util.money and gw.util.science store numbers as Rationals. This means\nusing and testing data with those libraries becomes easier and more accurate\n\nArithmetic operators can be applied to rational numbers using the following syntax:\nRational.add(i)\n\nRational.subtract(i)\n\nRational.multiply(i)\n\nRational.divide(i)",
+      "word_count": 92,
+      "avg_confidence": 93.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Rational.class in Gosu =\n\n© gw.uta,\n\n11 Project\n\npublic gw.util.Rational invert() ( /* compiled code */ }\n\npublic gw.util.Rational abs() ( /* compile\n\npublic gy.util.Rational pow (int exponent)\n\nST rsvucture\n\n@rationalcoercer.class (gosu-core-api-1.14.10.jar\\gw\\lang\\pazser\\coercers)\n@racionaitrig.ciass (gosu-core-api-precompiled-1.14.10.jar\\gw\\utéi\\science)\n(GavseractbataPreparationAlgorithm.class (cc-10.0.0.jaz\\com\\guidewize\\cc\\system\\webservices\\dataExtraction)\n(Geaseoperationalstat.class (perfdownload-analyzer-10.7.2.Jar\\com\\guidewire\\pl\\perfdownload\\plat form\\analyzer\\ interna:\n(GabstractconfigurationAwareLookup.class (1og4j-core-2.7.jaz\\org\\apache\\ logging\\ 1og43\\core\\ Lookup)\n(@Govjectoperationalzostat.class (perfdownload-analyzer~10.7.3.jaz\\con\\guidewire\\pl\\perfdownload\\platform\\analyzer\\intd\n(GovjectoperationalLockstat.class (perfdownload-analyzer-10.7.3.Jar\\com\\guidewire\\pl\\perfdownload\\plat form\\analyzer\\ ii\n@ rapleorindexoperationaliostat class (perfdownload-analyzer-10.7.3.3ar\\com\\guidewire\\pl\\perfdownload\\plat form\\analy:\n@ rapieorindexoperationalLockstat.class (perfdownload-analyzer-10.7.3. jar\\com\\guidewire\\p1\\perfdownload\\plat form\\anal\n\n@ rabieorindexoperationalstatsReader.class_ (per Sdownload-col lector10.7.3. jar\\com\\guidewire\\pl\\perfdowntoad\\piatform\\q",
+      "word_count": 67,
+      "avg_confidence": 58.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Using rational numbers Gi\n\n¢ Examples of declaring Rational literals:\n\n//prints 31476765859979876 / 10000000000000000\nvar myRational= Rational.get (3.147676585997987798798)\n\nprint (myRational)\n\n//prints 1/3\n\nvar rationalFraction = Rational.get(1,3)\nprint (rationalFraction)\n\n//prints 3/12\n\nvar rationalString = Rational.get (\"3/12\")\n\nprint (rationalString)",
+      "word_count": 37,
+      "avg_confidence": 82.03,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Demonstration G\nGosu Examples\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n_— — Inthe screenshot shown here, what is the array method to return the\n¢ number of objects in the ContactNotes array? What is the value?\n\n¢\n¢\n\nGt F Search | ntact | ¥\n\nActions, Person: William Andy\n\nSummary Notes\n\nDetails Contact Note Contact Note Type > Subject a\n\n2018-06-19: William Andy has many general qu..\n\n‘Addresses (3)\n\n2018-06-19: william Andy has a new phone number\n\nMS SS",
+      "word_count": 71,
+      "avg_confidence": 83.23,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\nSe\n\nGi\n\n~ ~ Inthe screenshot shown here, what is the array method to return the\n\nnumber of objects in the ContactNotes array? What is the value?\n\nEi TriningApp Search ¥\n\nsummary\n\nDetails\n\n‘Addresses (3)\n\nNotes (5)\n\nSocial Media\n\nContact | ¥\n\nNotes\n\nContact Note Contact Note Type > Subject FI\n2018-06\n\nWilliam Andy\n\nhas many general qu.\n\nin his new lic...\n\ncovered ase...\n\nvar count = array.length or array.Count.\n\nThe total number of elements in the ContactNotes array is 5.",
+      "word_count": 82,
+      "avg_confidence": 84.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question G\n\n~ ~ Inthe screenshot shown here, what is the expression to return the count\nof notes that are regarding a problem? What is the count value?\n\n¢\n\n<\n\nG Ar Search +\nActions Person: William Andy\n\nsummary Notes\n\nDetails Contact Note Contact Note Type > Subject [=]\n\nliam Andy has many general qu...\n\n‘Addresses (3)\n\n: William Andy has a new phone number\nNotes (5) liam Andy has more questions...\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...",
+      "word_count": 88,
+      "avg_confidence": 86.45,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer Gi\n\n_— — Inthe screenshot shown here, what is the expression to return the count\n¢ of notes that are regarding a problem? What is the count value?\n\n“ Gi TriningApp Search |¥ Contact |\n\n‘Actions Per\n\nsummary Notes\n\nDetails\n\nContact Note Contact Note Type > Subject Fe]\n\n1s many general QU...\n\nphone number\n\nNotes (5) questions...\n\nSocial Media 2018-06-19: William Andy has discovered ase...\n\nvar countNotes = notes.countWhere( \\ note ->\nnote.ContactNoteType == typekey.ContactNoteType.TC_ PROBLEM)\n\nig\n1\nI\nI\nI\n1\nI\n1 Addresses (3)\nI\nI\n1\n1\nI\nI\n1\n' The total number of elements in the ContactNotes array is 1.",
+      "word_count": 106,
+      "avg_confidence": 80.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question G\n\n_— — Inthe screenshot shown here, what is an expression to retum an array of\nContactNotes where the note was created after January 31, 2014?\n\nG rs Search |v ntact |~\nsummary Notes\n\nContact Note Contact Note Type S Subject B\n2018-06-19: William Andy has many general qu...\n\n2018-06-19: william Andy has a new phone number\n\nNotes (5) 2018-06-19: William Andy has more questions...\n\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...\n\nMS SS",
+      "word_count": 84,
+      "avg_confidence": 86.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer G\n\n_— — Inthe screenshot shown here, what is an expression to retum an array of\n¢ ContactNotes where the note was created after January 31, 2014?\n\nGi TrainingApp Search |¥ Contact |\n\nPerson: William Andy\n\nsummary Notes\n\nDetails Contact Note Type ‘Subject a\n\nny general qu...\n\n‘Addresses (3)\n\n‘ew phone number\nNotes (5) Fe questions ..\nhis new lc...\n\n‘Social Media s discovered a se...\n\nvar filteredNotes = notes.where( \\ note -> note.CreateTime >=\n\"02/01/2014™.toDate() )\n\nSe",
+      "word_count": 79,
+      "avg_confidence": 84.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Lesson\nobj ectives ¢ Describe the ways that Guidewire\nreview applications use Gosu\n\n¢ Write Gosu using basic Gosu syntax\n¢ Describe Studio features that aid in the writing\nof Gosu",
+      "word_count": 31,
+      "avg_confidence": 88.52,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Student exercise\n\nIntroduction to Gosu",
+      "word_count": 5,
+      "avg_confidence": 94.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

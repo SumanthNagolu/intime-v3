@@ -1,0 +1,2140 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_09_02.mp4",
+    "video_stem": "In_Policy_09_02",
+    "duration_seconds": 146.36,
+    "duration_formatted": "00:02:26.360",
+    "segment_count": 16,
+    "word_count": 327,
+    "avg_confidence": 0.9747,
+    "transcription_time_seconds": 17.04,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:29:52.383196"
+  },
+  "full_text": "A renewal transaction is automatically started by a batch job, for policies expiring in a number of days defined in PolicyCenter. However, a user can manually start a renewal at any time. Go to a policy file that is in force. To manually start a renewal, click Actions. Select Renew Policy. Click OK to confirm. The renewal job is in the renewal workflow. It will become automatically quoted and it will be completed on the renewal start date. Or you can click Next. Before the renewal is bound, changes may be made. Make the policy editable. This applies to renewal jobs started by the batch job as well. It removes the renewal from the workflow and puts it in a draft status. After making the desired changes, quote the renewal job. There are two bind options. Renew puts the job back in the renewal workflow. It will be completed on the renewal start date and ends up bound and renewed. You can still edit the renewal job if you want. Issue now binds and issues the renewal immediately as a new policy term. The renewal job is completed and cannot be edited. Let's select Renew. Select a renewal code. Select a renewal code. Save the data. The renewal job is in the workflow and has a status of Renewing. Click on the renewal job to return to it. This time, we decide to issue the renewal immediately. Click Edit Policy Transaction again to put it in the draft status. Click Quote. Click Bind Options. This time, select Issue Now because we do not want to make any changes. The renewal job is bound as a new policy term. Go to the Account. The new policy term is scheduled because the current term has not expired. When the date reaches the start date of the renewal term, the new term becomes in force and the previous term becomes expired. This is the end of demonstration for manual renewal. ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 23.76,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:23.760",
+      "text": "A renewal transaction is automatically started by a batch job, for policies expiring in a number of days defined in PolicyCenter. However, a user can manually start a renewal at any time. Go to a policy file that is in force. To manually start a renewal, click Actions. Select Renew Policy. Click OK to confirm.",
+      "words": [
+        {
+          "word": "A",
+          "start": 0.0,
+          "end": 0.74,
+          "probability": 0.9048
+        },
+        {
+          "word": "renewal",
+          "start": 0.74,
+          "end": 1.08,
+          "probability": 0.894
+        },
+        {
+          "word": "transaction",
+          "start": 1.08,
+          "end": 1.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 1.58,
+          "end": 1.98,
+          "probability": 0.998
+        },
+        {
+          "word": "automatically",
+          "start": 1.98,
+          "end": 2.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "started",
+          "start": 2.46,
+          "end": 2.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "by",
+          "start": 2.98,
+          "end": 3.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 3.22,
+          "end": 3.34,
+          "probability": 0.998
+        },
+        {
+          "word": "batch",
+          "start": 3.34,
+          "end": 3.6,
+          "probability": 0.9526
+        },
+        {
+          "word": "job,",
+          "start": 3.6,
+          "end": 4.06,
+          "probability": 0.9829
+        },
+        {
+          "word": "for",
+          "start": 4.24,
+          "end": 4.46,
+          "probability": 0.9902
+        },
+        {
+          "word": "policies",
+          "start": 4.46,
+          "end": 5.0,
+          "probability": 0.9829
+        },
+        {
+          "word": "expiring",
+          "start": 5.0,
+          "end": 5.58,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 5.58,
+          "end": 5.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 5.72,
+          "end": 5.86,
+          "probability": 0.9897
+        },
+        {
+          "word": "number",
+          "start": 5.86,
+          "end": 6.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 6.04,
+          "end": 6.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "days",
+          "start": 6.22,
+          "end": 6.44,
+          "probability": 0.999
+        },
+        {
+          "word": "defined",
+          "start": 6.44,
+          "end": 6.84,
+          "probability": 0.9551
+        },
+        {
+          "word": "in",
+          "start": 6.84,
+          "end": 7.06,
+          "probability": 0.999
+        },
+        {
+          "word": "PolicyCenter.",
+          "start": 7.06,
+          "end": 7.92,
+          "probability": 0.6929
+        },
+        {
+          "word": "However,",
+          "start": 8.2,
+          "end": 8.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 9.08,
+          "end": 9.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "user",
+          "start": 9.28,
+          "end": 9.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "can",
+          "start": 9.56,
+          "end": 9.8,
+          "probability": 0.999
+        },
+        {
+          "word": "manually",
+          "start": 9.8,
+          "end": 10.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "start",
+          "start": 10.18,
+          "end": 10.5,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 10.5,
+          "end": 10.64,
+          "probability": 0.999
+        },
+        {
+          "word": "renewal",
+          "start": 10.64,
+          "end": 10.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "at",
+          "start": 10.94,
+          "end": 11.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "any",
+          "start": 11.18,
+          "end": 11.36,
+          "probability": 0.98
+        },
+        {
+          "word": "time.",
+          "start": 11.36,
+          "end": 11.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "Go",
+          "start": 12.04,
+          "end": 12.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 12.42,
+          "end": 12.56,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 12.56,
+          "end": 12.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy",
+          "start": 12.68,
+          "end": 13.08,
+          "probability": 0.9141
+        },
+        {
+          "word": "file",
+          "start": 13.08,
+          "end": 13.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 13.46,
+          "end": 13.64,
+          "probability": 0.9795
+        },
+        {
+          "word": "is",
+          "start": 13.64,
+          "end": 13.78,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 13.78,
+          "end": 13.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "force.",
+          "start": 13.98,
+          "end": 14.3,
+          "probability": 0.8657
+        },
+        {
+          "word": "To",
+          "start": 14.56,
+          "end": 14.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "manually",
+          "start": 14.9,
+          "end": 15.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "start",
+          "start": 15.3,
+          "end": 15.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 15.64,
+          "end": 15.8,
+          "probability": 0.999
+        },
+        {
+          "word": "renewal,",
+          "start": 15.8,
+          "end": 16.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "click",
+          "start": 16.48,
+          "end": 16.78,
+          "probability": 0.9873
+        },
+        {
+          "word": "Actions.",
+          "start": 16.78,
+          "end": 17.4,
+          "probability": 0.9531
+        },
+        {
+          "word": "Select",
+          "start": 18.16,
+          "end": 18.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "Renew",
+          "start": 18.8,
+          "end": 19.14,
+          "probability": 0.9858
+        },
+        {
+          "word": "Policy.",
+          "start": 19.14,
+          "end": 19.64,
+          "probability": 0.9385
+        },
+        {
+          "word": "Click",
+          "start": 22.28,
+          "end": 22.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "OK",
+          "start": 22.92,
+          "end": 23.16,
+          "probability": 0.9458
+        },
+        {
+          "word": "to",
+          "start": 23.16,
+          "end": 23.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "confirm.",
+          "start": 23.38,
+          "end": 23.76,
+          "probability": 0.9668
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 26.36,
+      "end": 52.04,
+      "start_formatted": "00:00:26.360",
+      "end_formatted": "00:00:52.040",
+      "text": "The renewal job is in the renewal workflow. It will become automatically quoted and it will be completed on the renewal start date. Or you can click Next. Before the renewal is bound, changes may be made. Make the policy editable. This applies to renewal jobs started by the batch job as well. It removes the renewal from the workflow and puts it in a draft status. After making the desired changes, quote the renewal job.",
+      "words": [
+        {
+          "word": "The",
+          "start": 26.36,
+          "end": 26.94,
+          "probability": 0.7666
+        },
+        {
+          "word": "renewal",
+          "start": 26.94,
+          "end": 27.24,
+          "probability": 0.7422
+        },
+        {
+          "word": "job",
+          "start": 27.24,
+          "end": 27.52,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 27.52,
+          "end": 27.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 27.72,
+          "end": 27.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 27.84,
+          "end": 27.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "renewal",
+          "start": 27.88,
+          "end": 28.2,
+          "probability": 0.8535
+        },
+        {
+          "word": "workflow.",
+          "start": 28.2,
+          "end": 28.68,
+          "probability": 0.9873
+        },
+        {
+          "word": "It",
+          "start": 29.14,
+          "end": 29.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "will",
+          "start": 29.52,
+          "end": 29.64,
+          "probability": 0.999
+        },
+        {
+          "word": "become",
+          "start": 29.64,
+          "end": 29.92,
+          "probability": 0.9941
+        },
+        {
+          "word": "automatically",
+          "start": 29.92,
+          "end": 30.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "quoted",
+          "start": 30.54,
+          "end": 30.94,
+          "probability": 0.9897
+        },
+        {
+          "word": "and",
+          "start": 30.94,
+          "end": 31.16,
+          "probability": 0.9888
+        },
+        {
+          "word": "it",
+          "start": 31.16,
+          "end": 31.26,
+          "probability": 0.9922
+        },
+        {
+          "word": "will",
+          "start": 31.26,
+          "end": 31.4,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 31.4,
+          "end": 31.56,
+          "probability": 0.999
+        },
+        {
+          "word": "completed",
+          "start": 31.56,
+          "end": 32.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 32.0,
+          "end": 32.2,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 32.2,
+          "end": 32.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "renewal",
+          "start": 32.3,
+          "end": 32.62,
+          "probability": 0.9824
+        },
+        {
+          "word": "start",
+          "start": 32.62,
+          "end": 32.92,
+          "probability": 0.9932
+        },
+        {
+          "word": "date.",
+          "start": 32.92,
+          "end": 33.3,
+          "probability": 0.999
+        },
+        {
+          "word": "Or",
+          "start": 33.52,
+          "end": 33.88,
+          "probability": 0.9395
+        },
+        {
+          "word": "you",
+          "start": 33.88,
+          "end": 34.04,
+          "probability": 0.981
+        },
+        {
+          "word": "can",
+          "start": 34.04,
+          "end": 34.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "click",
+          "start": 34.2,
+          "end": 34.44,
+          "probability": 0.9873
+        },
+        {
+          "word": "Next.",
+          "start": 34.44,
+          "end": 34.78,
+          "probability": 0.375
+        },
+        {
+          "word": "Before",
+          "start": 35.56,
+          "end": 36.14,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 36.14,
+          "end": 36.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "renewal",
+          "start": 36.28,
+          "end": 36.6,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 36.6,
+          "end": 36.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "bound,",
+          "start": 36.82,
+          "end": 37.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "changes",
+          "start": 37.4,
+          "end": 37.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "may",
+          "start": 37.86,
+          "end": 38.14,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 38.14,
+          "end": 38.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "made.",
+          "start": 38.3,
+          "end": 38.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "Make",
+          "start": 38.86,
+          "end": 39.26,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 39.26,
+          "end": 39.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 39.38,
+          "end": 39.82,
+          "probability": 0.9863
+        },
+        {
+          "word": "editable.",
+          "start": 39.82,
+          "end": 40.34,
+          "probability": 0.9795
+        },
+        {
+          "word": "This",
+          "start": 40.6,
+          "end": 41.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "applies",
+          "start": 41.0,
+          "end": 41.38,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 41.38,
+          "end": 41.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "renewal",
+          "start": 41.6,
+          "end": 41.96,
+          "probability": 0.9868
+        },
+        {
+          "word": "jobs",
+          "start": 41.96,
+          "end": 42.34,
+          "probability": 0.9829
+        },
+        {
+          "word": "started",
+          "start": 42.34,
+          "end": 42.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "by",
+          "start": 42.68,
+          "end": 42.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 42.88,
+          "end": 43.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "batch",
+          "start": 43.0,
+          "end": 43.28,
+          "probability": 0.9746
+        },
+        {
+          "word": "job",
+          "start": 43.28,
+          "end": 43.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "as",
+          "start": 43.62,
+          "end": 43.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "well.",
+          "start": 43.78,
+          "end": 44.04,
+          "probability": 0.999
+        },
+        {
+          "word": "It",
+          "start": 44.56,
+          "end": 45.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "removes",
+          "start": 45.14,
+          "end": 45.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 45.5,
+          "end": 45.68,
+          "probability": 0.999
+        },
+        {
+          "word": "renewal",
+          "start": 45.68,
+          "end": 45.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "from",
+          "start": 45.98,
+          "end": 46.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 46.18,
+          "end": 46.32,
+          "probability": 0.999
+        },
+        {
+          "word": "workflow",
+          "start": 46.32,
+          "end": 46.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 46.7,
+          "end": 46.94,
+          "probability": 0.999
+        },
+        {
+          "word": "puts",
+          "start": 46.94,
+          "end": 47.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 47.2,
+          "end": 47.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 47.32,
+          "end": 47.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 47.42,
+          "end": 47.54,
+          "probability": 0.9888
+        },
+        {
+          "word": "draft",
+          "start": 47.54,
+          "end": 47.76,
+          "probability": 0.9546
+        },
+        {
+          "word": "status.",
+          "start": 47.76,
+          "end": 48.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "After",
+          "start": 48.6,
+          "end": 49.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "making",
+          "start": 49.06,
+          "end": 49.36,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 49.36,
+          "end": 49.52,
+          "probability": 0.999
+        },
+        {
+          "word": "desired",
+          "start": 49.52,
+          "end": 49.86,
+          "probability": 0.999
+        },
+        {
+          "word": "changes,",
+          "start": 49.86,
+          "end": 50.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "quote",
+          "start": 50.88,
+          "end": 51.04,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 51.04,
+          "end": 51.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "renewal",
+          "start": 51.18,
+          "end": 51.52,
+          "probability": 0.9937
+        },
+        {
+          "word": "job.",
+          "start": 51.52,
+          "end": 52.04,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 52.04,
+      "end": 74.76,
+      "start_formatted": "00:00:52.040",
+      "end_formatted": "00:01:14.760",
+      "text": "There are two bind options. Renew puts the job back in the renewal workflow. It will be completed on the renewal start date and ends up bound and renewed. You can still edit the renewal job if you want. Issue now binds and issues the renewal immediately as a new policy term. The renewal job is completed and cannot be edited. Let's select Renew.",
+      "words": [
+        {
+          "word": "There",
+          "start": 52.04,
+          "end": 53.02,
+          "probability": 0.9761
+        },
+        {
+          "word": "are",
+          "start": 53.02,
+          "end": 53.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 53.16,
+          "end": 53.34,
+          "probability": 0.9072
+        },
+        {
+          "word": "bind",
+          "start": 53.34,
+          "end": 53.64,
+          "probability": 0.9707
+        },
+        {
+          "word": "options.",
+          "start": 53.64,
+          "end": 54.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Renew",
+          "start": 56.8,
+          "end": 57.4,
+          "probability": 0.9805
+        },
+        {
+          "word": "puts",
+          "start": 57.4,
+          "end": 57.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 57.68,
+          "end": 57.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "job",
+          "start": 57.84,
+          "end": 58.1,
+          "probability": 0.9907
+        },
+        {
+          "word": "back",
+          "start": 58.1,
+          "end": 58.38,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 58.38,
+          "end": 58.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 58.52,
+          "end": 58.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "renewal",
+          "start": 58.58,
+          "end": 58.9,
+          "probability": 0.8247
+        },
+        {
+          "word": "workflow.",
+          "start": 58.9,
+          "end": 59.4,
+          "probability": 0.999
+        },
+        {
+          "word": "It",
+          "start": 59.84,
+          "end": 60.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 60.2,
+          "end": 60.34,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 60.34,
+          "end": 60.5,
+          "probability": 1.0
+        },
+        {
+          "word": "completed",
+          "start": 60.5,
+          "end": 60.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 60.92,
+          "end": 61.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 61.12,
+          "end": 61.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "renewal",
+          "start": 61.2,
+          "end": 61.56,
+          "probability": 0.9849
+        },
+        {
+          "word": "start",
+          "start": 61.56,
+          "end": 61.86,
+          "probability": 0.998
+        },
+        {
+          "word": "date",
+          "start": 61.86,
+          "end": 62.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 62.12,
+          "end": 62.28,
+          "probability": 0.998
+        },
+        {
+          "word": "ends",
+          "start": 62.28,
+          "end": 62.56,
+          "probability": 0.999
+        },
+        {
+          "word": "up",
+          "start": 62.56,
+          "end": 62.72,
+          "probability": 0.999
+        },
+        {
+          "word": "bound",
+          "start": 62.72,
+          "end": 62.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "and",
+          "start": 62.94,
+          "end": 63.1,
+          "probability": 0.9663
+        },
+        {
+          "word": "renewed.",
+          "start": 63.1,
+          "end": 63.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "You",
+          "start": 63.8,
+          "end": 64.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 64.14,
+          "end": 64.3,
+          "probability": 1.0
+        },
+        {
+          "word": "still",
+          "start": 64.3,
+          "end": 64.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "edit",
+          "start": 64.56,
+          "end": 64.82,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 64.82,
+          "end": 64.98,
+          "probability": 1.0
+        },
+        {
+          "word": "renewal",
+          "start": 64.98,
+          "end": 65.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "job",
+          "start": 65.32,
+          "end": 65.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 65.64,
+          "end": 65.84,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 65.84,
+          "end": 65.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "want.",
+          "start": 65.92,
+          "end": 66.26,
+          "probability": 1.0
+        },
+        {
+          "word": "Issue",
+          "start": 66.72,
+          "end": 67.04,
+          "probability": 0.9902
+        },
+        {
+          "word": "now",
+          "start": 67.04,
+          "end": 67.22,
+          "probability": 0.9331
+        },
+        {
+          "word": "binds",
+          "start": 67.22,
+          "end": 67.52,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 67.52,
+          "end": 67.72,
+          "probability": 0.9878
+        },
+        {
+          "word": "issues",
+          "start": 67.72,
+          "end": 68.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 68.02,
+          "end": 68.22,
+          "probability": 0.999
+        },
+        {
+          "word": "renewal",
+          "start": 68.22,
+          "end": 68.52,
+          "probability": 0.999
+        },
+        {
+          "word": "immediately",
+          "start": 68.52,
+          "end": 69.04,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 69.04,
+          "end": 69.36,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 69.36,
+          "end": 69.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 69.46,
+          "end": 69.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 69.6,
+          "end": 70.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "term.",
+          "start": 70.1,
+          "end": 70.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 70.78,
+          "end": 71.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "renewal",
+          "start": 71.08,
+          "end": 71.38,
+          "probability": 0.999
+        },
+        {
+          "word": "job",
+          "start": 71.38,
+          "end": 71.66,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 71.66,
+          "end": 71.84,
+          "probability": 1.0
+        },
+        {
+          "word": "completed",
+          "start": 71.84,
+          "end": 72.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 72.26,
+          "end": 72.46,
+          "probability": 1.0
+        },
+        {
+          "word": "cannot",
+          "start": 72.46,
+          "end": 72.72,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 72.72,
+          "end": 72.9,
+          "probability": 1.0
+        },
+        {
+          "word": "edited.",
+          "start": 72.9,
+          "end": 73.2,
+          "probability": 1.0
+        },
+        {
+          "word": "Let's",
+          "start": 73.62,
+          "end": 74.04,
+          "probability": 0.9893
+        },
+        {
+          "word": "select",
+          "start": 74.04,
+          "end": 74.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "Renew.",
+          "start": 74.32,
+          "end": 74.76,
+          "probability": 0.9219
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 79.04,
+      "end": 80.54,
+      "start_formatted": "00:01:19.040",
+      "end_formatted": "00:01:20.540",
+      "text": "Select a renewal code.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 79.04,
+          "end": 79.6,
+          "probability": 0.9829
+        },
+        {
+          "word": "a",
+          "start": 79.6,
+          "end": 79.78,
+          "probability": 0.9766
+        },
+        {
+          "word": "renewal",
+          "start": 79.78,
+          "end": 80.06,
+          "probability": 0.9399
+        },
+        {
+          "word": "code.",
+          "start": 80.06,
+          "end": 80.54,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 82.12,
+      "end": 82.68,
+      "start_formatted": "00:01:22.120",
+      "end_formatted": "00:01:22.680",
+      "text": "Select a renewal code.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 82.12,
+          "end": 82.68,
+          "probability": 0.0001
+        },
+        {
+          "word": "a",
+          "start": 82.68,
+          "end": 82.68,
+          "probability": 0.5688
+        },
+        {
+          "word": "renewal",
+          "start": 82.68,
+          "end": 82.68,
+          "probability": 0.9272
+        },
+        {
+          "word": "code.",
+          "start": 82.68,
+          "end": 82.68,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 83.1,
+      "end": 84.06,
+      "start_formatted": "00:01:23.100",
+      "end_formatted": "00:01:24.060",
+      "text": "Save the data.",
+      "words": [
+        {
+          "word": "Save",
+          "start": 83.1,
+          "end": 83.66,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 83.66,
+          "end": 83.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "data.",
+          "start": 83.78,
+          "end": 84.06,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 90.78,
+      "end": 96.82,
+      "start_formatted": "00:01:30.780",
+      "end_formatted": "00:01:36.820",
+      "text": "The renewal job is in the workflow and has a status of Renewing. Click on the renewal job to return to it.",
+      "words": [
+        {
+          "word": "The",
+          "start": 90.78,
+          "end": 91.34,
+          "probability": 0.9653
+        },
+        {
+          "word": "renewal",
+          "start": 91.34,
+          "end": 91.64,
+          "probability": 0.9512
+        },
+        {
+          "word": "job",
+          "start": 91.64,
+          "end": 91.9,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 91.9,
+          "end": 92.1,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 92.1,
+          "end": 92.22,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 92.22,
+          "end": 92.3,
+          "probability": 0.999
+        },
+        {
+          "word": "workflow",
+          "start": 92.3,
+          "end": 92.64,
+          "probability": 0.9912
+        },
+        {
+          "word": "and",
+          "start": 92.64,
+          "end": 92.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 92.84,
+          "end": 93.02,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 93.02,
+          "end": 93.14,
+          "probability": 0.9897
+        },
+        {
+          "word": "status",
+          "start": 93.14,
+          "end": 93.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 93.48,
+          "end": 93.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "Renewing.",
+          "start": 93.72,
+          "end": 94.22,
+          "probability": 0.8076
+        },
+        {
+          "word": "Click",
+          "start": 94.42,
+          "end": 94.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "on",
+          "start": 94.86,
+          "end": 95.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 95.1,
+          "end": 95.2,
+          "probability": 0.999
+        },
+        {
+          "word": "renewal",
+          "start": 95.2,
+          "end": 95.54,
+          "probability": 0.8667
+        },
+        {
+          "word": "job",
+          "start": 95.54,
+          "end": 95.86,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 95.86,
+          "end": 96.04,
+          "probability": 0.999
+        },
+        {
+          "word": "return",
+          "start": 96.04,
+          "end": 96.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 96.34,
+          "end": 96.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "it.",
+          "start": 96.6,
+          "end": 96.82,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 96.82,
+      "end": 104.78,
+      "start_formatted": "00:01:36.820",
+      "end_formatted": "00:01:44.780",
+      "text": "This time, we decide to issue the renewal immediately. Click Edit Policy Transaction again to put it in the draft status.",
+      "words": [
+        {
+          "word": "This",
+          "start": 96.82,
+          "end": 98.12,
+          "probability": 0.9697
+        },
+        {
+          "word": "time,",
+          "start": 98.12,
+          "end": 98.48,
+          "probability": 0.998
+        },
+        {
+          "word": "we",
+          "start": 98.68,
+          "end": 98.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "decide",
+          "start": 98.92,
+          "end": 99.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 99.24,
+          "end": 99.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "issue",
+          "start": 99.44,
+          "end": 99.72,
+          "probability": 0.9863
+        },
+        {
+          "word": "the",
+          "start": 99.72,
+          "end": 99.88,
+          "probability": 0.999
+        },
+        {
+          "word": "renewal",
+          "start": 99.88,
+          "end": 100.22,
+          "probability": 0.9775
+        },
+        {
+          "word": "immediately.",
+          "start": 100.22,
+          "end": 100.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "Click",
+          "start": 101.2,
+          "end": 101.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "Edit",
+          "start": 101.68,
+          "end": 101.88,
+          "probability": 0.6924
+        },
+        {
+          "word": "Policy",
+          "start": 101.88,
+          "end": 102.38,
+          "probability": 0.894
+        },
+        {
+          "word": "Transaction",
+          "start": 102.38,
+          "end": 103.08,
+          "probability": 0.9834
+        },
+        {
+          "word": "again",
+          "start": 103.08,
+          "end": 103.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 103.32,
+          "end": 103.48,
+          "probability": 0.999
+        },
+        {
+          "word": "put",
+          "start": 103.48,
+          "end": 103.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 103.68,
+          "end": 103.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 103.78,
+          "end": 103.88,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 103.88,
+          "end": 103.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "draft",
+          "start": 103.96,
+          "end": 104.26,
+          "probability": 0.7715
+        },
+        {
+          "word": "status.",
+          "start": 104.26,
+          "end": 104.78,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 110.74,
+      "end": 111.82,
+      "start_formatted": "00:01:50.740",
+      "end_formatted": "00:01:51.820",
+      "text": "Click Quote.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 110.74,
+          "end": 111.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "Quote.",
+          "start": 111.42,
+          "end": 111.82,
+          "probability": 0.9551
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 114.98,
+      "end": 116.36,
+      "start_formatted": "00:01:54.980",
+      "end_formatted": "00:01:56.360",
+      "text": "Click Bind Options.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 114.98,
+          "end": 115.66,
+          "probability": 0.998
+        },
+        {
+          "word": "Bind",
+          "start": 115.66,
+          "end": 115.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "Options.",
+          "start": 115.98,
+          "end": 116.36,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 119.34,
+      "end": 123.6,
+      "start_formatted": "00:01:59.340",
+      "end_formatted": "00:02:03.600",
+      "text": "This time, select Issue Now because we do not want to make any changes.",
+      "words": [
+        {
+          "word": "This",
+          "start": 119.34,
+          "end": 119.84,
+          "probability": 0.9199
+        },
+        {
+          "word": "time,",
+          "start": 119.84,
+          "end": 120.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "select",
+          "start": 120.5,
+          "end": 120.96,
+          "probability": 0.9873
+        },
+        {
+          "word": "Issue",
+          "start": 120.96,
+          "end": 121.3,
+          "probability": 0.876
+        },
+        {
+          "word": "Now",
+          "start": 121.3,
+          "end": 121.48,
+          "probability": 0.731
+        },
+        {
+          "word": "because",
+          "start": 121.48,
+          "end": 121.74,
+          "probability": 0.998
+        },
+        {
+          "word": "we",
+          "start": 121.74,
+          "end": 121.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "do",
+          "start": 121.96,
+          "end": 122.14,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 122.14,
+          "end": 122.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "want",
+          "start": 122.36,
+          "end": 122.6,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 122.6,
+          "end": 122.72,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 122.72,
+          "end": 122.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 122.9,
+          "end": 123.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes.",
+          "start": 123.1,
+          "end": 123.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 127.88,
+      "end": 131.84,
+      "start_formatted": "00:02:07.880",
+      "end_formatted": "00:02:11.840",
+      "text": "The renewal job is bound as a new policy term. Go to the Account.",
+      "words": [
+        {
+          "word": "The",
+          "start": 127.88,
+          "end": 128.38,
+          "probability": 0.9551
+        },
+        {
+          "word": "renewal",
+          "start": 128.38,
+          "end": 128.66,
+          "probability": 0.8379
+        },
+        {
+          "word": "job",
+          "start": 128.66,
+          "end": 128.94,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 128.94,
+          "end": 129.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "bound",
+          "start": 129.16,
+          "end": 129.38,
+          "probability": 0.9497
+        },
+        {
+          "word": "as",
+          "start": 129.38,
+          "end": 129.56,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 129.56,
+          "end": 129.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 129.68,
+          "end": 129.82,
+          "probability": 0.9707
+        },
+        {
+          "word": "policy",
+          "start": 129.82,
+          "end": 130.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "term.",
+          "start": 130.24,
+          "end": 130.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "Go",
+          "start": 130.88,
+          "end": 131.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 131.22,
+          "end": 131.38,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 131.38,
+          "end": 131.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "Account.",
+          "start": 131.5,
+          "end": 131.84,
+          "probability": 0.3967
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 131.84,
+      "end": 136.46,
+      "start_formatted": "00:02:11.840",
+      "end_formatted": "00:02:16.460",
+      "text": "The new policy term is scheduled because the current term has not expired.",
+      "words": [
+        {
+          "word": "The",
+          "start": 131.84,
+          "end": 132.9,
+          "probability": 0.9048
+        },
+        {
+          "word": "new",
+          "start": 132.9,
+          "end": 133.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "policy",
+          "start": 133.08,
+          "end": 133.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "term",
+          "start": 133.58,
+          "end": 133.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 133.88,
+          "end": 134.1,
+          "probability": 1.0
+        },
+        {
+          "word": "scheduled",
+          "start": 134.1,
+          "end": 134.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 134.54,
+          "end": 134.86,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 134.86,
+          "end": 135.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "current",
+          "start": 135.06,
+          "end": 135.32,
+          "probability": 1.0
+        },
+        {
+          "word": "term",
+          "start": 135.32,
+          "end": 135.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 135.54,
+          "end": 135.76,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 135.76,
+          "end": 135.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "expired.",
+          "start": 135.98,
+          "end": 136.46,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 136.94,
+      "end": 143.48,
+      "start_formatted": "00:02:16.940",
+      "end_formatted": "00:02:23.480",
+      "text": "When the date reaches the start date of the renewal term, the new term becomes in force and the previous term becomes expired.",
+      "words": [
+        {
+          "word": "When",
+          "start": 136.94,
+          "end": 137.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 137.5,
+          "end": 137.6,
+          "probability": 1.0
+        },
+        {
+          "word": "date",
+          "start": 137.6,
+          "end": 137.8,
+          "probability": 0.9888
+        },
+        {
+          "word": "reaches",
+          "start": 137.8,
+          "end": 138.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 138.16,
+          "end": 138.4,
+          "probability": 1.0
+        },
+        {
+          "word": "start",
+          "start": 138.4,
+          "end": 138.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "date",
+          "start": 138.68,
+          "end": 138.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 138.88,
+          "end": 139.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 139.04,
+          "end": 139.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "renewal",
+          "start": 139.12,
+          "end": 139.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "term,",
+          "start": 139.42,
+          "end": 139.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 140.1,
+          "end": 140.26,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 140.26,
+          "end": 140.44,
+          "probability": 1.0
+        },
+        {
+          "word": "term",
+          "start": 140.44,
+          "end": 140.7,
+          "probability": 0.998
+        },
+        {
+          "word": "becomes",
+          "start": 140.7,
+          "end": 141.12,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 141.12,
+          "end": 141.28,
+          "probability": 0.9326
+        },
+        {
+          "word": "force",
+          "start": 141.28,
+          "end": 141.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 141.56,
+          "end": 141.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 141.72,
+          "end": 141.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "previous",
+          "start": 141.82,
+          "end": 142.18,
+          "probability": 1.0
+        },
+        {
+          "word": "term",
+          "start": 142.18,
+          "end": 142.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "becomes",
+          "start": 142.56,
+          "end": 142.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "expired.",
+          "start": 142.96,
+          "end": 143.48,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 143.78,
+      "end": 146.38,
+      "start_formatted": "00:02:23.780",
+      "end_formatted": "00:02:26.380",
+      "text": "This is the end of demonstration for manual renewal.",
+      "words": [
+        {
+          "word": "This",
+          "start": 143.78,
+          "end": 144.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 144.18,
+          "end": 144.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 144.3,
+          "end": 144.42,
+          "probability": 1.0
+        },
+        {
+          "word": "end",
+          "start": 144.42,
+          "end": 144.62,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 144.62,
+          "end": 144.74,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 144.74,
+          "end": 145.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "for",
+          "start": 145.28,
+          "end": 145.62,
+          "probability": 0.999
+        },
+        {
+          "word": "manual",
+          "start": 145.62,
+          "end": 145.96,
+          "probability": 0.9316
+        },
+        {
+          "word": "renewal.",
+          "start": 145.96,
+          "end": 146.38,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 146.36,
+      "end": 146.36,
+      "start_formatted": "00:02:26.360",
+      "end_formatted": "00:02:26.360",
+      "text": "",
+      "words": []
+    }
+  ]
+}

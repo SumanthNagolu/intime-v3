@@ -1,0 +1,346 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-07",
+    "slide_count": 30,
+    "slides_with_text": 27,
+    "total_words": 1446,
+    "avg_confidence": 83.8,
+    "processing_time_seconds": 13.2,
+    "extracted_at": "2026-02-13T12:18:19.280804"
+  },
+  "full_text": "Introduction to Locations\n\nLesson\nobjectives\n\n¢ Describe the way that Locations are used to\ncontrol navigation in the user interface\n\n¢ List the different types of Locations\n\n¢ Modify widgets so that they navigate to given\nLocations\n\n| Locations\n\n——_——_,\n\n| Widget\n—_—__\n\n¢« ALocation is a PCF element that a\nuser can navigate to\n\n« Locations themselves do not define\nany visual content, but they can\ncontain Screen container(s) that do\n\n¢ Locations can use system permissions\nto control what the users can\nsee/access in the application\n\n| Pages\n\n« APage contains a single screen\n\n* Pages are used exclusively within Location Groups\n\nTitroiningapp Search |» Contact |~\n\nPerson Wiliam Andy\nSummary\n\nBasics | SocialMedia | Analysis\n\nBasic information Flag Entries\nView ater = Reason >\nName ‘wallam Andy lagged\n\ncssa0it —Noeralad\n\nAssigned User\n\ncreated on 06/19/2018\n\nPrimary Address\n\n245 FirLane\nLs canada,cA 1352\n\n| Location groups G\n\n[Gi Claimcenter™ Desktop ~ Claim (235-53-365870)|~ Search ~ AddressBook ~ Vacation\n\n@ & HM & & Pots4123456 Ins: RayNewton Dol: 01/02/2021 Adj: Andy Applegate (Auto - TeamA)\n\nSummary\neB Summary page\n\nFinancials High-Risk Indicators\n\n° status Open A initiation\nGe 14 days (Target: 150) Gross incurred $18,400.00 F Currently flagged\nlealth Metrics Zl & Subrogation: In Review\necono =| Workplan page Paid $2,000.00 Subrogation\nRecovered $0.00\n\nLoss details page\n\na —E\nae\n\nNotice Date\n\nEB] Policy\n\nLoss Location 1253 Paloma Ave, Arcadia, CA 91007\n\nExposures page\n\nInsured hit other party's car on the front passenger side while\nturn,\n\nExp\nDescription\n\nParties involved page\n\nPolicy page\n\nFinancials page Ray Newton Andy Applegate 400.00 |\nMedical Payments Stan Newton _ Andy Applegat $2,000.00 $1,500.00 le\n\n© Notes Med Pay\n\n4A Financi\n\n| Wizards G\n\nA Wizard is an ordered collection of screens used to execute a complex business\nprocess\n\nGi Claimcenter™ Desktop |~ Claim|* Search| Address Book |» Dashboard Team :2@\n\n@ > & Pot:6932765279 Ins: RayNewton Dol: 08/28/2018 pcf\nStep 2 of 5: Basic information »\n\nInvolved vehicle(s)\n\n¢ Single info bar,\n\n+ [ayeton ee ranma actions menu,\na ) = es and side bar\nsees sues 2002 Toyota Avalon ¢ Includes toolbar\nconto contactnfo with Back and\npotess Urination ae ised Next buttons\n\nHome Phone\n\n| Wizard example: ClaimCenter G\n\nClaimCenter wizards are used primarily to create new claims and issue payments.\n\nTi Claimcenter Desktop |» Clsim|~ Search| Address Book |» Dashboard Team :Z2 0\n\n© > rocesna7cs77 inc aytewton vot:08282018\n\nStep 3 of 5: Add claim information [ covcet I ex J vee J ensn |\n\n‘Swervedtoaoldhitingadeerthatwas | | Location [Nem\nIntheroad, tthe side guar ra,\ncow United tates\nonzerois 1201 a ee)\n+ [Ania ~\n+ [versie\ncounty Riverside\nsate + [Siem\nzPcode sxso1-seee\nrisdction California\n\nVehicles, People, & Property\n==\n\nCatitoria\n1\n\n| Wizard example: PolicyCenter\n\nPolicyCenter wizards are used to create, modify, renew, or cancel policies\n\nEF PolicyCentor\n\nBuildings\n\nRisk Analysis\n\nDesktop |\n\nAccount|» Policy| Contact|» Searh|~ Tem 3 [f ©\n\n[Ez submission (Ora) {finland Marine €ff.08/29/2018 Sherman Developments Account # 0000556767\n\nUnderwriter: Alice Applegate\n\nContractors Equipment {3 [save orat |\n\nlose Options\n\nCoverages || underwriting information\n\nIM Contractors Equipment Questions\nsa guard or watchperson service employed where the equipments operated or stored?\n‘Are allemployees (including temporarie) trained to handle the equipment they will operate?\n‘Are equipment operators’ MVR reviewed on a regular basis and maintained?\n\n‘the job and storage sites is there security lighting?\n\n‘Are the job and storage sites fence in?\n\n‘Are there any hazardous or flammable materials stored in close proximity tothe equipment?\n‘Are any ofthe ob and storage sites subject to flooding?\n\nIsany ofthe equipment stored indoors?\n\nYes\n\nves\n\nves\n\nYes\n\nves\n\nEFF EEEE\n\nGi\n\n| Wizard example: BillingCenter\n\nBillingCenter wizards are Ei aitingconter™ Desktop |~\nused to enter transactions\n\nGi\n\nAccount |~ Policy ¥ Producer|~ Search |~ Administration |»\n\nDisbursement Wizard - Step 1 of 3\n\nas well as to create or\nmodify producers and\naccounts as needed.\n\nAccounts\n\nSearch Criteria Contact\nCompany Name\n\nFirstname\n\n<none> =} | country\n<none> +] | ety\nType <none> =| | state\n21P Code\n\nOrganization Type\nFen\n\nHas charge Holds\n\nSelect Account# >\n\n| Popups\n\n¢« APopup contains a single screen and returns the user to the previous Location\nonce the popup is closed\n\n* Automatically has \"Return to <previous location>\" link\n\nPerson: willam Andy\n\nSummary\n\nBasics | SocialMedia | Analysis\n\nBasic information\n\nFlagenties\n. . DateFlagged ¢ Reason\nName vim ney Peron: willam Andy\ncssj2018 ——Noemallacé\nats\nFlag Entry\ncsyso/20n8\nconnote\nNo emailadresforthis contact.\nPrimary Adsress\n\nCy\n\n| Worksheets\n\n¢« AWorksheet contains a single screen rendered in the workspace frame pef\n\nTF Troiningapp Search| Contact |~\n\n@ Notes\n\nigh |\n\n| Forwards G\n\n¢ A Forward contains logic to execute before navigating to another Location\n¢ Often involves deciding which Location to navigate to\n\npcf\n\nContact ¥\nContactTabForward [f=\n\nABContactSummaryPage NoContactPage\n\n| Exit points\n¢ An exit point points to a URL outside of the\nGuidewire application\n\n* Often used to access other applications\nor websites\n\n¢ Does not contain (directly or\nindirectly) a Screen widget\n\nEiTrainingapp Search |* Contact |~\n\nNew Company »\n\n| Review of Locations navigation G\n\nPage Location Group Wizard\n@er= fa —\n\nett\nPopup Exit Point\n7 ea\neta e—foP\n\nForward\nWorksheet\n\nCa =]\n\n| Locations summary\n\n[ro]\n[}\nS\n\ngo()\n\nec\ni}\ncS\n\ngo()\npush()\n\n|\n\npush()\n\npush()\n\nNothing\n\nFirst child page Screen area\n\nScreen\nFirst screen\nScreen\nScreen\n\nExternal page\nor web site\n\nScreen area\nScreen area\nWorkspace frame\nOriginating frame\n\nNew window (or entire\nexisting window)\n\n| Demonstration G\nMake the Assigned User field navigable\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Business requirement G\n\nA business partner wants to make the Assigned User field navigable, so when a user\nwith the appropriate permissions (for example, Contact Administrator) logs in and\nclicks on the name of the contact, the system opens a popup and the user can easily\nsee the user details and/or make changes.\n\nG\n\njingApp Search|» Contact\n\nPerson Willa ny\nSummary\n\nBasics | SocialMedia | Analysis\n\nName wiliam andy\n\nabss\n\nAlice Applegate\n\n06/19/2018\n\nPrimary Address\n\nQuestion\n\n,~ ~ Of the seven types of Locations listed... ’ Locations\nie Which two contain multiple screens and have their own\n¢ info bar, actions menu, and side bar? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS\n\nAnswer\n\n,~ — Of the seven types of Locations listed...\nA Which two contain multiple screens and have their own\n¢ info bar, actions menu, and side bar?\n\nThe correct response is:\nLocation Group and Wizard\n\nSooo ooo ooo ooo ooo\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nQuestion\n\n,~ — Of the seven types of Locations listed...\nie Which two renders a screen somewhere other than the\n: screen area?\n\nSooo ooD Oooo oOooooMoS\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nAnswer\n\n,~ — Of the seven types of Locations listed...\nA Which one renders a screen somewhere other than the\nscreen area?\n\nThe correct response is:\nWorksheet and Exit Point\n\nSooo ooo ooo ooo ooo\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nQuestion\n\n,~ ~ Of the seven types of Locations listed... ’ Locations\nie Which one typically navigates to one of several Locations\n¢ based on business logic? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS\n\nAnswer\n\nForward\n\nExit Point\n\n,~ ~ Of the seven types of Locations listed... ’ Locations\nA Which one typically navigates to one of several Locations\nPa based on business logic? Page\n| Location\ni Group\n| Wizard\nI\nI Popup\nI\nI The correct response is: Worksheet\n' Forward\nI\n1\n1\n1\n! |\n\nQuestion\n\n7~ ~ Of the seven types of Locations listed... Locations\nie For each Location, what method would you usually use to\n¢ navigate to it? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS\n\nAnswer\n\n4\n¢\n¢\n\nSooo ooo ooo ooo ooo\n\n,~ — Of the seven types of Locations listed...\nFor each Location, what method would you usually use to\nnavigate to it?\n\nThe correct responses are:\n\nUse go() to navigate to Pages, Location Groups, Wizards, and\nForwards.\n\nUse push() to navigate to Popups and Exit Points.\nUse goInWorkspace() to navigate to Worksheets.\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nLesson\nobjectives ¢ Describe the way that Locations are used to\nreview control navigation in the user interface\n\n¢ List the different types of Locations\n¢ Modify widgets so that they navigate to given\nLocations\n\n| Student exercise\n\nIntroduction to Locations",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to Locations",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the way that Locations are used to\ncontrol navigation in the user interface\n\n¢ List the different types of Locations\n\n¢ Modify widgets so that they navigate to given\nLocations",
+      "word_count": 34,
+      "avg_confidence": 90.91,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Locations\n\n——_——_,\n\n| Widget\n—_—__\n\n¢« ALocation is a PCF element that a\nuser can navigate to\n\n« Locations themselves do not define\nany visual content, but they can\ncontain Screen container(s) that do\n\n¢ Locations can use system permissions\nto control what the users can\nsee/access in the application",
+      "word_count": 51,
+      "avg_confidence": 86.87,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Pages\n\n« APage contains a single screen\n\n* Pages are used exclusively within Location Groups\n\nTitroiningapp Search |» Contact |~\n\nPerson Wiliam Andy\nSummary\n\nBasics | SocialMedia | Analysis\n\nBasic information Flag Entries\nView ater = Reason >\nName ‘wallam Andy lagged\n\ncssa0it —Noeralad\n\nAssigned User\n\ncreated on 06/19/2018\n\nPrimary Address\n\n245 FirLane\nLs canada,cA 1352",
+      "word_count": 57,
+      "avg_confidence": 72.3,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Location groups G\n\n[Gi Claimcenter™ Desktop ~ Claim (235-53-365870)|~ Search ~ AddressBook ~ Vacation\n\n@ & HM & & Pots4123456 Ins: RayNewton Dol: 01/02/2021 Adj: Andy Applegate (Auto - TeamA)\n\nSummary\neB Summary page\n\nFinancials High-Risk Indicators\n\n° status Open A initiation\nGe 14 days (Target: 150) Gross incurred $18,400.00 F Currently flagged\nlealth Metrics Zl & Subrogation: In Review\necono =| Workplan page Paid $2,000.00 Subrogation\nRecovered $0.00\n\nLoss details page\n\na —E\nae\n\nNotice Date\n\nEB] Policy\n\nLoss Location 1253 Paloma Ave, Arcadia, CA 91007\n\nExposures page\n\nInsured hit other party's car on the front passenger side while\nturn,\n\nExp\nDescription\n\nParties involved page\n\nPolicy page\n\nFinancials page Ray Newton Andy Applegate 400.00 |\nMedical Payments Stan Newton _ Andy Applegat $2,000.00 $1,500.00 le\n\n© Notes Med Pay\n\n4A Financi",
+      "word_count": 133,
+      "avg_confidence": 78.94,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Wizards G\n\nA Wizard is an ordered collection of screens used to execute a complex business\nprocess\n\nGi Claimcenter™ Desktop |~ Claim|* Search| Address Book |» Dashboard Team :2@\n\n@ > & Pot:6932765279 Ins: RayNewton Dol: 08/28/2018 pcf\nStep 2 of 5: Basic information »\n\nInvolved vehicle(s)\n\n¢ Single info bar,\n\n+ [ayeton ee ranma actions menu,\na ) = es and side bar\nsees sues 2002 Toyota Avalon ¢ Includes toolbar\nconto contactnfo with Back and\npotess Urination ae ised Next buttons\n\nHome Phone",
+      "word_count": 86,
+      "avg_confidence": 70.68,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Wizard example: ClaimCenter G\n\nClaimCenter wizards are used primarily to create new claims and issue payments.\n\nTi Claimcenter Desktop |» Clsim|~ Search| Address Book |» Dashboard Team :Z2 0\n\n© > rocesna7cs77 inc aytewton vot:08282018\n\nStep 3 of 5: Add claim information [ covcet I ex J vee J ensn |\n\n‘Swervedtoaoldhitingadeerthatwas | | Location [Nem\nIntheroad, tthe side guar ra,\ncow United tates\nonzerois 1201 a ee)\n+ [Ania ~\n+ [versie\ncounty Riverside\nsate + [Siem\nzPcode sxso1-seee\nrisdction California\n\nVehicles, People, & Property\n==\n\nCatitoria\n1",
+      "word_count": 90,
+      "avg_confidence": 65.09,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Wizard example: PolicyCenter\n\nPolicyCenter wizards are used to create, modify, renew, or cancel policies\n\nEF PolicyCentor\n\nBuildings\n\nRisk Analysis\n\nDesktop |\n\nAccount|» Policy| Contact|» Searh|~ Tem 3 [f ©\n\n[Ez submission (Ora) {finland Marine €ff.08/29/2018 Sherman Developments Account # 0000556767\n\nUnderwriter: Alice Applegate\n\nContractors Equipment {3 [save orat |\n\nlose Options\n\nCoverages || underwriting information\n\nIM Contractors Equipment Questions\nsa guard or watchperson service employed where the equipments operated or stored?\n‘Are allemployees (including temporarie) trained to handle the equipment they will operate?\n‘Are equipment operators’ MVR reviewed on a regular basis and maintained?\n\n‘the job and storage sites is there security lighting?\n\n‘Are the job and storage sites fence in?\n\n‘Are there any hazardous or flammable materials stored in close proximity tothe equipment?\n‘Are any ofthe ob and storage sites subject to flooding?\n\nIsany ofthe equipment stored indoors?\n\nYes\n\nves\n\nves\n\nYes\n\nves\n\nEFF EEEE\n\nGi",
+      "word_count": 148,
+      "avg_confidence": 69.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Wizard example: BillingCenter\n\nBillingCenter wizards are Ei aitingconter™ Desktop |~\nused to enter transactions\n\nGi\n\nAccount |~ Policy ¥ Producer|~ Search |~ Administration |»\n\nDisbursement Wizard - Step 1 of 3\n\nas well as to create or\nmodify producers and\naccounts as needed.\n\nAccounts\n\nSearch Criteria Contact\nCompany Name\n\nFirstname\n\n<none> =} | country\n<none> +] | ety\nType <none> =| | state\n21P Code\n\nOrganization Type\nFen\n\nHas charge Holds\n\nSelect Account# >",
+      "word_count": 75,
+      "avg_confidence": 77.68,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Popups\n\n¢« APopup contains a single screen and returns the user to the previous Location\nonce the popup is closed\n\n* Automatically has \"Return to <previous location>\" link\n\nPerson: willam Andy\n\nSummary\n\nBasics | SocialMedia | Analysis\n\nBasic information\n\nFlagenties\n. . DateFlagged ¢ Reason\nName vim ney Peron: willam Andy\ncssj2018 ——Noemallacé\nats\nFlag Entry\ncsyso/20n8\nconnote\nNo emailadresforthis contact.\nPrimary Adsress\n\nCy",
+      "word_count": 65,
+      "avg_confidence": 80.41,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Worksheets\n\n¢« AWorksheet contains a single screen rendered in the workspace frame pef\n\nTF Troiningapp Search| Contact |~\n\n@ Notes\n\nigh |",
+      "word_count": 23,
+      "avg_confidence": 75.84,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Forwards G\n\n¢ A Forward contains logic to execute before navigating to another Location\n¢ Often involves deciding which Location to navigate to\n\npcf\n\nContact ¥\nContactTabForward [f=\n\nABContactSummaryPage NoContactPage",
+      "word_count": 31,
+      "avg_confidence": 82.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Exit points\n¢ An exit point points to a URL outside of the\nGuidewire application\n\n* Often used to access other applications\nor websites\n\n¢ Does not contain (directly or\nindirectly) a Screen widget\n\nEiTrainingapp Search |* Contact |~\n\nNew Company »",
+      "word_count": 43,
+      "avg_confidence": 84.6,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Review of Locations navigation G\n\nPage Location Group Wizard\n@er= fa —\n\nett\nPopup Exit Point\n7 ea\neta e—foP\n\nForward\nWorksheet\n\nCa =]",
+      "word_count": 25,
+      "avg_confidence": 71.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Locations summary\n\n[ro]\n[}\nS\n\ngo()\n\nec\ni}\ncS\n\ngo()\npush()\n\n|\n\npush()\n\npush()\n\nNothing\n\nFirst child page Screen area\n\nScreen\nFirst screen\nScreen\nScreen\n\nExternal page\nor web site\n\nScreen area\nScreen area\nWorkspace frame\nOriginating frame\n\nNew window (or entire\nexisting window)",
+      "word_count": 45,
+      "avg_confidence": 90.89,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\nMake the Assigned User field navigable\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 95.44,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Business requirement G\n\nA business partner wants to make the Assigned User field navigable, so when a user\nwith the appropriate permissions (for example, Contact Administrator) logs in and\nclicks on the name of the contact, the system opens a popup and the user can easily\nsee the user details and/or make changes.\n\nG\n\njingApp Search|» Contact\n\nPerson Willa ny\nSummary\n\nBasics | SocialMedia | Analysis\n\nName wiliam andy\n\nabss\n\nAlice Applegate\n\n06/19/2018\n\nPrimary Address",
+      "word_count": 76,
+      "avg_confidence": 90.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question\n\n,~ ~ Of the seven types of Locations listed... ’ Locations\nie Which two contain multiple screens and have their own\n¢ info bar, actions menu, and side bar? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS",
+      "word_count": 43,
+      "avg_confidence": 84.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\n,~ — Of the seven types of Locations listed...\nA Which two contain multiple screens and have their own\n¢ info bar, actions menu, and side bar?\n\nThe correct response is:\nLocation Group and Wizard\n\nSooo ooo ooo ooo ooo\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "word_count": 51,
+      "avg_confidence": 85.18,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\n,~ — Of the seven types of Locations listed...\nie Which two renders a screen somewhere other than the\n: screen area?\n\nSooo ooD Oooo oOooooMoS\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "word_count": 37,
+      "avg_confidence": 90.94,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer\n\n,~ — Of the seven types of Locations listed...\nA Which one renders a screen somewhere other than the\nscreen area?\n\nThe correct response is:\nWorksheet and Exit Point\n\nSooo ooo ooo ooo ooo\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "word_count": 45,
+      "avg_confidence": 86.36,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question\n\n,~ ~ Of the seven types of Locations listed... ’ Locations\nie Which one typically navigates to one of several Locations\n¢ based on business logic? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS",
+      "word_count": 40,
+      "avg_confidence": 83.89,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer\n\nForward\n\nExit Point\n\n,~ ~ Of the seven types of Locations listed... ’ Locations\nA Which one typically navigates to one of several Locations\nPa based on business logic? Page\n| Location\ni Group\n| Wizard\nI\nI Popup\nI\nI The correct response is: Worksheet\n' Forward\nI\n1\n1\n1\n! |",
+      "word_count": 55,
+      "avg_confidence": 76.4,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n7~ ~ Of the seven types of Locations listed... Locations\nie For each Location, what method would you usually use to\n¢ navigate to it? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS",
+      "word_count": 39,
+      "avg_confidence": 91.22,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer\n\n4\n¢\n¢\n\nSooo ooo ooo ooo ooo\n\n,~ — Of the seven types of Locations listed...\nFor each Location, what method would you usually use to\nnavigate to it?\n\nThe correct responses are:\n\nUse go() to navigate to Pages, Location Groups, Wizards, and\nForwards.\n\nUse push() to navigate to Popups and Exit Points.\nUse goInWorkspace() to navigate to Worksheets.\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "word_count": 71,
+      "avg_confidence": 87.04,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Lesson\nobjectives ¢ Describe the way that Locations are used to\nreview control navigation in the user interface\n\n¢ List the different types of Locations\n¢ Modify widgets so that they navigate to given\nLocations",
+      "word_count": 35,
+      "avg_confidence": 90.97,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Student exercise\n\nIntroduction to Locations",
+      "word_count": 6,
+      "avg_confidence": 95.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

@@ -1,0 +1,2241 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_09_01.mp4",
+    "video_stem": "PP_09_01",
+    "duration_seconds": 160.06,
+    "duration_formatted": "00:02:40.060",
+    "segment_count": 8,
+    "word_count": 357,
+    "avg_confidence": 0.97,
+    "transcription_time_seconds": 7.15,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:28:55.810402"
+  },
+  "full_text": "Let's look at the behaviors of contact data synchronization from the account to the policy. Amy Taylor called to get a personal auto policy for her car. Create a new person account for Amy with a home phone number. Create a new submission for personal auto. Go to the policy info page. Click the primary named insured link. Amy Taylor's information is the same as the account because new submission always copies the contact data from the account. Complete other steps like driver and vehicles. Quote and issue the policy. After two months, Amy called to inform that she had gotten married and would like to change her last name to King. Go to the account. Go to the account contacts page. Edit the contact. Change the contact's last name. She also has a new phone number. Save the changes. Open the previous policy. Go to the policy contacts page. The contact name is a revision field. So it is not synchronized from the account to the policy because it has been bound. The phone number on the policy, however, shows the same value as account since it is a shared field. The reason the name is revisioned and the phone number is not is because the name is part of the policy contract data, whereas the phone number is not, and they are configured accordingly. After three months, Amy called to renew the policy for six months. In the policy, click actions. Select renew policy. Go to the policy. Go to the policy info page. The name on the renewal job is the same as the account. To summarize, the shared data of a contact is always the same on both the account and the policy. If a revision contact field is changed on the account, it will not be synchronized to the bound policies. So that each policy can keep the history of contact data. New policy jobs copy the current contact data from the account, with the exception of a backdated policy change job, which keeps the original policy data. This is the end of demonstration for contact data synchronization from account to policy.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.52,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.520",
+      "text": "Let's look at the behaviors of contact data synchronization from the account to the policy. Amy Taylor called to get a personal auto policy for her car. Create a new person account for Amy with a home phone number. Create a new submission for personal auto. Go to the policy info page. Click the primary named insured link.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 0.0,
+          "end": 0.92,
+          "probability": 0.9854
+        },
+        {
+          "word": "look",
+          "start": 0.92,
+          "end": 1.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "at",
+          "start": 1.08,
+          "end": 1.2,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 1.2,
+          "end": 1.3,
+          "probability": 0.998
+        },
+        {
+          "word": "behaviors",
+          "start": 1.3,
+          "end": 1.72,
+          "probability": 0.9292
+        },
+        {
+          "word": "of",
+          "start": 1.72,
+          "end": 1.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact",
+          "start": 1.98,
+          "end": 2.4,
+          "probability": 0.9058
+        },
+        {
+          "word": "data",
+          "start": 2.4,
+          "end": 2.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "synchronization",
+          "start": 2.78,
+          "end": 3.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "from",
+          "start": 3.54,
+          "end": 3.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 3.8,
+          "end": 3.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "account",
+          "start": 3.94,
+          "end": 4.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 4.24,
+          "end": 4.42,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 4.42,
+          "end": 4.52,
+          "probability": 0.998
+        },
+        {
+          "word": "policy.",
+          "start": 4.52,
+          "end": 5.02,
+          "probability": 0.9873
+        },
+        {
+          "word": "Amy",
+          "start": 5.34,
+          "end": 5.76,
+          "probability": 0.9751
+        },
+        {
+          "word": "Taylor",
+          "start": 5.76,
+          "end": 6.06,
+          "probability": 0.9819
+        },
+        {
+          "word": "called",
+          "start": 6.06,
+          "end": 6.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 6.4,
+          "end": 6.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "get",
+          "start": 6.54,
+          "end": 6.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 6.66,
+          "end": 6.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "personal",
+          "start": 6.76,
+          "end": 7.14,
+          "probability": 0.8774
+        },
+        {
+          "word": "auto",
+          "start": 7.14,
+          "end": 7.52,
+          "probability": 0.9824
+        },
+        {
+          "word": "policy",
+          "start": 7.52,
+          "end": 8.02,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 8.02,
+          "end": 8.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "her",
+          "start": 8.26,
+          "end": 8.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "car.",
+          "start": 8.4,
+          "end": 8.72,
+          "probability": 0.998
+        },
+        {
+          "word": "Create",
+          "start": 9.0,
+          "end": 9.54,
+          "probability": 0.9897
+        },
+        {
+          "word": "a",
+          "start": 9.54,
+          "end": 9.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 9.68,
+          "end": 9.8,
+          "probability": 0.9917
+        },
+        {
+          "word": "person",
+          "start": 9.8,
+          "end": 10.18,
+          "probability": 0.9424
+        },
+        {
+          "word": "account",
+          "start": 10.18,
+          "end": 10.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 10.46,
+          "end": 10.72,
+          "probability": 0.999
+        },
+        {
+          "word": "Amy",
+          "start": 10.72,
+          "end": 10.96,
+          "probability": 0.9897
+        },
+        {
+          "word": "with",
+          "start": 10.96,
+          "end": 11.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 11.18,
+          "end": 11.28,
+          "probability": 0.9668
+        },
+        {
+          "word": "home",
+          "start": 11.28,
+          "end": 11.48,
+          "probability": 0.9785
+        },
+        {
+          "word": "phone",
+          "start": 11.48,
+          "end": 11.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "number.",
+          "start": 11.76,
+          "end": 12.16,
+          "probability": 0.999
+        },
+        {
+          "word": "Create",
+          "start": 16.0,
+          "end": 16.6,
+          "probability": 0.9917
+        },
+        {
+          "word": "a",
+          "start": 16.6,
+          "end": 16.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 16.74,
+          "end": 16.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "submission",
+          "start": 16.86,
+          "end": 17.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "for",
+          "start": 17.3,
+          "end": 17.54,
+          "probability": 0.999
+        },
+        {
+          "word": "personal",
+          "start": 17.54,
+          "end": 17.98,
+          "probability": 0.9316
+        },
+        {
+          "word": "auto.",
+          "start": 17.98,
+          "end": 18.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "Go",
+          "start": 23.24,
+          "end": 23.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 23.84,
+          "end": 24.0,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 24.0,
+          "end": 24.12,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 24.12,
+          "end": 24.54,
+          "probability": 0.6616
+        },
+        {
+          "word": "info",
+          "start": 24.54,
+          "end": 24.84,
+          "probability": 0.9858
+        },
+        {
+          "word": "page.",
+          "start": 24.84,
+          "end": 25.34,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 27.12,
+          "end": 27.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 27.72,
+          "end": 27.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "primary",
+          "start": 27.92,
+          "end": 28.32,
+          "probability": 0.7241
+        },
+        {
+          "word": "named",
+          "start": 28.32,
+          "end": 28.68,
+          "probability": 0.9326
+        },
+        {
+          "word": "insured",
+          "start": 28.68,
+          "end": 29.1,
+          "probability": 0.855
+        },
+        {
+          "word": "link.",
+          "start": 29.1,
+          "end": 29.52,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 31.1,
+      "end": 54.6,
+      "start_formatted": "00:00:31.100",
+      "end_formatted": "00:00:54.600",
+      "text": "Amy Taylor's information is the same as the account because new submission always copies the contact data from the account. Complete other steps like driver and vehicles. Quote and issue the policy. After two months, Amy called to inform that she had gotten married and would like to change her last name to King. Go to the account. Go to the account contacts page. Edit the contact.",
+      "words": [
+        {
+          "word": "Amy",
+          "start": 31.1,
+          "end": 31.66,
+          "probability": 0.9795
+        },
+        {
+          "word": "Taylor's",
+          "start": 31.66,
+          "end": 32.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "information",
+          "start": 32.14,
+          "end": 32.58,
+          "probability": 0.9927
+        },
+        {
+          "word": "is",
+          "start": 32.58,
+          "end": 32.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 32.9,
+          "end": 33.02,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 33.02,
+          "end": 33.28,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 33.28,
+          "end": 33.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 33.44,
+          "end": 33.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "account",
+          "start": 33.54,
+          "end": 33.84,
+          "probability": 0.998
+        },
+        {
+          "word": "because",
+          "start": 33.84,
+          "end": 34.2,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 34.2,
+          "end": 34.44,
+          "probability": 0.877
+        },
+        {
+          "word": "submission",
+          "start": 34.44,
+          "end": 34.88,
+          "probability": 0.999
+        },
+        {
+          "word": "always",
+          "start": 34.88,
+          "end": 35.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "copies",
+          "start": 35.34,
+          "end": 35.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 35.8,
+          "end": 36.0,
+          "probability": 1.0
+        },
+        {
+          "word": "contact",
+          "start": 36.0,
+          "end": 36.44,
+          "probability": 0.999
+        },
+        {
+          "word": "data",
+          "start": 36.44,
+          "end": 36.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 36.76,
+          "end": 36.98,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 36.98,
+          "end": 37.1,
+          "probability": 1.0
+        },
+        {
+          "word": "account.",
+          "start": 37.1,
+          "end": 37.5,
+          "probability": 1.0
+        },
+        {
+          "word": "Complete",
+          "start": 37.96,
+          "end": 38.52,
+          "probability": 0.998
+        },
+        {
+          "word": "other",
+          "start": 38.52,
+          "end": 38.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "steps",
+          "start": 38.78,
+          "end": 39.14,
+          "probability": 1.0
+        },
+        {
+          "word": "like",
+          "start": 39.14,
+          "end": 39.4,
+          "probability": 1.0
+        },
+        {
+          "word": "driver",
+          "start": 39.4,
+          "end": 39.74,
+          "probability": 0.9907
+        },
+        {
+          "word": "and",
+          "start": 39.74,
+          "end": 39.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "vehicles.",
+          "start": 39.96,
+          "end": 40.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "Quote",
+          "start": 40.98,
+          "end": 41.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "and",
+          "start": 41.36,
+          "end": 41.5,
+          "probability": 0.9912
+        },
+        {
+          "word": "issue",
+          "start": 41.5,
+          "end": 41.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 41.7,
+          "end": 41.82,
+          "probability": 1.0
+        },
+        {
+          "word": "policy.",
+          "start": 41.82,
+          "end": 42.36,
+          "probability": 1.0
+        },
+        {
+          "word": "After",
+          "start": 42.64,
+          "end": 43.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 43.1,
+          "end": 43.32,
+          "probability": 0.917
+        },
+        {
+          "word": "months,",
+          "start": 43.32,
+          "end": 43.74,
+          "probability": 1.0
+        },
+        {
+          "word": "Amy",
+          "start": 44.02,
+          "end": 44.22,
+          "probability": 1.0
+        },
+        {
+          "word": "called",
+          "start": 44.22,
+          "end": 44.52,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 44.52,
+          "end": 44.66,
+          "probability": 1.0
+        },
+        {
+          "word": "inform",
+          "start": 44.66,
+          "end": 45.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 45.0,
+          "end": 45.18,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 45.18,
+          "end": 45.32,
+          "probability": 1.0
+        },
+        {
+          "word": "had",
+          "start": 45.32,
+          "end": 45.44,
+          "probability": 1.0
+        },
+        {
+          "word": "gotten",
+          "start": 45.44,
+          "end": 45.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "married",
+          "start": 45.68,
+          "end": 46.0,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 46.0,
+          "end": 46.18,
+          "probability": 1.0
+        },
+        {
+          "word": "would",
+          "start": 46.18,
+          "end": 46.32,
+          "probability": 1.0
+        },
+        {
+          "word": "like",
+          "start": 46.32,
+          "end": 46.48,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 46.48,
+          "end": 46.6,
+          "probability": 1.0
+        },
+        {
+          "word": "change",
+          "start": 46.6,
+          "end": 46.86,
+          "probability": 1.0
+        },
+        {
+          "word": "her",
+          "start": 46.86,
+          "end": 47.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "last",
+          "start": 47.04,
+          "end": 47.38,
+          "probability": 1.0
+        },
+        {
+          "word": "name",
+          "start": 47.38,
+          "end": 47.62,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 47.62,
+          "end": 47.78,
+          "probability": 1.0
+        },
+        {
+          "word": "King.",
+          "start": 47.78,
+          "end": 48.02,
+          "probability": 0.8281
+        },
+        {
+          "word": "Go",
+          "start": 48.34,
+          "end": 48.66,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 48.66,
+          "end": 48.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 48.8,
+          "end": 48.94,
+          "probability": 0.999
+        },
+        {
+          "word": "account.",
+          "start": 48.94,
+          "end": 49.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "Go",
+          "start": 49.64,
+          "end": 50.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 50.12,
+          "end": 50.26,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 50.26,
+          "end": 50.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "account",
+          "start": 50.4,
+          "end": 50.72,
+          "probability": 0.9639
+        },
+        {
+          "word": "contacts",
+          "start": 50.72,
+          "end": 51.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "page.",
+          "start": 51.24,
+          "end": 51.78,
+          "probability": 1.0
+        },
+        {
+          "word": "Edit",
+          "start": 53.48,
+          "end": 54.04,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 54.04,
+          "end": 54.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact.",
+          "start": 54.26,
+          "end": 54.6,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 61.44,
+      "end": 89.46,
+      "start_formatted": "00:01:01.440",
+      "end_formatted": "00:01:29.460",
+      "text": "Change the contact's last name. She also has a new phone number. Save the changes. Open the previous policy. Go to the policy contacts page. The contact name is a revision field.",
+      "words": [
+        {
+          "word": "Change",
+          "start": 61.44,
+          "end": 62.22,
+          "probability": 0.9526
+        },
+        {
+          "word": "the",
+          "start": 62.22,
+          "end": 62.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "contact's",
+          "start": 62.4,
+          "end": 63.0,
+          "probability": 0.8843
+        },
+        {
+          "word": "last",
+          "start": 63.0,
+          "end": 63.3,
+          "probability": 0.9819
+        },
+        {
+          "word": "name.",
+          "start": 63.3,
+          "end": 63.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "She",
+          "start": 65.28,
+          "end": 66.06,
+          "probability": 0.9824
+        },
+        {
+          "word": "also",
+          "start": 66.06,
+          "end": 66.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "has",
+          "start": 66.38,
+          "end": 66.66,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 66.66,
+          "end": 66.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "new",
+          "start": 66.78,
+          "end": 66.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "phone",
+          "start": 66.9,
+          "end": 67.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "number.",
+          "start": 67.18,
+          "end": 67.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "Save",
+          "start": 75.32,
+          "end": 76.1,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 76.1,
+          "end": 76.24,
+          "probability": 0.998
+        },
+        {
+          "word": "changes.",
+          "start": 76.24,
+          "end": 76.66,
+          "probability": 0.9824
+        },
+        {
+          "word": "Open",
+          "start": 79.28,
+          "end": 80.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 80.06,
+          "end": 80.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "previous",
+          "start": 80.22,
+          "end": 80.6,
+          "probability": 0.9346
+        },
+        {
+          "word": "policy.",
+          "start": 80.6,
+          "end": 81.24,
+          "probability": 0.9653
+        },
+        {
+          "word": "Go",
+          "start": 83.06,
+          "end": 83.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 83.84,
+          "end": 83.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 83.98,
+          "end": 84.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy",
+          "start": 84.1,
+          "end": 84.54,
+          "probability": 0.4429
+        },
+        {
+          "word": "contacts",
+          "start": 84.54,
+          "end": 85.0,
+          "probability": 0.9614
+        },
+        {
+          "word": "page.",
+          "start": 85.0,
+          "end": 85.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "The",
+          "start": 86.98,
+          "end": 87.76,
+          "probability": 0.9819
+        },
+        {
+          "word": "contact",
+          "start": 87.76,
+          "end": 88.16,
+          "probability": 0.9854
+        },
+        {
+          "word": "name",
+          "start": 88.16,
+          "end": 88.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 88.48,
+          "end": 88.64,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 88.64,
+          "end": 88.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "revision",
+          "start": 88.74,
+          "end": 89.14,
+          "probability": 0.876
+        },
+        {
+          "word": "field.",
+          "start": 89.14,
+          "end": 89.46,
+          "probability": 0.6348
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.46,
+      "end": 117.86,
+      "start_formatted": "00:01:29.460",
+      "end_formatted": "00:01:57.860",
+      "text": "So it is not synchronized from the account to the policy because it has been bound. The phone number on the policy, however, shows the same value as account since it is a shared field. The reason the name is revisioned and the phone number is not is because the name is part of the policy contract data, whereas the phone number is not, and they are configured accordingly. After three months, Amy called to renew the policy for six months. In the policy, click actions. Select renew policy.",
+      "words": [
+        {
+          "word": "So",
+          "start": 89.46,
+          "end": 90.12,
+          "probability": 0.178
+        },
+        {
+          "word": "it",
+          "start": 90.12,
+          "end": 90.32,
+          "probability": 0.9053
+        },
+        {
+          "word": "is",
+          "start": 90.32,
+          "end": 90.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "not",
+          "start": 90.46,
+          "end": 90.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "synchronized",
+          "start": 90.64,
+          "end": 91.26,
+          "probability": 0.9922
+        },
+        {
+          "word": "from",
+          "start": 91.26,
+          "end": 91.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 91.44,
+          "end": 91.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "account",
+          "start": 91.56,
+          "end": 91.84,
+          "probability": 0.9761
+        },
+        {
+          "word": "to",
+          "start": 91.84,
+          "end": 92.02,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 92.02,
+          "end": 92.12,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 92.12,
+          "end": 92.52,
+          "probability": 0.9487
+        },
+        {
+          "word": "because",
+          "start": 92.52,
+          "end": 92.82,
+          "probability": 0.9712
+        },
+        {
+          "word": "it",
+          "start": 92.82,
+          "end": 93.04,
+          "probability": 0.998
+        },
+        {
+          "word": "has",
+          "start": 93.04,
+          "end": 93.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "been",
+          "start": 93.16,
+          "end": 93.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "bound.",
+          "start": 93.34,
+          "end": 93.62,
+          "probability": 0.9897
+        },
+        {
+          "word": "The",
+          "start": 93.94,
+          "end": 94.28,
+          "probability": 0.9917
+        },
+        {
+          "word": "phone",
+          "start": 94.28,
+          "end": 94.56,
+          "probability": 0.9785
+        },
+        {
+          "word": "number",
+          "start": 94.56,
+          "end": 94.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 94.86,
+          "end": 95.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 95.02,
+          "end": 95.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy,",
+          "start": 95.12,
+          "end": 95.66,
+          "probability": 0.9697
+        },
+        {
+          "word": "however,",
+          "start": 95.9,
+          "end": 96.3,
+          "probability": 0.9858
+        },
+        {
+          "word": "shows",
+          "start": 96.68,
+          "end": 97.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 97.02,
+          "end": 97.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 97.22,
+          "end": 97.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "value",
+          "start": 97.46,
+          "end": 97.82,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 97.82,
+          "end": 98.04,
+          "probability": 0.999
+        },
+        {
+          "word": "account",
+          "start": 98.04,
+          "end": 98.32,
+          "probability": 0.8521
+        },
+        {
+          "word": "since",
+          "start": 98.32,
+          "end": 98.6,
+          "probability": 0.9888
+        },
+        {
+          "word": "it",
+          "start": 98.6,
+          "end": 98.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 98.82,
+          "end": 98.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 98.94,
+          "end": 99.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "shared",
+          "start": 99.04,
+          "end": 99.3,
+          "probability": 0.9707
+        },
+        {
+          "word": "field.",
+          "start": 99.3,
+          "end": 99.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "The",
+          "start": 100.06,
+          "end": 100.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "reason",
+          "start": 100.36,
+          "end": 100.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 100.6,
+          "end": 100.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "name",
+          "start": 100.76,
+          "end": 100.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 100.96,
+          "end": 101.14,
+          "probability": 0.999
+        },
+        {
+          "word": "revisioned",
+          "start": 101.14,
+          "end": 101.66,
+          "probability": 0.9326
+        },
+        {
+          "word": "and",
+          "start": 101.66,
+          "end": 101.76,
+          "probability": 0.8301
+        },
+        {
+          "word": "the",
+          "start": 101.76,
+          "end": 101.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "phone",
+          "start": 101.84,
+          "end": 102.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "number",
+          "start": 102.1,
+          "end": 102.4,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 102.4,
+          "end": 102.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 102.6,
+          "end": 102.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 102.78,
+          "end": 102.96,
+          "probability": 0.9849
+        },
+        {
+          "word": "because",
+          "start": 102.96,
+          "end": 103.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 103.22,
+          "end": 103.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 103.46,
+          "end": 103.66,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 103.66,
+          "end": 103.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "part",
+          "start": 103.82,
+          "end": 104.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 104.0,
+          "end": 104.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 104.12,
+          "end": 104.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "policy",
+          "start": 104.22,
+          "end": 104.64,
+          "probability": 0.9878
+        },
+        {
+          "word": "contract",
+          "start": 104.64,
+          "end": 105.06,
+          "probability": 0.9873
+        },
+        {
+          "word": "data,",
+          "start": 105.06,
+          "end": 105.54,
+          "probability": 0.998
+        },
+        {
+          "word": "whereas",
+          "start": 105.8,
+          "end": 106.08,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 106.08,
+          "end": 106.34,
+          "probability": 0.998
+        },
+        {
+          "word": "phone",
+          "start": 106.34,
+          "end": 106.58,
+          "probability": 0.999
+        },
+        {
+          "word": "number",
+          "start": 106.58,
+          "end": 106.88,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 106.88,
+          "end": 107.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "not,",
+          "start": 107.08,
+          "end": 107.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 107.6,
+          "end": 107.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "they",
+          "start": 107.84,
+          "end": 107.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 107.94,
+          "end": 108.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "configured",
+          "start": 108.06,
+          "end": 108.54,
+          "probability": 0.999
+        },
+        {
+          "word": "accordingly.",
+          "start": 108.54,
+          "end": 109.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "After",
+          "start": 109.66,
+          "end": 110.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "three",
+          "start": 110.16,
+          "end": 110.42,
+          "probability": 0.6909
+        },
+        {
+          "word": "months,",
+          "start": 110.42,
+          "end": 110.78,
+          "probability": 0.999
+        },
+        {
+          "word": "Amy",
+          "start": 111.1,
+          "end": 111.3,
+          "probability": 0.792
+        },
+        {
+          "word": "called",
+          "start": 111.3,
+          "end": 111.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 111.6,
+          "end": 111.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "renew",
+          "start": 111.76,
+          "end": 111.98,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 111.98,
+          "end": 112.18,
+          "probability": 0.999
+        },
+        {
+          "word": "policy",
+          "start": 112.18,
+          "end": 112.62,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 112.62,
+          "end": 112.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "six",
+          "start": 112.86,
+          "end": 113.16,
+          "probability": 0.9556
+        },
+        {
+          "word": "months.",
+          "start": 113.16,
+          "end": 113.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "In",
+          "start": 113.94,
+          "end": 114.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 114.22,
+          "end": 114.3,
+          "probability": 0.998
+        },
+        {
+          "word": "policy,",
+          "start": 114.3,
+          "end": 114.84,
+          "probability": 0.9473
+        },
+        {
+          "word": "click",
+          "start": 115.18,
+          "end": 115.44,
+          "probability": 0.9849
+        },
+        {
+          "word": "actions.",
+          "start": 115.44,
+          "end": 115.88,
+          "probability": 0.2098
+        },
+        {
+          "word": "Select",
+          "start": 116.44,
+          "end": 116.96,
+          "probability": 0.9922
+        },
+        {
+          "word": "renew",
+          "start": 116.96,
+          "end": 117.26,
+          "probability": 0.7632
+        },
+        {
+          "word": "policy.",
+          "start": 117.26,
+          "end": 117.86,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 123.7,
+      "end": 125.68,
+      "start_formatted": "00:02:03.700",
+      "end_formatted": "00:02:05.680",
+      "text": "Go to the policy. Go to the policy info page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 123.7,
+          "end": 124.18,
+          "probability": 0.9277
+        },
+        {
+          "word": "to",
+          "start": 124.18,
+          "end": 124.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 124.34,
+          "end": 124.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "policy.",
+          "start": 124.46,
+          "end": 124.86,
+          "probability": 0.4463
+        },
+        {
+          "word": "Go",
+          "start": 124.86,
+          "end": 125.2,
+          "probability": 0.019
+        },
+        {
+          "word": "to",
+          "start": 125.2,
+          "end": 125.2,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 125.2,
+          "end": 125.2,
+          "probability": 0.9644
+        },
+        {
+          "word": "policy",
+          "start": 125.2,
+          "end": 125.2,
+          "probability": 0.7739
+        },
+        {
+          "word": "info",
+          "start": 125.2,
+          "end": 125.2,
+          "probability": 0.728
+        },
+        {
+          "word": "page.",
+          "start": 125.2,
+          "end": 125.68,
+          "probability": 0.9653
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 127.54,
+      "end": 130.38,
+      "start_formatted": "00:02:07.540",
+      "end_formatted": "00:02:10.380",
+      "text": "The name on the renewal job is the same as the account.",
+      "words": [
+        {
+          "word": "The",
+          "start": 127.54,
+          "end": 128.02,
+          "probability": 0.9126
+        },
+        {
+          "word": "name",
+          "start": 128.02,
+          "end": 128.24,
+          "probability": 0.9746
+        },
+        {
+          "word": "on",
+          "start": 128.24,
+          "end": 128.4,
+          "probability": 0.9805
+        },
+        {
+          "word": "the",
+          "start": 128.4,
+          "end": 128.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "renewal",
+          "start": 128.5,
+          "end": 128.82,
+          "probability": 0.9683
+        },
+        {
+          "word": "job",
+          "start": 128.82,
+          "end": 129.12,
+          "probability": 0.9805
+        },
+        {
+          "word": "is",
+          "start": 129.12,
+          "end": 129.32,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 129.32,
+          "end": 129.44,
+          "probability": 0.9951
+        },
+        {
+          "word": "same",
+          "start": 129.44,
+          "end": 129.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 129.68,
+          "end": 129.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 129.86,
+          "end": 130.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "account.",
+          "start": 130.0,
+          "end": 130.38,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 131.38,
+      "end": 142.58,
+      "start_formatted": "00:02:11.380",
+      "end_formatted": "00:02:22.580",
+      "text": "To summarize, the shared data of a contact is always the same on both the account and the policy. If a revision contact field is changed on the account, it will not be synchronized to the bound policies.",
+      "words": [
+        {
+          "word": "To",
+          "start": 131.38,
+          "end": 131.86,
+          "probability": 0.9707
+        },
+        {
+          "word": "summarize,",
+          "start": 131.86,
+          "end": 132.24,
+          "probability": 0.9639
+        },
+        {
+          "word": "the",
+          "start": 132.68,
+          "end": 132.88,
+          "probability": 0.9829
+        },
+        {
+          "word": "shared",
+          "start": 132.88,
+          "end": 133.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "data",
+          "start": 133.14,
+          "end": 133.4,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 133.4,
+          "end": 133.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 133.58,
+          "end": 133.72,
+          "probability": 0.9795
+        },
+        {
+          "word": "contact",
+          "start": 133.72,
+          "end": 134.0,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 134.0,
+          "end": 134.32,
+          "probability": 0.9888
+        },
+        {
+          "word": "always",
+          "start": 134.32,
+          "end": 134.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 134.68,
+          "end": 134.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "same",
+          "start": 134.88,
+          "end": 135.1,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 135.1,
+          "end": 135.28,
+          "probability": 0.9883
+        },
+        {
+          "word": "both",
+          "start": 135.28,
+          "end": 135.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 135.48,
+          "end": 135.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "account",
+          "start": 135.62,
+          "end": 135.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "and",
+          "start": 135.92,
+          "end": 136.1,
+          "probability": 0.9707
+        },
+        {
+          "word": "the",
+          "start": 136.1,
+          "end": 136.2,
+          "probability": 0.9917
+        },
+        {
+          "word": "policy.",
+          "start": 136.2,
+          "end": 136.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "If",
+          "start": 136.92,
+          "end": 137.32,
+          "probability": 0.9883
+        },
+        {
+          "word": "a",
+          "start": 137.32,
+          "end": 137.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "revision",
+          "start": 137.42,
+          "end": 137.8,
+          "probability": 0.856
+        },
+        {
+          "word": "contact",
+          "start": 137.8,
+          "end": 138.24,
+          "probability": 0.9526
+        },
+        {
+          "word": "field",
+          "start": 138.24,
+          "end": 138.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 138.72,
+          "end": 138.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "changed",
+          "start": 138.94,
+          "end": 139.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 139.3,
+          "end": 139.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 139.48,
+          "end": 139.58,
+          "probability": 0.998
+        },
+        {
+          "word": "account,",
+          "start": 139.58,
+          "end": 139.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "it",
+          "start": 140.2,
+          "end": 140.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "will",
+          "start": 140.4,
+          "end": 140.54,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 140.54,
+          "end": 140.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "be",
+          "start": 140.72,
+          "end": 140.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "synchronized",
+          "start": 140.9,
+          "end": 141.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 141.48,
+          "end": 141.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 141.62,
+          "end": 141.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "bound",
+          "start": 141.72,
+          "end": 141.96,
+          "probability": 0.9648
+        },
+        {
+          "word": "policies.",
+          "start": 141.96,
+          "end": 142.58,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 142.58,
+      "end": 160.06,
+      "start_formatted": "00:02:22.580",
+      "end_formatted": "00:02:40.060",
+      "text": "So that each policy can keep the history of contact data. New policy jobs copy the current contact data from the account, with the exception of a backdated policy change job, which keeps the original policy data. This is the end of demonstration for contact data synchronization from account to policy.",
+      "words": [
+        {
+          "word": "So",
+          "start": 142.58,
+          "end": 143.28,
+          "probability": 0.3665
+        },
+        {
+          "word": "that",
+          "start": 143.28,
+          "end": 143.44,
+          "probability": 0.9917
+        },
+        {
+          "word": "each",
+          "start": 143.44,
+          "end": 143.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 143.64,
+          "end": 144.1,
+          "probability": 0.9897
+        },
+        {
+          "word": "can",
+          "start": 144.1,
+          "end": 144.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "keep",
+          "start": 144.36,
+          "end": 144.6,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 144.6,
+          "end": 144.76,
+          "probability": 0.999
+        },
+        {
+          "word": "history",
+          "start": 144.76,
+          "end": 145.1,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 145.1,
+          "end": 145.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 145.28,
+          "end": 145.66,
+          "probability": 0.9844
+        },
+        {
+          "word": "data.",
+          "start": 145.66,
+          "end": 146.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "New",
+          "start": 146.4,
+          "end": 146.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "policy",
+          "start": 146.8,
+          "end": 147.3,
+          "probability": 0.9629
+        },
+        {
+          "word": "jobs",
+          "start": 147.3,
+          "end": 147.64,
+          "probability": 0.999
+        },
+        {
+          "word": "copy",
+          "start": 147.64,
+          "end": 148.06,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 148.06,
+          "end": 148.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "current",
+          "start": 148.22,
+          "end": 148.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 148.52,
+          "end": 148.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "data",
+          "start": 148.98,
+          "end": 149.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 149.32,
+          "end": 149.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 149.54,
+          "end": 149.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "account,",
+          "start": 149.66,
+          "end": 150.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 150.26,
+          "end": 150.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 150.5,
+          "end": 150.62,
+          "probability": 1.0
+        },
+        {
+          "word": "exception",
+          "start": 150.62,
+          "end": 150.98,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 150.98,
+          "end": 151.22,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 151.22,
+          "end": 151.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "backdated",
+          "start": 151.3,
+          "end": 151.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 151.74,
+          "end": 152.26,
+          "probability": 0.9946
+        },
+        {
+          "word": "change",
+          "start": 152.26,
+          "end": 152.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "job,",
+          "start": 152.6,
+          "end": 153.04,
+          "probability": 1.0
+        },
+        {
+          "word": "which",
+          "start": 153.24,
+          "end": 153.48,
+          "probability": 1.0
+        },
+        {
+          "word": "keeps",
+          "start": 153.48,
+          "end": 153.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 153.8,
+          "end": 153.96,
+          "probability": 1.0
+        },
+        {
+          "word": "original",
+          "start": 153.96,
+          "end": 154.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 154.34,
+          "end": 154.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "data.",
+          "start": 154.82,
+          "end": 155.2,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 155.5,
+          "end": 155.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 155.94,
+          "end": 156.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 156.04,
+          "end": 156.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "end",
+          "start": 156.18,
+          "end": 156.36,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 156.36,
+          "end": 156.48,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 156.48,
+          "end": 157.02,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 157.02,
+          "end": 157.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 157.36,
+          "end": 157.82,
+          "probability": 0.9819
+        },
+        {
+          "word": "data",
+          "start": 157.82,
+          "end": 158.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "synchronization",
+          "start": 158.16,
+          "end": 158.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 158.88,
+          "end": 159.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "account",
+          "start": 159.18,
+          "end": 159.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 159.5,
+          "end": 159.66,
+          "probability": 0.998
+        },
+        {
+          "word": "policy.",
+          "start": 159.66,
+          "end": 160.06,
+          "probability": 0.9995
+        }
+      ]
+    }
+  ]
+}

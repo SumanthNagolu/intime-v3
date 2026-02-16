@@ -1,0 +1,3883 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "filename": "Is_Fund_17 .mp4",
+    "video_stem": "Is_Fund_17",
+    "duration_seconds": 280.9,
+    "duration_formatted": "00:04:40.900",
+    "segment_count": 27,
+    "word_count": 593,
+    "avg_confidence": 0.9438,
+    "transcription_time_seconds": 18.31,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:24:35.184853"
+  },
+  "full_text": "An insurance company has a very specific policy number format, two letters, a hyphen, and seven digits. We want this format to be enforced when a policy is being saved. The same format will be used when the policy is saved from the UI or through API calls. In the UI, a watermark should be displayed to guide users. If the policy number format a user enters is incorrect, then the following error message should be displayed, Policy Number must be a valid policy number. Example, AA-1234567. First, we need to define the field validator. To do this we will open the field validators.xml file. There are additional field validators files, allowing localization, thus, a phone number can have different validators in different countries. However, the base validator must be defined in this main file. For example, there is a field validator.xml file. To define a new field validator for German. Click the de folder. Click the de folder. Click the de folder. Click the de folder. Click the de folder. validators.xml file. To define a new field validator, we will need to add a new validator def in this file. Field validators are reusable and can be accessed by any entity in the data model. Thus, the same field validator can be associated with multiple entity fields. Add a new validator def. The name of the validator is SI policy number. The value is a regular expression, regex, defining the pattern that must be followed. In this case, the pattern consists of two letters, a hyphen, and seven digits. Regular expressions are not a guidewire specific concept, they are an industry standard. The description is a message that will pop up when the user attempts to save and the field does not match the validator. For localization purposes, we will use a display key. We need to put the closing syntax on the validator, because studio does not do so automatically. Now the XML syntax is valid. Now, we have to define the display key. The Alt plus Enter shortcut does not work from the field validators file, so we will navigate to the appropriate display.properties file. Click localizations. Click resource bundle display. Double click display.properties. We will use a variable so that this display key can be used in multiple places with different labels. Add the display key. Next we will associate the field validator with the entities field. We will add a new column parameter to the policy number field. This will be for the validator. Click the policy number field. Click the down arrow. Click column parameter. The name of the column parameter is validator. Select validator. For value, enter SI policy number. Press ctrl plus s to save and validate the work. To deploy the changes, we have to restart the server. The server is restarted, so let's switch to training app. Login as Alice Applegate. Search for the EricAndy record. Click the search button to search for the contact record. Select the EricAndy link. Click the edit button. Click the add button to add a new policy. Here's the new policy. We'll try a policy number that doesn't fit the validator criteria. Click update. We get the error message we defined as a display key. The same thing is true if we try all numbers, or any other combination except for two letters, hyphen, and seven numbers. Now, we have a policy number that does fit the validator criteria. Click update. Click update. The new policy is saved. The validator works is configured. This concludes the demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.4,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.400",
+      "text": "An insurance company has a very specific policy number format, two letters, a hyphen, and seven digits. We want this format to be enforced when a policy is being saved. The same format will be used when the policy is saved from the UI or through API calls. In the UI, a watermark should be displayed to guide users. If the policy number format a user enters is incorrect, then the following error message should be displayed, Policy Number must be a valid policy number.",
+      "words": [
+        {
+          "word": "An",
+          "start": 0.0,
+          "end": 0.98,
+          "probability": 0.9487
+        },
+        {
+          "word": "insurance",
+          "start": 0.98,
+          "end": 1.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "company",
+          "start": 1.36,
+          "end": 1.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 1.88,
+          "end": 2.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 2.12,
+          "end": 2.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "very",
+          "start": 2.22,
+          "end": 2.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "specific",
+          "start": 2.44,
+          "end": 2.96,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 2.96,
+          "end": 3.46,
+          "probability": 0.959
+        },
+        {
+          "word": "number",
+          "start": 3.46,
+          "end": 3.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "format,",
+          "start": 3.76,
+          "end": 4.34,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 4.56,
+          "end": 4.82,
+          "probability": 0.9395
+        },
+        {
+          "word": "letters,",
+          "start": 4.82,
+          "end": 5.22,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 5.58,
+          "end": 5.76,
+          "probability": 1.0
+        },
+        {
+          "word": "hyphen,",
+          "start": 5.76,
+          "end": 6.16,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 6.42,
+          "end": 6.66,
+          "probability": 1.0
+        },
+        {
+          "word": "seven",
+          "start": 6.66,
+          "end": 6.96,
+          "probability": 0.9805
+        },
+        {
+          "word": "digits.",
+          "start": 6.96,
+          "end": 7.36,
+          "probability": 1.0
+        },
+        {
+          "word": "We",
+          "start": 7.7,
+          "end": 8.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "want",
+          "start": 8.08,
+          "end": 8.28,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 8.28,
+          "end": 8.46,
+          "probability": 1.0
+        },
+        {
+          "word": "format",
+          "start": 8.46,
+          "end": 8.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 8.82,
+          "end": 9.0,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 9.0,
+          "end": 9.12,
+          "probability": 1.0
+        },
+        {
+          "word": "enforced",
+          "start": 9.12,
+          "end": 9.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 9.5,
+          "end": 9.7,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 9.7,
+          "end": 9.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 9.82,
+          "end": 10.22,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 10.22,
+          "end": 10.44,
+          "probability": 1.0
+        },
+        {
+          "word": "being",
+          "start": 10.44,
+          "end": 10.68,
+          "probability": 1.0
+        },
+        {
+          "word": "saved.",
+          "start": 10.68,
+          "end": 11.14,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 11.36,
+          "end": 11.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 11.78,
+          "end": 12.02,
+          "probability": 1.0
+        },
+        {
+          "word": "format",
+          "start": 12.02,
+          "end": 12.54,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 12.54,
+          "end": 12.68,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 12.68,
+          "end": 12.8,
+          "probability": 1.0
+        },
+        {
+          "word": "used",
+          "start": 12.8,
+          "end": 13.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 13.06,
+          "end": 13.24,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 13.24,
+          "end": 13.34,
+          "probability": 0.728
+        },
+        {
+          "word": "policy",
+          "start": 13.34,
+          "end": 13.78,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 13.78,
+          "end": 14.02,
+          "probability": 1.0
+        },
+        {
+          "word": "saved",
+          "start": 14.02,
+          "end": 14.26,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 14.26,
+          "end": 14.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 14.46,
+          "end": 14.58,
+          "probability": 1.0
+        },
+        {
+          "word": "UI",
+          "start": 14.58,
+          "end": 14.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 14.88,
+          "end": 15.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "through",
+          "start": 15.1,
+          "end": 15.28,
+          "probability": 1.0
+        },
+        {
+          "word": "API",
+          "start": 15.28,
+          "end": 15.8,
+          "probability": 0.998
+        },
+        {
+          "word": "calls.",
+          "start": 15.8,
+          "end": 16.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "In",
+          "start": 16.74,
+          "end": 17.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 17.14,
+          "end": 17.24,
+          "probability": 1.0
+        },
+        {
+          "word": "UI,",
+          "start": 17.24,
+          "end": 17.62,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 17.84,
+          "end": 18.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "watermark",
+          "start": 18.06,
+          "end": 18.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "should",
+          "start": 18.56,
+          "end": 18.74,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 18.74,
+          "end": 18.88,
+          "probability": 1.0
+        },
+        {
+          "word": "displayed",
+          "start": 18.88,
+          "end": 19.32,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 19.32,
+          "end": 19.48,
+          "probability": 1.0
+        },
+        {
+          "word": "guide",
+          "start": 19.48,
+          "end": 19.74,
+          "probability": 0.999
+        },
+        {
+          "word": "users.",
+          "start": 19.74,
+          "end": 20.18,
+          "probability": 1.0
+        },
+        {
+          "word": "If",
+          "start": 20.58,
+          "end": 21.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 21.1,
+          "end": 21.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "policy",
+          "start": 21.22,
+          "end": 21.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "number",
+          "start": 21.62,
+          "end": 21.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "format",
+          "start": 21.9,
+          "end": 22.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 22.34,
+          "end": 22.56,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 22.56,
+          "end": 22.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "enters",
+          "start": 22.82,
+          "end": 23.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 23.18,
+          "end": 23.44,
+          "probability": 0.999
+        },
+        {
+          "word": "incorrect,",
+          "start": 23.44,
+          "end": 23.92,
+          "probability": 1.0
+        },
+        {
+          "word": "then",
+          "start": 24.3,
+          "end": 24.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 24.5,
+          "end": 24.64,
+          "probability": 1.0
+        },
+        {
+          "word": "following",
+          "start": 24.64,
+          "end": 25.02,
+          "probability": 0.999
+        },
+        {
+          "word": "error",
+          "start": 25.02,
+          "end": 25.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "message",
+          "start": 25.36,
+          "end": 25.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "should",
+          "start": 25.74,
+          "end": 25.98,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 25.98,
+          "end": 26.12,
+          "probability": 1.0
+        },
+        {
+          "word": "displayed,",
+          "start": 26.12,
+          "end": 26.7,
+          "probability": 1.0
+        },
+        {
+          "word": "Policy",
+          "start": 26.9,
+          "end": 27.44,
+          "probability": 0.4109
+        },
+        {
+          "word": "Number",
+          "start": 27.44,
+          "end": 27.72,
+          "probability": 0.6748
+        },
+        {
+          "word": "must",
+          "start": 27.72,
+          "end": 28.0,
+          "probability": 0.875
+        },
+        {
+          "word": "be",
+          "start": 28.0,
+          "end": 28.16,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 28.16,
+          "end": 28.28,
+          "probability": 0.999
+        },
+        {
+          "word": "valid",
+          "start": 28.28,
+          "end": 28.54,
+          "probability": 0.9883
+        },
+        {
+          "word": "policy",
+          "start": 28.54,
+          "end": 29.02,
+          "probability": 0.9243
+        },
+        {
+          "word": "number.",
+          "start": 29.02,
+          "end": 29.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.32,
+      "end": 59.38,
+      "start_formatted": "00:00:30.320",
+      "end_formatted": "00:00:59.380",
+      "text": "Example, AA-1234567. First, we need to define the field validator. To do this we will open the field validators.xml file. There are additional field validators files, allowing localization, thus, a phone number can have different validators in different countries. However, the base validator must be defined in this main file. For example, there is a field validator.xml file.",
+      "words": [
+        {
+          "word": "Example,",
+          "start": 30.32,
+          "end": 30.88,
+          "probability": 0.7832
+        },
+        {
+          "word": "AA",
+          "start": 30.88,
+          "end": 31.44,
+          "probability": 0.3389
+        },
+        {
+          "word": "-1234567.",
+          "start": 31.44,
+          "end": 34.44,
+          "probability": 0.9883
+        },
+        {
+          "word": "First,",
+          "start": 35.5,
+          "end": 36.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "we",
+          "start": 36.28,
+          "end": 36.5,
+          "probability": 0.998
+        },
+        {
+          "word": "need",
+          "start": 36.5,
+          "end": 36.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 36.72,
+          "end": 36.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "define",
+          "start": 36.84,
+          "end": 37.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 37.18,
+          "end": 37.32,
+          "probability": 0.999
+        },
+        {
+          "word": "field",
+          "start": 37.32,
+          "end": 37.58,
+          "probability": 0.8281
+        },
+        {
+          "word": "validator.",
+          "start": 37.58,
+          "end": 38.26,
+          "probability": 0.9927
+        },
+        {
+          "word": "To",
+          "start": 38.5,
+          "end": 38.82,
+          "probability": 0.999
+        },
+        {
+          "word": "do",
+          "start": 38.82,
+          "end": 38.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 38.96,
+          "end": 39.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "we",
+          "start": 39.18,
+          "end": 39.32,
+          "probability": 0.9243
+        },
+        {
+          "word": "will",
+          "start": 39.32,
+          "end": 39.46,
+          "probability": 0.999
+        },
+        {
+          "word": "open",
+          "start": 39.46,
+          "end": 39.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 39.74,
+          "end": 39.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "field",
+          "start": 39.86,
+          "end": 40.14,
+          "probability": 0.9404
+        },
+        {
+          "word": "validators",
+          "start": 40.14,
+          "end": 40.86,
+          "probability": 0.7329
+        },
+        {
+          "word": ".xml",
+          "start": 40.86,
+          "end": 41.64,
+          "probability": 0.9609
+        },
+        {
+          "word": "file.",
+          "start": 41.64,
+          "end": 42.02,
+          "probability": 0.998
+        },
+        {
+          "word": "There",
+          "start": 44.82,
+          "end": 45.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "are",
+          "start": 45.38,
+          "end": 45.5,
+          "probability": 1.0
+        },
+        {
+          "word": "additional",
+          "start": 45.5,
+          "end": 45.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "field",
+          "start": 45.92,
+          "end": 46.24,
+          "probability": 0.9907
+        },
+        {
+          "word": "validators",
+          "start": 46.24,
+          "end": 46.98,
+          "probability": 0.9824
+        },
+        {
+          "word": "files,",
+          "start": 46.98,
+          "end": 47.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "allowing",
+          "start": 47.64,
+          "end": 48.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "localization,",
+          "start": 48.06,
+          "end": 48.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "thus,",
+          "start": 49.26,
+          "end": 49.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "a",
+          "start": 49.94,
+          "end": 50.14,
+          "probability": 0.999
+        },
+        {
+          "word": "phone",
+          "start": 50.14,
+          "end": 50.34,
+          "probability": 0.999
+        },
+        {
+          "word": "number",
+          "start": 50.34,
+          "end": 50.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 50.62,
+          "end": 50.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 50.8,
+          "end": 50.98,
+          "probability": 1.0
+        },
+        {
+          "word": "different",
+          "start": 50.98,
+          "end": 51.3,
+          "probability": 0.999
+        },
+        {
+          "word": "validators",
+          "start": 51.3,
+          "end": 51.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 51.96,
+          "end": 52.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "different",
+          "start": 52.14,
+          "end": 52.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "countries.",
+          "start": 52.42,
+          "end": 52.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "However,",
+          "start": 53.26,
+          "end": 53.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 54.14,
+          "end": 54.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 54.32,
+          "end": 54.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "validator",
+          "start": 54.58,
+          "end": 55.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "must",
+          "start": 55.2,
+          "end": 55.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 55.44,
+          "end": 55.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "defined",
+          "start": 55.6,
+          "end": 55.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 55.94,
+          "end": 56.1,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 56.1,
+          "end": 56.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "main",
+          "start": 56.28,
+          "end": 56.52,
+          "probability": 0.999
+        },
+        {
+          "word": "file.",
+          "start": 56.52,
+          "end": 56.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 57.24,
+          "end": 57.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "example,",
+          "start": 57.8,
+          "end": 58.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "there",
+          "start": 58.48,
+          "end": 58.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 58.74,
+          "end": 58.88,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 58.88,
+          "end": 58.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "field",
+          "start": 58.96,
+          "end": 59.22,
+          "probability": 0.999
+        },
+        {
+          "word": "validator",
+          "start": 59.22,
+          "end": 59.38,
+          "probability": 0.9775
+        },
+        {
+          "word": ".xml",
+          "start": 59.38,
+          "end": 59.38,
+          "probability": 0.6069
+        },
+        {
+          "word": "file.",
+          "start": 59.38,
+          "end": 59.38,
+          "probability": 0.7583
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.38,
+      "end": 77.48,
+      "start_formatted": "00:00:59.380",
+      "end_formatted": "00:01:17.480",
+      "text": "To define a new field validator for German. Click the de folder. Click the de folder. Click the de folder. Click the de folder. Click the de folder.",
+      "words": [
+        {
+          "word": "To",
+          "start": 59.38,
+          "end": 59.64,
+          "probability": 0.0507
+        },
+        {
+          "word": "define",
+          "start": 59.64,
+          "end": 59.64,
+          "probability": 0.7529
+        },
+        {
+          "word": "a",
+          "start": 59.64,
+          "end": 59.64,
+          "probability": 0.9463
+        },
+        {
+          "word": "new",
+          "start": 59.64,
+          "end": 59.64,
+          "probability": 0.9863
+        },
+        {
+          "word": "field",
+          "start": 59.64,
+          "end": 59.64,
+          "probability": 0.8374
+        },
+        {
+          "word": "validator",
+          "start": 59.64,
+          "end": 59.88,
+          "probability": 0.9854
+        },
+        {
+          "word": "for",
+          "start": 59.88,
+          "end": 60.08,
+          "probability": 0.2144
+        },
+        {
+          "word": "German.",
+          "start": 60.08,
+          "end": 60.42,
+          "probability": 0.9629
+        },
+        {
+          "word": "Click",
+          "start": 60.76,
+          "end": 61.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 61.18,
+          "end": 61.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "de",
+          "start": 61.36,
+          "end": 61.58,
+          "probability": 0.1113
+        },
+        {
+          "word": "folder.",
+          "start": 61.58,
+          "end": 62.1,
+          "probability": 0.9707
+        },
+        {
+          "word": "Click",
+          "start": 64.78,
+          "end": 65.54,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 65.54,
+          "end": 65.72,
+          "probability": 0.9941
+        },
+        {
+          "word": "de",
+          "start": 65.72,
+          "end": 66.26,
+          "probability": 0.0045
+        },
+        {
+          "word": "folder.",
+          "start": 66.26,
+          "end": 66.28,
+          "probability": 0.9316
+        },
+        {
+          "word": "Click",
+          "start": 66.28,
+          "end": 66.28,
+          "probability": 0.9077
+        },
+        {
+          "word": "the",
+          "start": 66.28,
+          "end": 66.28,
+          "probability": 0.9907
+        },
+        {
+          "word": "de",
+          "start": 66.28,
+          "end": 66.28,
+          "probability": 0.021
+        },
+        {
+          "word": "folder.",
+          "start": 66.28,
+          "end": 66.68,
+          "probability": 0.8799
+        },
+        {
+          "word": "Click",
+          "start": 70.38,
+          "end": 71.14,
+          "probability": 0.3064
+        },
+        {
+          "word": "the",
+          "start": 71.14,
+          "end": 71.34,
+          "probability": 0.9805
+        },
+        {
+          "word": "de",
+          "start": 71.34,
+          "end": 71.72,
+          "probability": 0.0547
+        },
+        {
+          "word": "folder.",
+          "start": 71.72,
+          "end": 71.72,
+          "probability": 0.7686
+        },
+        {
+          "word": "Click",
+          "start": 75.9,
+          "end": 76.66,
+          "probability": 0.1738
+        },
+        {
+          "word": "the",
+          "start": 76.66,
+          "end": 76.92,
+          "probability": 0.9634
+        },
+        {
+          "word": "de",
+          "start": 76.92,
+          "end": 77.42,
+          "probability": 0.0673
+        },
+        {
+          "word": "folder.",
+          "start": 77.42,
+          "end": 77.48,
+          "probability": 0.6592
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 77.48,
+      "end": 84.88,
+      "start_formatted": "00:01:17.480",
+      "end_formatted": "00:01:24.880",
+      "text": "validators.xml file. To define a new field validator, we will need to add a new",
+      "words": [
+        {
+          "word": "validators",
+          "start": 77.48,
+          "end": 78.24,
+          "probability": 0.5015
+        },
+        {
+          "word": ".xml",
+          "start": 78.24,
+          "end": 79.02,
+          "probability": 0.8975
+        },
+        {
+          "word": "file.",
+          "start": 79.02,
+          "end": 79.4,
+          "probability": 0.9688
+        },
+        {
+          "word": "To",
+          "start": 81.58,
+          "end": 82.14,
+          "probability": 0.9834
+        },
+        {
+          "word": "define",
+          "start": 82.14,
+          "end": 82.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 82.44,
+          "end": 82.58,
+          "probability": 0.9849
+        },
+        {
+          "word": "new",
+          "start": 82.58,
+          "end": 82.68,
+          "probability": 0.9854
+        },
+        {
+          "word": "field",
+          "start": 82.68,
+          "end": 82.92,
+          "probability": 0.8306
+        },
+        {
+          "word": "validator,",
+          "start": 82.92,
+          "end": 83.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "we",
+          "start": 83.8,
+          "end": 84.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 84.04,
+          "end": 84.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "need",
+          "start": 84.18,
+          "end": 84.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 84.34,
+          "end": 84.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "add",
+          "start": 84.46,
+          "end": 84.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 84.62,
+          "end": 84.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "new",
+          "start": 84.74,
+          "end": 84.88,
+          "probability": 0.9771
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 84.88,
+      "end": 89.22,
+      "start_formatted": "00:01:24.880",
+      "end_formatted": "00:01:29.220",
+      "text": "validator def in this file. Field validators are reusable and can be",
+      "words": [
+        {
+          "word": "validator",
+          "start": 84.88,
+          "end": 85.48,
+          "probability": 0.9702
+        },
+        {
+          "word": "def",
+          "start": 85.48,
+          "end": 85.66,
+          "probability": 0.6548
+        },
+        {
+          "word": "in",
+          "start": 85.66,
+          "end": 85.84,
+          "probability": 0.9805
+        },
+        {
+          "word": "this",
+          "start": 85.84,
+          "end": 86.02,
+          "probability": 0.999
+        },
+        {
+          "word": "file.",
+          "start": 86.02,
+          "end": 86.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "Field",
+          "start": 86.74,
+          "end": 87.24,
+          "probability": 0.9888
+        },
+        {
+          "word": "validators",
+          "start": 87.24,
+          "end": 87.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "are",
+          "start": 87.9,
+          "end": 88.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "reusable",
+          "start": 88.08,
+          "end": 88.54,
+          "probability": 0.9644
+        },
+        {
+          "word": "and",
+          "start": 88.54,
+          "end": 88.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "can",
+          "start": 88.86,
+          "end": 89.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 89.02,
+          "end": 89.22,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 89.22,
+      "end": 94.26,
+      "start_formatted": "00:01:29.220",
+      "end_formatted": "00:01:34.260",
+      "text": "accessed by any entity in the data model. Thus, the same field validator can be",
+      "words": [
+        {
+          "word": "accessed",
+          "start": 89.22,
+          "end": 89.68,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 89.68,
+          "end": 89.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 89.9,
+          "end": 90.14,
+          "probability": 0.999
+        },
+        {
+          "word": "entity",
+          "start": 90.14,
+          "end": 90.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 90.5,
+          "end": 90.68,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 90.68,
+          "end": 90.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "data",
+          "start": 90.78,
+          "end": 91.02,
+          "probability": 0.9614
+        },
+        {
+          "word": "model.",
+          "start": 91.02,
+          "end": 91.42,
+          "probability": 0.998
+        },
+        {
+          "word": "Thus,",
+          "start": 91.72,
+          "end": 92.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 92.48,
+          "end": 92.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "same",
+          "start": 92.72,
+          "end": 92.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "field",
+          "start": 92.98,
+          "end": 93.3,
+          "probability": 0.9941
+        },
+        {
+          "word": "validator",
+          "start": 93.3,
+          "end": 93.92,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 93.92,
+          "end": 94.12,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 94.12,
+          "end": 94.26,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 94.26,
+      "end": 100.42,
+      "start_formatted": "00:01:34.260",
+      "end_formatted": "00:01:40.420",
+      "text": "associated with multiple entity fields. Add a new validator def. The name of the",
+      "words": [
+        {
+          "word": "associated",
+          "start": 94.26,
+          "end": 94.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 94.82,
+          "end": 95.12,
+          "probability": 1.0
+        },
+        {
+          "word": "multiple",
+          "start": 95.12,
+          "end": 95.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "entity",
+          "start": 95.52,
+          "end": 95.9,
+          "probability": 0.9824
+        },
+        {
+          "word": "fields.",
+          "start": 95.9,
+          "end": 96.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "Add",
+          "start": 97.38,
+          "end": 97.94,
+          "probability": 0.9751
+        },
+        {
+          "word": "a",
+          "start": 97.94,
+          "end": 98.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "new",
+          "start": 98.06,
+          "end": 98.2,
+          "probability": 0.9844
+        },
+        {
+          "word": "validator",
+          "start": 98.2,
+          "end": 98.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "def.",
+          "start": 98.8,
+          "end": 99.1,
+          "probability": 0.9888
+        },
+        {
+          "word": "The",
+          "start": 99.44,
+          "end": 100.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "name",
+          "start": 100.0,
+          "end": 100.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 100.18,
+          "end": 100.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 100.32,
+          "end": 100.42,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 100.42,
+      "end": 106.5,
+      "start_formatted": "00:01:40.420",
+      "end_formatted": "00:01:46.500",
+      "text": "validator is SI policy number. The value is a regular expression, regex, defining",
+      "words": [
+        {
+          "word": "validator",
+          "start": 100.42,
+          "end": 101.0,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 101.0,
+          "end": 101.2,
+          "probability": 0.998
+        },
+        {
+          "word": "SI",
+          "start": 101.2,
+          "end": 101.46,
+          "probability": 0.5859
+        },
+        {
+          "word": "policy",
+          "start": 101.46,
+          "end": 101.92,
+          "probability": 0.6035
+        },
+        {
+          "word": "number.",
+          "start": 101.92,
+          "end": 102.34,
+          "probability": 0.9438
+        },
+        {
+          "word": "The",
+          "start": 102.76,
+          "end": 103.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "value",
+          "start": 103.22,
+          "end": 103.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 103.56,
+          "end": 103.74,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 103.74,
+          "end": 103.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "regular",
+          "start": 103.86,
+          "end": 104.16,
+          "probability": 0.9917
+        },
+        {
+          "word": "expression,",
+          "start": 104.16,
+          "end": 104.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "regex,",
+          "start": 105.1,
+          "end": 105.8,
+          "probability": 0.9292
+        },
+        {
+          "word": "defining",
+          "start": 106.0,
+          "end": 106.5,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 106.5,
+      "end": 111.9,
+      "start_formatted": "00:01:46.500",
+      "end_formatted": "00:01:51.900",
+      "text": "the pattern that must be followed. In this case, the pattern consists of two letters, a hyphen,",
+      "words": [
+        {
+          "word": "the",
+          "start": 106.5,
+          "end": 106.7,
+          "probability": 0.9854
+        },
+        {
+          "word": "pattern",
+          "start": 106.7,
+          "end": 107.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 107.02,
+          "end": 107.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "must",
+          "start": 107.22,
+          "end": 107.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 107.44,
+          "end": 107.6,
+          "probability": 1.0
+        },
+        {
+          "word": "followed.",
+          "start": 107.6,
+          "end": 108.0,
+          "probability": 1.0
+        },
+        {
+          "word": "In",
+          "start": 108.26,
+          "end": 108.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 108.68,
+          "end": 108.86,
+          "probability": 1.0
+        },
+        {
+          "word": "case,",
+          "start": 108.86,
+          "end": 109.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 109.36,
+          "end": 109.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "pattern",
+          "start": 109.56,
+          "end": 109.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "consists",
+          "start": 109.9,
+          "end": 110.32,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 110.32,
+          "end": 110.52,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 110.52,
+          "end": 110.7,
+          "probability": 0.9756
+        },
+        {
+          "word": "letters,",
+          "start": 110.7,
+          "end": 111.08,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 111.3,
+          "end": 111.5,
+          "probability": 1.0
+        },
+        {
+          "word": "hyphen,",
+          "start": 111.5,
+          "end": 111.9,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 112.14,
+      "end": 117.84,
+      "start_formatted": "00:01:52.140",
+      "end_formatted": "00:01:57.840",
+      "text": "and seven digits. Regular expressions are not a guidewire specific concept, they are an industry",
+      "words": [
+        {
+          "word": "and",
+          "start": 112.14,
+          "end": 112.4,
+          "probability": 1.0
+        },
+        {
+          "word": "seven",
+          "start": 112.4,
+          "end": 112.66,
+          "probability": 0.9814
+        },
+        {
+          "word": "digits.",
+          "start": 112.66,
+          "end": 113.08,
+          "probability": 1.0
+        },
+        {
+          "word": "Regular",
+          "start": 113.48,
+          "end": 113.96,
+          "probability": 0.999
+        },
+        {
+          "word": "expressions",
+          "start": 113.96,
+          "end": 114.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "are",
+          "start": 114.52,
+          "end": 114.82,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 114.82,
+          "end": 114.98,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 114.98,
+          "end": 115.1,
+          "probability": 1.0
+        },
+        {
+          "word": "guidewire",
+          "start": 115.1,
+          "end": 115.62,
+          "probability": 0.9116
+        },
+        {
+          "word": "specific",
+          "start": 115.62,
+          "end": 116.0,
+          "probability": 0.3005
+        },
+        {
+          "word": "concept,",
+          "start": 116.0,
+          "end": 116.76,
+          "probability": 1.0
+        },
+        {
+          "word": "they",
+          "start": 116.98,
+          "end": 117.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 117.16,
+          "end": 117.26,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 117.26,
+          "end": 117.38,
+          "probability": 0.999
+        },
+        {
+          "word": "industry",
+          "start": 117.38,
+          "end": 117.84,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 117.84,
+      "end": 123.04,
+      "start_formatted": "00:01:57.840",
+      "end_formatted": "00:02:03.040",
+      "text": "standard. The description is a message that will pop up when the user attempts to save and the field",
+      "words": [
+        {
+          "word": "standard.",
+          "start": 117.84,
+          "end": 118.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 118.94,
+          "end": 119.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "description",
+          "start": 119.4,
+          "end": 119.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 119.82,
+          "end": 120.1,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 120.1,
+          "end": 120.2,
+          "probability": 1.0
+        },
+        {
+          "word": "message",
+          "start": 120.2,
+          "end": 120.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 120.5,
+          "end": 120.72,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 120.72,
+          "end": 120.86,
+          "probability": 1.0
+        },
+        {
+          "word": "pop",
+          "start": 120.86,
+          "end": 121.12,
+          "probability": 1.0
+        },
+        {
+          "word": "up",
+          "start": 121.12,
+          "end": 121.28,
+          "probability": 0.998
+        },
+        {
+          "word": "when",
+          "start": 121.28,
+          "end": 121.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 121.44,
+          "end": 121.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 121.56,
+          "end": 121.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "attempts",
+          "start": 121.82,
+          "end": 122.18,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 122.18,
+          "end": 122.38,
+          "probability": 1.0
+        },
+        {
+          "word": "save",
+          "start": 122.38,
+          "end": 122.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 122.64,
+          "end": 122.74,
+          "probability": 0.8032
+        },
+        {
+          "word": "the",
+          "start": 122.74,
+          "end": 122.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "field",
+          "start": 122.84,
+          "end": 123.04,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 123.04,
+      "end": 129.22,
+      "start_formatted": "00:02:03.040",
+      "end_formatted": "00:02:09.220",
+      "text": "does not match the validator. For localization purposes, we will use a display key. We need to",
+      "words": [
+        {
+          "word": "does",
+          "start": 123.04,
+          "end": 123.26,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 123.26,
+          "end": 123.44,
+          "probability": 0.999
+        },
+        {
+          "word": "match",
+          "start": 123.44,
+          "end": 123.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 123.72,
+          "end": 123.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "validator.",
+          "start": 123.88,
+          "end": 124.48,
+          "probability": 0.998
+        },
+        {
+          "word": "For",
+          "start": 124.72,
+          "end": 125.12,
+          "probability": 1.0
+        },
+        {
+          "word": "localization",
+          "start": 125.12,
+          "end": 125.84,
+          "probability": 1.0
+        },
+        {
+          "word": "purposes,",
+          "start": 125.84,
+          "end": 126.36,
+          "probability": 1.0
+        },
+        {
+          "word": "we",
+          "start": 126.72,
+          "end": 126.94,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 126.94,
+          "end": 127.08,
+          "probability": 1.0
+        },
+        {
+          "word": "use",
+          "start": 127.08,
+          "end": 127.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 127.26,
+          "end": 127.36,
+          "probability": 0.9785
+        },
+        {
+          "word": "display",
+          "start": 127.36,
+          "end": 127.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "key.",
+          "start": 127.68,
+          "end": 128.06,
+          "probability": 0.999
+        },
+        {
+          "word": "We",
+          "start": 128.42,
+          "end": 128.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "need",
+          "start": 128.94,
+          "end": 129.1,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 129.1,
+          "end": 129.22,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 129.22,
+      "end": 135.74,
+      "start_formatted": "00:02:09.220",
+      "end_formatted": "00:02:15.740",
+      "text": "put the closing syntax on the validator, because studio does not do so automatically. Now the XML",
+      "words": [
+        {
+          "word": "put",
+          "start": 129.22,
+          "end": 129.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 129.4,
+          "end": 129.52,
+          "probability": 1.0
+        },
+        {
+          "word": "closing",
+          "start": 129.52,
+          "end": 129.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "syntax",
+          "start": 129.86,
+          "end": 130.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 130.28,
+          "end": 130.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 130.58,
+          "end": 130.68,
+          "probability": 0.999
+        },
+        {
+          "word": "validator,",
+          "start": 130.68,
+          "end": 131.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 131.44,
+          "end": 131.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "studio",
+          "start": 131.82,
+          "end": 132.22,
+          "probability": 0.439
+        },
+        {
+          "word": "does",
+          "start": 132.22,
+          "end": 132.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 132.58,
+          "end": 132.84,
+          "probability": 1.0
+        },
+        {
+          "word": "do",
+          "start": 132.84,
+          "end": 133.02,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 133.02,
+          "end": 133.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "automatically.",
+          "start": 133.26,
+          "end": 133.88,
+          "probability": 1.0
+        },
+        {
+          "word": "Now",
+          "start": 134.52,
+          "end": 135.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 135.04,
+          "end": 135.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "XML",
+          "start": 135.22,
+          "end": 135.74,
+          "probability": 0.8203
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 135.74,
+      "end": 142.24,
+      "start_formatted": "00:02:15.740",
+      "end_formatted": "00:02:22.240",
+      "text": "syntax is valid. Now, we have to define the display key. The Alt plus Enter shortcut does",
+      "words": [
+        {
+          "word": "syntax",
+          "start": 135.74,
+          "end": 136.28,
+          "probability": 0.4692
+        },
+        {
+          "word": "is",
+          "start": 136.28,
+          "end": 136.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "valid.",
+          "start": 136.6,
+          "end": 136.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Now,",
+          "start": 137.38,
+          "end": 138.02,
+          "probability": 0.9912
+        },
+        {
+          "word": "we",
+          "start": 138.2,
+          "end": 138.46,
+          "probability": 0.9946
+        },
+        {
+          "word": "have",
+          "start": 138.46,
+          "end": 138.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 138.64,
+          "end": 138.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "define",
+          "start": 138.76,
+          "end": 139.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 139.14,
+          "end": 139.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "display",
+          "start": 139.34,
+          "end": 139.68,
+          "probability": 0.8125
+        },
+        {
+          "word": "key.",
+          "start": 139.68,
+          "end": 140.0,
+          "probability": 0.9927
+        },
+        {
+          "word": "The",
+          "start": 140.3,
+          "end": 140.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "Alt",
+          "start": 140.64,
+          "end": 140.9,
+          "probability": 0.7563
+        },
+        {
+          "word": "plus",
+          "start": 140.9,
+          "end": 141.18,
+          "probability": 0.0411
+        },
+        {
+          "word": "Enter",
+          "start": 141.18,
+          "end": 141.48,
+          "probability": 0.854
+        },
+        {
+          "word": "shortcut",
+          "start": 141.48,
+          "end": 142.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "does",
+          "start": 142.0,
+          "end": 142.24,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 142.24,
+      "end": 147.78,
+      "start_formatted": "00:02:22.240",
+      "end_formatted": "00:02:27.780",
+      "text": "not work from the field validators file, so we will navigate to the appropriate display.properties",
+      "words": [
+        {
+          "word": "not",
+          "start": 142.24,
+          "end": 142.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "work",
+          "start": 142.44,
+          "end": 142.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 142.74,
+          "end": 142.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 142.96,
+          "end": 143.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "field",
+          "start": 143.08,
+          "end": 143.34,
+          "probability": 0.8789
+        },
+        {
+          "word": "validators",
+          "start": 143.34,
+          "end": 144.08,
+          "probability": 0.7764
+        },
+        {
+          "word": "file,",
+          "start": 144.08,
+          "end": 144.48,
+          "probability": 0.9878
+        },
+        {
+          "word": "so",
+          "start": 144.72,
+          "end": 144.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "we",
+          "start": 144.96,
+          "end": 145.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 145.1,
+          "end": 145.24,
+          "probability": 0.998
+        },
+        {
+          "word": "navigate",
+          "start": 145.24,
+          "end": 145.64,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 145.64,
+          "end": 145.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 145.88,
+          "end": 146.0,
+          "probability": 0.999
+        },
+        {
+          "word": "appropriate",
+          "start": 146.0,
+          "end": 146.52,
+          "probability": 0.9824
+        },
+        {
+          "word": "display",
+          "start": 146.52,
+          "end": 146.94,
+          "probability": 0.7207
+        },
+        {
+          "word": ".properties",
+          "start": 146.94,
+          "end": 147.78,
+          "probability": 0.9365
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 147.78,
+      "end": 159.0,
+      "start_formatted": "00:02:27.780",
+      "end_formatted": "00:02:39.000",
+      "text": "file. Click localizations. Click resource bundle display. Double click display.properties.",
+      "words": [
+        {
+          "word": "file.",
+          "start": 147.78,
+          "end": 148.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "Click",
+          "start": 148.64,
+          "end": 149.26,
+          "probability": 0.9897
+        },
+        {
+          "word": "localizations.",
+          "start": 149.26,
+          "end": 150.12,
+          "probability": 0.7188
+        },
+        {
+          "word": "Click",
+          "start": 152.64,
+          "end": 153.3,
+          "probability": 0.9893
+        },
+        {
+          "word": "resource",
+          "start": 153.3,
+          "end": 153.66,
+          "probability": 0.8594
+        },
+        {
+          "word": "bundle",
+          "start": 153.66,
+          "end": 154.08,
+          "probability": 0.9155
+        },
+        {
+          "word": "display.",
+          "start": 154.08,
+          "end": 154.7,
+          "probability": 0.9839
+        },
+        {
+          "word": "Double",
+          "start": 156.64,
+          "end": 157.3,
+          "probability": 0.9883
+        },
+        {
+          "word": "click",
+          "start": 157.3,
+          "end": 157.6,
+          "probability": 0.5737
+        },
+        {
+          "word": "display",
+          "start": 157.6,
+          "end": 158.02,
+          "probability": 0.9297
+        },
+        {
+          "word": ".properties.",
+          "start": 158.02,
+          "end": 159.0,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 161.14,
+      "end": 165.88,
+      "start_formatted": "00:02:41.140",
+      "end_formatted": "00:02:45.880",
+      "text": "We will use a variable so that this display key can be used in multiple places with different",
+      "words": [
+        {
+          "word": "We",
+          "start": 161.14,
+          "end": 161.74,
+          "probability": 0.9653
+        },
+        {
+          "word": "will",
+          "start": 161.74,
+          "end": 161.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "use",
+          "start": 161.9,
+          "end": 162.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 162.1,
+          "end": 162.22,
+          "probability": 0.9927
+        },
+        {
+          "word": "variable",
+          "start": 162.22,
+          "end": 162.56,
+          "probability": 0.9883
+        },
+        {
+          "word": "so",
+          "start": 162.56,
+          "end": 162.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 162.82,
+          "end": 162.98,
+          "probability": 0.9888
+        },
+        {
+          "word": "this",
+          "start": 162.98,
+          "end": 163.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "display",
+          "start": 163.18,
+          "end": 163.58,
+          "probability": 0.8345
+        },
+        {
+          "word": "key",
+          "start": 163.58,
+          "end": 163.8,
+          "probability": 0.9873
+        },
+        {
+          "word": "can",
+          "start": 163.8,
+          "end": 163.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "be",
+          "start": 163.96,
+          "end": 164.1,
+          "probability": 0.998
+        },
+        {
+          "word": "used",
+          "start": 164.1,
+          "end": 164.4,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 164.4,
+          "end": 164.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "multiple",
+          "start": 164.56,
+          "end": 164.88,
+          "probability": 0.998
+        },
+        {
+          "word": "places",
+          "start": 164.88,
+          "end": 165.34,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 165.34,
+          "end": 165.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "different",
+          "start": 165.58,
+          "end": 165.88,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 165.88,
+      "end": 172.2,
+      "start_formatted": "00:02:45.880",
+      "end_formatted": "00:02:52.200",
+      "text": "labels. Add the display key. Next we will associate the field validator with the entities field.",
+      "words": [
+        {
+          "word": "labels.",
+          "start": 165.88,
+          "end": 166.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "Add",
+          "start": 166.72,
+          "end": 167.24,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 167.24,
+          "end": 167.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "display",
+          "start": 167.36,
+          "end": 167.72,
+          "probability": 0.9033
+        },
+        {
+          "word": "key.",
+          "start": 167.72,
+          "end": 168.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "Next",
+          "start": 168.44,
+          "end": 169.04,
+          "probability": 0.998
+        },
+        {
+          "word": "we",
+          "start": 169.04,
+          "end": 169.22,
+          "probability": 0.8662
+        },
+        {
+          "word": "will",
+          "start": 169.22,
+          "end": 169.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "associate",
+          "start": 169.38,
+          "end": 169.88,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 169.88,
+          "end": 170.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "field",
+          "start": 170.18,
+          "end": 170.48,
+          "probability": 0.9268
+        },
+        {
+          "word": "validator",
+          "start": 170.48,
+          "end": 171.08,
+          "probability": 0.98
+        },
+        {
+          "word": "with",
+          "start": 171.08,
+          "end": 171.26,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 171.26,
+          "end": 171.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "entities",
+          "start": 171.38,
+          "end": 171.74,
+          "probability": 0.5815
+        },
+        {
+          "word": "field.",
+          "start": 171.74,
+          "end": 172.2,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 174.82,
+      "end": 182.54,
+      "start_formatted": "00:02:54.820",
+      "end_formatted": "00:03:02.540",
+      "text": "We will add a new column parameter to the policy number field. This will be for the validator. Click the policy number field.",
+      "words": [
+        {
+          "word": "We",
+          "start": 174.82,
+          "end": 175.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 175.42,
+          "end": 175.58,
+          "probability": 0.999
+        },
+        {
+          "word": "add",
+          "start": 175.58,
+          "end": 175.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 175.74,
+          "end": 175.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "new",
+          "start": 175.86,
+          "end": 176.0,
+          "probability": 0.9888
+        },
+        {
+          "word": "column",
+          "start": 176.0,
+          "end": 176.36,
+          "probability": 0.9858
+        },
+        {
+          "word": "parameter",
+          "start": 176.36,
+          "end": 176.86,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 176.86,
+          "end": 177.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 177.1,
+          "end": 177.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "policy",
+          "start": 177.22,
+          "end": 177.64,
+          "probability": 0.8667
+        },
+        {
+          "word": "number",
+          "start": 177.64,
+          "end": 177.94,
+          "probability": 0.9624
+        },
+        {
+          "word": "field.",
+          "start": 177.94,
+          "end": 178.36,
+          "probability": 0.999
+        },
+        {
+          "word": "This",
+          "start": 178.64,
+          "end": 179.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "will",
+          "start": 179.04,
+          "end": 179.18,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 179.18,
+          "end": 179.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 179.3,
+          "end": 179.46,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 179.46,
+          "end": 179.56,
+          "probability": 0.999
+        },
+        {
+          "word": "validator.",
+          "start": 179.56,
+          "end": 180.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "Click",
+          "start": 180.56,
+          "end": 181.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 181.14,
+          "end": 181.3,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 181.3,
+          "end": 181.74,
+          "probability": 0.9409
+        },
+        {
+          "word": "number",
+          "start": 181.74,
+          "end": 182.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "field.",
+          "start": 182.06,
+          "end": 182.54,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 184.2,
+      "end": 190.06,
+      "start_formatted": "00:03:04.200",
+      "end_formatted": "00:03:10.060",
+      "text": "Click the down arrow. Click column parameter.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 184.2,
+          "end": 185.32,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 185.32,
+          "end": 185.5,
+          "probability": 0.998
+        },
+        {
+          "word": "down",
+          "start": 185.5,
+          "end": 185.7,
+          "probability": 0.9229
+        },
+        {
+          "word": "arrow.",
+          "start": 185.7,
+          "end": 186.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "Click",
+          "start": 188.24,
+          "end": 189.36,
+          "probability": 0.999
+        },
+        {
+          "word": "column",
+          "start": 189.36,
+          "end": 189.76,
+          "probability": 0.2751
+        },
+        {
+          "word": "parameter.",
+          "start": 189.76,
+          "end": 190.06,
+          "probability": 0.1361
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 193.04,
+      "end": 199.66,
+      "start_formatted": "00:03:13.040",
+      "end_formatted": "00:03:19.660",
+      "text": "The name of the column parameter is validator. Select validator.",
+      "words": [
+        {
+          "word": "The",
+          "start": 192.64,
+          "end": 193.2,
+          "probability": 0.9878
+        },
+        {
+          "word": "name",
+          "start": 193.2,
+          "end": 193.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 193.4,
+          "end": 193.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 193.54,
+          "end": 193.64,
+          "probability": 0.999
+        },
+        {
+          "word": "column",
+          "start": 193.64,
+          "end": 193.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "parameter",
+          "start": 193.96,
+          "end": 194.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 194.52,
+          "end": 194.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "validator.",
+          "start": 194.78,
+          "end": 195.44,
+          "probability": 0.7354
+        },
+        {
+          "word": "Select",
+          "start": 197.84,
+          "end": 198.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "validator.",
+          "start": 198.96,
+          "end": 199.66,
+          "probability": 0.9697
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 202.08,
+      "end": 210.36,
+      "start_formatted": "00:03:22.080",
+      "end_formatted": "00:03:30.360",
+      "text": "For value, enter SI policy number. Press ctrl plus s to save and validate the work. To deploy the changes,",
+      "words": [
+        {
+          "word": "For",
+          "start": 202.08,
+          "end": 202.72,
+          "probability": 0.9888
+        },
+        {
+          "word": "value,",
+          "start": 202.72,
+          "end": 203.18,
+          "probability": 0.9404
+        },
+        {
+          "word": "enter",
+          "start": 203.58,
+          "end": 203.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "SI",
+          "start": 203.8,
+          "end": 204.2,
+          "probability": 0.8315
+        },
+        {
+          "word": "policy",
+          "start": 204.2,
+          "end": 204.68,
+          "probability": 0.7764
+        },
+        {
+          "word": "number.",
+          "start": 204.68,
+          "end": 205.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "Press",
+          "start": 205.52,
+          "end": 206.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "ctrl",
+          "start": 206.02,
+          "end": 206.38,
+          "probability": 0.5337
+        },
+        {
+          "word": "plus",
+          "start": 206.38,
+          "end": 206.7,
+          "probability": 0.874
+        },
+        {
+          "word": "s",
+          "start": 206.7,
+          "end": 206.92,
+          "probability": 0.7495
+        },
+        {
+          "word": "to",
+          "start": 206.92,
+          "end": 207.08,
+          "probability": 1.0
+        },
+        {
+          "word": "save",
+          "start": 207.08,
+          "end": 207.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 207.34,
+          "end": 207.48,
+          "probability": 0.999
+        },
+        {
+          "word": "validate",
+          "start": 207.48,
+          "end": 207.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 207.84,
+          "end": 208.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "work.",
+          "start": 208.04,
+          "end": 208.36,
+          "probability": 0.999
+        },
+        {
+          "word": "To",
+          "start": 208.74,
+          "end": 209.38,
+          "probability": 0.999
+        },
+        {
+          "word": "deploy",
+          "start": 209.38,
+          "end": 209.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 209.74,
+          "end": 209.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "changes,",
+          "start": 209.94,
+          "end": 210.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 210.7,
+      "end": 219.42,
+      "start_formatted": "00:03:30.700",
+      "end_formatted": "00:03:39.420",
+      "text": "we have to restart the server. The server is restarted, so let's switch to training app. Login as Alice",
+      "words": [
+        {
+          "word": "we",
+          "start": 210.7,
+          "end": 210.92,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 210.92,
+          "end": 211.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 211.14,
+          "end": 211.28,
+          "probability": 1.0
+        },
+        {
+          "word": "restart",
+          "start": 211.28,
+          "end": 211.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 211.66,
+          "end": 211.86,
+          "probability": 1.0
+        },
+        {
+          "word": "server.",
+          "start": 211.86,
+          "end": 212.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 214.26,
+          "end": 214.9,
+          "probability": 0.998
+        },
+        {
+          "word": "server",
+          "start": 214.9,
+          "end": 215.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 215.2,
+          "end": 215.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "restarted,",
+          "start": 215.38,
+          "end": 215.98,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 216.14,
+          "end": 216.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "let's",
+          "start": 216.4,
+          "end": 216.76,
+          "probability": 0.999
+        },
+        {
+          "word": "switch",
+          "start": 216.76,
+          "end": 217.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 217.0,
+          "end": 217.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "training",
+          "start": 217.18,
+          "end": 217.5,
+          "probability": 0.7197
+        },
+        {
+          "word": "app.",
+          "start": 217.5,
+          "end": 217.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "Login",
+          "start": 218.28,
+          "end": 218.92,
+          "probability": 0.5806
+        },
+        {
+          "word": "as",
+          "start": 218.92,
+          "end": 219.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "Alice",
+          "start": 219.1,
+          "end": 219.42,
+          "probability": 0.9712
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 219.42,
+      "end": 249.1,
+      "start_formatted": "00:03:39.420",
+      "end_formatted": "00:04:09.100",
+      "text": "Applegate. Search for the EricAndy record. Click the search button to search for the contact record. Select the EricAndy link. Click the edit button. Click the add button to add a new policy. Here's the new policy. We'll try a policy number that doesn't fit the validator criteria.",
+      "words": [
+        {
+          "word": "Applegate.",
+          "start": 219.42,
+          "end": 220.12,
+          "probability": 0.856
+        },
+        {
+          "word": "Search",
+          "start": 222.38,
+          "end": 223.0,
+          "probability": 0.9917
+        },
+        {
+          "word": "for",
+          "start": 223.0,
+          "end": 223.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 223.18,
+          "end": 223.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "EricAndy",
+          "start": 223.3,
+          "end": 223.94,
+          "probability": 0.6724
+        },
+        {
+          "word": "record.",
+          "start": 223.94,
+          "end": 224.28,
+          "probability": 0.9038
+        },
+        {
+          "word": "Click",
+          "start": 226.24,
+          "end": 226.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 226.86,
+          "end": 227.04,
+          "probability": 0.998
+        },
+        {
+          "word": "search",
+          "start": 227.04,
+          "end": 227.26,
+          "probability": 0.4619
+        },
+        {
+          "word": "button",
+          "start": 227.26,
+          "end": 227.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 227.6,
+          "end": 227.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "search",
+          "start": 227.86,
+          "end": 228.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 228.1,
+          "end": 228.3,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 228.3,
+          "end": 228.4,
+          "probability": 0.998
+        },
+        {
+          "word": "contact",
+          "start": 228.4,
+          "end": 228.8,
+          "probability": 0.9746
+        },
+        {
+          "word": "record.",
+          "start": 228.8,
+          "end": 229.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "Select",
+          "start": 231.92,
+          "end": 232.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 232.54,
+          "end": 232.72,
+          "probability": 0.999
+        },
+        {
+          "word": "EricAndy",
+          "start": 232.72,
+          "end": 233.32,
+          "probability": 0.9702
+        },
+        {
+          "word": "link.",
+          "start": 233.32,
+          "end": 233.66,
+          "probability": 0.9883
+        },
+        {
+          "word": "Click",
+          "start": 235.78,
+          "end": 236.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 236.4,
+          "end": 236.56,
+          "probability": 0.998
+        },
+        {
+          "word": "edit",
+          "start": 236.56,
+          "end": 236.78,
+          "probability": 0.7715
+        },
+        {
+          "word": "button.",
+          "start": 236.78,
+          "end": 237.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "Click",
+          "start": 239.78,
+          "end": 240.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 240.4,
+          "end": 240.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "add",
+          "start": 240.58,
+          "end": 240.72,
+          "probability": 0.8545
+        },
+        {
+          "word": "button",
+          "start": 240.72,
+          "end": 240.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 240.98,
+          "end": 241.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "add",
+          "start": 241.18,
+          "end": 241.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 241.36,
+          "end": 241.44,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 241.44,
+          "end": 241.62,
+          "probability": 0.998
+        },
+        {
+          "word": "policy.",
+          "start": 241.62,
+          "end": 242.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "Here's",
+          "start": 243.84,
+          "end": 244.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 244.46,
+          "end": 244.58,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 244.58,
+          "end": 244.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy.",
+          "start": 244.76,
+          "end": 245.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "We'll",
+          "start": 245.68,
+          "end": 246.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "try",
+          "start": 246.24,
+          "end": 246.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 246.42,
+          "end": 246.62,
+          "probability": 0.9868
+        },
+        {
+          "word": "policy",
+          "start": 246.62,
+          "end": 246.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "number",
+          "start": 246.98,
+          "end": 247.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 247.28,
+          "end": 247.48,
+          "probability": 0.999
+        },
+        {
+          "word": "doesn't",
+          "start": 247.48,
+          "end": 247.8,
+          "probability": 1.0
+        },
+        {
+          "word": "fit",
+          "start": 247.8,
+          "end": 247.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 247.96,
+          "end": 248.1,
+          "probability": 0.999
+        },
+        {
+          "word": "validator",
+          "start": 248.1,
+          "end": 248.68,
+          "probability": 0.9873
+        },
+        {
+          "word": "criteria.",
+          "start": 248.68,
+          "end": 249.1,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 249.76,
+      "end": 264.28,
+      "start_formatted": "00:04:09.760",
+      "end_formatted": "00:04:24.280",
+      "text": "Click update. We get the error message we defined as a display key. The same thing is true if we try all numbers, or any other combination except for two letters, hyphen, and seven numbers.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 249.76,
+          "end": 250.28,
+          "probability": 0.7573
+        },
+        {
+          "word": "update.",
+          "start": 250.28,
+          "end": 250.62,
+          "probability": 0.1573
+        },
+        {
+          "word": "We",
+          "start": 253.76,
+          "end": 254.28,
+          "probability": 0.981
+        },
+        {
+          "word": "get",
+          "start": 254.28,
+          "end": 254.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 254.44,
+          "end": 254.56,
+          "probability": 0.998
+        },
+        {
+          "word": "error",
+          "start": 254.56,
+          "end": 254.78,
+          "probability": 0.9888
+        },
+        {
+          "word": "message",
+          "start": 254.78,
+          "end": 255.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "we",
+          "start": 255.12,
+          "end": 255.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "defined",
+          "start": 255.36,
+          "end": 255.7,
+          "probability": 0.9868
+        },
+        {
+          "word": "as",
+          "start": 255.7,
+          "end": 255.9,
+          "probability": 0.9897
+        },
+        {
+          "word": "a",
+          "start": 255.9,
+          "end": 255.98,
+          "probability": 0.9893
+        },
+        {
+          "word": "display",
+          "start": 255.98,
+          "end": 256.28,
+          "probability": 0.9136
+        },
+        {
+          "word": "key.",
+          "start": 256.28,
+          "end": 256.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "The",
+          "start": 257.12,
+          "end": 257.6,
+          "probability": 0.9912
+        },
+        {
+          "word": "same",
+          "start": 257.6,
+          "end": 257.82,
+          "probability": 0.999
+        },
+        {
+          "word": "thing",
+          "start": 257.82,
+          "end": 258.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 258.04,
+          "end": 258.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "true",
+          "start": 258.24,
+          "end": 258.46,
+          "probability": 0.998
+        },
+        {
+          "word": "if",
+          "start": 258.46,
+          "end": 258.64,
+          "probability": 0.9922
+        },
+        {
+          "word": "we",
+          "start": 258.64,
+          "end": 258.74,
+          "probability": 0.998
+        },
+        {
+          "word": "try",
+          "start": 258.74,
+          "end": 258.98,
+          "probability": 0.9805
+        },
+        {
+          "word": "all",
+          "start": 258.98,
+          "end": 259.24,
+          "probability": 0.9849
+        },
+        {
+          "word": "numbers,",
+          "start": 259.24,
+          "end": 259.68,
+          "probability": 0.9922
+        },
+        {
+          "word": "or",
+          "start": 259.9,
+          "end": 260.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "any",
+          "start": 260.14,
+          "end": 260.34,
+          "probability": 0.998
+        },
+        {
+          "word": "other",
+          "start": 260.34,
+          "end": 260.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "combination",
+          "start": 260.52,
+          "end": 261.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "except",
+          "start": 261.08,
+          "end": 261.54,
+          "probability": 0.9829
+        },
+        {
+          "word": "for",
+          "start": 261.54,
+          "end": 261.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "two",
+          "start": 261.76,
+          "end": 261.94,
+          "probability": 0.8047
+        },
+        {
+          "word": "letters,",
+          "start": 261.94,
+          "end": 262.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "hyphen,",
+          "start": 262.62,
+          "end": 263.12,
+          "probability": 0.9785
+        },
+        {
+          "word": "and",
+          "start": 263.32,
+          "end": 263.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "seven",
+          "start": 263.6,
+          "end": 263.86,
+          "probability": 0.8628
+        },
+        {
+          "word": "numbers.",
+          "start": 263.86,
+          "end": 264.28,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 266.64,
+      "end": 271.76,
+      "start_formatted": "00:04:26.640",
+      "end_formatted": "00:04:31.760",
+      "text": "Now, we have a policy number that does fit the validator criteria. Click update.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 266.64,
+          "end": 267.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "we",
+          "start": 267.32,
+          "end": 267.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "have",
+          "start": 267.58,
+          "end": 267.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 267.72,
+          "end": 267.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 267.8,
+          "end": 268.2,
+          "probability": 0.9565
+        },
+        {
+          "word": "number",
+          "start": 268.2,
+          "end": 268.48,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 268.48,
+          "end": 268.7,
+          "probability": 0.999
+        },
+        {
+          "word": "does",
+          "start": 268.7,
+          "end": 268.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "fit",
+          "start": 268.88,
+          "end": 269.08,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 269.08,
+          "end": 269.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "validator",
+          "start": 269.22,
+          "end": 269.8,
+          "probability": 0.9785
+        },
+        {
+          "word": "criteria.",
+          "start": 269.8,
+          "end": 270.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "Click",
+          "start": 270.92,
+          "end": 271.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "update.",
+          "start": 271.44,
+          "end": 271.76,
+          "probability": 0.9678
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 271.76,
+      "end": 280.9,
+      "start_formatted": "00:04:31.760",
+      "end_formatted": "00:04:40.900",
+      "text": "Click update. The new policy is saved. The validator works is configured. This concludes the demonstration.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 271.76,
+          "end": 271.76,
+          "probability": 0.0001
+        },
+        {
+          "word": "update.",
+          "start": 271.76,
+          "end": 271.94,
+          "probability": 0.0052
+        },
+        {
+          "word": "The",
+          "start": 274.52,
+          "end": 275.32,
+          "probability": 0.9492
+        },
+        {
+          "word": "new",
+          "start": 275.32,
+          "end": 275.46,
+          "probability": 0.9756
+        },
+        {
+          "word": "policy",
+          "start": 275.46,
+          "end": 275.96,
+          "probability": 0.9644
+        },
+        {
+          "word": "is",
+          "start": 275.96,
+          "end": 276.2,
+          "probability": 0.998
+        },
+        {
+          "word": "saved.",
+          "start": 276.2,
+          "end": 276.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "The",
+          "start": 276.88,
+          "end": 277.22,
+          "probability": 0.9648
+        },
+        {
+          "word": "validator",
+          "start": 277.22,
+          "end": 277.8,
+          "probability": 0.8145
+        },
+        {
+          "word": "works",
+          "start": 277.8,
+          "end": 278.06,
+          "probability": 0.938
+        },
+        {
+          "word": "is",
+          "start": 278.06,
+          "end": 278.24,
+          "probability": 0.4456
+        },
+        {
+          "word": "configured.",
+          "start": 278.24,
+          "end": 278.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "This",
+          "start": 279.22,
+          "end": 279.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "concludes",
+          "start": 279.76,
+          "end": 280.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 280.18,
+          "end": 280.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "demonstration.",
+          "start": 280.4,
+          "end": 280.9,
+          "probability": 0.9922
+        }
+      ]
+    }
+  ]
+}

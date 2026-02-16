@@ -1,0 +1,379 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-10",
+    "slide_count": 33,
+    "slides_with_text": 27,
+    "total_words": 1116,
+    "avg_confidence": 87.19,
+    "processing_time_seconds": 12.42,
+    "extracted_at": "2026-02-13T12:23:39.728772"
+  },
+  "full_text": "Introduction to Permission Configuration\n\nLesson\nobjectives\n\n* Configure system permissions\n\n« Write Gosu expressions that evaluate user\npermissions\n\n* Describe static and object-based permissions\n\nPolicyCenter security and\nconcepts\n\ni Review: Role based Security in PolicyCenter G&G\n¢ Security is provided using:\n\nRole Permissions Producer codes\n\nA &\n\n¢« Auser must be assigned a role with the appropriate permissions\n¢ Inthe base configuration, the Superuser role is:\n* Granted all permissions and\n\n« Responsible for granting permissions to other roles\n\ni System permissions\n\nA system permission is a granular ability to see or do something within\n\nPolicyCenter\nView mS View wou View ean\n\n ) ea\n\nEdit users Edit groups\n\ne.\n\nOwn activities\n\ni Roles\n\nGi\n\nArole is a named collection of permissions used to simplify the assignment of\n\npermissions to users\n\n* Typically, a role maps to a job title or a job function\n\nUnderwriter Assistant\n\nView account\n\n&\n\nCreate account\nCreate activities\n\nEdit submission\nEdit rewrite\n\nUnderwriter\n\nAY\n\nView account\nView sensitive notes\nView sensitive docs\n\nCreate account\nCreate activities\nCreate audit\n\nEdit submission\nEdit rewrite\nEdit rates and premium overrides\n\ni Review: Security Dictionary G\n\nSecurity Dictionary is a series of HTML pages that document the permissions and\nroles in your application\n¢ Located at: <server directory>\\build\\dictionary\\security\\index.html\n\n« When you add or edit permissions or roles, you can regenerate the information in these\nsections to reflect the changes\n\n* The dictionary has four main sections\n\ni Review: Security Dictionary main sections G&G\n\nEach Application Permission Key displays the set of system permissions and\nthe pages and elements referencing it in the Ul\n\nEach Page lists conditions that check either system permission or application\npermission keys to view or edit the page\n\nEach System Permission lists the roles containing it and Ul components\nreferencing it\n\nEach Role lists the permissions it contains\n\ni Demonstration G\n\nCreate new system permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Creating System permissions\n\n« System permissions are defined in the SystemPermissionType typelist\n* Permissions that appear grayed are internal and cannot be modified\n« Add typecodes in SystemPermissionType to create new system permissions\n* Permission codes should be all lowercase without white spaces\n* Specify one permission per action\n« Name permission codes as a verb for the entity name and action\n¢ Permission code: [entity][action] — can be interchanged\n¢« Examples:\n* accountcreate: Permission to create an account\n* bindsubmission: Permission to bind a submission\n\n* viewsensnote: Permission to view sensitive notes\n\ni Demonstration G\n\nCheck permissions using Gosu\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni The perm namespace G&G\n\n* perm is a Gosu namespace used to create expressions that determine if current\nuser has a given permission\n\n« Expression returns true or false\n\n* perm Syntax\n\nperm.System.permission is used when user calls a system permission defined in the\nSystemPermissionType typelist\n\n* perm.System.viewteam\n\nperm.Entity.permission is used when an application permission key is called\n* perm.Account.create\n\n* perm.Organization.create\n\ni Typical uses of perm expressions\n\nAtomic widget attributes\n* Control visibility, editability, or availability of a field, button, or menu item\nContainer widget attributes\n* Control visibility or editability of a detail view or list view\nLocation attributes\n* Control ability to visit or edit a location\nBusiness rules\n\n« Modify rule behavior (such as generating additional activity if current user lacks a given\npermission)\n\nStatic and object-based\npermissions\n\ni Application permission keys (APKs) G&G\n\n¢« An APK is a set of one or more system permissions defined in security-config.xml\n\n« APKs use custom handlers to define the mapping of different objects in\nPolicyCenter to system permissions\n\n¢ For example, StaticHandlers, WrapHandler, AccountProducerCodeHandler\n* PolicyCenter defines APKs for following objects:\n\n* Account\n\n* PolicyPeriod\n\n« Jobs such as submission, rewrite, or policy change\n\n* Notes\n\n+ Documents\n\n* Activities\n\ni Static and object-based permissions\n\n¢ Static permissions\n* Do not require an object as an argument\n+ May or may not use APKs\n\n* For example, the permission to create a\nnew activity pattern\n\n* Object-based permissions\n« Always require an object as an argument\n« Always use APKs\n\n« For example, permission to reassign an\nowned activity (must pass in the activity to\nbe reassigned)\n\nCreate activity\npattern\n\nBO\n\nReassign owned\nactivities\n\ni Static or object-based in security dictionary G&G\n\nWhether a permission is static or object-based is indicated in the security dictionary\n\nactpatcreate\nactpatdelete\nactpatedit\nactpatview\nactpolicyapprove\n\nactqueuepick\nactraown\n\nactviewallqueues\n\nactpatcreate{[static)} Create activity pattern\n\nDescription\nPermission to create new activity patterns\n\nactraown]|(object-based)}- Reassign owned activities\n\nDescription\nPermission to reassign your own activities\n\ni Static system permissions\n\n* perm.System.permission\n* permission: typecode of a permission defined in SystemPermissionType typelist\n« Returns true if current user has the permission\n\n¢ Example:\n\n* perm.System.viewteam\n\ni Static permissions on entities\n\n¢ APKs defined using StaticHandlers in security-config.xml\n* perm.Entity.permission\n\n« Entity: entity on which the permission is defined\n\n* permission: permKey attribute defined in security-config.xml\n\n¢ Returns true if current user has the permission\n¢ Example:\n\n* perm.Account.create\n\ni Object-based permissions Gi\n\n« APKs defined using custom Handlers in security-config.xml\n* Object has to be passed in as an argument in the perm expression for checking\npermissions\n* perm.Entity.permission (object)\n« Entity: entity on which the permission is defined\n* permission: permKey attribute defined in security-config.xml\n* object: the current object in memory\n¢ Returns true if current user has the permission\n¢« Examples:\n* perm.Account.edit(account)\n\n* perm.Submission.view(submission)\n\ni Demonstration G\n\nStatic and object-based permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\nae What is a system permission?\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\nae What is a system permission?\n4\n¢\n\nSystem permissions are permissions defined in the SystemPermissionType typelist.\n\nSS Se ee eee eo\n\nQuestion G\n\n_~ — Define static and object-based permissions. Give examples.\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\n_~ — Define static and object-based permissions. Give examples.\n\n¢\n4\n¢\n\nStatic permissions do not take any parameter as argument whereas object-based\npermissions take an object as an argument.\n\nExample of static permission — perm.System.viewteam.\n\nExample of object-based permission — perm.Account.edit( account ).\n\nSS Se ee eee eo\n\nLesson\nobjectives * Configure system permissions\n\nreview ¢ Write Gosu expressions that evaluate user\npermissions\n* Describe static and object-based permissions\n\ni Student exercise\n\nIntroduction to Permission\nConfiguration",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to Permission Configuration",
+      "word_count": 4,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Configure system permissions\n\n« Write Gosu expressions that evaluate user\npermissions\n\n* Describe static and object-based permissions",
+      "word_count": 20,
+      "avg_confidence": 85.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "PolicyCenter security and\nconcepts",
+      "word_count": 4,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Review: Role based Security in PolicyCenter G&G\n¢ Security is provided using:\n\nRole Permissions Producer codes\n\nA &\n\n¢« Auser must be assigned a role with the appropriate permissions\n¢ Inthe base configuration, the Superuser role is:\n* Granted all permissions and\n\n« Responsible for granting permissions to other roles",
+      "word_count": 51,
+      "avg_confidence": 84.63,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i System permissions\n\nA system permission is a granular ability to see or do something within\n\nPolicyCenter\nView mS View wou View ean\n\n ) ea\n\nEdit users Edit groups\n\ne.\n\nOwn activities",
+      "word_count": 32,
+      "avg_confidence": 85.14,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Roles\n\nGi\n\nArole is a named collection of permissions used to simplify the assignment of\n\npermissions to users\n\n* Typically, a role maps to a job title or a job function\n\nUnderwriter Assistant\n\nView account\n\n&\n\nCreate account\nCreate activities\n\nEdit submission\nEdit rewrite\n\nUnderwriter\n\nAY\n\nView account\nView sensitive notes\nView sensitive docs\n\nCreate account\nCreate activities\nCreate audit\n\nEdit submission\nEdit rewrite\nEdit rates and premium overrides",
+      "word_count": 70,
+      "avg_confidence": 91.11,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Review: Security Dictionary G\n\nSecurity Dictionary is a series of HTML pages that document the permissions and\nroles in your application\n¢ Located at: <server directory>\\build\\dictionary\\security\\index.html\n\n« When you add or edit permissions or roles, you can regenerate the information in these\nsections to reflect the changes\n\n* The dictionary has four main sections",
+      "word_count": 55,
+      "avg_confidence": 90.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Review: Security Dictionary main sections G&G\n\nEach Application Permission Key displays the set of system permissions and\nthe pages and elements referencing it in the Ul\n\nEach Page lists conditions that check either system permission or application\npermission keys to view or edit the page\n\nEach System Permission lists the roles containing it and Ul components\nreferencing it\n\nEach Role lists the permissions it contains",
+      "word_count": 66,
+      "avg_confidence": 93.64,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Demonstration G\n\nCreate new system permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.84,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Creating System permissions\n\n« System permissions are defined in the SystemPermissionType typelist\n* Permissions that appear grayed are internal and cannot be modified\n« Add typecodes in SystemPermissionType to create new system permissions\n* Permission codes should be all lowercase without white spaces\n* Specify one permission per action\n« Name permission codes as a verb for the entity name and action\n¢ Permission code: [entity][action] — can be interchanged\n¢« Examples:\n* accountcreate: Permission to create an account\n* bindsubmission: Permission to bind a submission\n\n* viewsensnote: Permission to view sensitive notes",
+      "word_count": 94,
+      "avg_confidence": 88.32,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Demonstration G\n\nCheck permissions using Gosu\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.65,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i The perm namespace G&G\n\n* perm is a Gosu namespace used to create expressions that determine if current\nuser has a given permission\n\n« Expression returns true or false\n\n* perm Syntax\n\nperm.System.permission is used when user calls a system permission defined in the\nSystemPermissionType typelist\n\n* perm.System.viewteam\n\nperm.Entity.permission is used when an application permission key is called\n* perm.Account.create\n\n* perm.Organization.create",
+      "word_count": 63,
+      "avg_confidence": 88.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Typical uses of perm expressions\n\nAtomic widget attributes\n* Control visibility, editability, or availability of a field, button, or menu item\nContainer widget attributes\n* Control visibility or editability of a detail view or list view\nLocation attributes\n* Control ability to visit or edit a location\nBusiness rules\n\n« Modify rule behavior (such as generating additional activity if current user lacks a given\npermission)",
+      "word_count": 66,
+      "avg_confidence": 92.09,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Static and object-based\npermissions",
+      "word_count": 4,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i Application permission keys (APKs) G&G\n\n¢« An APK is a set of one or more system permissions defined in security-config.xml\n\n« APKs use custom handlers to define the mapping of different objects in\nPolicyCenter to system permissions\n\n¢ For example, StaticHandlers, WrapHandler, AccountProducerCodeHandler\n* PolicyCenter defines APKs for following objects:\n\n* Account\n\n* PolicyPeriod\n\n« Jobs such as submission, rewrite, or policy change\n\n* Notes\n\n+ Documents\n\n* Activities",
+      "word_count": 70,
+      "avg_confidence": 83.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Static and object-based permissions\n\n¢ Static permissions\n* Do not require an object as an argument\n+ May or may not use APKs\n\n* For example, the permission to create a\nnew activity pattern\n\n* Object-based permissions\n« Always require an object as an argument\n« Always use APKs\n\n« For example, permission to reassign an\nowned activity (must pass in the activity to\nbe reassigned)\n\nCreate activity\npattern\n\nBO\n\nReassign owned\nactivities",
+      "word_count": 74,
+      "avg_confidence": 87.36,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Static or object-based in security dictionary G&G\n\nWhether a permission is static or object-based is indicated in the security dictionary\n\nactpatcreate\nactpatdelete\nactpatedit\nactpatview\nactpolicyapprove\n\nactqueuepick\nactraown\n\nactviewallqueues\n\nactpatcreate{[static)} Create activity pattern\n\nDescription\nPermission to create new activity patterns\n\nactraown]|(object-based)}- Reassign owned activities\n\nDescription\nPermission to reassign your own activities",
+      "word_count": 51,
+      "avg_confidence": 88.98,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Static system permissions\n\n* perm.System.permission\n* permission: typecode of a permission defined in SystemPermissionType typelist\n« Returns true if current user has the permission\n\n¢ Example:\n\n* perm.System.viewteam",
+      "word_count": 29,
+      "avg_confidence": 86.79,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Static permissions on entities\n\n¢ APKs defined using StaticHandlers in security-config.xml\n* perm.Entity.permission\n\n« Entity: entity on which the permission is defined\n\n* permission: permKey attribute defined in security-config.xml\n\n¢ Returns true if current user has the permission\n¢ Example:\n\n* perm.Account.create",
+      "word_count": 43,
+      "avg_confidence": 86.3,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i Object-based permissions Gi\n\n« APKs defined using custom Handlers in security-config.xml\n* Object has to be passed in as an argument in the perm expression for checking\npermissions\n* perm.Entity.permission (object)\n« Entity: entity on which the permission is defined\n* permission: permKey attribute defined in security-config.xml\n* object: the current object in memory\n¢ Returns true if current user has the permission\n¢« Examples:\n* perm.Account.edit(account)\n\n* perm.Submission.view(submission)",
+      "word_count": 70,
+      "avg_confidence": 86.73,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "i Demonstration G\n\nStatic and object-based permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.81,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question G\n\nae What is a system permission?\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 16,
+      "avg_confidence": 59.44,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer G\n\nae What is a system permission?\n4\n¢\n\nSystem permissions are permissions defined in the SystemPermissionType typelist.\n\nSS Se ee eee eo",
+      "word_count": 24,
+      "avg_confidence": 74.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n_~ — Define static and object-based permissions. Give examples.\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 20,
+      "avg_confidence": 64.41,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer G\n\n_~ — Define static and object-based permissions. Give examples.\n\n¢\n4\n¢\n\nStatic permissions do not take any parameter as argument whereas object-based\npermissions take an object as an argument.\n\nExample of static permission — perm.System.viewteam.\n\nExample of object-based permission — perm.Account.edit( account ).\n\nSS Se ee eee eo",
+      "word_count": 51,
+      "avg_confidence": 83.75,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Lesson\nobjectives * Configure system permissions\n\nreview ¢ Write Gosu expressions that evaluate user\npermissions\n* Describe static and object-based permissions",
+      "word_count": 21,
+      "avg_confidence": 89.35,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "i Student exercise\n\nIntroduction to Permission\nConfiguration",
+      "word_count": 7,
+      "avg_confidence": 87.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

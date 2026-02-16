@@ -1,0 +1,511 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-14",
+    "slide_count": 45,
+    "slides_with_text": 42,
+    "total_words": 2133,
+    "avg_confidence": 85.73,
+    "processing_time_seconds": 19.3,
+    "extracted_at": "2026-02-13T12:11:53.200249"
+  },
+  "full_text": "Permissions and Access Control Lists\n\nLesson\nobjectives\n\n¢ Describe the role of permissions in controlling\nuser capabilities in ClaimCenter\n\n¢ Describe the use of roles in managing user\npermissions\n\n« Assign permissions to roles\n\n¢ Assign roles to users\n\n¢ Describe Access Control Lists (ACLs)\n\n| need to make sure that employees are\nallowed to perform only those tasks that they\nhave been approved to perform. A CSR should\nnot be allowed to issue a payment.\n\nCan ClaimCenter manage that level of\nauthorization and security?\n\nKarun\nAgency\nManager\n\n| Access G&G\n\nAccess is the ability to see and do things in ClaimCenter based on your user\nidentity\n\nAccess can control\n\n* Creation, modification, or deletion\n\n* Ownership\n+ Visibility (viewing and navigation)\n\n+ What you can do with an object (i.e., close claim)\nAccess is granted and managed with system permissions\n\nPermissions determine what a user can and cannot do\n\nAuser's permissions are determined during login [a\n(1 of 4)\n\nusername\nand __2nd password Bp\n\nClaimCenter cc data\n\nAuser's permissions are determined d\n| us p i uring login [a\n\nauthenticated?\n\nusername what permissions?\nand 2nd password which start page?\n\nClaimCenter cc data\n\n| Auser's permissions are determined during login\n(3 of 4)\n\n=\n\nusername\n\nand __2nd password Bp\n\nClaimCenter\n\nauthenticated?\nwhat permissions?\nwhich start page?\n—_——\n\nYes!\nView claim, ...\nDesktop: Activities\n\nGi\n\ncc data\n\n| Auser's permissions are determined during login\n\n(4 of 4)\n\nusername\nand password\n\n—_—\nDesktop: Activities\n\nClaimCenter\n\nauthenticated?\nwhat permissions?\nwhich start page?\n—_——\n\nYes!\nView claim, ...\nDesktop: Activities\n\nGi\n\ncc data\n\n| Permissions\n\nView\n\nView Team\n\nRick Ralston Betty Baker\nManager Adjuster\n\n@ =\n\n@& Can not View\nIda Belt Team\nCSR\n\nCreate object); Own object\n\n@~ | O~\n\nCreate Address Own Claim\nBook Contacts\n\nOr | Or\n\nCan not Create Can not Own\nAddress Book Claim\nContacts\n\nClose Claim\n\n@ =\n\nCan not Close\nClaim\n\n| Assigning permissions to roles G\n\n‘) CSR role ‘) Adjuster role\n4 View claims oP\n\nCreate claims\nEdit claims\nEdit exposures\n\nView claims\nCreate claims\nEdit claims\nEdit exposures\n\nView confidential Notes\n\nOwn claims\nEdit matters\n\n¢ Arole is a named collection of permissions used to simplify the assignment of\npermissions to users\n\n« Roles are managed by a user with the Manage Roles permission\n« Roles screen is in Administration\n\n| Assigning roles to users\n\n@ @\n\nIda Belt Betty Baker Rick Ralston\n\n>) ee CO\n& A £@\n\n¢ Each user is given one or more roles\n¢ Auser has all the permissions of the roles assigned to that user\n\n¢ Roles are assigned from the Administration Roles screen or the Administration\nUsers screen\n\n| The security dictionary G\n\n* Series of HTML pages that document\npermissions and roles in your\n\napplication\n* Four main sections - -\noo. _ Application Permission Keys -.\n* Application permission keys Pages Activity approve\n+ Pages (in the user interface) System Permissions Reres) _\n+ System permissions Roles Description\n\n» Roles\n\nSummary\n\neg woe Related Permissions\n* Application Permission Keys\n\nare used to contain one or Activity approve\n\nactapproveany\n\nan Activity approveany Permission to approve any appro\nmore system permissions Activity assign even if the activity is assigned to\n\n* Application Permission Keys\nare used to improve performance\nfor system permissions\n\nSystem permissions and application permission G\nkeys\n\nSystem permissions\n+ Assigned to roles (assigned to users)\n+ Dictionary shows\n\nRoles that use the permission\nRelated application permission keys\nRelated pages\n\nRelated elements\n\nApplication permission keys\n\n+ May contain multiple system permissions\n\n+ Used to simplify coding (configuration)\n+ Used to restrict view and edit of pages\n\n+ May be used in code for security checks\n\nApplication Permission Keys\nPages\n\n[sstmzemisios\nRoles\nabcreate\n\nabcreatepref\nabdelete\n\nabedit\n\nabeditpref\nabview\nabviewsearch\naccountmng:\naccountview\nactapproveany\nacteditunowned\nactivityruleapprove\nactivitvruledeploy\nactivityruleedit\nactivityruleimport\nactivitvruleview\nactmakemand\nactown\n\nactcreate (object-based) - Create activities\n\n> Description\n\nAdjuster\nBase permissions for an adjuster\n\nClaims Supervisor\n\nBase permissions for a claims supervisor\n\nBase permissions for a clerical user\n\nRelated Application Permission Keys\n\nPermission to create a new activity on the claim. Checks cr\n\nRelated Pages\n\nNewActivity via Claim createactvi\n\n‘Base permissions Tor a reinsurance manager\n\nSuperuser\n‘Superuser with full permissions\n\n| Demonstration G\n\nManaging roles and permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nA Karun\nenc\nRe neuen\n\nAssigning roles to users is good, but there are\nclaims that should only be seen by particular users.\n| need to be able to control which users can access\n\nspecial types of claims.\n\n| Access Control Lists (ACLs) add object level\n\npermissions\nClaim 100-00-100001 ACL\nUsers on this ACL:\n(> Tae’ Andy Applegate\n— Sue Smith\n= Ida Belt\n\n¢« AnAccess Control List (ACL) is a list associated with a claim, identifying which\nusers can access the claim and its sub-objects\n\n¢ ACLs ensure that a given user can view or edit only objects which he or she needs\nto\n\n| Permissions versus ACLs Gi\n\n¢ Permissions are granted or denied\nacross entire application, regardless of eae\nthe object\n\nClaimCenter\n¢ All-or-none approach for what a user\n\ncan do\n\n« ACLs are object-based permissions\nand are granted or denied on a claim- o~ ©)\nby-claim basis —s aN\n¢« ACLS and permissions work together\nto provide full access security\n\nCreate group\n\nCreate exposure\n(for a given claim)\n\n| Permissions and ACLs\n\n2 @\n\nGi\n\nTo view a claim, a user must\nhave the correct permissions\nand be on the Access Control\nList for that claim\n\nyy\n\n© @ e- &\nen es Cs — U\ne oy\n&\nUsers on this ACL:\nYI a ine\n~~S —Y% ida Belt\n\nHow ACLs are created\n\nSecurity types\nEmployee claim\nFraud risk\nSensitive\n\nUnder litigation\nUnsecured (none)\n\n@\n- ©\nas |\n\nGi\n\nACLs are virtual; there is no UI\nor direct access\n\nACLs are created based on\ndefined security types\nPrivileges are based on:\n* Security type (of the claim or object)\n* Ownership (of the claim or object)\n\n* Group (or security zone) of the\nobject owner\n\n* Role (on the object)\n\n| Elements of access control\n\n« ACLs are determined by an access profile\n\n* Access profiles are in security-config.xml Primary Aahuster\n* Claim security types (each type has a Special Claim Permission\nmatching access profile)\n+ Employee claim, Fraud risk, Sensitive, Under\nlitigation, UnsecuredClaim\n\nClaim Validation Level\nSalvage Status\n\nOther Recoverable Status\n+ Set by the claim owner on the claim as Special\nClaim Permission\n\nReinsurance Reportable?\n+ Determines which access profile to apply\n* Access types\n\n* Own, view, and edit\n\n* Access levels\n+ User, Group, Security zone, Anyone\n\nAndy Applegate\n\nAutol -TeamA\n\n<none> a\n\n<none>\nEmployee claim\nFraud risk\n\nUnder litigation\nUnsecuredClaim\n\n<none> .\n\n| Access profile I\n\nSecurity-config.xml\n<AccessProfile securitylevel=\"unsecuredclaim\">\n<ClaimAccessLevels>\n\n<AccessLevel level=“group\" permission=\"view\"/>\n<AccessLevel level=“group\" permission=\"edit\"/>\n\n<AccessLevel level=\"securityzone\" permission=\"view\"/>\n\n<ClaimUserAccessLevel role=\"relateduser\" level=\"user\" permission=\"Vview\"/>\n</ClaimAccessLevels>\n\nFor an unsecured claim (unrestricted):\n« All object owners have view and edit access\n¢ All users in the same group as the claim owner have view and edit access\n¢ All users in the same security zone as the claim owner have view and edit access\nAll users with the relateduser role have view only access\n\nOwner access\n\nDana Evans @\n@e\n\nPeter Beebe @\n@e\n\n* Object owners have access\n« Jason is not in the Worker’s Comp Security Zone\n\n[v) EA owner: Dana Evans\n\na) owner: Dana Evans\n\neS,\nwe owner: Peter Beebe\n\nix)\ne_|\n\nJason Tran @®\n\nGroup access\n\n‘*\n\nDana Evans @ : owner: Dana Evans\ns- om\nPeter Beebe s : oO\n\niy owner: Dana Evans\n\nEllen Bishop a,\nwe owner: Peter Beebe\n\nix)\ne_|\n\nJason Tran @®\n\nGroup permissions contain view and edit\nAnyone in the same group as the owner has view and edit access\n\n| Security zone access Gi\n\nDana evans @ ; OF. o Al owner: Dana Evans\n\n: o\nPeter peeve @ OF CDR owner: Dana Evans\n9 Xs\nEllen sisnor @ OF\n\neS,\nwe owner: Peter Beebe\n\nWorkers’ @\n\nComp\n\nSecurity Auto\nZone r ) | Claim\n\nJason Tran @® Security\none\n\n* Security zone permissions contain view only\n« Anyone in the same security zone as the claim owner has view only permissions\n\n| ‘Bt access al\n\nAl claim an al claim\n\na)\nAccess\nProfile\n( Tee\ne- =\n— —\n— —\nACL ACL\n1 2\n\na ove e claim a al claim\n\nic) loyee\n\nclaim Access\n\nProfile\no- (ls\n— —\n— —\nACL ACL\n3 4\n\n« AClaimCenter implementation may use multiple access profiles\n* Each profile contains the criteria for a type of business scenario\n\n| Demonstration G\n\nAccess Control Lists\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nPermissions and Access Control Lists\nActivity\n\nQuestion G\n\n,~ — When does ClaimCenter determine which permissions a given user has?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nAnswer [a\n\n,~ — When does ClaimCenter determine which permissions a given user has?\n\n4\n¢\n¢\n\nClaimCenter determines the permissions for a given user when that user logs in.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n,~ — How many permissions can a given role have?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nAnswer\n\n,~ — How many permissions can a given role have?\n4\n\n¢\n¢\n\nArole can have any number of permissions, from zero (which would serve no\nbusiness purpose but is theoretically possible) to all the permissions in the system.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n,~ — How many roles can a given user have?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nAnswer [a\n\n,~ — Howmany roles can a given user have?\n\n4\n¢\n¢\n\nAuser can theoretically have any number of roles from Zero to all the roles in the\nsystem. A user must have at least one role in order to be able to do anything in\nClaimCenter. A user who has broader responsibility than another user can be given\nadditional roles so that they are able to accomplish these responsibilities.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n,~ — How could you easily determine the number of roles that enable users to\n\now create matters?\n7\n\nSSoopooD OOOO OD ooo\n\nGi\n\nAnswer [a\n\n,~ — How could you easily determine the number of roles that enable users to\n¢ create matters?\n\n¢\n¢\n\nYou could view the create matter permission in the security dictionary to see which\nroles contain that permission. Note that this only works for the base product, because\nthe security dictionary will not update based on any changes that a project team or\nsecurity administrator makes to the roles.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n,~ — Agiven user appears on the access control list for claim 234-22-147282,\now but that user cannot view or edit the claim. How could this happen?\n\nSSoopooD OOOO OD ooo\n\nGi\n\nAnswer [a\n\n,~ — Agiven user appears on the access control list for claim 234-22-147282,\nra but that user cannot view or edit the claim. How could this happen?\n\nThe user probably lacks the system permission to view and/or edit claims. In order to\nview or edit a claim, the user must have the system permission and appear on the\nACL.\n\nSS Oooo D OOOO ODD oo\n\nQuestion\n\n,~ — Asecurity profile can specify criteria for three types of access. What are\now the three types of access?\n\nSSoopooD OOOO OD ooo\n\nGi\n\nAnswer\n\n,~ — Asecurity profile can specify criteria for three types of access. What are\nra the three types of access?\n\nOwn access, view access, edit access.\n\nSS Oooo D OOOO ODD oo\n\nGi\n\nQuestion\n\n_~ — Iwo different claims that use the same security profile can have two\n¢ completely different access control lists. Why?\n\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nGi\n\nAnswer [a\n\n_~ — Iwo different claims that use the same security profile can have two\n¢ completely different access control lists. Why?\n\n¢\n¢\n\nThe security profile generates a list of users based on the criteria. The users who meet\nthe criteria vary from claim to claim. For example, if a profile says only the claim owner\nand members of his group can view and edit the claim, then two claims will have\ndifferent access control lists if they are owned by users in different groups.\n\nSS Oooo D OOOO ODD oo\n\nLesson\nobjectives ¢ Describe the role of permissions in controlling\nreview user capabilities in ClaimCenter\n\nDescribe the use of roles in managing user\npermissions\n\n« Assign permissions to roles\n\n¢ Assign roles to users\n\n¢ Describe Access Control Lists (ACLs)",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Permissions and Access Control Lists",
+      "word_count": 5,
+      "avg_confidence": 95.12,
+      "image_size": {
+        "width": 1280,
+        "height": 562
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the role of permissions in controlling\nuser capabilities in ClaimCenter\n\n¢ Describe the use of roles in managing user\npermissions\n\n« Assign permissions to roles\n\n¢ Assign roles to users\n\n¢ Describe Access Control Lists (ACLs)",
+      "word_count": 40,
+      "avg_confidence": 89.22,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| need to make sure that employees are\nallowed to perform only those tasks that they\nhave been approved to perform. A CSR should\nnot be allowed to issue a payment.\n\nCan ClaimCenter manage that level of\nauthorization and security?\n\nKarun\nAgency\nManager",
+      "word_count": 43,
+      "avg_confidence": 95.2,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Access G&G\n\nAccess is the ability to see and do things in ClaimCenter based on your user\nidentity\n\nAccess can control\n\n* Creation, modification, or deletion\n\n* Ownership\n+ Visibility (viewing and navigation)\n\n+ What you can do with an object (i.e., close claim)\nAccess is granted and managed with system permissions\n\nPermissions determine what a user can and cannot do",
+      "word_count": 62,
+      "avg_confidence": 92.98,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Auser's permissions are determined during login [a\n(1 of 4)\n\nusername\nand __2nd password Bp\n\nClaimCenter cc data",
+      "word_count": 18,
+      "avg_confidence": 83.48,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Auser's permissions are determined d\n| us p i uring login [a\n\nauthenticated?\n\nusername what permissions?\nand 2nd password which start page?\n\nClaimCenter cc data",
+      "word_count": 25,
+      "avg_confidence": 86.67,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Auser's permissions are determined during login\n(3 of 4)\n\n=\n\nusername\n\nand __2nd password Bp\n\nClaimCenter\n\nauthenticated?\nwhat permissions?\nwhich start page?\n—_——\n\nYes!\nView claim, ...\nDesktop: Activities\n\nGi\n\ncc data",
+      "word_count": 33,
+      "avg_confidence": 84.66,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Auser's permissions are determined during login\n\n(4 of 4)\n\nusername\nand password\n\n—_—\nDesktop: Activities\n\nClaimCenter\n\nauthenticated?\nwhat permissions?\nwhich start page?\n—_——\n\nYes!\nView claim, ...\nDesktop: Activities\n\nGi\n\ncc data",
+      "word_count": 33,
+      "avg_confidence": 89.78,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Permissions\n\nView\n\nView Team\n\nRick Ralston Betty Baker\nManager Adjuster\n\n@ =\n\n@& Can not View\nIda Belt Team\nCSR\n\nCreate object); Own object\n\n@~ | O~\n\nCreate Address Own Claim\nBook Contacts\n\nOr | Or\n\nCan not Create Can not Own\nAddress Book Claim\nContacts\n\nClose Claim\n\n@ =\n\nCan not Close\nClaim",
+      "word_count": 55,
+      "avg_confidence": 87.67,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Assigning permissions to roles G\n\n‘) CSR role ‘) Adjuster role\n4 View claims oP\n\nCreate claims\nEdit claims\nEdit exposures\n\nView claims\nCreate claims\nEdit claims\nEdit exposures\n\nView confidential Notes\n\nOwn claims\nEdit matters\n\n¢ Arole is a named collection of permissions used to simplify the assignment of\npermissions to users\n\n« Roles are managed by a user with the Manage Roles permission\n« Roles screen is in Administration",
+      "word_count": 72,
+      "avg_confidence": 89.01,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Assigning roles to users\n\n@ @\n\nIda Belt Betty Baker Rick Ralston\n\n>) ee CO\n& A £@\n\n¢ Each user is given one or more roles\n¢ Auser has all the permissions of the roles assigned to that user\n\n¢ Roles are assigned from the Administration Roles screen or the Administration\nUsers screen",
+      "word_count": 55,
+      "avg_confidence": 84.13,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| The security dictionary G\n\n* Series of HTML pages that document\npermissions and roles in your\n\napplication\n* Four main sections - -\noo. _ Application Permission Keys -.\n* Application permission keys Pages Activity approve\n+ Pages (in the user interface) System Permissions Reres) _\n+ System permissions Roles Description\n\n» Roles\n\nSummary\n\neg woe Related Permissions\n* Application Permission Keys\n\nare used to contain one or Activity approve\n\nactapproveany\n\nan Activity approveany Permission to approve any appro\nmore system permissions Activity assign even if the activity is assigned to\n\n* Application Permission Keys\nare used to improve performance\nfor system permissions",
+      "word_count": 104,
+      "avg_confidence": 89.15,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "System permissions and application permission G\nkeys\n\nSystem permissions\n+ Assigned to roles (assigned to users)\n+ Dictionary shows\n\nRoles that use the permission\nRelated application permission keys\nRelated pages\n\nRelated elements\n\nApplication permission keys\n\n+ May contain multiple system permissions\n\n+ Used to simplify coding (configuration)\n+ Used to restrict view and edit of pages\n\n+ May be used in code for security checks\n\nApplication Permission Keys\nPages\n\n[sstmzemisios\nRoles\nabcreate\n\nabcreatepref\nabdelete\n\nabedit\n\nabeditpref\nabview\nabviewsearch\naccountmng:\naccountview\nactapproveany\nacteditunowned\nactivityruleapprove\nactivitvruledeploy\nactivityruleedit\nactivityruleimport\nactivitvruleview\nactmakemand\nactown\n\nactcreate (object-based) - Create activities\n\n> Description\n\nAdjuster\nBase permissions for an adjuster\n\nClaims Supervisor\n\nBase permissions for a claims supervisor\n\nBase permissions for a clerical user\n\nRelated Application Permission Keys\n\nPermission to create a new activity on the claim. Checks cr\n\nRelated Pages\n\nNewActivity via Claim createactvi\n\n‘Base permissions Tor a reinsurance manager\n\nSuperuser\n‘Superuser with full permissions",
+      "word_count": 148,
+      "avg_confidence": 89.18,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\n\nManaging roles and permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.39,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "A Karun\nenc\nRe neuen\n\nAssigning roles to users is good, but there are\nclaims that should only be seen by particular users.\n| need to be able to control which users can access\n\nspecial types of claims.",
+      "word_count": 38,
+      "avg_confidence": 91.1,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Access Control Lists (ACLs) add object level\n\npermissions\nClaim 100-00-100001 ACL\nUsers on this ACL:\n(> Tae’ Andy Applegate\n— Sue Smith\n= Ida Belt\n\n¢« AnAccess Control List (ACL) is a list associated with a claim, identifying which\nusers can access the claim and its sub-objects\n\n¢ ACLs ensure that a given user can view or edit only objects which he or she needs\nto",
+      "word_count": 67,
+      "avg_confidence": 91.33,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Permissions versus ACLs Gi\n\n¢ Permissions are granted or denied\nacross entire application, regardless of eae\nthe object\n\nClaimCenter\n¢ All-or-none approach for what a user\n\ncan do\n\n« ACLs are object-based permissions\nand are granted or denied on a claim- o~ ©)\nby-claim basis —s aN\n¢« ACLS and permissions work together\nto provide full access security\n\nCreate group\n\nCreate exposure\n(for a given claim)",
+      "word_count": 67,
+      "avg_confidence": 87.13,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Permissions and ACLs\n\n2 @\n\nGi\n\nTo view a claim, a user must\nhave the correct permissions\nand be on the Access Control\nList for that claim\n\nyy\n\n© @ e- &\nen es Cs — U\ne oy\n&\nUsers on this ACL:\nYI a ine\n~~S —Y% ida Belt",
+      "word_count": 52,
+      "avg_confidence": 75.15,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "How ACLs are created\n\nSecurity types\nEmployee claim\nFraud risk\nSensitive\n\nUnder litigation\nUnsecured (none)\n\n@\n- ©\nas |\n\nGi\n\nACLs are virtual; there is no UI\nor direct access\n\nACLs are created based on\ndefined security types\nPrivileges are based on:\n* Security type (of the claim or object)\n* Ownership (of the claim or object)\n\n* Group (or security zone) of the\nobject owner\n\n* Role (on the object)",
+      "word_count": 72,
+      "avg_confidence": 89.11,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Elements of access control\n\n« ACLs are determined by an access profile\n\n* Access profiles are in security-config.xml Primary Aahuster\n* Claim security types (each type has a Special Claim Permission\nmatching access profile)\n+ Employee claim, Fraud risk, Sensitive, Under\nlitigation, UnsecuredClaim\n\nClaim Validation Level\nSalvage Status\n\nOther Recoverable Status\n+ Set by the claim owner on the claim as Special\nClaim Permission\n\nReinsurance Reportable?\n+ Determines which access profile to apply\n* Access types\n\n* Own, view, and edit\n\n* Access levels\n+ User, Group, Security zone, Anyone\n\nAndy Applegate\n\nAutol -TeamA\n\n<none> a\n\n<none>\nEmployee claim\nFraud risk\n\nUnder litigation\nUnsecuredClaim\n\n<none> .",
+      "word_count": 107,
+      "avg_confidence": 87.73,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Access profile I\n\nSecurity-config.xml\n<AccessProfile securitylevel=\"unsecuredclaim\">\n<ClaimAccessLevels>\n\n<AccessLevel level=“group\" permission=\"view\"/>\n<AccessLevel level=“group\" permission=\"edit\"/>\n\n<AccessLevel level=\"securityzone\" permission=\"view\"/>\n\n<ClaimUserAccessLevel role=\"relateduser\" level=\"user\" permission=\"Vview\"/>\n</ClaimAccessLevels>\n\nFor an unsecured claim (unrestricted):\n« All object owners have view and edit access\n¢ All users in the same group as the claim owner have view and edit access\n¢ All users in the same security zone as the claim owner have view and edit access\nAll users with the relateduser role have view only access",
+      "word_count": 79,
+      "avg_confidence": 88.01,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Owner access\n\nDana Evans @\n@e\n\nPeter Beebe @\n@e\n\n* Object owners have access\n« Jason is not in the Worker’s Comp Security Zone\n\n[v) EA owner: Dana Evans\n\na) owner: Dana Evans\n\neS,\nwe owner: Peter Beebe\n\nix)\ne_|\n\nJason Tran @®",
+      "word_count": 44,
+      "avg_confidence": 79.98,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Group access\n\n‘*\n\nDana Evans @ : owner: Dana Evans\ns- om\nPeter Beebe s : oO\n\niy owner: Dana Evans\n\nEllen Bishop a,\nwe owner: Peter Beebe\n\nix)\ne_|\n\nJason Tran @®\n\nGroup permissions contain view and edit\nAnyone in the same group as the owner has view and edit access",
+      "word_count": 52,
+      "avg_confidence": 85.96,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Security zone access Gi\n\nDana evans @ ; OF. o Al owner: Dana Evans\n\n: o\nPeter peeve @ OF CDR owner: Dana Evans\n9 Xs\nEllen sisnor @ OF\n\neS,\nwe owner: Peter Beebe\n\nWorkers’ @\n\nComp\n\nSecurity Auto\nZone r ) | Claim\n\nJason Tran @® Security\none\n\n* Security zone permissions contain view only\n« Anyone in the same security zone as the claim owner has view only permissions",
+      "word_count": 73,
+      "avg_confidence": 79.68,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| ‘Bt access al\n\nAl claim an al claim\n\na)\nAccess\nProfile\n( Tee\ne- =\n— —\n— —\nACL ACL\n1 2\n\na ove e claim a al claim\n\nic) loyee\n\nclaim Access\n\nProfile\no- (ls\n— —\n— —\nACL ACL\n3 4\n\n« AClaimCenter implementation may use multiple access profiles\n* Each profile contains the criteria for a type of business scenario",
+      "word_count": 66,
+      "avg_confidence": 76.37,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Demonstration G\n\nAccess Control Lists\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.41,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Student exercise\n\nPermissions and Access Control Lists\nActivity",
+      "word_count": 9,
+      "avg_confidence": 95.82,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question G\n\n,~ — When does ClaimCenter determine which permissions a given user has?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo",
+      "word_count": 21,
+      "avg_confidence": 73.95,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer [a\n\n,~ — When does ClaimCenter determine which permissions a given user has?\n\n4\n¢\n¢\n\nClaimCenter determines the permissions for a given user when that user logs in.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 36,
+      "avg_confidence": 80.56,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question\n\n,~ — How many permissions can a given role have?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo",
+      "word_count": 18,
+      "avg_confidence": 67.53,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer\n\n,~ — How many permissions can a given role have?\n4\n\n¢\n¢\n\nArole can have any number of permissions, from zero (which would serve no\nbusiness purpose but is theoretically possible) to all the permissions in the system.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 46,
+      "avg_confidence": 81.55,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question\n\n,~ — How many roles can a given user have?\n\n4\n¢\n¢\n\nSSoopooD OOOO OD ooo",
+      "word_count": 18,
+      "avg_confidence": 66.27,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer [a\n\n,~ — Howmany roles can a given user have?\n\n4\n¢\n¢\n\nAuser can theoretically have any number of roles from Zero to all the roles in the\nsystem. A user must have at least one role in order to be able to do anything in\nClaimCenter. A user who has broader responsibility than another user can be given\nadditional roles so that they are able to accomplish these responsibilities.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 78,
+      "avg_confidence": 88.41,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Question\n\n,~ — How could you easily determine the number of roles that enable users to\n\now create matters?\n7\n\nSSoopooD OOOO OD ooo\n\nGi",
+      "word_count": 25,
+      "avg_confidence": 75.32,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Answer [a\n\n,~ — How could you easily determine the number of roles that enable users to\n¢ create matters?\n\n¢\n¢\n\nYou could view the create matter permission in the security dictionary to see which\nroles contain that permission. Note that this only works for the base product, because\nthe security dictionary will not update based on any changes that a project team or\nsecurity administrator makes to the roles.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 77,
+      "avg_confidence": 89.69,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Question\n\n,~ — Agiven user appears on the access control list for claim 234-22-147282,\now but that user cannot view or edit the claim. How could this happen?\n\nSSoopooD OOOO OD ooo\n\nGi",
+      "word_count": 33,
+      "avg_confidence": 83.03,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Answer [a\n\n,~ — Agiven user appears on the access control list for claim 234-22-147282,\nra but that user cannot view or edit the claim. How could this happen?\n\nThe user probably lacks the system permission to view and/or edit claims. In order to\nview or edit a claim, the user must have the system permission and appear on the\nACL.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 67,
+      "avg_confidence": 88.38,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Question\n\n,~ — Asecurity profile can specify criteria for three types of access. What are\now the three types of access?\n\nSSoopooD OOOO OD ooo\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 80.8,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Answer\n\n,~ — Asecurity profile can specify criteria for three types of access. What are\nra the three types of access?\n\nOwn access, view access, edit access.\n\nSS Oooo D OOOO ODD oo\n\nGi",
+      "word_count": 34,
+      "avg_confidence": 81.66,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Question\n\n_~ — Iwo different claims that use the same security profile can have two\n¢ completely different access control lists. Why?\n\n¢\n¢\n\nSSoopooD OOOO OD ooo\n\nGi",
+      "word_count": 29,
+      "avg_confidence": 79.7,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "Answer [a\n\n_~ — Iwo different claims that use the same security profile can have two\n¢ completely different access control lists. Why?\n\n¢\n¢\n\nThe security profile generates a list of users based on the criteria. The users who meet\nthe criteria vary from claim to claim. For example, if a profile says only the claim owner\nand members of his group can view and edit the claim, then two claims will have\ndifferent access control lists if they are owned by users in different groups.\n\nSS Oooo D OOOO ODD oo",
+      "word_count": 93,
+      "avg_confidence": 89.84,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "Lesson\nobjectives ¢ Describe the role of permissions in controlling\nreview user capabilities in ClaimCenter\n\nDescribe the use of roles in managing user\npermissions\n\n« Assign permissions to roles\n\n¢ Assign roles to users\n\n¢ Describe Access Control Lists (ACLs)",
+      "word_count": 40,
+      "avg_confidence": 90.2,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

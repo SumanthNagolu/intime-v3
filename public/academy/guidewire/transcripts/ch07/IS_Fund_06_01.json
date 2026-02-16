@@ -1,0 +1,2735 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "filename": "IS_Fund_06_01.mp4",
+    "video_stem": "IS_Fund_06_01",
+    "duration_seconds": 100.36,
+    "duration_formatted": "00:01:40.360",
+    "segment_count": 32,
+    "word_count": 403,
+    "avg_confidence": 0.9219,
+    "transcription_time_seconds": 16.52,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:14:20.062293"
+  },
+  "full_text": "Recall the shortcut to open a PCF in Studio from the browser is to use Alt plus Shift plus E. The shading colors, light blue, dark blue, gray, of the containers mean in a PCF have various meanings. Light blue is a reference container defined in another PCF. Dark blue is an indirectly referenced container, that is, a reference container from a reference container. Gray is a container directly defined in this PCF. Shown here are the main elements in the hierarchy. The location is a page. The page is everything you see on the canvas. The top level container is a screen, shown here. There is no secondary container in this design. A secondary container is a container that contains other containers, such as the card view we have already seen and the list detail view we will see in the essentials course. The primary container is a detail view. A primary container is a container which can contain atomic widgets directly. The input column is one of those container widgets. The input column contains several widgets, for example a label widget as shown here. The detail view here is an inline detail view widget. Double click on the detail view. When you click the detail view on the canvas, notice how most of its properties are blank. Switch back to abcontact summary page.pcf. Double click on the social media tab. Looking at the social media tab from the details page, it has all the widgets we need. Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of                            ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.1,
+      "end": 29.3,
+      "start_formatted": "00:00:01.100",
+      "end_formatted": "00:00:29.300",
+      "text": "Recall the shortcut to open a PCF in Studio from the browser is to use Alt plus Shift plus E. The shading colors, light blue, dark blue, gray, of the containers mean in a PCF have various meanings. Light blue is a reference container defined in another PCF. Dark blue is an indirectly referenced container, that is, a reference container from a reference container. Gray is a container directly defined in this PCF. Shown here are the main elements in the hierarchy.",
+      "words": [
+        {
+          "word": "Recall",
+          "start": 1.1,
+          "end": 1.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 1.66,
+          "end": 1.8,
+          "probability": 0.9868
+        },
+        {
+          "word": "shortcut",
+          "start": 1.8,
+          "end": 2.22,
+          "probability": 0.9917
+        },
+        {
+          "word": "to",
+          "start": 2.22,
+          "end": 2.42,
+          "probability": 0.9907
+        },
+        {
+          "word": "open",
+          "start": 2.42,
+          "end": 2.68,
+          "probability": 0.8984
+        },
+        {
+          "word": "a",
+          "start": 2.68,
+          "end": 2.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "PCF",
+          "start": 2.82,
+          "end": 3.4,
+          "probability": 0.981
+        },
+        {
+          "word": "in",
+          "start": 3.4,
+          "end": 3.52,
+          "probability": 0.939
+        },
+        {
+          "word": "Studio",
+          "start": 3.52,
+          "end": 3.88,
+          "probability": 0.5957
+        },
+        {
+          "word": "from",
+          "start": 3.88,
+          "end": 4.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 4.2,
+          "end": 4.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "browser",
+          "start": 4.32,
+          "end": 4.68,
+          "probability": 0.9712
+        },
+        {
+          "word": "is",
+          "start": 4.68,
+          "end": 4.9,
+          "probability": 0.9868
+        },
+        {
+          "word": "to",
+          "start": 4.9,
+          "end": 5.02,
+          "probability": 0.998
+        },
+        {
+          "word": "use",
+          "start": 5.02,
+          "end": 5.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "Alt",
+          "start": 5.24,
+          "end": 5.44,
+          "probability": 0.7827
+        },
+        {
+          "word": "plus",
+          "start": 5.44,
+          "end": 5.72,
+          "probability": 0.0839
+        },
+        {
+          "word": "Shift",
+          "start": 5.72,
+          "end": 5.94,
+          "probability": 0.9302
+        },
+        {
+          "word": "plus",
+          "start": 5.94,
+          "end": 6.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "E.",
+          "start": 6.18,
+          "end": 6.46,
+          "probability": 0.9922
+        },
+        {
+          "word": "The",
+          "start": 6.8,
+          "end": 7.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "shading",
+          "start": 7.36,
+          "end": 7.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "colors,",
+          "start": 7.64,
+          "end": 8.12,
+          "probability": 0.9902
+        },
+        {
+          "word": "light",
+          "start": 8.32,
+          "end": 8.68,
+          "probability": 0.9575
+        },
+        {
+          "word": "blue,",
+          "start": 8.68,
+          "end": 8.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "dark",
+          "start": 9.22,
+          "end": 9.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "blue,",
+          "start": 9.54,
+          "end": 9.86,
+          "probability": 1.0
+        },
+        {
+          "word": "gray,",
+          "start": 10.06,
+          "end": 10.46,
+          "probability": 0.9375
+        },
+        {
+          "word": "of",
+          "start": 10.68,
+          "end": 10.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 10.92,
+          "end": 11.04,
+          "probability": 1.0
+        },
+        {
+          "word": "containers",
+          "start": 11.04,
+          "end": 11.48,
+          "probability": 0.9814
+        },
+        {
+          "word": "mean",
+          "start": 11.48,
+          "end": 11.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "in",
+          "start": 11.78,
+          "end": 11.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 11.94,
+          "end": 12.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "PCF",
+          "start": 12.04,
+          "end": 12.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 12.64,
+          "end": 12.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "various",
+          "start": 12.8,
+          "end": 13.14,
+          "probability": 1.0
+        },
+        {
+          "word": "meanings.",
+          "start": 13.14,
+          "end": 13.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "Light",
+          "start": 14.04,
+          "end": 14.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "blue",
+          "start": 14.44,
+          "end": 14.64,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 14.64,
+          "end": 14.8,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 14.8,
+          "end": 14.92,
+          "probability": 1.0
+        },
+        {
+          "word": "reference",
+          "start": 14.92,
+          "end": 15.28,
+          "probability": 0.6987
+        },
+        {
+          "word": "container",
+          "start": 15.28,
+          "end": 15.78,
+          "probability": 0.998
+        },
+        {
+          "word": "defined",
+          "start": 15.78,
+          "end": 16.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 16.12,
+          "end": 16.42,
+          "probability": 1.0
+        },
+        {
+          "word": "another",
+          "start": 16.42,
+          "end": 16.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "PCF.",
+          "start": 16.7,
+          "end": 17.46,
+          "probability": 1.0
+        },
+        {
+          "word": "Dark",
+          "start": 17.78,
+          "end": 18.1,
+          "probability": 0.999
+        },
+        {
+          "word": "blue",
+          "start": 18.1,
+          "end": 18.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 18.34,
+          "end": 18.52,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 18.52,
+          "end": 18.64,
+          "probability": 0.999
+        },
+        {
+          "word": "indirectly",
+          "start": 18.64,
+          "end": 19.1,
+          "probability": 0.9946
+        },
+        {
+          "word": "referenced",
+          "start": 19.1,
+          "end": 19.74,
+          "probability": 0.9712
+        },
+        {
+          "word": "container,",
+          "start": 19.74,
+          "end": 20.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 20.52,
+          "end": 20.8,
+          "probability": 0.998
+        },
+        {
+          "word": "is,",
+          "start": 20.8,
+          "end": 21.08,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 21.26,
+          "end": 21.46,
+          "probability": 1.0
+        },
+        {
+          "word": "reference",
+          "start": 21.46,
+          "end": 21.82,
+          "probability": 0.8584
+        },
+        {
+          "word": "container",
+          "start": 21.82,
+          "end": 22.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 22.32,
+          "end": 22.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 22.52,
+          "end": 22.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "reference",
+          "start": 22.64,
+          "end": 23.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "container.",
+          "start": 23.0,
+          "end": 23.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Gray",
+          "start": 23.96,
+          "end": 24.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 24.26,
+          "end": 24.44,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 24.44,
+          "end": 24.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "container",
+          "start": 24.54,
+          "end": 24.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "directly",
+          "start": 24.9,
+          "end": 25.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "defined",
+          "start": 25.36,
+          "end": 25.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 25.74,
+          "end": 25.94,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 25.94,
+          "end": 26.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "PCF.",
+          "start": 26.1,
+          "end": 26.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Shown",
+          "start": 27.14,
+          "end": 27.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "here",
+          "start": 27.56,
+          "end": 27.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 27.74,
+          "end": 27.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 27.9,
+          "end": 28.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "main",
+          "start": 28.0,
+          "end": 28.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "elements",
+          "start": 28.16,
+          "end": 28.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 28.62,
+          "end": 28.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 28.76,
+          "end": 28.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "hierarchy.",
+          "start": 28.84,
+          "end": 29.3,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.3,
+      "end": 59.26,
+      "start_formatted": "00:00:29.300",
+      "end_formatted": "00:00:59.260",
+      "text": "The location is a page. The page is everything you see on the canvas. The top level container is a screen, shown here. There is no secondary container in this design. A secondary container is a container that contains other containers, such as the card view we have already seen and the list detail view we will see in the essentials course. The primary container is a detail view. A primary container is a container which can contain atomic widgets directly. The input column is one of those container widgets.",
+      "words": [
+        {
+          "word": "The",
+          "start": 29.3,
+          "end": 30.06,
+          "probability": 0.9111
+        },
+        {
+          "word": "location",
+          "start": 30.06,
+          "end": 30.54,
+          "probability": 0.9409
+        },
+        {
+          "word": "is",
+          "start": 30.54,
+          "end": 30.8,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 30.8,
+          "end": 30.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "page.",
+          "start": 30.9,
+          "end": 31.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "The",
+          "start": 31.52,
+          "end": 31.9,
+          "probability": 0.999
+        },
+        {
+          "word": "page",
+          "start": 31.9,
+          "end": 32.12,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 32.12,
+          "end": 32.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "everything",
+          "start": 32.26,
+          "end": 32.54,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 32.54,
+          "end": 32.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 32.78,
+          "end": 32.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 32.98,
+          "end": 33.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 33.14,
+          "end": 33.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "canvas.",
+          "start": 33.24,
+          "end": 33.64,
+          "probability": 0.9658
+        },
+        {
+          "word": "The",
+          "start": 34.14,
+          "end": 34.7,
+          "probability": 0.999
+        },
+        {
+          "word": "top",
+          "start": 34.7,
+          "end": 34.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "level",
+          "start": 34.96,
+          "end": 35.24,
+          "probability": 0.5996
+        },
+        {
+          "word": "container",
+          "start": 35.24,
+          "end": 35.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 35.62,
+          "end": 35.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 35.88,
+          "end": 35.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "screen,",
+          "start": 35.98,
+          "end": 36.36,
+          "probability": 0.998
+        },
+        {
+          "word": "shown",
+          "start": 36.58,
+          "end": 36.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "here.",
+          "start": 36.94,
+          "end": 37.24,
+          "probability": 1.0
+        },
+        {
+          "word": "There",
+          "start": 37.54,
+          "end": 37.86,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 37.86,
+          "end": 38.02,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 38.02,
+          "end": 38.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "secondary",
+          "start": 38.18,
+          "end": 38.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "container",
+          "start": 38.74,
+          "end": 39.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 39.2,
+          "end": 39.48,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 39.48,
+          "end": 39.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "design.",
+          "start": 39.64,
+          "end": 40.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "A",
+          "start": 40.3,
+          "end": 40.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "secondary",
+          "start": 40.68,
+          "end": 41.12,
+          "probability": 0.999
+        },
+        {
+          "word": "container",
+          "start": 41.12,
+          "end": 41.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 41.62,
+          "end": 41.88,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 41.88,
+          "end": 41.98,
+          "probability": 1.0
+        },
+        {
+          "word": "container",
+          "start": 41.98,
+          "end": 42.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 42.4,
+          "end": 42.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "contains",
+          "start": 42.64,
+          "end": 43.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "other",
+          "start": 43.08,
+          "end": 43.34,
+          "probability": 1.0
+        },
+        {
+          "word": "containers,",
+          "start": 43.34,
+          "end": 43.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "such",
+          "start": 44.16,
+          "end": 44.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 44.52,
+          "end": 44.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 44.66,
+          "end": 44.78,
+          "probability": 1.0
+        },
+        {
+          "word": "card",
+          "start": 44.78,
+          "end": 45.02,
+          "probability": 0.7065
+        },
+        {
+          "word": "view",
+          "start": 45.02,
+          "end": 45.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "we",
+          "start": 45.24,
+          "end": 45.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 45.4,
+          "end": 45.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "already",
+          "start": 45.54,
+          "end": 45.86,
+          "probability": 1.0
+        },
+        {
+          "word": "seen",
+          "start": 45.86,
+          "end": 46.2,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 46.2,
+          "end": 46.34,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 46.34,
+          "end": 46.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "list",
+          "start": 46.46,
+          "end": 46.68,
+          "probability": 0.9717
+        },
+        {
+          "word": "detail",
+          "start": 46.68,
+          "end": 47.12,
+          "probability": 0.9863
+        },
+        {
+          "word": "view",
+          "start": 47.12,
+          "end": 47.38,
+          "probability": 1.0
+        },
+        {
+          "word": "we",
+          "start": 47.38,
+          "end": 47.56,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 47.56,
+          "end": 47.7,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 47.7,
+          "end": 47.9,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 47.9,
+          "end": 48.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 48.04,
+          "end": 48.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "essentials",
+          "start": 48.14,
+          "end": 48.58,
+          "probability": 0.6177
+        },
+        {
+          "word": "course.",
+          "start": 48.58,
+          "end": 49.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 49.54,
+          "end": 49.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "primary",
+          "start": 49.92,
+          "end": 50.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "container",
+          "start": 50.34,
+          "end": 50.78,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 50.78,
+          "end": 51.04,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 51.04,
+          "end": 51.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "detail",
+          "start": 51.14,
+          "end": 51.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "view.",
+          "start": 51.48,
+          "end": 51.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "A",
+          "start": 52.18,
+          "end": 52.46,
+          "probability": 0.999
+        },
+        {
+          "word": "primary",
+          "start": 52.46,
+          "end": 52.9,
+          "probability": 1.0
+        },
+        {
+          "word": "container",
+          "start": 52.9,
+          "end": 53.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 53.36,
+          "end": 53.6,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 53.6,
+          "end": 53.7,
+          "probability": 1.0
+        },
+        {
+          "word": "container",
+          "start": 53.7,
+          "end": 54.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "which",
+          "start": 54.06,
+          "end": 54.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 54.32,
+          "end": 54.5,
+          "probability": 1.0
+        },
+        {
+          "word": "contain",
+          "start": 54.5,
+          "end": 54.88,
+          "probability": 0.998
+        },
+        {
+          "word": "atomic",
+          "start": 54.88,
+          "end": 55.32,
+          "probability": 0.9678
+        },
+        {
+          "word": "widgets",
+          "start": 55.32,
+          "end": 55.72,
+          "probability": 0.998
+        },
+        {
+          "word": "directly.",
+          "start": 55.72,
+          "end": 56.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 56.52,
+          "end": 56.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "input",
+          "start": 56.92,
+          "end": 57.3,
+          "probability": 0.9922
+        },
+        {
+          "word": "column",
+          "start": 57.3,
+          "end": 57.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 57.72,
+          "end": 57.94,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 57.94,
+          "end": 58.1,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 58.1,
+          "end": 58.22,
+          "probability": 1.0
+        },
+        {
+          "word": "those",
+          "start": 58.22,
+          "end": 58.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "container",
+          "start": 58.46,
+          "end": 58.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "widgets.",
+          "start": 58.92,
+          "end": 59.26,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.08,
+      "end": 89.04,
+      "start_formatted": "00:01:00.080",
+      "end_formatted": "00:01:29.040",
+      "text": "The input column contains several widgets, for example a label widget as shown here. The detail view here is an inline detail view widget. Double click on the detail view. When you click the detail view on the canvas, notice how most of its properties are blank. Switch back to abcontact summary page.pcf. Double click on the social media tab. Looking at the social media tab from the details page, it has all the widgets we need.",
+      "words": [
+        {
+          "word": "The",
+          "start": 60.08,
+          "end": 60.64,
+          "probability": 0.8955
+        },
+        {
+          "word": "input",
+          "start": 60.64,
+          "end": 61.04,
+          "probability": 0.7002
+        },
+        {
+          "word": "column",
+          "start": 61.04,
+          "end": 61.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "contains",
+          "start": 61.48,
+          "end": 61.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "several",
+          "start": 61.92,
+          "end": 62.36,
+          "probability": 0.999
+        },
+        {
+          "word": "widgets,",
+          "start": 62.36,
+          "end": 62.78,
+          "probability": 0.9873
+        },
+        {
+          "word": "for",
+          "start": 63.1,
+          "end": 63.32,
+          "probability": 0.9575
+        },
+        {
+          "word": "example",
+          "start": 63.32,
+          "end": 63.72,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 63.72,
+          "end": 63.92,
+          "probability": 0.9678
+        },
+        {
+          "word": "label",
+          "start": 63.92,
+          "end": 64.16,
+          "probability": 0.7061
+        },
+        {
+          "word": "widget",
+          "start": 64.16,
+          "end": 64.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "as",
+          "start": 64.48,
+          "end": 64.66,
+          "probability": 0.9585
+        },
+        {
+          "word": "shown",
+          "start": 64.66,
+          "end": 64.9,
+          "probability": 0.999
+        },
+        {
+          "word": "here.",
+          "start": 64.9,
+          "end": 65.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 65.62,
+          "end": 66.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "detail",
+          "start": 66.08,
+          "end": 66.44,
+          "probability": 0.8257
+        },
+        {
+          "word": "view",
+          "start": 66.44,
+          "end": 66.7,
+          "probability": 0.9863
+        },
+        {
+          "word": "here",
+          "start": 66.7,
+          "end": 66.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 66.94,
+          "end": 67.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "an",
+          "start": 67.1,
+          "end": 67.22,
+          "probability": 0.9893
+        },
+        {
+          "word": "inline",
+          "start": 67.22,
+          "end": 67.56,
+          "probability": 0.9341
+        },
+        {
+          "word": "detail",
+          "start": 67.56,
+          "end": 67.9,
+          "probability": 0.9624
+        },
+        {
+          "word": "view",
+          "start": 67.9,
+          "end": 68.24,
+          "probability": 0.98
+        },
+        {
+          "word": "widget.",
+          "start": 68.24,
+          "end": 68.6,
+          "probability": 0.998
+        },
+        {
+          "word": "Double",
+          "start": 68.86,
+          "end": 69.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "click",
+          "start": 69.3,
+          "end": 69.52,
+          "probability": 0.3679
+        },
+        {
+          "word": "on",
+          "start": 69.52,
+          "end": 69.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 69.7,
+          "end": 69.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "detail",
+          "start": 69.82,
+          "end": 70.16,
+          "probability": 0.9614
+        },
+        {
+          "word": "view.",
+          "start": 70.16,
+          "end": 70.64,
+          "probability": 0.998
+        },
+        {
+          "word": "When",
+          "start": 71.12,
+          "end": 71.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "you",
+          "start": 71.68,
+          "end": 71.78,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 71.78,
+          "end": 72.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 72.02,
+          "end": 72.16,
+          "probability": 0.9932
+        },
+        {
+          "word": "detail",
+          "start": 72.16,
+          "end": 72.5,
+          "probability": 0.9805
+        },
+        {
+          "word": "view",
+          "start": 72.5,
+          "end": 72.78,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 72.78,
+          "end": 72.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 72.98,
+          "end": 73.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "canvas,",
+          "start": 73.08,
+          "end": 73.52,
+          "probability": 0.9507
+        },
+        {
+          "word": "notice",
+          "start": 73.78,
+          "end": 74.16,
+          "probability": 0.9927
+        },
+        {
+          "word": "how",
+          "start": 74.16,
+          "end": 74.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "most",
+          "start": 74.36,
+          "end": 74.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 74.62,
+          "end": 74.78,
+          "probability": 0.999
+        },
+        {
+          "word": "its",
+          "start": 74.78,
+          "end": 74.94,
+          "probability": 0.9668
+        },
+        {
+          "word": "properties",
+          "start": 74.94,
+          "end": 75.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 75.4,
+          "end": 75.68,
+          "probability": 0.999
+        },
+        {
+          "word": "blank.",
+          "start": 75.68,
+          "end": 76.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "Switch",
+          "start": 76.76,
+          "end": 77.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "back",
+          "start": 77.32,
+          "end": 77.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 77.58,
+          "end": 77.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "abcontact",
+          "start": 77.72,
+          "end": 78.56,
+          "probability": 0.6118
+        },
+        {
+          "word": "summary",
+          "start": 78.56,
+          "end": 78.84,
+          "probability": 0.2114
+        },
+        {
+          "word": "page",
+          "start": 78.84,
+          "end": 79.28,
+          "probability": 0.9644
+        },
+        {
+          "word": ".pcf.",
+          "start": 79.28,
+          "end": 80.32,
+          "probability": 0.9067
+        },
+        {
+          "word": "Double",
+          "start": 80.6,
+          "end": 81.16,
+          "probability": 0.9922
+        },
+        {
+          "word": "click",
+          "start": 81.16,
+          "end": 81.4,
+          "probability": 0.9263
+        },
+        {
+          "word": "on",
+          "start": 81.4,
+          "end": 81.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 81.56,
+          "end": 81.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "social",
+          "start": 81.66,
+          "end": 81.94,
+          "probability": 0.5581
+        },
+        {
+          "word": "media",
+          "start": 81.94,
+          "end": 82.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "tab.",
+          "start": 82.32,
+          "end": 82.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "Looking",
+          "start": 84.16,
+          "end": 84.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "at",
+          "start": 84.72,
+          "end": 84.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 84.9,
+          "end": 85.02,
+          "probability": 0.999
+        },
+        {
+          "word": "social",
+          "start": 85.02,
+          "end": 85.32,
+          "probability": 0.8984
+        },
+        {
+          "word": "media",
+          "start": 85.32,
+          "end": 85.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "tab",
+          "start": 85.68,
+          "end": 86.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "from",
+          "start": 86.06,
+          "end": 86.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 86.28,
+          "end": 86.4,
+          "probability": 0.999
+        },
+        {
+          "word": "details",
+          "start": 86.4,
+          "end": 86.84,
+          "probability": 0.9473
+        },
+        {
+          "word": "page,",
+          "start": 86.84,
+          "end": 87.3,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 87.48,
+          "end": 87.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "has",
+          "start": 87.68,
+          "end": 87.84,
+          "probability": 0.998
+        },
+        {
+          "word": "all",
+          "start": 87.84,
+          "end": 88.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 88.02,
+          "end": 88.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "widgets",
+          "start": 88.16,
+          "end": 88.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "we",
+          "start": 88.5,
+          "end": 88.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "need.",
+          "start": 88.72,
+          "end": 89.04,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 90.64,
+      "end": 100.38,
+      "start_formatted": "00:01:30.640",
+      "end_formatted": "00:01:40.380",
+      "text": "Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of the Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 90.64,
+          "end": 90.92,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.0309
+        },
+        {
+          "word": "the",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.1696
+        },
+        {
+          "word": "Filogy",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.3086
+        },
+        {
+          "word": "of",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.2849
+        },
+        {
+          "word": "the",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.5967
+        },
+        {
+          "word": "Filogy",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.4438
+        },
+        {
+          "word": "of",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.3992
+        },
+        {
+          "word": "the",
+          "start": 90.92,
+          "end": 90.92,
+          "probability": 0.7651
+        },
+        {
+          "word": "Filogy",
+          "start": 90.92,
+          "end": 91.02,
+          "probability": 0.5479
+        },
+        {
+          "word": "of",
+          "start": 91.02,
+          "end": 91.04,
+          "probability": 0.4885
+        },
+        {
+          "word": "the",
+          "start": 91.04,
+          "end": 91.32,
+          "probability": 0.8291
+        },
+        {
+          "word": "Filogy",
+          "start": 91.32,
+          "end": 91.46,
+          "probability": 0.7354
+        },
+        {
+          "word": "of",
+          "start": 91.46,
+          "end": 91.46,
+          "probability": 0.5835
+        },
+        {
+          "word": "the",
+          "start": 91.46,
+          "end": 91.52,
+          "probability": 0.8633
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.8389
+        },
+        {
+          "word": "of",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.6411
+        },
+        {
+          "word": "the",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.8833
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9136
+        },
+        {
+          "word": "of",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.6909
+        },
+        {
+          "word": "the",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9033
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9453
+        },
+        {
+          "word": "of",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.7441
+        },
+        {
+          "word": "the",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9165
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9629
+        },
+        {
+          "word": "of",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.7822
+        },
+        {
+          "word": "the",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9248
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9688
+        },
+        {
+          "word": "of",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.8159
+        },
+        {
+          "word": "the",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9302
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9756
+        },
+        {
+          "word": "of",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.8472
+        },
+        {
+          "word": "the",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9331
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.8765
+        },
+        {
+          "word": "the",
+          "start": 91.52,
+          "end": 91.52,
+          "probability": 0.9385
+        },
+        {
+          "word": "Filogy",
+          "start": 91.52,
+          "end": 92.1,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.8853
+        },
+        {
+          "word": "the",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.9424
+        },
+        {
+          "word": "Filogy",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.9087
+        },
+        {
+          "word": "the",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.9453
+        },
+        {
+          "word": "Filogy",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.915
+        },
+        {
+          "word": "the",
+          "start": 92.1,
+          "end": 92.1,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 92.1,
+          "end": 92.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 92.38,
+          "end": 92.48,
+          "probability": 0.9292
+        },
+        {
+          "word": "the",
+          "start": 92.48,
+          "end": 92.48,
+          "probability": 0.9507
+        },
+        {
+          "word": "Filogy",
+          "start": 92.48,
+          "end": 92.48,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 92.48,
+          "end": 92.48,
+          "probability": 0.9326
+        },
+        {
+          "word": "the",
+          "start": 92.48,
+          "end": 92.48,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 92.48,
+          "end": 92.52,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9414
+        },
+        {
+          "word": "the",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9424
+        },
+        {
+          "word": "the",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9609
+        },
+        {
+          "word": "Filogy",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9458
+        },
+        {
+          "word": "the",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9629
+        },
+        {
+          "word": "Filogy",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 92.52,
+          "end": 92.52,
+          "probability": 0.9526
+        },
+        {
+          "word": "Filogy",
+          "start": 92.52,
+          "end": 92.82,
+          "probability": 0.4963
+        },
+        {
+          "word": "of",
+          "start": 92.82,
+          "end": 92.82,
+          "probability": 0.9019
+        },
+        {
+          "word": "Filogy",
+          "start": 92.82,
+          "end": 92.82,
+          "probability": 0.4976
+        },
+        {
+          "word": "of",
+          "start": 92.82,
+          "end": 92.82,
+          "probability": 0.8872
+        },
+        {
+          "word": "Filogy",
+          "start": 92.82,
+          "end": 92.82,
+          "probability": 0.4998
+        },
+        {
+          "word": "of",
+          "start": 92.82,
+          "end": 92.82,
+          "probability": 0.8823
+        },
+        {
+          "word": "Filogy",
+          "start": 92.82,
+          "end": 92.82,
+          "probability": 0.5034
+        },
+        {
+          "word": "of",
+          "start": 92.82,
+          "end": 92.86,
+          "probability": 0.8867
+        },
+        {
+          "word": "Filogy",
+          "start": 92.86,
+          "end": 92.86,
+          "probability": 0.5107
+        },
+        {
+          "word": "of",
+          "start": 92.86,
+          "end": 93.1,
+          "probability": 0.8926
+        },
+        {
+          "word": "Filogy",
+          "start": 93.1,
+          "end": 93.56,
+          "probability": 0.5166
+        },
+        {
+          "word": "of",
+          "start": 93.56,
+          "end": 93.56,
+          "probability": 0.9014
+        },
+        {
+          "word": "Filogy",
+          "start": 93.56,
+          "end": 94.08,
+          "probability": 0.5293
+        },
+        {
+          "word": "of",
+          "start": 94.08,
+          "end": 94.08,
+          "probability": 0.9033
+        },
+        {
+          "word": "Filogy",
+          "start": 94.08,
+          "end": 94.3,
+          "probability": 0.5469
+        },
+        {
+          "word": "of",
+          "start": 94.3,
+          "end": 94.4,
+          "probability": 0.9087
+        },
+        {
+          "word": "Filogy",
+          "start": 94.4,
+          "end": 94.4,
+          "probability": 0.5708
+        },
+        {
+          "word": "of",
+          "start": 94.4,
+          "end": 94.4,
+          "probability": 0.915
+        },
+        {
+          "word": "Filogy",
+          "start": 94.4,
+          "end": 94.4,
+          "probability": 0.5879
+        },
+        {
+          "word": "of",
+          "start": 94.4,
+          "end": 94.4,
+          "probability": 0.917
+        },
+        {
+          "word": "Filogy",
+          "start": 94.4,
+          "end": 94.4,
+          "probability": 0.6299
+        },
+        {
+          "word": "of",
+          "start": 94.4,
+          "end": 94.4,
+          "probability": 0.918
+        },
+        {
+          "word": "Filogy",
+          "start": 94.4,
+          "end": 94.4,
+          "probability": 0.6523
+        },
+        {
+          "word": "of",
+          "start": 94.4,
+          "end": 94.5,
+          "probability": 0.9199
+        },
+        {
+          "word": "Filogy",
+          "start": 94.5,
+          "end": 94.6,
+          "probability": 0.6899
+        },
+        {
+          "word": "of",
+          "start": 94.6,
+          "end": 94.84,
+          "probability": 0.9229
+        },
+        {
+          "word": "Filogy",
+          "start": 94.84,
+          "end": 94.98,
+          "probability": 0.7158
+        },
+        {
+          "word": "of",
+          "start": 94.98,
+          "end": 94.98,
+          "probability": 0.9263
+        },
+        {
+          "word": "Filogy",
+          "start": 94.98,
+          "end": 95.74,
+          "probability": 0.7524
+        },
+        {
+          "word": "of",
+          "start": 95.74,
+          "end": 95.88,
+          "probability": 0.9272
+        },
+        {
+          "word": "Filogy",
+          "start": 95.88,
+          "end": 96.58,
+          "probability": 0.7661
+        },
+        {
+          "word": "of",
+          "start": 96.58,
+          "end": 96.6,
+          "probability": 0.9292
+        },
+        {
+          "word": "Filogy",
+          "start": 96.6,
+          "end": 96.6,
+          "probability": 0.7969
+        },
+        {
+          "word": "of",
+          "start": 96.6,
+          "end": 96.74,
+          "probability": 0.9312
+        },
+        {
+          "word": "Filogy",
+          "start": 96.74,
+          "end": 96.74,
+          "probability": 0.8174
+        },
+        {
+          "word": "of",
+          "start": 96.74,
+          "end": 96.74,
+          "probability": 0.9287
+        },
+        {
+          "word": "Filogy",
+          "start": 96.74,
+          "end": 96.8,
+          "probability": 0.8457
+        },
+        {
+          "word": "of",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.9316
+        },
+        {
+          "word": "Filogy",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.8691
+        },
+        {
+          "word": "of",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.9321
+        },
+        {
+          "word": "Filogy",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.873
+        },
+        {
+          "word": "of",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.936
+        },
+        {
+          "word": "Filogy",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.8887
+        },
+        {
+          "word": "of",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.938
+        },
+        {
+          "word": "Filogy",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.8994
+        },
+        {
+          "word": "of",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.9395
+        },
+        {
+          "word": "Filogy",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.9121
+        },
+        {
+          "word": "of",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.939
+        },
+        {
+          "word": "Filogy",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.9106
+        },
+        {
+          "word": "of",
+          "start": 96.8,
+          "end": 96.8,
+          "probability": 0.9375
+        },
+        {
+          "word": "Filogy",
+          "start": 96.8,
+          "end": 96.94,
+          "probability": 0.9248
+        },
+        {
+          "word": "of",
+          "start": 96.94,
+          "end": 96.96,
+          "probability": 0.9419
+        },
+        {
+          "word": "Filogy",
+          "start": 96.96,
+          "end": 96.96,
+          "probability": 0.9258
+        },
+        {
+          "word": "of",
+          "start": 96.96,
+          "end": 97.18,
+          "probability": 0.9429
+        },
+        {
+          "word": "Filogy",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.937
+        },
+        {
+          "word": "of",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.9419
+        },
+        {
+          "word": "Filogy",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.9395
+        },
+        {
+          "word": "of",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.9448
+        },
+        {
+          "word": "Filogy",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.9438
+        },
+        {
+          "word": "of",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.9468
+        },
+        {
+          "word": "of",
+          "start": 97.18,
+          "end": 97.18,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 97.18,
+          "end": 97.36,
+          "probability": 0.9502
+        },
+        {
+          "word": "of",
+          "start": 97.36,
+          "end": 97.36,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 97.36,
+          "end": 97.38,
+          "probability": 0.9497
+        },
+        {
+          "word": "of",
+          "start": 97.38,
+          "end": 97.4,
+          "probability": 0.9482
+        },
+        {
+          "word": "Filogy",
+          "start": 97.4,
+          "end": 97.7,
+          "probability": 0.9536
+        },
+        {
+          "word": "of",
+          "start": 97.7,
+          "end": 97.7,
+          "probability": 0.9473
+        },
+        {
+          "word": "Filogy",
+          "start": 97.7,
+          "end": 97.78,
+          "probability": 0.959
+        },
+        {
+          "word": "of",
+          "start": 97.78,
+          "end": 97.78,
+          "probability": 0.9478
+        },
+        {
+          "word": "Filogy",
+          "start": 97.78,
+          "end": 98.48,
+          "probability": 0.9595
+        },
+        {
+          "word": "of",
+          "start": 98.48,
+          "end": 98.62,
+          "probability": 0.9487
+        },
+        {
+          "word": "Filogy",
+          "start": 98.62,
+          "end": 99.12,
+          "probability": 0.9639
+        },
+        {
+          "word": "of",
+          "start": 99.12,
+          "end": 99.12,
+          "probability": 0.9507
+        },
+        {
+          "word": "Filogy",
+          "start": 99.12,
+          "end": 99.82,
+          "probability": 0.9644
+        },
+        {
+          "word": "of",
+          "start": 99.82,
+          "end": 99.82,
+          "probability": 0.9507
+        },
+        {
+          "word": "Filogy",
+          "start": 99.82,
+          "end": 100.22,
+          "probability": 0.9653
+        },
+        {
+          "word": "of",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9526
+        },
+        {
+          "word": "Filogy",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9507
+        },
+        {
+          "word": "Filogy",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9678
+        },
+        {
+          "word": "of",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9531
+        },
+        {
+          "word": "Filogy",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9688
+        },
+        {
+          "word": "of",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9541
+        },
+        {
+          "word": "Filogy",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9536
+        },
+        {
+          "word": "Filogy",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9697
+        },
+        {
+          "word": "of",
+          "start": 100.22,
+          "end": 100.22,
+          "probability": 0.9546
+        },
+        {
+          "word": "Filogy",
+          "start": 100.22,
+          "end": 100.38,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 100.38,
+          "end": 100.38,
+          "probability": 0.9561
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 5,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 6,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 7,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 8,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 9,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 10,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 11,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 12,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 13,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 14,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 15,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 16,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 17,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 18,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 19,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 100.36,
+      "end": 100.36,
+      "start_formatted": "00:01:40.360",
+      "end_formatted": "00:01:40.360",
+      "text": "",
+      "words": []
+    }
+  ]
+}

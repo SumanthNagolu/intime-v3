@@ -94,6 +94,17 @@ import { sprintItemsRouter } from '../routers/sprint-items'
 import { boardRouter } from '../routers/board'
 import { retrospectivesRouter } from '../routers/retrospectives'
 import { searchRouter } from '../routers/search'
+// Unified Inbox (Phase 1: Foundation)
+import { inboxRouter } from '../routers/inbox'
+// Workflow Progress (Phase 1: Foundation)
+import { workflowProgressRouter } from '../routers/workflow-progress'
+// Communications (Phase 2)
+import { emailRouter } from '../routers/email'
+import { calendarRouter } from '../routers/calendar'
+// Phone Integration (Phase 3)
+import { phoneRouter } from '../routers/phone'
+// AI Intelligence (Phase 4)
+import { aiRouter } from '../routers/ai'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -192,6 +203,17 @@ export const appRouter = router({
   board: boardRouter,
   retrospectives: retrospectivesRouter,
   search: searchRouter,
+  // Unified Inbox (Phase 1: Foundation)
+  inbox: inboxRouter,
+  // Workflow Progress (Phase 1: Foundation)
+  workflowProgress: workflowProgressRouter,
+  // Communications (Phase 2)
+  email: emailRouter,
+  calendar: calendarRouter,
+  // Phone Integration (Phase 3)
+  phone: phoneRouter,
+  // AI Intelligence (Phase 4)
+  ai: aiRouter,
 })
 
 export type AppRouter = typeof appRouter

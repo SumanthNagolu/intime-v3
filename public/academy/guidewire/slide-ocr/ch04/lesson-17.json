@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-17",
+    "slide_count": 25,
+    "slides_with_text": 24,
+    "total_words": 862,
+    "avg_confidence": 87.01,
+    "processing_time_seconds": 11.6,
+    "extracted_at": "2026-02-13T12:06:21.668260"
+  },
+  "full_text": "Coverages\n\nLesson\nobjectives\n\nDefine a coverage\n\nDefine a coverable\n\nDescribe a coverage category\n\nDescribe subclause relationships in Advanced\nProduct Designer\n\n| Coverables and coverages\n\n¢ Acoverable is an exposure to risk and is\nnot explicitly defined in the product model\n\n¢« Examples of coverables include\ndwellings, autos, policy lines (named\ninsured)\n\nDwelling — a coverable\n\n| Coverages\n\n* Coverages are attached to coverables\n\n* Coverages are patterns in the product ty\nmodel where each coverage pattern is\nassociated with a relevant entity\n\n¢« Examples of coverage include theft\ncoverage, fire coverage or liability vehicle\ndamage (on the policy line)\n\nThis coverable, the dwelling,\nhas fire coverage\n\n| Defining coverages in the product model\n\n¢ The product model is where you can define\ncoverages and coverage terms\n\n¢ Example: an insurer may decide to add a\ncoverage that will insure business in the case\nof cyber attacks\n\n* Type of coverage: Liability coverage\n+ What are the terms?\n* Can you base this new coverage on an existing\n\ncoverage in an existing line of business (e.g.\nGeneral Liability)?\n\n| Coverage pattern attributes Gi\n\njattibute estion to consider\n\nCovered object\nCategory\nAvailability\n\nExistence\n\nTo what coverable does the coverage apply?\nIn what category is the coverage located?\n\nCan a coverage be offered on the policy?\n\nIs the coverage created automatically or manually? Can the coverage be\ndeleted?\n\n| Covered object Gi\n\nThe coverable is the dwelling\n\nThe fire coverage applies to the\ndwelling\n\nEach coverable has its own coverage\ntable (lookup table)\n\nAny new coverable requires a new\ncoverage table\n\nCoverage\ntable\n\nCoverable with fire coverage\n\n| PolicyCenter and coverage pattern outcome Gi\n\n¢ PolicyCenter records selection of coverage in database\n\n¢ PolicyCenter does not store information on an electable or suggested coverage\ndeclined by user\n\n¢ There is one database row for each coverage that exists on a policy\n\n—_YES, PLEASE | PLEASE\nNO, Oo YOU\n\n| Coverage categories — Homeowners Gi\n\n« Acoverage category:\n\n* is a group of one or more logically related\n\ncoverage patterns\n\n* associates CoveragePatterns with\nPolicyLinePatterns\n¢ This example is in the base\nconfiguration Homeowners line of\nbusiness\n\nSection | Coverages\n\nCoverage A - Coverage B -\nDwelling Other Structures\n\nCoverage C- Coverage D - Section! :\nPersonal Loss of Use Deductibles :\nProperty F\n\n| Coverage categories — Personal Auto oS\n\nPhysical Damage Group\n\noe)\n\nCollision Comprehensive\n\nPersonal Auto\nPolicyLinePattern\n\n| Recommended practices: coverage patterns\n\n« When mapping coverage patterns to categories:\n* Put coverages that will appear together into same category\n« Use categories to separate coverages that appear automatically\n« When rendering coverages on user interface:\n* Put most commonly accepted coverages on \"Included Coverages\" tab\n\n* Put less commonly accepted coverages on \"Additional Coverages\" tab\n\n| Coverage availability and existence\n\n* Does a coverage appear on a policy?\n« Availability addresses this issue\n* Howcan you specify “how” a coverage appears to the user?\n\n¢ This is set using the Existence option:\n+ Suggested\n+ Electable\n\n+ Required\n\n| Coverage lookup table for availability G\n\nPersonal auto\n\nc=?\n\nDeath & Disability\n\nBenefit\nStartEffectiveDate* EndEffectiveDate Availability~ State UWCompanyCode JobType\n1/1/00 Available South Dakota [SD]\n1/1/00 Available Texas [TX]\n1/1/00 Unavailable\n\n| Demonstration G\nCoverages\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Introducing the subclause relationship Gi\n\nree, Insurance companies often offer coverages as\nproduct Manage groups or families of coverages. How can | create\nsubcoverages under a parent coverage in\n\nPolicyCenter?\n\nMarcus\nBusiness\nAnalyst\n\nThis can be achieved in Advanced Product\nDesigner which supports the subclause\nrelationship for clauses (coverage,\nconditions, exclusions).\n\n| Subclause relationships in Advanced Product Designer Gi\n\n¢ Defining subclause relationships in a mind map\n\n« Aclause can have zero or one parent clause\n\n« Aclause can have multiple subclauses\n\n+ You can create multiple levels of subclauses\n\n* The subclause and its parent must be of the same clause type\n¢ Visualizing subclauses in PolicyCenter\n\n+ Add anew or existing clause as a subclause\n\n+ Unassign a subclause from its parent clause\n\n+ Remove a subclause\n\nQuestion\n\n,~ — What is a coverable?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhat is a coverable?\n\nA coverable is an exposure to risk and is not a pattern in product model.\n\nQuestion\n\n,~ — What is a coverage?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhat is a coverage?\n\nCoverages are patterns in the product model where each coverage pattern is\nassociated with a relevant entity.\n\nQuestion\n\n_~ — Define and give an example of a coverage category.\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n¢\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nDefine and give an example of a coverage category.\n\nA coverage category is a group of one or more logically related coverage patterns.\n\nLesson\nobjectives\nreview\n\nDefine a coverage\n\nDefine a coverable\n\nDescribe a coverage category\n\nDescribe subclause relationships in Advanced\nProduct Designer\n\n| Student exercise\n\nCoverages",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Coverages",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nDefine a coverage\n\nDefine a coverable\n\nDescribe a coverage category\n\nDescribe subclause relationships in Advanced\nProduct Designer",
+      "word_count": 19,
+      "avg_confidence": 95.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Coverables and coverages\n\n¢ Acoverable is an exposure to risk and is\nnot explicitly defined in the product model\n\n¢« Examples of coverables include\ndwellings, autos, policy lines (named\ninsured)\n\nDwelling — a coverable",
+      "word_count": 35,
+      "avg_confidence": 91.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Coverages\n\n* Coverages are attached to coverables\n\n* Coverages are patterns in the product ty\nmodel where each coverage pattern is\nassociated with a relevant entity\n\n¢« Examples of coverage include theft\ncoverage, fire coverage or liability vehicle\ndamage (on the policy line)\n\nThis coverable, the dwelling,\nhas fire coverage",
+      "word_count": 51,
+      "avg_confidence": 92.21,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Defining coverages in the product model\n\n¢ The product model is where you can define\ncoverages and coverage terms\n\n¢ Example: an insurer may decide to add a\ncoverage that will insure business in the case\nof cyber attacks\n\n* Type of coverage: Liability coverage\n+ What are the terms?\n* Can you base this new coverage on an existing\n\ncoverage in an existing line of business (e.g.\nGeneral Liability)?",
+      "word_count": 71,
+      "avg_confidence": 92.31,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Coverage pattern attributes Gi\n\njattibute estion to consider\n\nCovered object\nCategory\nAvailability\n\nExistence\n\nTo what coverable does the coverage apply?\nIn what category is the coverage located?\n\nCan a coverage be offered on the policy?\n\nIs the coverage created automatically or manually? Can the coverage be\ndeleted?",
+      "word_count": 48,
+      "avg_confidence": 93.04,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Covered object Gi\n\nThe coverable is the dwelling\n\nThe fire coverage applies to the\ndwelling\n\nEach coverable has its own coverage\ntable (lookup table)\n\nAny new coverable requires a new\ncoverage table\n\nCoverage\ntable\n\nCoverable with fire coverage",
+      "word_count": 39,
+      "avg_confidence": 93.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| PolicyCenter and coverage pattern outcome Gi\n\n¢ PolicyCenter records selection of coverage in database\n\n¢ PolicyCenter does not store information on an electable or suggested coverage\ndeclined by user\n\n¢ There is one database row for each coverage that exists on a policy\n\n—_YES, PLEASE | PLEASE\nNO, Oo YOU",
+      "word_count": 51,
+      "avg_confidence": 87.21,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Coverage categories — Homeowners Gi\n\n« Acoverage category:\n\n* is a group of one or more logically related\n\ncoverage patterns\n\n* associates CoveragePatterns with\nPolicyLinePatterns\n¢ This example is in the base\nconfiguration Homeowners line of\nbusiness\n\nSection | Coverages\n\nCoverage A - Coverage B -\nDwelling Other Structures\n\nCoverage C- Coverage D - Section! :\nPersonal Loss of Use Deductibles :\nProperty F",
+      "word_count": 65,
+      "avg_confidence": 88.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Coverage categories — Personal Auto oS\n\nPhysical Damage Group\n\noe)\n\nCollision Comprehensive\n\nPersonal Auto\nPolicyLinePattern",
+      "word_count": 16,
+      "avg_confidence": 86.28,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Recommended practices: coverage patterns\n\n« When mapping coverage patterns to categories:\n* Put coverages that will appear together into same category\n« Use categories to separate coverages that appear automatically\n« When rendering coverages on user interface:\n* Put most commonly accepted coverages on \"Included Coverages\" tab\n\n* Put less commonly accepted coverages on \"Additional Coverages\" tab",
+      "word_count": 58,
+      "avg_confidence": 89.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Coverage availability and existence\n\n* Does a coverage appear on a policy?\n« Availability addresses this issue\n* Howcan you specify “how” a coverage appears to the user?\n\n¢ This is set using the Existence option:\n+ Suggested\n+ Electable\n\n+ Required",
+      "word_count": 43,
+      "avg_confidence": 86.26,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Coverage lookup table for availability G\n\nPersonal auto\n\nc=?\n\nDeath & Disability\n\nBenefit\nStartEffectiveDate* EndEffectiveDate Availability~ State UWCompanyCode JobType\n1/1/00 Available South Dakota [SD]\n1/1/00 Available Texas [TX]\n1/1/00 Unavailable",
+      "word_count": 31,
+      "avg_confidence": 89.74,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\nCoverages\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Introducing the subclause relationship Gi\n\nree, Insurance companies often offer coverages as\nproduct Manage groups or families of coverages. How can | create\nsubcoverages under a parent coverage in\n\nPolicyCenter?\n\nMarcus\nBusiness\nAnalyst\n\nThis can be achieved in Advanced Product\nDesigner which supports the subclause\nrelationship for clauses (coverage,\nconditions, exclusions).",
+      "word_count": 52,
+      "avg_confidence": 90.67,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Subclause relationships in Advanced Product Designer Gi\n\n¢ Defining subclause relationships in a mind map\n\n« Aclause can have zero or one parent clause\n\n« Aclause can have multiple subclauses\n\n+ You can create multiple levels of subclauses\n\n* The subclause and its parent must be of the same clause type\n¢ Visualizing subclauses in PolicyCenter\n\n+ Add anew or existing clause as a subclause\n\n+ Unassign a subclause from its parent clause\n\n+ Remove a subclause",
+      "word_count": 78,
+      "avg_confidence": 86.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n,~ — What is a coverable?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 16,
+      "avg_confidence": 54.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhat is a coverable?\n\nA coverable is an exposure to risk and is not a pattern in product model.",
+      "word_count": 29,
+      "avg_confidence": 83.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n,~ — What is a coverage?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 16,
+      "avg_confidence": 60.77,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhat is a coverage?\n\nCoverages are patterns in the product model where each coverage pattern is\nassociated with a relevant entity.",
+      "word_count": 31,
+      "avg_confidence": 85.04,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_~ — Define and give an example of a coverage category.\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 21,
+      "avg_confidence": 74.22,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n¢\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nDefine and give an example of a coverage category.\n\nA coverage category is a group of one or more logically related coverage patterns.",
+      "word_count": 33,
+      "avg_confidence": 87.57,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Lesson\nobjectives\nreview\n\nDefine a coverage\n\nDefine a coverable\n\nDescribe a coverage category\n\nDescribe subclause relationships in Advanced\nProduct Designer",
+      "word_count": 20,
+      "avg_confidence": 95.2,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Student exercise\n\nCoverages",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

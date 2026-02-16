@@ -1,0 +1,467 @@
+{
+  "metadata": {
+    "chapter": "ch13",
+    "chapter_title": "Rating Introduction",
+    "lesson": "lesson-01",
+    "slide_count": 41,
+    "slides_with_text": 37,
+    "total_words": 1616,
+    "avg_confidence": 84.74,
+    "processing_time_seconds": 13.4,
+    "extracted_at": "2026-02-15T18:23:41.079568"
+  },
+  "full_text": "Rating: Business Overview\n\nLesson\nobjectives\n\n¢ Identify the main components in rating\n¢ Describe primary rating terms\n« Explain the rating implementation approach\n\n| A look at the overall process of rating Gi\n\nKalani t 5 On my next project, I’m\nworking with PolicyCenter\nRating Management. Can\nyou give me an overview\nof how rating works? Julia\n\nImplementation\nArchitect\n\nRating Analyst\n\nLet’s start by looking at\nthe overall process.\n\n| PolicyCenter rating overview G\n\nae\n\n* Rating is the process of determining the cost of a policy\n\nRating Engine\n\n¢ Rating output results in information representing the prices for various portions of\nthe policies such as coverage costs, taxes or fees\n\n| Components of PolicyCenter rating management fa\n\nWhat are the main components in\nPolicyCenter rating management?\n\nJulia\n\nThe main components are Implementation\nrate books, rate tables, rate Architect\nroutines and parameter\nsets. I'll show you.\n\nSS\n|\n\n| Rating components fa\n\nRating Engine roy\n\n=\n@-coe-\n\nRate tables Rate book Rate routines\nand rate table\ndefinitions\nParameter Set\n\nGi\n\n| Rating process diagram CO)\na\n} —-ii§—__-.\n\nQuote Rating Engine selects a Rate Book. The Rating Engine calls a Rate Routine\nfor the Cost Item (for example, coverage)\n\nE\nReturn them to the calling policy transaction (Quote) G\n\nConstructs a corresponding\nworksheet with the calculated results\n\nQuestion\n\n_— — What are some of the actions that take place in terms of rating after a\n¢ quote is requested?\n\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nGi\n\nAnswer fa\n\n_— — What are some of the actions that take place in terms of rating after a\noo quote is requested?\n“ Possible answers include:\n1. Rating Engine selects a Rate Book\n2. The Rating Engine calls a Rate Routine for the Cost Item (for example, coverage)\n\n3. The PolicyCenter Rating Engine constructs the corresponding Worksheet with the\ncalculated results\n\n4. The results are returned to the calling policy transaction (quote)\n\nSS oe ooo ee oe oOoOe SoD\n\n| Demonstration G\n\nPersonal Auto submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nCommercial Property submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nCopy a submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Rating terminology fa\n\nJulia\nImplementation {\n\n‘\n\nArchitect\n\n~ over these in more detail?\n\nThat’s a lot of new terms.\nWould you like me to go\n\nKalani °\nRating Analyst Ve\n\nYes, please.\n\n| Rate tables and rate table definitions i\n\n¢ Arate table contains static rates in a\ntable format consisting of one or\nmore rows\n\n* Rate tables contain columns\nrepresenting parameters used to\nlookup a value, known as a factor.\n\n* Arate table definition describes the\nparameters and factors for a\nparticular rate table\n\nQuestion\n\n_—- — Whatis a rate table?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n_—- — Whatis a rate table?\n\n¢\n7 Arate table contains static rates in a table format consisting of one or more rows.\n\nSS oe ooo ee oe oOoOe SoD\n\nQuestion\n\n,- — Whatis a factor?\n\nSsesessee see s5455=>-\n\nAnswer\n\n,- — Whatis a factor?\n\n¢\n: “ A factor is a value in a rate table that can be a rate factor, class, or tier, or as code for\n\nuse in further lookups.\n\nSS oe ooo ee oe oOoOe SoD\n\nGi\n\nQuestion\n\n_- — Whatis a parameter set?\ny ¢\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n_- — Whatis a parameter set?\n\n¢\noe A parameter set enables users to define the usable information available within a rate\n\nroutine.\n\nSS oe ooo ee oe oOoOe SoD\n\nGi\n\n| Rate routines i\n\n« Arate routine defines steps for\ncalculating a cost for coverage, taxes\nand other policy costs\n\n¢ Arate routine step can specify:\n« Mathematical operations\n* Logic conditions\n\n« Variable assignments from a rate table\nlookup\n\n| Rate books i\n\n¢ Arate book is a group of rate tables\nand rate routines\n\n* Rate books can be accessed from\nthe Administration tab > Rating >\nRate Books\n\n| Rating engine and rate flow fa\n\n¢ The base implementation of the\nrating engine uses a hierarchy of\nclasses and flexible logic\n\n* The term “rate flow” refers to the\nlogic in the rating engine that\ncalculates the premium\n\nRate Flow\n\nQuestion\n\n,—- — Whatis “rate flow’?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n,—- — Whatis “rate flow’?\n\n¢\noe Rate flow is the logic in the rating engine plugin that calculates the premium.\n\nSS oe ooo ee oe oOoOe SoD\n\n| Process for implementing rating\n\nRating Analyst © What is the process for\nimplementing rating?\n\nWhile the rating manual\nremains the same, you have\nto adjust the content so that\nit works in PolicyCenter.\n\nJulia\nImplementation We\nArchitect\n\n!\n\n| Move rating content to PolicyCenter Gi\n\nMainframe Policy Administration System\n\n;) rating manual\n\nThe rating manual is the same, but the format is changed\n\n| The actuary’s (or rating analyst's) role G\n\n&\n\n¢ During implementation, actuaries\nprovide rating-specific content to\nconfiguration developers\n\n¢ The format you have may not work\n\n¢ Work with implementation experts to\ntransition“old” rating content format to\na PolicyCenter-ready format while\nkeeping the rating manual the same\n\nRating user stories: Example implementation stories [5\n\nSet up Rate Table\n\nSet up Rate Routines\n\nCreation of a country-wide rate\nbook and a jurisdictional rate\nbook\n\nAs an actuary or rating\n\nanalyst, | want to be able to\ndefine and populate the required\nrate tables.\n\nAs an actuary or rating analyst, |\nwant to enter the rate routines\ninto the Rating Engine.\n\nAs an actuary or rating analyst, |\nwant to define rate books to\nsupport policy line and\njurisdictional requirements so\nthat | can better manage rate\ntables and rate routines.\n\nThe Rate Tables in\nPolicyCenter represent the look\nups for Rate Factors\n\nThe Rate Routines in\nPolicyCenter represent the\nrating (algorithm) used to\ncalculate each premium or cost\n\nRate books relate rate tables\nand rate routines together for\ninsurers to file and use for each\njurisdiction.\n\n| Starting with this... G\n\nRating Algorithm\nTandon Tuncion Dexipton Ted Format | State Bazpton | Tobie Name Tele nputs “GaatonRules/intermedate Sep ‘Rounding les\n[assign driver to each vehicle bated on driver\nlssiennent wie. See assiarment Logie\nA\n[celclete te vehicle Coverage Prenvom for\nlech ourenase cveroge forthe fist vehice\n| sing Stns 8 thru 19\n3] 79, coup, Cou base Rate ance\nC4 lLimit Factor [Limit\nslvenie |cowe.con |x __Joessesie Factor peductibe\nclvericie|n,r0,comp.cou |x __rertoryFector reer\nfe ap: Derive Popa\n{venice 5,20 Ix __laspican ge Factor Lroticont ge este sgotcant age [age using soplicont 008\nalvehicie [coup Ou x [vehicle Type Factor [venicleType stat vencle Type\nalveice [i PO, COMP, COU» |vehele Coverage SuBiotal Premiam Poles [Round ote nearest ert\n\n¢ This is an example of where an actuary or rating specialist might begin\n¢ The format is an independent summary and not ready for PolicyCenter\n\n¢ The actuary or rating specialist must organize it into a PolicyCenter-ready format\n\nGo to this...\n\nBy coverable (vehicle)\n\n1 Coverage Rate Routine\nLiability- 81 &PD_}PA Coverage Premium Algorithm\n\nBase Rate\n\nvehicleTypeFactor\n\nvehicleCostFactor\n\ncoverageFactor\n\nuwCompanyFactor\n\nAdjustedRate\n\nTermamount\n\nPrint Amount\n\nRate Routine\nMedical Payments ]PA Coverage Premium Algorithm\n\nBase Rate\nvehicleTypeFactor\nvehicleCostFactor\ncoverageFactor\nuwCompanyFactor\nAdjustedRate\nTermamount\nPrint Amount\n\nBy coverage\n\nsured Motorist | PA Coverage Premium Algorithm\nBase Rate\nvehicleTypeFactor\nvehicleCostFactor\ncoverageFactor\nuwCompanyFactor\n\nPremium\n\nPremium\n\nPremium\n\nam\n\n1s\n16\n09\n372\n372\n\n372.00\n\nbeaters.\n\naL\n\n1s\n0.75\n09\n\nam\n\n12\n16\n09\n237\n\n297.00\n\nseests.\n\na.\n\n12\n0.75\n03\n\nam\n\nvB\n\n16\n09\n\n495.00\n\n0.48\n\nAgeBe\n\naL\n\n0.75\n09\n\nam\n\nBa8\n\n09\n372\n372\n\n372.00\n\n0.44\n\nAgeBe\n\naL\n\n0.75\n09\n\nesis.\n\nBB\n\nae\n\n0.75\n09\n\n| Review: What is required? i\nRate Flow: Logic in the rating engine that performs the\n\npremium calculation\nRate Tables: The rating content\nin a lookup format\n\nRate Book: A group of rate tables and rate routines G\n\nRate Routines: Algorithms used to\ncalculate premium\n\n| Rate flow implementation approach fa\n\n¢ The rate flow defines the order of\nexecution\n\n¢ Simple rate lines of business (LOB) may\nnot require much alteration from out-of-\nthe-box (OOTB) samples*\n\n¢ Analternative approach to hard-coding\nthe rate routines is to define the rate\norder in a table of its own which will call\nthe routines according to priority\n\nQ\n\n+ Examples exist for PARatingEngine.gs and\nCPRatingEngine.gs in the base configuration\nof PolicyCenter\n\n* Hard-coding rate routines is NOT\nrecommended\n\nQuestion\n\n_- — Whatis the process that an actuary or rating analyst must follow in order\n¢ to prepare usable rating content for the configuration developer?\n\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nGi\n\nAnswer fa\n\n_— — Whatis the process that an actuary or rating analyst must follow in order\noo to prepare usable rating content for the configuration developer?\n¢\nEach rating implementation starts from a different place. For example, a rating analyst\nmay have a spreadsheet with existing rating data or it may be contained in the current\nsystem in another format. Actuaries and rating specialists must create content that is\nPolicyCenter ready.\n\nSS oe ooo ee oe oOoOe SoD\n\nLesson\nobjectives ¢ Identify the main components in rating\nreview * Describe primary rating terms\n\n« Explain the rating implementation approach\n\n| Student exercise\n\nWorking with submissions",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Rating: Business Overview",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Identify the main components in rating\n¢ Describe primary rating terms\n« Explain the rating implementation approach",
+      "word_count": 20,
+      "avg_confidence": 86.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| A look at the overall process of rating Gi\n\nKalani t 5 On my next project, I’m\nworking with PolicyCenter\nRating Management. Can\nyou give me an overview\nof how rating works? Julia\n\nImplementation\nArchitect\n\nRating Analyst\n\nLet’s start by looking at\nthe overall process.",
+      "word_count": 46,
+      "avg_confidence": 90.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| PolicyCenter rating overview G\n\nae\n\n* Rating is the process of determining the cost of a policy\n\nRating Engine\n\n¢ Rating output results in information representing the prices for various portions of\nthe policies such as coverage costs, taxes or fees",
+      "word_count": 42,
+      "avg_confidence": 91.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Components of PolicyCenter rating management fa\n\nWhat are the main components in\nPolicyCenter rating management?\n\nJulia\n\nThe main components are Implementation\nrate books, rate tables, rate Architect\nroutines and parameter\nsets. I'll show you.\n\nSS\n|",
+      "word_count": 37,
+      "avg_confidence": 89.03,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Rating components fa\n\nRating Engine roy\n\n=\n@-coe-\n\nRate tables Rate book Rate routines\nand rate table\ndefinitions\nParameter Set",
+      "word_count": 21,
+      "avg_confidence": 87.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Gi\n\n| Rating process diagram CO)\na\n} —-ii§—__-.\n\nQuote Rating Engine selects a Rate Book. The Rating Engine calls a Rate Routine\nfor the Cost Item (for example, coverage)\n\nE\nReturn them to the calling policy transaction (Quote) G\n\nConstructs a corresponding\nworksheet with the calculated results",
+      "word_count": 48,
+      "avg_confidence": 91.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Question\n\n_— — What are some of the actions that take place in terms of rating after a\n¢ quote is requested?\n\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nGi",
+      "word_count": 31,
+      "avg_confidence": 71.03,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Answer fa\n\n_— — What are some of the actions that take place in terms of rating after a\noo quote is requested?\n“ Possible answers include:\n1. Rating Engine selects a Rate Book\n2. The Rating Engine calls a Rate Routine for the Cost Item (for example, coverage)\n\n3. The PolicyCenter Rating Engine constructs the corresponding Worksheet with the\ncalculated results\n\n4. The results are returned to the calling policy transaction (quote)\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 80,
+      "avg_confidence": 84.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Demonstration G\n\nPersonal Auto submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Demonstration G\n\nCommercial Property submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\n\nCopy a submission\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Rating terminology fa\n\nJulia\nImplementation {\n\n‘\n\nArchitect\n\n~ over these in more detail?\n\nThat’s a lot of new terms.\nWould you like me to go\n\nKalani °\nRating Analyst Ve\n\nYes, please.",
+      "word_count": 34,
+      "avg_confidence": 87.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Rate tables and rate table definitions i\n\n¢ Arate table contains static rates in a\ntable format consisting of one or\nmore rows\n\n* Rate tables contain columns\nrepresenting parameters used to\nlookup a value, known as a factor.\n\n* Arate table definition describes the\nparameters and factors for a\nparticular rate table",
+      "word_count": 54,
+      "avg_confidence": 90.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n_—- — Whatis a rate table?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 16,
+      "avg_confidence": 60.53,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n_—- — Whatis a rate table?\n\n¢\n7 Arate table contains static rates in a table format consisting of one or more rows.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 31,
+      "avg_confidence": 77.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n,- — Whatis a factor?\n\nSsesessee see s5455=>-",
+      "word_count": 9,
+      "avg_confidence": 75.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\n,- — Whatis a factor?\n\n¢\n: “ A factor is a value in a rate table that can be a rate factor, class, or tier, or as code for\n\nuse in further lookups.\n\nSS oe ooo ee oe oOoOe SoD\n\nGi",
+      "word_count": 43,
+      "avg_confidence": 81.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_- — Whatis a parameter set?\ny ¢\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 16,
+      "avg_confidence": 61.47,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n_- — Whatis a parameter set?\n\n¢\noe A parameter set enables users to define the usable information available within a rate\n\nroutine.\n\nSS oe ooo ee oe oOoOe SoD\n\nGi",
+      "word_count": 32,
+      "avg_confidence": 71.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Rate routines i\n\n« Arate routine defines steps for\ncalculating a cost for coverage, taxes\nand other policy costs\n\n¢ Arate routine step can specify:\n« Mathematical operations\n* Logic conditions\n\n« Variable assignments from a rate table\nlookup",
+      "word_count": 40,
+      "avg_confidence": 86.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Rate books i\n\n¢ Arate book is a group of rate tables\nand rate routines\n\n* Rate books can be accessed from\nthe Administration tab > Rating >\nRate Books",
+      "word_count": 31,
+      "avg_confidence": 90.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Rating engine and rate flow fa\n\n¢ The base implementation of the\nrating engine uses a hierarchy of\nclasses and flexible logic\n\n* The term “rate flow” refers to the\nlogic in the rating engine that\ncalculates the premium\n\nRate Flow",
+      "word_count": 42,
+      "avg_confidence": 91.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n,—- — Whatis “rate flow’?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 15,
+      "avg_confidence": 56.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer\n\n,—- — Whatis “rate flow’?\n\n¢\noe Rate flow is the logic in the rating engine plugin that calculates the premium.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 29,
+      "avg_confidence": 74.43,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Process for implementing rating\n\nRating Analyst © What is the process for\nimplementing rating?\n\nWhile the rating manual\nremains the same, you have\nto adjust the content so that\nit works in PolicyCenter.\n\nJulia\nImplementation We\nArchitect\n\n!",
+      "word_count": 39,
+      "avg_confidence": 90.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Move rating content to PolicyCenter Gi\n\nMainframe Policy Administration System\n\n;) rating manual\n\nThe rating manual is the same, but the format is changed",
+      "word_count": 25,
+      "avg_confidence": 93.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| The actuary’s (or rating analyst's) role G\n\n&\n\n¢ During implementation, actuaries\nprovide rating-specific content to\nconfiguration developers\n\n¢ The format you have may not work\n\n¢ Work with implementation experts to\ntransition“old” rating content format to\na PolicyCenter-ready format while\nkeeping the rating manual the same",
+      "word_count": 48,
+      "avg_confidence": 89.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Rating user stories: Example implementation stories [5\n\nSet up Rate Table\n\nSet up Rate Routines\n\nCreation of a country-wide rate\nbook and a jurisdictional rate\nbook\n\nAs an actuary or rating\n\nanalyst, | want to be able to\ndefine and populate the required\nrate tables.\n\nAs an actuary or rating analyst, |\nwant to enter the rate routines\ninto the Rating Engine.\n\nAs an actuary or rating analyst, |\nwant to define rate books to\nsupport policy line and\njurisdictional requirements so\nthat | can better manage rate\ntables and rate routines.\n\nThe Rate Tables in\nPolicyCenter represent the look\nups for Rate Factors\n\nThe Rate Routines in\nPolicyCenter represent the\nrating (algorithm) used to\ncalculate each premium or cost\n\nRate books relate rate tables\nand rate routines together for\ninsurers to file and use for each\njurisdiction.",
+      "word_count": 138,
+      "avg_confidence": 95.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "| Starting with this... G\n\nRating Algorithm\nTandon Tuncion Dexipton Ted Format | State Bazpton | Tobie Name Tele nputs “GaatonRules/intermedate Sep ‘Rounding les\n[assign driver to each vehicle bated on driver\nlssiennent wie. See assiarment Logie\nA\n[celclete te vehicle Coverage Prenvom for\nlech ourenase cveroge forthe fist vehice\n| sing Stns 8 thru 19\n3] 79, coup, Cou base Rate ance\nC4 lLimit Factor [Limit\nslvenie |cowe.con |x __Joessesie Factor peductibe\nclvericie|n,r0,comp.cou |x __rertoryFector reer\nfe ap: Derive Popa\n{venice 5,20 Ix __laspican ge Factor Lroticont ge este sgotcant age [age using soplicont 008\nalvehicie [coup Ou x [vehicle Type Factor [venicleType stat vencle Type\nalveice [i PO, COMP, COU» |vehele Coverage SuBiotal Premiam Poles [Round ote nearest ert\n\n¢ This is an example of where an actuary or rating specialist might begin\n¢ The format is an independent summary and not ready for PolicyCenter\n\n¢ The actuary or rating specialist must organize it into a PolicyCenter-ready format",
+      "word_count": 160,
+      "avg_confidence": 64.99,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Go to this...\n\nBy coverable (vehicle)\n\n1 Coverage Rate Routine\nLiability- 81 &PD_}PA Coverage Premium Algorithm\n\nBase Rate\n\nvehicleTypeFactor\n\nvehicleCostFactor\n\ncoverageFactor\n\nuwCompanyFactor\n\nAdjustedRate\n\nTermamount\n\nPrint Amount\n\nRate Routine\nMedical Payments ]PA Coverage Premium Algorithm\n\nBase Rate\nvehicleTypeFactor\nvehicleCostFactor\ncoverageFactor\nuwCompanyFactor\nAdjustedRate\nTermamount\nPrint Amount\n\nBy coverage\n\nsured Motorist | PA Coverage Premium Algorithm\nBase Rate\nvehicleTypeFactor\nvehicleCostFactor\ncoverageFactor\nuwCompanyFactor\n\nPremium\n\nPremium\n\nPremium\n\nam\n\n1s\n16\n09\n372\n372\n\n372.00\n\nbeaters.\n\naL\n\n1s\n0.75\n09\n\nam\n\n12\n16\n09\n237\n\n297.00\n\nseests.\n\na.\n\n12\n0.75\n03\n\nam\n\nvB\n\n16\n09\n\n495.00\n\n0.48\n\nAgeBe\n\naL\n\n0.75\n09\n\nam\n\nBa8\n\n09\n372\n372\n\n372.00\n\n0.44\n\nAgeBe\n\naL\n\n0.75\n09\n\nesis.\n\nBB\n\nae\n\n0.75\n09",
+      "word_count": 111,
+      "avg_confidence": 76.93,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Review: What is required? i\nRate Flow: Logic in the rating engine that performs the\n\npremium calculation\nRate Tables: The rating content\nin a lookup format\n\nRate Book: A group of rate tables and rate routines G\n\nRate Routines: Algorithms used to\ncalculate premium",
+      "word_count": 45,
+      "avg_confidence": 94.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "| Rate flow implementation approach fa\n\n¢ The rate flow defines the order of\nexecution\n\n¢ Simple rate lines of business (LOB) may\nnot require much alteration from out-of-\nthe-box (OOTB) samples*\n\n¢ Analternative approach to hard-coding\nthe rate routines is to define the rate\norder in a table of its own which will call\nthe routines according to priority\n\nQ\n\n+ Examples exist for PARatingEngine.gs and\nCPRatingEngine.gs in the base configuration\nof PolicyCenter\n\n* Hard-coding rate routines is NOT\nrecommended",
+      "word_count": 81,
+      "avg_confidence": 90.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question\n\n_- — Whatis the process that an actuary or rating analyst must follow in order\n¢ to prepare usable rating content for the configuration developer?\n\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nGi",
+      "word_count": 35,
+      "avg_confidence": 77.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer fa\n\n_— — Whatis the process that an actuary or rating analyst must follow in order\noo to prepare usable rating content for the configuration developer?\n¢\nEach rating implementation starts from a different place. For example, a rating analyst\nmay have a spreadsheet with existing rating data or it may be contained in the current\nsystem in another format. Actuaries and rating specialists must create content that is\nPolicyCenter ready.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 79,
+      "avg_confidence": 88.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Lesson\nobjectives ¢ Identify the main components in rating\nreview * Describe primary rating terms\n\n« Explain the rating implementation approach",
+      "word_count": 21,
+      "avg_confidence": 88.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "| Student exercise\n\nWorking with submissions",
+      "word_count": 6,
+      "avg_confidence": 95.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

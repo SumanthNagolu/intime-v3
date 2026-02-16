@@ -49,7 +49,10 @@ export const leadFormSchema = z.object({
   lastName: z.string().optional(),
   title: z.string().optional(),
   email: z.string().email('Invalid email').optional().or(z.literal('')),
-  phone: z.string().optional(),
+  phone: z.union([
+    z.string(),
+    z.object({ countryCode: z.string(), number: z.string() }),
+  ]).optional(),
   linkedinUrl: z.string().url('Invalid LinkedIn URL').optional().or(z.literal('')),
   source: z.string().min(1, 'Lead source is required'),
   businessNeed: z.string().optional(),

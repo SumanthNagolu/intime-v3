@@ -1,0 +1,2167 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_07_02.mp4",
+    "video_stem": "CC_07_02",
+    "duration_seconds": 253.3,
+    "duration_formatted": "00:04:13.300",
+    "segment_count": 29,
+    "word_count": 310,
+    "avg_confidence": 0.9406,
+    "transcription_time_seconds": 17.21,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:37:50.280591"
+  },
+  "full_text": "Succeed Insurance has an optional foreign coverage for auto claims. When a claim takes place in a foreign country and the policy does not have this coverage, things can get complicated, so they want every such claim segmented as high complexity, even if it's just glass breakage. I will create a claim segmentation rule to implement this requirement. The rule will go under the Auto Parent rule, which filters for claims where the loss causes auto. I will give the rule a name reflecting its functionality. I will ensure that this rule is the first to execute in the Auto Group. There are two conditions for this rule to fire. The first condition is that the claim being segmented occurs outside the US. The first condition is that the claim being segmented occurs outside the US. The second is that the policy does not include the foreign coverage option. The action of this rule is simple, it segments the claim as high complexity Auto. When this rule is done, we don't want any further segmentation rules to run on this claim. To test the rule, I'll reload the changed class. Now I'll log into Claim Center as Andy Applegate. I'll quickly create a new Auto Claim. I'll quickly create a new Auto Claim. I'll use Robert Farley's policy. Now, if I look at the policy. I see that the policy does not have the foreign coverage option selected. Returning to the claim, I'll keep things as simple as possible. I'll keep things as simple as possible. I'll place the accident in Canada.   And that's all the information I really need to test this rule. I'll assign the claim to myself. Now I can view the new claim. Looking at its status page, I see that the claim is segmented properly as auto, high complexity. This concludes the segmentation rules demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.64,
+      "end": 19.48,
+      "start_formatted": "00:00:00.640",
+      "end_formatted": "00:00:19.480",
+      "text": "Succeed Insurance has an optional foreign coverage for auto claims. When a claim takes place in a foreign country and the policy does not have this coverage, things can get complicated, so they want every such claim segmented as high complexity, even if it's just glass breakage. I will create a claim segmentation rule to implement this requirement.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 0.64,
+          "end": 1.16,
+          "probability": 0.9395
+        },
+        {
+          "word": "Insurance",
+          "start": 1.16,
+          "end": 1.5,
+          "probability": 0.5894
+        },
+        {
+          "word": "has",
+          "start": 1.5,
+          "end": 1.8,
+          "probability": 0.9937
+        },
+        {
+          "word": "an",
+          "start": 1.8,
+          "end": 1.94,
+          "probability": 0.998
+        },
+        {
+          "word": "optional",
+          "start": 1.94,
+          "end": 2.32,
+          "probability": 0.9863
+        },
+        {
+          "word": "foreign",
+          "start": 2.32,
+          "end": 2.66,
+          "probability": 0.9805
+        },
+        {
+          "word": "coverage",
+          "start": 2.66,
+          "end": 3.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 3.1,
+          "end": 3.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "auto",
+          "start": 3.36,
+          "end": 3.58,
+          "probability": 0.8892
+        },
+        {
+          "word": "claims.",
+          "start": 3.58,
+          "end": 4.0,
+          "probability": 0.9092
+        },
+        {
+          "word": "When",
+          "start": 4.3,
+          "end": 4.68,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 4.68,
+          "end": 4.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim",
+          "start": 4.82,
+          "end": 5.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "takes",
+          "start": 5.04,
+          "end": 5.34,
+          "probability": 0.999
+        },
+        {
+          "word": "place",
+          "start": 5.34,
+          "end": 5.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 5.64,
+          "end": 5.86,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 5.86,
+          "end": 5.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "foreign",
+          "start": 5.94,
+          "end": 6.2,
+          "probability": 0.999
+        },
+        {
+          "word": "country",
+          "start": 6.2,
+          "end": 6.58,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 6.58,
+          "end": 6.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 6.76,
+          "end": 6.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "policy",
+          "start": 6.86,
+          "end": 7.26,
+          "probability": 0.998
+        },
+        {
+          "word": "does",
+          "start": 7.26,
+          "end": 7.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "not",
+          "start": 7.48,
+          "end": 7.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 7.7,
+          "end": 7.9,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 7.9,
+          "end": 8.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "coverage,",
+          "start": 8.1,
+          "end": 8.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "things",
+          "start": 8.8,
+          "end": 9.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "can",
+          "start": 9.06,
+          "end": 9.22,
+          "probability": 0.999
+        },
+        {
+          "word": "get",
+          "start": 9.22,
+          "end": 9.38,
+          "probability": 0.998
+        },
+        {
+          "word": "complicated,",
+          "start": 9.38,
+          "end": 10.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "so",
+          "start": 10.28,
+          "end": 10.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "they",
+          "start": 10.52,
+          "end": 10.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "want",
+          "start": 10.66,
+          "end": 10.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "every",
+          "start": 10.88,
+          "end": 11.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "such",
+          "start": 11.1,
+          "end": 11.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 11.38,
+          "end": 11.74,
+          "probability": 0.9756
+        },
+        {
+          "word": "segmented",
+          "start": 11.74,
+          "end": 12.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 12.3,
+          "end": 12.44,
+          "probability": 0.9658
+        },
+        {
+          "word": "high",
+          "start": 12.44,
+          "end": 12.64,
+          "probability": 0.9858
+        },
+        {
+          "word": "complexity,",
+          "start": 12.64,
+          "end": 13.22,
+          "probability": 0.8467
+        },
+        {
+          "word": "even",
+          "start": 13.56,
+          "end": 13.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 13.84,
+          "end": 14.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "it's",
+          "start": 14.02,
+          "end": 14.2,
+          "probability": 0.9912
+        },
+        {
+          "word": "just",
+          "start": 14.2,
+          "end": 14.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "glass",
+          "start": 14.46,
+          "end": 14.76,
+          "probability": 0.96
+        },
+        {
+          "word": "breakage.",
+          "start": 14.76,
+          "end": 15.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 15.62,
+          "end": 16.04,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 16.04,
+          "end": 16.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 16.2,
+          "end": 16.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 16.52,
+          "end": 16.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 16.68,
+          "end": 16.94,
+          "probability": 0.8721
+        },
+        {
+          "word": "segmentation",
+          "start": 16.94,
+          "end": 17.78,
+          "probability": 0.999
+        },
+        {
+          "word": "rule",
+          "start": 17.78,
+          "end": 18.0,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 18.0,
+          "end": 18.2,
+          "probability": 0.999
+        },
+        {
+          "word": "implement",
+          "start": 18.2,
+          "end": 18.62,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 18.62,
+          "end": 18.88,
+          "probability": 0.999
+        },
+        {
+          "word": "requirement.",
+          "start": 18.88,
+          "end": 19.48,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 27.14,
+      "end": 32.22,
+      "start_formatted": "00:00:27.140",
+      "end_formatted": "00:00:32.220",
+      "text": "The rule will go under the Auto Parent rule, which filters for claims where the loss causes auto.",
+      "words": [
+        {
+          "word": "The",
+          "start": 27.14,
+          "end": 27.62,
+          "probability": 0.9297
+        },
+        {
+          "word": "rule",
+          "start": 27.62,
+          "end": 27.82,
+          "probability": 0.8491
+        },
+        {
+          "word": "will",
+          "start": 27.82,
+          "end": 28.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "go",
+          "start": 28.04,
+          "end": 28.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "under",
+          "start": 28.2,
+          "end": 28.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 28.44,
+          "end": 28.6,
+          "probability": 0.9839
+        },
+        {
+          "word": "Auto",
+          "start": 28.6,
+          "end": 28.82,
+          "probability": 0.5645
+        },
+        {
+          "word": "Parent",
+          "start": 28.82,
+          "end": 29.12,
+          "probability": 0.6758
+        },
+        {
+          "word": "rule,",
+          "start": 29.12,
+          "end": 29.5,
+          "probability": 0.8252
+        },
+        {
+          "word": "which",
+          "start": 29.74,
+          "end": 30.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "filters",
+          "start": 30.0,
+          "end": 30.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "for",
+          "start": 30.36,
+          "end": 30.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "claims",
+          "start": 30.6,
+          "end": 30.88,
+          "probability": 0.9541
+        },
+        {
+          "word": "where",
+          "start": 30.88,
+          "end": 31.1,
+          "probability": 0.9038
+        },
+        {
+          "word": "the",
+          "start": 31.1,
+          "end": 31.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "loss",
+          "start": 31.22,
+          "end": 31.46,
+          "probability": 0.9473
+        },
+        {
+          "word": "causes",
+          "start": 31.46,
+          "end": 31.86,
+          "probability": 0.7656
+        },
+        {
+          "word": "auto.",
+          "start": 31.86,
+          "end": 32.22,
+          "probability": 0.5791
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 39.68,
+      "end": 42.38,
+      "start_formatted": "00:00:39.680",
+      "end_formatted": "00:00:42.380",
+      "text": "I will give the rule a name reflecting its functionality.",
+      "words": [
+        {
+          "word": "I",
+          "start": 39.68,
+          "end": 40.16,
+          "probability": 0.9912
+        },
+        {
+          "word": "will",
+          "start": 40.16,
+          "end": 40.32,
+          "probability": 0.9878
+        },
+        {
+          "word": "give",
+          "start": 40.32,
+          "end": 40.46,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 40.46,
+          "end": 40.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "rule",
+          "start": 40.6,
+          "end": 40.8,
+          "probability": 0.9907
+        },
+        {
+          "word": "a",
+          "start": 40.8,
+          "end": 40.94,
+          "probability": 0.9912
+        },
+        {
+          "word": "name",
+          "start": 40.94,
+          "end": 41.08,
+          "probability": 0.9927
+        },
+        {
+          "word": "reflecting",
+          "start": 41.08,
+          "end": 41.54,
+          "probability": 0.9897
+        },
+        {
+          "word": "its",
+          "start": 41.54,
+          "end": 41.78,
+          "probability": 0.9404
+        },
+        {
+          "word": "functionality.",
+          "start": 41.78,
+          "end": 42.38,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 53.56,
+      "end": 57.24,
+      "start_formatted": "00:00:53.560",
+      "end_formatted": "00:00:57.240",
+      "text": "I will ensure that this rule is the first to execute in the Auto Group.",
+      "words": [
+        {
+          "word": "I",
+          "start": 53.56,
+          "end": 54.08,
+          "probability": 0.9736
+        },
+        {
+          "word": "will",
+          "start": 54.08,
+          "end": 54.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "ensure",
+          "start": 54.26,
+          "end": 54.54,
+          "probability": 0.9849
+        },
+        {
+          "word": "that",
+          "start": 54.54,
+          "end": 54.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "this",
+          "start": 54.74,
+          "end": 54.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "rule",
+          "start": 54.92,
+          "end": 55.16,
+          "probability": 0.981
+        },
+        {
+          "word": "is",
+          "start": 55.16,
+          "end": 55.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 55.32,
+          "end": 55.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "first",
+          "start": 55.44,
+          "end": 55.68,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 55.68,
+          "end": 55.86,
+          "probability": 0.998
+        },
+        {
+          "word": "execute",
+          "start": 55.86,
+          "end": 56.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 56.3,
+          "end": 56.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 56.5,
+          "end": 56.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "Auto",
+          "start": 56.6,
+          "end": 56.9,
+          "probability": 0.251
+        },
+        {
+          "word": "Group.",
+          "start": 56.9,
+          "end": 57.24,
+          "probability": 0.6216
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 59.88,
+      "end": 62.38,
+      "start_formatted": "00:00:59.880",
+      "end_formatted": "00:01:02.380",
+      "text": "There are two conditions for this rule to fire.",
+      "words": [
+        {
+          "word": "There",
+          "start": 59.88,
+          "end": 60.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "are",
+          "start": 60.4,
+          "end": 60.56,
+          "probability": 0.999
+        },
+        {
+          "word": "two",
+          "start": 60.56,
+          "end": 60.68,
+          "probability": 0.9194
+        },
+        {
+          "word": "conditions",
+          "start": 60.68,
+          "end": 61.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "for",
+          "start": 61.22,
+          "end": 61.46,
+          "probability": 0.9521
+        },
+        {
+          "word": "this",
+          "start": 61.46,
+          "end": 61.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "rule",
+          "start": 61.64,
+          "end": 61.88,
+          "probability": 0.9697
+        },
+        {
+          "word": "to",
+          "start": 61.88,
+          "end": 62.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "fire.",
+          "start": 62.04,
+          "end": 62.38,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 63.52,
+      "end": 67.8,
+      "start_formatted": "00:01:03.520",
+      "end_formatted": "00:01:07.800",
+      "text": "The first condition is that the claim being segmented occurs outside the US.",
+      "words": [
+        {
+          "word": "The",
+          "start": 63.52,
+          "end": 64.04,
+          "probability": 0.9902
+        },
+        {
+          "word": "first",
+          "start": 64.04,
+          "end": 64.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "condition",
+          "start": 64.32,
+          "end": 64.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 64.76,
+          "end": 65.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 65.0,
+          "end": 65.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 65.14,
+          "end": 65.28,
+          "probability": 0.9941
+        },
+        {
+          "word": "claim",
+          "start": 65.28,
+          "end": 65.54,
+          "probability": 0.9819
+        },
+        {
+          "word": "being",
+          "start": 65.54,
+          "end": 65.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "segmented",
+          "start": 65.8,
+          "end": 66.42,
+          "probability": 0.979
+        },
+        {
+          "word": "occurs",
+          "start": 66.42,
+          "end": 66.68,
+          "probability": 0.9771
+        },
+        {
+          "word": "outside",
+          "start": 66.68,
+          "end": 67.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 67.08,
+          "end": 67.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "US.",
+          "start": 67.36,
+          "end": 67.8,
+          "probability": 0.7485
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 74.02,
+      "end": 79.42,
+      "start_formatted": "00:01:14.020",
+      "end_formatted": "00:01:19.420",
+      "text": "The first condition is that the claim being segmented occurs outside the US.",
+      "words": [
+        {
+          "word": "The",
+          "start": 74.02,
+          "end": 74.54,
+          "probability": 0.3193
+        },
+        {
+          "word": "first",
+          "start": 74.54,
+          "end": 75.06,
+          "probability": 0.1893
+        },
+        {
+          "word": "condition",
+          "start": 75.06,
+          "end": 78.24,
+          "probability": 0.8364
+        },
+        {
+          "word": "is",
+          "start": 78.24,
+          "end": 78.26,
+          "probability": 0.9321
+        },
+        {
+          "word": "that",
+          "start": 78.26,
+          "end": 78.28,
+          "probability": 0.9346
+        },
+        {
+          "word": "the",
+          "start": 78.28,
+          "end": 78.3,
+          "probability": 0.8652
+        },
+        {
+          "word": "claim",
+          "start": 78.3,
+          "end": 78.32,
+          "probability": 0.7944
+        },
+        {
+          "word": "being",
+          "start": 78.32,
+          "end": 78.32,
+          "probability": 0.873
+        },
+        {
+          "word": "segmented",
+          "start": 78.32,
+          "end": 78.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "occurs",
+          "start": 78.68,
+          "end": 78.68,
+          "probability": 0.9541
+        },
+        {
+          "word": "outside",
+          "start": 78.68,
+          "end": 78.76,
+          "probability": 0.9404
+        },
+        {
+          "word": "the",
+          "start": 78.76,
+          "end": 79.42,
+          "probability": 0.9043
+        },
+        {
+          "word": "US.",
+          "start": 79.42,
+          "end": 79.42,
+          "probability": 0.9556
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 79.48,
+      "end": 83.42,
+      "start_formatted": "00:01:19.480",
+      "end_formatted": "00:01:23.420",
+      "text": "The second is that the policy does not include the foreign coverage option.",
+      "words": [
+        {
+          "word": "The",
+          "start": 79.48,
+          "end": 80.1,
+          "probability": 0.9482
+        },
+        {
+          "word": "second",
+          "start": 80.1,
+          "end": 80.38,
+          "probability": 0.9873
+        },
+        {
+          "word": "is",
+          "start": 80.38,
+          "end": 80.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 80.6,
+          "end": 80.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 80.74,
+          "end": 80.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "policy",
+          "start": 80.88,
+          "end": 81.3,
+          "probability": 0.9863
+        },
+        {
+          "word": "does",
+          "start": 81.3,
+          "end": 81.54,
+          "probability": 0.9917
+        },
+        {
+          "word": "not",
+          "start": 81.54,
+          "end": 81.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "include",
+          "start": 81.76,
+          "end": 82.08,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 82.08,
+          "end": 82.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "foreign",
+          "start": 82.24,
+          "end": 82.48,
+          "probability": 0.8911
+        },
+        {
+          "word": "coverage",
+          "start": 82.48,
+          "end": 82.88,
+          "probability": 0.9829
+        },
+        {
+          "word": "option.",
+          "start": 82.88,
+          "end": 83.42,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 92.58,
+      "end": 97.48,
+      "start_formatted": "00:01:32.580",
+      "end_formatted": "00:01:37.480",
+      "text": "The action of this rule is simple, it segments the claim as high complexity Auto.",
+      "words": [
+        {
+          "word": "The",
+          "start": 92.58,
+          "end": 93.14,
+          "probability": 0.9897
+        },
+        {
+          "word": "action",
+          "start": 93.14,
+          "end": 93.5,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 93.5,
+          "end": 93.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 93.68,
+          "end": 93.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "rule",
+          "start": 93.84,
+          "end": 94.06,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 94.06,
+          "end": 94.26,
+          "probability": 0.999
+        },
+        {
+          "word": "simple,",
+          "start": 94.26,
+          "end": 94.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 94.92,
+          "end": 95.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "segments",
+          "start": 95.14,
+          "end": 95.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 95.52,
+          "end": 95.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 95.8,
+          "end": 96.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "as",
+          "start": 96.08,
+          "end": 96.24,
+          "probability": 0.9658
+        },
+        {
+          "word": "high",
+          "start": 96.24,
+          "end": 96.44,
+          "probability": 0.8018
+        },
+        {
+          "word": "complexity",
+          "start": 96.44,
+          "end": 97.0,
+          "probability": 0.3069
+        },
+        {
+          "word": "Auto.",
+          "start": 97.0,
+          "end": 97.48,
+          "probability": 0.0192
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 109.48,
+      "end": 114.08,
+      "start_formatted": "00:01:49.480",
+      "end_formatted": "00:01:54.080",
+      "text": "When this rule is done, we don't want any further segmentation rules to run on this claim.",
+      "words": [
+        {
+          "word": "When",
+          "start": 109.48,
+          "end": 109.62,
+          "probability": 0.9766
+        },
+        {
+          "word": "this",
+          "start": 109.62,
+          "end": 109.78,
+          "probability": 0.9883
+        },
+        {
+          "word": "rule",
+          "start": 109.78,
+          "end": 110.02,
+          "probability": 0.9844
+        },
+        {
+          "word": "is",
+          "start": 110.02,
+          "end": 110.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "done,",
+          "start": 110.2,
+          "end": 110.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "we",
+          "start": 110.78,
+          "end": 111.0,
+          "probability": 0.9941
+        },
+        {
+          "word": "don't",
+          "start": 111.0,
+          "end": 111.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "want",
+          "start": 111.22,
+          "end": 111.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "any",
+          "start": 111.4,
+          "end": 111.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "further",
+          "start": 111.6,
+          "end": 111.9,
+          "probability": 0.9907
+        },
+        {
+          "word": "segmentation",
+          "start": 111.9,
+          "end": 112.72,
+          "probability": 0.9824
+        },
+        {
+          "word": "rules",
+          "start": 112.72,
+          "end": 113.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "to",
+          "start": 113.06,
+          "end": 113.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "run",
+          "start": 113.28,
+          "end": 113.46,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 113.46,
+          "end": 113.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "this",
+          "start": 113.6,
+          "end": 113.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "claim.",
+          "start": 113.78,
+          "end": 114.08,
+          "probability": 0.9551
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 119.46,
+      "end": 122.44,
+      "start_formatted": "00:01:59.460",
+      "end_formatted": "00:02:02.440",
+      "text": "To test the rule, I'll reload the changed class.",
+      "words": [
+        {
+          "word": "To",
+          "start": 119.46,
+          "end": 119.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "test",
+          "start": 119.98,
+          "end": 120.2,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 120.2,
+          "end": 120.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "rule,",
+          "start": 120.36,
+          "end": 120.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "I'll",
+          "start": 120.84,
+          "end": 121.12,
+          "probability": 0.9854
+        },
+        {
+          "word": "reload",
+          "start": 121.12,
+          "end": 121.46,
+          "probability": 0.9336
+        },
+        {
+          "word": "the",
+          "start": 121.46,
+          "end": 121.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "changed",
+          "start": 121.64,
+          "end": 121.98,
+          "probability": 0.8135
+        },
+        {
+          "word": "class.",
+          "start": 121.98,
+          "end": 122.44,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 127.38,
+      "end": 130.38,
+      "start_formatted": "00:02:07.380",
+      "end_formatted": "00:02:10.380",
+      "text": "Now I'll log into Claim Center as Andy Applegate.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 127.38,
+          "end": 127.9,
+          "probability": 0.9766
+        },
+        {
+          "word": "I'll",
+          "start": 127.9,
+          "end": 128.16,
+          "probability": 0.9849
+        },
+        {
+          "word": "log",
+          "start": 128.16,
+          "end": 128.38,
+          "probability": 0.6885
+        },
+        {
+          "word": "into",
+          "start": 128.38,
+          "end": 128.54,
+          "probability": 0.5977
+        },
+        {
+          "word": "Claim",
+          "start": 128.54,
+          "end": 128.86,
+          "probability": 0.8105
+        },
+        {
+          "word": "Center",
+          "start": 128.86,
+          "end": 129.22,
+          "probability": 0.8247
+        },
+        {
+          "word": "as",
+          "start": 129.22,
+          "end": 129.4,
+          "probability": 0.9624
+        },
+        {
+          "word": "Andy",
+          "start": 129.4,
+          "end": 129.76,
+          "probability": 0.9258
+        },
+        {
+          "word": "Applegate.",
+          "start": 129.76,
+          "end": 130.38,
+          "probability": 0.9722
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 139.92,
+      "end": 142.12,
+      "start_formatted": "00:02:19.920",
+      "end_formatted": "00:02:22.120",
+      "text": "I'll quickly create a new Auto Claim.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 139.92,
+          "end": 140.56,
+          "probability": 0.9805
+        },
+        {
+          "word": "quickly",
+          "start": 140.56,
+          "end": 140.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "create",
+          "start": 140.86,
+          "end": 141.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 141.24,
+          "end": 141.42,
+          "probability": 0.9912
+        },
+        {
+          "word": "new",
+          "start": 141.42,
+          "end": 141.56,
+          "probability": 0.9946
+        },
+        {
+          "word": "Auto",
+          "start": 141.56,
+          "end": 141.74,
+          "probability": 0.1312
+        },
+        {
+          "word": "Claim.",
+          "start": 141.74,
+          "end": 142.12,
+          "probability": 0.7173
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 142.4,
+      "end": 142.48,
+      "start_formatted": "00:02:22.400",
+      "end_formatted": "00:02:22.480",
+      "text": "I'll quickly create a new Auto Claim.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 142.4,
+          "end": 142.48,
+          "probability": 0.9854
+        },
+        {
+          "word": "quickly",
+          "start": 142.48,
+          "end": 142.48,
+          "probability": 0.0
+        },
+        {
+          "word": "create",
+          "start": 142.48,
+          "end": 142.48,
+          "probability": 0.7168
+        },
+        {
+          "word": "a",
+          "start": 142.48,
+          "end": 142.48,
+          "probability": 0.9067
+        },
+        {
+          "word": "new",
+          "start": 142.48,
+          "end": 142.48,
+          "probability": 0.9648
+        },
+        {
+          "word": "Auto",
+          "start": 142.48,
+          "end": 142.48,
+          "probability": 0.9346
+        },
+        {
+          "word": "Claim.",
+          "start": 142.48,
+          "end": 142.48,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 161.78,
+      "end": 163.98,
+      "start_formatted": "00:02:41.780",
+      "end_formatted": "00:02:43.980",
+      "text": "I'll use Robert Farley's policy.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 161.78,
+          "end": 162.42,
+          "probability": 0.9683
+        },
+        {
+          "word": "use",
+          "start": 162.42,
+          "end": 162.6,
+          "probability": 0.957
+        },
+        {
+          "word": "Robert",
+          "start": 162.6,
+          "end": 162.92,
+          "probability": 0.9736
+        },
+        {
+          "word": "Farley's",
+          "start": 162.92,
+          "end": 163.52,
+          "probability": 0.9775
+        },
+        {
+          "word": "policy.",
+          "start": 163.52,
+          "end": 163.98,
+          "probability": 0.625
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 169.2,
+      "end": 171.2,
+      "start_formatted": "00:02:49.200",
+      "end_formatted": "00:02:51.200",
+      "text": "Now, if I look at the policy.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 169.2,
+          "end": 169.7,
+          "probability": 0.9224
+        },
+        {
+          "word": "if",
+          "start": 169.98,
+          "end": 170.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "I",
+          "start": 170.22,
+          "end": 170.32,
+          "probability": 0.9873
+        },
+        {
+          "word": "look",
+          "start": 170.32,
+          "end": 170.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "at",
+          "start": 170.52,
+          "end": 170.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 170.62,
+          "end": 170.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy.",
+          "start": 170.72,
+          "end": 171.2,
+          "probability": 0.9355
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 172.82,
+      "end": 176.68,
+      "start_formatted": "00:02:52.820",
+      "end_formatted": "00:02:56.680",
+      "text": "I see that the policy does not have the foreign coverage option selected.",
+      "words": [
+        {
+          "word": "I",
+          "start": 172.82,
+          "end": 173.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "see",
+          "start": 173.32,
+          "end": 173.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 173.52,
+          "end": 173.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 173.68,
+          "end": 173.8,
+          "probability": 0.9927
+        },
+        {
+          "word": "policy",
+          "start": 173.8,
+          "end": 174.2,
+          "probability": 0.9873
+        },
+        {
+          "word": "does",
+          "start": 174.2,
+          "end": 174.46,
+          "probability": 0.9878
+        },
+        {
+          "word": "not",
+          "start": 174.46,
+          "end": 174.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "have",
+          "start": 174.68,
+          "end": 174.86,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 174.86,
+          "end": 174.98,
+          "probability": 0.9917
+        },
+        {
+          "word": "foreign",
+          "start": 174.98,
+          "end": 175.22,
+          "probability": 0.7661
+        },
+        {
+          "word": "coverage",
+          "start": 175.22,
+          "end": 175.66,
+          "probability": 0.9917
+        },
+        {
+          "word": "option",
+          "start": 175.66,
+          "end": 176.12,
+          "probability": 0.7856
+        },
+        {
+          "word": "selected.",
+          "start": 176.12,
+          "end": 176.68,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 177.08,
+      "end": 178.22,
+      "start_formatted": "00:02:57.080",
+      "end_formatted": "00:02:58.220",
+      "text": "Returning to the claim,",
+      "words": [
+        {
+          "word": "Returning",
+          "start": 177.08,
+          "end": 177.58,
+          "probability": 0.9873
+        },
+        {
+          "word": "to",
+          "start": 177.58,
+          "end": 177.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 177.76,
+          "end": 177.9,
+          "probability": 0.998
+        },
+        {
+          "word": "claim,",
+          "start": 177.9,
+          "end": 178.22,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 180.6,
+      "end": 182.72,
+      "start_formatted": "00:03:00.600",
+      "end_formatted": "00:03:02.720",
+      "text": "I'll keep things as simple as possible.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 180.6,
+          "end": 181.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "keep",
+          "start": 181.1,
+          "end": 181.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "things",
+          "start": 181.26,
+          "end": 181.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "as",
+          "start": 181.58,
+          "end": 181.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "simple",
+          "start": 181.76,
+          "end": 182.02,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 182.02,
+          "end": 182.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "possible.",
+          "start": 182.24,
+          "end": 182.72,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 190.26,
+      "end": 193.9,
+      "start_formatted": "00:03:10.260",
+      "end_formatted": "00:03:13.900",
+      "text": "I'll keep things as simple as possible.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 190.26,
+          "end": 190.76,
+          "probability": 0.543
+        },
+        {
+          "word": "keep",
+          "start": 190.76,
+          "end": 190.86,
+          "probability": 0.4226
+        },
+        {
+          "word": "things",
+          "start": 190.86,
+          "end": 191.54,
+          "probability": 0.7231
+        },
+        {
+          "word": "as",
+          "start": 191.54,
+          "end": 191.54,
+          "probability": 0.9604
+        },
+        {
+          "word": "simple",
+          "start": 191.54,
+          "end": 191.54,
+          "probability": 0.9834
+        },
+        {
+          "word": "as",
+          "start": 191.54,
+          "end": 191.58,
+          "probability": 0.9766
+        },
+        {
+          "word": "possible.",
+          "start": 191.58,
+          "end": 193.9,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 201.0,
+      "end": 202.98,
+      "start_formatted": "00:03:21.000",
+      "end_formatted": "00:03:22.980",
+      "text": "I'll place the accident in Canada.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 201.0,
+          "end": 201.52,
+          "probability": 0.9609
+        },
+        {
+          "word": "place",
+          "start": 201.52,
+          "end": 201.8,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 201.8,
+          "end": 201.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "accident",
+          "start": 201.94,
+          "end": 202.34,
+          "probability": 0.937
+        },
+        {
+          "word": "in",
+          "start": 202.34,
+          "end": 202.58,
+          "probability": 0.9907
+        },
+        {
+          "word": "Canada.",
+          "start": 202.58,
+          "end": 202.98,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 203.0,
+      "end": 203.0,
+      "start_formatted": "00:03:23.000",
+      "end_formatted": "00:03:23.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 203.0,
+      "end": 203.0,
+      "start_formatted": "00:03:23.000",
+      "end_formatted": "00:03:23.000",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 216.8,
+      "end": 220.06,
+      "start_formatted": "00:03:36.800",
+      "end_formatted": "00:03:40.060",
+      "text": "And that's all the information I really need to test this rule.",
+      "words": [
+        {
+          "word": "And",
+          "start": 216.8,
+          "end": 217.32,
+          "probability": 0.6992
+        },
+        {
+          "word": "that's",
+          "start": 217.32,
+          "end": 217.62,
+          "probability": 0.9805
+        },
+        {
+          "word": "all",
+          "start": 217.62,
+          "end": 217.8,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 217.8,
+          "end": 217.96,
+          "probability": 0.9756
+        },
+        {
+          "word": "information",
+          "start": 217.96,
+          "end": 218.42,
+          "probability": 0.9927
+        },
+        {
+          "word": "I",
+          "start": 218.42,
+          "end": 218.68,
+          "probability": 0.9702
+        },
+        {
+          "word": "really",
+          "start": 218.68,
+          "end": 218.92,
+          "probability": 0.9688
+        },
+        {
+          "word": "need",
+          "start": 218.92,
+          "end": 219.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 219.16,
+          "end": 219.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "test",
+          "start": 219.3,
+          "end": 219.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "this",
+          "start": 219.56,
+          "end": 219.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "rule.",
+          "start": 219.78,
+          "end": 220.06,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 231.38,
+      "end": 233.26,
+      "start_formatted": "00:03:51.380",
+      "end_formatted": "00:03:53.260",
+      "text": "I'll assign the claim to myself.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 231.38,
+          "end": 231.9,
+          "probability": 0.9575
+        },
+        {
+          "word": "assign",
+          "start": 231.9,
+          "end": 232.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 232.2,
+          "end": 232.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim",
+          "start": 232.34,
+          "end": 232.58,
+          "probability": 0.9727
+        },
+        {
+          "word": "to",
+          "start": 232.58,
+          "end": 232.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "myself.",
+          "start": 232.76,
+          "end": 233.26,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 238.86,
+      "end": 240.5,
+      "start_formatted": "00:03:58.860",
+      "end_formatted": "00:04:00.500",
+      "text": "Now I can view the new claim.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 238.86,
+          "end": 239.38,
+          "probability": 0.9878
+        },
+        {
+          "word": "I",
+          "start": 239.38,
+          "end": 239.52,
+          "probability": 0.9873
+        },
+        {
+          "word": "can",
+          "start": 239.52,
+          "end": 239.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "view",
+          "start": 239.66,
+          "end": 239.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 239.86,
+          "end": 240.02,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 240.02,
+          "end": 240.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim.",
+          "start": 240.16,
+          "end": 240.5,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 242.76,
+      "end": 244.48,
+      "start_formatted": "00:04:02.760",
+      "end_formatted": "00:04:04.480",
+      "text": "Looking at its status page,",
+      "words": [
+        {
+          "word": "Looking",
+          "start": 242.76,
+          "end": 243.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "at",
+          "start": 243.28,
+          "end": 243.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "its",
+          "start": 243.46,
+          "end": 243.64,
+          "probability": 0.9561
+        },
+        {
+          "word": "status",
+          "start": 243.64,
+          "end": 243.96,
+          "probability": 0.8901
+        },
+        {
+          "word": "page,",
+          "start": 243.96,
+          "end": 244.48,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 246.2,
+      "end": 250.26,
+      "start_formatted": "00:04:06.200",
+      "end_formatted": "00:04:10.260",
+      "text": "I see that the claim is segmented properly as auto, high complexity.",
+      "words": [
+        {
+          "word": "I",
+          "start": 246.2,
+          "end": 246.8,
+          "probability": 0.9551
+        },
+        {
+          "word": "see",
+          "start": 246.8,
+          "end": 247.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 247.0,
+          "end": 247.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 247.18,
+          "end": 247.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim",
+          "start": 247.28,
+          "end": 247.58,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 247.58,
+          "end": 247.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "segmented",
+          "start": 247.72,
+          "end": 248.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "properly",
+          "start": 248.24,
+          "end": 248.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "as",
+          "start": 248.64,
+          "end": 248.86,
+          "probability": 0.9937
+        },
+        {
+          "word": "auto,",
+          "start": 248.86,
+          "end": 249.16,
+          "probability": 0.5605
+        },
+        {
+          "word": "high",
+          "start": 249.38,
+          "end": 249.64,
+          "probability": 0.9878
+        },
+        {
+          "word": "complexity.",
+          "start": 249.64,
+          "end": 250.26,
+          "probability": 0.9756
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 250.68,
+      "end": 253.3,
+      "start_formatted": "00:04:10.680",
+      "end_formatted": "00:04:13.300",
+      "text": "This concludes the segmentation rules demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 250.68,
+          "end": 251.06,
+          "probability": 0.998
+        },
+        {
+          "word": "concludes",
+          "start": 251.06,
+          "end": 251.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 251.48,
+          "end": 251.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "segmentation",
+          "start": 251.68,
+          "end": 252.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "rules",
+          "start": 252.4,
+          "end": 252.72,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration.",
+          "start": 252.72,
+          "end": 253.3,
+          "probability": 0.9937
+        }
+      ]
+    }
+  ]
+}

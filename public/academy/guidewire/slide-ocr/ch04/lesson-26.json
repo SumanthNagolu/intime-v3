@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-26",
+    "slide_count": 32,
+    "slides_with_text": 31,
+    "total_words": 1089,
+    "avg_confidence": 84.11,
+    "processing_time_seconds": 11.82,
+    "extracted_at": "2026-02-13T12:07:29.640687"
+  },
+  "full_text": "Activities\n\nLesson\nobjectives\n\n¢ Define an Activity as the term is used in\nPolicyCenter\n\n¢ Explain the difference between a Manual and\nAutomatic Activity\n\n¢ Define an Activity Pattern\n\n¢ Describe the Activity life cycle\n\n¢ Discern an Underwriter Activity from a\nGeneral Activity\n\nTanya\nCustomer\n\nService\nRepresentative\n\n~~\n\nWhen | start my day, | want to know what | have\nto do. Does PolicyCenter give me a task list?\nWhat does it look like, and how does it work?\n\n| Activities G\n« Area way to keep PolicyCenter\nusers informed about important tasks\n\n| 009 | related to\n) * accounts\n\n* policies\n\nae, & — * transactions\n* Can improve workflow\n| oe | * Can be manually or automatically\n\ncreated using business rules\n\n| Activity assignments Gi\n\nAutomatic\n\nManual\n\nPolicyCenter uses pre-defined business rules to create the activity.\n\nBusiness cases: PolicyCenter is configured to create an activity that alerts a\nsupervisor if a specific task is past due.\n\nBusiness case: PolicyCenter creates an activity when an external system fails\nto complete its experience task (for example, DMS failure)\n\nA PolicyCenter user can make requests to other users or can create self-\nreminders.\n\nBusiness case: Manually create an activity to request internal personnel to\nrate and quote a policy submission.\n\nBusiness case: Manually create an activity to request underwriter review.\n\n| View activities in the Desktop Gi\n\nDesktop » Account ~ Policy ~ Contact ~ Reinsurance ~ Search ~ eam Administ\n\nGi PolicyCenter™\n\nMy Activities\n\nummary\nAllopen +\nPriority > Status Subject\nNormal Open All ordered MVRs received -Clear\nNormal Open All ordered MVRs received - Clear\n\nNormal Open All ordered MVRs received - Clear\n\n| Activity patterns\n\n¢ Activity patterns standardize the way\nPolicyCenter creates activities\n¢« Example\n* Manually Rate Policy\n* Priority: medium\n\n* Due in five days\n\n| Activity lifecycle (1 of 5) G\n\n) ' > DueDate Priority 2 Status > Subject >\na) 06/07/2018 High Open Review and approve\n\nStar indicates unviewed activity\n\n| Activity lifecycle (2 of 5) G\n\nDueDate >\n06/07/2018\n\nStatus > Subject >\n\nReview and approve\n\n[ | Normal Open The renewal quote reqi\nStar disappears on view\n\n| Activity lifecycle (3 of 5)\n\nDueDate >\n06/07/2018\n\n[ | Normal Open The renewal quote req!\nStar disappears on view\n\nPriority > Status >\nHigh Open\n\nje date turns red when ovet\n\n| Activity lifecycle (4 of 5) G\n\nDueDate Priority + Status 2 Subject *\nIn progress: new/updated 06/07/2018 High Open\nv Star indicates unviewed activity\n. Normal Open\nIn progress (viewed): normal\nStar —_— on view\n\ny\n\nw Priority > Status >\nOverdue High Open\nv Due date turns red when overdue\nDue Date > Priority > Status > Subject >\nEscalated 05/31/2018 Urgent Open\n\nExclamation appears when overdue date is passed\n\n| Activity lifecycle (5 of 5) Gi\n\nDueDate Priority + Status S Subject >\nIn progress: new/updated 06/07/2018 High Open\nv Star indicates unviewed activity\n. Normal Open\nIn progress (viewed): normal\nStar —_— on view\n\ny\n\nw Priority > Status >\nOverdue High Open\nv Due date turns red when overdue\nDue Date > Priority > Status > Subject >\nEscalated 05/31/2018 Urgent Open\nVv Exclamation appears when overdue date is passed\n\nvy!) S  DueDate > Priority > Status >\n\nSS SomPistea ot ekibpes\n\nDalia\nUnderwriter\n\n®*\n\nIf there is a policy submission that carries\nsignificant risk, | need to know. Is there a way to\nreceive notification so | can review the\nsubmission myself?\n\n| Types of activities in PolicyCenter (1 of 2)\n\n¢ General activity is a task to do; no authority is involved in completing task\n\n| Types of activities in PolicyCenter (2 of 2) Gi\n\n¢« AGeneral activity is task to do, but no authority involved in doing task\n\n¢« An Underwriter review activity requests underwriters to review underwriting\nissues\n\n| Activity ownership: explicit and implicit Gi\n\nS&S,\n\nSy explicit\n\nAlice Applegate\n\nSe\n\nunderwriter for\nBig Lake\nBakery\n\n&,\nwo\n\nSe\n\nimplicit\nunderwriter —_______-_» Alice Applegate\n\n| Activity queues\n\nNew Account Group\n\nor<0 |\nOn\nS\n\na\neo\nQUEUE\n\nActivity: Initial\ncontact needed\n\n(a —\n\nGi\n\n©\na)\n\ne-\n\nSend welcome\npacket\n\nUser in the\ngroup takes on\none activity in\nthe queue\n\nWhat you can do with activities\n\nActivities associated\n\nwith accounts, policies | Activities in a queue\nor transactions\n\nActivities that you own\n\nView activities\nSearch activities\nTake ownership\nModify activities\nReassign activities\n\nComplete or skip\nactivities\n\nx<\n\n| Demonstration G\nCreating an activity\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n/~ — Give one example of how an activity can help users manage their work.\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD\n\nGi\n\nAnswer\n\n¢\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nGive one example of how an activity can help users manage their work.\n\nAssign work to a user, alert users to certain events, manage how policy jobs are\ncompleted.\n\nGi\n\nQuestion\n\n_~ — What business objects can have an associated activity?\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD\n\nAnswer\n\n_~ — What business objects can have an associated activity?\n\n4\n4\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nAccounts, policies and transactions (jobs).\n\nQuestion\n\nae What is an activity pattern?\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD\n\nAnswer\n\n77\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nWhat is an activity pattern?\n\nAn activity pattern is a description of how to create a specific activity.\n\nQuestion\n\nae Is an activity always assigned to a group? A user?\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD\n\nAnswer\n\n77\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nIs an activity always assigned to a group? A user?\n\nActivities can be assigned to users, groups or queues. In addition, a user is assigned\nto a group; a queue contains activities assigned to a group.\n\nQuestion\n\n,- — Who can modify an activity?\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD\n\nAnswer\n\n77\n4\n4\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nWho can modify an activity?\n\nThe activity owner and anyone with manager permissions.\n\nLesson\nobj ectives * Define an Activity as the term is used in\nreview PolicyCenter\n\n¢ Explain the difference between a Manual and\nAutomatic Activity\n\n¢ Define an Activity Pattern\n\n¢ Describe the Activity life cycle\n\n¢ Discern an Underwriter Activity from a\nGeneral Activity\n\n| Student exercise\n\nActivities",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Activities",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Define an Activity as the term is used in\nPolicyCenter\n\n¢ Explain the difference between a Manual and\nAutomatic Activity\n\n¢ Define an Activity Pattern\n\n¢ Describe the Activity life cycle\n\n¢ Discern an Underwriter Activity from a\nGeneral Activity",
+      "word_count": 43,
+      "avg_confidence": 87.21,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Tanya\nCustomer\n\nService\nRepresentative\n\n~~\n\nWhen | start my day, | want to know what | have\nto do. Does PolicyCenter give me a task list?\nWhat does it look like, and how does it work?",
+      "word_count": 36,
+      "avg_confidence": 93.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Activities G\n« Area way to keep PolicyCenter\nusers informed about important tasks\n\n| 009 | related to\n) * accounts\n\n* policies\n\nae, & — * transactions\n* Can improve workflow\n| oe | * Can be manually or automatically\n\ncreated using business rules",
+      "word_count": 46,
+      "avg_confidence": 78.98,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Activity assignments Gi\n\nAutomatic\n\nManual\n\nPolicyCenter uses pre-defined business rules to create the activity.\n\nBusiness cases: PolicyCenter is configured to create an activity that alerts a\nsupervisor if a specific task is past due.\n\nBusiness case: PolicyCenter creates an activity when an external system fails\nto complete its experience task (for example, DMS failure)\n\nA PolicyCenter user can make requests to other users or can create self-\nreminders.\n\nBusiness case: Manually create an activity to request internal personnel to\nrate and quote a policy submission.\n\nBusiness case: Manually create an activity to request underwriter review.",
+      "word_count": 96,
+      "avg_confidence": 94.7,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| View activities in the Desktop Gi\n\nDesktop » Account ~ Policy ~ Contact ~ Reinsurance ~ Search ~ eam Administ\n\nGi PolicyCenter™\n\nMy Activities\n\nummary\nAllopen +\nPriority > Status Subject\nNormal Open All ordered MVRs received -Clear\nNormal Open All ordered MVRs received - Clear\n\nNormal Open All ordered MVRs received - Clear",
+      "word_count": 55,
+      "avg_confidence": 84.4,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Activity patterns\n\n¢ Activity patterns standardize the way\nPolicyCenter creates activities\n¢« Example\n* Manually Rate Policy\n* Priority: medium\n\n* Due in five days",
+      "word_count": 26,
+      "avg_confidence": 84.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Activity lifecycle (1 of 5) G\n\n) ' > DueDate Priority 2 Status > Subject >\na) 06/07/2018 High Open Review and approve\n\nStar indicates unviewed activity",
+      "word_count": 28,
+      "avg_confidence": 82.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Activity lifecycle (2 of 5) G\n\nDueDate >\n06/07/2018\n\nStatus > Subject >\n\nReview and approve\n\n[ | Normal Open The renewal quote reqi\nStar disappears on view",
+      "word_count": 29,
+      "avg_confidence": 88.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Activity lifecycle (3 of 5)\n\nDueDate >\n06/07/2018\n\n[ | Normal Open The renewal quote req!\nStar disappears on view\n\nPriority > Status >\nHigh Open\n\nje date turns red when ovet",
+      "word_count": 33,
+      "avg_confidence": 88.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Activity lifecycle (4 of 5) G\n\nDueDate Priority + Status 2 Subject *\nIn progress: new/updated 06/07/2018 High Open\nv Star indicates unviewed activity\n. Normal Open\nIn progress (viewed): normal\nStar —_— on view\n\ny\n\nw Priority > Status >\nOverdue High Open\nv Due date turns red when overdue\nDue Date > Priority > Status > Subject >\nEscalated 05/31/2018 Urgent Open\n\nExclamation appears when overdue date is passed",
+      "word_count": 72,
+      "avg_confidence": 82.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Activity lifecycle (5 of 5) Gi\n\nDueDate Priority + Status S Subject >\nIn progress: new/updated 06/07/2018 High Open\nv Star indicates unviewed activity\n. Normal Open\nIn progress (viewed): normal\nStar —_— on view\n\ny\n\nw Priority > Status >\nOverdue High Open\nv Due date turns red when overdue\nDue Date > Priority > Status > Subject >\nEscalated 05/31/2018 Urgent Open\nVv Exclamation appears when overdue date is passed\n\nvy!) S  DueDate > Priority > Status >\n\nSS SomPistea ot ekibpes",
+      "word_count": 85,
+      "avg_confidence": 79.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Dalia\nUnderwriter\n\n®*\n\nIf there is a policy submission that carries\nsignificant risk, | need to know. Is there a way to\nreceive notification so | can review the\nsubmission myself?",
+      "word_count": 31,
+      "avg_confidence": 93.16,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Types of activities in PolicyCenter (1 of 2)\n\n¢ General activity is a task to do; no authority is involved in completing task",
+      "word_count": 24,
+      "avg_confidence": 93.5,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Types of activities in PolicyCenter (2 of 2) Gi\n\n¢« AGeneral activity is task to do, but no authority involved in doing task\n\n¢« An Underwriter review activity requests underwriters to review underwriting\nissues",
+      "word_count": 35,
+      "avg_confidence": 90.29,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Activity ownership: explicit and implicit Gi\n\nS&S,\n\nSy explicit\n\nAlice Applegate\n\nSe\n\nunderwriter for\nBig Lake\nBakery\n\n&,\nwo\n\nSe\n\nimplicit\nunderwriter —_______-_» Alice Applegate",
+      "word_count": 26,
+      "avg_confidence": 77.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Activity queues\n\nNew Account Group\n\nor<0 |\nOn\nS\n\na\neo\nQUEUE\n\nActivity: Initial\ncontact needed\n\n(a —\n\nGi\n\n©\na)\n\ne-\n\nSend welcome\npacket\n\nUser in the\ngroup takes on\none activity in\nthe queue",
+      "word_count": 37,
+      "avg_confidence": 81.28,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "What you can do with activities\n\nActivities associated\n\nwith accounts, policies | Activities in a queue\nor transactions\n\nActivities that you own\n\nView activities\nSearch activities\nTake ownership\nModify activities\nReassign activities\n\nComplete or skip\nactivities\n\nx<",
+      "word_count": 37,
+      "avg_confidence": 93.34,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Demonstration G\nCreating an activity\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question\n\n/~ — Give one example of how an activity can help users manage their work.\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 74.29,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\n¢\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nGive one example of how an activity can help users manage their work.\n\nAssign work to a user, alert users to certain events, manage how policy jobs are\ncompleted.\n\nGi",
+      "word_count": 41,
+      "avg_confidence": 87.68,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\n_~ — What business objects can have an associated activity?\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "word_count": 20,
+      "avg_confidence": 69.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer\n\n_~ — What business objects can have an associated activity?\n\n4\n4\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nAccounts, policies and transactions (jobs).",
+      "word_count": 25,
+      "avg_confidence": 79.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question\n\nae What is an activity pattern?\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "word_count": 15,
+      "avg_confidence": 66.77,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer\n\n77\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nWhat is an activity pattern?\n\nAn activity pattern is a description of how to create a specific activity.",
+      "word_count": 29,
+      "avg_confidence": 82.84,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\nae Is an activity always assigned to a group? A user?\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "word_count": 20,
+      "avg_confidence": 75.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer\n\n77\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nIs an activity always assigned to a group? A user?\n\nActivities can be assigned to users, groups or queues. In addition, a user is assigned\nto a group; a queue contains activities assigned to a group.",
+      "word_count": 47,
+      "avg_confidence": 88.4,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question\n\n,- — Who can modify an activity?\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "word_count": 17,
+      "avg_confidence": 55.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer\n\n77\n4\n4\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nWho can modify an activity?\n\nThe activity owner and anyone with manager permissions.",
+      "word_count": 24,
+      "avg_confidence": 79.75,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Lesson\nobj ectives * Define an Activity as the term is used in\nreview PolicyCenter\n\n¢ Explain the difference between a Manual and\nAutomatic Activity\n\n¢ Define an Activity Pattern\n\n¢ Describe the Activity life cycle\n\n¢ Discern an Underwriter Activity from a\nGeneral Activity",
+      "word_count": 45,
+      "avg_confidence": 87.64,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "| Student exercise\n\nActivities",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

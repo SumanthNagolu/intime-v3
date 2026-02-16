@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-05",
+    "slide_count": 31,
+    "slides_with_text": 26,
+    "total_words": 1074,
+    "avg_confidence": 86.5,
+    "processing_time_seconds": 8.95,
+    "extracted_at": "2026-02-15T18:16:08.454389"
+  },
+  "full_text": "Writing Assignment Rules\n\nLesson\nobjectives\n\n¢ Describe the ClaimCenter assignment model\n¢ Assign entities to groups and users\n\n| What can be assigned?\n\n¢ Inthe base configuration, ClaimCenter assigns:\n\n* Claims Exposure\n* Exposures ON\n\nGg\n+ Matters @\n\n+ Subrogations Claim Ne\n\n* Service Requests _ —_—»\n* Activities O aA Fal\n¢ To:\n\n* Groups\n\nS,\n« Users \\w\n\n| Queues G\n\n¢ Are places for unassigned activities to “wait” until they are assigned\n¢ Every group in the organization can have one or more associated queues\n\n* Queues can be “shared” by creating the queue on a parent group and making it visible to all\nchild groups\n\n¢ Activities assigned to the group, but not to a specific user, can be placed in the\nqueue\n\n¢ Group supervisor can assign activities from the queue to subordinates\n* Group members can assign activities from the queue to themselves\n\n¢ Only activities can be placed in a queue\n\n| Assignment rule sets\n\n¢ For each assignable entity there are\ntwo rule sets:\n* Global<Entity>AssignmentRules\n+ Run first\n+ Assign entity to group\n* May assign entity to a user\n¢ DefaultGroup<Entity>AssignmentRules\n\n+ Run if Global rules do not assign entity toa\nuser\n\n+ Assign entity to user\n\nv [Rule Sets\n> ApprovalRouting\n> Archive\nVv Assignment\n\n#) DefaultGroupActivityAssignmentRules\n\n#) DefaultGroupClaimAssignmentRules\n\n#) DefaultGroupExposureAssignmentRules\n\n#) DefaultGroupMatterAssignmentRules\n\n#) DefaultGroupServiceRequestAssignmentRules\n&) DefaultGroupSubrogationAssignmentRules\n#) GlobalActivityAssignmentRules\n\n#) GlobalExposureAssignmentRules\n\n#) GlobalMatterAssignmentRules\n\n&) GlobalServiceRequestAssignmentRules\n\n#) GlobalSubrogationAssignmentRules\n\n| Assignment flow Gi\n\nnothing specified\n\nSelect how you would like to do the assignment\n\nne | Global <entity>\nAssignment Rules\n\nGroup assigned?\n\nyes\n\nUser assigned?\n\nO Select from list: * Useautomated assignment +\n\ngroup specified\n\nnt | Default Group <entity>\nAssignment Rules\n\nUser assigned?\n\nNew group assigned?\n\ngroup and user specified\n\n‘Andy Applegate Autol - TeamA\n\nAssign to\ngroup supervisor\n\n| Default owner assignment\n\nIf global assignment is\nsuccessful, entity is\nassigned to a group\n\nIf global assignment is\nunsuccessful, entity is\nassigned to \"Default\nOwner\" and root group\n\nPrimary Adjuster\n\nPrimary Group\n\nPrimary Adjuster\n\nPrimary Group\n\nGi\n\nAndy Applegate\n\nAutol - TeamA\n\nDefault Owner\n\nAutol - TeamA\n\n| CCAssignable delegate (1 of 2)\n\n¢ To be assignable, an entity must implement the\nCCAssignable delegate\n\n¢ All assignable objects in the base application implement\n\nCCAssignable\n\n* Grants access to CurrentAssignment\n\n(continued)\n\nPOrerr rr rrrrry\n\n¥\n\neneeeeepecnsaqedeacs\n\ney\n\nXs\nor BE\n\nPrrrerieriiry\n\nN)\n\n(\n\nZ\n\ny\n\nw!\n[a5\ny\n\nN\n\na\n\n| CCAssignable delegate (2 of 2) G\n\n¢ Provides most of the methods used for\n\nassigning to groups and users\n\nHas fields that track NY]\nAssignment status \"\nCurrent assignee (queue or user and group) :\n\nPrevious assignee (queue or user and group)\n\nUser who last assigned the entity\n\nTime when the entity was last assigned\n\nseeeeeagpeneseqedhasenencennsenenens\n:\n\n8\n(\n\n6\nS i\neet\n\n8\ny\nN\n\n| Assignment in the UI Gi\n\n¢ Most assignment is done automatically Select how you would like to do the assignment\nO Select from list: * | Use automated assignment\n* Some screens allow users to manually Use automated assianment\n‘Sue Smith (Autol - TeamA)\n\nassign entities\n\nHeidi Johnson (Auto - TeamA)\n\nFind :\nind a user or group: Felicity Wagner (Auto1 - TeamA)\n\n* Allows them to choose a specific user/group Gary Wang (autol -Teama)\nand assign object directly without invoking Dan Henson (Autoi - TeamA)\nrules Eugene Nyugen (Auto1 - TeamA)\nSearch For | Us| Betty Baker (Autol - TeamA) .\n\nChris Craft (Auto1 - TeamA)\n\nFiest name Andy Applegate (Autol - TeamA)\n\n| Demonstration G\n\nAssigning Entities in the UI\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Assignment methods\n\n¢ Assign entities to groups and users using provided methods\n¢ Are provided by CurrentAssignment\n\n« For example,\nactivity.CurrentAssignment.assignGroup (activity.Claim.AssignedGroup)\nattempts to assign an activity to a group.\n\n¢ Return a Boolean value\n* True if assignment was successful\n\n¢ False if appropriate group/user could not be assigned by this rule\n\n| actions.exit() method\n\nEnds the execution of the rule set\n¢ Should be executed when assignment is successful:\nif (assignMethod) {\n\nactions.exit()\n\nACTION (activity entity.Activity, actions : gw.rules.Action) :\nvar assignedGroup = activity.Claim.AssignedGroup\n\nif (activity.CurrentAssignment.assign(assignedGroup, assignedGroup.Supervisor)) {\nactions.exit ()\n\n}\nEND\n\n| Commonly-used assignment methods Ga\n\nMethod Object Assigns To...\n\nassignGroup(group) Any The named group\n\nassignGroupByRoundRobin(groupType,\ni \" *\n\ndicectChiidrenOniw eroup* Group matching specified location and group type\nassign(group, user) | Any The named user and group\n| Any The next user in the named group (in a cyclical fashion)\n\nUser matching location\nurrentGroup\nassignTolssueOwner() Allbut Claim | The owner of the claim or related exposure\n\nassignManually(responsibleUser) | ay | The group supervisor\n\nassignActivityToQueue(queue, currentGroup) Activity The named activity queue\n\n*, attributeCriteria) Any Auser which matches specified attributes\n\nassignUserByRoundRobin()\n‘assignUserByLocation(address, includeSubGroups,\n\n| Dynamic assignment\n\n¢ Is an advanced topic\n* Offers two methods:\n* assignGroupDynamically(dynamicGroupAssignmentStrategy)\n* assignUserDynamically(dynamicUserAssignmentStrategy)\n* The argument of these methods must implement an interface, respectively\n* DynamicGroupAssignmentStrategy\n\n+ DynamicUserAssignmentStrategy\n\n| Demonstration G\n\nAssignment Methods\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,— — Inthe base configuration, what kinds of objects may be assigned to a\n\nPa queue?\n¢\n\nSS Seeoesese sees ee ese\n\nGi\n\nAnswer\n\n,— — Inthe base configuration, what kinds of objects may be assigned to a\nKs queue?\n¢\n\nThe correct answer is only Activities,\n\nSS eeesee seen ee ese\n\nGi\n\nQuestion\n\n_— — What must be true of an entity for its objects to be assignable?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese\n\nAnswer\n\n_— — What must be true of an entity for its objects to be assignable?\n\n¢\n7\n\na The correct answer is it must implement the CCAssignable delegate.\n\nSS eeesee seen ee ese\n\nnl\n\nQuestion\n\n_— — What method ends the execution of a rule set?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese\n\nAnswer\n\n_— — What method ends the execution of a rule set?\n\n¢\n¢\n“ The correct answer is the actions.exit() method.\n\nSS eeesee seen ee ese\n\n| Student exercise G\n\nAssigning auto theft claims by location\n\n| Student exercise\n\nAssigning FNOL error\nactivities to claim creator\n\n| Student exercise\n\nAssigning vandalism claims manually\n\nLesson\nobjectives ¢ Describe the ClaimCenter assignment model\nreview ¢ Assign entities to groups and users",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Writing Assignment Rules",
+      "word_count": 3,
+      "avg_confidence": 95.4,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the ClaimCenter assignment model\n¢ Assign entities to groups and users",
+      "word_count": 15,
+      "avg_confidence": 86.67,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| What can be assigned?\n\n¢ Inthe base configuration, ClaimCenter assigns:\n\n* Claims Exposure\n* Exposures ON\n\nGg\n+ Matters @\n\n+ Subrogations Claim Ne\n\n* Service Requests _ —_—»\n* Activities O aA Fal\n¢ To:\n\n* Groups\n\nS,\n« Users \\w",
+      "word_count": 43,
+      "avg_confidence": 70.95,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Queues G\n\n¢ Are places for unassigned activities to “wait” until they are assigned\n¢ Every group in the organization can have one or more associated queues\n\n* Queues can be “shared” by creating the queue on a parent group and making it visible to all\nchild groups\n\n¢ Activities assigned to the group, but not to a specific user, can be placed in the\nqueue\n\n¢ Group supervisor can assign activities from the queue to subordinates\n* Group members can assign activities from the queue to themselves\n\n¢ Only activities can be placed in a queue",
+      "word_count": 98,
+      "avg_confidence": 91.6,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Assignment rule sets\n\n¢ For each assignable entity there are\ntwo rule sets:\n* Global<Entity>AssignmentRules\n+ Run first\n+ Assign entity to group\n* May assign entity to a user\n¢ DefaultGroup<Entity>AssignmentRules\n\n+ Run if Global rules do not assign entity toa\nuser\n\n+ Assign entity to user\n\nv [Rule Sets\n> ApprovalRouting\n> Archive\nVv Assignment\n\n#) DefaultGroupActivityAssignmentRules\n\n#) DefaultGroupClaimAssignmentRules\n\n#) DefaultGroupExposureAssignmentRules\n\n#) DefaultGroupMatterAssignmentRules\n\n#) DefaultGroupServiceRequestAssignmentRules\n&) DefaultGroupSubrogationAssignmentRules\n#) GlobalActivityAssignmentRules\n\n#) GlobalExposureAssignmentRules\n\n#) GlobalMatterAssignmentRules\n\n&) GlobalServiceRequestAssignmentRules\n\n#) GlobalSubrogationAssignmentRules",
+      "word_count": 80,
+      "avg_confidence": 79.76,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Assignment flow Gi\n\nnothing specified\n\nSelect how you would like to do the assignment\n\nne | Global <entity>\nAssignment Rules\n\nGroup assigned?\n\nyes\n\nUser assigned?\n\nO Select from list: * Useautomated assignment +\n\ngroup specified\n\nnt | Default Group <entity>\nAssignment Rules\n\nUser assigned?\n\nNew group assigned?\n\ngroup and user specified\n\n‘Andy Applegate Autol - TeamA\n\nAssign to\ngroup supervisor",
+      "word_count": 61,
+      "avg_confidence": 86.38,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Default owner assignment\n\nIf global assignment is\nsuccessful, entity is\nassigned to a group\n\nIf global assignment is\nunsuccessful, entity is\nassigned to \"Default\nOwner\" and root group\n\nPrimary Adjuster\n\nPrimary Group\n\nPrimary Adjuster\n\nPrimary Group\n\nGi\n\nAndy Applegate\n\nAutol - TeamA\n\nDefault Owner\n\nAutol - TeamA",
+      "word_count": 48,
+      "avg_confidence": 92.67,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| CCAssignable delegate (1 of 2)\n\n¢ To be assignable, an entity must implement the\nCCAssignable delegate\n\n¢ All assignable objects in the base application implement\n\nCCAssignable\n\n* Grants access to CurrentAssignment\n\n(continued)\n\nPOrerr rr rrrrry\n\n¥\n\neneeeeepecnsaqedeacs\n\ney\n\nXs\nor BE\n\nPrrrerieriiry\n\nN)\n\n(\n\nZ\n\ny\n\nw!\n[a5\ny\n\nN\n\na",
+      "word_count": 52,
+      "avg_confidence": 73.22,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| CCAssignable delegate (2 of 2) G\n\n¢ Provides most of the methods used for\n\nassigning to groups and users\n\nHas fields that track NY]\nAssignment status \"\nCurrent assignee (queue or user and group) :\n\nPrevious assignee (queue or user and group)\n\nUser who last assigned the entity\n\nTime when the entity was last assigned\n\nseeeeeagpeneseqedhasenencennsenenens\n:\n\n8\n(\n\n6\nS i\neet\n\n8\ny\nN",
+      "word_count": 67,
+      "avg_confidence": 86.37,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Assignment in the UI Gi\n\n¢ Most assignment is done automatically Select how you would like to do the assignment\nO Select from list: * | Use automated assignment\n* Some screens allow users to manually Use automated assianment\n‘Sue Smith (Autol - TeamA)\n\nassign entities\n\nHeidi Johnson (Auto - TeamA)\n\nFind :\nind a user or group: Felicity Wagner (Auto1 - TeamA)\n\n* Allows them to choose a specific user/group Gary Wang (autol -Teama)\nand assign object directly without invoking Dan Henson (Autoi - TeamA)\nrules Eugene Nyugen (Auto1 - TeamA)\nSearch For | Us| Betty Baker (Autol - TeamA) .\n\nChris Craft (Auto1 - TeamA)\n\nFiest name Andy Applegate (Autol - TeamA)",
+      "word_count": 115,
+      "avg_confidence": 81.52,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Demonstration G\n\nAssigning Entities in the UI\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 93.08,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Assignment methods\n\n¢ Assign entities to groups and users using provided methods\n¢ Are provided by CurrentAssignment\n\n« For example,\nactivity.CurrentAssignment.assignGroup (activity.Claim.AssignedGroup)\nattempts to assign an activity to a group.\n\n¢ Return a Boolean value\n* True if assignment was successful\n\n¢ False if appropriate group/user could not be assigned by this rule",
+      "word_count": 54,
+      "avg_confidence": 89.92,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| actions.exit() method\n\nEnds the execution of the rule set\n¢ Should be executed when assignment is successful:\nif (assignMethod) {\n\nactions.exit()\n\nACTION (activity entity.Activity, actions : gw.rules.Action) :\nvar assignedGroup = activity.Claim.AssignedGroup\n\nif (activity.CurrentAssignment.assign(assignedGroup, assignedGroup.Supervisor)) {\nactions.exit ()\n\n}\nEND",
+      "word_count": 41,
+      "avg_confidence": 88.8,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Commonly-used assignment methods Ga\n\nMethod Object Assigns To...\n\nassignGroup(group) Any The named group\n\nassignGroupByRoundRobin(groupType,\ni \" *\n\ndicectChiidrenOniw eroup* Group matching specified location and group type\nassign(group, user) | Any The named user and group\n| Any The next user in the named group (in a cyclical fashion)\n\nUser matching location\nurrentGroup\nassignTolssueOwner() Allbut Claim | The owner of the claim or related exposure\n\nassignManually(responsibleUser) | ay | The group supervisor\n\nassignActivityToQueue(queue, currentGroup) Activity The named activity queue\n\n*, attributeCriteria) Any Auser which matches specified attributes\n\nassignUserByRoundRobin()\n‘assignUserByLocation(address, includeSubGroups,",
+      "word_count": 90,
+      "avg_confidence": 86.98,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Dynamic assignment\n\n¢ Is an advanced topic\n* Offers two methods:\n* assignGroupDynamically(dynamicGroupAssignmentStrategy)\n* assignUserDynamically(dynamicUserAssignmentStrategy)\n* The argument of these methods must implement an interface, respectively\n* DynamicGroupAssignmentStrategy\n\n+ DynamicUserAssignmentStrategy",
+      "word_count": 31,
+      "avg_confidence": 83.84,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Demonstration G\n\nAssignment Methods\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.43,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n,— — Inthe base configuration, what kinds of objects may be assigned to a\n\nPa queue?\n¢\n\nSS Seeoesese sees ee ese\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 83.6,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\n,— — Inthe base configuration, what kinds of objects may be assigned to a\nKs queue?\n¢\n\nThe correct answer is only Activities,\n\nSS eeesee seen ee ese\n\nGi",
+      "word_count": 30,
+      "avg_confidence": 83.07,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n_— — What must be true of an entity for its objects to be assignable?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese",
+      "word_count": 24,
+      "avg_confidence": 87.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n_— — What must be true of an entity for its objects to be assignable?\n\n¢\n7\n\na The correct answer is it must implement the CCAssignable delegate.\n\nSS eeesee seen ee ese\n\nnl",
+      "word_count": 35,
+      "avg_confidence": 86.03,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n_— — What method ends the execution of a rule set?\n\n¢\n7\n¢\n\nSS Seeoesese sees ee ese",
+      "word_count": 20,
+      "avg_confidence": 84.62,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n_— — What method ends the execution of a rule set?\n\n¢\n¢\n“ The correct answer is the actions.exit() method.\n\nSS eeesee seen ee ese",
+      "word_count": 27,
+      "avg_confidence": 82.38,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Student exercise G\n\nAssigning auto theft claims by location",
+      "word_count": 10,
+      "avg_confidence": 88.09,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Student exercise\n\nAssigning FNOL error\nactivities to claim creator",
+      "word_count": 10,
+      "avg_confidence": 89.91,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Student exercise\n\nAssigning vandalism claims manually",
+      "word_count": 7,
+      "avg_confidence": 88.25,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Lesson\nobjectives ¢ Describe the ClaimCenter assignment model\nreview ¢ Assign entities to groups and users",
+      "word_count": 16,
+      "avg_confidence": 87.0,
+      "image_size": {
+        "width": 1280,
+        "height": 664
+      }
+    }
+  ]
+}

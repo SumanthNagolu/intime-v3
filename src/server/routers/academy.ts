@@ -1,9 +1,53 @@
 import { z } from 'zod'
-import { router } from '../trpc/init'
+import { publicProcedure, router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
 
 export const academyRouter = router({
+  getPublicCourseBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ input }) => {
+      const adminClient = getAdminClient()
+      const { data: course } = await adminClient
+        .from('courses')
+        .select(`
+            *,
+            course_modules (
+                id,
+                title,
+                slug,
+                description,
+                module_number,
+                is_published,
+                module_topics (
+                    id,
+                    title,
+                    slug,
+                    topic_number,
+                    content_type,
+                    is_published,
+                    estimated_duration_minutes
+                )
+            )
+        `)
+        .eq('slug', input.slug)
+        .eq('is_published', true)
+        .single()
+
+      if (course && course.course_modules) {
+        // Sort modules by number
+        course.course_modules.sort((a: any, b: any) => (a.module_number || 0) - (b.module_number || 0));
+
+        // Sort topics in each module
+        course.course_modules.forEach((m: any) => {
+          if (m.module_topics) {
+            m.module_topics.sort((a: any, b: any) => (a.topic_number || 0) - (b.topic_number || 0));
+          }
+        });
+      }
+
+      return course;
+    }),
   // ============================================
   // STUDENT PORTAL PROCEDURES
   // ============================================

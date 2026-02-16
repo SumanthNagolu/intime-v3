@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "chapter": "ch14",
+    "chapter_title": "Rating Configuration",
+    "lesson": "lesson-02",
+    "slide_count": 25,
+    "slides_with_text": 24,
+    "total_words": 1187,
+    "avg_confidence": 83.24,
+    "processing_time_seconds": 9.07,
+    "extracted_at": "2026-02-15T18:24:36.741830"
+  },
+  "full_text": "Configuring CostData Objects\n\nLesson\nobjectives\n\n¢ Describe the CostData Gosu classes to be\nused by the rating engine to flexibly build up\nthe cost entities\n\n¢ Define a new CostData class\n\nCostData objects\n\n| CostData objects G\nCreates, a Merged and prorated, P ted\nbuilds ore copied to Costs ersiste\n\nRating engine CostData objects Cost entities Database\n\n¢ CostData objects are POGOs that mirror every cost entity\n¢ They allow the rating engine to flexibly build up cost entities during rating\n\n¢ Atthe end, the CostData objects are merged, prorated and copied to actual cost\nentities to be maintained.\n\n| General properties and methods Gi\n\n¢ The CostData base class provides common financial fields which match the cost\n\ndelegate , such as standard, override, actual values for base and adjusted rate,\nterm amount, and prorated amount\n\n¢ It also provides common methods used by the rating engine, such as:\n* mergelfCostEqual()\n\n* copyStandardColumnsToActualColumns()\n* setRounding()\n\n| Define a new CostData class\n\nGi\n\n¢ For every cost subtype entity, create a CostData subclass\n\n¢ CostData subclass name = CostEntityName + “Data” | eti |\n\n« Example: PACostData, PersonalAutoCovCostData,\n\nPersonalVehicleCovCostData\n¢ Extend the abstract class CostData or its child classes for the line\n« Add member variables to match columns on the cost entity\n\nAdd constructors\n¢ Implement abstract properties and methods\n\n* KeyValues()\n* setSpecificFieldsOnCost()\n* getVersionedCosts()\n\n| Keys Gi\n\n¢ CostData subclasses must define member variables to match the columns on their\ncorresponding cost entities\n¢ Define a property that links to an entity instance such as key in a CostData class\n* Key links one object to another\n\n* Set the key field with the Fixedid property of the entity instance\n\n* new PersonalAutoCovCostData ( start, end, cov.Currency, RateCache, vehicle.Fixedid, cov.Fixedid )\nin PARatingEngine\n\nPersonalAutoCovCost _|A taxable unit of price f..\nimplementsEntity Cost class PersonalautocovcostData extends PACostData<PersonalAutoCovcost> (\nimplementsinterfac gw.api.domain financial... gw.lob.pafinancials PA...\nforeignkey PersonalAutoCov PersonalAutoCoy a> var _covID :\n\nforeignkey PersonalVehicle PersonalVehicle\n\n| Constructors Gi\n\n¢ Date-based constructor: 1\n« Used to create new CostData for a cost bearing object on the policy graph\n« Parameters added to set the member variables specific to the subclass\n* Cost-based constructor: 4\n« Used to create CostData based on existing cost\n* Constructors to support backward compatibility for non-multicurrency: 2, 3\n\nabstract class PACostData<k extends PACost> extends CostData<R, PersonalAutoLine> {\nconstruct (effDate : Date, expDate : Date, c : Currency, rateCache : PolicyPeriodFxXRateCache) {\nsuper(effDate, expDate, c, rateCache)\n\n»\n\n2) construct cersoate : Date, expDate : Date) { super(effDate, expDate) }\n\nGB) constrast : R) { super(c) }\n\n( Q)) construct (< : Ry rateCache : PolicyPeriodFxRateCache) { super(c, rateCache) }\n\n| Merging CostData objects G\n\nThe rating engine merges CostData objects with similar costs\n\nCostData\n(Date range) Coverage Coverable TermAmount\nsw\ncoe eS Qq-—s— 10.00\nald Merged .,\n1/13/15 Liability Auto 1 e—-@-S 10.00\nPolicyChange Se NY\neffective 3/16 wy Qq-—s— 10.00 1/1 — 12/31 Liability Auto 1\n3/16 — 12/31 Liability Auto 1\n\nRe\nle\nRSH\nBy iS —\n4\n\nRSS\n\nie,\nRSF — me 5.00\nNY = ;\n\nJ KeyValues() G\n\nCostData subclasses must implement the KeyValues() property\nUsed to determine if two CostData objects are “the same”\n\nImportant when merging CostData objects (e.g. when there are multiple slices in a\nbranch)\n\nProvides a list of values that collectively identifies the CostData object\n\nPersonalAutoCovCostData.gs\n\nprotected override property get KeyValues() : List<Object> {\nreturn {_vehicleID, _covID}\n\n}\n\n| setSpecificFieldsOnCost() G\n\n* CostData subclasses must implement the setSpecificFieldsOnCost() method\n\n« Used to create new cost entities or update existing cost entities based on\nCostData objects\n\n* CostData base class sets the general properties for the cost entity, such as\namounts and rates\n\n¢ Subclasses must set the fields specific to the associated cost entities\n¢ Non-FK properties: set properties directly on the cost entities\n\n« FK properties: set properties using setFieldValue( costPropertyNames, Key )\n\ncostPropertyName: String specifying property name on av cost entity\n\nKey: Key containing the fixedID for the object to be linked. Example:\ncost.setFieldValue (“PersonalAutoCov”, _covID) in\nPersonalAutoCovCostData.as\n\n| Cost VersionList Gi\n\nA Cost VersionList used by a rating engine is a set of cost rows for the same thing\n\nQq-—s— 10.00\n\nAuto 1\n\nCostData °. A]\n4/1 — 12/31 Collision\n\nx\n8\nPersonalAutoCovCostData\n\nCost VersionList g =—\n11 — 12/31 for CostData object —\n1/1-3/31 Liability Auto 1\n\nQe Liability g o— =—\n\n4/1 —12/31 Liability Auto 1\n\n= Auto 1\n25.00\n\n| getVersionedCosts() Gi\n\n* CostData subclasses must implement the getVersionedCosts() method\n« Used to match corresponding costs to the CostData object\n¢ Retrieve version lists of cost objects from the PolicyPeriod\n\n¢ Repeat all costs for the target object and determine which cost entity instances\ncorrespond to the current CostData object\n\n¢ Use the Key field to match the cost if the CostData subclass has one\n\n| Demonstration G\n\nConfiguring CostData objects\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,~ — What are CostData objects? How are they named?\n\n¢\n4\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nAnswer Gi\n\n,~ — What are CostData objects? How are they named?\n¢\nor CostData objects are Gosu objects that mirror every cost on a policy graph. Each\nCostData subclass has the same name as the cost entity followed by the suffix “Data”.\n\nSSS eee oe eo ooo e SoD\n\nQuestion\n\nae Describe briefly the two CostData constructors.\n4\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nAnswer\n\n_~ — Describe briefly the two CostData constructors.\n¢\n7 The two CostData constructors are:\n- Date-based constructor is created based on effective and expiration dates,\nusually for a new cost object.\n\n+ Cost-based constructor is created based on a pre-existing cost object that is\npassed-in as a parameter.\n\nSSS eee oe eo ooo e SoD\n\nQuestion\n\nae Why are KeyValues needed?\n4\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nAnswer\n\n,~ — Why are KeyValues needed?\n¢\nor KeyValues are needed to determine if two CostData objects are the same. The\nKeyValues property creates a list of the Key Values. The rating engine uses it as it\nmerges CostData objects.\n\nSSS eee oe eo ooo e SoD\n\nQuestion G\n\n,~ — Why can you not set properties directly on cost entities for both FKs?\n\n¢\n4\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nAnswer Gi\n\nae Why can you not set properties directly on cost entities for both FKs?\nor For non-FK properties, you can set the properties directly on the cost entity instance.\nFor FK properties, this approach does not work, because CostData objects store the\nentity's fixed ID encapsulated in a key object. So the methods\nsetSpecificFieldsOnCost and setFieldValue provided by the CostData class must be\nused to set the foreign key properties.\n\nSSS eee oe eo ooo e SoD\n\nLesson\nobjectives « Describe the CostData Gosu classes to be\n\nreview used by the rating engine to flexibly build up\nthe Cost entities\n¢ Define a new CostData class\n\n| Student exercise\n\nConfiguring CostData objects",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring CostData Objects",
+      "word_count": 3,
+      "avg_confidence": 94.0,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the CostData Gosu classes to be\nused by the rating engine to flexibly build up\nthe cost entities\n\n¢ Define a new CostData class",
+      "word_count": 28,
+      "avg_confidence": 90.36,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "CostData objects",
+      "word_count": 2,
+      "avg_confidence": 94.5,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| CostData objects G\nCreates, a Merged and prorated, P ted\nbuilds ore copied to Costs ersiste\n\nRating engine CostData objects Cost entities Database\n\n¢ CostData objects are POGOs that mirror every cost entity\n¢ They allow the rating engine to flexibly build up cost entities during rating\n\n¢ Atthe end, the CostData objects are merged, prorated and copied to actual cost\nentities to be maintained.",
+      "word_count": 66,
+      "avg_confidence": 89.11,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| General properties and methods Gi\n\n¢ The CostData base class provides common financial fields which match the cost\n\ndelegate , such as standard, override, actual values for base and adjusted rate,\nterm amount, and prorated amount\n\n¢ It also provides common methods used by the rating engine, such as:\n* mergelfCostEqual()\n\n* copyStandardColumnsToActualColumns()\n* setRounding()",
+      "word_count": 56,
+      "avg_confidence": 86.27,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Define a new CostData class\n\nGi\n\n¢ For every cost subtype entity, create a CostData subclass\n\n¢ CostData subclass name = CostEntityName + “Data” | eti |\n\n« Example: PACostData, PersonalAutoCovCostData,\n\nPersonalVehicleCovCostData\n¢ Extend the abstract class CostData or its child classes for the line\n« Add member variables to match columns on the cost entity\n\nAdd constructors\n¢ Implement abstract properties and methods\n\n* KeyValues()\n* setSpecificFieldsOnCost()\n* getVersionedCosts()",
+      "word_count": 71,
+      "avg_confidence": 86.17,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Keys Gi\n\n¢ CostData subclasses must define member variables to match the columns on their\ncorresponding cost entities\n¢ Define a property that links to an entity instance such as key in a CostData class\n* Key links one object to another\n\n* Set the key field with the Fixedid property of the entity instance\n\n* new PersonalAutoCovCostData ( start, end, cov.Currency, RateCache, vehicle.Fixedid, cov.Fixedid )\nin PARatingEngine\n\nPersonalAutoCovCost _|A taxable unit of price f..\nimplementsEntity Cost class PersonalautocovcostData extends PACostData<PersonalAutoCovcost> (\nimplementsinterfac gw.api.domain financial... gw.lob.pafinancials PA...\nforeignkey PersonalAutoCov PersonalAutoCoy a> var _covID :\n\nforeignkey PersonalVehicle PersonalVehicle",
+      "word_count": 98,
+      "avg_confidence": 82.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Constructors Gi\n\n¢ Date-based constructor: 1\n« Used to create new CostData for a cost bearing object on the policy graph\n« Parameters added to set the member variables specific to the subclass\n* Cost-based constructor: 4\n« Used to create CostData based on existing cost\n* Constructors to support backward compatibility for non-multicurrency: 2, 3\n\nabstract class PACostData<k extends PACost> extends CostData<R, PersonalAutoLine> {\nconstruct (effDate : Date, expDate : Date, c : Currency, rateCache : PolicyPeriodFxXRateCache) {\nsuper(effDate, expDate, c, rateCache)\n\n»\n\n2) construct cersoate : Date, expDate : Date) { super(effDate, expDate) }\n\nGB) constrast : R) { super(c) }\n\n( Q)) construct (< : Ry rateCache : PolicyPeriodFxRateCache) { super(c, rateCache) }",
+      "word_count": 117,
+      "avg_confidence": 84.27,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Merging CostData objects G\n\nThe rating engine merges CostData objects with similar costs\n\nCostData\n(Date range) Coverage Coverable TermAmount\nsw\ncoe eS Qq-—s— 10.00\nald Merged .,\n1/13/15 Liability Auto 1 e—-@-S 10.00\nPolicyChange Se NY\neffective 3/16 wy Qq-—s— 10.00 1/1 — 12/31 Liability Auto 1\n3/16 — 12/31 Liability Auto 1\n\nRe\nle\nRSH\nBy iS —\n4\n\nRSS\n\nie,\nRSF — me 5.00\nNY = ;",
+      "word_count": 70,
+      "avg_confidence": 71.58,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "J KeyValues() G\n\nCostData subclasses must implement the KeyValues() property\nUsed to determine if two CostData objects are “the same”\n\nImportant when merging CostData objects (e.g. when there are multiple slices in a\nbranch)\n\nProvides a list of values that collectively identifies the CostData object\n\nPersonalAutoCovCostData.gs\n\nprotected override property get KeyValues() : List<Object> {\nreturn {_vehicleID, _covID}\n\n}",
+      "word_count": 58,
+      "avg_confidence": 91.64,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| setSpecificFieldsOnCost() G\n\n* CostData subclasses must implement the setSpecificFieldsOnCost() method\n\n« Used to create new cost entities or update existing cost entities based on\nCostData objects\n\n* CostData base class sets the general properties for the cost entity, such as\namounts and rates\n\n¢ Subclasses must set the fields specific to the associated cost entities\n¢ Non-FK properties: set properties directly on the cost entities\n\n« FK properties: set properties using setFieldValue( costPropertyNames, Key )\n\ncostPropertyName: String specifying property name on av cost entity\n\nKey: Key containing the fixedID for the object to be linked. Example:\ncost.setFieldValue (“PersonalAutoCov”, _covID) in\nPersonalAutoCovCostData.as",
+      "word_count": 102,
+      "avg_confidence": 89.91,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Cost VersionList Gi\n\nA Cost VersionList used by a rating engine is a set of cost rows for the same thing\n\nQq-—s— 10.00\n\nAuto 1\n\nCostData °. A]\n4/1 — 12/31 Collision\n\nx\n8\nPersonalAutoCovCostData\n\nCost VersionList g =—\n11 — 12/31 for CostData object —\n1/1-3/31 Liability Auto 1\n\nQe Liability g o— =—\n\n4/1 —12/31 Liability Auto 1\n\n= Auto 1\n25.00",
+      "word_count": 65,
+      "avg_confidence": 71.33,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| getVersionedCosts() Gi\n\n* CostData subclasses must implement the getVersionedCosts() method\n« Used to match corresponding costs to the CostData object\n¢ Retrieve version lists of cost objects from the PolicyPeriod\n\n¢ Repeat all costs for the target object and determine which cost entity instances\ncorrespond to the current CostData object\n\n¢ Use the Key field to match the cost if the CostData subclass has one",
+      "word_count": 66,
+      "avg_confidence": 89.45,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\n\nConfiguring CostData objects\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.39,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Question\n\n,~ — What are CostData objects? How are they named?\n\n¢\n4\n¢\n\nSS oe ooo e eo oe ooooOoD",
+      "word_count": 21,
+      "avg_confidence": 66.24,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Answer Gi\n\n,~ — What are CostData objects? How are they named?\n¢\nor CostData objects are Gosu objects that mirror every cost on a policy graph. Each\nCostData subclass has the same name as the cost entity followed by the suffix “Data”.\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 50,
+      "avg_confidence": 81.06,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\nae Describe briefly the two CostData constructors.\n4\n¢\n\nSS oe ooo e eo oe ooooOoD",
+      "word_count": 17,
+      "avg_confidence": 63.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n_~ — Describe briefly the two CostData constructors.\n¢\n7 The two CostData constructors are:\n- Date-based constructor is created based on effective and expiration dates,\nusually for a new cost object.\n\n+ Cost-based constructor is created based on a pre-existing cost object that is\npassed-in as a parameter.\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 57,
+      "avg_confidence": 84.14,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\nae Why are KeyValues needed?\n4\n¢\n\nSS oe ooo e eo oe ooooOoD",
+      "word_count": 15,
+      "avg_confidence": 59.53,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\n,~ — Why are KeyValues needed?\n¢\nor KeyValues are needed to determine if two CostData objects are the same. The\nKeyValues property creates a list of the Key Values. The rating engine uses it as it\nmerges CostData objects.\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 48,
+      "avg_confidence": 82.08,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n,~ — Why can you not set properties directly on cost entities for both FKs?\n\n¢\n4\n¢\n\nSS oe ooo e eo oe ooooOoD",
+      "word_count": 27,
+      "avg_confidence": 72.37,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\nae Why can you not set properties directly on cost entities for both FKs?\nor For non-FK properties, you can set the properties directly on the cost entity instance.\nFor FK properties, this approach does not work, because CostData objects store the\nentity's fixed ID encapsulated in a key object. So the methods\nsetSpecificFieldsOnCost and setFieldValue provided by the CostData class must be\nused to set the foreign key properties.\n\nSSS eee oe eo ooo e SoD",
+      "word_count": 79,
+      "avg_confidence": 86.91,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Lesson\nobjectives « Describe the CostData Gosu classes to be\n\nreview used by the rating engine to flexibly build up\nthe Cost entities\n¢ Define a new CostData class",
+      "word_count": 29,
+      "avg_confidence": 90.76,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Student exercise\n\nConfiguring CostData objects",
+      "word_count": 6,
+      "avg_confidence": 94.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

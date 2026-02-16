@@ -1,0 +1,141 @@
+{
+  "metadata": {
+    "chapter": "ch14",
+    "chapter_title": "Rating Configuration",
+    "lesson": "lesson-01",
+    "slide_count": 12,
+    "slides_with_text": 6,
+    "total_words": 245,
+    "avg_confidence": 91.03,
+    "processing_time_seconds": 3.6,
+    "extracted_at": "2026-02-13T12:25:00.829595"
+  },
+  "full_text": "Configuring Costs and Transactions\n\nLesson |\nobjectives ¢ Describe the rating process and rating\n\narchitecture so that you can design and\nconfigure rating effectively\n\n* Configure the cost structure to store the\npremiums and other monetary amounts of the\npolicy\n\n¢ Access the changes in costs using the\ntransaction entity\n\n| Rating process overview Gi\n\nRating Engine\n\nCreates Rating Engine\nbased on policy line\n\n===>\n\nUser clicks Quote PCRatingPlugin.gs <LOB>RatingEngine.gs Policy is quoted and\nin a policy transaction (Main entry point gets rates from rate books premium is displayed\nto rating) and calculates costs\n\nCalculates costs\n\n| Rating architecture Gi\n\nwD Rating Engine Rate Book\nraed Instantiates\n===> Parameter Sets\nPopulates\nPCRatingPlugin\n\n<LOB>RatingEngine Inputs\n\nRate Routines Rate\nCreates Queries [Tables\n\nCostData Objects\n\nMerges CostDatas RY)\nand persists Costs » 51 Costs and Transactions\n\n| Demonstration G\n\nRating overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| What is a cost? G\n* Unit of price for an aspect of a policy Co\") Cost\nover a specific period of time  ] 11.00\n* Discrete unit which cannot be broken up Liability\n\ninto smaller units :\n\n« Examples of costs\nP = Collision\n« Premium for an entire coverage a\n7.00\n* Taxes Ld\nCo Comprehensive\n¢ Total cost of policy is the sum of all\nindividual costs CL) 4.00\nTax\n\nTotal 28.00\n\n9.00",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Costs and Transactions",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson |\nobjectives ¢ Describe the rating process and rating\n\narchitecture so that you can design and\nconfigure rating effectively\n\n* Configure the cost structure to store the\npremiums and other monetary amounts of the\npolicy\n\n¢ Access the changes in costs using the\ntransaction entity",
+      "word_count": 46,
+      "avg_confidence": 90.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Rating process overview Gi\n\nRating Engine\n\nCreates Rating Engine\nbased on policy line\n\n===>\n\nUser clicks Quote PCRatingPlugin.gs <LOB>RatingEngine.gs Policy is quoted and\nin a policy transaction (Main entry point gets rates from rate books premium is displayed\nto rating) and calculates costs\n\nCalculates costs",
+      "word_count": 46,
+      "avg_confidence": 93.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Rating architecture Gi\n\nwD Rating Engine Rate Book\nraed Instantiates\n===> Parameter Sets\nPopulates\nPCRatingPlugin\n\n<LOB>RatingEngine Inputs\n\nRate Routines Rate\nCreates Queries [Tables\n\nCostData Objects\n\nMerges CostDatas RY)\nand persists Costs » 51 Costs and Transactions",
+      "word_count": 37,
+      "avg_confidence": 81.59,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Demonstration G\n\nRating overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.63,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| What is a cost? G\n* Unit of price for an aspect of a policy Co\") Cost\nover a specific period of time  ] 11.00\n* Discrete unit which cannot be broken up Liability\n\ninto smaller units :\n\n« Examples of costs\nP = Collision\n« Premium for an entire coverage a\n7.00\n* Taxes Ld\nCo Comprehensive\n¢ Total cost of policy is the sum of all\nindividual costs CL) 4.00\nTax\n\nTotal 28.00\n\n9.00",
+      "word_count": 77,
+      "avg_confidence": 85.32,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "error": "cannot identify image file 'public/academy/guidewire/slides-original/ch14/lesson-01/slide-12.png'"
+    }
+  ]
+}

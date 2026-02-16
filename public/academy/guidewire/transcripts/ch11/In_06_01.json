@@ -1,0 +1,3795 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_06_01.mp4",
+    "video_stem": "In_06_01",
+    "duration_seconds": 245.78,
+    "duration_formatted": "00:04:05.780",
+    "segment_count": 50,
+    "word_count": 544,
+    "avg_confidence": 0.908,
+    "transcription_time_seconds": 20.39,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:47:34.337634"
+  },
+  "full_text": "This demonstration will export the following user fields in XML format. Full name. Public ID. User name. This demonstration requires that you use Training App and Guidewire Studio. Prior to creating the XML model, create a package to store the new model. In Studio, navigate to the GSRC package and create a new package called XML model. Right click on the GSRC package. Select New and then Package. Type the path and name of the new package. Click OK to save the new package. Create a new GX model in the new package by right clicking on the XML model package. Select New and then GX model. In the search by name field, type the name of the class. In the search results, select User, Entity. Notice that the model name field is auto-populates. Click OK to save changes. Add the key and normal properties for the model. Typically, select the public ID field as the key property since it uniquely identifies the object. Click the Add button. Select Key property. Select the display name property and add it as a normal property. Click the Add button. Select Normal property. The user name field. The user name field is on the credential entity. The credential for an key field is not bold and can't be selected. However, expand credential and select the user name field. Rather than adding the user name field directly, create another XML model on the credential entity to demonstrate how the credential for an key field becomes bold once it is backed by an XML model. Right click on the XML model package. Select New and then GX model. In the Search by Name field, type Credential. In the search results, select Credential . Click OK to save. In the Credential model, select User Name field. Click the Add button. Select Normal property. Click on the User Model tab. Notice that the Credential . Select the Credential . And add it as a Normal property. Click the Add button. Select Normal property. Select Model pop-up window. Select Credential Model. Click OK to save changes. Click on the Sample XML tab. Look at the sample XML and verify that the User Name field is added. Click on the Debug Server icon to start the server. Click on Tools and then select GOSA Scratchpad. Enter code that will test the new XML models. Examine the code. Lines 6 to 9. Add the query. The query is joining two entities. User Entity and User Contact Entity. The foreign key name is Contact. That is why in Line 7, Contact is used as the Join parameter. Enter. These advanced query techniques can be found in the GOSA Reference Guide. Line 12. The XML object is created using the XML model. Note, since XML model is going to be deprecated in the next major release, a deprecated line is shown through the code. Lines 14 to 17. The serialization options are configured. Line 20. The payload is created using serialization options. Click the Run and Debug Process icon to execute the code. As expected, the public ID and display name fields are exported from the user object. The user name field is exported from the credential object. This ends the Create an XML model demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.42,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.420",
+      "text": "This demonstration will export the following user fields in XML format. Full name. Public ID. User name. This demonstration requires that you use Training App and Guidewire Studio. Prior to creating the XML model, create a package to store the new model. In Studio, navigate to the GSRC package and create a new package called XML model. Right click on the GSRC package.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.9927
+        },
+        {
+          "word": "demonstration",
+          "start": 0.8,
+          "end": 1.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 1.44,
+          "end": 1.86,
+          "probability": 1.0
+        },
+        {
+          "word": "export",
+          "start": 1.86,
+          "end": 2.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 2.3,
+          "end": 2.48,
+          "probability": 1.0
+        },
+        {
+          "word": "following",
+          "start": 2.48,
+          "end": 2.9,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 2.9,
+          "end": 3.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "fields",
+          "start": 3.36,
+          "end": 3.84,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 3.84,
+          "end": 4.06,
+          "probability": 1.0
+        },
+        {
+          "word": "XML",
+          "start": 4.06,
+          "end": 4.5,
+          "probability": 0.9937
+        },
+        {
+          "word": "format.",
+          "start": 4.5,
+          "end": 5.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "Full",
+          "start": 5.48,
+          "end": 5.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "name.",
+          "start": 5.62,
+          "end": 6.0,
+          "probability": 0.8433
+        },
+        {
+          "word": "Public",
+          "start": 6.26,
+          "end": 7.06,
+          "probability": 0.999
+        },
+        {
+          "word": "ID.",
+          "start": 7.06,
+          "end": 7.52,
+          "probability": 0.9683
+        },
+        {
+          "word": "User",
+          "start": 8.18,
+          "end": 8.66,
+          "probability": 0.481
+        },
+        {
+          "word": "name.",
+          "start": 8.66,
+          "end": 8.92,
+          "probability": 0.9712
+        },
+        {
+          "word": "This",
+          "start": 9.36,
+          "end": 10.02,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 10.02,
+          "end": 10.66,
+          "probability": 1.0
+        },
+        {
+          "word": "requires",
+          "start": 10.66,
+          "end": 11.3,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 11.3,
+          "end": 11.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "you",
+          "start": 11.6,
+          "end": 11.78,
+          "probability": 0.98
+        },
+        {
+          "word": "use",
+          "start": 11.78,
+          "end": 12.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "Training",
+          "start": 12.12,
+          "end": 12.44,
+          "probability": 0.7529
+        },
+        {
+          "word": "App",
+          "start": 12.44,
+          "end": 12.8,
+          "probability": 0.8066
+        },
+        {
+          "word": "and",
+          "start": 12.8,
+          "end": 13.04,
+          "probability": 0.9878
+        },
+        {
+          "word": "Guidewire",
+          "start": 13.04,
+          "end": 13.66,
+          "probability": 0.9819
+        },
+        {
+          "word": "Studio.",
+          "start": 13.66,
+          "end": 14.1,
+          "probability": 0.9858
+        },
+        {
+          "word": "Prior",
+          "start": 14.48,
+          "end": 15.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 15.28,
+          "end": 15.54,
+          "probability": 1.0
+        },
+        {
+          "word": "creating",
+          "start": 15.54,
+          "end": 15.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 15.94,
+          "end": 16.16,
+          "probability": 1.0
+        },
+        {
+          "word": "XML",
+          "start": 16.16,
+          "end": 16.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "model,",
+          "start": 16.66,
+          "end": 17.06,
+          "probability": 0.9678
+        },
+        {
+          "word": "create",
+          "start": 17.34,
+          "end": 17.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 17.72,
+          "end": 17.86,
+          "probability": 1.0
+        },
+        {
+          "word": "package",
+          "start": 17.86,
+          "end": 18.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 18.22,
+          "end": 18.5,
+          "probability": 1.0
+        },
+        {
+          "word": "store",
+          "start": 18.5,
+          "end": 18.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 18.78,
+          "end": 18.96,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 18.96,
+          "end": 19.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "model.",
+          "start": 19.14,
+          "end": 19.52,
+          "probability": 1.0
+        },
+        {
+          "word": "In",
+          "start": 19.94,
+          "end": 20.46,
+          "probability": 1.0
+        },
+        {
+          "word": "Studio,",
+          "start": 20.46,
+          "end": 20.88,
+          "probability": 0.9424
+        },
+        {
+          "word": "navigate",
+          "start": 21.22,
+          "end": 21.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 21.7,
+          "end": 22.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 22.02,
+          "end": 22.16,
+          "probability": 1.0
+        },
+        {
+          "word": "GSRC",
+          "start": 22.16,
+          "end": 22.92,
+          "probability": 0.9502
+        },
+        {
+          "word": "package",
+          "start": 22.92,
+          "end": 23.4,
+          "probability": 0.9756
+        },
+        {
+          "word": "and",
+          "start": 23.4,
+          "end": 23.82,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 23.82,
+          "end": 24.14,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 24.14,
+          "end": 24.4,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 24.4,
+          "end": 24.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "package",
+          "start": 24.56,
+          "end": 24.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "called",
+          "start": 24.98,
+          "end": 25.38,
+          "probability": 1.0
+        },
+        {
+          "word": "XML",
+          "start": 25.38,
+          "end": 25.9,
+          "probability": 0.9922
+        },
+        {
+          "word": "model.",
+          "start": 25.9,
+          "end": 26.38,
+          "probability": 0.769
+        },
+        {
+          "word": "Right",
+          "start": 26.68,
+          "end": 27.46,
+          "probability": 0.999
+        },
+        {
+          "word": "click",
+          "start": 27.46,
+          "end": 27.68,
+          "probability": 0.3301
+        },
+        {
+          "word": "on",
+          "start": 27.68,
+          "end": 27.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 27.96,
+          "end": 28.08,
+          "probability": 1.0
+        },
+        {
+          "word": "GSRC",
+          "start": 28.08,
+          "end": 28.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "package.",
+          "start": 28.8,
+          "end": 29.42,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.0,
+      "end": 59.98,
+      "start_formatted": "00:00:30.000",
+      "end_formatted": "00:00:59.980",
+      "text": "Select New and then Package. Type the path and name of the new package. Click OK to save the new package. Create a new GX model in the new package by right clicking on the XML model package. Select New and then GX model. In the search by name field, type the name of the class. In the search results, select User, Entity. Notice that the model name field is",
+      "words": [
+        {
+          "word": "Select",
+          "start": 30.0,
+          "end": 30.56,
+          "probability": 0.7744
+        },
+        {
+          "word": "New",
+          "start": 30.56,
+          "end": 30.8,
+          "probability": 0.5908
+        },
+        {
+          "word": "and",
+          "start": 30.8,
+          "end": 31.04,
+          "probability": 0.9302
+        },
+        {
+          "word": "then",
+          "start": 31.04,
+          "end": 31.22,
+          "probability": 0.9639
+        },
+        {
+          "word": "Package.",
+          "start": 31.22,
+          "end": 31.82,
+          "probability": 0.9639
+        },
+        {
+          "word": "Type",
+          "start": 32.48,
+          "end": 33.06,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 33.06,
+          "end": 33.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "path",
+          "start": 33.24,
+          "end": 33.6,
+          "probability": 0.917
+        },
+        {
+          "word": "and",
+          "start": 33.6,
+          "end": 33.82,
+          "probability": 0.9902
+        },
+        {
+          "word": "name",
+          "start": 33.82,
+          "end": 34.16,
+          "probability": 0.9663
+        },
+        {
+          "word": "of",
+          "start": 34.16,
+          "end": 34.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 34.4,
+          "end": 34.52,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 34.52,
+          "end": 34.66,
+          "probability": 0.9575
+        },
+        {
+          "word": "package.",
+          "start": 34.66,
+          "end": 35.06,
+          "probability": 0.9272
+        },
+        {
+          "word": "Click",
+          "start": 38.78,
+          "end": 39.36,
+          "probability": 0.9902
+        },
+        {
+          "word": "OK",
+          "start": 39.36,
+          "end": 39.62,
+          "probability": 0.9014
+        },
+        {
+          "word": "to",
+          "start": 39.62,
+          "end": 39.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "save",
+          "start": 39.98,
+          "end": 40.24,
+          "probability": 0.9604
+        },
+        {
+          "word": "the",
+          "start": 40.24,
+          "end": 40.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 40.48,
+          "end": 40.64,
+          "probability": 0.9814
+        },
+        {
+          "word": "package.",
+          "start": 40.64,
+          "end": 41.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "Create",
+          "start": 41.6,
+          "end": 42.16,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 42.16,
+          "end": 42.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 42.36,
+          "end": 42.54,
+          "probability": 0.9146
+        },
+        {
+          "word": "GX",
+          "start": 42.54,
+          "end": 43.06,
+          "probability": 0.9004
+        },
+        {
+          "word": "model",
+          "start": 43.06,
+          "end": 43.34,
+          "probability": 0.647
+        },
+        {
+          "word": "in",
+          "start": 43.34,
+          "end": 43.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 43.6,
+          "end": 43.7,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 43.7,
+          "end": 43.86,
+          "probability": 0.9824
+        },
+        {
+          "word": "package",
+          "start": 43.86,
+          "end": 44.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "by",
+          "start": 44.34,
+          "end": 44.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "right",
+          "start": 44.64,
+          "end": 44.9,
+          "probability": 0.9736
+        },
+        {
+          "word": "clicking",
+          "start": 44.9,
+          "end": 45.22,
+          "probability": 0.2445
+        },
+        {
+          "word": "on",
+          "start": 45.22,
+          "end": 45.52,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 45.52,
+          "end": 45.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "XML",
+          "start": 45.7,
+          "end": 46.16,
+          "probability": 0.8232
+        },
+        {
+          "word": "model",
+          "start": 46.16,
+          "end": 46.56,
+          "probability": 0.6279
+        },
+        {
+          "word": "package.",
+          "start": 46.56,
+          "end": 47.18,
+          "probability": 0.9907
+        },
+        {
+          "word": "Select",
+          "start": 47.86,
+          "end": 48.44,
+          "probability": 0.9907
+        },
+        {
+          "word": "New",
+          "start": 48.44,
+          "end": 48.68,
+          "probability": 0.9482
+        },
+        {
+          "word": "and",
+          "start": 48.68,
+          "end": 48.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "then",
+          "start": 48.9,
+          "end": 49.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "GX",
+          "start": 49.1,
+          "end": 49.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "model.",
+          "start": 49.56,
+          "end": 49.94,
+          "probability": 0.7651
+        },
+        {
+          "word": "In",
+          "start": 50.28,
+          "end": 50.76,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 50.76,
+          "end": 50.94,
+          "probability": 0.9771
+        },
+        {
+          "word": "search",
+          "start": 50.94,
+          "end": 51.18,
+          "probability": 0.3083
+        },
+        {
+          "word": "by",
+          "start": 51.18,
+          "end": 51.44,
+          "probability": 0.9663
+        },
+        {
+          "word": "name",
+          "start": 51.44,
+          "end": 51.78,
+          "probability": 0.9434
+        },
+        {
+          "word": "field,",
+          "start": 51.78,
+          "end": 52.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "type",
+          "start": 52.5,
+          "end": 52.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 52.8,
+          "end": 53.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 53.0,
+          "end": 53.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 53.22,
+          "end": 53.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 53.42,
+          "end": 53.52,
+          "probability": 0.999
+        },
+        {
+          "word": "class.",
+          "start": 53.52,
+          "end": 53.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "In",
+          "start": 54.42,
+          "end": 54.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 54.88,
+          "end": 55.0,
+          "probability": 0.9897
+        },
+        {
+          "word": "search",
+          "start": 55.0,
+          "end": 55.24,
+          "probability": 0.9785
+        },
+        {
+          "word": "results,",
+          "start": 55.24,
+          "end": 55.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "select",
+          "start": 56.04,
+          "end": 56.56,
+          "probability": 0.9766
+        },
+        {
+          "word": "User,",
+          "start": 56.56,
+          "end": 56.96,
+          "probability": 0.4622
+        },
+        {
+          "word": "Entity.",
+          "start": 57.16,
+          "end": 57.74,
+          "probability": 0.96
+        },
+        {
+          "word": "Notice",
+          "start": 58.0,
+          "end": 58.52,
+          "probability": 0.9761
+        },
+        {
+          "word": "that",
+          "start": 58.52,
+          "end": 58.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 58.74,
+          "end": 58.86,
+          "probability": 0.998
+        },
+        {
+          "word": "model",
+          "start": 58.86,
+          "end": 59.14,
+          "probability": 0.9043
+        },
+        {
+          "word": "name",
+          "start": 59.14,
+          "end": 59.48,
+          "probability": 0.98
+        },
+        {
+          "word": "field",
+          "start": 59.48,
+          "end": 59.88,
+          "probability": 0.9912
+        },
+        {
+          "word": "is",
+          "start": 59.88,
+          "end": 59.98,
+          "probability": 0.5952
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.98,
+      "end": 88.0,
+      "start_formatted": "00:00:59.980",
+      "end_formatted": "00:01:28.000",
+      "text": "auto-populates. Click OK to save changes. Add the key and normal properties for the model. Typically, select the public ID field as the key property since it uniquely identifies the object. Click the Add button. Select Key property. Select the display name property and add it as a normal property. Click the Add button. Select Normal property.",
+      "words": [
+        {
+          "word": "auto",
+          "start": 59.98,
+          "end": 60.28,
+          "probability": 0.3438
+        },
+        {
+          "word": "-populates.",
+          "start": 60.28,
+          "end": 61.1,
+          "probability": 0.8389
+        },
+        {
+          "word": "Click",
+          "start": 61.58,
+          "end": 62.12,
+          "probability": 0.9844
+        },
+        {
+          "word": "OK",
+          "start": 62.12,
+          "end": 62.4,
+          "probability": 0.8267
+        },
+        {
+          "word": "to",
+          "start": 62.4,
+          "end": 62.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "save",
+          "start": 62.78,
+          "end": 63.04,
+          "probability": 0.9424
+        },
+        {
+          "word": "changes.",
+          "start": 63.04,
+          "end": 63.78,
+          "probability": 0.9927
+        },
+        {
+          "word": "Add",
+          "start": 64.12,
+          "end": 64.66,
+          "probability": 0.9839
+        },
+        {
+          "word": "the",
+          "start": 64.66,
+          "end": 64.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "key",
+          "start": 64.82,
+          "end": 65.02,
+          "probability": 0.8452
+        },
+        {
+          "word": "and",
+          "start": 65.02,
+          "end": 65.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "normal",
+          "start": 65.28,
+          "end": 65.58,
+          "probability": 0.8086
+        },
+        {
+          "word": "properties",
+          "start": 65.58,
+          "end": 66.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 66.12,
+          "end": 66.38,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 66.38,
+          "end": 66.52,
+          "probability": 0.999
+        },
+        {
+          "word": "model.",
+          "start": 66.52,
+          "end": 66.92,
+          "probability": 0.9849
+        },
+        {
+          "word": "Typically,",
+          "start": 67.2,
+          "end": 67.74,
+          "probability": 0.9927
+        },
+        {
+          "word": "select",
+          "start": 68.06,
+          "end": 68.54,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 68.54,
+          "end": 68.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "public",
+          "start": 68.7,
+          "end": 69.0,
+          "probability": 0.6631
+        },
+        {
+          "word": "ID",
+          "start": 69.0,
+          "end": 69.34,
+          "probability": 0.9189
+        },
+        {
+          "word": "field",
+          "start": 69.34,
+          "end": 69.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "as",
+          "start": 69.8,
+          "end": 70.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 70.06,
+          "end": 70.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "key",
+          "start": 70.18,
+          "end": 70.34,
+          "probability": 0.9575
+        },
+        {
+          "word": "property",
+          "start": 70.34,
+          "end": 70.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "since",
+          "start": 70.8,
+          "end": 71.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "it",
+          "start": 71.1,
+          "end": 71.4,
+          "probability": 0.999
+        },
+        {
+          "word": "uniquely",
+          "start": 71.4,
+          "end": 71.86,
+          "probability": 0.999
+        },
+        {
+          "word": "identifies",
+          "start": 71.86,
+          "end": 72.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 72.64,
+          "end": 73.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "object.",
+          "start": 73.0,
+          "end": 73.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "Click",
+          "start": 73.9,
+          "end": 74.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 74.48,
+          "end": 74.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "Add",
+          "start": 74.68,
+          "end": 74.86,
+          "probability": 0.5713
+        },
+        {
+          "word": "button.",
+          "start": 74.86,
+          "end": 75.2,
+          "probability": 0.9907
+        },
+        {
+          "word": "Select",
+          "start": 76.5,
+          "end": 77.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "Key",
+          "start": 77.18,
+          "end": 77.4,
+          "probability": 0.7559
+        },
+        {
+          "word": "property.",
+          "start": 77.4,
+          "end": 77.86,
+          "probability": 0.5356
+        },
+        {
+          "word": "Select",
+          "start": 79.08,
+          "end": 79.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 79.76,
+          "end": 79.96,
+          "probability": 0.999
+        },
+        {
+          "word": "display",
+          "start": 79.96,
+          "end": 80.38,
+          "probability": 0.3035
+        },
+        {
+          "word": "name",
+          "start": 80.38,
+          "end": 80.78,
+          "probability": 0.9277
+        },
+        {
+          "word": "property",
+          "start": 80.78,
+          "end": 81.36,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 81.36,
+          "end": 81.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "add",
+          "start": 81.7,
+          "end": 81.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "it",
+          "start": 81.96,
+          "end": 82.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 82.08,
+          "end": 82.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 82.3,
+          "end": 82.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "normal",
+          "start": 82.4,
+          "end": 82.68,
+          "probability": 0.9546
+        },
+        {
+          "word": "property.",
+          "start": 82.68,
+          "end": 83.2,
+          "probability": 0.999
+        },
+        {
+          "word": "Click",
+          "start": 83.66,
+          "end": 84.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 84.2,
+          "end": 84.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "Add",
+          "start": 84.38,
+          "end": 84.56,
+          "probability": 0.9517
+        },
+        {
+          "word": "button.",
+          "start": 84.56,
+          "end": 84.92,
+          "probability": 0.999
+        },
+        {
+          "word": "Select",
+          "start": 86.46,
+          "end": 87.14,
+          "probability": 0.9932
+        },
+        {
+          "word": "Normal",
+          "start": 87.14,
+          "end": 87.48,
+          "probability": 0.8564
+        },
+        {
+          "word": "property.",
+          "start": 87.48,
+          "end": 88.0,
+          "probability": 0.9727
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 88.86,
+      "end": 100.0,
+      "start_formatted": "00:01:28.860",
+      "end_formatted": "00:01:40.000",
+      "text": "The user name field. The user name field is on the credential entity. The credential for an key field is not bold and can't be selected. However, expand credential and select the user name field.",
+      "words": [
+        {
+          "word": "The",
+          "start": 88.86,
+          "end": 89.54,
+          "probability": 0.7847
+        },
+        {
+          "word": "user",
+          "start": 89.54,
+          "end": 89.88,
+          "probability": 0.1255
+        },
+        {
+          "word": "name",
+          "start": 89.88,
+          "end": 90.22,
+          "probability": 0.9414
+        },
+        {
+          "word": "field.",
+          "start": 90.22,
+          "end": 90.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 90.8,
+          "end": 90.8,
+          "probability": 0.3635
+        },
+        {
+          "word": "user",
+          "start": 90.8,
+          "end": 90.8,
+          "probability": 0.1552
+        },
+        {
+          "word": "name",
+          "start": 90.8,
+          "end": 90.8,
+          "probability": 0.9834
+        },
+        {
+          "word": "field",
+          "start": 90.8,
+          "end": 90.8,
+          "probability": 0.9761
+        },
+        {
+          "word": "is",
+          "start": 90.8,
+          "end": 90.8,
+          "probability": 0.959
+        },
+        {
+          "word": "on",
+          "start": 90.8,
+          "end": 90.94,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 90.94,
+          "end": 91.06,
+          "probability": 0.9883
+        },
+        {
+          "word": "credential",
+          "start": 91.06,
+          "end": 91.5,
+          "probability": 0.9165
+        },
+        {
+          "word": "entity.",
+          "start": 91.5,
+          "end": 91.98,
+          "probability": 0.9819
+        },
+        {
+          "word": "The",
+          "start": 92.4,
+          "end": 92.76,
+          "probability": 0.9785
+        },
+        {
+          "word": "credential",
+          "start": 92.76,
+          "end": 93.26,
+          "probability": 0.8535
+        },
+        {
+          "word": "for",
+          "start": 93.26,
+          "end": 93.62,
+          "probability": 0.6108
+        },
+        {
+          "word": "an",
+          "start": 93.62,
+          "end": 93.76,
+          "probability": 0.3782
+        },
+        {
+          "word": "key",
+          "start": 93.76,
+          "end": 93.96,
+          "probability": 0.9707
+        },
+        {
+          "word": "field",
+          "start": 93.96,
+          "end": 94.28,
+          "probability": 0.9717
+        },
+        {
+          "word": "is",
+          "start": 94.28,
+          "end": 94.5,
+          "probability": 0.9443
+        },
+        {
+          "word": "not",
+          "start": 94.5,
+          "end": 94.72,
+          "probability": 0.9883
+        },
+        {
+          "word": "bold",
+          "start": 94.72,
+          "end": 94.98,
+          "probability": 0.9868
+        },
+        {
+          "word": "and",
+          "start": 94.98,
+          "end": 95.24,
+          "probability": 0.9717
+        },
+        {
+          "word": "can't",
+          "start": 95.24,
+          "end": 95.58,
+          "probability": 0.9888
+        },
+        {
+          "word": "be",
+          "start": 95.58,
+          "end": 95.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "selected.",
+          "start": 95.72,
+          "end": 96.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "However,",
+          "start": 96.56,
+          "end": 96.86,
+          "probability": 0.978
+        },
+        {
+          "word": "expand",
+          "start": 97.3,
+          "end": 97.7,
+          "probability": 0.9751
+        },
+        {
+          "word": "credential",
+          "start": 97.7,
+          "end": 98.26,
+          "probability": 0.8301
+        },
+        {
+          "word": "and",
+          "start": 98.26,
+          "end": 98.76,
+          "probability": 0.9839
+        },
+        {
+          "word": "select",
+          "start": 98.76,
+          "end": 99.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 99.12,
+          "end": 99.34,
+          "probability": 0.9907
+        },
+        {
+          "word": "user",
+          "start": 99.34,
+          "end": 99.64,
+          "probability": 0.9751
+        },
+        {
+          "word": "name",
+          "start": 99.64,
+          "end": 99.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "field.",
+          "start": 99.96,
+          "end": 100.3,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 100.3,
+      "end": 106.66,
+      "start_formatted": "00:01:40.300",
+      "end_formatted": "00:01:46.660",
+      "text": "Rather than adding the user name field directly, create another XML model on the credential",
+      "words": [
+        {
+          "word": "Rather",
+          "start": 100.3,
+          "end": 101.6,
+          "probability": 0.4163
+        },
+        {
+          "word": "than",
+          "start": 101.6,
+          "end": 101.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "adding",
+          "start": 101.86,
+          "end": 102.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 102.16,
+          "end": 102.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "user",
+          "start": 102.36,
+          "end": 102.66,
+          "probability": 0.4248
+        },
+        {
+          "word": "name",
+          "start": 102.66,
+          "end": 102.98,
+          "probability": 0.8877
+        },
+        {
+          "word": "field",
+          "start": 102.98,
+          "end": 103.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "directly,",
+          "start": 103.34,
+          "end": 103.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "create",
+          "start": 104.16,
+          "end": 104.52,
+          "probability": 0.9727
+        },
+        {
+          "word": "another",
+          "start": 104.52,
+          "end": 104.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "XML",
+          "start": 104.92,
+          "end": 105.46,
+          "probability": 0.9072
+        },
+        {
+          "word": "model",
+          "start": 105.46,
+          "end": 105.88,
+          "probability": 0.9199
+        },
+        {
+          "word": "on",
+          "start": 105.88,
+          "end": 106.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 106.12,
+          "end": 106.22,
+          "probability": 0.998
+        },
+        {
+          "word": "credential",
+          "start": 106.22,
+          "end": 106.66,
+          "probability": 0.5938
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 106.66,
+      "end": 111.86,
+      "start_formatted": "00:01:46.660",
+      "end_formatted": "00:01:51.860",
+      "text": "entity to demonstrate how the credential for an key field becomes bold once it is backed",
+      "words": [
+        {
+          "word": "entity",
+          "start": 106.66,
+          "end": 107.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 107.18,
+          "end": 107.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "demonstrate",
+          "start": 107.46,
+          "end": 107.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "how",
+          "start": 107.94,
+          "end": 108.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 108.32,
+          "end": 108.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "credential",
+          "start": 108.48,
+          "end": 108.94,
+          "probability": 0.6724
+        },
+        {
+          "word": "for",
+          "start": 108.94,
+          "end": 109.34,
+          "probability": 0.5713
+        },
+        {
+          "word": "an",
+          "start": 109.34,
+          "end": 109.46,
+          "probability": 0.4458
+        },
+        {
+          "word": "key",
+          "start": 109.46,
+          "end": 109.66,
+          "probability": 0.8945
+        },
+        {
+          "word": "field",
+          "start": 109.66,
+          "end": 110.02,
+          "probability": 0.9565
+        },
+        {
+          "word": "becomes",
+          "start": 110.02,
+          "end": 110.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "bold",
+          "start": 110.46,
+          "end": 110.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "once",
+          "start": 110.84,
+          "end": 111.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "it",
+          "start": 111.22,
+          "end": 111.46,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 111.46,
+          "end": 111.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "backed",
+          "start": 111.6,
+          "end": 111.86,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 111.86,
+      "end": 113.16,
+      "start_formatted": "00:01:51.860",
+      "end_formatted": "00:01:53.160",
+      "text": "by an XML model.",
+      "words": [
+        {
+          "word": "by",
+          "start": 111.86,
+          "end": 112.1,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 112.1,
+          "end": 112.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "XML",
+          "start": 112.3,
+          "end": 112.7,
+          "probability": 0.9927
+        },
+        {
+          "word": "model.",
+          "start": 112.7,
+          "end": 113.16,
+          "probability": 0.9619
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 113.66,
+      "end": 116.38,
+      "start_formatted": "00:01:53.660",
+      "end_formatted": "00:01:56.380",
+      "text": "Right click on the XML model package.",
+      "words": [
+        {
+          "word": "Right",
+          "start": 113.66,
+          "end": 114.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "click",
+          "start": 114.2,
+          "end": 114.44,
+          "probability": 0.3423
+        },
+        {
+          "word": "on",
+          "start": 114.44,
+          "end": 114.7,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 114.7,
+          "end": 114.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "XML",
+          "start": 114.84,
+          "end": 115.32,
+          "probability": 0.9224
+        },
+        {
+          "word": "model",
+          "start": 115.32,
+          "end": 115.74,
+          "probability": 0.8647
+        },
+        {
+          "word": "package.",
+          "start": 115.74,
+          "end": 116.38,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 117.38,
+      "end": 118.94,
+      "start_formatted": "00:01:57.380",
+      "end_formatted": "00:01:58.940",
+      "text": "Select New and then GX model.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 117.08,
+          "end": 117.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "New",
+          "start": 117.44,
+          "end": 117.66,
+          "probability": 0.4434
+        },
+        {
+          "word": "and",
+          "start": 117.66,
+          "end": 117.9,
+          "probability": 0.6997
+        },
+        {
+          "word": "then",
+          "start": 117.9,
+          "end": 118.12,
+          "probability": 0.5903
+        },
+        {
+          "word": "GX",
+          "start": 118.12,
+          "end": 118.56,
+          "probability": 0.9307
+        },
+        {
+          "word": "model.",
+          "start": 118.56,
+          "end": 118.94,
+          "probability": 0.4822
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 119.24,
+      "end": 122.48,
+      "start_formatted": "00:01:59.240",
+      "end_formatted": "00:02:02.480",
+      "text": "In the Search by Name field, type Credential.",
+      "words": [
+        {
+          "word": "In",
+          "start": 119.24,
+          "end": 119.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 119.74,
+          "end": 119.88,
+          "probability": 0.9771
+        },
+        {
+          "word": "Search",
+          "start": 119.88,
+          "end": 120.16,
+          "probability": 0.5981
+        },
+        {
+          "word": "by",
+          "start": 120.16,
+          "end": 120.42,
+          "probability": 0.9028
+        },
+        {
+          "word": "Name",
+          "start": 120.42,
+          "end": 120.76,
+          "probability": 0.541
+        },
+        {
+          "word": "field,",
+          "start": 120.76,
+          "end": 121.28,
+          "probability": 0.9858
+        },
+        {
+          "word": "type",
+          "start": 121.46,
+          "end": 121.82,
+          "probability": 0.9834
+        },
+        {
+          "word": "Credential.",
+          "start": 121.82,
+          "end": 122.48,
+          "probability": 0.7354
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 124.14,
+      "end": 126.96,
+      "start_formatted": "00:02:04.140",
+      "end_formatted": "00:02:06.960",
+      "text": "In the search results, select Credential .",
+      "words": [
+        {
+          "word": "In",
+          "start": 123.8,
+          "end": 124.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 124.16,
+          "end": 124.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "search",
+          "start": 124.28,
+          "end": 124.52,
+          "probability": 0.7612
+        },
+        {
+          "word": "results,",
+          "start": 124.52,
+          "end": 125.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "select",
+          "start": 125.38,
+          "end": 125.84,
+          "probability": 0.978
+        },
+        {
+          "word": "Credential",
+          "start": 125.84,
+          "end": 126.52,
+          "probability": 0.9814
+        },
+        {
+          "word": ".",
+          "start": 126.52,
+          "end": 126.96,
+          "probability": 0.2939
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 128.18,
+      "end": 129.3,
+      "start_formatted": "00:02:08.180",
+      "end_formatted": "00:02:09.300",
+      "text": "Click OK to save.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 127.84,
+          "end": 128.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "OK",
+          "start": 128.2,
+          "end": 128.48,
+          "probability": 0.9346
+        },
+        {
+          "word": "to",
+          "start": 128.48,
+          "end": 128.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "save.",
+          "start": 128.86,
+          "end": 129.3,
+          "probability": 0.8936
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 129.3,
+      "end": 133.72,
+      "start_formatted": "00:02:09.300",
+      "end_formatted": "00:02:13.720",
+      "text": "In the Credential model, select User Name field.",
+      "words": [
+        {
+          "word": "In",
+          "start": 129.3,
+          "end": 130.6,
+          "probability": 0.9536
+        },
+        {
+          "word": "the",
+          "start": 130.6,
+          "end": 130.7,
+          "probability": 0.999
+        },
+        {
+          "word": "Credential",
+          "start": 130.7,
+          "end": 131.26,
+          "probability": 0.7842
+        },
+        {
+          "word": "model,",
+          "start": 131.26,
+          "end": 131.6,
+          "probability": 0.563
+        },
+        {
+          "word": "select",
+          "start": 131.9,
+          "end": 132.4,
+          "probability": 0.9619
+        },
+        {
+          "word": "User",
+          "start": 132.4,
+          "end": 132.76,
+          "probability": 0.729
+        },
+        {
+          "word": "Name",
+          "start": 132.76,
+          "end": 133.22,
+          "probability": 0.9121
+        },
+        {
+          "word": "field.",
+          "start": 133.22,
+          "end": 133.72,
+          "probability": 0.8999
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 134.64,
+      "end": 135.4,
+      "start_formatted": "00:02:14.640",
+      "end_formatted": "00:02:15.400",
+      "text": "Click the Add button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 134.27,
+          "end": 134.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 134.66,
+          "end": 134.86,
+          "probability": 0.999
+        },
+        {
+          "word": "Add",
+          "start": 134.86,
+          "end": 135.04,
+          "probability": 0.9033
+        },
+        {
+          "word": "button.",
+          "start": 135.04,
+          "end": 135.4,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 136.54,
+      "end": 138.18,
+      "start_formatted": "00:02:16.540",
+      "end_formatted": "00:02:18.180",
+      "text": "Select Normal property.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 136.54,
+          "end": 137.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "Normal",
+          "start": 137.32,
+          "end": 137.66,
+          "probability": 0.9634
+        },
+        {
+          "word": "property.",
+          "start": 137.66,
+          "end": 138.18,
+          "probability": 0.8413
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 139.0,
+      "end": 141.16,
+      "start_formatted": "00:02:19.000",
+      "end_formatted": "00:02:21.160",
+      "text": "Click on the User Model tab.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 139.0,
+          "end": 139.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 139.78,
+          "end": 140.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 140.02,
+          "end": 140.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "User",
+          "start": 140.14,
+          "end": 140.46,
+          "probability": 0.9912
+        },
+        {
+          "word": "Model",
+          "start": 140.46,
+          "end": 140.84,
+          "probability": 0.8496
+        },
+        {
+          "word": "tab.",
+          "start": 140.84,
+          "end": 141.16,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 142.48,
+      "end": 143.86,
+      "start_formatted": "00:02:22.480",
+      "end_formatted": "00:02:23.860",
+      "text": "Notice that the Credential .",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 142.27,
+          "end": 142.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 142.66,
+          "end": 142.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 142.9,
+          "end": 143.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "Credential",
+          "start": 143.04,
+          "end": 143.6,
+          "probability": 0.9717
+        },
+        {
+          "word": ".",
+          "start": 143.6,
+          "end": 143.86,
+          "probability": 0.0003
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 145.68,
+      "end": 147.78,
+      "start_formatted": "00:02:25.680",
+      "end_formatted": "00:02:27.780",
+      "text": "Select the Credential .",
+      "words": [
+        {
+          "word": "Select",
+          "start": 145.68,
+          "end": 146.46,
+          "probability": 0.0051
+        },
+        {
+          "word": "the",
+          "start": 146.46,
+          "end": 146.72,
+          "probability": 0.9473
+        },
+        {
+          "word": "Credential",
+          "start": 146.72,
+          "end": 147.3,
+          "probability": 0.9556
+        },
+        {
+          "word": ".",
+          "start": 147.3,
+          "end": 147.78,
+          "probability": 0.5781
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 148.54,
+      "end": 150.08,
+      "start_formatted": "00:02:28.540",
+      "end_formatted": "00:02:30.080",
+      "text": "And add it as a Normal property.",
+      "words": [
+        {
+          "word": "And",
+          "start": 148.19,
+          "end": 148.58,
+          "probability": 0.1026
+        },
+        {
+          "word": "add",
+          "start": 148.58,
+          "end": 148.88,
+          "probability": 0.9233
+        },
+        {
+          "word": "it",
+          "start": 148.88,
+          "end": 149.0,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 149.0,
+          "end": 149.2,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 149.2,
+          "end": 149.3,
+          "probability": 0.9937
+        },
+        {
+          "word": "Normal",
+          "start": 149.3,
+          "end": 149.58,
+          "probability": 0.7305
+        },
+        {
+          "word": "property.",
+          "start": 149.58,
+          "end": 150.08,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 152.0,
+      "end": 152.74,
+      "start_formatted": "00:02:32.000",
+      "end_formatted": "00:02:32.740",
+      "text": "Click the Add button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 151.65,
+          "end": 152.04,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 152.04,
+          "end": 152.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "Add",
+          "start": 152.22,
+          "end": 152.4,
+          "probability": 0.9854
+        },
+        {
+          "word": "button.",
+          "start": 152.4,
+          "end": 152.74,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 154.82,
+      "end": 155.7,
+      "start_formatted": "00:02:34.820",
+      "end_formatted": "00:02:35.700",
+      "text": "Select Normal property.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 154.45,
+          "end": 154.84,
+          "probability": 0.9829
+        },
+        {
+          "word": "Normal",
+          "start": 154.84,
+          "end": 155.16,
+          "probability": 0.9834
+        },
+        {
+          "word": "property.",
+          "start": 155.16,
+          "end": 155.7,
+          "probability": 0.9683
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 156.8,
+      "end": 159.0,
+      "start_formatted": "00:02:36.800",
+      "end_formatted": "00:02:39.000",
+      "text": "Select Model pop-up window.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 156.8,
+          "end": 157.54,
+          "probability": 0.001
+        },
+        {
+          "word": "Model",
+          "start": 157.54,
+          "end": 158.08,
+          "probability": 0.1403
+        },
+        {
+          "word": "pop",
+          "start": 158.08,
+          "end": 158.4,
+          "probability": 0.2261
+        },
+        {
+          "word": "-up",
+          "start": 158.4,
+          "end": 158.7,
+          "probability": 0.8945
+        },
+        {
+          "word": "window.",
+          "start": 158.7,
+          "end": 159.0,
+          "probability": 0.9224
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 159.28,
+      "end": 160.62,
+      "start_formatted": "00:02:39.280",
+      "end_formatted": "00:02:40.620",
+      "text": "Select Credential Model.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 159.28,
+          "end": 159.72,
+          "probability": 0.7905
+        },
+        {
+          "word": "Credential",
+          "start": 159.72,
+          "end": 160.24,
+          "probability": 0.9375
+        },
+        {
+          "word": "Model.",
+          "start": 160.24,
+          "end": 160.62,
+          "probability": 0.8584
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 161.2,
+      "end": 163.46,
+      "start_formatted": "00:02:41.200",
+      "end_formatted": "00:02:43.460",
+      "text": "Click OK to save changes.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 161.2,
+          "end": 161.86,
+          "probability": 0.981
+        },
+        {
+          "word": "OK",
+          "start": 161.86,
+          "end": 162.12,
+          "probability": 0.9355
+        },
+        {
+          "word": "to",
+          "start": 162.12,
+          "end": 162.5,
+          "probability": 0.9819
+        },
+        {
+          "word": "save",
+          "start": 162.5,
+          "end": 162.76,
+          "probability": 0.7729
+        },
+        {
+          "word": "changes.",
+          "start": 162.76,
+          "end": 163.46,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 164.08,
+      "end": 166.3,
+      "start_formatted": "00:02:44.080",
+      "end_formatted": "00:02:46.300",
+      "text": "Click on the Sample XML tab.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 164.08,
+          "end": 164.68,
+          "probability": 0.96
+        },
+        {
+          "word": "on",
+          "start": 164.68,
+          "end": 164.86,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 164.86,
+          "end": 164.98,
+          "probability": 0.9863
+        },
+        {
+          "word": "Sample",
+          "start": 164.98,
+          "end": 165.42,
+          "probability": 0.9282
+        },
+        {
+          "word": "XML",
+          "start": 165.42,
+          "end": 165.86,
+          "probability": 0.8491
+        },
+        {
+          "word": "tab.",
+          "start": 165.86,
+          "end": 166.3,
+          "probability": 0.9565
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 166.84,
+      "end": 171.1,
+      "start_formatted": "00:02:46.840",
+      "end_formatted": "00:02:51.100",
+      "text": "Look at the sample XML and verify that the User Name field is added.",
+      "words": [
+        {
+          "word": "Look",
+          "start": 166.84,
+          "end": 167.34,
+          "probability": 0.9907
+        },
+        {
+          "word": "at",
+          "start": 167.34,
+          "end": 167.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 167.52,
+          "end": 167.64,
+          "probability": 0.9917
+        },
+        {
+          "word": "sample",
+          "start": 167.64,
+          "end": 168.0,
+          "probability": 0.7051
+        },
+        {
+          "word": "XML",
+          "start": 168.0,
+          "end": 168.46,
+          "probability": 0.9478
+        },
+        {
+          "word": "and",
+          "start": 168.46,
+          "end": 168.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "verify",
+          "start": 168.72,
+          "end": 169.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "that",
+          "start": 169.1,
+          "end": 169.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 169.4,
+          "end": 169.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "User",
+          "start": 169.54,
+          "end": 169.86,
+          "probability": 0.4636
+        },
+        {
+          "word": "Name",
+          "start": 169.86,
+          "end": 170.2,
+          "probability": 0.9102
+        },
+        {
+          "word": "field",
+          "start": 170.2,
+          "end": 170.54,
+          "probability": 0.9727
+        },
+        {
+          "word": "is",
+          "start": 170.54,
+          "end": 170.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "added.",
+          "start": 170.82,
+          "end": 171.1,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 171.1,
+      "end": 174.86,
+      "start_formatted": "00:02:51.100",
+      "end_formatted": "00:02:54.860",
+      "text": "Click on the Debug Server icon to start the server.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 171.1,
+          "end": 172.12,
+          "probability": 0.8691
+        },
+        {
+          "word": "on",
+          "start": 172.12,
+          "end": 172.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 172.38,
+          "end": 172.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "Debug",
+          "start": 172.5,
+          "end": 172.86,
+          "probability": 0.6538
+        },
+        {
+          "word": "Server",
+          "start": 172.86,
+          "end": 173.22,
+          "probability": 0.5625
+        },
+        {
+          "word": "icon",
+          "start": 173.22,
+          "end": 173.64,
+          "probability": 0.9507
+        },
+        {
+          "word": "to",
+          "start": 173.64,
+          "end": 174.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "start",
+          "start": 174.02,
+          "end": 174.34,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 174.34,
+          "end": 174.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "server.",
+          "start": 174.52,
+          "end": 174.86,
+          "probability": 0.9629
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 175.34,
+      "end": 178.6,
+      "start_formatted": "00:02:55.340",
+      "end_formatted": "00:02:58.600",
+      "text": "Click on Tools and then select GOSA Scratchpad.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 175.34,
+          "end": 175.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 175.86,
+          "end": 176.12,
+          "probability": 0.998
+        },
+        {
+          "word": "Tools",
+          "start": 176.12,
+          "end": 176.36,
+          "probability": 0.8911
+        },
+        {
+          "word": "and",
+          "start": 176.36,
+          "end": 176.78,
+          "probability": 0.9795
+        },
+        {
+          "word": "then",
+          "start": 176.78,
+          "end": 176.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "select",
+          "start": 176.96,
+          "end": 177.46,
+          "probability": 0.9673
+        },
+        {
+          "word": "GOSA",
+          "start": 177.46,
+          "end": 177.9,
+          "probability": 0.6543
+        },
+        {
+          "word": "Scratchpad.",
+          "start": 177.9,
+          "end": 178.6,
+          "probability": 0.793
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 178.6,
+      "end": 182.14,
+      "start_formatted": "00:02:58.600",
+      "end_formatted": "00:03:02.140",
+      "text": "Enter code that will test the new XML models.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 178.6,
+          "end": 179.62,
+          "probability": 0.8672
+        },
+        {
+          "word": "code",
+          "start": 179.62,
+          "end": 179.98,
+          "probability": 0.979
+        },
+        {
+          "word": "that",
+          "start": 179.98,
+          "end": 180.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "will",
+          "start": 180.22,
+          "end": 180.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "test",
+          "start": 180.38,
+          "end": 180.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 180.66,
+          "end": 180.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "new",
+          "start": 180.86,
+          "end": 181.02,
+          "probability": 0.9922
+        },
+        {
+          "word": "XML",
+          "start": 181.02,
+          "end": 181.46,
+          "probability": 0.9229
+        },
+        {
+          "word": "models.",
+          "start": 181.46,
+          "end": 182.14,
+          "probability": 0.9702
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 182.58,
+      "end": 183.84,
+      "start_formatted": "00:03:02.580",
+      "end_formatted": "00:03:03.840",
+      "text": "Examine the code.",
+      "words": [
+        {
+          "word": "Examine",
+          "start": 182.58,
+          "end": 183.3,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 183.3,
+          "end": 183.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "code.",
+          "start": 183.42,
+          "end": 183.84,
+          "probability": 0.9697
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 184.34,
+      "end": 185.86,
+      "start_formatted": "00:03:04.340",
+      "end_formatted": "00:03:05.860",
+      "text": "Lines 6 to 9.",
+      "words": [
+        {
+          "word": "Lines",
+          "start": 184.34,
+          "end": 184.96,
+          "probability": 0.9668
+        },
+        {
+          "word": "6",
+          "start": 184.96,
+          "end": 185.3,
+          "probability": 0.9019
+        },
+        {
+          "word": "to",
+          "start": 185.3,
+          "end": 185.5,
+          "probability": 0.7886
+        },
+        {
+          "word": "9.",
+          "start": 185.5,
+          "end": 185.86,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 186.74,
+      "end": 187.38,
+      "start_formatted": "00:03:06.740",
+      "end_formatted": "00:03:07.380",
+      "text": "Add the query.",
+      "words": [
+        {
+          "word": "Add",
+          "start": 186.74,
+          "end": 187.38,
+          "probability": 0.0
+        },
+        {
+          "word": "the",
+          "start": 187.38,
+          "end": 187.38,
+          "probability": 0.0145
+        },
+        {
+          "word": "query.",
+          "start": 187.38,
+          "end": 187.38,
+          "probability": 0.0958
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 187.38,
+      "end": 189.0,
+      "start_formatted": "00:03:07.380",
+      "end_formatted": "00:03:09.000",
+      "text": "The query is joining two entities.",
+      "words": [
+        {
+          "word": "The",
+          "start": 187.38,
+          "end": 187.38,
+          "probability": 0.0708
+        },
+        {
+          "word": "query",
+          "start": 187.38,
+          "end": 187.54,
+          "probability": 0.2362
+        },
+        {
+          "word": "is",
+          "start": 187.54,
+          "end": 187.86,
+          "probability": 0.8438
+        },
+        {
+          "word": "joining",
+          "start": 187.86,
+          "end": 188.22,
+          "probability": 0.9849
+        },
+        {
+          "word": "two",
+          "start": 188.22,
+          "end": 188.54,
+          "probability": 0.8862
+        },
+        {
+          "word": "entities.",
+          "start": 188.54,
+          "end": 189.0,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 189.46,
+      "end": 191.88,
+      "start_formatted": "00:03:09.460",
+      "end_formatted": "00:03:11.880",
+      "text": "User Entity and User Contact Entity.",
+      "words": [
+        {
+          "word": "User",
+          "start": 189.46,
+          "end": 189.76,
+          "probability": 0.9023
+        },
+        {
+          "word": "Entity",
+          "start": 189.76,
+          "end": 190.24,
+          "probability": 0.5654
+        },
+        {
+          "word": "and",
+          "start": 190.24,
+          "end": 190.48,
+          "probability": 0.9673
+        },
+        {
+          "word": "User",
+          "start": 190.48,
+          "end": 190.82,
+          "probability": 0.9463
+        },
+        {
+          "word": "Contact",
+          "start": 190.82,
+          "end": 191.26,
+          "probability": 0.9614
+        },
+        {
+          "word": "Entity.",
+          "start": 191.26,
+          "end": 191.88,
+          "probability": 0.9678
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 192.18,
+      "end": 194.14,
+      "start_formatted": "00:03:12.180",
+      "end_formatted": "00:03:14.140",
+      "text": "The foreign key name is Contact.",
+      "words": [
+        {
+          "word": "The",
+          "start": 192.18,
+          "end": 192.52,
+          "probability": 0.9653
+        },
+        {
+          "word": "foreign",
+          "start": 192.52,
+          "end": 192.88,
+          "probability": 0.9644
+        },
+        {
+          "word": "key",
+          "start": 192.88,
+          "end": 193.1,
+          "probability": 0.9868
+        },
+        {
+          "word": "name",
+          "start": 193.1,
+          "end": 193.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 193.4,
+          "end": 193.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "Contact.",
+          "start": 193.68,
+          "end": 194.14,
+          "probability": 0.668
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 194.66,
+      "end": 198.5,
+      "start_formatted": "00:03:14.660",
+      "end_formatted": "00:03:18.500",
+      "text": "That is why in Line 7, Contact is used as the Join parameter.",
+      "words": [
+        {
+          "word": "That",
+          "start": 194.66,
+          "end": 194.72,
+          "probability": 0.9541
+        },
+        {
+          "word": "is",
+          "start": 194.72,
+          "end": 194.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "why",
+          "start": 194.86,
+          "end": 195.1,
+          "probability": 0.9956
+        },
+        {
+          "word": "in",
+          "start": 195.1,
+          "end": 195.36,
+          "probability": 0.9795
+        },
+        {
+          "word": "Line",
+          "start": 195.36,
+          "end": 195.64,
+          "probability": 0.4302
+        },
+        {
+          "word": "7,",
+          "start": 195.64,
+          "end": 196.04,
+          "probability": 0.9351
+        },
+        {
+          "word": "Contact",
+          "start": 196.46,
+          "end": 196.74,
+          "probability": 0.873
+        },
+        {
+          "word": "is",
+          "start": 196.74,
+          "end": 197.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "used",
+          "start": 197.08,
+          "end": 197.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "as",
+          "start": 197.4,
+          "end": 197.64,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 197.64,
+          "end": 197.8,
+          "probability": 0.9702
+        },
+        {
+          "word": "Join",
+          "start": 197.8,
+          "end": 198.02,
+          "probability": 0.4146
+        },
+        {
+          "word": "parameter.",
+          "start": 198.02,
+          "end": 198.5,
+          "probability": 0.9561
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 198.5,
+      "end": 198.6,
+      "start_formatted": "00:03:18.500",
+      "end_formatted": "00:03:18.600",
+      "text": "Enter.",
+      "words": [
+        {
+          "word": "Enter.",
+          "start": 198.5,
+          "end": 198.6,
+          "probability": 0.0001
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 199.44,
+      "end": 204.08,
+      "start_formatted": "00:03:19.440",
+      "end_formatted": "00:03:24.080",
+      "text": "These advanced query techniques can be found in the GOSA Reference Guide.",
+      "words": [
+        {
+          "word": "These",
+          "start": 199.44,
+          "end": 200.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "advanced",
+          "start": 200.16,
+          "end": 200.6,
+          "probability": 0.9824
+        },
+        {
+          "word": "query",
+          "start": 200.6,
+          "end": 201.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "techniques",
+          "start": 201.06,
+          "end": 201.54,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 201.54,
+          "end": 201.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 201.96,
+          "end": 202.12,
+          "probability": 1.0
+        },
+        {
+          "word": "found",
+          "start": 202.12,
+          "end": 202.46,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 202.46,
+          "end": 202.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 202.7,
+          "end": 202.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "GOSA",
+          "start": 202.82,
+          "end": 203.22,
+          "probability": 0.9346
+        },
+        {
+          "word": "Reference",
+          "start": 203.22,
+          "end": 203.62,
+          "probability": 0.7598
+        },
+        {
+          "word": "Guide.",
+          "start": 203.62,
+          "end": 204.08,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 204.54,
+      "end": 205.54,
+      "start_formatted": "00:03:24.540",
+      "end_formatted": "00:03:25.540",
+      "text": "Line 12.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 204.54,
+          "end": 205.16,
+          "probability": 0.9893
+        },
+        {
+          "word": "12.",
+          "start": 205.16,
+          "end": 205.54,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 205.84,
+      "end": 209.42,
+      "start_formatted": "00:03:25.840",
+      "end_formatted": "00:03:29.420",
+      "text": "The XML object is created using the XML model.",
+      "words": [
+        {
+          "word": "The",
+          "start": 205.84,
+          "end": 205.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "XML",
+          "start": 205.98,
+          "end": 206.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "object",
+          "start": 206.5,
+          "end": 207.0,
+          "probability": 0.9814
+        },
+        {
+          "word": "is",
+          "start": 207.0,
+          "end": 207.36,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 207.36,
+          "end": 207.78,
+          "probability": 1.0
+        },
+        {
+          "word": "using",
+          "start": 207.78,
+          "end": 208.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 208.14,
+          "end": 208.44,
+          "probability": 1.0
+        },
+        {
+          "word": "XML",
+          "start": 208.44,
+          "end": 208.98,
+          "probability": 0.999
+        },
+        {
+          "word": "model.",
+          "start": 208.98,
+          "end": 209.42,
+          "probability": 0.9658
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 209.96,
+      "end": 216.38,
+      "start_formatted": "00:03:29.960",
+      "end_formatted": "00:03:36.380",
+      "text": "Note, since XML model is going to be deprecated in the next major release, a deprecated line",
+      "words": [
+        {
+          "word": "Note,",
+          "start": 209.96,
+          "end": 210.48,
+          "probability": 0.9834
+        },
+        {
+          "word": "since",
+          "start": 210.66,
+          "end": 211.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "XML",
+          "start": 211.14,
+          "end": 211.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "model",
+          "start": 211.64,
+          "end": 212.06,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 212.06,
+          "end": 212.32,
+          "probability": 1.0
+        },
+        {
+          "word": "going",
+          "start": 212.32,
+          "end": 212.54,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 212.54,
+          "end": 212.72,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 212.72,
+          "end": 212.88,
+          "probability": 1.0
+        },
+        {
+          "word": "deprecated",
+          "start": 212.88,
+          "end": 213.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 213.52,
+          "end": 213.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 213.74,
+          "end": 213.86,
+          "probability": 1.0
+        },
+        {
+          "word": "next",
+          "start": 213.86,
+          "end": 214.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "major",
+          "start": 214.1,
+          "end": 214.5,
+          "probability": 0.999
+        },
+        {
+          "word": "release,",
+          "start": 214.5,
+          "end": 215.1,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 215.28,
+          "end": 215.48,
+          "probability": 1.0
+        },
+        {
+          "word": "deprecated",
+          "start": 215.48,
+          "end": 216.08,
+          "probability": 1.0
+        },
+        {
+          "word": "line",
+          "start": 216.08,
+          "end": 216.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 216.38,
+      "end": 217.74,
+      "start_formatted": "00:03:36.380",
+      "end_formatted": "00:03:37.740",
+      "text": "is shown through the code.",
+      "words": [
+        {
+          "word": "is",
+          "start": 216.38,
+          "end": 216.62,
+          "probability": 1.0
+        },
+        {
+          "word": "shown",
+          "start": 216.62,
+          "end": 216.92,
+          "probability": 1.0
+        },
+        {
+          "word": "through",
+          "start": 216.92,
+          "end": 217.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 217.18,
+          "end": 217.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "code.",
+          "start": 217.32,
+          "end": 217.74,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 217.74,
+      "end": 220.18,
+      "start_formatted": "00:03:37.740",
+      "end_formatted": "00:03:40.180",
+      "text": "Lines 14 to 17.",
+      "words": [
+        {
+          "word": "Lines",
+          "start": 217.74,
+          "end": 218.82,
+          "probability": 0.9805
+        },
+        {
+          "word": "14",
+          "start": 218.82,
+          "end": 219.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 219.4,
+          "end": 219.64,
+          "probability": 0.8735
+        },
+        {
+          "word": "17.",
+          "start": 219.64,
+          "end": 220.18,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 220.18,
+      "end": 223.08,
+      "start_formatted": "00:03:40.180",
+      "end_formatted": "00:03:43.080",
+      "text": "The serialization options are configured.",
+      "words": [
+        {
+          "word": "The",
+          "start": 220.18,
+          "end": 220.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "serialization",
+          "start": 220.78,
+          "end": 221.6,
+          "probability": 0.9785
+        },
+        {
+          "word": "options",
+          "start": 221.6,
+          "end": 222.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 222.08,
+          "end": 222.48,
+          "probability": 1.0
+        },
+        {
+          "word": "configured.",
+          "start": 222.48,
+          "end": 223.08,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 223.64,
+      "end": 224.62,
+      "start_formatted": "00:03:43.640",
+      "end_formatted": "00:03:44.620",
+      "text": "Line 20.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 223.64,
+          "end": 224.26,
+          "probability": 0.979
+        },
+        {
+          "word": "20.",
+          "start": 224.26,
+          "end": 224.62,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 224.88,
+      "end": 228.14,
+      "start_formatted": "00:03:44.880",
+      "end_formatted": "00:03:48.140",
+      "text": "The payload is created using serialization options.",
+      "words": [
+        {
+          "word": "The",
+          "start": 224.88,
+          "end": 225.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "payload",
+          "start": 225.02,
+          "end": 225.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 225.42,
+          "end": 225.7,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 225.7,
+          "end": 226.1,
+          "probability": 1.0
+        },
+        {
+          "word": "using",
+          "start": 226.1,
+          "end": 226.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "serialization",
+          "start": 226.5,
+          "end": 227.52,
+          "probability": 0.998
+        },
+        {
+          "word": "options.",
+          "start": 227.52,
+          "end": 228.14,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 228.56,
+      "end": 232.74,
+      "start_formatted": "00:03:48.560",
+      "end_formatted": "00:03:52.740",
+      "text": "Click the Run and Debug Process icon to execute the code.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 228.56,
+          "end": 229.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 229.32,
+          "end": 229.5,
+          "probability": 1.0
+        },
+        {
+          "word": "Run",
+          "start": 229.5,
+          "end": 229.74,
+          "probability": 0.8408
+        },
+        {
+          "word": "and",
+          "start": 229.74,
+          "end": 229.98,
+          "probability": 0.6631
+        },
+        {
+          "word": "Debug",
+          "start": 229.98,
+          "end": 230.36,
+          "probability": 0.959
+        },
+        {
+          "word": "Process",
+          "start": 230.36,
+          "end": 230.82,
+          "probability": 0.498
+        },
+        {
+          "word": "icon",
+          "start": 230.82,
+          "end": 231.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 231.32,
+          "end": 231.62,
+          "probability": 1.0
+        },
+        {
+          "word": "execute",
+          "start": 231.62,
+          "end": 232.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 232.08,
+          "end": 232.34,
+          "probability": 1.0
+        },
+        {
+          "word": "code.",
+          "start": 232.34,
+          "end": 232.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 232.92,
+      "end": 238.64,
+      "start_formatted": "00:03:52.920",
+      "end_formatted": "00:03:58.640",
+      "text": "As expected, the public ID and display name fields are exported from the user object.",
+      "words": [
+        {
+          "word": "As",
+          "start": 232.92,
+          "end": 233.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "expected,",
+          "start": 233.6,
+          "end": 234.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 234.34,
+          "end": 234.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "public",
+          "start": 234.56,
+          "end": 234.9,
+          "probability": 0.5835
+        },
+        {
+          "word": "ID",
+          "start": 234.9,
+          "end": 235.22,
+          "probability": 0.9722
+        },
+        {
+          "word": "and",
+          "start": 235.22,
+          "end": 235.54,
+          "probability": 1.0
+        },
+        {
+          "word": "display",
+          "start": 235.54,
+          "end": 235.96,
+          "probability": 0.9336
+        },
+        {
+          "word": "name",
+          "start": 235.96,
+          "end": 236.24,
+          "probability": 0.9907
+        },
+        {
+          "word": "fields",
+          "start": 236.24,
+          "end": 236.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 236.64,
+          "end": 236.92,
+          "probability": 1.0
+        },
+        {
+          "word": "exported",
+          "start": 236.92,
+          "end": 237.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 237.4,
+          "end": 237.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 237.7,
+          "end": 237.86,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 237.86,
+          "end": 238.18,
+          "probability": 0.9541
+        },
+        {
+          "word": "object.",
+          "start": 238.18,
+          "end": 238.64,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 239.0,
+      "end": 242.72,
+      "start_formatted": "00:03:59.000",
+      "end_formatted": "00:04:02.720",
+      "text": "The user name field is exported from the credential object.",
+      "words": [
+        {
+          "word": "The",
+          "start": 239.0,
+          "end": 239.38,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 239.38,
+          "end": 239.72,
+          "probability": 0.7383
+        },
+        {
+          "word": "name",
+          "start": 239.72,
+          "end": 240.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "field",
+          "start": 240.02,
+          "end": 240.4,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 240.4,
+          "end": 240.64,
+          "probability": 1.0
+        },
+        {
+          "word": "exported",
+          "start": 240.64,
+          "end": 241.2,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 241.2,
+          "end": 241.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 241.5,
+          "end": 241.64,
+          "probability": 1.0
+        },
+        {
+          "word": "credential",
+          "start": 241.64,
+          "end": 242.1,
+          "probability": 0.9858
+        },
+        {
+          "word": "object.",
+          "start": 242.1,
+          "end": 242.72,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 243.1,
+      "end": 245.78,
+      "start_formatted": "00:04:03.100",
+      "end_formatted": "00:04:05.780",
+      "text": "This ends the Create an XML model demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 243.1,
+          "end": 243.72,
+          "probability": 1.0
+        },
+        {
+          "word": "ends",
+          "start": 243.72,
+          "end": 243.98,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 243.98,
+          "end": 244.12,
+          "probability": 1.0
+        },
+        {
+          "word": "Create",
+          "start": 244.12,
+          "end": 244.46,
+          "probability": 0.7827
+        },
+        {
+          "word": "an",
+          "start": 244.46,
+          "end": 244.62,
+          "probability": 0.9644
+        },
+        {
+          "word": "XML",
+          "start": 244.62,
+          "end": 245.08,
+          "probability": 0.998
+        },
+        {
+          "word": "model",
+          "start": 245.08,
+          "end": 245.54,
+          "probability": 0.406
+        },
+        {
+          "word": "demonstration.",
+          "start": 245.54,
+          "end": 245.78,
+          "probability": 0.8149
+        }
+      ]
+    }
+  ]
+}

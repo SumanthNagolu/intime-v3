@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-10",
+    "slide_count": 27,
+    "slides_with_text": 25,
+    "total_words": 1432,
+    "avg_confidence": 85.59,
+    "processing_time_seconds": 10.1,
+    "extracted_at": "2026-02-15T18:21:10.864826"
+  },
+  "full_text": "Plugins\n\nLesson\nobjectives ¢ Describe the basic functionality of Guidewire\n\nplugins\n¢ Configure plugins in Gosu\n* Configure plugin parameters\n¢ Register and deploy plugins\n\n| Guidewire plugin G\n\n+ . . i: & Project A © | Hie\n* Aninterface provided by Guidewire SS Brinnon AGWiOtrineghyrinedicertgrair\nv Ce confic\n+ Describes methods called by the application > Beni Homes\n. . ao . > D8 Btensions\n* May define required application behavior > CPLocalizations\n> > Messaging\n+ Authentication Plugins > D& Metadata\n> [& age Configuration\n+ Number generators Dib Plugins\n7 . . Y DWregistry\n* Or may define an integration point 1 AuthenticationServicePlugin.gwp\n@ AuthenticationSourceCreatorPlugin.gwp\n* Messaging plugins 1@ BackgroundTaskFailoverPlugin.gwp\n@ BackgroundTaskLoadBalancingPlugin.gwp.\n+ Document Management 1@ BankAccountV nRequest.gwp\n. . . 1@ BankAccountVerificationTransport.gwp\n* Since you implement the interface(s), & BCBilingSysternTransport.gwp\n@ BillingSystemPlugin.gwp\n+ You define method behavior @ CCClaimsystem Transport gwp\n& ClaimSystemPlugin.gup\n« Based on the interface contract, you define: o& ClusterGroadcastTransportFactory.gwp\n@ ClusterFastBroadcastTransportFactory.gwp.\n+ Input parameters @ ClusterUnicastTransportFactory.gwp\n\n@ DefaultPrintToConsoleTransport.gwp\n©) Return values 1@ documentStoreTransport.gwp\n\n| Types of plugins\n¢ Predefined plugins\n\n+ Used to implement customizable\nbehavior for predefined points in the\napplication\n\n« Messaging plugins\n\n+ Used to send messages to external systems\nand process the resulting replies\n\n¢ Startable plugins\n\n¢ Used to listen for incoming messages from\nexternal systems and processes them\nasynchronously\n\nRecommended plugin source code options Gi\n\nen « \"Nava plugin J\n\nUse Guidewire Studio ¢ IntelliJ IDEAwith OSGi « Third party IDE\nEditor\n\n« Native access to ¢ Needs ALL Guidewire\napplication API * Access to Guidewire JARs\n¢ Native debugging within application API ¢ No inspection support\nGuidewire Studio ¢ Easily add third party for Guidewire Internal\nlibraries API\n¢ Easy deployment ¢ Require special\n\ndeployment\n\n| Use case\n\n¢ Create an exchange rate set that\n\nincludes one exchange rate for\n\nevery typekey currency\n\nay\n\nExchangeRate\nPlugin\n\n<—__——\n\n0.769\n\n€ mm S\n\nGi\n\n1.\n2.\n\n3.\n\nDetermine plugin requirements\n\nWrite plugin class (implement the\ninterface) in Guidewire Studio\n\nRegister the plugin by creating or\nmodifying the appropriate plugin\nregistry entry\n\n4. Deploy the changes\n\nPlugin configuration\n\n| Determine Gosu plugin requirements Gi\n\n¢ What interface(s) must the plugin implement? Predefined Plugins\n« IExchangeRateSetPlugin Display instructions\n¢ What methods are included in the interface(s)? Aendicangeeane\n* createExchangeRateSet =\nRetrieved On Base Currency Price Currency Rate\n« When are the methods called? Nodataro display\n\n* By clicking on the Invoke ExchangeRateSet Plugin button\nin the Ul\n\n* Administration > Training: Plugins > Predefined Plugins\n\n¢ What issues should you consider when implementing\nthe plugin?\n\n« External system must be online\n\n| Plugin class Gi\n\n* Create the package and Gosu class that will implement the plugin\n« Use a package naming convention recommendation\n* gsrc.<company_ code>.<app_code>.plugin.<functional_area>\n\n¢ Use plugin naming convention recommendation\n\nv Wigsre\n\n* <meaningful_name><interface_implemented> > com.guidewire.pl.docexamples\n+ TrnlExchangeRateSetPlugin is a predefined plugin 4 demo.ta\n\n> gw\n\n> libraries\n\n> sita\n\n> trainingapp\n\nv trn.ta\n\nplugin.exchangerate\n\n© TrlExchangeRateSetPlugin\n\n| Implement required interface(s)\n\n¢ Implement the interface\n¢« ALT+ENTER to implement methods\n\n¢ Every public method from the interface must exist\n\n+ Some methods can be left as stubs that do nothing\n\n© Trnl€xchangeRateSetPlugin.gs * |\n\n® Implement methods\n\n@ Make ‘TmnlExchangeRateSetPlugin' abstract\n\nDP Annotate interface ‘lExchangeRateSetPlugin’ as @Deprecated >\n\npackage trn.ta.plugin.exchangerate\n\nclass Tr\n\noverride function createExchangeRateSet ()\nreturn null\n\nuses gw.plugin.exchangerate. IExchangeRateSetPlugin\n\nngeRa gin implements IExchangeRateSetPlugin{\n\n: ExchangeRateSet {\n\nLF; Select Methods to Implement\n\nC1 Copy JavaDoc\n\n© insert @Qverride\n\nen\n\nCancel\n\n| Create the plugin registry file (if necessary) Gi\n\n¢ Ifthe plugin definition does not exist, then create a new plugin registry file under\nconfiguration.config.Plugins.registry\n\nY Db Plugins 1\nY Dibregistry New Ph\n@ AuthenticationServicePlugin.gwp US\n* Specify the name and interface\n\nGi Plugin x GiPugin x\nName: | ExchangeRateSetPlugin) Name: __[ExchangeRateSetPlugin\nIntetoce - Baars Inetace: xchongeRateSetugin | [=\n\ncad Search by Nome [BER cues\n\nNo matches found in project.\nTExchangeRateSetPlugin\n\n| Configure the plugin registry file Gi\n\n¢ In many cases, the plugin definition already exists in the project\n¢ Plugin editor options\n\n1. Add plugin type\n\n2. Specify the plugin class\n\n3. Disable the plugin\n\n4. Define plugin 1B lExchangeRateSetPlugin.gwp\nparameters ‘Name: |lExchangeRateSetPlugin\n\nInterface: |lExchangeRateSetPlugin\n\n= Gosu Class: _trn.ta.plugin.exchangerate.TrnlExchangeRateSetPlugin\nFRY AE TM ngerate.TrniExchangeRateSetPlugin]\n\nEnvironment:\n‘Add Java Plugin\n\n‘Add OSGi Plugin seve:\nDisabled\n\nParameters: Name Value | Environment | Server | +.\n\nPlugin parameters\n\n| Plugin parameters\n\nParameters:\n\nName value Environment Server\npassword low QA ‘TestServer\nusername lsu Prod |Prodserver\npassword \\6mzi)x_h4+=HyzoG Prod [ProdServer\n\nSpecify values at the registry level that can be passed to a plugin class during initialization\n\n+ Name and Value String fields are required\n\n+ Environment and Server fields are optional\n\nUseful for varying plugin behavior without changing the plugin code itself\n\nExample:\n\n* Testing environment compared to a production environment\n\nPlugin class must implement InitializablePlugin interface and\n\nset Parameters property\n\n| Using plugin parameters Gi\n\n¢ Add the parameters in the plugin registry\n\n¢ Reference the parameters in the plugin class\n\npackage trn.ta.plugin.exchangerate\nGosu Class: _agin.exchangerate.TmlExchangeRateSetPlugin\n\nEnvi uses gv.plugin.InitializablePlugin\nSTIS uses gw.plugin.exchangerate. IExchangeRateSetPlugin\nServer:\n—> class TrnlExchangeRateSetPlugin implenents IExchangeRateSetPlugin, InitielizeblePlugin{\n1 Disabled : *\n= 2 svate static var USERNAME = \"username\"\nParameters: | Name | Value [Environment Server bar\n\nprivate static var username : String\n= a private static final var PASSWORD = \"password\"\n\npassword gw private static var _passvord : String\n@1 © override function createExchangeRateset() : ExchangeRateset (...)\n@1 > override property set Parameters (parameters : MapcObject, Object>) {\n\nusername = parameters.get (USERNAME) as String\n“passvord = parameters.get (PASSWORD) as String\n)\n\n| Deploy code changes\n\n¢ New Gosu plugin class\n\n¢« Newor modified plugin registry file\n\nGta Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nYE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+Shift+F9\n\\y Attach to Local Process...\n\n[2 Edit Configurations...\n\nBl import Test Results >\nHl Stop ‘Server’ Ctrl+F2\n\nTools VCS Window Help\nD> Run ‘Server’\n\n& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD> Run...\n\nW Debus...\n\niy Attach to Local Process...\n\n[> Edit Configurations...\n\n] Import Test Results\n\nI Stop ‘Server’\n\nEP show Running List\n\nSto\n\nGi\n\n¢ Modified Gosu plugin class\n\n| Demonstration G\nConfiguring a plugin with parameters\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — (dentify if each statements true or false.\n\n¢\now A) Plugins implement methods that are called by internal code.\n\nB) Plugins must be written in Gosu.\n\nC) Aplugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\n\nD) Plugins are used exclusively for external application integration.\n\nSe Soe Se sees esse ese\n\nAnswer\n\n_— — |dentify if each statements true or false.\n\nY\n, A\nB\nCc\n\nwere\n\nD\n\nz=\n\ng\n\nCc)\nD\n\nz=\n\n&\n\nPlugins implement methods that are called by internal code.\nPlugins must be written in Gosu.\n\nA plugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\n\nPlugins are used exclusively for external application integration.\nTrue\n\nFalse — Guidewire recommends that they be written in Gosu, but they can be\nwritten in OSGi or Java.\n\nTrue\n\nFalse — They are also used to execute tasks exclusively within the Guidewire\napplication.\n\nQuestion\n\nan What is the purpose of a plugin registry entry?\n¢\n4\n\nSe Soe Se sees esse ese\n\nAnswer\n\nae What is the purpose of a plugin registry entry?\n\n¢\n4\n\nThe plugin registry entry identifies the plugin class to use for a given set of internally\ncalled methods and initialization parameters that may be used to affect the plugin's\nbehavior.\n\nSoo eS oe ese Sse ese\n\nQuestion\n\n,- — Doyou need to restart the server when you:\n¢\n\now A) Modify code in an existing Gosu plugin?\n\nB) Modify a plugin registry entry?\n\nSe Soe Se sees esse ese\n\nAnswer Gi\n\n_- — Doyou need to restart the server when you:\n\n¢\n“ A\nB\n\nModify code in an existing Gosu plugin?\n\nModify a plugin registry entry?\n\nA) No, you do not to restart the server when you make changes to a Gosu plugin\nclass. However, you need to execute Reload Changed Classes.\n\nB) Yes, you need to restart the server when modifying a plugin registry entry because\nplugin registry entries are initialized only during the server application start-up.\n\nSoo eS oe ese Sse ese\n\nLesson\nobjectives ¢ Describe the basic functionality of Guidewire\nreview plugins\n\n¢ Configure plugins in Gosu\n* Configure plugin parameters\n¢ Register and deploy plugins\n\n| Student exercise\n\nCreate an exchange rate plugin",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Plugins",
+      "word_count": 1,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe the basic functionality of Guidewire\n\nplugins\n¢ Configure plugins in Gosu\n* Configure plugin parameters\n¢ Register and deploy plugins",
+      "word_count": 24,
+      "avg_confidence": 85.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Guidewire plugin G\n\n+ . . i: & Project A © | Hie\n* Aninterface provided by Guidewire SS Brinnon AGWiOtrineghyrinedicertgrair\nv Ce confic\n+ Describes methods called by the application > Beni Homes\n. . ao . > D8 Btensions\n* May define required application behavior > CPLocalizations\n> > Messaging\n+ Authentication Plugins > D& Metadata\n> [& age Configuration\n+ Number generators Dib Plugins\n7 . . Y DWregistry\n* Or may define an integration point 1 AuthenticationServicePlugin.gwp\n@ AuthenticationSourceCreatorPlugin.gwp\n* Messaging plugins 1@ BackgroundTaskFailoverPlugin.gwp\n@ BackgroundTaskLoadBalancingPlugin.gwp.\n+ Document Management 1@ BankAccountV nRequest.gwp\n. . . 1@ BankAccountVerificationTransport.gwp\n* Since you implement the interface(s), & BCBilingSysternTransport.gwp\n@ BillingSystemPlugin.gwp\n+ You define method behavior @ CCClaimsystem Transport gwp\n& ClaimSystemPlugin.gup\n« Based on the interface contract, you define: o& ClusterGroadcastTransportFactory.gwp\n@ ClusterFastBroadcastTransportFactory.gwp.\n+ Input parameters @ ClusterUnicastTransportFactory.gwp\n\n@ DefaultPrintToConsoleTransport.gwp\n©) Return values 1@ documentStoreTransport.gwp",
+      "word_count": 147,
+      "avg_confidence": 69.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Types of plugins\n¢ Predefined plugins\n\n+ Used to implement customizable\nbehavior for predefined points in the\napplication\n\n« Messaging plugins\n\n+ Used to send messages to external systems\nand process the resulting replies\n\n¢ Startable plugins\n\n¢ Used to listen for incoming messages from\nexternal systems and processes them\nasynchronously",
+      "word_count": 52,
+      "avg_confidence": 89.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Recommended plugin source code options Gi\n\nen « \"Nava plugin J\n\nUse Guidewire Studio ¢ IntelliJ IDEAwith OSGi « Third party IDE\nEditor\n\n« Native access to ¢ Needs ALL Guidewire\napplication API * Access to Guidewire JARs\n¢ Native debugging within application API ¢ No inspection support\nGuidewire Studio ¢ Easily add third party for Guidewire Internal\nlibraries API\n¢ Easy deployment ¢ Require special\n\ndeployment",
+      "word_count": 67,
+      "avg_confidence": 79.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Use case\n\n¢ Create an exchange rate set that\n\nincludes one exchange rate for\n\nevery typekey currency\n\nay\n\nExchangeRate\nPlugin\n\n<—__——\n\n0.769\n\n€ mm S\n\nGi\n\n1.\n2.\n\n3.\n\nDetermine plugin requirements\n\nWrite plugin class (implement the\ninterface) in Guidewire Studio\n\nRegister the plugin by creating or\nmodifying the appropriate plugin\nregistry entry\n\n4. Deploy the changes",
+      "word_count": 58,
+      "avg_confidence": 90.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Plugin configuration",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Determine Gosu plugin requirements Gi\n\n¢ What interface(s) must the plugin implement? Predefined Plugins\n« IExchangeRateSetPlugin Display instructions\n¢ What methods are included in the interface(s)? Aendicangeeane\n* createExchangeRateSet =\nRetrieved On Base Currency Price Currency Rate\n« When are the methods called? Nodataro display\n\n* By clicking on the Invoke ExchangeRateSet Plugin button\nin the Ul\n\n* Administration > Training: Plugins > Predefined Plugins\n\n¢ What issues should you consider when implementing\nthe plugin?\n\n« External system must be online",
+      "word_count": 82,
+      "avg_confidence": 86.72,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Plugin class Gi\n\n* Create the package and Gosu class that will implement the plugin\n« Use a package naming convention recommendation\n* gsrc.<company_ code>.<app_code>.plugin.<functional_area>\n\n¢ Use plugin naming convention recommendation\n\nv Wigsre\n\n* <meaningful_name><interface_implemented> > com.guidewire.pl.docexamples\n+ TrnlExchangeRateSetPlugin is a predefined plugin 4 demo.ta\n\n> gw\n\n> libraries\n\n> sita\n\n> trainingapp\n\nv trn.ta\n\nplugin.exchangerate\n\n© TrlExchangeRateSetPlugin",
+      "word_count": 59,
+      "avg_confidence": 83.12,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Implement required interface(s)\n\n¢ Implement the interface\n¢« ALT+ENTER to implement methods\n\n¢ Every public method from the interface must exist\n\n+ Some methods can be left as stubs that do nothing\n\n© Trnl€xchangeRateSetPlugin.gs * |\n\n® Implement methods\n\n@ Make ‘TmnlExchangeRateSetPlugin' abstract\n\nDP Annotate interface ‘lExchangeRateSetPlugin’ as @Deprecated >\n\npackage trn.ta.plugin.exchangerate\n\nclass Tr\n\noverride function createExchangeRateSet ()\nreturn null\n\nuses gw.plugin.exchangerate. IExchangeRateSetPlugin\n\nngeRa gin implements IExchangeRateSetPlugin{\n\n: ExchangeRateSet {\n\nLF; Select Methods to Implement\n\nC1 Copy JavaDoc\n\n© insert @Qverride\n\nen\n\nCancel",
+      "word_count": 84,
+      "avg_confidence": 83.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Create the plugin registry file (if necessary) Gi\n\n¢ Ifthe plugin definition does not exist, then create a new plugin registry file under\nconfiguration.config.Plugins.registry\n\nY Db Plugins 1\nY Dibregistry New Ph\n@ AuthenticationServicePlugin.gwp US\n* Specify the name and interface\n\nGi Plugin x GiPugin x\nName: | ExchangeRateSetPlugin) Name: __[ExchangeRateSetPlugin\nIntetoce - Baars Inetace: xchongeRateSetugin | [=\n\ncad Search by Nome [BER cues\n\nNo matches found in project.\nTExchangeRateSetPlugin",
+      "word_count": 71,
+      "avg_confidence": 75.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Configure the plugin registry file Gi\n\n¢ In many cases, the plugin definition already exists in the project\n¢ Plugin editor options\n\n1. Add plugin type\n\n2. Specify the plugin class\n\n3. Disable the plugin\n\n4. Define plugin 1B lExchangeRateSetPlugin.gwp\nparameters ‘Name: |lExchangeRateSetPlugin\n\nInterface: |lExchangeRateSetPlugin\n\n= Gosu Class: _trn.ta.plugin.exchangerate.TrnlExchangeRateSetPlugin\nFRY AE TM ngerate.TrniExchangeRateSetPlugin]\n\nEnvironment:\n‘Add Java Plugin\n\n‘Add OSGi Plugin seve:\nDisabled\n\nParameters: Name Value | Environment | Server | +.",
+      "word_count": 72,
+      "avg_confidence": 73.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Plugin parameters",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Plugin parameters\n\nParameters:\n\nName value Environment Server\npassword low QA ‘TestServer\nusername lsu Prod |Prodserver\npassword \\6mzi)x_h4+=HyzoG Prod [ProdServer\n\nSpecify values at the registry level that can be passed to a plugin class during initialization\n\n+ Name and Value String fields are required\n\n+ Environment and Server fields are optional\n\nUseful for varying plugin behavior without changing the plugin code itself\n\nExample:\n\n* Testing environment compared to a production environment\n\nPlugin class must implement InitializablePlugin interface and\n\nset Parameters property",
+      "word_count": 81,
+      "avg_confidence": 91.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Using plugin parameters Gi\n\n¢ Add the parameters in the plugin registry\n\n¢ Reference the parameters in the plugin class\n\npackage trn.ta.plugin.exchangerate\nGosu Class: _agin.exchangerate.TmlExchangeRateSetPlugin\n\nEnvi uses gv.plugin.InitializablePlugin\nSTIS uses gw.plugin.exchangerate. IExchangeRateSetPlugin\nServer:\n—> class TrnlExchangeRateSetPlugin implenents IExchangeRateSetPlugin, InitielizeblePlugin{\n1 Disabled : *\n= 2 svate static var USERNAME = \"username\"\nParameters: | Name | Value [Environment Server bar\n\nprivate static var username : String\n= a private static final var PASSWORD = \"password\"\n\npassword gw private static var _passvord : String\n@1 © override function createExchangeRateset() : ExchangeRateset (...)\n@1 > override property set Parameters (parameters : MapcObject, Object>) {\n\nusername = parameters.get (USERNAME) as String\n“passvord = parameters.get (PASSWORD) as String\n)",
+      "word_count": 115,
+      "avg_confidence": 74.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Deploy code changes\n\n¢ New Gosu plugin class\n\n¢« Newor modified plugin registry file\n\nGta Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nYE Run ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+Shift+F9\n\\y Attach to Local Process...\n\n[2 Edit Configurations...\n\nBl import Test Results >\nHl Stop ‘Server’ Ctrl+F2\n\nTools VCS Window Help\nD> Run ‘Server’\n\n& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD> Run...\n\nW Debus...\n\niy Attach to Local Process...\n\n[> Edit Configurations...\n\n] Import Test Results\n\nI Stop ‘Server’\n\nEP show Running List\n\nSto\n\nGi\n\n¢ Modified Gosu plugin class",
+      "word_count": 97,
+      "avg_confidence": 78.48,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Demonstration G\nConfiguring a plugin with parameters\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.66,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question G\n\n_— — (dentify if each statements true or false.\n\n¢\now A) Plugins implement methods that are called by internal code.\n\nB) Plugins must be written in Gosu.\n\nC) Aplugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\n\nD) Plugins are used exclusively for external application integration.\n\nSe Soe Se sees esse ese",
+      "word_count": 62,
+      "avg_confidence": 87.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\n_— — |dentify if each statements true or false.\n\nY\n, A\nB\nCc\n\nwere\n\nD\n\nz=\n\ng\n\nCc)\nD\n\nz=\n\n&\n\nPlugins implement methods that are called by internal code.\nPlugins must be written in Gosu.\n\nA plugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\n\nPlugins are used exclusively for external application integration.\nTrue\n\nFalse — Guidewire recommends that they be written in Gosu, but they can be\nwritten in OSGi or Java.\n\nTrue\n\nFalse — They are also used to execute tasks exclusively within the Guidewire\napplication.",
+      "word_count": 98,
+      "avg_confidence": 90.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\nan What is the purpose of a plugin registry entry?\n¢\n4\n\nSe Soe Se sees esse ese",
+      "word_count": 19,
+      "avg_confidence": 75.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer\n\nae What is the purpose of a plugin registry entry?\n\n¢\n4\n\nThe plugin registry entry identifies the plugin class to use for a given set of internally\ncalled methods and initialization parameters that may be used to affect the plugin's\nbehavior.\n\nSoo eS oe ese Sse ese",
+      "word_count": 49,
+      "avg_confidence": 87.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n,- — Doyou need to restart the server when you:\n¢\n\now A) Modify code in an existing Gosu plugin?\n\nB) Modify a plugin registry entry?\n\nSe Soe Se sees esse ese",
+      "word_count": 33,
+      "avg_confidence": 83.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer Gi\n\n_- — Doyou need to restart the server when you:\n\n¢\n“ A\nB\n\nModify code in an existing Gosu plugin?\n\nModify a plugin registry entry?\n\nA) No, you do not to restart the server when you make changes to a Gosu plugin\nclass. However, you need to execute Reload Changed Classes.\n\nB) Yes, you need to restart the server when modifying a plugin registry entry because\nplugin registry entries are initialized only during the server application start-up.\n\nSoo eS oe ese Sse ese",
+      "word_count": 86,
+      "avg_confidence": 90.66,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Lesson\nobjectives ¢ Describe the basic functionality of Guidewire\nreview plugins\n\n¢ Configure plugins in Gosu\n* Configure plugin parameters\n¢ Register and deploy plugins",
+      "word_count": 25,
+      "avg_confidence": 85.52,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Student exercise\n\nCreate an exchange rate plugin",
+      "word_count": 8,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

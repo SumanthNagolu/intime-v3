@@ -1,0 +1,2750 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_07_01.mp4",
+    "video_stem": "PP_07_01",
+    "duration_seconds": 186.18,
+    "duration_formatted": "00:03:06.180",
+    "segment_count": 32,
+    "word_count": 402,
+    "avg_confidence": 0.9377,
+    "transcription_time_seconds": 17.62,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:27:59.737387"
+  },
+  "full_text": "Log in at SuperUser. Go to Underwriting Rules through Business Rules. Select the underwriting rule for BOP, Year Built. Modify the rule so that the user can only approve the issue with the year built no earlier than a limit. Let's review and configure the fields that are related to approving the underwriting issues. On the Rule Details tab, Default Duration specifies the property on the New Approval page, and it indicates when an approval will expire. Keep it as rescinded. Go to the Advanced tab. If Auto Approvable is set to Yes, the issue is automatically approved if the logged in user has the authority to approve it. Default Edit Before Bind corresponds to the property on the New Approval page. Yes indicates the issue will not be raised again if the policy transaction is edited after the issue has been approved. Default Approval Blocking Point. Default Approval Blocking Point specifies the default approval blocking point when an issue is opened for approval. Value Comparator defines how to compare the issue value to see if it is within the authority limit. Select At Least. Value Format Type defines which output format are to use. Keep it as unformatted. Default Value Assignment Type specifies how to compute a default approval value from the value of the issue. Policy Center uses this value if the comparator is set to At Least or At Most. Fixed. Fixed copies the issue value directly to the default approval value. Offset Amount or Offset Percentage adds to the issue value by an offset amount or percentage to produce the default approval value. Select Fixed. Go back to the Rule Details tab. In the Underwriting Issue Details section, the Value field is visible because Value Comparator is set as At Least. It is compared with Authority Grants to determine if the user can approve this issue. After entering the value, click outside of the box to refresh the page. Save the Rule. Click the Gear icon. Log Out. Log In as a Producer. Go back to the same submission that raised the issue for Building Built before 1950. Notice the year is not displayed. Edit Policy Transaction. Click OK to Warning. Click Quote. Go to Risk Analysis. The Year is displayed with the issue, because we configured the Underwriting Rule to record the value. This is the end of demonstration for the Underwriting Rule fields related to approval. ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.48,
+      "end": 15.68,
+      "start_formatted": "00:00:01.480",
+      "end_formatted": "00:00:15.680",
+      "text": "Log in at SuperUser. Go to Underwriting Rules through Business Rules. Select the underwriting rule for BOP, Year Built. Modify the rule so that the user can only approve the issue with the year built no earlier than a limit.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 1.48,
+          "end": 2.08,
+          "probability": 0.8506
+        },
+        {
+          "word": "in",
+          "start": 2.08,
+          "end": 2.3,
+          "probability": 0.6704
+        },
+        {
+          "word": "at",
+          "start": 2.3,
+          "end": 2.5,
+          "probability": 0.5444
+        },
+        {
+          "word": "SuperUser.",
+          "start": 2.5,
+          "end": 3.3,
+          "probability": 0.6309
+        },
+        {
+          "word": "Go",
+          "start": 3.52,
+          "end": 3.92,
+          "probability": 0.9854
+        },
+        {
+          "word": "to",
+          "start": 3.92,
+          "end": 4.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "Underwriting",
+          "start": 4.12,
+          "end": 4.68,
+          "probability": 0.9028
+        },
+        {
+          "word": "Rules",
+          "start": 4.68,
+          "end": 5.06,
+          "probability": 0.6436
+        },
+        {
+          "word": "through",
+          "start": 5.06,
+          "end": 5.36,
+          "probability": 0.9629
+        },
+        {
+          "word": "Business",
+          "start": 5.36,
+          "end": 5.74,
+          "probability": 0.9551
+        },
+        {
+          "word": "Rules.",
+          "start": 5.74,
+          "end": 6.32,
+          "probability": 0.9595
+        },
+        {
+          "word": "Select",
+          "start": 6.68,
+          "end": 7.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 7.28,
+          "end": 7.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "underwriting",
+          "start": 7.5,
+          "end": 8.1,
+          "probability": 0.8262
+        },
+        {
+          "word": "rule",
+          "start": 8.1,
+          "end": 8.42,
+          "probability": 0.9888
+        },
+        {
+          "word": "for",
+          "start": 8.42,
+          "end": 8.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "BOP,",
+          "start": 8.7,
+          "end": 9.04,
+          "probability": 0.9478
+        },
+        {
+          "word": "Year",
+          "start": 9.18,
+          "end": 9.56,
+          "probability": 0.9282
+        },
+        {
+          "word": "Built.",
+          "start": 9.56,
+          "end": 9.82,
+          "probability": 0.6719
+        },
+        {
+          "word": "Modify",
+          "start": 10.3,
+          "end": 10.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 10.9,
+          "end": 11.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 11.08,
+          "end": 11.3,
+          "probability": 0.9785
+        },
+        {
+          "word": "so",
+          "start": 11.3,
+          "end": 11.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 11.52,
+          "end": 11.68,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 11.68,
+          "end": 11.82,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 11.82,
+          "end": 12.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "can",
+          "start": 12.14,
+          "end": 12.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 12.42,
+          "end": 12.72,
+          "probability": 0.999
+        },
+        {
+          "word": "approve",
+          "start": 12.72,
+          "end": 13.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 13.02,
+          "end": 13.18,
+          "probability": 0.999
+        },
+        {
+          "word": "issue",
+          "start": 13.18,
+          "end": 13.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 13.5,
+          "end": 13.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 13.74,
+          "end": 13.84,
+          "probability": 0.6841
+        },
+        {
+          "word": "year",
+          "start": 13.84,
+          "end": 14.06,
+          "probability": 0.6001
+        },
+        {
+          "word": "built",
+          "start": 14.06,
+          "end": 14.38,
+          "probability": 0.978
+        },
+        {
+          "word": "no",
+          "start": 14.38,
+          "end": 14.58,
+          "probability": 0.9863
+        },
+        {
+          "word": "earlier",
+          "start": 14.58,
+          "end": 14.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "than",
+          "start": 14.98,
+          "end": 15.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 15.26,
+          "end": 15.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "limit.",
+          "start": 15.38,
+          "end": 15.68,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 17.12,
+      "end": 28.14,
+      "start_formatted": "00:00:17.120",
+      "end_formatted": "00:00:28.140",
+      "text": "Let's review and configure the fields that are related to approving the underwriting issues. On the Rule Details tab, Default Duration specifies the property on the New Approval page,",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 17.12,
+          "end": 17.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "review",
+          "start": 17.72,
+          "end": 18.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "and",
+          "start": 18.04,
+          "end": 18.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "configure",
+          "start": 18.3,
+          "end": 18.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 18.74,
+          "end": 18.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "fields",
+          "start": 18.96,
+          "end": 19.34,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 19.34,
+          "end": 19.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 19.54,
+          "end": 19.66,
+          "probability": 1.0
+        },
+        {
+          "word": "related",
+          "start": 19.66,
+          "end": 20.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 20.04,
+          "end": 20.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "approving",
+          "start": 20.24,
+          "end": 20.68,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 20.68,
+          "end": 20.88,
+          "probability": 0.999
+        },
+        {
+          "word": "underwriting",
+          "start": 20.88,
+          "end": 21.5,
+          "probability": 0.998
+        },
+        {
+          "word": "issues.",
+          "start": 21.5,
+          "end": 21.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "On",
+          "start": 22.36,
+          "end": 22.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 22.94,
+          "end": 23.08,
+          "probability": 0.999
+        },
+        {
+          "word": "Rule",
+          "start": 23.08,
+          "end": 23.24,
+          "probability": 0.8896
+        },
+        {
+          "word": "Details",
+          "start": 23.24,
+          "end": 23.74,
+          "probability": 0.9883
+        },
+        {
+          "word": "tab,",
+          "start": 23.74,
+          "end": 24.12,
+          "probability": 0.9824
+        },
+        {
+          "word": "Default",
+          "start": 24.46,
+          "end": 24.92,
+          "probability": 0.8408
+        },
+        {
+          "word": "Duration",
+          "start": 24.92,
+          "end": 25.4,
+          "probability": 0.9473
+        },
+        {
+          "word": "specifies",
+          "start": 25.4,
+          "end": 26.18,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 26.18,
+          "end": 26.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "property",
+          "start": 26.38,
+          "end": 26.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 26.76,
+          "end": 27.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 27.04,
+          "end": 27.16,
+          "probability": 0.999
+        },
+        {
+          "word": "New",
+          "start": 27.16,
+          "end": 27.3,
+          "probability": 0.6138
+        },
+        {
+          "word": "Approval",
+          "start": 27.3,
+          "end": 27.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "page,",
+          "start": 27.72,
+          "end": 28.14,
+          "probability": 0.9629
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 28.14,
+      "end": 34.52,
+      "start_formatted": "00:00:28.140",
+      "end_formatted": "00:00:34.520",
+      "text": "and it indicates when an approval will expire. Keep it as rescinded. Go to the Advanced tab.",
+      "words": [
+        {
+          "word": "and",
+          "start": 28.14,
+          "end": 28.54,
+          "probability": 0.9507
+        },
+        {
+          "word": "it",
+          "start": 28.54,
+          "end": 28.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "indicates",
+          "start": 28.7,
+          "end": 29.16,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 29.16,
+          "end": 29.38,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 29.38,
+          "end": 29.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "approval",
+          "start": 29.5,
+          "end": 29.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 29.86,
+          "end": 30.18,
+          "probability": 1.0
+        },
+        {
+          "word": "expire.",
+          "start": 30.18,
+          "end": 30.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Keep",
+          "start": 31.1,
+          "end": 31.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 31.56,
+          "end": 31.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 31.74,
+          "end": 31.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "rescinded.",
+          "start": 31.96,
+          "end": 32.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "Go",
+          "start": 32.82,
+          "end": 33.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 33.34,
+          "end": 33.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 33.52,
+          "end": 33.66,
+          "probability": 1.0
+        },
+        {
+          "word": "Advanced",
+          "start": 33.66,
+          "end": 34.08,
+          "probability": 0.8008
+        },
+        {
+          "word": "tab.",
+          "start": 34.08,
+          "end": 34.52,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 36.48,
+      "end": 48.9,
+      "start_formatted": "00:00:36.480",
+      "end_formatted": "00:00:48.900",
+      "text": "If Auto Approvable is set to Yes, the issue is automatically approved if the logged in user has the authority to approve it. Default Edit Before Bind corresponds to the property on the New Approval page.",
+      "words": [
+        {
+          "word": "If",
+          "start": 36.48,
+          "end": 37.08,
+          "probability": 0.998
+        },
+        {
+          "word": "Auto",
+          "start": 37.08,
+          "end": 37.34,
+          "probability": 0.4175
+        },
+        {
+          "word": "Approvable",
+          "start": 37.34,
+          "end": 37.82,
+          "probability": 0.7373
+        },
+        {
+          "word": "is",
+          "start": 37.82,
+          "end": 38.14,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 38.14,
+          "end": 38.4,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 38.4,
+          "end": 38.56,
+          "probability": 1.0
+        },
+        {
+          "word": "Yes,",
+          "start": 38.56,
+          "end": 38.94,
+          "probability": 0.9385
+        },
+        {
+          "word": "the",
+          "start": 39.16,
+          "end": 39.38,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 39.38,
+          "end": 39.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 39.7,
+          "end": 39.92,
+          "probability": 1.0
+        },
+        {
+          "word": "automatically",
+          "start": 39.92,
+          "end": 40.5,
+          "probability": 1.0
+        },
+        {
+          "word": "approved",
+          "start": 40.5,
+          "end": 41.06,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 41.06,
+          "end": 41.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 41.3,
+          "end": 41.46,
+          "probability": 1.0
+        },
+        {
+          "word": "logged",
+          "start": 41.46,
+          "end": 41.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 41.76,
+          "end": 41.94,
+          "probability": 0.707
+        },
+        {
+          "word": "user",
+          "start": 41.94,
+          "end": 42.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 42.18,
+          "end": 42.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 42.42,
+          "end": 42.58,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 42.58,
+          "end": 43.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 43.0,
+          "end": 43.26,
+          "probability": 1.0
+        },
+        {
+          "word": "approve",
+          "start": 43.26,
+          "end": 43.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "it.",
+          "start": 43.62,
+          "end": 43.8,
+          "probability": 1.0
+        },
+        {
+          "word": "Default",
+          "start": 44.34,
+          "end": 44.94,
+          "probability": 0.999
+        },
+        {
+          "word": "Edit",
+          "start": 44.94,
+          "end": 45.24,
+          "probability": 0.7412
+        },
+        {
+          "word": "Before",
+          "start": 45.24,
+          "end": 45.64,
+          "probability": 0.8594
+        },
+        {
+          "word": "Bind",
+          "start": 45.64,
+          "end": 46.02,
+          "probability": 0.8408
+        },
+        {
+          "word": "corresponds",
+          "start": 46.02,
+          "end": 46.52,
+          "probability": 0.9917
+        },
+        {
+          "word": "to",
+          "start": 46.52,
+          "end": 46.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 46.94,
+          "end": 47.06,
+          "probability": 1.0
+        },
+        {
+          "word": "property",
+          "start": 47.06,
+          "end": 47.44,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 47.44,
+          "end": 47.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 47.72,
+          "end": 47.84,
+          "probability": 1.0
+        },
+        {
+          "word": "New",
+          "start": 47.84,
+          "end": 48.02,
+          "probability": 0.2419
+        },
+        {
+          "word": "Approval",
+          "start": 48.02,
+          "end": 48.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "page.",
+          "start": 48.48,
+          "end": 48.9,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 49.22,
+      "end": 55.7,
+      "start_formatted": "00:00:49.220",
+      "end_formatted": "00:00:55.700",
+      "text": "Yes indicates the issue will not be raised again if the policy transaction is edited after the issue has been approved.",
+      "words": [
+        {
+          "word": "Yes",
+          "start": 49.22,
+          "end": 49.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "indicates",
+          "start": 49.64,
+          "end": 50.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 50.06,
+          "end": 50.42,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 50.42,
+          "end": 50.72,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 50.72,
+          "end": 50.96,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 50.96,
+          "end": 51.18,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 51.18,
+          "end": 51.36,
+          "probability": 1.0
+        },
+        {
+          "word": "raised",
+          "start": 51.36,
+          "end": 51.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "again",
+          "start": 51.66,
+          "end": 51.96,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 51.96,
+          "end": 52.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 52.24,
+          "end": 52.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 52.34,
+          "end": 52.78,
+          "probability": 0.9619
+        },
+        {
+          "word": "transaction",
+          "start": 52.78,
+          "end": 53.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 53.36,
+          "end": 53.7,
+          "probability": 1.0
+        },
+        {
+          "word": "edited",
+          "start": 53.7,
+          "end": 53.96,
+          "probability": 0.998
+        },
+        {
+          "word": "after",
+          "start": 53.96,
+          "end": 54.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 54.32,
+          "end": 54.52,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 54.52,
+          "end": 54.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 54.82,
+          "end": 55.06,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 55.06,
+          "end": 55.22,
+          "probability": 1.0
+        },
+        {
+          "word": "approved.",
+          "start": 55.22,
+          "end": 55.7,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 55.7,
+      "end": 62.5,
+      "start_formatted": "00:00:55.700",
+      "end_formatted": "00:01:02.500",
+      "text": "Default Approval Blocking Point. Default Approval Blocking Point specifies the default approval blocking point when an issue is opened for approval.",
+      "words": [
+        {
+          "word": "Default",
+          "start": 55.7,
+          "end": 56.94,
+          "probability": 0.9756
+        },
+        {
+          "word": "Approval",
+          "start": 56.94,
+          "end": 57.4,
+          "probability": 0.752
+        },
+        {
+          "word": "Blocking",
+          "start": 57.4,
+          "end": 57.82,
+          "probability": 0.8364
+        },
+        {
+          "word": "Point.",
+          "start": 57.82,
+          "end": 58.08,
+          "probability": 0.9404
+        },
+        {
+          "word": "Default",
+          "start": 58.34,
+          "end": 58.42,
+          "probability": 0.667
+        },
+        {
+          "word": "Approval",
+          "start": 58.42,
+          "end": 58.42,
+          "probability": 0.9678
+        },
+        {
+          "word": "Blocking",
+          "start": 58.42,
+          "end": 58.42,
+          "probability": 0.9844
+        },
+        {
+          "word": "Point",
+          "start": 58.42,
+          "end": 58.42,
+          "probability": 0.9775
+        },
+        {
+          "word": "specifies",
+          "start": 58.42,
+          "end": 58.84,
+          "probability": 0.752
+        },
+        {
+          "word": "the",
+          "start": 58.84,
+          "end": 59.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "default",
+          "start": 59.06,
+          "end": 59.42,
+          "probability": 0.7202
+        },
+        {
+          "word": "approval",
+          "start": 59.42,
+          "end": 59.96,
+          "probability": 0.9536
+        },
+        {
+          "word": "blocking",
+          "start": 59.96,
+          "end": 60.42,
+          "probability": 0.9712
+        },
+        {
+          "word": "point",
+          "start": 60.42,
+          "end": 60.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "when",
+          "start": 60.76,
+          "end": 60.98,
+          "probability": 0.9844
+        },
+        {
+          "word": "an",
+          "start": 60.98,
+          "end": 61.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "issue",
+          "start": 61.14,
+          "end": 61.38,
+          "probability": 0.9819
+        },
+        {
+          "word": "is",
+          "start": 61.38,
+          "end": 61.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "opened",
+          "start": 61.56,
+          "end": 61.84,
+          "probability": 0.9722
+        },
+        {
+          "word": "for",
+          "start": 61.84,
+          "end": 62.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "approval.",
+          "start": 62.06,
+          "end": 62.5,
+          "probability": 0.9639
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 63.06,
+      "end": 68.88,
+      "start_formatted": "00:01:03.060",
+      "end_formatted": "00:01:08.880",
+      "text": "Value Comparator defines how to compare the issue value to see if it is within the authority limit.",
+      "words": [
+        {
+          "word": "Value",
+          "start": 63.06,
+          "end": 63.74,
+          "probability": 0.978
+        },
+        {
+          "word": "Comparator",
+          "start": 63.74,
+          "end": 64.32,
+          "probability": 0.9829
+        },
+        {
+          "word": "defines",
+          "start": 64.32,
+          "end": 64.64,
+          "probability": 0.9424
+        },
+        {
+          "word": "how",
+          "start": 64.64,
+          "end": 65.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 65.06,
+          "end": 65.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "compare",
+          "start": 65.24,
+          "end": 65.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 65.64,
+          "end": 65.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "issue",
+          "start": 65.84,
+          "end": 66.14,
+          "probability": 0.9668
+        },
+        {
+          "word": "value",
+          "start": 66.14,
+          "end": 66.52,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 66.52,
+          "end": 66.76,
+          "probability": 0.9937
+        },
+        {
+          "word": "see",
+          "start": 66.76,
+          "end": 67.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "if",
+          "start": 67.0,
+          "end": 67.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "it",
+          "start": 67.3,
+          "end": 67.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "is",
+          "start": 67.44,
+          "end": 67.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "within",
+          "start": 67.6,
+          "end": 67.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 67.84,
+          "end": 68.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "authority",
+          "start": 68.02,
+          "end": 68.44,
+          "probability": 0.9116
+        },
+        {
+          "word": "limit.",
+          "start": 68.44,
+          "end": 68.88,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 71.48,
+      "end": 72.8,
+      "start_formatted": "00:01:11.480",
+      "end_formatted": "00:01:12.800",
+      "text": "Select At Least.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 71.48,
+          "end": 72.16,
+          "probability": 0.9683
+        },
+        {
+          "word": "At",
+          "start": 72.16,
+          "end": 72.32,
+          "probability": 0.5542
+        },
+        {
+          "word": "Least.",
+          "start": 72.32,
+          "end": 72.8,
+          "probability": 0.8555
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 75.42,
+      "end": 80.7,
+      "start_formatted": "00:01:15.420",
+      "end_formatted": "00:01:20.700",
+      "text": "Value Format Type defines which output format are to use. Keep it as unformatted.",
+      "words": [
+        {
+          "word": "Value",
+          "start": 75.42,
+          "end": 76.1,
+          "probability": 0.978
+        },
+        {
+          "word": "Format",
+          "start": 76.1,
+          "end": 76.64,
+          "probability": 0.9829
+        },
+        {
+          "word": "Type",
+          "start": 76.64,
+          "end": 76.9,
+          "probability": 0.981
+        },
+        {
+          "word": "defines",
+          "start": 76.9,
+          "end": 77.32,
+          "probability": 0.9502
+        },
+        {
+          "word": "which",
+          "start": 77.32,
+          "end": 77.72,
+          "probability": 0.998
+        },
+        {
+          "word": "output",
+          "start": 77.72,
+          "end": 78.16,
+          "probability": 0.8877
+        },
+        {
+          "word": "format",
+          "start": 78.16,
+          "end": 78.62,
+          "probability": 0.5044
+        },
+        {
+          "word": "are",
+          "start": 78.62,
+          "end": 78.8,
+          "probability": 0.8125
+        },
+        {
+          "word": "to",
+          "start": 78.8,
+          "end": 78.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "use.",
+          "start": 78.94,
+          "end": 79.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "Keep",
+          "start": 79.62,
+          "end": 80.06,
+          "probability": 0.9829
+        },
+        {
+          "word": "it",
+          "start": 80.06,
+          "end": 80.26,
+          "probability": 0.9766
+        },
+        {
+          "word": "as",
+          "start": 80.26,
+          "end": 80.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "unformatted.",
+          "start": 80.48,
+          "end": 80.82,
+          "probability": 0.9102
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 82.06,
+      "end": 88.42,
+      "start_formatted": "00:01:22.060",
+      "end_formatted": "00:01:28.420",
+      "text": "Default Value Assignment Type specifies how to compute a default approval value from the value of the issue.",
+      "words": [
+        {
+          "word": "Default",
+          "start": 82.06,
+          "end": 82.68,
+          "probability": 0.8613
+        },
+        {
+          "word": "Value",
+          "start": 82.68,
+          "end": 83.04,
+          "probability": 0.6543
+        },
+        {
+          "word": "Assignment",
+          "start": 83.04,
+          "end": 83.64,
+          "probability": 0.8081
+        },
+        {
+          "word": "Type",
+          "start": 83.64,
+          "end": 83.98,
+          "probability": 0.584
+        },
+        {
+          "word": "specifies",
+          "start": 83.98,
+          "end": 84.78,
+          "probability": 0.9775
+        },
+        {
+          "word": "how",
+          "start": 84.78,
+          "end": 85.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 85.02,
+          "end": 85.2,
+          "probability": 0.999
+        },
+        {
+          "word": "compute",
+          "start": 85.2,
+          "end": 85.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 85.56,
+          "end": 85.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "default",
+          "start": 85.72,
+          "end": 86.04,
+          "probability": 0.8687
+        },
+        {
+          "word": "approval",
+          "start": 86.04,
+          "end": 86.52,
+          "probability": 0.894
+        },
+        {
+          "word": "value",
+          "start": 86.52,
+          "end": 86.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "from",
+          "start": 86.9,
+          "end": 87.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 87.16,
+          "end": 87.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "value",
+          "start": 87.3,
+          "end": 87.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 87.68,
+          "end": 87.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 87.94,
+          "end": 88.06,
+          "probability": 0.999
+        },
+        {
+          "word": "issue.",
+          "start": 88.06,
+          "end": 88.42,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 88.76,
+      "end": 93.56,
+      "start_formatted": "00:01:28.760",
+      "end_formatted": "00:01:33.560",
+      "text": "Policy Center uses this value if the comparator is set to At Least or At Most.",
+      "words": [
+        {
+          "word": "Policy",
+          "start": 88.76,
+          "end": 89.36,
+          "probability": 0.9907
+        },
+        {
+          "word": "Center",
+          "start": 89.36,
+          "end": 89.72,
+          "probability": 0.8525
+        },
+        {
+          "word": "uses",
+          "start": 89.72,
+          "end": 90.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 90.1,
+          "end": 90.4,
+          "probability": 0.999
+        },
+        {
+          "word": "value",
+          "start": 90.4,
+          "end": 90.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "if",
+          "start": 90.78,
+          "end": 91.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 91.06,
+          "end": 91.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "comparator",
+          "start": 91.2,
+          "end": 91.72,
+          "probability": 0.9141
+        },
+        {
+          "word": "is",
+          "start": 91.72,
+          "end": 91.96,
+          "probability": 0.999
+        },
+        {
+          "word": "set",
+          "start": 91.96,
+          "end": 92.2,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 92.2,
+          "end": 92.4,
+          "probability": 0.998
+        },
+        {
+          "word": "At",
+          "start": 92.4,
+          "end": 92.62,
+          "probability": 0.1633
+        },
+        {
+          "word": "Least",
+          "start": 92.62,
+          "end": 92.92,
+          "probability": 0.7344
+        },
+        {
+          "word": "or",
+          "start": 92.92,
+          "end": 93.08,
+          "probability": 0.979
+        },
+        {
+          "word": "At",
+          "start": 93.08,
+          "end": 93.24,
+          "probability": 0.9434
+        },
+        {
+          "word": "Most.",
+          "start": 93.24,
+          "end": 93.56,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 96.3,
+      "end": 97.1,
+      "start_formatted": "00:01:36.300",
+      "end_formatted": "00:01:37.100",
+      "text": "Fixed.",
+      "words": [
+        {
+          "word": "Fixed.",
+          "start": 96.3,
+          "end": 97.1,
+          "probability": 0.9663
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 97.1,
+      "end": 100.64,
+      "start_formatted": "00:01:37.100",
+      "end_formatted": "00:01:40.640",
+      "text": "Fixed copies the issue value directly to the default approval value.",
+      "words": [
+        {
+          "word": "Fixed",
+          "start": 97.1,
+          "end": 97.12,
+          "probability": 0.9673
+        },
+        {
+          "word": "copies",
+          "start": 97.12,
+          "end": 97.52,
+          "probability": 0.959
+        },
+        {
+          "word": "the",
+          "start": 97.52,
+          "end": 97.7,
+          "probability": 0.999
+        },
+        {
+          "word": "issue",
+          "start": 97.7,
+          "end": 98.02,
+          "probability": 0.9595
+        },
+        {
+          "word": "value",
+          "start": 98.02,
+          "end": 98.42,
+          "probability": 0.999
+        },
+        {
+          "word": "directly",
+          "start": 98.42,
+          "end": 98.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 98.88,
+          "end": 99.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 99.16,
+          "end": 99.3,
+          "probability": 1.0
+        },
+        {
+          "word": "default",
+          "start": 99.3,
+          "end": 99.7,
+          "probability": 0.9688
+        },
+        {
+          "word": "approval",
+          "start": 99.7,
+          "end": 100.12,
+          "probability": 0.98
+        },
+        {
+          "word": "value.",
+          "start": 100.12,
+          "end": 100.64,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 100.98,
+      "end": 108.6,
+      "start_formatted": "00:01:40.980",
+      "end_formatted": "00:01:48.600",
+      "text": "Offset Amount or Offset Percentage adds to the issue value by an offset amount or percentage to produce the default approval value.",
+      "words": [
+        {
+          "word": "Offset",
+          "start": 100.98,
+          "end": 101.6,
+          "probability": 0.998
+        },
+        {
+          "word": "Amount",
+          "start": 101.6,
+          "end": 102.06,
+          "probability": 0.5874
+        },
+        {
+          "word": "or",
+          "start": 102.06,
+          "end": 102.24,
+          "probability": 0.9937
+        },
+        {
+          "word": "Offset",
+          "start": 102.24,
+          "end": 102.68,
+          "probability": 0.9502
+        },
+        {
+          "word": "Percentage",
+          "start": 102.68,
+          "end": 103.32,
+          "probability": 0.9585
+        },
+        {
+          "word": "adds",
+          "start": 103.32,
+          "end": 103.54,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 103.54,
+          "end": 103.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 103.72,
+          "end": 103.86,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 103.86,
+          "end": 104.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "value",
+          "start": 104.16,
+          "end": 104.56,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 104.56,
+          "end": 104.78,
+          "probability": 0.998
+        },
+        {
+          "word": "an",
+          "start": 104.78,
+          "end": 104.94,
+          "probability": 0.999
+        },
+        {
+          "word": "offset",
+          "start": 104.94,
+          "end": 105.3,
+          "probability": 0.9492
+        },
+        {
+          "word": "amount",
+          "start": 105.3,
+          "end": 105.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "or",
+          "start": 105.74,
+          "end": 105.94,
+          "probability": 0.999
+        },
+        {
+          "word": "percentage",
+          "start": 105.94,
+          "end": 106.38,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 106.38,
+          "end": 106.68,
+          "probability": 0.999
+        },
+        {
+          "word": "produce",
+          "start": 106.68,
+          "end": 107.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 107.02,
+          "end": 107.24,
+          "probability": 1.0
+        },
+        {
+          "word": "default",
+          "start": 107.24,
+          "end": 107.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "approval",
+          "start": 107.64,
+          "end": 108.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "value.",
+          "start": 108.08,
+          "end": 108.6,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 108.92,
+      "end": 110.12,
+      "start_formatted": "00:01:48.920",
+      "end_formatted": "00:01:50.120",
+      "text": "Select Fixed.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 108.92,
+          "end": 109.56,
+          "probability": 0.9941
+        },
+        {
+          "word": "Fixed.",
+          "start": 109.56,
+          "end": 110.12,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 111.78,
+      "end": 114.02,
+      "start_formatted": "00:01:51.780",
+      "end_formatted": "00:01:54.020",
+      "text": "Go back to the Rule Details tab.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 111.78,
+          "end": 112.42,
+          "probability": 0.958
+        },
+        {
+          "word": "back",
+          "start": 112.42,
+          "end": 112.66,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 112.66,
+          "end": 112.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 112.84,
+          "end": 112.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Rule",
+          "start": 112.96,
+          "end": 113.18,
+          "probability": 0.7686
+        },
+        {
+          "word": "Details",
+          "start": 113.18,
+          "end": 113.66,
+          "probability": 0.9614
+        },
+        {
+          "word": "tab.",
+          "start": 113.66,
+          "end": 114.02,
+          "probability": 0.9697
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 116.26,
+      "end": 123.5,
+      "start_formatted": "00:01:56.260",
+      "end_formatted": "00:02:03.500",
+      "text": "In the Underwriting Issue Details section, the Value field is visible because Value Comparator is set as At Least.",
+      "words": [
+        {
+          "word": "In",
+          "start": 116.26,
+          "end": 116.9,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 116.9,
+          "end": 117.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "Underwriting",
+          "start": 117.04,
+          "end": 117.68,
+          "probability": 0.9268
+        },
+        {
+          "word": "Issue",
+          "start": 117.68,
+          "end": 118.06,
+          "probability": 0.9814
+        },
+        {
+          "word": "Details",
+          "start": 118.06,
+          "end": 118.5,
+          "probability": 0.9795
+        },
+        {
+          "word": "section,",
+          "start": 118.5,
+          "end": 119.04,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 119.32,
+          "end": 119.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "Value",
+          "start": 119.54,
+          "end": 119.9,
+          "probability": 0.7026
+        },
+        {
+          "word": "field",
+          "start": 119.9,
+          "end": 120.2,
+          "probability": 0.9219
+        },
+        {
+          "word": "is",
+          "start": 120.2,
+          "end": 120.4,
+          "probability": 0.999
+        },
+        {
+          "word": "visible",
+          "start": 120.4,
+          "end": 120.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "because",
+          "start": 120.78,
+          "end": 121.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "Value",
+          "start": 121.14,
+          "end": 121.6,
+          "probability": 0.8545
+        },
+        {
+          "word": "Comparator",
+          "start": 121.6,
+          "end": 122.2,
+          "probability": 0.98
+        },
+        {
+          "word": "is",
+          "start": 122.2,
+          "end": 122.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "set",
+          "start": 122.46,
+          "end": 122.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "as",
+          "start": 122.7,
+          "end": 122.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "At",
+          "start": 122.94,
+          "end": 123.08,
+          "probability": 0.4524
+        },
+        {
+          "word": "Least.",
+          "start": 123.08,
+          "end": 123.5,
+          "probability": 0.8589
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 123.66,
+      "end": 128.12,
+      "start_formatted": "00:02:03.660",
+      "end_formatted": "00:02:08.120",
+      "text": "It is compared with Authority Grants to determine if the user can approve this issue.",
+      "words": [
+        {
+          "word": "It",
+          "start": 123.66,
+          "end": 124.04,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 124.04,
+          "end": 124.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "compared",
+          "start": 124.18,
+          "end": 124.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "with",
+          "start": 124.6,
+          "end": 124.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "Authority",
+          "start": 124.84,
+          "end": 125.22,
+          "probability": 0.8921
+        },
+        {
+          "word": "Grants",
+          "start": 125.22,
+          "end": 125.64,
+          "probability": 0.9268
+        },
+        {
+          "word": "to",
+          "start": 125.64,
+          "end": 125.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "determine",
+          "start": 125.82,
+          "end": 126.2,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 126.2,
+          "end": 126.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 126.5,
+          "end": 126.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "user",
+          "start": 126.62,
+          "end": 126.9,
+          "probability": 0.9814
+        },
+        {
+          "word": "can",
+          "start": 126.9,
+          "end": 127.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "approve",
+          "start": 127.2,
+          "end": 127.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "this",
+          "start": 127.52,
+          "end": 127.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "issue.",
+          "start": 127.76,
+          "end": 128.12,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 131.24,
+      "end": 135.8,
+      "start_formatted": "00:02:11.240",
+      "end_formatted": "00:02:15.800",
+      "text": "After entering the value, click outside of the box to refresh the page.",
+      "words": [
+        {
+          "word": "After",
+          "start": 131.24,
+          "end": 131.96,
+          "probability": 0.9116
+        },
+        {
+          "word": "entering",
+          "start": 131.96,
+          "end": 132.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 132.32,
+          "end": 132.52,
+          "probability": 0.9932
+        },
+        {
+          "word": "value,",
+          "start": 132.52,
+          "end": 132.9,
+          "probability": 0.9883
+        },
+        {
+          "word": "click",
+          "start": 133.2,
+          "end": 133.54,
+          "probability": 0.9824
+        },
+        {
+          "word": "outside",
+          "start": 133.54,
+          "end": 133.9,
+          "probability": 0.9702
+        },
+        {
+          "word": "of",
+          "start": 133.9,
+          "end": 134.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 134.18,
+          "end": 134.28,
+          "probability": 0.999
+        },
+        {
+          "word": "box",
+          "start": 134.28,
+          "end": 134.56,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 134.56,
+          "end": 134.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "refresh",
+          "start": 134.78,
+          "end": 135.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 135.14,
+          "end": 135.38,
+          "probability": 0.999
+        },
+        {
+          "word": "page.",
+          "start": 135.38,
+          "end": 135.8,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 137.68,
+      "end": 138.86,
+      "start_formatted": "00:02:17.680",
+      "end_formatted": "00:02:18.860",
+      "text": "Save the Rule.",
+      "words": [
+        {
+          "word": "Save",
+          "start": 137.68,
+          "end": 138.4,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 138.4,
+          "end": 138.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "Rule.",
+          "start": 138.56,
+          "end": 138.86,
+          "probability": 0.0307
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 141.68,
+      "end": 143.18,
+      "start_formatted": "00:02:21.680",
+      "end_formatted": "00:02:23.180",
+      "text": "Click the Gear icon.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 141.68,
+          "end": 142.4,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 142.4,
+          "end": 142.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "Gear",
+          "start": 142.58,
+          "end": 142.78,
+          "probability": 0.4297
+        },
+        {
+          "word": "icon.",
+          "start": 142.78,
+          "end": 143.18,
+          "probability": 0.8862
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 145.66,
+      "end": 146.7,
+      "start_formatted": "00:02:25.660",
+      "end_formatted": "00:02:26.700",
+      "text": "Log Out.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 145.66,
+          "end": 146.38,
+          "probability": 0.9912
+        },
+        {
+          "word": "Out.",
+          "start": 146.38,
+          "end": 146.7,
+          "probability": 0.4856
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 149.74,
+      "end": 151.34,
+      "start_formatted": "00:02:29.740",
+      "end_formatted": "00:02:31.340",
+      "text": "Log In as a Producer.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 149.74,
+          "end": 150.42,
+          "probability": 0.9536
+        },
+        {
+          "word": "In",
+          "start": 150.42,
+          "end": 150.64,
+          "probability": 0.0167
+        },
+        {
+          "word": "as",
+          "start": 150.64,
+          "end": 150.84,
+          "probability": 0.3503
+        },
+        {
+          "word": "a",
+          "start": 150.84,
+          "end": 150.92,
+          "probability": 0.9839
+        },
+        {
+          "word": "Producer.",
+          "start": 150.92,
+          "end": 151.34,
+          "probability": 0.8633
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 151.72,
+      "end": 156.56,
+      "start_formatted": "00:02:31.720",
+      "end_formatted": "00:02:36.560",
+      "text": "Go back to the same submission that raised the issue for Building Built before 1950.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 151.72,
+          "end": 152.12,
+          "probability": 0.9888
+        },
+        {
+          "word": "back",
+          "start": 152.12,
+          "end": 152.36,
+          "probability": 0.8579
+        },
+        {
+          "word": "to",
+          "start": 152.36,
+          "end": 152.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 152.52,
+          "end": 152.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "same",
+          "start": 152.66,
+          "end": 152.9,
+          "probability": 0.9844
+        },
+        {
+          "word": "submission",
+          "start": 152.9,
+          "end": 153.4,
+          "probability": 0.8818
+        },
+        {
+          "word": "that",
+          "start": 153.4,
+          "end": 153.66,
+          "probability": 0.998
+        },
+        {
+          "word": "raised",
+          "start": 153.66,
+          "end": 153.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 153.94,
+          "end": 154.12,
+          "probability": 0.999
+        },
+        {
+          "word": "issue",
+          "start": 154.12,
+          "end": 154.46,
+          "probability": 0.9722
+        },
+        {
+          "word": "for",
+          "start": 154.46,
+          "end": 154.68,
+          "probability": 0.998
+        },
+        {
+          "word": "Building",
+          "start": 154.68,
+          "end": 155.0,
+          "probability": 0.4504
+        },
+        {
+          "word": "Built",
+          "start": 155.0,
+          "end": 155.36,
+          "probability": 0.8115
+        },
+        {
+          "word": "before",
+          "start": 155.36,
+          "end": 155.76,
+          "probability": 0.7642
+        },
+        {
+          "word": "1950.",
+          "start": 155.76,
+          "end": 156.56,
+          "probability": 0.9351
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 156.98,
+      "end": 159.02,
+      "start_formatted": "00:02:36.980",
+      "end_formatted": "00:02:39.020",
+      "text": "Notice the year is not displayed.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 156.98,
+          "end": 157.52,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 157.52,
+          "end": 157.74,
+          "probability": 0.9854
+        },
+        {
+          "word": "year",
+          "start": 157.74,
+          "end": 158.0,
+          "probability": 0.7529
+        },
+        {
+          "word": "is",
+          "start": 158.0,
+          "end": 158.24,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 158.24,
+          "end": 158.44,
+          "probability": 0.9741
+        },
+        {
+          "word": "displayed.",
+          "start": 158.44,
+          "end": 159.02,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 159.36,
+      "end": 161.04,
+      "start_formatted": "00:02:39.360",
+      "end_formatted": "00:02:41.040",
+      "text": "Edit Policy Transaction.",
+      "words": [
+        {
+          "word": "Edit",
+          "start": 159.36,
+          "end": 159.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "Policy",
+          "start": 159.72,
+          "end": 160.26,
+          "probability": 0.9717
+        },
+        {
+          "word": "Transaction.",
+          "start": 160.26,
+          "end": 161.04,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 163.26,
+      "end": 164.8,
+      "start_formatted": "00:02:43.260",
+      "end_formatted": "00:02:44.800",
+      "text": "Click OK to Warning.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 163.26,
+          "end": 163.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "OK",
+          "start": 163.94,
+          "end": 164.2,
+          "probability": 0.9399
+        },
+        {
+          "word": "to",
+          "start": 164.2,
+          "end": 164.5,
+          "probability": 0.9897
+        },
+        {
+          "word": "Warning.",
+          "start": 164.5,
+          "end": 164.8,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 167.28,
+      "end": 168.28,
+      "start_formatted": "00:02:47.280",
+      "end_formatted": "00:02:48.280",
+      "text": "Click Quote.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 167.28,
+          "end": 167.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Quote.",
+          "start": 167.96,
+          "end": 168.28,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 171.7,
+      "end": 172.58,
+      "start_formatted": "00:02:51.700",
+      "end_formatted": "00:02:52.580",
+      "text": "Go to Risk Analysis.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 171.42,
+          "end": 171.76,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 171.76,
+          "end": 171.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "Risk",
+          "start": 171.94,
+          "end": 172.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "Analysis.",
+          "start": 172.16,
+          "end": 172.58,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 175.06,
+      "end": 181.0,
+      "start_formatted": "00:02:55.060",
+      "end_formatted": "00:03:01.000",
+      "text": "The Year is displayed with the issue, because we configured the Underwriting Rule to record the value.",
+      "words": [
+        {
+          "word": "The",
+          "start": 175.06,
+          "end": 175.68,
+          "probability": 0.7783
+        },
+        {
+          "word": "Year",
+          "start": 175.68,
+          "end": 175.9,
+          "probability": 0.1724
+        },
+        {
+          "word": "is",
+          "start": 175.9,
+          "end": 176.1,
+          "probability": 0.9888
+        },
+        {
+          "word": "displayed",
+          "start": 176.1,
+          "end": 176.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "with",
+          "start": 176.56,
+          "end": 176.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 176.78,
+          "end": 176.9,
+          "probability": 0.9897
+        },
+        {
+          "word": "issue,",
+          "start": 176.9,
+          "end": 177.28,
+          "probability": 0.728
+        },
+        {
+          "word": "because",
+          "start": 177.54,
+          "end": 177.92,
+          "probability": 0.9854
+        },
+        {
+          "word": "we",
+          "start": 177.92,
+          "end": 178.12,
+          "probability": 0.9844
+        },
+        {
+          "word": "configured",
+          "start": 178.12,
+          "end": 178.64,
+          "probability": 0.9814
+        },
+        {
+          "word": "the",
+          "start": 178.64,
+          "end": 178.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "Underwriting",
+          "start": 178.88,
+          "end": 179.5,
+          "probability": 0.7471
+        },
+        {
+          "word": "Rule",
+          "start": 179.5,
+          "end": 179.82,
+          "probability": 0.77
+        },
+        {
+          "word": "to",
+          "start": 179.82,
+          "end": 180.08,
+          "probability": 0.9946
+        },
+        {
+          "word": "record",
+          "start": 180.08,
+          "end": 180.46,
+          "probability": 0.9746
+        },
+        {
+          "word": "the",
+          "start": 180.46,
+          "end": 180.62,
+          "probability": 0.9966
+        },
+        {
+          "word": "value.",
+          "start": 180.62,
+          "end": 181.0,
+          "probability": 0.9683
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 181.3,
+      "end": 186.18,
+      "start_formatted": "00:03:01.300",
+      "end_formatted": "00:03:06.180",
+      "text": "This is the end of demonstration for the Underwriting Rule fields related to approval.",
+      "words": [
+        {
+          "word": "This",
+          "start": 181.3,
+          "end": 181.84,
+          "probability": 0.9902
+        },
+        {
+          "word": "is",
+          "start": 181.84,
+          "end": 182.0,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 182.0,
+          "end": 182.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "end",
+          "start": 182.16,
+          "end": 182.44,
+          "probability": 0.9629
+        },
+        {
+          "word": "of",
+          "start": 182.44,
+          "end": 182.58,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration",
+          "start": 182.58,
+          "end": 183.14,
+          "probability": 0.9229
+        },
+        {
+          "word": "for",
+          "start": 183.14,
+          "end": 183.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 183.58,
+          "end": 183.72,
+          "probability": 0.9834
+        },
+        {
+          "word": "Underwriting",
+          "start": 183.72,
+          "end": 184.42,
+          "probability": 0.9546
+        },
+        {
+          "word": "Rule",
+          "start": 184.42,
+          "end": 184.76,
+          "probability": 0.9678
+        },
+        {
+          "word": "fields",
+          "start": 184.76,
+          "end": 185.24,
+          "probability": 0.8696
+        },
+        {
+          "word": "related",
+          "start": 185.24,
+          "end": 185.64,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 185.64,
+          "end": 185.86,
+          "probability": 0.999
+        },
+        {
+          "word": "approval.",
+          "start": 185.86,
+          "end": 186.18,
+          "probability": 0.6274
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 186.18,
+      "end": 186.18,
+      "start_formatted": "00:03:06.180",
+      "end_formatted": "00:03:06.180",
+      "text": "",
+      "words": []
+    }
+  ]
+}

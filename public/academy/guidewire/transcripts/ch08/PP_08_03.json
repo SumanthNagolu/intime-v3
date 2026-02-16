@@ -1,0 +1,1533 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_08_03.mp4",
+    "video_stem": "PP_08_03",
+    "duration_seconds": 110.96,
+    "duration_formatted": "00:01:50.960",
+    "segment_count": 5,
+    "word_count": 231,
+    "avg_confidence": 0.9489,
+    "transcription_time_seconds": 5.1,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:28:33.662178"
+  },
+  "full_text": "The class-based validation can be invoked in many places. For example, in Submission Process, the bind method invokes JobProcessValidator, which checks data in the policy period. It eventually calls PolicyPeriodValidation.ValidatePeriod method. The class-based validation can also be invoked in a particular point in the user interface. One example is in the BeforeSave attribute of a JobWizardStep. In LineWizardStepSet.PersonalAuto, the JobWizardStepPersonalVehicles, the BeforeSave attribute invokes PAWizardStepHelper.OnVehiclesStepExit method. Control-click to open the function. It calls PA LineStep's validators validate all vehicles garaged in same state and validate vehicles step methods. In ValidateVehiclesStep method, it starts validation chaining with class-based validation, such as PA LineVehiclesValidator, AssignmentValidator, etc. In PolicyCenter, Add New Vehicle and Click Next. The logic in the BeforeSave attribute of the Vehicles step is executed to validate the vehicles. A warning message is displayed indicating there are no assigned drivers for vehicles. Another example is in the BeforeCommit attribute of a pop-up. In BOPBuildingPopUp, the BeforeCommit attribute invokes BOPBuildingValidation.ValidateBuilding method. Control-click to open the method. It calls class-based validation to perform many checks on the building, such as at least one base coverage. In PolicyCenter, add a new building in a business owner's submission without any base coverage. Click Update Building. The logic in the BeforeCommit attribute of the building pop-up is executed and it displays an error in the validation results. This is the end of demonstration for invoking class-based validation.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.68,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.680",
+      "text": "The class-based validation can be invoked in many places. For example, in Submission Process, the bind method invokes JobProcessValidator, which checks data in the policy period. It eventually calls PolicyPeriodValidation.ValidatePeriod method. The class-based validation can also be invoked in a particular point in the user interface. One example is in the BeforeSave attribute of a JobWizardStep. In LineWizardStepSet.PersonalAuto, the JobWizardStepPersonalVehicles,",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.9502
+        },
+        {
+          "word": "class",
+          "start": 0.8,
+          "end": 1.08,
+          "probability": 0.9526
+        },
+        {
+          "word": "-based",
+          "start": 1.08,
+          "end": 1.34,
+          "probability": 0.9482
+        },
+        {
+          "word": "validation",
+          "start": 1.34,
+          "end": 1.76,
+          "probability": 0.9814
+        },
+        {
+          "word": "can",
+          "start": 1.76,
+          "end": 2.18,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 2.18,
+          "end": 2.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoked",
+          "start": 2.32,
+          "end": 2.72,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 2.72,
+          "end": 2.84,
+          "probability": 0.999
+        },
+        {
+          "word": "many",
+          "start": 2.84,
+          "end": 3.06,
+          "probability": 0.999
+        },
+        {
+          "word": "places.",
+          "start": 3.06,
+          "end": 3.52,
+          "probability": 0.998
+        },
+        {
+          "word": "For",
+          "start": 3.8,
+          "end": 4.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "example,",
+          "start": 4.26,
+          "end": 4.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 4.92,
+          "end": 5.14,
+          "probability": 0.9932
+        },
+        {
+          "word": "Submission",
+          "start": 5.14,
+          "end": 5.58,
+          "probability": 0.75
+        },
+        {
+          "word": "Process,",
+          "start": 5.58,
+          "end": 5.96,
+          "probability": 0.4277
+        },
+        {
+          "word": "the",
+          "start": 6.34,
+          "end": 6.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "bind",
+          "start": 6.56,
+          "end": 6.8,
+          "probability": 0.8682
+        },
+        {
+          "word": "method",
+          "start": 6.8,
+          "end": 7.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "invokes",
+          "start": 7.1,
+          "end": 7.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "JobProcessValidator,",
+          "start": 7.58,
+          "end": 9.04,
+          "probability": 0.833
+        },
+        {
+          "word": "which",
+          "start": 9.2,
+          "end": 9.52,
+          "probability": 0.999
+        },
+        {
+          "word": "checks",
+          "start": 9.52,
+          "end": 9.86,
+          "probability": 0.999
+        },
+        {
+          "word": "data",
+          "start": 9.86,
+          "end": 10.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 10.12,
+          "end": 10.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 10.32,
+          "end": 10.42,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 10.42,
+          "end": 10.8,
+          "probability": 0.7246
+        },
+        {
+          "word": "period.",
+          "start": 10.8,
+          "end": 11.22,
+          "probability": 0.9536
+        },
+        {
+          "word": "It",
+          "start": 11.48,
+          "end": 12.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "eventually",
+          "start": 12.0,
+          "end": 12.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "calls",
+          "start": 12.38,
+          "end": 12.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "PolicyPeriodValidation",
+          "start": 12.8,
+          "end": 14.3,
+          "probability": 0.8462
+        },
+        {
+          "word": ".ValidatePeriod",
+          "start": 14.3,
+          "end": 15.38,
+          "probability": 0.8872
+        },
+        {
+          "word": "method.",
+          "start": 15.38,
+          "end": 15.66,
+          "probability": 0.8828
+        },
+        {
+          "word": "The",
+          "start": 16.0,
+          "end": 16.36,
+          "probability": 0.998
+        },
+        {
+          "word": "class",
+          "start": 16.36,
+          "end": 16.64,
+          "probability": 0.999
+        },
+        {
+          "word": "-based",
+          "start": 16.64,
+          "end": 16.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "validation",
+          "start": 16.9,
+          "end": 17.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 17.46,
+          "end": 17.74,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 17.74,
+          "end": 18.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 18.0,
+          "end": 18.18,
+          "probability": 1.0
+        },
+        {
+          "word": "invoked",
+          "start": 18.18,
+          "end": 18.56,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 18.56,
+          "end": 18.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 18.68,
+          "end": 18.78,
+          "probability": 0.999
+        },
+        {
+          "word": "particular",
+          "start": 18.78,
+          "end": 19.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "point",
+          "start": 19.18,
+          "end": 19.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 19.5,
+          "end": 19.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 19.68,
+          "end": 19.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 19.78,
+          "end": 20.02,
+          "probability": 0.936
+        },
+        {
+          "word": "interface.",
+          "start": 20.02,
+          "end": 20.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "One",
+          "start": 20.96,
+          "end": 21.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "example",
+          "start": 21.54,
+          "end": 21.94,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 21.94,
+          "end": 22.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 22.14,
+          "end": 22.26,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 22.26,
+          "end": 22.32,
+          "probability": 0.999
+        },
+        {
+          "word": "BeforeSave",
+          "start": 22.32,
+          "end": 22.9,
+          "probability": 0.8027
+        },
+        {
+          "word": "attribute",
+          "start": 22.9,
+          "end": 23.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 23.26,
+          "end": 23.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 23.5,
+          "end": 23.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "JobWizardStep.",
+          "start": 23.58,
+          "end": 24.38,
+          "probability": 0.7588
+        },
+        {
+          "word": "In",
+          "start": 24.74,
+          "end": 25.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "LineWizardStepSet",
+          "start": 25.38,
+          "end": 26.42,
+          "probability": 0.9087
+        },
+        {
+          "word": ".PersonalAuto,",
+          "start": 26.42,
+          "end": 27.36,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 27.58,
+          "end": 27.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "JobWizardStepPersonalVehicles,",
+          "start": 27.84,
+          "end": 29.68,
+          "probability": 0.936
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.68,
+      "end": 59.48,
+      "start_formatted": "00:00:29.680",
+      "end_formatted": "00:00:59.480",
+      "text": "the BeforeSave attribute invokes PAWizardStepHelper.OnVehiclesStepExit method. Control-click to open the function. It calls PA LineStep's validators validate all vehicles garaged in same state and validate vehicles step methods. In ValidateVehiclesStep method, it starts validation chaining with class-based validation, such as PA LineVehiclesValidator, AssignmentValidator, etc. In PolicyCenter,",
+      "words": [
+        {
+          "word": "the",
+          "start": 29.68,
+          "end": 30.08,
+          "probability": 0.7568
+        },
+        {
+          "word": "BeforeSave",
+          "start": 30.08,
+          "end": 30.62,
+          "probability": 0.689
+        },
+        {
+          "word": "attribute",
+          "start": 30.62,
+          "end": 31.02,
+          "probability": 0.9761
+        },
+        {
+          "word": "invokes",
+          "start": 31.02,
+          "end": 31.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "PAWizardStepHelper",
+          "start": 31.54,
+          "end": 32.8,
+          "probability": 0.7983
+        },
+        {
+          "word": ".OnVehiclesStepExit",
+          "start": 32.8,
+          "end": 34.2,
+          "probability": 0.9102
+        },
+        {
+          "word": "method.",
+          "start": 34.2,
+          "end": 34.5,
+          "probability": 0.9756
+        },
+        {
+          "word": "Control",
+          "start": 34.92,
+          "end": 35.56,
+          "probability": 0.8989
+        },
+        {
+          "word": "-click",
+          "start": 35.56,
+          "end": 35.86,
+          "probability": 0.8203
+        },
+        {
+          "word": "to",
+          "start": 35.86,
+          "end": 36.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "open",
+          "start": 36.04,
+          "end": 36.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 36.28,
+          "end": 36.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "function.",
+          "start": 36.42,
+          "end": 36.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "It",
+          "start": 39.14,
+          "end": 39.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "calls",
+          "start": 39.86,
+          "end": 40.16,
+          "probability": 0.999
+        },
+        {
+          "word": "PA",
+          "start": 40.16,
+          "end": 40.46,
+          "probability": 0.9897
+        },
+        {
+          "word": "LineStep's",
+          "start": 40.46,
+          "end": 41.2,
+          "probability": 0.5454
+        },
+        {
+          "word": "validators",
+          "start": 41.2,
+          "end": 41.72,
+          "probability": 0.9326
+        },
+        {
+          "word": "validate",
+          "start": 41.72,
+          "end": 42.12,
+          "probability": 0.6816
+        },
+        {
+          "word": "all",
+          "start": 42.12,
+          "end": 42.34,
+          "probability": 0.8921
+        },
+        {
+          "word": "vehicles",
+          "start": 42.34,
+          "end": 42.8,
+          "probability": 0.9814
+        },
+        {
+          "word": "garaged",
+          "start": 42.8,
+          "end": 43.3,
+          "probability": 0.9692
+        },
+        {
+          "word": "in",
+          "start": 43.3,
+          "end": 43.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "same",
+          "start": 43.46,
+          "end": 43.72,
+          "probability": 0.9731
+        },
+        {
+          "word": "state",
+          "start": 43.72,
+          "end": 44.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "and",
+          "start": 44.04,
+          "end": 44.22,
+          "probability": 0.999
+        },
+        {
+          "word": "validate",
+          "start": 44.22,
+          "end": 44.54,
+          "probability": 0.998
+        },
+        {
+          "word": "vehicles",
+          "start": 44.54,
+          "end": 44.98,
+          "probability": 0.3579
+        },
+        {
+          "word": "step",
+          "start": 44.98,
+          "end": 45.28,
+          "probability": 0.9658
+        },
+        {
+          "word": "methods.",
+          "start": 45.28,
+          "end": 45.7,
+          "probability": 0.9902
+        },
+        {
+          "word": "In",
+          "start": 47.5,
+          "end": 48.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "ValidateVehiclesStep",
+          "start": 48.22,
+          "end": 49.44,
+          "probability": 0.8882
+        },
+        {
+          "word": "method,",
+          "start": 49.44,
+          "end": 49.78,
+          "probability": 0.8892
+        },
+        {
+          "word": "it",
+          "start": 49.98,
+          "end": 50.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "starts",
+          "start": 50.2,
+          "end": 50.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "validation",
+          "start": 50.54,
+          "end": 51.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "chaining",
+          "start": 51.14,
+          "end": 51.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 51.58,
+          "end": 51.76,
+          "probability": 1.0
+        },
+        {
+          "word": "class",
+          "start": 51.76,
+          "end": 52.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "-based",
+          "start": 52.04,
+          "end": 52.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "validation,",
+          "start": 52.36,
+          "end": 52.98,
+          "probability": 0.998
+        },
+        {
+          "word": "such",
+          "start": 53.28,
+          "end": 53.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 53.64,
+          "end": 53.94,
+          "probability": 1.0
+        },
+        {
+          "word": "PA",
+          "start": 53.94,
+          "end": 54.46,
+          "probability": 0.8833
+        },
+        {
+          "word": "LineVehiclesValidator,",
+          "start": 54.46,
+          "end": 55.88,
+          "probability": 0.9067
+        },
+        {
+          "word": "AssignmentValidator,",
+          "start": 56.06,
+          "end": 57.24,
+          "probability": 0.9839
+        },
+        {
+          "word": "etc.",
+          "start": 57.44,
+          "end": 57.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "In",
+          "start": 58.2,
+          "end": 58.66,
+          "probability": 0.9941
+        },
+        {
+          "word": "PolicyCenter,",
+          "start": 58.66,
+          "end": 59.48,
+          "probability": 0.8853
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.48,
+      "end": 84.18,
+      "start_formatted": "00:00:59.480",
+      "end_formatted": "00:01:24.180",
+      "text": "Add New Vehicle and Click Next. The logic in the BeforeSave attribute of the Vehicles step is executed to validate the vehicles. A warning message is displayed indicating there are no assigned drivers for vehicles. Another example is in the BeforeCommit attribute of a pop-up. In BOPBuildingPopUp, the BeforeCommit attribute invokes BOPBuildingValidation.ValidateBuilding method. Control-click to open the method.",
+      "words": [
+        {
+          "word": "Add",
+          "start": 59.48,
+          "end": 60.0,
+          "probability": 0.4695
+        },
+        {
+          "word": "New",
+          "start": 60.0,
+          "end": 60.16,
+          "probability": 0.5757
+        },
+        {
+          "word": "Vehicle",
+          "start": 60.16,
+          "end": 60.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "and",
+          "start": 60.6,
+          "end": 60.76,
+          "probability": 0.9551
+        },
+        {
+          "word": "Click",
+          "start": 60.76,
+          "end": 60.98,
+          "probability": 0.1437
+        },
+        {
+          "word": "Next.",
+          "start": 60.98,
+          "end": 61.3,
+          "probability": 0.9551
+        },
+        {
+          "word": "The",
+          "start": 63.36,
+          "end": 63.98,
+          "probability": 0.9683
+        },
+        {
+          "word": "logic",
+          "start": 63.98,
+          "end": 64.28,
+          "probability": 0.9272
+        },
+        {
+          "word": "in",
+          "start": 64.28,
+          "end": 64.46,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 64.46,
+          "end": 64.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "BeforeSave",
+          "start": 64.54,
+          "end": 65.06,
+          "probability": 0.7295
+        },
+        {
+          "word": "attribute",
+          "start": 65.06,
+          "end": 65.46,
+          "probability": 0.9434
+        },
+        {
+          "word": "of",
+          "start": 65.46,
+          "end": 65.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 65.7,
+          "end": 65.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "Vehicles",
+          "start": 65.78,
+          "end": 66.18,
+          "probability": 0.7236
+        },
+        {
+          "word": "step",
+          "start": 66.18,
+          "end": 66.44,
+          "probability": 0.9497
+        },
+        {
+          "word": "is",
+          "start": 66.44,
+          "end": 66.62,
+          "probability": 0.998
+        },
+        {
+          "word": "executed",
+          "start": 66.62,
+          "end": 67.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 67.08,
+          "end": 67.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "validate",
+          "start": 67.3,
+          "end": 67.66,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 67.66,
+          "end": 67.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "vehicles.",
+          "start": 67.86,
+          "end": 68.26,
+          "probability": 0.9497
+        },
+        {
+          "word": "A",
+          "start": 68.6,
+          "end": 68.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "warning",
+          "start": 68.98,
+          "end": 69.26,
+          "probability": 0.9014
+        },
+        {
+          "word": "message",
+          "start": 69.26,
+          "end": 69.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 69.62,
+          "end": 69.84,
+          "probability": 0.998
+        },
+        {
+          "word": "displayed",
+          "start": 69.84,
+          "end": 70.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "indicating",
+          "start": 70.2,
+          "end": 70.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "there",
+          "start": 70.56,
+          "end": 70.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "are",
+          "start": 70.9,
+          "end": 71.0,
+          "probability": 0.999
+        },
+        {
+          "word": "no",
+          "start": 71.0,
+          "end": 71.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "assigned",
+          "start": 71.16,
+          "end": 71.5,
+          "probability": 0.978
+        },
+        {
+          "word": "drivers",
+          "start": 71.5,
+          "end": 71.9,
+          "probability": 0.9844
+        },
+        {
+          "word": "for",
+          "start": 71.9,
+          "end": 72.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "vehicles.",
+          "start": 72.16,
+          "end": 72.58,
+          "probability": 0.9839
+        },
+        {
+          "word": "Another",
+          "start": 73.02,
+          "end": 73.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "example",
+          "start": 73.54,
+          "end": 73.94,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 73.94,
+          "end": 74.16,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 74.16,
+          "end": 74.28,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 74.28,
+          "end": 74.36,
+          "probability": 0.998
+        },
+        {
+          "word": "BeforeCommit",
+          "start": 74.36,
+          "end": 74.96,
+          "probability": 0.9736
+        },
+        {
+          "word": "attribute",
+          "start": 74.96,
+          "end": 75.24,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 75.24,
+          "end": 75.56,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 75.56,
+          "end": 75.64,
+          "probability": 0.998
+        },
+        {
+          "word": "pop",
+          "start": 75.64,
+          "end": 75.86,
+          "probability": 0.8994
+        },
+        {
+          "word": "-up.",
+          "start": 75.86,
+          "end": 76.12,
+          "probability": 0.8164
+        },
+        {
+          "word": "In",
+          "start": 76.38,
+          "end": 76.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "BOPBuildingPopUp,",
+          "start": 76.74,
+          "end": 77.76,
+          "probability": 0.7627
+        },
+        {
+          "word": "the",
+          "start": 77.92,
+          "end": 78.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "BeforeCommit",
+          "start": 78.16,
+          "end": 78.8,
+          "probability": 0.9912
+        },
+        {
+          "word": "attribute",
+          "start": 78.8,
+          "end": 79.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "invokes",
+          "start": 79.14,
+          "end": 79.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "BOPBuildingValidation",
+          "start": 79.62,
+          "end": 80.94,
+          "probability": 0.9648
+        },
+        {
+          "word": ".ValidateBuilding",
+          "start": 80.94,
+          "end": 82.02,
+          "probability": 0.9644
+        },
+        {
+          "word": "method.",
+          "start": 82.02,
+          "end": 82.26,
+          "probability": 0.9385
+        },
+        {
+          "word": "Control",
+          "start": 82.7,
+          "end": 83.06,
+          "probability": 0.7725
+        },
+        {
+          "word": "-click",
+          "start": 83.06,
+          "end": 83.36,
+          "probability": 0.7583
+        },
+        {
+          "word": "to",
+          "start": 83.36,
+          "end": 83.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "open",
+          "start": 83.56,
+          "end": 83.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 83.8,
+          "end": 83.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "method.",
+          "start": 83.92,
+          "end": 84.18,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 86.1,
+      "end": 98.98,
+      "start_formatted": "00:01:26.100",
+      "end_formatted": "00:01:38.980",
+      "text": "It calls class-based validation to perform many checks on the building, such as at least one base coverage. In PolicyCenter, add a new building in a business owner's submission without any base coverage. Click Update Building.",
+      "words": [
+        {
+          "word": "It",
+          "start": 86.1,
+          "end": 86.68,
+          "probability": 0.9502
+        },
+        {
+          "word": "calls",
+          "start": 86.68,
+          "end": 87.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "class",
+          "start": 87.0,
+          "end": 87.32,
+          "probability": 0.8579
+        },
+        {
+          "word": "-based",
+          "start": 87.32,
+          "end": 87.58,
+          "probability": 0.9453
+        },
+        {
+          "word": "validation",
+          "start": 87.58,
+          "end": 88.0,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 88.0,
+          "end": 88.44,
+          "probability": 0.999
+        },
+        {
+          "word": "perform",
+          "start": 88.44,
+          "end": 88.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "many",
+          "start": 88.88,
+          "end": 89.12,
+          "probability": 0.3198
+        },
+        {
+          "word": "checks",
+          "start": 89.12,
+          "end": 89.38,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 89.38,
+          "end": 89.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 89.58,
+          "end": 89.7,
+          "probability": 0.999
+        },
+        {
+          "word": "building,",
+          "start": 89.7,
+          "end": 90.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "such",
+          "start": 90.24,
+          "end": 90.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 90.6,
+          "end": 90.78,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 90.78,
+          "end": 90.9,
+          "probability": 0.9922
+        },
+        {
+          "word": "least",
+          "start": 90.9,
+          "end": 91.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "one",
+          "start": 91.08,
+          "end": 91.36,
+          "probability": 0.9678
+        },
+        {
+          "word": "base",
+          "start": 91.36,
+          "end": 91.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "coverage.",
+          "start": 91.64,
+          "end": 92.1,
+          "probability": 0.998
+        },
+        {
+          "word": "In",
+          "start": 92.5,
+          "end": 92.9,
+          "probability": 0.999
+        },
+        {
+          "word": "PolicyCenter,",
+          "start": 92.9,
+          "end": 93.74,
+          "probability": 0.6689
+        },
+        {
+          "word": "add",
+          "start": 93.94,
+          "end": 94.22,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 94.22,
+          "end": 94.32,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 94.32,
+          "end": 94.44,
+          "probability": 0.998
+        },
+        {
+          "word": "building",
+          "start": 94.44,
+          "end": 94.78,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 94.78,
+          "end": 94.94,
+          "probability": 0.9077
+        },
+        {
+          "word": "a",
+          "start": 94.94,
+          "end": 95.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "business",
+          "start": 95.04,
+          "end": 95.32,
+          "probability": 0.855
+        },
+        {
+          "word": "owner's",
+          "start": 95.32,
+          "end": 95.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "submission",
+          "start": 95.76,
+          "end": 96.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "without",
+          "start": 96.12,
+          "end": 96.38,
+          "probability": 0.999
+        },
+        {
+          "word": "any",
+          "start": 96.38,
+          "end": 96.64,
+          "probability": 1.0
+        },
+        {
+          "word": "base",
+          "start": 96.64,
+          "end": 96.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "coverage.",
+          "start": 96.9,
+          "end": 97.4,
+          "probability": 1.0
+        },
+        {
+          "word": "Click",
+          "start": 97.76,
+          "end": 98.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "Update",
+          "start": 98.2,
+          "end": 98.52,
+          "probability": 0.9688
+        },
+        {
+          "word": "Building.",
+          "start": 98.52,
+          "end": 98.98,
+          "probability": 0.978
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 100.64,
+      "end": 110.96,
+      "start_formatted": "00:01:40.640",
+      "end_formatted": "00:01:50.960",
+      "text": "The logic in the BeforeCommit attribute of the building pop-up is executed and it displays an error in the validation results. This is the end of demonstration for invoking class-based validation.",
+      "words": [
+        {
+          "word": "The",
+          "start": 100.64,
+          "end": 101.22,
+          "probability": 0.999
+        },
+        {
+          "word": "logic",
+          "start": 101.22,
+          "end": 101.52,
+          "probability": 0.9927
+        },
+        {
+          "word": "in",
+          "start": 101.52,
+          "end": 101.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 101.72,
+          "end": 101.8,
+          "probability": 1.0
+        },
+        {
+          "word": "BeforeCommit",
+          "start": 101.8,
+          "end": 102.46,
+          "probability": 0.8145
+        },
+        {
+          "word": "attribute",
+          "start": 102.46,
+          "end": 102.72,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 102.72,
+          "end": 103.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 103.0,
+          "end": 103.08,
+          "probability": 1.0
+        },
+        {
+          "word": "building",
+          "start": 103.08,
+          "end": 103.38,
+          "probability": 0.9287
+        },
+        {
+          "word": "pop",
+          "start": 103.38,
+          "end": 103.68,
+          "probability": 0.999
+        },
+        {
+          "word": "-up",
+          "start": 103.68,
+          "end": 103.86,
+          "probability": 0.8774
+        },
+        {
+          "word": "is",
+          "start": 103.86,
+          "end": 104.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "executed",
+          "start": 104.02,
+          "end": 104.56,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 104.56,
+          "end": 104.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "it",
+          "start": 104.76,
+          "end": 104.88,
+          "probability": 1.0
+        },
+        {
+          "word": "displays",
+          "start": 104.88,
+          "end": 105.24,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 105.24,
+          "end": 105.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "error",
+          "start": 105.46,
+          "end": 105.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 105.64,
+          "end": 105.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 105.78,
+          "end": 105.86,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 105.86,
+          "end": 106.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "results.",
+          "start": 106.42,
+          "end": 107.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "This",
+          "start": 107.42,
+          "end": 108.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 108.0,
+          "end": 108.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 108.14,
+          "end": 108.26,
+          "probability": 1.0
+        },
+        {
+          "word": "end",
+          "start": 108.26,
+          "end": 108.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 108.44,
+          "end": 108.56,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration",
+          "start": 108.56,
+          "end": 109.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "for",
+          "start": 109.06,
+          "end": 109.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoking",
+          "start": 109.44,
+          "end": 109.9,
+          "probability": 0.999
+        },
+        {
+          "word": "class",
+          "start": 109.9,
+          "end": 110.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "-based",
+          "start": 110.26,
+          "end": 110.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "validation.",
+          "start": 110.58,
+          "end": 110.96,
+          "probability": 0.9927
+        }
+      ]
+    }
+  ]
+}

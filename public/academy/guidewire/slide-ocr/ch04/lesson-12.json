@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-12",
+    "slide_count": 35,
+    "slides_with_text": 32,
+    "total_words": 1371,
+    "avg_confidence": 88.22,
+    "processing_time_seconds": 18.79,
+    "extracted_at": "2026-02-13T12:05:27.289410"
+  },
+  "full_text": "Organizations and Producer Codes\n\nLesson\nobjectives\n\n« Manage Organizations\n\nManage Producer Codes\n\nDescribe producers and Producer Code\nsecurity\n\nDescribe external user access\n\nMarcus\nBusiness\nAnalyst\n\nHow does PolicyCenter organize users from\nmultiple agencies?\n\n| Organization / Community model G\n\nAn organization is a business entity which represents either the insurer or an agency\n\nInsurer Agency\n(internal organization) (external organization)\n\nee se aay\nGroups ee ee PCN asx Groups\nofusers esp@an 6a Om se i Se © of producers\n~~) ~) gee ig\n\nProducer ] Producer\n<>\n\nUser @& oo1 @& oo2 code lig oo1 oN oo2 code\n\n| Producer\n\nae iE\n\nInsurer Producer Insured\n\n« Anintermediary who assists the insurers to underwrite policies for the insureds\n¢ Typically, paid commissions for underwritten policies\n\n¢ Identified by a unique producer code\n\n| Internal and external producers Gi\n\n¢ Internal producers are employees of the insurer\n\n* Sell insurance for insurer\n* Definition may vary depending upon country or insurer\n\n¢ External producers usually belong to an external\nagency or organization\n\n* Some external producers are also called independent\nagents\n\n| Producer types\n\n¢ Producer of Record\n\n« Producer that created the submission\n\n« Receives commission based on the\npremium\n\n¢ Producer of Service\n* Producer that services the policy\n« Usually the same as the producer of record\n\n+ If different, then receives commission only\nafter the policy is renewed\n\n¢ Displayed on Policy Info and Summary\npages\n\nProducer of Record\nOrganization\nProducer Code\nProducer of Service\n\nOrganization\n\nProducer Code\n\nGi\n\nArmstrong and Company\n\n100-002541 Armstrong (Premier)\n\nArmstrong and Company\n\n100-002541 Armstrong (Premier)\n\n| Producer code i\n\n¢ Aunique ID assigned by the insurer to track which agent or agency is responsible\nfor which policies and accounts\n\n* Can track different policy categories for the same producer\n\nCode 100-002541\n\nDescription Armstrong (Premier)\n\nOrganization Armstrong and Company\n\nMarci\nConfiguration\nDeveloper\n\nHow do | work with organizations and\na producer codes?\n\n| Managing organizations Gi\n¢ Search, view, edit and create the organizations from the Administration tab\n\n¢ The tree structure of an organization is displayed in the left sidebar\n\n* Organization details can be viewed and edited in different cards\n\nActions : Organization: Armstrong and Company\n\n| Basics | Users | Producer Codes | Queues | Regions |\n\nOrganization Name Armstrong and Company\nType Agency\nAgency Status Active\n\nTier\n\n| Managing producer code fa\n\n* Search the producer code\n\n¢ Administration > Users & Security > Producer Codes\n¢ View or edit the producer code\n\n* The producer code details are on the Basic tab\n\n« Roles can be assigned on the Roles tab\n\n* Groups and Users tabs are available in view mode only\n\n+ Use the Edit Users or Edit Groups administration screens to add producer codes to Groups and Users\n\n* Create a new producer code\n\n« Administration > Actions > New Producer Code\n\n| Review: Producer codes in a group fa\n\nAny user (internal or external) assigned to the group has access to all producer\ncodes available to the group\n\nProducer Codes tab lists all producer codes assigned to the group\n\nGroup: Eastern Mid-West Region\n\nProducer codes can be selected here from those available to the parent group\n\nAvailable Code Description Status Branch\nQALPRODUCERCODEO1 Internal Producer Code-2 Active Los Angeles Branch UW\n\nStandard Code Internal Producer Code-1 Active Los Angeles Branch UW\n\n| Delegate management using User Admin role fa\n\n¢ Internal organizations delegate the management of external companies\n* By assigning the User Admin role to a user within that external company\n\n« User admin builds Users, Groups, Organizations and Permissions to represent an external\ncompany\n\n« User admin and other users in the external company do not have access to other\norganizations\n\n¢ Internal organization has access and administrative rights to the external company\n\n| Demonstration G\n\nManaging organizations and producer\n— codes\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nGi\n\nMarcus\nBusiness\nAnalyst\n\n| have a requirement to control data access for\nproducers. How can | do it?\n\nJulia\nImplementation\n\nYou can use producer code Architect\nsecurity, which allows some ee)\nusers to access a set of accounts\nand policies while restricting\naccess for others.\n\n| Security in PolicyCenter\n\n¢ Role-based security\n* A permission is the ability to see or do a granular task\n+ Examples: create submission, edit account\n\n« Arole is anamed collection of permissions and typically\nmaps to a job function or job title\n\n+ Examples: Underwriter, Producer, Auditor\n\n¢ Data-based security\n\n* Defines what data can be accessed and typically managed\nthrough producer codes\n\n« Examples: Policy and Account access is restricted using\nproducer code security\n\nA ®\n\nO01\n00c\n\n| Producer code security G\n\nThe producer code controls data access and works with the permissions to\ndetermine what actions can be taken by the user.\n\nUser with matching\nproducer code\n\n| Status field\n\n¢ Is available for both Organizations and Producer Codes\n¢ Limits access for an agency whose contract has expired\n\n¢ Prevents producer code misuse\n\nProducer code status\n(Suspended, Terminating, Terminated)\n\n| Demonstration G\n\nProducer code security\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nMarci |\n\nConfiguration Yas\n\nDeveloper _.\n\noy\n\n_ How do | configure producer code security?\n\nA)\n\nUser Access\n\n¢ Turn on/off producer code security (Yes for user type Producer)\n\n¢ User inherits producer code from their group and can add additional producer\n\ncodes\nUser: Frede\n\nrick Dwight\n\nAttributes\n\nBasics\n\nAccess || Roles | Profile | Region | UWAuthority\n\nGroup details = S™uPs\nGroup Member Manager Load Factor Permissions Load Factor\nProducers ‘Yes\nProducer codes Producer Codes from Groups\nCode Description Status Groups Actions\n\nTo add a producer code\nto this user\n\n301-008597 Cid Vicious agency Active\n\nAdditional Producer Codes\n\nCode Description Status > Actions\n\n| work on policies for more than one agency\nand need to be assigned to groups and\nproducer codes from more than one\norganization.\n\nJulia\nImplementation We\nArchitect\n\nThis can be easily done with\nExternal User Access\nconfiguration.\n\nbt\n\n| External user access G&G\n\n¢ Enables producer code security for agents working for multiple agencies\n\n« External users can be assigned to groups and producer codes at three levels\n\nFULLYRESTRICTED PROTECTINTERNAL ALLOWINTERNAL\nonly within their from any external from internal or any\norganization organizations external organizations\n\n|-—_\n\ni i fran\n\nAgency 1 Agency 2 Insurer\n\n| Demonstration G\n\nExternal user access (optional)\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_~ — What is a producer code? What does it identify?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n,~ — What is a producer code? What does it identify?\n\n¢\n¢\n¢\n\nA producer code is a unique ID (alphanumeric) assigned by the insurer to determine\nwhat a producer can do. Producer code and its description identify the sales agent that\nsold the policy.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n_~ — Whatis an organization?\n4\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\nae What is an organization?\n\n¢\n¢\n\nAn organization is a business entity which represents either the Insurer itself or an\nexternal company for any set of users, typically producers.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\nWhich External User Access level allows the external users to be\n\n/’ assigned to groups and producer codes from intemal and any extemal\n¢ organization?\n\nSooo oooe sooo oOo oOo oAaDS\n\nA.\nB.\nC.\nD\n\n. None of the above\n\nFULLYRESTRICTED\nPROTECTINTERNAL\nALLOWINTERNAL\n\nGi\n\nAnswer a\n\nWhich External User Access level allows the external users to be\nassigned to groups and producer codes from intemal and any external\n: organization?\n\nFULLYRESTRICTED\n\nPROTECTINTERNAL\n\nALLOWINTERNAL\n\nNone of the above\n\nGOD >\n\nCorrect answer: C\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobj ectives « Manage Organizations\nreview * Manage Producer Codes\n\n¢ Describe producers and Producer Code\nsecurity\n¢ Describe external user access\n\n| Student exercise\n\nOrganizations and Producer Codes",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Organizations and Producer Codes",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n« Manage Organizations\n\nManage Producer Codes\n\nDescribe producers and Producer Code\nsecurity\n\nDescribe external user access",
+      "word_count": 18,
+      "avg_confidence": 91.33,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Marcus\nBusiness\nAnalyst\n\nHow does PolicyCenter organize users from\nmultiple agencies?",
+      "word_count": 11,
+      "avg_confidence": 95.08,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Organization / Community model G\n\nAn organization is a business entity which represents either the insurer or an agency\n\nInsurer Agency\n(internal organization) (external organization)\n\nee se aay\nGroups ee ee PCN asx Groups\nofusers esp@an 6a Om se i Se © of producers\n~~) ~) gee ig\n\nProducer ] Producer\n<>\n\nUser @& oo1 @& oo2 code lig oo1 oN oo2 code",
+      "word_count": 64,
+      "avg_confidence": 75.52,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Producer\n\nae iE\n\nInsurer Producer Insured\n\n« Anintermediary who assists the insurers to underwrite policies for the insureds\n¢ Typically, paid commissions for underwritten policies\n\n¢ Identified by a unique producer code",
+      "word_count": 33,
+      "avg_confidence": 86.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Internal and external producers Gi\n\n¢ Internal producers are employees of the insurer\n\n* Sell insurance for insurer\n* Definition may vary depending upon country or insurer\n\n¢ External producers usually belong to an external\nagency or organization\n\n* Some external producers are also called independent\nagents",
+      "word_count": 48,
+      "avg_confidence": 89.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Producer types\n\n¢ Producer of Record\n\n« Producer that created the submission\n\n« Receives commission based on the\npremium\n\n¢ Producer of Service\n* Producer that services the policy\n« Usually the same as the producer of record\n\n+ If different, then receives commission only\nafter the policy is renewed\n\n¢ Displayed on Policy Info and Summary\npages\n\nProducer of Record\nOrganization\nProducer Code\nProducer of Service\n\nOrganization\n\nProducer Code\n\nGi\n\nArmstrong and Company\n\n100-002541 Armstrong (Premier)\n\nArmstrong and Company\n\n100-002541 Armstrong (Premier)",
+      "word_count": 84,
+      "avg_confidence": 90.3,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Producer code i\n\n¢ Aunique ID assigned by the insurer to track which agent or agency is responsible\nfor which policies and accounts\n\n* Can track different policy categories for the same producer\n\nCode 100-002541\n\nDescription Armstrong (Premier)\n\nOrganization Armstrong and Company",
+      "word_count": 43,
+      "avg_confidence": 91.33,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Marci\nConfiguration\nDeveloper\n\nHow do | work with organizations and\na producer codes?",
+      "word_count": 13,
+      "avg_confidence": 88.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Managing organizations Gi\n¢ Search, view, edit and create the organizations from the Administration tab\n\n¢ The tree structure of an organization is displayed in the left sidebar\n\n* Organization details can be viewed and edited in different cards\n\nActions : Organization: Armstrong and Company\n\n| Basics | Users | Producer Codes | Queues | Regions |\n\nOrganization Name Armstrong and Company\nType Agency\nAgency Status Active\n\nTier",
+      "word_count": 69,
+      "avg_confidence": 89.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Managing producer code fa\n\n* Search the producer code\n\n¢ Administration > Users & Security > Producer Codes\n¢ View or edit the producer code\n\n* The producer code details are on the Basic tab\n\n« Roles can be assigned on the Roles tab\n\n* Groups and Users tabs are available in view mode only\n\n+ Use the Edit Users or Edit Groups administration screens to add producer codes to Groups and Users\n\n* Create a new producer code\n\n« Administration > Actions > New Producer Code",
+      "word_count": 88,
+      "avg_confidence": 89.64,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Review: Producer codes in a group fa\n\nAny user (internal or external) assigned to the group has access to all producer\ncodes available to the group\n\nProducer Codes tab lists all producer codes assigned to the group\n\nGroup: Eastern Mid-West Region\n\nProducer codes can be selected here from those available to the parent group\n\nAvailable Code Description Status Branch\nQALPRODUCERCODEO1 Internal Producer Code-2 Active Los Angeles Branch UW\n\nStandard Code Internal Producer Code-1 Active Los Angeles Branch UW",
+      "word_count": 79,
+      "avg_confidence": 90.89,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Delegate management using User Admin role fa\n\n¢ Internal organizations delegate the management of external companies\n* By assigning the User Admin role to a user within that external company\n\n« User admin builds Users, Groups, Organizations and Permissions to represent an external\ncompany\n\n« User admin and other users in the external company do not have access to other\norganizations\n\n¢ Internal organization has access and administrative rights to the external company",
+      "word_count": 74,
+      "avg_confidence": 91.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\n\nManaging organizations and producer\n— codes\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 94.85,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Gi\n\nMarcus\nBusiness\nAnalyst\n\n| have a requirement to control data access for\nproducers. How can | do it?\n\nJulia\nImplementation\n\nYou can use producer code Architect\nsecurity, which allows some ee)\nusers to access a set of accounts\nand policies while restricting\naccess for others.",
+      "word_count": 46,
+      "avg_confidence": 91.14,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Security in PolicyCenter\n\n¢ Role-based security\n* A permission is the ability to see or do a granular task\n+ Examples: create submission, edit account\n\n« Arole is anamed collection of permissions and typically\nmaps to a job function or job title\n\n+ Examples: Underwriter, Producer, Auditor\n\n¢ Data-based security\n\n* Defines what data can be accessed and typically managed\nthrough producer codes\n\n« Examples: Policy and Account access is restricted using\nproducer code security\n\nA ®\n\nO01\n00c",
+      "word_count": 80,
+      "avg_confidence": 86.97,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Producer code security G\n\nThe producer code controls data access and works with the permissions to\ndetermine what actions can be taken by the user.\n\nUser with matching\nproducer code",
+      "word_count": 31,
+      "avg_confidence": 95.12,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Status field\n\n¢ Is available for both Organizations and Producer Codes\n¢ Limits access for an agency whose contract has expired\n\n¢ Prevents producer code misuse\n\nProducer code status\n(Suspended, Terminating, Terminated)",
+      "word_count": 33,
+      "avg_confidence": 88.72,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Demonstration G\n\nProducer code security\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Marci |\n\nConfiguration Yas\n\nDeveloper _.\n\noy\n\n_ How do | configure producer code security?\n\nA)",
+      "word_count": 16,
+      "avg_confidence": 72.27,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "User Access\n\n¢ Turn on/off producer code security (Yes for user type Producer)\n\n¢ User inherits producer code from their group and can add additional producer\n\ncodes\nUser: Frede\n\nrick Dwight\n\nAttributes\n\nBasics\n\nAccess || Roles | Profile | Region | UWAuthority\n\nGroup details = S™uPs\nGroup Member Manager Load Factor Permissions Load Factor\nProducers ‘Yes\nProducer codes Producer Codes from Groups\nCode Description Status Groups Actions\n\nTo add a producer code\nto this user\n\n301-008597 Cid Vicious agency Active\n\nAdditional Producer Codes\n\nCode Description Status > Actions",
+      "word_count": 88,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| work on policies for more than one agency\nand need to be assigned to groups and\nproducer codes from more than one\norganization.\n\nJulia\nImplementation We\nArchitect\n\nThis can be easily done with\nExternal User Access\nconfiguration.\n\nbt",
+      "word_count": 39,
+      "avg_confidence": 92.07,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| External user access G&G\n\n¢ Enables producer code security for agents working for multiple agencies\n\n« External users can be assigned to groups and producer codes at three levels\n\nFULLYRESTRICTED PROTECTINTERNAL ALLOWINTERNAL\nonly within their from any external from internal or any\norganization organizations external organizations\n\n|-—_\n\ni i fran\n\nAgency 1 Agency 2 Insurer",
+      "word_count": 56,
+      "avg_confidence": 89.48,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Demonstration G\n\nExternal user access (optional)\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question\n\n_~ — What is a producer code? What does it identify?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 21,
+      "avg_confidence": 71.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer\n\n,~ — What is a producer code? What does it identify?\n\n¢\n¢\n¢\n\nA producer code is a unique ID (alphanumeric) assigned by the insurer to determine\nwhat a producer can do. Producer code and its description identify the sales agent that\nsold the policy.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 52,
+      "avg_confidence": 88.63,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question\n\n_~ — Whatis an organization?\n4\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 15,
+      "avg_confidence": 59.5,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer\n\nae What is an organization?\n\n¢\n¢\n\nAn organization is a business entity which represents either the Insurer itself or an\nexternal company for any set of users, typically producers.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 36,
+      "avg_confidence": 89.03,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\nWhich External User Access level allows the external users to be\n\n/’ assigned to groups and producer codes from intemal and any extemal\n¢ organization?\n\nSooo oooe sooo oOo oOo oAaDS\n\nA.\nB.\nC.\nD\n\n. None of the above\n\nFULLYRESTRICTED\nPROTECTINTERNAL\nALLOWINTERNAL\n\nGi",
+      "word_count": 45,
+      "avg_confidence": 86.49,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer a\n\nWhich External User Access level allows the external users to be\nassigned to groups and producer codes from intemal and any external\n: organization?\n\nFULLYRESTRICTED\n\nPROTECTINTERNAL\n\nALLOWINTERNAL\n\nNone of the above\n\nGOD >\n\nCorrect answer: C\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 43,
+      "avg_confidence": 86.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Lesson\nobj ectives « Manage Organizations\nreview * Manage Producer Codes\n\n¢ Describe producers and Producer Code\nsecurity\n¢ Describe external user access",
+      "word_count": 23,
+      "avg_confidence": 87.83,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Student exercise\n\nOrganizations and Producer Codes",
+      "word_count": 7,
+      "avg_confidence": 95.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

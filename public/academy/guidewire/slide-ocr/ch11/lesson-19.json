@@ -1,0 +1,500 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-19",
+    "slide_count": 44,
+    "slides_with_text": 41,
+    "total_words": 2333,
+    "avg_confidence": 85.99,
+    "processing_time_seconds": 17.85,
+    "extracted_at": "2026-02-15T18:23:13.910997"
+  },
+  "full_text": "Document Management\n\nLesson\nobjectives\n\n¢ Explain how to integrate an InsuranceSuite\n\napplication with an external Document\nManagement System (DMS)\n\nIdentify the plugins and methods that enable\nDMS integration\n\nImplement the plugins to support DMS\nintegration\n\nDeploy and configure DMS integration plugins\nDescribe the features and limitations of\nGuidewire’s default implementations of\ndocument storage functionality\n\ni Document Management System provides:\n\n* Document storage\n+ Document content\n+ The digital content of a document file\n+ Document metadata\n+ Date created, Date modified, Author(s)\n\n+ Tags, Categories, Title, Subject\n\nDocument services\nSearch and retrieval\nAdd and update\nIndexing\nVersioning\nWorkflow management\nSecurity\n\ni What is a Document?\n\n« Adocument is a digital file that is related to one or more\nobjects\n\n* Content is stored by a DMS\n* Metadata stored in DMS or Guidewire, or both\n\n* Documents are related to business objects\n\n+ Business objects vary by InsuranceSuite application\n\nC:) Claim\nis) .\nPolicy, Account\n@ Policy, Account, Producer\n\ni Content and Metadata\n\n* Content\n+ The content of a digital file\n+ Word, Excel, JPG, MP4, PDF, etc.\n« Metadata\n\n+ Attributes that describe and classify a document\n\n+ Name, Description, Section\n+ Document Type (MIME type)\n+ Related objects, Author, Recipient\n+ Inbound, Status, Security Type, Type, Hidden\n+ Represented by a Document entity in Guidewire\n\n+ If the application is configured such that Metadata is maintained in Guidewire\n\ni IDocumentContentSource plugin interface Gi\n\nOW) * Manages document content\n« May also manage document metadata based on:\n\n* Configuration of IDocumentMetadataSource plugin\ninterface and\n\n* Configuration of IDocumentContentSource plugin\ninterface addDocument method\n\n« No search capability\n\nIDocumentContentSource plugin interface\naddDocument(InputStream, Document): boolean\n\n+ Parameters\n\n+ An InputStream object, which is a new\ndocument as a stream of bytes\n\n+ ADocument object, which contains\ndocument metadata\n\n* Purpose\n+ Add new document content in the DMS\n\n+ Set metadata properties on the Document\nobject\n\n+ Such as DocUID and PublicID\n\n+ Properties that uniquely identify the content\ncorresponding to the Document entity\n\n+ If called with a null InputStream properties\nshould still be set\n\nReturns boolean\nControls how metadata is managed\n\nIf IDocumentMetadataSource plugin is not\nimplemented and enabled\n\n+ Must return false\n\n+ System saves the metadata in the Document\nentity\n\nIf IDocumentMetadataSource plugin is\nimplemented and enabled\n\n+ Return false if IDocumentMetadataSource\nplugin saves metadata\n\n+ Return true if IDocumentContentSource plugin\nsaves metadata\n\nIDocumentContentSource plugin interface Gi\n\nupdateDocument(Document, InputStream) : boolean\n\n+ Parameters\n\n+ An InputStream object, which is a\n\nreplacement document as a stream of bytes\n\n+ ADocument object, which contains\n\ndocument metadata\n\n* Purpose\n\n+ Update the contents of an existing\ndocument in the DMS\n\n+ Update metadata properties on the\n\nDocument object that represent the change\n\nSet DateModified, UpdateTime, and\nUpdateUser properties at a minimum\n\n* Returns boolean\n\n* Controls how metadata is managed\n\n+ If IDocumentMetadataSource plugin is not\nimplemented and enabled\n\nMust return false\n\nSystem saves the metadata in the Document\nentity\n\n+ If IDocumentMetadataSource plugin is\nimplemented and enabled\n\nReturn false if IDocumentMetadataSource\nplugin saves metadata\n\nReturn true if IDocumentContentSource plugin\nsaves metadata\n\nIDocumentContentSource plugin interface Gi\n\ntemoveDocument(Document) : boolean\n\n+ Parameters * Returns boolean\n\n+ ADocument object, which contains * Controls how metadata is managed\n\nd it metadata i\nlocument metadal + If IDocumentMetadataSource plugin is not\n\n* Purpose implemented and enabled\n* Logically or physically delete the content + Must return false\n* Optionally delete the metadata properties on + System saves the metadata in the Document\n\nthe Document object based on return value entity\n\n+ If IDocumentMetadataSource plugin is\nimplemented and enabled\n\n+ Return false if IDocumentMetadataSource\nplugin removes metadata\n\n+ Return true if IDocumentContentSource plugin\nremoves metadata\n\nIDocumentContentSource plugin interface Gi\ngetDocumentContentsInfo(Document, boolean) : DocumentContentsInfo\n\n« Parameters + Returns DocumentContentsInfo object\n\n+ ADocument object, which contains document metadata + Encapsulates document contents as an\n\n* boolean value InputStream\n\n+ If true, call to include content + Describes Content Response Type\n\n+ If false, call to retrieve just metadata * DOCUMENT_CONTENTS or URL\n\n* Purpose + Specifies MIME type\n\n+ Retrieve the contents of a document\n+ Uses DocUID property to retrieve content from DMS\n+ Uses publiclD if content is identified differently than metadata\n\n+ Any changes to Document entity are not persisted\n\nIDocumentContentSource plugin interface Gi\n\nisDocument(Document) : boolean\n\n* Returns boolean\n+ Return true if DMS system already contains\n. content corresponding to the appropriate\nPurpose fields on the Document entity\n\n* Parameters\n* ADocument object, which contains document metadata\n\n+ Check for the existence of a document in the DMS .\n+ Return false otherwise\n* Often uses DocUID or PublicID property\n\ni IDocumentMetadataSource plugin interface Gi\n\naa *« Manages document metadata\n« Unless managed by IDocumentContentSource plugin\n\n« Add / change / remove metadata for documents with\n°, s. or without content\n\n* Only ClaimCenter may have documents without content\n.\n“ * Supports search\n\nIDocumentMetadataSource plugin interface Gi\n\nsearchDocuments(DocumentSearchCriteria, RemotableSearchResultSpec) :\nDocumentSearchResult\n\n* Parameters * Returns a DocumentSearchResult object\n\n+ DocumentSearchCriteria object which defines + Contains a Document] collection\nthe search criteria to send to the DMS\n+ For each item in DocumentSearchResult, set\n\n+ RemotableSearchResultSpec object which properties as needed\n\ncontains sorting and paging information for the\nPCF list view * docuUID to the linked identifier in the external\nsystem\n\n* Purpose * Documentldentifier\n\n+ Return the set of documents in the DMS that\n\n\", pe * DMS (true/false)\nmatch the given search criteria\n\nIDocumentMetadataSource plugin interface Gi\nOther methods\n\n* retrieveDocument (String) : Document\n\n« Retrieve the metadata for a document from a DMS\n\n« Returns a Document object containing the retrieved metadata\n\nSet the DocUID of the returned document to the ID that was retrieved\n\nMust initialize the internal properties of the returned Document object by calling\nDocumentsUtilBase.initOriginalValues method\n\nMust call setRetrievedFromipMs method on the Document entity instance\n\nIDocumentMetadataSource plugin interface Gi\n\nOther methods (Continued)\n\n* saveDocument (Document)\n* Create or update the metadata for a Document to a DMS\n+ If IDocumentContentSource plugin methods addDocument or updateDocument return false\n+ Indicates they did not handle metadata\n+ Application calls the saveDocument method\n* removeDocument (Document)\n\n« Logically or physically delete document metadata\n\ni Other methods in both plugin interfaces Gi\n\n«Ifthe external DMS is available for the «Ifthe external DMS is available for the\ndesired actions desired actions\n+ From Gosu this is the InboundAvailable + From Gosu this is the OutboundAvailable\nproperty property\nIf true, the following methods can be called: «If true, the following methods can be called:\n+ Content methods + Content methods\n* addDocument * isDocument\n* updateDocument * getDocumentContentsInfo\n* xremoveDocument + Metadata methods\n+ Metadata methods * searchDocuments\n* saveDocument .\n\nretrieveDocument\n\n* yremoveDocument\n\nDefault implementations\n\nInsuranceSuite default DMS implementations\nDefault implementation\n¢ Used for demonstration purposes\n¢ Not for use in production environments\n« |IDocumentMetadataSource\n¢ Plugin is not implemented and enabled\n+ Document table in application database stores document metadata\n« IDocumentContentSource\n¢ Plugin is enabled\n* Implemented by AsyncDocumentContentSource Gosu class\n\n* Stores document content in the Guidewire application server file system\n+ For example, in a Windows environment:\n\nC:\\Users\\<user>\\AppData\\Local\\Temp\\Guidewire_Server.\n\nPc\n\ni InsuranceSuite default DMS implementations Gi\n\nAlternate implementation\n\nUsed for proof-of-concept demonstrations\n¢ Not for use in production environments\n¢ [DocumentMetadataSource\n\n* Implement and enable plugin using LocalDocumentMetadataSource Gosu\nclass\n\n* IDocumentContentSource plugin addDocument method returns false\n\n+ IDocumentMetadataSource plugin saves XML metadata file in the Guidewire\napplication server file system\n\n* For example, in a Windows environment:\n\nC:\\Users\\<user>\\AppData\\Local\\Temp\\jetty-0.0.0.0-8080-webapp-_cc-any-<###...>.dir\\..\n\nInsuranceSuite default DMS implementations\n\nAlternate implementation (Continued)\n\n|IDocumentContentSource\n\n¢ Implement and enable plugin using LocalDocumentContentSource Gosu\nclass\n+ Stores document content in the Guidewire application server file system\n+ For example, in a Windows environment:\n\nC:\\Users\\<user>\\AppData\\Local\\Temp\\Guidewire_Server\\,\n\ni\nGi\n==\n\nre\n\nImplementation options\n\ni DMS integration considerations Gi\n+ DMS Uptime and Availability\n\n* Understand the implications and the impact on your integration design if the DMS goes down\n¢ If metadata is stored locally, users may be able to continue limited document related work\n\n¢ Is the DMS able to handle modifying both content and metadata in a single call?\n* If so, a IDocumentMetadataSource plugin may not be required or desirable\n\n¢ Is external and Guidewire data synchronization required?\n* Often metadata must exist in both systems and remain in-sync\n¢ Usually requires |IDocumentMetadataSource Plugin be implemented\n\nwy Gi\n\ni First DMS integration option Gi\n\n« IDocumentMetadataSource * Create, update and delete operations may\n+ Read-only of metadata be more efficient\n+ |DocumentContentSource deals with contents\n« [DocumentContentSource\n\nand metadata\n+ Writes metadata and handles updates + Asecond remote call is avoided\n+ Methods return true:\n\n* Appropriate for a DMS that...\n\n+ addDocument\n\n+ updatepocunent + Maintains content and metadata\n* FemovePocument + Can modify content and metadata with one\n+ Manages No content documents API call\n* Document table is not used « List documents depends on DMS availability\n\n+ IDocumentMetadataSource accesses the\nDMS\n\nFirst DMS integration option\n\nMethod call sequences\n\nCreate document\n+ IDocumentContentSource\naddDocument*\nReturns true\nUpdate document content only\n+ IDocumentContentSource\nupdateDocument\n+ Returns true\nUpdate document metadata only\n+ IDocumentMetadataSource\n\nsaveDocument\n\nFirst DMS integration option\n\nMethod call sequences (Continued\nDelete document\n\n+ IDocumentContentSource\n* xemoveDocument\n+ Returns true\nList documents\n+ IDocumentMetadataSource\n* searchDocuments\nRetrieve document (contents)\n+ IDocumentMetadataSource\n* retrieveDocument\n+ Retrieve call may be omitted if search has loaded metadata\n+ |DocumentContentSource\n\n* getDocumentContentsiInfo\n\ni Second DMS integration option Gi\n\n¢ |DocumentMetadataSource * Create, update and delete operations may\n+ Read and write of metadata be less efficient\n. * Calls both IDocumentContentSource and\nIDocumentContentSource IDocumentietadataSource\n+ Methods return false:\n| adapocument * Appropriate for DMS whose API does not\n« updatepscunent allow for content and metadata to be\n\nmodified in one call\n\n+ removeDocument\n\n* Document table is not used « List documents depends on DMS availability\n\nSecond DMS integration option\n\nMethod call sequences\n\nCreate document\n\n« IDocumentContentSource\n* addDocument\n\n+ Returns false\n\n+ IDocumentMetadataSource\n\n* saveDocument\n\n¢ Update document\n+ IDocumentContentSource\n* updateDocument.\n- Returns false\n- IDocumentMetadataSource\n\n* saveDocument\n\nSecond DMS integration option Gi\n\nMethod call sequences (Continued)\n\n¢ Delete document ¢ List documents\n¢ IDocumentContentSource + IDocumentMetadataSource\n* xemoveDocument * searchDocuments\n* Returns false * Retrieve document\n\n+ IDocumentMetadataSource + [DocumentMetadataSource\n\n* xemoveDocument. .\n* retrieveDocument\n« Retrieve call may be omitted if search has loaded\nmetadata\n+ [DocumentContentSource\n\n* getDocumentContentsInfo\n\ni Third DMS integration option\n\nGi\n| WDocumentMetadataSource disabled »===Runtie characteristics\n\n¢ Base configuration of\n\nCreate, update and delete operations may\n\nIDocumentMetadataSource be more efficient\n* |DocumentContentSource + No remote call through\n|IDocumentMetadataSource\n+ Methods return false:\n+ adadocument * Guidewire application queries its database\n+ updateDocument for document list\n\n+ xemoveDocunent + List documents independent of DMS\n+ Use Document table for read/write of\n\nmetadata ¢ DMS metadata changes are not detected\n\n* Synchronization issues between Guidewire\nDocument table and DMS possible\n\nThird DMS integration option\n\nMethod call sequences\n\n* Create document\n« IDocumentContentSource\n* addDocument\n+ Returns false\n« Row added to Document table\n« Update document\n« |DocumentContentSource\n* updateDocument\n\n+ Returns false\n\n« Row updated in Document table\n\nList documents\n\n+ Query of the Document table\n\nThird DMS integration option\n\nMethod call sequences\n\n¢ Delete document\n\n« IDocumentContentSource\n* xremoveDocument\n\n+ Returns false\n« Row marked as retired in Document table\n¢ Retrieve document\n\n« |DocumentContentSource\n* getDocumentContentsInfo\n« Reads row from Document table\n+ Read may be omitted if search has loaded metadata\n\nThird DMS integration option\n\nVariant\n\n¢ |DocumentContentSource modifies DMS metadata\n\n« DMS stores metadata in parallel to Document table\n¢ Metadata versions must be synchronized\n\n* Concern if metadata on DMS is changed outside of Guidewire\n¢ Listing documents is still independent of the DMS\n\n+ Read metadata from Document table\n\ni Document related SOAP APIs G\n\n« Add document metadata to Guidewire programmatically\n¢ APls that have methods for adding documents:\n\n* ClaimCenter\n* ClaimAPI\n* BillingCenter\n\n* BCAPI\n\n* PolicyCenter\n\n* AccountAPI\n« May be used by external system to notify Guidewire\n\n* Sends document ID and other metadata for document added / changed directly on the DMS*\n\ni Asynchronous Document Storage Gi\n\n¢ Transfer of large documents to or from an external DMS requires significant\nmemory and resources\n* The external document storage system (or intermediate network) may be slow\n¢ Multiple simultaneous requests mean that multiple threads are competing for CPU cycles\n* One alternative is to create, add, or update documents asynchronously so that\nusers are not blocked while the operation completes.\n* Guidewire includes the following reference implementation to support this feature:\n\n* The built-in asynchronous document content source\ngw.plugin.document.impl.AsyncDocumentContentSource\n\n* The built-in document storage messaging transport\n\n¢ For more information see Asynchronous Document Storage in the Integration\nGuide\n\ni Demonstration G\nAnalyze Default DMS implementation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Which plugin interfaces are used for document storage? Which plugin\nPa interface is a required interface?\n\nSS ee eee ae eee\n\nGi\n\nAnswer\n\n_- — Which plugin interfaces are used for document storage? Which plugin\nPa interface is a required interface?\n\n|DocumentContentSource (Required) and IDocumentMetadataSource.\n\nSee eee ee eae\n\nGi\n\nQuestion\n\n_- — Whatare the characteristics of the OOTB default implementation for\n¢ document metadata storage and content storage?\n\n¢\n¢\n\nSS ee eee ae eee\n\nGi\n\nAnswer Gi\n\n_- — Whatare the characteristics of the OOTB default implementation for\nPa document metadata storage and content storage?\n¢\n\nDocument metadata is stored in the Guidewire database and document content is\nstored in the file system of the Guidewire application server.\n\nSee eee ee eae\n\nLesson\nobjectives\nreview\n\n¢ Explain how to integrate an InsuranceSuite\n\napplication with an external Document\nManagement System (DMS)\n\nIdentify the plugins and methods that enable\nDMS integration\n\nImplement the plugins to support DMS\nintegration\n\nDeploy and configure DMS integration plugins\nDescribe the features and limitations of\nGuidewire’s default implementations of\ndocument storage functionality\n\ni Student exercise\n\nAnalyze Alternate default DMS implementation",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Document Management",
+      "word_count": 2,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Explain how to integrate an InsuranceSuite\n\napplication with an external Document\nManagement System (DMS)\n\nIdentify the plugins and methods that enable\nDMS integration\n\nImplement the plugins to support DMS\nintegration\n\nDeploy and configure DMS integration plugins\nDescribe the features and limitations of\nGuidewire’s default implementations of\ndocument storage functionality",
+      "word_count": 52,
+      "avg_confidence": 94.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Document Management System provides:\n\n* Document storage\n+ Document content\n+ The digital content of a document file\n+ Document metadata\n+ Date created, Date modified, Author(s)\n\n+ Tags, Categories, Title, Subject\n\nDocument services\nSearch and retrieval\nAdd and update\nIndexing\nVersioning\nWorkflow management\nSecurity",
+      "word_count": 46,
+      "avg_confidence": 89.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i What is a Document?\n\n« Adocument is a digital file that is related to one or more\nobjects\n\n* Content is stored by a DMS\n* Metadata stored in DMS or Guidewire, or both\n\n* Documents are related to business objects\n\n+ Business objects vary by InsuranceSuite application\n\nC:) Claim\nis) .\nPolicy, Account\n@ Policy, Account, Producer",
+      "word_count": 59,
+      "avg_confidence": 91.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Content and Metadata\n\n* Content\n+ The content of a digital file\n+ Word, Excel, JPG, MP4, PDF, etc.\n« Metadata\n\n+ Attributes that describe and classify a document\n\n+ Name, Description, Section\n+ Document Type (MIME type)\n+ Related objects, Author, Recipient\n+ Inbound, Status, Security Type, Type, Hidden\n+ Represented by a Document entity in Guidewire\n\n+ If the application is configured such that Metadata is maintained in Guidewire",
+      "word_count": 72,
+      "avg_confidence": 88.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i IDocumentContentSource plugin interface Gi\n\nOW) * Manages document content\n« May also manage document metadata based on:\n\n* Configuration of IDocumentMetadataSource plugin\ninterface and\n\n* Configuration of IDocumentContentSource plugin\ninterface addDocument method\n\n« No search capability",
+      "word_count": 37,
+      "avg_confidence": 81.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "IDocumentContentSource plugin interface\naddDocument(InputStream, Document): boolean\n\n+ Parameters\n\n+ An InputStream object, which is a new\ndocument as a stream of bytes\n\n+ ADocument object, which contains\ndocument metadata\n\n* Purpose\n+ Add new document content in the DMS\n\n+ Set metadata properties on the Document\nobject\n\n+ Such as DocUID and PublicID\n\n+ Properties that uniquely identify the content\ncorresponding to the Document entity\n\n+ If called with a null InputStream properties\nshould still be set\n\nReturns boolean\nControls how metadata is managed\n\nIf IDocumentMetadataSource plugin is not\nimplemented and enabled\n\n+ Must return false\n\n+ System saves the metadata in the Document\nentity\n\nIf IDocumentMetadataSource plugin is\nimplemented and enabled\n\n+ Return false if IDocumentMetadataSource\nplugin saves metadata\n\n+ Return true if IDocumentContentSource plugin\nsaves metadata",
+      "word_count": 128,
+      "avg_confidence": 90.8,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "IDocumentContentSource plugin interface Gi\n\nupdateDocument(Document, InputStream) : boolean\n\n+ Parameters\n\n+ An InputStream object, which is a\n\nreplacement document as a stream of bytes\n\n+ ADocument object, which contains\n\ndocument metadata\n\n* Purpose\n\n+ Update the contents of an existing\ndocument in the DMS\n\n+ Update metadata properties on the\n\nDocument object that represent the change\n\nSet DateModified, UpdateTime, and\nUpdateUser properties at a minimum\n\n* Returns boolean\n\n* Controls how metadata is managed\n\n+ If IDocumentMetadataSource plugin is not\nimplemented and enabled\n\nMust return false\n\nSystem saves the metadata in the Document\nentity\n\n+ If IDocumentMetadataSource plugin is\nimplemented and enabled\n\nReturn false if IDocumentMetadataSource\nplugin saves metadata\n\nReturn true if IDocumentContentSource plugin\nsaves metadata",
+      "word_count": 116,
+      "avg_confidence": 90.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "IDocumentContentSource plugin interface Gi\n\ntemoveDocument(Document) : boolean\n\n+ Parameters * Returns boolean\n\n+ ADocument object, which contains * Controls how metadata is managed\n\nd it metadata i\nlocument metadal + If IDocumentMetadataSource plugin is not\n\n* Purpose implemented and enabled\n* Logically or physically delete the content + Must return false\n* Optionally delete the metadata properties on + System saves the metadata in the Document\n\nthe Document object based on return value entity\n\n+ If IDocumentMetadataSource plugin is\nimplemented and enabled\n\n+ Return false if IDocumentMetadataSource\nplugin removes metadata\n\n+ Return true if IDocumentContentSource plugin\nremoves metadata",
+      "word_count": 98,
+      "avg_confidence": 87.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "IDocumentContentSource plugin interface Gi\ngetDocumentContentsInfo(Document, boolean) : DocumentContentsInfo\n\n« Parameters + Returns DocumentContentsInfo object\n\n+ ADocument object, which contains document metadata + Encapsulates document contents as an\n\n* boolean value InputStream\n\n+ If true, call to include content + Describes Content Response Type\n\n+ If false, call to retrieve just metadata * DOCUMENT_CONTENTS or URL\n\n* Purpose + Specifies MIME type\n\n+ Retrieve the contents of a document\n+ Uses DocUID property to retrieve content from DMS\n+ Uses publiclD if content is identified differently than metadata\n\n+ Any changes to Document entity are not persisted",
+      "word_count": 96,
+      "avg_confidence": 87.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "IDocumentContentSource plugin interface Gi\n\nisDocument(Document) : boolean\n\n* Returns boolean\n+ Return true if DMS system already contains\n. content corresponding to the appropriate\nPurpose fields on the Document entity\n\n* Parameters\n* ADocument object, which contains document metadata\n\n+ Check for the existence of a document in the DMS .\n+ Return false otherwise\n* Often uses DocUID or PublicID property",
+      "word_count": 62,
+      "avg_confidence": 87.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i IDocumentMetadataSource plugin interface Gi\n\naa *« Manages document metadata\n« Unless managed by IDocumentContentSource plugin\n\n« Add / change / remove metadata for documents with\n°, s. or without content\n\n* Only ClaimCenter may have documents without content\n.\n“ * Supports search",
+      "word_count": 44,
+      "avg_confidence": 71.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "IDocumentMetadataSource plugin interface Gi\n\nsearchDocuments(DocumentSearchCriteria, RemotableSearchResultSpec) :\nDocumentSearchResult\n\n* Parameters * Returns a DocumentSearchResult object\n\n+ DocumentSearchCriteria object which defines + Contains a Document] collection\nthe search criteria to send to the DMS\n+ For each item in DocumentSearchResult, set\n\n+ RemotableSearchResultSpec object which properties as needed\n\ncontains sorting and paging information for the\nPCF list view * docuUID to the linked identifier in the external\nsystem\n\n* Purpose * Documentldentifier\n\n+ Return the set of documents in the DMS that\n\n\", pe * DMS (true/false)\nmatch the given search criteria",
+      "word_count": 91,
+      "avg_confidence": 87.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "IDocumentMetadataSource plugin interface Gi\nOther methods\n\n* retrieveDocument (String) : Document\n\n« Retrieve the metadata for a document from a DMS\n\n« Returns a Document object containing the retrieved metadata\n\nSet the DocUID of the returned document to the ID that was retrieved\n\nMust initialize the internal properties of the returned Document object by calling\nDocumentsUtilBase.initOriginalValues method\n\nMust call setRetrievedFromipMs method on the Document entity instance",
+      "word_count": 66,
+      "avg_confidence": 90.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "IDocumentMetadataSource plugin interface Gi\n\nOther methods (Continued)\n\n* saveDocument (Document)\n* Create or update the metadata for a Document to a DMS\n+ If IDocumentContentSource plugin methods addDocument or updateDocument return false\n+ Indicates they did not handle metadata\n+ Application calls the saveDocument method\n* removeDocument (Document)\n\n« Logically or physically delete document metadata",
+      "word_count": 55,
+      "avg_confidence": 87.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Other methods in both plugin interfaces Gi\n\n«Ifthe external DMS is available for the «Ifthe external DMS is available for the\ndesired actions desired actions\n+ From Gosu this is the InboundAvailable + From Gosu this is the OutboundAvailable\nproperty property\nIf true, the following methods can be called: «If true, the following methods can be called:\n+ Content methods + Content methods\n* addDocument * isDocument\n* updateDocument * getDocumentContentsInfo\n* xremoveDocument + Metadata methods\n+ Metadata methods * searchDocuments\n* saveDocument .\n\nretrieveDocument\n\n* yremoveDocument",
+      "word_count": 88,
+      "avg_confidence": 86.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Default implementations",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "InsuranceSuite default DMS implementations\nDefault implementation\n¢ Used for demonstration purposes\n¢ Not for use in production environments\n« |IDocumentMetadataSource\n¢ Plugin is not implemented and enabled\n+ Document table in application database stores document metadata\n« IDocumentContentSource\n¢ Plugin is enabled\n* Implemented by AsyncDocumentContentSource Gosu class\n\n* Stores document content in the Guidewire application server file system\n+ For example, in a Windows environment:\n\nC:\\Users\\<user>\\AppData\\Local\\Temp\\Guidewire_Server.\n\nPc",
+      "word_count": 68,
+      "avg_confidence": 85.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i InsuranceSuite default DMS implementations Gi\n\nAlternate implementation\n\nUsed for proof-of-concept demonstrations\n¢ Not for use in production environments\n¢ [DocumentMetadataSource\n\n* Implement and enable plugin using LocalDocumentMetadataSource Gosu\nclass\n\n* IDocumentContentSource plugin addDocument method returns false\n\n+ IDocumentMetadataSource plugin saves XML metadata file in the Guidewire\napplication server file system\n\n* For example, in a Windows environment:\n\nC:\\Users\\<user>\\AppData\\Local\\Temp\\jetty-0.0.0.0-8080-webapp-_cc-any-<###...>.dir\\..",
+      "word_count": 59,
+      "avg_confidence": 83.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "InsuranceSuite default DMS implementations\n\nAlternate implementation (Continued)\n\n|IDocumentContentSource\n\n¢ Implement and enable plugin using LocalDocumentContentSource Gosu\nclass\n+ Stores document content in the Guidewire application server file system\n+ For example, in a Windows environment:\n\nC:\\Users\\<user>\\AppData\\Local\\Temp\\Guidewire_Server\\,\n\ni\nGi\n==\n\nre",
+      "word_count": 40,
+      "avg_confidence": 83.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Implementation options",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i DMS integration considerations Gi\n+ DMS Uptime and Availability\n\n* Understand the implications and the impact on your integration design if the DMS goes down\n¢ If metadata is stored locally, users may be able to continue limited document related work\n\n¢ Is the DMS able to handle modifying both content and metadata in a single call?\n* If so, a IDocumentMetadataSource plugin may not be required or desirable\n\n¢ Is external and Guidewire data synchronization required?\n* Often metadata must exist in both systems and remain in-sync\n¢ Usually requires |IDocumentMetadataSource Plugin be implemented\n\nwy Gi",
+      "word_count": 98,
+      "avg_confidence": 86.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "i First DMS integration option Gi\n\n« IDocumentMetadataSource * Create, update and delete operations may\n+ Read-only of metadata be more efficient\n+ |DocumentContentSource deals with contents\n« [DocumentContentSource\n\nand metadata\n+ Writes metadata and handles updates + Asecond remote call is avoided\n+ Methods return true:\n\n* Appropriate for a DMS that...\n\n+ addDocument\n\n+ updatepocunent + Maintains content and metadata\n* FemovePocument + Can modify content and metadata with one\n+ Manages No content documents API call\n* Document table is not used « List documents depends on DMS availability\n\n+ IDocumentMetadataSource accesses the\nDMS",
+      "word_count": 97,
+      "avg_confidence": 82.01,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "First DMS integration option\n\nMethod call sequences\n\nCreate document\n+ IDocumentContentSource\naddDocument*\nReturns true\nUpdate document content only\n+ IDocumentContentSource\nupdateDocument\n+ Returns true\nUpdate document metadata only\n+ IDocumentMetadataSource\n\nsaveDocument",
+      "word_count": 31,
+      "avg_confidence": 86.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "First DMS integration option\n\nMethod call sequences (Continued\nDelete document\n\n+ IDocumentContentSource\n* xemoveDocument\n+ Returns true\nList documents\n+ IDocumentMetadataSource\n* searchDocuments\nRetrieve document (contents)\n+ IDocumentMetadataSource\n* retrieveDocument\n+ Retrieve call may be omitted if search has loaded metadata\n+ |DocumentContentSource\n\n* getDocumentContentsiInfo",
+      "word_count": 45,
+      "avg_confidence": 80.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "i Second DMS integration option Gi\n\n¢ |DocumentMetadataSource * Create, update and delete operations may\n+ Read and write of metadata be less efficient\n. * Calls both IDocumentContentSource and\nIDocumentContentSource IDocumentietadataSource\n+ Methods return false:\n| adapocument * Appropriate for DMS whose API does not\n« updatepscunent allow for content and metadata to be\n\nmodified in one call\n\n+ removeDocument\n\n* Document table is not used « List documents depends on DMS availability",
+      "word_count": 74,
+      "avg_confidence": 80.43,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Second DMS integration option\n\nMethod call sequences\n\nCreate document\n\n« IDocumentContentSource\n* addDocument\n\n+ Returns false\n\n+ IDocumentMetadataSource\n\n* saveDocument\n\n¢ Update document\n+ IDocumentContentSource\n* updateDocument.\n- Returns false\n- IDocumentMetadataSource\n\n* saveDocument",
+      "word_count": 34,
+      "avg_confidence": 74.76,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Second DMS integration option Gi\n\nMethod call sequences (Continued)\n\n¢ Delete document ¢ List documents\n¢ IDocumentContentSource + IDocumentMetadataSource\n* xemoveDocument * searchDocuments\n* Returns false * Retrieve document\n\n+ IDocumentMetadataSource + [DocumentMetadataSource\n\n* xemoveDocument. .\n* retrieveDocument\n« Retrieve call may be omitted if search has loaded\nmetadata\n+ [DocumentContentSource\n\n* getDocumentContentsInfo",
+      "word_count": 53,
+      "avg_confidence": 74.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "i Third DMS integration option\n\nGi\n| WDocumentMetadataSource disabled »===Runtie characteristics\n\n¢ Base configuration of\n\nCreate, update and delete operations may\n\nIDocumentMetadataSource be more efficient\n* |DocumentContentSource + No remote call through\n|IDocumentMetadataSource\n+ Methods return false:\n+ adadocument * Guidewire application queries its database\n+ updateDocument for document list\n\n+ xemoveDocunent + List documents independent of DMS\n+ Use Document table for read/write of\n\nmetadata ¢ DMS metadata changes are not detected\n\n* Synchronization issues between Guidewire\nDocument table and DMS possible",
+      "word_count": 83,
+      "avg_confidence": 84.03,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Third DMS integration option\n\nMethod call sequences\n\n* Create document\n« IDocumentContentSource\n* addDocument\n+ Returns false\n« Row added to Document table\n« Update document\n« |DocumentContentSource\n* updateDocument\n\n+ Returns false\n\n« Row updated in Document table\n\nList documents\n\n+ Query of the Document table",
+      "word_count": 47,
+      "avg_confidence": 81.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Third DMS integration option\n\nMethod call sequences\n\n¢ Delete document\n\n« IDocumentContentSource\n* xremoveDocument\n\n+ Returns false\n« Row marked as retired in Document table\n¢ Retrieve document\n\n« |DocumentContentSource\n* getDocumentContentsInfo\n« Reads row from Document table\n+ Read may be omitted if search has loaded metadata",
+      "word_count": 48,
+      "avg_confidence": 81.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Third DMS integration option\n\nVariant\n\n¢ |DocumentContentSource modifies DMS metadata\n\n« DMS stores metadata in parallel to Document table\n¢ Metadata versions must be synchronized\n\n* Concern if metadata on DMS is changed outside of Guidewire\n¢ Listing documents is still independent of the DMS\n\n+ Read metadata from Document table",
+      "word_count": 51,
+      "avg_confidence": 87.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "i Document related SOAP APIs G\n\n« Add document metadata to Guidewire programmatically\n¢ APls that have methods for adding documents:\n\n* ClaimCenter\n* ClaimAPI\n* BillingCenter\n\n* BCAPI\n\n* PolicyCenter\n\n* AccountAPI\n« May be used by external system to notify Guidewire\n\n* Sends document ID and other metadata for document added / changed directly on the DMS*",
+      "word_count": 59,
+      "avg_confidence": 86.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "i Asynchronous Document Storage Gi\n\n¢ Transfer of large documents to or from an external DMS requires significant\nmemory and resources\n* The external document storage system (or intermediate network) may be slow\n¢ Multiple simultaneous requests mean that multiple threads are competing for CPU cycles\n* One alternative is to create, add, or update documents asynchronously so that\nusers are not blocked while the operation completes.\n* Guidewire includes the following reference implementation to support this feature:\n\n* The built-in asynchronous document content source\ngw.plugin.document.impl.AsyncDocumentContentSource\n\n* The built-in document storage messaging transport\n\n¢ For more information see Asynchronous Document Storage in the Integration\nGuide",
+      "word_count": 105,
+      "avg_confidence": 90.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "i Demonstration G\nAnalyze Default DMS implementation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Question\n\n_- — Which plugin interfaces are used for document storage? Which plugin\nPa interface is a required interface?\n\nSS ee eee ae eee\n\nGi",
+      "word_count": 25,
+      "avg_confidence": 74.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Answer\n\n_- — Which plugin interfaces are used for document storage? Which plugin\nPa interface is a required interface?\n\n|DocumentContentSource (Required) and IDocumentMetadataSource.\n\nSee eee ee eae\n\nGi",
+      "word_count": 28,
+      "avg_confidence": 77.16,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Question\n\n_- — Whatare the characteristics of the OOTB default implementation for\n¢ document metadata storage and content storage?\n\n¢\n¢\n\nSS ee eee ae eee\n\nGi",
+      "word_count": 27,
+      "avg_confidence": 74.76,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Answer Gi\n\n_- — Whatare the characteristics of the OOTB default implementation for\nPa document metadata storage and content storage?\n¢\n\nDocument metadata is stored in the Guidewire database and document content is\nstored in the file system of the Guidewire application server.\n\nSee eee ee eae",
+      "word_count": 47,
+      "avg_confidence": 85.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Explain how to integrate an InsuranceSuite\n\napplication with an external Document\nManagement System (DMS)\n\nIdentify the plugins and methods that enable\nDMS integration\n\nImplement the plugins to support DMS\nintegration\n\nDeploy and configure DMS integration plugins\nDescribe the features and limitations of\nGuidewire’s default implementations of\ndocument storage functionality",
+      "word_count": 53,
+      "avg_confidence": 94.23,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "i Student exercise\n\nAnalyze Alternate default DMS implementation",
+      "word_count": 8,
+      "avg_confidence": 89.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

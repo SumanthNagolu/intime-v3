@@ -1,0 +1,4551 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_12_03.mp4",
+    "video_stem": "CC_12_03",
+    "duration_seconds": 324.02,
+    "duration_formatted": "00:05:24.020",
+    "segment_count": 56,
+    "word_count": 654,
+    "avg_confidence": 0.9596,
+    "transcription_time_seconds": 21.07,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:42:10.314364"
+  },
+  "full_text": "I have been given a requirement that automatic approvals should be limited to $1,000 and automatic payments should be limited to $1,500. I can meet this requirement by configuring straight through invoice processing, or STIP. To accomplish this, I need to edit two files. The first is Invoice Auto Approval Helper. And the second is Invoice Auto Payment Helper. Invoice Auto Approval Helper has a useful property called Small Amount Thresholds. The Get Failed to Qualify Reasons function produces a list of reasons why an invoice might not qualify for automatic approval. If none of these apply, the list is empty and the invoice is automatically approved. Get Failed to Qualify Reasons has a clause, in the base configuration, that tests the amount of an invoice against small amount threshold and adds an entry to the list if it exceeds that threshold. So, all I need to do to meet the first part of the requirement, is to change the value of small amount threshold. The Auto Payment Helper does not have this functionality in the base configuration. So I will copy the property from the Invoice Auto Approval Helper. And paste it into the Invoice Auto Payment Helper. And paste it into the Invoice Auto Payment Helper. Small amount threshold uses a package, big decimal, not used in the base configuration of Invoice Auto Payment Helper. I click OK to approve importing the package. I change the US currency value to meet the requirement. I also have to arrange for Invoice Auto Payment Helper to use the property. So I return to the Auto Approval Helper. Copy the clause I need. And paste it into the Auto Payment Helper. I paste it at the bottom of the Get field to qualify reasons function, right before the return statement. Now I see that this clause uses a variable which has not been created in this helper. So I return to the Approval Helper. And copy the line that instantiates the variable. There is more logic associated with this variable, but this one line will suffice for this demonstration. Then I return to the Payment Helper. And I paste the line immediately before the line where the variable is needed. This concludes the configuration. Now I will start the server to test my work. A proper test involves at least 3 services. One below $1,000, which should be automatically approved and paid. One above $1,500, which should require manual approval and manual payment. And one between those two values, which should require manual approval and then be automatically paid. Due to time constraints, I will only demonstrate the last of these. I log in as Andy Applegate. First, I will navigate to a Claims Financials screen. Reserve Line 2 has $4,700 of remaining reserves available, and will be perfect for this test. I also observe that the line is for auto body work. I will create a new service. I relayed the service to the Reserve Line I chose. This will be a quote in Perform Service Request. The service to perform is auto body repair. I'll finish up the required fields. And I submit the service request. After a while, the auto shop provides a quote. The quote totals $1,000. 750 for parts. And 250 for labor. The quote is waiting for approval. So I approve it. The vendor completes the work and sends in an invoice. I'll fill in the invoice details. The parts came in right on target. But the cost of labor was higher than expected. The status of the invoice is waiting for approval. The reason it is waiting for approval is because the amount is too high. That is, it exceeds the $1,000 I set in the approval helper. So I approve the invoice. The check is immediately created. This is because I set the small amount threshold to $1,500 in the payment helper. This concludes the STIP demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.86,
+      "end": 27.94,
+      "start_formatted": "00:00:00.860",
+      "end_formatted": "00:00:27.940",
+      "text": "I have been given a requirement that automatic approvals should be limited to $1,000 and automatic payments should be limited to $1,500. I can meet this requirement by configuring straight through invoice processing, or STIP. To accomplish this, I need to edit two files. The first is Invoice Auto Approval Helper. And the second is Invoice Auto Payment Helper.",
+      "words": [
+        {
+          "word": "I",
+          "start": 0.86,
+          "end": 1.46,
+          "probability": 0.9702
+        },
+        {
+          "word": "have",
+          "start": 1.46,
+          "end": 1.6,
+          "probability": 0.9912
+        },
+        {
+          "word": "been",
+          "start": 1.6,
+          "end": 1.76,
+          "probability": 0.999
+        },
+        {
+          "word": "given",
+          "start": 1.76,
+          "end": 1.98,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 1.98,
+          "end": 2.14,
+          "probability": 0.9883
+        },
+        {
+          "word": "requirement",
+          "start": 2.14,
+          "end": 2.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 2.62,
+          "end": 2.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "automatic",
+          "start": 2.86,
+          "end": 3.38,
+          "probability": 0.9268
+        },
+        {
+          "word": "approvals",
+          "start": 3.38,
+          "end": 3.96,
+          "probability": 0.9688
+        },
+        {
+          "word": "should",
+          "start": 3.96,
+          "end": 4.14,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 4.14,
+          "end": 4.3,
+          "probability": 0.998
+        },
+        {
+          "word": "limited",
+          "start": 4.3,
+          "end": 4.6,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 4.6,
+          "end": 4.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "$1",
+          "start": 4.8,
+          "end": 5.06,
+          "probability": 0.7568
+        },
+        {
+          "word": ",000",
+          "start": 5.06,
+          "end": 5.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "and",
+          "start": 5.48,
+          "end": 6.24,
+          "probability": 0.6123
+        },
+        {
+          "word": "automatic",
+          "start": 6.24,
+          "end": 6.72,
+          "probability": 0.9902
+        },
+        {
+          "word": "payments",
+          "start": 6.72,
+          "end": 7.14,
+          "probability": 0.9932
+        },
+        {
+          "word": "should",
+          "start": 7.14,
+          "end": 7.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 7.4,
+          "end": 7.56,
+          "probability": 0.999
+        },
+        {
+          "word": "limited",
+          "start": 7.56,
+          "end": 7.86,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 7.86,
+          "end": 8.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "$1",
+          "start": 8.06,
+          "end": 8.32,
+          "probability": 0.9854
+        },
+        {
+          "word": ",500.",
+          "start": 8.32,
+          "end": 9.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 9.96,
+          "end": 10.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "can",
+          "start": 10.36,
+          "end": 10.52,
+          "probability": 0.999
+        },
+        {
+          "word": "meet",
+          "start": 10.52,
+          "end": 10.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 10.7,
+          "end": 10.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "requirement",
+          "start": 10.9,
+          "end": 11.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "by",
+          "start": 11.42,
+          "end": 11.64,
+          "probability": 0.998
+        },
+        {
+          "word": "configuring",
+          "start": 11.64,
+          "end": 12.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "straight",
+          "start": 12.28,
+          "end": 12.58,
+          "probability": 0.9775
+        },
+        {
+          "word": "through",
+          "start": 12.58,
+          "end": 12.84,
+          "probability": 0.9546
+        },
+        {
+          "word": "invoice",
+          "start": 12.84,
+          "end": 13.28,
+          "probability": 0.7358
+        },
+        {
+          "word": "processing,",
+          "start": 13.28,
+          "end": 13.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "or",
+          "start": 14.2,
+          "end": 14.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "STIP.",
+          "start": 14.44,
+          "end": 14.74,
+          "probability": 0.8633
+        },
+        {
+          "word": "To",
+          "start": 15.06,
+          "end": 15.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "accomplish",
+          "start": 15.52,
+          "end": 15.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "this,",
+          "start": 15.96,
+          "end": 16.36,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 16.56,
+          "end": 16.76,
+          "probability": 0.998
+        },
+        {
+          "word": "need",
+          "start": 16.76,
+          "end": 16.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 16.94,
+          "end": 17.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "edit",
+          "start": 17.08,
+          "end": 17.3,
+          "probability": 0.9966
+        },
+        {
+          "word": "two",
+          "start": 17.3,
+          "end": 17.56,
+          "probability": 0.895
+        },
+        {
+          "word": "files.",
+          "start": 17.56,
+          "end": 18.08,
+          "probability": 0.999
+        },
+        {
+          "word": "The",
+          "start": 18.44,
+          "end": 18.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "first",
+          "start": 18.94,
+          "end": 19.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 19.2,
+          "end": 19.42,
+          "probability": 0.999
+        },
+        {
+          "word": "Invoice",
+          "start": 19.42,
+          "end": 19.86,
+          "probability": 0.7593
+        },
+        {
+          "word": "Auto",
+          "start": 19.86,
+          "end": 20.18,
+          "probability": 0.9199
+        },
+        {
+          "word": "Approval",
+          "start": 20.18,
+          "end": 20.7,
+          "probability": 0.9712
+        },
+        {
+          "word": "Helper.",
+          "start": 20.7,
+          "end": 21.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "And",
+          "start": 25.16,
+          "end": 25.76,
+          "probability": 0.9624
+        },
+        {
+          "word": "the",
+          "start": 25.76,
+          "end": 25.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "second",
+          "start": 25.88,
+          "end": 26.14,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 26.14,
+          "end": 26.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "Invoice",
+          "start": 26.38,
+          "end": 26.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "Auto",
+          "start": 26.82,
+          "end": 27.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "Payment",
+          "start": 27.12,
+          "end": 27.56,
+          "probability": 0.9922
+        },
+        {
+          "word": "Helper.",
+          "start": 27.56,
+          "end": 27.94,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 31.6,
+      "end": 48.42,
+      "start_formatted": "00:00:31.600",
+      "end_formatted": "00:00:48.420",
+      "text": "Invoice Auto Approval Helper has a useful property called Small Amount Thresholds. The Get Failed to Qualify Reasons function produces a list of reasons why an invoice might not qualify for automatic approval. If none of these apply, the list is empty and the invoice is automatically approved.",
+      "words": [
+        {
+          "word": "Invoice",
+          "start": 31.6,
+          "end": 32.2,
+          "probability": 0.9741
+        },
+        {
+          "word": "Auto",
+          "start": 32.2,
+          "end": 32.52,
+          "probability": 0.6685
+        },
+        {
+          "word": "Approval",
+          "start": 32.52,
+          "end": 33.06,
+          "probability": 0.937
+        },
+        {
+          "word": "Helper",
+          "start": 33.06,
+          "end": 33.36,
+          "probability": 0.9512
+        },
+        {
+          "word": "has",
+          "start": 33.36,
+          "end": 33.58,
+          "probability": 0.9834
+        },
+        {
+          "word": "a",
+          "start": 33.58,
+          "end": 33.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "useful",
+          "start": 33.72,
+          "end": 34.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "property",
+          "start": 34.06,
+          "end": 34.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "called",
+          "start": 34.54,
+          "end": 34.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Small",
+          "start": 34.88,
+          "end": 35.2,
+          "probability": 0.7808
+        },
+        {
+          "word": "Amount",
+          "start": 35.2,
+          "end": 35.52,
+          "probability": 0.9473
+        },
+        {
+          "word": "Thresholds.",
+          "start": 35.52,
+          "end": 36.2,
+          "probability": 0.998
+        },
+        {
+          "word": "The",
+          "start": 36.38,
+          "end": 36.96,
+          "probability": 0.998
+        },
+        {
+          "word": "Get",
+          "start": 36.96,
+          "end": 37.14,
+          "probability": 0.8042
+        },
+        {
+          "word": "Failed",
+          "start": 37.14,
+          "end": 37.46,
+          "probability": 0.9663
+        },
+        {
+          "word": "to",
+          "start": 37.46,
+          "end": 37.62,
+          "probability": 0.957
+        },
+        {
+          "word": "Qualify",
+          "start": 37.62,
+          "end": 38.12,
+          "probability": 0.9902
+        },
+        {
+          "word": "Reasons",
+          "start": 38.12,
+          "end": 38.5,
+          "probability": 0.9609
+        },
+        {
+          "word": "function",
+          "start": 38.5,
+          "end": 38.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "produces",
+          "start": 38.88,
+          "end": 39.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 39.42,
+          "end": 39.66,
+          "probability": 1.0
+        },
+        {
+          "word": "list",
+          "start": 39.66,
+          "end": 39.88,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 39.88,
+          "end": 40.04,
+          "probability": 1.0
+        },
+        {
+          "word": "reasons",
+          "start": 40.04,
+          "end": 40.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "why",
+          "start": 40.38,
+          "end": 40.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 40.68,
+          "end": 40.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 40.86,
+          "end": 41.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "might",
+          "start": 41.26,
+          "end": 41.52,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 41.52,
+          "end": 41.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "qualify",
+          "start": 41.76,
+          "end": 42.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 42.28,
+          "end": 42.58,
+          "probability": 1.0
+        },
+        {
+          "word": "automatic",
+          "start": 42.58,
+          "end": 43.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "approval.",
+          "start": 43.08,
+          "end": 43.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "If",
+          "start": 43.94,
+          "end": 44.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "none",
+          "start": 44.32,
+          "end": 44.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 44.48,
+          "end": 44.64,
+          "probability": 1.0
+        },
+        {
+          "word": "these",
+          "start": 44.64,
+          "end": 44.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "apply,",
+          "start": 44.8,
+          "end": 45.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 45.44,
+          "end": 45.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "list",
+          "start": 45.66,
+          "end": 45.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 45.88,
+          "end": 46.04,
+          "probability": 1.0
+        },
+        {
+          "word": "empty",
+          "start": 46.04,
+          "end": 46.34,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 46.34,
+          "end": 46.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 46.52,
+          "end": 46.62,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 46.62,
+          "end": 47.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 47.04,
+          "end": 47.26,
+          "probability": 1.0
+        },
+        {
+          "word": "automatically",
+          "start": 47.26,
+          "end": 47.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "approved.",
+          "start": 47.82,
+          "end": 48.42,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 48.9,
+      "end": 59.2,
+      "start_formatted": "00:00:48.900",
+      "end_formatted": "00:00:59.200",
+      "text": "Get Failed to Qualify Reasons has a clause, in the base configuration, that tests the amount of an invoice against small amount threshold and adds an entry to the list if it exceeds that threshold.",
+      "words": [
+        {
+          "word": "Get",
+          "start": 48.9,
+          "end": 49.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "Failed",
+          "start": 49.4,
+          "end": 49.66,
+          "probability": 0.9678
+        },
+        {
+          "word": "to",
+          "start": 49.66,
+          "end": 49.84,
+          "probability": 1.0
+        },
+        {
+          "word": "Qualify",
+          "start": 49.84,
+          "end": 50.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "Reasons",
+          "start": 50.32,
+          "end": 50.74,
+          "probability": 0.9912
+        },
+        {
+          "word": "has",
+          "start": 50.74,
+          "end": 50.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 50.96,
+          "end": 51.08,
+          "probability": 1.0
+        },
+        {
+          "word": "clause,",
+          "start": 51.08,
+          "end": 51.56,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 51.58,
+          "end": 51.96,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 51.96,
+          "end": 52.04,
+          "probability": 0.999
+        },
+        {
+          "word": "base",
+          "start": 52.04,
+          "end": 52.26,
+          "probability": 0.9434
+        },
+        {
+          "word": "configuration,",
+          "start": 52.26,
+          "end": 52.96,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 53.34,
+          "end": 53.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "tests",
+          "start": 53.62,
+          "end": 53.92,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 53.92,
+          "end": 54.08,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 54.08,
+          "end": 54.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 54.34,
+          "end": 54.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 54.5,
+          "end": 54.62,
+          "probability": 0.998
+        },
+        {
+          "word": "invoice",
+          "start": 54.62,
+          "end": 55.0,
+          "probability": 0.999
+        },
+        {
+          "word": "against",
+          "start": 55.0,
+          "end": 55.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "small",
+          "start": 55.36,
+          "end": 55.72,
+          "probability": 0.7866
+        },
+        {
+          "word": "amount",
+          "start": 55.72,
+          "end": 56.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "threshold",
+          "start": 56.04,
+          "end": 56.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 56.46,
+          "end": 56.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "adds",
+          "start": 56.78,
+          "end": 57.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 57.06,
+          "end": 57.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "entry",
+          "start": 57.18,
+          "end": 57.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 57.46,
+          "end": 57.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 57.64,
+          "end": 57.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "list",
+          "start": 57.76,
+          "end": 57.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "if",
+          "start": 57.94,
+          "end": 58.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 58.14,
+          "end": 58.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "exceeds",
+          "start": 58.24,
+          "end": 58.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 58.56,
+          "end": 58.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "threshold.",
+          "start": 58.76,
+          "end": 59.2,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 60.0,
+      "end": 65.74,
+      "start_formatted": "00:01:00.000",
+      "end_formatted": "00:01:05.740",
+      "text": "So, all I need to do to meet the first part of the requirement, is to change the value of small amount threshold.",
+      "words": [
+        {
+          "word": "So,",
+          "start": 60.0,
+          "end": 60.36,
+          "probability": 0.959
+        },
+        {
+          "word": "all",
+          "start": 60.66,
+          "end": 60.92,
+          "probability": 0.9839
+        },
+        {
+          "word": "I",
+          "start": 60.92,
+          "end": 61.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "need",
+          "start": 61.08,
+          "end": 61.26,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 61.26,
+          "end": 61.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "do",
+          "start": 61.38,
+          "end": 61.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 61.5,
+          "end": 61.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "meet",
+          "start": 61.64,
+          "end": 61.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 61.84,
+          "end": 61.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "first",
+          "start": 61.98,
+          "end": 62.2,
+          "probability": 0.9917
+        },
+        {
+          "word": "part",
+          "start": 62.2,
+          "end": 62.46,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 62.46,
+          "end": 62.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 62.58,
+          "end": 62.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "requirement,",
+          "start": 62.68,
+          "end": 63.2,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 63.5,
+          "end": 63.74,
+          "probability": 0.9849
+        },
+        {
+          "word": "to",
+          "start": 63.74,
+          "end": 63.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "change",
+          "start": 63.86,
+          "end": 64.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 64.14,
+          "end": 64.34,
+          "probability": 0.999
+        },
+        {
+          "word": "value",
+          "start": 64.34,
+          "end": 64.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "of",
+          "start": 64.66,
+          "end": 64.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "small",
+          "start": 64.86,
+          "end": 65.08,
+          "probability": 0.3799
+        },
+        {
+          "word": "amount",
+          "start": 65.08,
+          "end": 65.38,
+          "probability": 0.938
+        },
+        {
+          "word": "threshold.",
+          "start": 65.38,
+          "end": 65.74,
+          "probability": 0.959
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 66.84,
+      "end": 75.06,
+      "start_formatted": "00:01:06.840",
+      "end_formatted": "00:01:15.060",
+      "text": "The Auto Payment Helper does not have this functionality in the base configuration. So I will copy the property from the Invoice Auto Approval Helper.",
+      "words": [
+        {
+          "word": "The",
+          "start": 66.84,
+          "end": 67.36,
+          "probability": 0.9907
+        },
+        {
+          "word": "Auto",
+          "start": 67.36,
+          "end": 67.64,
+          "probability": 0.3652
+        },
+        {
+          "word": "Payment",
+          "start": 67.64,
+          "end": 68.04,
+          "probability": 0.8389
+        },
+        {
+          "word": "Helper",
+          "start": 68.04,
+          "end": 68.34,
+          "probability": 0.9258
+        },
+        {
+          "word": "does",
+          "start": 68.34,
+          "end": 68.56,
+          "probability": 0.9946
+        },
+        {
+          "word": "not",
+          "start": 68.56,
+          "end": 68.76,
+          "probability": 0.9951
+        },
+        {
+          "word": "have",
+          "start": 68.76,
+          "end": 68.94,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 68.94,
+          "end": 69.12,
+          "probability": 0.998
+        },
+        {
+          "word": "functionality",
+          "start": 69.12,
+          "end": 69.66,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 69.66,
+          "end": 70.02,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 70.02,
+          "end": 70.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "base",
+          "start": 70.1,
+          "end": 70.32,
+          "probability": 0.854
+        },
+        {
+          "word": "configuration.",
+          "start": 70.32,
+          "end": 70.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "So",
+          "start": 71.44,
+          "end": 71.84,
+          "probability": 0.9873
+        },
+        {
+          "word": "I",
+          "start": 71.84,
+          "end": 71.98,
+          "probability": 0.9116
+        },
+        {
+          "word": "will",
+          "start": 71.98,
+          "end": 72.12,
+          "probability": 0.9941
+        },
+        {
+          "word": "copy",
+          "start": 72.12,
+          "end": 72.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 72.44,
+          "end": 72.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "property",
+          "start": 72.6,
+          "end": 73.0,
+          "probability": 0.9937
+        },
+        {
+          "word": "from",
+          "start": 73.0,
+          "end": 73.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 73.24,
+          "end": 73.38,
+          "probability": 0.9893
+        },
+        {
+          "word": "Invoice",
+          "start": 73.38,
+          "end": 73.8,
+          "probability": 0.9121
+        },
+        {
+          "word": "Auto",
+          "start": 73.8,
+          "end": 74.16,
+          "probability": 0.8965
+        },
+        {
+          "word": "Approval",
+          "start": 74.16,
+          "end": 74.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "Helper.",
+          "start": 74.68,
+          "end": 75.06,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 75.06,
+      "end": 78.4,
+      "start_formatted": "00:01:15.060",
+      "end_formatted": "00:01:18.400",
+      "text": "And paste it into the Invoice Auto Payment Helper.",
+      "words": [
+        {
+          "word": "And",
+          "start": 75.06,
+          "end": 76.0,
+          "probability": 0.2529
+        },
+        {
+          "word": "paste",
+          "start": 76.0,
+          "end": 76.34,
+          "probability": 0.9692
+        },
+        {
+          "word": "it",
+          "start": 76.34,
+          "end": 76.5,
+          "probability": 0.998
+        },
+        {
+          "word": "into",
+          "start": 76.5,
+          "end": 76.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 76.64,
+          "end": 76.8,
+          "probability": 0.9863
+        },
+        {
+          "word": "Invoice",
+          "start": 76.8,
+          "end": 77.24,
+          "probability": 0.7939
+        },
+        {
+          "word": "Auto",
+          "start": 77.24,
+          "end": 77.56,
+          "probability": 0.8618
+        },
+        {
+          "word": "Payment",
+          "start": 77.56,
+          "end": 78.02,
+          "probability": 0.9629
+        },
+        {
+          "word": "Helper.",
+          "start": 78.02,
+          "end": 78.4,
+          "probability": 0.9199
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 81.6,
+      "end": 82.28,
+      "start_formatted": "00:01:21.600",
+      "end_formatted": "00:01:22.280",
+      "text": "And paste it into the Invoice Auto Payment Helper.",
+      "words": [
+        {
+          "word": "And",
+          "start": 81.6,
+          "end": 82.28,
+          "probability": 0.0006
+        },
+        {
+          "word": "paste",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.8823
+        },
+        {
+          "word": "it",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.9751
+        },
+        {
+          "word": "into",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.9482
+        },
+        {
+          "word": "Invoice",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.9897
+        },
+        {
+          "word": "Auto",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Payment",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.998
+        },
+        {
+          "word": "Helper.",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 82.28,
+      "end": 88.82,
+      "start_formatted": "00:01:22.280",
+      "end_formatted": "00:01:28.820",
+      "text": "Small amount threshold uses a package, big decimal, not used in the base configuration of Invoice Auto Payment Helper.",
+      "words": [
+        {
+          "word": "Small",
+          "start": 82.28,
+          "end": 82.28,
+          "probability": 0.8086
+        },
+        {
+          "word": "amount",
+          "start": 82.28,
+          "end": 82.66,
+          "probability": 0.2393
+        },
+        {
+          "word": "threshold",
+          "start": 82.66,
+          "end": 83.06,
+          "probability": 0.9902
+        },
+        {
+          "word": "uses",
+          "start": 83.06,
+          "end": 83.5,
+          "probability": 0.9917
+        },
+        {
+          "word": "a",
+          "start": 83.5,
+          "end": 83.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "package,",
+          "start": 83.68,
+          "end": 84.18,
+          "probability": 0.998
+        },
+        {
+          "word": "big",
+          "start": 84.38,
+          "end": 84.64,
+          "probability": 0.373
+        },
+        {
+          "word": "decimal,",
+          "start": 84.64,
+          "end": 84.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "not",
+          "start": 85.28,
+          "end": 85.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "used",
+          "start": 85.58,
+          "end": 85.88,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 85.88,
+          "end": 86.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 86.04,
+          "end": 86.12,
+          "probability": 1.0
+        },
+        {
+          "word": "base",
+          "start": 86.12,
+          "end": 86.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "configuration",
+          "start": 86.38,
+          "end": 86.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 86.96,
+          "end": 87.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Invoice",
+          "start": 87.3,
+          "end": 87.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "Auto",
+          "start": 87.74,
+          "end": 88.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "Payment",
+          "start": 88.0,
+          "end": 88.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "Helper.",
+          "start": 88.46,
+          "end": 88.82,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 89.06,
+      "end": 91.52,
+      "start_formatted": "00:01:29.060",
+      "end_formatted": "00:01:31.520",
+      "text": "I click OK to approve importing the package.",
+      "words": [
+        {
+          "word": "I",
+          "start": 89.06,
+          "end": 89.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 89.48,
+          "end": 89.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "OK",
+          "start": 89.74,
+          "end": 89.96,
+          "probability": 0.9443
+        },
+        {
+          "word": "to",
+          "start": 89.96,
+          "end": 90.22,
+          "probability": 1.0
+        },
+        {
+          "word": "approve",
+          "start": 90.22,
+          "end": 90.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "importing",
+          "start": 90.54,
+          "end": 90.98,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 90.98,
+          "end": 91.16,
+          "probability": 1.0
+        },
+        {
+          "word": "package.",
+          "start": 91.16,
+          "end": 91.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 91.52,
+      "end": 95.44,
+      "start_formatted": "00:01:31.520",
+      "end_formatted": "00:01:35.440",
+      "text": "I change the US currency value to meet the requirement.",
+      "words": [
+        {
+          "word": "I",
+          "start": 91.52,
+          "end": 92.74,
+          "probability": 0.9893
+        },
+        {
+          "word": "change",
+          "start": 92.74,
+          "end": 93.1,
+          "probability": 0.7314
+        },
+        {
+          "word": "the",
+          "start": 93.1,
+          "end": 93.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "US",
+          "start": 93.28,
+          "end": 93.6,
+          "probability": 0.4517
+        },
+        {
+          "word": "currency",
+          "start": 93.6,
+          "end": 94.0,
+          "probability": 0.9482
+        },
+        {
+          "word": "value",
+          "start": 94.0,
+          "end": 94.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 94.46,
+          "end": 94.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "meet",
+          "start": 94.64,
+          "end": 94.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 94.82,
+          "end": 94.94,
+          "probability": 1.0
+        },
+        {
+          "word": "requirement.",
+          "start": 94.94,
+          "end": 95.44,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 96.3,
+      "end": 100.68,
+      "start_formatted": "00:01:36.300",
+      "end_formatted": "00:01:40.680",
+      "text": "I also have to arrange for Invoice Auto Payment Helper to use the property.",
+      "words": [
+        {
+          "word": "I",
+          "start": 96.3,
+          "end": 96.94,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 96.94,
+          "end": 97.26,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 97.26,
+          "end": 97.52,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 97.52,
+          "end": 97.66,
+          "probability": 1.0
+        },
+        {
+          "word": "arrange",
+          "start": 97.66,
+          "end": 97.96,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 97.96,
+          "end": 98.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "Invoice",
+          "start": 98.18,
+          "end": 98.6,
+          "probability": 0.7085
+        },
+        {
+          "word": "Auto",
+          "start": 98.6,
+          "end": 98.94,
+          "probability": 0.7197
+        },
+        {
+          "word": "Payment",
+          "start": 98.94,
+          "end": 99.36,
+          "probability": 0.9478
+        },
+        {
+          "word": "Helper",
+          "start": 99.36,
+          "end": 99.66,
+          "probability": 0.9082
+        },
+        {
+          "word": "to",
+          "start": 99.66,
+          "end": 99.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "use",
+          "start": 99.82,
+          "end": 100.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 100.06,
+          "end": 100.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "property.",
+          "start": 100.24,
+          "end": 100.68,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 101.02,
+      "end": 103.38,
+      "start_formatted": "00:01:41.020",
+      "end_formatted": "00:01:43.380",
+      "text": "So I return to the Auto Approval Helper.",
+      "words": [
+        {
+          "word": "So",
+          "start": 101.02,
+          "end": 101.4,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 101.4,
+          "end": 101.54,
+          "probability": 0.9805
+        },
+        {
+          "word": "return",
+          "start": 101.54,
+          "end": 101.88,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 101.88,
+          "end": 102.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 102.08,
+          "end": 102.2,
+          "probability": 0.999
+        },
+        {
+          "word": "Auto",
+          "start": 102.2,
+          "end": 102.48,
+          "probability": 0.793
+        },
+        {
+          "word": "Approval",
+          "start": 102.48,
+          "end": 102.98,
+          "probability": 0.9922
+        },
+        {
+          "word": "Helper.",
+          "start": 102.98,
+          "end": 103.38,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 104.0,
+      "end": 105.6,
+      "start_formatted": "00:01:44.000",
+      "end_formatted": "00:01:45.600",
+      "text": "Copy the clause I need.",
+      "words": [
+        {
+          "word": "Copy",
+          "start": 104.0,
+          "end": 104.64,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 104.64,
+          "end": 104.78,
+          "probability": 1.0
+        },
+        {
+          "word": "clause",
+          "start": 104.78,
+          "end": 105.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 105.06,
+          "end": 105.26,
+          "probability": 0.999
+        },
+        {
+          "word": "need.",
+          "start": 105.26,
+          "end": 105.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 106.84,
+      "end": 109.32,
+      "start_formatted": "00:01:46.840",
+      "end_formatted": "00:01:49.320",
+      "text": "And paste it into the Auto Payment Helper.",
+      "words": [
+        {
+          "word": "And",
+          "start": 106.84,
+          "end": 107.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "paste",
+          "start": 107.48,
+          "end": 107.8,
+          "probability": 0.9937
+        },
+        {
+          "word": "it",
+          "start": 107.8,
+          "end": 107.94,
+          "probability": 1.0
+        },
+        {
+          "word": "into",
+          "start": 107.94,
+          "end": 108.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 108.12,
+          "end": 108.28,
+          "probability": 1.0
+        },
+        {
+          "word": "Auto",
+          "start": 108.28,
+          "end": 108.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "Payment",
+          "start": 108.56,
+          "end": 108.96,
+          "probability": 0.999
+        },
+        {
+          "word": "Helper.",
+          "start": 108.96,
+          "end": 109.32,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 110.36,
+      "end": 116.04,
+      "start_formatted": "00:01:50.360",
+      "end_formatted": "00:01:56.040",
+      "text": "I paste it at the bottom of the Get field to qualify reasons function, right before the return statement.",
+      "words": [
+        {
+          "word": "I",
+          "start": 110.36,
+          "end": 110.88,
+          "probability": 0.9653
+        },
+        {
+          "word": "paste",
+          "start": 110.88,
+          "end": 111.22,
+          "probability": 0.6772
+        },
+        {
+          "word": "it",
+          "start": 111.22,
+          "end": 111.34,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 111.34,
+          "end": 111.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 111.44,
+          "end": 111.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "bottom",
+          "start": 111.54,
+          "end": 111.8,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 111.8,
+          "end": 111.96,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 111.96,
+          "end": 112.06,
+          "probability": 0.998
+        },
+        {
+          "word": "Get",
+          "start": 112.06,
+          "end": 112.22,
+          "probability": 0.1768
+        },
+        {
+          "word": "field",
+          "start": 112.22,
+          "end": 112.48,
+          "probability": 0.3286
+        },
+        {
+          "word": "to",
+          "start": 112.48,
+          "end": 112.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "qualify",
+          "start": 112.68,
+          "end": 113.08,
+          "probability": 0.8105
+        },
+        {
+          "word": "reasons",
+          "start": 113.08,
+          "end": 113.64,
+          "probability": 0.8726
+        },
+        {
+          "word": "function,",
+          "start": 113.64,
+          "end": 114.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "right",
+          "start": 114.48,
+          "end": 114.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "before",
+          "start": 114.78,
+          "end": 115.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 115.06,
+          "end": 115.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "return",
+          "start": 115.22,
+          "end": 115.56,
+          "probability": 0.9609
+        },
+        {
+          "word": "statement.",
+          "start": 115.56,
+          "end": 116.04,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 117.02,
+      "end": 121.54,
+      "start_formatted": "00:01:57.020",
+      "end_formatted": "00:02:01.540",
+      "text": "Now I see that this clause uses a variable which has not been created in this helper.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 117.02,
+          "end": 117.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 117.54,
+          "end": 117.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "see",
+          "start": 117.74,
+          "end": 117.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 117.94,
+          "end": 118.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 118.14,
+          "end": 118.34,
+          "probability": 0.999
+        },
+        {
+          "word": "clause",
+          "start": 118.34,
+          "end": 118.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "uses",
+          "start": 118.66,
+          "end": 119.0,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 119.0,
+          "end": 119.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "variable",
+          "start": 119.18,
+          "end": 119.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 119.54,
+          "end": 119.82,
+          "probability": 0.998
+        },
+        {
+          "word": "has",
+          "start": 119.82,
+          "end": 119.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 119.96,
+          "end": 120.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "been",
+          "start": 120.18,
+          "end": 120.38,
+          "probability": 1.0
+        },
+        {
+          "word": "created",
+          "start": 120.38,
+          "end": 120.84,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 120.84,
+          "end": 121.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 121.04,
+          "end": 121.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "helper.",
+          "start": 121.2,
+          "end": 121.54,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 122.02,
+      "end": 124.12,
+      "start_formatted": "00:02:02.020",
+      "end_formatted": "00:02:04.120",
+      "text": "So I return to the Approval Helper.",
+      "words": [
+        {
+          "word": "So",
+          "start": 122.02,
+          "end": 122.54,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 122.54,
+          "end": 122.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "return",
+          "start": 122.68,
+          "end": 123.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 123.0,
+          "end": 123.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 123.18,
+          "end": 123.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Approval",
+          "start": 123.3,
+          "end": 123.74,
+          "probability": 0.6924
+        },
+        {
+          "word": "Helper.",
+          "start": 123.74,
+          "end": 124.12,
+          "probability": 0.6919
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 125.54,
+      "end": 128.34,
+      "start_formatted": "00:02:05.540",
+      "end_formatted": "00:02:08.340",
+      "text": "And copy the line that instantiates the variable.",
+      "words": [
+        {
+          "word": "And",
+          "start": 125.54,
+          "end": 126.08,
+          "probability": 0.5137
+        },
+        {
+          "word": "copy",
+          "start": 126.08,
+          "end": 126.42,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 126.42,
+          "end": 126.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "line",
+          "start": 126.56,
+          "end": 126.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 126.82,
+          "end": 126.98,
+          "probability": 0.998
+        },
+        {
+          "word": "instantiates",
+          "start": 126.98,
+          "end": 127.82,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 127.82,
+          "end": 127.98,
+          "probability": 0.999
+        },
+        {
+          "word": "variable.",
+          "start": 127.98,
+          "end": 128.34,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 128.74,
+      "end": 134.08,
+      "start_formatted": "00:02:08.740",
+      "end_formatted": "00:02:14.080",
+      "text": "There is more logic associated with this variable, but this one line will suffice for this demonstration.",
+      "words": [
+        {
+          "word": "There",
+          "start": 128.74,
+          "end": 129.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 129.06,
+          "end": 129.2,
+          "probability": 0.998
+        },
+        {
+          "word": "more",
+          "start": 129.2,
+          "end": 129.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "logic",
+          "start": 129.4,
+          "end": 129.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "associated",
+          "start": 129.78,
+          "end": 130.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 130.4,
+          "end": 130.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 130.62,
+          "end": 130.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "variable,",
+          "start": 130.82,
+          "end": 131.26,
+          "probability": 0.999
+        },
+        {
+          "word": "but",
+          "start": 131.54,
+          "end": 131.8,
+          "probability": 0.9922
+        },
+        {
+          "word": "this",
+          "start": 131.8,
+          "end": 132.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 132.0,
+          "end": 132.22,
+          "probability": 0.9922
+        },
+        {
+          "word": "line",
+          "start": 132.22,
+          "end": 132.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 132.44,
+          "end": 132.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "suffice",
+          "start": 132.62,
+          "end": 133.1,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 133.1,
+          "end": 133.28,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 133.28,
+          "end": 133.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration.",
+          "start": 133.44,
+          "end": 134.08,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 134.66,
+      "end": 136.74,
+      "start_formatted": "00:02:14.660",
+      "end_formatted": "00:02:16.740",
+      "text": "Then I return to the Payment Helper.",
+      "words": [
+        {
+          "word": "Then",
+          "start": 134.66,
+          "end": 135.18,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 135.18,
+          "end": 135.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "return",
+          "start": 135.32,
+          "end": 135.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 135.66,
+          "end": 135.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 135.86,
+          "end": 135.96,
+          "probability": 0.999
+        },
+        {
+          "word": "Payment",
+          "start": 135.96,
+          "end": 136.34,
+          "probability": 0.5596
+        },
+        {
+          "word": "Helper.",
+          "start": 136.34,
+          "end": 136.74,
+          "probability": 0.9531
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 138.22,
+      "end": 142.16,
+      "start_formatted": "00:02:18.220",
+      "end_formatted": "00:02:22.160",
+      "text": "And I paste the line immediately before the line where the variable is needed.",
+      "words": [
+        {
+          "word": "And",
+          "start": 138.22,
+          "end": 138.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 138.76,
+          "end": 138.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "paste",
+          "start": 138.9,
+          "end": 139.18,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 139.18,
+          "end": 139.34,
+          "probability": 1.0
+        },
+        {
+          "word": "line",
+          "start": 139.34,
+          "end": 139.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "immediately",
+          "start": 139.56,
+          "end": 140.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "before",
+          "start": 140.02,
+          "end": 140.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 140.42,
+          "end": 140.6,
+          "probability": 1.0
+        },
+        {
+          "word": "line",
+          "start": 140.6,
+          "end": 140.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "where",
+          "start": 140.86,
+          "end": 141.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 141.04,
+          "end": 141.18,
+          "probability": 1.0
+        },
+        {
+          "word": "variable",
+          "start": 141.18,
+          "end": 141.58,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 141.58,
+          "end": 141.88,
+          "probability": 1.0
+        },
+        {
+          "word": "needed.",
+          "start": 141.88,
+          "end": 142.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 142.84,
+      "end": 144.12,
+      "start_formatted": "00:02:22.840",
+      "end_formatted": "00:02:24.120",
+      "text": "This concludes the configuration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 142.84,
+          "end": 143.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "concludes",
+          "start": 143.38,
+          "end": 143.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 143.8,
+          "end": 144.02,
+          "probability": 1.0
+        },
+        {
+          "word": "configuration.",
+          "start": 144.02,
+          "end": 144.29,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 145.18,
+      "end": 147.62,
+      "start_formatted": "00:02:25.180",
+      "end_formatted": "00:02:27.620",
+      "text": "Now I will start the server to test my work.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 145.18,
+          "end": 145.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 145.54,
+          "end": 145.7,
+          "probability": 0.999
+        },
+        {
+          "word": "will",
+          "start": 145.7,
+          "end": 145.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "start",
+          "start": 145.86,
+          "end": 146.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 146.12,
+          "end": 146.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "server",
+          "start": 146.28,
+          "end": 146.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 146.54,
+          "end": 146.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "test",
+          "start": 146.72,
+          "end": 146.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "my",
+          "start": 146.96,
+          "end": 147.18,
+          "probability": 1.0
+        },
+        {
+          "word": "work.",
+          "start": 147.18,
+          "end": 147.62,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 148.3,
+      "end": 151.14,
+      "start_formatted": "00:02:28.300",
+      "end_formatted": "00:02:31.140",
+      "text": "A proper test involves at least 3 services.",
+      "words": [
+        {
+          "word": "A",
+          "start": 148.3,
+          "end": 148.84,
+          "probability": 0.998
+        },
+        {
+          "word": "proper",
+          "start": 148.84,
+          "end": 149.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "test",
+          "start": 149.14,
+          "end": 149.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "involves",
+          "start": 149.48,
+          "end": 149.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 149.9,
+          "end": 150.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "least",
+          "start": 150.12,
+          "end": 150.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "3",
+          "start": 150.32,
+          "end": 150.54,
+          "probability": 0.4453
+        },
+        {
+          "word": "services.",
+          "start": 150.54,
+          "end": 151.14,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 151.14,
+      "end": 155.56,
+      "start_formatted": "00:02:31.140",
+      "end_formatted": "00:02:35.560",
+      "text": "One below $1,000, which should be automatically approved and paid.",
+      "words": [
+        {
+          "word": "One",
+          "start": 151.14,
+          "end": 151.74,
+          "probability": 0.2595
+        },
+        {
+          "word": "below",
+          "start": 151.74,
+          "end": 152.04,
+          "probability": 0.9951
+        },
+        {
+          "word": "$1",
+          "start": 152.04,
+          "end": 152.4,
+          "probability": 0.8115
+        },
+        {
+          "word": ",000,",
+          "start": 152.4,
+          "end": 152.86,
+          "probability": 0.998
+        },
+        {
+          "word": "which",
+          "start": 153.1,
+          "end": 153.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "should",
+          "start": 153.68,
+          "end": 153.88,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 153.88,
+          "end": 154.02,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 154.02,
+          "end": 154.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "approved",
+          "start": 154.46,
+          "end": 155.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 155.02,
+          "end": 155.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "paid.",
+          "start": 155.22,
+          "end": 155.56,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 155.78,
+      "end": 160.88,
+      "start_formatted": "00:02:35.780",
+      "end_formatted": "00:02:40.880",
+      "text": "One above $1,500, which should require manual approval and manual payment.",
+      "words": [
+        {
+          "word": "One",
+          "start": 155.78,
+          "end": 156.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "above",
+          "start": 156.0,
+          "end": 156.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "$1",
+          "start": 156.28,
+          "end": 156.62,
+          "probability": 0.999
+        },
+        {
+          "word": ",500,",
+          "start": 156.62,
+          "end": 157.5,
+          "probability": 1.0
+        },
+        {
+          "word": "which",
+          "start": 157.9,
+          "end": 158.5,
+          "probability": 1.0
+        },
+        {
+          "word": "should",
+          "start": 158.5,
+          "end": 158.7,
+          "probability": 1.0
+        },
+        {
+          "word": "require",
+          "start": 158.7,
+          "end": 159.1,
+          "probability": 1.0
+        },
+        {
+          "word": "manual",
+          "start": 159.1,
+          "end": 159.44,
+          "probability": 0.9756
+        },
+        {
+          "word": "approval",
+          "start": 159.44,
+          "end": 159.9,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 159.9,
+          "end": 160.12,
+          "probability": 0.999
+        },
+        {
+          "word": "manual",
+          "start": 160.12,
+          "end": 160.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment.",
+          "start": 160.46,
+          "end": 160.88,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 161.2,
+      "end": 166.3,
+      "start_formatted": "00:02:41.200",
+      "end_formatted": "00:02:46.300",
+      "text": "And one between those two values, which should require manual approval and then be automatically paid.",
+      "words": [
+        {
+          "word": "And",
+          "start": 161.2,
+          "end": 161.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "one",
+          "start": 161.36,
+          "end": 161.58,
+          "probability": 0.9883
+        },
+        {
+          "word": "between",
+          "start": 161.58,
+          "end": 161.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "those",
+          "start": 161.84,
+          "end": 162.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 162.14,
+          "end": 162.4,
+          "probability": 0.98
+        },
+        {
+          "word": "values,",
+          "start": 162.4,
+          "end": 162.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 163.16,
+          "end": 163.42,
+          "probability": 0.999
+        },
+        {
+          "word": "should",
+          "start": 163.42,
+          "end": 163.62,
+          "probability": 0.999
+        },
+        {
+          "word": "require",
+          "start": 163.62,
+          "end": 164.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "manual",
+          "start": 164.02,
+          "end": 164.4,
+          "probability": 0.999
+        },
+        {
+          "word": "approval",
+          "start": 164.4,
+          "end": 164.84,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 164.84,
+          "end": 165.06,
+          "probability": 0.999
+        },
+        {
+          "word": "then",
+          "start": 165.06,
+          "end": 165.18,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 165.18,
+          "end": 165.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "automatically",
+          "start": 165.32,
+          "end": 165.82,
+          "probability": 1.0
+        },
+        {
+          "word": "paid.",
+          "start": 165.82,
+          "end": 166.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 166.58,
+      "end": 170.3,
+      "start_formatted": "00:02:46.580",
+      "end_formatted": "00:02:50.300",
+      "text": "Due to time constraints, I will only demonstrate the last of these.",
+      "words": [
+        {
+          "word": "Due",
+          "start": 166.58,
+          "end": 166.94,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 166.94,
+          "end": 167.14,
+          "probability": 1.0
+        },
+        {
+          "word": "time",
+          "start": 167.14,
+          "end": 167.34,
+          "probability": 0.999
+        },
+        {
+          "word": "constraints,",
+          "start": 167.34,
+          "end": 167.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 168.26,
+          "end": 168.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 168.46,
+          "end": 168.6,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 168.6,
+          "end": 168.8,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstrate",
+          "start": 168.8,
+          "end": 169.36,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 169.36,
+          "end": 169.6,
+          "probability": 1.0
+        },
+        {
+          "word": "last",
+          "start": 169.6,
+          "end": 169.84,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 169.84,
+          "end": 170.02,
+          "probability": 1.0
+        },
+        {
+          "word": "these.",
+          "start": 170.02,
+          "end": 170.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 170.7,
+      "end": 172.88,
+      "start_formatted": "00:02:50.700",
+      "end_formatted": "00:02:52.880",
+      "text": "I log in as Andy Applegate.",
+      "words": [
+        {
+          "word": "I",
+          "start": 170.7,
+          "end": 171.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "log",
+          "start": 171.3,
+          "end": 171.58,
+          "probability": 0.8857
+        },
+        {
+          "word": "in",
+          "start": 171.58,
+          "end": 171.74,
+          "probability": 0.9937
+        },
+        {
+          "word": "as",
+          "start": 171.74,
+          "end": 171.88,
+          "probability": 0.999
+        },
+        {
+          "word": "Andy",
+          "start": 171.88,
+          "end": 172.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "Applegate.",
+          "start": 172.22,
+          "end": 172.88,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 183.94,
+      "end": 187.38,
+      "start_formatted": "00:03:03.940",
+      "end_formatted": "00:03:07.380",
+      "text": "First, I will navigate to a Claims Financials screen.",
+      "words": [
+        {
+          "word": "First,",
+          "start": 183.94,
+          "end": 184.54,
+          "probability": 0.916
+        },
+        {
+          "word": "I",
+          "start": 184.88,
+          "end": 185.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "will",
+          "start": 185.02,
+          "end": 185.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "navigate",
+          "start": 185.2,
+          "end": 185.58,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 185.58,
+          "end": 185.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 185.84,
+          "end": 186.0,
+          "probability": 0.9688
+        },
+        {
+          "word": "Claims",
+          "start": 186.0,
+          "end": 186.34,
+          "probability": 0.7998
+        },
+        {
+          "word": "Financials",
+          "start": 186.34,
+          "end": 187.12,
+          "probability": 0.5972
+        },
+        {
+          "word": "screen.",
+          "start": 187.12,
+          "end": 187.38,
+          "probability": 0.9761
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 190.74,
+      "end": 197.14,
+      "start_formatted": "00:03:10.740",
+      "end_formatted": "00:03:17.140",
+      "text": "Reserve Line 2 has $4,700 of remaining reserves available, and will be perfect for this test.",
+      "words": [
+        {
+          "word": "Reserve",
+          "start": 190.74,
+          "end": 191.34,
+          "probability": 0.9175
+        },
+        {
+          "word": "Line",
+          "start": 191.34,
+          "end": 191.6,
+          "probability": 0.6421
+        },
+        {
+          "word": "2",
+          "start": 191.6,
+          "end": 191.82,
+          "probability": 0.9756
+        },
+        {
+          "word": "has",
+          "start": 191.82,
+          "end": 192.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "$4",
+          "start": 192.02,
+          "end": 192.3,
+          "probability": 0.8672
+        },
+        {
+          "word": ",700",
+          "start": 192.3,
+          "end": 193.26,
+          "probability": 0.9614
+        },
+        {
+          "word": "of",
+          "start": 193.26,
+          "end": 193.86,
+          "probability": 0.9922
+        },
+        {
+          "word": "remaining",
+          "start": 193.86,
+          "end": 194.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "reserves",
+          "start": 194.24,
+          "end": 194.68,
+          "probability": 0.9619
+        },
+        {
+          "word": "available,",
+          "start": 194.68,
+          "end": 195.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 195.5,
+          "end": 195.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "will",
+          "start": 195.74,
+          "end": 195.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 195.9,
+          "end": 196.04,
+          "probability": 0.999
+        },
+        {
+          "word": "perfect",
+          "start": 196.04,
+          "end": 196.36,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 196.36,
+          "end": 196.58,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 196.58,
+          "end": 196.76,
+          "probability": 0.999
+        },
+        {
+          "word": "test.",
+          "start": 196.76,
+          "end": 197.14,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 197.4,
+      "end": 200.28,
+      "start_formatted": "00:03:17.400",
+      "end_formatted": "00:03:20.280",
+      "text": "I also observe that the line is for auto body work.",
+      "words": [
+        {
+          "word": "I",
+          "start": 197.4,
+          "end": 197.78,
+          "probability": 0.998
+        },
+        {
+          "word": "also",
+          "start": 197.78,
+          "end": 198.12,
+          "probability": 0.998
+        },
+        {
+          "word": "observe",
+          "start": 198.12,
+          "end": 198.52,
+          "probability": 0.8833
+        },
+        {
+          "word": "that",
+          "start": 198.52,
+          "end": 198.7,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 198.7,
+          "end": 198.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "line",
+          "start": 198.82,
+          "end": 199.04,
+          "probability": 0.9688
+        },
+        {
+          "word": "is",
+          "start": 199.04,
+          "end": 199.22,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 199.22,
+          "end": 199.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "auto",
+          "start": 199.42,
+          "end": 199.62,
+          "probability": 0.7808
+        },
+        {
+          "word": "body",
+          "start": 199.62,
+          "end": 199.92,
+          "probability": 0.8945
+        },
+        {
+          "word": "work.",
+          "start": 199.92,
+          "end": 200.28,
+          "probability": 0.6348
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 200.58,
+      "end": 202.46,
+      "start_formatted": "00:03:20.580",
+      "end_formatted": "00:03:22.460",
+      "text": "I will create a new service.",
+      "words": [
+        {
+          "word": "I",
+          "start": 200.58,
+          "end": 201.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "will",
+          "start": 201.16,
+          "end": 201.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "create",
+          "start": 201.34,
+          "end": 201.66,
+          "probability": 0.9839
+        },
+        {
+          "word": "a",
+          "start": 201.66,
+          "end": 201.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "new",
+          "start": 201.86,
+          "end": 202.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "service.",
+          "start": 202.02,
+          "end": 202.46,
+          "probability": 0.9385
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 206.7,
+      "end": 209.74,
+      "start_formatted": "00:03:26.700",
+      "end_formatted": "00:03:29.740",
+      "text": "I relayed the service to the Reserve Line I chose.",
+      "words": [
+        {
+          "word": "I",
+          "start": 206.7,
+          "end": 207.3,
+          "probability": 0.9937
+        },
+        {
+          "word": "relayed",
+          "start": 207.3,
+          "end": 207.68,
+          "probability": 0.6055
+        },
+        {
+          "word": "the",
+          "start": 207.68,
+          "end": 207.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "service",
+          "start": 207.76,
+          "end": 208.08,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 208.08,
+          "end": 208.28,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 208.28,
+          "end": 208.4,
+          "probability": 0.999
+        },
+        {
+          "word": "Reserve",
+          "start": 208.4,
+          "end": 208.78,
+          "probability": 0.5894
+        },
+        {
+          "word": "Line",
+          "start": 208.78,
+          "end": 209.1,
+          "probability": 0.6719
+        },
+        {
+          "word": "I",
+          "start": 209.1,
+          "end": 209.3,
+          "probability": 0.9893
+        },
+        {
+          "word": "chose.",
+          "start": 209.3,
+          "end": 209.74,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 210.4,
+      "end": 213.12,
+      "start_formatted": "00:03:30.400",
+      "end_formatted": "00:03:33.120",
+      "text": "This will be a quote in Perform Service Request.",
+      "words": [
+        {
+          "word": "This",
+          "start": 210.4,
+          "end": 211.0,
+          "probability": 0.938
+        },
+        {
+          "word": "will",
+          "start": 211.0,
+          "end": 211.14,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 211.14,
+          "end": 211.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 211.26,
+          "end": 211.4,
+          "probability": 0.998
+        },
+        {
+          "word": "quote",
+          "start": 211.4,
+          "end": 211.6,
+          "probability": 0.9185
+        },
+        {
+          "word": "in",
+          "start": 211.6,
+          "end": 211.74,
+          "probability": 0.8335
+        },
+        {
+          "word": "Perform",
+          "start": 211.74,
+          "end": 212.04,
+          "probability": 0.5747
+        },
+        {
+          "word": "Service",
+          "start": 212.04,
+          "end": 212.56,
+          "probability": 0.6528
+        },
+        {
+          "word": "Request.",
+          "start": 212.56,
+          "end": 213.12,
+          "probability": 0.9775
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 214.96,
+      "end": 216.58,
+      "start_formatted": "00:03:34.960",
+      "end_formatted": "00:03:36.580",
+      "text": "The service to perform",
+      "words": [
+        {
+          "word": "The",
+          "start": 214.96,
+          "end": 215.56,
+          "probability": 0.9585
+        },
+        {
+          "word": "service",
+          "start": 215.56,
+          "end": 215.92,
+          "probability": 0.9375
+        },
+        {
+          "word": "to",
+          "start": 215.92,
+          "end": 216.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "perform",
+          "start": 216.1,
+          "end": 216.58,
+          "probability": 0.9673
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 218.2,
+      "end": 219.74,
+      "start_formatted": "00:03:38.200",
+      "end_formatted": "00:03:39.740",
+      "text": "is auto body repair.",
+      "words": [
+        {
+          "word": "is",
+          "start": 218.2,
+          "end": 218.8,
+          "probability": 0.9331
+        },
+        {
+          "word": "auto",
+          "start": 218.8,
+          "end": 219.0,
+          "probability": 0.6533
+        },
+        {
+          "word": "body",
+          "start": 219.0,
+          "end": 219.3,
+          "probability": 0.9712
+        },
+        {
+          "word": "repair.",
+          "start": 219.3,
+          "end": 219.74,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 223.9,
+      "end": 226.1,
+      "start_formatted": "00:03:43.900",
+      "end_formatted": "00:03:46.100",
+      "text": "I'll finish up the required fields.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 223.9,
+          "end": 224.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "finish",
+          "start": 224.5,
+          "end": 224.78,
+          "probability": 0.999
+        },
+        {
+          "word": "up",
+          "start": 224.78,
+          "end": 224.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 224.96,
+          "end": 225.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "required",
+          "start": 225.1,
+          "end": 225.52,
+          "probability": 0.9907
+        },
+        {
+          "word": "fields.",
+          "start": 225.52,
+          "end": 226.1,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 229.98,
+      "end": 232.04,
+      "start_formatted": "00:03:49.980",
+      "end_formatted": "00:03:52.040",
+      "text": "And I submit the service request.",
+      "words": [
+        {
+          "word": "And",
+          "start": 229.98,
+          "end": 230.58,
+          "probability": 0.9756
+        },
+        {
+          "word": "I",
+          "start": 230.58,
+          "end": 230.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "submit",
+          "start": 230.7,
+          "end": 231.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 231.0,
+          "end": 231.18,
+          "probability": 1.0
+        },
+        {
+          "word": "service",
+          "start": 231.18,
+          "end": 231.48,
+          "probability": 0.9741
+        },
+        {
+          "word": "request.",
+          "start": 231.48,
+          "end": 232.04,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 233.48,
+      "end": 236.72,
+      "start_formatted": "00:03:53.480",
+      "end_formatted": "00:03:56.720",
+      "text": "After a while, the auto shop provides a quote.",
+      "words": [
+        {
+          "word": "After",
+          "start": 233.48,
+          "end": 234.24,
+          "probability": 0.9775
+        },
+        {
+          "word": "a",
+          "start": 234.24,
+          "end": 234.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "while,",
+          "start": 234.42,
+          "end": 234.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 235.06,
+          "end": 235.2,
+          "probability": 0.9927
+        },
+        {
+          "word": "auto",
+          "start": 235.2,
+          "end": 235.52,
+          "probability": 0.9575
+        },
+        {
+          "word": "shop",
+          "start": 235.52,
+          "end": 235.82,
+          "probability": 0.9893
+        },
+        {
+          "word": "provides",
+          "start": 235.82,
+          "end": 236.26,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 236.26,
+          "end": 236.42,
+          "probability": 0.999
+        },
+        {
+          "word": "quote.",
+          "start": 236.42,
+          "end": 236.72,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 242.2,
+      "end": 244.4,
+      "start_formatted": "00:04:02.200",
+      "end_formatted": "00:04:04.400",
+      "text": "The quote totals $1,000.",
+      "words": [
+        {
+          "word": "The",
+          "start": 242.2,
+          "end": 242.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "quote",
+          "start": 242.96,
+          "end": 243.22,
+          "probability": 0.998
+        },
+        {
+          "word": "totals",
+          "start": 243.22,
+          "end": 243.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "$1",
+          "start": 243.64,
+          "end": 244.02,
+          "probability": 0.9688
+        },
+        {
+          "word": ",000.",
+          "start": 244.02,
+          "end": 244.4,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 246.92,
+      "end": 248.5,
+      "start_formatted": "00:04:06.920",
+      "end_formatted": "00:04:08.500",
+      "text": "750 for parts.",
+      "words": [
+        {
+          "word": "750",
+          "start": 246.92,
+          "end": 247.68,
+          "probability": 0.2766
+        },
+        {
+          "word": "for",
+          "start": 247.68,
+          "end": 248.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "parts.",
+          "start": 248.04,
+          "end": 248.5,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 254.76,
+      "end": 256.78,
+      "start_formatted": "00:04:14.760",
+      "end_formatted": "00:04:16.780",
+      "text": "And 250 for labor.",
+      "words": [
+        {
+          "word": "And",
+          "start": 254.76,
+          "end": 255.44,
+          "probability": 0.5156
+        },
+        {
+          "word": "250",
+          "start": 255.44,
+          "end": 256.12,
+          "probability": 0.7437
+        },
+        {
+          "word": "for",
+          "start": 256.12,
+          "end": 256.5,
+          "probability": 0.9937
+        },
+        {
+          "word": "labor.",
+          "start": 256.5,
+          "end": 256.78,
+          "probability": 0.9355
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 260.54,
+      "end": 262.56,
+      "start_formatted": "00:04:20.540",
+      "end_formatted": "00:04:22.560",
+      "text": "The quote is waiting for approval.",
+      "words": [
+        {
+          "word": "The",
+          "start": 260.54,
+          "end": 261.22,
+          "probability": 0.9917
+        },
+        {
+          "word": "quote",
+          "start": 261.22,
+          "end": 261.44,
+          "probability": 0.9634
+        },
+        {
+          "word": "is",
+          "start": 261.44,
+          "end": 261.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "waiting",
+          "start": 261.62,
+          "end": 261.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 261.88,
+          "end": 262.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "approval.",
+          "start": 262.1,
+          "end": 262.56,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 263.5,
+      "end": 264.32,
+      "start_formatted": "00:04:23.500",
+      "end_formatted": "00:04:24.320",
+      "text": "So I approve it.",
+      "words": [
+        {
+          "word": "So",
+          "start": 263.22,
+          "end": 263.56,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 263.56,
+          "end": 263.76,
+          "probability": 0.9766
+        },
+        {
+          "word": "approve",
+          "start": 263.76,
+          "end": 264.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "it.",
+          "start": 264.1,
+          "end": 264.32,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 268.5,
+      "end": 271.28,
+      "start_formatted": "00:04:28.500",
+      "end_formatted": "00:04:31.280",
+      "text": "The vendor completes the work and sends in an invoice.",
+      "words": [
+        {
+          "word": "The",
+          "start": 268.5,
+          "end": 269.06,
+          "probability": 0.9219
+        },
+        {
+          "word": "vendor",
+          "start": 269.06,
+          "end": 269.32,
+          "probability": 0.9561
+        },
+        {
+          "word": "completes",
+          "start": 269.32,
+          "end": 269.78,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 269.78,
+          "end": 269.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "work",
+          "start": 269.96,
+          "end": 270.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 270.2,
+          "end": 270.36,
+          "probability": 0.9878
+        },
+        {
+          "word": "sends",
+          "start": 270.36,
+          "end": 270.66,
+          "probability": 0.9902
+        },
+        {
+          "word": "in",
+          "start": 270.66,
+          "end": 270.8,
+          "probability": 0.9751
+        },
+        {
+          "word": "an",
+          "start": 270.8,
+          "end": 270.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "invoice.",
+          "start": 270.92,
+          "end": 271.28,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 277.26,
+      "end": 279.1,
+      "start_formatted": "00:04:37.260",
+      "end_formatted": "00:04:39.100",
+      "text": "I'll fill in the invoice details.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 277.26,
+          "end": 277.82,
+          "probability": 0.9883
+        },
+        {
+          "word": "fill",
+          "start": 277.82,
+          "end": 278.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 278.02,
+          "end": 278.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 278.16,
+          "end": 278.26,
+          "probability": 0.998
+        },
+        {
+          "word": "invoice",
+          "start": 278.26,
+          "end": 278.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "details.",
+          "start": 278.66,
+          "end": 279.1,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 284.94,
+      "end": 287.0,
+      "start_formatted": "00:04:44.940",
+      "end_formatted": "00:04:47.000",
+      "text": "The parts came in right on target.",
+      "words": [
+        {
+          "word": "The",
+          "start": 284.94,
+          "end": 285.46,
+          "probability": 0.8389
+        },
+        {
+          "word": "parts",
+          "start": 285.46,
+          "end": 285.78,
+          "probability": 0.9087
+        },
+        {
+          "word": "came",
+          "start": 285.78,
+          "end": 286.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "in",
+          "start": 286.02,
+          "end": 286.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "right",
+          "start": 286.2,
+          "end": 286.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "on",
+          "start": 286.4,
+          "end": 286.58,
+          "probability": 0.9927
+        },
+        {
+          "word": "target.",
+          "start": 286.58,
+          "end": 287.0,
+          "probability": 0.9858
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 293.92,
+      "end": 296.44,
+      "start_formatted": "00:04:53.920",
+      "end_formatted": "00:04:56.440",
+      "text": "But the cost of labor was higher than expected.",
+      "words": [
+        {
+          "word": "But",
+          "start": 293.92,
+          "end": 294.44,
+          "probability": 0.9663
+        },
+        {
+          "word": "the",
+          "start": 294.44,
+          "end": 294.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "cost",
+          "start": 294.56,
+          "end": 294.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 294.86,
+          "end": 295.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "labor",
+          "start": 295.02,
+          "end": 295.26,
+          "probability": 0.9634
+        },
+        {
+          "word": "was",
+          "start": 295.26,
+          "end": 295.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "higher",
+          "start": 295.54,
+          "end": 295.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "than",
+          "start": 295.78,
+          "end": 295.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "expected.",
+          "start": 295.98,
+          "end": 296.44,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 299.98,
+      "end": 302.7,
+      "start_formatted": "00:04:59.980",
+      "end_formatted": "00:05:02.700",
+      "text": "The status of the invoice is waiting for approval.",
+      "words": [
+        {
+          "word": "The",
+          "start": 299.98,
+          "end": 300.5,
+          "probability": 0.9517
+        },
+        {
+          "word": "status",
+          "start": 300.5,
+          "end": 300.84,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 300.84,
+          "end": 301.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 301.06,
+          "end": 301.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice",
+          "start": 301.18,
+          "end": 301.56,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 301.56,
+          "end": 301.76,
+          "probability": 0.999
+        },
+        {
+          "word": "waiting",
+          "start": 301.76,
+          "end": 302.0,
+          "probability": 0.9053
+        },
+        {
+          "word": "for",
+          "start": 302.0,
+          "end": 302.24,
+          "probability": 1.0
+        },
+        {
+          "word": "approval.",
+          "start": 302.24,
+          "end": 302.7,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 303.04,
+      "end": 306.78,
+      "start_formatted": "00:05:03.040",
+      "end_formatted": "00:05:06.780",
+      "text": "The reason it is waiting for approval is because the amount is too high.",
+      "words": [
+        {
+          "word": "The",
+          "start": 303.04,
+          "end": 303.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "reason",
+          "start": 303.56,
+          "end": 303.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 303.82,
+          "end": 304.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 304.0,
+          "end": 304.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "waiting",
+          "start": 304.12,
+          "end": 304.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 304.38,
+          "end": 304.62,
+          "probability": 1.0
+        },
+        {
+          "word": "approval",
+          "start": 304.62,
+          "end": 305.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 305.02,
+          "end": 305.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "because",
+          "start": 305.28,
+          "end": 305.52,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 305.52,
+          "end": 305.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "amount",
+          "start": 305.7,
+          "end": 305.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 305.96,
+          "end": 306.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "too",
+          "start": 306.2,
+          "end": 306.4,
+          "probability": 0.999
+        },
+        {
+          "word": "high.",
+          "start": 306.4,
+          "end": 306.78,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 306.94,
+      "end": 310.76,
+      "start_formatted": "00:05:06.940",
+      "end_formatted": "00:05:10.760",
+      "text": "That is, it exceeds the $1,000 I set in the approval helper.",
+      "words": [
+        {
+          "word": "That",
+          "start": 306.94,
+          "end": 307.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "is,",
+          "start": 307.22,
+          "end": 307.48,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 307.64,
+          "end": 307.86,
+          "probability": 0.999
+        },
+        {
+          "word": "exceeds",
+          "start": 307.86,
+          "end": 308.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 308.18,
+          "end": 308.42,
+          "probability": 0.999
+        },
+        {
+          "word": "$1",
+          "start": 308.42,
+          "end": 308.68,
+          "probability": 0.9131
+        },
+        {
+          "word": ",000",
+          "start": 308.68,
+          "end": 309.08,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 309.08,
+          "end": 309.58,
+          "probability": 0.9932
+        },
+        {
+          "word": "set",
+          "start": 309.58,
+          "end": 309.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "in",
+          "start": 309.82,
+          "end": 309.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 309.94,
+          "end": 310.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "approval",
+          "start": 310.02,
+          "end": 310.38,
+          "probability": 0.7261
+        },
+        {
+          "word": "helper.",
+          "start": 310.38,
+          "end": 310.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 310.76,
+      "end": 313.02,
+      "start_formatted": "00:05:10.760",
+      "end_formatted": "00:05:13.020",
+      "text": "So I approve the invoice.",
+      "words": [
+        {
+          "word": "So",
+          "start": 310.76,
+          "end": 311.94,
+          "probability": 0.7969
+        },
+        {
+          "word": "I",
+          "start": 311.94,
+          "end": 312.1,
+          "probability": 0.9229
+        },
+        {
+          "word": "approve",
+          "start": 312.1,
+          "end": 312.42,
+          "probability": 0.9619
+        },
+        {
+          "word": "the",
+          "start": 312.42,
+          "end": 312.58,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice.",
+          "start": 312.58,
+          "end": 313.02,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 314.38,
+      "end": 316.36,
+      "start_formatted": "00:05:14.380",
+      "end_formatted": "00:05:16.360",
+      "text": "The check is immediately created.",
+      "words": [
+        {
+          "word": "The",
+          "start": 314.38,
+          "end": 314.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "check",
+          "start": 314.98,
+          "end": 315.2,
+          "probability": 0.9746
+        },
+        {
+          "word": "is",
+          "start": 315.2,
+          "end": 315.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "immediately",
+          "start": 315.42,
+          "end": 315.84,
+          "probability": 0.999
+        },
+        {
+          "word": "created.",
+          "start": 315.84,
+          "end": 316.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 316.7,
+      "end": 321.98,
+      "start_formatted": "00:05:16.700",
+      "end_formatted": "00:05:21.980",
+      "text": "This is because I set the small amount threshold to $1,500 in the payment helper.",
+      "words": [
+        {
+          "word": "This",
+          "start": 316.7,
+          "end": 317.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 317.2,
+          "end": 317.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 317.36,
+          "end": 317.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 317.58,
+          "end": 317.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "set",
+          "start": 317.78,
+          "end": 317.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 317.98,
+          "end": 318.12,
+          "probability": 0.998
+        },
+        {
+          "word": "small",
+          "start": 318.12,
+          "end": 318.38,
+          "probability": 0.9673
+        },
+        {
+          "word": "amount",
+          "start": 318.38,
+          "end": 318.68,
+          "probability": 0.998
+        },
+        {
+          "word": "threshold",
+          "start": 318.68,
+          "end": 319.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 319.14,
+          "end": 319.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "$1",
+          "start": 319.42,
+          "end": 319.7,
+          "probability": 0.9521
+        },
+        {
+          "word": ",500",
+          "start": 319.7,
+          "end": 320.58,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 320.58,
+          "end": 321.18,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 321.18,
+          "end": 321.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 321.26,
+          "end": 321.54,
+          "probability": 0.9019
+        },
+        {
+          "word": "helper.",
+          "start": 321.54,
+          "end": 321.98,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 321.98,
+      "end": 324.02,
+      "start_formatted": "00:05:21.980",
+      "end_formatted": "00:05:24.020",
+      "text": "This concludes the STIP demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 321.98,
+          "end": 322.92,
+          "probability": 0.8882
+        },
+        {
+          "word": "concludes",
+          "start": 322.92,
+          "end": 323.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 323.34,
+          "end": 323.54,
+          "probability": 0.8491
+        },
+        {
+          "word": "STIP",
+          "start": 323.54,
+          "end": 323.74,
+          "probability": 0.7402
+        },
+        {
+          "word": "demonstration.",
+          "start": 323.74,
+          "end": 324.02,
+          "probability": 0.9385
+        }
+      ]
+    }
+  ]
+}

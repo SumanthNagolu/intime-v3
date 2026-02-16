@@ -1,0 +1,1879 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_09_01.mp4",
+    "video_stem": "In_09_01",
+    "duration_seconds": 161.88,
+    "duration_formatted": "00:02:41.880",
+    "segment_count": 15,
+    "word_count": 279,
+    "avg_confidence": 0.9359,
+    "transcription_time_seconds": 14.7,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:48:18.677257"
+  },
+  "full_text": "In this demonstration, consume an external SOAP web service that publishes a stock quote given a stock symbol. This demonstration requires that you use Training App, External App, and Guidewire Studio. Create a web service collection in the demo.ta package. In Studio, right-click on the demo.ta package. Select New and then Package. Type the name of the new package. Click OK to save. Right-click on the new stocks package. Select New and then Web Service Collection. Type the name of the new web service collection. Click OK to save. Click the Add New Resource icon. Type the resource URL. Right-click on the newountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount app server is running before executing the fetch. In the WSDL Fetcher Output screen, the return code is 0, which indicates a successful fetch. Click the Fetched Resources tab. Verify the stock API. WSDL and SOAP headers.xsd folders are retrieved. Restart the server to deploy the new resources. Click the Stop Server icon. Click the Debug Server icon to start the server. Open GoSo Scratchpad to test the new web service collection. Click Tools and then select GoSo Scratchpad. Enter code to test the new web service collection. Examine the code. Line 3. Create a new API instance. Lines 5 to 7. Set API properties as necessary. Lines 5 to 6. Set authentication parameters. Line 7. Specify the CallTimeout property to prevent endlessly waiting for a server response. Line 9. Call the API GetQuote method to get the stock quote for Guidewire. Click the Run and Debug Process icon to execute the code. In the console output, the quote for Guidewire was retrieved from the external resource. This ends, the consuming a soap web service demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.7,
+      "end": 27.5,
+      "start_formatted": "00:00:00.700",
+      "end_formatted": "00:00:27.500",
+      "text": "In this demonstration, consume an external SOAP web service that publishes a stock quote given a stock symbol. This demonstration requires that you use Training App, External App, and Guidewire Studio. Create a web service collection in the demo.ta package. In Studio, right-click on the demo.ta package. Select New and then Package. Type the name of the new package.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.7,
+          "end": 1.4,
+          "probability": 0.9629
+        },
+        {
+          "word": "this",
+          "start": 1.4,
+          "end": 1.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "demonstration,",
+          "start": 1.62,
+          "end": 2.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "consume",
+          "start": 2.62,
+          "end": 3.04,
+          "probability": 0.9658
+        },
+        {
+          "word": "an",
+          "start": 3.04,
+          "end": 3.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "external",
+          "start": 3.24,
+          "end": 3.66,
+          "probability": 0.8667
+        },
+        {
+          "word": "SOAP",
+          "start": 3.66,
+          "end": 4.06,
+          "probability": 0.9082
+        },
+        {
+          "word": "web",
+          "start": 4.06,
+          "end": 4.22,
+          "probability": 0.8604
+        },
+        {
+          "word": "service",
+          "start": 4.22,
+          "end": 4.62,
+          "probability": 0.9746
+        },
+        {
+          "word": "that",
+          "start": 4.62,
+          "end": 4.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "publishes",
+          "start": 4.92,
+          "end": 5.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 5.48,
+          "end": 5.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "stock",
+          "start": 5.6,
+          "end": 5.86,
+          "probability": 0.8535
+        },
+        {
+          "word": "quote",
+          "start": 5.86,
+          "end": 6.16,
+          "probability": 0.9731
+        },
+        {
+          "word": "given",
+          "start": 6.16,
+          "end": 6.44,
+          "probability": 0.9844
+        },
+        {
+          "word": "a",
+          "start": 6.44,
+          "end": 6.64,
+          "probability": 0.9658
+        },
+        {
+          "word": "stock",
+          "start": 6.64,
+          "end": 6.92,
+          "probability": 0.9683
+        },
+        {
+          "word": "symbol.",
+          "start": 6.92,
+          "end": 7.38,
+          "probability": 0.9941
+        },
+        {
+          "word": "This",
+          "start": 7.74,
+          "end": 8.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "demonstration",
+          "start": 8.38,
+          "end": 9.02,
+          "probability": 0.9927
+        },
+        {
+          "word": "requires",
+          "start": 9.02,
+          "end": 9.6,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 9.6,
+          "end": 9.88,
+          "probability": 0.998
+        },
+        {
+          "word": "you",
+          "start": 9.88,
+          "end": 10.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "use",
+          "start": 10.02,
+          "end": 10.28,
+          "probability": 0.9897
+        },
+        {
+          "word": "Training",
+          "start": 10.28,
+          "end": 10.58,
+          "probability": 0.7886
+        },
+        {
+          "word": "App,",
+          "start": 10.58,
+          "end": 11.0,
+          "probability": 0.7871
+        },
+        {
+          "word": "External",
+          "start": 11.22,
+          "end": 11.62,
+          "probability": 0.9624
+        },
+        {
+          "word": "App,",
+          "start": 11.62,
+          "end": 12.0,
+          "probability": 0.9883
+        },
+        {
+          "word": "and",
+          "start": 12.12,
+          "end": 12.36,
+          "probability": 0.9824
+        },
+        {
+          "word": "Guidewire",
+          "start": 12.36,
+          "end": 12.98,
+          "probability": 0.979
+        },
+        {
+          "word": "Studio.",
+          "start": 12.98,
+          "end": 13.4,
+          "probability": 0.9683
+        },
+        {
+          "word": "Create",
+          "start": 14.16,
+          "end": 14.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 14.86,
+          "end": 15.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "web",
+          "start": 15.04,
+          "end": 15.26,
+          "probability": 0.8569
+        },
+        {
+          "word": "service",
+          "start": 15.26,
+          "end": 15.7,
+          "probability": 0.9849
+        },
+        {
+          "word": "collection",
+          "start": 15.7,
+          "end": 16.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "in",
+          "start": 16.18,
+          "end": 16.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 16.5,
+          "end": 16.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "demo",
+          "start": 16.58,
+          "end": 16.84,
+          "probability": 0.4968
+        },
+        {
+          "word": ".ta",
+          "start": 16.84,
+          "end": 17.6,
+          "probability": 0.9023
+        },
+        {
+          "word": "package.",
+          "start": 17.6,
+          "end": 18.06,
+          "probability": 0.9785
+        },
+        {
+          "word": "In",
+          "start": 18.72,
+          "end": 19.1,
+          "probability": 0.9922
+        },
+        {
+          "word": "Studio,",
+          "start": 19.1,
+          "end": 19.48,
+          "probability": 0.8813
+        },
+        {
+          "word": "right",
+          "start": 19.84,
+          "end": 20.18,
+          "probability": 0.8647
+        },
+        {
+          "word": "-click",
+          "start": 20.18,
+          "end": 20.42,
+          "probability": 0.8945
+        },
+        {
+          "word": "on",
+          "start": 20.42,
+          "end": 20.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 20.66,
+          "end": 20.76,
+          "probability": 0.998
+        },
+        {
+          "word": "demo",
+          "start": 20.76,
+          "end": 21.02,
+          "probability": 0.9692
+        },
+        {
+          "word": ".ta",
+          "start": 21.02,
+          "end": 21.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "package.",
+          "start": 21.72,
+          "end": 22.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "Select",
+          "start": 22.86,
+          "end": 23.56,
+          "probability": 0.9863
+        },
+        {
+          "word": "New",
+          "start": 23.56,
+          "end": 23.78,
+          "probability": 0.8667
+        },
+        {
+          "word": "and",
+          "start": 23.78,
+          "end": 24.0,
+          "probability": 0.9775
+        },
+        {
+          "word": "then",
+          "start": 24.0,
+          "end": 24.18,
+          "probability": 0.9834
+        },
+        {
+          "word": "Package.",
+          "start": 24.18,
+          "end": 24.74,
+          "probability": 0.9854
+        },
+        {
+          "word": "Type",
+          "start": 25.34,
+          "end": 26.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 26.04,
+          "end": 26.24,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 26.24,
+          "end": 26.48,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 26.48,
+          "end": 26.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 26.68,
+          "end": 26.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 26.8,
+          "end": 26.98,
+          "probability": 0.9893
+        },
+        {
+          "word": "package.",
+          "start": 26.98,
+          "end": 27.5,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 32.12,
+      "end": 54.12,
+      "start_formatted": "00:00:32.120",
+      "end_formatted": "00:00:54.120",
+      "text": "Click OK to save. Right-click on the new stocks package. Select New and then Web Service Collection. Type the name of the new web service collection. Click OK to save. Click the Add New Resource icon. Type the resource URL.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 32.12,
+          "end": 32.86,
+          "probability": 0.873
+        },
+        {
+          "word": "OK",
+          "start": 32.86,
+          "end": 33.24,
+          "probability": 0.6831
+        },
+        {
+          "word": "to",
+          "start": 33.24,
+          "end": 33.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "save.",
+          "start": 33.54,
+          "end": 33.88,
+          "probability": 0.8745
+        },
+        {
+          "word": "Right",
+          "start": 34.88,
+          "end": 35.58,
+          "probability": 0.9883
+        },
+        {
+          "word": "-click",
+          "start": 35.58,
+          "end": 35.82,
+          "probability": 0.7578
+        },
+        {
+          "word": "on",
+          "start": 35.82,
+          "end": 36.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 36.04,
+          "end": 36.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 36.16,
+          "end": 36.34,
+          "probability": 0.5723
+        },
+        {
+          "word": "stocks",
+          "start": 36.34,
+          "end": 36.74,
+          "probability": 0.833
+        },
+        {
+          "word": "package.",
+          "start": 36.74,
+          "end": 37.34,
+          "probability": 0.9897
+        },
+        {
+          "word": "Select",
+          "start": 37.9,
+          "end": 38.64,
+          "probability": 0.978
+        },
+        {
+          "word": "New",
+          "start": 38.64,
+          "end": 38.9,
+          "probability": 0.4243
+        },
+        {
+          "word": "and",
+          "start": 38.9,
+          "end": 39.12,
+          "probability": 0.9229
+        },
+        {
+          "word": "then",
+          "start": 39.12,
+          "end": 39.3,
+          "probability": 0.9688
+        },
+        {
+          "word": "Web",
+          "start": 39.3,
+          "end": 39.48,
+          "probability": 0.9067
+        },
+        {
+          "word": "Service",
+          "start": 39.48,
+          "end": 39.94,
+          "probability": 0.9092
+        },
+        {
+          "word": "Collection.",
+          "start": 39.94,
+          "end": 40.56,
+          "probability": 0.896
+        },
+        {
+          "word": "Type",
+          "start": 41.28,
+          "end": 42.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 42.02,
+          "end": 42.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 42.2,
+          "end": 42.44,
+          "probability": 0.9541
+        },
+        {
+          "word": "of",
+          "start": 42.44,
+          "end": 42.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 42.62,
+          "end": 42.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 42.74,
+          "end": 42.88,
+          "probability": 0.98
+        },
+        {
+          "word": "web",
+          "start": 42.88,
+          "end": 43.1,
+          "probability": 0.4543
+        },
+        {
+          "word": "service",
+          "start": 43.1,
+          "end": 43.42,
+          "probability": 0.9868
+        },
+        {
+          "word": "collection.",
+          "start": 43.42,
+          "end": 44.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "Click",
+          "start": 46.98,
+          "end": 47.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "OK",
+          "start": 47.72,
+          "end": 48.06,
+          "probability": 0.9722
+        },
+        {
+          "word": "to",
+          "start": 48.06,
+          "end": 48.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "save.",
+          "start": 48.36,
+          "end": 48.72,
+          "probability": 0.9644
+        },
+        {
+          "word": "Click",
+          "start": 49.68,
+          "end": 50.4,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 50.4,
+          "end": 50.62,
+          "probability": 0.9956
+        },
+        {
+          "word": "Add",
+          "start": 50.62,
+          "end": 50.84,
+          "probability": 0.7349
+        },
+        {
+          "word": "New",
+          "start": 50.84,
+          "end": 51.02,
+          "probability": 0.7842
+        },
+        {
+          "word": "Resource",
+          "start": 51.02,
+          "end": 51.42,
+          "probability": 0.9624
+        },
+        {
+          "word": "icon.",
+          "start": 51.42,
+          "end": 51.88,
+          "probability": 0.9917
+        },
+        {
+          "word": "Type",
+          "start": 52.36,
+          "end": 53.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 53.02,
+          "end": 53.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "resource",
+          "start": 53.2,
+          "end": 53.58,
+          "probability": 0.8384
+        },
+        {
+          "word": "URL.",
+          "start": 53.58,
+          "end": 54.12,
+          "probability": 0.9736
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.0,
+      "end": 80.14,
+      "start_formatted": "00:01:00.000",
+      "end_formatted": "00:01:20.140",
+      "text": "Right-click on the newountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "Right",
+          "start": 60.0,
+          "end": 60.34,
+          "probability": 0.0002
+        },
+        {
+          "word": "-click",
+          "start": 60.34,
+          "end": 61.5,
+          "probability": 0.459
+        },
+        {
+          "word": "on",
+          "start": 61.5,
+          "end": 61.56,
+          "probability": 0.0529
+        },
+        {
+          "word": "the",
+          "start": 61.56,
+          "end": 61.56,
+          "probability": 0.5068
+        },
+        {
+          "word": "newountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 61.56,
+          "end": 80.14,
+          "probability": 0.918
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 80.14,
+      "end": 86.52,
+      "start_formatted": "00:01:20.140",
+      "end_formatted": "00:01:26.520",
+      "text": "app server is running before executing the fetch. In the WSDL Fetcher Output screen,",
+      "words": [
+        {
+          "word": "app",
+          "start": 80.14,
+          "end": 80.32,
+          "probability": 0.5664
+        },
+        {
+          "word": "server",
+          "start": 80.32,
+          "end": 80.58,
+          "probability": 0.9883
+        },
+        {
+          "word": "is",
+          "start": 80.58,
+          "end": 80.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "running",
+          "start": 80.86,
+          "end": 81.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "before",
+          "start": 81.12,
+          "end": 81.48,
+          "probability": 0.998
+        },
+        {
+          "word": "executing",
+          "start": 81.48,
+          "end": 82.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 82.1,
+          "end": 82.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "fetch.",
+          "start": 82.34,
+          "end": 82.68,
+          "probability": 0.9468
+        },
+        {
+          "word": "In",
+          "start": 83.38,
+          "end": 84.06,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 84.06,
+          "end": 84.18,
+          "probability": 0.998
+        },
+        {
+          "word": "WSDL",
+          "start": 84.18,
+          "end": 85.14,
+          "probability": 0.9707
+        },
+        {
+          "word": "Fetcher",
+          "start": 85.14,
+          "end": 85.58,
+          "probability": 0.9155
+        },
+        {
+          "word": "Output",
+          "start": 85.58,
+          "end": 86.08,
+          "probability": 0.7656
+        },
+        {
+          "word": "screen,",
+          "start": 86.08,
+          "end": 86.52,
+          "probability": 0.9062
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 86.74,
+      "end": 93.22,
+      "start_formatted": "00:01:26.740",
+      "end_formatted": "00:01:33.220",
+      "text": "the return code is 0, which indicates a successful fetch. Click the Fetched Resources tab.",
+      "words": [
+        {
+          "word": "the",
+          "start": 86.74,
+          "end": 86.96,
+          "probability": 0.9956
+        },
+        {
+          "word": "return",
+          "start": 86.96,
+          "end": 87.3,
+          "probability": 0.979
+        },
+        {
+          "word": "code",
+          "start": 87.3,
+          "end": 87.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 87.62,
+          "end": 87.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "0,",
+          "start": 87.88,
+          "end": 88.18,
+          "probability": 0.4612
+        },
+        {
+          "word": "which",
+          "start": 88.48,
+          "end": 88.78,
+          "probability": 0.998
+        },
+        {
+          "word": "indicates",
+          "start": 88.78,
+          "end": 89.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 89.28,
+          "end": 89.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "successful",
+          "start": 89.48,
+          "end": 90.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "fetch.",
+          "start": 90.02,
+          "end": 90.5,
+          "probability": 0.9834
+        },
+        {
+          "word": "Click",
+          "start": 91.02,
+          "end": 91.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 91.7,
+          "end": 91.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Fetched",
+          "start": 91.88,
+          "end": 92.34,
+          "probability": 0.9536
+        },
+        {
+          "word": "Resources",
+          "start": 92.34,
+          "end": 92.72,
+          "probability": 0.9536
+        },
+        {
+          "word": "tab.",
+          "start": 92.72,
+          "end": 93.22,
+          "probability": 0.98
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 94.2,
+      "end": 100.56,
+      "start_formatted": "00:01:34.200",
+      "end_formatted": "00:01:40.560",
+      "text": "Verify the stock API. WSDL and SOAP headers.xsd folders are retrieved.",
+      "words": [
+        {
+          "word": "Verify",
+          "start": 94.2,
+          "end": 94.88,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 94.88,
+          "end": 95.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "stock",
+          "start": 95.08,
+          "end": 95.32,
+          "probability": 0.6577
+        },
+        {
+          "word": "API.",
+          "start": 95.32,
+          "end": 95.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "WSDL",
+          "start": 96.74,
+          "end": 97.42,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 97.42,
+          "end": 97.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "SOAP",
+          "start": 97.66,
+          "end": 98.06,
+          "probability": 0.7441
+        },
+        {
+          "word": "headers",
+          "start": 98.06,
+          "end": 98.24,
+          "probability": 0.876
+        },
+        {
+          "word": ".xsd",
+          "start": 98.24,
+          "end": 99.26,
+          "probability": 0.9268
+        },
+        {
+          "word": "folders",
+          "start": 99.26,
+          "end": 99.64,
+          "probability": 0.9902
+        },
+        {
+          "word": "are",
+          "start": 99.64,
+          "end": 99.92,
+          "probability": 1.0
+        },
+        {
+          "word": "retrieved.",
+          "start": 99.92,
+          "end": 100.56,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 101.26,
+      "end": 106.26,
+      "start_formatted": "00:01:41.260",
+      "end_formatted": "00:01:46.260",
+      "text": "Restart the server to deploy the new resources. Click the Stop Server icon.",
+      "words": [
+        {
+          "word": "Restart",
+          "start": 101.26,
+          "end": 101.94,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 101.94,
+          "end": 102.12,
+          "probability": 1.0
+        },
+        {
+          "word": "server",
+          "start": 102.12,
+          "end": 102.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 102.42,
+          "end": 102.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "deploy",
+          "start": 102.66,
+          "end": 102.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 102.96,
+          "end": 103.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 103.2,
+          "end": 103.36,
+          "probability": 0.999
+        },
+        {
+          "word": "resources.",
+          "start": 103.36,
+          "end": 103.88,
+          "probability": 0.998
+        },
+        {
+          "word": "Click",
+          "start": 104.56,
+          "end": 105.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 105.02,
+          "end": 105.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "Stop",
+          "start": 105.24,
+          "end": 105.5,
+          "probability": 0.8672
+        },
+        {
+          "word": "Server",
+          "start": 105.5,
+          "end": 105.84,
+          "probability": 0.7529
+        },
+        {
+          "word": "icon.",
+          "start": 105.84,
+          "end": 106.26,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 106.26,
+      "end": 113.72,
+      "start_formatted": "00:01:46.260",
+      "end_formatted": "00:01:53.720",
+      "text": "Click the Debug Server icon to start the server. Open GoSo Scratchpad to test the new web service",
+      "words": [
+        {
+          "word": "Click",
+          "start": 106.26,
+          "end": 107.56,
+          "probability": 0.9302
+        },
+        {
+          "word": "the",
+          "start": 107.56,
+          "end": 107.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "Debug",
+          "start": 107.74,
+          "end": 108.14,
+          "probability": 0.6699
+        },
+        {
+          "word": "Server",
+          "start": 108.14,
+          "end": 108.48,
+          "probability": 0.646
+        },
+        {
+          "word": "icon",
+          "start": 108.48,
+          "end": 108.86,
+          "probability": 0.9761
+        },
+        {
+          "word": "to",
+          "start": 108.86,
+          "end": 109.16,
+          "probability": 0.998
+        },
+        {
+          "word": "start",
+          "start": 109.16,
+          "end": 109.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 109.44,
+          "end": 109.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "server.",
+          "start": 109.64,
+          "end": 109.98,
+          "probability": 0.9536
+        },
+        {
+          "word": "Open",
+          "start": 110.66,
+          "end": 111.34,
+          "probability": 0.998
+        },
+        {
+          "word": "GoSo",
+          "start": 111.34,
+          "end": 111.64,
+          "probability": 0.2585
+        },
+        {
+          "word": "Scratchpad",
+          "start": 111.64,
+          "end": 112.3,
+          "probability": 0.6641
+        },
+        {
+          "word": "to",
+          "start": 112.3,
+          "end": 112.54,
+          "probability": 0.999
+        },
+        {
+          "word": "test",
+          "start": 112.54,
+          "end": 112.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 112.8,
+          "end": 112.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 112.98,
+          "end": 113.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "web",
+          "start": 113.14,
+          "end": 113.4,
+          "probability": 0.748
+        },
+        {
+          "word": "service",
+          "start": 113.4,
+          "end": 113.72,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 113.72,
+      "end": 120.98,
+      "start_formatted": "00:01:53.720",
+      "end_formatted": "00:02:00.980",
+      "text": "collection. Click Tools and then select GoSo Scratchpad. Enter code to test the new web service",
+      "words": [
+        {
+          "word": "collection.",
+          "start": 113.72,
+          "end": 114.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "Click",
+          "start": 114.9,
+          "end": 115.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "Tools",
+          "start": 115.48,
+          "end": 115.78,
+          "probability": 0.9619
+        },
+        {
+          "word": "and",
+          "start": 115.78,
+          "end": 116.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "then",
+          "start": 116.12,
+          "end": 116.3,
+          "probability": 0.998
+        },
+        {
+          "word": "select",
+          "start": 116.3,
+          "end": 116.7,
+          "probability": 0.9731
+        },
+        {
+          "word": "GoSo",
+          "start": 116.7,
+          "end": 117.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "Scratchpad.",
+          "start": 117.14,
+          "end": 117.98,
+          "probability": 0.9932
+        },
+        {
+          "word": "Enter",
+          "start": 118.54,
+          "end": 119.2,
+          "probability": 0.9756
+        },
+        {
+          "word": "code",
+          "start": 119.2,
+          "end": 119.52,
+          "probability": 0.8213
+        },
+        {
+          "word": "to",
+          "start": 119.52,
+          "end": 119.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "test",
+          "start": 119.7,
+          "end": 119.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 119.96,
+          "end": 120.12,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 120.12,
+          "end": 120.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "web",
+          "start": 120.3,
+          "end": 120.56,
+          "probability": 0.998
+        },
+        {
+          "word": "service",
+          "start": 120.56,
+          "end": 120.98,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 120.98,
+      "end": 131.12,
+      "start_formatted": "00:02:00.980",
+      "end_formatted": "00:02:11.120",
+      "text": "collection. Examine the code. Line 3. Create a new API instance. Lines 5 to 7. Set API properties as",
+      "words": [
+        {
+          "word": "collection.",
+          "start": 120.98,
+          "end": 121.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "Examine",
+          "start": 122.24,
+          "end": 122.92,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 122.92,
+          "end": 123.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "code.",
+          "start": 123.04,
+          "end": 123.38,
+          "probability": 0.9697
+        },
+        {
+          "word": "Line",
+          "start": 123.94,
+          "end": 124.36,
+          "probability": 0.9736
+        },
+        {
+          "word": "3.",
+          "start": 124.36,
+          "end": 124.68,
+          "probability": 0.9756
+        },
+        {
+          "word": "Create",
+          "start": 124.92,
+          "end": 125.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "a",
+          "start": 125.34,
+          "end": 125.58,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 125.58,
+          "end": 125.8,
+          "probability": 0.9756
+        },
+        {
+          "word": "API",
+          "start": 125.8,
+          "end": 126.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "instance.",
+          "start": 126.36,
+          "end": 126.94,
+          "probability": 0.9673
+        },
+        {
+          "word": "Lines",
+          "start": 127.74,
+          "end": 128.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "5",
+          "start": 128.42,
+          "end": 128.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 128.76,
+          "end": 128.96,
+          "probability": 0.9468
+        },
+        {
+          "word": "7.",
+          "start": 128.96,
+          "end": 129.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "Set",
+          "start": 129.54,
+          "end": 129.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "API",
+          "start": 129.82,
+          "end": 130.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "properties",
+          "start": 130.22,
+          "end": 130.76,
+          "probability": 0.9756
+        },
+        {
+          "word": "as",
+          "start": 130.76,
+          "end": 131.12,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 131.12,
+      "end": 139.38,
+      "start_formatted": "00:02:11.120",
+      "end_formatted": "00:02:19.380",
+      "text": "necessary. Lines 5 to 6. Set authentication parameters. Line 7. Specify the CallTimeout",
+      "words": [
+        {
+          "word": "necessary.",
+          "start": 131.12,
+          "end": 131.8,
+          "probability": 0.8979
+        },
+        {
+          "word": "Lines",
+          "start": 132.24,
+          "end": 132.96,
+          "probability": 0.9922
+        },
+        {
+          "word": "5",
+          "start": 132.96,
+          "end": 133.36,
+          "probability": 0.9502
+        },
+        {
+          "word": "to",
+          "start": 133.36,
+          "end": 133.56,
+          "probability": 0.8677
+        },
+        {
+          "word": "6.",
+          "start": 133.56,
+          "end": 133.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Set",
+          "start": 134.18,
+          "end": 134.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "authentication",
+          "start": 134.54,
+          "end": 135.14,
+          "probability": 0.9614
+        },
+        {
+          "word": "parameters.",
+          "start": 135.14,
+          "end": 135.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Line",
+          "start": 136.5,
+          "end": 137.06,
+          "probability": 0.9644
+        },
+        {
+          "word": "7.",
+          "start": 137.06,
+          "end": 137.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "Specify",
+          "start": 137.82,
+          "end": 138.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 138.4,
+          "end": 138.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "CallTimeout",
+          "start": 138.56,
+          "end": 139.38,
+          "probability": 0.5557
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 139.38,
+      "end": 146.46,
+      "start_formatted": "00:02:19.380",
+      "end_formatted": "00:02:26.460",
+      "text": "property to prevent endlessly waiting for a server response. Line 9. Call the API GetQuote method to",
+      "words": [
+        {
+          "word": "property",
+          "start": 139.38,
+          "end": 139.78,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 139.78,
+          "end": 140.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "prevent",
+          "start": 140.06,
+          "end": 140.38,
+          "probability": 0.999
+        },
+        {
+          "word": "endlessly",
+          "start": 140.38,
+          "end": 140.82,
+          "probability": 0.9941
+        },
+        {
+          "word": "waiting",
+          "start": 140.82,
+          "end": 141.24,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 141.24,
+          "end": 141.5,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 141.5,
+          "end": 141.64,
+          "probability": 0.999
+        },
+        {
+          "word": "server",
+          "start": 141.64,
+          "end": 141.92,
+          "probability": 0.9937
+        },
+        {
+          "word": "response.",
+          "start": 141.92,
+          "end": 142.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "Line",
+          "start": 143.1,
+          "end": 143.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "9.",
+          "start": 143.82,
+          "end": 144.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "Call",
+          "start": 144.46,
+          "end": 144.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 144.7,
+          "end": 144.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "API",
+          "start": 144.84,
+          "end": 145.32,
+          "probability": 0.959
+        },
+        {
+          "word": "GetQuote",
+          "start": 145.32,
+          "end": 145.92,
+          "probability": 0.7744
+        },
+        {
+          "word": "method",
+          "start": 145.92,
+          "end": 146.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 146.22,
+          "end": 146.46,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 146.46,
+      "end": 152.6,
+      "start_formatted": "00:02:26.460",
+      "end_formatted": "00:02:32.600",
+      "text": "get the stock quote for Guidewire. Click the Run and Debug Process icon to execute the code.",
+      "words": [
+        {
+          "word": "get",
+          "start": 146.46,
+          "end": 146.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 146.64,
+          "end": 146.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "stock",
+          "start": 146.82,
+          "end": 147.1,
+          "probability": 0.9712
+        },
+        {
+          "word": "quote",
+          "start": 147.1,
+          "end": 147.38,
+          "probability": 0.9282
+        },
+        {
+          "word": "for",
+          "start": 147.38,
+          "end": 147.58,
+          "probability": 0.9888
+        },
+        {
+          "word": "Guidewire.",
+          "start": 147.58,
+          "end": 148.28,
+          "probability": 0.6841
+        },
+        {
+          "word": "Click",
+          "start": 148.88,
+          "end": 149.38,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 149.38,
+          "end": 149.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Run",
+          "start": 149.54,
+          "end": 149.78,
+          "probability": 0.9351
+        },
+        {
+          "word": "and",
+          "start": 149.78,
+          "end": 150.0,
+          "probability": 0.7627
+        },
+        {
+          "word": "Debug",
+          "start": 150.0,
+          "end": 150.36,
+          "probability": 0.9863
+        },
+        {
+          "word": "Process",
+          "start": 150.36,
+          "end": 150.78,
+          "probability": 0.6416
+        },
+        {
+          "word": "icon",
+          "start": 150.78,
+          "end": 151.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 151.22,
+          "end": 151.5,
+          "probability": 1.0
+        },
+        {
+          "word": "execute",
+          "start": 151.5,
+          "end": 151.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 151.98,
+          "end": 152.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "code.",
+          "start": 152.24,
+          "end": 152.6,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 153.38,
+      "end": 158.06,
+      "start_formatted": "00:02:33.380",
+      "end_formatted": "00:02:38.060",
+      "text": "In the console output, the quote for Guidewire was retrieved from the external resource.",
+      "words": [
+        {
+          "word": "In",
+          "start": 153.18,
+          "end": 153.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.54,
+          "end": 153.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "console",
+          "start": 153.66,
+          "end": 154.08,
+          "probability": 0.9287
+        },
+        {
+          "word": "output,",
+          "start": 154.08,
+          "end": 154.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 154.8,
+          "end": 154.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "quote",
+          "start": 154.98,
+          "end": 155.24,
+          "probability": 0.979
+        },
+        {
+          "word": "for",
+          "start": 155.24,
+          "end": 155.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "Guidewire",
+          "start": 155.46,
+          "end": 155.96,
+          "probability": 0.9883
+        },
+        {
+          "word": "was",
+          "start": 155.96,
+          "end": 156.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "retrieved",
+          "start": 156.22,
+          "end": 156.72,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 156.72,
+          "end": 156.88,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 156.88,
+          "end": 157.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "external",
+          "start": 157.02,
+          "end": 157.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "resource.",
+          "start": 157.46,
+          "end": 158.06,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 158.66,
+      "end": 161.88,
+      "start_formatted": "00:02:38.660",
+      "end_formatted": "00:02:41.880",
+      "text": "This ends, the consuming a soap web service demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 158.66,
+          "end": 159.18,
+          "probability": 0.9019
+        },
+        {
+          "word": "ends,",
+          "start": 159.18,
+          "end": 159.48,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 159.64,
+          "end": 159.9,
+          "probability": 0.9614
+        },
+        {
+          "word": "consuming",
+          "start": 159.9,
+          "end": 160.46,
+          "probability": 0.7065
+        },
+        {
+          "word": "a",
+          "start": 160.46,
+          "end": 160.72,
+          "probability": 0.958
+        },
+        {
+          "word": "soap",
+          "start": 160.72,
+          "end": 160.9,
+          "probability": 0.9658
+        },
+        {
+          "word": "web",
+          "start": 160.9,
+          "end": 161.16,
+          "probability": 0.9727
+        },
+        {
+          "word": "service",
+          "start": 161.16,
+          "end": 161.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "demonstration.",
+          "start": 161.62,
+          "end": 161.88,
+          "probability": 0.9966
+        }
+      ]
+    }
+  ]
+}

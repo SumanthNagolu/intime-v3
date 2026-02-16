@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatDistanceToNow } from 'date-fns'
 import { Building2, MapPin, Phone, Globe, FileText, Activity, Users, DollarSign, Clock } from 'lucide-react'
+import { formatPhone } from '@/lib/formatters'
 
 interface Vendor {
   id: string
@@ -119,7 +120,7 @@ export function VendorOverviewSectionPCF({ entityId: _entityId, entity }: PCFSec
                 {vendor.contact_phone && (
                   <p className="text-sm flex items-center gap-1">
                     <Phone className="w-4 h-4 text-charcoal-400" />
-                    {vendor.contact_phone}
+                    {formatPhone(vendor.contact_phone)}
                   </p>
                 )}
               </>

@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-02",
+    "slide_count": 43,
+    "slides_with_text": 40,
+    "total_words": 2020,
+    "avg_confidence": 86.44,
+    "processing_time_seconds": 19.55,
+    "extracted_at": "2026-02-13T12:24:44.332524"
+  },
+  "full_text": "Lines of Business\n\nLesson\nobjectives ¢ Describe the implementation of Lines of\n\nBusiness in ClaimCenter 10\n« Add and remove items from the various levels\nof the Line of Business model\n\nAbout the ClaimCenter line of business\n(LOB) model\n\nWhat are lines of business?\n| iF Gi\n¢ Insurers organize policies, coverages, Property\nand covered losses in a hierarchy\n\n* This hierarchy impacts: Eq J pomeowners\nLine\n\n* How reporting is done\n* Which coverages are displayed for a claim\nassociated with a given policy type [rosy rier\n\n. . Policy\n« Which user interface elements capture\ninformation for a given exposure\n\n¢ This hierarchy is known as the “line of Med Pay\nbusiness” (LOB) model\nHomeowners\n* In ClaimCenter, it has six levels Med. Pay. / Medical\n. Payments\n¢ Implemented as a special set of\nMedical\n\ntypelists\n\nPayments\n\n| Loss type Gi\n\nHighest-level category of loss.\n* Ties together policies, coverages, and claims that deal with similar losses\n\n¢ Useful for dynamic generation of User Interface and for reporting\n\nLossType ff Auto | | Liability q rN Property\n= Workers’ = ;\nteal Compensation (a Travellers\n\ni LOB (Line Of Business) code G\n\nA business categorization below Loss Type.\n\n¢ More granular than loss type for reporting purposes\n* Not commonly used as a determinant for claims handling\n\nLossType\n\nPersonal | Gy! Commercial Commercial\nLOBCode Auto =] Auto Property\n\nInland\nMarine\n\ni Loss type and LOB code in the ClaimCenter base application G\n\nClaim Status\n\nClaim Status page\n\nGeneral Status (LossType and LOB Code)\nLoss Type Auto\nLine of Business Personal Auto Line\n\nWorkplan rules\n(LossType)\n\n2) claimworkpiangrs\nY BE Claim Workolan pses\n> ‘CLW00100 - Not First and Final @\n> ‘CLWO7000 = Workers comp claims\n‘CLW08000 - BizRules\n\ni Policy type G\n\nA product (type of policy) offered by an insurer.\n¢ Asingle policy type may be associated with multiple LOB Codes\n\nLossType (A) Property\nGeneral Commercial | cy % Inland\nLiability Line Property Line Marine Line\n\n. General Commercial Commercial ‘\n“oreyiee Liability [r°\"] Poxkae Property [v9] [r°\"] injangenne\n\nLOBCode\n\nStep 1: Search or Create Policy\n\n© Find Poticy Create Unverified Policy\n\nPolicy #\nFirst name\nLastname\nOrganization Name\n\nPolicy Type\n\nLoss Date\n\nBusinessowners,\nCommercial Auto\n‘Commercial Package\n‘Commercial Property\nFarmowners\n\nGeneral Liability\nHomeowners\n\nInland Marine\n\nPersonal Auto\n\nPersonal Travel\nPersonal Umbrella\nProfessional Liability\nWorkers’ Compensation\n\nList of all Policy Types\nwhen searching for policy\nin New Claim Wizard\n\nPolicy# > Insured >\n\ni Policy type in the ClaimCenter base application G\n\nPolicy: General\n\nBasic Information\n\nPolicy Number 54-123456\n\nType Personal Auto\n\nEffective Date 11/08/2017\nExpiration Date 11/07/2018\nPolicy Type of policy\n\nassociated with the claim\n\ni Coverage type\n\nLossType\nCommercial Homeowners\nLOBCode Property Line Line\nCommercial Commercial\nPoneytyee Package Property [°°] [r°\"] Momeoumers\n\nCoverageType Ld] CO Yd] Yd]\n\nGeneral Building Extra Expense Homeowners\nLiability Coverage Coverage Med Pay\n\nSpecification of the type of thing being indemnified.\n\ni Coverage type in the ClaimCenter base application (1 of 2) G\n\n© | © | a@rciziz0005 | istemerconsivcion | cmeedGitesie | Dotasoxans | scOpen | 4\n\nPolicy: General Type + [Exposure Limit Incident Limit > Notes >\n\nicy catingpian | | Workers' Comp Employers Li $100,000.00 Bodily injury By Accident\n\nWorkers’ Comp Employer's Liability $500,000.00 Bodily Injury By Disease for Policy\n\nStates in which pol\napplies\n\nWorkers’ Comp Employer's Liability $100,000.00 Bodily Injury By Disease per Employee\n\nwork Program? No\n\n(1-30f3)\n\nExposure Limit ¢ Incident Limit Notes\n\n$100,000.00\n$500,000.00\n$100,000.00\n\nBodily Injury By Accident\noily injury By Disease for Policy\noly injury By Disease per Employee\n\ni Coverage type in the ClaimCenter base application (2 of 2) G\n\nExposures\n\nAllclaimants +\n\n#2 Type Coverage Claimant Adjuster\n\n1 Vehicle Collision Ray Newton Andy Applegate\n2 MedPay — || Medical Payments Stan Newton Andy Applegate\n3 Vehicle Liability - Bodily Injury and Property Damage] Bo Simpson Andy Applegate\n\n4 Bodily Injury} Liability - Bodily Injury and Property Damage] 80 Simpson Carla Levitt\n\nGi\n\nDefines the information to gather\nabout an exposure.\n\ni Exposure type\n\nLossType Auto\n\nLOBCode Personal Auto Line\n: Personal [o9) mr\nPolicyType Auto a Es\n\n@::=:. Bodily Injury Building\nCoverage Type @:: Property Damage Collision Coverage\n=55= bs i =< = =\n\nExposureType\n\n@ Injury Vehicle Property\n\ni Exposure type in the ClaimCenter Ul Gi\n\nExposures\n\nAllclaimants +\n\nCoverage > Claimant Adjuster >\nCollision Ray Newton Andy Applegate\nMedical Payments Stan Newton Andy Applegate\n\n1\n\n2\n\n3 [Vehicle Liability - Bodily injury and Property Damage 80 Simpson Andy Applegate\n4 | Bodily injury] Liability - Bodily Injury and Property Damage 80 Simpson Carla Levitt\n\nNew Exposure - Med Pay\n\nNew Exposure - Vehicle\n\nNew Exposure - Bodily Injury\n\ni Coverage subtype maps coverage type to exposure type\n\n¢ ClaimCenter uses an additional layer\nof the Lines of Business to represent\nthe M:M mapping from Coverage Type\nto Exposure Type\n\n* This layer is called Coverage Subtype\n\n* Each Coverage Subtype is a single\nmapping between one coverage type and\none exposure type.\n\n¢ Enables situations where the same\ncoverage type maps to the same\nexposure type under different\ncircumstances\n\nGi\n\nVehicle\n\nCollision Collision (damage)\n\nVehicle\n(damage)\n\nLiability\n\n- Bodil\n\ninjury Bodily Injury\nand (damage)\nProperty\nDamage\n\nProperty\n(damage)\n\nPremise/Ops —\nGeneral —~. limit: $100,000\n\nGeneral\nLiability\n\nGeneral\n(damage)\n\ni Coverage subtype\n\nLossType\n\nLOBCode\n\nPolicyType\n\nCoverageType\n\nCoverageSubtype\n\nExposureType\n\nAuto\n\nPersonal\nAuto Line\n\nPersonal\nAuto\n\ne\na\n\nLiability - Bodily\nInjury and Property\nDamage\n\nProperty\n\nHomeowners\nLine\n\nCommercial\nProperty Line\n\nCommercial\nProperty Homeowners\nvy Vv\nCollision Homeowners\nMed. Pay.\n\nCoverage subtype in the ClaimCenter base application\n\nNew Exposure\n\nChoose by Coverage Type >\n\nChoose by Coverage »\n\n1997 Saturn SL (1HGJ465 / California)\n\n(4) 3rd Party Bodily Injury - Bo Simpson\n\nDetails ISO\n\nExposure\n\nLoss Party Third-party liability\n\nrimary Coverage\n\nae e ween nnn nee,\nLiability - Bodily Injury and Property Damage J\n\n1996 Toyota Corolla (2GDH967 / California) >\n\nGi\n\n‘and Property Damage Liability - Bodily Injury\n\nLiability - Property Damage\n\nComprehensive\n\nLiability - Vehicle Damage\nMedical Payments\n\ni System which determines each level\n\n¢ Information about\nLossType, LOBCode,\nPolicyType, CoverageType,\nand CoverageSubtype are\ntypically derived from the\nPolicy Administration\nSystem (PAS)\n\n¢ Information about\nExposureType and\nCoverageSubtype are\nunique to ClaimCenter\n« ExposureType is used to\nstreamline gathering\n\ninformation about a loss and\nhas no PAS equivalent\n\nLossType\n\nLOBCode\nCommercial\n\nHomeowners\nProperty Line ii\n\nLine\n\nPolicyType Commercial\n\nProperty Homeowners\n\nHomeowners\n\nCoverageType Collision Med. Pay.\n\n— ——_—— = =\nCoverageSubtype\n\nExposure Type\n\nConfiguring the LOB model\n\ni Line of Business model is implemented using typelists\n\n* ClaimCenter manages the LOB model through a\nseries of six interconnected typelists\n\n* Typecodes in each typelist reference typecodes in the\ntypelists above and below it\n\n¢ For example, the “PersonalAuto\" policy typecode\nreferences one parent LOB code (“PersonalAutoLine\")\nand thirty-six child coverage typecodes (such as\n“PACollisionCov* and “PAComprehensiveCov”)\n\nA ===ii B A has 0 or more Bs\n\nTypelists:\n\nCoverageSubtype\n\nExposureType\n\nGi\n\nAuto\n\nPersonalAuto\nLine\n\nPersonalAuto\n\nPACollisionCov\n\nPACollisionCov\n\nVehicleDamage\n\ni LOB typelists have children and parents\n\nEach element in an LOB typelist has a\nChildren node\n\n¢ Displays its relationships with elements in\nthe next node down\n\n« Exposure Type has no next node down, so\nno Children node\n\nEach element also has a Parents node\n\n¢ Displays its relationships with elements in\nthe next node up\n\n« Loss Type has no next node up, so no\nParents node\n\nPolicyType.ttx\n\nGi\n\nje CoverageType V YShwAlvy = = +Y\nLoB Typecode _ __ Typelist\nY Commercial Property CommercialProperty PolicyType\nY BE Children CoverageType\n> Building Coverage CPBIdgCov CoverageType\n> Business Income Cov CPBIdgBuslncomeC.... CoverageType\n> Business Personal Pre CPBldgStockCov —CoverageType\n> Business Personal Pre CPBPPCov CoverageType\n> CPBlanket Coverage CPBlanketCov CoverageType\n> Extra Expense Covere CPBIdgExtraExpens... CoverageType\nv Bm Parents LOBCode\n> Commercial Property CPLine LOBCode\n\ni “Other Categories” node G\n\n* Some Line of Business typelists are associated with “other” typelists\n\n* These may be “incoming” or “outgoing”\n\n« For example, LOBCode, PolicyType, CoverageType, and CoverageSubtype are all associated\nwith the SourceSystem typelist\n\n¢ These “other” typelists are also listed in the Incoming Categories and Outgoing\nCategories tabs of the Line of Business typelists\n\nPolicyType\n\n‘Y Commercial Auto\nmidren\n> Bs Parents\n‘Other Categories\n‘commercial\nendorsements\naggregatelimits\nvehicles\nstatcodes\n\nPC\n\nBusinessAuto\n\n‘commercial\nendorsements\naggregatelimits\nvehicles\nstatcodes\n\nPC\n\nLine of Business tab Incoming Categories tab Outgoing Categories tab\n\nCategory/Typecode Typelist\n\n~<Cateqories> -<this typelist>\nPolicyType Pesan]\n\nToveragelype\nLoBcode\n\nIntemalPolicyType\nPolicyTab\nPolicyTab\nPolicyTab\nPolicyTab\nSourceSystem\n\ni Demonstration G\nExploring line of business typelists\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Student exercise\n\nExploring line of business typelists\n\ni Adding to the line of business model\n\nol\n\n¢ When you add an item to the Line of Business\nmodel, it is best to start with the Parent for the\n\nnew item a\n« Exception: If you add a LossType, there is no Parent [\n+ Failing to link a new item to a parent node will\n\nus\nprevent the ClaimCenter server from starting\nos\n\n¢ Work downward through the Child nodes until ,\n\nyou link to an existing item or there are no CoverageType\nmore changes\n\n. apn When you add an ExposureType, there is [coverageSubtype\nno Child.. CoverageSubtype\n\n* ...However, every ExposureType must be\n\nassociated with one and only one Incident ExposureType fee ccc) |\n\nClaimantType\nLossCause\nMetroReportType\nOfficialType\n\nQuickClaimDefault\nResolutionType\nSeverityType\n\nInsuranceLine\nClaimTier\nExposureTier\n\nCostCategory Fal CoverageType SourceSystem\n\nCovTermPattern\n\nLineCategory l.\n\ni Removing typecodes from the line of business model G\n\nYou can remove connections in the M:M\n\nCommercial CPLine LOBCode |\ni j child PolicyType\nrelationships between typecodes Pee conleommecapece Donte\n* Guidewire recommends to not delete » Cope iets 1\ntypecodes from the model > Eiothes\n\n* Can result in inconsistencies which will prevent the\n\nserver from starting\n\nGeneral Liab GLLi\n\n% Remove typecode from parent\n\n¢ If you are not using a typecode at all, you can\n\nretire it\n\n* Can do this even if you\nhave used it in the past\n\nBAAudVisDataEgip2Cov\n\nname Audio, Visual, Data Electronic Equipment- Stated Amt.\ndesc Audio Visual Data Equipment\nidentifierCode\n\npriority\n\ni Demonstration G\nConfiguring lines of business\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,— — Whatis ClaimCenter’s line of business (LOB) model?\n\n¢\n7\n¢\n\nee\n\nAnswer\n\n_— — Whatis ClaimCenter’s line of business (LOB) model?\n\n¢\n¢\nThe correct answer is the hierarchy that organizes policies, coverages, and covered\n\nlosses.\n\nSe see aS SSeS\n\nQuestion\n\n,— — Whatis the purpose of the Coverage Subtype in the LOB model?\n\n¢\n7\n¢\n\nee\n\nAnswer\n\n_— — Whatis the purpose of the Coverage Subtype in the LOB model?\n\n¢\n\n¢\n¢ The correct answer is that it provides a M:M mapping between coverage types and\nexposure types.\n\nSe see aS SSeS\n\nQuestion\n\n,— — Which two levels of the LOB model are not typically derived from the\n: policy administration system?\n\n7\n¢\n\nee\n\nGi\n\nAnswer\n\n,— — Which two levels of the LOB model are not typically derived from the\nPa policy administration system?\n¢\n\nThe correct answers are exposure type and coverage subtype.\n\nSe see aS SSeS\n\nGi\n\nQuestion\n\na i “ typelist, outside of the LOB model, must every exposure type be\n, ?\n\nee\n\nGi\n\nAnswer\n\na i “ typelist, outside of the LOB model, must every exposure type be\n, ?\n\nThe correct answer is incident type.\n\nSe see aS SSeS\n\nGi\n\nQuestion\n\n,- — Why does Guidewire recommend to not delete typecodes from the Line\nPa of Business model?\n\nee\n\nGi\n\nAnswer\n\n,- — Why does Guidewire recommend to not delete typecodes from the Line\nPa of Business model?\n\nThe correct answer is that it can result in inconsistencies which will cause the server\nnot to start.\n\nSe see aS SSeS\n\nGi\n\ni Student exercise\n\nConfiguring lines of business\n\nLesson\nobjectives ¢ Describe the implementation of Lines of\nreview Business in ClaimCenter 10\n\n« Add and remove items from the various levels\n\nof the Line of Business model",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Lines of Business",
+      "word_count": 3,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe the implementation of Lines of\n\nBusiness in ClaimCenter 10\n« Add and remove items from the various levels\nof the Line of Business model",
+      "word_count": 28,
+      "avg_confidence": 90.46,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "About the ClaimCenter line of business\n(LOB) model",
+      "word_count": 8,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "What are lines of business?\n| iF Gi\n¢ Insurers organize policies, coverages, Property\nand covered losses in a hierarchy\n\n* This hierarchy impacts: Eq J pomeowners\nLine\n\n* How reporting is done\n* Which coverages are displayed for a claim\nassociated with a given policy type [rosy rier\n\n. . Policy\n« Which user interface elements capture\ninformation for a given exposure\n\n¢ This hierarchy is known as the “line of Med Pay\nbusiness” (LOB) model\nHomeowners\n* In ClaimCenter, it has six levels Med. Pay. / Medical\n. Payments\n¢ Implemented as a special set of\nMedical\n\ntypelists\n\nPayments",
+      "word_count": 101,
+      "avg_confidence": 85.01,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Loss type Gi\n\nHighest-level category of loss.\n* Ties together policies, coverages, and claims that deal with similar losses\n\n¢ Useful for dynamic generation of User Interface and for reporting\n\nLossType ff Auto | | Liability q rN Property\n= Workers’ = ;\nteal Compensation (a Travellers",
+      "word_count": 48,
+      "avg_confidence": 83.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i LOB (Line Of Business) code G\n\nA business categorization below Loss Type.\n\n¢ More granular than loss type for reporting purposes\n* Not commonly used as a determinant for claims handling\n\nLossType\n\nPersonal | Gy! Commercial Commercial\nLOBCode Auto =] Auto Property\n\nInland\nMarine",
+      "word_count": 45,
+      "avg_confidence": 86.36,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Loss type and LOB code in the ClaimCenter base application G\n\nClaim Status\n\nClaim Status page\n\nGeneral Status (LossType and LOB Code)\nLoss Type Auto\nLine of Business Personal Auto Line\n\nWorkplan rules\n(LossType)\n\n2) claimworkpiangrs\nY BE Claim Workolan pses\n> ‘CLW00100 - Not First and Final @\n> ‘CLWO7000 = Workers comp claims\n‘CLW08000 - BizRules",
+      "word_count": 59,
+      "avg_confidence": 85.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Policy type G\n\nA product (type of policy) offered by an insurer.\n¢ Asingle policy type may be associated with multiple LOB Codes\n\nLossType (A) Property\nGeneral Commercial | cy % Inland\nLiability Line Property Line Marine Line\n\n. General Commercial Commercial ‘\n“oreyiee Liability [r°\"] Poxkae Property [v9] [r°\"] injangenne\n\nLOBCode",
+      "word_count": 53,
+      "avg_confidence": 85.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Step 1: Search or Create Policy\n\n© Find Poticy Create Unverified Policy\n\nPolicy #\nFirst name\nLastname\nOrganization Name\n\nPolicy Type\n\nLoss Date\n\nBusinessowners,\nCommercial Auto\n‘Commercial Package\n‘Commercial Property\nFarmowners\n\nGeneral Liability\nHomeowners\n\nInland Marine\n\nPersonal Auto\n\nPersonal Travel\nPersonal Umbrella\nProfessional Liability\nWorkers’ Compensation\n\nList of all Policy Types\nwhen searching for policy\nin New Claim Wizard\n\nPolicy# > Insured >\n\ni Policy type in the ClaimCenter base application G\n\nPolicy: General\n\nBasic Information\n\nPolicy Number 54-123456\n\nType Personal Auto\n\nEffective Date 11/08/2017\nExpiration Date 11/07/2018\nPolicy Type of policy\n\nassociated with the claim",
+      "word_count": 96,
+      "avg_confidence": 89.12,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Coverage type\n\nLossType\nCommercial Homeowners\nLOBCode Property Line Line\nCommercial Commercial\nPoneytyee Package Property [°°] [r°\"] Momeoumers\n\nCoverageType Ld] CO Yd] Yd]\n\nGeneral Building Extra Expense Homeowners\nLiability Coverage Coverage Med Pay\n\nSpecification of the type of thing being indemnified.",
+      "word_count": 41,
+      "avg_confidence": 91.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Coverage type in the ClaimCenter base application (1 of 2) G\n\n© | © | a@rciziz0005 | istemerconsivcion | cmeedGitesie | Dotasoxans | scOpen | 4\n\nPolicy: General Type + [Exposure Limit Incident Limit > Notes >\n\nicy catingpian | | Workers' Comp Employers Li $100,000.00 Bodily injury By Accident\n\nWorkers’ Comp Employer's Liability $500,000.00 Bodily Injury By Disease for Policy\n\nStates in which pol\napplies\n\nWorkers’ Comp Employer's Liability $100,000.00 Bodily Injury By Disease per Employee\n\nwork Program? No\n\n(1-30f3)\n\nExposure Limit ¢ Incident Limit Notes\n\n$100,000.00\n$500,000.00\n$100,000.00\n\nBodily Injury By Accident\noily injury By Disease for Policy\noly injury By Disease per Employee",
+      "word_count": 107,
+      "avg_confidence": 78.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Coverage type in the ClaimCenter base application (2 of 2) G\n\nExposures\n\nAllclaimants +\n\n#2 Type Coverage Claimant Adjuster\n\n1 Vehicle Collision Ray Newton Andy Applegate\n2 MedPay — || Medical Payments Stan Newton Andy Applegate\n3 Vehicle Liability - Bodily Injury and Property Damage] Bo Simpson Andy Applegate\n\n4 Bodily Injury} Liability - Bodily Injury and Property Damage] 80 Simpson Carla Levitt",
+      "word_count": 64,
+      "avg_confidence": 80.28,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Gi\n\nDefines the information to gather\nabout an exposure.\n\ni Exposure type\n\nLossType Auto\n\nLOBCode Personal Auto Line\n: Personal [o9) mr\nPolicyType Auto a Es\n\n@::=:. Bodily Injury Building\nCoverage Type @:: Property Damage Collision Coverage\n=55= bs i =< = =\n\nExposureType\n\n@ Injury Vehicle Property",
+      "word_count": 48,
+      "avg_confidence": 79.59,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Exposure type in the ClaimCenter Ul Gi\n\nExposures\n\nAllclaimants +\n\nCoverage > Claimant Adjuster >\nCollision Ray Newton Andy Applegate\nMedical Payments Stan Newton Andy Applegate\n\n1\n\n2\n\n3 [Vehicle Liability - Bodily injury and Property Damage 80 Simpson Andy Applegate\n4 | Bodily injury] Liability - Bodily Injury and Property Damage 80 Simpson Carla Levitt\n\nNew Exposure - Med Pay\n\nNew Exposure - Vehicle\n\nNew Exposure - Bodily Injury",
+      "word_count": 71,
+      "avg_confidence": 79.01,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Coverage subtype maps coverage type to exposure type\n\n¢ ClaimCenter uses an additional layer\nof the Lines of Business to represent\nthe M:M mapping from Coverage Type\nto Exposure Type\n\n* This layer is called Coverage Subtype\n\n* Each Coverage Subtype is a single\nmapping between one coverage type and\none exposure type.\n\n¢ Enables situations where the same\ncoverage type maps to the same\nexposure type under different\ncircumstances\n\nGi\n\nVehicle\n\nCollision Collision (damage)\n\nVehicle\n(damage)\n\nLiability\n\n- Bodil\n\ninjury Bodily Injury\nand (damage)\nProperty\nDamage\n\nProperty\n(damage)\n\nPremise/Ops —\nGeneral —~. limit: $100,000\n\nGeneral\nLiability\n\nGeneral\n(damage)",
+      "word_count": 100,
+      "avg_confidence": 90.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Coverage subtype\n\nLossType\n\nLOBCode\n\nPolicyType\n\nCoverageType\n\nCoverageSubtype\n\nExposureType\n\nAuto\n\nPersonal\nAuto Line\n\nPersonal\nAuto\n\ne\na\n\nLiability - Bodily\nInjury and Property\nDamage\n\nProperty\n\nHomeowners\nLine\n\nCommercial\nProperty Line\n\nCommercial\nProperty Homeowners\nvy Vv\nCollision Homeowners\nMed. Pay.",
+      "word_count": 39,
+      "avg_confidence": 91.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Coverage subtype in the ClaimCenter base application\n\nNew Exposure\n\nChoose by Coverage Type >\n\nChoose by Coverage »\n\n1997 Saturn SL (1HGJ465 / California)\n\n(4) 3rd Party Bodily Injury - Bo Simpson\n\nDetails ISO\n\nExposure\n\nLoss Party Third-party liability\n\nrimary Coverage\n\nae e ween nnn nee,\nLiability - Bodily Injury and Property Damage J\n\n1996 Toyota Corolla (2GDH967 / California) >\n\nGi\n\n‘and Property Damage Liability - Bodily Injury\n\nLiability - Property Damage\n\nComprehensive\n\nLiability - Vehicle Damage\nMedical Payments",
+      "word_count": 80,
+      "avg_confidence": 85.73,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i System which determines each level\n\n¢ Information about\nLossType, LOBCode,\nPolicyType, CoverageType,\nand CoverageSubtype are\ntypically derived from the\nPolicy Administration\nSystem (PAS)\n\n¢ Information about\nExposureType and\nCoverageSubtype are\nunique to ClaimCenter\n« ExposureType is used to\nstreamline gathering\n\ninformation about a loss and\nhas no PAS equivalent\n\nLossType\n\nLOBCode\nCommercial\n\nHomeowners\nProperty Line ii\n\nLine\n\nPolicyType Commercial\n\nProperty Homeowners\n\nHomeowners\n\nCoverageType Collision Med. Pay.\n\n— ——_—— = =\nCoverageSubtype\n\nExposure Type",
+      "word_count": 74,
+      "avg_confidence": 87.96,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Configuring the LOB model",
+      "word_count": 4,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Line of Business model is implemented using typelists\n\n* ClaimCenter manages the LOB model through a\nseries of six interconnected typelists\n\n* Typecodes in each typelist reference typecodes in the\ntypelists above and below it\n\n¢ For example, the “PersonalAuto\" policy typecode\nreferences one parent LOB code (“PersonalAutoLine\")\nand thirty-six child coverage typecodes (such as\n“PACollisionCov* and “PAComprehensiveCov”)\n\nA ===ii B A has 0 or more Bs\n\nTypelists:\n\nCoverageSubtype\n\nExposureType\n\nGi\n\nAuto\n\nPersonalAuto\nLine\n\nPersonalAuto\n\nPACollisionCov\n\nPACollisionCov\n\nVehicleDamage",
+      "word_count": 79,
+      "avg_confidence": 86.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i LOB typelists have children and parents\n\nEach element in an LOB typelist has a\nChildren node\n\n¢ Displays its relationships with elements in\nthe next node down\n\n« Exposure Type has no next node down, so\nno Children node\n\nEach element also has a Parents node\n\n¢ Displays its relationships with elements in\nthe next node up\n\n« Loss Type has no next node up, so no\nParents node\n\nPolicyType.ttx\n\nGi\n\nje CoverageType V YShwAlvy = = +Y\nLoB Typecode _ __ Typelist\nY Commercial Property CommercialProperty PolicyType\nY BE Children CoverageType\n> Building Coverage CPBIdgCov CoverageType\n> Business Income Cov CPBIdgBuslncomeC.... CoverageType\n> Business Personal Pre CPBldgStockCov —CoverageType\n> Business Personal Pre CPBPPCov CoverageType\n> CPBlanket Coverage CPBlanketCov CoverageType\n> Extra Expense Covere CPBIdgExtraExpens... CoverageType\nv Bm Parents LOBCode\n> Commercial Property CPLine LOBCode",
+      "word_count": 136,
+      "avg_confidence": 82.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i “Other Categories” node G\n\n* Some Line of Business typelists are associated with “other” typelists\n\n* These may be “incoming” or “outgoing”\n\n« For example, LOBCode, PolicyType, CoverageType, and CoverageSubtype are all associated\nwith the SourceSystem typelist\n\n¢ These “other” typelists are also listed in the Incoming Categories and Outgoing\nCategories tabs of the Line of Business typelists\n\nPolicyType\n\n‘Y Commercial Auto\nmidren\n> Bs Parents\n‘Other Categories\n‘commercial\nendorsements\naggregatelimits\nvehicles\nstatcodes\n\nPC\n\nBusinessAuto\n\n‘commercial\nendorsements\naggregatelimits\nvehicles\nstatcodes\n\nPC\n\nLine of Business tab Incoming Categories tab Outgoing Categories tab\n\nCategory/Typecode Typelist\n\n~<Cateqories> -<this typelist>\nPolicyType Pesan]\n\nToveragelype\nLoBcode\n\nIntemalPolicyType\nPolicyTab\nPolicyTab\nPolicyTab\nPolicyTab\nSourceSystem",
+      "word_count": 107,
+      "avg_confidence": 83.35,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Demonstration G\nExploring line of business typelists\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 93.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "i Student exercise\n\nExploring line of business typelists",
+      "word_count": 8,
+      "avg_confidence": 88.44,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "i Adding to the line of business model\n\nol\n\n¢ When you add an item to the Line of Business\nmodel, it is best to start with the Parent for the\n\nnew item a\n« Exception: If you add a LossType, there is no Parent [\n+ Failing to link a new item to a parent node will\n\nus\nprevent the ClaimCenter server from starting\nos\n\n¢ Work downward through the Child nodes until ,\n\nyou link to an existing item or there are no CoverageType\nmore changes\n\n. apn When you add an ExposureType, there is [coverageSubtype\nno Child.. CoverageSubtype\n\n* ...However, every ExposureType must be\n\nassociated with one and only one Incident ExposureType fee ccc) |",
+      "word_count": 118,
+      "avg_confidence": 86.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "ClaimantType\nLossCause\nMetroReportType\nOfficialType\n\nQuickClaimDefault\nResolutionType\nSeverityType\n\nInsuranceLine\nClaimTier\nExposureTier\n\nCostCategory Fal CoverageType SourceSystem\n\nCovTermPattern\n\nLineCategory l.",
+      "word_count": 17,
+      "avg_confidence": 90.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "i Removing typecodes from the line of business model G\n\nYou can remove connections in the M:M\n\nCommercial CPLine LOBCode |\ni j child PolicyType\nrelationships between typecodes Pee conleommecapece Donte\n* Guidewire recommends to not delete » Cope iets 1\ntypecodes from the model > Eiothes\n\n* Can result in inconsistencies which will prevent the\n\nserver from starting\n\nGeneral Liab GLLi\n\n% Remove typecode from parent\n\n¢ If you are not using a typecode at all, you can\n\nretire it\n\n* Can do this even if you\nhave used it in the past\n\nBAAudVisDataEgip2Cov\n\nname Audio, Visual, Data Electronic Equipment- Stated Amt.\ndesc Audio Visual Data Equipment\nidentifierCode\n\npriority",
+      "word_count": 110,
+      "avg_confidence": 88.12,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "i Demonstration G\nConfiguring lines of business\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n,— — Whatis ClaimCenter’s line of business (LOB) model?\n\n¢\n7\n¢\n\nee",
+      "word_count": 14,
+      "avg_confidence": 80.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer\n\n_— — Whatis ClaimCenter’s line of business (LOB) model?\n\n¢\n¢\nThe correct answer is the hierarchy that organizes policies, coverages, and covered\n\nlosses.\n\nSe see aS SSeS",
+      "word_count": 29,
+      "avg_confidence": 82.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question\n\n,— — Whatis the purpose of the Coverage Subtype in the LOB model?\n\n¢\n7\n¢\n\nee",
+      "word_count": 18,
+      "avg_confidence": 84.36,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer\n\n_— — Whatis the purpose of the Coverage Subtype in the LOB model?\n\n¢\n\n¢\n¢ The correct answer is that it provides a M:M mapping between coverage types and\nexposure types.\n\nSe see aS SSeS",
+      "word_count": 37,
+      "avg_confidence": 84.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question\n\n,— — Which two levels of the LOB model are not typically derived from the\n: policy administration system?\n\n7\n¢\n\nee\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 83.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer\n\n,— — Which two levels of the LOB model are not typically derived from the\nPa policy administration system?\n¢\n\nThe correct answers are exposure type and coverage subtype.\n\nSe see aS SSeS\n\nGi",
+      "word_count": 35,
+      "avg_confidence": 80.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question\n\na i “ typelist, outside of the LOB model, must every exposure type be\n, ?\n\nee\n\nGi",
+      "word_count": 19,
+      "avg_confidence": 81.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer\n\na i “ typelist, outside of the LOB model, must every exposure type be\n, ?\n\nThe correct answer is incident type.\n\nSe see aS SSeS\n\nGi",
+      "word_count": 28,
+      "avg_confidence": 77.77,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Question\n\n,- — Why does Guidewire recommend to not delete typecodes from the Line\nPa of Business model?\n\nee\n\nGi",
+      "word_count": 20,
+      "avg_confidence": 81.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Answer\n\n,- — Why does Guidewire recommend to not delete typecodes from the Line\nPa of Business model?\n\nThe correct answer is that it can result in inconsistencies which will cause the server\nnot to start.\n\nSe see aS SSeS\n\nGi",
+      "word_count": 41,
+      "avg_confidence": 83.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "i Student exercise\n\nConfiguring lines of business",
+      "word_count": 7,
+      "avg_confidence": 88.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Lesson\nobjectives ¢ Describe the implementation of Lines of\nreview Business in ClaimCenter 10\n\n« Add and remove items from the various levels\n\nof the Line of Business model",
+      "word_count": 29,
+      "avg_confidence": 90.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

@@ -1,0 +1,2996 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_15_02.mp4",
+    "video_stem": "CC_15_02",
+    "duration_seconds": 195.82,
+    "duration_formatted": "00:03:15.820",
+    "segment_count": 17,
+    "word_count": 463,
+    "avg_confidence": 0.9163,
+    "transcription_time_seconds": 10.79,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:44:35.737762"
+  },
+  "full_text": "The Security Dictionary provides useful, detailed information about the permission structure in ClaimCenter. I'll start by looking at System Permissions. Permissions related to activities begin with the letters ACT. The ActCreate permission is a good example. ActCreate is an object-based permission with a description, permission to create new activities. Eight roles use this System Permission. One of these is a System Permission. is the All Permissions, or Super User, role. ActCreate is a member of one Application Permission Key, or APK, Claim.CreateActivity. And it is related to one page, new activity, through that APK. In ClaimCenter Studio, I see that new activities can visit property calls the APK that includes ActCreate. Looking at the ActOwnSystem permission. It has the same layout, but with different details. For example, it belongs to the Activity.onAPK. And it is related to not one but three pages. If I click the Vacation Activities page link, I see that its Visit Permission expression includes the Activity.onAPK. In fact, the Edit and Visit Permission expressions are identical. In Studio, the CanEdit expression is void. This is because one implicitly includes the other. If you can't visit the page you obviously can't edit it, so a separate CanEdit expression would be needed. Only if it were more restrictive than the CanEdit property. Now I'll look at roles in the Security Dictionary. As I mentioned earlier, the Super Users All Underscore Permissions role includes all System permissions. But the Activity Rules Viewer role has only one permission, the right to view Business Rules. If I click the Permission, I see that several roles include this permission. That's pretty much all there is. That's pretty much all there is to roles. A role is just a list of permissions. There's a slight quirk to the Pages section of the Security Dictionary. It includes more than just pages. It includes all PCF files in the application, including things like screens and views, neither of which require permissions, because they inherit them from their parent pages. So perhaps it should really be called a PCF instead of pages. The main reason for this is that some non-page PCFs, like popups and forwards do have permission expressions. For example, the Activity Detail Forward requires the Activity View APK. Finally, on in the Application Permission Key section of the Security Dictionary, I can select an APK and see the permissions it conveys and the pages that use it. Some APKs have an additional reference type. Element references list elements, such as widgets, in PCFs that use the APK or permission in their available properties. For example, the Activity View APK is used to determine whether the subject cell of some activities list views is available. This concludes the Security Dictionary demonstration. The is is  is is is",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "The Security Dictionary provides useful, detailed information about the permission structure in ClaimCenter. I'll start by looking at System Permissions. Permissions related to activities begin with the letters ACT. The ActCreate permission is a good example. ActCreate is an object-based permission with a description, permission to create new activities. Eight roles use this System Permission. One of these is a System Permission.",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.0,
+          "end": 0.78,
+          "probability": 0.9717
+        },
+        {
+          "word": "Security",
+          "start": 0.78,
+          "end": 1.18,
+          "probability": 0.6245
+        },
+        {
+          "word": "Dictionary",
+          "start": 1.18,
+          "end": 1.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "provides",
+          "start": 1.86,
+          "end": 2.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "useful,",
+          "start": 2.36,
+          "end": 2.86,
+          "probability": 0.9961
+        },
+        {
+          "word": "detailed",
+          "start": 3.1,
+          "end": 3.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "information",
+          "start": 3.6,
+          "end": 4.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "about",
+          "start": 4.12,
+          "end": 4.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 4.54,
+          "end": 4.72,
+          "probability": 0.998
+        },
+        {
+          "word": "permission",
+          "start": 4.72,
+          "end": 5.08,
+          "probability": 0.9531
+        },
+        {
+          "word": "structure",
+          "start": 5.08,
+          "end": 5.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 5.6,
+          "end": 5.82,
+          "probability": 0.6953
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 5.82,
+          "end": 6.46,
+          "probability": 0.75
+        },
+        {
+          "word": "I'll",
+          "start": 6.94,
+          "end": 7.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "start",
+          "start": 7.58,
+          "end": 7.86,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 7.86,
+          "end": 8.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "looking",
+          "start": 8.06,
+          "end": 8.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 8.32,
+          "end": 8.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "System",
+          "start": 8.52,
+          "end": 8.86,
+          "probability": 0.4414
+        },
+        {
+          "word": "Permissions.",
+          "start": 8.86,
+          "end": 9.46,
+          "probability": 0.8984
+        },
+        {
+          "word": "Permissions",
+          "start": 10.84,
+          "end": 11.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "related",
+          "start": 11.56,
+          "end": 11.96,
+          "probability": 0.9761
+        },
+        {
+          "word": "to",
+          "start": 11.96,
+          "end": 12.2,
+          "probability": 0.999
+        },
+        {
+          "word": "activities",
+          "start": 12.2,
+          "end": 12.68,
+          "probability": 0.79
+        },
+        {
+          "word": "begin",
+          "start": 12.68,
+          "end": 13.04,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 13.04,
+          "end": 13.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 13.24,
+          "end": 13.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "letters",
+          "start": 13.36,
+          "end": 13.64,
+          "probability": 0.9717
+        },
+        {
+          "word": "ACT.",
+          "start": 13.64,
+          "end": 14.12,
+          "probability": 0.6987
+        },
+        {
+          "word": "The",
+          "start": 14.68,
+          "end": 15.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "ActCreate",
+          "start": 15.02,
+          "end": 15.7,
+          "probability": 0.7959
+        },
+        {
+          "word": "permission",
+          "start": 15.7,
+          "end": 16.04,
+          "probability": 0.8579
+        },
+        {
+          "word": "is",
+          "start": 16.04,
+          "end": 16.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 16.34,
+          "end": 16.42,
+          "probability": 0.999
+        },
+        {
+          "word": "good",
+          "start": 16.42,
+          "end": 16.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "example.",
+          "start": 16.56,
+          "end": 17.04,
+          "probability": 1.0
+        },
+        {
+          "word": "ActCreate",
+          "start": 20.52,
+          "end": 21.24,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 21.24,
+          "end": 21.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "an",
+          "start": 21.36,
+          "end": 21.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "object",
+          "start": 21.52,
+          "end": 21.92,
+          "probability": 0.9565
+        },
+        {
+          "word": "-based",
+          "start": 21.92,
+          "end": 22.28,
+          "probability": 0.9751
+        },
+        {
+          "word": "permission",
+          "start": 22.28,
+          "end": 22.7,
+          "probability": 0.998
+        },
+        {
+          "word": "with",
+          "start": 22.7,
+          "end": 22.96,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 22.96,
+          "end": 23.06,
+          "probability": 0.9614
+        },
+        {
+          "word": "description,",
+          "start": 23.06,
+          "end": 23.56,
+          "probability": 0.9883
+        },
+        {
+          "word": "permission",
+          "start": 23.9,
+          "end": 24.38,
+          "probability": 0.9478
+        },
+        {
+          "word": "to",
+          "start": 24.38,
+          "end": 24.6,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 24.6,
+          "end": 24.92,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 24.92,
+          "end": 25.12,
+          "probability": 0.999
+        },
+        {
+          "word": "activities.",
+          "start": 25.12,
+          "end": 25.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "Eight",
+          "start": 26.32,
+          "end": 26.86,
+          "probability": 0.8682
+        },
+        {
+          "word": "roles",
+          "start": 26.86,
+          "end": 27.12,
+          "probability": 0.8457
+        },
+        {
+          "word": "use",
+          "start": 27.12,
+          "end": 27.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 27.42,
+          "end": 27.62,
+          "probability": 0.8711
+        },
+        {
+          "word": "System",
+          "start": 27.62,
+          "end": 27.98,
+          "probability": 0.4409
+        },
+        {
+          "word": "Permission.",
+          "start": 27.98,
+          "end": 28.48,
+          "probability": 0.7427
+        },
+        {
+          "word": "One",
+          "start": 28.84,
+          "end": 29.52,
+          "probability": 0.9761
+        },
+        {
+          "word": "of",
+          "start": 29.52,
+          "end": 29.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "these",
+          "start": 29.64,
+          "end": 29.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 29.84,
+          "end": 29.98,
+          "probability": 0.7056
+        },
+        {
+          "word": "a",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2461
+        },
+        {
+          "word": "System",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.1311
+        },
+        {
+          "word": "Permission.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.9263
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.78,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.780",
+      "text": "is the All Permissions, or Super User, role. ActCreate is a member of one Application Permission Key, or APK, Claim.CreateActivity. And it is related to one page, new activity, through that APK. In ClaimCenter Studio, I see that new activities can visit property calls the APK that includes ActCreate. Looking at the ActOwnSystem permission. It has the same layout, but with different details. For example,",
+      "words": [
+        {
+          "word": "is",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.0298
+        },
+        {
+          "word": "the",
+          "start": 29.98,
+          "end": 30.16,
+          "probability": 0.9902
+        },
+        {
+          "word": "All",
+          "start": 30.16,
+          "end": 30.38,
+          "probability": 0.4336
+        },
+        {
+          "word": "Permissions,",
+          "start": 30.38,
+          "end": 30.98,
+          "probability": 0.9121
+        },
+        {
+          "word": "or",
+          "start": 30.98,
+          "end": 31.44,
+          "probability": 0.9897
+        },
+        {
+          "word": "Super",
+          "start": 31.44,
+          "end": 31.76,
+          "probability": 0.9302
+        },
+        {
+          "word": "User,",
+          "start": 31.76,
+          "end": 32.1,
+          "probability": 0.7246
+        },
+        {
+          "word": "role.",
+          "start": 32.32,
+          "end": 32.7,
+          "probability": 0.981
+        },
+        {
+          "word": "ActCreate",
+          "start": 33.58,
+          "end": 34.18,
+          "probability": 0.874
+        },
+        {
+          "word": "is",
+          "start": 34.18,
+          "end": 34.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 34.32,
+          "end": 34.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "member",
+          "start": 34.44,
+          "end": 34.66,
+          "probability": 0.978
+        },
+        {
+          "word": "of",
+          "start": 34.66,
+          "end": 34.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "one",
+          "start": 34.86,
+          "end": 35.06,
+          "probability": 0.5679
+        },
+        {
+          "word": "Application",
+          "start": 35.06,
+          "end": 35.66,
+          "probability": 0.4507
+        },
+        {
+          "word": "Permission",
+          "start": 35.66,
+          "end": 36.2,
+          "probability": 0.9697
+        },
+        {
+          "word": "Key,",
+          "start": 36.2,
+          "end": 36.5,
+          "probability": 0.8853
+        },
+        {
+          "word": "or",
+          "start": 36.7,
+          "end": 36.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "APK,",
+          "start": 36.94,
+          "end": 37.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "Claim",
+          "start": 37.88,
+          "end": 38.22,
+          "probability": 0.8335
+        },
+        {
+          "word": ".CreateActivity.",
+          "start": 38.22,
+          "end": 39.46,
+          "probability": 0.9644
+        },
+        {
+          "word": "And",
+          "start": 39.98,
+          "end": 40.58,
+          "probability": 0.9897
+        },
+        {
+          "word": "it",
+          "start": 40.58,
+          "end": 40.72,
+          "probability": 0.9868
+        },
+        {
+          "word": "is",
+          "start": 40.72,
+          "end": 40.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "related",
+          "start": 40.86,
+          "end": 41.24,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 41.24,
+          "end": 41.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 41.42,
+          "end": 41.64,
+          "probability": 0.8105
+        },
+        {
+          "word": "page,",
+          "start": 41.64,
+          "end": 42.1,
+          "probability": 0.8823
+        },
+        {
+          "word": "new",
+          "start": 42.26,
+          "end": 42.52,
+          "probability": 0.4329
+        },
+        {
+          "word": "activity,",
+          "start": 42.52,
+          "end": 42.98,
+          "probability": 0.8848
+        },
+        {
+          "word": "through",
+          "start": 43.34,
+          "end": 43.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 43.56,
+          "end": 43.78,
+          "probability": 1.0
+        },
+        {
+          "word": "APK.",
+          "start": 43.78,
+          "end": 44.34,
+          "probability": 0.999
+        },
+        {
+          "word": "In",
+          "start": 44.92,
+          "end": 45.52,
+          "probability": 0.999
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 45.52,
+          "end": 46.14,
+          "probability": 0.7573
+        },
+        {
+          "word": "Studio,",
+          "start": 46.14,
+          "end": 46.56,
+          "probability": 0.8364
+        },
+        {
+          "word": "I",
+          "start": 46.88,
+          "end": 47.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 47.1,
+          "end": 47.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 47.3,
+          "end": 47.5,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 47.5,
+          "end": 47.68,
+          "probability": 0.8896
+        },
+        {
+          "word": "activities",
+          "start": 47.68,
+          "end": 48.16,
+          "probability": 0.9536
+        },
+        {
+          "word": "can",
+          "start": 48.16,
+          "end": 48.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "visit",
+          "start": 48.44,
+          "end": 48.72,
+          "probability": 0.9941
+        },
+        {
+          "word": "property",
+          "start": 48.72,
+          "end": 49.18,
+          "probability": 0.9482
+        },
+        {
+          "word": "calls",
+          "start": 49.18,
+          "end": 49.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 49.56,
+          "end": 49.74,
+          "probability": 0.9814
+        },
+        {
+          "word": "APK",
+          "start": 49.74,
+          "end": 50.28,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 50.28,
+          "end": 50.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "includes",
+          "start": 50.48,
+          "end": 50.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "ActCreate.",
+          "start": 50.9,
+          "end": 51.66,
+          "probability": 0.9878
+        },
+        {
+          "word": "Looking",
+          "start": 52.12,
+          "end": 52.72,
+          "probability": 0.9937
+        },
+        {
+          "word": "at",
+          "start": 52.72,
+          "end": 52.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 52.92,
+          "end": 53.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "ActOwnSystem",
+          "start": 53.04,
+          "end": 53.9,
+          "probability": 0.8418
+        },
+        {
+          "word": "permission.",
+          "start": 53.9,
+          "end": 54.32,
+          "probability": 0.9214
+        },
+        {
+          "word": "It",
+          "start": 55.6,
+          "end": 56.2,
+          "probability": 0.998
+        },
+        {
+          "word": "has",
+          "start": 56.2,
+          "end": 56.36,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 56.36,
+          "end": 56.48,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 56.48,
+          "end": 56.74,
+          "probability": 1.0
+        },
+        {
+          "word": "layout,",
+          "start": 56.74,
+          "end": 57.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "but",
+          "start": 57.42,
+          "end": 57.64,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 57.64,
+          "end": 57.8,
+          "probability": 1.0
+        },
+        {
+          "word": "different",
+          "start": 57.8,
+          "end": 58.1,
+          "probability": 1.0
+        },
+        {
+          "word": "details.",
+          "start": 58.1,
+          "end": 58.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 58.96,
+          "end": 59.36,
+          "probability": 0.999
+        },
+        {
+          "word": "example,",
+          "start": 59.36,
+          "end": 59.78,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.78,
+      "end": 89.76,
+      "start_formatted": "00:00:59.780",
+      "end_formatted": "00:01:29.760",
+      "text": "it belongs to the Activity.onAPK. And it is related to not one but three pages. If I click the Vacation Activities page link, I see that its Visit Permission expression includes the Activity.onAPK. In fact, the Edit and Visit Permission expressions are identical. In Studio, the CanEdit expression is void. This is because one implicitly includes the other. If you can't visit the page you obviously can't edit it, so a separate CanEdit expression would be needed.",
+      "words": [
+        {
+          "word": "it",
+          "start": 59.78,
+          "end": 60.32,
+          "probability": 0.7344
+        },
+        {
+          "word": "belongs",
+          "start": 60.32,
+          "end": 60.7,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 60.7,
+          "end": 60.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 60.9,
+          "end": 61.02,
+          "probability": 0.9976
+        },
+        {
+          "word": "Activity",
+          "start": 61.02,
+          "end": 61.5,
+          "probability": 0.5527
+        },
+        {
+          "word": ".onAPK.",
+          "start": 61.5,
+          "end": 62.48,
+          "probability": 0.7319
+        },
+        {
+          "word": "And",
+          "start": 63.04,
+          "end": 63.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "it",
+          "start": 63.6,
+          "end": 63.74,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 63.74,
+          "end": 63.88,
+          "probability": 1.0
+        },
+        {
+          "word": "related",
+          "start": 63.88,
+          "end": 64.26,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 64.26,
+          "end": 64.44,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 64.44,
+          "end": 64.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "one",
+          "start": 64.64,
+          "end": 64.86,
+          "probability": 0.9443
+        },
+        {
+          "word": "but",
+          "start": 64.86,
+          "end": 65.02,
+          "probability": 0.9897
+        },
+        {
+          "word": "three",
+          "start": 65.02,
+          "end": 65.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "pages.",
+          "start": 65.24,
+          "end": 65.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "If",
+          "start": 66.02,
+          "end": 66.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 66.42,
+          "end": 66.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "click",
+          "start": 66.52,
+          "end": 66.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 66.76,
+          "end": 66.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "Vacation",
+          "start": 66.9,
+          "end": 67.42,
+          "probability": 0.96
+        },
+        {
+          "word": "Activities",
+          "start": 67.42,
+          "end": 67.96,
+          "probability": 0.9668
+        },
+        {
+          "word": "page",
+          "start": 67.96,
+          "end": 68.24,
+          "probability": 0.9819
+        },
+        {
+          "word": "link,",
+          "start": 68.24,
+          "end": 68.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 68.78,
+          "end": 69.64,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 69.64,
+          "end": 69.84,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 69.84,
+          "end": 70.02,
+          "probability": 1.0
+        },
+        {
+          "word": "its",
+          "start": 70.02,
+          "end": 70.2,
+          "probability": 0.9907
+        },
+        {
+          "word": "Visit",
+          "start": 70.2,
+          "end": 70.44,
+          "probability": 0.688
+        },
+        {
+          "word": "Permission",
+          "start": 70.44,
+          "end": 70.92,
+          "probability": 0.9712
+        },
+        {
+          "word": "expression",
+          "start": 70.92,
+          "end": 71.38,
+          "probability": 0.7627
+        },
+        {
+          "word": "includes",
+          "start": 71.38,
+          "end": 71.88,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 71.88,
+          "end": 72.06,
+          "probability": 1.0
+        },
+        {
+          "word": "Activity",
+          "start": 72.06,
+          "end": 72.54,
+          "probability": 0.9971
+        },
+        {
+          "word": ".onAPK.",
+          "start": 72.54,
+          "end": 73.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "In",
+          "start": 74.06,
+          "end": 74.6,
+          "probability": 1.0
+        },
+        {
+          "word": "fact,",
+          "start": 74.6,
+          "end": 74.9,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 75.2,
+          "end": 75.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "Edit",
+          "start": 75.34,
+          "end": 75.56,
+          "probability": 0.9614
+        },
+        {
+          "word": "and",
+          "start": 75.56,
+          "end": 75.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "Visit",
+          "start": 75.76,
+          "end": 76.0,
+          "probability": 0.998
+        },
+        {
+          "word": "Permission",
+          "start": 76.0,
+          "end": 76.48,
+          "probability": 0.9912
+        },
+        {
+          "word": "expressions",
+          "start": 76.48,
+          "end": 77.0,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 77.0,
+          "end": 77.34,
+          "probability": 1.0
+        },
+        {
+          "word": "identical.",
+          "start": 77.34,
+          "end": 77.8,
+          "probability": 1.0
+        },
+        {
+          "word": "In",
+          "start": 78.18,
+          "end": 78.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "Studio,",
+          "start": 78.56,
+          "end": 78.92,
+          "probability": 0.769
+        },
+        {
+          "word": "the",
+          "start": 79.54,
+          "end": 80.02,
+          "probability": 0.9927
+        },
+        {
+          "word": "CanEdit",
+          "start": 80.02,
+          "end": 80.42,
+          "probability": 0.9229
+        },
+        {
+          "word": "expression",
+          "start": 80.42,
+          "end": 80.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 80.9,
+          "end": 81.18,
+          "probability": 1.0
+        },
+        {
+          "word": "void.",
+          "start": 81.18,
+          "end": 81.46,
+          "probability": 0.9912
+        },
+        {
+          "word": "This",
+          "start": 81.76,
+          "end": 82.18,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 82.18,
+          "end": 82.32,
+          "probability": 1.0
+        },
+        {
+          "word": "because",
+          "start": 82.32,
+          "end": 82.58,
+          "probability": 1.0
+        },
+        {
+          "word": "one",
+          "start": 82.58,
+          "end": 82.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "implicitly",
+          "start": 82.84,
+          "end": 83.44,
+          "probability": 1.0
+        },
+        {
+          "word": "includes",
+          "start": 83.44,
+          "end": 83.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 83.82,
+          "end": 84.02,
+          "probability": 1.0
+        },
+        {
+          "word": "other.",
+          "start": 84.02,
+          "end": 84.26,
+          "probability": 1.0
+        },
+        {
+          "word": "If",
+          "start": 84.46,
+          "end": 84.7,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 84.7,
+          "end": 84.8,
+          "probability": 1.0
+        },
+        {
+          "word": "can't",
+          "start": 84.8,
+          "end": 85.08,
+          "probability": 1.0
+        },
+        {
+          "word": "visit",
+          "start": 85.08,
+          "end": 85.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 85.36,
+          "end": 85.52,
+          "probability": 1.0
+        },
+        {
+          "word": "page",
+          "start": 85.52,
+          "end": 85.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "you",
+          "start": 85.74,
+          "end": 85.92,
+          "probability": 0.4724
+        },
+        {
+          "word": "obviously",
+          "start": 85.92,
+          "end": 86.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "can't",
+          "start": 86.42,
+          "end": 86.84,
+          "probability": 1.0
+        },
+        {
+          "word": "edit",
+          "start": 86.84,
+          "end": 87.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "it,",
+          "start": 87.08,
+          "end": 87.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 87.46,
+          "end": 87.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 87.72,
+          "end": 87.9,
+          "probability": 1.0
+        },
+        {
+          "word": "separate",
+          "start": 87.9,
+          "end": 88.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "CanEdit",
+          "start": 88.2,
+          "end": 88.62,
+          "probability": 0.9878
+        },
+        {
+          "word": "expression",
+          "start": 88.62,
+          "end": 89.1,
+          "probability": 0.999
+        },
+        {
+          "word": "would",
+          "start": 89.1,
+          "end": 89.38,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 89.38,
+          "end": 89.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "needed.",
+          "start": 89.52,
+          "end": 89.76,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.76,
+      "end": 115.22,
+      "start_formatted": "00:01:29.760",
+      "end_formatted": "00:01:55.220",
+      "text": "Only if it were more restrictive than the CanEdit property. Now I'll look at roles in the Security Dictionary. As I mentioned earlier, the Super Users All Underscore Permissions role includes all System permissions. But the Activity Rules Viewer role has only one permission, the right to view Business Rules. If I click the Permission, I see that several roles include this permission.",
+      "words": [
+        {
+          "word": "Only",
+          "start": 89.76,
+          "end": 90.02,
+          "probability": 0.0257
+        },
+        {
+          "word": "if",
+          "start": 90.02,
+          "end": 90.2,
+          "probability": 0.9858
+        },
+        {
+          "word": "it",
+          "start": 90.2,
+          "end": 90.3,
+          "probability": 0.9922
+        },
+        {
+          "word": "were",
+          "start": 90.3,
+          "end": 90.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "more",
+          "start": 90.44,
+          "end": 90.62,
+          "probability": 0.8862
+        },
+        {
+          "word": "restrictive",
+          "start": 90.62,
+          "end": 91.1,
+          "probability": 0.9873
+        },
+        {
+          "word": "than",
+          "start": 91.1,
+          "end": 91.36,
+          "probability": 0.9424
+        },
+        {
+          "word": "the",
+          "start": 91.36,
+          "end": 91.46,
+          "probability": 0.9829
+        },
+        {
+          "word": "CanEdit",
+          "start": 91.46,
+          "end": 91.84,
+          "probability": 0.0846
+        },
+        {
+          "word": "property.",
+          "start": 91.84,
+          "end": 92.28,
+          "probability": 0.9897
+        },
+        {
+          "word": "Now",
+          "start": 92.9,
+          "end": 93.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "I'll",
+          "start": 93.5,
+          "end": 93.72,
+          "probability": 0.9658
+        },
+        {
+          "word": "look",
+          "start": 93.72,
+          "end": 93.84,
+          "probability": 0.9961
+        },
+        {
+          "word": "at",
+          "start": 93.84,
+          "end": 93.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "roles",
+          "start": 93.96,
+          "end": 94.22,
+          "probability": 0.9653
+        },
+        {
+          "word": "in",
+          "start": 94.22,
+          "end": 94.42,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 94.42,
+          "end": 94.5,
+          "probability": 0.998
+        },
+        {
+          "word": "Security",
+          "start": 94.5,
+          "end": 94.92,
+          "probability": 0.4875
+        },
+        {
+          "word": "Dictionary.",
+          "start": 94.92,
+          "end": 95.62,
+          "probability": 0.9238
+        },
+        {
+          "word": "As",
+          "start": 96.3,
+          "end": 96.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 96.9,
+          "end": 97.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "mentioned",
+          "start": 97.0,
+          "end": 97.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "earlier,",
+          "start": 97.34,
+          "end": 97.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 98.1,
+          "end": 98.26,
+          "probability": 0.9692
+        },
+        {
+          "word": "Super",
+          "start": 98.26,
+          "end": 98.52,
+          "probability": 0.5952
+        },
+        {
+          "word": "Users",
+          "start": 98.52,
+          "end": 98.86,
+          "probability": 0.1237
+        },
+        {
+          "word": "All",
+          "start": 98.86,
+          "end": 99.14,
+          "probability": 0.8579
+        },
+        {
+          "word": "Underscore",
+          "start": 99.14,
+          "end": 99.66,
+          "probability": 0.9404
+        },
+        {
+          "word": "Permissions",
+          "start": 99.66,
+          "end": 100.22,
+          "probability": 0.9722
+        },
+        {
+          "word": "role",
+          "start": 100.22,
+          "end": 100.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "includes",
+          "start": 100.46,
+          "end": 100.9,
+          "probability": 0.9946
+        },
+        {
+          "word": "all",
+          "start": 100.9,
+          "end": 101.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "System",
+          "start": 101.16,
+          "end": 101.56,
+          "probability": 0.2144
+        },
+        {
+          "word": "permissions.",
+          "start": 101.56,
+          "end": 102.02,
+          "probability": 0.7812
+        },
+        {
+          "word": "But",
+          "start": 102.26,
+          "end": 102.86,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 102.86,
+          "end": 103.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "Activity",
+          "start": 103.0,
+          "end": 103.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "Rules",
+          "start": 103.6,
+          "end": 103.96,
+          "probability": 0.9697
+        },
+        {
+          "word": "Viewer",
+          "start": 103.96,
+          "end": 104.38,
+          "probability": 0.9448
+        },
+        {
+          "word": "role",
+          "start": 104.38,
+          "end": 104.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "has",
+          "start": 104.64,
+          "end": 105.68,
+          "probability": 0.9126
+        },
+        {
+          "word": "only",
+          "start": 105.68,
+          "end": 105.9,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 105.9,
+          "end": 106.14,
+          "probability": 0.9897
+        },
+        {
+          "word": "permission,",
+          "start": 106.14,
+          "end": 106.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 106.88,
+          "end": 107.1,
+          "probability": 0.998
+        },
+        {
+          "word": "right",
+          "start": 107.1,
+          "end": 107.28,
+          "probability": 0.7192
+        },
+        {
+          "word": "to",
+          "start": 107.28,
+          "end": 107.44,
+          "probability": 0.9868
+        },
+        {
+          "word": "view",
+          "start": 107.44,
+          "end": 107.66,
+          "probability": 0.9688
+        },
+        {
+          "word": "Business",
+          "start": 107.66,
+          "end": 108.02,
+          "probability": 0.9033
+        },
+        {
+          "word": "Rules.",
+          "start": 108.02,
+          "end": 108.46,
+          "probability": 0.5923
+        },
+        {
+          "word": "If",
+          "start": 108.82,
+          "end": 109.2,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 109.2,
+          "end": 109.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 109.3,
+          "end": 109.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 109.52,
+          "end": 109.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "Permission,",
+          "start": 109.66,
+          "end": 110.16,
+          "probability": 0.709
+        },
+        {
+          "word": "I",
+          "start": 110.34,
+          "end": 113.06,
+          "probability": 0.999
+        },
+        {
+          "word": "see",
+          "start": 113.06,
+          "end": 113.24,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 113.24,
+          "end": 113.46,
+          "probability": 1.0
+        },
+        {
+          "word": "several",
+          "start": 113.46,
+          "end": 113.8,
+          "probability": 0.999
+        },
+        {
+          "word": "roles",
+          "start": 113.8,
+          "end": 114.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "include",
+          "start": 114.18,
+          "end": 114.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 114.54,
+          "end": 114.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "permission.",
+          "start": 114.78,
+          "end": 115.22,
+          "probability": 0.9639
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 118.54,
+      "end": 120.1,
+      "start_formatted": "00:01:58.540",
+      "end_formatted": "00:02:00.100",
+      "text": "That's pretty much all there is.",
+      "words": [
+        {
+          "word": "That's",
+          "start": 118.54,
+          "end": 119.06,
+          "probability": 0.9766
+        },
+        {
+          "word": "pretty",
+          "start": 119.06,
+          "end": 119.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "much",
+          "start": 119.3,
+          "end": 119.54,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 119.54,
+          "end": 119.76,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 119.76,
+          "end": 119.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "is.",
+          "start": 119.96,
+          "end": 120.1,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 120.16,
+      "end": 124.14,
+      "start_formatted": "00:02:00.160",
+      "end_formatted": "00:02:04.140",
+      "text": "That's pretty much all there is to roles. A role is just a list of permissions.",
+      "words": [
+        {
+          "word": "That's",
+          "start": 120.16,
+          "end": 120.22,
+          "probability": 0.3752
+        },
+        {
+          "word": "pretty",
+          "start": 120.22,
+          "end": 120.22,
+          "probability": 0.5454
+        },
+        {
+          "word": "much",
+          "start": 120.22,
+          "end": 120.22,
+          "probability": 0.9917
+        },
+        {
+          "word": "all",
+          "start": 120.22,
+          "end": 120.22,
+          "probability": 0.8906
+        },
+        {
+          "word": "there",
+          "start": 120.22,
+          "end": 120.22,
+          "probability": 0.9561
+        },
+        {
+          "word": "is",
+          "start": 120.22,
+          "end": 120.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "to",
+          "start": 120.22,
+          "end": 120.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "roles.",
+          "start": 120.22,
+          "end": 120.54,
+          "probability": 0.8647
+        },
+        {
+          "word": "A",
+          "start": 122.02,
+          "end": 122.54,
+          "probability": 0.9805
+        },
+        {
+          "word": "role",
+          "start": 122.54,
+          "end": 122.78,
+          "probability": 0.9819
+        },
+        {
+          "word": "is",
+          "start": 122.78,
+          "end": 122.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "just",
+          "start": 122.98,
+          "end": 123.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 123.16,
+          "end": 123.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "list",
+          "start": 123.32,
+          "end": 123.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 123.54,
+          "end": 123.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "permissions.",
+          "start": 123.68,
+          "end": 124.14,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 126.3,
+      "end": 145.2,
+      "start_formatted": "00:02:06.300",
+      "end_formatted": "00:02:25.200",
+      "text": "There's a slight quirk to the Pages section of the Security Dictionary. It includes more than just pages. It includes all PCF files in the application, including things like screens and views, neither of which require permissions, because they inherit them from their parent pages. So perhaps it should really be called a",
+      "words": [
+        {
+          "word": "There's",
+          "start": 126.3,
+          "end": 126.82,
+          "probability": 0.9893
+        },
+        {
+          "word": "a",
+          "start": 126.82,
+          "end": 126.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "slight",
+          "start": 126.92,
+          "end": 127.18,
+          "probability": 0.9927
+        },
+        {
+          "word": "quirk",
+          "start": 127.18,
+          "end": 127.5,
+          "probability": 0.7607
+        },
+        {
+          "word": "to",
+          "start": 127.5,
+          "end": 127.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 127.66,
+          "end": 127.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "Pages",
+          "start": 127.78,
+          "end": 128.16,
+          "probability": 0.6182
+        },
+        {
+          "word": "section",
+          "start": 128.16,
+          "end": 128.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 128.54,
+          "end": 128.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 128.72,
+          "end": 128.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "Security",
+          "start": 128.82,
+          "end": 129.18,
+          "probability": 0.7412
+        },
+        {
+          "word": "Dictionary.",
+          "start": 129.18,
+          "end": 129.92,
+          "probability": 0.9893
+        },
+        {
+          "word": "It",
+          "start": 130.82,
+          "end": 131.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "includes",
+          "start": 131.34,
+          "end": 131.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "more",
+          "start": 131.8,
+          "end": 132.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "than",
+          "start": 132.02,
+          "end": 132.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "just",
+          "start": 132.2,
+          "end": 132.42,
+          "probability": 0.999
+        },
+        {
+          "word": "pages.",
+          "start": 132.42,
+          "end": 132.82,
+          "probability": 0.8999
+        },
+        {
+          "word": "It",
+          "start": 133.2,
+          "end": 133.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "includes",
+          "start": 133.58,
+          "end": 134.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "all",
+          "start": 134.02,
+          "end": 134.22,
+          "probability": 0.998
+        },
+        {
+          "word": "PCF",
+          "start": 134.22,
+          "end": 134.88,
+          "probability": 0.9854
+        },
+        {
+          "word": "files",
+          "start": 134.88,
+          "end": 135.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 135.22,
+          "end": 135.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 135.42,
+          "end": 135.5,
+          "probability": 0.999
+        },
+        {
+          "word": "application,",
+          "start": 135.5,
+          "end": 136.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "including",
+          "start": 136.52,
+          "end": 136.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "things",
+          "start": 136.98,
+          "end": 137.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "like",
+          "start": 137.3,
+          "end": 137.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "screens",
+          "start": 137.56,
+          "end": 137.96,
+          "probability": 0.8926
+        },
+        {
+          "word": "and",
+          "start": 137.96,
+          "end": 138.18,
+          "probability": 0.999
+        },
+        {
+          "word": "views,",
+          "start": 138.18,
+          "end": 138.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "neither",
+          "start": 138.86,
+          "end": 139.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 139.14,
+          "end": 139.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 139.34,
+          "end": 139.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "require",
+          "start": 139.54,
+          "end": 139.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "permissions,",
+          "start": 139.98,
+          "end": 140.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "because",
+          "start": 140.84,
+          "end": 141.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "they",
+          "start": 141.16,
+          "end": 141.38,
+          "probability": 0.999
+        },
+        {
+          "word": "inherit",
+          "start": 141.38,
+          "end": 141.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "them",
+          "start": 141.74,
+          "end": 141.98,
+          "probability": 0.998
+        },
+        {
+          "word": "from",
+          "start": 141.98,
+          "end": 142.14,
+          "probability": 0.999
+        },
+        {
+          "word": "their",
+          "start": 142.14,
+          "end": 142.3,
+          "probability": 0.999
+        },
+        {
+          "word": "parent",
+          "start": 142.3,
+          "end": 142.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "pages.",
+          "start": 142.64,
+          "end": 143.1,
+          "probability": 0.9897
+        },
+        {
+          "word": "So",
+          "start": 143.44,
+          "end": 143.86,
+          "probability": 0.9927
+        },
+        {
+          "word": "perhaps",
+          "start": 143.86,
+          "end": 144.2,
+          "probability": 0.9668
+        },
+        {
+          "word": "it",
+          "start": 144.2,
+          "end": 144.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "should",
+          "start": 144.42,
+          "end": 144.58,
+          "probability": 0.999
+        },
+        {
+          "word": "really",
+          "start": 144.58,
+          "end": 144.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 144.86,
+          "end": 145.04,
+          "probability": 0.998
+        },
+        {
+          "word": "called",
+          "start": 145.04,
+          "end": 145.2,
+          "probability": 0.7749
+        },
+        {
+          "word": "a",
+          "start": 145.2,
+          "end": 145.2,
+          "probability": 0.2898
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 145.2,
+      "end": 159.56,
+      "start_formatted": "00:02:25.200",
+      "end_formatted": "00:02:39.560",
+      "text": "PCF instead of pages. The main reason for this is that some non-page PCFs, like popups and forwards do have permission expressions. For example, the Activity Detail Forward requires the Activity View APK.",
+      "words": [
+        {
+          "word": "PCF",
+          "start": 145.2,
+          "end": 145.92,
+          "probability": 0.5337
+        },
+        {
+          "word": "instead",
+          "start": 145.92,
+          "end": 146.14,
+          "probability": 0.0068
+        },
+        {
+          "word": "of",
+          "start": 146.14,
+          "end": 146.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "pages.",
+          "start": 146.48,
+          "end": 146.86,
+          "probability": 0.7388
+        },
+        {
+          "word": "The",
+          "start": 147.46,
+          "end": 147.96,
+          "probability": 0.9902
+        },
+        {
+          "word": "main",
+          "start": 147.96,
+          "end": 148.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "reason",
+          "start": 148.16,
+          "end": 148.52,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 148.52,
+          "end": 148.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "this",
+          "start": 148.7,
+          "end": 148.86,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 148.86,
+          "end": 149.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "that",
+          "start": 149.02,
+          "end": 149.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "some",
+          "start": 149.16,
+          "end": 149.36,
+          "probability": 0.981
+        },
+        {
+          "word": "non",
+          "start": 149.36,
+          "end": 149.6,
+          "probability": 0.9375
+        },
+        {
+          "word": "-page",
+          "start": 149.6,
+          "end": 149.9,
+          "probability": 0.916
+        },
+        {
+          "word": "PCFs,",
+          "start": 149.9,
+          "end": 150.82,
+          "probability": 0.9028
+        },
+        {
+          "word": "like",
+          "start": 150.84,
+          "end": 151.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "popups",
+          "start": 151.14,
+          "end": 151.72,
+          "probability": 0.584
+        },
+        {
+          "word": "and",
+          "start": 151.72,
+          "end": 152.52,
+          "probability": 0.6016
+        },
+        {
+          "word": "forwards",
+          "start": 152.52,
+          "end": 152.96,
+          "probability": 0.9507
+        },
+        {
+          "word": "do",
+          "start": 152.96,
+          "end": 153.2,
+          "probability": 0.6943
+        },
+        {
+          "word": "have",
+          "start": 153.2,
+          "end": 153.38,
+          "probability": 0.9897
+        },
+        {
+          "word": "permission",
+          "start": 153.38,
+          "end": 153.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "expressions.",
+          "start": 153.76,
+          "end": 154.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "For",
+          "start": 154.84,
+          "end": 155.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "example,",
+          "start": 155.2,
+          "end": 155.62,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 156.1,
+          "end": 156.18,
+          "probability": 0.9912
+        },
+        {
+          "word": "Activity",
+          "start": 156.18,
+          "end": 156.74,
+          "probability": 0.5879
+        },
+        {
+          "word": "Detail",
+          "start": 156.74,
+          "end": 157.24,
+          "probability": 0.7188
+        },
+        {
+          "word": "Forward",
+          "start": 157.24,
+          "end": 157.54,
+          "probability": 0.6294
+        },
+        {
+          "word": "requires",
+          "start": 157.54,
+          "end": 158.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 158.04,
+          "end": 158.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "Activity",
+          "start": 158.24,
+          "end": 158.72,
+          "probability": 0.8584
+        },
+        {
+          "word": "View",
+          "start": 158.72,
+          "end": 158.96,
+          "probability": 0.6465
+        },
+        {
+          "word": "APK.",
+          "start": 158.96,
+          "end": 159.56,
+          "probability": 0.9482
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 160.26,
+      "end": 175.7,
+      "start_formatted": "00:02:40.260",
+      "end_formatted": "00:02:55.700",
+      "text": "Finally, on in the Application Permission Key section of the Security Dictionary, I can select an APK and see the permissions it conveys and the pages that use it. Some APKs have an additional reference type.",
+      "words": [
+        {
+          "word": "Finally,",
+          "start": 160.26,
+          "end": 160.96,
+          "probability": 0.9932
+        },
+        {
+          "word": "on",
+          "start": 161.46,
+          "end": 161.58,
+          "probability": 0.9756
+        },
+        {
+          "word": "in",
+          "start": 161.58,
+          "end": 161.72,
+          "probability": 0.9585
+        },
+        {
+          "word": "the",
+          "start": 161.72,
+          "end": 161.82,
+          "probability": 0.999
+        },
+        {
+          "word": "Application",
+          "start": 161.82,
+          "end": 162.36,
+          "probability": 0.625
+        },
+        {
+          "word": "Permission",
+          "start": 162.36,
+          "end": 162.96,
+          "probability": 0.9541
+        },
+        {
+          "word": "Key",
+          "start": 162.96,
+          "end": 163.18,
+          "probability": 0.2744
+        },
+        {
+          "word": "section",
+          "start": 163.18,
+          "end": 163.58,
+          "probability": 0.9902
+        },
+        {
+          "word": "of",
+          "start": 163.58,
+          "end": 163.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 163.76,
+          "end": 163.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "Security",
+          "start": 163.86,
+          "end": 164.24,
+          "probability": 0.8057
+        },
+        {
+          "word": "Dictionary,",
+          "start": 164.24,
+          "end": 164.98,
+          "probability": 0.9858
+        },
+        {
+          "word": "I",
+          "start": 165.14,
+          "end": 166.24,
+          "probability": 0.9946
+        },
+        {
+          "word": "can",
+          "start": 166.24,
+          "end": 166.4,
+          "probability": 1.0
+        },
+        {
+          "word": "select",
+          "start": 166.4,
+          "end": 166.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 166.76,
+          "end": 166.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "APK",
+          "start": 166.96,
+          "end": 167.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "and",
+          "start": 167.54,
+          "end": 169.94,
+          "probability": 0.7607
+        },
+        {
+          "word": "see",
+          "start": 169.94,
+          "end": 170.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 170.12,
+          "end": 170.26,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions",
+          "start": 170.26,
+          "end": 170.74,
+          "probability": 0.999
+        },
+        {
+          "word": "it",
+          "start": 170.74,
+          "end": 170.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "conveys",
+          "start": 170.96,
+          "end": 171.4,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 171.4,
+          "end": 171.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 171.54,
+          "end": 171.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "pages",
+          "start": 171.62,
+          "end": 171.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 171.96,
+          "end": 172.22,
+          "probability": 1.0
+        },
+        {
+          "word": "use",
+          "start": 172.22,
+          "end": 172.42,
+          "probability": 1.0
+        },
+        {
+          "word": "it.",
+          "start": 172.42,
+          "end": 172.66,
+          "probability": 1.0
+        },
+        {
+          "word": "Some",
+          "start": 173.02,
+          "end": 173.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "APKs",
+          "start": 173.48,
+          "end": 174.12,
+          "probability": 0.9902
+        },
+        {
+          "word": "have",
+          "start": 174.12,
+          "end": 174.28,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 174.28,
+          "end": 174.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "additional",
+          "start": 174.4,
+          "end": 174.84,
+          "probability": 0.9932
+        },
+        {
+          "word": "reference",
+          "start": 174.84,
+          "end": 175.28,
+          "probability": 0.9834
+        },
+        {
+          "word": "type.",
+          "start": 175.28,
+          "end": 175.7,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 176.72,
+      "end": 195.58,
+      "start_formatted": "00:02:56.720",
+      "end_formatted": "00:03:15.580",
+      "text": "Element references list elements, such as widgets, in PCFs that use the APK or permission in their available properties. For example, the Activity View APK is used to determine whether the subject cell of some activities list views is available. This concludes the Security Dictionary demonstration.",
+      "words": [
+        {
+          "word": "Element",
+          "start": 176.72,
+          "end": 177.4,
+          "probability": 0.9087
+        },
+        {
+          "word": "references",
+          "start": 177.4,
+          "end": 177.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "list",
+          "start": 177.94,
+          "end": 178.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "elements,",
+          "start": 178.32,
+          "end": 178.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "such",
+          "start": 179.02,
+          "end": 179.36,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 179.36,
+          "end": 179.52,
+          "probability": 1.0
+        },
+        {
+          "word": "widgets,",
+          "start": 179.52,
+          "end": 179.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 180.12,
+          "end": 180.36,
+          "probability": 0.9404
+        },
+        {
+          "word": "PCFs",
+          "start": 180.36,
+          "end": 181.06,
+          "probability": 0.9893
+        },
+        {
+          "word": "that",
+          "start": 181.06,
+          "end": 181.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "use",
+          "start": 181.18,
+          "end": 181.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 181.4,
+          "end": 181.54,
+          "probability": 1.0
+        },
+        {
+          "word": "APK",
+          "start": 181.54,
+          "end": 182.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "or",
+          "start": 182.08,
+          "end": 182.36,
+          "probability": 0.9814
+        },
+        {
+          "word": "permission",
+          "start": 182.36,
+          "end": 182.8,
+          "probability": 0.9756
+        },
+        {
+          "word": "in",
+          "start": 182.8,
+          "end": 183.02,
+          "probability": 0.9844
+        },
+        {
+          "word": "their",
+          "start": 183.02,
+          "end": 183.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "available",
+          "start": 183.14,
+          "end": 183.6,
+          "probability": 0.999
+        },
+        {
+          "word": "properties.",
+          "start": 183.6,
+          "end": 184.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "For",
+          "start": 184.56,
+          "end": 184.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 184.98,
+          "end": 185.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 185.76,
+          "end": 185.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Activity",
+          "start": 185.96,
+          "end": 186.48,
+          "probability": 0.8115
+        },
+        {
+          "word": "View",
+          "start": 186.48,
+          "end": 186.7,
+          "probability": 0.0626
+        },
+        {
+          "word": "APK",
+          "start": 186.7,
+          "end": 187.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 187.42,
+          "end": 188.4,
+          "probability": 0.9609
+        },
+        {
+          "word": "used",
+          "start": 188.4,
+          "end": 188.66,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 188.66,
+          "end": 188.8,
+          "probability": 1.0
+        },
+        {
+          "word": "determine",
+          "start": 188.8,
+          "end": 189.18,
+          "probability": 1.0
+        },
+        {
+          "word": "whether",
+          "start": 189.18,
+          "end": 189.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 189.44,
+          "end": 189.62,
+          "probability": 1.0
+        },
+        {
+          "word": "subject",
+          "start": 189.62,
+          "end": 189.98,
+          "probability": 0.978
+        },
+        {
+          "word": "cell",
+          "start": 189.98,
+          "end": 190.26,
+          "probability": 0.9751
+        },
+        {
+          "word": "of",
+          "start": 190.26,
+          "end": 190.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "some",
+          "start": 190.44,
+          "end": 190.66,
+          "probability": 0.999
+        },
+        {
+          "word": "activities",
+          "start": 190.66,
+          "end": 191.16,
+          "probability": 0.8623
+        },
+        {
+          "word": "list",
+          "start": 191.16,
+          "end": 191.48,
+          "probability": 0.9785
+        },
+        {
+          "word": "views",
+          "start": 191.48,
+          "end": 191.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 191.74,
+          "end": 191.94,
+          "probability": 0.9204
+        },
+        {
+          "word": "available.",
+          "start": 191.94,
+          "end": 192.4,
+          "probability": 1.0
+        },
+        {
+          "word": "This",
+          "start": 192.88,
+          "end": 193.5,
+          "probability": 1.0
+        },
+        {
+          "word": "concludes",
+          "start": 193.5,
+          "end": 193.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 193.94,
+          "end": 194.12,
+          "probability": 1.0
+        },
+        {
+          "word": "Security",
+          "start": 194.12,
+          "end": 194.52,
+          "probability": 0.7871
+        },
+        {
+          "word": "Dictionary",
+          "start": 194.52,
+          "end": 195.24,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration.",
+          "start": 195.24,
+          "end": 195.58,
+          "probability": 0.7173
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 195.58,
+      "end": 195.6,
+      "start_formatted": "00:03:15.580",
+      "end_formatted": "00:03:15.600",
+      "text": "The",
+      "words": [
+        {
+          "word": "The",
+          "start": 195.58,
+          "end": 195.6,
+          "probability": 0.0125
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 195.6,
+      "end": 195.66,
+      "start_formatted": "00:03:15.600",
+      "end_formatted": "00:03:15.660",
+      "text": "is",
+      "words": [
+        {
+          "word": "is",
+          "start": 195.6,
+          "end": 195.66,
+          "probability": 0.0003
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 195.72,
+      "end": 195.76,
+      "start_formatted": "00:03:15.720",
+      "end_formatted": "00:03:15.760",
+      "text": "is",
+      "words": [
+        {
+          "word": "is",
+          "start": 195.72,
+          "end": 195.76,
+          "probability": 0.0002
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 195.76,
+      "end": 195.76,
+      "start_formatted": "00:03:15.760",
+      "end_formatted": "00:03:15.760",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 14,
+      "start": 195.76,
+      "end": 195.78,
+      "start_formatted": "00:03:15.760",
+      "end_formatted": "00:03:15.780",
+      "text": "is",
+      "words": [
+        {
+          "word": "is",
+          "start": 195.76,
+          "end": 195.78,
+          "probability": 0.0244
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 195.78,
+      "end": 195.8,
+      "start_formatted": "00:03:15.780",
+      "end_formatted": "00:03:15.800",
+      "text": "is",
+      "words": [
+        {
+          "word": "is",
+          "start": 195.78,
+          "end": 195.8,
+          "probability": 0.0994
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 195.8,
+      "end": 195.82,
+      "start_formatted": "00:03:15.800",
+      "end_formatted": "00:03:15.820",
+      "text": "is",
+      "words": [
+        {
+          "word": "is",
+          "start": 195.8,
+          "end": 195.82,
+          "probability": 0.1985
+        }
+      ]
+    }
+  ]
+}

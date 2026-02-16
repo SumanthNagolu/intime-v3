@@ -1,0 +1,445 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-18",
+    "slide_count": 39,
+    "slides_with_text": 35,
+    "total_words": 1673,
+    "avg_confidence": 83.62,
+    "processing_time_seconds": 12.88,
+    "extracted_at": "2026-02-15T18:19:00.589208"
+  },
+  "full_text": "Cloud Data Archiving for ClaimCenter\n\nv081622.1\n\nLesson\nobjectives\n\n¢ Describe key aspects of archiving in\n\nGuidewire Cloud\n\nDescribe the steps required to enable\narchiving\n\nConfigure archiving rules\n\nDescribe the bulk restore functions\n\nExplain the purge process\n\nExplain how privacy and GDPR compliance\nare achieved\n\nData archiving overview\n\nI Key business use cases G\n\nMoves entities not required for daily operations to archive\n\nEnhances application and database performance\nCloud supports scaling of archive for large data volumes\n\n+ Returns entities from the archive to the operational database\n22] Data retrieval + Supports governance and compliance requirements\nC7 + Supports litigation, catastrophes, fraud, audits, amendments\n\nComplies with GDPR/CCPA needs\nProvides data privacy and security for archived data\n\n64 Security and compliance\n\nI Archiving in self-managed implementations Gi\n\n_ Customer managed\nI\nI\ndatabase WA claim iw I , A —\n| I =\nee ( | ie\nSse I I , Stored data O\nI\n«s” ; — Archived data\nassigned ] it\n| aA I es\ni deb) |\ni] @& ase | a I Purged data\ni} I\nI\n\ngroup\n\nI Archiving in the Cloud G\n\ndatabase WA claim iw\n|\n\nRB\nfe\n\nee 1\n@rc@® I\nan ! AWS $3\n@ I\nassigned I = claim SSS\ngroup |\nI ON !\n; oe i\" | Purged data\nI\n\nI Acomparison of Archiving\n\nArchiving in self-managed\n\nGuidewire Responsibility (Self-\nManaged)\n\n+ Data extract capab\n\n+ Storage and maintenance of archived data\n* Search archived data\n+» Restore from archive\n\n+ Set up purge for archive\n\n+ Manage business rules for Archive and Purge\n+ Set up and manage batch jobs/queues\n\n+ Privacy and security compliance\n\n> GDPR\n\nGi\n\nArchiving as a service\n\nGuidewire Responsibility (GW\nCloud)\n\nData extract capability\n\nStorage and maintenance of archived data\nSearch archived data\n\nRestore from archive\n\nSet up purge for archive\n\nSet up and manage batch jobs/queues for\nArchive and Purge\n\nPrivacy and security compliance (GDPR)\n\nManage business rules\nArchive, purge\n\nI What can be archived\n\nGi\n\nPp pp\n\nClaimCenter 2, is) E ) Ce Fe) Re @)\now (A) a\n@ax PDK =\" Fe\n= Ea} ap y= Ee aS\n\n¢ Archival = is a Claim\n¢ Archive domain graph:\n¢ Begins with the root entity Claim\n¢ Includes all entity types the root entity owns\n\nI Archiving claims in Cloud (1 oF6)\n\nI Archiving claims in Cloud ore)\n\nclosed\n\nI Archiving claims in Cloud @ors) Gi\n\n— |(Al\na as +1 year Meets\n\nclosed archive\nrequirements\n\nArchiving item\nwriter\n\nI Archiving claims in Cloud (ors) Gi\n\n: (Al\nq Marked as +1 year Meets\n\nclosed archive\nrequirements\n\n|\nArchiving item ah\n\nAWS S3\n\nI Archiving claims in Cloud (or)\n\n: (Al\nq Marked as +1 year Meets\n\nclosed archive\nrequirements\n\nArchiving item\nwriter\n\nRestore\n\nI Archiving claims in Cloud ¢or)\n\n: (Al\nq Marked as +1 year\n\nclosed archive\nrequirements\n\nArchiving item\nwriter\n\nRestore\n\nMeets\n\n|\n=\n\nAWS S3\n\ne—\"\no_O\n\nPurge\n\nArchive process for Claims Gi\n\n¢ Set DaysClosedBeforeArchive to a number of days (config.xml)\n¢ ClaimClosed rule uses that to calculate DateEligibleForArchive\n¢ Batch archive process only selects claims that are eligible\n\n« Runs Gosu rules Claim Archiving rules\n\n¢ If not skipped, then the claim is archived\n\n2\n\narchive store\nclaims\n\nI Configuration components of archiving\n\n¢ Configuration parameters —config.xml + Batch processes\n\n* Archive item writer\n|\nx» * Restore archived claims\nell\nfile config xml * Bulk Purge\n\n* Gosu rules ¢ Plugin — lArchiveSource\n\nbatch process\n\n* Claim closed ruleset rad\n* Default Group Claim Archiving Rules [3 plugin\n\n* Archived Claim Purge\nrule set\n\nI config.xml parameters that control archiving\n\n« ArchiveEnabled\n* DaysClosedBeforeArchive\n\nsa configaem\n\nClaimCenter\n\n<param name=\"DaysClosedBeforeArchive\" value=\"30\"/>\n\nI Gosu rules Gi\n\n* ClaimClosed ruleset — sets DateEligibleForArchive property\nwhen a claim is closed\n\n¢ DefaultGroupClaimArchiving ruleset — skip a claim that: rule set\n\n© Bit Rule Sets CB © Default Group Claim Archiving Rules\n\n« Is not closed > bs ApprovaRoving 4) © Anco1000-caim state Rule\n\nIs part of a bulk invoice that is not approved SSS 21 acoso - complete Review Re\n> Pe iptenics €) G7 Anc06000 - Unsynced Review Rule\n\n9) © ARc07000 - Transaction State Rule\n8) G Anc08000 - subrogation Status Rule\n\n* Has open activities Tian\n\n* Has incomplete vendor reviews + tranny\n\n* Has reviews not synched with ContactManager cn\n\n¢ Has transactions yet to be escalated or acknowledged oad\n\n* Has incomplete subrogation\n\n¢ ArchivedClaimPurge ruleset — customer defined rules\n\nBatch processes and plugin\n\nBatch processes:\n\nArchiving Item Writer\n\nBulk Purge\n\nRestore Archived Claims\n\nAccess from: Server Tools -> Batch Process Info\n\nRun manually or schedule in scheduler-config.xml\n\nPlugin |ArchiveSource included in all InsuranceSuite applications — controls writing to\nand retrieving from an archive data store\n\nRestoring archived data\n\nWhy restore archived data? Gi\n\n* To view detailed information for a claim (after archiving, only a summary is available\nin the operational database)\n\n¢ To add newly available information to a claim, or one of its related objects\n¢ To satisfy changes in business or regulatory requirements\n\n¢ To satisfy new reporting requirements\n\n—_i=—_e£\n\narchive store retrieved from InsuranceSuite\narchive Cloud database\n\nI Restoring data from the archive data store Gi\n\n¢ Retrieves claims from archive and restores them to the ClaimCenter operational\ndatabase\n¢ Existing capabilities:\n\n« Search for and retrieve individual claims\n\n=\n\n¢« New capabilities: Le] ~\n* Bulk restore\n\nretrieve from\n\n* Group restored claims together 7\narchive\n\n* Monitor progress\n\nI Retrieve archived claims — single restore Gi\n\nAdvanced search screen provides an option to search the archive\n« Enter search criteria and select a claim in the search results\n\nClick Retrieve from Archive\n\nRetrieve Archived Claims\n\nS  Lessdate > Adjuster > Status >\n\n10/18/2001 Andy Applegate Archived\n\nI Retrieve archived claims — bulk restore (1 of3) Gi\n\nSelect the Administration tab (administrative rights required)\n* Select Utilities -> Restore Archived Claims in Bulk -> Bulk Restore Claims Records in the menu pane\n* Click New Restore with Claim Numbers\n\ni |¥ Dashboard Teom | Administration | v | Vacation\n\nBulk Restore Claims Records\n\nExisting Restorations\n\n#\nSummary Description > Date Created >\n\nNo data to display\n\nI Retrieve archived claims — bulk restore (2of3)\n¢ Enter a value in Restore Summary to identify the restore request\n\n* Select how claim numbers will be provided\n\n« Restore the claims\nGi Claimcenter\n\nDesktop | ¥ ¥ .\n\nI Retrieve archived claims — bulk restore (30F3) Gi\n¢ Monitor the restore request as it is processed\n\n* Click Refresh for updates\n\nBulk Restore Claims Record Details kk\n\nTefermution othe crvnt pags i\n© 2valid ais found. estore Request for2 cls) submited\n\nBull Restore Claims Record Details Restore Request Overview\nRestore Summary Restored Ray Newton claims Claims Restored\n‘Bulk claims restore to restore claims for Ray Newton\n\nDescription Claims Retieving\n\nColones Bulk Restore Claims Record Details Upto uk\nBulk Restore Claims Record Details Restore Request Overview\nRestore Summary Restored Ray Newton claims Claims Restored\n\nc Bulk claims restore to restore claims for Ray Newton\n\n‘chive State 10/21/2021 0251:30 aM\n\nRestored\n\nRestored\n\nI Restored claim associations Gi\n\n* Completed bulk restore requests can be accessed from the Bulk Restore Claims\nRecords page\n\n* Click the request name to view the details\n\nBulk Restore Claims Records\n\n[iting Restorations\n{seo\n\nBulk Restore Claims Record Details\n\nsummary ¢\n\nate\n\njoreclaimsforRay Newton 10/24\nBulk Restore Claims Record Details Restore Request Overview\n\n10/21/2021 02:51:30 aM\n\nClaims Archive State\n\n000.00-000087 Restored\n\n000-00-000088 Restored\n\nI Archived claim retrieval configuration parameters\n\nMaxNumberOfArchivedEntitiesToRestore parameter in config.xml:\n* Specifies the maximum number of entities allowed per bulk restore request\n\n« Refers to the number of claims to be retrieved\nBi centgaml\n\n<paran nane=\"DaysRetrievedBeforeArchive” value=\"100\"/>\n\n<paran nane=\"RestorePattern” value=\"restore\"/>\n\n=\"MaxNuaberOfArchivedEntitiesToRestore™ value=\"2000\"/>\n\nData model changes (1 of2) Gi\n\n« Archived data may span multiple versions of a data model\n¢ ClaimCenter checks the data model version during the restore\n¢ Ifitis an earlier version, ClaimCenter runs upgrade triggers on the object\n¢ Upgrade triggers are:\n* Built-in upgrade triggers for Guidewire data model changes (Guidewire built)\n* Custom upgrade triggers for customer data model changes (customer built)\n\n¢ After all upgrade triggers are successful, the object is converted into a real entity\ninstance\n\n¢ Ifthe upgrade fails, the entire restore process fails\n\nData model changes @of2) Gi\n\n« For data model changes:\n\n+ Use IDataModelChange interface\n\n¢ Implement DatabaseUpgradeVersionTrigger for database upgrades\n\n¢ Implement ArchivedDocumentUpgradeVersionTrigger for archived document upgrades\n¢ Implement both triggers when any data model changes are made\n\n¢ Implementing as you go keeps data upgrade and archive retrievals in sync with the\ncurrent data model\n\n¢ The upgrade operates on one XML document at a time\n* See Gosu documentation for more details\n\nPurge archived data\n\nPurging data — ClaimCenter only Gi\n\nWhen data is past its useful life\n\nWhen data is past regulatory and retention\nrequirements\n\nIs a permanent action\nSupported by two-step ruleset\n\n¢ A flag is set during the archive process (eligible for archive) |\n\n« Aruleset checks again for eligibility at time of purge ii]\nCustomer can configure rulesets to manage the purge A\nPurge is disabled by default and must be enabled in\nconfig.xml AWS s3 Purge\n\nPurging claims Gi\n\n¢ MarkArchivedEntityPurgeReady work queue runs ArchiveClaimPurge ruleset\n¢ ArchiveClaimPurge ruleset provides additional filters for preventing purge\n¢ Archived claims that pass the rules are marked for purge\n\n¢ Bulk Purge purges those claims marked for purge\n\na ae Op\n\nAWS S3 MarkArchived AWS S3 Bulk\nArchived EntityPurgeR Archived Purge\nclaims eady claims\n\nEb\n\nI Data security and privacy\n\n¢ Archived data is stored in AWS S3\n¢« AWS S3 ensures data security and privacy\n¢ Archived data is also GDPR compliant\n¢ Data destruction for GDPR:\n* Destroys data in the archive (AWS S3)\n\n¢ Destroys data in live database (Aurora)\n\nLesson\nobjectives\nreview\n\n¢ Describe key aspects of archiving in\n\nGuidewire Cloud\n\n¢ Describe the steps required to enable\n\narchiving\n\nConfigure archiving rules\n\nDescribe the bulk restore functions\n\nExplain the purge process\n\nExplain how privacy and GDPR compliance\nare achieved",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Cloud Data Archiving for ClaimCenter\n\nv081622.1",
+      "word_count": 6,
+      "avg_confidence": 90.71,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe key aspects of archiving in\n\nGuidewire Cloud\n\nDescribe the steps required to enable\narchiving\n\nConfigure archiving rules\n\nDescribe the bulk restore functions\n\nExplain the purge process\n\nExplain how privacy and GDPR compliance\nare achieved",
+      "word_count": 38,
+      "avg_confidence": 94.55,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Data archiving overview",
+      "word_count": 3,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "I Key business use cases G\n\nMoves entities not required for daily operations to archive\n\nEnhances application and database performance\nCloud supports scaling of archive for large data volumes\n\n+ Returns entities from the archive to the operational database\n22] Data retrieval + Supports governance and compliance requirements\nC7 + Supports litigation, catastrophes, fraud, audits, amendments\n\nComplies with GDPR/CCPA needs\nProvides data privacy and security for archived data\n\n64 Security and compliance",
+      "word_count": 72,
+      "avg_confidence": 91.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "I Archiving in self-managed implementations Gi\n\n_ Customer managed\nI\nI\ndatabase WA claim iw I , A —\n| I =\nee ( | ie\nSse I I , Stored data O\nI\n«s” ; — Archived data\nassigned ] it\n| aA I es\ni deb) |\ni] @& ase | a I Purged data\ni} I\nI\n\ngroup",
+      "word_count": 61,
+      "avg_confidence": 57.78,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "I Archiving in the Cloud G\n\ndatabase WA claim iw\n|\n\nRB\nfe\n\nee 1\n@rc@® I\nan ! AWS $3\n@ I\nassigned I = claim SSS\ngroup |\nI ON !\n; oe i\" | Purged data\nI",
+      "word_count": 40,
+      "avg_confidence": 62.85,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "I Acomparison of Archiving\n\nArchiving in self-managed\n\nGuidewire Responsibility (Self-\nManaged)\n\n+ Data extract capab\n\n+ Storage and maintenance of archived data\n* Search archived data\n+» Restore from archive\n\n+ Set up purge for archive\n\n+ Manage business rules for Archive and Purge\n+ Set up and manage batch jobs/queues\n\n+ Privacy and security compliance\n\n> GDPR\n\nGi\n\nArchiving as a service\n\nGuidewire Responsibility (GW\nCloud)\n\nData extract capability\n\nStorage and maintenance of archived data\nSearch archived data\n\nRestore from archive\n\nSet up purge for archive\n\nSet up and manage batch jobs/queues for\nArchive and Purge\n\nPrivacy and security compliance (GDPR)\n\nManage business rules\nArchive, purge",
+      "word_count": 107,
+      "avg_confidence": 90.25,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "I What can be archived\n\nGi\n\nPp pp\n\nClaimCenter 2, is) E ) Ce Fe) Re @)\now (A) a\n@ax PDK =\" Fe\n= Ea} ap y= Ee aS\n\n¢ Archival = is a Claim\n¢ Archive domain graph:\n¢ Begins with the root entity Claim\n¢ Includes all entity types the root entity owns",
+      "word_count": 56,
+      "avg_confidence": 67.02,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "I Archiving claims in Cloud (1 oF6)",
+      "word_count": 7,
+      "avg_confidence": 74.57,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "I Archiving claims in Cloud ore)\n\nclosed",
+      "word_count": 7,
+      "avg_confidence": 77.14,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "I Archiving claims in Cloud @ors) Gi\n\n— |(Al\na as +1 year Meets\n\nclosed archive\nrequirements\n\nArchiving item\nwriter",
+      "word_count": 20,
+      "avg_confidence": 77.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "I Archiving claims in Cloud (ors) Gi\n\n: (Al\nq Marked as +1 year Meets\n\nclosed archive\nrequirements\n\n|\nArchiving item ah\n\nAWS S3",
+      "word_count": 24,
+      "avg_confidence": 76.08,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "I Archiving claims in Cloud (or)\n\n: (Al\nq Marked as +1 year Meets\n\nclosed archive\nrequirements\n\nArchiving item\nwriter\n\nRestore",
+      "word_count": 21,
+      "avg_confidence": 79.82,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "I Archiving claims in Cloud ¢or)\n\n: (Al\nq Marked as +1 year\n\nclosed archive\nrequirements\n\nArchiving item\nwriter\n\nRestore\n\nMeets\n\n|\n=\n\nAWS S3\n\ne—\"\no_O\n\nPurge",
+      "word_count": 28,
+      "avg_confidence": 83.19,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Archive process for Claims Gi\n\n¢ Set DaysClosedBeforeArchive to a number of days (config.xml)\n¢ ClaimClosed rule uses that to calculate DateEligibleForArchive\n¢ Batch archive process only selects claims that are eligible\n\n« Runs Gosu rules Claim Archiving rules\n\n¢ If not skipped, then the claim is archived\n\n2\n\narchive store\nclaims",
+      "word_count": 52,
+      "avg_confidence": 84.06,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "I Configuration components of archiving\n\n¢ Configuration parameters —config.xml + Batch processes\n\n* Archive item writer\n|\nx» * Restore archived claims\nell\nfile config xml * Bulk Purge\n\n* Gosu rules ¢ Plugin — lArchiveSource\n\nbatch process\n\n* Claim closed ruleset rad\n* Default Group Claim Archiving Rules [3 plugin\n\n* Archived Claim Purge\nrule set",
+      "word_count": 57,
+      "avg_confidence": 78.25,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "I config.xml parameters that control archiving\n\n« ArchiveEnabled\n* DaysClosedBeforeArchive\n\nsa configaem\n\nClaimCenter\n\n<param name=\"DaysClosedBeforeArchive\" value=\"30\"/>",
+      "word_count": 16,
+      "avg_confidence": 72.94,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "I Gosu rules Gi\n\n* ClaimClosed ruleset — sets DateEligibleForArchive property\nwhen a claim is closed\n\n¢ DefaultGroupClaimArchiving ruleset — skip a claim that: rule set\n\n© Bit Rule Sets CB © Default Group Claim Archiving Rules\n\n« Is not closed > bs ApprovaRoving 4) © Anco1000-caim state Rule\n\nIs part of a bulk invoice that is not approved SSS 21 acoso - complete Review Re\n> Pe iptenics €) G7 Anc06000 - Unsynced Review Rule\n\n9) © ARc07000 - Transaction State Rule\n8) G Anc08000 - subrogation Status Rule\n\n* Has open activities Tian\n\n* Has incomplete vendor reviews + tranny\n\n* Has reviews not synched with ContactManager cn\n\n¢ Has transactions yet to be escalated or acknowledged oad\n\n* Has incomplete subrogation\n\n¢ ArchivedClaimPurge ruleset — customer defined rules",
+      "word_count": 131,
+      "avg_confidence": 77.02,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Batch processes and plugin\n\nBatch processes:\n\nArchiving Item Writer\n\nBulk Purge\n\nRestore Archived Claims\n\nAccess from: Server Tools -> Batch Process Info\n\nRun manually or schedule in scheduler-config.xml\n\nPlugin |ArchiveSource included in all InsuranceSuite applications — controls writing to\nand retrieving from an archive data store",
+      "word_count": 46,
+      "avg_confidence": 93.48,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Restoring archived data",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Why restore archived data? Gi\n\n* To view detailed information for a claim (after archiving, only a summary is available\nin the operational database)\n\n¢ To add newly available information to a claim, or one of its related objects\n¢ To satisfy changes in business or regulatory requirements\n\n¢ To satisfy new reporting requirements\n\n—_i=—_e£\n\narchive store retrieved from InsuranceSuite\narchive Cloud database",
+      "word_count": 63,
+      "avg_confidence": 91.5,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "I Restoring data from the archive data store Gi\n\n¢ Retrieves claims from archive and restores them to the ClaimCenter operational\ndatabase\n¢ Existing capabilities:\n\n« Search for and retrieve individual claims\n\n=\n\n¢« New capabilities: Le] ~\n* Bulk restore\n\nretrieve from\n\n* Group restored claims together 7\narchive\n\n* Monitor progress",
+      "word_count": 53,
+      "avg_confidence": 78.57,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "I Retrieve archived claims — single restore Gi\n\nAdvanced search screen provides an option to search the archive\n« Enter search criteria and select a claim in the search results\n\nClick Retrieve from Archive\n\nRetrieve Archived Claims\n\nS  Lessdate > Adjuster > Status >\n\n10/18/2001 Andy Applegate Archived",
+      "word_count": 48,
+      "avg_confidence": 79.81,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "I Retrieve archived claims — bulk restore (1 of3) Gi\n\nSelect the Administration tab (administrative rights required)\n* Select Utilities -> Restore Archived Claims in Bulk -> Bulk Restore Claims Records in the menu pane\n* Click New Restore with Claim Numbers\n\ni |¥ Dashboard Teom | Administration | v | Vacation\n\nBulk Restore Claims Records\n\nExisting Restorations\n\n#\nSummary Description > Date Created >\n\nNo data to display",
+      "word_count": 69,
+      "avg_confidence": 83.09,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "I Retrieve archived claims — bulk restore (2of3)\n¢ Enter a value in Restore Summary to identify the restore request\n\n* Select how claim numbers will be provided\n\n« Restore the claims\nGi Claimcenter\n\nDesktop | ¥ ¥ .",
+      "word_count": 39,
+      "avg_confidence": 87.8,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "I Retrieve archived claims — bulk restore (30F3) Gi\n¢ Monitor the restore request as it is processed\n\n* Click Refresh for updates\n\nBulk Restore Claims Record Details kk\n\nTefermution othe crvnt pags i\n© 2valid ais found. estore Request for2 cls) submited\n\nBull Restore Claims Record Details Restore Request Overview\nRestore Summary Restored Ray Newton claims Claims Restored\n‘Bulk claims restore to restore claims for Ray Newton\n\nDescription Claims Retieving\n\nColones Bulk Restore Claims Record Details Upto uk\nBulk Restore Claims Record Details Restore Request Overview\nRestore Summary Restored Ray Newton claims Claims Restored\n\nc Bulk claims restore to restore claims for Ray Newton\n\n‘chive State 10/21/2021 0251:30 aM\n\nRestored\n\nRestored",
+      "word_count": 112,
+      "avg_confidence": 75.4,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "I Restored claim associations Gi\n\n* Completed bulk restore requests can be accessed from the Bulk Restore Claims\nRecords page\n\n* Click the request name to view the details\n\nBulk Restore Claims Records\n\n[iting Restorations\n{seo\n\nBulk Restore Claims Record Details\n\nsummary ¢\n\nate\n\njoreclaimsforRay Newton 10/24\nBulk Restore Claims Record Details Restore Request Overview\n\n10/21/2021 02:51:30 aM\n\nClaims Archive State\n\n000.00-000087 Restored\n\n000-00-000088 Restored",
+      "word_count": 65,
+      "avg_confidence": 82.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "I Archived claim retrieval configuration parameters\n\nMaxNumberOfArchivedEntitiesToRestore parameter in config.xml:\n* Specifies the maximum number of entities allowed per bulk restore request\n\n« Refers to the number of claims to be retrieved\nBi centgaml\n\n<paran nane=\"DaysRetrievedBeforeArchive” value=\"100\"/>\n\n<paran nane=\"RestorePattern” value=\"restore\"/>\n\n=\"MaxNuaberOfArchivedEntitiesToRestore™ value=\"2000\"/>",
+      "word_count": 42,
+      "avg_confidence": 78.89,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Data model changes (1 of2) Gi\n\n« Archived data may span multiple versions of a data model\n¢ ClaimCenter checks the data model version during the restore\n¢ Ifitis an earlier version, ClaimCenter runs upgrade triggers on the object\n¢ Upgrade triggers are:\n* Built-in upgrade triggers for Guidewire data model changes (Guidewire built)\n* Custom upgrade triggers for customer data model changes (customer built)\n\n¢ After all upgrade triggers are successful, the object is converted into a real entity\ninstance\n\n¢ Ifthe upgrade fails, the entire restore process fails",
+      "word_count": 90,
+      "avg_confidence": 89.11,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Data model changes @of2) Gi\n\n« For data model changes:\n\n+ Use IDataModelChange interface\n\n¢ Implement DatabaseUpgradeVersionTrigger for database upgrades\n\n¢ Implement ArchivedDocumentUpgradeVersionTrigger for archived document upgrades\n¢ Implement both triggers when any data model changes are made\n\n¢ Implementing as you go keeps data upgrade and archive retrievals in sync with the\ncurrent data model\n\n¢ The upgrade operates on one XML document at a time\n* See Gosu documentation for more details",
+      "word_count": 74,
+      "avg_confidence": 86.05,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Purge archived data",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Purging data — ClaimCenter only Gi\n\nWhen data is past its useful life\n\nWhen data is past regulatory and retention\nrequirements\n\nIs a permanent action\nSupported by two-step ruleset\n\n¢ A flag is set during the archive process (eligible for archive) |\n\n« Aruleset checks again for eligibility at time of purge ii]\nCustomer can configure rulesets to manage the purge A\nPurge is disabled by default and must be enabled in\nconfig.xml AWS s3 Purge",
+      "word_count": 76,
+      "avg_confidence": 89.52,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Purging claims Gi\n\n¢ MarkArchivedEntityPurgeReady work queue runs ArchiveClaimPurge ruleset\n¢ ArchiveClaimPurge ruleset provides additional filters for preventing purge\n¢ Archived claims that pass the rules are marked for purge\n\n¢ Bulk Purge purges those claims marked for purge\n\na ae Op\n\nAWS S3 MarkArchived AWS S3 Bulk\nArchived EntityPurgeR Archived Purge\nclaims eady claims\n\nEb",
+      "word_count": 56,
+      "avg_confidence": 87.72,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "I Data security and privacy\n\n¢ Archived data is stored in AWS S3\n¢« AWS S3 ensures data security and privacy\n¢ Archived data is also GDPR compliant\n¢ Data destruction for GDPR:\n* Destroys data in the archive (AWS S3)\n\n¢ Destroys data in live database (Aurora)",
+      "word_count": 48,
+      "avg_confidence": 85.48,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe key aspects of archiving in\n\nGuidewire Cloud\n\n¢ Describe the steps required to enable\n\narchiving\n\nConfigure archiving rules\n\nDescribe the bulk restore functions\n\nExplain the purge process\n\nExplain how privacy and GDPR compliance\nare achieved",
+      "word_count": 40,
+      "avg_confidence": 93.62,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

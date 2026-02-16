@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-18",
+    "slide_count": 31,
+    "slides_with_text": 29,
+    "total_words": 1689,
+    "avg_confidence": 86.32,
+    "processing_time_seconds": 14.12,
+    "extracted_at": "2026-02-13T12:16:13.457724"
+  },
+  "full_text": "Designating an Alternate Payer\n\nLesson\nobj ectives ¢ Differentiate between the two types of\n\nalternate payers\n\n¢ Create and test a list bill account\n\n¢ Describe performance considerations for\nalternate payer accounts\n\nAlternate payers\n\nnl\n\nvou There are times when someone who\nmeat et is not the policyholder pays for a\npolicy. For example, | paid for my\nson’s car insurance last summer\n\nwhen he was between jobs.\n\neommatrtian BS\n\nBillingCenter uses the term Developer. |\n“alternate payer” for accounts\nthat pay for policies they do\nnot own. There are two types\nof alternate payers.\n\n| How BillingCenter supports alternate payers G\n— Overriding payer a\nfo] orl oe\nS=129> $—<29>\n\n¢ An overriding payer is an account ¢ A\\list bill payer is an account that is\n\nthat is responsible for paying a responsible for paying all charges\ncharge on a policy it does not own on one or more policies it does not\n\n« Responsibility to pay is assigned at the own\ncharge level + Responsibility to pay is assigned at the\n* An overriding payer can be any type Policy level\nof account\n\n¢ Alist bill payer must have an\naccount type of List Bill\n\nOverriding payer example 1\n\nmy\"\n\n* Scenario: Company ABC has two regional offices\n\n+ Each office has a commercial Eastern policy ——_\nproperty policy Premium lp\n\n* Each office pays the premium invoice stream HQ\nfor its own policy\n* HQ pays all the taxes\n\n—ha\n\ninvoice stream Eastern\n\n=\n\ninvoice stream Western\n\nOverriding payer example 2\n\nmy, ™\n\ninvoice stream Central\n\n*« Scenario: Company XYZ has two regional offices\n\n* Each office has a commercial Northern policy\nproperty policy\n* Central pays all charges for both policies\n\nz\n°\na\n2;\n3\n\nao\n°\ni=\n&\n=>\no\n3\n\nDemonstration G\n\nDesignate an overriding payer\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nPayroll deduct scenarios\n\nnl\n\nMarcus\n\nwees | can see where alternate payers provide a\nAnalyst way to implement situations such as an\n\n: employer making a single payment to cover\n/ the premiums of several employees.\n\nfr\n\n\\\n\n) “ Ganisuretion BS\n> Absolutely, Marcus! The scenario Developer\n\n, you mention can be implemented\n\neither by an overriding payer or\n\nby a list bill account.\n\nA payroll deduct example (1 of 3) G\n\n¢ Alarge employer pays premiums on employees’ personal line insurance policies\n¢ Insurer offers discounted premium if employees pay through their paychecks\n¢ Employer automatically deducts premium payments from employee paychecks\n¢ The employees benefit:\na Discounted insurance\nif Convenience of no extra bills to pay\n¢ The insurer benefits:\na More predictable cash flow\nwt Typically, premium is paid early\nav Reduced operational costs\nav Reduced likelihood of returned checks\n\nA payroll deduct example (2 of 3)\n\nThe employer pays all the charges for several policyholders\n\nae\n\nInsurer One Employer\npayment\n\nTasks done outside of BillingCenter\n\nact)\n\nvee\n\nPolicyholder B\n\ne@\nIT)\n“N\n\nPolicyholder C\n\n| A payroll deduct example (3 of 3)\nImplemented using either overriding payer or list bill payer\nPA01-JJONES\n\n=|\n\ninvoice stream\n\nSame\n\nBig Employer\n\nMore about list bill\n\nSo, which alternate payer should be used to\nimplement the employee payroll deduct scenario?\n\nF\n\nMarci\nThe decision depends on Configuration\nDeveloper\n\nvarious factors. First let’s take a\ncloser look at list bill. Then we\ncan discuss the choice of\nalternate payers.\n\nnl\n\nSpecial behaviors of list bill accounts (1 of 2)\n\n.\n\nA list bill account is the payer for policies\nowned by other accounts\n\nAlt bill account: $\nCannot own policies 1)\nor hold collateral .\npolicy owner\n\nHas a predefined set of supported\npayment plans\n\nHas a predefined set of invoice streams\nthat Support the payment intervals on\npayment plans\n\nUses account-level billing fel\n\nCannot be changed to a different account type\n\nnl\n\nSpecial behaviors of list bill accounts (2 of 2) Gi\n\n¢ A\\list bill account is the payer for policies\nowned by other accounts\n\n¢ Allist bill account: gs —\nas ( List bill\n* Cannot own policies\n\naccount eoe :\n\nor hold collateral policy owner Suet\n+ Has a predefined set of supported Account : Policy A :\npayment plans A : :\n\n+ Has a predefined set of invoice streams | eee l —\nthat Support the payment intervals on owns : :\njayment plans : r i\npayment Account ; Policy B :\n\nas :\n+ Uses account-level billing fel feoel :\n\n* Cannot be changed to a different account type Account : Policy C i\nc : i\n\nQuestion G\n\n_— — What are the three main characteristics of a list bill account?\n\n¢\n¢\n4\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gi\n\n_— — What are the three main characteristics of a list bill account?\n\n¢\noo Alist bill account must be type List Bill. It must have at least one associated payment\n\nplan and one associated invoice stream that supports the payment interval on the\npayment plan.\n\n~- SSS 5S 555555 5-5 =--=\n\nQuestion\n\n,— — What are the restrictions for list bill accounts?\n\n¢\n¢\n4\n\n~- SSS 55555555 55=->=-=\n\nAnswer Gi\n\n,— — What are the restrictions for list bill accounts?\n\n4\n“ Alist bill account:\n\n* Cannot own policies or hold collateral\n« Always uses accountlevel billing\n\n* Cannot be changed to a different account type\n\n~- SSS 5S 555555 5-5 =--=\n\nCreating a new list bill policy (for testing purposes) [5\n\n¢ Policies must have:\n\n+ List Bill as billing method\n\n¢ AList Bill account as the overriding payer account\nPolicy Issuance Wizard - Step 1 of 2\n\n* PPi2 =\nream * | Twice Per Month oN can filter search by List Bill type\n\nSearch for Accounts [iwi Peieytsvoncew\n\n%* | BOOL-MFLEET\n\nLise itt\n\n11000000006\n\nList i\n\nOnly overriding payer’s invoice streams and payment plans are available\n\ngg\n\nDemonstration G\n\nCreate and test the list bill account\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nHandling list bill payments\n\nnl\n\nBusiness\nAnalyst, -\n\nHow does BillingCenter handle\npayments for list bill policies?\n\nMarci\nConfiguration\nDeveloper\n\nTypically, a billing clerk uses\nthe Multiple Payment Entry\nwizard to record payments.\n\nRecording list bill/overriding payer payments Gi\n\n* Billing clerk uses the Multiple Payment Entry wizard to record payments\n\n« Recommended: Split large payment into smaller payments and allocate payments at the\naccount, policy, or invoice level\n\nsry Es\n\nlist bill payer billing clerk\n\nMultiple Payment Entry Wizard - Confirm Payments Step\n\nType > _Date > Paymentinstrument > _Check#  ___Amount_$ _Description > fH\n\nAccount # Invoice # > $ Producer#_ >\nPayment 04):\n\nPayment 04/19/2019\n$1,243.89\n\n$6,919.12\n\n8002-SSMITH-1 Payment 04/19/2019\n\nTotal\n\nRecording list bill/overriding payer payments Gi\n\n* Billing clerk uses the Multiple Payment Entry wizard to record payments\n\n« Recommended: Split large payment into smaller payments and allocate payments at the\naccount, policy, or invoice level\n\nsry Es\n\nlist bill payer billing clerk\n\nMultiple Payment Entry Wizard - Confirm Payments Step\n\nType > _Date > Paymentinstrument > _Check#  ___Amount_$ _Description > fH\n\nAccount # Invoice # > $ Producer#_ >\nPayment 04):\n\nPayment 04/19/2019\n$1,243.89\n\n$6,919.12\n\n8002-SSMITH-1 Payment 04/19/2019\n\nTotal\n\nAlternate payers and delinquency Ke G\n\n« When a policy becomes past due, the policy and policy owner become delinquent\n\nEY EEL fat (B Poticy# Hoos-PNeFFER-: Account DEM00000%\n\n[ FT] QName Pat Netter Aecount# DEN000004 Feb 19, 2019\n\nAccount Summary\n(Co)\nA\\ This account has one or more active delinquencies: Past Due.\n\npolicy owner & Q Name Pat Neffer Account# DEM000004 Feb 19,2019\n\nPolicy Summary\n\nAA This policy has one or more active delinquencies: Past Due\n\npolicy [SEE fa EB Poticye Hi00s-PNeFFER-1 Accounte DEMO00004\n\nPolicy Details Account Details\n\nA\\ This policy has one or more active delinquencies: Past Due \\ This account has one or more active delinquencies: Past Due.\n\n¢ The list bill account/overriding payer does not become delinquent\n\ntame PermaPat Account 1000000006 Feb 19,2018 GEE Name PermaPat Account 2000000006 Feb 19,2019\n\nAccount Summary Account Details\ne—2)>\n\nOverview Account Basics\n\nAlternate payer considerations\n\nMarci\nConfiguration\nDeveloper\n\n8\n\nNow that you know more about list bill\n\n<~ payers, let’s discuss the factors to\n\nconsider when deciding which type of\nalternate payer to use.\n\nDetermining which type of alternate payer to use\n\nAssuming a single account pays for multiple policies it does not own\n\nnl\n\n* Generally, Guidewire recommends using list bill accounts because list bill\naccounts have performance enhancements that overriding payers do not\n\n* However: A list bill account cannot own policies whereas an overriding payer account can\n¢ A policy that requires multiple payers must make use of overriding payers\n¢ For fewer than 50 policies:\n* Set billing method to List Bill on the policies and use a list bill account payer, OR\n* Set billing method to Direct Bill on the policies and use an overriding payer\n¢ For 50 to 1,000 policies:\n* Set billing method to List Bill on the policies and use a list bill account payer\n¢ For over 1,000 policies, distribute the work (as described on the next slide)\n\nPerformance considerations for alternate payers G\n\n¢ Apayer with a large number of policies adversely impacts performance\n\n* Batch processes such as Invoice, Invoice Due, and New Payment can fail to complete work\nwithin the nightly window\n\n¢ Screens such as Invoices and Charges take more time to render\n« Payment reconciliation is more difficult when a mistake occurs\n* Guidewire recommends:\n¢ Distribute work over multiple payer accounts\n+ Distribute work over time\n+ Example: Invoice some monthly policies on the 1st of the month, others on the 2\"4, and so on\n\n+ Process payments as batch payments\n\nConsult your Guidewire Customer Support representative about sizing list bill accounts\n\nLesson\nobj ectives + Differentiate between the two types of\nreview ; alternate payers\n\nCreate and test a list bill account\n¢ Describe performance considerations for\nalternate payer accounts\n\nStudent exercise\n\nCreate a list bill account",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Designating an Alternate Payer",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobj ectives ¢ Differentiate between the two types of\n\nalternate payers\n\n¢ Create and test a list bill account\n\n¢ Describe performance considerations for\nalternate payer accounts",
+      "word_count": 28,
+      "avg_confidence": 88.07,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Alternate payers\n\nnl\n\nvou There are times when someone who\nmeat et is not the policyholder pays for a\npolicy. For example, | paid for my\nson’s car insurance last summer\n\nwhen he was between jobs.\n\neommatrtian BS\n\nBillingCenter uses the term Developer. |\n“alternate payer” for accounts\nthat pay for policies they do\nnot own. There are two types\nof alternate payers.",
+      "word_count": 63,
+      "avg_confidence": 90.5,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| How BillingCenter supports alternate payers G\n— Overriding payer a\nfo] orl oe\nS=129> $—<29>\n\n¢ An overriding payer is an account ¢ A\\list bill payer is an account that is\n\nthat is responsible for paying a responsible for paying all charges\ncharge on a policy it does not own on one or more policies it does not\n\n« Responsibility to pay is assigned at the own\ncharge level + Responsibility to pay is assigned at the\n* An overriding payer can be any type Policy level\nof account\n\n¢ Alist bill payer must have an\naccount type of List Bill",
+      "word_count": 102,
+      "avg_confidence": 86.92,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Overriding payer example 1\n\nmy\"\n\n* Scenario: Company ABC has two regional offices\n\n+ Each office has a commercial Eastern policy ——_\nproperty policy Premium lp\n\n* Each office pays the premium invoice stream HQ\nfor its own policy\n* HQ pays all the taxes\n\n—ha\n\ninvoice stream Eastern\n\n=\n\ninvoice stream Western",
+      "word_count": 53,
+      "avg_confidence": 86.81,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Overriding payer example 2\n\nmy, ™\n\ninvoice stream Central\n\n*« Scenario: Company XYZ has two regional offices\n\n* Each office has a commercial Northern policy\nproperty policy\n* Central pays all charges for both policies\n\nz\n°\na\n2;\n3\n\nao\n°\ni=\n&\n=>\no\n3",
+      "word_count": 47,
+      "avg_confidence": 79.32,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Demonstration G\n\nDesignate an overriding payer\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Payroll deduct scenarios\n\nnl\n\nMarcus\n\nwees | can see where alternate payers provide a\nAnalyst way to implement situations such as an\n\n: employer making a single payment to cover\n/ the premiums of several employees.\n\nfr\n\n\\\n\n) “ Ganisuretion BS\n> Absolutely, Marcus! The scenario Developer\n\n, you mention can be implemented\n\neither by an overriding payer or\n\nby a list bill account.",
+      "word_count": 65,
+      "avg_confidence": 89.47,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "A payroll deduct example (1 of 3) G\n\n¢ Alarge employer pays premiums on employees’ personal line insurance policies\n¢ Insurer offers discounted premium if employees pay through their paychecks\n¢ Employer automatically deducts premium payments from employee paychecks\n¢ The employees benefit:\na Discounted insurance\nif Convenience of no extra bills to pay\n¢ The insurer benefits:\na More predictable cash flow\nwt Typically, premium is paid early\nav Reduced operational costs\nav Reduced likelihood of returned checks",
+      "word_count": 79,
+      "avg_confidence": 85.61,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "A payroll deduct example (2 of 3)\n\nThe employer pays all the charges for several policyholders\n\nae\n\nInsurer One Employer\npayment\n\nTasks done outside of BillingCenter\n\nact)\n\nvee\n\nPolicyholder B\n\ne@\nIT)\n“N\n\nPolicyholder C",
+      "word_count": 35,
+      "avg_confidence": 86.55,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| A payroll deduct example (3 of 3)\nImplemented using either overriding payer or list bill payer\nPA01-JJONES\n\n=|\n\ninvoice stream\n\nSame\n\nBig Employer",
+      "word_count": 24,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "More about list bill\n\nSo, which alternate payer should be used to\nimplement the employee payroll deduct scenario?\n\nF\n\nMarci\nThe decision depends on Configuration\nDeveloper\n\nvarious factors. First let’s take a\ncloser look at list bill. Then we\ncan discuss the choice of\nalternate payers.\n\nnl",
+      "word_count": 47,
+      "avg_confidence": 94.62,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Special behaviors of list bill accounts (1 of 2)\n\n.\n\nA list bill account is the payer for policies\nowned by other accounts\n\nAlt bill account: $\nCannot own policies 1)\nor hold collateral .\npolicy owner\n\nHas a predefined set of supported\npayment plans\n\nHas a predefined set of invoice streams\nthat Support the payment intervals on\npayment plans\n\nUses account-level billing fel\n\nCannot be changed to a different account type\n\nnl",
+      "word_count": 73,
+      "avg_confidence": 89.53,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Special behaviors of list bill accounts (2 of 2) Gi\n\n¢ A\\list bill account is the payer for policies\nowned by other accounts\n\n¢ Allist bill account: gs —\nas ( List bill\n* Cannot own policies\n\naccount eoe :\n\nor hold collateral policy owner Suet\n+ Has a predefined set of supported Account : Policy A :\npayment plans A : :\n\n+ Has a predefined set of invoice streams | eee l —\nthat Support the payment intervals on owns : :\njayment plans : r i\npayment Account ; Policy B :\n\nas :\n+ Uses account-level billing fel feoel :\n\n* Cannot be changed to a different account type Account : Policy C i\nc : i",
+      "word_count": 121,
+      "avg_confidence": 82.36,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Question G\n\n_— — What are the three main characteristics of a list bill account?\n\n¢\n¢\n4\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 22,
+      "avg_confidence": 69.38,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Answer Gi\n\n_— — What are the three main characteristics of a list bill account?\n\n¢\noo Alist bill account must be type List Bill. It must have at least one associated payment\n\nplan and one associated invoice stream that supports the payment interval on the\npayment plan.\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 54,
+      "avg_confidence": 85.22,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n,— — What are the restrictions for list bill accounts?\n\n¢\n¢\n4\n\n~- SSS 55555555 55=->=-=",
+      "word_count": 18,
+      "avg_confidence": 71.53,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer Gi\n\n,— — What are the restrictions for list bill accounts?\n\n4\n“ Alist bill account:\n\n* Cannot own policies or hold collateral\n« Always uses accountlevel billing\n\n* Cannot be changed to a different account type\n\n~- SSS 5S 555555 5-5 =--=",
+      "word_count": 44,
+      "avg_confidence": 75.51,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Creating a new list bill policy (for testing purposes) [5\n\n¢ Policies must have:\n\n+ List Bill as billing method\n\n¢ AList Bill account as the overriding payer account\nPolicy Issuance Wizard - Step 1 of 2\n\n* PPi2 =\nream * | Twice Per Month oN can filter search by List Bill type\n\nSearch for Accounts [iwi Peieytsvoncew\n\n%* | BOOL-MFLEET\n\nLise itt\n\n11000000006\n\nList i\n\nOnly overriding payer’s invoice streams and payment plans are available\n\ngg",
+      "word_count": 78,
+      "avg_confidence": 84.06,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Demonstration G\n\nCreate and test the list bill account\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 39,
+      "avg_confidence": 95.38,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Handling list bill payments\n\nnl\n\nBusiness\nAnalyst, -\n\nHow does BillingCenter handle\npayments for list bill policies?\n\nMarci\nConfiguration\nDeveloper\n\nTypically, a billing clerk uses\nthe Multiple Payment Entry\nwizard to record payments.",
+      "word_count": 33,
+      "avg_confidence": 90.68,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Recording list bill/overriding payer payments Gi\n\n* Billing clerk uses the Multiple Payment Entry wizard to record payments\n\n« Recommended: Split large payment into smaller payments and allocate payments at the\naccount, policy, or invoice level\n\nsry Es\n\nlist bill payer billing clerk\n\nMultiple Payment Entry Wizard - Confirm Payments Step\n\nType > _Date > Paymentinstrument > _Check#  ___Amount_$ _Description > fH\n\nAccount # Invoice # > $ Producer#_ >\nPayment 04):\n\nPayment 04/19/2019\n$1,243.89\n\n$6,919.12\n\n8002-SSMITH-1 Payment 04/19/2019\n\nTotal",
+      "word_count": 80,
+      "avg_confidence": 78.06,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Recording list bill/overriding payer payments Gi\n\n* Billing clerk uses the Multiple Payment Entry wizard to record payments\n\n« Recommended: Split large payment into smaller payments and allocate payments at the\naccount, policy, or invoice level\n\nsry Es\n\nlist bill payer billing clerk\n\nMultiple Payment Entry Wizard - Confirm Payments Step\n\nType > _Date > Paymentinstrument > _Check#  ___Amount_$ _Description > fH\n\nAccount # Invoice # > $ Producer#_ >\nPayment 04):\n\nPayment 04/19/2019\n$1,243.89\n\n$6,919.12\n\n8002-SSMITH-1 Payment 04/19/2019\n\nTotal",
+      "word_count": 80,
+      "avg_confidence": 78.06,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Alternate payers and delinquency Ke G\n\n« When a policy becomes past due, the policy and policy owner become delinquent\n\nEY EEL fat (B Poticy# Hoos-PNeFFER-: Account DEM00000%\n\n[ FT] QName Pat Netter Aecount# DEN000004 Feb 19, 2019\n\nAccount Summary\n(Co)\nA\\ This account has one or more active delinquencies: Past Due.\n\npolicy owner & Q Name Pat Neffer Account# DEM000004 Feb 19,2019\n\nPolicy Summary\n\nAA This policy has one or more active delinquencies: Past Due\n\npolicy [SEE fa EB Poticye Hi00s-PNeFFER-1 Accounte DEMO00004\n\nPolicy Details Account Details\n\nA\\ This policy has one or more active delinquencies: Past Due \\ This account has one or more active delinquencies: Past Due.\n\n¢ The list bill account/overriding payer does not become delinquent\n\ntame PermaPat Account 1000000006 Feb 19,2018 GEE Name PermaPat Account 2000000006 Feb 19,2019\n\nAccount Summary Account Details\ne—2)>\n\nOverview Account Basics",
+      "word_count": 141,
+      "avg_confidence": 77.1,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Alternate payer considerations\n\nMarci\nConfiguration\nDeveloper\n\n8\n\nNow that you know more about list bill\n\n<~ payers, let’s discuss the factors to\n\nconsider when deciding which type of\nalternate payer to use.",
+      "word_count": 32,
+      "avg_confidence": 90.91,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Determining which type of alternate payer to use\n\nAssuming a single account pays for multiple policies it does not own\n\nnl\n\n* Generally, Guidewire recommends using list bill accounts because list bill\naccounts have performance enhancements that overriding payers do not\n\n* However: A list bill account cannot own policies whereas an overriding payer account can\n¢ A policy that requires multiple payers must make use of overriding payers\n¢ For fewer than 50 policies:\n* Set billing method to List Bill on the policies and use a list bill account payer, OR\n* Set billing method to Direct Bill on the policies and use an overriding payer\n¢ For 50 to 1,000 policies:\n* Set billing method to List Bill on the policies and use a list bill account payer\n¢ For over 1,000 policies, distribute the work (as described on the next slide)",
+      "word_count": 145,
+      "avg_confidence": 91.92,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Performance considerations for alternate payers G\n\n¢ Apayer with a large number of policies adversely impacts performance\n\n* Batch processes such as Invoice, Invoice Due, and New Payment can fail to complete work\nwithin the nightly window\n\n¢ Screens such as Invoices and Charges take more time to render\n« Payment reconciliation is more difficult when a mistake occurs\n* Guidewire recommends:\n¢ Distribute work over multiple payer accounts\n+ Distribute work over time\n+ Example: Invoice some monthly policies on the 1st of the month, others on the 2\"4, and so on\n\n+ Process payments as batch payments\n\nConsult your Guidewire Customer Support representative about sizing list bill accounts",
+      "word_count": 110,
+      "avg_confidence": 89.47,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Lesson\nobj ectives + Differentiate between the two types of\nreview ; alternate payers\n\nCreate and test a list bill account\n¢ Describe performance considerations for\nalternate payer accounts",
+      "word_count": 29,
+      "avg_confidence": 89.55,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Student exercise\n\nCreate a list bill account",
+      "word_count": 7,
+      "avg_confidence": 95.88,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    }
+  ]
+}

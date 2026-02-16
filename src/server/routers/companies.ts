@@ -758,7 +758,7 @@ export const companiesRouter = router({
       industry: z.string().optional(),
       subIndustry: z.string().optional(),
       website: z.string().url().optional().or(z.literal('')).nullable(),
-      phone: z.string().optional().nullable(),
+      phone: z.string().max(20).regex(/^[\d\s+\-()]*$/, 'Invalid phone number format').optional().nullable(),
       linkedinUrl: z.string().url().optional().or(z.literal('')).nullable(),
       // Location
       headquartersCity: z.string().optional().nullable(),

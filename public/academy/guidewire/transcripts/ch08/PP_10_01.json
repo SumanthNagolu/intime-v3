@@ -1,0 +1,1543 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_10_01.mp4",
+    "video_stem": "PP_10_01",
+    "duration_seconds": 132.62,
+    "duration_formatted": "00:02:12.620",
+    "segment_count": 42,
+    "word_count": 186,
+    "avg_confidence": 0.9258,
+    "transcription_time_seconds": 15.17,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:29:29.797337"
+  },
+  "full_text": "We are adding a new permission to restrict users from editing the affinity group on the PolicyInfo page. In Studio, double-click the Shift key. Find and open the TypeListExtensionFileSystemPermissionType.ttx. Add a new type code. Enter a unique code. Enter the name and description. Save the file. Users must regenerate dictionaries to see new permissions listed within Security Dictionary. In Windows Explorer, pressing Shift and then right-click the PolicyCenter folder. Open a command window. Type GWB GEN DATA Dictionary. It also helps to validate the type list changes. Navigate to Build, Dictionary, Security. Open the index.html for the Security Dictionary. Go to the System Permissions page. The new permission is listed under System Permissions in the Security Dictionary. You must restart the server in Studio for the application to pick up the data model changes. In PolicyCenter, login as SuperUser. We will add the new permission to the Underwriter role. Go to Administration, Users, and Security, Roles. Select the Underwriter role. Edit the role. Click Add. Select the permission Added Affinity Group. Save the changes. This is the end of demonstration for creating a new system permission.                                    ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.18,
+      "end": 24.98,
+      "start_formatted": "00:00:01.180",
+      "end_formatted": "00:00:24.980",
+      "text": "We are adding a new permission to restrict users from editing the affinity group on the PolicyInfo page. In Studio, double-click the Shift key. Find and open the TypeListExtensionFileSystemPermissionType.ttx. Add a new type code. Enter a unique code.",
+      "words": [
+        {
+          "word": "We",
+          "start": 1.18,
+          "end": 1.86,
+          "probability": 0.917
+        },
+        {
+          "word": "are",
+          "start": 1.86,
+          "end": 2.0,
+          "probability": 0.9224
+        },
+        {
+          "word": "adding",
+          "start": 2.0,
+          "end": 2.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 2.24,
+          "end": 2.4,
+          "probability": 0.9868
+        },
+        {
+          "word": "new",
+          "start": 2.4,
+          "end": 2.58,
+          "probability": 0.9946
+        },
+        {
+          "word": "permission",
+          "start": 2.58,
+          "end": 3.02,
+          "probability": 0.9805
+        },
+        {
+          "word": "to",
+          "start": 3.02,
+          "end": 3.28,
+          "probability": 0.998
+        },
+        {
+          "word": "restrict",
+          "start": 3.28,
+          "end": 3.68,
+          "probability": 0.9897
+        },
+        {
+          "word": "users",
+          "start": 3.68,
+          "end": 4.16,
+          "probability": 0.9888
+        },
+        {
+          "word": "from",
+          "start": 4.16,
+          "end": 4.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "editing",
+          "start": 4.46,
+          "end": 4.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 4.82,
+          "end": 5.06,
+          "probability": 0.9927
+        },
+        {
+          "word": "affinity",
+          "start": 5.06,
+          "end": 5.4,
+          "probability": 0.7773
+        },
+        {
+          "word": "group",
+          "start": 5.4,
+          "end": 5.8,
+          "probability": 0.9897
+        },
+        {
+          "word": "on",
+          "start": 5.8,
+          "end": 6.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 6.02,
+          "end": 6.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "PolicyInfo",
+          "start": 6.14,
+          "end": 7.04,
+          "probability": 0.5806
+        },
+        {
+          "word": "page.",
+          "start": 7.04,
+          "end": 7.5,
+          "probability": 0.96
+        },
+        {
+          "word": "In",
+          "start": 7.78,
+          "end": 8.12,
+          "probability": 0.9731
+        },
+        {
+          "word": "Studio,",
+          "start": 8.12,
+          "end": 8.5,
+          "probability": 0.6943
+        },
+        {
+          "word": "double",
+          "start": 8.82,
+          "end": 9.18,
+          "probability": 0.873
+        },
+        {
+          "word": "-click",
+          "start": 9.18,
+          "end": 9.5,
+          "probability": 0.8442
+        },
+        {
+          "word": "the",
+          "start": 9.5,
+          "end": 9.74,
+          "probability": 0.9927
+        },
+        {
+          "word": "Shift",
+          "start": 9.74,
+          "end": 9.92,
+          "probability": 0.7725
+        },
+        {
+          "word": "key.",
+          "start": 9.92,
+          "end": 10.26,
+          "probability": 0.9146
+        },
+        {
+          "word": "Find",
+          "start": 10.62,
+          "end": 11.2,
+          "probability": 0.9824
+        },
+        {
+          "word": "and",
+          "start": 11.2,
+          "end": 11.4,
+          "probability": 0.9683
+        },
+        {
+          "word": "open",
+          "start": 11.4,
+          "end": 11.74,
+          "probability": 0.9468
+        },
+        {
+          "word": "the",
+          "start": 11.74,
+          "end": 11.92,
+          "probability": 0.9722
+        },
+        {
+          "word": "TypeListExtensionFileSystemPermissionType",
+          "start": 11.92,
+          "end": 14.72,
+          "probability": 0.8301
+        },
+        {
+          "word": ".ttx.",
+          "start": 14.72,
+          "end": 15.92,
+          "probability": 0.8555
+        },
+        {
+          "word": "Add",
+          "start": 16.12,
+          "end": 16.62,
+          "probability": 0.9814
+        },
+        {
+          "word": "a",
+          "start": 16.62,
+          "end": 16.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "new",
+          "start": 16.78,
+          "end": 16.94,
+          "probability": 0.978
+        },
+        {
+          "word": "type",
+          "start": 16.94,
+          "end": 17.3,
+          "probability": 0.8408
+        },
+        {
+          "word": "code.",
+          "start": 17.3,
+          "end": 17.7,
+          "probability": 0.9775
+        },
+        {
+          "word": "Enter",
+          "start": 23.38,
+          "end": 24.06,
+          "probability": 0.9883
+        },
+        {
+          "word": "a",
+          "start": 24.06,
+          "end": 24.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "unique",
+          "start": 24.24,
+          "end": 24.56,
+          "probability": 0.981
+        },
+        {
+          "word": "code.",
+          "start": 24.56,
+          "end": 24.98,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 31.16,
+      "end": 52.66,
+      "start_formatted": "00:00:31.160",
+      "end_formatted": "00:00:52.660",
+      "text": "Enter the name and description. Save the file. Users must regenerate dictionaries to see new permissions listed within Security Dictionary. In Windows Explorer, pressing Shift and then right-click the PolicyCenter folder. Open a command window. Type GWB GEN DATA Dictionary.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 31.16,
+          "end": 31.94,
+          "probability": 0.9546
+        },
+        {
+          "word": "the",
+          "start": 31.94,
+          "end": 32.12,
+          "probability": 0.9922
+        },
+        {
+          "word": "name",
+          "start": 32.12,
+          "end": 32.4,
+          "probability": 0.9199
+        },
+        {
+          "word": "and",
+          "start": 32.4,
+          "end": 32.6,
+          "probability": 0.9873
+        },
+        {
+          "word": "description.",
+          "start": 32.6,
+          "end": 33.04,
+          "probability": 0.98
+        },
+        {
+          "word": "Save",
+          "start": 33.46,
+          "end": 33.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 33.94,
+          "end": 34.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "file.",
+          "start": 34.08,
+          "end": 34.46,
+          "probability": 0.9951
+        },
+        {
+          "word": "Users",
+          "start": 35.14,
+          "end": 35.8,
+          "probability": 0.9849
+        },
+        {
+          "word": "must",
+          "start": 35.8,
+          "end": 36.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "regenerate",
+          "start": 36.22,
+          "end": 36.78,
+          "probability": 0.9194
+        },
+        {
+          "word": "dictionaries",
+          "start": 36.78,
+          "end": 37.42,
+          "probability": 0.9863
+        },
+        {
+          "word": "to",
+          "start": 37.42,
+          "end": 37.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "see",
+          "start": 37.6,
+          "end": 37.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 37.8,
+          "end": 37.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "permissions",
+          "start": 37.98,
+          "end": 38.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "listed",
+          "start": 38.44,
+          "end": 38.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "within",
+          "start": 38.88,
+          "end": 39.2,
+          "probability": 0.9902
+        },
+        {
+          "word": "Security",
+          "start": 39.2,
+          "end": 39.72,
+          "probability": 0.7793
+        },
+        {
+          "word": "Dictionary.",
+          "start": 39.72,
+          "end": 40.52,
+          "probability": 0.9609
+        },
+        {
+          "word": "In",
+          "start": 40.74,
+          "end": 41.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "Windows",
+          "start": 41.12,
+          "end": 41.46,
+          "probability": 0.9844
+        },
+        {
+          "word": "Explorer,",
+          "start": 41.46,
+          "end": 42.14,
+          "probability": 0.9795
+        },
+        {
+          "word": "pressing",
+          "start": 42.42,
+          "end": 42.82,
+          "probability": 0.874
+        },
+        {
+          "word": "Shift",
+          "start": 42.82,
+          "end": 43.12,
+          "probability": 0.8667
+        },
+        {
+          "word": "and",
+          "start": 43.12,
+          "end": 43.38,
+          "probability": 0.9443
+        },
+        {
+          "word": "then",
+          "start": 43.38,
+          "end": 43.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "right",
+          "start": 43.62,
+          "end": 43.86,
+          "probability": 0.8931
+        },
+        {
+          "word": "-click",
+          "start": 43.86,
+          "end": 44.1,
+          "probability": 0.9351
+        },
+        {
+          "word": "the",
+          "start": 44.1,
+          "end": 44.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 44.36,
+          "end": 45.18,
+          "probability": 0.646
+        },
+        {
+          "word": "folder.",
+          "start": 45.18,
+          "end": 45.52,
+          "probability": 0.9814
+        },
+        {
+          "word": "Open",
+          "start": 45.86,
+          "end": 46.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 46.38,
+          "end": 46.54,
+          "probability": 0.959
+        },
+        {
+          "word": "command",
+          "start": 46.54,
+          "end": 46.9,
+          "probability": 0.8198
+        },
+        {
+          "word": "window.",
+          "start": 46.9,
+          "end": 47.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "Type",
+          "start": 49.46,
+          "end": 50.24,
+          "probability": 0.9644
+        },
+        {
+          "word": "GWB",
+          "start": 50.24,
+          "end": 51.16,
+          "probability": 0.6816
+        },
+        {
+          "word": "GEN",
+          "start": 51.16,
+          "end": 51.74,
+          "probability": 0.3374
+        },
+        {
+          "word": "DATA",
+          "start": 51.74,
+          "end": 52.02,
+          "probability": 0.6704
+        },
+        {
+          "word": "Dictionary.",
+          "start": 52.02,
+          "end": 52.66,
+          "probability": 0.9297
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.0,
+      "end": 73.34,
+      "start_formatted": "00:01:00.000",
+      "end_formatted": "00:01:13.340",
+      "text": "It also helps to validate the type list changes. Navigate to Build, Dictionary, Security. Open the index.html for the Security Dictionary. Go to the System Permissions page.",
+      "words": [
+        {
+          "word": "It",
+          "start": 60.0,
+          "end": 60.58,
+          "probability": 0.9614
+        },
+        {
+          "word": "also",
+          "start": 60.58,
+          "end": 60.9,
+          "probability": 0.9946
+        },
+        {
+          "word": "helps",
+          "start": 60.9,
+          "end": 61.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 61.26,
+          "end": 61.46,
+          "probability": 0.9932
+        },
+        {
+          "word": "validate",
+          "start": 61.46,
+          "end": 61.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 61.88,
+          "end": 62.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "type",
+          "start": 62.24,
+          "end": 62.48,
+          "probability": 0.6489
+        },
+        {
+          "word": "list",
+          "start": 62.48,
+          "end": 62.68,
+          "probability": 0.7241
+        },
+        {
+          "word": "changes.",
+          "start": 62.68,
+          "end": 63.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "Navigate",
+          "start": 63.76,
+          "end": 64.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 64.44,
+          "end": 64.6,
+          "probability": 0.9878
+        },
+        {
+          "word": "Build,",
+          "start": 64.6,
+          "end": 64.96,
+          "probability": 0.3074
+        },
+        {
+          "word": "Dictionary,",
+          "start": 65.14,
+          "end": 65.92,
+          "probability": 0.9922
+        },
+        {
+          "word": "Security.",
+          "start": 66.1,
+          "end": 66.68,
+          "probability": 0.9731
+        },
+        {
+          "word": "Open",
+          "start": 67.08,
+          "end": 67.62,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 67.62,
+          "end": 67.76,
+          "probability": 0.9795
+        },
+        {
+          "word": "index",
+          "start": 67.76,
+          "end": 68.2,
+          "probability": 0.8291
+        },
+        {
+          "word": ".html",
+          "start": 68.2,
+          "end": 69.42,
+          "probability": 0.9595
+        },
+        {
+          "word": "for",
+          "start": 69.42,
+          "end": 69.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 69.7,
+          "end": 69.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "Security",
+          "start": 69.86,
+          "end": 70.3,
+          "probability": 0.4185
+        },
+        {
+          "word": "Dictionary.",
+          "start": 70.3,
+          "end": 71.04,
+          "probability": 0.9458
+        },
+        {
+          "word": "Go",
+          "start": 71.32,
+          "end": 71.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 71.76,
+          "end": 71.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 71.94,
+          "end": 72.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "System",
+          "start": 72.1,
+          "end": 72.4,
+          "probability": 0.7837
+        },
+        {
+          "word": "Permissions",
+          "start": 72.4,
+          "end": 73.0,
+          "probability": 0.9492
+        },
+        {
+          "word": "page.",
+          "start": 73.0,
+          "end": 73.34,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 74.82,
+      "end": 86.0,
+      "start_formatted": "00:01:14.820",
+      "end_formatted": "00:01:26.000",
+      "text": "The new permission is listed under System Permissions in the Security Dictionary. You must restart the server in Studio for the application to pick up the data model changes.",
+      "words": [
+        {
+          "word": "The",
+          "start": 74.82,
+          "end": 75.5,
+          "probability": 0.9893
+        },
+        {
+          "word": "new",
+          "start": 75.5,
+          "end": 75.64,
+          "probability": 0.9775
+        },
+        {
+          "word": "permission",
+          "start": 75.64,
+          "end": 76.04,
+          "probability": 0.9761
+        },
+        {
+          "word": "is",
+          "start": 76.04,
+          "end": 76.34,
+          "probability": 0.998
+        },
+        {
+          "word": "listed",
+          "start": 76.34,
+          "end": 76.66,
+          "probability": 0.998
+        },
+        {
+          "word": "under",
+          "start": 76.66,
+          "end": 77.0,
+          "probability": 0.998
+        },
+        {
+          "word": "System",
+          "start": 77.0,
+          "end": 77.34,
+          "probability": 0.9038
+        },
+        {
+          "word": "Permissions",
+          "start": 77.34,
+          "end": 77.94,
+          "probability": 0.9668
+        },
+        {
+          "word": "in",
+          "start": 77.94,
+          "end": 78.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 78.22,
+          "end": 78.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "Security",
+          "start": 78.34,
+          "end": 78.74,
+          "probability": 0.9517
+        },
+        {
+          "word": "Dictionary.",
+          "start": 78.74,
+          "end": 79.52,
+          "probability": 0.9854
+        },
+        {
+          "word": "You",
+          "start": 81.0,
+          "end": 81.68,
+          "probability": 0.9897
+        },
+        {
+          "word": "must",
+          "start": 81.68,
+          "end": 81.96,
+          "probability": 0.998
+        },
+        {
+          "word": "restart",
+          "start": 81.96,
+          "end": 82.38,
+          "probability": 0.9688
+        },
+        {
+          "word": "the",
+          "start": 82.38,
+          "end": 82.64,
+          "probability": 0.999
+        },
+        {
+          "word": "server",
+          "start": 82.64,
+          "end": 82.94,
+          "probability": 0.748
+        },
+        {
+          "word": "in",
+          "start": 82.94,
+          "end": 83.2,
+          "probability": 0.9053
+        },
+        {
+          "word": "Studio",
+          "start": 83.2,
+          "end": 83.58,
+          "probability": 0.5415
+        },
+        {
+          "word": "for",
+          "start": 83.58,
+          "end": 83.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 83.88,
+          "end": 84.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "application",
+          "start": 84.02,
+          "end": 84.48,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 84.48,
+          "end": 84.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "pick",
+          "start": 84.88,
+          "end": 85.14,
+          "probability": 0.9839
+        },
+        {
+          "word": "up",
+          "start": 85.14,
+          "end": 85.26,
+          "probability": 0.9888
+        },
+        {
+          "word": "the",
+          "start": 85.26,
+          "end": 85.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "data",
+          "start": 85.42,
+          "end": 85.64,
+          "probability": 0.9004
+        },
+        {
+          "word": "model",
+          "start": 85.64,
+          "end": 85.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "changes.",
+          "start": 85.98,
+          "end": 86.32,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 90.12,
+      "end": 114.62,
+      "start_formatted": "00:01:30.120",
+      "end_formatted": "00:01:54.620",
+      "text": "In PolicyCenter, login as SuperUser. We will add the new permission to the Underwriter role. Go to Administration, Users, and Security, Roles. Select the Underwriter role. Edit the role. Click Add.",
+      "words": [
+        {
+          "word": "In",
+          "start": 90.12,
+          "end": 90.96,
+          "probability": 0.77
+        },
+        {
+          "word": "PolicyCenter,",
+          "start": 90.96,
+          "end": 91.8,
+          "probability": 0.6719
+        },
+        {
+          "word": "login",
+          "start": 91.98,
+          "end": 92.52,
+          "probability": 0.5479
+        },
+        {
+          "word": "as",
+          "start": 92.52,
+          "end": 92.82,
+          "probability": 0.9746
+        },
+        {
+          "word": "SuperUser.",
+          "start": 92.82,
+          "end": 93.7,
+          "probability": 0.6675
+        },
+        {
+          "word": "We",
+          "start": 94.02,
+          "end": 94.7,
+          "probability": 0.9663
+        },
+        {
+          "word": "will",
+          "start": 94.7,
+          "end": 94.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "add",
+          "start": 94.92,
+          "end": 95.12,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 95.12,
+          "end": 95.3,
+          "probability": 0.981
+        },
+        {
+          "word": "new",
+          "start": 95.3,
+          "end": 95.46,
+          "probability": 0.9897
+        },
+        {
+          "word": "permission",
+          "start": 95.46,
+          "end": 95.9,
+          "probability": 0.9722
+        },
+        {
+          "word": "to",
+          "start": 95.9,
+          "end": 96.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 96.18,
+          "end": 96.32,
+          "probability": 0.9927
+        },
+        {
+          "word": "Underwriter",
+          "start": 96.32,
+          "end": 96.98,
+          "probability": 0.7729
+        },
+        {
+          "word": "role.",
+          "start": 96.98,
+          "end": 97.26,
+          "probability": 0.9233
+        },
+        {
+          "word": "Go",
+          "start": 97.98,
+          "end": 98.56,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 98.56,
+          "end": 98.76,
+          "probability": 0.998
+        },
+        {
+          "word": "Administration,",
+          "start": 98.76,
+          "end": 99.46,
+          "probability": 0.8745
+        },
+        {
+          "word": "Users,",
+          "start": 99.76,
+          "end": 100.26,
+          "probability": 0.9775
+        },
+        {
+          "word": "and",
+          "start": 100.52,
+          "end": 100.8,
+          "probability": 0.9648
+        },
+        {
+          "word": "Security,",
+          "start": 100.8,
+          "end": 101.36,
+          "probability": 0.9912
+        },
+        {
+          "word": "Roles.",
+          "start": 101.6,
+          "end": 102.18,
+          "probability": 0.9692
+        },
+        {
+          "word": "Select",
+          "start": 105.92,
+          "end": 106.76,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 106.76,
+          "end": 106.92,
+          "probability": 0.9849
+        },
+        {
+          "word": "Underwriter",
+          "start": 106.92,
+          "end": 107.52,
+          "probability": 0.9619
+        },
+        {
+          "word": "role.",
+          "start": 107.52,
+          "end": 107.82,
+          "probability": 0.9751
+        },
+        {
+          "word": "Edit",
+          "start": 109.48,
+          "end": 110.32,
+          "probability": 0.9902
+        },
+        {
+          "word": "the",
+          "start": 110.32,
+          "end": 110.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "role.",
+          "start": 110.52,
+          "end": 110.8,
+          "probability": 0.9873
+        },
+        {
+          "word": "Click",
+          "start": 113.44,
+          "end": 114.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "Add.",
+          "start": 114.28,
+          "end": 114.62,
+          "probability": 0.7153
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 120.98,
+      "end": 132.64,
+      "start_formatted": "00:02:00.980",
+      "end_formatted": "00:02:12.640",
+      "text": "Select the permission Added Affinity Group. Save the changes. This is the end of demonstration for creating a new system permission.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 120.98,
+          "end": 121.78,
+          "probability": 0.8794
+        },
+        {
+          "word": "the",
+          "start": 121.78,
+          "end": 122.02,
+          "probability": 0.9946
+        },
+        {
+          "word": "permission",
+          "start": 122.02,
+          "end": 122.4,
+          "probability": 0.644
+        },
+        {
+          "word": "Added",
+          "start": 122.4,
+          "end": 122.98,
+          "probability": 0.5122
+        },
+        {
+          "word": "Affinity",
+          "start": 122.98,
+          "end": 123.4,
+          "probability": 0.7686
+        },
+        {
+          "word": "Group.",
+          "start": 123.4,
+          "end": 123.76,
+          "probability": 0.4468
+        },
+        {
+          "word": "Save",
+          "start": 124.82,
+          "end": 125.62,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 125.62,
+          "end": 125.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "changes.",
+          "start": 125.78,
+          "end": 126.18,
+          "probability": 0.9741
+        },
+        {
+          "word": "This",
+          "start": 128.5,
+          "end": 129.3,
+          "probability": 0.9917
+        },
+        {
+          "word": "is",
+          "start": 129.3,
+          "end": 129.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 129.48,
+          "end": 129.64,
+          "probability": 0.999
+        },
+        {
+          "word": "end",
+          "start": 129.64,
+          "end": 129.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 129.94,
+          "end": 130.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 130.06,
+          "end": 130.68,
+          "probability": 0.9487
+        },
+        {
+          "word": "for",
+          "start": 130.68,
+          "end": 131.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "creating",
+          "start": 131.08,
+          "end": 131.46,
+          "probability": 0.9937
+        },
+        {
+          "word": "a",
+          "start": 131.46,
+          "end": 131.68,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 131.68,
+          "end": 131.84,
+          "probability": 0.9941
+        },
+        {
+          "word": "system",
+          "start": 131.84,
+          "end": 132.24,
+          "probability": 0.9019
+        },
+        {
+          "word": "permission.",
+          "start": 132.24,
+          "end": 132.64,
+          "probability": 0.9336
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 7,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 8,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 9,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 10,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 11,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 12,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 13,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 14,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 15,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 16,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 17,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 18,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 19,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 21,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 33,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 38,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 132.62,
+      "end": 132.62,
+      "start_formatted": "00:02:12.620",
+      "end_formatted": "00:02:12.620",
+      "text": "",
+      "words": []
+    }
+  ]
+}

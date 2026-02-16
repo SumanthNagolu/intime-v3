@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-08",
+    "slide_count": 38,
+    "slides_with_text": 33,
+    "total_words": 2631,
+    "avg_confidence": 85.63,
+    "processing_time_seconds": 17.09,
+    "extracted_at": "2026-02-15T18:20:44.185266"
+  },
+  "full_text": "RESTful Web Services\n\nLesson\nobjectives\n\n* Create a swagger schema to define an API\n\n¢ Reference an existing Integration View in the\nAPI\n\n* Create an API handler class\n\n¢ Publish an API\n\n« Use swagger-ui to test an API\n\n| What is the InsuranceSuite REST framework? Gi\n\n¢ A framework for defining\nRESTful web services\n\n¢ Publishing only\n\n* No client toolkit for\ninvoking APIs\n\n¢ Design approach is\nschema-first rather than\ncode-first\n\n* Based on Swagger\nschemas\n\n« Not based on JAX-RS\n\nRest API Basics\n\nTypical HTTP Verbs:\n\nGET -> Read from Database\n\nPUT -> Update/Replace row in Database\nPATCH -> Update/Modify row in Database\nPOST -> Create a new record in the database\nDELETE -> Delete from the database\n\nDatabase\n\nHTTP\nGET\nIS ee\n\nHTTP POST\n\nOo\n+ /newUser >\ns\nUi HTTP.\nPATCH\n/updateUsey,\n\nwaAzm-rg\n\nRest API\n\nRecieves HTTP\nrequests from\nClients and does\nwhatever request\nneeds. i.e create\nusers\n\n—\n\nOur Rest API queries the\ndatabase for what it needs\n\nk\n\nOur Clients, send HTTP Requests\nand wait for responses\n\nResponse: When the Rest API has what it\nneeds, it sends back a response to the\nclients. This would typically be in JSON\nor XML format.\n\n| REST framework components\n\n* Swagger schema\n\n* Swagger 2.0 schema definitions to define APIs\nlew\n¢ Integration View\n\n« JSON Schema draft 4 to define the input/output schemas\n\n* Can use the same schemas for integration views and/or\nREST APIs\n\n* Schema files drive request routing, validation, and\n(de)serialization\n\n+ Framework also handles standardized error codes and error\nformats, localization, pluggable authentication, pluggable Ln\nlogging, content negotiation, etc\n\nSwagger\nSchema\n\nPublish\n\n&:\n\nExternal\nRequest\n\n+ \"1980-06-20T04:00:00.0002\",\n\niilliam Andy\",\n\n“primaryAddress™ : {\n\n¢ Gosu classes “eddreastype\" + “hose”\n\n}\n\nd\negg ar 4s\n\n| Use case\n\nCreate an API that will allow external\nresources to:\n\nView a contact\nView a list of contact notes\nUpdate a contact\n\nAdd a note to a contact\n\nGi\nDesign approach\n\n1. Define the API schema\n\n* Create the Swagger schema for the\nAPI paths and operations\n\n2. Define the API Integration View\n\n* Create an integration view for any\ninputs and outputs\n\n3. Define the API handler class\n\n¢ Implement the API by creating a\nhandler class and its methods\n\n4. Publish and test the API\n\ne Ad it tn nithlichad sanic vam! filo\n\nDefine API schema\n\n| Create a new yam file Gi\n\n* Swagger schemas are written as yaml files\n+ Placed in sub-directories of the config/integration/apis folder\n\n* Swagger schemas can be defined in their own namespace within the apis folder, and can be nested in\narbitrary folders\n\n+ Asa best practice, customer-specific Swagger schemas should be put into a customer-specific namespace:\n\n+ apis/<company_code>/<product_code>\n\n+ Swagger schemas must always have a version attached to their v integration\nname, separated by a '-' character v apis\n* The names should be formed as > gw.pl.framework\n\nv trn.ta\n\nconta wagger.yaml\n\n* config/integration/apis/trn/ta/contact-1.0.swagger.yaml\n\n+ <name>-<version>.swagger.yaml\n\n¢ For example, for Training:\n\n+ Swagger schema named trn.ta.contact-1.0 within the application\n\n| Define header information\n\nbasePath\n\n+ Determines where the resources are rooted on the REST servlet\n\nREST servlet is defined in web.xml file with the default path rest\n\n+ Becomes a prefix to each of the paths\n\n+ The runtime path to the resources will\n\n<scheme>://<server>:<port>/<webapp>/<servlet>/\n<basePath>/<resource>\n\nhttp://localhost:8880/ab/rest/trn/ta/contact/v1/<resource> (resources\nare defined in paths)\n\nInsuranceSuite extensions\n\n+ Any declaration that starts with x-gw are custom InsuranceSuite\nextensions to the schema, for example:\n\nx-gw-schema-import\n\nx-gw-apihandlers\n\n:\n\nswagger: '2.0'\ninfo:\n\nversion: '1.0'\n\ntitle: \"Contact API\"\n\ndescription: \"Contact API\"\nbasePath: /trn/ta/contact/vl\nx-gw-schema-import:\n\ncontact: trn.ta.contact-1.0\ncontactnote: trn.ta.contactnote-1.0\nx-gw-apihandlers:\n- trainingapp. restapi .ContactAPIHandler\nproduces:\n- application/json\nconsumes:\n- application/json\npaths:\n\n| Define get operation to view a contact anditsnotes [5\n\n¢ HTTP GET requests are used to retrieve resource information only\n\n/contacts/{contactId}:\nget:\nsummary: \"Retrieves a contact details”\noperationId: getContact\nx-gw-permissions:\n~ abview\nparameters:\n- $ref: \"#/parameters/contactId\"\n~ name: filter\nin: query\ntype: string\nenum: [\"contact_details\", \"contactnote details\")\nresponses:\n\"200\":\ndescription: \"Contact details returned”\nschema:\n$ref: \"contact#/definitions/ContactDetails”\n\nWH\n\n¥\n\n¥.\n\nv\n\nparameters:\ncontactId:\nname: contactId\nin: path\ntype: string\nrequired: true\n\n| Define patch operation to update a contact Gi\n\n¢ HTTP PATCH requests are used to make a partial update on a resource\n\n¢ HTTP PUT requests are used to replace a resource in its entirety\n\n14 Wd\n\npatch:\nsummary: \"Updates a contact\"\noperationId: updateContact\nproduces:\n- text/plain\nparameters:\n- $ref: \"#/parameters/contactId\"\n- name: body\nin: body\nrequired: true\nschema:\n$ref: \"contact#/definitions/ContactUpdate\"\nresponses:\n*200':\ndescription: \"Contact was updated\"\nschema:\ntype: string\n\n| Define post operation to add a note to a contact Gi\n\n¢« HTTP POST requests are used to create new resources\n\nLW\n\n/contacts/{contactId} /note:\npost:\nsummary: \"Adds a note to a contact”\noperationId: createContactifote\nparameters:\n- $ref: \"#/parameters/contactIa\"\n~ name: body\nin: body\nrequired: true\nschema:\n$ref: \"contactnote#/definitions/ContactNoteDetails”\nresponses:\n\"201\":\ndescription: \"Note was added to the contact”\n\n| Parameter validation constraints Gi\n\n« Aresource may have a parameter in OED\ntheir path, body, header and query\n\n\"/destinations/{destinationId}/retry\":\npost:\n\nDepending on the type of parameter,\nconstraints can be specified to ensure\nthe request conforms to expected\nschema definition\n\nApart from standard swagger schema\n2.0 spec parameter options we also\nsupport:\n\n* x-gw-type for path, query and header\nparameters\n\n* The value of x-gw-type is an InsuranceSuite\ntypekey\n\nsummary: “Retry messages for a destination that had errors”\ndescription: \"\"\noperationid: retryHessages\nx-gw-apihandler: gw.api.rest.pl.system.v10.MessagingToolsaPIHandler\nparameters:\n- ref: “#/parameters/destinationid™\n-]name: category\njin: query\nrequired: false\n\nItype: string\n{x-gu-type:_typekey.ErrorCategory\nparameters:\ndestinationId:\nname: destinationid\nin: path\ndescription: “ID of the destination”\nrequired: true\ntype: integer\nformat: _int32\n\n| Integration Views and the REST API Gi\n\n¢ API inputs and outputs can be associated with a\n\nJSON schema definition and its corresponding > =\nmapper file VE filters.trn.ta\n\n= address_minimal-1.0.gql\n& contact_details-1.0.gql\n= contactnote_details-1.0.gql\n\n* The JSON schema and mapping files in\nInsuranceSuite are shared between the Integration\n\nViews framework and the REST API framework mappingstinta\n4) address-1.0.mapping,json\n¢ Both make use of the same files, with the same rules, and 4) contact-1.0.mapping,json\n\nthe same subset of json schema 4 contactnote-1.0.mapping,json\n\n> gw.pl.framework\n\nv tr.ta\n4) address-1.0.schema,json\n¢) contact-1.0.schema,json\n\n5 contactnote-1.0.schema,json\n\n| Integration View files to view a contact and its notes [5\n\n*« Schema file\n\n* contact-1.0.schema.json imports address and schemas > Bm apis\n* ContactDetails definition contains properties needed for ¥ En fitters:tm.ta\nresponse object = address_minimal-1.0.gql\n2 contact_details-1.0.gql\n¢ Mapper file # contactnote_details-1.0.9ql\ncoe . . mappings.tmn.ta\n* contact-1.0.mapping.json imports address and mappings  address-1.0.mapping,json\n* ContactDetails mappers defines paths to data needed for i} contact-1.0.mapping,json\nresponse object properties { contactnote-1.O.mapping,son\n\n¢ Filter files gw.pl.framework\n\ntna\n\n* contact_details-1.0.gql\n\n4) address-1.0.schema,json\n\n* contactnote_details-1.0.gql () contact-1.0.schema,json\n) contactnote-1.0.schema,json\n\n« Used to return either contact or notes information\n\n| Integration View files used to update a contact Gi\n\n* Schema file\n\n* ContactUpdate definition is added to the J nemne  wontect\ncontact-1.0.schema.json file \"properties\" : {\n36 \"DateOfBirth\" : {\n* x-gw-nullable = true added to \"type\" : \"string\",\nproperties to allow for null values \"format\" : \"date-time\",\n39 \"x-gw-nullable\" : true\n+ By default, on input, explicitly-null properties\nare not allowed \"DriversLicenseNumber\" : {\n\n\"type\" : \"string\",\n\"x-gw-nullable\" : true\n\n¢ Mapper file\n\n}\n\n:, . A . \"Dri Li State\" : {\n+ Not required since mapping of the input . “type” t \"etring\",\nproperties ” \"x-gw-type\" : \"typekey. Jurisdiction”\nand domain properties will be handled in the }\n\nAPI handler class } ,\n\n| Integration View files used to add a contact note\n\nSchema file\n* contactnote-1.0.schema.json file\nMapper file\n\n* Not required since mapping of the input\nproperties and domain properties will be\nhandled in the API handler class\n\nGi\n\n‘} contactnote-1.0.schema,json\n\nt\n\n\"$schema\" :\n\"definitions\" : {\n\n\"http: //json-schema.org/draft-04/schema#\",\n\n\"contactNoteDetails” : {\n\"type\" : \"object\",\n\"properties\" : {\n\"contactNoteType” : {\npe\" : \"string\",\ngw-type\" : \"typekey.ContactNoteType”\n\nim\n\"Confidential\" : {\n\n\"type\" : \"boolean\"\nih\n\"Subject\" : {\n\n\"type\": \"string\"\nh\n\"Body\" = {\n\n\"type\": \"string\"\n\n| API handler class Gi\n\nx-gv-apihandlers:\n\n* Handler classes can be specified at the root level of ~ erainingapp.reevapt .ConcactAPTHandier\nthe document and overridden at the operation level y aepticarianrdaea\n* The root document can provide a list of classes rather than « sppliasion seen\njust one; they'll be considered in order 2 Jeontacts/(contactta)\nget:\n+ Handler classes need to have a no arguments, public constructor : anemone net Seteuist\n\ndeno.restapi .DemoContactAPIHandler\n\nclass Con\n\n* Every operation defined for a published API must have an associated handler method\n\n+ For each operation:\n\nFramework will look for a public method with a name matching the operationld, for each candidate handler class\nDeclared methods are considered first, then all methods\nThere must be exactly one match\n\nMethod names cannot be overloaded\n\n| Parameter binding\n\nEach method parameter must match the name and\ntype of a parameter declared on the Swagger schema\n\n* Order doesn’t matter\n\n+ Don’t have to include all possible parameters\n\nclass Cont\n\nfunction getContact(contactId : String,| fi\n\n|: TransformResult {...}\n\nEach parameter to the API handler method must either be:\n\n+ A parameter declared on the Swagger schema for the associated\noperation, or\n\n* Of type gw.api.rest.RequestContext\n\nRuntime operation parameter values can always be retrieved by name\nfrom the RequestContext if they're not explicit arguments to the handler\nmethod\n\nGi\n\npaths:\n/contacts/(contactId}:\nget:\n\nsummary: \"Retrieves a contact details\"\nx-gw-apihandlers:\n~ deno. restapi .DenoContactAPIHandler\noperationId: getContact\nx-gw-permissions: <1 ites>\n\nters /contactId\"\n\nenum: [\"contact details\", \"contactnote details\")\n\n| Return values Gi\n\n* The API Handler method can return either\ngw.api.rest.Response, void, or any type\nthat can be serialized out at runtime\n\nfunction getContact (contactid : String, filter : String) :{TransformResult (...}\n\nclass ContactAPIHan\n\nfunction updateContact (contactId : String, body : Jsondbjq Sering{...}\n\n* Some common return types include: function «\n\nactilove (contactId : String, body : Jsorpbject) : void (...}\n* void\n\n+ If the operation returns a 204 response code (no content), the method need not return anything at all\n* TransformResult\n\n+ An operation that produces JSON and/or XML and which uses an Integration Mapping to produce that data can\nreturn a TransformResult directly\n\n* String or byte]\n+ Can return a String or byte[] that will be written out as-is.\n+ Response\n\n+ Can return a Response object that explicitly sets the response code, response body, and/or custom headers\n\nHandler method to view a contact and its notes\n\nfunction getContact(contactId : String, filter : String) : TransformResult (\n\nvar contact = findContactBylId(contactId)\n\n+0\", \"ContactDetails\")\n\nvar mappingOpts = new JsonMappingOptions ()\nswitch (filter) {\ncase \"contact_details\":\nnappingOpts.withFilter(\"trn.ta.contact_details-1.0\")\nbreak\ncase \"contactnote_details\":\nnappingOpts.withFilter(\"trn.ta.contactnote_details-1.0\")\nbreak\n}\nreturn jsonMapper.transformObject (contact, mappingOpts)\n} else {\nreturn jsonMapper.transformdbject (contact)\n}\n)\n\nprivate function findContactByld(contactId : String) : ABContact {\n\nvar query0b} = Query.make(ABContact)\n\nquery0bj..compare (ABContact#PublicID, Relop. Equals, contactId)\nvar target0bj = query0bj.select() .AtMostOneRow\n\nreturn target0bj\n\n| Handler method to update a contact Gi\n\nfunction updateContact(contactId : String, body : JsonObject) : String{\nvar contact = findContactById(contactId)\nvar contactUpdate = ContactUpdate.vrap(body)\nTransaction. runW#ithNevBundle(\\b -> {\ncontact = b.add(contact)\n\nif (body.containsKey(\"dateOfBirth\")) {\n(contact as ABPerson) .DateOfBirth = contactUpdate.DateOfBirth\n\nif (body. containsKey(\"driversLicenseNumber\")) {\n(contact as ABPerson).LicenseNumber = contactUpdate.DriversLicenselumber\n\nif (body. containsKey(\"driversLicenseState\")) {\n(contact as ABPerson).LicenseState = contactUpdate.DriversLicenseState\n}\n»\nreturn (\"Contact \" + contact.DisplayName + \" was successfully updated\")\n\n| Handler method to create a contact note Gi\n\nfunction c e(contactId : String, body : JsonObject) : void {\nvar contac! ‘indContactById (contactId)\nvar contactNote = ContactNoteDetails.vrap (body)\nTransaction. runW#ithNewBundle(\\b -> {\nvar newNote = new entity.ContactNote()\nnewNote.ContactNoteType = contactNote.ContactloteType\nnewNote.IsConfidential = contactNote.Confidential\nnewNote. Subject = contactNote.Subject\nnewNote.Body = contactNote.Body\ncontact.addToContactNotes (newNote)\n\n* The newNote entity instance (ContactNote) is added to the contact read-only\nentity instance (ABContact) by a foreign key field on newNote itself\n\n¢ Therefore, the read-only contact entity instance does not need to be added to or\ncommitted in the bundle\n\n| Deploy code changes Gi\n\n¢ New Gosu class * Modified Gosu Class\nD> Run ‘Server’\nTools VCS Window Help 9% Debug Server\nD Run ‘Server’ Shift+F10 W Run ‘Server’ with Coverage\n186 Debug ‘Server’ Shift+F9 D Run...\nE Run ‘Server’ with Coverage W Debus...\n\nAttach to Local Process...\n[> Edit Configurations...\nB] Import Test Results\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+ Shift+F9\n7 Attach to Local Process...\n\n[> Edit Configurations... Il Stop ‘Server’\nImport Test Results > EF show Running List\n\nHE Stop ‘Server’ Ctrl F2 Stop Background Processes...\n\n| API publishing\n\nSchema files do not turn into network endpoints by default —— \"a\n\n* Must opt-in APIs to control what is exposed on the network\n\n.\n\n°\n\npublished-apis.yaml\n\n~ name: gw.pl.£f\n\njev_template-1.0\n\nFiles are added to config/integration/apis/published-apis.yaml\n\nExtension model\n\n* Customers extend the core API and publish their\nextended version, not the core one\n\n« Multiple live versions can be published, all based\non core version\n\nThe default API URL returns a list of APIs\nthat have been published\n\n* http://localhost:8880/ab/rest/apis\n\nic}\n\nJSON Raw Data\n\nSave Copy\nsapis:\nbasePath\ndescription\ndocs:\n\ntitle\n\ndescription\ndocs\ntitle\n\n® locathost:8880/ab/rest,\n\nHeaders\n\n“Dynamically lists the APIs that are available”\n“http://Locathost :8880/ab/rest/opis/swogger. json”\nwAPI List”\n\n“/contact/v1\"\n“Contact API”\n“http://Locathost :8880/ab/rest/contact/v1/swagger. json”\n“Contact API”\n\n| swagger-ui\n\n« InsuranceSuite bundles a swagger-ui distribution\n+ Default URL is <base servlet url>/resources/swagger-ui/\n+ http://localhost:8880/ab/resources/swagger-ui\n¢ Every API automatically gets a /swagger.json endpoint\n+ The serviet by default exists at /rest\n+ Returns the default external view of the schema\n¢ In swagger-ui manually change the endpoint to reference the desired API\n+ <basePath>/swagger.json\n\n+ The basePath declared in the schema is prepended to every path in the schema\n\n{+ swagger http:/localhost:8880/ab/rest/trn/ta/contact/v1/swagger.json\n\nExplore\n\nContact API\n\nClick Authorize to enter login credentials\nClick HTTP verb to test each API\n\n1. Click Try it out to test\nEnter parameter(s)\n\n2.\n3. Click Execute\n\nee CT\n\nContact API®\n\nContact API\nITP a\ndefault Vv\n\nParameters\n\nComacad sed\n\nfiter\n\nDescription\n\n_ 200\n\n- —\n\nServer response\n\ncode Details\n\n| Demonstration G\n\nCreate a User REST API\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n7~ — Match the HTTP verb with its description\n\n7\n¢\n\n[verb answer Description\n\nif\n\n| PUT Delete from the database\n\n| RETRIEVE Update/Replace row in the database\nI GET Create a new record in the database\n| PATCH Read from the database\n\n| INSERT Update/Modify row in the database\n\n1 REMOVE Not an HTTP verb\n\n' POST Not an HTTP verb\n\n' REPLACE Not an HTTP verb\n\n1\n\n|||\n\nDELETE Not an HTTP verb\n\nAnswer Gi\n\n_- — Match the HTTP verb with its description\n\n7\n¢\n\nSve [answer Description\n\nf\n\n| PUT Update/Replace row in the database Delete from the database\n\n| RETRIEVE Not an HTTP verb Update/Replace row in the database\nI GET Read from the database Create a new record in the database\n| PATCH Update/Modify row in the database Read from the database\n\n| INSERT Not an HTTP verb Update/Modify row in the database\n\n| REMOVE Not an HTTP verb Not an HTTP verb\n\ni] POST Create a new record in the database Not an HTTP verb\n\n| REPLACE Not an HTTP verb Not an HTTP verb\n\n! DELETE Delete from the database Not an HTTP verb\n\nQuestion\n\n_— — What file must be updated to publish an API schema?\n\n4\now A) swagger.yaml\n\nB) published-schemas.yaml\nC) codegen-schemas.yaml\nD) published-apis.yaml\n\nE) json-apis.yaml\n\nSe Soe Se sees esse ese\n\nAnswer\n\n_- — What file must be updated to publish an API schema?\nook\nB\n\nc\n\nD\n\nE\n\nswagger.yaml\n\npublished-schemas.yaml\n\nwv\n\ncodegen-schemas.yaml\n\npublished-apis.yaml\n\njson-apis.yaml\n\nThe correct answer is published-apis.yaml\n\nSoo eS oe ese Sse ese\n\nLesson\nobjectives * Create a swagger schema to define an API\n\nreview ¢ Reference an existing Integration View in the\nAPI\n\n* Create an API handler class\n¢ Publish an API\n« Use swagger-ui to test an API\n\n| Student exercise\n\nCreate a Contact REST API",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "RESTful Web Services",
+      "word_count": 3,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Create a swagger schema to define an API\n\n¢ Reference an existing Integration View in the\nAPI\n\n* Create an API handler class\n\n¢ Publish an API\n\n« Use swagger-ui to test an API",
+      "word_count": 37,
+      "avg_confidence": 86.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| What is the InsuranceSuite REST framework? Gi\n\n¢ A framework for defining\nRESTful web services\n\n¢ Publishing only\n\n* No client toolkit for\ninvoking APIs\n\n¢ Design approach is\nschema-first rather than\ncode-first\n\n* Based on Swagger\nschemas\n\n« Not based on JAX-RS\n\nRest API Basics\n\nTypical HTTP Verbs:\n\nGET -> Read from Database\n\nPUT -> Update/Replace row in Database\nPATCH -> Update/Modify row in Database\nPOST -> Create a new record in the database\nDELETE -> Delete from the database\n\nDatabase\n\nHTTP\nGET\nIS ee\n\nHTTP POST\n\nOo\n+ /newUser >\ns\nUi HTTP.\nPATCH\n/updateUsey,\n\nwaAzm-rg\n\nRest API\n\nRecieves HTTP\nrequests from\nClients and does\nwhatever request\nneeds. i.e create\nusers\n\n—\n\nOur Rest API queries the\ndatabase for what it needs\n\nk\n\nOur Clients, send HTTP Requests\nand wait for responses\n\nResponse: When the Rest API has what it\nneeds, it sends back a response to the\nclients. This would typically be in JSON\nor XML format.",
+      "word_count": 161,
+      "avg_confidence": 88.09,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| REST framework components\n\n* Swagger schema\n\n* Swagger 2.0 schema definitions to define APIs\nlew\n¢ Integration View\n\n« JSON Schema draft 4 to define the input/output schemas\n\n* Can use the same schemas for integration views and/or\nREST APIs\n\n* Schema files drive request routing, validation, and\n(de)serialization\n\n+ Framework also handles standardized error codes and error\nformats, localization, pluggable authentication, pluggable Ln\nlogging, content negotiation, etc\n\nSwagger\nSchema\n\nPublish\n\n&:\n\nExternal\nRequest\n\n+ \"1980-06-20T04:00:00.0002\",\n\niilliam Andy\",\n\n“primaryAddress™ : {\n\n¢ Gosu classes “eddreastype\" + “hose”\n\n}\n\nd\negg ar 4s",
+      "word_count": 93,
+      "avg_confidence": 83.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Use case\n\nCreate an API that will allow external\nresources to:\n\nView a contact\nView a list of contact notes\nUpdate a contact\n\nAdd a note to a contact\n\nGi\nDesign approach\n\n1. Define the API schema\n\n* Create the Swagger schema for the\nAPI paths and operations\n\n2. Define the API Integration View\n\n* Create an integration view for any\ninputs and outputs\n\n3. Define the API handler class\n\n¢ Implement the API by creating a\nhandler class and its methods\n\n4. Publish and test the API\n\ne Ad it tn nithlichad sanic vam! filo",
+      "word_count": 97,
+      "avg_confidence": 90.15,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Define API schema",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Create a new yam file Gi\n\n* Swagger schemas are written as yaml files\n+ Placed in sub-directories of the config/integration/apis folder\n\n* Swagger schemas can be defined in their own namespace within the apis folder, and can be nested in\narbitrary folders\n\n+ Asa best practice, customer-specific Swagger schemas should be put into a customer-specific namespace:\n\n+ apis/<company_code>/<product_code>\n\n+ Swagger schemas must always have a version attached to their v integration\nname, separated by a '-' character v apis\n* The names should be formed as > gw.pl.framework\n\nv trn.ta\n\nconta wagger.yaml\n\n* config/integration/apis/trn/ta/contact-1.0.swagger.yaml\n\n+ <name>-<version>.swagger.yaml\n\n¢ For example, for Training:\n\n+ Swagger schema named trn.ta.contact-1.0 within the application",
+      "word_count": 111,
+      "avg_confidence": 88.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Define header information\n\nbasePath\n\n+ Determines where the resources are rooted on the REST servlet\n\nREST servlet is defined in web.xml file with the default path rest\n\n+ Becomes a prefix to each of the paths\n\n+ The runtime path to the resources will\n\n<scheme>://<server>:<port>/<webapp>/<servlet>/\n<basePath>/<resource>\n\nhttp://localhost:8880/ab/rest/trn/ta/contact/v1/<resource> (resources\nare defined in paths)\n\nInsuranceSuite extensions\n\n+ Any declaration that starts with x-gw are custom InsuranceSuite\nextensions to the schema, for example:\n\nx-gw-schema-import\n\nx-gw-apihandlers\n\n:\n\nswagger: '2.0'\ninfo:\n\nversion: '1.0'\n\ntitle: \"Contact API\"\n\ndescription: \"Contact API\"\nbasePath: /trn/ta/contact/vl\nx-gw-schema-import:\n\ncontact: trn.ta.contact-1.0\ncontactnote: trn.ta.contactnote-1.0\nx-gw-apihandlers:\n- trainingapp. restapi .ContactAPIHandler\nproduces:\n- application/json\nconsumes:\n- application/json\npaths:",
+      "word_count": 104,
+      "avg_confidence": 88.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Define get operation to view a contact anditsnotes [5\n\n¢ HTTP GET requests are used to retrieve resource information only\n\n/contacts/{contactId}:\nget:\nsummary: \"Retrieves a contact details”\noperationId: getContact\nx-gw-permissions:\n~ abview\nparameters:\n- $ref: \"#/parameters/contactId\"\n~ name: filter\nin: query\ntype: string\nenum: [\"contact_details\", \"contactnote details\")\nresponses:\n\"200\":\ndescription: \"Contact details returned”\nschema:\n$ref: \"contact#/definitions/ContactDetails”\n\nWH\n\n¥\n\n¥.\n\nv\n\nparameters:\ncontactId:\nname: contactId\nin: path\ntype: string\nrequired: true",
+      "word_count": 71,
+      "avg_confidence": 84.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Define patch operation to update a contact Gi\n\n¢ HTTP PATCH requests are used to make a partial update on a resource\n\n¢ HTTP PUT requests are used to replace a resource in its entirety\n\n14 Wd\n\npatch:\nsummary: \"Updates a contact\"\noperationId: updateContact\nproduces:\n- text/plain\nparameters:\n- $ref: \"#/parameters/contactId\"\n- name: body\nin: body\nrequired: true\nschema:\n$ref: \"contact#/definitions/ContactUpdate\"\nresponses:\n*200':\ndescription: \"Contact was updated\"\nschema:\ntype: string",
+      "word_count": 71,
+      "avg_confidence": 86.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Define post operation to add a note to a contact Gi\n\n¢« HTTP POST requests are used to create new resources\n\nLW\n\n/contacts/{contactId} /note:\npost:\nsummary: \"Adds a note to a contact”\noperationId: createContactifote\nparameters:\n- $ref: \"#/parameters/contactIa\"\n~ name: body\nin: body\nrequired: true\nschema:\n$ref: \"contactnote#/definitions/ContactNoteDetails”\nresponses:\n\"201\":\ndescription: \"Note was added to the contact”",
+      "word_count": 58,
+      "avg_confidence": 84.46,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Parameter validation constraints Gi\n\n« Aresource may have a parameter in OED\ntheir path, body, header and query\n\n\"/destinations/{destinationId}/retry\":\npost:\n\nDepending on the type of parameter,\nconstraints can be specified to ensure\nthe request conforms to expected\nschema definition\n\nApart from standard swagger schema\n2.0 spec parameter options we also\nsupport:\n\n* x-gw-type for path, query and header\nparameters\n\n* The value of x-gw-type is an InsuranceSuite\ntypekey\n\nsummary: “Retry messages for a destination that had errors”\ndescription: \"\"\noperationid: retryHessages\nx-gw-apihandler: gw.api.rest.pl.system.v10.MessagingToolsaPIHandler\nparameters:\n- ref: “#/parameters/destinationid™\n-]name: category\njin: query\nrequired: false\n\nItype: string\n{x-gu-type:_typekey.ErrorCategory\nparameters:\ndestinationId:\nname: destinationid\nin: path\ndescription: “ID of the destination”\nrequired: true\ntype: integer\nformat: _int32",
+      "word_count": 114,
+      "avg_confidence": 85.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Integration Views and the REST API Gi\n\n¢ API inputs and outputs can be associated with a\n\nJSON schema definition and its corresponding > =\nmapper file VE filters.trn.ta\n\n= address_minimal-1.0.gql\n& contact_details-1.0.gql\n= contactnote_details-1.0.gql\n\n* The JSON schema and mapping files in\nInsuranceSuite are shared between the Integration\n\nViews framework and the REST API framework mappingstinta\n4) address-1.0.mapping,json\n¢ Both make use of the same files, with the same rules, and 4) contact-1.0.mapping,json\n\nthe same subset of json schema 4 contactnote-1.0.mapping,json\n\n> gw.pl.framework\n\nv tr.ta\n4) address-1.0.schema,json\n¢) contact-1.0.schema,json\n\n5 contactnote-1.0.schema,json",
+      "word_count": 93,
+      "avg_confidence": 85.45,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Integration View files to view a contact and its notes [5\n\n*« Schema file\n\n* contact-1.0.schema.json imports address and schemas > Bm apis\n* ContactDetails definition contains properties needed for ¥ En fitters:tm.ta\nresponse object = address_minimal-1.0.gql\n2 contact_details-1.0.gql\n¢ Mapper file # contactnote_details-1.0.9ql\ncoe . . mappings.tmn.ta\n* contact-1.0.mapping.json imports address and mappings  address-1.0.mapping,json\n* ContactDetails mappers defines paths to data needed for i} contact-1.0.mapping,json\nresponse object properties { contactnote-1.O.mapping,son\n\n¢ Filter files gw.pl.framework\n\ntna\n\n* contact_details-1.0.gql\n\n4) address-1.0.schema,json\n\n* contactnote_details-1.0.gql () contact-1.0.schema,json\n) contactnote-1.0.schema,json\n\n« Used to return either contact or notes information",
+      "word_count": 96,
+      "avg_confidence": 77.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Integration View files used to update a contact Gi\n\n* Schema file\n\n* ContactUpdate definition is added to the J nemne  wontect\ncontact-1.0.schema.json file \"properties\" : {\n36 \"DateOfBirth\" : {\n* x-gw-nullable = true added to \"type\" : \"string\",\nproperties to allow for null values \"format\" : \"date-time\",\n39 \"x-gw-nullable\" : true\n+ By default, on input, explicitly-null properties\nare not allowed \"DriversLicenseNumber\" : {\n\n\"type\" : \"string\",\n\"x-gw-nullable\" : true\n\n¢ Mapper file\n\n}\n\n:, . A . \"Dri Li State\" : {\n+ Not required since mapping of the input . “type” t \"etring\",\nproperties ” \"x-gw-type\" : \"typekey. Jurisdiction”\nand domain properties will be handled in the }\n\nAPI handler class } ,",
+      "word_count": 118,
+      "avg_confidence": 84.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Integration View files used to add a contact note\n\nSchema file\n* contactnote-1.0.schema.json file\nMapper file\n\n* Not required since mapping of the input\nproperties and domain properties will be\nhandled in the API handler class\n\nGi\n\n‘} contactnote-1.0.schema,json\n\nt\n\n\"$schema\" :\n\"definitions\" : {\n\n\"http: //json-schema.org/draft-04/schema#\",\n\n\"contactNoteDetails” : {\n\"type\" : \"object\",\n\"properties\" : {\n\"contactNoteType” : {\npe\" : \"string\",\ngw-type\" : \"typekey.ContactNoteType”\n\nim\n\"Confidential\" : {\n\n\"type\" : \"boolean\"\nih\n\"Subject\" : {\n\n\"type\": \"string\"\nh\n\"Body\" = {\n\n\"type\": \"string\"",
+      "word_count": 85,
+      "avg_confidence": 78.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| API handler class Gi\n\nx-gv-apihandlers:\n\n* Handler classes can be specified at the root level of ~ erainingapp.reevapt .ConcactAPTHandier\nthe document and overridden at the operation level y aepticarianrdaea\n* The root document can provide a list of classes rather than « sppliasion seen\njust one; they'll be considered in order 2 Jeontacts/(contactta)\nget:\n+ Handler classes need to have a no arguments, public constructor : anemone net Seteuist\n\ndeno.restapi .DemoContactAPIHandler\n\nclass Con\n\n* Every operation defined for a published API must have an associated handler method\n\n+ For each operation:\n\nFramework will look for a public method with a name matching the operationld, for each candidate handler class\nDeclared methods are considered first, then all methods\nThere must be exactly one match\n\nMethod names cannot be overloaded",
+      "word_count": 129,
+      "avg_confidence": 87.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Parameter binding\n\nEach method parameter must match the name and\ntype of a parameter declared on the Swagger schema\n\n* Order doesn’t matter\n\n+ Don’t have to include all possible parameters\n\nclass Cont\n\nfunction getContact(contactId : String,| fi\n\n|: TransformResult {...}\n\nEach parameter to the API handler method must either be:\n\n+ A parameter declared on the Swagger schema for the associated\noperation, or\n\n* Of type gw.api.rest.RequestContext\n\nRuntime operation parameter values can always be retrieved by name\nfrom the RequestContext if they're not explicit arguments to the handler\nmethod\n\nGi\n\npaths:\n/contacts/(contactId}:\nget:\n\nsummary: \"Retrieves a contact details\"\nx-gw-apihandlers:\n~ deno. restapi .DenoContactAPIHandler\noperationId: getContact\nx-gw-permissions: <1 ites>\n\nters /contactId\"\n\nenum: [\"contact details\", \"contactnote details\")",
+      "word_count": 117,
+      "avg_confidence": 86.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Return values Gi\n\n* The API Handler method can return either\ngw.api.rest.Response, void, or any type\nthat can be serialized out at runtime\n\nfunction getContact (contactid : String, filter : String) :{TransformResult (...}\n\nclass ContactAPIHan\n\nfunction updateContact (contactId : String, body : Jsondbjq Sering{...}\n\n* Some common return types include: function «\n\nactilove (contactId : String, body : Jsorpbject) : void (...}\n* void\n\n+ If the operation returns a 204 response code (no content), the method need not return anything at all\n* TransformResult\n\n+ An operation that produces JSON and/or XML and which uses an Integration Mapping to produce that data can\nreturn a TransformResult directly\n\n* String or byte]\n+ Can return a String or byte[] that will be written out as-is.\n+ Response\n\n+ Can return a Response object that explicitly sets the response code, response body, and/or custom headers",
+      "word_count": 145,
+      "avg_confidence": 86.99,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Handler method to view a contact and its notes\n\nfunction getContact(contactId : String, filter : String) : TransformResult (\n\nvar contact = findContactBylId(contactId)\n\n+0\", \"ContactDetails\")\n\nvar mappingOpts = new JsonMappingOptions ()\nswitch (filter) {\ncase \"contact_details\":\nnappingOpts.withFilter(\"trn.ta.contact_details-1.0\")\nbreak\ncase \"contactnote_details\":\nnappingOpts.withFilter(\"trn.ta.contactnote_details-1.0\")\nbreak\n}\nreturn jsonMapper.transformObject (contact, mappingOpts)\n} else {\nreturn jsonMapper.transformdbject (contact)\n}\n)\n\nprivate function findContactByld(contactId : String) : ABContact {\n\nvar query0b} = Query.make(ABContact)\n\nquery0bj..compare (ABContact#PublicID, Relop. Equals, contactId)\nvar target0bj = query0bj.select() .AtMostOneRow\n\nreturn target0bj",
+      "word_count": 79,
+      "avg_confidence": 78.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Handler method to update a contact Gi\n\nfunction updateContact(contactId : String, body : JsonObject) : String{\nvar contact = findContactById(contactId)\nvar contactUpdate = ContactUpdate.vrap(body)\nTransaction. runW#ithNevBundle(\\b -> {\ncontact = b.add(contact)\n\nif (body.containsKey(\"dateOfBirth\")) {\n(contact as ABPerson) .DateOfBirth = contactUpdate.DateOfBirth\n\nif (body. containsKey(\"driversLicenseNumber\")) {\n(contact as ABPerson).LicenseNumber = contactUpdate.DriversLicenselumber\n\nif (body. containsKey(\"driversLicenseState\")) {\n(contact as ABPerson).LicenseState = contactUpdate.DriversLicenseState\n}\n»\nreturn (\"Contact \" + contact.DisplayName + \" was successfully updated\")",
+      "word_count": 71,
+      "avg_confidence": 84.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Handler method to create a contact note Gi\n\nfunction c e(contactId : String, body : JsonObject) : void {\nvar contac! ‘indContactById (contactId)\nvar contactNote = ContactNoteDetails.vrap (body)\nTransaction. runW#ithNewBundle(\\b -> {\nvar newNote = new entity.ContactNote()\nnewNote.ContactNoteType = contactNote.ContactloteType\nnewNote.IsConfidential = contactNote.Confidential\nnewNote. Subject = contactNote.Subject\nnewNote.Body = contactNote.Body\ncontact.addToContactNotes (newNote)\n\n* The newNote entity instance (ContactNote) is added to the contact read-only\nentity instance (ABContact) by a foreign key field on newNote itself\n\n¢ Therefore, the read-only contact entity instance does not need to be added to or\ncommitted in the bundle",
+      "word_count": 95,
+      "avg_confidence": 87.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Deploy code changes Gi\n\n¢ New Gosu class * Modified Gosu Class\nD> Run ‘Server’\nTools VCS Window Help 9% Debug Server\nD Run ‘Server’ Shift+F10 W Run ‘Server’ with Coverage\n186 Debug ‘Server’ Shift+F9 D Run...\nE Run ‘Server’ with Coverage W Debus...\n\nAttach to Local Process...\n[> Edit Configurations...\nB] Import Test Results\n\nD Run... Alt+Shift+F10\nWE Debug... Alt+ Shift+F9\n7 Attach to Local Process...\n\n[> Edit Configurations... Il Stop ‘Server’\nImport Test Results > EF show Running List\n\nHE Stop ‘Server’ Ctrl F2 Stop Background Processes...",
+      "word_count": 90,
+      "avg_confidence": 76.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| API publishing\n\nSchema files do not turn into network endpoints by default —— \"a\n\n* Must opt-in APIs to control what is exposed on the network\n\n.\n\n°\n\npublished-apis.yaml\n\n~ name: gw.pl.£f\n\njev_template-1.0\n\nFiles are added to config/integration/apis/published-apis.yaml\n\nExtension model\n\n* Customers extend the core API and publish their\nextended version, not the core one\n\n« Multiple live versions can be published, all based\non core version\n\nThe default API URL returns a list of APIs\nthat have been published\n\n* http://localhost:8880/ab/rest/apis\n\nic}\n\nJSON Raw Data\n\nSave Copy\nsapis:\nbasePath\ndescription\ndocs:\n\ntitle\n\ndescription\ndocs\ntitle\n\n® locathost:8880/ab/rest,\n\nHeaders\n\n“Dynamically lists the APIs that are available”\n“http://Locathost :8880/ab/rest/opis/swogger. json”\nwAPI List”\n\n“/contact/v1\"\n“Contact API”\n“http://Locathost :8880/ab/rest/contact/v1/swagger. json”\n“Contact API”",
+      "word_count": 120,
+      "avg_confidence": 81.34,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| swagger-ui\n\n« InsuranceSuite bundles a swagger-ui distribution\n+ Default URL is <base servlet url>/resources/swagger-ui/\n+ http://localhost:8880/ab/resources/swagger-ui\n¢ Every API automatically gets a /swagger.json endpoint\n+ The serviet by default exists at /rest\n+ Returns the default external view of the schema\n¢ In swagger-ui manually change the endpoint to reference the desired API\n+ <basePath>/swagger.json\n\n+ The basePath declared in the schema is prepended to every path in the schema\n\n{+ swagger http:/localhost:8880/ab/rest/trn/ta/contact/v1/swagger.json\n\nExplore",
+      "word_count": 75,
+      "avg_confidence": 88.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Contact API\n\nClick Authorize to enter login credentials\nClick HTTP verb to test each API\n\n1. Click Try it out to test\nEnter parameter(s)\n\n2.\n3. Click Execute\n\nee CT\n\nContact API®\n\nContact API\nITP a\ndefault Vv\n\nParameters\n\nComacad sed\n\nfiter\n\nDescription\n\n_ 200\n\n- —\n\nServer response\n\ncode Details",
+      "word_count": 51,
+      "avg_confidence": 83.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Demonstration G\n\nCreate a User REST API\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question G\n\n7~ — Match the HTTP verb with its description\n\n7\n¢\n\n[verb answer Description\n\nif\n\n| PUT Delete from the database\n\n| RETRIEVE Update/Replace row in the database\nI GET Create a new record in the database\n| PATCH Read from the database\n\n| INSERT Update/Modify row in the database\n\n1 REMOVE Not an HTTP verb\n\n' POST Not an HTTP verb\n\n' REPLACE Not an HTTP verb\n\n1\n\n|||\n\nDELETE Not an HTTP verb",
+      "word_count": 77,
+      "avg_confidence": 83.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer Gi\n\n_- — Match the HTTP verb with its description\n\n7\n¢\n\nSve [answer Description\n\nf\n\n| PUT Update/Replace row in the database Delete from the database\n\n| RETRIEVE Not an HTTP verb Update/Replace row in the database\nI GET Read from the database Create a new record in the database\n| PATCH Update/Modify row in the database Read from the database\n\n| INSERT Not an HTTP verb Update/Modify row in the database\n\n| REMOVE Not an HTTP verb Not an HTTP verb\n\ni] POST Create a new record in the database Not an HTTP verb\n\n| REPLACE Not an HTTP verb Not an HTTP verb\n\n! DELETE Delete from the database Not an HTTP verb",
+      "word_count": 117,
+      "avg_confidence": 85.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question\n\n_— — What file must be updated to publish an API schema?\n\n4\now A) swagger.yaml\n\nB) published-schemas.yaml\nC) codegen-schemas.yaml\nD) published-apis.yaml\n\nE) json-apis.yaml\n\nSe Soe Se sees esse ese",
+      "word_count": 31,
+      "avg_confidence": 75.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer\n\n_- — What file must be updated to publish an API schema?\nook\nB\n\nc\n\nD\n\nE\n\nswagger.yaml\n\npublished-schemas.yaml\n\nwv\n\ncodegen-schemas.yaml\n\npublished-apis.yaml\n\njson-apis.yaml\n\nThe correct answer is published-apis.yaml\n\nSoo eS oe ese Sse ese",
+      "word_count": 35,
+      "avg_confidence": 79.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Lesson\nobjectives * Create a swagger schema to define an API\n\nreview ¢ Reference an existing Integration View in the\nAPI\n\n* Create an API handler class\n¢ Publish an API\n« Use swagger-ui to test an API",
+      "word_count": 38,
+      "avg_confidence": 86.53,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "| Student exercise\n\nCreate a Contact REST API",
+      "word_count": 8,
+      "avg_confidence": 95.44,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

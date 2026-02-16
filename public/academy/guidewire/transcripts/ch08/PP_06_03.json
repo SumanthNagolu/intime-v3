@@ -1,0 +1,1307 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_06_03.mp4",
+    "video_stem": "PP_06_03",
+    "duration_seconds": 87.76,
+    "duration_formatted": "00:01:27.760",
+    "segment_count": 7,
+    "word_count": 203,
+    "avg_confidence": 0.9044,
+    "transcription_time_seconds": 5.64,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:27:17.921584"
+  },
+  "full_text": "As you already know, there are different rule contexts available based on the policy line selected in the underwriting rule. Click Left Expression. Once a context is selected, you can access the symbols in the context and the associated fields. For example, P, A, Driver. Open PolicyCenter Studio. The context definition classes are added in BizRules plugin. Control click to open one of them. In the context definition class, it defines a symbol to be used in the rule to reference the objects on the policy period. Here, the symbol P, A, Driver references all policy drivers on the personal auto line. The context definition is identified by the rule context definition key. The name of the rule context definition key is displayed in the context dropdown in the user interface. Open the parent class of the context definition. The method applies to policy lines determines which policy lines it applies to. The context definition keys must be added to the supported context in underwriter evaluator triggering point. Go back to the context definition class. Other context definitions are defined in the same package. This is the end of demonstration for rule context definition. The context definition is defined in the same package.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.68,
+      "end": 9.22,
+      "start_formatted": "00:00:00.680",
+      "end_formatted": "00:00:09.220",
+      "text": "As you already know, there are different rule contexts available based on the policy line selected in the underwriting rule. Click Left Expression.",
+      "words": [
+        {
+          "word": "As",
+          "start": 0.68,
+          "end": 1.34,
+          "probability": 0.9673
+        },
+        {
+          "word": "you",
+          "start": 1.34,
+          "end": 1.46,
+          "probability": 0.999
+        },
+        {
+          "word": "already",
+          "start": 1.46,
+          "end": 1.88,
+          "probability": 0.9951
+        },
+        {
+          "word": "know,",
+          "start": 1.88,
+          "end": 2.22,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 2.44,
+          "end": 2.64,
+          "probability": 0.9961
+        },
+        {
+          "word": "are",
+          "start": 2.64,
+          "end": 2.78,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 2.78,
+          "end": 3.06,
+          "probability": 0.998
+        },
+        {
+          "word": "rule",
+          "start": 3.06,
+          "end": 3.38,
+          "probability": 0.8521
+        },
+        {
+          "word": "contexts",
+          "start": 3.38,
+          "end": 3.84,
+          "probability": 0.9941
+        },
+        {
+          "word": "available",
+          "start": 3.84,
+          "end": 4.42,
+          "probability": 0.9893
+        },
+        {
+          "word": "based",
+          "start": 4.42,
+          "end": 4.78,
+          "probability": 0.9814
+        },
+        {
+          "word": "on",
+          "start": 4.78,
+          "end": 4.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 4.96,
+          "end": 5.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "policy",
+          "start": 5.06,
+          "end": 5.46,
+          "probability": 0.9106
+        },
+        {
+          "word": "line",
+          "start": 5.46,
+          "end": 5.76,
+          "probability": 0.7935
+        },
+        {
+          "word": "selected",
+          "start": 5.76,
+          "end": 6.2,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 6.2,
+          "end": 6.4,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 6.4,
+          "end": 6.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "underwriting",
+          "start": 6.5,
+          "end": 7.08,
+          "probability": 0.9399
+        },
+        {
+          "word": "rule.",
+          "start": 7.08,
+          "end": 7.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "Click",
+          "start": 7.76,
+          "end": 8.34,
+          "probability": 0.9893
+        },
+        {
+          "word": "Left",
+          "start": 8.34,
+          "end": 8.6,
+          "probability": 0.4045
+        },
+        {
+          "word": "Expression.",
+          "start": 8.6,
+          "end": 9.22,
+          "probability": 0.9238
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 11.72,
+      "end": 29.4,
+      "start_formatted": "00:00:11.720",
+      "end_formatted": "00:00:29.400",
+      "text": "Once a context is selected, you can access the symbols in the context and the associated fields. For example, P, A, Driver. Open PolicyCenter Studio. The context definition classes are added in BizRules plugin. Control click to open one of them.",
+      "words": [
+        {
+          "word": "Once",
+          "start": 11.72,
+          "end": 12.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 12.38,
+          "end": 12.56,
+          "probability": 0.9893
+        },
+        {
+          "word": "context",
+          "start": 12.56,
+          "end": 12.96,
+          "probability": 0.9575
+        },
+        {
+          "word": "is",
+          "start": 12.96,
+          "end": 13.26,
+          "probability": 0.999
+        },
+        {
+          "word": "selected,",
+          "start": 13.26,
+          "end": 13.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "you",
+          "start": 13.98,
+          "end": 14.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 14.2,
+          "end": 14.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 14.38,
+          "end": 14.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 14.7,
+          "end": 14.96,
+          "probability": 0.999
+        },
+        {
+          "word": "symbols",
+          "start": 14.96,
+          "end": 15.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "in",
+          "start": 15.3,
+          "end": 15.48,
+          "probability": 0.9609
+        },
+        {
+          "word": "the",
+          "start": 15.48,
+          "end": 15.56,
+          "probability": 0.999
+        },
+        {
+          "word": "context",
+          "start": 15.56,
+          "end": 16.02,
+          "probability": 0.9819
+        },
+        {
+          "word": "and",
+          "start": 16.02,
+          "end": 16.26,
+          "probability": 0.6494
+        },
+        {
+          "word": "the",
+          "start": 16.26,
+          "end": 16.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "associated",
+          "start": 16.36,
+          "end": 16.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "fields.",
+          "start": 16.92,
+          "end": 17.52,
+          "probability": 0.998
+        },
+        {
+          "word": "For",
+          "start": 17.8,
+          "end": 18.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "example,",
+          "start": 18.2,
+          "end": 18.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "P,",
+          "start": 19.0,
+          "end": 19.3,
+          "probability": 0.5601
+        },
+        {
+          "word": "A,",
+          "start": 19.58,
+          "end": 20.08,
+          "probability": 0.9785
+        },
+        {
+          "word": "Driver.",
+          "start": 20.34,
+          "end": 20.76,
+          "probability": 0.8125
+        },
+        {
+          "word": "Open",
+          "start": 21.32,
+          "end": 21.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 21.98,
+          "end": 22.88,
+          "probability": 0.6685
+        },
+        {
+          "word": "Studio.",
+          "start": 22.88,
+          "end": 23.26,
+          "probability": 0.6885
+        },
+        {
+          "word": "The",
+          "start": 23.66,
+          "end": 24.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "context",
+          "start": 24.0,
+          "end": 24.44,
+          "probability": 0.77
+        },
+        {
+          "word": "definition",
+          "start": 24.44,
+          "end": 24.94,
+          "probability": 0.9668
+        },
+        {
+          "word": "classes",
+          "start": 24.94,
+          "end": 25.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 25.48,
+          "end": 25.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "added",
+          "start": 25.72,
+          "end": 25.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 25.96,
+          "end": 26.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "BizRules",
+          "start": 26.14,
+          "end": 26.68,
+          "probability": 0.7969
+        },
+        {
+          "word": "plugin.",
+          "start": 26.68,
+          "end": 27.1,
+          "probability": 0.6206
+        },
+        {
+          "word": "Control",
+          "start": 27.58,
+          "end": 28.02,
+          "probability": 0.8398
+        },
+        {
+          "word": "click",
+          "start": 28.02,
+          "end": 28.36,
+          "probability": 0.3022
+        },
+        {
+          "word": "to",
+          "start": 28.36,
+          "end": 28.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "open",
+          "start": 28.58,
+          "end": 28.86,
+          "probability": 0.999
+        },
+        {
+          "word": "one",
+          "start": 28.86,
+          "end": 29.06,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 29.06,
+          "end": 29.2,
+          "probability": 0.999
+        },
+        {
+          "word": "them.",
+          "start": 29.2,
+          "end": 29.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 31.7,
+      "end": 48.9,
+      "start_formatted": "00:00:31.700",
+      "end_formatted": "00:00:48.900",
+      "text": "In the context definition class, it defines a symbol to be used in the rule to reference the objects on the policy period. Here, the symbol P, A, Driver references all policy drivers on the personal auto line. The context definition is identified by the rule context definition key.",
+      "words": [
+        {
+          "word": "In",
+          "start": 31.7,
+          "end": 32.34,
+          "probability": 0.9302
+        },
+        {
+          "word": "the",
+          "start": 32.34,
+          "end": 32.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "context",
+          "start": 32.44,
+          "end": 32.84,
+          "probability": 0.7158
+        },
+        {
+          "word": "definition",
+          "start": 32.84,
+          "end": 33.3,
+          "probability": 0.9253
+        },
+        {
+          "word": "class,",
+          "start": 33.3,
+          "end": 33.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "it",
+          "start": 34.16,
+          "end": 34.36,
+          "probability": 0.9805
+        },
+        {
+          "word": "defines",
+          "start": 34.36,
+          "end": 34.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 34.76,
+          "end": 34.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "symbol",
+          "start": 34.94,
+          "end": 35.18,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 35.18,
+          "end": 35.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 35.3,
+          "end": 35.44,
+          "probability": 0.999
+        },
+        {
+          "word": "used",
+          "start": 35.44,
+          "end": 35.74,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 35.74,
+          "end": 35.88,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 35.88,
+          "end": 35.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "rule",
+          "start": 35.96,
+          "end": 36.16,
+          "probability": 0.9663
+        },
+        {
+          "word": "to",
+          "start": 36.16,
+          "end": 36.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "reference",
+          "start": 36.36,
+          "end": 36.72,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 36.72,
+          "end": 36.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "objects",
+          "start": 36.9,
+          "end": 37.3,
+          "probability": 0.9941
+        },
+        {
+          "word": "on",
+          "start": 37.3,
+          "end": 37.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 37.52,
+          "end": 37.6,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 37.6,
+          "end": 38.06,
+          "probability": 0.9307
+        },
+        {
+          "word": "period.",
+          "start": 38.06,
+          "end": 38.48,
+          "probability": 0.9922
+        },
+        {
+          "word": "Here,",
+          "start": 38.82,
+          "end": 39.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 39.58,
+          "end": 39.8,
+          "probability": 0.9956
+        },
+        {
+          "word": "symbol",
+          "start": 39.8,
+          "end": 40.1,
+          "probability": 0.9829
+        },
+        {
+          "word": "P,",
+          "start": 40.1,
+          "end": 40.32,
+          "probability": 0.0488
+        },
+        {
+          "word": "A,",
+          "start": 40.32,
+          "end": 40.48,
+          "probability": 0.4802
+        },
+        {
+          "word": "Driver",
+          "start": 40.6,
+          "end": 40.82,
+          "probability": 0.27
+        },
+        {
+          "word": "references",
+          "start": 40.82,
+          "end": 41.3,
+          "probability": 0.9121
+        },
+        {
+          "word": "all",
+          "start": 41.3,
+          "end": 41.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy",
+          "start": 41.68,
+          "end": 42.16,
+          "probability": 0.9775
+        },
+        {
+          "word": "drivers",
+          "start": 42.16,
+          "end": 42.62,
+          "probability": 0.9873
+        },
+        {
+          "word": "on",
+          "start": 42.62,
+          "end": 42.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 42.88,
+          "end": 42.96,
+          "probability": 0.9434
+        },
+        {
+          "word": "personal",
+          "start": 42.96,
+          "end": 43.38,
+          "probability": 0.814
+        },
+        {
+          "word": "auto",
+          "start": 43.38,
+          "end": 43.7,
+          "probability": 0.7798
+        },
+        {
+          "word": "line.",
+          "start": 43.7,
+          "end": 44.08,
+          "probability": 0.8628
+        },
+        {
+          "word": "The",
+          "start": 44.5,
+          "end": 45.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "context",
+          "start": 45.08,
+          "end": 45.5,
+          "probability": 0.9819
+        },
+        {
+          "word": "definition",
+          "start": 45.5,
+          "end": 45.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 45.92,
+          "end": 46.3,
+          "probability": 0.998
+        },
+        {
+          "word": "identified",
+          "start": 46.3,
+          "end": 46.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "by",
+          "start": 46.72,
+          "end": 47.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 47.02,
+          "end": 47.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "rule",
+          "start": 47.16,
+          "end": 47.38,
+          "probability": 0.6118
+        },
+        {
+          "word": "context",
+          "start": 47.38,
+          "end": 47.84,
+          "probability": 0.8408
+        },
+        {
+          "word": "definition",
+          "start": 47.84,
+          "end": 48.46,
+          "probability": 0.9917
+        },
+        {
+          "word": "key.",
+          "start": 48.46,
+          "end": 48.9,
+          "probability": 0.9844
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 51.14,
+      "end": 60.28,
+      "start_formatted": "00:00:51.140",
+      "end_formatted": "00:01:00.280",
+      "text": "The name of the rule context definition key is displayed in the context dropdown in the user interface. Open the parent class of the context definition.",
+      "words": [
+        {
+          "word": "The",
+          "start": 51.14,
+          "end": 51.94,
+          "probability": 0.9902
+        },
+        {
+          "word": "name",
+          "start": 51.94,
+          "end": 52.12,
+          "probability": 0.9893
+        },
+        {
+          "word": "of",
+          "start": 52.12,
+          "end": 52.26,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 52.26,
+          "end": 52.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 52.36,
+          "end": 52.6,
+          "probability": 0.7847
+        },
+        {
+          "word": "context",
+          "start": 52.6,
+          "end": 53.02,
+          "probability": 0.6406
+        },
+        {
+          "word": "definition",
+          "start": 53.02,
+          "end": 53.6,
+          "probability": 0.9463
+        },
+        {
+          "word": "key",
+          "start": 53.6,
+          "end": 54.02,
+          "probability": 0.9917
+        },
+        {
+          "word": "is",
+          "start": 54.02,
+          "end": 54.2,
+          "probability": 0.998
+        },
+        {
+          "word": "displayed",
+          "start": 54.2,
+          "end": 54.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 54.62,
+          "end": 54.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 54.78,
+          "end": 54.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "context",
+          "start": 54.86,
+          "end": 55.34,
+          "probability": 0.9839
+        },
+        {
+          "word": "dropdown",
+          "start": 55.34,
+          "end": 55.72,
+          "probability": 0.4121
+        },
+        {
+          "word": "in",
+          "start": 55.72,
+          "end": 56.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 56.04,
+          "end": 56.14,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 56.14,
+          "end": 56.44,
+          "probability": 0.978
+        },
+        {
+          "word": "interface.",
+          "start": 56.44,
+          "end": 56.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "Open",
+          "start": 57.54,
+          "end": 58.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 58.24,
+          "end": 58.38,
+          "probability": 1.0
+        },
+        {
+          "word": "parent",
+          "start": 58.38,
+          "end": 58.66,
+          "probability": 0.9893
+        },
+        {
+          "word": "class",
+          "start": 58.66,
+          "end": 59.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 59.0,
+          "end": 59.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 59.18,
+          "end": 59.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "context",
+          "start": 59.28,
+          "end": 59.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "definition.",
+          "start": 59.78,
+          "end": 60.28,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 62.84,
+      "end": 78.38,
+      "start_formatted": "00:01:02.840",
+      "end_formatted": "00:01:18.380",
+      "text": "The method applies to policy lines determines which policy lines it applies to. The context definition keys must be added to the supported context in underwriter evaluator triggering point. Go back to the context definition class.",
+      "words": [
+        {
+          "word": "The",
+          "start": 62.84,
+          "end": 63.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "method",
+          "start": 63.64,
+          "end": 63.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "applies",
+          "start": 63.9,
+          "end": 64.32,
+          "probability": 0.9624
+        },
+        {
+          "word": "to",
+          "start": 64.32,
+          "end": 64.52,
+          "probability": 1.0
+        },
+        {
+          "word": "policy",
+          "start": 64.52,
+          "end": 64.94,
+          "probability": 0.9814
+        },
+        {
+          "word": "lines",
+          "start": 64.94,
+          "end": 65.34,
+          "probability": 0.999
+        },
+        {
+          "word": "determines",
+          "start": 65.34,
+          "end": 65.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 65.8,
+          "end": 66.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 66.16,
+          "end": 66.66,
+          "probability": 1.0
+        },
+        {
+          "word": "lines",
+          "start": 66.66,
+          "end": 67.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 67.0,
+          "end": 67.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "applies",
+          "start": 67.14,
+          "end": 67.56,
+          "probability": 1.0
+        },
+        {
+          "word": "to.",
+          "start": 67.56,
+          "end": 67.88,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 68.48,
+          "end": 69.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "context",
+          "start": 69.16,
+          "end": 69.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "definition",
+          "start": 69.62,
+          "end": 70.1,
+          "probability": 1.0
+        },
+        {
+          "word": "keys",
+          "start": 70.1,
+          "end": 70.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "must",
+          "start": 70.58,
+          "end": 70.84,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 70.84,
+          "end": 71.0,
+          "probability": 1.0
+        },
+        {
+          "word": "added",
+          "start": 71.0,
+          "end": 71.3,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 71.3,
+          "end": 71.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 71.46,
+          "end": 71.6,
+          "probability": 1.0
+        },
+        {
+          "word": "supported",
+          "start": 71.6,
+          "end": 72.06,
+          "probability": 0.9902
+        },
+        {
+          "word": "context",
+          "start": 72.06,
+          "end": 72.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "in",
+          "start": 72.6,
+          "end": 72.94,
+          "probability": 0.9282
+        },
+        {
+          "word": "underwriter",
+          "start": 72.94,
+          "end": 73.5,
+          "probability": 0.832
+        },
+        {
+          "word": "evaluator",
+          "start": 73.5,
+          "end": 74.26,
+          "probability": 0.9062
+        },
+        {
+          "word": "triggering",
+          "start": 74.26,
+          "end": 74.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "point.",
+          "start": 74.58,
+          "end": 75.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "Go",
+          "start": 75.6,
+          "end": 76.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 76.26,
+          "end": 76.52,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 76.52,
+          "end": 76.66,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 76.66,
+          "end": 76.78,
+          "probability": 1.0
+        },
+        {
+          "word": "context",
+          "start": 76.78,
+          "end": 77.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "definition",
+          "start": 77.28,
+          "end": 77.76,
+          "probability": 1.0
+        },
+        {
+          "word": "class.",
+          "start": 77.76,
+          "end": 78.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 80.4,
+      "end": 87.54,
+      "start_formatted": "00:01:20.400",
+      "end_formatted": "00:01:27.540",
+      "text": "Other context definitions are defined in the same package. This is the end of demonstration for rule context definition.",
+      "words": [
+        {
+          "word": "Other",
+          "start": 80.4,
+          "end": 81.12,
+          "probability": 0.9307
+        },
+        {
+          "word": "context",
+          "start": 81.12,
+          "end": 81.58,
+          "probability": 0.9883
+        },
+        {
+          "word": "definitions",
+          "start": 81.58,
+          "end": 82.12,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 82.12,
+          "end": 82.5,
+          "probability": 0.999
+        },
+        {
+          "word": "defined",
+          "start": 82.5,
+          "end": 82.84,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 82.84,
+          "end": 82.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 82.98,
+          "end": 83.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "same",
+          "start": 83.08,
+          "end": 83.32,
+          "probability": 1.0
+        },
+        {
+          "word": "package.",
+          "start": 83.32,
+          "end": 83.84,
+          "probability": 0.999
+        },
+        {
+          "word": "This",
+          "start": 84.28,
+          "end": 84.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 84.84,
+          "end": 84.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 84.96,
+          "end": 85.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "end",
+          "start": 85.08,
+          "end": 85.28,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 85.28,
+          "end": 85.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "demonstration",
+          "start": 85.38,
+          "end": 85.9,
+          "probability": 0.9795
+        },
+        {
+          "word": "for",
+          "start": 85.9,
+          "end": 86.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "rule",
+          "start": 86.26,
+          "end": 86.56,
+          "probability": 0.8691
+        },
+        {
+          "word": "context",
+          "start": 86.56,
+          "end": 87.02,
+          "probability": 0.9736
+        },
+        {
+          "word": "definition.",
+          "start": 87.02,
+          "end": 87.54,
+          "probability": 0.8164
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 87.54,
+      "end": 87.76,
+      "start_formatted": "00:01:27.540",
+      "end_formatted": "00:01:27.760",
+      "text": "The context definition is defined in the same package.",
+      "words": [
+        {
+          "word": "The",
+          "start": 87.54,
+          "end": 87.54,
+          "probability": 0.0051
+        },
+        {
+          "word": "context",
+          "start": 87.54,
+          "end": 87.66,
+          "probability": 0.0001
+        },
+        {
+          "word": "definition",
+          "start": 87.66,
+          "end": 87.76,
+          "probability": 0.0
+        },
+        {
+          "word": "is",
+          "start": 87.76,
+          "end": 87.76,
+          "probability": 0.2454
+        },
+        {
+          "word": "defined",
+          "start": 87.76,
+          "end": 87.76,
+          "probability": 0.0156
+        },
+        {
+          "word": "in",
+          "start": 87.76,
+          "end": 87.76,
+          "probability": 0.1187
+        },
+        {
+          "word": "the",
+          "start": 87.76,
+          "end": 87.76,
+          "probability": 0.3794
+        },
+        {
+          "word": "same",
+          "start": 87.76,
+          "end": 87.76,
+          "probability": 0.0136
+        },
+        {
+          "word": "package.",
+          "start": 87.76,
+          "end": 87.76,
+          "probability": 0.0001
+        }
+      ]
+    }
+  ]
+}

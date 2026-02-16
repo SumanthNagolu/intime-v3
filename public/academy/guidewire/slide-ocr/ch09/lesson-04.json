@@ -1,0 +1,346 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-04",
+    "slide_count": 30,
+    "slides_with_text": 26,
+    "total_words": 1441,
+    "avg_confidence": 84.36,
+    "processing_time_seconds": 9.69,
+    "extracted_at": "2026-02-15T18:15:59.505231"
+  },
+  "full_text": "Writing Gosu rules\n\n0701221\n\nLesson\nobjectives\n\n¢ Explain the role of Gosu rules in ClaimCenter\n¢ Write effective Gosu rules to meet business\nneeds\n\nIntroducing Gosu rules\n\n| Gosu rules G\n\n¢ Gosu rules are part of the Guidewire Platform capabilities\n« Written in Gosu (an open-source programming language)\n¢ ClaimCenter Gosu rules execute business logic required for claims processing\n\nData User\n\nModel Interface\nInteg.\nAPIs\n\nGuidewire Platform\nprovides a common technology for configuring...\n\nData User Integration\nModel Interface APIs\n\n| Rule Sets\n\n¢ Gosu rules are organized into\nrule sets\n\n« Rule sets are categorized by the\nevent type that triggers the\nevent-specific rules\n\n* These are rule set categories\n\n¢ Rule sets contain Gosu rules:\n\n#) ActivityEscalationRules.grs\n\nIv Activity Escalation Rules\nGosu Rule: | [Y] AERO1000 - High priority activities\n\n[¥] AERO2000 - Urgent priority activities\n\nY Be Rule Sets\n> Bl ApprovalRouting\n> Ba Archive\n> Bil Assignment\n>_ Bs Bulkdinvoi\n> Rule Set\n>\n\nCategories\n\n#8) ClaimExceptionRules\n#) GroupExceptionRules\n'#) UserExceptionRules\nInitialReserve\nLoaded\nPostsetup\nPresetup\nPreupdate\nReopened\nSegmentation\nTransactionApproval\nValidation\n\nWorkplan\n\nRule Sets\n\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n\n| Rule Sets hierarchy\n\nGosu Rules can have “child rules”.\n\n* Child rules are only processed if their parent rule’s Condition evaluates as True\n\n4) ClaimPreupdate.grs |\n\nv oe i\n\n001 te Document Asy\n| €PU03000 - Set SIU Life Cycle\nCPU04000 - SI Triggers\n\n4 CPU04100 - SIU Life Cycle Stage 1\n\nv\nv@y\nau\nyy\nyy\nM\nv@y\nau\n\nClaim Pre-update\n000 - Create\n\nDocument Synchronously\n\nchron\n\nCPU04110 - SI - Unreasonable delay in reporting loss\nCPU04120 - SI - Claim within 15 days of poli ception\nCPU04130 - SI-Claim within 30 days of policy inception\nCPU04140 - SI - Claim Loss Cause is theft related\n\nCPU04200 - SIU Life Cycle Stage 2\n\nCPU04210 - SI - No on-scene reports of incident\nPU04220 - SI - Minor not on policy\n\n| Triggering Events\n\n¢ The base ClaimCenter configuration\nincludes Gosu Rules triggered by\nseventeen distinct types of events\n\n« In this lesson we discuss Exception rules\nand Preupdate rules\n\n¢ In later lessons we discuss Assignment\nrules and Validation rules\n\nv\n\n3} Rule Sets iF\n\n> ApprovalRouting\n> Archive\n> BulkinvoiceApproval\n> Closed\n> EventMessage\nException\nInitialReserve\nLoaded\nPostsetup\nPresetup\nPreupdate\n> Reopened\n> Segmentation\n> TransactionApproval\n\nValidation\n\n> Workplan\n\ni\n\ni\n\n| Rule structure (1 of 2)\n\nRules have three parts:\n\n1.\n\nAn optional “uses” clause, which\nimports external functionality\n\nAcondition which evaluates as\n\ntrue or false\n(continued)\n\ni locale. Diaplaykey\n\nCONDITION (claim : entity.Claim): i\nSreturn pincidentso: tg length > 0) <\neerie pies okra as de Atararararararary\n1\n\n1\n1\n1\nVar today = java.util.Date.\n\nfor (eachTripincident in cl\nfor (eachTripSegment in e:\n\ni pIncidentsonly) {\n\n1 pincident.TripSegnents) {\n| eachTripSegnent.onPreUpdate (claim, today, DisplayRey.get(\"Rules.PreUpdate.Claim\n| .teipexpenseTransportation\") )\n\n1 for (eachAddnitripsegment in eachTripSegment.AddnlTripSegments) {\n\n1 eachAddn]TripSegment.onPreUpdate (claim, today, DisplayKey. get (\"Rules Prevpdate.\n| .Claim. TripExpenseTransportation\") )\n1\n\n1\n\n1\n\niJ\n\n1\n\n)\n)\ny\n\nEND\na rs\n\nte\n\n| Rule structure (2 of 2)\n\nRules have three parts:\n\n3. An action which is performed Only jcosors:on isin + eneity-ciainy:\n\n===. § return claim.TripIncidentsOnly -hasMatch(\\ t -> t.Tripseg\n\nif the condition evaluates as true\n\n* Condition and action are written in\nGosu\n\n1\n\n1\n\n1\n\n1\n\n| incident in elain.tripineidentsonly) (\n\n| for (eachtripsegnent in each?ripincident TripSegmenta) (\n\n| eachteiptegnent .onPreUpdate (claim, today, Displaykey.get (\"Rules. PreUpdate.clain\n| .TxipExpenserransportation\"))\n1\n\nJ\n\n1\n\n1\n\n1\n\n1\n\n1\n\n1\n\n1\n\n* The condition has one parameter:\n* The entity on which the rule is called\n\nfor (eachAddnlTripsegment in eachTripSeqment .AddniTripSeqments) (\n© eachaddnitripsegment.onPretpdate (claim, today, DisplayKey. get (\"Rules.Preupdate\n-Clain. TripExpenseTransportation\"))\n\n« The action has two parameters:\n+ The entity on which the rule is called\n\n+ Aninstance of gw.rules.Action, WhiCh iS Gamma SSS Sr rr rarer rere\nused for functions such as exiting rules\nor rulesets in a useful way\n\n| Exception rules G\n\nException rules define actions taken if an object is in a specified state.\n* An activity is escalated\n* An object either:\n+ Has had significant activity since the last time the exception rules were run, or\n\n+ Has had no significant activity for a long time (defined by the 1dleclaimrhresholdDays parameter)\n\n| Activity escalation rules G\n\n¢ Specify what actions to take when an ra\n+ ad\n\nactivity is escalated\n\n¢ Batch process activityesc runs\n\nevery 30 minutes (by default) #2) ActivityEscalationRules grs\nae . Il I\n* Detects activities where the Escalation Date ars 9) AEROIO0O- High priority activities\nis in the past, but the Activity has not yet [¥] AERO2000 - Urgent priority activities\n\nbeen escalated\n« Escalates these activities\n\n¢ ClaimCenter then runs escalation rules\nfor the activities that have been\nescalated\n\n| Claim exception rules G\n\n* Specify what actions to take if a claim is as Shay\n* Recently updated\n¢ Not updated for too long a period €) ClaimExceptionRules.grs\n* Batch process claimexception sea By cern ta SIU Life Cycle State\n\nlooks for recently updated claims R030\n\n* Runs daily at (by default) 2 am M CERO5000 - BizRules\n\n* Batch process idleclaimexception looks for claims untouched for (by default)\n7 days\n\n* Runs (by default) Sundays at noon\n\n* Both processes add claims to the ClaimException table\n\n| Group exception rules\n\n¢ Look for groups that “need attention”\nand perform appropriate action on\nthem\n¢ Batch process groupexception runs\n(by default) every day at 4am\n¢ Identifies groups that\n+ Have been changed\n\n+ Have not been inspected for a (definable)\nperiod of time\n\n« Runs Group Exception rules against these\ngroups\n\nte\nrm) a@n\n\n#) GroupExceptionRules.grs\n3 — Group Exception Rules\n\n| User exception rules\n\n¢ Look for users that “need attention”\nand perform appropriate actions on\nthem\n\n¢ Batch process userexception runs\n(by default) every day at 3 am\n* Identifies users that have been changed\n\n¢ Runs User Exception rules against these\nusers\n\nii—2\n\n®) UserExceptionRules.grs\nf — User Exception Rules\n\n| Demonstration G\nConfiguring exception rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Preupdate rules G\n\n« Fire whenever an object (of certain types) is ready for VE Preupdate\n\n. . € ‘vit\nsubmission to the database seers\n#) ContactPreupdate\n\n« Perform domain logic or processing that must be completed before 4) ExposurePreupdate\n\nthe object is committed €) GroupPreupdate\n. €) MatterPreupdate\n« Example: A contact preupdate rule might say: ) PolicyPreupdate\n5, #) RlAgreementPreupdate\n° When saving a contact = 4) RiTransactionsetPreupdate\n(trigger), 4) subrogationPreupdate\na #) TransactionSetPreupdate\n* If the contact’s address NaS — comrrion contact + entity.contact) + €) UserPreupdate\nchanged (condition), contact. PrinaryAddress.isFieldchanged(\"Addresstinel\") oF\n* Then change the address on contace-reinerfnadeese.isFielacenged(caity\") et\nany checks scheduled for this contact. Prinryaddrens-iaFielachanged{-resecieoas\")) and\ncontact (action) Perey an ees aes aa\n\ncchoggercategory.AB_CONTACT_PLUGIN. info (\"Updating check addresses for contact ${contact} to address ${contact\nnew gw. financials. CheckUpdater (gw.transaction.Transaction.getCurrent ()) -updateMailingAddress (contact)\n\nQuestion G\n\n_— — What is the parent of a rule set called?\n\n4\n¢\n7\n\n- SS H SSs e e\n\nAnswer Gi\n\n_— — What is the parent of a rule set called?\n\n¢\n¢ 6\n; The correct answer is a rule set category.\n\n~-SS HS S s e H\n\nQuestion G\n\n,— — Which component of a Gosu rule determines whether the rule will be\n\nY executed?\n4\n\n- SS H SSs e e\n\nAnswer Gi\n\n,~ — Which component of a Gosu rule determines whether the rule will be\nY executed?\n7\nThe correct answer is the Condition, which must evaluate to true or false. If it\nevaluates to true, the rule is executed.\n\n~-SS HS S s e H\n\nQuestion G\n\n,— — What triggers exception rules?\n\n4\n¢\n7\n\n- SS H SSs e e\n\nAnswer Gi\n\n,— — What triggers exception rules?\n\n¢\n¢\n¢ The correct answer is when an object is in a specified state, such as an activity being\n\nescalated.\n\n~-SS HS S s e H\n\nQuestion G\n\n_— — What triggers preupdate rules?\n\n4\n¢\n7\n\n- SS H SSs e e\n\nAnswer Gi\n\n_— — What triggers preupdate rules?\n\n¢\ng The correct answer is when an attempt is made to update an entity, that is, to save it to\nthe database.\n\n| Student exercise\n\nCreate a claim exception rule\n\neo ap Please complete the lab called Create a claim exception rule\n\noe a= in the Student Workbook.\n@ ap\n\nLesson\nobjectives ¢ Explain the role of Gosu rules in ClaimCenter\n\nreview ¢ Write effective Gosu rules to meet business\nneeds",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Writing Gosu rules\n\n0701221",
+      "word_count": 4,
+      "avg_confidence": 83.2,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Explain the role of Gosu rules in ClaimCenter\n¢ Write effective Gosu rules to meet business\nneeds",
+      "word_count": 20,
+      "avg_confidence": 89.85,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Introducing Gosu rules",
+      "word_count": 3,
+      "avg_confidence": 93.33,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Gosu rules G\n\n¢ Gosu rules are part of the Guidewire Platform capabilities\n« Written in Gosu (an open-source programming language)\n¢ ClaimCenter Gosu rules execute business logic required for claims processing\n\nData User\n\nModel Interface\nInteg.\nAPIs\n\nGuidewire Platform\nprovides a common technology for configuring...\n\nData User Integration\nModel Interface APIs",
+      "word_count": 53,
+      "avg_confidence": 90.54,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Rule Sets\n\n¢ Gosu rules are organized into\nrule sets\n\n« Rule sets are categorized by the\nevent type that triggers the\nevent-specific rules\n\n* These are rule set categories\n\n¢ Rule sets contain Gosu rules:\n\n#) ActivityEscalationRules.grs\n\nIv Activity Escalation Rules\nGosu Rule: | [Y] AERO1000 - High priority activities\n\n[¥] AERO2000 - Urgent priority activities\n\nY Be Rule Sets\n> Bl ApprovalRouting\n> Ba Archive\n> Bil Assignment\n>_ Bs Bulkdinvoi\n> Rule Set\n>\n\nCategories\n\n#8) ClaimExceptionRules\n#) GroupExceptionRules\n'#) UserExceptionRules\nInitialReserve\nLoaded\nPostsetup\nPresetup\nPreupdate\nReopened\nSegmentation\nTransactionApproval\nValidation\n\nWorkplan\n\nRule Sets\n\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>",
+      "word_count": 107,
+      "avg_confidence": 82.66,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Rule Sets hierarchy\n\nGosu Rules can have “child rules”.\n\n* Child rules are only processed if their parent rule’s Condition evaluates as True\n\n4) ClaimPreupdate.grs |\n\nv oe i\n\n001 te Document Asy\n| €PU03000 - Set SIU Life Cycle\nCPU04000 - SI Triggers\n\n4 CPU04100 - SIU Life Cycle Stage 1\n\nv\nv@y\nau\nyy\nyy\nM\nv@y\nau\n\nClaim Pre-update\n000 - Create\n\nDocument Synchronously\n\nchron\n\nCPU04110 - SI - Unreasonable delay in reporting loss\nCPU04120 - SI - Claim within 15 days of poli ception\nCPU04130 - SI-Claim within 30 days of policy inception\nCPU04140 - SI - Claim Loss Cause is theft related\n\nCPU04200 - SIU Life Cycle Stage 2\n\nCPU04210 - SI - No on-scene reports of incident\nPU04220 - SI - Minor not on policy",
+      "word_count": 132,
+      "avg_confidence": 86.36,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Triggering Events\n\n¢ The base ClaimCenter configuration\nincludes Gosu Rules triggered by\nseventeen distinct types of events\n\n« In this lesson we discuss Exception rules\nand Preupdate rules\n\n¢ In later lessons we discuss Assignment\nrules and Validation rules\n\nv\n\n3} Rule Sets iF\n\n> ApprovalRouting\n> Archive\n> BulkinvoiceApproval\n> Closed\n> EventMessage\nException\nInitialReserve\nLoaded\nPostsetup\nPresetup\nPreupdate\n> Reopened\n> Segmentation\n> TransactionApproval\n\nValidation\n\n> Workplan\n\ni\n\ni",
+      "word_count": 72,
+      "avg_confidence": 86.26,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Rule structure (1 of 2)\n\nRules have three parts:\n\n1.\n\nAn optional “uses” clause, which\nimports external functionality\n\nAcondition which evaluates as\n\ntrue or false\n(continued)\n\ni locale. Diaplaykey\n\nCONDITION (claim : entity.Claim): i\nSreturn pincidentso: tg length > 0) <\neerie pies okra as de Atararararararary\n1\n\n1\n1\n1\nVar today = java.util.Date.\n\nfor (eachTripincident in cl\nfor (eachTripSegment in e:\n\ni pIncidentsonly) {\n\n1 pincident.TripSegnents) {\n| eachTripSegnent.onPreUpdate (claim, today, DisplayRey.get(\"Rules.PreUpdate.Claim\n| .teipexpenseTransportation\") )\n\n1 for (eachAddnitripsegment in eachTripSegment.AddnlTripSegments) {\n\n1 eachAddn]TripSegment.onPreUpdate (claim, today, DisplayKey. get (\"Rules Prevpdate.\n| .Claim. TripExpenseTransportation\") )\n1\n\n1\n\n1\n\niJ\n\n1\n\n)\n)\ny\n\nEND\na rs\n\nte",
+      "word_count": 108,
+      "avg_confidence": 70.31,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Rule structure (2 of 2)\n\nRules have three parts:\n\n3. An action which is performed Only jcosors:on isin + eneity-ciainy:\n\n===. § return claim.TripIncidentsOnly -hasMatch(\\ t -> t.Tripseg\n\nif the condition evaluates as true\n\n* Condition and action are written in\nGosu\n\n1\n\n1\n\n1\n\n1\n\n| incident in elain.tripineidentsonly) (\n\n| for (eachtripsegnent in each?ripincident TripSegmenta) (\n\n| eachteiptegnent .onPreUpdate (claim, today, Displaykey.get (\"Rules. PreUpdate.clain\n| .TxipExpenserransportation\"))\n1\n\nJ\n\n1\n\n1\n\n1\n\n1\n\n1\n\n1\n\n1\n\n* The condition has one parameter:\n* The entity on which the rule is called\n\nfor (eachAddnlTripsegment in eachTripSeqment .AddniTripSeqments) (\n© eachaddnitripsegment.onPretpdate (claim, today, DisplayKey. get (\"Rules.Preupdate\n-Clain. TripExpenseTransportation\"))\n\n« The action has two parameters:\n+ The entity on which the rule is called\n\n+ Aninstance of gw.rules.Action, WhiCh iS Gamma SSS Sr rr rarer rere\nused for functions such as exiting rules\nor rulesets in a useful way",
+      "word_count": 148,
+      "avg_confidence": 77.52,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Exception rules G\n\nException rules define actions taken if an object is in a specified state.\n* An activity is escalated\n* An object either:\n+ Has had significant activity since the last time the exception rules were run, or\n\n+ Has had no significant activity for a long time (defined by the 1dleclaimrhresholdDays parameter)",
+      "word_count": 56,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Activity escalation rules G\n\n¢ Specify what actions to take when an ra\n+ ad\n\nactivity is escalated\n\n¢ Batch process activityesc runs\n\nevery 30 minutes (by default) #2) ActivityEscalationRules grs\nae . Il I\n* Detects activities where the Escalation Date ars 9) AEROIO0O- High priority activities\nis in the past, but the Activity has not yet [¥] AERO2000 - Urgent priority activities\n\nbeen escalated\n« Escalates these activities\n\n¢ ClaimCenter then runs escalation rules\nfor the activities that have been\nescalated",
+      "word_count": 84,
+      "avg_confidence": 83.66,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Claim exception rules G\n\n* Specify what actions to take if a claim is as Shay\n* Recently updated\n¢ Not updated for too long a period €) ClaimExceptionRules.grs\n* Batch process claimexception sea By cern ta SIU Life Cycle State\n\nlooks for recently updated claims R030\n\n* Runs daily at (by default) 2 am M CERO5000 - BizRules\n\n* Batch process idleclaimexception looks for claims untouched for (by default)\n7 days\n\n* Runs (by default) Sundays at noon\n\n* Both processes add claims to the ClaimException table",
+      "word_count": 89,
+      "avg_confidence": 83.3,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Group exception rules\n\n¢ Look for groups that “need attention”\nand perform appropriate action on\nthem\n¢ Batch process groupexception runs\n(by default) every day at 4am\n¢ Identifies groups that\n+ Have been changed\n\n+ Have not been inspected for a (definable)\nperiod of time\n\n« Runs Group Exception rules against these\ngroups\n\nte\nrm) a@n\n\n#) GroupExceptionRules.grs\n3 — Group Exception Rules",
+      "word_count": 65,
+      "avg_confidence": 83.66,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| User exception rules\n\n¢ Look for users that “need attention”\nand perform appropriate actions on\nthem\n\n¢ Batch process userexception runs\n(by default) every day at 3 am\n* Identifies users that have been changed\n\n¢ Runs User Exception rules against these\nusers\n\nii—2\n\n®) UserExceptionRules.grs\nf — User Exception Rules",
+      "word_count": 52,
+      "avg_confidence": 85.24,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Demonstration G\nConfiguring exception rules\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.44,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Preupdate rules G\n\n« Fire whenever an object (of certain types) is ready for VE Preupdate\n\n. . € ‘vit\nsubmission to the database seers\n#) ContactPreupdate\n\n« Perform domain logic or processing that must be completed before 4) ExposurePreupdate\n\nthe object is committed €) GroupPreupdate\n. €) MatterPreupdate\n« Example: A contact preupdate rule might say: ) PolicyPreupdate\n5, #) RlAgreementPreupdate\n° When saving a contact = 4) RiTransactionsetPreupdate\n(trigger), 4) subrogationPreupdate\na #) TransactionSetPreupdate\n* If the contact’s address NaS — comrrion contact + entity.contact) + €) UserPreupdate\nchanged (condition), contact. PrinaryAddress.isFieldchanged(\"Addresstinel\") oF\n* Then change the address on contace-reinerfnadeese.isFielacenged(caity\") et\nany checks scheduled for this contact. Prinryaddrens-iaFielachanged{-resecieoas\")) and\ncontact (action) Perey an ees aes aa\n\ncchoggercategory.AB_CONTACT_PLUGIN. info (\"Updating check addresses for contact ${contact} to address ${contact\nnew gw. financials. CheckUpdater (gw.transaction.Transaction.getCurrent ()) -updateMailingAddress (contact)",
+      "word_count": 138,
+      "avg_confidence": 73.42,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n_— — What is the parent of a rule set called?\n\n4\n¢\n7\n\n- SS H SSs e e",
+      "word_count": 22,
+      "avg_confidence": 70.44,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer Gi\n\n_— — What is the parent of a rule set called?\n\n¢\n¢ 6\n; The correct answer is a rule set category.\n\n~-SS HS S s e H",
+      "word_count": 31,
+      "avg_confidence": 78.35,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question G\n\n,— — Which component of a Gosu rule determines whether the rule will be\n\nY executed?\n4\n\n- SS H SSs e e",
+      "word_count": 25,
+      "avg_confidence": 81.57,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer Gi\n\n,~ — Which component of a Gosu rule determines whether the rule will be\nY executed?\n7\nThe correct answer is the Condition, which must evaluate to true or false. If it\nevaluates to true, the rule is executed.\n\n~-SS HS S s e H",
+      "word_count": 47,
+      "avg_confidence": 86.88,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question G\n\n,— — What triggers exception rules?\n\n4\n¢\n7\n\n- SS H SSs e e",
+      "word_count": 17,
+      "avg_confidence": 68.54,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer Gi\n\n,— — What triggers exception rules?\n\n¢\n¢\n¢ The correct answer is when an object is in a specified state, such as an activity being\n\nescalated.\n\n~-SS HS S s e H",
+      "word_count": 35,
+      "avg_confidence": 84.77,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question G\n\n_— — What triggers preupdate rules?\n\n4\n¢\n7\n\n- SS H SSs e e",
+      "word_count": 17,
+      "avg_confidence": 70.0,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer Gi\n\n_— — What triggers preupdate rules?\n\n¢\ng The correct answer is when an attempt is made to update an entity, that is, to save it to\nthe database.",
+      "word_count": 31,
+      "avg_confidence": 88.75,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Student exercise\n\nCreate a claim exception rule\n\neo ap Please complete the lab called Create a claim exception rule\n\noe a= in the Student Workbook.\n@ ap",
+      "word_count": 28,
+      "avg_confidence": 87.46,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Lesson\nobjectives ¢ Explain the role of Gosu rules in ClaimCenter\n\nreview ¢ Write effective Gosu rules to meet business\nneeds",
+      "word_count": 21,
+      "avg_confidence": 90.05,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    }
+  ]
+}

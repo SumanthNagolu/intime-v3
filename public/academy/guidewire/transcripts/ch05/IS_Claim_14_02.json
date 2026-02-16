@@ -1,0 +1,7198 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_14_02.mp4",
+    "video_stem": "IS_Claim_14_02",
+    "duration_seconds": 392.98,
+    "duration_formatted": "00:06:32.980",
+    "segment_count": 91,
+    "word_count": 1043,
+    "avg_confidence": 0.9548,
+    "transcription_time_seconds": 33.68,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:56:02.767332"
+  },
+  "full_text": "Access control lists are used to control access at the object level. For example, a user may have all claims access permissions, but they won't have access to claims that are outside of their security zone. This demonstration shows that for a given claim, users in different groups and security zones have different access to the claim. The ClaimCenter administrator logs into ClaimCenter. First, she navigates to the administration screens. And then to use a claim. List, users in security, users in security. The administrator wants to examine some groups to see the list of users in the groups, and which security zones each of the groups belong to. She searches for all groups with auto1 in the group name. There are three groups with auto1 in the group name, Team, A, Team, B, and Team, C. The administrator opens Team A. The auto1 Team A group is of type, auto, and is in the auto and property security zone. Two of the users in this group are Andy Applegate and Betty Baker. The administrator clicks the Groups menu link to perform another search. She is looking for groups with Western as part of the group name. She opens the Western Call Center group. The Western Call Center group is a new claim processing type group, and is also in the Auto and Property Security zone. Not only is Stacey Bain one of the users in this group, she is also the supervisor of the group. The administrator now knows that Andy and Betty are in Auto Team A, which is in the Auto and Property Security zone. Stacey Bain is in the Western Call Center, a different group, but that group is also in the Auto and Property Security zone. She logs out of Claim Center. In this part of the demonstration, Betty Baker checks to see if she can edit the rain new claim. Betty logs into Claim Center. And opens the search screen. She searches for any claim with the last name of Newton. The search returns three claims. Betty opens the second claim. Notice the adjuster assigned is Andy Applegate. She opens the status screen. Andy Applegate is the owner, or primary adjuster, on this claim. Betty can see and edit the claim. Notice the edit button, even though she does not own it. That is because the claim is using the default access profile, which allows anyone in the same group or security zone to edit the claim. Betty logs out of Claim Center. Stacey Bain is going to verify that she also has edit privileges on the Ray Newton claim. Remember that Stacey is not in Andy's group, but is in the same security zone. Stacey logs into Claim Center. Since the Ray Newton claim is not owned by Stacey, and she had not recently opened the claim, it is not in her claims list. She opens the search screen to find the claim. She searches for claims with the last name of Newton. Stacey opens the same Ray Newton claim that Betty opened earlier. And goes straight to the status screen. Not only can Stacey edit the claim, but she can also remove the flag. She can edit the claim because even though she is not in the same group as Andy, she is in the same security zone. Since she is a supervisor, she can also remove the flag. Stacey logs out of Claim Center. Andy Applegate logs back in. And selects the same Ray Newton claim. Then he opens the status screen. And edits the claim. Special claim permission is not set, which implies that the default access profile is in use. Remember that the default access profile allows any user in the owners group, or any user in the same security zone, to edit the claim. Andy changes the special claim permission to employee claim. This access profile grants view and edit access to only those users in the same group as the claim owner. In this case, Betty is in the same group as Andy, but Stacey is not. After setting the special claim permission to employee claim, Andy clicks Update to save the changes. By making this claim an employee claim, Andy has restricted access to only those users who are in his group. He logs out of Claim Center. Betty Baker now logs back into Claim Center. Since she is in Andy's group, she expects to still be able to see and edit the Ray Newton claim. Since she has recently viewed the Ray Newton claim, it is in her Claim drop-down list. She opens the status screen. Betty sees that the claim is now set to an employee claim, and that she still has edit permissions, even though she does not, own the claim. She has access because she is in the same group as Andy and the employee access profile specifies that anyone in the same group is granted those privileges. Betty logs out of Claim Center. Stacey logs back into Claim Center. Remember that Stacey is in the same security zone as Andy, but is not in the same group. Like Betty, Stacey recently accessed the Ray Newton claim, so it is in her claim drop-down list. Even though the claim was in her claims list, she no longer has access since the special claim permission was set to employee claim. The employee claim access profile only grants access to users in the same group as the owner. Betty starts a search to look for the claim another way. She enters Newton as the last name for the search. The search returns two claims where Ray Newton is a claimant. The claim that ends in 870, is not on the list because Stacey does not have access permissions for that claim. She resets the claim search. This time, she searches for the claim using the claim number. Even using the claim number, the search returns no claims that match. Although the claim does exist, she does not have any permissions on the claim. Not only can she not edit it, she cannot even view the claim. Stacey logs out of Claim Center. This is the end of the access control lists demonstration. Stacey logs out of Claimountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 29.98,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:29.980",
+      "text": "Access control lists are used to control access at the object level. For example, a user may have all claims access permissions, but they won't have access to claims that are outside of their security zone. This demonstration shows that for a given claim, users in different groups and security zones have different access to the claim. The ClaimCenter administrator logs into ClaimCenter. First, she navigates to the administration screens. And then to use a claim.",
+      "words": [
+        {
+          "word": "Access",
+          "start": 0.0,
+          "end": 0.14,
+          "probability": 0.7866
+        },
+        {
+          "word": "control",
+          "start": 0.14,
+          "end": 0.62,
+          "probability": 0.7183
+        },
+        {
+          "word": "lists",
+          "start": 0.62,
+          "end": 0.94,
+          "probability": 0.9731
+        },
+        {
+          "word": "are",
+          "start": 0.94,
+          "end": 1.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 1.16,
+          "end": 1.52,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 1.52,
+          "end": 1.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "control",
+          "start": 1.76,
+          "end": 2.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "access",
+          "start": 2.16,
+          "end": 2.5,
+          "probability": 0.9849
+        },
+        {
+          "word": "at",
+          "start": 2.5,
+          "end": 2.78,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 2.78,
+          "end": 2.9,
+          "probability": 0.998
+        },
+        {
+          "word": "object",
+          "start": 2.9,
+          "end": 3.28,
+          "probability": 0.9688
+        },
+        {
+          "word": "level.",
+          "start": 3.28,
+          "end": 3.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "For",
+          "start": 4.14,
+          "end": 4.56,
+          "probability": 0.9941
+        },
+        {
+          "word": "example,",
+          "start": 4.56,
+          "end": 5.02,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 5.3,
+          "end": 5.54,
+          "probability": 0.9873
+        },
+        {
+          "word": "user",
+          "start": 5.54,
+          "end": 5.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "may",
+          "start": 5.86,
+          "end": 6.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "have",
+          "start": 6.08,
+          "end": 6.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "all",
+          "start": 6.26,
+          "end": 6.46,
+          "probability": 0.9888
+        },
+        {
+          "word": "claims",
+          "start": 6.46,
+          "end": 6.74,
+          "probability": 0.896
+        },
+        {
+          "word": "access",
+          "start": 6.74,
+          "end": 7.1,
+          "probability": 0.9766
+        },
+        {
+          "word": "permissions,",
+          "start": 7.1,
+          "end": 7.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "but",
+          "start": 8.08,
+          "end": 8.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "they",
+          "start": 8.34,
+          "end": 8.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "won't",
+          "start": 8.48,
+          "end": 8.76,
+          "probability": 0.9932
+        },
+        {
+          "word": "have",
+          "start": 8.76,
+          "end": 8.96,
+          "probability": 0.999
+        },
+        {
+          "word": "access",
+          "start": 8.96,
+          "end": 9.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 9.34,
+          "end": 9.58,
+          "probability": 0.999
+        },
+        {
+          "word": "claims",
+          "start": 9.58,
+          "end": 9.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 9.94,
+          "end": 10.14,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 10.14,
+          "end": 10.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "outside",
+          "start": 10.28,
+          "end": 10.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 10.66,
+          "end": 10.84,
+          "probability": 0.9897
+        },
+        {
+          "word": "their",
+          "start": 10.84,
+          "end": 11.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "security",
+          "start": 11.0,
+          "end": 11.52,
+          "probability": 0.9233
+        },
+        {
+          "word": "zone.",
+          "start": 11.52,
+          "end": 11.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "This",
+          "start": 12.34,
+          "end": 12.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "demonstration",
+          "start": 12.74,
+          "end": 13.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "shows",
+          "start": 13.3,
+          "end": 13.82,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 13.82,
+          "end": 14.08,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 14.08,
+          "end": 14.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 14.28,
+          "end": 14.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "given",
+          "start": 14.44,
+          "end": 14.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim,",
+          "start": 14.68,
+          "end": 15.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "users",
+          "start": 15.38,
+          "end": 15.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "in",
+          "start": 15.76,
+          "end": 15.98,
+          "probability": 0.9868
+        },
+        {
+          "word": "different",
+          "start": 15.98,
+          "end": 16.26,
+          "probability": 0.999
+        },
+        {
+          "word": "groups",
+          "start": 16.26,
+          "end": 16.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "and",
+          "start": 16.64,
+          "end": 16.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "security",
+          "start": 16.94,
+          "end": 17.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "zones",
+          "start": 17.48,
+          "end": 17.8,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 17.8,
+          "end": 18.08,
+          "probability": 0.999
+        },
+        {
+          "word": "different",
+          "start": 18.08,
+          "end": 18.4,
+          "probability": 0.999
+        },
+        {
+          "word": "access",
+          "start": 18.4,
+          "end": 18.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 18.8,
+          "end": 19.06,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 19.06,
+          "end": 19.18,
+          "probability": 0.998
+        },
+        {
+          "word": "claim.",
+          "start": 19.18,
+          "end": 19.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "The",
+          "start": 20.2,
+          "end": 20.84,
+          "probability": 0.9849
+        },
+        {
+          "word": "ClaimCenter",
+          "start": 20.84,
+          "end": 21.54,
+          "probability": 0.7021
+        },
+        {
+          "word": "administrator",
+          "start": 21.54,
+          "end": 22.08,
+          "probability": 0.8115
+        },
+        {
+          "word": "logs",
+          "start": 22.08,
+          "end": 22.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "into",
+          "start": 22.72,
+          "end": 22.98,
+          "probability": 0.9663
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 22.98,
+          "end": 23.78,
+          "probability": 0.9824
+        },
+        {
+          "word": "First,",
+          "start": 24.52,
+          "end": 25.16,
+          "probability": 0.9854
+        },
+        {
+          "word": "she",
+          "start": 25.32,
+          "end": 25.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "navigates",
+          "start": 25.64,
+          "end": 26.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 26.32,
+          "end": 26.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 26.48,
+          "end": 26.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "administration",
+          "start": 26.62,
+          "end": 27.18,
+          "probability": 0.8428
+        },
+        {
+          "word": "screens.",
+          "start": 27.18,
+          "end": 28.0,
+          "probability": 0.9536
+        },
+        {
+          "word": "And",
+          "start": 28.76,
+          "end": 29.4,
+          "probability": 0.8936
+        },
+        {
+          "word": "then",
+          "start": 29.4,
+          "end": 29.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 29.58,
+          "end": 29.76,
+          "probability": 0.9775
+        },
+        {
+          "word": "use",
+          "start": 29.76,
+          "end": 29.98,
+          "probability": 0.9209
+        },
+        {
+          "word": "a",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.4436
+        },
+        {
+          "word": "claim.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.3142
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 59.96,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:59.960",
+      "text": "List, users in security, users in security. The administrator wants to examine some groups to see the list of users in the groups, and which security zones each of the groups belong to. She searches for all groups with auto1 in the group name. There are three groups with auto1 in the group name, Team, A, Team, B, and Team, C. The administrator opens Team A. The auto1 Team A group is of type, auto, and is in the auto and property security zone.",
+      "words": [
+        {
+          "word": "List,",
+          "start": 29.98,
+          "end": 30.1,
+          "probability": 0.0
+        },
+        {
+          "word": "users",
+          "start": 30.1,
+          "end": 30.1,
+          "probability": 0.131
+        },
+        {
+          "word": "in",
+          "start": 30.1,
+          "end": 30.34,
+          "probability": 0.0038
+        },
+        {
+          "word": "security,",
+          "start": 30.34,
+          "end": 30.92,
+          "probability": 0.7798
+        },
+        {
+          "word": "users",
+          "start": 31.16,
+          "end": 31.16,
+          "probability": 0.0382
+        },
+        {
+          "word": "in",
+          "start": 31.16,
+          "end": 31.16,
+          "probability": 0.1188
+        },
+        {
+          "word": "security.",
+          "start": 31.16,
+          "end": 31.16,
+          "probability": 0.8555
+        },
+        {
+          "word": "The",
+          "start": 31.66,
+          "end": 32.22,
+          "probability": 0.9629
+        },
+        {
+          "word": "administrator",
+          "start": 32.22,
+          "end": 32.84,
+          "probability": 0.8223
+        },
+        {
+          "word": "wants",
+          "start": 32.84,
+          "end": 33.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 33.32,
+          "end": 33.5,
+          "probability": 0.999
+        },
+        {
+          "word": "examine",
+          "start": 33.5,
+          "end": 33.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "some",
+          "start": 33.94,
+          "end": 34.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "groups",
+          "start": 34.24,
+          "end": 34.58,
+          "probability": 0.9785
+        },
+        {
+          "word": "to",
+          "start": 34.58,
+          "end": 34.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "see",
+          "start": 34.78,
+          "end": 34.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 34.96,
+          "end": 35.14,
+          "probability": 0.9971
+        },
+        {
+          "word": "list",
+          "start": 35.14,
+          "end": 35.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 35.38,
+          "end": 35.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "users",
+          "start": 35.54,
+          "end": 35.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "in",
+          "start": 35.86,
+          "end": 36.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 36.1,
+          "end": 36.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "groups,",
+          "start": 36.2,
+          "end": 36.5,
+          "probability": 0.9663
+        },
+        {
+          "word": "and",
+          "start": 36.68,
+          "end": 36.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "which",
+          "start": 36.98,
+          "end": 37.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "security",
+          "start": 37.18,
+          "end": 37.7,
+          "probability": 0.9653
+        },
+        {
+          "word": "zones",
+          "start": 37.7,
+          "end": 38.04,
+          "probability": 0.9893
+        },
+        {
+          "word": "each",
+          "start": 38.04,
+          "end": 38.38,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 38.38,
+          "end": 38.56,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 38.56,
+          "end": 38.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "groups",
+          "start": 38.66,
+          "end": 38.94,
+          "probability": 0.9902
+        },
+        {
+          "word": "belong",
+          "start": 38.94,
+          "end": 39.34,
+          "probability": 0.9761
+        },
+        {
+          "word": "to.",
+          "start": 39.34,
+          "end": 39.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "She",
+          "start": 40.34,
+          "end": 40.9,
+          "probability": 0.9829
+        },
+        {
+          "word": "searches",
+          "start": 40.9,
+          "end": 41.26,
+          "probability": 0.9897
+        },
+        {
+          "word": "for",
+          "start": 41.26,
+          "end": 41.54,
+          "probability": 0.999
+        },
+        {
+          "word": "all",
+          "start": 41.54,
+          "end": 41.74,
+          "probability": 0.979
+        },
+        {
+          "word": "groups",
+          "start": 41.74,
+          "end": 42.1,
+          "probability": 0.9756
+        },
+        {
+          "word": "with",
+          "start": 42.1,
+          "end": 42.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "auto1",
+          "start": 42.32,
+          "end": 42.82,
+          "probability": 0.6055
+        },
+        {
+          "word": "in",
+          "start": 42.82,
+          "end": 43.02,
+          "probability": 0.9683
+        },
+        {
+          "word": "the",
+          "start": 43.02,
+          "end": 43.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "group",
+          "start": 43.14,
+          "end": 43.4,
+          "probability": 0.9795
+        },
+        {
+          "word": "name.",
+          "start": 43.4,
+          "end": 43.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "There",
+          "start": 44.34,
+          "end": 44.88,
+          "probability": 0.9839
+        },
+        {
+          "word": "are",
+          "start": 44.88,
+          "end": 45.06,
+          "probability": 0.998
+        },
+        {
+          "word": "three",
+          "start": 45.06,
+          "end": 45.24,
+          "probability": 0.6533
+        },
+        {
+          "word": "groups",
+          "start": 45.24,
+          "end": 45.62,
+          "probability": 0.9912
+        },
+        {
+          "word": "with",
+          "start": 45.62,
+          "end": 45.82,
+          "probability": 0.998
+        },
+        {
+          "word": "auto1",
+          "start": 45.82,
+          "end": 46.34,
+          "probability": 0.979
+        },
+        {
+          "word": "in",
+          "start": 46.34,
+          "end": 46.54,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 46.54,
+          "end": 46.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "group",
+          "start": 46.64,
+          "end": 46.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "name,",
+          "start": 46.92,
+          "end": 47.34,
+          "probability": 0.9912
+        },
+        {
+          "word": "Team,",
+          "start": 47.62,
+          "end": 47.94,
+          "probability": 0.2203
+        },
+        {
+          "word": "A,",
+          "start": 48.12,
+          "end": 48.5,
+          "probability": 0.8218
+        },
+        {
+          "word": "Team,",
+          "start": 48.78,
+          "end": 49.12,
+          "probability": 0.9097
+        },
+        {
+          "word": "B,",
+          "start": 49.32,
+          "end": 49.46,
+          "probability": 0.9092
+        },
+        {
+          "word": "and",
+          "start": 49.64,
+          "end": 49.96,
+          "probability": 0.9897
+        },
+        {
+          "word": "Team,",
+          "start": 49.96,
+          "end": 50.22,
+          "probability": 0.9429
+        },
+        {
+          "word": "C.",
+          "start": 50.42,
+          "end": 50.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "The",
+          "start": 51.06,
+          "end": 51.62,
+          "probability": 0.9883
+        },
+        {
+          "word": "administrator",
+          "start": 51.62,
+          "end": 52.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "opens",
+          "start": 52.22,
+          "end": 52.76,
+          "probability": 0.998
+        },
+        {
+          "word": "Team",
+          "start": 52.76,
+          "end": 53.0,
+          "probability": 0.8013
+        },
+        {
+          "word": "A.",
+          "start": 53.0,
+          "end": 53.46,
+          "probability": 0.5127
+        },
+        {
+          "word": "The",
+          "start": 54.1,
+          "end": 54.66,
+          "probability": 0.9897
+        },
+        {
+          "word": "auto1",
+          "start": 54.66,
+          "end": 55.16,
+          "probability": 0.918
+        },
+        {
+          "word": "Team",
+          "start": 55.16,
+          "end": 55.38,
+          "probability": 0.7354
+        },
+        {
+          "word": "A",
+          "start": 55.38,
+          "end": 55.62,
+          "probability": 0.9385
+        },
+        {
+          "word": "group",
+          "start": 55.62,
+          "end": 56.02,
+          "probability": 0.9395
+        },
+        {
+          "word": "is",
+          "start": 56.02,
+          "end": 56.22,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 56.22,
+          "end": 56.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "type,",
+          "start": 56.36,
+          "end": 56.68,
+          "probability": 0.9692
+        },
+        {
+          "word": "auto,",
+          "start": 56.94,
+          "end": 57.26,
+          "probability": 0.7495
+        },
+        {
+          "word": "and",
+          "start": 57.5,
+          "end": 57.78,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 57.78,
+          "end": 57.94,
+          "probability": 0.9858
+        },
+        {
+          "word": "in",
+          "start": 57.94,
+          "end": 58.08,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 58.08,
+          "end": 58.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "auto",
+          "start": 58.16,
+          "end": 58.44,
+          "probability": 0.9697
+        },
+        {
+          "word": "and",
+          "start": 58.44,
+          "end": 58.68,
+          "probability": 0.7827
+        },
+        {
+          "word": "property",
+          "start": 58.68,
+          "end": 59.16,
+          "probability": 0.9941
+        },
+        {
+          "word": "security",
+          "start": 59.16,
+          "end": 59.68,
+          "probability": 0.9731
+        },
+        {
+          "word": "zone.",
+          "start": 59.68,
+          "end": 59.96,
+          "probability": 0.937
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.96,
+      "end": 64.24,
+      "start_formatted": "00:00:59.960",
+      "end_formatted": "00:01:04.240",
+      "text": "Two of the users in this group are Andy Applegate and Betty Baker.",
+      "words": [
+        {
+          "word": "Two",
+          "start": 59.96,
+          "end": 60.82,
+          "probability": 0.3899
+        },
+        {
+          "word": "of",
+          "start": 60.82,
+          "end": 61.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 61.0,
+          "end": 61.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "users",
+          "start": 61.14,
+          "end": 61.48,
+          "probability": 0.9834
+        },
+        {
+          "word": "in",
+          "start": 61.48,
+          "end": 61.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "this",
+          "start": 61.72,
+          "end": 61.9,
+          "probability": 0.9941
+        },
+        {
+          "word": "group",
+          "start": 61.9,
+          "end": 62.14,
+          "probability": 0.9673
+        },
+        {
+          "word": "are",
+          "start": 62.14,
+          "end": 62.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "Andy",
+          "start": 62.38,
+          "end": 62.62,
+          "probability": 0.979
+        },
+        {
+          "word": "Applegate",
+          "start": 62.62,
+          "end": 63.26,
+          "probability": 0.9897
+        },
+        {
+          "word": "and",
+          "start": 63.26,
+          "end": 63.5,
+          "probability": 0.979
+        },
+        {
+          "word": "Betty",
+          "start": 63.5,
+          "end": 63.76,
+          "probability": 0.9727
+        },
+        {
+          "word": "Baker.",
+          "start": 63.76,
+          "end": 64.24,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 65.36,
+      "end": 68.96,
+      "start_formatted": "00:01:05.360",
+      "end_formatted": "00:01:08.960",
+      "text": "The administrator clicks the Groups menu link to perform another search.",
+      "words": [
+        {
+          "word": "The",
+          "start": 65.1,
+          "end": 65.42,
+          "probability": 0.9863
+        },
+        {
+          "word": "administrator",
+          "start": 65.42,
+          "end": 66.0,
+          "probability": 0.8687
+        },
+        {
+          "word": "clicks",
+          "start": 66.0,
+          "end": 66.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 66.54,
+          "end": 66.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "Groups",
+          "start": 66.72,
+          "end": 67.06,
+          "probability": 0.6641
+        },
+        {
+          "word": "menu",
+          "start": 67.06,
+          "end": 67.28,
+          "probability": 0.9277
+        },
+        {
+          "word": "link",
+          "start": 67.28,
+          "end": 67.62,
+          "probability": 0.9834
+        },
+        {
+          "word": "to",
+          "start": 67.62,
+          "end": 67.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "perform",
+          "start": 67.78,
+          "end": 68.18,
+          "probability": 0.998
+        },
+        {
+          "word": "another",
+          "start": 68.18,
+          "end": 68.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "search.",
+          "start": 68.6,
+          "end": 68.96,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 70.14,
+      "end": 73.24,
+      "start_formatted": "00:01:10.140",
+      "end_formatted": "00:01:13.240",
+      "text": "She is looking for groups with Western as part of the group name.",
+      "words": [
+        {
+          "word": "She",
+          "start": 69.84,
+          "end": 70.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 70.16,
+          "end": 70.34,
+          "probability": 0.999
+        },
+        {
+          "word": "looking",
+          "start": 70.34,
+          "end": 70.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "for",
+          "start": 70.58,
+          "end": 70.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "groups",
+          "start": 70.92,
+          "end": 71.26,
+          "probability": 0.7007
+        },
+        {
+          "word": "with",
+          "start": 71.26,
+          "end": 71.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "Western",
+          "start": 71.52,
+          "end": 71.84,
+          "probability": 0.9189
+        },
+        {
+          "word": "as",
+          "start": 71.84,
+          "end": 72.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "part",
+          "start": 72.14,
+          "end": 72.38,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 72.38,
+          "end": 72.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 72.5,
+          "end": 72.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "group",
+          "start": 72.64,
+          "end": 72.92,
+          "probability": 0.937
+        },
+        {
+          "word": "name.",
+          "start": 72.92,
+          "end": 73.24,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 74.76,
+      "end": 76.86,
+      "start_formatted": "00:01:14.760",
+      "end_formatted": "00:01:16.860",
+      "text": "She opens the Western Call Center group.",
+      "words": [
+        {
+          "word": "She",
+          "start": 74.46,
+          "end": 74.78,
+          "probability": 0.9561
+        },
+        {
+          "word": "opens",
+          "start": 74.78,
+          "end": 75.18,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 75.18,
+          "end": 75.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "Western",
+          "start": 75.36,
+          "end": 75.78,
+          "probability": 0.9858
+        },
+        {
+          "word": "Call",
+          "start": 75.78,
+          "end": 76.08,
+          "probability": 0.895
+        },
+        {
+          "word": "Center",
+          "start": 76.08,
+          "end": 76.46,
+          "probability": 0.9214
+        },
+        {
+          "word": "group.",
+          "start": 76.46,
+          "end": 76.86,
+          "probability": 0.7051
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 78.7,
+      "end": 83.62,
+      "start_formatted": "00:01:18.700",
+      "end_formatted": "00:01:23.620",
+      "text": "The Western Call Center group is a new claim processing type group, and is also in the",
+      "words": [
+        {
+          "word": "The",
+          "start": 78.42,
+          "end": 78.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "Western",
+          "start": 78.74,
+          "end": 79.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "Call",
+          "start": 79.12,
+          "end": 79.44,
+          "probability": 0.9839
+        },
+        {
+          "word": "Center",
+          "start": 79.44,
+          "end": 79.82,
+          "probability": 0.9951
+        },
+        {
+          "word": "group",
+          "start": 79.82,
+          "end": 80.18,
+          "probability": 0.957
+        },
+        {
+          "word": "is",
+          "start": 80.18,
+          "end": 80.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 80.34,
+          "end": 80.46,
+          "probability": 0.9912
+        },
+        {
+          "word": "new",
+          "start": 80.46,
+          "end": 80.66,
+          "probability": 0.9478
+        },
+        {
+          "word": "claim",
+          "start": 80.66,
+          "end": 80.94,
+          "probability": 0.7886
+        },
+        {
+          "word": "processing",
+          "start": 80.94,
+          "end": 81.6,
+          "probability": 0.9761
+        },
+        {
+          "word": "type",
+          "start": 81.6,
+          "end": 81.96,
+          "probability": 0.9912
+        },
+        {
+          "word": "group,",
+          "start": 81.96,
+          "end": 82.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "and",
+          "start": 82.52,
+          "end": 82.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 82.78,
+          "end": 82.94,
+          "probability": 0.998
+        },
+        {
+          "word": "also",
+          "start": 82.94,
+          "end": 83.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 83.26,
+          "end": 83.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 83.48,
+          "end": 83.62,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 83.62,
+      "end": 85.56,
+      "start_formatted": "00:01:23.620",
+      "end_formatted": "00:01:25.560",
+      "text": "Auto and Property Security zone.",
+      "words": [
+        {
+          "word": "Auto",
+          "start": 83.62,
+          "end": 83.9,
+          "probability": 0.5825
+        },
+        {
+          "word": "and",
+          "start": 83.9,
+          "end": 84.14,
+          "probability": 0.6704
+        },
+        {
+          "word": "Property",
+          "start": 84.14,
+          "end": 84.58,
+          "probability": 0.9507
+        },
+        {
+          "word": "Security",
+          "start": 84.58,
+          "end": 85.12,
+          "probability": 0.8862
+        },
+        {
+          "word": "zone.",
+          "start": 85.12,
+          "end": 85.56,
+          "probability": 0.6665
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 85.56,
+      "end": 91.48,
+      "start_formatted": "00:01:25.560",
+      "end_formatted": "00:01:31.480",
+      "text": "Not only is Stacey Bain one of the users in this group, she is also the supervisor of",
+      "words": [
+        {
+          "word": "Not",
+          "start": 85.56,
+          "end": 86.36,
+          "probability": 0.6582
+        },
+        {
+          "word": "only",
+          "start": 86.36,
+          "end": 86.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 86.72,
+          "end": 86.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "Stacey",
+          "start": 86.98,
+          "end": 87.28,
+          "probability": 0.8418
+        },
+        {
+          "word": "Bain",
+          "start": 87.28,
+          "end": 87.64,
+          "probability": 0.8799
+        },
+        {
+          "word": "one",
+          "start": 87.64,
+          "end": 87.88,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 87.88,
+          "end": 88.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 88.04,
+          "end": 88.16,
+          "probability": 0.9976
+        },
+        {
+          "word": "users",
+          "start": 88.16,
+          "end": 88.5,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 88.5,
+          "end": 88.72,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 88.72,
+          "end": 88.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "group,",
+          "start": 88.9,
+          "end": 89.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "she",
+          "start": 89.58,
+          "end": 89.86,
+          "probability": 0.9902
+        },
+        {
+          "word": "is",
+          "start": 89.86,
+          "end": 90.04,
+          "probability": 0.998
+        },
+        {
+          "word": "also",
+          "start": 90.04,
+          "end": 90.34,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 90.34,
+          "end": 90.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "supervisor",
+          "start": 90.6,
+          "end": 91.1,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 91.1,
+          "end": 91.48,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 91.48,
+      "end": 91.86,
+      "start_formatted": "00:01:31.480",
+      "end_formatted": "00:01:31.860",
+      "text": "the group.",
+      "words": [
+        {
+          "word": "the",
+          "start": 91.48,
+          "end": 91.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "group.",
+          "start": 91.58,
+          "end": 91.86,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 92.18,
+      "end": 97.7,
+      "start_formatted": "00:01:32.180",
+      "end_formatted": "00:01:37.700",
+      "text": "The administrator now knows that Andy and Betty are in Auto Team A, which is in the Auto and",
+      "words": [
+        {
+          "word": "The",
+          "start": 92.18,
+          "end": 92.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "administrator",
+          "start": 92.52,
+          "end": 93.14,
+          "probability": 0.9399
+        },
+        {
+          "word": "now",
+          "start": 93.14,
+          "end": 93.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "knows",
+          "start": 93.58,
+          "end": 93.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 93.88,
+          "end": 94.08,
+          "probability": 0.999
+        },
+        {
+          "word": "Andy",
+          "start": 94.08,
+          "end": 94.36,
+          "probability": 0.978
+        },
+        {
+          "word": "and",
+          "start": 94.36,
+          "end": 94.62,
+          "probability": 0.9785
+        },
+        {
+          "word": "Betty",
+          "start": 94.62,
+          "end": 94.86,
+          "probability": 0.9526
+        },
+        {
+          "word": "are",
+          "start": 94.86,
+          "end": 95.14,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 95.14,
+          "end": 95.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "Auto",
+          "start": 95.32,
+          "end": 95.52,
+          "probability": 0.7861
+        },
+        {
+          "word": "Team",
+          "start": 95.52,
+          "end": 95.78,
+          "probability": 0.8599
+        },
+        {
+          "word": "A,",
+          "start": 95.78,
+          "end": 96.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "which",
+          "start": 96.5,
+          "end": 96.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 96.78,
+          "end": 96.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 96.94,
+          "end": 97.08,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 97.08,
+          "end": 97.18,
+          "probability": 0.9976
+        },
+        {
+          "word": "Auto",
+          "start": 97.18,
+          "end": 97.46,
+          "probability": 0.7563
+        },
+        {
+          "word": "and",
+          "start": 97.46,
+          "end": 97.7,
+          "probability": 0.6978
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 97.7,
+      "end": 99.12,
+      "start_formatted": "00:01:37.700",
+      "end_formatted": "00:01:39.120",
+      "text": "Property Security zone.",
+      "words": [
+        {
+          "word": "Property",
+          "start": 97.7,
+          "end": 98.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "Security",
+          "start": 98.14,
+          "end": 98.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "zone.",
+          "start": 98.68,
+          "end": 99.12,
+          "probability": 0.2371
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 99.6,
+      "end": 104.6,
+      "start_formatted": "00:01:39.600",
+      "end_formatted": "00:01:44.600",
+      "text": "Stacey Bain is in the Western Call Center, a different group, but that group is also in",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 99.6,
+          "end": 100.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "Bain",
+          "start": 100.12,
+          "end": 100.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 100.44,
+          "end": 100.58,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 100.58,
+          "end": 100.72,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 100.72,
+          "end": 100.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "Western",
+          "start": 100.82,
+          "end": 101.2,
+          "probability": 0.9785
+        },
+        {
+          "word": "Call",
+          "start": 101.2,
+          "end": 101.48,
+          "probability": 0.8506
+        },
+        {
+          "word": "Center,",
+          "start": 101.48,
+          "end": 101.84,
+          "probability": 0.9292
+        },
+        {
+          "word": "a",
+          "start": 102.02,
+          "end": 102.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "different",
+          "start": 102.28,
+          "end": 102.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "group,",
+          "start": 102.58,
+          "end": 102.98,
+          "probability": 0.999
+        },
+        {
+          "word": "but",
+          "start": 103.16,
+          "end": 103.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 103.42,
+          "end": 103.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "group",
+          "start": 103.64,
+          "end": 103.86,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 103.86,
+          "end": 104.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "also",
+          "start": 104.06,
+          "end": 104.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 104.38,
+          "end": 104.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 104.6,
+      "end": 106.72,
+      "start_formatted": "00:01:44.600",
+      "end_formatted": "00:01:46.720",
+      "text": "the Auto and Property Security zone.",
+      "words": [
+        {
+          "word": "the",
+          "start": 104.6,
+          "end": 104.74,
+          "probability": 0.999
+        },
+        {
+          "word": "Auto",
+          "start": 104.74,
+          "end": 105.02,
+          "probability": 0.9927
+        },
+        {
+          "word": "and",
+          "start": 105.02,
+          "end": 105.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "Property",
+          "start": 105.26,
+          "end": 105.72,
+          "probability": 0.998
+        },
+        {
+          "word": "Security",
+          "start": 105.72,
+          "end": 106.24,
+          "probability": 0.998
+        },
+        {
+          "word": "zone.",
+          "start": 106.24,
+          "end": 106.72,
+          "probability": 0.9043
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 107.24,
+      "end": 109.26,
+      "start_formatted": "00:01:47.240",
+      "end_formatted": "00:01:49.260",
+      "text": "She logs out of Claim Center.",
+      "words": [
+        {
+          "word": "She",
+          "start": 107.24,
+          "end": 107.76,
+          "probability": 0.9839
+        },
+        {
+          "word": "logs",
+          "start": 107.76,
+          "end": 108.18,
+          "probability": 0.978
+        },
+        {
+          "word": "out",
+          "start": 108.18,
+          "end": 108.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 108.4,
+          "end": 108.58,
+          "probability": 0.999
+        },
+        {
+          "word": "Claim",
+          "start": 108.58,
+          "end": 108.88,
+          "probability": 0.9663
+        },
+        {
+          "word": "Center.",
+          "start": 108.88,
+          "end": 109.26,
+          "probability": 0.9116
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 110.46,
+      "end": 115.52,
+      "start_formatted": "00:01:50.460",
+      "end_formatted": "00:01:55.520",
+      "text": "In this part of the demonstration, Betty Baker checks to see if she can edit the rain new",
+      "words": [
+        {
+          "word": "In",
+          "start": 110.46,
+          "end": 110.98,
+          "probability": 0.9834
+        },
+        {
+          "word": "this",
+          "start": 110.98,
+          "end": 111.2,
+          "probability": 0.999
+        },
+        {
+          "word": "part",
+          "start": 111.2,
+          "end": 111.46,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 111.46,
+          "end": 111.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 111.58,
+          "end": 111.68,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration,",
+          "start": 111.68,
+          "end": 112.26,
+          "probability": 0.9946
+        },
+        {
+          "word": "Betty",
+          "start": 112.64,
+          "end": 112.88,
+          "probability": 0.9922
+        },
+        {
+          "word": "Baker",
+          "start": 112.88,
+          "end": 113.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "checks",
+          "start": 113.26,
+          "end": 113.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 113.7,
+          "end": 113.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "see",
+          "start": 113.9,
+          "end": 114.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 114.08,
+          "end": 114.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "she",
+          "start": 114.26,
+          "end": 114.42,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 114.42,
+          "end": 114.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "edit",
+          "start": 114.62,
+          "end": 114.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 114.88,
+          "end": 115.04,
+          "probability": 0.9756
+        },
+        {
+          "word": "rain",
+          "start": 115.04,
+          "end": 115.3,
+          "probability": 0.1085
+        },
+        {
+          "word": "new",
+          "start": 115.3,
+          "end": 115.52,
+          "probability": 0.4827
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 115.52,
+      "end": 115.96,
+      "start_formatted": "00:01:55.520",
+      "end_formatted": "00:01:55.960",
+      "text": "claim.",
+      "words": [
+        {
+          "word": "claim.",
+          "start": 115.52,
+          "end": 115.96,
+          "probability": 0.4651
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 117.52,
+      "end": 119.08,
+      "start_formatted": "00:01:57.520",
+      "end_formatted": "00:01:59.080",
+      "text": "Betty logs into Claim Center.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 117.28,
+          "end": 117.66,
+          "probability": 0.9678
+        },
+        {
+          "word": "logs",
+          "start": 117.66,
+          "end": 118.08,
+          "probability": 0.98
+        },
+        {
+          "word": "into",
+          "start": 118.08,
+          "end": 118.36,
+          "probability": 0.8896
+        },
+        {
+          "word": "Claim",
+          "start": 118.36,
+          "end": 118.72,
+          "probability": 0.79
+        },
+        {
+          "word": "Center.",
+          "start": 118.72,
+          "end": 119.08,
+          "probability": 0.9458
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 119.64,
+      "end": 121.42,
+      "start_formatted": "00:01:59.640",
+      "end_formatted": "00:02:01.420",
+      "text": "And opens the search screen.",
+      "words": [
+        {
+          "word": "And",
+          "start": 119.64,
+          "end": 120.18,
+          "probability": 0.7739
+        },
+        {
+          "word": "opens",
+          "start": 120.18,
+          "end": 120.56,
+          "probability": 0.9741
+        },
+        {
+          "word": "the",
+          "start": 120.56,
+          "end": 120.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "search",
+          "start": 120.72,
+          "end": 120.98,
+          "probability": 0.897
+        },
+        {
+          "word": "screen.",
+          "start": 120.98,
+          "end": 121.42,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 122.88,
+      "end": 125.56,
+      "start_formatted": "00:02:02.880",
+      "end_formatted": "00:02:05.560",
+      "text": "She searches for any claim with the last name of Newton.",
+      "words": [
+        {
+          "word": "She",
+          "start": 122.56,
+          "end": 122.94,
+          "probability": 0.9897
+        },
+        {
+          "word": "searches",
+          "start": 122.94,
+          "end": 123.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "for",
+          "start": 123.28,
+          "end": 123.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 123.54,
+          "end": 123.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim",
+          "start": 123.78,
+          "end": 124.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "with",
+          "start": 124.06,
+          "end": 124.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 124.32,
+          "end": 124.48,
+          "probability": 0.9956
+        },
+        {
+          "word": "last",
+          "start": 124.48,
+          "end": 124.74,
+          "probability": 0.9897
+        },
+        {
+          "word": "name",
+          "start": 124.74,
+          "end": 125.06,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 125.06,
+          "end": 125.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "Newton.",
+          "start": 125.28,
+          "end": 125.56,
+          "probability": 0.8804
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 126.26,
+      "end": 128.54,
+      "start_formatted": "00:02:06.260",
+      "end_formatted": "00:02:08.540",
+      "text": "The search returns three claims.",
+      "words": [
+        {
+          "word": "The",
+          "start": 126.26,
+          "end": 126.78,
+          "probability": 0.9849
+        },
+        {
+          "word": "search",
+          "start": 126.78,
+          "end": 127.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "returns",
+          "start": 127.06,
+          "end": 127.7,
+          "probability": 0.998
+        },
+        {
+          "word": "three",
+          "start": 127.7,
+          "end": 128.0,
+          "probability": 0.8032
+        },
+        {
+          "word": "claims.",
+          "start": 128.0,
+          "end": 128.54,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 129.08,
+      "end": 131.16,
+      "start_formatted": "00:02:09.080",
+      "end_formatted": "00:02:11.160",
+      "text": "Betty opens the second claim.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 129.08,
+          "end": 129.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "opens",
+          "start": 129.72,
+          "end": 130.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 130.14,
+          "end": 130.36,
+          "probability": 0.999
+        },
+        {
+          "word": "second",
+          "start": 130.36,
+          "end": 130.7,
+          "probability": 0.9956
+        },
+        {
+          "word": "claim.",
+          "start": 130.7,
+          "end": 131.16,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 131.54,
+      "end": 134.42,
+      "start_formatted": "00:02:11.540",
+      "end_formatted": "00:02:14.420",
+      "text": "Notice the adjuster assigned is Andy Applegate.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 131.54,
+          "end": 132.1,
+          "probability": 0.9775
+        },
+        {
+          "word": "the",
+          "start": 132.1,
+          "end": 132.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "adjuster",
+          "start": 132.28,
+          "end": 132.8,
+          "probability": 0.9766
+        },
+        {
+          "word": "assigned",
+          "start": 132.8,
+          "end": 133.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 133.2,
+          "end": 133.42,
+          "probability": 0.6118
+        },
+        {
+          "word": "Andy",
+          "start": 133.42,
+          "end": 133.72,
+          "probability": 0.8608
+        },
+        {
+          "word": "Applegate.",
+          "start": 133.72,
+          "end": 134.42,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 134.92,
+      "end": 136.8,
+      "start_formatted": "00:02:14.920",
+      "end_formatted": "00:02:16.800",
+      "text": "She opens the status screen.",
+      "words": [
+        {
+          "word": "She",
+          "start": 134.92,
+          "end": 135.4,
+          "probability": 0.9922
+        },
+        {
+          "word": "opens",
+          "start": 135.4,
+          "end": 135.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 135.8,
+          "end": 135.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "status",
+          "start": 135.98,
+          "end": 136.32,
+          "probability": 0.9487
+        },
+        {
+          "word": "screen.",
+          "start": 136.32,
+          "end": 136.8,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 138.32,
+      "end": 142.16,
+      "start_formatted": "00:02:18.320",
+      "end_formatted": "00:02:22.160",
+      "text": "Andy Applegate is the owner, or primary adjuster, on this claim.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 137.98,
+          "end": 138.36,
+          "probability": 0.9697
+        },
+        {
+          "word": "Applegate",
+          "start": 138.36,
+          "end": 138.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 138.94,
+          "end": 139.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 139.08,
+          "end": 139.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "owner,",
+          "start": 139.22,
+          "end": 139.54,
+          "probability": 0.9644
+        },
+        {
+          "word": "or",
+          "start": 139.56,
+          "end": 139.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "primary",
+          "start": 139.98,
+          "end": 140.42,
+          "probability": 0.9888
+        },
+        {
+          "word": "adjuster,",
+          "start": 140.42,
+          "end": 141.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "on",
+          "start": 141.26,
+          "end": 141.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 141.58,
+          "end": 141.78,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 141.78,
+          "end": 142.16,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 142.16,
+      "end": 144.36,
+      "start_formatted": "00:02:22.160",
+      "end_formatted": "00:02:24.360",
+      "text": "Betty can see and edit the claim.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 142.16,
+          "end": 142.9,
+          "probability": 0.7915
+        },
+        {
+          "word": "can",
+          "start": 142.9,
+          "end": 143.18,
+          "probability": 0.9844
+        },
+        {
+          "word": "see",
+          "start": 143.18,
+          "end": 143.4,
+          "probability": 0.978
+        },
+        {
+          "word": "and",
+          "start": 143.4,
+          "end": 143.62,
+          "probability": 0.9917
+        },
+        {
+          "word": "edit",
+          "start": 143.62,
+          "end": 143.86,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 143.86,
+          "end": 144.0,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 144.0,
+          "end": 144.36,
+          "probability": 0.981
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 144.6,
+      "end": 147.62,
+      "start_formatted": "00:02:24.600",
+      "end_formatted": "00:02:27.620",
+      "text": "Notice the edit button, even though she does not own it.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 144.6,
+          "end": 145.04,
+          "probability": 0.7314
+        },
+        {
+          "word": "the",
+          "start": 145.04,
+          "end": 145.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "edit",
+          "start": 145.22,
+          "end": 145.46,
+          "probability": 0.6372
+        },
+        {
+          "word": "button,",
+          "start": 145.46,
+          "end": 145.84,
+          "probability": 0.999
+        },
+        {
+          "word": "even",
+          "start": 146.06,
+          "end": 146.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "though",
+          "start": 146.38,
+          "end": 146.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "she",
+          "start": 146.58,
+          "end": 146.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "does",
+          "start": 146.8,
+          "end": 146.98,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 146.98,
+          "end": 147.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "own",
+          "start": 147.22,
+          "end": 147.44,
+          "probability": 0.999
+        },
+        {
+          "word": "it.",
+          "start": 147.44,
+          "end": 147.62,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 148.12,
+      "end": 153.62,
+      "start_formatted": "00:02:28.120",
+      "end_formatted": "00:02:33.620",
+      "text": "That is because the claim is using the default access profile, which allows anyone in the same",
+      "words": [
+        {
+          "word": "That",
+          "start": 148.12,
+          "end": 148.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 148.6,
+          "end": 148.74,
+          "probability": 0.999
+        },
+        {
+          "word": "because",
+          "start": 148.74,
+          "end": 149.04,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 149.04,
+          "end": 149.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 149.3,
+          "end": 149.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 149.6,
+          "end": 149.82,
+          "probability": 0.999
+        },
+        {
+          "word": "using",
+          "start": 149.82,
+          "end": 150.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 150.12,
+          "end": 150.28,
+          "probability": 0.998
+        },
+        {
+          "word": "default",
+          "start": 150.28,
+          "end": 150.6,
+          "probability": 0.96
+        },
+        {
+          "word": "access",
+          "start": 150.6,
+          "end": 151.0,
+          "probability": 0.9067
+        },
+        {
+          "word": "profile,",
+          "start": 151.0,
+          "end": 151.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "which",
+          "start": 151.96,
+          "end": 152.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "allows",
+          "start": 152.22,
+          "end": 152.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "anyone",
+          "start": 152.58,
+          "end": 153.02,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 153.02,
+          "end": 153.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.26,
+          "end": 153.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "same",
+          "start": 153.38,
+          "end": 153.62,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 153.62,
+      "end": 156.06,
+      "start_formatted": "00:02:33.620",
+      "end_formatted": "00:02:36.060",
+      "text": "group or security zone to edit the claim.",
+      "words": [
+        {
+          "word": "group",
+          "start": 153.62,
+          "end": 153.9,
+          "probability": 0.9854
+        },
+        {
+          "word": "or",
+          "start": 153.9,
+          "end": 154.14,
+          "probability": 0.999
+        },
+        {
+          "word": "security",
+          "start": 154.14,
+          "end": 154.64,
+          "probability": 0.9668
+        },
+        {
+          "word": "zone",
+          "start": 154.64,
+          "end": 154.98,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 154.98,
+          "end": 155.2,
+          "probability": 0.999
+        },
+        {
+          "word": "edit",
+          "start": 155.2,
+          "end": 155.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 155.48,
+          "end": 155.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim.",
+          "start": 155.68,
+          "end": 156.06,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 156.94,
+      "end": 159.02,
+      "start_formatted": "00:02:36.940",
+      "end_formatted": "00:02:39.020",
+      "text": "Betty logs out of Claim Center.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 156.94,
+          "end": 157.5,
+          "probability": 0.9834
+        },
+        {
+          "word": "logs",
+          "start": 157.5,
+          "end": 157.92,
+          "probability": 0.8467
+        },
+        {
+          "word": "out",
+          "start": 157.92,
+          "end": 158.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 158.14,
+          "end": 158.3,
+          "probability": 0.999
+        },
+        {
+          "word": "Claim",
+          "start": 158.3,
+          "end": 158.62,
+          "probability": 0.7935
+        },
+        {
+          "word": "Center.",
+          "start": 158.62,
+          "end": 159.02,
+          "probability": 0.9541
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 159.82,
+      "end": 164.74,
+      "start_formatted": "00:02:39.820",
+      "end_formatted": "00:02:44.740",
+      "text": "Stacey Bain is going to verify that she also has edit privileges on the Ray Newton claim.",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 159.82,
+          "end": 160.34,
+          "probability": 0.7544
+        },
+        {
+          "word": "Bain",
+          "start": 160.34,
+          "end": 160.68,
+          "probability": 0.9082
+        },
+        {
+          "word": "is",
+          "start": 160.68,
+          "end": 160.84,
+          "probability": 0.998
+        },
+        {
+          "word": "going",
+          "start": 160.84,
+          "end": 161.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 161.06,
+          "end": 161.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "verify",
+          "start": 161.24,
+          "end": 161.64,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 161.64,
+          "end": 161.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 161.92,
+          "end": 162.1,
+          "probability": 0.999
+        },
+        {
+          "word": "also",
+          "start": 162.1,
+          "end": 162.42,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 162.42,
+          "end": 162.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "edit",
+          "start": 162.68,
+          "end": 162.94,
+          "probability": 0.7363
+        },
+        {
+          "word": "privileges",
+          "start": 162.94,
+          "end": 163.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 163.5,
+          "end": 163.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 163.76,
+          "end": 163.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "Ray",
+          "start": 163.86,
+          "end": 164.08,
+          "probability": 0.9766
+        },
+        {
+          "word": "Newton",
+          "start": 164.08,
+          "end": 164.36,
+          "probability": 0.9517
+        },
+        {
+          "word": "claim.",
+          "start": 164.36,
+          "end": 164.74,
+          "probability": 0.9043
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 165.6,
+      "end": 170.24,
+      "start_formatted": "00:02:45.600",
+      "end_formatted": "00:02:50.240",
+      "text": "Remember that Stacey is not in Andy's group, but is in the same security zone.",
+      "words": [
+        {
+          "word": "Remember",
+          "start": 165.6,
+          "end": 165.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "that",
+          "start": 165.98,
+          "end": 166.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "Stacey",
+          "start": 166.24,
+          "end": 166.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 166.66,
+          "end": 166.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 166.88,
+          "end": 167.1,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 167.1,
+          "end": 167.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "Andy's",
+          "start": 167.28,
+          "end": 167.74,
+          "probability": 0.9072
+        },
+        {
+          "word": "group,",
+          "start": 167.74,
+          "end": 168.06,
+          "probability": 0.9526
+        },
+        {
+          "word": "but",
+          "start": 168.24,
+          "end": 168.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 168.5,
+          "end": 168.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 168.66,
+          "end": 168.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 168.84,
+          "end": 168.98,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 168.98,
+          "end": 169.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "security",
+          "start": 169.26,
+          "end": 169.8,
+          "probability": 0.9546
+        },
+        {
+          "word": "zone.",
+          "start": 169.8,
+          "end": 170.24,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 171.3,
+      "end": 173.2,
+      "start_formatted": "00:02:51.300",
+      "end_formatted": "00:02:53.200",
+      "text": "Stacey logs into Claim Center.",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 171.3,
+          "end": 171.82,
+          "probability": 0.8638
+        },
+        {
+          "word": "logs",
+          "start": 171.82,
+          "end": 172.14,
+          "probability": 0.6743
+        },
+        {
+          "word": "into",
+          "start": 172.14,
+          "end": 172.44,
+          "probability": 0.9585
+        },
+        {
+          "word": "Claim",
+          "start": 172.44,
+          "end": 172.8,
+          "probability": 0.917
+        },
+        {
+          "word": "Center.",
+          "start": 172.8,
+          "end": 173.2,
+          "probability": 0.8931
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 173.8,
+      "end": 178.82,
+      "start_formatted": "00:02:53.800",
+      "end_formatted": "00:02:58.820",
+      "text": "Since the Ray Newton claim is not owned by Stacey, and she had not recently opened the",
+      "words": [
+        {
+          "word": "Since",
+          "start": 173.8,
+          "end": 174.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 174.32,
+          "end": 174.48,
+          "probability": 1.0
+        },
+        {
+          "word": "Ray",
+          "start": 174.48,
+          "end": 174.72,
+          "probability": 0.999
+        },
+        {
+          "word": "Newton",
+          "start": 174.72,
+          "end": 174.96,
+          "probability": 0.998
+        },
+        {
+          "word": "claim",
+          "start": 174.96,
+          "end": 175.34,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 175.34,
+          "end": 175.58,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 175.58,
+          "end": 175.8,
+          "probability": 1.0
+        },
+        {
+          "word": "owned",
+          "start": 175.8,
+          "end": 176.02,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 176.02,
+          "end": 176.22,
+          "probability": 1.0
+        },
+        {
+          "word": "Stacey,",
+          "start": 176.22,
+          "end": 176.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 176.88,
+          "end": 177.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 177.14,
+          "end": 177.32,
+          "probability": 1.0
+        },
+        {
+          "word": "had",
+          "start": 177.32,
+          "end": 177.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 177.5,
+          "end": 177.68,
+          "probability": 1.0
+        },
+        {
+          "word": "recently",
+          "start": 177.68,
+          "end": 178.26,
+          "probability": 1.0
+        },
+        {
+          "word": "opened",
+          "start": 178.26,
+          "end": 178.64,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 178.64,
+          "end": 178.82,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 178.82,
+      "end": 181.12,
+      "start_formatted": "00:02:58.820",
+      "end_formatted": "00:03:01.120",
+      "text": "claim, it is not in her claims list.",
+      "words": [
+        {
+          "word": "claim,",
+          "start": 178.82,
+          "end": 179.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 179.34,
+          "end": 179.56,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 179.56,
+          "end": 179.7,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 179.7,
+          "end": 179.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 179.92,
+          "end": 180.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "her",
+          "start": 180.06,
+          "end": 180.22,
+          "probability": 1.0
+        },
+        {
+          "word": "claims",
+          "start": 180.22,
+          "end": 180.68,
+          "probability": 0.9736
+        },
+        {
+          "word": "list.",
+          "start": 180.68,
+          "end": 181.12,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 181.42,
+      "end": 184.06,
+      "start_formatted": "00:03:01.420",
+      "end_formatted": "00:03:04.060",
+      "text": "She opens the search screen to find the claim.",
+      "words": [
+        {
+          "word": "She",
+          "start": 181.42,
+          "end": 181.86,
+          "probability": 0.999
+        },
+        {
+          "word": "opens",
+          "start": 181.86,
+          "end": 182.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 182.24,
+          "end": 182.42,
+          "probability": 1.0
+        },
+        {
+          "word": "search",
+          "start": 182.42,
+          "end": 182.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "screen",
+          "start": 182.66,
+          "end": 183.02,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 183.02,
+          "end": 183.22,
+          "probability": 1.0
+        },
+        {
+          "word": "find",
+          "start": 183.22,
+          "end": 183.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 183.5,
+          "end": 183.68,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 183.68,
+          "end": 184.06,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 184.06,
+      "end": 187.58,
+      "start_formatted": "00:03:04.060",
+      "end_formatted": "00:03:07.580",
+      "text": "She searches for claims with the last name of Newton.",
+      "words": [
+        {
+          "word": "She",
+          "start": 184.06,
+          "end": 185.08,
+          "probability": 0.8481
+        },
+        {
+          "word": "searches",
+          "start": 185.08,
+          "end": 185.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "for",
+          "start": 185.44,
+          "end": 185.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "claims",
+          "start": 185.74,
+          "end": 186.12,
+          "probability": 0.9512
+        },
+        {
+          "word": "with",
+          "start": 186.12,
+          "end": 186.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 186.32,
+          "end": 186.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "last",
+          "start": 186.48,
+          "end": 186.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "name",
+          "start": 186.78,
+          "end": 187.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 187.08,
+          "end": 187.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "Newton.",
+          "start": 187.3,
+          "end": 187.58,
+          "probability": 0.9492
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 189.0,
+      "end": 192.58,
+      "start_formatted": "00:03:09.000",
+      "end_formatted": "00:03:12.580",
+      "text": "Stacey opens the same Ray Newton claim that Betty opened earlier.",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 189.0,
+          "end": 189.56,
+          "probability": 0.8184
+        },
+        {
+          "word": "opens",
+          "start": 189.56,
+          "end": 189.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 189.94,
+          "end": 190.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 190.16,
+          "end": 190.42,
+          "probability": 0.999
+        },
+        {
+          "word": "Ray",
+          "start": 190.42,
+          "end": 190.66,
+          "probability": 0.9575
+        },
+        {
+          "word": "Newton",
+          "start": 190.66,
+          "end": 190.92,
+          "probability": 0.9565
+        },
+        {
+          "word": "claim",
+          "start": 190.92,
+          "end": 191.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "that",
+          "start": 191.28,
+          "end": 191.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "Betty",
+          "start": 191.5,
+          "end": 191.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "opened",
+          "start": 191.68,
+          "end": 192.08,
+          "probability": 0.999
+        },
+        {
+          "word": "earlier.",
+          "start": 192.08,
+          "end": 192.58,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 194.2,
+      "end": 196.48,
+      "start_formatted": "00:03:14.200",
+      "end_formatted": "00:03:16.480",
+      "text": "And goes straight to the status screen.",
+      "words": [
+        {
+          "word": "And",
+          "start": 194.2,
+          "end": 194.76,
+          "probability": 0.9351
+        },
+        {
+          "word": "goes",
+          "start": 194.76,
+          "end": 195.0,
+          "probability": 0.998
+        },
+        {
+          "word": "straight",
+          "start": 195.0,
+          "end": 195.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 195.3,
+          "end": 195.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 195.52,
+          "end": 195.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "status",
+          "start": 195.64,
+          "end": 195.98,
+          "probability": 0.9585
+        },
+        {
+          "word": "screen.",
+          "start": 195.98,
+          "end": 196.48,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 197.84,
+      "end": 201.76,
+      "start_formatted": "00:03:17.840",
+      "end_formatted": "00:03:21.760",
+      "text": "Not only can Stacey edit the claim, but she can also remove the flag.",
+      "words": [
+        {
+          "word": "Not",
+          "start": 197.6,
+          "end": 197.88,
+          "probability": 0.9966
+        },
+        {
+          "word": "only",
+          "start": 197.88,
+          "end": 198.2,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 198.2,
+          "end": 198.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "Stacey",
+          "start": 198.4,
+          "end": 198.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "edit",
+          "start": 198.88,
+          "end": 199.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 199.16,
+          "end": 199.38,
+          "probability": 0.999
+        },
+        {
+          "word": "claim,",
+          "start": 199.38,
+          "end": 199.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "but",
+          "start": 199.94,
+          "end": 200.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 200.18,
+          "end": 200.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 200.34,
+          "end": 200.5,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 200.5,
+          "end": 200.78,
+          "probability": 1.0
+        },
+        {
+          "word": "remove",
+          "start": 200.78,
+          "end": 201.16,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 201.16,
+          "end": 201.4,
+          "probability": 1.0
+        },
+        {
+          "word": "flag.",
+          "start": 201.4,
+          "end": 201.76,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 202.06,
+      "end": 206.82,
+      "start_formatted": "00:03:22.060",
+      "end_formatted": "00:03:26.820",
+      "text": "She can edit the claim because even though she is not in the same group as Andy, she is",
+      "words": [
+        {
+          "word": "She",
+          "start": 202.06,
+          "end": 202.48,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 202.48,
+          "end": 202.68,
+          "probability": 1.0
+        },
+        {
+          "word": "edit",
+          "start": 202.68,
+          "end": 202.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 202.92,
+          "end": 203.08,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 203.08,
+          "end": 203.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 203.34,
+          "end": 203.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "even",
+          "start": 203.72,
+          "end": 204.06,
+          "probability": 0.999
+        },
+        {
+          "word": "though",
+          "start": 204.06,
+          "end": 204.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "she",
+          "start": 204.26,
+          "end": 204.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 204.44,
+          "end": 204.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 204.62,
+          "end": 204.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 204.78,
+          "end": 204.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 204.96,
+          "end": 205.08,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 205.08,
+          "end": 205.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "group",
+          "start": 205.32,
+          "end": 205.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 205.58,
+          "end": 205.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "Andy,",
+          "start": 205.82,
+          "end": 206.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "she",
+          "start": 206.32,
+          "end": 206.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 206.64,
+          "end": 206.82,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 206.82,
+      "end": 208.4,
+      "start_formatted": "00:03:26.820",
+      "end_formatted": "00:03:28.400",
+      "text": "in the same security zone.",
+      "words": [
+        {
+          "word": "in",
+          "start": 206.82,
+          "end": 207.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 207.02,
+          "end": 207.16,
+          "probability": 1.0
+        },
+        {
+          "word": "same",
+          "start": 207.16,
+          "end": 207.46,
+          "probability": 1.0
+        },
+        {
+          "word": "security",
+          "start": 207.46,
+          "end": 207.98,
+          "probability": 0.9917
+        },
+        {
+          "word": "zone.",
+          "start": 207.98,
+          "end": 208.4,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 208.72,
+      "end": 212.32,
+      "start_formatted": "00:03:28.720",
+      "end_formatted": "00:03:32.320",
+      "text": "Since she is a supervisor, she can also remove the flag.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 208.72,
+          "end": 209.22,
+          "probability": 0.999
+        },
+        {
+          "word": "she",
+          "start": 209.22,
+          "end": 209.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 209.44,
+          "end": 209.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 209.58,
+          "end": 209.68,
+          "probability": 0.999
+        },
+        {
+          "word": "supervisor,",
+          "start": 209.68,
+          "end": 210.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "she",
+          "start": 210.62,
+          "end": 210.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 210.84,
+          "end": 211.0,
+          "probability": 1.0
+        },
+        {
+          "word": "also",
+          "start": 211.0,
+          "end": 211.3,
+          "probability": 1.0
+        },
+        {
+          "word": "remove",
+          "start": 211.3,
+          "end": 211.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 211.7,
+          "end": 211.92,
+          "probability": 1.0
+        },
+        {
+          "word": "flag.",
+          "start": 211.92,
+          "end": 212.32,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 212.32,
+      "end": 215.02,
+      "start_formatted": "00:03:32.320",
+      "end_formatted": "00:03:35.020",
+      "text": "Stacey logs out of Claim Center.",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 212.32,
+          "end": 213.6,
+          "probability": 0.542
+        },
+        {
+          "word": "logs",
+          "start": 213.6,
+          "end": 214.02,
+          "probability": 0.8833
+        },
+        {
+          "word": "out",
+          "start": 214.02,
+          "end": 214.2,
+          "probability": 0.9932
+        },
+        {
+          "word": "of",
+          "start": 214.2,
+          "end": 214.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "Claim",
+          "start": 214.36,
+          "end": 214.64,
+          "probability": 0.8857
+        },
+        {
+          "word": "Center.",
+          "start": 214.64,
+          "end": 215.02,
+          "probability": 0.9346
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 216.14,
+      "end": 217.8,
+      "start_formatted": "00:03:36.140",
+      "end_formatted": "00:03:37.800",
+      "text": "Andy Applegate logs back in.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 215.88,
+          "end": 216.24,
+          "probability": 0.8945
+        },
+        {
+          "word": "Applegate",
+          "start": 216.24,
+          "end": 216.82,
+          "probability": 0.9482
+        },
+        {
+          "word": "logs",
+          "start": 216.82,
+          "end": 217.16,
+          "probability": 0.9727
+        },
+        {
+          "word": "back",
+          "start": 217.16,
+          "end": 217.44,
+          "probability": 0.9902
+        },
+        {
+          "word": "in.",
+          "start": 217.44,
+          "end": 217.8,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 218.18,
+      "end": 220.46,
+      "start_formatted": "00:03:38.180",
+      "end_formatted": "00:03:40.460",
+      "text": "And selects the same Ray Newton claim.",
+      "words": [
+        {
+          "word": "And",
+          "start": 218.18,
+          "end": 218.82,
+          "probability": 0.9487
+        },
+        {
+          "word": "selects",
+          "start": 218.82,
+          "end": 219.26,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 219.26,
+          "end": 219.36,
+          "probability": 0.999
+        },
+        {
+          "word": "same",
+          "start": 219.36,
+          "end": 219.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "Ray",
+          "start": 219.64,
+          "end": 219.86,
+          "probability": 0.9751
+        },
+        {
+          "word": "Newton",
+          "start": 219.86,
+          "end": 220.12,
+          "probability": 0.9663
+        },
+        {
+          "word": "claim.",
+          "start": 220.12,
+          "end": 220.46,
+          "probability": 0.8975
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 221.6,
+      "end": 223.16,
+      "start_formatted": "00:03:41.600",
+      "end_formatted": "00:03:43.160",
+      "text": "Then he opens the status screen.",
+      "words": [
+        {
+          "word": "Then",
+          "start": 221.26,
+          "end": 221.62,
+          "probability": 0.998
+        },
+        {
+          "word": "he",
+          "start": 221.62,
+          "end": 221.74,
+          "probability": 0.9893
+        },
+        {
+          "word": "opens",
+          "start": 221.74,
+          "end": 222.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 222.12,
+          "end": 222.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "status",
+          "start": 222.3,
+          "end": 222.64,
+          "probability": 0.729
+        },
+        {
+          "word": "screen.",
+          "start": 222.64,
+          "end": 223.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 224.36,
+      "end": 225.2,
+      "start_formatted": "00:03:44.360",
+      "end_formatted": "00:03:45.200",
+      "text": "And edits the claim.",
+      "words": [
+        {
+          "word": "And",
+          "start": 224.0,
+          "end": 224.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "edits",
+          "start": 224.36,
+          "end": 224.7,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 224.7,
+          "end": 224.88,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 224.88,
+          "end": 225.2,
+          "probability": 0.9639
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 226.72,
+      "end": 232.26,
+      "start_formatted": "00:03:46.720",
+      "end_formatted": "00:03:52.260",
+      "text": "Special claim permission is not set, which implies that the default access profile is",
+      "words": [
+        {
+          "word": "Special",
+          "start": 226.72,
+          "end": 227.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "claim",
+          "start": 227.44,
+          "end": 227.82,
+          "probability": 0.7637
+        },
+        {
+          "word": "permission",
+          "start": 227.82,
+          "end": 228.26,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 228.26,
+          "end": 228.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 228.52,
+          "end": 228.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "set,",
+          "start": 228.74,
+          "end": 229.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 229.3,
+          "end": 229.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "implies",
+          "start": 229.54,
+          "end": 230.0,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 230.0,
+          "end": 230.24,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 230.24,
+          "end": 230.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "default",
+          "start": 230.38,
+          "end": 230.76,
+          "probability": 0.9038
+        },
+        {
+          "word": "access",
+          "start": 230.76,
+          "end": 231.26,
+          "probability": 0.9062
+        },
+        {
+          "word": "profile",
+          "start": 231.26,
+          "end": 231.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 231.86,
+          "end": 232.26,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 232.26,
+      "end": 232.76,
+      "start_formatted": "00:03:52.260",
+      "end_formatted": "00:03:52.760",
+      "text": "in use.",
+      "words": [
+        {
+          "word": "in",
+          "start": 232.26,
+          "end": 232.4,
+          "probability": 1.0
+        },
+        {
+          "word": "use.",
+          "start": 232.4,
+          "end": 232.76,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 233.26,
+      "end": 238.9,
+      "start_formatted": "00:03:53.260",
+      "end_formatted": "00:03:58.900",
+      "text": "Remember that the default access profile allows any user in the owners group, or any user",
+      "words": [
+        {
+          "word": "Remember",
+          "start": 233.26,
+          "end": 233.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 233.94,
+          "end": 234.16,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 234.16,
+          "end": 234.3,
+          "probability": 1.0
+        },
+        {
+          "word": "default",
+          "start": 234.3,
+          "end": 234.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "access",
+          "start": 234.62,
+          "end": 235.06,
+          "probability": 0.999
+        },
+        {
+          "word": "profile",
+          "start": 235.06,
+          "end": 235.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "allows",
+          "start": 235.68,
+          "end": 236.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 236.1,
+          "end": 236.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 236.38,
+          "end": 236.78,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 236.78,
+          "end": 236.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 236.98,
+          "end": 237.12,
+          "probability": 1.0
+        },
+        {
+          "word": "owners",
+          "start": 237.12,
+          "end": 237.4,
+          "probability": 0.5181
+        },
+        {
+          "word": "group,",
+          "start": 237.4,
+          "end": 237.8,
+          "probability": 0.9839
+        },
+        {
+          "word": "or",
+          "start": 237.8,
+          "end": 238.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "any",
+          "start": 238.24,
+          "end": 238.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 238.5,
+          "end": 238.9,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 238.9,
+      "end": 241.7,
+      "start_formatted": "00:03:58.900",
+      "end_formatted": "00:04:01.700",
+      "text": "in the same security zone, to edit the claim.",
+      "words": [
+        {
+          "word": "in",
+          "start": 238.9,
+          "end": 239.06,
+          "probability": 0.8032
+        },
+        {
+          "word": "the",
+          "start": 239.06,
+          "end": 239.18,
+          "probability": 0.998
+        },
+        {
+          "word": "same",
+          "start": 239.18,
+          "end": 239.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "security",
+          "start": 239.46,
+          "end": 240.02,
+          "probability": 0.7632
+        },
+        {
+          "word": "zone,",
+          "start": 240.02,
+          "end": 240.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 240.62,
+          "end": 240.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "edit",
+          "start": 240.86,
+          "end": 241.14,
+          "probability": 0.9771
+        },
+        {
+          "word": "the",
+          "start": 241.14,
+          "end": 241.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim.",
+          "start": 241.32,
+          "end": 241.7,
+          "probability": 0.9595
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 242.68,
+      "end": 246.32,
+      "start_formatted": "00:04:02.680",
+      "end_formatted": "00:04:06.320",
+      "text": "Andy changes the special claim permission to employee claim.",
+      "words": [
+        {
+          "word": "Andy",
+          "start": 242.68,
+          "end": 243.3,
+          "probability": 0.8799
+        },
+        {
+          "word": "changes",
+          "start": 243.3,
+          "end": 243.74,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 243.74,
+          "end": 243.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "special",
+          "start": 243.98,
+          "end": 244.32,
+          "probability": 0.5786
+        },
+        {
+          "word": "claim",
+          "start": 244.32,
+          "end": 244.7,
+          "probability": 0.9492
+        },
+        {
+          "word": "permission",
+          "start": 244.7,
+          "end": 245.16,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 245.16,
+          "end": 245.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "employee",
+          "start": 245.42,
+          "end": 245.86,
+          "probability": 0.6152
+        },
+        {
+          "word": "claim.",
+          "start": 245.86,
+          "end": 246.32,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 247.4,
+      "end": 252.72,
+      "start_formatted": "00:04:07.400",
+      "end_formatted": "00:04:12.720",
+      "text": "This access profile grants view and edit access to only those users in the same group as the",
+      "words": [
+        {
+          "word": "This",
+          "start": 247.17,
+          "end": 247.48,
+          "probability": 0.9893
+        },
+        {
+          "word": "access",
+          "start": 247.48,
+          "end": 247.84,
+          "probability": 0.8525
+        },
+        {
+          "word": "profile",
+          "start": 247.84,
+          "end": 248.44,
+          "probability": 0.9907
+        },
+        {
+          "word": "grants",
+          "start": 248.44,
+          "end": 248.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "view",
+          "start": 248.98,
+          "end": 249.3,
+          "probability": 0.9224
+        },
+        {
+          "word": "and",
+          "start": 249.3,
+          "end": 249.5,
+          "probability": 0.9629
+        },
+        {
+          "word": "edit",
+          "start": 249.5,
+          "end": 249.8,
+          "probability": 0.9888
+        },
+        {
+          "word": "access",
+          "start": 249.8,
+          "end": 250.22,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 250.22,
+          "end": 250.48,
+          "probability": 0.998
+        },
+        {
+          "word": "only",
+          "start": 250.48,
+          "end": 250.82,
+          "probability": 0.9956
+        },
+        {
+          "word": "those",
+          "start": 250.82,
+          "end": 251.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "users",
+          "start": 251.1,
+          "end": 251.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "in",
+          "start": 251.52,
+          "end": 251.76,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 251.76,
+          "end": 251.86,
+          "probability": 0.998
+        },
+        {
+          "word": "same",
+          "start": 251.86,
+          "end": 252.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "group",
+          "start": 252.08,
+          "end": 252.38,
+          "probability": 0.9966
+        },
+        {
+          "word": "as",
+          "start": 252.38,
+          "end": 252.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 252.6,
+          "end": 252.72,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 252.72,
+      "end": 253.4,
+      "start_formatted": "00:04:12.720",
+      "end_formatted": "00:04:13.400",
+      "text": "claim owner.",
+      "words": [
+        {
+          "word": "claim",
+          "start": 252.72,
+          "end": 253.04,
+          "probability": 0.978
+        },
+        {
+          "word": "owner.",
+          "start": 253.04,
+          "end": 253.4,
+          "probability": 0.9888
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 253.74,
+      "end": 258.42,
+      "start_formatted": "00:04:13.740",
+      "end_formatted": "00:04:18.420",
+      "text": "In this case, Betty is in the same group as Andy, but Stacey is not.",
+      "words": [
+        {
+          "word": "In",
+          "start": 253.74,
+          "end": 254.04,
+          "probability": 0.9922
+        },
+        {
+          "word": "this",
+          "start": 254.04,
+          "end": 254.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "case,",
+          "start": 254.28,
+          "end": 254.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "Betty",
+          "start": 255.04,
+          "end": 255.26,
+          "probability": 0.9419
+        },
+        {
+          "word": "is",
+          "start": 255.26,
+          "end": 255.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 255.5,
+          "end": 255.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 255.62,
+          "end": 255.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "same",
+          "start": 255.72,
+          "end": 255.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "group",
+          "start": 255.98,
+          "end": 256.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "as",
+          "start": 256.32,
+          "end": 256.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "Andy,",
+          "start": 256.54,
+          "end": 256.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "but",
+          "start": 257.1,
+          "end": 257.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "Stacey",
+          "start": 257.42,
+          "end": 257.8,
+          "probability": 0.6904
+        },
+        {
+          "word": "is",
+          "start": 257.8,
+          "end": 258.1,
+          "probability": 0.998
+        },
+        {
+          "word": "not.",
+          "start": 258.1,
+          "end": 258.42,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "start": 259.4,
+      "end": 264.94,
+      "start_formatted": "00:04:19.400",
+      "end_formatted": "00:04:24.940",
+      "text": "After setting the special claim permission to employee claim, Andy clicks Update to save",
+      "words": [
+        {
+          "word": "After",
+          "start": 259.4,
+          "end": 260.0,
+          "probability": 0.9131
+        },
+        {
+          "word": "setting",
+          "start": 260.0,
+          "end": 260.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 260.36,
+          "end": 260.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "special",
+          "start": 260.56,
+          "end": 260.92,
+          "probability": 0.6475
+        },
+        {
+          "word": "claim",
+          "start": 260.92,
+          "end": 261.28,
+          "probability": 0.9321
+        },
+        {
+          "word": "permission",
+          "start": 261.28,
+          "end": 261.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 261.76,
+          "end": 262.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "employee",
+          "start": 262.0,
+          "end": 262.46,
+          "probability": 0.6045
+        },
+        {
+          "word": "claim,",
+          "start": 262.46,
+          "end": 263.04,
+          "probability": 0.978
+        },
+        {
+          "word": "Andy",
+          "start": 263.38,
+          "end": 263.58,
+          "probability": 0.9541
+        },
+        {
+          "word": "clicks",
+          "start": 263.58,
+          "end": 264.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "Update",
+          "start": 264.04,
+          "end": 264.36,
+          "probability": 0.4556
+        },
+        {
+          "word": "to",
+          "start": 264.36,
+          "end": 264.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "save",
+          "start": 264.66,
+          "end": 264.94,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "start": 264.94,
+      "end": 265.6,
+      "start_formatted": "00:04:24.940",
+      "end_formatted": "00:04:25.600",
+      "text": "the changes.",
+      "words": [
+        {
+          "word": "the",
+          "start": 264.94,
+          "end": 265.12,
+          "probability": 0.998
+        },
+        {
+          "word": "changes.",
+          "start": 265.12,
+          "end": 265.6,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "start": 266.82,
+      "end": 272.68,
+      "start_formatted": "00:04:26.820",
+      "end_formatted": "00:04:32.680",
+      "text": "By making this claim an employee claim, Andy has restricted access to only those users who",
+      "words": [
+        {
+          "word": "By",
+          "start": 266.82,
+          "end": 267.42,
+          "probability": 0.9932
+        },
+        {
+          "word": "making",
+          "start": 267.42,
+          "end": 267.76,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 267.76,
+          "end": 268.02,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 268.02,
+          "end": 268.32,
+          "probability": 0.9907
+        },
+        {
+          "word": "an",
+          "start": 268.32,
+          "end": 268.48,
+          "probability": 0.9805
+        },
+        {
+          "word": "employee",
+          "start": 268.48,
+          "end": 268.9,
+          "probability": 0.9189
+        },
+        {
+          "word": "claim,",
+          "start": 268.9,
+          "end": 269.44,
+          "probability": 0.9932
+        },
+        {
+          "word": "Andy",
+          "start": 269.7,
+          "end": 270.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "has",
+          "start": 270.02,
+          "end": 270.22,
+          "probability": 0.999
+        },
+        {
+          "word": "restricted",
+          "start": 270.22,
+          "end": 270.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "access",
+          "start": 270.7,
+          "end": 271.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 271.14,
+          "end": 271.44,
+          "probability": 0.999
+        },
+        {
+          "word": "only",
+          "start": 271.44,
+          "end": 271.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "those",
+          "start": 271.78,
+          "end": 272.06,
+          "probability": 0.999
+        },
+        {
+          "word": "users",
+          "start": 272.06,
+          "end": 272.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "who",
+          "start": 272.48,
+          "end": 272.68,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "start": 272.68,
+      "end": 273.44,
+      "start_formatted": "00:04:32.680",
+      "end_formatted": "00:04:33.440",
+      "text": "are in his group.",
+      "words": [
+        {
+          "word": "are",
+          "start": 272.68,
+          "end": 272.88,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 272.88,
+          "end": 273.0,
+          "probability": 0.999
+        },
+        {
+          "word": "his",
+          "start": 273.0,
+          "end": 273.16,
+          "probability": 0.9604
+        },
+        {
+          "word": "group.",
+          "start": 273.16,
+          "end": 273.44,
+          "probability": 0.9609
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "start": 273.8,
+      "end": 275.56,
+      "start_formatted": "00:04:33.800",
+      "end_formatted": "00:04:35.560",
+      "text": "He logs out of Claim Center.",
+      "words": [
+        {
+          "word": "He",
+          "start": 273.8,
+          "end": 274.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "logs",
+          "start": 274.12,
+          "end": 274.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "out",
+          "start": 274.5,
+          "end": 274.7,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 274.7,
+          "end": 274.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Claim",
+          "start": 274.88,
+          "end": 275.18,
+          "probability": 0.9429
+        },
+        {
+          "word": "Center.",
+          "start": 275.18,
+          "end": 275.56,
+          "probability": 0.9028
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "start": 277.08,
+      "end": 280.02,
+      "start_formatted": "00:04:37.080",
+      "end_formatted": "00:04:40.020",
+      "text": "Betty Baker now logs back into Claim Center.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 277.08,
+          "end": 277.68,
+          "probability": 0.9878
+        },
+        {
+          "word": "Baker",
+          "start": 277.68,
+          "end": 278.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "now",
+          "start": 278.08,
+          "end": 278.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "logs",
+          "start": 278.32,
+          "end": 278.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "back",
+          "start": 278.74,
+          "end": 279.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "into",
+          "start": 279.0,
+          "end": 279.28,
+          "probability": 0.9941
+        },
+        {
+          "word": "Claim",
+          "start": 279.28,
+          "end": 279.62,
+          "probability": 0.998
+        },
+        {
+          "word": "Center.",
+          "start": 279.62,
+          "end": 280.02,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "start": 280.3,
+      "end": 285.78,
+      "start_formatted": "00:04:40.300",
+      "end_formatted": "00:04:45.780",
+      "text": "Since she is in Andy's group, she expects to still be able to see and edit the Ray Newton claim.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 280.3,
+          "end": 280.82,
+          "probability": 0.999
+        },
+        {
+          "word": "she",
+          "start": 280.82,
+          "end": 281.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 281.04,
+          "end": 281.2,
+          "probability": 0.9771
+        },
+        {
+          "word": "in",
+          "start": 281.2,
+          "end": 281.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "Andy's",
+          "start": 281.32,
+          "end": 281.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "group,",
+          "start": 281.78,
+          "end": 282.06,
+          "probability": 0.9692
+        },
+        {
+          "word": "she",
+          "start": 282.32,
+          "end": 282.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "expects",
+          "start": 282.54,
+          "end": 282.96,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 282.96,
+          "end": 283.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "still",
+          "start": 283.18,
+          "end": 283.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 283.42,
+          "end": 283.6,
+          "probability": 1.0
+        },
+        {
+          "word": "able",
+          "start": 283.6,
+          "end": 283.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 283.86,
+          "end": 284.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 284.0,
+          "end": 284.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 284.22,
+          "end": 284.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "edit",
+          "start": 284.42,
+          "end": 284.7,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 284.7,
+          "end": 284.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "Ray",
+          "start": 284.88,
+          "end": 285.12,
+          "probability": 0.7729
+        },
+        {
+          "word": "Newton",
+          "start": 285.12,
+          "end": 285.36,
+          "probability": 0.9712
+        },
+        {
+          "word": "claim.",
+          "start": 285.36,
+          "end": 285.78,
+          "probability": 0.936
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "start": 286.46,
+      "end": 291.58,
+      "start_formatted": "00:04:46.460",
+      "end_formatted": "00:04:51.580",
+      "text": "Since she has recently viewed the Ray Newton claim, it is in her Claim drop-down list.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 286.46,
+          "end": 287.02,
+          "probability": 0.8584
+        },
+        {
+          "word": "she",
+          "start": 287.02,
+          "end": 287.28,
+          "probability": 0.9937
+        },
+        {
+          "word": "has",
+          "start": 287.28,
+          "end": 287.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "recently",
+          "start": 287.46,
+          "end": 287.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "viewed",
+          "start": 287.92,
+          "end": 288.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 288.32,
+          "end": 288.52,
+          "probability": 0.9937
+        },
+        {
+          "word": "Ray",
+          "start": 288.52,
+          "end": 288.7,
+          "probability": 0.8892
+        },
+        {
+          "word": "Newton",
+          "start": 288.7,
+          "end": 288.98,
+          "probability": 0.9639
+        },
+        {
+          "word": "claim,",
+          "start": 288.98,
+          "end": 289.36,
+          "probability": 0.9062
+        },
+        {
+          "word": "it",
+          "start": 289.62,
+          "end": 289.88,
+          "probability": 0.9897
+        },
+        {
+          "word": "is",
+          "start": 289.88,
+          "end": 290.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "in",
+          "start": 290.02,
+          "end": 290.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "her",
+          "start": 290.16,
+          "end": 290.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "Claim",
+          "start": 290.28,
+          "end": 290.6,
+          "probability": 0.5615
+        },
+        {
+          "word": "drop",
+          "start": 290.6,
+          "end": 290.9,
+          "probability": 0.728
+        },
+        {
+          "word": "-down",
+          "start": 290.9,
+          "end": 291.12,
+          "probability": 0.8525
+        },
+        {
+          "word": "list.",
+          "start": 291.12,
+          "end": 291.58,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "start": 292.12,
+      "end": 294.1,
+      "start_formatted": "00:04:52.120",
+      "end_formatted": "00:04:54.100",
+      "text": "She opens the status screen.",
+      "words": [
+        {
+          "word": "She",
+          "start": 292.12,
+          "end": 292.68,
+          "probability": 0.9844
+        },
+        {
+          "word": "opens",
+          "start": 292.68,
+          "end": 293.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 293.06,
+          "end": 293.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "status",
+          "start": 293.26,
+          "end": 293.58,
+          "probability": 0.7383
+        },
+        {
+          "word": "screen.",
+          "start": 293.58,
+          "end": 294.1,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "start": 295.3,
+      "end": 300.98,
+      "start_formatted": "00:04:55.300",
+      "end_formatted": "00:05:00.980",
+      "text": "Betty sees that the claim is now set to an employee claim, and that she still has edit permissions,",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 295.3,
+          "end": 295.86,
+          "probability": 0.9736
+        },
+        {
+          "word": "sees",
+          "start": 295.86,
+          "end": 296.3,
+          "probability": 0.9878
+        },
+        {
+          "word": "that",
+          "start": 296.3,
+          "end": 296.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 296.48,
+          "end": 296.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "claim",
+          "start": 296.6,
+          "end": 296.92,
+          "probability": 0.9463
+        },
+        {
+          "word": "is",
+          "start": 296.92,
+          "end": 297.1,
+          "probability": 0.999
+        },
+        {
+          "word": "now",
+          "start": 297.1,
+          "end": 297.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "set",
+          "start": 297.28,
+          "end": 297.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 297.58,
+          "end": 297.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 297.72,
+          "end": 297.86,
+          "probability": 0.998
+        },
+        {
+          "word": "employee",
+          "start": 297.86,
+          "end": 298.26,
+          "probability": 0.8218
+        },
+        {
+          "word": "claim,",
+          "start": 298.26,
+          "end": 298.82,
+          "probability": 0.9893
+        },
+        {
+          "word": "and",
+          "start": 299.02,
+          "end": 299.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 299.32,
+          "end": 299.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "she",
+          "start": 299.46,
+          "end": 299.64,
+          "probability": 0.999
+        },
+        {
+          "word": "still",
+          "start": 299.64,
+          "end": 299.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "has",
+          "start": 299.84,
+          "end": 300.12,
+          "probability": 0.999
+        },
+        {
+          "word": "edit",
+          "start": 300.12,
+          "end": 300.34,
+          "probability": 0.563
+        },
+        {
+          "word": "permissions,",
+          "start": 300.34,
+          "end": 300.98,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "start": 301.26,
+      "end": 303.48,
+      "start_formatted": "00:05:01.260",
+      "end_formatted": "00:05:03.480",
+      "text": "even though she does not, own the claim.",
+      "words": [
+        {
+          "word": "even",
+          "start": 301.26,
+          "end": 301.6,
+          "probability": 0.998
+        },
+        {
+          "word": "though",
+          "start": 301.6,
+          "end": 301.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "she",
+          "start": 301.8,
+          "end": 301.98,
+          "probability": 0.999
+        },
+        {
+          "word": "does",
+          "start": 301.98,
+          "end": 302.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "not,",
+          "start": 302.18,
+          "end": 302.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "own",
+          "start": 302.66,
+          "end": 302.98,
+          "probability": 0.9736
+        },
+        {
+          "word": "the",
+          "start": 302.98,
+          "end": 303.12,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 303.12,
+          "end": 303.48,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "start": 303.98,
+      "end": 309.26,
+      "start_formatted": "00:05:03.980",
+      "end_formatted": "00:05:09.260",
+      "text": "She has access because she is in the same group as Andy and the employee access profile",
+      "words": [
+        {
+          "word": "She",
+          "start": 303.98,
+          "end": 304.48,
+          "probability": 0.9951
+        },
+        {
+          "word": "has",
+          "start": 304.48,
+          "end": 304.7,
+          "probability": 0.998
+        },
+        {
+          "word": "access",
+          "start": 304.7,
+          "end": 305.08,
+          "probability": 0.9189
+        },
+        {
+          "word": "because",
+          "start": 305.08,
+          "end": 305.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "she",
+          "start": 305.44,
+          "end": 305.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 305.7,
+          "end": 305.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "in",
+          "start": 305.82,
+          "end": 305.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 305.94,
+          "end": 306.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "same",
+          "start": 306.04,
+          "end": 306.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "group",
+          "start": 306.28,
+          "end": 306.64,
+          "probability": 0.9663
+        },
+        {
+          "word": "as",
+          "start": 306.64,
+          "end": 306.88,
+          "probability": 0.999
+        },
+        {
+          "word": "Andy",
+          "start": 306.88,
+          "end": 307.18,
+          "probability": 0.9634
+        },
+        {
+          "word": "and",
+          "start": 307.18,
+          "end": 307.48,
+          "probability": 0.9717
+        },
+        {
+          "word": "the",
+          "start": 307.48,
+          "end": 307.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "employee",
+          "start": 307.66,
+          "end": 308.06,
+          "probability": 0.6055
+        },
+        {
+          "word": "access",
+          "start": 308.06,
+          "end": 308.58,
+          "probability": 0.9609
+        },
+        {
+          "word": "profile",
+          "start": 308.58,
+          "end": 309.26,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "start": 309.26,
+      "end": 313.14,
+      "start_formatted": "00:05:09.260",
+      "end_formatted": "00:05:13.140",
+      "text": "specifies that anyone in the same group is granted those privileges.",
+      "words": [
+        {
+          "word": "specifies",
+          "start": 309.26,
+          "end": 309.98,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 309.98,
+          "end": 310.22,
+          "probability": 0.999
+        },
+        {
+          "word": "anyone",
+          "start": 310.22,
+          "end": 310.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "in",
+          "start": 310.56,
+          "end": 310.84,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 310.84,
+          "end": 310.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "same",
+          "start": 310.96,
+          "end": 311.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "group",
+          "start": 311.2,
+          "end": 311.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 311.58,
+          "end": 311.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "granted",
+          "start": 311.84,
+          "end": 312.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "those",
+          "start": 312.2,
+          "end": 312.54,
+          "probability": 0.998
+        },
+        {
+          "word": "privileges.",
+          "start": 312.54,
+          "end": 313.14,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "start": 314.28,
+      "end": 316.36,
+      "start_formatted": "00:05:14.280",
+      "end_formatted": "00:05:16.360",
+      "text": "Betty logs out of Claim Center.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 314.28,
+          "end": 314.84,
+          "probability": 0.6387
+        },
+        {
+          "word": "logs",
+          "start": 314.84,
+          "end": 315.3,
+          "probability": 0.8506
+        },
+        {
+          "word": "out",
+          "start": 315.3,
+          "end": 315.5,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 315.5,
+          "end": 315.66,
+          "probability": 0.9946
+        },
+        {
+          "word": "Claim",
+          "start": 315.66,
+          "end": 315.98,
+          "probability": 0.8438
+        },
+        {
+          "word": "Center.",
+          "start": 315.98,
+          "end": 316.36,
+          "probability": 0.9009
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "start": 317.24,
+      "end": 319.5,
+      "start_formatted": "00:05:17.240",
+      "end_formatted": "00:05:19.500",
+      "text": "Stacey logs back into Claim Center.",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 317.24,
+          "end": 317.8,
+          "probability": 0.8506
+        },
+        {
+          "word": "logs",
+          "start": 317.8,
+          "end": 318.2,
+          "probability": 0.9907
+        },
+        {
+          "word": "back",
+          "start": 318.2,
+          "end": 318.54,
+          "probability": 0.998
+        },
+        {
+          "word": "into",
+          "start": 318.54,
+          "end": 318.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "Claim",
+          "start": 318.78,
+          "end": 319.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "Center.",
+          "start": 319.12,
+          "end": 319.5,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "start": 320.12,
+      "end": 325.26,
+      "start_formatted": "00:05:20.120",
+      "end_formatted": "00:05:25.260",
+      "text": "Remember that Stacey is in the same security zone as Andy, but is not in the same group.",
+      "words": [
+        {
+          "word": "Remember",
+          "start": 320.12,
+          "end": 320.68,
+          "probability": 0.9951
+        },
+        {
+          "word": "that",
+          "start": 320.68,
+          "end": 320.94,
+          "probability": 0.999
+        },
+        {
+          "word": "Stacey",
+          "start": 320.94,
+          "end": 321.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 321.36,
+          "end": 321.62,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 321.62,
+          "end": 321.74,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 321.74,
+          "end": 321.84,
+          "probability": 0.999
+        },
+        {
+          "word": "same",
+          "start": 321.84,
+          "end": 322.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "security",
+          "start": 322.12,
+          "end": 322.7,
+          "probability": 0.9146
+        },
+        {
+          "word": "zone",
+          "start": 322.7,
+          "end": 323.0,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 323.0,
+          "end": 323.24,
+          "probability": 0.999
+        },
+        {
+          "word": "Andy,",
+          "start": 323.24,
+          "end": 323.54,
+          "probability": 0.978
+        },
+        {
+          "word": "but",
+          "start": 323.74,
+          "end": 323.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 323.98,
+          "end": 324.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 324.16,
+          "end": 324.34,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 324.34,
+          "end": 324.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 324.56,
+          "end": 324.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 324.66,
+          "end": 324.9,
+          "probability": 0.999
+        },
+        {
+          "word": "group.",
+          "start": 324.9,
+          "end": 325.26,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "start": 326.06,
+      "end": 331.72,
+      "start_formatted": "00:05:26.060",
+      "end_formatted": "00:05:31.720",
+      "text": "Like Betty, Stacey recently accessed the Ray Newton claim, so it is in her claim drop-down",
+      "words": [
+        {
+          "word": "Like",
+          "start": 326.06,
+          "end": 326.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "Betty,",
+          "start": 326.62,
+          "end": 326.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "Stacey",
+          "start": 327.22,
+          "end": 327.74,
+          "probability": 0.998
+        },
+        {
+          "word": "recently",
+          "start": 327.74,
+          "end": 328.22,
+          "probability": 0.999
+        },
+        {
+          "word": "accessed",
+          "start": 328.22,
+          "end": 328.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 328.74,
+          "end": 328.92,
+          "probability": 0.9917
+        },
+        {
+          "word": "Ray",
+          "start": 328.92,
+          "end": 329.2,
+          "probability": 0.9067
+        },
+        {
+          "word": "Newton",
+          "start": 329.2,
+          "end": 329.4,
+          "probability": 0.98
+        },
+        {
+          "word": "claim,",
+          "start": 329.4,
+          "end": 329.8,
+          "probability": 0.9487
+        },
+        {
+          "word": "so",
+          "start": 330.08,
+          "end": 330.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "it",
+          "start": 330.36,
+          "end": 330.54,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 330.54,
+          "end": 330.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "in",
+          "start": 330.66,
+          "end": 330.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "her",
+          "start": 330.76,
+          "end": 330.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 330.88,
+          "end": 331.18,
+          "probability": 0.9092
+        },
+        {
+          "word": "drop",
+          "start": 331.18,
+          "end": 331.52,
+          "probability": 0.8584
+        },
+        {
+          "word": "-down",
+          "start": 331.52,
+          "end": 331.72,
+          "probability": 0.9443
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "start": 331.72,
+      "end": 332.12,
+      "start_formatted": "00:05:31.720",
+      "end_formatted": "00:05:32.120",
+      "text": "list.",
+      "words": [
+        {
+          "word": "list.",
+          "start": 331.72,
+          "end": 332.12,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "start": 332.86,
+      "end": 337.9,
+      "start_formatted": "00:05:32.860",
+      "end_formatted": "00:05:37.900",
+      "text": "Even though the claim was in her claims list, she no longer has access since the special",
+      "words": [
+        {
+          "word": "Even",
+          "start": 332.86,
+          "end": 333.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "though",
+          "start": 333.42,
+          "end": 333.62,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 333.62,
+          "end": 333.82,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 333.82,
+          "end": 334.1,
+          "probability": 0.998
+        },
+        {
+          "word": "was",
+          "start": 334.1,
+          "end": 334.34,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 334.34,
+          "end": 334.48,
+          "probability": 0.999
+        },
+        {
+          "word": "her",
+          "start": 334.48,
+          "end": 334.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "claims",
+          "start": 334.6,
+          "end": 335.02,
+          "probability": 0.9565
+        },
+        {
+          "word": "list,",
+          "start": 335.02,
+          "end": 335.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "she",
+          "start": 335.66,
+          "end": 335.92,
+          "probability": 0.998
+        },
+        {
+          "word": "no",
+          "start": 335.92,
+          "end": 336.12,
+          "probability": 0.999
+        },
+        {
+          "word": "longer",
+          "start": 336.12,
+          "end": 336.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 336.44,
+          "end": 336.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "access",
+          "start": 336.7,
+          "end": 337.04,
+          "probability": 0.999
+        },
+        {
+          "word": "since",
+          "start": 337.04,
+          "end": 337.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 337.38,
+          "end": 337.56,
+          "probability": 0.999
+        },
+        {
+          "word": "special",
+          "start": 337.56,
+          "end": 337.9,
+          "probability": 0.9116
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "start": 337.9,
+      "end": 340.44,
+      "start_formatted": "00:05:37.900",
+      "end_formatted": "00:05:40.440",
+      "text": "claim permission was set to employee claim.",
+      "words": [
+        {
+          "word": "claim",
+          "start": 337.9,
+          "end": 338.3,
+          "probability": 0.9712
+        },
+        {
+          "word": "permission",
+          "start": 338.3,
+          "end": 338.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "was",
+          "start": 338.72,
+          "end": 339.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "set",
+          "start": 339.04,
+          "end": 339.28,
+          "probability": 0.9893
+        },
+        {
+          "word": "to",
+          "start": 339.28,
+          "end": 339.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "employee",
+          "start": 339.46,
+          "end": 339.9,
+          "probability": 0.5884
+        },
+        {
+          "word": "claim.",
+          "start": 339.9,
+          "end": 340.44,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "start": 340.44,
+      "end": 346.58,
+      "start_formatted": "00:05:40.440",
+      "end_formatted": "00:05:46.580",
+      "text": "The employee claim access profile only grants access to users in the same group as the owner.",
+      "words": [
+        {
+          "word": "The",
+          "start": 340.44,
+          "end": 341.38,
+          "probability": 0.8477
+        },
+        {
+          "word": "employee",
+          "start": 341.38,
+          "end": 341.86,
+          "probability": 0.6597
+        },
+        {
+          "word": "claim",
+          "start": 341.86,
+          "end": 342.32,
+          "probability": 0.9341
+        },
+        {
+          "word": "access",
+          "start": 342.32,
+          "end": 342.68,
+          "probability": 0.9863
+        },
+        {
+          "word": "profile",
+          "start": 342.68,
+          "end": 343.34,
+          "probability": 0.998
+        },
+        {
+          "word": "only",
+          "start": 343.34,
+          "end": 343.68,
+          "probability": 0.998
+        },
+        {
+          "word": "grants",
+          "start": 343.68,
+          "end": 344.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "access",
+          "start": 344.06,
+          "end": 344.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 344.52,
+          "end": 344.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "users",
+          "start": 344.72,
+          "end": 345.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 345.06,
+          "end": 345.3,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 345.3,
+          "end": 345.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 345.42,
+          "end": 345.62,
+          "probability": 0.999
+        },
+        {
+          "word": "group",
+          "start": 345.62,
+          "end": 345.94,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 345.94,
+          "end": 346.16,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 346.16,
+          "end": 346.28,
+          "probability": 0.999
+        },
+        {
+          "word": "owner.",
+          "start": 346.28,
+          "end": 346.58,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "start": 347.5,
+      "end": 350.62,
+      "start_formatted": "00:05:47.500",
+      "end_formatted": "00:05:50.620",
+      "text": "Betty starts a search to look for the claim another way.",
+      "words": [
+        {
+          "word": "Betty",
+          "start": 347.5,
+          "end": 348.06,
+          "probability": 0.9878
+        },
+        {
+          "word": "starts",
+          "start": 348.06,
+          "end": 348.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 348.52,
+          "end": 348.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "search",
+          "start": 348.7,
+          "end": 348.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 348.92,
+          "end": 349.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "look",
+          "start": 349.16,
+          "end": 349.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 349.36,
+          "end": 349.58,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 349.58,
+          "end": 349.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 349.72,
+          "end": 350.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "another",
+          "start": 350.0,
+          "end": 350.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "way.",
+          "start": 350.32,
+          "end": 350.62,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "start": 351.08,
+      "end": 354.16,
+      "start_formatted": "00:05:51.080",
+      "end_formatted": "00:05:54.160",
+      "text": "She enters Newton as the last name for the search.",
+      "words": [
+        {
+          "word": "She",
+          "start": 351.08,
+          "end": 351.64,
+          "probability": 0.999
+        },
+        {
+          "word": "enters",
+          "start": 351.64,
+          "end": 352.02,
+          "probability": 0.999
+        },
+        {
+          "word": "Newton",
+          "start": 352.02,
+          "end": 352.38,
+          "probability": 0.9312
+        },
+        {
+          "word": "as",
+          "start": 352.38,
+          "end": 352.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 352.66,
+          "end": 352.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "last",
+          "start": 352.78,
+          "end": 353.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "name",
+          "start": 353.12,
+          "end": 353.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 353.38,
+          "end": 353.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 353.66,
+          "end": 353.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "search.",
+          "start": 353.8,
+          "end": 354.16,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "start": 354.76,
+      "end": 358.32,
+      "start_formatted": "00:05:54.760",
+      "end_formatted": "00:05:58.320",
+      "text": "The search returns two claims where Ray Newton is a claimant.",
+      "words": [
+        {
+          "word": "The",
+          "start": 354.76,
+          "end": 355.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "search",
+          "start": 355.32,
+          "end": 355.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "returns",
+          "start": 355.6,
+          "end": 356.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 356.16,
+          "end": 356.4,
+          "probability": 0.9023
+        },
+        {
+          "word": "claims",
+          "start": 356.4,
+          "end": 356.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "where",
+          "start": 356.88,
+          "end": 357.12,
+          "probability": 0.9258
+        },
+        {
+          "word": "Ray",
+          "start": 357.12,
+          "end": 357.3,
+          "probability": 0.915
+        },
+        {
+          "word": "Newton",
+          "start": 357.3,
+          "end": 357.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 357.5,
+          "end": 357.74,
+          "probability": 0.9912
+        },
+        {
+          "word": "a",
+          "start": 357.74,
+          "end": 357.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "claimant.",
+          "start": 357.82,
+          "end": 358.32,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "start": 358.32,
+      "end": 364.6,
+      "start_formatted": "00:05:58.320",
+      "end_formatted": "00:06:04.600",
+      "text": "The claim that ends in 870, is not on the list because Stacey does not have access permissions",
+      "words": [
+        {
+          "word": "The",
+          "start": 358.32,
+          "end": 358.92,
+          "probability": 0.9019
+        },
+        {
+          "word": "claim",
+          "start": 358.92,
+          "end": 359.22,
+          "probability": 0.9917
+        },
+        {
+          "word": "that",
+          "start": 359.22,
+          "end": 359.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "ends",
+          "start": 359.38,
+          "end": 359.62,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 359.62,
+          "end": 359.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "870,",
+          "start": 359.76,
+          "end": 360.48,
+          "probability": 0.9785
+        },
+        {
+          "word": "is",
+          "start": 360.9,
+          "end": 361.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "not",
+          "start": 361.18,
+          "end": 361.42,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 361.42,
+          "end": 361.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 361.62,
+          "end": 361.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "list",
+          "start": 361.72,
+          "end": 362.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 362.06,
+          "end": 362.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "Stacey",
+          "start": 362.42,
+          "end": 362.88,
+          "probability": 0.7207
+        },
+        {
+          "word": "does",
+          "start": 362.88,
+          "end": 363.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "not",
+          "start": 363.16,
+          "end": 363.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 363.38,
+          "end": 363.64,
+          "probability": 1.0
+        },
+        {
+          "word": "access",
+          "start": 363.64,
+          "end": 364.02,
+          "probability": 0.9878
+        },
+        {
+          "word": "permissions",
+          "start": 364.02,
+          "end": 364.6,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "start": 364.6,
+      "end": 365.5,
+      "start_formatted": "00:06:04.600",
+      "end_formatted": "00:06:05.500",
+      "text": "for that claim.",
+      "words": [
+        {
+          "word": "for",
+          "start": 364.6,
+          "end": 364.9,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 364.9,
+          "end": 365.14,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 365.14,
+          "end": 365.5,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "start": 366.18,
+      "end": 368.04,
+      "start_formatted": "00:06:06.180",
+      "end_formatted": "00:06:08.040",
+      "text": "She resets the claim search.",
+      "words": [
+        {
+          "word": "She",
+          "start": 366.18,
+          "end": 366.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "resets",
+          "start": 366.74,
+          "end": 367.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 367.18,
+          "end": 367.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 367.34,
+          "end": 367.68,
+          "probability": 0.98
+        },
+        {
+          "word": "search.",
+          "start": 367.68,
+          "end": 368.04,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "start": 369.02,
+      "end": 372.6,
+      "start_formatted": "00:06:09.020",
+      "end_formatted": "00:06:12.600",
+      "text": "This time, she searches for the claim using the claim number.",
+      "words": [
+        {
+          "word": "This",
+          "start": 369.02,
+          "end": 369.58,
+          "probability": 0.999
+        },
+        {
+          "word": "time,",
+          "start": 369.58,
+          "end": 369.92,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 370.1,
+          "end": 370.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "searches",
+          "start": 370.38,
+          "end": 370.7,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 370.7,
+          "end": 371.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 371.0,
+          "end": 371.12,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 371.12,
+          "end": 371.4,
+          "probability": 1.0
+        },
+        {
+          "word": "using",
+          "start": 371.4,
+          "end": 371.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 371.74,
+          "end": 371.96,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 371.96,
+          "end": 372.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "number.",
+          "start": 372.24,
+          "end": 372.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "start": 373.24,
+      "end": 377.72,
+      "start_formatted": "00:06:13.240",
+      "end_formatted": "00:06:17.720",
+      "text": "Even using the claim number, the search returns no claims that match.",
+      "words": [
+        {
+          "word": "Even",
+          "start": 373.24,
+          "end": 373.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "using",
+          "start": 373.8,
+          "end": 374.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 374.2,
+          "end": 374.38,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 374.38,
+          "end": 374.64,
+          "probability": 1.0
+        },
+        {
+          "word": "number,",
+          "start": 374.64,
+          "end": 375.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 375.18,
+          "end": 375.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "search",
+          "start": 375.44,
+          "end": 375.7,
+          "probability": 1.0
+        },
+        {
+          "word": "returns",
+          "start": 375.7,
+          "end": 376.32,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 376.32,
+          "end": 376.6,
+          "probability": 0.999
+        },
+        {
+          "word": "claims",
+          "start": 376.6,
+          "end": 377.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 377.04,
+          "end": 377.3,
+          "probability": 1.0
+        },
+        {
+          "word": "match.",
+          "start": 377.3,
+          "end": 377.72,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "start": 377.92,
+      "end": 382.32,
+      "start_formatted": "00:06:17.920",
+      "end_formatted": "00:06:22.320",
+      "text": "Although the claim does exist, she does not have any permissions on the claim.",
+      "words": [
+        {
+          "word": "Although",
+          "start": 377.92,
+          "end": 378.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 378.48,
+          "end": 378.64,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 378.64,
+          "end": 378.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "does",
+          "start": 378.94,
+          "end": 379.2,
+          "probability": 1.0
+        },
+        {
+          "word": "exist,",
+          "start": 379.2,
+          "end": 379.7,
+          "probability": 1.0
+        },
+        {
+          "word": "she",
+          "start": 379.94,
+          "end": 380.2,
+          "probability": 0.999
+        },
+        {
+          "word": "does",
+          "start": 380.2,
+          "end": 380.38,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 380.38,
+          "end": 380.6,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 380.6,
+          "end": 380.8,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 380.8,
+          "end": 381.02,
+          "probability": 1.0
+        },
+        {
+          "word": "permissions",
+          "start": 381.02,
+          "end": 381.56,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 381.56,
+          "end": 381.84,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 381.84,
+          "end": 381.96,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 381.96,
+          "end": 382.32,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "start": 382.32,
+      "end": 386.36,
+      "start_formatted": "00:06:22.320",
+      "end_formatted": "00:06:26.360",
+      "text": "Not only can she not edit it, she cannot even view the claim.",
+      "words": [
+        {
+          "word": "Not",
+          "start": 382.32,
+          "end": 383.1,
+          "probability": 0.8149
+        },
+        {
+          "word": "only",
+          "start": 383.1,
+          "end": 383.44,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 383.44,
+          "end": 383.62,
+          "probability": 0.998
+        },
+        {
+          "word": "she",
+          "start": 383.62,
+          "end": 383.78,
+          "probability": 0.999
+        },
+        {
+          "word": "not",
+          "start": 383.78,
+          "end": 384.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "edit",
+          "start": 384.02,
+          "end": 384.3,
+          "probability": 0.998
+        },
+        {
+          "word": "it,",
+          "start": 384.3,
+          "end": 384.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "she",
+          "start": 384.76,
+          "end": 384.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "cannot",
+          "start": 384.9,
+          "end": 385.22,
+          "probability": 0.6816
+        },
+        {
+          "word": "even",
+          "start": 385.22,
+          "end": 385.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "view",
+          "start": 385.58,
+          "end": 385.82,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 385.82,
+          "end": 385.98,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 385.98,
+          "end": 386.36,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "start": 387.12,
+      "end": 389.0,
+      "start_formatted": "00:06:27.120",
+      "end_formatted": "00:06:29.000",
+      "text": "Stacey logs out of Claim Center.",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 387.12,
+          "end": 387.68,
+          "probability": 0.6812
+        },
+        {
+          "word": "logs",
+          "start": 387.68,
+          "end": 388.02,
+          "probability": 0.9248
+        },
+        {
+          "word": "out",
+          "start": 388.02,
+          "end": 388.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 388.22,
+          "end": 388.38,
+          "probability": 0.999
+        },
+        {
+          "word": "Claim",
+          "start": 388.38,
+          "end": 388.66,
+          "probability": 0.9033
+        },
+        {
+          "word": "Center.",
+          "start": 388.66,
+          "end": 389.0,
+          "probability": 0.957
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "start": 390.14,
+      "end": 392.6,
+      "start_formatted": "00:06:30.140",
+      "end_formatted": "00:06:32.600",
+      "text": "This is the end of the access control lists demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 389.9,
+          "end": 390.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "is",
+          "start": 390.18,
+          "end": 390.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 390.32,
+          "end": 390.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "end",
+          "start": 390.46,
+          "end": 390.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 390.74,
+          "end": 390.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 390.88,
+          "end": 391.02,
+          "probability": 0.999
+        },
+        {
+          "word": "access",
+          "start": 391.02,
+          "end": 391.44,
+          "probability": 0.5254
+        },
+        {
+          "word": "control",
+          "start": 391.44,
+          "end": 391.92,
+          "probability": 0.998
+        },
+        {
+          "word": "lists",
+          "start": 391.92,
+          "end": 392.26,
+          "probability": 0.9414
+        },
+        {
+          "word": "demonstration.",
+          "start": 392.26,
+          "end": 392.6,
+          "probability": 0.9902
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "start": 392.6,
+      "end": 393.0,
+      "start_formatted": "00:06:32.600",
+      "end_formatted": "00:06:33.000",
+      "text": "Stacey logs out of Claimountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "Stacey",
+          "start": 392.6,
+          "end": 392.6,
+          "probability": 0.0013
+        },
+        {
+          "word": "logs",
+          "start": 392.6,
+          "end": 392.6,
+          "probability": 0.0
+        },
+        {
+          "word": "out",
+          "start": 392.6,
+          "end": 392.6,
+          "probability": 0.0634
+        },
+        {
+          "word": "of",
+          "start": 392.6,
+          "end": 392.6,
+          "probability": 0.1604
+        },
+        {
+          "word": "Claimountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 392.6,
+          "end": 393.0,
+          "probability": 0.9043
+        }
+      ]
+    },
+    {
+      "id": 90,
+      "start": 392.98,
+      "end": 392.98,
+      "start_formatted": "00:06:32.980",
+      "end_formatted": "00:06:32.980",
+      "text": "",
+      "words": []
+    }
+  ]
+}

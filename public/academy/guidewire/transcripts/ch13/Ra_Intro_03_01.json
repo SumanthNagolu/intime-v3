@@ -1,0 +1,2411 @@
+{
+  "metadata": {
+    "chapter": "ch13",
+    "chapter_title": "Rating Introduction",
+    "filename": "Ra_Intro_03_01.mp4",
+    "video_stem": "Ra_Intro_03_01",
+    "duration_seconds": 169.24,
+    "duration_formatted": "00:02:49.240",
+    "segment_count": 21,
+    "word_count": 364,
+    "avg_confidence": 0.9247,
+    "transcription_time_seconds": 13.04,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:59:55.678337"
+  },
+  "full_text": "In the demo, we will look at the process used to export rate books to an Excel format, edit a rate table, and then import the updated rate table. Let's navigate to the rate book. Click the down arrow. Click rate books. Next, we will find the rate books for personal auto. Click the policy, line field. Select personal auto. Click the search button. We will work with the demo rating rate book. Notice that there are two editions of this rate book. Click the link for addition 2. Notice that this rate book is in an active status. This means that no changes can be made to the rate book. To change this rate book, I'll have to create a new edition. Click the Create new edition button. Click the Addition field. Type 3. The next step is to set when this rate book will become effective. Click the date lookup. Select the date when this rate book will be effective. For the purposes of this demo, I'll select the first day of the next month. Click the Update button. Notice this rate book is now in draft status. This will allow us to change the rates. I could edit the rates using the browser. However, I'm going to export the rate book and edit the rates using Excel. To do this, I'll click the export button. And then select, Export to spreadsheet. I'll download the spreadsheet by clicking the download button. And then, download spreadsheet. Now I can open the spreadsheet I downloaded in Excel. Notice that the first tab of this spreadsheet has details about this rate book. Click the tab for the base rates. Click the Base Rate field. Change the base rate to 94. Click the Save button. We now have to import the base rate change back in. To do this, return to the rate book. Click the Edit button. Select Base Rate. Click the Import button. Click the Browse button. Select the spreadsheet file. Click the Open button. Click OK. Click Update. Select the state. Let's confirm that the change imported. Click Base Rate. The base rate for that coverage is now 94. This completes this demo.  ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 8.16,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:08.160",
+      "text": "In the demo, we will look at the process used to export rate books to an Excel format, edit a rate table, and then import the updated rate table.",
+      "words": [
+        {
+          "word": "In",
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.1326
+        },
+        {
+          "word": "the",
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.2537
+        },
+        {
+          "word": "demo,",
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8267
+        },
+        {
+          "word": "we",
+          "start": 0.36,
+          "end": 0.58,
+          "probability": 0.9736
+        },
+        {
+          "word": "will",
+          "start": 0.58,
+          "end": 0.74,
+          "probability": 0.9858
+        },
+        {
+          "word": "look",
+          "start": 0.74,
+          "end": 0.92,
+          "probability": 0.9902
+        },
+        {
+          "word": "at",
+          "start": 0.92,
+          "end": 1.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 1.06,
+          "end": 1.18,
+          "probability": 0.9932
+        },
+        {
+          "word": "process",
+          "start": 1.18,
+          "end": 1.58,
+          "probability": 0.9844
+        },
+        {
+          "word": "used",
+          "start": 1.58,
+          "end": 2.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 2.02,
+          "end": 2.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "export",
+          "start": 2.26,
+          "end": 2.68,
+          "probability": 0.9829
+        },
+        {
+          "word": "rate",
+          "start": 2.68,
+          "end": 2.94,
+          "probability": 0.8257
+        },
+        {
+          "word": "books",
+          "start": 2.94,
+          "end": 3.32,
+          "probability": 0.5488
+        },
+        {
+          "word": "to",
+          "start": 3.32,
+          "end": 3.52,
+          "probability": 0.9849
+        },
+        {
+          "word": "an",
+          "start": 3.52,
+          "end": 3.68,
+          "probability": 0.9673
+        },
+        {
+          "word": "Excel",
+          "start": 3.68,
+          "end": 3.98,
+          "probability": 0.5693
+        },
+        {
+          "word": "format,",
+          "start": 3.98,
+          "end": 4.54,
+          "probability": 0.938
+        },
+        {
+          "word": "edit",
+          "start": 4.72,
+          "end": 5.0,
+          "probability": 0.8999
+        },
+        {
+          "word": "a",
+          "start": 5.0,
+          "end": 5.2,
+          "probability": 0.9805
+        },
+        {
+          "word": "rate",
+          "start": 5.2,
+          "end": 5.32,
+          "probability": 0.9126
+        },
+        {
+          "word": "table,",
+          "start": 5.32,
+          "end": 5.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "and",
+          "start": 5.88,
+          "end": 6.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "then",
+          "start": 6.14,
+          "end": 6.3,
+          "probability": 0.9893
+        },
+        {
+          "word": "import",
+          "start": 6.3,
+          "end": 6.68,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 6.68,
+          "end": 6.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "updated",
+          "start": 6.92,
+          "end": 7.42,
+          "probability": 0.979
+        },
+        {
+          "word": "rate",
+          "start": 7.42,
+          "end": 7.72,
+          "probability": 0.9741
+        },
+        {
+          "word": "table.",
+          "start": 7.72,
+          "end": 8.16,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 9.58,
+      "end": 14.76,
+      "start_formatted": "00:00:09.580",
+      "end_formatted": "00:00:14.760",
+      "text": "Let's navigate to the rate book. Click the down arrow. Click rate books.",
+      "words": [
+        {
+          "word": "Let's",
+          "start": 9.58,
+          "end": 10.18,
+          "probability": 0.9609
+        },
+        {
+          "word": "navigate",
+          "start": 10.18,
+          "end": 10.6,
+          "probability": 0.98
+        },
+        {
+          "word": "to",
+          "start": 10.6,
+          "end": 10.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 10.86,
+          "end": 10.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "rate",
+          "start": 10.98,
+          "end": 11.2,
+          "probability": 0.9038
+        },
+        {
+          "word": "book.",
+          "start": 11.2,
+          "end": 11.58,
+          "probability": 0.9629
+        },
+        {
+          "word": "Click",
+          "start": 11.86,
+          "end": 12.28,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 12.28,
+          "end": 12.42,
+          "probability": 0.9941
+        },
+        {
+          "word": "down",
+          "start": 12.42,
+          "end": 12.68,
+          "probability": 0.9595
+        },
+        {
+          "word": "arrow.",
+          "start": 12.68,
+          "end": 13.1,
+          "probability": 0.9888
+        },
+        {
+          "word": "Click",
+          "start": 13.48,
+          "end": 14.04,
+          "probability": 0.9741
+        },
+        {
+          "word": "rate",
+          "start": 14.04,
+          "end": 14.24,
+          "probability": 0.3887
+        },
+        {
+          "word": "books.",
+          "start": 14.24,
+          "end": 14.76,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 16.9,
+      "end": 24.86,
+      "start_formatted": "00:00:16.900",
+      "end_formatted": "00:00:24.860",
+      "text": "Next, we will find the rate books for personal auto. Click the policy, line field. Select personal auto.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 16.9,
+          "end": 17.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "we",
+          "start": 17.78,
+          "end": 18.0,
+          "probability": 0.9829
+        },
+        {
+          "word": "will",
+          "start": 18.0,
+          "end": 18.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "find",
+          "start": 18.16,
+          "end": 18.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 18.42,
+          "end": 18.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "rate",
+          "start": 18.6,
+          "end": 18.8,
+          "probability": 0.9849
+        },
+        {
+          "word": "books",
+          "start": 18.8,
+          "end": 19.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 19.2,
+          "end": 19.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "personal",
+          "start": 19.42,
+          "end": 19.84,
+          "probability": 0.6758
+        },
+        {
+          "word": "auto.",
+          "start": 19.84,
+          "end": 20.22,
+          "probability": 0.9609
+        },
+        {
+          "word": "Click",
+          "start": 20.62,
+          "end": 21.06,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 21.06,
+          "end": 21.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy,",
+          "start": 21.22,
+          "end": 21.72,
+          "probability": 0.7646
+        },
+        {
+          "word": "line",
+          "start": 21.92,
+          "end": 22.34,
+          "probability": 0.8926
+        },
+        {
+          "word": "field.",
+          "start": 22.34,
+          "end": 22.78,
+          "probability": 0.9878
+        },
+        {
+          "word": "Select",
+          "start": 23.4,
+          "end": 24.0,
+          "probability": 0.9736
+        },
+        {
+          "word": "personal",
+          "start": 24.0,
+          "end": 24.46,
+          "probability": 0.8159
+        },
+        {
+          "word": "auto.",
+          "start": 24.46,
+          "end": 24.86,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 26.46,
+      "end": 36.96,
+      "start_formatted": "00:00:26.460",
+      "end_formatted": "00:00:36.960",
+      "text": "Click the search button. We will work with the demo rating rate book. Notice that there are two editions of this rate book. Click the link for addition 2.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 26.46,
+          "end": 26.98,
+          "probability": 0.7578
+        },
+        {
+          "word": "the",
+          "start": 26.98,
+          "end": 27.16,
+          "probability": 0.9888
+        },
+        {
+          "word": "search",
+          "start": 27.16,
+          "end": 27.38,
+          "probability": 0.5884
+        },
+        {
+          "word": "button.",
+          "start": 27.38,
+          "end": 27.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "We",
+          "start": 29.2,
+          "end": 29.72,
+          "probability": 0.979
+        },
+        {
+          "word": "will",
+          "start": 29.72,
+          "end": 29.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "work",
+          "start": 29.9,
+          "end": 30.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 30.2,
+          "end": 30.38,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 30.38,
+          "end": 30.52,
+          "probability": 0.9814
+        },
+        {
+          "word": "demo",
+          "start": 30.52,
+          "end": 30.78,
+          "probability": 0.7871
+        },
+        {
+          "word": "rating",
+          "start": 30.78,
+          "end": 31.14,
+          "probability": 0.8711
+        },
+        {
+          "word": "rate",
+          "start": 31.14,
+          "end": 31.46,
+          "probability": 0.9531
+        },
+        {
+          "word": "book.",
+          "start": 31.46,
+          "end": 31.8,
+          "probability": 0.7227
+        },
+        {
+          "word": "Notice",
+          "start": 32.2,
+          "end": 32.72,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 32.72,
+          "end": 32.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "there",
+          "start": 32.96,
+          "end": 33.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "are",
+          "start": 33.18,
+          "end": 33.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 33.34,
+          "end": 33.52,
+          "probability": 0.7598
+        },
+        {
+          "word": "editions",
+          "start": 33.52,
+          "end": 33.96,
+          "probability": 0.9346
+        },
+        {
+          "word": "of",
+          "start": 33.96,
+          "end": 34.16,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 34.16,
+          "end": 34.36,
+          "probability": 0.9961
+        },
+        {
+          "word": "rate",
+          "start": 34.36,
+          "end": 34.58,
+          "probability": 0.9468
+        },
+        {
+          "word": "book.",
+          "start": 34.58,
+          "end": 34.92,
+          "probability": 0.9678
+        },
+        {
+          "word": "Click",
+          "start": 35.24,
+          "end": 35.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 35.68,
+          "end": 35.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "link",
+          "start": 35.84,
+          "end": 36.1,
+          "probability": 0.9888
+        },
+        {
+          "word": "for",
+          "start": 36.1,
+          "end": 36.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "addition",
+          "start": 36.32,
+          "end": 36.64,
+          "probability": 0.4053
+        },
+        {
+          "word": "2.",
+          "start": 36.64,
+          "end": 36.96,
+          "probability": 0.4438
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 38.9,
+      "end": 49.06,
+      "start_formatted": "00:00:38.900",
+      "end_formatted": "00:00:49.060",
+      "text": "Notice that this rate book is in an active status. This means that no changes can be made to the rate book. To change this rate book, I'll have to create a new edition.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 38.9,
+          "end": 39.42,
+          "probability": 0.9849
+        },
+        {
+          "word": "that",
+          "start": 39.42,
+          "end": 39.64,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 39.64,
+          "end": 39.86,
+          "probability": 0.9946
+        },
+        {
+          "word": "rate",
+          "start": 39.86,
+          "end": 40.14,
+          "probability": 0.9844
+        },
+        {
+          "word": "book",
+          "start": 40.14,
+          "end": 40.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "is",
+          "start": 40.44,
+          "end": 40.66,
+          "probability": 0.9604
+        },
+        {
+          "word": "in",
+          "start": 40.66,
+          "end": 40.8,
+          "probability": 0.9097
+        },
+        {
+          "word": "an",
+          "start": 40.8,
+          "end": 40.94,
+          "probability": 0.8838
+        },
+        {
+          "word": "active",
+          "start": 40.94,
+          "end": 41.24,
+          "probability": 0.9819
+        },
+        {
+          "word": "status.",
+          "start": 41.24,
+          "end": 41.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "This",
+          "start": 42.1,
+          "end": 42.54,
+          "probability": 0.9932
+        },
+        {
+          "word": "means",
+          "start": 42.54,
+          "end": 42.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 42.8,
+          "end": 43.04,
+          "probability": 0.999
+        },
+        {
+          "word": "no",
+          "start": 43.04,
+          "end": 43.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "changes",
+          "start": 43.22,
+          "end": 43.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "can",
+          "start": 43.66,
+          "end": 43.94,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 43.94,
+          "end": 44.14,
+          "probability": 0.999
+        },
+        {
+          "word": "made",
+          "start": 44.14,
+          "end": 44.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 44.4,
+          "end": 44.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 44.56,
+          "end": 44.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "rate",
+          "start": 44.7,
+          "end": 44.96,
+          "probability": 0.9946
+        },
+        {
+          "word": "book.",
+          "start": 44.96,
+          "end": 45.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "To",
+          "start": 45.64,
+          "end": 45.94,
+          "probability": 0.9946
+        },
+        {
+          "word": "change",
+          "start": 45.94,
+          "end": 46.3,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 46.3,
+          "end": 46.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "rate",
+          "start": 46.54,
+          "end": 46.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "book,",
+          "start": 46.78,
+          "end": 47.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "I'll",
+          "start": 47.34,
+          "end": 47.64,
+          "probability": 0.9868
+        },
+        {
+          "word": "have",
+          "start": 47.64,
+          "end": 47.8,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 47.8,
+          "end": 47.98,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 47.98,
+          "end": 48.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 48.26,
+          "end": 48.48,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 48.48,
+          "end": 48.64,
+          "probability": 0.999
+        },
+        {
+          "word": "edition.",
+          "start": 48.64,
+          "end": 49.06,
+          "probability": 0.9268
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 50.2,
+      "end": 56.36,
+      "start_formatted": "00:00:50.200",
+      "end_formatted": "00:00:56.360",
+      "text": "Click the Create new edition button. Click the Addition field. Type 3.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 50.2,
+          "end": 50.8,
+          "probability": 0.853
+        },
+        {
+          "word": "the",
+          "start": 50.8,
+          "end": 51.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "Create",
+          "start": 51.02,
+          "end": 51.36,
+          "probability": 0.5625
+        },
+        {
+          "word": "new",
+          "start": 51.36,
+          "end": 51.64,
+          "probability": 0.314
+        },
+        {
+          "word": "edition",
+          "start": 51.64,
+          "end": 52.06,
+          "probability": 0.4761
+        },
+        {
+          "word": "button.",
+          "start": 52.06,
+          "end": 52.42,
+          "probability": 0.9858
+        },
+        {
+          "word": "Click",
+          "start": 52.92,
+          "end": 53.42,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 53.42,
+          "end": 53.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "Addition",
+          "start": 53.64,
+          "end": 54.0,
+          "probability": 0.6528
+        },
+        {
+          "word": "field.",
+          "start": 54.0,
+          "end": 54.48,
+          "probability": 0.9614
+        },
+        {
+          "word": "Type",
+          "start": 55.4,
+          "end": 56.0,
+          "probability": 0.9844
+        },
+        {
+          "word": "3.",
+          "start": 56.0,
+          "end": 56.36,
+          "probability": 0.9336
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 57.1,
+      "end": 65.82,
+      "start_formatted": "00:00:57.100",
+      "end_formatted": "00:01:05.820",
+      "text": "The next step is to set when this rate book will become effective. Click the date lookup. Select the date when this rate book will be effective.",
+      "words": [
+        {
+          "word": "The",
+          "start": 57.1,
+          "end": 57.7,
+          "probability": 0.9863
+        },
+        {
+          "word": "next",
+          "start": 57.7,
+          "end": 58.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "step",
+          "start": 58.0,
+          "end": 58.36,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 58.36,
+          "end": 58.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 58.54,
+          "end": 58.68,
+          "probability": 0.998
+        },
+        {
+          "word": "set",
+          "start": 58.68,
+          "end": 58.92,
+          "probability": 0.9702
+        },
+        {
+          "word": "when",
+          "start": 58.92,
+          "end": 59.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 59.1,
+          "end": 59.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "rate",
+          "start": 59.36,
+          "end": 59.56,
+          "probability": 0.9121
+        },
+        {
+          "word": "book",
+          "start": 59.56,
+          "end": 59.82,
+          "probability": 0.748
+        },
+        {
+          "word": "will",
+          "start": 59.82,
+          "end": 60.1,
+          "probability": 0.999
+        },
+        {
+          "word": "become",
+          "start": 60.1,
+          "end": 60.38,
+          "probability": 0.998
+        },
+        {
+          "word": "effective.",
+          "start": 60.38,
+          "end": 60.84,
+          "probability": 0.9858
+        },
+        {
+          "word": "Click",
+          "start": 61.22,
+          "end": 61.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 61.68,
+          "end": 61.84,
+          "probability": 0.999
+        },
+        {
+          "word": "date",
+          "start": 61.84,
+          "end": 62.06,
+          "probability": 0.3528
+        },
+        {
+          "word": "lookup.",
+          "start": 62.06,
+          "end": 62.54,
+          "probability": 0.9209
+        },
+        {
+          "word": "Select",
+          "start": 63.02,
+          "end": 63.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 63.62,
+          "end": 63.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "date",
+          "start": 63.84,
+          "end": 64.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "when",
+          "start": 64.06,
+          "end": 64.28,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 64.28,
+          "end": 64.54,
+          "probability": 0.999
+        },
+        {
+          "word": "rate",
+          "start": 64.54,
+          "end": 64.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "book",
+          "start": 64.76,
+          "end": 65.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 65.04,
+          "end": 65.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 65.28,
+          "end": 65.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "effective.",
+          "start": 65.42,
+          "end": 65.82,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 65.82,
+      "end": 74.46,
+      "start_formatted": "00:01:05.820",
+      "end_formatted": "00:01:14.460",
+      "text": "For the purposes of this demo, I'll select the first day of the next month. Click the Update button.",
+      "words": [
+        {
+          "word": "For",
+          "start": 65.82,
+          "end": 66.7,
+          "probability": 0.8145
+        },
+        {
+          "word": "the",
+          "start": 66.7,
+          "end": 66.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "purposes",
+          "start": 66.86,
+          "end": 67.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 67.28,
+          "end": 67.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 67.54,
+          "end": 67.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "demo,",
+          "start": 67.72,
+          "end": 68.08,
+          "probability": 0.9893
+        },
+        {
+          "word": "I'll",
+          "start": 68.32,
+          "end": 68.62,
+          "probability": 0.9932
+        },
+        {
+          "word": "select",
+          "start": 68.62,
+          "end": 68.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 68.96,
+          "end": 69.12,
+          "probability": 0.999
+        },
+        {
+          "word": "first",
+          "start": 69.12,
+          "end": 69.38,
+          "probability": 0.96
+        },
+        {
+          "word": "day",
+          "start": 69.38,
+          "end": 69.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "of",
+          "start": 69.62,
+          "end": 69.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 69.78,
+          "end": 69.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "next",
+          "start": 69.88,
+          "end": 70.12,
+          "probability": 0.998
+        },
+        {
+          "word": "month.",
+          "start": 70.12,
+          "end": 70.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "Click",
+          "start": 72.98,
+          "end": 73.54,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 73.54,
+          "end": 73.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "Update",
+          "start": 73.72,
+          "end": 74.08,
+          "probability": 0.4834
+        },
+        {
+          "word": "button.",
+          "start": 74.08,
+          "end": 74.46,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 75.94,
+      "end": 89.04,
+      "start_formatted": "00:01:15.940",
+      "end_formatted": "00:01:29.040",
+      "text": "Notice this rate book is now in draft status. This will allow us to change the rates. I could edit the rates using the browser. However, I'm going to export the rate book and edit the rates using Excel.",
+      "words": [
+        {
+          "word": "Notice",
+          "start": 75.94,
+          "end": 76.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "this",
+          "start": 76.5,
+          "end": 76.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "rate",
+          "start": 76.78,
+          "end": 77.04,
+          "probability": 0.6304
+        },
+        {
+          "word": "book",
+          "start": 77.04,
+          "end": 77.28,
+          "probability": 0.5718
+        },
+        {
+          "word": "is",
+          "start": 77.28,
+          "end": 77.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "now",
+          "start": 77.5,
+          "end": 77.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 77.72,
+          "end": 78.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "draft",
+          "start": 78.0,
+          "end": 78.28,
+          "probability": 0.3877
+        },
+        {
+          "word": "status.",
+          "start": 78.28,
+          "end": 78.88,
+          "probability": 0.9956
+        },
+        {
+          "word": "This",
+          "start": 79.14,
+          "end": 79.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 79.68,
+          "end": 79.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "allow",
+          "start": 79.88,
+          "end": 80.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "us",
+          "start": 80.22,
+          "end": 80.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 80.5,
+          "end": 80.66,
+          "probability": 1.0
+        },
+        {
+          "word": "change",
+          "start": 80.66,
+          "end": 80.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 80.98,
+          "end": 81.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "rates.",
+          "start": 81.18,
+          "end": 81.56,
+          "probability": 0.9961
+        },
+        {
+          "word": "I",
+          "start": 82.0,
+          "end": 82.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "could",
+          "start": 82.54,
+          "end": 82.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "edit",
+          "start": 82.72,
+          "end": 82.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 82.98,
+          "end": 83.14,
+          "probability": 1.0
+        },
+        {
+          "word": "rates",
+          "start": 83.14,
+          "end": 83.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "using",
+          "start": 83.38,
+          "end": 83.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 83.78,
+          "end": 83.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "browser.",
+          "start": 83.96,
+          "end": 84.38,
+          "probability": 0.9521
+        },
+        {
+          "word": "However,",
+          "start": 84.68,
+          "end": 85.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "I'm",
+          "start": 85.4,
+          "end": 85.72,
+          "probability": 0.998
+        },
+        {
+          "word": "going",
+          "start": 85.72,
+          "end": 85.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 85.94,
+          "end": 86.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "export",
+          "start": 86.14,
+          "end": 86.6,
+          "probability": 0.9883
+        },
+        {
+          "word": "the",
+          "start": 86.6,
+          "end": 86.88,
+          "probability": 1.0
+        },
+        {
+          "word": "rate",
+          "start": 86.88,
+          "end": 87.08,
+          "probability": 0.9355
+        },
+        {
+          "word": "book",
+          "start": 87.08,
+          "end": 87.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 87.4,
+          "end": 87.66,
+          "probability": 0.998
+        },
+        {
+          "word": "edit",
+          "start": 87.66,
+          "end": 87.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 87.9,
+          "end": 88.08,
+          "probability": 1.0
+        },
+        {
+          "word": "rates",
+          "start": 88.08,
+          "end": 88.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "using",
+          "start": 88.34,
+          "end": 88.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "Excel.",
+          "start": 88.7,
+          "end": 89.04,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 91.16,
+      "end": 97.92,
+      "start_formatted": "00:01:31.160",
+      "end_formatted": "00:01:37.920",
+      "text": "To do this, I'll click the export button. And then select, Export to spreadsheet.",
+      "words": [
+        {
+          "word": "To",
+          "start": 91.16,
+          "end": 91.94,
+          "probability": 0.729
+        },
+        {
+          "word": "do",
+          "start": 91.94,
+          "end": 92.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "this,",
+          "start": 92.1,
+          "end": 92.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "I'll",
+          "start": 92.66,
+          "end": 92.94,
+          "probability": 0.9707
+        },
+        {
+          "word": "click",
+          "start": 92.94,
+          "end": 93.2,
+          "probability": 0.9702
+        },
+        {
+          "word": "the",
+          "start": 93.2,
+          "end": 93.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "export",
+          "start": 93.46,
+          "end": 93.9,
+          "probability": 0.4822
+        },
+        {
+          "word": "button.",
+          "start": 93.9,
+          "end": 94.3,
+          "probability": 0.9956
+        },
+        {
+          "word": "And",
+          "start": 95.02,
+          "end": 95.72,
+          "probability": 0.8604
+        },
+        {
+          "word": "then",
+          "start": 95.72,
+          "end": 95.94,
+          "probability": 0.9814
+        },
+        {
+          "word": "select,",
+          "start": 95.94,
+          "end": 96.52,
+          "probability": 0.9585
+        },
+        {
+          "word": "Export",
+          "start": 96.74,
+          "end": 97.22,
+          "probability": 0.2075
+        },
+        {
+          "word": "to",
+          "start": 97.22,
+          "end": 97.46,
+          "probability": 0.9644
+        },
+        {
+          "word": "spreadsheet.",
+          "start": 97.46,
+          "end": 97.92,
+          "probability": 0.5195
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 99.3,
+      "end": 105.74,
+      "start_formatted": "00:01:39.300",
+      "end_formatted": "00:01:45.740",
+      "text": "I'll download the spreadsheet by clicking the download button. And then, download spreadsheet.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 99.3,
+          "end": 100.08,
+          "probability": 0.9922
+        },
+        {
+          "word": "download",
+          "start": 100.08,
+          "end": 100.46,
+          "probability": 0.9785
+        },
+        {
+          "word": "the",
+          "start": 100.46,
+          "end": 100.78,
+          "probability": 0.9932
+        },
+        {
+          "word": "spreadsheet",
+          "start": 100.78,
+          "end": 101.3,
+          "probability": 0.9854
+        },
+        {
+          "word": "by",
+          "start": 101.3,
+          "end": 101.62,
+          "probability": 0.9922
+        },
+        {
+          "word": "clicking",
+          "start": 101.62,
+          "end": 101.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 101.94,
+          "end": 102.2,
+          "probability": 0.9951
+        },
+        {
+          "word": "download",
+          "start": 102.2,
+          "end": 102.58,
+          "probability": 0.8032
+        },
+        {
+          "word": "button.",
+          "start": 102.58,
+          "end": 103.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "And",
+          "start": 103.52,
+          "end": 103.94,
+          "probability": 0.9648
+        },
+        {
+          "word": "then,",
+          "start": 103.94,
+          "end": 104.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "download",
+          "start": 104.5,
+          "end": 105.0,
+          "probability": 0.7129
+        },
+        {
+          "word": "spreadsheet.",
+          "start": 105.0,
+          "end": 105.74,
+          "probability": 0.9414
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 108.24,
+      "end": 116.96,
+      "start_formatted": "00:01:48.240",
+      "end_formatted": "00:01:56.960",
+      "text": "Now I can open the spreadsheet I downloaded in Excel. Notice that the first tab of this spreadsheet has details about this rate book.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 108.24,
+          "end": 108.86,
+          "probability": 0.8975
+        },
+        {
+          "word": "I",
+          "start": 108.86,
+          "end": 109.08,
+          "probability": 0.9585
+        },
+        {
+          "word": "can",
+          "start": 109.08,
+          "end": 109.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "open",
+          "start": 109.28,
+          "end": 109.56,
+          "probability": 0.9893
+        },
+        {
+          "word": "the",
+          "start": 109.56,
+          "end": 109.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "spreadsheet",
+          "start": 109.76,
+          "end": 110.28,
+          "probability": 0.9663
+        },
+        {
+          "word": "I",
+          "start": 110.28,
+          "end": 110.62,
+          "probability": 0.9937
+        },
+        {
+          "word": "downloaded",
+          "start": 110.62,
+          "end": 111.2,
+          "probability": 0.998
+        },
+        {
+          "word": "in",
+          "start": 111.2,
+          "end": 111.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "Excel.",
+          "start": 111.48,
+          "end": 111.82,
+          "probability": 0.9468
+        },
+        {
+          "word": "Notice",
+          "start": 112.26,
+          "end": 112.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 112.88,
+          "end": 113.14,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 113.14,
+          "end": 113.32,
+          "probability": 0.998
+        },
+        {
+          "word": "first",
+          "start": 113.32,
+          "end": 113.58,
+          "probability": 0.9927
+        },
+        {
+          "word": "tab",
+          "start": 113.58,
+          "end": 113.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "of",
+          "start": 113.9,
+          "end": 114.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 114.08,
+          "end": 114.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "spreadsheet",
+          "start": 114.26,
+          "end": 114.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "has",
+          "start": 114.78,
+          "end": 115.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "details",
+          "start": 115.24,
+          "end": 115.68,
+          "probability": 0.998
+        },
+        {
+          "word": "about",
+          "start": 115.68,
+          "end": 116.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 116.06,
+          "end": 116.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "rate",
+          "start": 116.4,
+          "end": 116.64,
+          "probability": 0.9351
+        },
+        {
+          "word": "book.",
+          "start": 116.64,
+          "end": 116.96,
+          "probability": 0.6147
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 118.16,
+      "end": 127.92,
+      "start_formatted": "00:01:58.160",
+      "end_formatted": "00:02:07.920",
+      "text": "Click the tab for the base rates. Click the Base Rate field. Change the base rate to 94. Click the Save button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 118.16,
+          "end": 118.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 118.78,
+          "end": 118.96,
+          "probability": 1.0
+        },
+        {
+          "word": "tab",
+          "start": 118.96,
+          "end": 119.18,
+          "probability": 0.9678
+        },
+        {
+          "word": "for",
+          "start": 119.18,
+          "end": 119.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 119.48,
+          "end": 119.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 119.64,
+          "end": 119.9,
+          "probability": 0.8599
+        },
+        {
+          "word": "rates.",
+          "start": 119.9,
+          "end": 120.34,
+          "probability": 0.9956
+        },
+        {
+          "word": "Click",
+          "start": 120.86,
+          "end": 121.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 121.4,
+          "end": 121.58,
+          "probability": 1.0
+        },
+        {
+          "word": "Base",
+          "start": 121.58,
+          "end": 121.86,
+          "probability": 0.3005
+        },
+        {
+          "word": "Rate",
+          "start": 121.86,
+          "end": 122.1,
+          "probability": 0.8613
+        },
+        {
+          "word": "field.",
+          "start": 122.1,
+          "end": 122.48,
+          "probability": 0.9536
+        },
+        {
+          "word": "Change",
+          "start": 123.48,
+          "end": 124.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 124.1,
+          "end": 124.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 124.26,
+          "end": 124.56,
+          "probability": 0.6812
+        },
+        {
+          "word": "rate",
+          "start": 124.56,
+          "end": 124.78,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 124.78,
+          "end": 124.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "94.",
+          "start": 124.98,
+          "end": 125.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Click",
+          "start": 126.56,
+          "end": 127.18,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 127.18,
+          "end": 127.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Save",
+          "start": 127.36,
+          "end": 127.64,
+          "probability": 0.7944
+        },
+        {
+          "word": "button.",
+          "start": 127.64,
+          "end": 127.92,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 129.22,
+      "end": 137.1,
+      "start_formatted": "00:02:09.220",
+      "end_formatted": "00:02:17.100",
+      "text": "We now have to import the base rate change back in. To do this, return to the rate book. Click the Edit button.",
+      "words": [
+        {
+          "word": "We",
+          "start": 129.22,
+          "end": 129.94,
+          "probability": 0.7627
+        },
+        {
+          "word": "now",
+          "start": 129.94,
+          "end": 130.2,
+          "probability": 0.9927
+        },
+        {
+          "word": "have",
+          "start": 130.2,
+          "end": 130.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 130.44,
+          "end": 130.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "import",
+          "start": 130.6,
+          "end": 130.92,
+          "probability": 0.9668
+        },
+        {
+          "word": "the",
+          "start": 130.92,
+          "end": 131.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "base",
+          "start": 131.12,
+          "end": 131.38,
+          "probability": 0.6787
+        },
+        {
+          "word": "rate",
+          "start": 131.38,
+          "end": 131.64,
+          "probability": 0.957
+        },
+        {
+          "word": "change",
+          "start": 131.64,
+          "end": 131.92,
+          "probability": 0.9399
+        },
+        {
+          "word": "back",
+          "start": 131.92,
+          "end": 132.34,
+          "probability": 0.9678
+        },
+        {
+          "word": "in.",
+          "start": 132.34,
+          "end": 132.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "To",
+          "start": 132.98,
+          "end": 133.34,
+          "probability": 0.9805
+        },
+        {
+          "word": "do",
+          "start": 133.34,
+          "end": 133.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "this,",
+          "start": 133.54,
+          "end": 133.88,
+          "probability": 0.998
+        },
+        {
+          "word": "return",
+          "start": 134.06,
+          "end": 134.46,
+          "probability": 0.9482
+        },
+        {
+          "word": "to",
+          "start": 134.46,
+          "end": 134.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 134.68,
+          "end": 134.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "rate",
+          "start": 134.8,
+          "end": 135.02,
+          "probability": 0.8354
+        },
+        {
+          "word": "book.",
+          "start": 135.02,
+          "end": 135.42,
+          "probability": 0.8472
+        },
+        {
+          "word": "Click",
+          "start": 135.7,
+          "end": 136.26,
+          "probability": 0.9604
+        },
+        {
+          "word": "the",
+          "start": 136.26,
+          "end": 136.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "Edit",
+          "start": 136.44,
+          "end": 136.7,
+          "probability": 0.3779
+        },
+        {
+          "word": "button.",
+          "start": 136.7,
+          "end": 137.1,
+          "probability": 0.959
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 138.3,
+      "end": 144.86,
+      "start_formatted": "00:02:18.300",
+      "end_formatted": "00:02:24.860",
+      "text": "Select Base Rate. Click the Import button. Click the Browse button.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 138.3,
+          "end": 139.02,
+          "probability": 0.9854
+        },
+        {
+          "word": "Base",
+          "start": 139.02,
+          "end": 139.38,
+          "probability": 0.707
+        },
+        {
+          "word": "Rate.",
+          "start": 139.38,
+          "end": 139.7,
+          "probability": 0.8149
+        },
+        {
+          "word": "Click",
+          "start": 140.76,
+          "end": 141.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 141.48,
+          "end": 141.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "Import",
+          "start": 141.66,
+          "end": 142.06,
+          "probability": 0.9185
+        },
+        {
+          "word": "button.",
+          "start": 142.06,
+          "end": 142.42,
+          "probability": 0.9756
+        },
+        {
+          "word": "Click",
+          "start": 143.28,
+          "end": 144.0,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 144.0,
+          "end": 144.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "Browse",
+          "start": 144.18,
+          "end": 144.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "button.",
+          "start": 144.56,
+          "end": 144.86,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 146.82,
+      "end": 155.44,
+      "start_formatted": "00:02:26.820",
+      "end_formatted": "00:02:35.440",
+      "text": "Select the spreadsheet file. Click the Open button. Click OK. Click Update.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 146.82,
+          "end": 147.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 147.54,
+          "end": 147.72,
+          "probability": 0.999
+        },
+        {
+          "word": "spreadsheet",
+          "start": 147.72,
+          "end": 148.08,
+          "probability": 0.4653
+        },
+        {
+          "word": "file.",
+          "start": 148.08,
+          "end": 148.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "Click",
+          "start": 149.26,
+          "end": 149.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 149.94,
+          "end": 150.1,
+          "probability": 0.998
+        },
+        {
+          "word": "Open",
+          "start": 150.1,
+          "end": 150.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "button.",
+          "start": 150.36,
+          "end": 150.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "Click",
+          "start": 151.8,
+          "end": 152.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "OK.",
+          "start": 152.52,
+          "end": 152.78,
+          "probability": 0.958
+        },
+        {
+          "word": "Click",
+          "start": 154.42,
+          "end": 155.14,
+          "probability": 0.998
+        },
+        {
+          "word": "Update.",
+          "start": 155.14,
+          "end": 155.44,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 155.44,
+      "end": 155.6,
+      "start_formatted": "00:02:35.440",
+      "end_formatted": "00:02:35.600",
+      "text": "Select the",
+      "words": [
+        {
+          "word": "Select",
+          "start": 155.44,
+          "end": 155.6,
+          "probability": 0.0002
+        },
+        {
+          "word": "the",
+          "start": 155.6,
+          "end": 155.6,
+          "probability": 0.3154
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 155.6,
+      "end": 161.7,
+      "start_formatted": "00:02:35.600",
+      "end_formatted": "00:02:41.700",
+      "text": "state. Let's confirm that the change imported. Click Base Rate.",
+      "words": [
+        {
+          "word": "state.",
+          "start": 155.6,
+          "end": 155.6,
+          "probability": 0.0075
+        },
+        {
+          "word": "Let's",
+          "start": 157.92,
+          "end": 158.56,
+          "probability": 0.7451
+        },
+        {
+          "word": "confirm",
+          "start": 158.56,
+          "end": 158.88,
+          "probability": 0.9883
+        },
+        {
+          "word": "that",
+          "start": 158.88,
+          "end": 159.1,
+          "probability": 0.9785
+        },
+        {
+          "word": "the",
+          "start": 159.1,
+          "end": 159.22,
+          "probability": 0.9873
+        },
+        {
+          "word": "change",
+          "start": 159.22,
+          "end": 159.54,
+          "probability": 0.9712
+        },
+        {
+          "word": "imported.",
+          "start": 159.54,
+          "end": 160.02,
+          "probability": 0.9399
+        },
+        {
+          "word": "Click",
+          "start": 160.52,
+          "end": 161.08,
+          "probability": 0.9688
+        },
+        {
+          "word": "Base",
+          "start": 161.08,
+          "end": 161.4,
+          "probability": 0.2581
+        },
+        {
+          "word": "Rate.",
+          "start": 161.4,
+          "end": 161.7,
+          "probability": 0.8384
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 162.88,
+      "end": 167.86,
+      "start_formatted": "00:02:42.880",
+      "end_formatted": "00:02:47.860",
+      "text": "The base rate for that coverage is now 94. This completes this demo.",
+      "words": [
+        {
+          "word": "The",
+          "start": 162.88,
+          "end": 163.52,
+          "probability": 0.9619
+        },
+        {
+          "word": "base",
+          "start": 163.52,
+          "end": 163.76,
+          "probability": 0.8745
+        },
+        {
+          "word": "rate",
+          "start": 163.76,
+          "end": 164.02,
+          "probability": 0.9883
+        },
+        {
+          "word": "for",
+          "start": 164.02,
+          "end": 164.2,
+          "probability": 0.9907
+        },
+        {
+          "word": "that",
+          "start": 164.2,
+          "end": 164.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "coverage",
+          "start": 164.4,
+          "end": 164.9,
+          "probability": 0.9878
+        },
+        {
+          "word": "is",
+          "start": 164.9,
+          "end": 165.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "now",
+          "start": 165.14,
+          "end": 165.38,
+          "probability": 0.9868
+        },
+        {
+          "word": "94.",
+          "start": 165.38,
+          "end": 165.94,
+          "probability": 0.9824
+        },
+        {
+          "word": "This",
+          "start": 166.4,
+          "end": 166.9,
+          "probability": 0.9683
+        },
+        {
+          "word": "completes",
+          "start": 166.9,
+          "end": 167.36,
+          "probability": 0.9829
+        },
+        {
+          "word": "this",
+          "start": 167.36,
+          "end": 167.62,
+          "probability": 0.9849
+        },
+        {
+          "word": "demo.",
+          "start": 167.62,
+          "end": 167.86,
+          "probability": 0.979
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 167.86,
+      "end": 167.86,
+      "start_formatted": "00:02:47.860",
+      "end_formatted": "00:02:47.860",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 20,
+      "start": 169.24,
+      "end": 169.24,
+      "start_formatted": "00:02:49.240",
+      "end_formatted": "00:02:49.240",
+      "text": "",
+      "words": []
+    }
+  ]
+}

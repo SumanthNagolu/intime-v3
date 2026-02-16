@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-14",
+    "slide_count": 24,
+    "slides_with_text": 22,
+    "total_words": 1282,
+    "avg_confidence": 86.39,
+    "processing_time_seconds": 9.39,
+    "extracted_at": "2026-02-15T18:21:52.774285"
+  },
+  "full_text": "Message Payload Transformation\n\nLesson\nobjectives ¢ Describe and configure the plugin used to\n\ntransform a payload\n\n* Configure a message reference value used\nby Guidewire and external system\n\n* Transform a message payload\n\n| Use case\n\n¢ The bank savings account\nverification message payload has a\ntoken that needs to be replaced with\nthe age of the message\n* Compare the time the message was\ncreated to the current time\n« Areference value needs to be\nadded to the payload to help identify\nthe message being sent to the\nexternal system\n\nGi\nDesign approach\n\n1. Create message request plugin\nclass\n\nCreate plugin registry\nConfigure the plugin\n\nConfigure the destination\n\na Fe N\n\nDeploy changes\n\n| Guidewire servers and messaging transactions\n\nDY) .\nEvent triggering & ¥ Sending message &\nMessage generation . Payload Process synchronous\n\ni ») transformation acknowled,\nigment\nA (event fired rules) (request plugin) (transport plugin)\n\n|\n\nProcess asynchronous\nacknowledgement\n\n¢ All activity from payload transformation takes place in transaction 2\n* Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back\n\nPayload late binding Gi\n\nA late binding value (token) is:\n+ Amessage payload value that cannot be determined when the payload is generated (event-time)\n\n+ Such a value is obtained and substituted in the payload right before the message is sent (send-time)\n\n* The message request plugin:\n+ Responsible for replacing all late binding tokens with actual values in an outbound message\n\n*** Stage 3(a) -- Transforming the message payload with\n\nlate binding ***\nRequest plugin: BankAccountVerificationRequest —\n\nbeforeSend()\nReplaced token <@@ageOfMessageInSeconds@@> with value 3\n\nReturning payload string\n\ndam\n\nReplace token\nwith actual age\nin seconds\n\nRequest (CH),\n\nPlugin t re5\n\n| SenderReflD\n\n* Optional message identifier\n\n¢ Determined by Guidewire, but in some cases, the\nexternal system determines the SenderReflD\n\n¢ Used by:\n\n* The external system to identify which request\n\nmessage it is responding to\n\nGi\n\nMessage (ab_message) (delegates to KeyableBean)\n> Description\n\nAttributes: Extendable”, Final”, Keyed’, Sourceable”\n> Concrete FK references:\nShow user interface details on all fields\n\nFields | Unique Keys for Mes\n\nFields\n\nSenderReflD oichor (6!) wate)\nOptional sender reference set at message send time.\n\n* Guidewire to look up a corresponding pending asynchronous request message\n\n« System administrator to\nidentify failed messages\n\n@.- seca oe a\n\n(G P+ arn\nSystem\n\ntrancport\n\nPlugil\n\nRequest plugin\n\n| Message request plugin Gi\n\nequest\n\nfe Payload\n\ntransformation\n\nExternal\na System\nPlugin\n* Called before the payload is sent by + Transforms the payload\ntransport plugin + Sets late binding value(s)\n* Sets the SenderReflD on the message object * Optionally, adds the SenderRefID value to the\n\nmessage payload\n\n| Create a message request plugin class Gi\n\nUse a package naming convention recommendation:\n\n* <company>.<app_code>.messaging.<functional_area>\n\n© bankAccountVerficationRequestgs\n\n=>\n\ne\neo\neo\neo\n\noe\n\nPackage trainingepp.messaging.bank\n\nclass BankAccountVerificationRequest implements MessageRequest {\n\nGParam(\"aMessage\", \"Message object sent by event fired rule\")\nGReturns(\"Payload, transformed or not\")\n\noverride function beforeSend(aMessage : Message) : String (...)\noverride function afterSend(p0 : Message) (...)\n\noverride function resume() (...}\n\noverride property set DestinationID(destinationID : int) (...)\n\noverride function shutdown() (...)\n\noverride function suspend() (...)\n\nSet the SenderReflD Gi\n\n17 @ override function beforeSend(aMessage : Message) : String {\n\n—P 19 if (aMessage.SenderRefID == null) {\n=> 20 aMessage.SenderRefID = aMessage.PublicID\n\n}\n\n¢ You must ensure that your beforeSend method implementation is idempotent,\nwhich means that it could be called multiple times and have the same effect.\n\n* Set the SenderReflD only once for a new message\n\n| Transform the payload Gi\n\n—> var transformedPayload = aMessage.Payload\n—> if ((aMessage.MessageRoot as BankAccount).AccountType == BankAccountType.TC SAVINGS) {\n> 26 + aMessage.SenderRef ID\n=> 2 var ageInSeconds = String. valueOf(DateUtil. secondsSince (aMessage.CreationTime) }\n\n29 var token = \"<@¢ageOfMessageInSeconds@@>\"\n\nif (transformedPayload.contains(token)) {\n\n1 transformedPayload = transformedPayload.replaceFirst (token, ageInSeconds)\n\n2 }\n—> return transformedPayload\n\n4 }\n\ncontact, ab:5\n. bankName,ACME Credit Union\n* The beforeSend method should not modify the routingNunber, 123-987\nH accountNumber, 345678901\nmessage payload directly\n\naccountly\n\n¢ It should return a transformed payload\n\n| Create plugin registry G\n\n1@ AuthenticationSourceCreatorPlugin.gwp 6 Cut CtrleX | (©) Groovy Class\n\n@ BackgroundTaskFeiloverPlugin.gwp [i copy cris | i File v\nd BackgroundTaskLoadBalancingPlugin.gwp Copy Path CtiieShifteC | i Scratch File Ctrl Alt+Shift+Insert_|\n\n& BankAccountVerificationRequest.gwp Copy Reference CirleAiteShitt+c |B Package G\n\n1 BankdccountVeificationTrensport.gup Lit Poste cotev | HTML re\n\n\" Name BankAccountVerificationRequest\n\nInterface: MessageRequest\n\n(0K Cancel\n\n* configuration.config.Plugins.registry\n* Specify a new request plugin registry entry name\n* Specify the interface to be implemented\n¢ Add the type of plugin to be implemented in the plugin name\n\n| Configure the plugin\n\n1 BankAccountVeiticationRequest.gwp\nName: | BankdAccountVetfcationRequest\n\nInterface: | MessageRequest\n\nGosy Class:\nTEE Environment:\n\nServer:\n\n‘Add Java Plugin\nAdd OSGi Plugin\n\nParameters:\n\n« Add Gosu Plugin\n* Optionally, select Java or OSGi plugin\n\n* Click the ellipse (...) and select the plugin\n\nimplementation class in the dialog\n\ntrainingapp.messaging.bank. BankAccountVerificationRequest\n\nName Value Environment Server\n\nBi Select Gosu Class\n\nSearch by Name | Project\n\nInclude non-project classes\n\n(Q BankAccountVeri ficationRequest]\n\n°o\n\n| Configure the destination Gi\n\nseh messaging-configam!\n\nDefault Server:\n\nMessaging Config: Default\n\nho\n1D, Name\n\n65 _Java.MessageDestination.Email.Name\n\n70 _Java.MessageDestination PolicySystemTransport:Name\n\nTl Java.MessageDestination.ClaimSystemTransport.Name\n\n72 Java.MessageDestination BilingSystemTransport.Name\n\n324\n\nJava.MessageDestination.DocumentStore Name\n\n‘Vendor Recommendation\nLegal Case Report\n\nSafe Ordering Demo\nMessage Generator\nFraud Check\n\n¢ Navigate to:\n\n¢ configuration.config.Messaging.messaging-config.xml\n\n|\nyy +\n10: B Z] 1 Disable destination\n‘Name: Bank Account Verification\n‘Server, ‘Host Name: Y\nTransport Plugin: BankAccountVerificationTransport\nAfter Send Plugin:\nReoly Plugin;\n\n¢ The destination must point to a plugin registry element that references the\nappropriate Message Request plugin\n\n| Deploy code changes\n\nNew request plugin class\nNew or modified plugin registry\n\nNew or modified destination\n\nTools VCS Window Help\nD> Run ‘Server’ Shift+F10\n& Debug ‘Server’ ‘Shift+ F9\n\nD Run... Alt+Shift+F10\n& Debug... Alt+Shift+F9\n\\m Attach to Local Process...\n\n[>> Edit Configurations...\n\nBl import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified request plugin class\n\nTools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD Run...\n\nWE Debug...\n\n2x Attach to Local Process...\n\n[> Edit Configurations...\n\nB] Import Test Results\n\nI Stop ‘Server’\n\nEP show Running List\n\n| Demonstration G\n\nExamine message payload transformation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\na With regards to payload generation and payload transformation:\n\noo A) Onwhich server does each take place?\n\nB) At what point in time does each take place?\n\nSeo e Soo e esses see sen\n\nAnswer Gi\n\na With regards to payload generation and payload transformation:\n“ A\nB\n\nOn which server does each take place?\n\nAt what point in time does each take place?\n\nA) Payload generation occurs on the application/UI server. Payload transformation\noccurs on the batch/integration server.\n\nB) Payload generation occurs during Event Fired rules (right after the triggering event\noccurs). Payload transformation occurs right before the message is sent (in the\nrequest plugin's beforeSend method.\n\nSoo ee See eo eS se ese\n\nQuestion\n\n_— — Under what circumstance would you need to late bind a message\n¢ payload?\n\n¢\n¢\n\nSeo e Soo e esses see sen\n\nAnswer\n\n_— — Under what circumstance would you need to late bind a message\nY payload?\n7\n\nYou would need to late bind a message if information that needs to go in the message\npayload is not known at the time the message payload is generated in Event Fired\nrules.\n\nSoo ee See eo eS se ese\n\nLesson\nobjectives ¢ Describe and configure the plugin used to\nreview transform a payload\n\n* Configure a message reference value used\nby Guidewire and external system\n* Transform a message payload\n\n| Student exercise\n\nConfigure message payload\ntransformation",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Message Payload Transformation",
+      "word_count": 3,
+      "avg_confidence": 95.25,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe and configure the plugin used to\n\ntransform a payload\n\n* Configure a message reference value used\nby Guidewire and external system\n\n* Transform a message payload",
+      "word_count": 30,
+      "avg_confidence": 89.8,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Use case\n\n¢ The bank savings account\nverification message payload has a\ntoken that needs to be replaced with\nthe age of the message\n* Compare the time the message was\ncreated to the current time\n« Areference value needs to be\nadded to the payload to help identify\nthe message being sent to the\nexternal system\n\nGi\nDesign approach\n\n1. Create message request plugin\nclass\n\nCreate plugin registry\nConfigure the plugin\n\nConfigure the destination\n\na Fe N\n\nDeploy changes",
+      "word_count": 81,
+      "avg_confidence": 91.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Guidewire servers and messaging transactions\n\nDY) .\nEvent triggering & ¥ Sending message &\nMessage generation . Payload Process synchronous\n\ni ») transformation acknowled,\nigment\nA (event fired rules) (request plugin) (transport plugin)\n\n|\n\nProcess asynchronous\nacknowledgement\n\n¢ All activity from payload transformation takes place in transaction 2\n* Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back",
+      "word_count": 69,
+      "avg_confidence": 88.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Payload late binding Gi\n\nA late binding value (token) is:\n+ Amessage payload value that cannot be determined when the payload is generated (event-time)\n\n+ Such a value is obtained and substituted in the payload right before the message is sent (send-time)\n\n* The message request plugin:\n+ Responsible for replacing all late binding tokens with actual values in an outbound message\n\n*** Stage 3(a) -- Transforming the message payload with\n\nlate binding ***\nRequest plugin: BankAccountVerificationRequest —\n\nbeforeSend()\nReplaced token <@@ageOfMessageInSeconds@@> with value 3\n\nReturning payload string\n\ndam\n\nReplace token\nwith actual age\nin seconds\n\nRequest (CH),\n\nPlugin t re5",
+      "word_count": 101,
+      "avg_confidence": 90.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| SenderReflD\n\n* Optional message identifier\n\n¢ Determined by Guidewire, but in some cases, the\nexternal system determines the SenderReflD\n\n¢ Used by:\n\n* The external system to identify which request\n\nmessage it is responding to\n\nGi\n\nMessage (ab_message) (delegates to KeyableBean)\n> Description\n\nAttributes: Extendable”, Final”, Keyed’, Sourceable”\n> Concrete FK references:\nShow user interface details on all fields\n\nFields | Unique Keys for Mes\n\nFields\n\nSenderReflD oichor (6!) wate)\nOptional sender reference set at message send time.\n\n* Guidewire to look up a corresponding pending asynchronous request message\n\n« System administrator to\nidentify failed messages\n\n@.- seca oe a\n\n(G P+ arn\nSystem\n\ntrancport\n\nPlugil",
+      "word_count": 107,
+      "avg_confidence": 83.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Request plugin",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Message request plugin Gi\n\nequest\n\nfe Payload\n\ntransformation\n\nExternal\na System\nPlugin\n* Called before the payload is sent by + Transforms the payload\ntransport plugin + Sets late binding value(s)\n* Sets the SenderReflD on the message object * Optionally, adds the SenderRefID value to the\n\nmessage payload",
+      "word_count": 50,
+      "avg_confidence": 86.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Create a message request plugin class Gi\n\nUse a package naming convention recommendation:\n\n* <company>.<app_code>.messaging.<functional_area>\n\n© bankAccountVerficationRequestgs\n\n=>\n\ne\neo\neo\neo\n\noe\n\nPackage trainingepp.messaging.bank\n\nclass BankAccountVerificationRequest implements MessageRequest {\n\nGParam(\"aMessage\", \"Message object sent by event fired rule\")\nGReturns(\"Payload, transformed or not\")\n\noverride function beforeSend(aMessage : Message) : String (...)\noverride function afterSend(p0 : Message) (...)\n\noverride function resume() (...}\n\noverride property set DestinationID(destinationID : int) (...)\n\noverride function shutdown() (...)\n\noverride function suspend() (...)",
+      "word_count": 76,
+      "avg_confidence": 78.53,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Set the SenderReflD Gi\n\n17 @ override function beforeSend(aMessage : Message) : String {\n\n—P 19 if (aMessage.SenderRefID == null) {\n=> 20 aMessage.SenderRefID = aMessage.PublicID\n\n}\n\n¢ You must ensure that your beforeSend method implementation is idempotent,\nwhich means that it could be called multiple times and have the same effect.\n\n* Set the SenderReflD only once for a new message",
+      "word_count": 62,
+      "avg_confidence": 87.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Transform the payload Gi\n\n—> var transformedPayload = aMessage.Payload\n—> if ((aMessage.MessageRoot as BankAccount).AccountType == BankAccountType.TC SAVINGS) {\n> 26 + aMessage.SenderRef ID\n=> 2 var ageInSeconds = String. valueOf(DateUtil. secondsSince (aMessage.CreationTime) }\n\n29 var token = \"<@¢ageOfMessageInSeconds@@>\"\n\nif (transformedPayload.contains(token)) {\n\n1 transformedPayload = transformedPayload.replaceFirst (token, ageInSeconds)\n\n2 }\n—> return transformedPayload\n\n4 }\n\ncontact, ab:5\n. bankName,ACME Credit Union\n* The beforeSend method should not modify the routingNunber, 123-987\nH accountNumber, 345678901\nmessage payload directly\n\naccountly\n\n¢ It should return a transformed payload",
+      "word_count": 85,
+      "avg_confidence": 78.35,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Create plugin registry G\n\n1@ AuthenticationSourceCreatorPlugin.gwp 6 Cut CtrleX | (©) Groovy Class\n\n@ BackgroundTaskFeiloverPlugin.gwp [i copy cris | i File v\nd BackgroundTaskLoadBalancingPlugin.gwp Copy Path CtiieShifteC | i Scratch File Ctrl Alt+Shift+Insert_|\n\n& BankAccountVerificationRequest.gwp Copy Reference CirleAiteShitt+c |B Package G\n\n1 BankdccountVeificationTrensport.gup Lit Poste cotev | HTML re\n\n\" Name BankAccountVerificationRequest\n\nInterface: MessageRequest\n\n(0K Cancel\n\n* configuration.config.Plugins.registry\n* Specify a new request plugin registry entry name\n* Specify the interface to be implemented\n¢ Add the type of plugin to be implemented in the plugin name",
+      "word_count": 88,
+      "avg_confidence": 70.46,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Configure the plugin\n\n1 BankAccountVeiticationRequest.gwp\nName: | BankdAccountVetfcationRequest\n\nInterface: | MessageRequest\n\nGosy Class:\nTEE Environment:\n\nServer:\n\n‘Add Java Plugin\nAdd OSGi Plugin\n\nParameters:\n\n« Add Gosu Plugin\n* Optionally, select Java or OSGi plugin\n\n* Click the ellipse (...) and select the plugin\n\nimplementation class in the dialog\n\ntrainingapp.messaging.bank. BankAccountVerificationRequest\n\nName Value Environment Server\n\nBi Select Gosu Class\n\nSearch by Name | Project\n\nInclude non-project classes\n\n(Q BankAccountVeri ficationRequest]\n\n°o",
+      "word_count": 71,
+      "avg_confidence": 82.12,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Configure the destination Gi\n\nseh messaging-configam!\n\nDefault Server:\n\nMessaging Config: Default\n\nho\n1D, Name\n\n65 _Java.MessageDestination.Email.Name\n\n70 _Java.MessageDestination PolicySystemTransport:Name\n\nTl Java.MessageDestination.ClaimSystemTransport.Name\n\n72 Java.MessageDestination BilingSystemTransport.Name\n\n324\n\nJava.MessageDestination.DocumentStore Name\n\n‘Vendor Recommendation\nLegal Case Report\n\nSafe Ordering Demo\nMessage Generator\nFraud Check\n\n¢ Navigate to:\n\n¢ configuration.config.Messaging.messaging-config.xml\n\n|\nyy +\n10: B Z] 1 Disable destination\n‘Name: Bank Account Verification\n‘Server, ‘Host Name: Y\nTransport Plugin: BankAccountVerificationTransport\nAfter Send Plugin:\nReoly Plugin;\n\n¢ The destination must point to a plugin registry element that references the\nappropriate Message Request plugin",
+      "word_count": 87,
+      "avg_confidence": 75.6,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Deploy code changes\n\nNew request plugin class\nNew or modified plugin registry\n\nNew or modified destination\n\nTools VCS Window Help\nD> Run ‘Server’ Shift+F10\n& Debug ‘Server’ ‘Shift+ F9\n\nD Run... Alt+Shift+F10\n& Debug... Alt+Shift+F9\n\\m Attach to Local Process...\n\n[>> Edit Configurations...\n\nBl import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified request plugin class\n\nTools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD Run...\n\nWE Debug...\n\n2x Attach to Local Process...\n\n[> Edit Configurations...\n\nB] Import Test Results\n\nI Stop ‘Server’\n\nEP show Running List",
+      "word_count": 97,
+      "avg_confidence": 78.69,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\n\nExamine message payload transformation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question\n\na With regards to payload generation and payload transformation:\n\noo A) Onwhich server does each take place?\n\nB) At what point in time does each take place?\n\nSeo e Soo e esses see sen",
+      "word_count": 35,
+      "avg_confidence": 90.75,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer Gi\n\na With regards to payload generation and payload transformation:\n“ A\nB\n\nOn which server does each take place?\n\nAt what point in time does each take place?\n\nA) Payload generation occurs on the application/UI server. Payload transformation\noccurs on the batch/integration server.\n\nB) Payload generation occurs during Event Fired rules (right after the triggering event\noccurs). Payload transformation occurs right before the message is sent (in the\nrequest plugin's beforeSend method.\n\nSoo ee See eo eS se ese",
+      "word_count": 81,
+      "avg_confidence": 87.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question\n\n_— — Under what circumstance would you need to late bind a message\n¢ payload?\n\n¢\n¢\n\nSeo e Soo e esses see sen",
+      "word_count": 25,
+      "avg_confidence": 82.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\n_— — Under what circumstance would you need to late bind a message\nY payload?\n7\n\nYou would need to late bind a message if information that needs to go in the message\npayload is not known at the time the message payload is generated in Event Fired\nrules.\n\nSoo ee See eo eS se ese",
+      "word_count": 57,
+      "avg_confidence": 84.54,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Lesson\nobjectives ¢ Describe and configure the plugin used to\nreview transform a payload\n\n* Configure a message reference value used\nby Guidewire and external system\n* Transform a message payload",
+      "word_count": 31,
+      "avg_confidence": 89.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Student exercise\n\nConfigure message payload\ntransformation",
+      "word_count": 7,
+      "avg_confidence": 95.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

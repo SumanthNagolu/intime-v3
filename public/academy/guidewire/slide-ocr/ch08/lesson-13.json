@@ -1,0 +1,379 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-13",
+    "slide_count": 33,
+    "slides_with_text": 29,
+    "total_words": 1106,
+    "avg_confidence": 80.67,
+    "processing_time_seconds": 11.62,
+    "extracted_at": "2026-02-13T12:24:17.562048"
+  },
+  "full_text": "The Job Lifecycle\n\nLesson\nobjectives\n\n« Describe how the special job components\nfunction during the lifecycle of a job\n¢ Configure a job process\n\ni Review: Jobs\n\neee ooe\nsubmission submission\ntransaction job\n\n¢ Policy Transactions are represented in PolicyCenter by Jobs\n¢ “Policy Transaction” and “Transaction” are used in the user interface\n« “Job” is used throughout the configuration\n\n¢ Jobs coordinate all of the work associated with creating a new policy and\nmodifying the policy\n\ni Review: Policy transactions Gi\n\nPolicy C\n\nNot renewed\nS> Renewal\noD\n\nPolicy\n\ncreated Cancellation\n\nReinstatement Rewrite\n\n| <Jobtype> entities\n\n¢ Job is the parent entity\n\n* Subtypes include Submission,\nPolicyChange, Cancellation, Renewal,\nAudit, etc.\n\n« <Jobtype> object\n¢ Is instantiated when the job is started\n« Executes a transaction on the policy\n* Contains required data\n\n* Can be enhanced or extended\nSubmissionDate\n\nRejectReason\n\nQuoteType\n\nGey SCJobNumber\nIefeeeysy PolicyPeriods\n\nSs, 7\na Activities\n\nta Notes\n\nCancelProcessDate\nNotificationDate\nCancelReasonCode\n\nPaymentReceived\nAuditInformation\n\ni Branches\n\n¢« Abranch is a set of objects related to\n\none PolicyPeriod object G3 PolicyNumber\n\n« Abranch is one version of the Policy CPLine, CALine, ...\n\n* Abranch is at the core of a job re PeriodStart, PeriodEnd\n* The job creates a branch Premium\n\neee Job\n\n—* sees\n\nBranch\n\ni Job processes\n\nSubmission process snippet\n\nFull app Start Edit Fi\n| Fulsee File submission —_ submission Pg «osavedraft fe Bind and Issue\n\n« Ajob process controls the flow of a job by using:\n* Gosu classes such as SubmissionProcess.gs\n« Wizard actions that can directly interact with the job and policy revisions\n+ Workflows\n\n¢ Job processes are flexible for user-driven logic\n\ni <Jobtype>Process classes\n\n* Contain methods required for processing the job\n\n¢ Sub classes of JobProcess include SubmissionProcess,\nRenewalProcess, AuditProcess, CancellationProcess, etc.\n\n* In Studio, configuration > gsrc > gw > job\n¢ Instantiated when methods are required\n\n* Maintained in cache\n\nLe\n\ni <Jobtype> wizards G\n¢ <Jobtype> Wizards contain screens, tools, and buttons that help =\nthe user step through the life cycle of the job —\n¢ Job Wizard Helper\n\n* Is a Java class that provides functionality for job wizards, such as | )\n\n+ Movement between steps\n\n+ Visibility based on state of job\n* Helper methods for adding messages\n* Has a Gosu enhancement that can be edited to provide additional functionality\n* Each job type has a Job Wizard Button Set containing relevant buttons\n\n¢ Buttons call Gosu code to perform the work of the job\n\nD>\n\n* Buttons appear in the job wizard’s screens only if they are currently relevant\n\ni Workflows\n\n¢ Integration with users and external systems\n« “Wait for user to respond before proceeding”\n« “Wait for billing system to respond before proceeding”\n* Time-delayed actions\n* Relative: “Wait three weeks before proceeding”\n« Absolute: “Wait until (effectiveDate) before proceeding” _78\n\nFl— 8\nWorkflow AY, =\nprocess\n\nUser\n\nExternal\nsystem\n\n| Starting a job\n\nJobs can be started in three ways\n\n+ By users through the Actions menu @,\n—\n\n* By external systems through APIs =a\n\n* Through PolicyCenter batch processes\n\nOp\n\ni Instantiating the <Jobtype> object\n\nThe <Jobtype> object needs to be instantiated\n\n* Typically on the screen that calls the job wizard and is passed as a parameter\n\n@startPolicyChange.pcf\n\ni\nPage Configuration) Text |\nProperties: | [J- Properties ® Entry Points | $82! Code\n+-td Variable\npolicyPeriod ¥ Basic properties\neffectiveDate name* job\na PolicyChange\ninForcePeriod C a properties yenangs\ninitialValue new yChange ()\n\ni Checking job conditions\n\n¢ Preconditions are checked before a job function is performed\n¢ Button visibility in the job wizards is based on canXXX methods in job process classes\n+ For example, in JobWizardToolBarButtonSet.Submission.pcf\n+ The Edit Policy Transaction button’s visible property calls JobProcess.canEdit().Okay()\n* Can methods return a JobConditions object\n* JobConditions object Checks for error conditions\n\n* Contains a string builder called “_messages” which begins empty and is built by error\ncondition checks\n\n* If “_messages” remains empty, derived property “Okay” returns true, otherwise, false\n\ni Executing business logic\n\n* Job wizard buttons call methods\n\n* They can call methods on any object available in the current context\n\n* Such as <Jobtype>Process, <Jobtype>Wizard, JobWizardHelper, PolicyPeriod\n¢ Job process methods call other methods\n* Job process methods call workflows\n\n¢ Workflows call job process methods\n\n| End of ajob\n\n« Job ends when the branch is\n* Promoted (bound)\n« Withdrawn\n* Discarded\n¢ Job object remains in the database, where it can be referenced\n* It can no longer be edited\n\n¢ Job process object is discarded\n\ni Demonstration G\n\nJob lifecycle\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Configuring job processes Ga\n\n1. Extend the <Jobtype> related classes and PCF files, for example\n« JobEnhancement.gs, SubmissionEnhancement.gs, SubmissionProcess.gs\n* SubmissionWizard.pcf and related screens\n\n2. Configure the business logic\n\na) Edit existing functions to capture your business process\n\nb) Create additional functions as needed\n\nQuestion G\n\nae What two classes exist for every job type?\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n_~ — What two classes exist for every job type?\n\n¢\n4\n¢\n\nThe job class and the job process class.\n\nSS Se ee eee eo\n\nQuestion G\n\n,- — Whatis a branch?\nih\nr\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,- — Whatis a branch?\n¢\n\n4\n¢\n\nThe set of objects associated with one PolicyPeriod object.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — Inwhat three ways can jobs be started?\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — Inwhat three ways can jobs be started?\n\n¢\n4\n¢\n\nBy users through the UI; by external systems through the APIs; and by PolicyCenter\nbatch processes.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — When does a job end?\nih\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — When does a job end?\n\n¢\n4\n¢\n\nWhen the job’s branch is promoted, withdrawn, or discarded.\n\nSS Se ee eee eo\n\nQuestion G\n\n,~ — What determines the visibility of buttons in a job’s button set?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer Gi\n\n,~ — What determines the visibility of buttons in a job’s button set?\n¢\n4\n¢\n\nCan methods on the job process class.\n\nSS Se ee eee eo\n\nLesson\nobjectives « Describe how the special job components\nreview function during the lifecycle of a job\n\n¢ Configure a job process\n\ni Student exercise\n\nThe Job Lifecycle",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "The Job Lifecycle",
+      "word_count": 3,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n« Describe how the special job components\nfunction during the lifecycle of a job\n¢ Configure a job process",
+      "word_count": 21,
+      "avg_confidence": 87.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Review: Jobs\n\neee ooe\nsubmission submission\ntransaction job\n\n¢ Policy Transactions are represented in PolicyCenter by Jobs\n¢ “Policy Transaction” and “Transaction” are used in the user interface\n« “Job” is used throughout the configuration\n\n¢ Jobs coordinate all of the work associated with creating a new policy and\nmodifying the policy",
+      "word_count": 53,
+      "avg_confidence": 87.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Review: Policy transactions Gi\n\nPolicy C\n\nNot renewed\nS> Renewal\noD\n\nPolicy\n\ncreated Cancellation\n\nReinstatement Rewrite",
+      "word_count": 17,
+      "avg_confidence": 87.48,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| <Jobtype> entities\n\n¢ Job is the parent entity\n\n* Subtypes include Submission,\nPolicyChange, Cancellation, Renewal,\nAudit, etc.\n\n« <Jobtype> object\n¢ Is instantiated when the job is started\n« Executes a transaction on the policy\n* Contains required data\n\n* Can be enhanced or extended\nSubmissionDate\n\nRejectReason\n\nQuoteType\n\nGey SCJobNumber\nIefeeeysy PolicyPeriods\n\nSs, 7\na Activities\n\nta Notes\n\nCancelProcessDate\nNotificationDate\nCancelReasonCode\n\nPaymentReceived\nAuditInformation",
+      "word_count": 64,
+      "avg_confidence": 83.21,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Branches\n\n¢« Abranch is a set of objects related to\n\none PolicyPeriod object G3 PolicyNumber\n\n« Abranch is one version of the Policy CPLine, CALine, ...\n\n* Abranch is at the core of a job re PeriodStart, PeriodEnd\n* The job creates a branch Premium\n\neee Job\n\n—* sees\n\nBranch",
+      "word_count": 51,
+      "avg_confidence": 85.02,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Job processes\n\nSubmission process snippet\n\nFull app Start Edit Fi\n| Fulsee File submission —_ submission Pg «osavedraft fe Bind and Issue\n\n« Ajob process controls the flow of a job by using:\n* Gosu classes such as SubmissionProcess.gs\n« Wizard actions that can directly interact with the job and policy revisions\n+ Workflows\n\n¢ Job processes are flexible for user-driven logic",
+      "word_count": 63,
+      "avg_confidence": 82.6,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i <Jobtype>Process classes\n\n* Contain methods required for processing the job\n\n¢ Sub classes of JobProcess include SubmissionProcess,\nRenewalProcess, AuditProcess, CancellationProcess, etc.\n\n* In Studio, configuration > gsrc > gw > job\n¢ Instantiated when methods are required\n\n* Maintained in cache\n\nLe",
+      "word_count": 43,
+      "avg_confidence": 85.14,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i <Jobtype> wizards G\n¢ <Jobtype> Wizards contain screens, tools, and buttons that help =\nthe user step through the life cycle of the job —\n¢ Job Wizard Helper\n\n* Is a Java class that provides functionality for job wizards, such as | )\n\n+ Movement between steps\n\n+ Visibility based on state of job\n* Helper methods for adding messages\n* Has a Gosu enhancement that can be edited to provide additional functionality\n* Each job type has a Job Wizard Button Set containing relevant buttons\n\n¢ Buttons call Gosu code to perform the work of the job\n\nD>\n\n* Buttons appear in the job wizard’s screens only if they are currently relevant",
+      "word_count": 115,
+      "avg_confidence": 88.34,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Workflows\n\n¢ Integration with users and external systems\n« “Wait for user to respond before proceeding”\n« “Wait for billing system to respond before proceeding”\n* Time-delayed actions\n* Relative: “Wait three weeks before proceeding”\n« Absolute: “Wait until (effectiveDate) before proceeding” _78\n\nFl— 8\nWorkflow AY, =\nprocess\n\nUser\n\nExternal\nsystem",
+      "word_count": 53,
+      "avg_confidence": 82.33,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Starting a job\n\nJobs can be started in three ways\n\n+ By users through the Actions menu @,\n—\n\n* By external systems through APIs =a\n\n* Through PolicyCenter batch processes\n\nOp",
+      "word_count": 33,
+      "avg_confidence": 83.93,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Instantiating the <Jobtype> object\n\nThe <Jobtype> object needs to be instantiated\n\n* Typically on the screen that calls the job wizard and is passed as a parameter\n\n@startPolicyChange.pcf\n\ni\nPage Configuration) Text |\nProperties: | [J- Properties ® Entry Points | $82! Code\n+-td Variable\npolicyPeriod ¥ Basic properties\neffectiveDate name* job\na PolicyChange\ninForcePeriod C a properties yenangs\ninitialValue new yChange ()",
+      "word_count": 64,
+      "avg_confidence": 81.15,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Checking job conditions\n\n¢ Preconditions are checked before a job function is performed\n¢ Button visibility in the job wizards is based on canXXX methods in job process classes\n+ For example, in JobWizardToolBarButtonSet.Submission.pcf\n+ The Edit Policy Transaction button’s visible property calls JobProcess.canEdit().Okay()\n* Can methods return a JobConditions object\n* JobConditions object Checks for error conditions\n\n* Contains a string builder called “_messages” which begins empty and is built by error\ncondition checks\n\n* If “_messages” remains empty, derived property “Okay” returns true, otherwise, false",
+      "word_count": 88,
+      "avg_confidence": 89.69,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Executing business logic\n\n* Job wizard buttons call methods\n\n* They can call methods on any object available in the current context\n\n* Such as <Jobtype>Process, <Jobtype>Wizard, JobWizardHelper, PolicyPeriod\n¢ Job process methods call other methods\n* Job process methods call workflows\n\n¢ Workflows call job process methods",
+      "word_count": 49,
+      "avg_confidence": 84.18,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| End of ajob\n\n« Job ends when the branch is\n* Promoted (bound)\n« Withdrawn\n* Discarded\n¢ Job object remains in the database, where it can be referenced\n* It can no longer be edited\n\n¢ Job process object is discarded",
+      "word_count": 43,
+      "avg_confidence": 84.19,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Demonstration G\n\nJob lifecycle\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.6,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Configuring job processes Ga\n\n1. Extend the <Jobtype> related classes and PCF files, for example\n« JobEnhancement.gs, SubmissionEnhancement.gs, SubmissionProcess.gs\n* SubmissionWizard.pcf and related screens\n\n2. Configure the business logic\n\na) Edit existing functions to capture your business process\n\nb) Create additional functions as needed",
+      "word_count": 45,
+      "avg_confidence": 89.29,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\nae What two classes exist for every job type?\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 19,
+      "avg_confidence": 64.48,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\n_~ — What two classes exist for every job type?\n\n¢\n4\n¢\n\nThe job class and the job process class.\n\nSS Se ee eee eo",
+      "word_count": 28,
+      "avg_confidence": 73.8,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question G\n\n,- — Whatis a branch?\nih\nr\n\nSS oe ee oe oe oo",
+      "word_count": 15,
+      "avg_confidence": 54.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer Gi\n\n,- — Whatis a branch?\n¢\n\n4\n¢\n\nThe set of objects associated with one PolicyPeriod object.\n\nSS Se ee eee eo",
+      "word_count": 24,
+      "avg_confidence": 68.31,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question G\n\n,~ — Inwhat three ways can jobs be started?\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 20,
+      "avg_confidence": 61.86,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer Gi\n\n,~ — Inwhat three ways can jobs be started?\n\n¢\n4\n¢\n\nBy users through the UI; by external systems through the APIs; and by PolicyCenter\nbatch processes.\n\nSS Se ee eee eo",
+      "word_count": 35,
+      "avg_confidence": 76.68,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question G\n\n,~ — When does a job end?\nih\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 17,
+      "avg_confidence": 56.11,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer Gi\n\n,~ — When does a job end?\n\n¢\n4\n¢\n\nWhen the job’s branch is promoted, withdrawn, or discarded.\n\nSS Se ee eee eo",
+      "word_count": 26,
+      "avg_confidence": 69.25,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n,~ — What determines the visibility of buttons in a job’s button set?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 24,
+      "avg_confidence": 67.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer Gi\n\n,~ — What determines the visibility of buttons in a job’s button set?\n¢\n4\n¢\n\nCan methods on the job process class.\n\nSS Se ee eee eo",
+      "word_count": 30,
+      "avg_confidence": 74.56,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Lesson\nobjectives « Describe how the special job components\nreview function during the lifecycle of a job\n\n¢ Configure a job process",
+      "word_count": 22,
+      "avg_confidence": 87.55,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "i Student exercise\n\nThe Job Lifecycle",
+      "word_count": 6,
+      "avg_confidence": 86.57,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

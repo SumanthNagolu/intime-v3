@@ -1,0 +1,500 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-18",
+    "slide_count": 44,
+    "slides_with_text": 41,
+    "total_words": 2508,
+    "avg_confidence": 83.28,
+    "processing_time_seconds": 17.83,
+    "extracted_at": "2026-02-15T18:22:56.060851"
+  },
+  "full_text": "Batch Processes\n\nLesson\nobjectives\n\n¢ Describe the role batch processes play in\nGuidewire applications\n\n¢ Implement custom batch processes\n\n* Schedule batch processes\n\n¢ Describe some best practices that can be\nimplemented when updating a database ina\nbatch process\n\nBatch process overview\n\ni What is a batch process?\n\nBl\n\nExchange rate Exchange Rate\nSystem\n\n© _ +\n\n¢« Abatch process is a background process that performs tasks independent of a\nuser\n\n* Typically, a batch process runs on a periodic schedule\n* Two type of batch process\n« Predefined\n\n* Custom\n\ni Types of batch processes Gi\n\n* Configured in the base application * Created by an integration developer\n\n* Examples: ¢ Allows for periodic scheduling of work\n+ ContactManager: Duplicate Contacts Finder beyond what the base application provides\n* ClaimCenter: Claim exception + Is fully configurable\n+ PolicyCenter: Policy renewal start * Can include triggers to integration points\n\n* BillingCenter: Account inactivity\n\n* Developers can schedule or manually run\neach process but cannot directly configure\nwhat each does\n\n+ Some processes can be indirectly configured\nbecause they trigger configurable elements\n\ni Batch process execution options\n\n* Common ways to execute a batch processes\n\n+ Periodically based on a schedule (the most\ncommon use)\n\n+ Immediately from the Internal Tools UI\n+ From an API call such as a web service or\ncommand line\n* Every execution option is not necessarily\nconfigured for every process\n+ Duplicate Contacts Finder batch process:\n* Can be run from the UI and scheduled\n\n+ Not configured to be executed from an API but\nevery batch process that is UI runnable is inherently\n\nAPI runnable\n\nGi\n\nBbatchProcessTypetts\n\n[db typecode v ¥v VshowAlly) og = EE) BatchProcessTypetti\nElement Code Name Priority\n\n‘AB Geocode Writer a\nDuplicate Contacts Finder -1\nBatchProcessTypeUsage\n\nABGeocode\neContacts\n\n> typecode\n\n\\ typecode Dupl\ncategory uiRu\ncategory Schedulable\n\nVerifyMinimumCriteria\n\nBatchProcessTypeUsage\nVerify Minimum Criteria 1\n\n[Bi BatchProcessTypeUsagetti\n\n‘Thisis a reed-only file.\n(hy\n\ni Batch processes and messaging Gi\n\n¢ You can use Guidewire messaging to ProcessHistory (av_processhistory) (delegates to EventAware, KeyableBean)\n\n¥ Description\n\nlaunch external processes during a process cn heey |\nAttributes: Final’, Keyed , Sourceable\nbatch process Messaging Events: The application will generate these events for this entity,\n+ rocestistn ed\n* Asa batch process starts, the application + ProcessHistoy Removed\nfires a ProcessHistoryAdded event Integration programmers can write Event Fired rules to perform actions on these events. Refer to the\n\nIntegration Guide for the complete list of events for all entities. Remember to configure a new or existing\n‘messaging destination in Studio to listen for desired events. in ils on all fel\n\n« As the status of the batch process changes,\n\nthe application fires a NEES\n\nProcessHistoryChanged event Fields\n+ The CompleteDate property contains the Toe a tm process anelaets\ndatestamp in a datetime object Process ype type key to BatchProcessType rcnnun” wit\n\n‘The process this entry refers to.\nRanToCompletion bit wast)\n¢ Events can be used to trigger additional Whether or poo oom ran to completion, or failed or was interrupted.\n: StartDate datetime — wuss)\nprocessing The date this process was actualy started\n\nRunning batch processes\n\ni Batch Process Info Ul screen Gi\n\nDefault >\n\n——\nFilter the displa y\nBatch Process Info ey Schedulable\n\n\"| Runnable\n\n3\n\nBatch Process > Description > LastRun Next Scheduled Run > Schedule ron-$ MH DOM M DOW\n\n« Ulscreen used to run batch processes on demand and view additional status\ninformation\n\n* To view Server Tools, pressALT+SHIFT+T\n¢ Torun a batch process manually, click Run\n« Batch process execution begins immediately\n\n¢ While batch process is running, the Last Run Status column lists the process as Running\n\ni Chart and History cards Gi\n\nBatch Process Info\n\nProcesses: Default +\n\nee\nLastRun > Next Scheduled Run > Schedule Cron -SMH DOM M DOW\n\nBatch Process.\n\nTotal\n\nTotal failed\n\nChart | History operations operations\n\nal > B-\n\nStart Requested > Started ‘Completed Scheduled | Server Description Ops > Failed =  FailureReason\n\n(09/27/2018 9:17 PM No rchiriboga-p. 1 ° ‘chert atone\n\n(09/27/2018 9:16 PM No rehiriboga-p 1 ° bes z\n09/27/2018 9:16 PM No chiriboga-p 1 ° FAY\n09/27/2018 9:10PM 09/27/2018 9:10PM No chinboga-p 1 ° me\n\n=|\n\n¢ Detailed information about selected batch process\nappear below list of batch processes\n\n* Chart and History\n\ni Scheduling a batch process Gi\n\n* Defines batch process schedules\n\nlah scheduler-configam!\n\n* configuration.config.scheduler\n\n* <ProcessSchedule/> element\ndescribes which batch process to\nexecute and when\n\n* <CronSchedule/> child element describes ; “\nwhen process runs <ProcessSchedule process=\"DuplicateContacts\">\n\n<CronSchedule dayofmonth=\"?\" dayofweek=\"SUN\" hours=\"12\"/>\n. ProcessScheaule>\n+ Define schedule attributes ‘ De . -\n<ProcessSchedule process=\"PurgeFailedMorkItens\">\n<CronSchedule dayofmonth=\"1\" hours=\"1\"/>\n\n¢ Restart server to deploy changes <jProcessScetale>\n\n<ProcessSchedule process=\"ProcessiistoryPurge\">\n<CronSchedule dayofmonth=\"3\" hours=\"1\" minutes=\"30\"/>\n</ProcessSchedule>\n</Schedule>\n\ni Scheduled batch processes\n\nBatch Process Info\n\nBREE rcicsh J dovnload suspend schedver iS\n\nBatch Process Description > ‘Action\nFinds new duplicate contacts and creates a\nDuplicate Contacts Finder browsable ist of aid contacts. Len]\n\n31 <ProcessSchedule process=\"DuplicateContacts\">\n\ndayofmonth=\"?\"_dayofweek=\"SUN\" hours=\"12\"/>\n\n<CronSchedule\n</ProcessSchedule>\n\n* Once scheduled, the batch process\nUI screen shows\n\n* Cron schedule criteria\n« Next Scheduled Run time\n\nGi\n\nBe\n\nLastRun ¢ Next Scheduled Run > Schedule Cron-S MHDOMM DOW\nDownload story J CREE sion | 012?\" SUN\n\n*« S (seconds) =0\n\n« M (minutes) = 0\n\n¢ H (hours) = 12\n\n¢ DOM (dayofmonth) = ?\n\n¢ M (month) = *\n\n*« DOW (dayofweek) = SUN\n\ni Running a batch process from an API Gi\n\n*« Command line syntax\n\nmaintenance_tools -startprocess <processName> -user <user> -password\n<password> -server <server>\n\ne Web service API syntax\n\n* processID = maintenanceToolsAPI.startBatchProcess (“processName”)\n\nuses gw.webservice.ab.abl000.MaintenanceToolsAPI\n\nvar maintenanceToolsAPI = new MaintenanceToo1sAPI ()\nvar processID = maintenanceToolsAPI.startBatchProcess (\"DuplicateContacts\")\n\ni Custom batch process architecture Gi\n\nswitch (type):\n\nFlagOverdue\n\nActivityEsc LegalReportsBatch\nArchive On\nDataDistribution At Ie\n\nFlagOverdueLegalReports ©\n\nProcesses\nPlugin\n\n¢« Acustom batch process is implemented by a Gosu class called by the\nProcessesPlugin\n\nUse case Gi\n\n¢ Flag contacts that have overdue 1. Add BatchProcessType typecode\nlegal reports ¢ Define typecode categories to specify\n\n* Batch process must execute the batch process execution options\nautomatically on a schedule every 2. Create custom batch process class\nday at 3am EST 3. Configure ProcessesPlugin class\n\n. wet ps ee UlorbyAPI on 4. Configure the IProcessesPlugin\n\nregistry entry\n\n5. Configure the scheduler-config.xml\nfile\n\n6. Deploy changes\n\ni Add BatchProcess Type typecode\n\nBatchProcessType.ttx\nmJcategoy~| [) Y — [Vshowallv) we =\nElement Code Name Value\nY typecode FlagOverdueLegalReports Flag Overdue Legal Reports 100 code UlRunnable\ncategory ‘APIRunnable BatchProcessTypeUsage\n\nBatchProcessTypeUsage\n\ncategory Schedulable\n\nUlRunnable\n\nDeferredUpgradeTasks\n\nProcessHistoryPurge\n\n1\n1\nBulkPurge 1\n1\n1\n\n> typecode\n\n> typecode\n\n¢ Add a typecode that represents the new batch process\n\n* Guidewire does NOT support modification of internal batch processes\n\nBuildingType Et\nBusinessType\nCatastropheType\nCharacterSet\nComponentType\nConsistencyCheckType\nContactBidiRe!\n\n¢ Add acategory of BatchProcessTypeUsage for each executable type\n\nCreate custom batch process class\n\n1 package trn.ta.batch. legalreport\n\nuses gw.api.database.Relop\nuses gw.processes.BatchProcessBase\n\n5 uses gw.processes.TerminatedException\nuses gw. transaction. Transaction\nuses gw.api.datebase.Query\nuses java.util.concurrent.TimeUnit\n\n—> class FlagOverdueLegalReportsBatch extends BatchProcessBase {\n12 super( BatchProcessType.TC_FLAGOVERDUELEGALREPORTS )\n2 }\n\n}\n\n*| override function requestTermination() : boolean {..\n\n| override function checkInitialConditions() : boolean {...}\n\n© override function doWork() {...}\n\n« Recommended naming convention:\n« Package: <company>.<app_code>.batch.<functional_area>\n\n* Class: <meaningfulName>Batch\n\ni checklnitialConditions method Gi\n\nclass FlagOverdueLegalReportsBatch extends BatchProcessBase {\nconstruct () { super( BatchProcessType.1C_FLAGOVERDUELEGALREPORTS ) }\n\n1s @f + override function requestTermination() : boolean {...}\n\nitialConditions() : boolean {\n\n* Application calls the method to determine whether to start a batch process\n\n¢ Used to determine if conditions are met to begin processing\n\n« Return true: doWork method will be called\n\n¢ Return false: only a history event will be written\n\n¢ Default: true\n\ni requestTermination method\n\n¢ The application may want to\nterminate a batch process,\nsuch as when...\n\n* The process is run from the Ul\nand the user clicks Stop 2s of\n\n* The process is run from the API 27\nand the stop process command\nis received\n\n* The application is shutting down\n\n¢ Handled by setting\nTerminateRequested\nproperty in code and used to\nexit any loops\n\nboolean {\n\noverride function requestTermination()\nsuper. requestTermination()\nreturn true by\n\n}\n\noverride function checkInitialConditions() : boolean {...}\n\noverride function doWork() {\nTimeUnit. SECONDS. sleep (15)\nif (TerminateRequested) {\n\nthrow new TerminatedException(\"Process terminated\")\n\nports = 0\n\nvar messageQuery = Query.make (Message)\nmessageQuery. compare (Message#DestinationID, Relop.Equals, 15)\nvar results0bj = messageQuery.select()\nfor (currentMessage in results0bj) {\nif (TerminateRequested) {\nthrow new TerminatedException (\"Process terminated\")\n}\n\ni Other methods and properties on BatchProcessBase\n\nGi\n\n* getDescription\n+ Retrieves the description of the current batch type\n\n* incrementOperationsCompleted\n\n+ Increments an internal counter for how many\noperations are complete\n\n+ Returns the current number of operations that are\ncomplete\n\n* incrementOperationsFailed\n\n* Increments an internal counter for how many\noperations failed\n\n* Call this method to track the progress of the batch\nprocess\n\n« Exclusive\n\n+ Determines whether another instance of this batch\nprocess can start while this process is running\n\n+ The base class implementation always returns true\n\n+ Set this property to false if you want to allow multiple\ninstances of this batch process to run in parallel.\n\n* OperationsExpected\n\n+ Set this once after determining number of items to\nbe processed\n\n+ Used to provide feedback in the UI for Ul Runnable\nProcesses\n\ni Configure ProcessesPlugin class\n\npackage trn.ta.batch\n\nuses gw.plugin.processing. IProcessesPlugin\nuses gw.processes.BatchProcess\nuses trn.ta.batch. legalreport. FlagOverdueLegalReportsBatch\n\nclass ProcessesPlugin implements IProcessesPlugin {\n\noverride function createBatchProcess(type : BatchProcessType, arguments : Object[])\nswitch(type) {\ncase BatchProcessType. 1C_FLAGOVERDUELEGALREPORTS:\nreturn new FlagOverdueLegalReportsBatch ()\ndefault:\nreturn null\n\n: BatchProcess {\n\ni Configure the IProcessesPlugin registry entry a\n\n* Create the plugin registry\n« config.Plugin.registry\n\nv Pi Plugins\nY Dib registry\n1@ AuthenticationServicePlugin.gwp\n\n* Specify the Plugin Bee\nName: |ProcessesPlugin\n\n« |ProcessesPlugin name\n\nInterface: IProcessesPlugin\n\n+ |ProcessesPlugin interface Cancel\n\n1@ lProcessesPlugin.gwp » |\n\n. Name [Pre Plugin\n* Configure the new plugin  “™\n\nInterface: IProcessesPlugin\n\nregistry\n\nGosu Class: _trn.ta.batch.ProcessesPlugin\n\nEnvironment:\n\ni Configure the scheduler-config.xml file Gi\n\n!-- Run every\n\n<ProcessSchedule process=\"FlagOverdueLegalReports\">\n<CronSchedule dayofmonth=\"?\"\ndayofweek=\"*\"\nhours=\"3\"/>\n</ProcessSchedule>\n\n¢ Open scheduler-config.xml file found under configuration.config.scheduler\n\n¢ dayofmonth - ? is used only for dayofmonth and dayofweek attribute and means\nwithout regard to this value\n\n¢ dayofweek -* means all values\n\n* hours - 3 means 3am using 24-hour clock\n\ni Deploy code changes\n\n¢ New Gosu plugin class\n¢ Modified plugin registry\n¢ New typelist typecode\n\n¢ Modified scheduler-config.xml file\n\ntlm Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\n186, Debug ‘Server’ Shift+F9\nYE Run ‘Server’ with Coverage\n\nD> Run... Alt+Shift+F10\nWE Debug... Alt+ Shift+F9\n\nMy Attach to Local Process...\n[>> Edit Configurations...\n\nB] import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified Gosu plugin class\n\nGARY Tools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server’\n\nW Run ‘Server’ with Coverage\nD Run...\n\n€ Debug...\n\n\\y Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results\n\nIl Stop ‘Server’\n\nEP show Running List\n\nStop Backgroun\n\nReload Changed CI\n\ni Updating the database in a batch process\n\nNo CurrentBundle for a batch process\n\nUse Transaction. runWithNewBundle(/ bundle ->{} , “user”) OF\nTransaction.newBundle ()\n\nIf you expect to update large numbers of rows:\nLarge number of rows is a relative term\nConsider using paging with regular commits\nKeep bundles size as small as possible\nBe careful about how you use accessors\n\nUse Query best practices\n* Do filtering at the database rather than in memory — let the DB do what it’s good at\n\n+ See Gosu Queries and Bundles and Database Transaction lessons for more information\n\ni Updating the database in a batch process Gi\n\nr\n\n¢ Problematic approach:\n\n* Two main problems:\n\n*« Memory\n\n+ Processing a possibly large\nqueryResult set\n\n¢ Bundle performance il\n\nuses gw.api.database. Query\nuses gw.transaction.Transaction\n\nTransaction. runWithNewBundle(\\bundle -> {\nvar queryObj = Query.make (ABContact)\nvar queryResult = queryObj.select()\nfor (€ in queryResult) {\n\nvar entityToModify = bundle.add(e)\n}\n2}\n\n+ Every new accessor drags an entity into the bundle\n\n+ And using accessors from those entities drag in more entities\n\n+ Bundles can grow very large\n\ni Abetter approach: Paging plus regular commits Gi\n\nuses com.google.common.collect.Iterables\nuses gw.api.database.Query\nuses gw.transaction.Transaction\n\nvar queryObj = Query.make(ABContact)\nvar queryResult = queryObj.select()\nqueryResult.setPageSize (10000)\n\nfor (entities in Iterables.partition(queryResult, 250)) {\nTransaction. runWithNewBundle(\\bundle -> {\nfor (€ in entities) {\nvar entityToModify = bundle.add(e)\n\ni Paging with modifications\n\nApp\nserver\n\ni Demonstration G\nCreate a custom batch process\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Whatare the three ways a batch process can be run? Which of the three\n\nPa is the most common?\n7\n\nSS ee eee ae eee\n\nGi\n\nAnswer Gi\n\n_- — Whatare the three ways a batch process can be run? Which of the three\n\nPa is the most common?\n7\n\nThree way to run a batch process are:\n* Scheduled\n¢ Run from the UI\n\n« Run from the web service API\n\nSee eee ee eae\n\nScheduled is the most common way to run a batch process.\n\nQuestion\n\n,- — When you add a new batch process typecode to BatchProcess Type,\n¢ why must you add one or more categories to the typecode?\n\n¢\n¢\n\nSS ee eee ae eee\n\nGi\n\nAnswer Gi\n\n,- — When you add a new batch process typecode to BatchProcess Type,\nPa why must you add one or more categories to the typecode?\n¢\n\nThe categories of a BatchProcessType typecode determines how the batch process\ncan be run (from the UI, scheduled, from the API, and/or in maintenance level).\n\nSee eee ee eae\n\nQuestion\n\n_- — When creating a custom batch process, do you need to implement the\n\nPa ProcessesPlugin or just modify it?\n¢\n\nSS ee eee ae eee\n\nGi\n\nAnswer Gi\n\n_- — When creating a custom batch process, do you need to implement the\nPa ProcessesPlugin or just modify it?\n¢\n\nFor PolicyCenter and ClaimCenter, the IProcessesPlugin file already exists in the base\napplication and you only need to modify the ProcessesPlugin class which implements\nthe IProcessesPlugin interface.\n\nFor BillingCenter and ContactManager, you need to create an IProcessesPlugin\nregistry file that implements the IProcessesPlugin interface in a new class.\n\nSee eee ee eae\n\nQuestion\n\n_- — Foracustom batch process, what method or methods require\n\nPa implementation?\n¢\n\nSS ee eee ae eee\n\nAnswer\n\n_- — Foracustom batch process, what method or methods require\nPa implementation?\n¢\n\nOnly the doWork method is required.\n\nSee eee ee eae\n\nQuestion\n\n,- — How does a batch process commit changes to the database?\n\n¢\n¢\n¢\n\nSS ee eee ae eee\n\nAnswer\n\n_- — How does a batch process commit changes to the database?\n¢\n\n¢\n¢\n\nThe code must create a new bundle using runWithNewBundle and add the entities to\nbe changed and committed to that bundle.\n\nSee eee ee eae\n\nLesson\nobjectives\nreview\n\n¢ Describe the role batch processes play in\n\nGuidewire applications\n\n¢ Implement custom batch processes\n\nSchedule batch processes\n\nDescribe some best practices that can be\nimplemented when updating a database ina\nbatch process\n\ni Student exercise\n\nCreate a custom batch process",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Batch Processes",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the role batch processes play in\nGuidewire applications\n\n¢ Implement custom batch processes\n\n* Schedule batch processes\n\n¢ Describe some best practices that can be\nimplemented when updating a database ina\nbatch process",
+      "word_count": 37,
+      "avg_confidence": 89.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Batch process overview",
+      "word_count": 3,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i What is a batch process?\n\nBl\n\nExchange rate Exchange Rate\nSystem\n\n© _ +\n\n¢« Abatch process is a background process that performs tasks independent of a\nuser\n\n* Typically, a batch process runs on a periodic schedule\n* Two type of batch process\n« Predefined\n\n* Custom",
+      "word_count": 49,
+      "avg_confidence": 86.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Types of batch processes Gi\n\n* Configured in the base application * Created by an integration developer\n\n* Examples: ¢ Allows for periodic scheduling of work\n+ ContactManager: Duplicate Contacts Finder beyond what the base application provides\n* ClaimCenter: Claim exception + Is fully configurable\n+ PolicyCenter: Policy renewal start * Can include triggers to integration points\n\n* BillingCenter: Account inactivity\n\n* Developers can schedule or manually run\neach process but cannot directly configure\nwhat each does\n\n+ Some processes can be indirectly configured\nbecause they trigger configurable elements",
+      "word_count": 90,
+      "avg_confidence": 87.99,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Batch process execution options\n\n* Common ways to execute a batch processes\n\n+ Periodically based on a schedule (the most\ncommon use)\n\n+ Immediately from the Internal Tools UI\n+ From an API call such as a web service or\ncommand line\n* Every execution option is not necessarily\nconfigured for every process\n+ Duplicate Contacts Finder batch process:\n* Can be run from the UI and scheduled\n\n+ Not configured to be executed from an API but\nevery batch process that is UI runnable is inherently\n\nAPI runnable\n\nGi\n\nBbatchProcessTypetts\n\n[db typecode v ¥v VshowAlly) og = EE) BatchProcessTypetti\nElement Code Name Priority\n\n‘AB Geocode Writer a\nDuplicate Contacts Finder -1\nBatchProcessTypeUsage\n\nABGeocode\neContacts\n\n> typecode\n\n\\ typecode Dupl\ncategory uiRu\ncategory Schedulable\n\nVerifyMinimumCriteria\n\nBatchProcessTypeUsage\nVerify Minimum Criteria 1\n\n[Bi BatchProcessTypeUsagetti\n\n‘Thisis a reed-only file.\n(hy",
+      "word_count": 138,
+      "avg_confidence": 84.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Batch processes and messaging Gi\n\n¢ You can use Guidewire messaging to ProcessHistory (av_processhistory) (delegates to EventAware, KeyableBean)\n\n¥ Description\n\nlaunch external processes during a process cn heey |\nAttributes: Final’, Keyed , Sourceable\nbatch process Messaging Events: The application will generate these events for this entity,\n+ rocestistn ed\n* Asa batch process starts, the application + ProcessHistoy Removed\nfires a ProcessHistoryAdded event Integration programmers can write Event Fired rules to perform actions on these events. Refer to the\n\nIntegration Guide for the complete list of events for all entities. Remember to configure a new or existing\n‘messaging destination in Studio to listen for desired events. in ils on all fel\n\n« As the status of the batch process changes,\n\nthe application fires a NEES\n\nProcessHistoryChanged event Fields\n+ The CompleteDate property contains the Toe a tm process anelaets\ndatestamp in a datetime object Process ype type key to BatchProcessType rcnnun” wit\n\n‘The process this entry refers to.\nRanToCompletion bit wast)\n¢ Events can be used to trigger additional Whether or poo oom ran to completion, or failed or was interrupted.\n: StartDate datetime — wuss)\nprocessing The date this process was actualy started",
+      "word_count": 196,
+      "avg_confidence": 78.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Running batch processes",
+      "word_count": 3,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Batch Process Info Ul screen Gi\n\nDefault >\n\n——\nFilter the displa y\nBatch Process Info ey Schedulable\n\n\"| Runnable\n\n3\n\nBatch Process > Description > LastRun Next Scheduled Run > Schedule ron-$ MH DOM M DOW\n\n« Ulscreen used to run batch processes on demand and view additional status\ninformation\n\n* To view Server Tools, pressALT+SHIFT+T\n¢ Torun a batch process manually, click Run\n« Batch process execution begins immediately\n\n¢ While batch process is running, the Last Run Status column lists the process as Running",
+      "word_count": 88,
+      "avg_confidence": 81.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Chart and History cards Gi\n\nBatch Process Info\n\nProcesses: Default +\n\nee\nLastRun > Next Scheduled Run > Schedule Cron -SMH DOM M DOW\n\nBatch Process.\n\nTotal\n\nTotal failed\n\nChart | History operations operations\n\nal > B-\n\nStart Requested > Started ‘Completed Scheduled | Server Description Ops > Failed =  FailureReason\n\n(09/27/2018 9:17 PM No rchiriboga-p. 1 ° ‘chert atone\n\n(09/27/2018 9:16 PM No rehiriboga-p 1 ° bes z\n09/27/2018 9:16 PM No chiriboga-p 1 ° FAY\n09/27/2018 9:10PM 09/27/2018 9:10PM No chinboga-p 1 ° me\n\n=|\n\n¢ Detailed information about selected batch process\nappear below list of batch processes\n\n* Chart and History",
+      "word_count": 105,
+      "avg_confidence": 74.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Scheduling a batch process Gi\n\n* Defines batch process schedules\n\nlah scheduler-configam!\n\n* configuration.config.scheduler\n\n* <ProcessSchedule/> element\ndescribes which batch process to\nexecute and when\n\n* <CronSchedule/> child element describes ; “\nwhen process runs <ProcessSchedule process=\"DuplicateContacts\">\n\n<CronSchedule dayofmonth=\"?\" dayofweek=\"SUN\" hours=\"12\"/>\n. ProcessScheaule>\n+ Define schedule attributes ‘ De . -\n<ProcessSchedule process=\"PurgeFailedMorkItens\">\n<CronSchedule dayofmonth=\"1\" hours=\"1\"/>\n\n¢ Restart server to deploy changes <jProcessScetale>\n\n<ProcessSchedule process=\"ProcessiistoryPurge\">\n<CronSchedule dayofmonth=\"3\" hours=\"1\" minutes=\"30\"/>\n</ProcessSchedule>\n</Schedule>",
+      "word_count": 72,
+      "avg_confidence": 79.93,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Scheduled batch processes\n\nBatch Process Info\n\nBREE rcicsh J dovnload suspend schedver iS\n\nBatch Process Description > ‘Action\nFinds new duplicate contacts and creates a\nDuplicate Contacts Finder browsable ist of aid contacts. Len]\n\n31 <ProcessSchedule process=\"DuplicateContacts\">\n\ndayofmonth=\"?\"_dayofweek=\"SUN\" hours=\"12\"/>\n\n<CronSchedule\n</ProcessSchedule>\n\n* Once scheduled, the batch process\nUI screen shows\n\n* Cron schedule criteria\n« Next Scheduled Run time\n\nGi\n\nBe\n\nLastRun ¢ Next Scheduled Run > Schedule Cron-S MHDOMM DOW\nDownload story J CREE sion | 012?\" SUN\n\n*« S (seconds) =0\n\n« M (minutes) = 0\n\n¢ H (hours) = 12\n\n¢ DOM (dayofmonth) = ?\n\n¢ M (month) = *\n\n*« DOW (dayofweek) = SUN",
+      "word_count": 109,
+      "avg_confidence": 69.58,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Running a batch process from an API Gi\n\n*« Command line syntax\n\nmaintenance_tools -startprocess <processName> -user <user> -password\n<password> -server <server>\n\ne Web service API syntax\n\n* processID = maintenanceToolsAPI.startBatchProcess (“processName”)\n\nuses gw.webservice.ab.abl000.MaintenanceToolsAPI\n\nvar maintenanceToolsAPI = new MaintenanceToo1sAPI ()\nvar processID = maintenanceToolsAPI.startBatchProcess (\"DuplicateContacts\")",
+      "word_count": 45,
+      "avg_confidence": 82.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Custom batch process architecture Gi\n\nswitch (type):\n\nFlagOverdue\n\nActivityEsc LegalReportsBatch\nArchive On\nDataDistribution At Ie\n\nFlagOverdueLegalReports ©\n\nProcesses\nPlugin\n\n¢« Acustom batch process is implemented by a Gosu class called by the\nProcessesPlugin",
+      "word_count": 34,
+      "avg_confidence": 84.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Use case Gi\n\n¢ Flag contacts that have overdue 1. Add BatchProcessType typecode\nlegal reports ¢ Define typecode categories to specify\n\n* Batch process must execute the batch process execution options\nautomatically on a schedule every 2. Create custom batch process class\nday at 3am EST 3. Configure ProcessesPlugin class\n\n. wet ps ee UlorbyAPI on 4. Configure the IProcessesPlugin\n\nregistry entry\n\n5. Configure the scheduler-config.xml\nfile\n\n6. Deploy changes",
+      "word_count": 70,
+      "avg_confidence": 86.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Add BatchProcess Type typecode\n\nBatchProcessType.ttx\nmJcategoy~| [) Y — [Vshowallv) we =\nElement Code Name Value\nY typecode FlagOverdueLegalReports Flag Overdue Legal Reports 100 code UlRunnable\ncategory ‘APIRunnable BatchProcessTypeUsage\n\nBatchProcessTypeUsage\n\ncategory Schedulable\n\nUlRunnable\n\nDeferredUpgradeTasks\n\nProcessHistoryPurge\n\n1\n1\nBulkPurge 1\n1\n1\n\n> typecode\n\n> typecode\n\n¢ Add a typecode that represents the new batch process\n\n* Guidewire does NOT support modification of internal batch processes\n\nBuildingType Et\nBusinessType\nCatastropheType\nCharacterSet\nComponentType\nConsistencyCheckType\nContactBidiRe!\n\n¢ Add acategory of BatchProcessTypeUsage for each executable type",
+      "word_count": 83,
+      "avg_confidence": 82.34,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Create custom batch process class\n\n1 package trn.ta.batch. legalreport\n\nuses gw.api.database.Relop\nuses gw.processes.BatchProcessBase\n\n5 uses gw.processes.TerminatedException\nuses gw. transaction. Transaction\nuses gw.api.datebase.Query\nuses java.util.concurrent.TimeUnit\n\n—> class FlagOverdueLegalReportsBatch extends BatchProcessBase {\n12 super( BatchProcessType.TC_FLAGOVERDUELEGALREPORTS )\n2 }\n\n}\n\n*| override function requestTermination() : boolean {..\n\n| override function checkInitialConditions() : boolean {...}\n\n© override function doWork() {...}\n\n« Recommended naming convention:\n« Package: <company>.<app_code>.batch.<functional_area>\n\n* Class: <meaningfulName>Batch",
+      "word_count": 66,
+      "avg_confidence": 77.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i checklnitialConditions method Gi\n\nclass FlagOverdueLegalReportsBatch extends BatchProcessBase {\nconstruct () { super( BatchProcessType.1C_FLAGOVERDUELEGALREPORTS ) }\n\n1s @f + override function requestTermination() : boolean {...}\n\nitialConditions() : boolean {\n\n* Application calls the method to determine whether to start a batch process\n\n¢ Used to determine if conditions are met to begin processing\n\n« Return true: doWork method will be called\n\n¢ Return false: only a history event will be written\n\n¢ Default: true",
+      "word_count": 74,
+      "avg_confidence": 84.44,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i requestTermination method\n\n¢ The application may want to\nterminate a batch process,\nsuch as when...\n\n* The process is run from the Ul\nand the user clicks Stop 2s of\n\n* The process is run from the API 27\nand the stop process command\nis received\n\n* The application is shutting down\n\n¢ Handled by setting\nTerminateRequested\nproperty in code and used to\nexit any loops\n\nboolean {\n\noverride function requestTermination()\nsuper. requestTermination()\nreturn true by\n\n}\n\noverride function checkInitialConditions() : boolean {...}\n\noverride function doWork() {\nTimeUnit. SECONDS. sleep (15)\nif (TerminateRequested) {\n\nthrow new TerminatedException(\"Process terminated\")\n\nports = 0\n\nvar messageQuery = Query.make (Message)\nmessageQuery. compare (Message#DestinationID, Relop.Equals, 15)\nvar results0bj = messageQuery.select()\nfor (currentMessage in results0bj) {\nif (TerminateRequested) {\nthrow new TerminatedException (\"Process terminated\")\n}",
+      "word_count": 130,
+      "avg_confidence": 85.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Other methods and properties on BatchProcessBase\n\nGi\n\n* getDescription\n+ Retrieves the description of the current batch type\n\n* incrementOperationsCompleted\n\n+ Increments an internal counter for how many\noperations are complete\n\n+ Returns the current number of operations that are\ncomplete\n\n* incrementOperationsFailed\n\n* Increments an internal counter for how many\noperations failed\n\n* Call this method to track the progress of the batch\nprocess\n\n« Exclusive\n\n+ Determines whether another instance of this batch\nprocess can start while this process is running\n\n+ The base class implementation always returns true\n\n+ Set this property to false if you want to allow multiple\ninstances of this batch process to run in parallel.\n\n* OperationsExpected\n\n+ Set this once after determining number of items to\nbe processed\n\n+ Used to provide feedback in the UI for Ul Runnable\nProcesses",
+      "word_count": 139,
+      "avg_confidence": 89.09,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Configure ProcessesPlugin class\n\npackage trn.ta.batch\n\nuses gw.plugin.processing. IProcessesPlugin\nuses gw.processes.BatchProcess\nuses trn.ta.batch. legalreport. FlagOverdueLegalReportsBatch\n\nclass ProcessesPlugin implements IProcessesPlugin {\n\noverride function createBatchProcess(type : BatchProcessType, arguments : Object[])\nswitch(type) {\ncase BatchProcessType. 1C_FLAGOVERDUELEGALREPORTS:\nreturn new FlagOverdueLegalReportsBatch ()\ndefault:\nreturn null\n\n: BatchProcess {",
+      "word_count": 43,
+      "avg_confidence": 81.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Configure the IProcessesPlugin registry entry a\n\n* Create the plugin registry\n« config.Plugin.registry\n\nv Pi Plugins\nY Dib registry\n1@ AuthenticationServicePlugin.gwp\n\n* Specify the Plugin Bee\nName: |ProcessesPlugin\n\n« |ProcessesPlugin name\n\nInterface: IProcessesPlugin\n\n+ |ProcessesPlugin interface Cancel\n\n1@ lProcessesPlugin.gwp » |\n\n. Name [Pre Plugin\n* Configure the new plugin  “™\n\nInterface: IProcessesPlugin\n\nregistry\n\nGosu Class: _trn.ta.batch.ProcessesPlugin\n\nEnvironment:",
+      "word_count": 59,
+      "avg_confidence": 66.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i Configure the scheduler-config.xml file Gi\n\n!-- Run every\n\n<ProcessSchedule process=\"FlagOverdueLegalReports\">\n<CronSchedule dayofmonth=\"?\"\ndayofweek=\"*\"\nhours=\"3\"/>\n</ProcessSchedule>\n\n¢ Open scheduler-config.xml file found under configuration.config.scheduler\n\n¢ dayofmonth - ? is used only for dayofmonth and dayofweek attribute and means\nwithout regard to this value\n\n¢ dayofweek -* means all values\n\n* hours - 3 means 3am using 24-hour clock",
+      "word_count": 57,
+      "avg_confidence": 86.91,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "i Deploy code changes\n\n¢ New Gosu plugin class\n¢ Modified plugin registry\n¢ New typelist typecode\n\n¢ Modified scheduler-config.xml file\n\ntlm Tools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\n186, Debug ‘Server’ Shift+F9\nYE Run ‘Server’ with Coverage\n\nD> Run... Alt+Shift+F10\nWE Debug... Alt+ Shift+F9\n\nMy Attach to Local Process...\n[>> Edit Configurations...\n\nB] import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified Gosu plugin class\n\nGARY Tools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server’\n\nW Run ‘Server’ with Coverage\nD Run...\n\n€ Debug...\n\n\\y Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results\n\nIl Stop ‘Server’\n\nEP show Running List\n\nStop Backgroun\n\nReload Changed CI",
+      "word_count": 113,
+      "avg_confidence": 77.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "i Updating the database in a batch process\n\nNo CurrentBundle for a batch process\n\nUse Transaction. runWithNewBundle(/ bundle ->{} , “user”) OF\nTransaction.newBundle ()\n\nIf you expect to update large numbers of rows:\nLarge number of rows is a relative term\nConsider using paging with regular commits\nKeep bundles size as small as possible\nBe careful about how you use accessors\n\nUse Query best practices\n* Do filtering at the database rather than in memory — let the DB do what it’s good at\n\n+ See Gosu Queries and Bundles and Database Transaction lessons for more information",
+      "word_count": 97,
+      "avg_confidence": 91.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "i Updating the database in a batch process Gi\n\nr\n\n¢ Problematic approach:\n\n* Two main problems:\n\n*« Memory\n\n+ Processing a possibly large\nqueryResult set\n\n¢ Bundle performance il\n\nuses gw.api.database. Query\nuses gw.transaction.Transaction\n\nTransaction. runWithNewBundle(\\bundle -> {\nvar queryObj = Query.make (ABContact)\nvar queryResult = queryObj.select()\nfor (€ in queryResult) {\n\nvar entityToModify = bundle.add(e)\n}\n2}\n\n+ Every new accessor drags an entity into the bundle\n\n+ And using accessors from those entities drag in more entities\n\n+ Bundles can grow very large",
+      "word_count": 86,
+      "avg_confidence": 86.52,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "i Abetter approach: Paging plus regular commits Gi\n\nuses com.google.common.collect.Iterables\nuses gw.api.database.Query\nuses gw.transaction.Transaction\n\nvar queryObj = Query.make(ABContact)\nvar queryResult = queryObj.select()\nqueryResult.setPageSize (10000)\n\nfor (entities in Iterables.partition(queryResult, 250)) {\nTransaction. runWithNewBundle(\\bundle -> {\nfor (€ in entities) {\nvar entityToModify = bundle.add(e)",
+      "word_count": 43,
+      "avg_confidence": 87.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "i Paging with modifications\n\nApp\nserver",
+      "word_count": 6,
+      "avg_confidence": 86.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "i Demonstration G\nCreate a custom batch process\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 94.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Question\n\n_- — Whatare the three ways a batch process can be run? Which of the three\n\nPa is the most common?\n7\n\nSS ee eee ae eee\n\nGi",
+      "word_count": 29,
+      "avg_confidence": 75.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Answer Gi\n\n_- — Whatare the three ways a batch process can be run? Which of the three\n\nPa is the most common?\n7\n\nThree way to run a batch process are:\n* Scheduled\n¢ Run from the UI\n\n« Run from the web service API\n\nSee eee ee eae\n\nScheduled is the most common way to run a batch process.",
+      "word_count": 61,
+      "avg_confidence": 82.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Question\n\n,- — When you add a new batch process typecode to BatchProcess Type,\n¢ why must you add one or more categories to the typecode?\n\n¢\n¢\n\nSS ee eee ae eee\n\nGi",
+      "word_count": 34,
+      "avg_confidence": 80.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Answer Gi\n\n,- — When you add a new batch process typecode to BatchProcess Type,\nPa why must you add one or more categories to the typecode?\n¢\n\nThe categories of a BatchProcessType typecode determines how the batch process\ncan be run (from the UI, scheduled, from the API, and/or in maintenance level).\n\nSee eee ee eae",
+      "word_count": 57,
+      "avg_confidence": 85.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Question\n\n_- — When creating a custom batch process, do you need to implement the\n\nPa ProcessesPlugin or just modify it?\n¢\n\nSS ee eee ae eee\n\nGi",
+      "word_count": 28,
+      "avg_confidence": 75.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Answer Gi\n\n_- — When creating a custom batch process, do you need to implement the\nPa ProcessesPlugin or just modify it?\n¢\n\nFor PolicyCenter and ClaimCenter, the IProcessesPlugin file already exists in the base\napplication and you only need to modify the ProcessesPlugin class which implements\nthe IProcessesPlugin interface.\n\nFor BillingCenter and ContactManager, you need to create an IProcessesPlugin\nregistry file that implements the IProcessesPlugin interface in a new class.\n\nSee eee ee eae",
+      "word_count": 75,
+      "avg_confidence": 87.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Question\n\n_- — Foracustom batch process, what method or methods require\n\nPa implementation?\n¢\n\nSS ee eee ae eee",
+      "word_count": 19,
+      "avg_confidence": 69.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Answer\n\n_- — Foracustom batch process, what method or methods require\nPa implementation?\n¢\n\nOnly the doWork method is required.\n\nSee eee ee eae",
+      "word_count": 24,
+      "avg_confidence": 76.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Question\n\n,- — How does a batch process commit changes to the database?\n\n¢\n¢\n¢\n\nSS ee eee ae eee",
+      "word_count": 21,
+      "avg_confidence": 68.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Answer\n\n_- — How does a batch process commit changes to the database?\n¢\n\n¢\n¢\n\nThe code must create a new bundle using runWithNewBundle and add the entities to\nbe changed and committed to that bundle.\n\nSee eee ee eae",
+      "word_count": 41,
+      "avg_confidence": 82.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe the role batch processes play in\n\nGuidewire applications\n\n¢ Implement custom batch processes\n\nSchedule batch processes\n\nDescribe some best practices that can be\nimplemented when updating a database ina\nbatch process",
+      "word_count": 36,
+      "avg_confidence": 93.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "i Student exercise\n\nCreate a custom batch process",
+      "word_count": 8,
+      "avg_confidence": 89.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

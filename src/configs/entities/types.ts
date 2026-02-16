@@ -25,6 +25,7 @@ export type FieldType =
   | 'rich-text'
   | 'file'
   | 'location' // Structured city/state/country picker
+  | 'address' // Full structured address (line1, line2, city, state, zip, country, county)
   | 'custom' // Custom component rendered by wizard (identified by customComponentKey)
 
 export interface SelectOption {

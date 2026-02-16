@@ -1,0 +1,2731 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "filename": "In_Policy_29_01.mp4",
+    "video_stem": "In_Policy_29_01",
+    "duration_seconds": 132.32,
+    "duration_formatted": "00:02:12.320",
+    "segment_count": 43,
+    "word_count": 383,
+    "avg_confidence": 0.9804,
+    "transcription_time_seconds": 16.32,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:39:18.235919"
+  },
+  "full_text": "Validation is a check executed by PolicyCenter before a given action, to ensure that the current business data is valid. Let's create a new contact. Select Person as the contact type. Validation with field validators will verify the field as the user types values. For example, the date field uses a field validator to ensure a certain format. The input mask appears as a watermark in the field and restricts user input, which must match the pattern. Letters or numbers entered using an incorrect format will not be accepted by the application. The input must match the pattern of the watermark. Validation occurs during save using business logic. Required fields have red asterisks on the UI. Error or warning messages are displayed on the UI after clicking Update. Next, let's look at how validation executed on wizard steps validates the policy data. For example, the user tries to navigate away from the page, when no driver is entered for the vehicle on a personal auto submission. A warning message is displayed. User can continue with other actions when a warning occurs. A warning or error message can be configured to be displayed at different point of time in a job. In this example, the driver missing on a vehicle is only a warning before quote, but it becomes an error when the quote button is clicked. The error or warning messages may be displayed on the top of the page, or in a worksheet at the bottom, depending on the validation method used. If the error message is displayed on a different page, there is a link to the page, where the condition exists. In this case, the error message is displayed on the Covertures page, but the error condition is on the Vehicles page. You can click on the error message. Clicking the link takes you to the Vehicles page, so that you can fix the problem. You can click the Clear button to get rid of the frame at the bottom. Try to quote again on the Vehicles page, where the problem exists. The error message is displayed again, but there is no link on the message, because it is on the same page. Errors must be resolved before the user can continue. This is the end of demonstration for validation-based                      ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.64,
+      "end": 9.38,
+      "start_formatted": "00:00:00.640",
+      "end_formatted": "00:00:09.380",
+      "text": "Validation is a check executed by PolicyCenter before a given action, to ensure that the current business data is valid. Let's create a new contact.",
+      "words": [
+        {
+          "word": "Validation",
+          "start": 0.64,
+          "end": 1.2,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 1.2,
+          "end": 1.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 1.36,
+          "end": 1.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "check",
+          "start": 1.48,
+          "end": 1.7,
+          "probability": 0.9873
+        },
+        {
+          "word": "executed",
+          "start": 1.7,
+          "end": 2.26,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 2.26,
+          "end": 2.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "PolicyCenter",
+          "start": 2.5,
+          "end": 3.36,
+          "probability": 0.6763
+        },
+        {
+          "word": "before",
+          "start": 3.36,
+          "end": 3.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 3.66,
+          "end": 3.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "given",
+          "start": 3.88,
+          "end": 4.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "action,",
+          "start": 4.08,
+          "end": 4.54,
+          "probability": 0.9692
+        },
+        {
+          "word": "to",
+          "start": 4.82,
+          "end": 5.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "ensure",
+          "start": 5.04,
+          "end": 5.32,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 5.32,
+          "end": 5.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 5.54,
+          "end": 5.66,
+          "probability": 0.9971
+        },
+        {
+          "word": "current",
+          "start": 5.66,
+          "end": 5.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "business",
+          "start": 5.94,
+          "end": 6.32,
+          "probability": 0.9175
+        },
+        {
+          "word": "data",
+          "start": 6.32,
+          "end": 6.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 6.64,
+          "end": 6.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "valid.",
+          "start": 6.88,
+          "end": 7.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "Let's",
+          "start": 7.8,
+          "end": 8.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "create",
+          "start": 8.36,
+          "end": 8.62,
+          "probability": 0.9844
+        },
+        {
+          "word": "a",
+          "start": 8.62,
+          "end": 8.78,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 8.78,
+          "end": 8.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "contact.",
+          "start": 8.94,
+          "end": 9.38,
+          "probability": 0.8828
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 12.04,
+      "end": 14.14,
+      "start_formatted": "00:00:12.040",
+      "end_formatted": "00:00:14.140",
+      "text": "Select Person as the contact type.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 12.04,
+          "end": 12.6,
+          "probability": 0.9922
+        },
+        {
+          "word": "Person",
+          "start": 12.6,
+          "end": 12.96,
+          "probability": 0.499
+        },
+        {
+          "word": "as",
+          "start": 12.96,
+          "end": 13.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 13.18,
+          "end": 13.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "contact",
+          "start": 13.3,
+          "end": 13.7,
+          "probability": 0.6484
+        },
+        {
+          "word": "type.",
+          "start": 13.7,
+          "end": 14.14,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 16.48,
+      "end": 25.58,
+      "start_formatted": "00:00:16.480",
+      "end_formatted": "00:00:25.580",
+      "text": "Validation with field validators will verify the field as the user types values. For example, the date field uses a field validator to ensure a certain format.",
+      "words": [
+        {
+          "word": "Validation",
+          "start": 16.48,
+          "end": 17.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 17.04,
+          "end": 17.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "field",
+          "start": 17.22,
+          "end": 17.46,
+          "probability": 0.6099
+        },
+        {
+          "word": "validators",
+          "start": 17.46,
+          "end": 18.1,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 18.1,
+          "end": 18.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "verify",
+          "start": 18.32,
+          "end": 18.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 18.68,
+          "end": 18.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "field",
+          "start": 18.92,
+          "end": 19.2,
+          "probability": 0.9976
+        },
+        {
+          "word": "as",
+          "start": 19.2,
+          "end": 19.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 19.38,
+          "end": 19.5,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 19.5,
+          "end": 19.8,
+          "probability": 0.9883
+        },
+        {
+          "word": "types",
+          "start": 19.8,
+          "end": 20.12,
+          "probability": 0.7935
+        },
+        {
+          "word": "values.",
+          "start": 20.12,
+          "end": 20.62,
+          "probability": 0.7739
+        },
+        {
+          "word": "For",
+          "start": 21.04,
+          "end": 21.38,
+          "probability": 0.999
+        },
+        {
+          "word": "example,",
+          "start": 21.38,
+          "end": 21.8,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 22.12,
+          "end": 22.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "date",
+          "start": 22.34,
+          "end": 22.56,
+          "probability": 0.5957
+        },
+        {
+          "word": "field",
+          "start": 22.56,
+          "end": 22.88,
+          "probability": 0.9932
+        },
+        {
+          "word": "uses",
+          "start": 22.88,
+          "end": 23.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 23.2,
+          "end": 23.38,
+          "probability": 0.9917
+        },
+        {
+          "word": "field",
+          "start": 23.38,
+          "end": 23.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "validator",
+          "start": 23.64,
+          "end": 24.24,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 24.24,
+          "end": 24.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "ensure",
+          "start": 24.4,
+          "end": 24.68,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 24.68,
+          "end": 24.9,
+          "probability": 0.999
+        },
+        {
+          "word": "certain",
+          "start": 24.9,
+          "end": 25.12,
+          "probability": 0.999
+        },
+        {
+          "word": "format.",
+          "start": 25.12,
+          "end": 25.58,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 25.58,
+      "end": 31.46,
+      "start_formatted": "00:00:25.580",
+      "end_formatted": "00:00:31.460",
+      "text": "The input mask appears as a watermark in the field and restricts user input, which must match the pattern.",
+      "words": [
+        {
+          "word": "The",
+          "start": 25.58,
+          "end": 26.2,
+          "probability": 0.9644
+        },
+        {
+          "word": "input",
+          "start": 26.2,
+          "end": 26.6,
+          "probability": 0.958
+        },
+        {
+          "word": "mask",
+          "start": 26.6,
+          "end": 26.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "appears",
+          "start": 26.9,
+          "end": 27.28,
+          "probability": 1.0
+        },
+        {
+          "word": "as",
+          "start": 27.28,
+          "end": 27.48,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 27.48,
+          "end": 27.58,
+          "probability": 1.0
+        },
+        {
+          "word": "watermark",
+          "start": 27.58,
+          "end": 28.06,
+          "probability": 0.999
+        },
+        {
+          "word": "in",
+          "start": 28.06,
+          "end": 28.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 28.2,
+          "end": 28.28,
+          "probability": 1.0
+        },
+        {
+          "word": "field",
+          "start": 28.28,
+          "end": 28.58,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 28.58,
+          "end": 28.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "restricts",
+          "start": 28.76,
+          "end": 29.24,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 29.24,
+          "end": 29.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "input,",
+          "start": 29.46,
+          "end": 29.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "which",
+          "start": 30.14,
+          "end": 30.4,
+          "probability": 1.0
+        },
+        {
+          "word": "must",
+          "start": 30.4,
+          "end": 30.64,
+          "probability": 1.0
+        },
+        {
+          "word": "match",
+          "start": 30.64,
+          "end": 30.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 30.92,
+          "end": 31.1,
+          "probability": 1.0
+        },
+        {
+          "word": "pattern.",
+          "start": 31.1,
+          "end": 31.46,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 32.36,
+      "end": 39.58,
+      "start_formatted": "00:00:32.360",
+      "end_formatted": "00:00:39.580",
+      "text": "Letters or numbers entered using an incorrect format will not be accepted by the application. The input must match the pattern of the watermark.",
+      "words": [
+        {
+          "word": "Letters",
+          "start": 32.36,
+          "end": 33.0,
+          "probability": 0.999
+        },
+        {
+          "word": "or",
+          "start": 33.0,
+          "end": 33.14,
+          "probability": 1.0
+        },
+        {
+          "word": "numbers",
+          "start": 33.14,
+          "end": 33.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "entered",
+          "start": 33.48,
+          "end": 33.74,
+          "probability": 1.0
+        },
+        {
+          "word": "using",
+          "start": 33.74,
+          "end": 34.02,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 34.02,
+          "end": 34.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "incorrect",
+          "start": 34.22,
+          "end": 34.66,
+          "probability": 1.0
+        },
+        {
+          "word": "format",
+          "start": 34.66,
+          "end": 35.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 35.14,
+          "end": 35.42,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 35.42,
+          "end": 35.6,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 35.6,
+          "end": 35.78,
+          "probability": 1.0
+        },
+        {
+          "word": "accepted",
+          "start": 35.78,
+          "end": 36.22,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 36.22,
+          "end": 36.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 36.42,
+          "end": 36.56,
+          "probability": 1.0
+        },
+        {
+          "word": "application.",
+          "start": 36.56,
+          "end": 37.18,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 37.62,
+          "end": 37.94,
+          "probability": 1.0
+        },
+        {
+          "word": "input",
+          "start": 37.94,
+          "end": 38.26,
+          "probability": 1.0
+        },
+        {
+          "word": "must",
+          "start": 38.26,
+          "end": 38.56,
+          "probability": 1.0
+        },
+        {
+          "word": "match",
+          "start": 38.56,
+          "end": 38.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 38.8,
+          "end": 38.98,
+          "probability": 1.0
+        },
+        {
+          "word": "pattern",
+          "start": 38.98,
+          "end": 39.32,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 39.32,
+          "end": 39.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 39.46,
+          "end": 39.56,
+          "probability": 1.0
+        },
+        {
+          "word": "watermark.",
+          "start": 39.56,
+          "end": 39.88,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 41.38,
+      "end": 47.3,
+      "start_formatted": "00:00:41.380",
+      "end_formatted": "00:00:47.300",
+      "text": "Validation occurs during save using business logic. Required fields have red asterisks on the UI.",
+      "words": [
+        {
+          "word": "Validation",
+          "start": 41.38,
+          "end": 42.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "occurs",
+          "start": 42.02,
+          "end": 42.38,
+          "probability": 1.0
+        },
+        {
+          "word": "during",
+          "start": 42.38,
+          "end": 42.66,
+          "probability": 1.0
+        },
+        {
+          "word": "save",
+          "start": 42.66,
+          "end": 43.0,
+          "probability": 0.5879
+        },
+        {
+          "word": "using",
+          "start": 43.0,
+          "end": 43.32,
+          "probability": 0.9585
+        },
+        {
+          "word": "business",
+          "start": 43.32,
+          "end": 43.74,
+          "probability": 0.9443
+        },
+        {
+          "word": "logic.",
+          "start": 43.74,
+          "end": 44.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "Required",
+          "start": 44.62,
+          "end": 45.26,
+          "probability": 1.0
+        },
+        {
+          "word": "fields",
+          "start": 45.26,
+          "end": 45.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 45.6,
+          "end": 45.8,
+          "probability": 1.0
+        },
+        {
+          "word": "red",
+          "start": 45.8,
+          "end": 46.0,
+          "probability": 0.5767
+        },
+        {
+          "word": "asterisks",
+          "start": 46.0,
+          "end": 46.64,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 46.64,
+          "end": 46.8,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 46.8,
+          "end": 46.92,
+          "probability": 1.0
+        },
+        {
+          "word": "UI.",
+          "start": 46.92,
+          "end": 47.3,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 47.86,
+      "end": 51.66,
+      "start_formatted": "00:00:47.860",
+      "end_formatted": "00:00:51.660",
+      "text": "Error or warning messages are displayed on the UI after clicking Update.",
+      "words": [
+        {
+          "word": "Error",
+          "start": 47.86,
+          "end": 48.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 48.5,
+          "end": 48.68,
+          "probability": 1.0
+        },
+        {
+          "word": "warning",
+          "start": 48.68,
+          "end": 49.02,
+          "probability": 0.999
+        },
+        {
+          "word": "messages",
+          "start": 49.02,
+          "end": 49.48,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 49.48,
+          "end": 49.74,
+          "probability": 1.0
+        },
+        {
+          "word": "displayed",
+          "start": 49.74,
+          "end": 50.12,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 50.12,
+          "end": 50.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 50.34,
+          "end": 50.44,
+          "probability": 1.0
+        },
+        {
+          "word": "UI",
+          "start": 50.44,
+          "end": 50.78,
+          "probability": 1.0
+        },
+        {
+          "word": "after",
+          "start": 50.78,
+          "end": 51.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicking",
+          "start": 51.0,
+          "end": 51.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "Update.",
+          "start": 51.38,
+          "end": 51.66,
+          "probability": 0.5991
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 52.4,
+      "end": 58.02,
+      "start_formatted": "00:00:52.400",
+      "end_formatted": "00:00:58.020",
+      "text": "Next, let's look at how validation executed on wizard steps validates the policy data.",
+      "words": [
+        {
+          "word": "Next,",
+          "start": 52.4,
+          "end": 52.98,
+          "probability": 0.9824
+        },
+        {
+          "word": "let's",
+          "start": 53.24,
+          "end": 53.62,
+          "probability": 0.999
+        },
+        {
+          "word": "look",
+          "start": 53.62,
+          "end": 53.82,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 53.82,
+          "end": 53.94,
+          "probability": 1.0
+        },
+        {
+          "word": "how",
+          "start": 53.94,
+          "end": 54.12,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 54.12,
+          "end": 54.78,
+          "probability": 0.9683
+        },
+        {
+          "word": "executed",
+          "start": 54.78,
+          "end": 55.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 55.52,
+          "end": 55.76,
+          "probability": 1.0
+        },
+        {
+          "word": "wizard",
+          "start": 55.76,
+          "end": 56.08,
+          "probability": 0.4543
+        },
+        {
+          "word": "steps",
+          "start": 56.08,
+          "end": 56.46,
+          "probability": 0.9678
+        },
+        {
+          "word": "validates",
+          "start": 56.46,
+          "end": 57.12,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 57.12,
+          "end": 57.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 57.28,
+          "end": 57.68,
+          "probability": 0.999
+        },
+        {
+          "word": "data.",
+          "start": 57.68,
+          "end": 58.02,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 58.26,
+      "end": 65.52,
+      "start_formatted": "00:00:58.260",
+      "end_formatted": "00:01:05.520",
+      "text": "For example, the user tries to navigate away from the page, when no driver is entered for the vehicle on a personal auto submission.",
+      "words": [
+        {
+          "word": "For",
+          "start": 58.26,
+          "end": 58.66,
+          "probability": 1.0
+        },
+        {
+          "word": "example,",
+          "start": 58.66,
+          "end": 59.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 59.4,
+          "end": 59.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 59.62,
+          "end": 59.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "tries",
+          "start": 59.9,
+          "end": 60.26,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 60.26,
+          "end": 60.48,
+          "probability": 1.0
+        },
+        {
+          "word": "navigate",
+          "start": 60.48,
+          "end": 60.86,
+          "probability": 1.0
+        },
+        {
+          "word": "away",
+          "start": 60.86,
+          "end": 61.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "from",
+          "start": 61.16,
+          "end": 61.36,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 61.36,
+          "end": 61.48,
+          "probability": 1.0
+        },
+        {
+          "word": "page,",
+          "start": 61.48,
+          "end": 61.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "when",
+          "start": 62.06,
+          "end": 62.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 62.32,
+          "end": 62.5,
+          "probability": 1.0
+        },
+        {
+          "word": "driver",
+          "start": 62.5,
+          "end": 62.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 62.86,
+          "end": 63.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "entered",
+          "start": 63.1,
+          "end": 63.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 63.36,
+          "end": 63.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 63.56,
+          "end": 63.66,
+          "probability": 0.999
+        },
+        {
+          "word": "vehicle",
+          "start": 63.66,
+          "end": 63.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 63.98,
+          "end": 64.2,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 64.2,
+          "end": 64.3,
+          "probability": 1.0
+        },
+        {
+          "word": "personal",
+          "start": 64.3,
+          "end": 64.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "auto",
+          "start": 64.72,
+          "end": 65.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "submission.",
+          "start": 65.04,
+          "end": 65.52,
+          "probability": 0.5693
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 66.12,
+      "end": 71.4,
+      "start_formatted": "00:01:06.120",
+      "end_formatted": "00:01:11.400",
+      "text": "A warning message is displayed. User can continue with other actions when a warning occurs.",
+      "words": [
+        {
+          "word": "A",
+          "start": 66.12,
+          "end": 66.7,
+          "probability": 0.999
+        },
+        {
+          "word": "warning",
+          "start": 66.7,
+          "end": 66.98,
+          "probability": 0.9888
+        },
+        {
+          "word": "message",
+          "start": 66.98,
+          "end": 67.34,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 67.34,
+          "end": 67.56,
+          "probability": 1.0
+        },
+        {
+          "word": "displayed.",
+          "start": 67.56,
+          "end": 68.04,
+          "probability": 1.0
+        },
+        {
+          "word": "User",
+          "start": 68.4,
+          "end": 68.82,
+          "probability": 0.9888
+        },
+        {
+          "word": "can",
+          "start": 68.82,
+          "end": 69.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "continue",
+          "start": 69.02,
+          "end": 69.42,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 69.42,
+          "end": 69.66,
+          "probability": 1.0
+        },
+        {
+          "word": "other",
+          "start": 69.66,
+          "end": 69.86,
+          "probability": 1.0
+        },
+        {
+          "word": "actions",
+          "start": 69.86,
+          "end": 70.3,
+          "probability": 1.0
+        },
+        {
+          "word": "when",
+          "start": 70.3,
+          "end": 70.54,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 70.54,
+          "end": 70.64,
+          "probability": 1.0
+        },
+        {
+          "word": "warning",
+          "start": 70.64,
+          "end": 70.92,
+          "probability": 0.999
+        },
+        {
+          "word": "occurs.",
+          "start": 70.92,
+          "end": 71.4,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 71.92,
+      "end": 83.92,
+      "start_formatted": "00:01:11.920",
+      "end_formatted": "00:01:23.920",
+      "text": "A warning or error message can be configured to be displayed at different point of time in a job. In this example, the driver missing on a vehicle is only a warning before quote, but it becomes an error when the quote button is clicked.",
+      "words": [
+        {
+          "word": "A",
+          "start": 71.92,
+          "end": 72.4,
+          "probability": 0.9155
+        },
+        {
+          "word": "warning",
+          "start": 72.4,
+          "end": 72.7,
+          "probability": 0.9087
+        },
+        {
+          "word": "or",
+          "start": 72.7,
+          "end": 72.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "error",
+          "start": 72.88,
+          "end": 73.12,
+          "probability": 0.9966
+        },
+        {
+          "word": "message",
+          "start": 73.12,
+          "end": 73.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 73.48,
+          "end": 73.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 73.72,
+          "end": 73.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "configured",
+          "start": 73.86,
+          "end": 74.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 74.3,
+          "end": 74.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 74.48,
+          "end": 74.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed",
+          "start": 74.62,
+          "end": 75.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 75.02,
+          "end": 75.2,
+          "probability": 0.9692
+        },
+        {
+          "word": "different",
+          "start": 75.2,
+          "end": 75.44,
+          "probability": 0.9624
+        },
+        {
+          "word": "point",
+          "start": 75.44,
+          "end": 75.72,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 75.72,
+          "end": 75.88,
+          "probability": 0.98
+        },
+        {
+          "word": "time",
+          "start": 75.88,
+          "end": 76.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 76.12,
+          "end": 76.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 76.28,
+          "end": 76.36,
+          "probability": 0.9229
+        },
+        {
+          "word": "job.",
+          "start": 76.36,
+          "end": 76.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "In",
+          "start": 76.94,
+          "end": 77.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 77.3,
+          "end": 77.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "example,",
+          "start": 77.46,
+          "end": 77.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 78.22,
+          "end": 78.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "driver",
+          "start": 78.44,
+          "end": 78.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "missing",
+          "start": 78.74,
+          "end": 79.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 79.08,
+          "end": 79.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 79.26,
+          "end": 79.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "vehicle",
+          "start": 79.36,
+          "end": 79.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 79.64,
+          "end": 79.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "only",
+          "start": 79.88,
+          "end": 80.14,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 80.14,
+          "end": 80.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "warning",
+          "start": 80.28,
+          "end": 80.5,
+          "probability": 0.9771
+        },
+        {
+          "word": "before",
+          "start": 80.5,
+          "end": 80.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "quote,",
+          "start": 80.8,
+          "end": 81.22,
+          "probability": 0.9565
+        },
+        {
+          "word": "but",
+          "start": 81.42,
+          "end": 81.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 81.62,
+          "end": 81.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "becomes",
+          "start": 81.74,
+          "end": 82.08,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 82.08,
+          "end": 82.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "error",
+          "start": 82.24,
+          "end": 82.5,
+          "probability": 0.999
+        },
+        {
+          "word": "when",
+          "start": 82.5,
+          "end": 82.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 82.68,
+          "end": 82.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "quote",
+          "start": 82.8,
+          "end": 83.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "button",
+          "start": 83.04,
+          "end": 83.36,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 83.36,
+          "end": 83.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicked.",
+          "start": 83.54,
+          "end": 83.92,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 85.18,
+      "end": 92.72,
+      "start_formatted": "00:01:25.180",
+      "end_formatted": "00:01:32.720",
+      "text": "The error or warning messages may be displayed on the top of the page, or in a worksheet at the bottom, depending on the validation method used.",
+      "words": [
+        {
+          "word": "The",
+          "start": 85.18,
+          "end": 85.62,
+          "probability": 0.9219
+        },
+        {
+          "word": "error",
+          "start": 85.62,
+          "end": 85.94,
+          "probability": 0.9429
+        },
+        {
+          "word": "or",
+          "start": 85.94,
+          "end": 86.14,
+          "probability": 0.9912
+        },
+        {
+          "word": "warning",
+          "start": 86.14,
+          "end": 86.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "messages",
+          "start": 86.46,
+          "end": 86.88,
+          "probability": 0.9873
+        },
+        {
+          "word": "may",
+          "start": 86.88,
+          "end": 87.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "be",
+          "start": 87.16,
+          "end": 87.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed",
+          "start": 87.3,
+          "end": 87.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 87.72,
+          "end": 87.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 87.9,
+          "end": 88.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "top",
+          "start": 88.04,
+          "end": 88.22,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 88.22,
+          "end": 88.36,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 88.36,
+          "end": 88.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "page,",
+          "start": 88.44,
+          "end": 88.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 88.96,
+          "end": 89.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 89.18,
+          "end": 89.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 89.32,
+          "end": 89.38,
+          "probability": 0.998
+        },
+        {
+          "word": "worksheet",
+          "start": 89.38,
+          "end": 89.68,
+          "probability": 0.998
+        },
+        {
+          "word": "at",
+          "start": 89.68,
+          "end": 89.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 89.9,
+          "end": 90.0,
+          "probability": 0.999
+        },
+        {
+          "word": "bottom,",
+          "start": 90.0,
+          "end": 90.34,
+          "probability": 0.999
+        },
+        {
+          "word": "depending",
+          "start": 90.62,
+          "end": 90.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 90.96,
+          "end": 91.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 91.18,
+          "end": 91.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "validation",
+          "start": 91.28,
+          "end": 91.9,
+          "probability": 0.9902
+        },
+        {
+          "word": "method",
+          "start": 91.9,
+          "end": 92.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "used.",
+          "start": 92.26,
+          "end": 92.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 93.16,
+      "end": 98.82,
+      "start_formatted": "00:01:33.160",
+      "end_formatted": "00:01:38.820",
+      "text": "If the error message is displayed on a different page, there is a link to the page, where the condition exists.",
+      "words": [
+        {
+          "word": "If",
+          "start": 93.16,
+          "end": 93.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 93.6,
+          "end": 93.7,
+          "probability": 1.0
+        },
+        {
+          "word": "error",
+          "start": 93.7,
+          "end": 93.96,
+          "probability": 0.999
+        },
+        {
+          "word": "message",
+          "start": 93.96,
+          "end": 94.3,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 94.3,
+          "end": 94.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "displayed",
+          "start": 94.52,
+          "end": 94.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 94.88,
+          "end": 95.1,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 95.1,
+          "end": 95.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "different",
+          "start": 95.18,
+          "end": 95.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "page,",
+          "start": 95.42,
+          "end": 95.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 96.1,
+          "end": 96.3,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 96.3,
+          "end": 96.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 96.44,
+          "end": 96.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "link",
+          "start": 96.54,
+          "end": 96.74,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 96.74,
+          "end": 96.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 96.92,
+          "end": 97.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "page,",
+          "start": 97.02,
+          "end": 97.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "where",
+          "start": 97.52,
+          "end": 97.76,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 97.76,
+          "end": 97.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "condition",
+          "start": 97.9,
+          "end": 98.26,
+          "probability": 0.9912
+        },
+        {
+          "word": "exists.",
+          "start": 98.26,
+          "end": 98.82,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 98.82,
+      "end": 105.46,
+      "start_formatted": "00:01:38.820",
+      "end_formatted": "00:01:45.460",
+      "text": "In this case, the error message is displayed on the Covertures page, but the error condition is on the Vehicles page.",
+      "words": [
+        {
+          "word": "In",
+          "start": 98.82,
+          "end": 99.5,
+          "probability": 0.9346
+        },
+        {
+          "word": "this",
+          "start": 99.5,
+          "end": 99.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "case,",
+          "start": 99.72,
+          "end": 100.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 100.28,
+          "end": 100.5,
+          "probability": 0.998
+        },
+        {
+          "word": "error",
+          "start": 100.5,
+          "end": 100.8,
+          "probability": 0.9458
+        },
+        {
+          "word": "message",
+          "start": 100.8,
+          "end": 101.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 101.14,
+          "end": 101.36,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed",
+          "start": 101.36,
+          "end": 101.72,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 101.72,
+          "end": 101.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 101.92,
+          "end": 102.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "Covertures",
+          "start": 102.02,
+          "end": 102.52,
+          "probability": 0.9297
+        },
+        {
+          "word": "page,",
+          "start": 102.52,
+          "end": 102.86,
+          "probability": 0.9785
+        },
+        {
+          "word": "but",
+          "start": 103.1,
+          "end": 103.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 103.3,
+          "end": 103.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "error",
+          "start": 103.44,
+          "end": 103.68,
+          "probability": 0.9673
+        },
+        {
+          "word": "condition",
+          "start": 103.68,
+          "end": 104.1,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 104.1,
+          "end": 104.36,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 104.36,
+          "end": 104.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 104.48,
+          "end": 104.58,
+          "probability": 0.998
+        },
+        {
+          "word": "Vehicles",
+          "start": 104.58,
+          "end": 105.02,
+          "probability": 0.9414
+        },
+        {
+          "word": "page.",
+          "start": 105.02,
+          "end": 105.46,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 105.8,
+      "end": 107.48,
+      "start_formatted": "00:01:45.800",
+      "end_formatted": "00:01:47.480",
+      "text": "You can click on the error message.",
+      "words": [
+        {
+          "word": "You",
+          "start": 105.8,
+          "end": 106.08,
+          "probability": 0.9951
+        },
+        {
+          "word": "can",
+          "start": 106.08,
+          "end": 106.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 106.24,
+          "end": 106.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 106.46,
+          "end": 106.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 106.62,
+          "end": 106.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "error",
+          "start": 106.74,
+          "end": 107.0,
+          "probability": 0.8047
+        },
+        {
+          "word": "message.",
+          "start": 107.0,
+          "end": 107.48,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 108.3,
+      "end": 112.4,
+      "start_formatted": "00:01:48.300",
+      "end_formatted": "00:01:52.400",
+      "text": "Clicking the link takes you to the Vehicles page, so that you can fix the problem.",
+      "words": [
+        {
+          "word": "Clicking",
+          "start": 108.3,
+          "end": 108.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 108.74,
+          "end": 108.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "link",
+          "start": 108.86,
+          "end": 109.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "takes",
+          "start": 109.08,
+          "end": 109.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 109.4,
+          "end": 109.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 109.58,
+          "end": 109.72,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 109.72,
+          "end": 109.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "Vehicles",
+          "start": 109.86,
+          "end": 110.3,
+          "probability": 0.9805
+        },
+        {
+          "word": "page,",
+          "start": 110.3,
+          "end": 110.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "so",
+          "start": 110.92,
+          "end": 111.22,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 111.22,
+          "end": 111.38,
+          "probability": 0.999
+        },
+        {
+          "word": "you",
+          "start": 111.38,
+          "end": 111.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 111.5,
+          "end": 111.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "fix",
+          "start": 111.66,
+          "end": 111.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 111.9,
+          "end": 112.06,
+          "probability": 0.999
+        },
+        {
+          "word": "problem.",
+          "start": 112.06,
+          "end": 112.4,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 112.76,
+      "end": 115.64,
+      "start_formatted": "00:01:52.760",
+      "end_formatted": "00:01:55.640",
+      "text": "You can click the Clear button to get rid of the frame at the bottom.",
+      "words": [
+        {
+          "word": "You",
+          "start": 112.76,
+          "end": 113.1,
+          "probability": 0.998
+        },
+        {
+          "word": "can",
+          "start": 113.1,
+          "end": 113.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 113.28,
+          "end": 113.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 113.5,
+          "end": 113.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "Clear",
+          "start": 113.66,
+          "end": 113.86,
+          "probability": 0.7671
+        },
+        {
+          "word": "button",
+          "start": 113.86,
+          "end": 114.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 114.16,
+          "end": 114.32,
+          "probability": 0.999
+        },
+        {
+          "word": "get",
+          "start": 114.32,
+          "end": 114.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "rid",
+          "start": 114.48,
+          "end": 114.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 114.62,
+          "end": 114.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 114.74,
+          "end": 114.84,
+          "probability": 0.999
+        },
+        {
+          "word": "frame",
+          "start": 114.84,
+          "end": 115.1,
+          "probability": 0.9927
+        },
+        {
+          "word": "at",
+          "start": 115.1,
+          "end": 115.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 115.24,
+          "end": 115.32,
+          "probability": 0.999
+        },
+        {
+          "word": "bottom.",
+          "start": 115.32,
+          "end": 115.64,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 116.28,
+      "end": 119.9,
+      "start_formatted": "00:01:56.280",
+      "end_formatted": "00:01:59.900",
+      "text": "Try to quote again on the Vehicles page, where the problem exists.",
+      "words": [
+        {
+          "word": "Try",
+          "start": 116.28,
+          "end": 116.72,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 116.72,
+          "end": 116.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "quote",
+          "start": 116.86,
+          "end": 117.08,
+          "probability": 0.9873
+        },
+        {
+          "word": "again",
+          "start": 117.08,
+          "end": 117.32,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 117.32,
+          "end": 117.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 117.46,
+          "end": 117.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "Vehicles",
+          "start": 117.58,
+          "end": 118.02,
+          "probability": 0.9927
+        },
+        {
+          "word": "page,",
+          "start": 118.02,
+          "end": 118.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "where",
+          "start": 118.64,
+          "end": 118.86,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 118.86,
+          "end": 118.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "problem",
+          "start": 118.98,
+          "end": 119.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "exists.",
+          "start": 119.36,
+          "end": 119.9,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 119.9,
+      "end": 126.02,
+      "start_formatted": "00:01:59.900",
+      "end_formatted": "00:02:06.020",
+      "text": "The error message is displayed again, but there is no link on the message, because it is on the same page.",
+      "words": [
+        {
+          "word": "The",
+          "start": 119.9,
+          "end": 120.82,
+          "probability": 0.8369
+        },
+        {
+          "word": "error",
+          "start": 120.82,
+          "end": 121.18,
+          "probability": 0.9741
+        },
+        {
+          "word": "message",
+          "start": 121.18,
+          "end": 121.56,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 121.56,
+          "end": 121.76,
+          "probability": 0.998
+        },
+        {
+          "word": "displayed",
+          "start": 121.76,
+          "end": 122.12,
+          "probability": 0.999
+        },
+        {
+          "word": "again,",
+          "start": 122.12,
+          "end": 122.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "but",
+          "start": 122.76,
+          "end": 122.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "there",
+          "start": 122.98,
+          "end": 123.12,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 123.12,
+          "end": 123.26,
+          "probability": 0.999
+        },
+        {
+          "word": "no",
+          "start": 123.26,
+          "end": 123.44,
+          "probability": 0.998
+        },
+        {
+          "word": "link",
+          "start": 123.44,
+          "end": 123.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 123.7,
+          "end": 123.82,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 123.82,
+          "end": 123.9,
+          "probability": 0.999
+        },
+        {
+          "word": "message,",
+          "start": 123.9,
+          "end": 124.34,
+          "probability": 0.998
+        },
+        {
+          "word": "because",
+          "start": 124.54,
+          "end": 124.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "it",
+          "start": 124.86,
+          "end": 125.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 125.02,
+          "end": 125.14,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 125.14,
+          "end": 125.28,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 125.28,
+          "end": 125.36,
+          "probability": 0.999
+        },
+        {
+          "word": "same",
+          "start": 125.36,
+          "end": 125.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "page.",
+          "start": 125.58,
+          "end": 126.02,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 126.34,
+      "end": 129.08,
+      "start_formatted": "00:02:06.340",
+      "end_formatted": "00:02:09.080",
+      "text": "Errors must be resolved before the user can continue.",
+      "words": [
+        {
+          "word": "Errors",
+          "start": 126.34,
+          "end": 126.82,
+          "probability": 0.9961
+        },
+        {
+          "word": "must",
+          "start": 126.82,
+          "end": 127.02,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 127.02,
+          "end": 127.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "resolved",
+          "start": 127.18,
+          "end": 127.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "before",
+          "start": 127.58,
+          "end": 127.88,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 127.88,
+          "end": 128.1,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 128.1,
+          "end": 128.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "can",
+          "start": 128.38,
+          "end": 128.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "continue.",
+          "start": 128.62,
+          "end": 129.08,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 129.44,
+      "end": 132.32,
+      "start_formatted": "00:02:09.440",
+      "end_formatted": "00:02:12.320",
+      "text": "This is the end of demonstration for validation-based",
+      "words": [
+        {
+          "word": "This",
+          "start": 129.44,
+          "end": 129.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 129.9,
+          "end": 130.0,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 130.0,
+          "end": 130.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "end",
+          "start": 130.14,
+          "end": 130.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "of",
+          "start": 130.32,
+          "end": 130.44,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration",
+          "start": 130.44,
+          "end": 130.96,
+          "probability": 0.9692
+        },
+        {
+          "word": "for",
+          "start": 130.96,
+          "end": 131.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "validation",
+          "start": 131.3,
+          "end": 131.94,
+          "probability": 0.9639
+        },
+        {
+          "word": "-based",
+          "start": 131.94,
+          "end": 132.32,
+          "probability": 0.6973
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 22,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 23,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 24,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 25,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 29,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 30,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 31,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 32,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 33,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 34,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 35,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 36,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 37,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 38,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 39,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 40,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 41,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 42,
+      "start": 132.32,
+      "end": 132.32,
+      "start_formatted": "00:02:12.320",
+      "end_formatted": "00:02:12.320",
+      "text": "",
+      "words": []
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "metadata": {
+    "chapter": "ch13",
+    "chapter_title": "Rating Introduction",
+    "lesson": "lesson-06",
+    "slide_count": 18,
+    "slides_with_text": 17,
+    "total_words": 626,
+    "avg_confidence": 87.8,
+    "processing_time_seconds": 5.69,
+    "extracted_at": "2026-02-15T18:24:23.116717"
+  },
+  "full_text": "Rating Overrides\n\nLesson\nobjectives\n\n¢ Describe the rating override process\n« Use PolicyCenter to override the rating ona\npolicy transaction\n\n| Defining rating overrides fa\n\nRating Analyst What is a rating override and what is it\nused for in PolicyCenter?\n\nRating overrides allow you to Julia\n\nmanually override the premium Pee ner Ne\nthat the rating engine\n\nautomatically generates for a\npolicy. Rating overrides are\nalso referred to as manual\nrating in the insurance\nindustry.\n\n!\n\n| When to apply overrides fa\n\n: The user cannot enter any overrides without\nFists rating a policy first.\n\nJulia\n\nmay apply overrides where overrides are\n\n| After viewing the results from a quote, the user\nallowed.\n\n| Rating overrides\n\nOverride costs ad 5\nae and rerate rl &\n\nQuote Rating Engine selects a Rate Book The Rating Engine calls a Rate Routine for\nthe Cost Item (for example, a Coverage)\n\n‘yy\nNew premium results in Quote screen =\n\nReturn to the calling policy transaction (Quote) G\n\nConstructs the corresponding\nWorksheet with the calculated results\n\n| Review: How are costs handled in PolicyCenter? i\n\n¢ The cost is an entity in PolicyCenter\n\n¢ The cost stores several details\nrelated to rating a policy\n\n« Base rate (BaseRate)\n\n« Adjusted rate (AdjRate)\n\n* Basis(Basis)\n\n* Pro rata factor (ProrataFactor)\n* Term amount (TermAmount)\n\n« Amount(Amount)\n\n| What can you override?\n\n¢ Base rate and adjusted rate\n¢ Un-prorated amount term amount\n* Prorated flat cost\n\n| What lines of business allow rating overrides?\n\no,\noS\n\n>\n\ncommercial\n\nworkers inland marine\nproperty\n\ncompensation\n\n| What cannot be overridden?\n\n« Rating overrides are not appropriate\nfor certain types of cost\n\n* Overrides can be disabled for these\ncosts\n\n¢ Examples\n* Tax calculations\n\n« Experience modifiers\n* Schedule credits\n\n| Costs and rating overrides (developers) fa\n\nBase rate StandardBaseRate OverrideBaseRate ActualBaseRate\nAdjusted rate StandardAdjustedRate OverrideAdjustedRate ActualAdjustedRate\nTerm Amount StandardTermAmount OverrideTermAmount ActualTermAmount\nAmount StandardAmount OverrideAmount ActualAmount\n\n* Overriding a rate results in specific properties being set for a cost entity\n\n¢ Each cost has its own base rate, adjusted rate, term amount and amount\ncolumns\n\n¢ See PolicyCenter documentation for implementation details\n\n| What permissions are available for rating overrides? [5\nPermission “Description == Code Example\n\nEdit rate and premium Edit or delete override _editratingoverrides Underwriter\noverrides on the Rating Override only\nscreen; rerate policy\nView rate and View Rating Override viewratingoverrides Underwriters\npremium overrides screen and policy\nmanagers only\nQuote with rate and Quote policy with quotewithrateandpremiumoverrides Underwriters\npremium overrides overrides and bypass and most\nreferring to an producers\n\nunderwriter\n\n| Rating overrides across policy transactions Gi\n\n¢ Rating overrides can be entered in\nany PolicyCenter jobs, set for a policy\nperiod and preserved for future jobs\n\n* Overrides are not preserved during:\n\negR\n\n+ Reinstatement: when overridden costs\noccur after a cancellation date\n\n+ Rewrite: If the overridden costs are\neffective after or before the copied date\n\n« Renewal: Overrides from a previous\npolicy term are copied to the renewal job\nand a referral reason is created for an\nunderwriter, who decides if the override\ncontinues\n\n| Demonstration G\n\nUsing rating overrides\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,— — When can rating be overridden?\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n_— — When can rating be overridden?\n\n¢\noe After obtaining a quote from the rating engine, rates and amounts can be overridden\n\nand the policy is rated again.\n\nSS oe ooo ee oe oOoOe SoD\n\nGi\n\nLesson\nobjectives ¢ Describe the rating override process\n\nreview « Use PolicyCenter to override the rating ona\npolicy transaction\n\n| Student exercise\n\nUsing rating overrides",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Rating Overrides",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the rating override process\n« Use PolicyCenter to override the rating ona\npolicy transaction",
+      "word_count": 18,
+      "avg_confidence": 88.78,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Defining rating overrides fa\n\nRating Analyst What is a rating override and what is it\nused for in PolicyCenter?\n\nRating overrides allow you to Julia\n\nmanually override the premium Pee ner Ne\nthat the rating engine\n\nautomatically generates for a\npolicy. Rating overrides are\nalso referred to as manual\nrating in the insurance\nindustry.\n\n!",
+      "word_count": 56,
+      "avg_confidence": 91.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| When to apply overrides fa\n\n: The user cannot enter any overrides without\nFists rating a policy first.\n\nJulia\n\nmay apply overrides where overrides are\n\n| After viewing the results from a quote, the user\nallowed.",
+      "word_count": 37,
+      "avg_confidence": 92.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Rating overrides\n\nOverride costs ad 5\nae and rerate rl &\n\nQuote Rating Engine selects a Rate Book The Rating Engine calls a Rate Routine for\nthe Cost Item (for example, a Coverage)\n\n‘yy\nNew premium results in Quote screen =\n\nReturn to the calling policy transaction (Quote) G\n\nConstructs the corresponding\nWorksheet with the calculated results",
+      "word_count": 58,
+      "avg_confidence": 90.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Review: How are costs handled in PolicyCenter? i\n\n¢ The cost is an entity in PolicyCenter\n\n¢ The cost stores several details\nrelated to rating a policy\n\n« Base rate (BaseRate)\n\n« Adjusted rate (AdjRate)\n\n* Basis(Basis)\n\n* Pro rata factor (ProrataFactor)\n* Term amount (TermAmount)\n\n« Amount(Amount)",
+      "word_count": 49,
+      "avg_confidence": 80.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| What can you override?\n\n¢ Base rate and adjusted rate\n¢ Un-prorated amount term amount\n* Prorated flat cost",
+      "word_count": 20,
+      "avg_confidence": 84.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| What lines of business allow rating overrides?\n\no,\noS\n\n>\n\ncommercial\n\nworkers inland marine\nproperty\n\ncompensation",
+      "word_count": 17,
+      "avg_confidence": 90.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| What cannot be overridden?\n\n« Rating overrides are not appropriate\nfor certain types of cost\n\n* Overrides can be disabled for these\ncosts\n\n¢ Examples\n* Tax calculations\n\n« Experience modifiers\n* Schedule credits",
+      "word_count": 35,
+      "avg_confidence": 85.8,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Costs and rating overrides (developers) fa\n\nBase rate StandardBaseRate OverrideBaseRate ActualBaseRate\nAdjusted rate StandardAdjustedRate OverrideAdjustedRate ActualAdjustedRate\nTerm Amount StandardTermAmount OverrideTermAmount ActualTermAmount\nAmount StandardAmount OverrideAmount ActualAmount\n\n* Overriding a rate results in specific properties being set for a cost entity\n\n¢ Each cost has its own base rate, adjusted rate, term amount and amount\ncolumns\n\n¢ See PolicyCenter documentation for implementation details",
+      "word_count": 62,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| What permissions are available for rating overrides? [5\nPermission “Description == Code Example\n\nEdit rate and premium Edit or delete override _editratingoverrides Underwriter\noverrides on the Rating Override only\nscreen; rerate policy\nView rate and View Rating Override viewratingoverrides Underwriters\npremium overrides screen and policy\nmanagers only\nQuote with rate and Quote policy with quotewithrateandpremiumoverrides Underwriters\npremium overrides overrides and bypass and most\nreferring to an producers\n\nunderwriter",
+      "word_count": 69,
+      "avg_confidence": 90.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Rating overrides across policy transactions Gi\n\n¢ Rating overrides can be entered in\nany PolicyCenter jobs, set for a policy\nperiod and preserved for future jobs\n\n* Overrides are not preserved during:\n\negR\n\n+ Reinstatement: when overridden costs\noccur after a cancellation date\n\n+ Rewrite: If the overridden costs are\neffective after or before the copied date\n\n« Renewal: Overrides from a previous\npolicy term are copied to the renewal job\nand a referral reason is created for an\nunderwriter, who decides if the override\ncontinues",
+      "word_count": 87,
+      "avg_confidence": 91.4,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Demonstration G\n\nUsing rating overrides\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question\n\n,— — When can rating be overridden?\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 17,
+      "avg_confidence": 62.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer\n\n_— — When can rating be overridden?\n\n¢\noe After obtaining a quote from the rating engine, rates and amounts can be overridden\n\nand the policy is rated again.\n\nSS oe ooo ee oe oOoOe SoD\n\nGi",
+      "word_count": 38,
+      "avg_confidence": 78.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Lesson\nobjectives ¢ Describe the rating override process\n\nreview « Use PolicyCenter to override the rating ona\npolicy transaction",
+      "word_count": 19,
+      "avg_confidence": 88.53,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Student exercise\n\nUsing rating overrides",
+      "word_count": 6,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

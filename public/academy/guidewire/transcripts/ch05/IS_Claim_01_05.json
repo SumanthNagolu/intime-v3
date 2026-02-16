@@ -1,0 +1,5342 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "filename": "IS_Claim_01_05.mp4",
+    "video_stem": "IS_Claim_01_05",
+    "duration_seconds": 253.42,
+    "duration_formatted": "00:04:13.420",
+    "segment_count": 50,
+    "word_count": 802,
+    "avg_confidence": 0.974,
+    "transcription_time_seconds": 22.61,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T11:44:52.512795"
+  },
+  "full_text": "As part of adjudication, an adjuster reviews the claims exposures to make decisions about damage. These decisions may include making payments for the claim. Chris is still logged into ClaimCenter. He selects the Mark Henderson claim. Chris needs to evaluate the cost of repairing Mr. Henderson's vehicle in terms of the value of the vehicle. If the repair costs are more than the car is worth, Succeed will just pay the value of the car. There is a total loss calculator function in ClaimCenter. The adjuster can use it to figure out how to proceed with this claim. Since the total loss calculator is related to an exposure, Chris starts by opening the exposures screen. He sees an exposure for Mark's vehicle, so he opens it to look at the details. He opens the total loss calculator. He clicks edit to make changes to the exposure. Chris knows that the vehicle is over 10 years old. And has over 100,000 miles. Mark, also told him that an extrication was required to remove him from the vehicle. He clicks, update, to save his changes and to see if the vehicle is a total loss. He sees that the calculator has qualified the vehicle as a total loss. Because the vehicle is considered a total loss, a new tab for vehicle salvage appears on the exposure. Chris goes to the claim work plan to see if anything has changed. He sees that there are two new activities, recover vehicle, and salvage vehicle. Moving forward on claim adjudication, Chris needs to make a payment against this exposure. He adds a check using the actions menu. He expected to simply issue a check to Mr. Henderson, but there are validation errors that must be fixed before he can continue. Claim Center uses validation levels to identify the maturity of a claim and its exposures. The claim and exposure are currently at the lowest validation level, new loss completion. This is fine for the early stages of adjudication, but in order to make payments, Claim Center requires that the claim and exposure be at the ability to pay validation level. Claim Center uses rules to identify validation, issues and set the validation level. The first, error states that in California, the insured driver's license number is required to make a payment. To correct the data, Chris clicks on the error to open the parties involved screen. He then selects Mark Henderson. He opens the contact details. The driver's license details are at the bottom of the screen, so he scrolls down on the page. The field in error is highlighted in red. Chris enters the driver's license number. He then selects California as the state. He scrolls up the page. And clicks Update. Chris then clears the error message. He has corrected the errors, but just to make sure, he uses the validation option to check that the claim and exposure, are at ability to pay. He sees that there are no errors, so he can proceed with issuing a check. He clears the validation results to close the worksheet. Just as before, he uses the actions menu to create a check. Since this payment is for Mark's vehicle, the payee is Mark Henderson. Chris continues to the next step of the check wizard. The payment is for Mark's vehicle, so Chris chooses first party vehicle, claim cost, auto body, as the reserve line for this payment. This is a partial payment. Chris enters $4,700 for the payment amount and applies the deductible. He continues to the last step. After reviewing the payment details, Chris creates the check. He notices that the check status is pending approval. Chris goes to the work plan. An activity has been added for his supervisor to approve the payment. Chris is done with this claim for now, so he logs out of claim center. This is the end of the exposures and financials demonstration. Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 9.56,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:09.560",
+      "text": "As part of adjudication, an adjuster reviews the claims exposures to make decisions about damage. These decisions may include making payments for the claim.",
+      "words": [
+        {
+          "word": "As",
+          "start": 0.0,
+          "end": 0.5,
+          "probability": 0.9814
+        },
+        {
+          "word": "part",
+          "start": 0.5,
+          "end": 0.76,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 0.76,
+          "end": 0.88,
+          "probability": 1.0
+        },
+        {
+          "word": "adjudication,",
+          "start": 0.88,
+          "end": 1.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 1.88,
+          "end": 2.1,
+          "probability": 0.998
+        },
+        {
+          "word": "adjuster",
+          "start": 2.1,
+          "end": 2.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "reviews",
+          "start": 2.54,
+          "end": 2.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 2.98,
+          "end": 3.18,
+          "probability": 1.0
+        },
+        {
+          "word": "claims",
+          "start": 3.18,
+          "end": 3.52,
+          "probability": 0.1796
+        },
+        {
+          "word": "exposures",
+          "start": 3.52,
+          "end": 4.22,
+          "probability": 0.9268
+        },
+        {
+          "word": "to",
+          "start": 4.22,
+          "end": 4.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "make",
+          "start": 4.44,
+          "end": 4.7,
+          "probability": 0.999
+        },
+        {
+          "word": "decisions",
+          "start": 4.7,
+          "end": 5.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 5.2,
+          "end": 5.58,
+          "probability": 1.0
+        },
+        {
+          "word": "damage.",
+          "start": 5.58,
+          "end": 6.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "These",
+          "start": 6.44,
+          "end": 6.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "decisions",
+          "start": 6.84,
+          "end": 7.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "may",
+          "start": 7.34,
+          "end": 7.68,
+          "probability": 0.999
+        },
+        {
+          "word": "include",
+          "start": 7.68,
+          "end": 8.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "making",
+          "start": 8.0,
+          "end": 8.32,
+          "probability": 0.999
+        },
+        {
+          "word": "payments",
+          "start": 8.32,
+          "end": 8.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 8.84,
+          "end": 9.06,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 9.06,
+          "end": 9.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim.",
+          "start": 9.18,
+          "end": 9.56,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 10.2,
+      "end": 15.06,
+      "start_formatted": "00:00:10.200",
+      "end_formatted": "00:00:15.060",
+      "text": "Chris is still logged into ClaimCenter. He selects the Mark Henderson claim.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 10.2,
+          "end": 10.8,
+          "probability": 0.9839
+        },
+        {
+          "word": "is",
+          "start": 10.8,
+          "end": 11.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "still",
+          "start": 11.02,
+          "end": 11.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "logged",
+          "start": 11.3,
+          "end": 11.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "into",
+          "start": 11.64,
+          "end": 11.9,
+          "probability": 0.9478
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 11.9,
+          "end": 12.6,
+          "probability": 0.7163
+        },
+        {
+          "word": "He",
+          "start": 12.9,
+          "end": 13.22,
+          "probability": 0.999
+        },
+        {
+          "word": "selects",
+          "start": 13.22,
+          "end": 13.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 13.76,
+          "end": 13.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "Mark",
+          "start": 13.9,
+          "end": 14.18,
+          "probability": 0.9868
+        },
+        {
+          "word": "Henderson",
+          "start": 14.18,
+          "end": 14.58,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim.",
+          "start": 14.58,
+          "end": 15.06,
+          "probability": 0.8784
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 15.7,
+      "end": 27.52,
+      "start_formatted": "00:00:15.700",
+      "end_formatted": "00:00:27.520",
+      "text": "Chris needs to evaluate the cost of repairing Mr. Henderson's vehicle in terms of the value of the vehicle. If the repair costs are more than the car is worth, Succeed will just pay the value of the car.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 15.7,
+          "end": 16.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "needs",
+          "start": 16.3,
+          "end": 16.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 16.54,
+          "end": 16.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "evaluate",
+          "start": 16.76,
+          "end": 17.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 17.26,
+          "end": 17.58,
+          "probability": 1.0
+        },
+        {
+          "word": "cost",
+          "start": 17.58,
+          "end": 17.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 17.9,
+          "end": 18.08,
+          "probability": 1.0
+        },
+        {
+          "word": "repairing",
+          "start": 18.08,
+          "end": 18.46,
+          "probability": 0.999
+        },
+        {
+          "word": "Mr.",
+          "start": 18.46,
+          "end": 18.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "Henderson's",
+          "start": 19.02,
+          "end": 19.56,
+          "probability": 0.999
+        },
+        {
+          "word": "vehicle",
+          "start": 19.56,
+          "end": 19.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 19.94,
+          "end": 20.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "terms",
+          "start": 20.22,
+          "end": 20.52,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 20.52,
+          "end": 20.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 20.74,
+          "end": 20.86,
+          "probability": 0.999
+        },
+        {
+          "word": "value",
+          "start": 20.86,
+          "end": 21.26,
+          "probability": 0.9966
+        },
+        {
+          "word": "of",
+          "start": 21.26,
+          "end": 21.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 21.5,
+          "end": 21.62,
+          "probability": 0.999
+        },
+        {
+          "word": "vehicle.",
+          "start": 21.62,
+          "end": 22.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "If",
+          "start": 22.26,
+          "end": 22.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 22.64,
+          "end": 22.76,
+          "probability": 1.0
+        },
+        {
+          "word": "repair",
+          "start": 22.76,
+          "end": 23.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "costs",
+          "start": 23.06,
+          "end": 23.44,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 23.44,
+          "end": 23.62,
+          "probability": 1.0
+        },
+        {
+          "word": "more",
+          "start": 23.62,
+          "end": 23.84,
+          "probability": 1.0
+        },
+        {
+          "word": "than",
+          "start": 23.84,
+          "end": 24.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 24.02,
+          "end": 24.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "car",
+          "start": 24.18,
+          "end": 24.44,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 24.44,
+          "end": 24.6,
+          "probability": 0.9888
+        },
+        {
+          "word": "worth,",
+          "start": 24.6,
+          "end": 24.98,
+          "probability": 1.0
+        },
+        {
+          "word": "Succeed",
+          "start": 25.32,
+          "end": 25.66,
+          "probability": 0.9512
+        },
+        {
+          "word": "will",
+          "start": 25.66,
+          "end": 25.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "just",
+          "start": 25.84,
+          "end": 26.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "pay",
+          "start": 26.12,
+          "end": 26.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 26.32,
+          "end": 26.46,
+          "probability": 1.0
+        },
+        {
+          "word": "value",
+          "start": 26.46,
+          "end": 26.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 26.84,
+          "end": 27.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 27.1,
+          "end": 27.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "car.",
+          "start": 27.22,
+          "end": 27.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 27.52,
+      "end": 34.96,
+      "start_formatted": "00:00:27.520",
+      "end_formatted": "00:00:34.960",
+      "text": "There is a total loss calculator function in ClaimCenter. The adjuster can use it to figure out how to proceed with this claim.",
+      "words": [
+        {
+          "word": "There",
+          "start": 27.52,
+          "end": 28.14,
+          "probability": 0.9663
+        },
+        {
+          "word": "is",
+          "start": 28.14,
+          "end": 28.34,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 28.34,
+          "end": 28.44,
+          "probability": 1.0
+        },
+        {
+          "word": "total",
+          "start": 28.44,
+          "end": 28.66,
+          "probability": 0.8525
+        },
+        {
+          "word": "loss",
+          "start": 28.66,
+          "end": 28.96,
+          "probability": 0.999
+        },
+        {
+          "word": "calculator",
+          "start": 28.96,
+          "end": 29.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "function",
+          "start": 29.5,
+          "end": 30.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 30.08,
+          "end": 30.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "ClaimCenter.",
+          "start": 30.4,
+          "end": 31.02,
+          "probability": 0.7344
+        },
+        {
+          "word": "The",
+          "start": 31.28,
+          "end": 31.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "adjuster",
+          "start": 31.64,
+          "end": 32.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "can",
+          "start": 32.08,
+          "end": 32.3,
+          "probability": 1.0
+        },
+        {
+          "word": "use",
+          "start": 32.3,
+          "end": 32.5,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 32.5,
+          "end": 32.6,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 32.6,
+          "end": 32.76,
+          "probability": 1.0
+        },
+        {
+          "word": "figure",
+          "start": 32.76,
+          "end": 33.04,
+          "probability": 1.0
+        },
+        {
+          "word": "out",
+          "start": 33.04,
+          "end": 33.36,
+          "probability": 1.0
+        },
+        {
+          "word": "how",
+          "start": 33.36,
+          "end": 33.56,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 33.56,
+          "end": 33.74,
+          "probability": 1.0
+        },
+        {
+          "word": "proceed",
+          "start": 33.74,
+          "end": 34.18,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 34.18,
+          "end": 34.4,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 34.4,
+          "end": 34.62,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 34.62,
+          "end": 34.96,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 35.48,
+      "end": 41.66,
+      "start_formatted": "00:00:35.480",
+      "end_formatted": "00:00:41.660",
+      "text": "Since the total loss calculator is related to an exposure, Chris starts by opening the exposures screen.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 35.48,
+          "end": 36.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 36.08,
+          "end": 36.26,
+          "probability": 1.0
+        },
+        {
+          "word": "total",
+          "start": 36.26,
+          "end": 36.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "loss",
+          "start": 36.46,
+          "end": 36.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "calculator",
+          "start": 36.78,
+          "end": 37.3,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 37.3,
+          "end": 37.68,
+          "probability": 1.0
+        },
+        {
+          "word": "related",
+          "start": 37.68,
+          "end": 38.04,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 38.04,
+          "end": 38.24,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 38.24,
+          "end": 38.38,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure,",
+          "start": 38.38,
+          "end": 38.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "Chris",
+          "start": 39.2,
+          "end": 39.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "starts",
+          "start": 39.4,
+          "end": 39.8,
+          "probability": 1.0
+        },
+        {
+          "word": "by",
+          "start": 39.8,
+          "end": 40.06,
+          "probability": 1.0
+        },
+        {
+          "word": "opening",
+          "start": 40.06,
+          "end": 40.46,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 40.46,
+          "end": 40.66,
+          "probability": 1.0
+        },
+        {
+          "word": "exposures",
+          "start": 40.66,
+          "end": 41.26,
+          "probability": 0.7915
+        },
+        {
+          "word": "screen.",
+          "start": 41.26,
+          "end": 41.66,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 42.14,
+      "end": 49.88,
+      "start_formatted": "00:00:42.140",
+      "end_formatted": "00:00:49.880",
+      "text": "He sees an exposure for Mark's vehicle, so he opens it to look at the details. He opens the total loss calculator.",
+      "words": [
+        {
+          "word": "He",
+          "start": 42.14,
+          "end": 42.74,
+          "probability": 1.0
+        },
+        {
+          "word": "sees",
+          "start": 42.74,
+          "end": 43.06,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 43.06,
+          "end": 43.2,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure",
+          "start": 43.2,
+          "end": 43.64,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 43.64,
+          "end": 43.94,
+          "probability": 0.7852
+        },
+        {
+          "word": "Mark's",
+          "start": 43.94,
+          "end": 44.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "vehicle,",
+          "start": 44.28,
+          "end": 44.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 44.96,
+          "end": 45.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 45.26,
+          "end": 45.48,
+          "probability": 1.0
+        },
+        {
+          "word": "opens",
+          "start": 45.48,
+          "end": 45.84,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 45.84,
+          "end": 46.02,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 46.02,
+          "end": 46.2,
+          "probability": 1.0
+        },
+        {
+          "word": "look",
+          "start": 46.2,
+          "end": 46.46,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 46.46,
+          "end": 46.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 46.62,
+          "end": 46.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "details.",
+          "start": 46.74,
+          "end": 47.24,
+          "probability": 1.0
+        },
+        {
+          "word": "He",
+          "start": 47.74,
+          "end": 48.18,
+          "probability": 1.0
+        },
+        {
+          "word": "opens",
+          "start": 48.18,
+          "end": 48.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 48.56,
+          "end": 48.76,
+          "probability": 1.0
+        },
+        {
+          "word": "total",
+          "start": 48.76,
+          "end": 49.0,
+          "probability": 0.999
+        },
+        {
+          "word": "loss",
+          "start": 49.0,
+          "end": 49.28,
+          "probability": 1.0
+        },
+        {
+          "word": "calculator.",
+          "start": 49.28,
+          "end": 49.88,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 50.3,
+      "end": 56.98,
+      "start_formatted": "00:00:50.300",
+      "end_formatted": "00:00:56.980",
+      "text": "He clicks edit to make changes to the exposure. Chris knows that the vehicle is over 10 years old.",
+      "words": [
+        {
+          "word": "He",
+          "start": 50.3,
+          "end": 50.8,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks",
+          "start": 50.8,
+          "end": 51.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "edit",
+          "start": 51.12,
+          "end": 51.38,
+          "probability": 0.5659
+        },
+        {
+          "word": "to",
+          "start": 51.38,
+          "end": 51.62,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 51.62,
+          "end": 51.8,
+          "probability": 1.0
+        },
+        {
+          "word": "changes",
+          "start": 51.8,
+          "end": 52.24,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 52.24,
+          "end": 52.48,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 52.48,
+          "end": 52.6,
+          "probability": 1.0
+        },
+        {
+          "word": "exposure.",
+          "start": 52.6,
+          "end": 53.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "Chris",
+          "start": 53.82,
+          "end": 54.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "knows",
+          "start": 54.42,
+          "end": 54.7,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 54.7,
+          "end": 54.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 54.94,
+          "end": 55.06,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle",
+          "start": 55.06,
+          "end": 55.48,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 55.48,
+          "end": 55.78,
+          "probability": 1.0
+        },
+        {
+          "word": "over",
+          "start": 55.78,
+          "end": 56.08,
+          "probability": 1.0
+        },
+        {
+          "word": "10",
+          "start": 56.08,
+          "end": 56.32,
+          "probability": 0.9888
+        },
+        {
+          "word": "years",
+          "start": 56.32,
+          "end": 56.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "old.",
+          "start": 56.6,
+          "end": 56.98,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 56.98,
+      "end": 65.36,
+      "start_formatted": "00:00:56.980",
+      "end_formatted": "00:01:05.360",
+      "text": "And has over 100,000 miles. Mark, also told him that an extrication was required to remove him from the vehicle.",
+      "words": [
+        {
+          "word": "And",
+          "start": 56.98,
+          "end": 57.9,
+          "probability": 0.3704
+        },
+        {
+          "word": "has",
+          "start": 57.9,
+          "end": 58.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "over",
+          "start": 58.14,
+          "end": 58.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "100",
+          "start": 58.44,
+          "end": 58.88,
+          "probability": 0.998
+        },
+        {
+          "word": ",000",
+          "start": 58.88,
+          "end": 59.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "miles.",
+          "start": 59.42,
+          "end": 59.8,
+          "probability": 0.998
+        },
+        {
+          "word": "Mark,",
+          "start": 60.48,
+          "end": 61.1,
+          "probability": 0.9922
+        },
+        {
+          "word": "also",
+          "start": 61.24,
+          "end": 61.7,
+          "probability": 0.998
+        },
+        {
+          "word": "told",
+          "start": 61.7,
+          "end": 62.04,
+          "probability": 1.0
+        },
+        {
+          "word": "him",
+          "start": 62.04,
+          "end": 62.2,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 62.2,
+          "end": 62.38,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 62.38,
+          "end": 62.52,
+          "probability": 1.0
+        },
+        {
+          "word": "extrication",
+          "start": 62.52,
+          "end": 63.24,
+          "probability": 0.999
+        },
+        {
+          "word": "was",
+          "start": 63.24,
+          "end": 63.46,
+          "probability": 1.0
+        },
+        {
+          "word": "required",
+          "start": 63.46,
+          "end": 63.9,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 63.9,
+          "end": 64.12,
+          "probability": 1.0
+        },
+        {
+          "word": "remove",
+          "start": 64.12,
+          "end": 64.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "him",
+          "start": 64.44,
+          "end": 64.66,
+          "probability": 1.0
+        },
+        {
+          "word": "from",
+          "start": 64.66,
+          "end": 64.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 64.86,
+          "end": 64.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "vehicle.",
+          "start": 64.98,
+          "end": 65.36,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 65.86,
+      "end": 71.6,
+      "start_formatted": "00:01:05.860",
+      "end_formatted": "00:01:11.600",
+      "text": "He clicks, update, to save his changes and to see if the vehicle is a total loss.",
+      "words": [
+        {
+          "word": "He",
+          "start": 65.86,
+          "end": 66.48,
+          "probability": 1.0
+        },
+        {
+          "word": "clicks,",
+          "start": 66.48,
+          "end": 66.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "update,",
+          "start": 67.1,
+          "end": 67.58,
+          "probability": 0.4868
+        },
+        {
+          "word": "to",
+          "start": 67.9,
+          "end": 68.16,
+          "probability": 1.0
+        },
+        {
+          "word": "save",
+          "start": 68.16,
+          "end": 68.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "his",
+          "start": 68.5,
+          "end": 68.68,
+          "probability": 1.0
+        },
+        {
+          "word": "changes",
+          "start": 68.68,
+          "end": 69.1,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 69.1,
+          "end": 69.38,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 69.38,
+          "end": 69.54,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 69.54,
+          "end": 69.8,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 69.8,
+          "end": 70.04,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 70.04,
+          "end": 70.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "vehicle",
+          "start": 70.16,
+          "end": 70.58,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 70.58,
+          "end": 70.86,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 70.86,
+          "end": 70.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "total",
+          "start": 70.96,
+          "end": 71.16,
+          "probability": 0.999
+        },
+        {
+          "word": "loss.",
+          "start": 71.16,
+          "end": 71.6,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 72.4,
+      "end": 76.84,
+      "start_formatted": "00:01:12.400",
+      "end_formatted": "00:01:16.840",
+      "text": "He sees that the calculator has qualified the vehicle as a total loss.",
+      "words": [
+        {
+          "word": "He",
+          "start": 72.4,
+          "end": 72.96,
+          "probability": 1.0
+        },
+        {
+          "word": "sees",
+          "start": 72.96,
+          "end": 73.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 73.24,
+          "end": 73.42,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 73.42,
+          "end": 73.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "calculator",
+          "start": 73.56,
+          "end": 74.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "has",
+          "start": 74.06,
+          "end": 74.42,
+          "probability": 1.0
+        },
+        {
+          "word": "qualified",
+          "start": 74.42,
+          "end": 74.96,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 74.96,
+          "end": 75.26,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle",
+          "start": 75.26,
+          "end": 75.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 75.7,
+          "end": 76.08,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 76.08,
+          "end": 76.22,
+          "probability": 1.0
+        },
+        {
+          "word": "total",
+          "start": 76.22,
+          "end": 76.4,
+          "probability": 0.999
+        },
+        {
+          "word": "loss.",
+          "start": 76.4,
+          "end": 76.84,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 77.3,
+      "end": 83.26,
+      "start_formatted": "00:01:17.300",
+      "end_formatted": "00:01:23.260",
+      "text": "Because the vehicle is considered a total loss, a new tab for vehicle salvage appears on the exposure.",
+      "words": [
+        {
+          "word": "Because",
+          "start": 77.3,
+          "end": 77.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 77.92,
+          "end": 78.12,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle",
+          "start": 78.12,
+          "end": 78.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 78.48,
+          "end": 78.76,
+          "probability": 1.0
+        },
+        {
+          "word": "considered",
+          "start": 78.76,
+          "end": 79.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 79.22,
+          "end": 79.38,
+          "probability": 1.0
+        },
+        {
+          "word": "total",
+          "start": 79.38,
+          "end": 79.64,
+          "probability": 0.999
+        },
+        {
+          "word": "loss,",
+          "start": 79.64,
+          "end": 80.08,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 80.24,
+          "end": 80.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 80.48,
+          "end": 80.68,
+          "probability": 1.0
+        },
+        {
+          "word": "tab",
+          "start": 80.68,
+          "end": 80.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 80.96,
+          "end": 81.18,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle",
+          "start": 81.18,
+          "end": 81.52,
+          "probability": 0.9556
+        },
+        {
+          "word": "salvage",
+          "start": 81.52,
+          "end": 82.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "appears",
+          "start": 82.02,
+          "end": 82.4,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 82.4,
+          "end": 82.66,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 82.66,
+          "end": 82.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure.",
+          "start": 82.78,
+          "end": 83.26,
+          "probability": 0.9829
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 83.26,
+      "end": 87.38,
+      "start_formatted": "00:01:23.260",
+      "end_formatted": "00:01:27.380",
+      "text": "Chris goes to the claim work plan to see if anything has changed.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 83.26,
+          "end": 84.22,
+          "probability": 0.9819
+        },
+        {
+          "word": "goes",
+          "start": 84.22,
+          "end": 84.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 84.5,
+          "end": 84.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 84.68,
+          "end": 84.82,
+          "probability": 0.999
+        },
+        {
+          "word": "claim",
+          "start": 84.82,
+          "end": 85.08,
+          "probability": 0.8438
+        },
+        {
+          "word": "work",
+          "start": 85.08,
+          "end": 85.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "plan",
+          "start": 85.34,
+          "end": 85.58,
+          "probability": 0.9653
+        },
+        {
+          "word": "to",
+          "start": 85.58,
+          "end": 85.8,
+          "probability": 1.0
+        },
+        {
+          "word": "see",
+          "start": 85.8,
+          "end": 86.0,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 86.0,
+          "end": 86.22,
+          "probability": 1.0
+        },
+        {
+          "word": "anything",
+          "start": 86.22,
+          "end": 86.54,
+          "probability": 1.0
+        },
+        {
+          "word": "has",
+          "start": 86.54,
+          "end": 86.92,
+          "probability": 1.0
+        },
+        {
+          "word": "changed.",
+          "start": 86.92,
+          "end": 87.38,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 88.22,
+      "end": 93.22,
+      "start_formatted": "00:01:28.220",
+      "end_formatted": "00:01:33.220",
+      "text": "He sees that there are two new activities, recover vehicle, and salvage vehicle.",
+      "words": [
+        {
+          "word": "He",
+          "start": 88.22,
+          "end": 88.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "sees",
+          "start": 88.74,
+          "end": 89.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 89.02,
+          "end": 89.2,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 89.2,
+          "end": 89.36,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 89.36,
+          "end": 89.5,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 89.5,
+          "end": 89.66,
+          "probability": 0.9858
+        },
+        {
+          "word": "new",
+          "start": 89.66,
+          "end": 89.84,
+          "probability": 1.0
+        },
+        {
+          "word": "activities,",
+          "start": 89.84,
+          "end": 90.46,
+          "probability": 1.0
+        },
+        {
+          "word": "recover",
+          "start": 90.8,
+          "end": 91.16,
+          "probability": 0.9673
+        },
+        {
+          "word": "vehicle,",
+          "start": 91.16,
+          "end": 91.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 91.92,
+          "end": 92.24,
+          "probability": 1.0
+        },
+        {
+          "word": "salvage",
+          "start": 92.24,
+          "end": 92.78,
+          "probability": 1.0
+        },
+        {
+          "word": "vehicle.",
+          "start": 92.78,
+          "end": 93.22,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 93.56,
+      "end": 98.64,
+      "start_formatted": "00:01:33.560",
+      "end_formatted": "00:01:38.640",
+      "text": "Moving forward on claim adjudication, Chris needs to make a payment against this exposure.",
+      "words": [
+        {
+          "word": "Moving",
+          "start": 93.56,
+          "end": 94.02,
+          "probability": 0.999
+        },
+        {
+          "word": "forward",
+          "start": 94.02,
+          "end": 94.46,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 94.46,
+          "end": 94.7,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 94.7,
+          "end": 94.94,
+          "probability": 0.9902
+        },
+        {
+          "word": "adjudication,",
+          "start": 94.94,
+          "end": 95.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "Chris",
+          "start": 96.12,
+          "end": 96.36,
+          "probability": 1.0
+        },
+        {
+          "word": "needs",
+          "start": 96.36,
+          "end": 96.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 96.62,
+          "end": 96.82,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 96.82,
+          "end": 97.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 97.04,
+          "end": 97.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 97.14,
+          "end": 97.46,
+          "probability": 0.9951
+        },
+        {
+          "word": "against",
+          "start": 97.46,
+          "end": 97.94,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 97.94,
+          "end": 98.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure.",
+          "start": 98.18,
+          "end": 98.64,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 99.1,
+      "end": 101.7,
+      "start_formatted": "00:01:39.100",
+      "end_formatted": "00:01:41.700",
+      "text": "He adds a check using the actions menu.",
+      "words": [
+        {
+          "word": "He",
+          "start": 99.1,
+          "end": 99.62,
+          "probability": 1.0
+        },
+        {
+          "word": "adds",
+          "start": 99.62,
+          "end": 99.92,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 99.92,
+          "end": 100.08,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 100.08,
+          "end": 100.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "using",
+          "start": 100.3,
+          "end": 100.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 100.62,
+          "end": 100.86,
+          "probability": 1.0
+        },
+        {
+          "word": "actions",
+          "start": 100.86,
+          "end": 101.28,
+          "probability": 0.9429
+        },
+        {
+          "word": "menu.",
+          "start": 101.28,
+          "end": 101.7,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 101.7,
+      "end": 109.6,
+      "start_formatted": "00:01:41.700",
+      "end_formatted": "00:01:49.600",
+      "text": "He expected to simply issue a check to Mr. Henderson, but there are validation errors that must be fixed before he can continue.",
+      "words": [
+        {
+          "word": "He",
+          "start": 101.7,
+          "end": 102.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "expected",
+          "start": 102.58,
+          "end": 103.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 103.1,
+          "end": 103.34,
+          "probability": 1.0
+        },
+        {
+          "word": "simply",
+          "start": 103.34,
+          "end": 103.76,
+          "probability": 1.0
+        },
+        {
+          "word": "issue",
+          "start": 103.76,
+          "end": 104.08,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 104.08,
+          "end": 104.3,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 104.3,
+          "end": 104.42,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 104.42,
+          "end": 104.68,
+          "probability": 1.0
+        },
+        {
+          "word": "Mr.",
+          "start": 104.68,
+          "end": 104.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "Henderson,",
+          "start": 105.14,
+          "end": 105.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "but",
+          "start": 105.74,
+          "end": 106.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 106.0,
+          "end": 106.18,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 106.18,
+          "end": 106.3,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 106.3,
+          "end": 106.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "errors",
+          "start": 106.86,
+          "end": 107.36,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 107.36,
+          "end": 107.6,
+          "probability": 1.0
+        },
+        {
+          "word": "must",
+          "start": 107.6,
+          "end": 107.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 107.82,
+          "end": 108.0,
+          "probability": 1.0
+        },
+        {
+          "word": "fixed",
+          "start": 108.0,
+          "end": 108.34,
+          "probability": 0.999
+        },
+        {
+          "word": "before",
+          "start": 108.34,
+          "end": 108.66,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 108.66,
+          "end": 108.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 108.9,
+          "end": 109.08,
+          "probability": 1.0
+        },
+        {
+          "word": "continue.",
+          "start": 109.08,
+          "end": 109.6,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 110.0,
+      "end": 115.54,
+      "start_formatted": "00:01:50.000",
+      "end_formatted": "00:01:55.540",
+      "text": "Claim Center uses validation levels to identify the maturity of a claim and its exposures.",
+      "words": [
+        {
+          "word": "Claim",
+          "start": 110.0,
+          "end": 110.48,
+          "probability": 0.999
+        },
+        {
+          "word": "Center",
+          "start": 110.48,
+          "end": 110.82,
+          "probability": 0.8594
+        },
+        {
+          "word": "uses",
+          "start": 110.82,
+          "end": 111.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "validation",
+          "start": 111.24,
+          "end": 111.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "levels",
+          "start": 111.94,
+          "end": 112.48,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 112.48,
+          "end": 112.72,
+          "probability": 1.0
+        },
+        {
+          "word": "identify",
+          "start": 112.72,
+          "end": 113.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 113.14,
+          "end": 113.44,
+          "probability": 1.0
+        },
+        {
+          "word": "maturity",
+          "start": 113.44,
+          "end": 113.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 113.86,
+          "end": 114.14,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 114.14,
+          "end": 114.22,
+          "probability": 0.5195
+        },
+        {
+          "word": "claim",
+          "start": 114.22,
+          "end": 114.48,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 114.48,
+          "end": 114.7,
+          "probability": 1.0
+        },
+        {
+          "word": "its",
+          "start": 114.7,
+          "end": 114.88,
+          "probability": 1.0
+        },
+        {
+          "word": "exposures.",
+          "start": 114.88,
+          "end": 115.54,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 115.72,
+      "end": 121.18,
+      "start_formatted": "00:01:55.720",
+      "end_formatted": "00:02:01.180",
+      "text": "The claim and exposure are currently at the lowest validation level, new loss completion.",
+      "words": [
+        {
+          "word": "The",
+          "start": 115.72,
+          "end": 116.16,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 116.16,
+          "end": 116.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "and",
+          "start": 116.44,
+          "end": 116.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 116.68,
+          "end": 117.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 117.18,
+          "end": 117.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "currently",
+          "start": 117.5,
+          "end": 117.88,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 117.88,
+          "end": 118.14,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 118.14,
+          "end": 118.28,
+          "probability": 1.0
+        },
+        {
+          "word": "lowest",
+          "start": 118.28,
+          "end": 118.6,
+          "probability": 0.999
+        },
+        {
+          "word": "validation",
+          "start": 118.6,
+          "end": 119.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "level,",
+          "start": 119.32,
+          "end": 119.8,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 120.02,
+          "end": 120.3,
+          "probability": 0.8984
+        },
+        {
+          "word": "loss",
+          "start": 120.3,
+          "end": 120.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "completion.",
+          "start": 120.6,
+          "end": 121.18,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 121.18,
+      "end": 126.3,
+      "start_formatted": "00:02:01.180",
+      "end_formatted": "00:02:06.300",
+      "text": "This is fine for the early stages of adjudication, but in order to make payments,",
+      "words": [
+        {
+          "word": "This",
+          "start": 121.18,
+          "end": 122.02,
+          "probability": 0.9263
+        },
+        {
+          "word": "is",
+          "start": 122.02,
+          "end": 122.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "fine",
+          "start": 122.2,
+          "end": 122.52,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 122.52,
+          "end": 122.72,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 122.72,
+          "end": 122.84,
+          "probability": 1.0
+        },
+        {
+          "word": "early",
+          "start": 122.84,
+          "end": 123.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "stages",
+          "start": 123.14,
+          "end": 123.62,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 123.62,
+          "end": 123.88,
+          "probability": 1.0
+        },
+        {
+          "word": "adjudication,",
+          "start": 123.88,
+          "end": 124.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "but",
+          "start": 124.82,
+          "end": 125.08,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 125.08,
+          "end": 125.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "order",
+          "start": 125.24,
+          "end": 125.44,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 125.44,
+          "end": 125.64,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 125.64,
+          "end": 125.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "payments,",
+          "start": 125.84,
+          "end": 126.3,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 126.7,
+      "end": 131.54,
+      "start_formatted": "00:02:06.700",
+      "end_formatted": "00:02:11.540",
+      "text": "Claim Center requires that the claim and exposure be at the ability to pay validation level.",
+      "words": [
+        {
+          "word": "Claim",
+          "start": 126.7,
+          "end": 126.9,
+          "probability": 0.9844
+        },
+        {
+          "word": "Center",
+          "start": 126.9,
+          "end": 127.22,
+          "probability": 0.9644
+        },
+        {
+          "word": "requires",
+          "start": 127.22,
+          "end": 127.76,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 127.76,
+          "end": 128.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 128.02,
+          "end": 128.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 128.14,
+          "end": 128.46,
+          "probability": 0.9834
+        },
+        {
+          "word": "and",
+          "start": 128.46,
+          "end": 128.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure",
+          "start": 128.64,
+          "end": 129.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 129.1,
+          "end": 129.34,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 129.34,
+          "end": 129.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 129.52,
+          "end": 129.64,
+          "probability": 1.0
+        },
+        {
+          "word": "ability",
+          "start": 129.64,
+          "end": 130.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 130.04,
+          "end": 130.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "pay",
+          "start": 130.28,
+          "end": 130.48,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 130.48,
+          "end": 131.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "level.",
+          "start": 131.04,
+          "end": 131.54,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 131.98,
+      "end": 137.7,
+      "start_formatted": "00:02:11.980",
+      "end_formatted": "00:02:17.700",
+      "text": "Claim Center uses rules to identify validation, issues and set the validation level.",
+      "words": [
+        {
+          "word": "Claim",
+          "start": 131.98,
+          "end": 132.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "Center",
+          "start": 132.56,
+          "end": 132.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "uses",
+          "start": 132.94,
+          "end": 133.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "rules",
+          "start": 133.3,
+          "end": 133.74,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 133.74,
+          "end": 133.96,
+          "probability": 1.0
+        },
+        {
+          "word": "identify",
+          "start": 133.96,
+          "end": 134.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "validation,",
+          "start": 134.42,
+          "end": 135.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "issues",
+          "start": 135.46,
+          "end": 135.9,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 135.9,
+          "end": 136.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "set",
+          "start": 136.18,
+          "end": 136.44,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 136.44,
+          "end": 136.6,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 136.6,
+          "end": 137.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "level.",
+          "start": 137.22,
+          "end": 137.7,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 137.92,
+      "end": 144.52,
+      "start_formatted": "00:02:17.920",
+      "end_formatted": "00:02:24.520",
+      "text": "The first, error states that in California, the insured driver's license number is required to make a payment.",
+      "words": [
+        {
+          "word": "The",
+          "start": 137.92,
+          "end": 138.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "first,",
+          "start": 138.34,
+          "end": 138.74,
+          "probability": 0.9907
+        },
+        {
+          "word": "error",
+          "start": 138.94,
+          "end": 139.28,
+          "probability": 0.8511
+        },
+        {
+          "word": "states",
+          "start": 139.28,
+          "end": 139.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 139.68,
+          "end": 139.92,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 139.92,
+          "end": 140.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "California,",
+          "start": 140.12,
+          "end": 140.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 140.98,
+          "end": 141.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "insured",
+          "start": 141.22,
+          "end": 141.66,
+          "probability": 0.9883
+        },
+        {
+          "word": "driver's",
+          "start": 141.66,
+          "end": 142.18,
+          "probability": 0.8306
+        },
+        {
+          "word": "license",
+          "start": 142.18,
+          "end": 142.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "number",
+          "start": 142.58,
+          "end": 142.96,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 142.96,
+          "end": 143.22,
+          "probability": 1.0
+        },
+        {
+          "word": "required",
+          "start": 143.22,
+          "end": 143.64,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 143.64,
+          "end": 143.86,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 143.86,
+          "end": 144.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 144.08,
+          "end": 144.16,
+          "probability": 1.0
+        },
+        {
+          "word": "payment.",
+          "start": 144.16,
+          "end": 144.52,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 144.52,
+      "end": 149.68,
+      "start_formatted": "00:02:24.520",
+      "end_formatted": "00:02:29.680",
+      "text": "To correct the data, Chris clicks on the error to open the parties involved screen.",
+      "words": [
+        {
+          "word": "To",
+          "start": 144.52,
+          "end": 145.42,
+          "probability": 0.9785
+        },
+        {
+          "word": "correct",
+          "start": 145.42,
+          "end": 145.78,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 145.78,
+          "end": 145.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "data,",
+          "start": 145.96,
+          "end": 146.28,
+          "probability": 0.999
+        },
+        {
+          "word": "Chris",
+          "start": 146.62,
+          "end": 146.82,
+          "probability": 0.9775
+        },
+        {
+          "word": "clicks",
+          "start": 146.82,
+          "end": 147.2,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 147.2,
+          "end": 147.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 147.44,
+          "end": 147.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "error",
+          "start": 147.56,
+          "end": 147.8,
+          "probability": 0.2507
+        },
+        {
+          "word": "to",
+          "start": 147.8,
+          "end": 148.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "open",
+          "start": 148.02,
+          "end": 148.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 148.36,
+          "end": 148.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "parties",
+          "start": 148.48,
+          "end": 148.82,
+          "probability": 0.5645
+        },
+        {
+          "word": "involved",
+          "start": 148.82,
+          "end": 149.22,
+          "probability": 0.7949
+        },
+        {
+          "word": "screen.",
+          "start": 149.22,
+          "end": 149.68,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 150.24,
+      "end": 152.48,
+      "start_formatted": "00:02:30.240",
+      "end_formatted": "00:02:32.480",
+      "text": "He then selects Mark Henderson.",
+      "words": [
+        {
+          "word": "He",
+          "start": 150.24,
+          "end": 150.92,
+          "probability": 0.998
+        },
+        {
+          "word": "then",
+          "start": 150.92,
+          "end": 151.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "selects",
+          "start": 151.16,
+          "end": 151.78,
+          "probability": 0.999
+        },
+        {
+          "word": "Mark",
+          "start": 151.78,
+          "end": 151.96,
+          "probability": 0.9404
+        },
+        {
+          "word": "Henderson.",
+          "start": 151.96,
+          "end": 152.48,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 152.98,
+      "end": 155.2,
+      "start_formatted": "00:02:32.980",
+      "end_formatted": "00:02:35.200",
+      "text": "He opens the contact details.",
+      "words": [
+        {
+          "word": "He",
+          "start": 152.98,
+          "end": 153.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "opens",
+          "start": 153.52,
+          "end": 153.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 153.9,
+          "end": 154.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 154.1,
+          "end": 154.52,
+          "probability": 0.9805
+        },
+        {
+          "word": "details.",
+          "start": 154.52,
+          "end": 155.2,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 155.62,
+      "end": 161.14,
+      "start_formatted": "00:02:35.620",
+      "end_formatted": "00:02:41.140",
+      "text": "The driver's license details are at the bottom of the screen, so he scrolls down on the page.",
+      "words": [
+        {
+          "word": "The",
+          "start": 155.62,
+          "end": 156.04,
+          "probability": 0.999
+        },
+        {
+          "word": "driver's",
+          "start": 156.04,
+          "end": 156.54,
+          "probability": 0.9863
+        },
+        {
+          "word": "license",
+          "start": 156.54,
+          "end": 156.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "details",
+          "start": 156.9,
+          "end": 157.3,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 157.3,
+          "end": 157.66,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 157.66,
+          "end": 157.8,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 157.8,
+          "end": 157.92,
+          "probability": 1.0
+        },
+        {
+          "word": "bottom",
+          "start": 157.92,
+          "end": 158.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 158.2,
+          "end": 158.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 158.42,
+          "end": 158.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "screen,",
+          "start": 158.54,
+          "end": 158.94,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 159.16,
+          "end": 159.44,
+          "probability": 0.998
+        },
+        {
+          "word": "he",
+          "start": 159.44,
+          "end": 159.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "scrolls",
+          "start": 159.64,
+          "end": 160.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "down",
+          "start": 160.2,
+          "end": 160.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 160.44,
+          "end": 160.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 160.66,
+          "end": 160.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "page.",
+          "start": 160.76,
+          "end": 161.14,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 161.56,
+      "end": 164.14,
+      "start_formatted": "00:02:41.560",
+      "end_formatted": "00:02:44.140",
+      "text": "The field in error is highlighted in red.",
+      "words": [
+        {
+          "word": "The",
+          "start": 161.56,
+          "end": 162.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "field",
+          "start": 162.04,
+          "end": 162.38,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 162.38,
+          "end": 162.56,
+          "probability": 0.6929
+        },
+        {
+          "word": "error",
+          "start": 162.56,
+          "end": 162.82,
+          "probability": 0.9492
+        },
+        {
+          "word": "is",
+          "start": 162.82,
+          "end": 163.08,
+          "probability": 1.0
+        },
+        {
+          "word": "highlighted",
+          "start": 163.08,
+          "end": 163.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 163.54,
+          "end": 163.84,
+          "probability": 1.0
+        },
+        {
+          "word": "red.",
+          "start": 163.84,
+          "end": 164.14,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 164.78,
+      "end": 166.88,
+      "start_formatted": "00:02:44.780",
+      "end_formatted": "00:02:46.880",
+      "text": "Chris enters the driver's license number.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 164.78,
+          "end": 165.02,
+          "probability": 0.999
+        },
+        {
+          "word": "enters",
+          "start": 165.02,
+          "end": 165.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 165.36,
+          "end": 165.58,
+          "probability": 1.0
+        },
+        {
+          "word": "driver's",
+          "start": 165.58,
+          "end": 166.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "license",
+          "start": 166.06,
+          "end": 166.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "number.",
+          "start": 166.44,
+          "end": 166.88,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 168.74,
+      "end": 171.64,
+      "start_formatted": "00:02:48.740",
+      "end_formatted": "00:02:51.640",
+      "text": "He then selects California as the state.",
+      "words": [
+        {
+          "word": "He",
+          "start": 168.74,
+          "end": 169.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "then",
+          "start": 169.42,
+          "end": 169.66,
+          "probability": 1.0
+        },
+        {
+          "word": "selects",
+          "start": 169.66,
+          "end": 170.16,
+          "probability": 1.0
+        },
+        {
+          "word": "California",
+          "start": 170.16,
+          "end": 170.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "as",
+          "start": 170.7,
+          "end": 171.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 171.18,
+          "end": 171.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "state.",
+          "start": 171.32,
+          "end": 171.64,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 172.34,
+      "end": 174.08,
+      "start_formatted": "00:02:52.340",
+      "end_formatted": "00:02:54.080",
+      "text": "He scrolls up the page.",
+      "words": [
+        {
+          "word": "He",
+          "start": 172.34,
+          "end": 172.86,
+          "probability": 0.9644
+        },
+        {
+          "word": "scrolls",
+          "start": 172.86,
+          "end": 173.36,
+          "probability": 0.9922
+        },
+        {
+          "word": "up",
+          "start": 173.36,
+          "end": 173.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 173.54,
+          "end": 173.66,
+          "probability": 0.998
+        },
+        {
+          "word": "page.",
+          "start": 173.66,
+          "end": 174.08,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 174.42,
+      "end": 175.68,
+      "start_formatted": "00:02:54.420",
+      "end_formatted": "00:02:55.680",
+      "text": "And clicks Update.",
+      "words": [
+        {
+          "word": "And",
+          "start": 174.42,
+          "end": 174.94,
+          "probability": 0.9829
+        },
+        {
+          "word": "clicks",
+          "start": 174.94,
+          "end": 175.32,
+          "probability": 0.9932
+        },
+        {
+          "word": "Update.",
+          "start": 175.32,
+          "end": 175.68,
+          "probability": 0.4946
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 177.14,
+      "end": 178.96,
+      "start_formatted": "00:02:57.140",
+      "end_formatted": "00:02:58.960",
+      "text": "Chris then clears the error message.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 177.14,
+          "end": 177.66,
+          "probability": 0.8535
+        },
+        {
+          "word": "then",
+          "start": 177.66,
+          "end": 177.84,
+          "probability": 0.9834
+        },
+        {
+          "word": "clears",
+          "start": 177.84,
+          "end": 178.12,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 178.12,
+          "end": 178.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "error",
+          "start": 178.32,
+          "end": 178.56,
+          "probability": 0.9678
+        },
+        {
+          "word": "message.",
+          "start": 178.56,
+          "end": 178.96,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 179.64,
+      "end": 188.32,
+      "start_formatted": "00:02:59.640",
+      "end_formatted": "00:03:08.320",
+      "text": "He has corrected the errors, but just to make sure, he uses the validation option to check that the claim and exposure, are at ability to pay.",
+      "words": [
+        {
+          "word": "He",
+          "start": 179.64,
+          "end": 180.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 180.16,
+          "end": 180.38,
+          "probability": 1.0
+        },
+        {
+          "word": "corrected",
+          "start": 180.38,
+          "end": 180.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 180.82,
+          "end": 181.02,
+          "probability": 1.0
+        },
+        {
+          "word": "errors,",
+          "start": 181.02,
+          "end": 181.48,
+          "probability": 0.999
+        },
+        {
+          "word": "but",
+          "start": 181.7,
+          "end": 181.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "just",
+          "start": 181.94,
+          "end": 182.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 182.2,
+          "end": 182.4,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 182.4,
+          "end": 182.6,
+          "probability": 1.0
+        },
+        {
+          "word": "sure,",
+          "start": 182.6,
+          "end": 182.94,
+          "probability": 1.0
+        },
+        {
+          "word": "he",
+          "start": 183.12,
+          "end": 183.42,
+          "probability": 0.9961
+        },
+        {
+          "word": "uses",
+          "start": 183.42,
+          "end": 183.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 183.76,
+          "end": 183.98,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 183.98,
+          "end": 184.36,
+          "probability": 0.7856
+        },
+        {
+          "word": "option",
+          "start": 184.36,
+          "end": 184.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 184.98,
+          "end": 185.26,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 185.26,
+          "end": 185.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 185.5,
+          "end": 185.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 185.7,
+          "end": 185.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 185.84,
+          "end": 186.12,
+          "probability": 0.9619
+        },
+        {
+          "word": "and",
+          "start": 186.12,
+          "end": 186.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "exposure,",
+          "start": 186.34,
+          "end": 186.88,
+          "probability": 0.9912
+        },
+        {
+          "word": "are",
+          "start": 187.08,
+          "end": 187.3,
+          "probability": 0.9912
+        },
+        {
+          "word": "at",
+          "start": 187.3,
+          "end": 187.44,
+          "probability": 0.9819
+        },
+        {
+          "word": "ability",
+          "start": 187.44,
+          "end": 187.8,
+          "probability": 0.9155
+        },
+        {
+          "word": "to",
+          "start": 187.8,
+          "end": 188.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "pay.",
+          "start": 188.06,
+          "end": 188.32,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 188.74,
+      "end": 193.02,
+      "start_formatted": "00:03:08.740",
+      "end_formatted": "00:03:13.020",
+      "text": "He sees that there are no errors, so he can proceed with issuing a check.",
+      "words": [
+        {
+          "word": "He",
+          "start": 188.74,
+          "end": 189.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "sees",
+          "start": 189.26,
+          "end": 189.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 189.52,
+          "end": 189.7,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 189.7,
+          "end": 189.86,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 189.86,
+          "end": 190.02,
+          "probability": 1.0
+        },
+        {
+          "word": "no",
+          "start": 190.02,
+          "end": 190.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "errors,",
+          "start": 190.18,
+          "end": 190.6,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 190.84,
+          "end": 191.12,
+          "probability": 0.999
+        },
+        {
+          "word": "he",
+          "start": 191.12,
+          "end": 191.32,
+          "probability": 1.0
+        },
+        {
+          "word": "can",
+          "start": 191.32,
+          "end": 191.52,
+          "probability": 1.0
+        },
+        {
+          "word": "proceed",
+          "start": 191.52,
+          "end": 191.96,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 191.96,
+          "end": 192.2,
+          "probability": 1.0
+        },
+        {
+          "word": "issuing",
+          "start": 192.2,
+          "end": 192.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 192.54,
+          "end": 192.8,
+          "probability": 1.0
+        },
+        {
+          "word": "check.",
+          "start": 192.8,
+          "end": 193.02,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 193.34,
+      "end": 196.54,
+      "start_formatted": "00:03:13.340",
+      "end_formatted": "00:03:16.540",
+      "text": "He clears the validation results to close the worksheet.",
+      "words": [
+        {
+          "word": "He",
+          "start": 193.34,
+          "end": 193.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "clears",
+          "start": 193.68,
+          "end": 194.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 194.02,
+          "end": 194.22,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 194.22,
+          "end": 194.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "results",
+          "start": 194.74,
+          "end": 195.38,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 195.38,
+          "end": 195.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "close",
+          "start": 195.62,
+          "end": 195.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 195.88,
+          "end": 196.08,
+          "probability": 1.0
+        },
+        {
+          "word": "worksheet.",
+          "start": 196.08,
+          "end": 196.54,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 197.14,
+      "end": 201.36,
+      "start_formatted": "00:03:17.140",
+      "end_formatted": "00:03:21.360",
+      "text": "Just as before, he uses the actions menu to create a check.",
+      "words": [
+        {
+          "word": "Just",
+          "start": 197.14,
+          "end": 197.74,
+          "probability": 0.9395
+        },
+        {
+          "word": "as",
+          "start": 197.74,
+          "end": 198.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "before,",
+          "start": 198.0,
+          "end": 198.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "he",
+          "start": 198.74,
+          "end": 198.98,
+          "probability": 0.9824
+        },
+        {
+          "word": "uses",
+          "start": 198.98,
+          "end": 199.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 199.42,
+          "end": 199.64,
+          "probability": 0.998
+        },
+        {
+          "word": "actions",
+          "start": 199.64,
+          "end": 200.04,
+          "probability": 0.4592
+        },
+        {
+          "word": "menu",
+          "start": 200.04,
+          "end": 200.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 200.46,
+          "end": 200.7,
+          "probability": 0.999
+        },
+        {
+          "word": "create",
+          "start": 200.7,
+          "end": 200.98,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 200.98,
+          "end": 201.22,
+          "probability": 0.999
+        },
+        {
+          "word": "check.",
+          "start": 201.22,
+          "end": 201.36,
+          "probability": 0.9248
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 201.92,
+      "end": 206.08,
+      "start_formatted": "00:03:21.920",
+      "end_formatted": "00:03:26.080",
+      "text": "Since this payment is for Mark's vehicle, the payee is Mark Henderson.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 201.92,
+          "end": 202.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "this",
+          "start": 202.52,
+          "end": 202.78,
+          "probability": 0.998
+        },
+        {
+          "word": "payment",
+          "start": 202.78,
+          "end": 203.12,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 203.12,
+          "end": 203.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 203.4,
+          "end": 203.58,
+          "probability": 0.9863
+        },
+        {
+          "word": "Mark's",
+          "start": 203.58,
+          "end": 203.92,
+          "probability": 0.9141
+        },
+        {
+          "word": "vehicle,",
+          "start": 203.92,
+          "end": 204.34,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 204.64,
+          "end": 204.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "payee",
+          "start": 204.8,
+          "end": 205.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 205.2,
+          "end": 205.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "Mark",
+          "start": 205.36,
+          "end": 205.64,
+          "probability": 0.9829
+        },
+        {
+          "word": "Henderson.",
+          "start": 205.64,
+          "end": 206.08,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 206.72,
+      "end": 209.48,
+      "start_formatted": "00:03:26.720",
+      "end_formatted": "00:03:29.480",
+      "text": "Chris continues to the next step of the check wizard.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 206.72,
+          "end": 207.1,
+          "probability": 0.8901
+        },
+        {
+          "word": "continues",
+          "start": 207.1,
+          "end": 207.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 207.6,
+          "end": 207.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 207.92,
+          "end": 208.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "next",
+          "start": 208.04,
+          "end": 208.3,
+          "probability": 0.9951
+        },
+        {
+          "word": "step",
+          "start": 208.3,
+          "end": 208.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 208.6,
+          "end": 208.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 208.78,
+          "end": 208.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "check",
+          "start": 208.9,
+          "end": 209.16,
+          "probability": 0.8608
+        },
+        {
+          "word": "wizard.",
+          "start": 209.16,
+          "end": 209.48,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 209.92,
+      "end": 218.6,
+      "start_formatted": "00:03:29.920",
+      "end_formatted": "00:03:38.600",
+      "text": "The payment is for Mark's vehicle, so Chris chooses first party vehicle, claim cost, auto body, as the reserve line for this payment.",
+      "words": [
+        {
+          "word": "The",
+          "start": 209.92,
+          "end": 210.52,
+          "probability": 0.9839
+        },
+        {
+          "word": "payment",
+          "start": 210.52,
+          "end": 210.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 210.82,
+          "end": 211.08,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 211.08,
+          "end": 211.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "Mark's",
+          "start": 211.24,
+          "end": 211.58,
+          "probability": 0.9917
+        },
+        {
+          "word": "vehicle,",
+          "start": 211.58,
+          "end": 212.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "so",
+          "start": 212.3,
+          "end": 212.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "Chris",
+          "start": 212.54,
+          "end": 212.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "chooses",
+          "start": 212.84,
+          "end": 213.32,
+          "probability": 0.9971
+        },
+        {
+          "word": "first",
+          "start": 213.32,
+          "end": 213.68,
+          "probability": 0.877
+        },
+        {
+          "word": "party",
+          "start": 213.68,
+          "end": 214.06,
+          "probability": 0.5527
+        },
+        {
+          "word": "vehicle,",
+          "start": 214.06,
+          "end": 214.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "claim",
+          "start": 214.8,
+          "end": 215.18,
+          "probability": 0.9316
+        },
+        {
+          "word": "cost,",
+          "start": 215.18,
+          "end": 215.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "auto",
+          "start": 215.88,
+          "end": 216.18,
+          "probability": 0.9414
+        },
+        {
+          "word": "body,",
+          "start": 216.18,
+          "end": 216.48,
+          "probability": 0.9902
+        },
+        {
+          "word": "as",
+          "start": 216.7,
+          "end": 217.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 217.02,
+          "end": 217.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserve",
+          "start": 217.14,
+          "end": 217.46,
+          "probability": 0.998
+        },
+        {
+          "word": "line",
+          "start": 217.46,
+          "end": 217.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 217.76,
+          "end": 218.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 218.0,
+          "end": 218.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment.",
+          "start": 218.22,
+          "end": 218.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 219.16,
+      "end": 220.88,
+      "start_formatted": "00:03:39.160",
+      "end_formatted": "00:03:40.880",
+      "text": "This is a partial payment.",
+      "words": [
+        {
+          "word": "This",
+          "start": 219.16,
+          "end": 219.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 219.76,
+          "end": 219.9,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 219.9,
+          "end": 220.04,
+          "probability": 0.999
+        },
+        {
+          "word": "partial",
+          "start": 220.04,
+          "end": 220.4,
+          "probability": 0.998
+        },
+        {
+          "word": "payment.",
+          "start": 220.4,
+          "end": 220.88,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 220.88,
+      "end": 227.08,
+      "start_formatted": "00:03:40.880",
+      "end_formatted": "00:03:47.080",
+      "text": "Chris enters $4,700 for the payment amount and applies the deductible.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 220.88,
+          "end": 222.3,
+          "probability": 0.9771
+        },
+        {
+          "word": "enters",
+          "start": 222.3,
+          "end": 222.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "$4",
+          "start": 222.72,
+          "end": 223.14,
+          "probability": 0.9702
+        },
+        {
+          "word": ",700",
+          "start": 223.14,
+          "end": 224.1,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 224.1,
+          "end": 224.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 224.82,
+          "end": 224.94,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 224.94,
+          "end": 225.32,
+          "probability": 1.0
+        },
+        {
+          "word": "amount",
+          "start": 225.32,
+          "end": 225.72,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 225.72,
+          "end": 225.96,
+          "probability": 1.0
+        },
+        {
+          "word": "applies",
+          "start": 225.96,
+          "end": 226.34,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 226.34,
+          "end": 226.52,
+          "probability": 1.0
+        },
+        {
+          "word": "deductible.",
+          "start": 226.52,
+          "end": 227.08,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 227.88,
+      "end": 229.92,
+      "start_formatted": "00:03:47.880",
+      "end_formatted": "00:03:49.920",
+      "text": "He continues to the last step.",
+      "words": [
+        {
+          "word": "He",
+          "start": 227.68,
+          "end": 228.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "continues",
+          "start": 228.04,
+          "end": 228.54,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 228.54,
+          "end": 228.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 228.74,
+          "end": 228.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "last",
+          "start": 228.88,
+          "end": 229.26,
+          "probability": 0.999
+        },
+        {
+          "word": "step.",
+          "start": 229.26,
+          "end": 229.92,
+          "probability": 0.7349
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 230.3,
+      "end": 234.14,
+      "start_formatted": "00:03:50.300",
+      "end_formatted": "00:03:54.140",
+      "text": "After reviewing the payment details, Chris creates the check.",
+      "words": [
+        {
+          "word": "After",
+          "start": 230.3,
+          "end": 230.9,
+          "probability": 1.0
+        },
+        {
+          "word": "reviewing",
+          "start": 230.9,
+          "end": 231.36,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 231.36,
+          "end": 231.6,
+          "probability": 1.0
+        },
+        {
+          "word": "payment",
+          "start": 231.6,
+          "end": 231.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "details,",
+          "start": 231.96,
+          "end": 232.6,
+          "probability": 1.0
+        },
+        {
+          "word": "Chris",
+          "start": 232.94,
+          "end": 233.16,
+          "probability": 1.0
+        },
+        {
+          "word": "creates",
+          "start": 233.16,
+          "end": 233.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 233.62,
+          "end": 233.82,
+          "probability": 1.0
+        },
+        {
+          "word": "check.",
+          "start": 233.82,
+          "end": 234.14,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 234.56,
+      "end": 237.9,
+      "start_formatted": "00:03:54.560",
+      "end_formatted": "00:03:57.900",
+      "text": "He notices that the check status is pending approval.",
+      "words": [
+        {
+          "word": "He",
+          "start": 234.56,
+          "end": 235.28,
+          "probability": 1.0
+        },
+        {
+          "word": "notices",
+          "start": 235.28,
+          "end": 235.7,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 235.7,
+          "end": 236.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 236.02,
+          "end": 236.16,
+          "probability": 0.998
+        },
+        {
+          "word": "check",
+          "start": 236.16,
+          "end": 236.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "status",
+          "start": 236.42,
+          "end": 236.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 236.86,
+          "end": 237.1,
+          "probability": 1.0
+        },
+        {
+          "word": "pending",
+          "start": 237.1,
+          "end": 237.38,
+          "probability": 0.9561
+        },
+        {
+          "word": "approval.",
+          "start": 237.38,
+          "end": 237.9,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 238.26,
+      "end": 240.08,
+      "start_formatted": "00:03:58.260",
+      "end_formatted": "00:04:00.080",
+      "text": "Chris goes to the work plan.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 238.26,
+          "end": 238.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "goes",
+          "start": 238.82,
+          "end": 239.08,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 239.08,
+          "end": 239.28,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 239.28,
+          "end": 239.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "work",
+          "start": 239.4,
+          "end": 239.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "plan.",
+          "start": 239.68,
+          "end": 240.08,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 240.64,
+      "end": 244.64,
+      "start_formatted": "00:04:00.640",
+      "end_formatted": "00:04:04.640",
+      "text": "An activity has been added for his supervisor to approve the payment.",
+      "words": [
+        {
+          "word": "An",
+          "start": 240.64,
+          "end": 241.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "activity",
+          "start": 241.36,
+          "end": 241.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "has",
+          "start": 241.78,
+          "end": 242.12,
+          "probability": 1.0
+        },
+        {
+          "word": "been",
+          "start": 242.12,
+          "end": 242.32,
+          "probability": 1.0
+        },
+        {
+          "word": "added",
+          "start": 242.32,
+          "end": 242.54,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 242.54,
+          "end": 242.76,
+          "probability": 1.0
+        },
+        {
+          "word": "his",
+          "start": 242.76,
+          "end": 242.94,
+          "probability": 1.0
+        },
+        {
+          "word": "supervisor",
+          "start": 242.94,
+          "end": 243.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 243.48,
+          "end": 243.76,
+          "probability": 1.0
+        },
+        {
+          "word": "approve",
+          "start": 243.76,
+          "end": 244.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 244.12,
+          "end": 244.26,
+          "probability": 1.0
+        },
+        {
+          "word": "payment.",
+          "start": 244.26,
+          "end": 244.64,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 244.64,
+      "end": 249.5,
+      "start_formatted": "00:04:04.640",
+      "end_formatted": "00:04:09.500",
+      "text": "Chris is done with this claim for now, so he logs out of claim center.",
+      "words": [
+        {
+          "word": "Chris",
+          "start": 244.64,
+          "end": 245.66,
+          "probability": 0.9277
+        },
+        {
+          "word": "is",
+          "start": 245.66,
+          "end": 245.9,
+          "probability": 0.999
+        },
+        {
+          "word": "done",
+          "start": 245.9,
+          "end": 246.08,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 246.08,
+          "end": 246.34,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 246.34,
+          "end": 246.58,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 246.58,
+          "end": 246.9,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 246.9,
+          "end": 247.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "now,",
+          "start": 247.1,
+          "end": 247.44,
+          "probability": 1.0
+        },
+        {
+          "word": "so",
+          "start": 247.68,
+          "end": 247.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "he",
+          "start": 247.96,
+          "end": 248.16,
+          "probability": 1.0
+        },
+        {
+          "word": "logs",
+          "start": 248.16,
+          "end": 248.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "out",
+          "start": 248.5,
+          "end": 248.72,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 248.72,
+          "end": 248.84,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 248.84,
+          "end": 249.12,
+          "probability": 0.2488
+        },
+        {
+          "word": "center.",
+          "start": 249.12,
+          "end": 249.5,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 249.92,
+      "end": 253.16,
+      "start_formatted": "00:04:09.920",
+      "end_formatted": "00:04:13.160",
+      "text": "This is the end of the exposures and financials demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 249.92,
+          "end": 250.44,
+          "probability": 0.998
+        },
+        {
+          "word": "is",
+          "start": 250.44,
+          "end": 250.62,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 250.62,
+          "end": 250.76,
+          "probability": 1.0
+        },
+        {
+          "word": "end",
+          "start": 250.76,
+          "end": 251.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 251.04,
+          "end": 251.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 251.18,
+          "end": 251.3,
+          "probability": 0.999
+        },
+        {
+          "word": "exposures",
+          "start": 251.3,
+          "end": 251.96,
+          "probability": 0.9873
+        },
+        {
+          "word": "and",
+          "start": 251.96,
+          "end": 252.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "financials",
+          "start": 252.22,
+          "end": 252.96,
+          "probability": 1.0
+        },
+        {
+          "word": "demonstration.",
+          "start": 252.96,
+          "end": 253.16,
+          "probability": 0.8457
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 253.16,
+      "end": 253.44,
+      "start_formatted": "00:04:13.160",
+      "end_formatted": "00:04:13.440",
+      "text": "Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy of Filogy",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 253.16,
+          "end": 253.16,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 253.16,
+          "end": 253.16,
+          "probability": 0.1876
+        },
+        {
+          "word": "Filogy",
+          "start": 253.16,
+          "end": 253.18,
+          "probability": 0.3342
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.6245
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.4778
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.7114
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.5093
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.8096
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.5923
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.8599
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.7344
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.895
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.8389
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9165
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.8892
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9336
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9209
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9429
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9448
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9468
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9492
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9512
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9595
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9556
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.957
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9707
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9595
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9722
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9634
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9736
+        },
+        {
+          "word": "of",
+          "start": 253.18,
+          "end": 253.18,
+          "probability": 0.9644
+        },
+        {
+          "word": "Filogy",
+          "start": 253.18,
+          "end": 253.2,
+          "probability": 0.9766
+        },
+        {
+          "word": "of",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9653
+        },
+        {
+          "word": "Filogy",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9771
+        },
+        {
+          "word": "of",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9688
+        },
+        {
+          "word": "Filogy",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9692
+        },
+        {
+          "word": "Filogy",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9697
+        },
+        {
+          "word": "Filogy",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 253.2,
+          "end": 253.2,
+          "probability": 0.9707
+        },
+        {
+          "word": "Filogy",
+          "start": 253.2,
+          "end": 253.22,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9697
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9722
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9712
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9697
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9829
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9692
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9707
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9839
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9702
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9717
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9727
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9849
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9731
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9727
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9731
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9736
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9736
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9746
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9854
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9746
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9756
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9761
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9756
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9761
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9863
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9761
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9775
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.978
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9785
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.22,
+          "end": 253.22,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 253.22,
+          "end": 253.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.979
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.98
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.98
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9795
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9814
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9819
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9878
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9824
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9829
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9873
+        },
+        {
+          "word": "of",
+          "start": 253.24,
+          "end": 253.24,
+          "probability": 0.9834
+        },
+        {
+          "word": "Filogy",
+          "start": 253.24,
+          "end": 253.44,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 253.42,
+      "end": 253.42,
+      "start_formatted": "00:04:13.420",
+      "end_formatted": "00:04:13.420",
+      "text": "",
+      "words": []
+    }
+  ]
+}

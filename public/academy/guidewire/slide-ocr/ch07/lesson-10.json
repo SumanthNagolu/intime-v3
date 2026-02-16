@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-10",
+    "slide_count": 29,
+    "slides_with_text": 26,
+    "total_words": 1259,
+    "avg_confidence": 88.0,
+    "processing_time_seconds": 11.63,
+    "extracted_at": "2026-02-13T12:19:04.626672"
+  },
+  "full_text": "Enhancements\n\nLesson\nobjectives\n\n¢ Describe the purpose and functionality of\nGosu enhancements\n\n* Create entity enhancements\n\n¢ Reference entity enhancement properties and\nmethods\n\n* Create Gosu enhancements for Java classes\nand interfaces\n\nGosu enhancements\n\nI Gosu enhancements Gi\n\n* Gosu enhancements allow you to augment classes and other types with additional\nconcrete methods and properties\n\n¢ The most valuable and useful uses of this feature are:\n\n* to add new properties and methods to Guidewire Entities. Entities are defined in XML files and\nsource code is automatically generated, thus cannot be modified, and\n\n* to define additional utility methods on a Java class or interface that cannot be directly\n\nmodified. For example, the source code is unavailable, or a given class is final (cannot be\nsubclassed)\n\n¢ [fan Entity/Java class is enhanced, then all the subtypes/subclasses will\nautomatically inherit all elements from the enhancement\n\n©\n\nI Enhancement components\n\nGi\n\n¢ Calculate derived\n\nvalues\n\nCe\n\n¢ Take input parameters,\n\nand/or\n\nCe\n\nSet field values that\nrequire additional logic\n\nModify other objects,\nand/or\n\nCreate objects\n\nms\n\nI Derived (virtual) properties Gi\n\nABPersonEnhancement.gsx enhances ABPerson entity and defines the Age getter\nproperty\n\n* Property calculates age based on the date of birth value\n\nDerived values should NOT be stored in the database, because storing them\nwould be redundant\n\n* They are calculated from physical fields\n\nI Getter property\n\n¢ Agetter property is used to calculate a derived value\n* Property not declared at Data Model level\n* Asa result the value is not stored in database\n* Code cannot receive input parameters\n* Code can only return a value and should not alter any data\n* Null safe\n¢« Example: ABPerson.Age\n* Derives value by calculating number of years between date of birth and current date\n« Returns \"Unknown\" if date of birth is null\n\n* Storing Age in database is redundant\n\nI Setter property Gi\n\n¢ Asetter property takes a single input value and uses it to modify the\nassociated object\n\n« Property not declared at data model level\n« Value given to setter may or may not be stored in database\n« Value manipulated by setter is typically stored in database\n* Code must receive exactly one input parameter\n* Should not be used to alter other objects\n* Example: ABPolicyPerson.HeightInInches (arg)\n\n* Getter takes height from database (in meters) and converts it to inches (so, for example, it can\nbe displayed in Ul)\n\n* Setter takes height (in inches) and converts it to meters before saving it to database\n\nI Function\n\n¢ A function is a set of statements that executes a logical unit of work\n* Can receive any number of parameters\n* Can optionally return a value\n* Create when your code...\n+ Requires multiple input parameters, and/or\n* Modifies multiple unrelated fields on given object, and/or\n* Creates or modifies other objects, and/or\n* Does not \"feel like\" a setter\n¢« Example: ABPerson.assignDefaultOccupation ()\n+ ABPersonEnhancement.gsx enhances ABPerson entity\n\n« Uses information known about object to generate default occupation\n\nI User stories Gi\n\n¢« Enhancements - User Story#1: “For each person, if the Age is not Unknown, we\nwant to see how many years the person has remaining until retirement. This value\nshould be calculated from the Age and be displayed as a read-only field in the UI\nright under the Date of Birth field on the Person Info card.”\n\n¢ Enhancements — User Story#2: “We also need a Toolbar button on the Person\nInfo card with the label: ‘Suggest insight score’. This button should be available\nonly if the location is in edit mode and the contact’s Score field is null. When the\nuser clicks on it a function should be executed with the following logic:\n« Ifthe Employment Info section is filled out completely the Score should be set to 10\n\n« Ifthe Employment Info and License Info sections are both filled out completely, the Score\nshould be set to 20.\n\n* Otherwise nothing happens.”\n\nUser story wireframe\n\nTrainingApp\n\n[DEV mode - 40.15] Gudewre TronngApp\n\nDP _ © _ Percen Witom Andy\n\nfads\n\n=\nD\nfresco |\n\n=\n\nSummary\n\nNome\nFull Nome\n\nPrete\n\nFeat Nome\nMiddle Nome\nLost Nome\n\nSul\n\nTox Info\nTox 1D\n\nTox Filing Stotus\n\nGender\n\nMorita totus\n\nDate of Beth\n\nYeors uni retirement\n\nWiiom Andy\nMe rr]\nWier —|\n‘Andy\n\nTe rv)\n\nFae ry)\n\nMarried\n\nVETAREEI caf =]\n\n2% ©\n\nEmployment Info\nOccupation\n\nSeles manager\n\nEmployer\n\nAberteon's\n\nInsight Summary\n\nI Gosu enhancements for Java\n\nWrite Gosu enhancements for Java types\n\nUseful when creating generic\nmethods that...\n\n* Do NOT relate to a specific entity\n« Extend the functionality of a base data type\nExamples:\n*« GWBaselntegerEnhancement enhances java.lang. Integer\n¢« GWBaseDateEnhancement enhances java.util.Date\n¢« GWBaseListEnhancement enhances java.util.List\nJava enhancements typically contain static functions\nDeploy and debug the same way as other enhancements\n\nI User Story: Enhance the ABPerson entity fa\n\n¢ For each person, if the Age is known,\nwe want to see how many years the\nperson has remaining until retirement\n\n¢ This value should be calculated from\nthe Age and be displayed as a read-\nonly field in the UI right under the Date\nof Birth field on the Person Info card\n\nI Demonstration G\n\nEnhance the ABPerson entity\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — What type of logic does a getter implement? A setter? A method?\n\n4\n¢\n¢\n\nee\n\nAnswer Gi\n\n,~ — What type of logic does a getter implement? A setter? A method?\n\n¢\n¢\n¢\n\nThe correct responses are:\n\nGetter: Logic that returns a derived value and does not take parameters or change\nother data.\n\nSetter: Logic that takes a single input value and uses that to modify some other field or\nset of fields on the given object.\n\nMethod: Logic that requires parameters, changes data, or otherwise does more than\nsimply deriving or setting a value.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n_~ — When you create a new enhancement, what code does Studio add for\n\nx you automatically?\n\n¢\n\nee\n\nAnswer Gi\n\n,~ — When you create a new enhancement, what code does Studio add for\n\nx you automatically?\n\n¢\n\nThe correct response is:\n\nStudio automatically creates the package statement and the enhancement declaration\nstatement and the type reference.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n,~ — Foran enhancement on the ABContact entity, what code would you write\nx to reference the given ABContact's AssignedUser field?\n\nee\n\nAnswer Gi\n\n,~ — Foran enhancement on the ABContact entity, what code would you write\nx to reference the given ABContact's AssignedUser field?\n\nThe correct response is: this.AssignedUser\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n,~ — Howdo you create an enhancement method that returns no value?\n\n4\n¢\n¢\n\nee\n\nAnswer Gi\n\n,~ — Howdo you create an enhancement method that returns no value?\n\n¢\n¢\n¢\n\nThe correct response is:\nYou would create the method and optionally specify a return type of void.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n,~ — Howdo you reference enhancement properties and methods?\n\n4\n¢\n¢\n\nee\n\nAnswer Gi\n\n,~ — Howdo you reference enhancement properties and methods?\n¢\n\n¢\n¢\n\nThe correct response is:\n\nYou reference enhancement properties and methods using the same syntax as base\napplication entity properties and methods: object.propertyOrMethodName\n\nSOOO ODDDSDoOODDODOoOoS\n\nLesson\nobjectives\nreview\n\n¢ Describe the purpose and functionality of\n\nGosu enhancements\n\n* Create entity enhancements\n\nReference entity enhancement properties and\nmethods\n\nCreate Gosu enhancements for Java classes\nand interfaces\n\nI Student exercise\n\nEnhancements",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Enhancements",
+      "word_count": 1,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 547
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the purpose and functionality of\nGosu enhancements\n\n* Create entity enhancements\n\n¢ Reference entity enhancement properties and\nmethods\n\n* Create Gosu enhancements for Java classes\nand interfaces",
+      "word_count": 31,
+      "avg_confidence": 88.03,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Gosu enhancements",
+      "word_count": 2,
+      "avg_confidence": 94.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "I Gosu enhancements Gi\n\n* Gosu enhancements allow you to augment classes and other types with additional\nconcrete methods and properties\n\n¢ The most valuable and useful uses of this feature are:\n\n* to add new properties and methods to Guidewire Entities. Entities are defined in XML files and\nsource code is automatically generated, thus cannot be modified, and\n\n* to define additional utility methods on a Java class or interface that cannot be directly\n\nmodified. For example, the source code is unavailable, or a given class is final (cannot be\nsubclassed)\n\n¢ [fan Entity/Java class is enhanced, then all the subtypes/subclasses will\nautomatically inherit all elements from the enhancement\n\n©",
+      "word_count": 111,
+      "avg_confidence": 90.9,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "I Enhancement components\n\nGi\n\n¢ Calculate derived\n\nvalues\n\nCe\n\n¢ Take input parameters,\n\nand/or\n\nCe\n\nSet field values that\nrequire additional logic\n\nModify other objects,\nand/or\n\nCreate objects\n\nms",
+      "word_count": 29,
+      "avg_confidence": 84.07,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "I Derived (virtual) properties Gi\n\nABPersonEnhancement.gsx enhances ABPerson entity and defines the Age getter\nproperty\n\n* Property calculates age based on the date of birth value\n\nDerived values should NOT be stored in the database, because storing them\nwould be redundant\n\n* They are calculated from physical fields",
+      "word_count": 48,
+      "avg_confidence": 89.73,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "I Getter property\n\n¢ Agetter property is used to calculate a derived value\n* Property not declared at Data Model level\n* Asa result the value is not stored in database\n* Code cannot receive input parameters\n* Code can only return a value and should not alter any data\n* Null safe\n¢« Example: ABPerson.Age\n* Derives value by calculating number of years between date of birth and current date\n« Returns \"Unknown\" if date of birth is null\n\n* Storing Age in database is redundant",
+      "word_count": 87,
+      "avg_confidence": 87.95,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "I Setter property Gi\n\n¢ Asetter property takes a single input value and uses it to modify the\nassociated object\n\n« Property not declared at data model level\n« Value given to setter may or may not be stored in database\n« Value manipulated by setter is typically stored in database\n* Code must receive exactly one input parameter\n* Should not be used to alter other objects\n* Example: ABPolicyPerson.HeightInInches (arg)\n\n* Getter takes height from database (in meters) and converts it to inches (so, for example, it can\nbe displayed in Ul)\n\n* Setter takes height (in inches) and converts it to meters before saving it to database",
+      "word_count": 110,
+      "avg_confidence": 90.01,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "I Function\n\n¢ A function is a set of statements that executes a logical unit of work\n* Can receive any number of parameters\n* Can optionally return a value\n* Create when your code...\n+ Requires multiple input parameters, and/or\n* Modifies multiple unrelated fields on given object, and/or\n* Creates or modifies other objects, and/or\n* Does not \"feel like\" a setter\n¢« Example: ABPerson.assignDefaultOccupation ()\n+ ABPersonEnhancement.gsx enhances ABPerson entity\n\n« Uses information known about object to generate default occupation",
+      "word_count": 83,
+      "avg_confidence": 88.75,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "I User stories Gi\n\n¢« Enhancements - User Story#1: “For each person, if the Age is not Unknown, we\nwant to see how many years the person has remaining until retirement. This value\nshould be calculated from the Age and be displayed as a read-only field in the UI\nright under the Date of Birth field on the Person Info card.”\n\n¢ Enhancements — User Story#2: “We also need a Toolbar button on the Person\nInfo card with the label: ‘Suggest insight score’. This button should be available\nonly if the location is in edit mode and the contact’s Score field is null. When the\nuser clicks on it a function should be executed with the following logic:\n« Ifthe Employment Info section is filled out completely the Score should be set to 10\n\n« Ifthe Employment Info and License Info sections are both filled out completely, the Score\nshould be set to 20.\n\n* Otherwise nothing happens.”",
+      "word_count": 158,
+      "avg_confidence": 92.59,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "User story wireframe\n\nTrainingApp\n\n[DEV mode - 40.15] Gudewre TronngApp\n\nDP _ © _ Percen Witom Andy\n\nfads\n\n=\nD\nfresco |\n\n=\n\nSummary\n\nNome\nFull Nome\n\nPrete\n\nFeat Nome\nMiddle Nome\nLost Nome\n\nSul\n\nTox Info\nTox 1D\n\nTox Filing Stotus\n\nGender\n\nMorita totus\n\nDate of Beth\n\nYeors uni retirement\n\nWiiom Andy\nMe rr]\nWier —|\n‘Andy\n\nTe rv)\n\nFae ry)\n\nMarried\n\nVETAREEI caf =]\n\n2% ©\n\nEmployment Info\nOccupation\n\nSeles manager\n\nEmployer\n\nAberteon's\n\nInsight Summary",
+      "word_count": 77,
+      "avg_confidence": 77.08,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "I Gosu enhancements for Java\n\nWrite Gosu enhancements for Java types\n\nUseful when creating generic\nmethods that...\n\n* Do NOT relate to a specific entity\n« Extend the functionality of a base data type\nExamples:\n*« GWBaselntegerEnhancement enhances java.lang. Integer\n¢« GWBaseDateEnhancement enhances java.util.Date\n¢« GWBaseListEnhancement enhances java.util.List\nJava enhancements typically contain static functions\nDeploy and debug the same way as other enhancements",
+      "word_count": 63,
+      "avg_confidence": 87.56,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "I User Story: Enhance the ABPerson entity fa\n\n¢ For each person, if the Age is known,\nwe want to see how many years the\nperson has remaining until retirement\n\n¢ This value should be calculated from\nthe Age and be displayed as a read-\nonly field in the UI right under the Date\nof Birth field on the Person Info card",
+      "word_count": 62,
+      "avg_confidence": 92.82,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "I Demonstration G\n\nEnhance the ABPerson entity\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 93.51,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question G\n\n,~ — What type of logic does a getter implement? A setter? A method?\n\n4\n¢\n¢\n\nee",
+      "word_count": 20,
+      "avg_confidence": 80.05,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer Gi\n\n,~ — What type of logic does a getter implement? A setter? A method?\n\n¢\n¢\n¢\n\nThe correct responses are:\n\nGetter: Logic that returns a derived value and does not take parameters or change\nother data.\n\nSetter: Logic that takes a single input value and uses that to modify some other field or\nset of fields on the given object.\n\nMethod: Logic that requires parameters, changes data, or otherwise does more than\nsimply deriving or setting a value.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 83,
+      "avg_confidence": 92.57,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question G\n\n_~ — When you create a new enhancement, what code does Studio add for\n\nx you automatically?\n\n¢\n\nee",
+      "word_count": 21,
+      "avg_confidence": 85.35,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer Gi\n\n,~ — When you create a new enhancement, what code does Studio add for\n\nx you automatically?\n\n¢\n\nThe correct response is:\n\nStudio automatically creates the package statement and the enhancement declaration\nstatement and the type reference.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 41,
+      "avg_confidence": 90.05,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\n,~ — Foran enhancement on the ABContact entity, what code would you write\nx to reference the given ABContact's AssignedUser field?\n\nee",
+      "word_count": 24,
+      "avg_confidence": 84.46,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer Gi\n\n,~ — Foran enhancement on the ABContact entity, what code would you write\nx to reference the given ABContact's AssignedUser field?\n\nThe correct response is: this.AssignedUser\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 30,
+      "avg_confidence": 86.6,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question G\n\n,~ — Howdo you create an enhancement method that returns no value?\n\n4\n¢\n¢\n\nee",
+      "word_count": 18,
+      "avg_confidence": 78.1,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer Gi\n\n,~ — Howdo you create an enhancement method that returns no value?\n\n¢\n¢\n¢\n\nThe correct response is:\nYou would create the method and optionally specify a return type of void.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 36,
+      "avg_confidence": 87.97,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question G\n\n,~ — Howdo you reference enhancement properties and methods?\n\n4\n¢\n¢\n\nee",
+      "word_count": 15,
+      "avg_confidence": 74.65,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer Gi\n\n,~ — Howdo you reference enhancement properties and methods?\n¢\n\n¢\n¢\n\nThe correct response is:\n\nYou reference enhancement properties and methods using the same syntax as base\napplication entity properties and methods: object.propertyOrMethodName\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 38,
+      "avg_confidence": 88.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Describe the purpose and functionality of\n\nGosu enhancements\n\n* Create entity enhancements\n\nReference entity enhancement properties and\nmethods\n\nCreate Gosu enhancements for Java classes\nand interfaces",
+      "word_count": 30,
+      "avg_confidence": 91.23,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "I Student exercise\n\nEnhancements",
+      "word_count": 4,
+      "avg_confidence": 82.6,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    }
+  ]
+}

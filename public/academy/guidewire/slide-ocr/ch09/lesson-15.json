@@ -1,0 +1,522 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-15",
+    "slide_count": 46,
+    "slides_with_text": 42,
+    "total_words": 2126,
+    "avg_confidence": 85.52,
+    "processing_time_seconds": 15.81,
+    "extracted_at": "2026-02-15T18:18:27.889840"
+  },
+  "full_text": "Configuring Permissions\n\nLesson\nobjectives\n\n* Create system permissions\n\n¢ Write Gosu expressions that evaluate user\npermissions\n\n¢ Use application permission keys\n\nPermissions, Roles, and Access Control\nLists\n\n| Permissions\n\n¢ Apermission allows a user to do one of the following:\n* View or navigate to an object\n* Create, edit, or delete an object\n* Own an object\n* Act on an object\n\n¢ For purposes of permissions, “an object’ is either:\n« A database object such as a claim or an activity, or\n« Auser interface (Ul) component such as a location or a button\n\n¢ Permissions are defined by the\nSystemPermissionType typelist\n\n* You can add custom permissions to this list\n\n¢ Are not assigned directly to users\n\nes\n\nView claims\n\nEdit claims\n\nOwn claims\n\nCo)\nI\n\nCreate claim\n\nFo\n\nPrint claims\n\n5e\n\nClose claims\n\n| Roles Gi\n\n¢ Are named collections of permissions that define a job’s tasks\n* Arole typically maps to a job title or function\n¢ Are assigned directly to individual users\n\nAx Ams\n\nIda Belt Andy Applegate Rick Ralston\n\n© @\ne Gm\n\nj aa\n\nAs Ans\n\nr\nPay Pay\n—S FA AK\n\n| Two ways of organizing tasks into roles Gi\n\nSuppose Adjusters have all the permissions of customer service representatives\n(CSR), as well as several more.\n\nSS OS\n\nCSOs\nSES BAR\n\nSS SS\nSs OS Os Qs\n\ne e ©\nCreate complete separate sets of Create roles with unique sets of\n\npermissions for each role permissions\n\nEach user has exactly one role Each user has as many roles as needed\n\n| Access control lists (ACLs)\n\n¢ Are lists associated with claims\n¢ Identify the users who may access the claim\n\n¢ Ensure that only users with a “need” can view or edit a claim\n\nShy < > a\nBes 0 Oe QO —s\nClaim Access\n\n# 100-00-100001 Control List\n\n| Permissions and ACLs Gi\n\nTo view a claim, a user must have the correct permissions AND be on the Access\nControl List for that claim.\n\ne . 2\naya A View Claim\n\nJason Tran\n\nXk,\n\no~—\nOa\n\nView Claim Claim # *00-50- 100801\n\n“e Applegate\nb4 '%)\nCe\n\nin a\n\n| Application permission keys (APKs) fa\n\n« An application permission key (APK) is a system-defined group of SS\none or more permissions plus additional logic SS\n\n* Groups permissions according to entities and business processes\n¢ Every APK is associated with a single entity Claim Edit\n* Cannot be created or modified\n¢ Appears in the files used to specify the user interface\n\nPage\n¥ Basic properties\ncanEdit false\n\ncanVisit perm.Claim.view(Claim)] and perm.System.viewworkplan\nid* ClaimWorkplan Claim View\n\ntitle* DisplayKey. get (\"Web.Claim.ClaimWorkplan\")\n\n| Static and object-based permissions\n\n¢ Static permissions are granted or\ndenied across the entire application\n\n* Object-based permissions are\ngranted or denied on a claim-by-claim\nbasis\n\n* These permissions are ACL related\n\n| Demonstration G\nPermission in the base application\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,~- — Whatis the difference between a static permission and an object-based\n\nPa permission?\n¢\n\nSS eee eee ee Soo e Sse\n\nGi\n\nAnswer\n\n,— — Whatis the difference between a static permission and an object-based\nPa permission?\n4\n\nThe correct answer is:\nAstatic permission is granted or revoked for the entire application.\n\nAn object-based permission is granted on a claim by claim (or exposure by exposure)\nbasis.\n\nSoe ee eon eee Soe e ese Ss\n\nGi\n\nQuestion\n\n,- — Whatis the difference between a permission and an application\n\nPa permission key (APK) containing only one permission?\n¢\n\nSS eee eee ee Soo e Sse\n\nAnswer Gi\n\n,— — Whatis the difference between a permission and an application\n\nPa permission key (APK) containing only one permission?\n¢\n\nPossible answers:\n* Apermission can be created by a Guidewire configurator, while an APK cannot.\n* Apermission can be added to a role, while an APK cannot.\n\n* Apermissions check using an APK will execute faster than a permissions check\nwhich directly references a permission.\n\nSoe ee eon eee Soe e ese Ss\n\nQuestion G\n\n_— — Whatis the difference between an APK with two permissions (such as\nPa “create note” and “edit note”) and a role with the same two pennissions?\n\nSS eee eee ee Soo e Sse\n\nAnswer Gi\n\n_— — Whatis the difference between an APK with two permissions (such as\n: “create note” and “edit note”) and a role with the same two pernissions?\n\n¢\n¢\n\nPossible answers:\n\nAn APK is created to optimize permissions checks. A role is created to assign\npermissions to users.\n\nDevelopers can create and modify roles. Developers cannot create or modify APKs.\n\nSoe ee eon eee Soe e ese Ss\n\nSecurity Dictionary\n\n| Review: Security dictionary fa\n\n* Series of HTML pages that document permissions and roles in your application\n¢ Four main sections\n¢ Application permission keys\n\n* Pages (in the user interface)\n+ System permissions Application Permission Keys\n\nPages Activity approve\n+ Roles System Permissions based)\n\nRoles > Description\n\nSummary\n\nRelated Permissions\n\na\nActiuity-appiove approve actapproveany\nActivity approveany Permission to approve any appro\n\nActivity assign even if the activity is assigned to\n\n| Security dictionary: APKs Gi\n\n¢ Lists all APKs\n¢ Displays permissions associated with each APK\n\nActivity assign AuthorityLimit create{(siaic)]\n\n> Description > Description\nRelated Permissions Related Permissions\n\nusergrantauth\nPermission to grant or change an authority limit for a user\n\nactraown\nPermission to reassign your own activities\n\nactraunown\nPermission to reassign activities owned by other users\n\n| Security dictionary: Pages fa\n\n¢ Lists all pages\n¢ Displays visit and edit permission expressions associated with each page\n\nAccountDetail\n\n> Description\n\nVisit Permission Expression:\nperm. System.accountmng\n\nEdit Permission Expression:\nperm.System.accountmng\n\n| Security dictionary: System permissions Gi\n\n¢ Lists all permissions\n\n¢ Displays roles, APKs, pages, and elements associated with each permission\n\nclaimown (static) - Own claim\n> Description\n\nRoles\n\nAdminData.Role.Name.Adjuster\nAdminData.Role.Description. Adjuster\n\nAdminData.Role.Name.Claims_Supervisor\nAdminData.Role.Description.Claims_Supervisor\n\nAdminData.Role.Name.Manager\nAdminData.Role.Description. Manager\n\nRelated Application Permission Keys\n\nClaim own\nPermission to own claims\n\nRelated Pages\n\nDesktopClaims via Claim own\n\nVacationClaims via Claim own\n\nRelated Elements\n\nInputSet visible attribute\nUserStatisticsDV (UserStatisticsDV.pcf)\n\n| Security dictionary: Roles Gi\n\n¢ Lists all roles\n¢ Displays permissions assigned to each role\n\nAdminData.Role.Name.Adjuster\n\n> Description\n\nPermissions\n\nabview\nPermission to view the details of contact entries in the address book\n\nabviewsearch\nPermission to search contact entries in the address book\n\nactcreate\nPermission to create new activities\n\nactcreateclsd\nPermission to create a new activity associated with a closed claim\n\nCreating the Security Dictionary at the command line\n\n1. Navigate to the ClaimCenter root directory\n2. Run the command gwb genDataDictionary\n\n* Creates the data dictionary at<ClaimCenter\nroot>/build/dictionary/security asa set of HTML files\n\n1H Administrator: C\\windows\\system32\\cmd.exe - gwb genDataDictionary oS\n\ndaemon will be stopped at the end of the build stopping after ¢\nparallel execution is an incubating feature.\n\n> Configur e pr oject\n\nBuild s an incubating feature.\n\n> Task :modules ‘on Figur: ‘ation: genEntitySources\nr module a on\"\nentities(s) 90 typelist(s)\n\n| Creating the Security Dictionary from the UI Gi\n\n1. Navigate to Administration > Utilities > Export Data\n\n2. Under Export Security Dictionary, select whether to export as HTML or XML\n3. Click Export\n\n* Creates the Security Dictionary as a downloadable ZIP file\n+ Useful when the user administrator changes roles\n\nExport Data\n\nExport Administrative Data Export Security Dictionary\n\nOutput Format © @ HTML XML Export\nData to Export\n\nAdmin\n\n| Demonstration G\nSecurity dictionary\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Ifyou need to know which roles include the claimown system\n\nPa permission, how would you go about this?\n¢\n\nSS eee eee ee Soo e Sse\n\nAnswer Gi\n\n_- — !fyou need to know which roles include the claimown system\nPa permission, how would you go about this?\n¢\nThe correct answer is on the System Permissions page of the security dictionary, look\n\nat the roles section of the claimown system permission.\n\nSoe ee eon eee Soe e ese Ss\n\nQuestion\n\n_- — Howcan you generate or update the security dictionary?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse\n\nAnswer Gi\n\n,— — How can you generate or update the security dictionary?\ny ¢\n“ The correct answers are using one of these two ways:\n1. Atthe command line, navigate to the ClaimCenter root directory and enter gwb\ngenDataDictionary. The security dictionary is generated along with the data\ndictionary.\n\n2. On the Export Data page of the Administration tab, you may choose to generate\nthe security dictionary either as HTML or as XML. In either case, the file is then\ndownloaded as a .ZIP.\n\nSoe ee eon eee Soe e ese Ss\n\nConfiguring Permissions\n\n| SystemPermissionType typelist\n\n* System permissions are defined in the\nSystemPermissionType typelist\n\n¢ Add typecodes to create new static\npermissions\n\n* You cannot create new object-based\npermissions\n\n[B systemPermissionType.ttx\n[iF vpecode ¥\nlement Code\n\ntypecods eventmessag..\ntypecods ownsensclaim\ntypecods ownsensclai..\ntypecodk viewsensdoc\ntypecodk editsensdoc\ntypecodk delsensdoc\ntypecod viewprivnete\ntypecodk editprivnote\ntypecods delprivmnote\ntypecodk viewsensnote\ntypecodk editsensnote\ntypecode delsensnote\ntypecod viewmednote\ntypecod editmednote\ntypecods delmednote\ntypecod viewSensSIU.\ntypecod editSensSiUd..\ntypecod viewSensMC..\ntypecodk editSensMC..\ntypecodk StorageUpda..\ntypecodk viewsubrodet.\ntypecod editsubrodet..\ntypecodk report user\n\ntypecodk editrefdata\ntypecod viewpolicysys.\ntypecodt riedit\ntypecod riview\nSite eae\n\nVsnowalv) of\n\nName\n\nView event\n(Own sensitiv.\n(Own sensitiv.\nView sensitiv.\n\nEdit sensitive. -\nDelete sensit. -\nView private. ~\nEdit private mn. -\nDelete privat. -\n\nView sensitiv.\n\nEdit sensitive. -\nDelete sensit. -1\nView medica. -\n\nEdit medical\n\nDelete medi... -\nView sensitiv. -\nEdit sensitive.\nView sensitiv.\nEdit sensitive. -\n\nEdit claim st.\nView Subrog..\n\nEdit Subroga..-\n\nShow reports\n\n- Show repors.\n\nView referen\nEdit referenc..\n\nView policys. -\nEdit Rltransa.\nView Rltrans. -\n\nVerity tots\n\nPrior\n\nPER eee R Ae OA eee eee eee eee\n\nGi\n\n| Adding a permission to a role\n\nNavigate to Administration >\nUsers & Security > Roles\n\nClick Edit\nClick Add\n\nIn the Permission field of the new\nrecord, select the permission from the\nmenu\n\nGi\n\nActivity Rules Admin\n\nBasics\n\nRole\nName\n\nDescription\n\nUsers\n\n‘<none>\n‘Add Data Change\n\nAdminister integration\nAdminister rules\n\nAllinteral tools\n\nAlways access debug tools\nApprove any approval activity\nApprove Exposure Rule\nApprove Reserve Rule\n\nApprove Rule\n\nArchive objects\n\nAssign activity from queue\nChange Contact Subtype\n\nClose claims\n\nClose exposures\n\nClose matters\n\nCreate activities\n\nCreate activities on closed claim\n\nCreate activity pattern\nCreate address book contacts x\n\n“<none> 5\n\n| Adding permissions to the Ul Gi\n\n¢ Select the PCF file (or component of a PCF file, such as a toolbar) where the\npermission is to be applied\n\n¢ Inthe appropriate property (such as canEdit, canVisit, visible, etc.) enter\nperm. System. permissionName\n\n¢ Returns true if the user has the listed permission\n\nPage\n¥ Basic properties\ncanEdit false\n\ncanVisit perm.Claim.view(Claim) and|perm.System.viewworkplan\n\nAdding APKs to the UI Gi\n\n¢ Select the PCF file (or component of a PCF file, such as a toolbar) where\nthe permission is to be applied\n¢ Inthe appropriate property (such as canEdit, canVisit, etc.) enter\nperm. entity. appKey fora static key\n« Returns true if current user has a permission in the given key\nperm. entity. appKey(object) for an object-based key\n* Object must be an instance of entity\n« Returns true if current user has a permission in the given key on the named object\nPage\n¥ Basic properties\n\ncanEdit false\n\ncanVisit perm.Claim.view(Claim)] and perm.System.viewworkplan i\n\n| Demonstration G\nConfiguring permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Given the perm condition perm. System. applyCheck, is applycheck a\nPa system permission or an APK?\n¢\n\nSS eee eee ee Soo e Sse\n\nGi\n\nAnswer Gi\n\n,- — Given the perm condition perm. System. applyCheck, is applycheck a\nPa system permission or an APK?\n¢\nThe correct answer is it is a system permission. If it were an APK, it would have the\nentity listed at the beginning of its name.\n\nSoe ee eon eee Soe e ese Ss\n\nQuestion\n\n_— — Given the perm condition perm. System. applyCheck, is applycheck\nPa static or object-based?\n\nSS eee eee ee Soo e Sse\n\nGi\n\nAnswer\n\n,- — Given the perm condition perm. System. applyCheck, is applycheck\nPa static or object-based?\n\nThe correct answer is Static. If it were object-based, it would have an (object)\nargument.\n\nSoe ee eon eee Soe e ese Ss\n\nGi\n\nLesson\nobjectives * Create system permissions\n\nreview ¢ Write Gosu expressions that evaluate user\npermissions\n¢ Use application permission keys\n\n| Student exercise\n\nRestrict moving metro reports",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring Permissions",
+      "word_count": 2,
+      "avg_confidence": 95.33,
+      "image_size": {
+        "width": 1280,
+        "height": 543
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n* Create system permissions\n\n¢ Write Gosu expressions that evaluate user\npermissions\n\n¢ Use application permission keys",
+      "word_count": 19,
+      "avg_confidence": 86.68,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Permissions, Roles, and Access Control\nLists",
+      "word_count": 6,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Permissions\n\n¢ Apermission allows a user to do one of the following:\n* View or navigate to an object\n* Create, edit, or delete an object\n* Own an object\n* Act on an object\n\n¢ For purposes of permissions, “an object’ is either:\n« A database object such as a claim or an activity, or\n« Auser interface (Ul) component such as a location or a button\n\n¢ Permissions are defined by the\nSystemPermissionType typelist\n\n* You can add custom permissions to this list\n\n¢ Are not assigned directly to users\n\nes\n\nView claims\n\nEdit claims\n\nOwn claims\n\nCo)\nI\n\nCreate claim\n\nFo\n\nPrint claims\n\n5e\n\nClose claims",
+      "word_count": 110,
+      "avg_confidence": 86.1,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Roles Gi\n\n¢ Are named collections of permissions that define a job’s tasks\n* Arole typically maps to a job title or function\n¢ Are assigned directly to individual users\n\nAx Ams\n\nIda Belt Andy Applegate Rick Ralston\n\n© @\ne Gm\n\nj aa\n\nAs Ans\n\nr\nPay Pay\n—S FA AK",
+      "word_count": 53,
+      "avg_confidence": 76.68,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Two ways of organizing tasks into roles Gi\n\nSuppose Adjusters have all the permissions of customer service representatives\n(CSR), as well as several more.\n\nSS OS\n\nCSOs\nSES BAR\n\nSS SS\nSs OS Os Qs\n\ne e ©\nCreate complete separate sets of Create roles with unique sets of\n\npermissions for each role permissions\n\nEach user has exactly one role Each user has as many roles as needed",
+      "word_count": 69,
+      "avg_confidence": 86.13,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Access control lists (ACLs)\n\n¢ Are lists associated with claims\n¢ Identify the users who may access the claim\n\n¢ Ensure that only users with a “need” can view or edit a claim\n\nShy < > a\nBes 0 Oe QO —s\nClaim Access\n\n# 100-00-100001 Control List",
+      "word_count": 49,
+      "avg_confidence": 83.52,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Permissions and ACLs Gi\n\nTo view a claim, a user must have the correct permissions AND be on the Access\nControl List for that claim.\n\ne . 2\naya A View Claim\n\nJason Tran\n\nXk,\n\no~—\nOa\n\nView Claim Claim # *00-50- 100801\n\n“e Applegate\nb4 '%)\nCe\n\nin a",
+      "word_count": 51,
+      "avg_confidence": 75.2,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Application permission keys (APKs) fa\n\n« An application permission key (APK) is a system-defined group of SS\none or more permissions plus additional logic SS\n\n* Groups permissions according to entities and business processes\n¢ Every APK is associated with a single entity Claim Edit\n* Cannot be created or modified\n¢ Appears in the files used to specify the user interface\n\nPage\n¥ Basic properties\ncanEdit false\n\ncanVisit perm.Claim.view(Claim)] and perm.System.viewworkplan\nid* ClaimWorkplan Claim View\n\ntitle* DisplayKey. get (\"Web.Claim.ClaimWorkplan\")",
+      "word_count": 81,
+      "avg_confidence": 85.53,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Static and object-based permissions\n\n¢ Static permissions are granted or\ndenied across the entire application\n\n* Object-based permissions are\ngranted or denied on a claim-by-claim\nbasis\n\n* These permissions are ACL related",
+      "word_count": 33,
+      "avg_confidence": 91.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Demonstration G\nPermission in the base application\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.47,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Question\n\n,~- — Whatis the difference between a static permission and an object-based\n\nPa permission?\n¢\n\nSS eee eee ee Soo e Sse\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 72.57,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Answer\n\n,— — Whatis the difference between a static permission and an object-based\nPa permission?\n4\n\nThe correct answer is:\nAstatic permission is granted or revoked for the entire application.\n\nAn object-based permission is granted on a claim by claim (or exposure by exposure)\nbasis.\n\nSoe ee eon eee Soe e ese Ss\n\nGi",
+      "word_count": 54,
+      "avg_confidence": 87.35,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question\n\n,- — Whatis the difference between a permission and an application\n\nPa permission key (APK) containing only one permission?\n¢\n\nSS eee eee ee Soo e Sse",
+      "word_count": 28,
+      "avg_confidence": 76.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer Gi\n\n,— — Whatis the difference between a permission and an application\n\nPa permission key (APK) containing only one permission?\n¢\n\nPossible answers:\n* Apermission can be created by a Guidewire configurator, while an APK cannot.\n* Apermission can be added to a role, while an APK cannot.\n\n* Apermissions check using an APK will execute faster than a permissions check\nwhich directly references a permission.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 75,
+      "avg_confidence": 87.51,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Question G\n\n_— — Whatis the difference between an APK with two permissions (such as\nPa “create note” and “edit note”) and a role with the same two pennissions?\n\nSS eee eee ee Soo e Sse",
+      "word_count": 36,
+      "avg_confidence": 79.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Answer Gi\n\n_— — Whatis the difference between an APK with two permissions (such as\n: “create note” and “edit note”) and a role with the same two pernissions?\n\n¢\n¢\n\nPossible answers:\n\nAn APK is created to optimize permissions checks. A role is created to assign\npermissions to users.\n\nDevelopers can create and modify roles. Developers cannot create or modify APKs.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 70,
+      "avg_confidence": 87.77,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Security Dictionary",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Review: Security dictionary fa\n\n* Series of HTML pages that document permissions and roles in your application\n¢ Four main sections\n¢ Application permission keys\n\n* Pages (in the user interface)\n+ System permissions Application Permission Keys\n\nPages Activity approve\n+ Roles System Permissions based)\n\nRoles > Description\n\nSummary\n\nRelated Permissions\n\na\nActiuity-appiove approve actapproveany\nActivity approveany Permission to approve any appro\n\nActivity assign even if the activity is assigned to",
+      "word_count": 72,
+      "avg_confidence": 88.95,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Security dictionary: APKs Gi\n\n¢ Lists all APKs\n¢ Displays permissions associated with each APK\n\nActivity assign AuthorityLimit create{(siaic)]\n\n> Description > Description\nRelated Permissions Related Permissions\n\nusergrantauth\nPermission to grant or change an authority limit for a user\n\nactraown\nPermission to reassign your own activities\n\nactraunown\nPermission to reassign activities owned by other users",
+      "word_count": 56,
+      "avg_confidence": 89.98,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Security dictionary: Pages fa\n\n¢ Lists all pages\n¢ Displays visit and edit permission expressions associated with each page\n\nAccountDetail\n\n> Description\n\nVisit Permission Expression:\nperm. System.accountmng\n\nEdit Permission Expression:\nperm.System.accountmng",
+      "word_count": 32,
+      "avg_confidence": 90.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Security dictionary: System permissions Gi\n\n¢ Lists all permissions\n\n¢ Displays roles, APKs, pages, and elements associated with each permission\n\nclaimown (static) - Own claim\n> Description\n\nRoles\n\nAdminData.Role.Name.Adjuster\nAdminData.Role.Description. Adjuster\n\nAdminData.Role.Name.Claims_Supervisor\nAdminData.Role.Description.Claims_Supervisor\n\nAdminData.Role.Name.Manager\nAdminData.Role.Description. Manager\n\nRelated Application Permission Keys\n\nClaim own\nPermission to own claims\n\nRelated Pages\n\nDesktopClaims via Claim own\n\nVacationClaims via Claim own\n\nRelated Elements\n\nInputSet visible attribute\nUserStatisticsDV (UserStatisticsDV.pcf)",
+      "word_count": 64,
+      "avg_confidence": 91.34,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Security dictionary: Roles Gi\n\n¢ Lists all roles\n¢ Displays permissions assigned to each role\n\nAdminData.Role.Name.Adjuster\n\n> Description\n\nPermissions\n\nabview\nPermission to view the details of contact entries in the address book\n\nabviewsearch\nPermission to search contact entries in the address book\n\nactcreate\nPermission to create new activities\n\nactcreateclsd\nPermission to create a new activity associated with a closed claim",
+      "word_count": 61,
+      "avg_confidence": 92.74,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Creating the Security Dictionary at the command line\n\n1. Navigate to the ClaimCenter root directory\n2. Run the command gwb genDataDictionary\n\n* Creates the data dictionary at<ClaimCenter\nroot>/build/dictionary/security asa set of HTML files\n\n1H Administrator: C\\windows\\system32\\cmd.exe - gwb genDataDictionary oS\n\ndaemon will be stopped at the end of the build stopping after ¢\nparallel execution is an incubating feature.\n\n> Configur e pr oject\n\nBuild s an incubating feature.\n\n> Task :modules ‘on Figur: ‘ation: genEntitySources\nr module a on\"\nentities(s) 90 typelist(s)",
+      "word_count": 83,
+      "avg_confidence": 79.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Creating the Security Dictionary from the UI Gi\n\n1. Navigate to Administration > Utilities > Export Data\n\n2. Under Export Security Dictionary, select whether to export as HTML or XML\n3. Click Export\n\n* Creates the Security Dictionary as a downloadable ZIP file\n+ Useful when the user administrator changes roles\n\nExport Data\n\nExport Administrative Data Export Security Dictionary\n\nOutput Format © @ HTML XML Export\nData to Export\n\nAdmin",
+      "word_count": 71,
+      "avg_confidence": 91.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Demonstration G\nSecurity dictionary\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.46,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Question\n\n_- — Ifyou need to know which roles include the claimown system\n\nPa permission, how would you go about this?\n¢\n\nSS eee eee ee Soo e Sse",
+      "word_count": 29,
+      "avg_confidence": 74.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Answer Gi\n\n_- — !fyou need to know which roles include the claimown system\nPa permission, how would you go about this?\n¢\nThe correct answer is on the System Permissions page of the security dictionary, look\n\nat the roles section of the claimown system permission.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 54,
+      "avg_confidence": 84.73,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Question\n\n_- — Howcan you generate or update the security dictionary?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse",
+      "word_count": 21,
+      "avg_confidence": 71.78,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Answer Gi\n\n,— — How can you generate or update the security dictionary?\ny ¢\n“ The correct answers are using one of these two ways:\n1. Atthe command line, navigate to the ClaimCenter root directory and enter gwb\ngenDataDictionary. The security dictionary is generated along with the data\ndictionary.\n\n2. On the Export Data page of the Administration tab, you may choose to generate\nthe security dictionary either as HTML or as XML. In either case, the file is then\ndownloaded as a .ZIP.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 93,
+      "avg_confidence": 89.79,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Configuring Permissions",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "| SystemPermissionType typelist\n\n* System permissions are defined in the\nSystemPermissionType typelist\n\n¢ Add typecodes to create new static\npermissions\n\n* You cannot create new object-based\npermissions\n\n[B systemPermissionType.ttx\n[iF vpecode ¥\nlement Code\n\ntypecods eventmessag..\ntypecods ownsensclaim\ntypecods ownsensclai..\ntypecodk viewsensdoc\ntypecodk editsensdoc\ntypecodk delsensdoc\ntypecod viewprivnete\ntypecodk editprivnote\ntypecods delprivmnote\ntypecodk viewsensnote\ntypecodk editsensnote\ntypecode delsensnote\ntypecod viewmednote\ntypecod editmednote\ntypecods delmednote\ntypecod viewSensSIU.\ntypecod editSensSiUd..\ntypecod viewSensMC..\ntypecodk editSensMC..\ntypecodk StorageUpda..\ntypecodk viewsubrodet.\ntypecod editsubrodet..\ntypecodk report user\n\ntypecodk editrefdata\ntypecod viewpolicysys.\ntypecodt riedit\ntypecod riview\nSite eae\n\nVsnowalv) of\n\nName\n\nView event\n(Own sensitiv.\n(Own sensitiv.\nView sensitiv.\n\nEdit sensitive. -\nDelete sensit. -\nView private. ~\nEdit private mn. -\nDelete privat. -\n\nView sensitiv.\n\nEdit sensitive. -\nDelete sensit. -1\nView medica. -\n\nEdit medical\n\nDelete medi... -\nView sensitiv. -\nEdit sensitive.\nView sensitiv.\nEdit sensitive. -\n\nEdit claim st.\nView Subrog..\n\nEdit Subroga..-\n\nShow reports\n\n- Show repors.\n\nView referen\nEdit referenc..\n\nView policys. -\nEdit Rltransa.\nView Rltrans. -\n\nVerity tots\n\nPrior\n\nPER eee R Ae OA eee eee eee eee\n\nGi",
+      "word_count": 181,
+      "avg_confidence": 58.83,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Adding a permission to a role\n\nNavigate to Administration >\nUsers & Security > Roles\n\nClick Edit\nClick Add\n\nIn the Permission field of the new\nrecord, select the permission from the\nmenu\n\nGi\n\nActivity Rules Admin\n\nBasics\n\nRole\nName\n\nDescription\n\nUsers\n\n‘<none>\n‘Add Data Change\n\nAdminister integration\nAdminister rules\n\nAllinteral tools\n\nAlways access debug tools\nApprove any approval activity\nApprove Exposure Rule\nApprove Reserve Rule\n\nApprove Rule\n\nArchive objects\n\nAssign activity from queue\nChange Contact Subtype\n\nClose claims\n\nClose exposures\n\nClose matters\n\nCreate activities\n\nCreate activities on closed claim\n\nCreate activity pattern\nCreate address book contacts x\n\n“<none> 5",
+      "word_count": 101,
+      "avg_confidence": 91.68,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "| Adding permissions to the Ul Gi\n\n¢ Select the PCF file (or component of a PCF file, such as a toolbar) where the\npermission is to be applied\n\n¢ Inthe appropriate property (such as canEdit, canVisit, visible, etc.) enter\nperm. System. permissionName\n\n¢ Returns true if the user has the listed permission\n\nPage\n¥ Basic properties\ncanEdit false\n\ncanVisit perm.Claim.view(Claim) and|perm.System.viewworkplan",
+      "word_count": 62,
+      "avg_confidence": 85.85,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Adding APKs to the UI Gi\n\n¢ Select the PCF file (or component of a PCF file, such as a toolbar) where\nthe permission is to be applied\n¢ Inthe appropriate property (such as canEdit, canVisit, etc.) enter\nperm. entity. appKey fora static key\n« Returns true if current user has a permission in the given key\nperm. entity. appKey(object) for an object-based key\n* Object must be an instance of entity\n« Returns true if current user has a permission in the given key on the named object\nPage\n¥ Basic properties\n\ncanEdit false\n\ncanVisit perm.Claim.view(Claim)] and perm.System.viewworkplan i",
+      "word_count": 100,
+      "avg_confidence": 87.66,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "| Demonstration G\nConfiguring permissions\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.49,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Question\n\n_- — Given the perm condition perm. System. applyCheck, is applycheck a\nPa system permission or an APK?\n¢\n\nSS eee eee ee Soo e Sse\n\nGi",
+      "word_count": 28,
+      "avg_confidence": 68.15,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Answer Gi\n\n,- — Given the perm condition perm. System. applyCheck, is applycheck a\nPa system permission or an APK?\n¢\nThe correct answer is it is a system permission. If it were an APK, it would have the\nentity listed at the beginning of its name.\n\nSoe ee eon eee Soe e ese Ss",
+      "word_count": 55,
+      "avg_confidence": 83.72,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Question\n\n_— — Given the perm condition perm. System. applyCheck, is applycheck\nPa static or object-based?\n\nSS eee eee ee Soo e Sse\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 65.09,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "Answer\n\n,- — Given the perm condition perm. System. applyCheck, is applycheck\nPa static or object-based?\n\nThe correct answer is Static. If it were object-based, it would have an (object)\nargument.\n\nSoe ee eon eee Soe e ese Ss\n\nGi",
+      "word_count": 40,
+      "avg_confidence": 81.54,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "Lesson\nobjectives * Create system permissions\n\nreview ¢ Write Gosu expressions that evaluate user\npermissions\n¢ Use application permission keys",
+      "word_count": 20,
+      "avg_confidence": 87.1,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-46.png",
+      "slide_number": 46,
+      "text": "| Student exercise\n\nRestrict moving metro reports",
+      "word_count": 7,
+      "avg_confidence": 95.88,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "lesson": "lesson-11",
+    "slide_count": 25,
+    "slides_with_text": 21,
+    "total_words": 796,
+    "avg_confidence": 85.6,
+    "processing_time_seconds": 8.63,
+    "extracted_at": "2026-02-13T12:23:48.363813"
+  },
+  "full_text": "Creating Activities\n\nLesson\nobjectives\n\n¢ Create and configure activity patterns\n* Create and configure activities\n\nActivity overview\n\n| Activity\n\n¢ An activity represents a task that someone\nmust attend to or an issue that someone should\nbe aware of\n\n¢ Used to:\n* Let automatic processes assign work to user\n¢ Let a user assign work to another user\n\n¢ Alert user to certain event, such as an underwriting\nissue\n\na Ss\n\n| Activity parent objects G\n\n¢ Every activity is associated with an account\n\n* Can also be associated with a job (and its subtypes) or a policy, which implicitly\nlinks it to their account, which implicitly links it to their account\n\nlm Account [a a\nve GS Co) Policy\n\ni When are activities created? Gi\n\na,\n« Automatically during policy job ooe %\nly IQ policy J > GS\n* Typically created when work must be done —_ review\nby a user to move the job forward submission submission\n\n¢ Automatically by & Sis a\n»,\n+ Business rule Te) oS\n\n* Gosu code Business rule, review\nworkflow, or overdue activity\n+ Workflow Gosu code\n\n¢ Manually by end user @ wr\ney e \\4\n\n* Typically done to request work to be done User review\nby another user producer\n\ni Demonstration G\n\nActivity overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nActivity pattern\n\n| Activity patterns G\n\n¢ Activity patterns are templates that standardize how activities are generated\n\n¢ Both the user interface and Gosu code create activities based on these patterns\n\nActivity pattern Activity\n\nea,\nSubject = Rate Policy Subject: Rate Policy\nPriority = medium Priority: medium\nDue Days = 5 Due Date: May 12\n\nEscalation Days = 10 Escalation Date: May 17\n\ni Managing activity patterns G&G\n\n¢ Activity patterns are typically created and modified by administrators\n¢ Administration tab > Business Settings > Activity Patterns\n¢ To create a new activity pattern, click the New Activity Pattern button\n\n* Code field is a unique internal name for the pattern and is used to reference an activity pattern\nin Gosu\n\n¢ To edit an existing activity pattern, click the name of the activity pattern in the list\n\n* Changes to an activity pattern affect only activities from that point forward\n\ni Demonstration G\n\nActivity pattern\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\ni Using activity patterns in Gosu G&G\n\n¢ There are two operations that you can perform in Gosu involving activity patterns\n\n* One is to test which activity pattern an existing activity uses\n+ Entity.ActivityPattern.Code == “pattern_code”\n\n* The other is to retrieve an activity pattern for use in creating a new activity\n* ActivityPattern.finder.getActivityPatternByCode( “pattern_code” )\n\n« Returns an ActivityPattern object\n\n¢ Use the activity pattern code to refer to an activity pattern in Gosu code\n\n* Do not use a pattern ID or PublicID value\n\ni Create activity related to an account Gi\n\n* Gosu code\n\nactivityPattern.createAccountActivity(bundle, activityPattern, Account, subject, description,\napprovallssue, priority, mandatory, targetDate, escalationDat¢\nor\n\naccount.newActivity(activityPattern)\n\n* Example\n\nvar anAccount : Account\nvar anActivityPattern : ActivityPattern\n\nanActivityPattern = ActivityPattern.finder.getActivityPatternByCode (\"notification\")\nanAccount.newActivity (anActivityPattern)\n\ni Create activity related to a policy Gi\n\n* Gosu code\n\nactivityPattern.createPolicyActivity(bundle, policy, subject, description, approvallssue,\npriority, mandatory, targetDate, escalationDat¢\n\n. Example if (policy != null) {\nvar a: Activity\nvar pattern = ActivityPattern. finder.getActivityPatternByCode (\"coverage\")\n@ = pattern.createPolicyActivity(\npolicy.Bundle,\npolicy,\n\"Verify coverage\",\n\"Call customer to verify coverage\",\nnull,\ntypekey.Priority.TC_NORMAL,\nfalse,\nnull,\nnull)\n\n¢ By default, an activity is always related to an account\n\ni Create activity related to a job\n\n* Gosu code\n\nactivityPattern.createJobActivity(bundle, job, subject, description, approvallssue,\npriority, mandatory, targetDate, escalationDat¢\n\n« Example\n\nif (policyPeriod != null) {\nvar a : Activity\nvar pattern = ActivityPattern. finder. getActivityPatternByCode (\"coverage\")\na = pattern. createdobActivity (policyPeriod.Job.Bundle, policyPeriod.Job, null, null, null, null, null, null, null)\n}\n\n¢ By default, an activity is always related to an account\n\nQuestion G\n\n,~ — Whatare the three possible parent objects for an Activity?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\nae What are the three possible parent objects for an Activity?\n4\n¢\n\nAccount, Job (and its subtypes), Policy.\n\nSS Se ee eee eo\n\nQuestion G\n\nae What field is a unique internal name for an activity pattern?\n4\n¢\n\nSS oe ee oe oe oo\n\nAnswer G\n\nae What field is a unique internal name for an activity pattern?\n4\n¢\n\nCode\n\nSS Se ee eee eo\n\nLesson\nobjectives ¢ Create and configure activity patterns\nreview * Create and configure activities\n\ni Student exercise\n\nCreating Activities",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Creating Activities",
+      "word_count": 2,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Create and configure activity patterns\n* Create and configure activities",
+      "word_count": 13,
+      "avg_confidence": 84.69,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Activity overview",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Activity\n\n¢ An activity represents a task that someone\nmust attend to or an issue that someone should\nbe aware of\n\n¢ Used to:\n* Let automatic processes assign work to user\n¢ Let a user assign work to another user\n\n¢ Alert user to certain event, such as an underwriting\nissue\n\na Ss",
+      "word_count": 55,
+      "avg_confidence": 83.93,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Activity parent objects G\n\n¢ Every activity is associated with an account\n\n* Can also be associated with a job (and its subtypes) or a policy, which implicitly\nlinks it to their account, which implicitly links it to their account\n\nlm Account [a a\nve GS Co) Policy",
+      "word_count": 49,
+      "avg_confidence": 86.04,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i When are activities created? Gi\n\na,\n« Automatically during policy job ooe %\nly IQ policy J > GS\n* Typically created when work must be done —_ review\nby a user to move the job forward submission submission\n\n¢ Automatically by & Sis a\n»,\n+ Business rule Te) oS\n\n* Gosu code Business rule, review\nworkflow, or overdue activity\n+ Workflow Gosu code\n\n¢ Manually by end user @ wr\ney e \\4\n\n* Typically done to request work to be done User review\nby another user producer",
+      "word_count": 91,
+      "avg_confidence": 79.35,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Demonstration G\n\nActivity overview\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Activity pattern",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Activity patterns G\n\n¢ Activity patterns are templates that standardize how activities are generated\n\n¢ Both the user interface and Gosu code create activities based on these patterns\n\nActivity pattern Activity\n\nea,\nSubject = Rate Policy Subject: Rate Policy\nPriority = medium Priority: medium\nDue Days = 5 Due Date: May 12\n\nEscalation Days = 10 Escalation Date: May 17",
+      "word_count": 61,
+      "avg_confidence": 91.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Managing activity patterns G&G\n\n¢ Activity patterns are typically created and modified by administrators\n¢ Administration tab > Business Settings > Activity Patterns\n¢ To create a new activity pattern, click the New Activity Pattern button\n\n* Code field is a unique internal name for the pattern and is used to reference an activity pattern\nin Gosu\n\n¢ To edit an existing activity pattern, click the name of the activity pattern in the list\n\n* Changes to an activity pattern affect only activities from that point forward",
+      "word_count": 88,
+      "avg_confidence": 90.55,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i Demonstration G\n\nActivity pattern\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 93.74,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Using activity patterns in Gosu G&G\n\n¢ There are two operations that you can perform in Gosu involving activity patterns\n\n* One is to test which activity pattern an existing activity uses\n+ Entity.ActivityPattern.Code == “pattern_code”\n\n* The other is to retrieve an activity pattern for use in creating a new activity\n* ActivityPattern.finder.getActivityPatternByCode( “pattern_code” )\n\n« Returns an ActivityPattern object\n\n¢ Use the activity pattern code to refer to an activity pattern in Gosu code\n\n* Do not use a pattern ID or PublicID value",
+      "word_count": 87,
+      "avg_confidence": 88.55,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Create activity related to an account Gi\n\n* Gosu code\n\nactivityPattern.createAccountActivity(bundle, activityPattern, Account, subject, description,\napprovallssue, priority, mandatory, targetDate, escalationDat¢\nor\n\naccount.newActivity(activityPattern)\n\n* Example\n\nvar anAccount : Account\nvar anActivityPattern : ActivityPattern\n\nanActivityPattern = ActivityPattern.finder.getActivityPatternByCode (\"notification\")\nanAccount.newActivity (anActivityPattern)",
+      "word_count": 39,
+      "avg_confidence": 85.26,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "i Create activity related to a policy Gi\n\n* Gosu code\n\nactivityPattern.createPolicyActivity(bundle, policy, subject, description, approvallssue,\npriority, mandatory, targetDate, escalationDat¢\n\n. Example if (policy != null) {\nvar a: Activity\nvar pattern = ActivityPattern. finder.getActivityPatternByCode (\"coverage\")\n@ = pattern.createPolicyActivity(\npolicy.Bundle,\npolicy,\n\"Verify coverage\",\n\"Call customer to verify coverage\",\nnull,\ntypekey.Priority.TC_NORMAL,\nfalse,\nnull,\nnull)\n\n¢ By default, an activity is always related to an account",
+      "word_count": 64,
+      "avg_confidence": 86.52,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "i Create activity related to a job\n\n* Gosu code\n\nactivityPattern.createJobActivity(bundle, job, subject, description, approvallssue,\npriority, mandatory, targetDate, escalationDat¢\n\n« Example\n\nif (policyPeriod != null) {\nvar a : Activity\nvar pattern = ActivityPattern. finder. getActivityPatternByCode (\"coverage\")\na = pattern. createdobActivity (policyPeriod.Job.Bundle, policyPeriod.Job, null, null, null, null, null, null, null)\n}\n\n¢ By default, an activity is always related to an account",
+      "word_count": 62,
+      "avg_confidence": 79.93,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question G\n\n,~ — Whatare the three possible parent objects for an Activity?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 22,
+      "avg_confidence": 65.46,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer G\n\nae What are the three possible parent objects for an Activity?\n4\n¢\n\nAccount, Job (and its subtypes), Policy.\n\nSS Se ee eee eo",
+      "word_count": 26,
+      "avg_confidence": 76.07,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question G\n\nae What field is a unique internal name for an activity pattern?\n4\n¢\n\nSS oe ee oe oe oo",
+      "word_count": 22,
+      "avg_confidence": 68.25,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer G\n\nae What field is a unique internal name for an activity pattern?\n4\n¢\n\nCode\n\nSS Se ee eee eo",
+      "word_count": 22,
+      "avg_confidence": 72.42,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Lesson\nobjectives ¢ Create and configure activity patterns\nreview * Create and configure activities",
+      "word_count": 14,
+      "avg_confidence": 89.36,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "i Student exercise\n\nCreating Activities",
+      "word_count": 5,
+      "avg_confidence": 85.0,
+      "image_size": {
+        "width": 1280,
+        "height": 672
+      }
+    }
+  ]
+}

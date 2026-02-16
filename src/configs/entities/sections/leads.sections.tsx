@@ -29,6 +29,7 @@ import {
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
+import { formatPhone } from '@/lib/formatters'
 import { ActivitiesSection } from '@/components/pcf/sections/ActivitiesSection'
 import { NotesSection } from '@/components/pcf/sections/NotesSection'
 import {
@@ -176,7 +177,7 @@ export function LeadOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
                     href={`tel:${lead.phone}`}
                     className="text-blue-600 hover:underline"
                   >
-                    {lead.phone}
+                    {formatPhone(lead.phone)}
                   </a>
                 </div>
               </div>

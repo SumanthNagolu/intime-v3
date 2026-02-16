@@ -28,6 +28,7 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { formatPhone } from '@/lib/formatters'
 import { format, formatDistanceToNow } from 'date-fns'
 import { ActivitiesSection } from '@/components/pcf/sections/ActivitiesSection'
 import { NotesSection } from '@/components/pcf/sections/NotesSection'
@@ -102,7 +103,7 @@ export function ProspectOverviewSectionPCF({ entityId: _entityId, entity }: PCFS
                     className="flex items-center gap-2 text-sm hover:text-hublot-900"
                   >
                     <Phone className="w-4 h-4" />
-                    {prospect.phone}
+                    {formatPhone(prospect.phone)}
                   </a>
                 </div>
               )}

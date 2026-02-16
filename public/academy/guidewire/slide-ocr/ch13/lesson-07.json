@@ -1,0 +1,181 @@
+{
+  "metadata": {
+    "chapter": "ch13",
+    "chapter_title": "Rating Introduction",
+    "lesson": "lesson-07",
+    "slide_count": 15,
+    "slides_with_text": 14,
+    "total_words": 483,
+    "avg_confidence": 85.37,
+    "processing_time_seconds": 4.56,
+    "extracted_at": "2026-02-15T18:24:27.674387"
+  },
+  "full_text": "Impact Testing\n\nLesson\nobjectives\n\n¢ Describe the impact testing process\n« Predict the impact of changes to a rate book\n\n| Purpose of impact testing Gi\n\nKalani\nRating Analyst\n\nWhat is impact testing and what is it\nused for in PolicyCenter?\n\nii i, Julia\nYou can use impact testing to Implementation a\nsee what effect changing the Architect\nrate book and rate routines\nhave on a policy premium for\n\na group of policies.\n\n!\n\n| Impact testing process fa\n\ntefreedss\nSelect policies from ImpactTestingPlugin.gs Create baseline\napplication DB periods\n\nI\nsO\n\nImpact results Select rate books\n\n| Policy selection for impact testing Gi\n\naN\n\n¢ Before impact testing, consider what\npolicies are included in the run\n\n¢ Impact testing can take a significant\namount of time\n\n* Depends on the number of policies\nand the underlying computer\nhardware\n\nBest Practice: Run impact testing on a\n\nrepresentative sample of policies\n\n| Demonstration G\n\nImpact Testing\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Rating renewals as renewal transactions i\n\n¢ Inthe base configuration:\n\n« Renewals are not included in impact\ntesting\n\n« Rates baseline and test policy periods as\nsubmission jobs\n\n* Impact testing can be configured to\nrate as a renewal instead of\nsubmission\n\n| Additional configuration options Gi\n\n¢ Write your own implementation of the\n0 A impact testing plugin interface\n* Customize how impact testing\ncreates test periods\n« Example: You may want to create test\n\nperiods in another way (that is, copying\nsubmissions or spinning off policies)\n\n* Select alternate rate books in impact\ntesting\n\n¢ Make these changes by writing your\nown implementation of the impact\ntesting plugin\n\n| Impact testing warnings and recommendations\n\nDesigned to work in a testing environment on a copy\nof production data\n\nAccessible only in development or test modes\nAffects system performance\n\nCreates test policy periods that are stored in the\ndatabase\n\nNot accessible in production mode\n\nRefer to the “Impact testing warnings and recommendations” article\n\nin the PolicyCenter Application Guide for more details\n\nGi\n\nQuestion\n\n_- — Whatis the purpose of impact testing?\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n_- — Whatis the purpose of impact testing?\n\n¢\noe To predict what will happen when a rate book changes.\n\nSS oe ooo ee oe oOoOe SoD\n\nQuestion\n\n,- — Can impact testing be run in a production environment?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD\n\nAnswer\n\n,- — Can impact testing be run in a production environment?\n\n¢\noe No. Impact testing is designed to be run in a test environment on a copy of the\n\nproduction data.\n\nSS oe ooo ee oe oOoOe SoD\n\nLesson\nobjectives ¢ Describe the impact testing process\n\nreview « Predict the impact of changes to a rate book",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Impact Testing",
+      "word_count": 2,
+      "avg_confidence": 94.75,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the impact testing process\n« Predict the impact of changes to a rate book",
+      "word_count": 18,
+      "avg_confidence": 87.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Purpose of impact testing Gi\n\nKalani\nRating Analyst\n\nWhat is impact testing and what is it\nused for in PolicyCenter?\n\nii i, Julia\nYou can use impact testing to Implementation a\nsee what effect changing the Architect\nrate book and rate routines\nhave on a policy premium for\n\na group of policies.\n\n!",
+      "word_count": 54,
+      "avg_confidence": 91.02,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Impact testing process fa\n\ntefreedss\nSelect policies from ImpactTestingPlugin.gs Create baseline\napplication DB periods\n\nI\nsO\n\nImpact results Select rate books",
+      "word_count": 22,
+      "avg_confidence": 87.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Policy selection for impact testing Gi\n\naN\n\n¢ Before impact testing, consider what\npolicies are included in the run\n\n¢ Impact testing can take a significant\namount of time\n\n* Depends on the number of policies\nand the underlying computer\nhardware\n\nBest Practice: Run impact testing on a\n\nrepresentative sample of policies",
+      "word_count": 53,
+      "avg_confidence": 89.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Demonstration G\n\nImpact Testing\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.34,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Rating renewals as renewal transactions i\n\n¢ Inthe base configuration:\n\n« Renewals are not included in impact\ntesting\n\n« Rates baseline and test policy periods as\nsubmission jobs\n\n* Impact testing can be configured to\nrate as a renewal instead of\nsubmission",
+      "word_count": 43,
+      "avg_confidence": 86.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Additional configuration options Gi\n\n¢ Write your own implementation of the\n0 A impact testing plugin interface\n* Customize how impact testing\ncreates test periods\n« Example: You may want to create test\n\nperiods in another way (that is, copying\nsubmissions or spinning off policies)\n\n* Select alternate rate books in impact\ntesting\n\n¢ Make these changes by writing your\nown implementation of the impact\ntesting plugin",
+      "word_count": 68,
+      "avg_confidence": 90.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Impact testing warnings and recommendations\n\nDesigned to work in a testing environment on a copy\nof production data\n\nAccessible only in development or test modes\nAffects system performance\n\nCreates test policy periods that are stored in the\ndatabase\n\nNot accessible in production mode\n\nRefer to the “Impact testing warnings and recommendations” article\n\nin the PolicyCenter Application Guide for more details\n\nGi",
+      "word_count": 62,
+      "avg_confidence": 94.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Question\n\n_- — Whatis the purpose of impact testing?\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 18,
+      "avg_confidence": 64.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Answer\n\n_- — Whatis the purpose of impact testing?\n\n¢\noe To predict what will happen when a rate book changes.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 28,
+      "avg_confidence": 76.15,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Question\n\n,- — Can impact testing be run in a production environment?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "word_count": 21,
+      "avg_confidence": 68.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Answer\n\n,- — Can impact testing be run in a production environment?\n\n¢\noe No. Impact testing is designed to be run in a test environment on a copy of the\n\nproduction data.\n\nSS oe ooo ee oe oOoOe SoD",
+      "word_count": 40,
+      "avg_confidence": 79.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Lesson\nobjectives ¢ Describe the impact testing process\n\nreview « Predict the impact of changes to a rate book",
+      "word_count": 19,
+      "avg_confidence": 88.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-31",
+    "slide_count": 21,
+    "slides_with_text": 21,
+    "total_words": 919,
+    "avg_confidence": 83.78,
+    "processing_time_seconds": 10.1,
+    "extracted_at": "2026-02-13T12:08:19.150695"
+  },
+  "full_text": "Introduction to Submission Intake\n\n\\\n\n5 ao — Moh. Py, Qo\n\n) Important note\n\nThis presentation is enhanced with audio. Adjust the volume on\nyour playback device before continuing.\n\nSubmission Intake streamlines\nsubmission creation in PolicyCenter\nby uploading a PDF file that contains\n\nOne or more ACORD forms for\ncreating submissions.\n\nDescribe the Submission Intake process\n\nUpload a PDF file with ACORD forms for a single or multiple lines\nView and review the uploaded ACORD forms\n\nCreate submissions from the uploaded ACORD forms\n\nExplain creation and data mapping of new lines for Submission Intake\n\nCreating submissions fromACORD forms Gi\nSucceed Insurance receives applications in PDF files\ncontaining the ACORD forms for insurance products.\n\nCan | upload the PDF files to PolicyCenter and create\n4 submissions automatically?\n\nAQF fos A tn ol dl,\n\nStandardized forms in the ACORD COMMERCIAL INSURANCE APPLICATION —\ninsurance industry —— APPLICANT FORMATION SECTION aoe\nEen Ee com cnc eurance Services Ine\nFor example, Peter, ae me\nBusiness Owners line: eae a\n*« ACORD 125\n* Commercial Insurance\nApplication Ee zene\n« ACORD 160 — z\n+ Business Owners Application p\n« ACORD 823\n\n+ Additional Premises\n\n\"POLICY INFORMATION\nproroeo er ont] monotone] —eunanan —] owwenTra [unoarnweat [are | —ooust | PRR, —rousvorem\n\n4012020 | 04/01/2021 X] peer [—] acency a ‘ 6\n\nThe Submission Intake ap y, Gi\nA cloud-based service and embeddable Jutro app\n* Integrates with AppReader to convert PDF documents into structured data\n\n* Embedded in PolicyCenter Cloud and requires Single Sign On\n* Can be embedded in the digital applications, for example Producer Engage\n\nEmbedded\n\n¢ > AppReader\n\nSubmission\nIntake\n\nPolicyCenter on\nGuidewire Cloud\n\n&;\n\nThe submission intake process y G\nf—-E—-@-f3\n\nUpload the ACORD View the uploaded Review the Create submissions\nforms in PDF format ACORD forms uploaded files\n\nrl Uploading the ACORD\n\nforms in PDF f\nthe ACORD forms in PDF format EV\n\nFrom the Uploaded ACORD Documents page on the Desktop\nFrom the Upload ACORD Documents tab on the New Submissions page\n\nDesktop |\n\n(@ Uploaded ACORD\n\nViewing the uploaded ACORD form\nr\\ g p oR\n\na a\n\nee\n\n¢ Filter the list of documents by entering text into the Search field\n\n« View the document's status and submission details\n\n* Open an uploaded document for review by clicking Review Needed or Review Started\n\n* Delete an uploaded document\n\nDesktop |¥ Account |¥ Policy |¥ Contact |¥ Search |» Team\n\nUploaded ACORD Documents\n\nDragand drop afileere\n\n© Upload file\nstatus ‘AccountNumber —AccountName Organization ProducerCode~\nFrickKS Paper... Anmstrongand... 501-002542\n\nSao\n\nLastUpdat.. Last Update. v\n\nuptest ‘siae)2022 .\n\nUp Test 16/2022 1\n\nrl Reviewing the uploaded A\\ RE) Mele\n\na a\n\nOn the ACORD Document [im\nReview screen, you can:\n\nMer 2\n\n« View the data in Submission\nIntake, side by side with the\nimage of the ACORD form\n\n« Review and fix any identified\nissues with the data\n\nCreating submissions\n\na a aa\n\nAfter you complete the\nreview, the Create\n\nSubmissions screen\nappears, where you can:\n* Confirm or select the agency,\n\naccount, and products for the\nsubmission\n\n* Submit the submission to\nPolicyCenter\n\nPC_INTRO_E160_Su jonintake_D1_SingleACORD\n\nBD summary\n\nBy recounts Location (2)\n\nEE by submissions\n\nBS by Renewals pace Ostia\n\n2 Otter Poy Hansactions B/AUOTT NEORUATION\n\nScATIONS,\n\nseme\n[ene\n\nSTICY NEORMATION\n\nCreating multiple submissions from ACORD Aims: Gi\nIf the PDF file includes ACORD forms for multiple lines - for\nexample, Commercial Auto, Commercial Property, and\n\nWorkers’ Compensation - can | create multiple submissions for\n4 all these lines using Submission Intake?\nMZ\n\nUploading a PDF with ACORD forms for rnulliple lines i\nMes Nee” Fes as a a Vale\n\nFrom the Upload ACORD Documents tab on the New Submissions page of an\naccount In PolicyCenter\n\n¥ Account |v Policy | v\n\nNew Submissions\n\nSelect Producer\ncot *\n\nOrganization Armstrong and Company {2}\n\nProducer Code *( s01-002542 Armstrong - Los Angeles -\n\nSelect ACORD POF\n\nBrowse.\n\nPC_INTRO_E160_Submissionintake_D2_MultipleACORDs\n\nBh Sieay\n1B Wyre\n\nConfiguring Submission Injake y, G\nSucceed Insurance developed a new\n\npolicy line. Does Submission Intake\nsupport new lines of business?\n\nMarci\nConfiguration\nDeveloper _.\n\nAs a developer, | need to\ncustomize the existing data\nmappings for the ACORD forms.\n\nSubmission Intake Config en a» _» ~\nAn application on Guidewire Cloud Home used to:\n\n* Customize existing mappings between ACORD form fields and PolicyCenter fields\n¢ Add configurations for lines not supported by Submission Intake yet\n\nG Guidewire Cloud\n\nPolicy Configuration\n\nAdvanced Product dati Submission Intake\nDesigner Configuration\n\nData aig mapping overview\n\nwae Py, ee ts\n_Non-line-specific data mapping _—_Line-specific data mapping\n\nHandled by Submission Intake, such as___ Done in the Submission Intake\n* Account locations and contacts Configuration app\n« Named insured « From the Submission Intake ACORD JSON\n* Name data to the line’s APD structure\n+ Address ¢ For non-APD products, the APD\n* FEIN representation must be extracted\n* Organization Type Using the APD representation simplifies\n\nSaves mapping effort for a brand-new the mapping process\nline\n\nyo of business EG or Submission {nfake ds A,\n\nSubmission Intake provides a mapping for many lines of business\n* This greatly reduces the customer mapping effort\n* Standard Based Template (SBT)\n* Commercial Auto\n+ Workers’ Compensation\n+ Crime\n* Guidewire Go family\n* General Liability\n* Commercial Property\n\nMore SBT lines are being added\n\n* Commercial Property\n* General Liability\n\nFores =\n\nAe Sas ee ae\n\nUse Submission Intake to upload a PDF file that contains ACORD forms of one or\nmore lines and then review and update the submission data before submitting it to\nPolicyCenter.",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to Submission Intake\n\n\\",
+      "word_count": 5,
+      "avg_confidence": 84.4,
+      "image_size": {
+        "width": 1280,
+        "height": 366
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "5 ao — Moh. Py, Qo\n\n) Important note\n\nThis presentation is enhanced with audio. Adjust the volume on\nyour playback device before continuing.",
+      "word_count": 24,
+      "avg_confidence": 85.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Submission Intake streamlines\nsubmission creation in PolicyCenter\nby uploading a PDF file that contains\n\nOne or more ACORD forms for\ncreating submissions.",
+      "word_count": 22,
+      "avg_confidence": 94.04,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Describe the Submission Intake process\n\nUpload a PDF file with ACORD forms for a single or multiple lines\nView and review the uploaded ACORD forms\n\nCreate submissions from the uploaded ACORD forms\n\nExplain creation and data mapping of new lines for Submission Intake",
+      "word_count": 43,
+      "avg_confidence": 95.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Creating submissions fromACORD forms Gi\nSucceed Insurance receives applications in PDF files\ncontaining the ACORD forms for insurance products.\n\nCan | upload the PDF files to PolicyCenter and create\n4 submissions automatically?",
+      "word_count": 32,
+      "avg_confidence": 91.85,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "AQF fos A tn ol dl,\n\nStandardized forms in the ACORD COMMERCIAL INSURANCE APPLICATION —\ninsurance industry —— APPLICANT FORMATION SECTION aoe\nEen Ee com cnc eurance Services Ine\nFor example, Peter, ae me\nBusiness Owners line: eae a\n*« ACORD 125\n* Commercial Insurance\nApplication Ee zene\n« ACORD 160 — z\n+ Business Owners Application p\n« ACORD 823\n\n+ Additional Premises\n\n\"POLICY INFORMATION\nproroeo er ont] monotone] —eunanan —] owwenTra [unoarnweat [are | —ooust | PRR, —rousvorem\n\n4012020 | 04/01/2021 X] peer [—] acency a ‘ 6",
+      "word_count": 90,
+      "avg_confidence": 76.36,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "The Submission Intake ap y, Gi\nA cloud-based service and embeddable Jutro app\n* Integrates with AppReader to convert PDF documents into structured data\n\n* Embedded in PolicyCenter Cloud and requires Single Sign On\n* Can be embedded in the digital applications, for example Producer Engage\n\nEmbedded\n\n¢ > AppReader\n\nSubmission\nIntake\n\nPolicyCenter on\nGuidewire Cloud\n\n&;",
+      "word_count": 57,
+      "avg_confidence": 87.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "The submission intake process y G\nf—-E—-@-f3\n\nUpload the ACORD View the uploaded Review the Create submissions\nforms in PDF format ACORD forms uploaded files",
+      "word_count": 25,
+      "avg_confidence": 88.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "rl Uploading the ACORD\n\nforms in PDF f\nthe ACORD forms in PDF format EV\n\nFrom the Uploaded ACORD Documents page on the Desktop\nFrom the Upload ACORD Documents tab on the New Submissions page\n\nDesktop |\n\n(@ Uploaded ACORD",
+      "word_count": 40,
+      "avg_confidence": 82.98,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Viewing the uploaded ACORD form\nr\\ g p oR\n\na a\n\nee\n\n¢ Filter the list of documents by entering text into the Search field\n\n« View the document's status and submission details\n\n* Open an uploaded document for review by clicking Review Needed or Review Started\n\n* Delete an uploaded document\n\nDesktop |¥ Account |¥ Policy |¥ Contact |¥ Search |» Team\n\nUploaded ACORD Documents\n\nDragand drop afileere\n\n© Upload file\nstatus ‘AccountNumber —AccountName Organization ProducerCode~\nFrickKS Paper... Anmstrongand... 501-002542\n\nSao\n\nLastUpdat.. Last Update. v\n\nuptest ‘siae)2022 .\n\nUp Test 16/2022 1",
+      "word_count": 93,
+      "avg_confidence": 72.45,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "rl Reviewing the uploaded A\\ RE) Mele\n\na a\n\nOn the ACORD Document [im\nReview screen, you can:\n\nMer 2\n\n« View the data in Submission\nIntake, side by side with the\nimage of the ACORD form\n\n« Review and fix any identified\nissues with the data",
+      "word_count": 47,
+      "avg_confidence": 83.53,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Creating submissions\n\na a aa\n\nAfter you complete the\nreview, the Create\n\nSubmissions screen\nappears, where you can:\n* Confirm or select the agency,\n\naccount, and products for the\nsubmission\n\n* Submit the submission to\nPolicyCenter",
+      "word_count": 36,
+      "avg_confidence": 88.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "PC_INTRO_E160_Su jonintake_D1_SingleACORD\n\nBD summary\n\nBy recounts Location (2)\n\nEE by submissions\n\nBS by Renewals pace Ostia\n\n2 Otter Poy Hansactions B/AUOTT NEORUATION\n\nScATIONS,\n\nseme\n[ene\n\nSTICY NEORMATION",
+      "word_count": 27,
+      "avg_confidence": 64.66,
+      "image_size": {
+        "width": 1280,
+        "height": 665
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Creating multiple submissions from ACORD Aims: Gi\nIf the PDF file includes ACORD forms for multiple lines - for\nexample, Commercial Auto, Commercial Property, and\n\nWorkers’ Compensation - can | create multiple submissions for\n4 all these lines using Submission Intake?\nMZ",
+      "word_count": 42,
+      "avg_confidence": 93.46,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Uploading a PDF with ACORD forms for rnulliple lines i\nMes Nee” Fes as a a Vale\n\nFrom the Upload ACORD Documents tab on the New Submissions page of an\naccount In PolicyCenter\n\n¥ Account |v Policy | v\n\nNew Submissions\n\nSelect Producer\ncot *\n\nOrganization Armstrong and Company {2}\n\nProducer Code *( s01-002542 Armstrong - Los Angeles -\n\nSelect ACORD POF\n\nBrowse.",
+      "word_count": 63,
+      "avg_confidence": 78.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "PC_INTRO_E160_Submissionintake_D2_MultipleACORDs\n\nBh Sieay\n1B Wyre",
+      "word_count": 5,
+      "avg_confidence": 64.5,
+      "image_size": {
+        "width": 1280,
+        "height": 665
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Configuring Submission Injake y, G\nSucceed Insurance developed a new\n\npolicy line. Does Submission Intake\nsupport new lines of business?\n\nMarci\nConfiguration\nDeveloper _.\n\nAs a developer, | need to\ncustomize the existing data\nmappings for the ACORD forms.",
+      "word_count": 39,
+      "avg_confidence": 89.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Submission Intake Config en a» _» ~\nAn application on Guidewire Cloud Home used to:\n\n* Customize existing mappings between ACORD form fields and PolicyCenter fields\n¢ Add configurations for lines not supported by Submission Intake yet\n\nG Guidewire Cloud\n\nPolicy Configuration\n\nAdvanced Product dati Submission Intake\nDesigner Configuration",
+      "word_count": 49,
+      "avg_confidence": 85.82,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Data aig mapping overview\n\nwae Py, ee ts\n_Non-line-specific data mapping _—_Line-specific data mapping\n\nHandled by Submission Intake, such as___ Done in the Submission Intake\n* Account locations and contacts Configuration app\n« Named insured « From the Submission Intake ACORD JSON\n* Name data to the line’s APD structure\n+ Address ¢ For non-APD products, the APD\n* FEIN representation must be extracted\n* Organization Type Using the APD representation simplifies\n\nSaves mapping effort for a brand-new the mapping process\nline",
+      "word_count": 82,
+      "avg_confidence": 82.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "yo of business EG or Submission {nfake ds A,\n\nSubmission Intake provides a mapping for many lines of business\n* This greatly reduces the customer mapping effort\n* Standard Based Template (SBT)\n* Commercial Auto\n+ Workers’ Compensation\n+ Crime\n* Guidewire Go family\n* General Liability\n* Commercial Property\n\nMore SBT lines are being added\n\n* Commercial Property\n* General Liability",
+      "word_count": 62,
+      "avg_confidence": 86.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Fores =\n\nAe Sas ee ae\n\nUse Submission Intake to upload a PDF file that contains ACORD forms of one or\nmore lines and then review and update the submission data before submitting it to\nPolicyCenter.",
+      "word_count": 36,
+      "avg_confidence": 83.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

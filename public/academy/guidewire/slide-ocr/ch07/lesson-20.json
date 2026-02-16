@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-20",
+    "slide_count": 24,
+    "slides_with_text": 22,
+    "total_words": 1004,
+    "avg_confidence": 83.61,
+    "processing_time_seconds": 10.6,
+    "extracted_at": "2026-02-13T12:20:57.171497"
+  },
+  "full_text": "Subtypes\n\nLesson\nobjectives\n\n¢ Describe the role of subtypes and supertypes\nin the data model\n\n« Extend an existing subtype entity\n\n* Create new a subtype entity\n\n| Subtype entity\n\n¢ Asubtype is an entity that is a child to a supertype entity\nand inherits all fields and methods from the supertype\n\n¢« Example:\n+ ABContact is the supertype\n*« ABCompany is the subtype\n*« ABCompany inherits PrefersContactByEmail from ABContact\n« ABContact does NOT inherit CanAddEmployees\n\nABCompany\n\n| Example: subtype hierarchy in TrainingApp fa\n\nABContact\n\nABPerson ABPlace\n\n| Additional subtype hierarchy examples\n\n@\naid\nAll applications\n\nContact: Person,\nCompany, Place, ...\n\nClaimCenter\n\nIncident: Injurylncident,\nTripIncident,\nPropertylncident\n\nTransaction: Payment,\nRecovery, Reserve, ...\n\n.\n1\n¢\nPolicyCenter\n\nJob: Submission,\nRenewal, Cancellation,\nReinstatement, ...\nPlanDetail:\n\nBillingPlanDetail,\nPaymentPlanDetail, ...\n\nBillingCenter\n\nPlan: BillingPlan,\nCommissionPlan,\nDelinquencyPlan, ...\nChargePattern:\n\nImmediateCharge,\nProRataCharge, ...\n\n| Subtypes in the database\n\n* Typelist and entity table define supertype and subtype relationships\n\n¢ Supertype entity table contains subtype columns in denormalized form\n\n¢ ID, TaxID and Name from ABContact\n\n¢ FirstName and LastName from ABPerson\n* AttorneyLicense from ABAttorney\n\n* IsFranchise is from ABAutoRepairShop\n\n¢ Irrelevant columns for subtype are null\n\nID\n67\n68\n75\n76\n\nTAXID\n\n'2096542-3113-2456902\n9983200-5335-0023899\n1242577-7777-7752421\n3219251-8888-1529123\n\nNAME\n\n‘null\n\n‘null\n\nExpress Auto\nEuropean Autoworks\n\nFIRSTNAME |LASTNAME |ATTORNEYLICENSE |ISFRANCHISE |SUBTYPE\n\nLily\n\nJames\n\nnull\nnull\n\n‘Watson\nAndersen\nnull\n\nnull\n\nJ12-13562\n'$20-82325\nnull\nnull\n\nnull\n‘null\nnull\n‘null\n\nSELECT ID, TYPECODE G\nFROM ABTL_ABCONTACT\n\n‘ORDER BY ID; iy |\n1D | TYPECODE\n\n1 |ABAdjudicator\n\n2 (ABAttome)\n\n3\n4 ABAUtoScrapYard_ext\n5 |ABAutoTowingAgcy\n6\n\n7\n\n8\n\nABCompany\nABContact\nABDoctor\n\n9 |ABLawFem\n\n10 |ABLegalvenue\n11 |ABMedicalCareOrg\n12 |ABPerson\n\n13 |ABPlace\n\n14 |ABPolcyCompany\n15 |ABPolcyPerson\n16 |ABUserContact\n17 |ABCompanyVendor\n18 |ABPersonVendor\n(18 rows, 4 ms)\n\nm\n\n2\n\n2\n3\n13\n\n| Subtypes in the Data Dictionary G\n\n° Parent entity > [ABContact ibstontataeases to ConmneCosicy ABLNabs\n‘ies: Abt st’, Expotabl’, Eten’, Keyed Lat’, Saucon’, Spey’ eine\n‘Subtypes\nfade =\nList of —__>» nitrates —etcmeer tnd\n| Aatattepition asitoeonSen\nsubtypes | fesaoTompseey —|asadaTonintans\n(ieee Seen |\n\n‘ABMedcaICareOrg | AfedicalCareOrg\n‘ABPolicyCompany —__|ABPolcyCompany\n\nFields\n¢ Fields at 1 ayy\nthy gts pay\nparent level > sno uerittace cts\nPrimaryAddress foreign key to Address (ematase cotens: PreuyAccressiD) (exporatie)’ (oassbie)’ (gga vaicnton)’ natin\nABCompany (subtype of ABContact)\nPSecrion\n\n¢ Fields at\nCanAddEmployees boolean (xine me) lercona’ neat)” (rt\nsubtype level | Satay St ic\n\n> ‘show userintetace details.\n\nCase anay key or ABCantat ete)\n\nEmployees ara ey ABParan cea\n\n| Subtypes and Java classes G\n\n@javax.annotation.Generated(value = \"com.guidewire.pl.metadata.codegen.Codegen\", comments = \"ABContact.eti ;ABContac\n/deprecation, unchecked/\n\n@gw. internal. gosu.parser.ExtendedType\n\n@gw. lang. SimplePropertyProcessing\n\npublic abstract class ABContact extends com.guidewire.pl.persistence.code.BeanBase implements entity.Retireable, er\n\npublic static final gw.pl.persistence.type.EntityPropertyInfoReference<gw.entity.IColumnPropertyInfo> TAXID_PROP\n\n@javax.annotation.Generated(value =\n/deprecation, unchecked/\n@gw. internal .gosu.parser.ExtendedType\n@gw.lang.SimplePropertyProcessing\n@gw.entity.EntityName (value = \"ABCompany\")\npublic class ABCompany extends entity.ABContact {\npublic static final gw.pl.persistence.type.EntityTypeReference<entity.ABCompany> TYPE = new com.guidewire.commons.metadata.\n\n\"com.guidewire.pl.metadata.codegen.Codegen\", comments = \"ABCompany.eti ;ABCompany .eix;ABC<\n\npublic static final gw.pl.persistence.type.EntityPropertyInfoReference<gw.entity.IColumnPropertyInfo> CANADDEMPLOYEES PROP\n\n| Review: subtypes\nDatabase\n\netl =| ABContact\nABContact\n\nCode generation\n> | !D\nTaxID\n\nSubtype\n\nee\n===> ABCompany extends ABContact\n\nDeployment J, CanAddEmployees\n\nab_abcontact\n\n| Subtype limitations\n\n« New subtypes inherit from supertype\n* All elements and attribute defaults\n* Behavior of its supertype\n* Only single inheritance\n¢ Unable to inherit from multiple supertypes\n\n* Can a towing agency repair cars?\nNo.\n\n* Can an auto repair shop tow cars?\nNo.\n\n* Can you create a single contact that both repairs\nand tows cars?\nYes, but you will need to create a new subtype\nwith duplicate fields!\n\nABAutoTowingAgcy\n\nABContact\n\nABCompany\n\nABCompanyVendor\n\nABAutoRepairShop\n\n| Subtype entity extensions Gi\n\n¢ The base application comes with OOTB subtype entities\n\n¢ Base application subtype entities can be extended the exact same way as top-\nlevel entities\n\n* Review:\n* Every entity can have at most one ETX file\n+ ETX file has the same name as the ETI file (no _Ext needed)\n« ETX files are .../configuration/config/extensions/Entity folder\n\n* Guidewire recommends using _ Ext (or unique suffix) for new fields added to the ETX file\n\n| Demonstration G\n\nCreate policy subtypes\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — Whatis a subtype entity?\n\na\n\nAnswer fa\n\n{777 What is a subtype entity?\n¢\n¢\n\nAsubtype is an entity that is a child to a parent entity and inherits all fields from the\nparent.\n\nSOOO ODD DOOD DODO DOOD\n\nQuestion G\n\n_- — Whatis a subtype entity extension?\n4\n\n¢\n¢\n\nee ee a\n\nAnswer fa\n\n_- — Whatis a subtype entity extension?\n4\n\n¢\n¢\n\nAsubtype extension is an entity extension of a base application subtype entity.\n\nSOOO ODD DOOD DODO DOOD\n\nQuestion G\n\n_— — Describe at least one limitation of relying heavily on subtype hierarchies.\n\n4\n¢\n¢\n\nee ee a\n\nAnswer fa\n\n_— — Describe at least one limitation of relying heavily on subtype hierarchies.\n4\n\n¢\n¢\n\nOne major limitation of a subtype hierarchy is that a subtype entity can only have one\nparent entity and multiple inheritance (two or more direct parents) is not supported. In\naddition, the subtype always inherits the parents elements, meaning the subtype\ncontains the parent fields.\n\nFor a deep hierarchy (many levels), this means the lowest child will inherit all the fields\nof the parents. Deep subtype hierarchies can result in very wide tables that are highly\ndenormalized resulting in poor application performance.\n\n- SSS SSS SE See\n\nQuestion G\n\n_— — When you create a new subtype, why are you NOT able specify a table\n\nie name?\n7\n\nee ee a\n\nAnswer fa\n\n_— — When you create a new subtype, why are you NOT able specify a table\nA name?\n¢\n\nYou cannot specify a table name because the new subtype data is stored in the same\ntable as the supertype.\n\nSOOO ODD DOOD DODO DOOD\n\nLesson\nobj ectives * Describe the role of subtypes and supertypes\nreview in the data model\n\n« Extend an existing subtype entity\n* Create new a subtype entity\n\n| Student exercise\n\nSubtypes",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Subtypes",
+      "word_count": 1,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 550
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the role of subtypes and supertypes\nin the data model\n\n« Extend an existing subtype entity\n\n* Create new a subtype entity",
+      "word_count": 26,
+      "avg_confidence": 87.92,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Subtype entity\n\n¢ Asubtype is an entity that is a child to a supertype entity\nand inherits all fields and methods from the supertype\n\n¢« Example:\n+ ABContact is the supertype\n*« ABCompany is the subtype\n*« ABCompany inherits PrefersContactByEmail from ABContact\n« ABContact does NOT inherit CanAddEmployees\n\nABCompany",
+      "word_count": 50,
+      "avg_confidence": 85.08,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Example: subtype hierarchy in TrainingApp fa\n\nABContact\n\nABPerson ABPlace",
+      "word_count": 10,
+      "avg_confidence": 84.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Additional subtype hierarchy examples\n\n@\naid\nAll applications\n\nContact: Person,\nCompany, Place, ...\n\nClaimCenter\n\nIncident: Injurylncident,\nTripIncident,\nPropertylncident\n\nTransaction: Payment,\nRecovery, Reserve, ...\n\n.\n1\n¢\nPolicyCenter\n\nJob: Submission,\nRenewal, Cancellation,\nReinstatement, ...\nPlanDetail:\n\nBillingPlanDetail,\nPaymentPlanDetail, ...\n\nBillingCenter\n\nPlan: BillingPlan,\nCommissionPlan,\nDelinquencyPlan, ...\nChargePattern:\n\nImmediateCharge,\nProRataCharge, ...",
+      "word_count": 48,
+      "avg_confidence": 84.21,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Subtypes in the database\n\n* Typelist and entity table define supertype and subtype relationships\n\n¢ Supertype entity table contains subtype columns in denormalized form\n\n¢ ID, TaxID and Name from ABContact\n\n¢ FirstName and LastName from ABPerson\n* AttorneyLicense from ABAttorney\n\n* IsFranchise is from ABAutoRepairShop\n\n¢ Irrelevant columns for subtype are null\n\nID\n67\n68\n75\n76\n\nTAXID\n\n'2096542-3113-2456902\n9983200-5335-0023899\n1242577-7777-7752421\n3219251-8888-1529123\n\nNAME\n\n‘null\n\n‘null\n\nExpress Auto\nEuropean Autoworks\n\nFIRSTNAME |LASTNAME |ATTORNEYLICENSE |ISFRANCHISE |SUBTYPE\n\nLily\n\nJames\n\nnull\nnull\n\n‘Watson\nAndersen\nnull\n\nnull\n\nJ12-13562\n'$20-82325\nnull\nnull\n\nnull\n‘null\nnull\n‘null\n\nSELECT ID, TYPECODE G\nFROM ABTL_ABCONTACT\n\n‘ORDER BY ID; iy |\n1D | TYPECODE\n\n1 |ABAdjudicator\n\n2 (ABAttome)\n\n3\n4 ABAUtoScrapYard_ext\n5 |ABAutoTowingAgcy\n6\n\n7\n\n8\n\nABCompany\nABContact\nABDoctor\n\n9 |ABLawFem\n\n10 |ABLegalvenue\n11 |ABMedicalCareOrg\n12 |ABPerson\n\n13 |ABPlace\n\n14 |ABPolcyCompany\n15 |ABPolcyPerson\n16 |ABUserContact\n17 |ABCompanyVendor\n18 |ABPersonVendor\n(18 rows, 4 ms)\n\nm\n\n2\n\n2\n3\n13",
+      "word_count": 150,
+      "avg_confidence": 78.04,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Subtypes in the Data Dictionary G\n\n° Parent entity > [ABContact ibstontataeases to ConmneCosicy ABLNabs\n‘ies: Abt st’, Expotabl’, Eten’, Keyed Lat’, Saucon’, Spey’ eine\n‘Subtypes\nfade =\nList of —__>» nitrates —etcmeer tnd\n| Aatattepition asitoeonSen\nsubtypes | fesaoTompseey —|asadaTonintans\n(ieee Seen |\n\n‘ABMedcaICareOrg | AfedicalCareOrg\n‘ABPolicyCompany —__|ABPolcyCompany\n\nFields\n¢ Fields at 1 ayy\nthy gts pay\nparent level > sno uerittace cts\nPrimaryAddress foreign key to Address (ematase cotens: PreuyAccressiD) (exporatie)’ (oassbie)’ (gga vaicnton)’ natin\nABCompany (subtype of ABContact)\nPSecrion\n\n¢ Fields at\nCanAddEmployees boolean (xine me) lercona’ neat)” (rt\nsubtype level | Satay St ic\n\n> ‘show userintetace details.\n\nCase anay key or ABCantat ete)\n\nEmployees ara ey ABParan cea",
+      "word_count": 114,
+      "avg_confidence": 56.15,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Subtypes and Java classes G\n\n@javax.annotation.Generated(value = \"com.guidewire.pl.metadata.codegen.Codegen\", comments = \"ABContact.eti ;ABContac\n/deprecation, unchecked/\n\n@gw. internal. gosu.parser.ExtendedType\n\n@gw. lang. SimplePropertyProcessing\n\npublic abstract class ABContact extends com.guidewire.pl.persistence.code.BeanBase implements entity.Retireable, er\n\npublic static final gw.pl.persistence.type.EntityPropertyInfoReference<gw.entity.IColumnPropertyInfo> TAXID_PROP\n\n@javax.annotation.Generated(value =\n/deprecation, unchecked/\n@gw. internal .gosu.parser.ExtendedType\n@gw.lang.SimplePropertyProcessing\n@gw.entity.EntityName (value = \"ABCompany\")\npublic class ABCompany extends entity.ABContact {\npublic static final gw.pl.persistence.type.EntityTypeReference<entity.ABCompany> TYPE = new com.guidewire.commons.metadata.\n\n\"com.guidewire.pl.metadata.codegen.Codegen\", comments = \"ABCompany.eti ;ABCompany .eix;ABC<\n\npublic static final gw.pl.persistence.type.EntityPropertyInfoReference<gw.entity.IColumnPropertyInfo> CANADDEMPLOYEES PROP",
+      "word_count": 73,
+      "avg_confidence": 79.68,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Review: subtypes\nDatabase\n\netl =| ABContact\nABContact\n\nCode generation\n> | !D\nTaxID\n\nSubtype\n\nee\n===> ABCompany extends ABContact\n\nDeployment J, CanAddEmployees\n\nab_abcontact",
+      "word_count": 24,
+      "avg_confidence": 79.07,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Subtype limitations\n\n« New subtypes inherit from supertype\n* All elements and attribute defaults\n* Behavior of its supertype\n* Only single inheritance\n¢ Unable to inherit from multiple supertypes\n\n* Can a towing agency repair cars?\nNo.\n\n* Can an auto repair shop tow cars?\nNo.\n\n* Can you create a single contact that both repairs\nand tows cars?\nYes, but you will need to create a new subtype\nwith duplicate fields!\n\nABAutoTowingAgcy\n\nABContact\n\nABCompany\n\nABCompanyVendor\n\nABAutoRepairShop",
+      "word_count": 79,
+      "avg_confidence": 90.7,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Subtype entity extensions Gi\n\n¢ The base application comes with OOTB subtype entities\n\n¢ Base application subtype entities can be extended the exact same way as top-\nlevel entities\n\n* Review:\n* Every entity can have at most one ETX file\n+ ETX file has the same name as the ETI file (no _Ext needed)\n« ETX files are .../configuration/config/extensions/Entity folder\n\n* Guidewire recommends using _ Ext (or unique suffix) for new fields added to the ETX file",
+      "word_count": 79,
+      "avg_confidence": 86.85,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Demonstration G\n\nCreate policy subtypes\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.44,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Question\n\n_- — Whatis a subtype entity?\n\na",
+      "word_count": 8,
+      "avg_confidence": 77.12,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Answer fa\n\n{777 What is a subtype entity?\n¢\n¢\n\nAsubtype is an entity that is a child to a parent entity and inherits all fields from the\nparent.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 34,
+      "avg_confidence": 84.77,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Question G\n\n_- — Whatis a subtype entity extension?\n4\n\n¢\n¢\n\nee ee a",
+      "word_count": 15,
+      "avg_confidence": 66.8,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Answer fa\n\n_- — Whatis a subtype entity extension?\n4\n\n¢\n¢\n\nAsubtype extension is an entity extension of a base application subtype entity.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 29,
+      "avg_confidence": 81.52,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question G\n\n_— — Describe at least one limitation of relying heavily on subtype hierarchies.\n\n4\n¢\n¢\n\nee ee a",
+      "word_count": 21,
+      "avg_confidence": 75.71,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer fa\n\n_— — Describe at least one limitation of relying heavily on subtype hierarchies.\n4\n\n¢\n¢\n\nOne major limitation of a subtype hierarchy is that a subtype entity can only have one\nparent entity and multiple inheritance (two or more direct parents) is not supported. In\naddition, the subtype always inherits the parents elements, meaning the subtype\ncontains the parent fields.\n\nFor a deep hierarchy (many levels), this means the lowest child will inherit all the fields\nof the parents. Deep subtype hierarchies can result in very wide tables that are highly\ndenormalized resulting in poor application performance.\n\n- SSS SSS SE See",
+      "word_count": 105,
+      "avg_confidence": 90.64,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n_— — When you create a new subtype, why are you NOT able specify a table\n\nie name?\n7\n\nee ee a",
+      "word_count": 24,
+      "avg_confidence": 77.83,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer fa\n\n_— — When you create a new subtype, why are you NOT able specify a table\nA name?\n¢\n\nYou cannot specify a table name because the new subtype data is stored in the same\ntable as the supertype.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 46,
+      "avg_confidence": 88.36,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Lesson\nobj ectives * Describe the role of subtypes and supertypes\nreview in the data model\n\n« Extend an existing subtype entity\n* Create new a subtype entity",
+      "word_count": 28,
+      "avg_confidence": 87.25,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Student exercise\n\nSubtypes",
+      "word_count": 4,
+      "avg_confidence": 95.8,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-01",
+    "slide_count": 43,
+    "slides_with_text": 39,
+    "total_words": 1435,
+    "avg_confidence": 84.48,
+    "processing_time_seconds": 16.48,
+    "extracted_at": "2026-02-13T12:16:51.101703"
+  },
+  "full_text": "Introduction to Guidewire Configuration\n\nLesson\nobjectives\n\n¢ Describe the product architecture for\n\nGuidewire products\n\nIdentify the primary components for\nconfiguring Guidewire products\nExplain the relationship between the\nGuidewire platform and the Guidewire\napplications\n\nDemonstrate the basic functionality of\nTrainingApp\n\nStart Guidewire Studio and runa\ndevelopment instance of a Guidewire\napplication\n\n| The three-tier architecture i\n\nThree-tier architecture is a client-server software architecture pattern in which the\nuser interface, functional process logic, data storage and data access are developed\nand maintained as independent modules\n\n| Data tier G\n\n* Contains the business and operational data\n\n¢ The data is stored in a relational database which is\ntypically hosted on a machine other than the\napplication\n\n* Guidewire supports the following Relational\nDatabase Management Systems (RDBMS):\n* Oracle Enterprise\n« Microsoft SQL Server\n\n* H2 for training and development only\n\n| Application tier\n\nGi\n\nContains the functional process and business logic\nThe application logic is written in Gosu\n\nGuidewire supports the following application\nservers:\n\nWebSphere\nWebLogic\nApache Tomcat\nJBoss EAP\n\nJetty for training and development only\n\n| Presentation tier i\n\n* Contains the user interface\n\n* Each application generates a collection of standard\nHTML pages that are rendered by the browser\n\n¢ Modern web browsers support the Guidewire user\ninterface\n\n* Chrome\n« Firefox\n\n* Microsoft Internet Explorer\n\n* Microsoft Edge\n\n| Presentation tier i\n\n* Contains the user interface\n\n* Each application generates a collection of standard\nHTML pages that are rendered by the browser\n\n¢ Modern web browsers support the Guidewire user\ninterface\n\n* Chrome\n« Firefox\n\n* Microsoft Internet Explorer\n\n* Microsoft Edge\n\n| Fundamental areas of configuration i\nDatabase : Application Server : User Interface\n\n| Data model entities i\n\nDatabase Application Server User Interface\n\nCreateTime\n\nab_abcontact\n\nPane [Paste cretoTine_|\n\nfF\n\n| Gosu and generated Java classes i\n\nDatabase : Application Server User Interface\n: generated Java class\nName :\nXML PubliclD ABContact\n\nName\nPubliciID\n\nCreateTime\n\nCreateTime\n\nab_abcontact\nGosu code\n\nLe\n\nPane [Paste cretoTine_|\n\n| PCF files (Page Configuration Format)\n\nDatabase\n\nABContact\n\nName\nPublicID\nCreateTime\n\nXML\n\nab_abcontact\n\nPane [Paste cretoTine_|\n\nApplication Server\n\ngenerated Java class\n\nABContact\n\nName\nPublicID\n\nCreateTime\n\nGosu code\n\n3)\n\nUser Interface\n\nG)ascontactsummaryDV.pct *\n\nGi\n\ncrc\nvone (ann pone\nnic [aioe\nCreated On Jef [a\nanes tar [aonacaigeatoe\nae\n\nv\n\nRobert smith\n\naba?\n\n06/19/2018\n\n| Components working together — displaying Express [>\nAuto (1 of 6)\n\nDatabase User Interface\n\nG ascontactsummaryDV.pct *\n\nApplication Server\n\nBasic Information\n\nName [anABContactDisplayName\ncontact\n\nPublic ID [anABContactPublidD\n\nAsics ser [stonacieatie\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class\n\nLa\n\nExpress Auto\nPublic ID absample:2\nCreated 01 10/10/2018\n\nigned Use Bruce Baker\n\n| Components working together — displaying Express [>\nAuto (2 of 6)\nUser Interface\n\nBascontactsummaryDv.pct *\n\nDatabase\n\nApplication Server\n\n(10/10/2018 Assigned User anABContactAssignedUser a]\nBurlingame ab:78 05/27/2018 ee\nSaab\nAlbertson's ab:61 03/16/2018\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker\n\n| Components working together — displaying Express [>\nAuto (3 of 6)\nUser Interface\n\nBascontactsummaryDv.pct *\n\nDatabase\n\nApplication Server\n\n(10/10/2018 —p> Assigned User anABContactAssignedUser a]\nBurlingame ab:78 05/27/2018 ee\nSaab\nAlbertson's ab:61 03/16/2018\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker\n\n| Components working together — displaying Express [>\nAuto (4 of 6)\n\nDatabase User Interface\n\nG)ascontactsynmaryDV.pct *\n\nApplication Server\n\nBasic Information\n\nName [anABContactDisplayName\ncontact\n\nPublic ID [anABContactPublidD\n\nAsics ser [stonacieatie\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker\n\n—%\n\n| Components working together — displaying Express [>\nAuto (5 of 6)\n\nDatabase User Interface\n\nG ascontactsynmaryDV.pct aan\nage\neae\n\nBasic Information t ve Se\n\"8\n\nName [anABContactDisplayNeme |®\nPublic ID [anABContactPublicid 6 ©\nCreated On Jol [) 0\n\n‘\nasics ser [etonacsieatie SP\n\nApplication Server\n\n—%\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker\n\n| Components working together — displaying Express [>\nAuto (6 of 6)\n\nDatabase User Interface\n\nG ascontactsynmaryDV.pct aan\nage\neae\n\nBasic Information t ve Se\n\"8\n\nName [anABContactDisplayNeme |®\nPublic ID [anABContactPublicid 6 ©\nCreated On Jol [) 0\n\n‘\nasics ser [etonacsieatie SP\n\nApplication Server\n\n—%\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker\n\nGuidewire application-specific\nfunctionality\n\n| The Guidewire platform fa\n¢ The Guidewire platform is a layer of configuration technology that includes the\nfunctionality needed to define a Guidewire application\n\n¢ Itcontains common resources and configuration techniques that are shared by all\nGuidewire applications. For example:\n\n* Data model entities, PCF files, and application logic to manage Users\n* Data model entities and PCF files to create and assign Activities to other users\n¢ This course focuses on the Guidewire platform\n\nGuidewire Platform offers technology for configuring\n\nApplication Integration :\nMechanisms :\n\nThe Guidewire training\nenvironment\n\n| TrainingApp fa\n¢ Developed exclusively for training\nrainingApp ; oo.\n¢ Designed to function like a contact management\napplication\n* Stores and manages contacts and related information\n\n¢« Examples of each fundamental configuration feature\n\n* Data Model, User Interface, Application Logic, Integration\nMechanisms\n\n* Small number of entities and screens\n\n¢ Excludes complex functionality\n\nApplication Integration\n\nInterface Logic Mechanisms\n\nGradle\n\n* Open source build automation system\n\nBH Command Prompt ao x\n\n* Builds upon the concepts of Apache Ant\n\n¢ Flexible and extendable\n\n« Run tasks from command prompt\n\n* To view available tasks, rungwb tasks ina\nCommand Prompt window\n\nGradle\n\n| Guidewire Studio G\n\n* Guidewire Studio is an Integrated Developer Environment (IDE) based on IntelliJ\nIDEA\n\n* Guidewire Studio comes bundled with your application as an application project\n* Supports:\n\nGosu, XML, JAVA* 2\n\nRefactoring =A\n\nPlugin extensibility =\n\nDynamic type support\n\nMake, run and debug\n\nGuidewire editors\n\nBuilt-in version control\n\n| Scenario i\n\nThe developers and business analysts of the insurance company want to become\nfamiliar with the development environment.\n\nThey would like to know how to start/stop Studio and the application.\n\nThey want to understand the high level anatomy of Studio and see a brief\ndemonstration of the functionality of TrainingApp.\n\n| Demonstration G\n\nDevelopment environment and tools\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Demonstration G\n\nTraining App\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nReview Questions\n\nQuestion G\n\n_— — Whatare the three tiers in the Guidewire application architecture?\n\n¢\n¢\n¢\n\nen\n\nAnswer a\n\n_— — Whatare the three tiers in the Guidewire application architecture?\n\n¢\noY” Data, application, presentation (or user interface/web clients)\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n_— — Inwhich tier are the following used?\n\n¢\n\no A) PCF files?\n\nB) Gosu?\n\nC) Data model entities?\n\nen\n\nAnswer\n\n_— — Inwhich tier are the following used?\n\n¢\n\noY” A) PCF files?\n\nB) Gosu?\n\nC) Data model entities?\n\nThe correct responses are:\nA) Presentation\n\nB) Application\n\nCc) Data\n\nBoD DD DD DS SSS oe\n\nQuestion\n\n_- — Whatis the purpose of the Guidewire platform?\n\n¢\n¢\n¢\n\nen\n\nAnswer a\n\n_- — Whatis the purpose of the Guidewire platform?\n¢\noY” It contains common resources and configuration techniques that are shared by all\n\nGuidewire applications. For example:\n* Data model entities, PCF files and application logic to manage Users\n\n* Data model entities and PCF files to create and assign Activities to other users\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n_- — Howdo you start Guidewire Studio?\n\n¢\n¢\n¢\n\nen\n\nAnswer a\n\n,- — Howdo you start Guidewire Studio?\n\n¢\noY” Open the command line in the application folder and type “gwb studio”\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n,— — Howdo you start a Guidewire application from Guidewire Studio?\n\n¢\n¢\n¢\n\nen\n\nAnswer a\n\n,- — Howdoyou start a Guidewire application from Guidewire Studio?\n\n¢\noY” Debug 'Server' or Run ‘Server’\n\nBoD DD DD DS SSS oe\n\nLesson\nobjectives\nreview\n\nDescribe the product architecture for\nGuidewire products\n\n¢ Identify the primary components for\n\nconfiguring Guidewire products\nExplain the relationship between the\nGuidewire platform and the Guidewire\napplications\n\nDemonstrate the basic functionality of\nTrainingApp\n\nStart Guidewire Studio and runa\ndevelopment instance of a Guidewire\napplication\n\n| Student exercise G\n\nIntroduction to Guidewire Configuration",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Introduction to Guidewire Configuration",
+      "word_count": 4,
+      "avg_confidence": 94.2,
+      "image_size": {
+        "width": 1280,
+        "height": 545
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the product architecture for\n\nGuidewire products\n\nIdentify the primary components for\nconfiguring Guidewire products\nExplain the relationship between the\nGuidewire platform and the Guidewire\napplications\n\nDemonstrate the basic functionality of\nTrainingApp\n\nStart Guidewire Studio and runa\ndevelopment instance of a Guidewire\napplication",
+      "word_count": 46,
+      "avg_confidence": 93.5,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| The three-tier architecture i\n\nThree-tier architecture is a client-server software architecture pattern in which the\nuser interface, functional process logic, data storage and data access are developed\nand maintained as independent modules",
+      "word_count": 33,
+      "avg_confidence": 93.32,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Data tier G\n\n* Contains the business and operational data\n\n¢ The data is stored in a relational database which is\ntypically hosted on a machine other than the\napplication\n\n* Guidewire supports the following Relational\nDatabase Management Systems (RDBMS):\n* Oracle Enterprise\n« Microsoft SQL Server\n\n* H2 for training and development only",
+      "word_count": 55,
+      "avg_confidence": 88.35,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Application tier\n\nGi\n\nContains the functional process and business logic\nThe application logic is written in Gosu\n\nGuidewire supports the following application\nservers:\n\nWebSphere\nWebLogic\nApache Tomcat\nJBoss EAP\n\nJetty for training and development only",
+      "word_count": 36,
+      "avg_confidence": 94.32,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Presentation tier i\n\n* Contains the user interface\n\n* Each application generates a collection of standard\nHTML pages that are rendered by the browser\n\n¢ Modern web browsers support the Guidewire user\ninterface\n\n* Chrome\n« Firefox\n\n* Microsoft Internet Explorer\n\n* Microsoft Edge",
+      "word_count": 45,
+      "avg_confidence": 83.61,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Presentation tier i\n\n* Contains the user interface\n\n* Each application generates a collection of standard\nHTML pages that are rendered by the browser\n\n¢ Modern web browsers support the Guidewire user\ninterface\n\n* Chrome\n« Firefox\n\n* Microsoft Internet Explorer\n\n* Microsoft Edge",
+      "word_count": 45,
+      "avg_confidence": 83.61,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Fundamental areas of configuration i\nDatabase : Application Server : User Interface",
+      "word_count": 13,
+      "avg_confidence": 87.38,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Data model entities i\n\nDatabase Application Server User Interface\n\nCreateTime\n\nab_abcontact\n\nPane [Paste cretoTine_|\n\nfF",
+      "word_count": 16,
+      "avg_confidence": 75.5,
+      "image_size": {
+        "width": 1280,
+        "height": 674
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Gosu and generated Java classes i\n\nDatabase : Application Server User Interface\n: generated Java class\nName :\nXML PubliclD ABContact\n\nName\nPubliciID\n\nCreateTime\n\nCreateTime\n\nab_abcontact\nGosu code\n\nLe\n\nPane [Paste cretoTine_|",
+      "word_count": 33,
+      "avg_confidence": 82.72,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| PCF files (Page Configuration Format)\n\nDatabase\n\nABContact\n\nName\nPublicID\nCreateTime\n\nXML\n\nab_abcontact\n\nPane [Paste cretoTine_|\n\nApplication Server\n\ngenerated Java class\n\nABContact\n\nName\nPublicID\n\nCreateTime\n\nGosu code\n\n3)\n\nUser Interface\n\nG)ascontactsummaryDV.pct *\n\nGi\n\ncrc\nvone (ann pone\nnic [aioe\nCreated On Jef [a\nanes tar [aonacaigeatoe\nae\n\nv\n\nRobert smith\n\naba?\n\n06/19/2018",
+      "word_count": 52,
+      "avg_confidence": 79.55,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Components working together — displaying Express [>\nAuto (1 of 6)\n\nDatabase User Interface\n\nG ascontactsummaryDV.pct *\n\nApplication Server\n\nBasic Information\n\nName [anABContactDisplayName\ncontact\n\nPublic ID [anABContactPublidD\n\nAsics ser [stonacieatie\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class\n\nLa\n\nExpress Auto\nPublic ID absample:2\nCreated 01 10/10/2018\n\nigned Use Bruce Baker",
+      "word_count": 61,
+      "avg_confidence": 83.35,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Components working together — displaying Express [>\nAuto (2 of 6)\nUser Interface\n\nBascontactsummaryDv.pct *\n\nDatabase\n\nApplication Server\n\n(10/10/2018 Assigned User anABContactAssignedUser a]\nBurlingame ab:78 05/27/2018 ee\nSaab\nAlbertson's ab:61 03/16/2018\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker",
+      "word_count": 50,
+      "avg_confidence": 82.86,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Components working together — displaying Express [>\nAuto (3 of 6)\nUser Interface\n\nBascontactsummaryDv.pct *\n\nDatabase\n\nApplication Server\n\n(10/10/2018 —p> Assigned User anABContactAssignedUser a]\nBurlingame ab:78 05/27/2018 ee\nSaab\nAlbertson's ab:61 03/16/2018\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker",
+      "word_count": 51,
+      "avg_confidence": 81.6,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Components working together — displaying Express [>\nAuto (4 of 6)\n\nDatabase User Interface\n\nG)ascontactsynmaryDV.pct *\n\nApplication Server\n\nBasic Information\n\nName [anABContactDisplayName\ncontact\n\nPublic ID [anABContactPublidD\n\nAsics ser [stonacieatie\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker\n\n—%",
+      "word_count": 57,
+      "avg_confidence": 82.38,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Components working together — displaying Express [>\nAuto (5 of 6)\n\nDatabase User Interface\n\nG ascontactsynmaryDV.pct aan\nage\neae\n\nBasic Information t ve Se\n\"8\n\nName [anABContactDisplayNeme |®\nPublic ID [anABContactPublicid 6 ©\nCreated On Jol [) 0\n\n‘\nasics ser [etonacsieatie SP\n\nApplication Server\n\n—%\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker",
+      "word_count": 73,
+      "avg_confidence": 71.22,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Components working together — displaying Express [>\nAuto (6 of 6)\n\nDatabase User Interface\n\nG ascontactsynmaryDV.pct aan\nage\neae\n\nBasic Information t ve Se\n\"8\n\nName [anABContactDisplayNeme |®\nPublic ID [anABContactPublicid 6 ©\nCreated On Jol [) 0\n\n‘\nasics ser [etonacsieatie SP\n\nApplication Server\n\n—%\n\nBurlingame ab:78 05/27/2018 Roope\nSaab\n\nAlbertson's ab:61 03/16/2018\n\nHealth South ab:73 04/18/2018\n\nBasic Information\n\ngenerated Java class Express Auto\nPublic iD absample2\n\nrojio/2018\n\n(@)) Bruce Baker",
+      "word_count": 73,
+      "avg_confidence": 71.28,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Guidewire application-specific\nfunctionality",
+      "word_count": 3,
+      "avg_confidence": 93.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| The Guidewire platform fa\n¢ The Guidewire platform is a layer of configuration technology that includes the\nfunctionality needed to define a Guidewire application\n\n¢ Itcontains common resources and configuration techniques that are shared by all\nGuidewire applications. For example:\n\n* Data model entities, PCF files, and application logic to manage Users\n* Data model entities and PCF files to create and assign Activities to other users\n¢ This course focuses on the Guidewire platform\n\nGuidewire Platform offers technology for configuring\n\nApplication Integration :\nMechanisms :",
+      "word_count": 87,
+      "avg_confidence": 90.32,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "The Guidewire training\nenvironment",
+      "word_count": 4,
+      "avg_confidence": 93.75,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| TrainingApp fa\n¢ Developed exclusively for training\nrainingApp ; oo.\n¢ Designed to function like a contact management\napplication\n* Stores and manages contacts and related information\n\n¢« Examples of each fundamental configuration feature\n\n* Data Model, User Interface, Application Logic, Integration\nMechanisms\n\n* Small number of entities and screens\n\n¢ Excludes complex functionality\n\nApplication Integration\n\nInterface Logic Mechanisms",
+      "word_count": 60,
+      "avg_confidence": 85.08,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Gradle\n\n* Open source build automation system\n\nBH Command Prompt ao x\n\n* Builds upon the concepts of Apache Ant\n\n¢ Flexible and extendable\n\n« Run tasks from command prompt\n\n* To view available tasks, rungwb tasks ina\nCommand Prompt window\n\nGradle",
+      "word_count": 42,
+      "avg_confidence": 85.77,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Guidewire Studio G\n\n* Guidewire Studio is an Integrated Developer Environment (IDE) based on IntelliJ\nIDEA\n\n* Guidewire Studio comes bundled with your application as an application project\n* Supports:\n\nGosu, XML, JAVA* 2\n\nRefactoring =A\n\nPlugin extensibility =\n\nDynamic type support\n\nMake, run and debug\n\nGuidewire editors\n\nBuilt-in version control",
+      "word_count": 52,
+      "avg_confidence": 89.46,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Scenario i\n\nThe developers and business analysts of the insurance company want to become\nfamiliar with the development environment.\n\nThey would like to know how to start/stop Studio and the application.\n\nThey want to understand the high level anatomy of Studio and see a brief\ndemonstration of the functionality of TrainingApp.",
+      "word_count": 52,
+      "avg_confidence": 94.19,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Demonstration G\n\nDevelopment environment and tools\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.38,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Demonstration G\n\nTraining App\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.43,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Review Questions",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n_— — Whatare the three tiers in the Guidewire application architecture?\n\n¢\n¢\n¢\n\nen",
+      "word_count": 17,
+      "avg_confidence": 77.67,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer a\n\n_— — Whatare the three tiers in the Guidewire application architecture?\n\n¢\noY” Data, application, presentation (or user interface/web clients)\n\nBoD DD DD DS SSS oe",
+      "word_count": 28,
+      "avg_confidence": 72.68,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question G\n\n_— — Inwhich tier are the following used?\n\n¢\n\no A) PCF files?\n\nB) Gosu?\n\nC) Data model entities?\n\nen",
+      "word_count": 22,
+      "avg_confidence": 83.32,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer\n\n_— — Inwhich tier are the following used?\n\n¢\n\noY” A) PCF files?\n\nB) Gosu?\n\nC) Data model entities?\n\nThe correct responses are:\nA) Presentation\n\nB) Application\n\nCc) Data\n\nBoD DD DD DS SSS oe",
+      "word_count": 36,
+      "avg_confidence": 76.58,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Question\n\n_- — Whatis the purpose of the Guidewire platform?\n\n¢\n¢\n¢\n\nen",
+      "word_count": 14,
+      "avg_confidence": 74.47,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "Answer a\n\n_- — Whatis the purpose of the Guidewire platform?\n¢\noY” It contains common resources and configuration techniques that are shared by all\n\nGuidewire applications. For example:\n* Data model entities, PCF files and application logic to manage Users\n\n* Data model entities and PCF files to create and assign Activities to other users\n\nBoD DD DD DS SSS oe",
+      "word_count": 62,
+      "avg_confidence": 82.29,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "Question G\n\n_- — Howdo you start Guidewire Studio?\n\n¢\n¢\n¢\n\nen",
+      "word_count": 13,
+      "avg_confidence": 72.64,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "Answer a\n\n,- — Howdo you start Guidewire Studio?\n\n¢\noY” Open the command line in the application folder and type “gwb studio”\n\nBoD DD DD DS SSS oe",
+      "word_count": 29,
+      "avg_confidence": 70.55,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Question G\n\n,— — Howdo you start a Guidewire application from Guidewire Studio?\n\n¢\n¢\n¢\n\nen",
+      "word_count": 17,
+      "avg_confidence": 74.67,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Answer a\n\n,- — Howdoyou start a Guidewire application from Guidewire Studio?\n\n¢\noY” Debug 'Server' or Run ‘Server’\n\nBoD DD DD DS SSS oe",
+      "word_count": 25,
+      "avg_confidence": 66.04,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Lesson\nobjectives\nreview\n\nDescribe the product architecture for\nGuidewire products\n\n¢ Identify the primary components for\n\nconfiguring Guidewire products\nExplain the relationship between the\nGuidewire platform and the Guidewire\napplications\n\nDemonstrate the basic functionality of\nTrainingApp\n\nStart Guidewire Studio and runa\ndevelopment instance of a Guidewire\napplication",
+      "word_count": 47,
+      "avg_confidence": 93.36,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "| Student exercise G\n\nIntroduction to Guidewire Configuration",
+      "word_count": 8,
+      "avg_confidence": 93.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    }
+  ]
+}

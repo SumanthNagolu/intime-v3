@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-17",
+    "slide_count": 27,
+    "slides_with_text": 24,
+    "total_words": 1050,
+    "avg_confidence": 87.52,
+    "processing_time_seconds": 12.31,
+    "extracted_at": "2026-02-13T12:12:41.721457"
+  },
+  "full_text": "Line of Business, Policy, and Coverage\n\nLesson\nobjectives\n\n¢ Describe the ClaimCenter Line of Business\n(LOB) model\n\n¢ Describe how the LOB affects screens and\ndata\n\n¢ Describe how the LOB model is created\n\n| The need to manage different types of claims\n\nDifferent types of claims require different types of\ndata. For example, vehicle speed does not make\nsense on a property claim, just as the number of\n\nrooms involved does not fit an auto claim.\n\n| need to understand the structure ClaimCenter\nuses to manage the many different types of\nclaims my company handles.\n\n| What is line of business? : i\n* Insurers organize policies, coverages, fe) Auto Z| Property\nand covered losses within a hierarchy SJ L\n\n¢ This hierarchy impacts:\n\n* How reporting is conducted Personal\n\nAuto 1@) Homeowners\n\n* Which coverages are available for claims\nassociated with a given policy type\n\n« Which user interface elements are used to\n\nGeo\ne\ncapture information for a given exposure OC Collision OC Homeowners\nMed. Pay.\n\n¢ This hierarchy is known as the Line of\nBusiness model (LOB model)\nVehicle ) Payments\n\n| LossType fa\n\nLossType [ Auto f (Al Property\no=4 ]\n\n¢ High-level category of loss\n* Ties policies, coverages, and claims that deal with similar losses together\n¢ Useful for dynamic generation of user interface (UI) and reporting\n\n* Determines which UI elements are used or displayed\n\nLine of business\n\nLossType [\nLine of Ger\nBusiness\n\nPersonal Commercial Commercial Inland\nAuto Line Auto Line Property Marine Line\nine\n\n¢ Additional layer under LossType\n¢ More granular level than LossType for reporting purposes\n¢ The line of business is a business categorization\n\n« Notas commonly used, used more as determinant for claims handling\n\n| PolicyType Gi\n\n* A product (type of policy) J =\n\nLossType Auto offered by insurer ey Property\n* Single policy type may be ¥\n\nLine of Personal associated with multiple Commercial\n\nBusiness Auto Line Lines of business Property\n\ni Line\n\ni Personal Commercial Commercial\n\n| CoverageType\n\nLossType\nLine of Personal\nBusiness Auto Line\n\nPolicyType (9) Personal\n\nLiability - Bodily Injury\nCoverageType  ] and Property Damage\n\n. &G\nProperty\nv\n\nDefines specific\nlosses the insurer will\n\nindemnify\n\nMay map many Commercial\n\nPolicy Types Property\n\n/ Line\n\nApolicy may have\n\nmany Commercial Commercial\n\nCoverageTypes Property Package\n\nCollision  ]  ]\n\nBuilding General Extra\nCoverage Liability Expense\n\nCoverage\n\n| Exposure Type\n\nLossType Auto\nLine of Personal\nBusiness Auto Line\n\nj Personal\nPolicyType (9) Auto\n\nCoverageType\n\nLiability - Bodily Injury\nand Property Damage\n\n* Asset of information to\ngather for an exposure\n\n« An ExposureType may\nmap to many\nCoverageTypes\n\n« ACoverageType may\nmap to many\nExposureTypes\n\n. GG\nProperty\nv\n\nCommercial\nProperty\nLine\n\nCommercial Commercial\nProperty Package\nCollision\n\nExposureType @ Bodily Injury ©) venice\n\nBuilding\nCoverage\n\n| CoverageSubtype\n\nLossType Auto\nLine of Personal\nBusiness Auto Line\n\nPersonal\nAuto\n\nPolicyType (9)\n\nLiability - Bodily Injury\nCoverageType and Property Damage\n\nCoverageSubtype\n\n. GG\nProperty\nv\n\nCommercial\n\n* Isa pair of one\nCoverageType and one\nExposureType\n\n« Resolves the many-to-\n\nmany relationships Property\nbetween Line\n\nCoverageTypes and c ial\nExposureTypes Package\n\nCommercial\nProperty\nBuilding\nCollision  ] Coverage\n\n| The need to ensure consistency\n\nWhen | record an Auto claim, | need to\nmake sure that the information | gather is in\nline with an Auto loss. | also need to make\nsure the details are in line with our\nbusiness and the insured’s policy.\n\nTanvi\nAdjuster Way)\n\n| Demonstration G\n\nAuto claim and the LOB\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nLine of business levels: Review fa\n\nLossType\n\nAuto Property\n\nLine of Personal Commercial Homeowners\nBusiness Auto Line Property Line\n1 Line\nj Personal Commercial\nPolicyType [res] Auto Property [F%*] Homeowners\n\nCoverageType Collision Comprehensive Building\nCoverage\n\nCoverageSubtype [ a\n\nExposureType\n\nHomeowners\nMed. pay.\n\nVehicle Property Medical Payments\n\n®\n®—@-(|-\n\n| Different data for different lines of business\n\nTanvi\nAdjuster\n\nWhen | record a Homeowners claim, |\nneed to record different data than an Auto\nclaim. | need to make sure ClaimCenter\ncan manage that.\n\n| Demonstration G\n\nProperty claim and the LOB\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Claim and policy data in ClaimCenter and PolicyCenter Gi\n\nClaimCenter\nLines of Business Model\n\nPolicyCenter Data Definitions\nfor the Product Model\n\nEquivalent concepts\n\nA—* B Arelates to 1 or more Bs, B relates to 1A policycenter definition\nAX_*% B A relates to 1 or more Bs, B relates to 1 or more As@ ClaimCenter definition\n\nQuestion\n\n_~ — What is the difference between a policy and a PolicyType in\n¢ ClaimCenter?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer a\n\n—— What is the difference between a policy and a PolicyType in\nx ClaimCenter?\n¢\nA policy is a product that is sold to customers, that promises to pay money when a\n\nspecified LossType occurs. It is a contract between the insurer and the insured.\n\nA PolicyType identifies the line of business associated with a policy, and indicates the\ncoverages (Coverage Types) that can be associated with the policy.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\nae What is the purpose of a CoverageSubtype?\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer a\n\nae What is the purpose of a CoverageSubtype?\nIt connects CoverageTypes to ExposureTypes.\nA CoverageSubtype is a pair of one CoverageType and one ExposureType. It\nmodels the complex relationship between CoverageTypes and ExposureTypes as a\nsimple parent-child relationship that is similar to the other levels in the Line of\nBusiness hierarchy.\n\nSooo ooo ooo Oooo oOoD\n\nQuestion\n\n_~ — What are some examples of Coverage Types?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nAnswer\n\n_~ — What are some examples of Coverage Types?\n\n¢\no Building Coverage, Homeowners Medical Payments, Collision, General Liability,\n\nComprehensive, and Liability are a few examples of coverage types.\n\nSooo ooo ooo Oooo oOoD\n\nLesson\nobjectives * Describe the ClaimCenter Line of Business\nreview (LOB) model\n\n¢ Describe how the LOB affects screens and\ndata\n¢ Describe how the LOB model is created\n\n| Student exercise\n\nLine of business and coverage",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Line of Business, Policy, and Coverage",
+      "word_count": 6,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the ClaimCenter Line of Business\n(LOB) model\n\n¢ Describe how the LOB affects screens and\ndata\n\n¢ Describe how the LOB model is created",
+      "word_count": 28,
+      "avg_confidence": 87.71,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| The need to manage different types of claims\n\nDifferent types of claims require different types of\ndata. For example, vehicle speed does not make\nsense on a property claim, just as the number of\n\nrooms involved does not fit an auto claim.\n\n| need to understand the structure ClaimCenter\nuses to manage the many different types of\nclaims my company handles.",
+      "word_count": 62,
+      "avg_confidence": 95.48,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| What is line of business? : i\n* Insurers organize policies, coverages, fe) Auto Z| Property\nand covered losses within a hierarchy SJ L\n\n¢ This hierarchy impacts:\n\n* How reporting is conducted Personal\n\nAuto 1@) Homeowners\n\n* Which coverages are available for claims\nassociated with a given policy type\n\n« Which user interface elements are used to\n\nGeo\ne\ncapture information for a given exposure OC Collision OC Homeowners\nMed. Pay.\n\n¢ This hierarchy is known as the Line of\nBusiness model (LOB model)\nVehicle ) Payments",
+      "word_count": 89,
+      "avg_confidence": 82.1,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| LossType fa\n\nLossType [ Auto f (Al Property\no=4 ]\n\n¢ High-level category of loss\n* Ties policies, coverages, and claims that deal with similar losses together\n¢ Useful for dynamic generation of user interface (UI) and reporting\n\n* Determines which UI elements are used or displayed",
+      "word_count": 48,
+      "avg_confidence": 85.06,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Line of business\n\nLossType [\nLine of Ger\nBusiness\n\nPersonal Commercial Commercial Inland\nAuto Line Auto Line Property Marine Line\nine\n\n¢ Additional layer under LossType\n¢ More granular level than LossType for reporting purposes\n¢ The line of business is a business categorization\n\n« Notas commonly used, used more as determinant for claims handling",
+      "word_count": 55,
+      "avg_confidence": 89.29,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| PolicyType Gi\n\n* A product (type of policy) J =\n\nLossType Auto offered by insurer ey Property\n* Single policy type may be ¥\n\nLine of Personal associated with multiple Commercial\n\nBusiness Auto Line Lines of business Property\n\ni Line\n\ni Personal Commercial Commercial",
+      "word_count": 45,
+      "avg_confidence": 82.98,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| CoverageType\n\nLossType\nLine of Personal\nBusiness Auto Line\n\nPolicyType (9) Personal\n\nLiability - Bodily Injury\nCoverageType  ] and Property Damage\n\n. &G\nProperty\nv\n\nDefines specific\nlosses the insurer will\n\nindemnify\n\nMay map many Commercial\n\nPolicy Types Property\n\n/ Line\n\nApolicy may have\n\nmany Commercial Commercial\n\nCoverageTypes Property Package\n\nCollision  ]  ]\n\nBuilding General Extra\nCoverage Liability Expense\n\nCoverage",
+      "word_count": 60,
+      "avg_confidence": 92.61,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Exposure Type\n\nLossType Auto\nLine of Personal\nBusiness Auto Line\n\nj Personal\nPolicyType (9) Auto\n\nCoverageType\n\nLiability - Bodily Injury\nand Property Damage\n\n* Asset of information to\ngather for an exposure\n\n« An ExposureType may\nmap to many\nCoverageTypes\n\n« ACoverageType may\nmap to many\nExposureTypes\n\n. GG\nProperty\nv\n\nCommercial\nProperty\nLine\n\nCommercial Commercial\nProperty Package\nCollision\n\nExposureType @ Bodily Injury ©) venice\n\nBuilding\nCoverage",
+      "word_count": 68,
+      "avg_confidence": 86.09,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| CoverageSubtype\n\nLossType Auto\nLine of Personal\nBusiness Auto Line\n\nPersonal\nAuto\n\nPolicyType (9)\n\nLiability - Bodily Injury\nCoverageType and Property Damage\n\nCoverageSubtype\n\n. GG\nProperty\nv\n\nCommercial\n\n* Isa pair of one\nCoverageType and one\nExposureType\n\n« Resolves the many-to-\n\nmany relationships Property\nbetween Line\n\nCoverageTypes and c ial\nExposureTypes Package\n\nCommercial\nProperty\nBuilding\nCollision  ] Coverage",
+      "word_count": 58,
+      "avg_confidence": 87.23,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| The need to ensure consistency\n\nWhen | record an Auto claim, | need to\nmake sure that the information | gather is in\nline with an Auto loss. | also need to make\nsure the details are in line with our\nbusiness and the insured’s policy.\n\nTanvi\nAdjuster Way)",
+      "word_count": 50,
+      "avg_confidence": 93.78,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Demonstration G\n\nAuto claim and the LOB\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.45,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Line of business levels: Review fa\n\nLossType\n\nAuto Property\n\nLine of Personal Commercial Homeowners\nBusiness Auto Line Property Line\n1 Line\nj Personal Commercial\nPolicyType [res] Auto Property [F%*] Homeowners\n\nCoverageType Collision Comprehensive Building\nCoverage\n\nCoverageSubtype [ a\n\nExposureType\n\nHomeowners\nMed. pay.\n\nVehicle Property Medical Payments\n\n®\n®—@-(|-",
+      "word_count": 48,
+      "avg_confidence": 87.4,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Different data for different lines of business\n\nTanvi\nAdjuster\n\nWhen | record a Homeowners claim, |\nneed to record different data than an Auto\nclaim. | need to make sure ClaimCenter\ncan manage that.",
+      "word_count": 35,
+      "avg_confidence": 92.89,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Demonstration G\n\nProperty claim and the LOB\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 38,
+      "avg_confidence": 95.47,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Claim and policy data in ClaimCenter and PolicyCenter Gi\n\nClaimCenter\nLines of Business Model\n\nPolicyCenter Data Definitions\nfor the Product Model\n\nEquivalent concepts\n\nA—* B Arelates to 1 or more Bs, B relates to 1A policycenter definition\nAX_*% B A relates to 1 or more Bs, B relates to 1 or more As@ ClaimCenter definition",
+      "word_count": 56,
+      "avg_confidence": 82.09,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n_~ — What is the difference between a policy and a PolicyType in\n¢ ClaimCenter?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 24,
+      "avg_confidence": 72.24,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer a\n\n—— What is the difference between a policy and a PolicyType in\nx ClaimCenter?\n¢\nA policy is a product that is sold to customers, that promises to pay money when a\n\nspecified LossType occurs. It is a contract between the insurer and the insured.\n\nA PolicyType identifies the line of business associated with a policy, and indicates the\ncoverages (Coverage Types) that can be associated with the policy.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 76,
+      "avg_confidence": 89.99,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\nae What is the purpose of a CoverageSubtype?\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 17,
+      "avg_confidence": 77.73,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer a\n\nae What is the purpose of a CoverageSubtype?\nIt connects CoverageTypes to ExposureTypes.\nA CoverageSubtype is a pair of one CoverageType and one ExposureType. It\nmodels the complex relationship between CoverageTypes and ExposureTypes as a\nsimple parent-child relationship that is similar to the other levels in the Line of\nBusiness hierarchy.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 58,
+      "avg_confidence": 90.73,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n_~ — What are some examples of Coverage Types?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "word_count": 19,
+      "avg_confidence": 63.06,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n_~ — What are some examples of Coverage Types?\n\n¢\no Building Coverage, Homeowners Medical Payments, Collision, General Liability,\n\nComprehensive, and Liability are a few examples of coverage types.\n\nSooo ooo ooo Oooo oOoD",
+      "word_count": 35,
+      "avg_confidence": 82.48,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Lesson\nobjectives * Describe the ClaimCenter Line of Business\nreview (LOB) model\n\n¢ Describe how the LOB affects screens and\ndata\n¢ Describe how the LOB model is created",
+      "word_count": 29,
+      "avg_confidence": 89.38,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Student exercise\n\nLine of business and coverage",
+      "word_count": 8,
+      "avg_confidence": 95.89,
+      "image_size": {
+        "width": 1280,
+        "height": 673
+      }
+    }
+  ]
+}

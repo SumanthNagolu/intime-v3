@@ -1,0 +1,2518 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_04_01.mp4",
+    "video_stem": "CC_04_01",
+    "duration_seconds": 780.76,
+    "duration_formatted": "00:13:00.760",
+    "segment_count": 34,
+    "word_count": 360,
+    "avg_confidence": 0.9323,
+    "transcription_time_seconds": 37.96,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:34:59.152838"
+  },
+  "full_text": "Succeed Insurance has specified that, if at least a third of the persons in the work group are on vacation, which should not happen very often, then that group will not be assigned any new claims. This rule should not apply to groups with less than three persons. In Studio, I navigate to the rule sets. The appropriate triggering event is exception. Exception rules target claims, activities, users, and groups that need some type of special attention. Activity exception rules run automatically when an activity is escalated. Let's look at a typical activity exception rule. For example, this rule becomes active when the priority of an escalated activity is high. When this happens, it sets a flag on the activity. Conversely, claim, group, and user exception rules operate on a schedule. When they run, they scan for conditions that may apply to any given claim, group, or user. For example, if there is an open claim, where the claims assign user does not have any open activities assigned to them. Then this rule will create an activity for the user to review the claim. I need to automatically create an activity based on the vacation status of the users in a group, so I will create a group exception rule. In the default configuration, these rules are checked daily at 4 am. There are no group exception rules in the default configuration. I will create a new one.  I will leave the default condition of true, so that every group will be checked every night. The group is already available as a parameter. The first thing I need is the number of users on vacation. I will derive it from the properties of the group. I will need to compare that number to one third the number of users in the group. I will also check to make sure that there are at least three members in the group. Bye! Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you. Thank you.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 16.4,
+      "start_formatted": "00:00:00.000",
+      "end_formatted": "00:00:16.400",
+      "text": "Succeed Insurance has specified that, if at least a third of the persons in the work group are on vacation, which should not happen very often, then that group will not be assigned any new claims. This rule should not apply to groups with less than three persons. In Studio, I navigate to the rule sets.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 0.0,
+          "end": 0.38,
+          "probability": 0.9702
+        },
+        {
+          "word": "Insurance",
+          "start": 0.38,
+          "end": 0.74,
+          "probability": 0.7344
+        },
+        {
+          "word": "has",
+          "start": 0.74,
+          "end": 1.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "specified",
+          "start": 1.06,
+          "end": 1.52,
+          "probability": 1.0
+        },
+        {
+          "word": "that,",
+          "start": 1.52,
+          "end": 1.96,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 2.08,
+          "end": 2.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "at",
+          "start": 2.36,
+          "end": 2.48,
+          "probability": 1.0
+        },
+        {
+          "word": "least",
+          "start": 2.48,
+          "end": 2.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 2.66,
+          "end": 2.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "third",
+          "start": 2.8,
+          "end": 2.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 2.94,
+          "end": 3.08,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 3.08,
+          "end": 3.18,
+          "probability": 1.0
+        },
+        {
+          "word": "persons",
+          "start": 3.18,
+          "end": 3.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 3.56,
+          "end": 3.74,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 3.74,
+          "end": 3.82,
+          "probability": 0.8774
+        },
+        {
+          "word": "work",
+          "start": 3.82,
+          "end": 4.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "group",
+          "start": 4.0,
+          "end": 4.22,
+          "probability": 0.8027
+        },
+        {
+          "word": "are",
+          "start": 4.22,
+          "end": 4.42,
+          "probability": 1.0
+        },
+        {
+          "word": "on",
+          "start": 4.42,
+          "end": 4.56,
+          "probability": 1.0
+        },
+        {
+          "word": "vacation,",
+          "start": 4.56,
+          "end": 5.1,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 5.38,
+          "end": 5.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "should",
+          "start": 5.68,
+          "end": 5.86,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 5.86,
+          "end": 6.08,
+          "probability": 1.0
+        },
+        {
+          "word": "happen",
+          "start": 6.08,
+          "end": 6.4,
+          "probability": 1.0
+        },
+        {
+          "word": "very",
+          "start": 6.4,
+          "end": 6.66,
+          "probability": 1.0
+        },
+        {
+          "word": "often,",
+          "start": 6.66,
+          "end": 7.12,
+          "probability": 1.0
+        },
+        {
+          "word": "then",
+          "start": 7.44,
+          "end": 7.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 7.66,
+          "end": 7.82,
+          "probability": 1.0
+        },
+        {
+          "word": "group",
+          "start": 7.82,
+          "end": 8.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "will",
+          "start": 8.02,
+          "end": 8.2,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 8.2,
+          "end": 8.38,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 8.38,
+          "end": 8.56,
+          "probability": 1.0
+        },
+        {
+          "word": "assigned",
+          "start": 8.56,
+          "end": 8.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "any",
+          "start": 8.96,
+          "end": 9.2,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 9.2,
+          "end": 9.42,
+          "probability": 1.0
+        },
+        {
+          "word": "claims.",
+          "start": 9.42,
+          "end": 9.8,
+          "probability": 0.999
+        },
+        {
+          "word": "This",
+          "start": 10.06,
+          "end": 10.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "rule",
+          "start": 10.56,
+          "end": 10.76,
+          "probability": 0.999
+        },
+        {
+          "word": "should",
+          "start": 10.76,
+          "end": 11.0,
+          "probability": 1.0
+        },
+        {
+          "word": "not",
+          "start": 11.0,
+          "end": 11.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "apply",
+          "start": 11.2,
+          "end": 11.52,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 11.52,
+          "end": 11.72,
+          "probability": 1.0
+        },
+        {
+          "word": "groups",
+          "start": 11.72,
+          "end": 12.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 12.0,
+          "end": 12.2,
+          "probability": 1.0
+        },
+        {
+          "word": "less",
+          "start": 12.2,
+          "end": 12.44,
+          "probability": 1.0
+        },
+        {
+          "word": "than",
+          "start": 12.44,
+          "end": 12.62,
+          "probability": 1.0
+        },
+        {
+          "word": "three",
+          "start": 12.62,
+          "end": 12.84,
+          "probability": 0.769
+        },
+        {
+          "word": "persons.",
+          "start": 12.84,
+          "end": 13.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "In",
+          "start": 13.82,
+          "end": 14.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "Studio,",
+          "start": 14.1,
+          "end": 14.5,
+          "probability": 0.6763
+        },
+        {
+          "word": "I",
+          "start": 14.84,
+          "end": 15.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigate",
+          "start": 15.06,
+          "end": 15.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 15.44,
+          "end": 15.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 15.68,
+          "end": 15.78,
+          "probability": 0.999
+        },
+        {
+          "word": "rule",
+          "start": 15.78,
+          "end": 15.98,
+          "probability": 0.9565
+        },
+        {
+          "word": "sets.",
+          "start": 15.98,
+          "end": 16.4,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 17.32,
+      "end": 26.72,
+      "start_formatted": "00:00:17.320",
+      "end_formatted": "00:00:26.720",
+      "text": "The appropriate triggering event is exception. Exception rules target claims, activities, users, and groups that need some type of special attention.",
+      "words": [
+        {
+          "word": "The",
+          "start": 17.32,
+          "end": 17.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "appropriate",
+          "start": 17.84,
+          "end": 18.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "triggering",
+          "start": 18.32,
+          "end": 18.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "event",
+          "start": 18.8,
+          "end": 19.12,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 19.12,
+          "end": 19.3,
+          "probability": 1.0
+        },
+        {
+          "word": "exception.",
+          "start": 19.3,
+          "end": 19.74,
+          "probability": 0.4487
+        },
+        {
+          "word": "Exception",
+          "start": 20.38,
+          "end": 20.9,
+          "probability": 0.9961
+        },
+        {
+          "word": "rules",
+          "start": 20.9,
+          "end": 21.3,
+          "probability": 0.9819
+        },
+        {
+          "word": "target",
+          "start": 21.3,
+          "end": 21.72,
+          "probability": 1.0
+        },
+        {
+          "word": "claims,",
+          "start": 21.72,
+          "end": 22.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "activities,",
+          "start": 22.48,
+          "end": 23.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "users,",
+          "start": 23.48,
+          "end": 23.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 24.22,
+          "end": 24.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "groups",
+          "start": 24.46,
+          "end": 24.74,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 24.74,
+          "end": 24.96,
+          "probability": 1.0
+        },
+        {
+          "word": "need",
+          "start": 24.96,
+          "end": 25.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "some",
+          "start": 25.2,
+          "end": 25.4,
+          "probability": 1.0
+        },
+        {
+          "word": "type",
+          "start": 25.4,
+          "end": 25.64,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 25.64,
+          "end": 25.82,
+          "probability": 1.0
+        },
+        {
+          "word": "special",
+          "start": 25.82,
+          "end": 26.2,
+          "probability": 0.999
+        },
+        {
+          "word": "attention.",
+          "start": 26.2,
+          "end": 26.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 26.72,
+      "end": 34.3,
+      "start_formatted": "00:00:26.720",
+      "end_formatted": "00:00:34.300",
+      "text": "Activity exception rules run automatically when an activity is escalated. Let's look at a typical activity exception rule.",
+      "words": [
+        {
+          "word": "Activity",
+          "start": 26.72,
+          "end": 27.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "exception",
+          "start": 27.86,
+          "end": 28.26,
+          "probability": 0.8213
+        },
+        {
+          "word": "rules",
+          "start": 28.26,
+          "end": 28.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "run",
+          "start": 28.7,
+          "end": 29.02,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 29.02,
+          "end": 29.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "when",
+          "start": 29.62,
+          "end": 29.94,
+          "probability": 0.9976
+        },
+        {
+          "word": "an",
+          "start": 29.94,
+          "end": 30.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "activity",
+          "start": 30.1,
+          "end": 30.48,
+          "probability": 0.9844
+        },
+        {
+          "word": "is",
+          "start": 30.48,
+          "end": 30.82,
+          "probability": 0.999
+        },
+        {
+          "word": "escalated.",
+          "start": 30.82,
+          "end": 31.42,
+          "probability": 0.9966
+        },
+        {
+          "word": "Let's",
+          "start": 31.7,
+          "end": 32.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "look",
+          "start": 32.16,
+          "end": 32.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "at",
+          "start": 32.32,
+          "end": 32.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 32.44,
+          "end": 32.52,
+          "probability": 0.998
+        },
+        {
+          "word": "typical",
+          "start": 32.52,
+          "end": 32.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "activity",
+          "start": 32.86,
+          "end": 33.34,
+          "probability": 0.9556
+        },
+        {
+          "word": "exception",
+          "start": 33.34,
+          "end": 33.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "rule.",
+          "start": 33.88,
+          "end": 34.3,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 35.16,
+      "end": 43.84,
+      "start_formatted": "00:00:35.160",
+      "end_formatted": "00:00:43.840",
+      "text": "For example, this rule becomes active when the priority of an escalated activity is high. When this happens, it sets a flag on the activity.",
+      "words": [
+        {
+          "word": "For",
+          "start": 35.16,
+          "end": 35.8,
+          "probability": 0.998
+        },
+        {
+          "word": "example,",
+          "start": 35.8,
+          "end": 36.24,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 36.58,
+          "end": 36.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "rule",
+          "start": 36.86,
+          "end": 37.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "becomes",
+          "start": 37.1,
+          "end": 37.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "active",
+          "start": 37.56,
+          "end": 37.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "when",
+          "start": 37.9,
+          "end": 38.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 38.12,
+          "end": 38.22,
+          "probability": 0.999
+        },
+        {
+          "word": "priority",
+          "start": 38.22,
+          "end": 38.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 38.6,
+          "end": 38.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 38.84,
+          "end": 38.94,
+          "probability": 0.999
+        },
+        {
+          "word": "escalated",
+          "start": 38.94,
+          "end": 39.6,
+          "probability": 0.999
+        },
+        {
+          "word": "activity",
+          "start": 39.6,
+          "end": 40.0,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 40.0,
+          "end": 40.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "high.",
+          "start": 40.34,
+          "end": 40.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "When",
+          "start": 40.86,
+          "end": 41.26,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 41.26,
+          "end": 41.44,
+          "probability": 1.0
+        },
+        {
+          "word": "happens,",
+          "start": 41.44,
+          "end": 41.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 42.16,
+          "end": 42.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "sets",
+          "start": 42.4,
+          "end": 42.68,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 42.68,
+          "end": 42.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "flag",
+          "start": 42.78,
+          "end": 43.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 43.06,
+          "end": 43.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 43.22,
+          "end": 43.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "activity.",
+          "start": 43.34,
+          "end": 43.84,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 44.36,
+      "end": 54.7,
+      "start_formatted": "00:00:44.360",
+      "end_formatted": "00:00:54.700",
+      "text": "Conversely, claim, group, and user exception rules operate on a schedule. When they run, they scan for conditions that may apply to any given claim, group, or user.",
+      "words": [
+        {
+          "word": "Conversely,",
+          "start": 44.36,
+          "end": 45.0,
+          "probability": 0.999
+        },
+        {
+          "word": "claim,",
+          "start": 45.36,
+          "end": 45.6,
+          "probability": 0.7764
+        },
+        {
+          "word": "group,",
+          "start": 45.82,
+          "end": 46.24,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 46.38,
+          "end": 46.64,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 46.64,
+          "end": 46.92,
+          "probability": 0.999
+        },
+        {
+          "word": "exception",
+          "start": 46.92,
+          "end": 47.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "rules",
+          "start": 47.34,
+          "end": 47.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "operate",
+          "start": 47.8,
+          "end": 48.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 48.26,
+          "end": 48.44,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 48.44,
+          "end": 48.56,
+          "probability": 0.998
+        },
+        {
+          "word": "schedule.",
+          "start": 48.56,
+          "end": 48.94,
+          "probability": 0.9971
+        },
+        {
+          "word": "When",
+          "start": 49.26,
+          "end": 49.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "they",
+          "start": 49.62,
+          "end": 49.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "run,",
+          "start": 49.74,
+          "end": 50.02,
+          "probability": 1.0
+        },
+        {
+          "word": "they",
+          "start": 50.22,
+          "end": 50.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "scan",
+          "start": 50.46,
+          "end": 50.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 50.78,
+          "end": 50.94,
+          "probability": 1.0
+        },
+        {
+          "word": "conditions",
+          "start": 50.94,
+          "end": 51.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 51.38,
+          "end": 51.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "may",
+          "start": 51.72,
+          "end": 51.88,
+          "probability": 0.998
+        },
+        {
+          "word": "apply",
+          "start": 51.88,
+          "end": 52.22,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 52.22,
+          "end": 52.4,
+          "probability": 1.0
+        },
+        {
+          "word": "any",
+          "start": 52.4,
+          "end": 52.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "given",
+          "start": 52.58,
+          "end": 52.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim,",
+          "start": 52.86,
+          "end": 53.22,
+          "probability": 0.999
+        },
+        {
+          "word": "group,",
+          "start": 53.5,
+          "end": 53.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "or",
+          "start": 54.02,
+          "end": 54.3,
+          "probability": 0.999
+        },
+        {
+          "word": "user.",
+          "start": 54.3,
+          "end": 54.7,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 61.88,
+      "end": 72.94,
+      "start_formatted": "00:01:01.880",
+      "end_formatted": "00:01:12.940",
+      "text": "For example, if there is an open claim, where the claims assign user does not have any open activities assigned to them. Then this rule will create an activity for the user to review the claim.",
+      "words": [
+        {
+          "word": "For",
+          "start": 61.88,
+          "end": 62.42,
+          "probability": 0.7773
+        },
+        {
+          "word": "example,",
+          "start": 62.42,
+          "end": 62.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "if",
+          "start": 63.22,
+          "end": 63.42,
+          "probability": 0.981
+        },
+        {
+          "word": "there",
+          "start": 63.42,
+          "end": 63.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 63.56,
+          "end": 63.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "an",
+          "start": 63.74,
+          "end": 63.86,
+          "probability": 0.9829
+        },
+        {
+          "word": "open",
+          "start": 63.86,
+          "end": 64.14,
+          "probability": 0.9316
+        },
+        {
+          "word": "claim,",
+          "start": 64.14,
+          "end": 64.52,
+          "probability": 0.9771
+        },
+        {
+          "word": "where",
+          "start": 64.7,
+          "end": 65.14,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 65.14,
+          "end": 65.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "claims",
+          "start": 65.26,
+          "end": 65.56,
+          "probability": 0.7241
+        },
+        {
+          "word": "assign",
+          "start": 65.56,
+          "end": 65.94,
+          "probability": 0.4592
+        },
+        {
+          "word": "user",
+          "start": 65.94,
+          "end": 66.3,
+          "probability": 0.9868
+        },
+        {
+          "word": "does",
+          "start": 66.3,
+          "end": 66.5,
+          "probability": 0.9937
+        },
+        {
+          "word": "not",
+          "start": 66.5,
+          "end": 66.7,
+          "probability": 0.9961
+        },
+        {
+          "word": "have",
+          "start": 66.7,
+          "end": 66.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "any",
+          "start": 66.9,
+          "end": 67.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "open",
+          "start": 67.12,
+          "end": 67.46,
+          "probability": 0.9785
+        },
+        {
+          "word": "activities",
+          "start": 67.46,
+          "end": 68.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "assigned",
+          "start": 68.06,
+          "end": 68.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 68.48,
+          "end": 68.66,
+          "probability": 0.999
+        },
+        {
+          "word": "them.",
+          "start": 68.66,
+          "end": 68.92,
+          "probability": 0.998
+        },
+        {
+          "word": "Then",
+          "start": 69.26,
+          "end": 69.78,
+          "probability": 0.9766
+        },
+        {
+          "word": "this",
+          "start": 69.78,
+          "end": 69.96,
+          "probability": 0.9819
+        },
+        {
+          "word": "rule",
+          "start": 69.96,
+          "end": 70.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "will",
+          "start": 70.2,
+          "end": 70.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "create",
+          "start": 70.4,
+          "end": 70.7,
+          "probability": 0.999
+        },
+        {
+          "word": "an",
+          "start": 70.7,
+          "end": 70.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "activity",
+          "start": 70.92,
+          "end": 71.28,
+          "probability": 0.9932
+        },
+        {
+          "word": "for",
+          "start": 71.28,
+          "end": 71.58,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 71.58,
+          "end": 71.7,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 71.7,
+          "end": 72.0,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 72.0,
+          "end": 72.2,
+          "probability": 0.999
+        },
+        {
+          "word": "review",
+          "start": 72.2,
+          "end": 72.5,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 72.5,
+          "end": 72.66,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 72.66,
+          "end": 72.94,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 72.94,
+      "end": 80.4,
+      "start_formatted": "00:01:12.940",
+      "end_formatted": "00:01:20.400",
+      "text": "I need to automatically create an activity based on the vacation status of the users in a group, so I will create a group exception rule.",
+      "words": [
+        {
+          "word": "I",
+          "start": 72.94,
+          "end": 73.5,
+          "probability": 0.9531
+        },
+        {
+          "word": "need",
+          "start": 73.5,
+          "end": 73.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "to",
+          "start": 73.68,
+          "end": 73.82,
+          "probability": 0.999
+        },
+        {
+          "word": "automatically",
+          "start": 73.82,
+          "end": 74.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "create",
+          "start": 74.26,
+          "end": 74.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "an",
+          "start": 74.72,
+          "end": 74.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "activity",
+          "start": 74.96,
+          "end": 75.34,
+          "probability": 0.959
+        },
+        {
+          "word": "based",
+          "start": 75.34,
+          "end": 75.72,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 75.72,
+          "end": 75.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 75.9,
+          "end": 75.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "vacation",
+          "start": 75.98,
+          "end": 76.46,
+          "probability": 0.9414
+        },
+        {
+          "word": "status",
+          "start": 76.46,
+          "end": 76.92,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 76.92,
+          "end": 77.16,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 77.16,
+          "end": 77.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "users",
+          "start": 77.26,
+          "end": 77.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "in",
+          "start": 77.58,
+          "end": 77.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 77.76,
+          "end": 77.84,
+          "probability": 0.9893
+        },
+        {
+          "word": "group,",
+          "start": 77.84,
+          "end": 78.14,
+          "probability": 0.9878
+        },
+        {
+          "word": "so",
+          "start": 78.34,
+          "end": 78.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "I",
+          "start": 78.6,
+          "end": 78.74,
+          "probability": 0.9946
+        },
+        {
+          "word": "will",
+          "start": 78.74,
+          "end": 78.9,
+          "probability": 0.9956
+        },
+        {
+          "word": "create",
+          "start": 78.9,
+          "end": 79.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 79.18,
+          "end": 79.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "group",
+          "start": 79.34,
+          "end": 79.52,
+          "probability": 0.8604
+        },
+        {
+          "word": "exception",
+          "start": 79.52,
+          "end": 79.94,
+          "probability": 0.979
+        },
+        {
+          "word": "rule.",
+          "start": 79.94,
+          "end": 80.4,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 80.64,
+      "end": 88.2,
+      "start_formatted": "00:01:20.640",
+      "end_formatted": "00:01:28.200",
+      "text": "In the default configuration, these rules are checked daily at 4 am. There are no group exception rules in the default configuration.",
+      "words": [
+        {
+          "word": "In",
+          "start": 80.64,
+          "end": 81.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 81.0,
+          "end": 81.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "default",
+          "start": 81.1,
+          "end": 81.44,
+          "probability": 0.9639
+        },
+        {
+          "word": "configuration,",
+          "start": 81.44,
+          "end": 82.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "these",
+          "start": 82.6,
+          "end": 82.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "rules",
+          "start": 82.86,
+          "end": 83.16,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 83.16,
+          "end": 83.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "checked",
+          "start": 83.4,
+          "end": 83.66,
+          "probability": 0.998
+        },
+        {
+          "word": "daily",
+          "start": 83.66,
+          "end": 83.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "at",
+          "start": 83.92,
+          "end": 84.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "4",
+          "start": 84.12,
+          "end": 84.32,
+          "probability": 0.9917
+        },
+        {
+          "word": "am.",
+          "start": 84.32,
+          "end": 84.64,
+          "probability": 0.1625
+        },
+        {
+          "word": "There",
+          "start": 85.0,
+          "end": 85.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "are",
+          "start": 85.36,
+          "end": 85.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "no",
+          "start": 85.48,
+          "end": 85.62,
+          "probability": 0.998
+        },
+        {
+          "word": "group",
+          "start": 85.62,
+          "end": 85.92,
+          "probability": 0.981
+        },
+        {
+          "word": "exception",
+          "start": 85.92,
+          "end": 86.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "rules",
+          "start": 86.38,
+          "end": 86.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "in",
+          "start": 86.8,
+          "end": 87.02,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 87.02,
+          "end": 87.12,
+          "probability": 0.998
+        },
+        {
+          "word": "default",
+          "start": 87.12,
+          "end": 87.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "configuration.",
+          "start": 87.44,
+          "end": 88.2,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 88.74,
+      "end": 90.36,
+      "start_formatted": "00:01:28.740",
+      "end_formatted": "00:01:30.360",
+      "text": "I will create a new one.",
+      "words": [
+        {
+          "word": "I",
+          "start": 88.74,
+          "end": 89.26,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 89.26,
+          "end": 89.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "create",
+          "start": 89.44,
+          "end": 89.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 89.76,
+          "end": 89.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "new",
+          "start": 89.96,
+          "end": 90.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "one.",
+          "start": 90.1,
+          "end": 90.36,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 90.36,
+      "end": 90.36,
+      "start_formatted": "00:01:30.360",
+      "end_formatted": "00:01:30.360",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 10,
+      "start": 112.78,
+      "end": 125.7,
+      "start_formatted": "00:01:52.780",
+      "end_formatted": "00:02:05.700",
+      "text": "I will leave the default condition of true, so that every group will be checked every night. The group is already available as a parameter. The first thing I need is the number of users on vacation. I will derive it from the properties of the group.",
+      "words": [
+        {
+          "word": "I",
+          "start": 112.78,
+          "end": 113.26,
+          "probability": 0.9814
+        },
+        {
+          "word": "will",
+          "start": 113.26,
+          "end": 113.36,
+          "probability": 0.0055
+        },
+        {
+          "word": "leave",
+          "start": 113.36,
+          "end": 113.5,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 113.5,
+          "end": 113.64,
+          "probability": 0.9858
+        },
+        {
+          "word": "default",
+          "start": 113.64,
+          "end": 113.98,
+          "probability": 0.895
+        },
+        {
+          "word": "condition",
+          "start": 113.98,
+          "end": 114.38,
+          "probability": 0.9858
+        },
+        {
+          "word": "of",
+          "start": 114.38,
+          "end": 114.6,
+          "probability": 0.9844
+        },
+        {
+          "word": "true,",
+          "start": 114.6,
+          "end": 114.88,
+          "probability": 0.542
+        },
+        {
+          "word": "so",
+          "start": 115.18,
+          "end": 115.44,
+          "probability": 0.9912
+        },
+        {
+          "word": "that",
+          "start": 115.44,
+          "end": 115.62,
+          "probability": 0.9878
+        },
+        {
+          "word": "every",
+          "start": 115.62,
+          "end": 115.82,
+          "probability": 0.9907
+        },
+        {
+          "word": "group",
+          "start": 115.82,
+          "end": 116.02,
+          "probability": 0.9512
+        },
+        {
+          "word": "will",
+          "start": 116.02,
+          "end": 116.2,
+          "probability": 0.9917
+        },
+        {
+          "word": "be",
+          "start": 116.2,
+          "end": 116.34,
+          "probability": 0.9966
+        },
+        {
+          "word": "checked",
+          "start": 116.34,
+          "end": 116.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "every",
+          "start": 116.58,
+          "end": 116.88,
+          "probability": 0.9907
+        },
+        {
+          "word": "night.",
+          "start": 116.88,
+          "end": 117.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "The",
+          "start": 117.4,
+          "end": 117.74,
+          "probability": 0.9839
+        },
+        {
+          "word": "group",
+          "start": 117.74,
+          "end": 117.94,
+          "probability": 0.9678
+        },
+        {
+          "word": "is",
+          "start": 117.94,
+          "end": 118.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "already",
+          "start": 118.14,
+          "end": 118.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "available",
+          "start": 118.54,
+          "end": 119.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "as",
+          "start": 119.02,
+          "end": 119.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 119.28,
+          "end": 119.36,
+          "probability": 0.9854
+        },
+        {
+          "word": "parameter.",
+          "start": 119.36,
+          "end": 119.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "The",
+          "start": 120.18,
+          "end": 120.5,
+          "probability": 0.9868
+        },
+        {
+          "word": "first",
+          "start": 120.5,
+          "end": 120.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "thing",
+          "start": 120.74,
+          "end": 120.94,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 120.94,
+          "end": 121.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "need",
+          "start": 121.1,
+          "end": 121.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 121.32,
+          "end": 121.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 121.46,
+          "end": 121.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "number",
+          "start": 121.6,
+          "end": 121.84,
+          "probability": 0.9609
+        },
+        {
+          "word": "of",
+          "start": 121.84,
+          "end": 122.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "users",
+          "start": 122.02,
+          "end": 122.34,
+          "probability": 0.9824
+        },
+        {
+          "word": "on",
+          "start": 122.34,
+          "end": 122.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "vacation.",
+          "start": 122.62,
+          "end": 123.12,
+          "probability": 0.9888
+        },
+        {
+          "word": "I",
+          "start": 123.52,
+          "end": 123.84,
+          "probability": 0.9927
+        },
+        {
+          "word": "will",
+          "start": 123.84,
+          "end": 123.9,
+          "probability": 0.7871
+        },
+        {
+          "word": "derive",
+          "start": 123.9,
+          "end": 124.12,
+          "probability": 0.9829
+        },
+        {
+          "word": "it",
+          "start": 124.12,
+          "end": 124.36,
+          "probability": 0.9771
+        },
+        {
+          "word": "from",
+          "start": 124.36,
+          "end": 124.5,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 124.5,
+          "end": 124.62,
+          "probability": 0.9941
+        },
+        {
+          "word": "properties",
+          "start": 124.62,
+          "end": 125.04,
+          "probability": 0.9717
+        },
+        {
+          "word": "of",
+          "start": 125.04,
+          "end": 125.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 125.3,
+          "end": 125.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "group.",
+          "start": 125.4,
+          "end": 125.7,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 157.4,
+      "end": 161.26,
+      "start_formatted": "00:02:37.400",
+      "end_formatted": "00:02:41.260",
+      "text": "I will need to compare that number to one third the number of users in the group.",
+      "words": [
+        {
+          "word": "I",
+          "start": 157.4,
+          "end": 157.8,
+          "probability": 0.9756
+        },
+        {
+          "word": "will",
+          "start": 157.8,
+          "end": 158.0,
+          "probability": 0.9795
+        },
+        {
+          "word": "need",
+          "start": 158.0,
+          "end": 158.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 158.18,
+          "end": 158.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "compare",
+          "start": 158.32,
+          "end": 158.68,
+          "probability": 0.9971
+        },
+        {
+          "word": "that",
+          "start": 158.68,
+          "end": 158.88,
+          "probability": 0.9927
+        },
+        {
+          "word": "number",
+          "start": 158.88,
+          "end": 159.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 159.16,
+          "end": 159.32,
+          "probability": 0.9951
+        },
+        {
+          "word": "one",
+          "start": 159.32,
+          "end": 159.52,
+          "probability": 0.605
+        },
+        {
+          "word": "third",
+          "start": 159.52,
+          "end": 159.7,
+          "probability": 0.6777
+        },
+        {
+          "word": "the",
+          "start": 159.7,
+          "end": 159.9,
+          "probability": 0.9727
+        },
+        {
+          "word": "number",
+          "start": 159.9,
+          "end": 160.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "of",
+          "start": 160.14,
+          "end": 160.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "users",
+          "start": 160.32,
+          "end": 160.66,
+          "probability": 0.9849
+        },
+        {
+          "word": "in",
+          "start": 160.66,
+          "end": 160.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 160.86,
+          "end": 160.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "group.",
+          "start": 160.94,
+          "end": 161.26,
+          "probability": 0.9907
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 174.02,
+      "end": 177.8,
+      "start_formatted": "00:02:54.020",
+      "end_formatted": "00:02:57.800",
+      "text": "I will also check to make sure that there are at least three members in the group.",
+      "words": [
+        {
+          "word": "I",
+          "start": 174.02,
+          "end": 174.38,
+          "probability": 0.9722
+        },
+        {
+          "word": "will",
+          "start": 174.38,
+          "end": 174.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "also",
+          "start": 174.56,
+          "end": 174.94,
+          "probability": 0.9937
+        },
+        {
+          "word": "check",
+          "start": 174.94,
+          "end": 175.22,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 175.22,
+          "end": 175.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "make",
+          "start": 175.36,
+          "end": 175.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "sure",
+          "start": 175.54,
+          "end": 175.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 175.78,
+          "end": 175.96,
+          "probability": 0.9561
+        },
+        {
+          "word": "there",
+          "start": 175.96,
+          "end": 176.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "are",
+          "start": 176.08,
+          "end": 176.22,
+          "probability": 0.9937
+        },
+        {
+          "word": "at",
+          "start": 176.22,
+          "end": 176.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "least",
+          "start": 176.38,
+          "end": 176.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "three",
+          "start": 176.54,
+          "end": 176.8,
+          "probability": 0.5918
+        },
+        {
+          "word": "members",
+          "start": 176.8,
+          "end": 177.22,
+          "probability": 0.9868
+        },
+        {
+          "word": "in",
+          "start": 177.22,
+          "end": 177.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 177.4,
+          "end": 177.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "group.",
+          "start": 177.5,
+          "end": 177.8,
+          "probability": 0.9863
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 186.34,
+      "end": 187.74,
+      "start_formatted": "00:03:06.340",
+      "end_formatted": "00:03:07.740",
+      "text": "Bye!",
+      "words": [
+        {
+          "word": "Bye!",
+          "start": 186.34,
+          "end": 187.74,
+          "probability": 0.0434
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 207.8,
+      "end": 208.12,
+      "start_formatted": "00:03:27.800",
+      "end_formatted": "00:03:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 207.8,
+          "end": 208.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 208.12,
+          "end": 208.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 237.8,
+      "end": 238.12,
+      "start_formatted": "00:03:57.800",
+      "end_formatted": "00:03:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 237.8,
+          "end": 238.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 238.12,
+          "end": 238.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 267.8,
+      "end": 268.12,
+      "start_formatted": "00:04:27.800",
+      "end_formatted": "00:04:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 267.8,
+          "end": 268.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 268.12,
+          "end": 268.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 297.8,
+      "end": 298.12,
+      "start_formatted": "00:04:57.800",
+      "end_formatted": "00:04:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 297.8,
+          "end": 298.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 298.12,
+          "end": 298.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 327.8,
+      "end": 328.12,
+      "start_formatted": "00:05:27.800",
+      "end_formatted": "00:05:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 327.8,
+          "end": 328.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 328.12,
+          "end": 328.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 357.8,
+      "end": 358.12,
+      "start_formatted": "00:05:57.800",
+      "end_formatted": "00:05:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 357.8,
+          "end": 358.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 358.12,
+          "end": 358.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 387.8,
+      "end": 388.12,
+      "start_formatted": "00:06:27.800",
+      "end_formatted": "00:06:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 387.8,
+          "end": 388.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 388.12,
+          "end": 388.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 417.8,
+      "end": 418.12,
+      "start_formatted": "00:06:57.800",
+      "end_formatted": "00:06:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 417.8,
+          "end": 418.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 418.12,
+          "end": 418.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 447.8,
+      "end": 448.12,
+      "start_formatted": "00:07:27.800",
+      "end_formatted": "00:07:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 447.8,
+          "end": 448.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 448.12,
+          "end": 448.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 477.8,
+      "end": 478.12,
+      "start_formatted": "00:07:57.800",
+      "end_formatted": "00:07:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 477.8,
+          "end": 478.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 478.12,
+          "end": 478.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 507.8,
+      "end": 508.12,
+      "start_formatted": "00:08:27.800",
+      "end_formatted": "00:08:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 507.8,
+          "end": 508.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 508.12,
+          "end": 508.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 537.8,
+      "end": 538.12,
+      "start_formatted": "00:08:57.800",
+      "end_formatted": "00:08:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 537.8,
+          "end": 538.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 538.12,
+          "end": 538.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 567.8,
+      "end": 568.12,
+      "start_formatted": "00:09:27.800",
+      "end_formatted": "00:09:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 567.8,
+          "end": 568.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 568.12,
+          "end": 568.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 597.8,
+      "end": 598.12,
+      "start_formatted": "00:09:57.800",
+      "end_formatted": "00:09:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 597.8,
+          "end": 598.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 598.12,
+          "end": 598.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 627.8,
+      "end": 628.12,
+      "start_formatted": "00:10:27.800",
+      "end_formatted": "00:10:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 627.8,
+          "end": 628.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 628.12,
+          "end": 628.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 657.8,
+      "end": 658.12,
+      "start_formatted": "00:10:57.800",
+      "end_formatted": "00:10:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 657.8,
+          "end": 658.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 658.12,
+          "end": 658.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 687.8,
+      "end": 688.12,
+      "start_formatted": "00:11:27.800",
+      "end_formatted": "00:11:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 687.8,
+          "end": 688.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 688.12,
+          "end": 688.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 717.8,
+      "end": 718.12,
+      "start_formatted": "00:11:57.800",
+      "end_formatted": "00:11:58.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 717.8,
+          "end": 718.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 718.12,
+          "end": 718.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 747.8,
+      "end": 748.12,
+      "start_formatted": "00:12:27.800",
+      "end_formatted": "00:12:28.120",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 747.8,
+          "end": 748.12,
+          "probability": 0.2734
+        },
+        {
+          "word": "you.",
+          "start": 748.12,
+          "end": 748.12,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 779.56,
+      "end": 780.76,
+      "start_formatted": "00:12:59.560",
+      "end_formatted": "00:13:00.760",
+      "text": "Thank you.",
+      "words": [
+        {
+          "word": "Thank",
+          "start": 779.56,
+          "end": 780.16,
+          "probability": 0.1942
+        },
+        {
+          "word": "you.",
+          "start": 780.16,
+          "end": 780.76,
+          "probability": 0.9985
+        }
+      ]
+    }
+  ]
+}

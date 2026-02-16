@@ -1,0 +1,3881 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_10_01.mp4",
+    "video_stem": "CC_10_01",
+    "duration_seconds": 210.12,
+    "duration_formatted": "00:03:30.120",
+    "segment_count": 16,
+    "word_count": 605,
+    "avg_confidence": 0.9131,
+    "transcription_time_seconds": 19.4,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:39:58.140800"
+  },
+  "full_text": "As Andy Applegate, I need to create three payments on the Karen Egertsen claim. Looking at the financials for the claim, I can see that several reserves have been created, and a few payments have already been made. The first payment I need to make is for auto repair. I have an invoice for $2,382.87, and I see that there is a reserve of $2,500. available for this. Navigating to the reserve. I will create a check for the invoice amount. The information about the payee is already provided, since it's associated with the exposure and incident. I select the payment type. I select the payment type. Which is final. And the cost category. Which is other. And enter the amount. $2,382.87. At this point I would typically link the payment to the invoice, but since there is no invoice for this reserve in the database. I'm done with this check, so I click finish. This check does not yet have a check number. This is because the check is awaiting submission to the check processing application. That application will assign a number to the check, and communicate that number back to Claim Center. The check is awaiting submission because I have the authority to approve a check of this amount. If I did not, it would be awaiting approval. Now I'm going to enter another check. This check covers physical therapy associated with Ms. Egertsen's injuries. There is a reserve of $12,000 set aside for medical expenses, of which $9,000 has already been paid. Ms. Egertsen has received a bill for $2,300. So I'll access the reserve. And create a check. Once again, I will just bypass this first screen. I'll make the payment final. Set the category to physical therapy. And enter the amount of $2,300. This check, too, is awaiting submission. Finally, I need to process a payment to a third party. There are $4,700 remaining on this reserve line, and I have been hand a bill for $2,000. The third party is Bob Smith. The third party will be approved for the treatment of the treatment of the treatment of the treatment of the treatment of the treatment of the treatment of the treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment treatment of treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment $2,000. The status of this check is pending approval. While I have the authority to approve a check of this size, the total checks for this claim have exceeded my authority, so the check must be approved by my manager. This concludes the transaction approval demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 2.48,
+      "end": 7.68,
+      "start_formatted": "00:00:02.480",
+      "end_formatted": "00:00:07.680",
+      "text": "As Andy Applegate, I need to create three payments on the Karen Egertsen claim.",
+      "words": [
+        {
+          "word": "As",
+          "start": 2.48,
+          "end": 2.98,
+          "probability": 0.8389
+        },
+        {
+          "word": "Andy",
+          "start": 2.98,
+          "end": 3.26,
+          "probability": 0.9795
+        },
+        {
+          "word": "Applegate,",
+          "start": 3.26,
+          "end": 3.94,
+          "probability": 0.9624
+        },
+        {
+          "word": "I",
+          "start": 4.18,
+          "end": 4.94,
+          "probability": 0.998
+        },
+        {
+          "word": "need",
+          "start": 4.94,
+          "end": 5.12,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 5.12,
+          "end": 5.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "create",
+          "start": 5.24,
+          "end": 5.56,
+          "probability": 0.999
+        },
+        {
+          "word": "three",
+          "start": 5.56,
+          "end": 5.82,
+          "probability": 0.7246
+        },
+        {
+          "word": "payments",
+          "start": 5.82,
+          "end": 6.24,
+          "probability": 0.999
+        },
+        {
+          "word": "on",
+          "start": 6.24,
+          "end": 6.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 6.42,
+          "end": 6.5,
+          "probability": 0.999
+        },
+        {
+          "word": "Karen",
+          "start": 6.5,
+          "end": 6.78,
+          "probability": 0.8882
+        },
+        {
+          "word": "Egertsen",
+          "start": 6.78,
+          "end": 7.3,
+          "probability": 0.8325
+        },
+        {
+          "word": "claim.",
+          "start": 7.3,
+          "end": 7.68,
+          "probability": 0.9668
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 10.9,
+      "end": 29.92,
+      "start_formatted": "00:00:10.900",
+      "end_formatted": "00:00:29.920",
+      "text": "Looking at the financials for the claim, I can see that several reserves have been created, and a few payments have already been made. The first payment I need to make is for auto repair. I have an invoice for $2,382.87, and I see that there is a reserve of $2,500.",
+      "words": [
+        {
+          "word": "Looking",
+          "start": 10.9,
+          "end": 11.4,
+          "probability": 0.9937
+        },
+        {
+          "word": "at",
+          "start": 11.4,
+          "end": 11.6,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 11.6,
+          "end": 11.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "financials",
+          "start": 11.7,
+          "end": 12.4,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 12.4,
+          "end": 12.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 12.54,
+          "end": 12.64,
+          "probability": 1.0
+        },
+        {
+          "word": "claim,",
+          "start": 12.64,
+          "end": 12.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 13.24,
+          "end": 14.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "can",
+          "start": 14.88,
+          "end": 15.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "see",
+          "start": 15.04,
+          "end": 15.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 15.24,
+          "end": 15.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "several",
+          "start": 15.44,
+          "end": 15.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserves",
+          "start": 15.8,
+          "end": 16.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "have",
+          "start": 16.22,
+          "end": 16.44,
+          "probability": 0.998
+        },
+        {
+          "word": "been",
+          "start": 16.44,
+          "end": 16.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "created,",
+          "start": 16.6,
+          "end": 17.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 17.34,
+          "end": 17.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 17.56,
+          "end": 17.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "few",
+          "start": 17.68,
+          "end": 17.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "payments",
+          "start": 17.84,
+          "end": 18.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 18.28,
+          "end": 18.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "already",
+          "start": 18.48,
+          "end": 18.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "been",
+          "start": 18.78,
+          "end": 19.0,
+          "probability": 1.0
+        },
+        {
+          "word": "made.",
+          "start": 19.0,
+          "end": 19.3,
+          "probability": 1.0
+        },
+        {
+          "word": "The",
+          "start": 19.6,
+          "end": 20.1,
+          "probability": 0.9985
+        },
+        {
+          "word": "first",
+          "start": 20.1,
+          "end": 20.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "payment",
+          "start": 20.36,
+          "end": 20.68,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 20.68,
+          "end": 20.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "need",
+          "start": 20.86,
+          "end": 21.02,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 21.02,
+          "end": 21.14,
+          "probability": 1.0
+        },
+        {
+          "word": "make",
+          "start": 21.14,
+          "end": 21.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 21.28,
+          "end": 21.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 21.44,
+          "end": 21.62,
+          "probability": 0.999
+        },
+        {
+          "word": "auto",
+          "start": 21.62,
+          "end": 21.88,
+          "probability": 0.9873
+        },
+        {
+          "word": "repair.",
+          "start": 21.88,
+          "end": 22.3,
+          "probability": 0.957
+        },
+        {
+          "word": "I",
+          "start": 22.62,
+          "end": 22.96,
+          "probability": 0.998
+        },
+        {
+          "word": "have",
+          "start": 22.96,
+          "end": 23.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 23.16,
+          "end": 23.28,
+          "probability": 0.999
+        },
+        {
+          "word": "invoice",
+          "start": 23.28,
+          "end": 23.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 23.66,
+          "end": 23.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "$2",
+          "start": 23.86,
+          "end": 24.16,
+          "probability": 0.9814
+        },
+        {
+          "word": ",382",
+          "start": 24.16,
+          "end": 25.6,
+          "probability": 0.9985
+        },
+        {
+          "word": ".87,",
+          "start": 25.6,
+          "end": 26.72,
+          "probability": 0.998
+        },
+        {
+          "word": "and",
+          "start": 26.94,
+          "end": 27.58,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 27.58,
+          "end": 27.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "see",
+          "start": 27.7,
+          "end": 27.88,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 27.88,
+          "end": 28.04,
+          "probability": 0.999
+        },
+        {
+          "word": "there",
+          "start": 28.04,
+          "end": 28.18,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 28.18,
+          "end": 28.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 28.32,
+          "end": 28.42,
+          "probability": 0.998
+        },
+        {
+          "word": "reserve",
+          "start": 28.42,
+          "end": 28.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 28.74,
+          "end": 28.9,
+          "probability": 0.9932
+        },
+        {
+          "word": "$2",
+          "start": 28.9,
+          "end": 29.12,
+          "probability": 0.9902
+        },
+        {
+          "word": ",500.",
+          "start": 29.12,
+          "end": 29.92,
+          "probability": 0.8496
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 30.0,
+      "end": 44.76,
+      "start_formatted": "00:00:30.000",
+      "end_formatted": "00:00:44.760",
+      "text": "available for this. Navigating to the reserve. I will create a check for the invoice amount. The information about the payee is already provided, since it's associated with the exposure and incident.",
+      "words": [
+        {
+          "word": "available",
+          "start": 30.0,
+          "end": 30.78,
+          "probability": 0.5728
+        },
+        {
+          "word": "for",
+          "start": 30.78,
+          "end": 31.06,
+          "probability": 0.999
+        },
+        {
+          "word": "this.",
+          "start": 31.06,
+          "end": 31.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "Navigating",
+          "start": 32.28,
+          "end": 32.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "to",
+          "start": 32.96,
+          "end": 33.12,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 33.12,
+          "end": 33.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "reserve.",
+          "start": 33.22,
+          "end": 33.58,
+          "probability": 0.6133
+        },
+        {
+          "word": "I",
+          "start": 35.28,
+          "end": 35.96,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 35.96,
+          "end": 36.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "create",
+          "start": 36.14,
+          "end": 36.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 36.44,
+          "end": 36.62,
+          "probability": 1.0
+        },
+        {
+          "word": "check",
+          "start": 36.62,
+          "end": 36.8,
+          "probability": 0.9888
+        },
+        {
+          "word": "for",
+          "start": 36.8,
+          "end": 36.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 36.98,
+          "end": 37.1,
+          "probability": 1.0
+        },
+        {
+          "word": "invoice",
+          "start": 37.1,
+          "end": 37.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "amount.",
+          "start": 37.54,
+          "end": 37.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 38.78,
+          "end": 39.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "information",
+          "start": 39.46,
+          "end": 39.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "about",
+          "start": 39.98,
+          "end": 40.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 40.3,
+          "end": 40.46,
+          "probability": 1.0
+        },
+        {
+          "word": "payee",
+          "start": 40.46,
+          "end": 40.86,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 40.86,
+          "end": 41.0,
+          "probability": 0.999
+        },
+        {
+          "word": "already",
+          "start": 41.0,
+          "end": 41.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "provided,",
+          "start": 41.4,
+          "end": 41.92,
+          "probability": 1.0
+        },
+        {
+          "word": "since",
+          "start": 42.16,
+          "end": 42.5,
+          "probability": 0.999
+        },
+        {
+          "word": "it's",
+          "start": 42.5,
+          "end": 42.74,
+          "probability": 0.9932
+        },
+        {
+          "word": "associated",
+          "start": 42.74,
+          "end": 43.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "with",
+          "start": 43.26,
+          "end": 43.52,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 43.52,
+          "end": 43.66,
+          "probability": 0.999
+        },
+        {
+          "word": "exposure",
+          "start": 43.66,
+          "end": 44.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "and",
+          "start": 44.16,
+          "end": 44.4,
+          "probability": 0.999
+        },
+        {
+          "word": "incident.",
+          "start": 44.4,
+          "end": 44.76,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 44.76,
+      "end": 62.54,
+      "start_formatted": "00:00:44.760",
+      "end_formatted": "00:01:02.540",
+      "text": "I select the payment type. I select the payment type. Which is final. And the cost category. Which is other. And enter the amount. $2,382.87.",
+      "words": [
+        {
+          "word": "I",
+          "start": 44.76,
+          "end": 45.9,
+          "probability": 0.9585
+        },
+        {
+          "word": "select",
+          "start": 45.9,
+          "end": 46.28,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 46.28,
+          "end": 46.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "payment",
+          "start": 46.44,
+          "end": 46.74,
+          "probability": 0.9409
+        },
+        {
+          "word": "type.",
+          "start": 46.74,
+          "end": 47.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 47.76,
+          "end": 48.6,
+          "probability": 0.0007
+        },
+        {
+          "word": "select",
+          "start": 48.6,
+          "end": 48.6,
+          "probability": 0.7852
+        },
+        {
+          "word": "the",
+          "start": 48.6,
+          "end": 48.6,
+          "probability": 0.584
+        },
+        {
+          "word": "payment",
+          "start": 48.6,
+          "end": 48.6,
+          "probability": 0.3386
+        },
+        {
+          "word": "type.",
+          "start": 48.6,
+          "end": 48.6,
+          "probability": 0.9219
+        },
+        {
+          "word": "Which",
+          "start": 48.6,
+          "end": 49.42,
+          "probability": 0.9199
+        },
+        {
+          "word": "is",
+          "start": 49.42,
+          "end": 49.56,
+          "probability": 0.9976
+        },
+        {
+          "word": "final.",
+          "start": 49.56,
+          "end": 49.92,
+          "probability": 0.7603
+        },
+        {
+          "word": "And",
+          "start": 51.42,
+          "end": 52.26,
+          "probability": 0.9697
+        },
+        {
+          "word": "the",
+          "start": 52.26,
+          "end": 52.36,
+          "probability": 0.9858
+        },
+        {
+          "word": "cost",
+          "start": 52.36,
+          "end": 52.64,
+          "probability": 0.98
+        },
+        {
+          "word": "category.",
+          "start": 52.64,
+          "end": 53.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "Which",
+          "start": 54.86,
+          "end": 55.7,
+          "probability": 0.9707
+        },
+        {
+          "word": "is",
+          "start": 55.7,
+          "end": 55.86,
+          "probability": 0.998
+        },
+        {
+          "word": "other.",
+          "start": 55.86,
+          "end": 56.08,
+          "probability": 0.9736
+        },
+        {
+          "word": "And",
+          "start": 57.8,
+          "end": 58.64,
+          "probability": 0.981
+        },
+        {
+          "word": "enter",
+          "start": 58.64,
+          "end": 58.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 58.94,
+          "end": 59.08,
+          "probability": 0.999
+        },
+        {
+          "word": "amount.",
+          "start": 59.08,
+          "end": 59.5,
+          "probability": 0.998
+        },
+        {
+          "word": "$2",
+          "start": 59.78,
+          "end": 60.02,
+          "probability": 0.876
+        },
+        {
+          "word": ",382",
+          "start": 60.02,
+          "end": 61.44,
+          "probability": 0.9951
+        },
+        {
+          "word": ".87.",
+          "start": 61.44,
+          "end": 62.54,
+          "probability": 0.9961
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 67.14,
+      "end": 76.3,
+      "start_formatted": "00:01:07.140",
+      "end_formatted": "00:01:16.300",
+      "text": "At this point I would typically link the payment to the invoice, but since there is no invoice for this reserve in the database. I'm done with this check, so I click finish.",
+      "words": [
+        {
+          "word": "At",
+          "start": 67.14,
+          "end": 67.58,
+          "probability": 0.6094
+        },
+        {
+          "word": "this",
+          "start": 67.58,
+          "end": 67.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "point",
+          "start": 67.82,
+          "end": 68.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 68.06,
+          "end": 68.22,
+          "probability": 0.918
+        },
+        {
+          "word": "would",
+          "start": 68.22,
+          "end": 68.38,
+          "probability": 0.998
+        },
+        {
+          "word": "typically",
+          "start": 68.38,
+          "end": 68.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "link",
+          "start": 68.72,
+          "end": 69.08,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 69.08,
+          "end": 69.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "payment",
+          "start": 69.22,
+          "end": 69.48,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 69.48,
+          "end": 69.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 69.7,
+          "end": 69.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "invoice,",
+          "start": 69.84,
+          "end": 70.28,
+          "probability": 0.9912
+        },
+        {
+          "word": "but",
+          "start": 70.48,
+          "end": 70.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "since",
+          "start": 70.7,
+          "end": 70.94,
+          "probability": 0.998
+        },
+        {
+          "word": "there",
+          "start": 70.94,
+          "end": 71.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 71.12,
+          "end": 71.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 71.26,
+          "end": 71.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "invoice",
+          "start": 71.46,
+          "end": 71.88,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 71.88,
+          "end": 72.08,
+          "probability": 0.999
+        },
+        {
+          "word": "this",
+          "start": 72.08,
+          "end": 72.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "reserve",
+          "start": 72.24,
+          "end": 72.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "in",
+          "start": 72.58,
+          "end": 72.76,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 72.76,
+          "end": 72.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "database.",
+          "start": 72.84,
+          "end": 73.24,
+          "probability": 0.999
+        },
+        {
+          "word": "I'm",
+          "start": 73.9,
+          "end": 74.34,
+          "probability": 0.9873
+        },
+        {
+          "word": "done",
+          "start": 74.34,
+          "end": 74.5,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 74.5,
+          "end": 74.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 74.66,
+          "end": 74.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "check,",
+          "start": 74.86,
+          "end": 75.14,
+          "probability": 0.9888
+        },
+        {
+          "word": "so",
+          "start": 75.32,
+          "end": 75.58,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 75.58,
+          "end": 75.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "click",
+          "start": 75.76,
+          "end": 76.02,
+          "probability": 0.9971
+        },
+        {
+          "word": "finish.",
+          "start": 76.02,
+          "end": 76.3,
+          "probability": 0.5669
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 77.16,
+      "end": 89.24,
+      "start_formatted": "00:01:17.160",
+      "end_formatted": "00:01:29.240",
+      "text": "This check does not yet have a check number. This is because the check is awaiting submission to the check processing application. That application will assign a number to the check, and communicate that number back to Claim Center.",
+      "words": [
+        {
+          "word": "This",
+          "start": 77.16,
+          "end": 77.68,
+          "probability": 0.8213
+        },
+        {
+          "word": "check",
+          "start": 77.68,
+          "end": 77.94,
+          "probability": 0.9893
+        },
+        {
+          "word": "does",
+          "start": 77.94,
+          "end": 78.18,
+          "probability": 0.9951
+        },
+        {
+          "word": "not",
+          "start": 78.18,
+          "end": 78.4,
+          "probability": 0.999
+        },
+        {
+          "word": "yet",
+          "start": 78.4,
+          "end": 78.6,
+          "probability": 0.9971
+        },
+        {
+          "word": "have",
+          "start": 78.6,
+          "end": 78.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 78.76,
+          "end": 78.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "check",
+          "start": 78.86,
+          "end": 79.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "number.",
+          "start": 79.08,
+          "end": 79.42,
+          "probability": 0.999
+        },
+        {
+          "word": "This",
+          "start": 79.72,
+          "end": 80.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 80.18,
+          "end": 80.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 80.3,
+          "end": 80.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 80.56,
+          "end": 80.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "check",
+          "start": 80.74,
+          "end": 80.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 80.96,
+          "end": 81.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "awaiting",
+          "start": 81.14,
+          "end": 81.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "submission",
+          "start": 81.44,
+          "end": 81.94,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 81.94,
+          "end": 82.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 82.2,
+          "end": 82.32,
+          "probability": 0.998
+        },
+        {
+          "word": "check",
+          "start": 82.32,
+          "end": 82.54,
+          "probability": 0.9727
+        },
+        {
+          "word": "processing",
+          "start": 82.54,
+          "end": 83.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "application.",
+          "start": 83.08,
+          "end": 83.8,
+          "probability": 1.0
+        },
+        {
+          "word": "That",
+          "start": 84.18,
+          "end": 84.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "application",
+          "start": 84.56,
+          "end": 85.12,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 85.12,
+          "end": 85.48,
+          "probability": 1.0
+        },
+        {
+          "word": "assign",
+          "start": 85.48,
+          "end": 85.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 85.78,
+          "end": 85.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "number",
+          "start": 85.92,
+          "end": 86.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 86.14,
+          "end": 86.3,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 86.3,
+          "end": 86.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "check,",
+          "start": 86.44,
+          "end": 86.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 86.94,
+          "end": 87.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "communicate",
+          "start": 87.16,
+          "end": 87.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 87.66,
+          "end": 87.96,
+          "probability": 1.0
+        },
+        {
+          "word": "number",
+          "start": 87.96,
+          "end": 88.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "back",
+          "start": 88.24,
+          "end": 88.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 88.52,
+          "end": 88.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "Claim",
+          "start": 88.68,
+          "end": 88.9,
+          "probability": 0.9131
+        },
+        {
+          "word": "Center.",
+          "start": 88.9,
+          "end": 89.24,
+          "probability": 0.96
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 89.72,
+      "end": 99.52,
+      "start_formatted": "00:01:29.720",
+      "end_formatted": "00:01:39.520",
+      "text": "The check is awaiting submission because I have the authority to approve a check of this amount. If I did not, it would be awaiting approval. Now I'm going to enter another check.",
+      "words": [
+        {
+          "word": "The",
+          "start": 89.72,
+          "end": 90.2,
+          "probability": 0.98
+        },
+        {
+          "word": "check",
+          "start": 90.2,
+          "end": 90.38,
+          "probability": 0.9854
+        },
+        {
+          "word": "is",
+          "start": 90.38,
+          "end": 90.6,
+          "probability": 1.0
+        },
+        {
+          "word": "awaiting",
+          "start": 90.6,
+          "end": 90.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "submission",
+          "start": 90.88,
+          "end": 91.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 91.42,
+          "end": 91.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 91.74,
+          "end": 91.96,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 91.96,
+          "end": 92.1,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 92.1,
+          "end": 92.22,
+          "probability": 1.0
+        },
+        {
+          "word": "authority",
+          "start": 92.22,
+          "end": 92.62,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 92.62,
+          "end": 92.88,
+          "probability": 1.0
+        },
+        {
+          "word": "approve",
+          "start": 92.88,
+          "end": 93.18,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 93.18,
+          "end": 93.3,
+          "probability": 0.9937
+        },
+        {
+          "word": "check",
+          "start": 93.3,
+          "end": 93.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 93.48,
+          "end": 93.66,
+          "probability": 1.0
+        },
+        {
+          "word": "this",
+          "start": 93.66,
+          "end": 93.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "amount.",
+          "start": 93.84,
+          "end": 94.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "If",
+          "start": 94.44,
+          "end": 94.82,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 94.82,
+          "end": 94.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "did",
+          "start": 94.92,
+          "end": 95.06,
+          "probability": 1.0
+        },
+        {
+          "word": "not,",
+          "start": 95.06,
+          "end": 95.36,
+          "probability": 1.0
+        },
+        {
+          "word": "it",
+          "start": 95.58,
+          "end": 95.78,
+          "probability": 1.0
+        },
+        {
+          "word": "would",
+          "start": 95.78,
+          "end": 95.92,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 95.92,
+          "end": 96.04,
+          "probability": 1.0
+        },
+        {
+          "word": "awaiting",
+          "start": 96.04,
+          "end": 96.4,
+          "probability": 0.999
+        },
+        {
+          "word": "approval.",
+          "start": 96.4,
+          "end": 96.96,
+          "probability": 1.0
+        },
+        {
+          "word": "Now",
+          "start": 97.4,
+          "end": 97.88,
+          "probability": 1.0
+        },
+        {
+          "word": "I'm",
+          "start": 97.88,
+          "end": 98.1,
+          "probability": 0.9834
+        },
+        {
+          "word": "going",
+          "start": 98.1,
+          "end": 98.3,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 98.3,
+          "end": 98.46,
+          "probability": 1.0
+        },
+        {
+          "word": "enter",
+          "start": 98.46,
+          "end": 98.76,
+          "probability": 1.0
+        },
+        {
+          "word": "another",
+          "start": 98.76,
+          "end": 99.1,
+          "probability": 1.0
+        },
+        {
+          "word": "check.",
+          "start": 99.1,
+          "end": 99.52,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 100.54,
+      "end": 118.28,
+      "start_formatted": "00:01:40.540",
+      "end_formatted": "00:01:58.280",
+      "text": "This check covers physical therapy associated with Ms. Egertsen's injuries. There is a reserve of $12,000 set aside for medical expenses, of which $9,000 has already been paid. Ms. Egertsen has received a bill for $2,300. So I'll access the reserve.",
+      "words": [
+        {
+          "word": "This",
+          "start": 100.54,
+          "end": 101.18,
+          "probability": 0.9326
+        },
+        {
+          "word": "check",
+          "start": 101.18,
+          "end": 101.4,
+          "probability": 0.9834
+        },
+        {
+          "word": "covers",
+          "start": 101.4,
+          "end": 101.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "physical",
+          "start": 101.82,
+          "end": 102.28,
+          "probability": 0.9844
+        },
+        {
+          "word": "therapy",
+          "start": 102.28,
+          "end": 102.76,
+          "probability": 0.999
+        },
+        {
+          "word": "associated",
+          "start": 102.76,
+          "end": 103.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "with",
+          "start": 103.32,
+          "end": 103.7,
+          "probability": 0.999
+        },
+        {
+          "word": "Ms.",
+          "start": 103.7,
+          "end": 103.94,
+          "probability": 0.9565
+        },
+        {
+          "word": "Egertsen's",
+          "start": 104.02,
+          "end": 104.54,
+          "probability": 0.835
+        },
+        {
+          "word": "injuries.",
+          "start": 104.54,
+          "end": 104.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "There",
+          "start": 105.3,
+          "end": 105.74,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 105.74,
+          "end": 105.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 105.9,
+          "end": 105.98,
+          "probability": 0.999
+        },
+        {
+          "word": "reserve",
+          "start": 105.98,
+          "end": 106.28,
+          "probability": 0.9868
+        },
+        {
+          "word": "of",
+          "start": 106.28,
+          "end": 106.46,
+          "probability": 0.998
+        },
+        {
+          "word": "$12",
+          "start": 106.46,
+          "end": 106.76,
+          "probability": 0.9902
+        },
+        {
+          "word": ",000",
+          "start": 106.76,
+          "end": 107.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "set",
+          "start": 107.24,
+          "end": 107.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "aside",
+          "start": 107.8,
+          "end": 108.12,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 108.12,
+          "end": 108.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "medical",
+          "start": 108.36,
+          "end": 108.66,
+          "probability": 0.998
+        },
+        {
+          "word": "expenses,",
+          "start": 108.66,
+          "end": 109.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 109.68,
+          "end": 109.88,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 109.88,
+          "end": 110.08,
+          "probability": 1.0
+        },
+        {
+          "word": "$9",
+          "start": 110.08,
+          "end": 110.38,
+          "probability": 0.999
+        },
+        {
+          "word": ",000",
+          "start": 110.38,
+          "end": 110.86,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 110.86,
+          "end": 111.38,
+          "probability": 0.999
+        },
+        {
+          "word": "already",
+          "start": 111.38,
+          "end": 111.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "been",
+          "start": 111.8,
+          "end": 112.06,
+          "probability": 1.0
+        },
+        {
+          "word": "paid.",
+          "start": 112.06,
+          "end": 112.38,
+          "probability": 1.0
+        },
+        {
+          "word": "Ms.",
+          "start": 112.7,
+          "end": 113.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "Egertsen",
+          "start": 113.14,
+          "end": 113.58,
+          "probability": 0.999
+        },
+        {
+          "word": "has",
+          "start": 113.58,
+          "end": 113.82,
+          "probability": 0.999
+        },
+        {
+          "word": "received",
+          "start": 113.82,
+          "end": 114.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 114.18,
+          "end": 114.32,
+          "probability": 1.0
+        },
+        {
+          "word": "bill",
+          "start": 114.32,
+          "end": 114.48,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 114.48,
+          "end": 114.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "$2",
+          "start": 114.68,
+          "end": 114.94,
+          "probability": 0.9927
+        },
+        {
+          "word": ",300.",
+          "start": 114.94,
+          "end": 115.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "So",
+          "start": 116.54,
+          "end": 117.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "I'll",
+          "start": 117.12,
+          "end": 117.34,
+          "probability": 0.9888
+        },
+        {
+          "word": "access",
+          "start": 117.34,
+          "end": 117.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 117.64,
+          "end": 117.86,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve.",
+          "start": 117.86,
+          "end": 118.28,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 120.32,
+      "end": 128.32,
+      "start_formatted": "00:02:00.320",
+      "end_formatted": "00:02:08.320",
+      "text": "And create a check. Once again, I will just bypass this first screen. I'll make the payment final.",
+      "words": [
+        {
+          "word": "And",
+          "start": 120.32,
+          "end": 120.92,
+          "probability": 0.314
+        },
+        {
+          "word": "create",
+          "start": 120.92,
+          "end": 121.24,
+          "probability": 0.9443
+        },
+        {
+          "word": "a",
+          "start": 121.24,
+          "end": 121.5,
+          "probability": 0.9971
+        },
+        {
+          "word": "check.",
+          "start": 121.5,
+          "end": 121.68,
+          "probability": 0.8643
+        },
+        {
+          "word": "Once",
+          "start": 123.28,
+          "end": 123.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "again,",
+          "start": 123.88,
+          "end": 124.2,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 124.44,
+          "end": 124.68,
+          "probability": 0.9917
+        },
+        {
+          "word": "will",
+          "start": 124.68,
+          "end": 124.84,
+          "probability": 0.9678
+        },
+        {
+          "word": "just",
+          "start": 124.84,
+          "end": 125.12,
+          "probability": 0.9927
+        },
+        {
+          "word": "bypass",
+          "start": 125.12,
+          "end": 125.42,
+          "probability": 0.9868
+        },
+        {
+          "word": "this",
+          "start": 125.42,
+          "end": 125.84,
+          "probability": 0.9941
+        },
+        {
+          "word": "first",
+          "start": 125.84,
+          "end": 126.14,
+          "probability": 0.9907
+        },
+        {
+          "word": "screen.",
+          "start": 126.14,
+          "end": 126.54,
+          "probability": 0.9966
+        },
+        {
+          "word": "I'll",
+          "start": 126.86,
+          "end": 127.3,
+          "probability": 0.9941
+        },
+        {
+          "word": "make",
+          "start": 127.3,
+          "end": 127.48,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 127.48,
+          "end": 127.6,
+          "probability": 0.9907
+        },
+        {
+          "word": "payment",
+          "start": 127.6,
+          "end": 127.9,
+          "probability": 0.9897
+        },
+        {
+          "word": "final.",
+          "start": 127.9,
+          "end": 128.32,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 132.5,
+      "end": 140.82,
+      "start_formatted": "00:02:12.500",
+      "end_formatted": "00:02:20.820",
+      "text": "Set the category to physical therapy. And enter the amount of $2,300.",
+      "words": [
+        {
+          "word": "Set",
+          "start": 132.5,
+          "end": 133.1,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 133.1,
+          "end": 133.24,
+          "probability": 0.998
+        },
+        {
+          "word": "category",
+          "start": 133.24,
+          "end": 133.68,
+          "probability": 0.9604
+        },
+        {
+          "word": "to",
+          "start": 133.68,
+          "end": 133.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "physical",
+          "start": 133.92,
+          "end": 134.22,
+          "probability": 0.3535
+        },
+        {
+          "word": "therapy.",
+          "start": 134.22,
+          "end": 134.76,
+          "probability": 0.9961
+        },
+        {
+          "word": "And",
+          "start": 138.26,
+          "end": 138.86,
+          "probability": 0.9814
+        },
+        {
+          "word": "enter",
+          "start": 138.86,
+          "end": 139.16,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 139.16,
+          "end": 139.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "amount",
+          "start": 139.3,
+          "end": 139.6,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 139.6,
+          "end": 139.78,
+          "probability": 0.9976
+        },
+        {
+          "word": "$2",
+          "start": 139.78,
+          "end": 140.04,
+          "probability": 0.7617
+        },
+        {
+          "word": ",300.",
+          "start": 140.04,
+          "end": 140.82,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 148.28,
+      "end": 160.7,
+      "start_formatted": "00:02:28.280",
+      "end_formatted": "00:02:40.700",
+      "text": "This check, too, is awaiting submission. Finally, I need to process a payment to a third party. There are $4,700 remaining on this reserve line, and I have been hand a bill for $2,000.",
+      "words": [
+        {
+          "word": "This",
+          "start": 148.28,
+          "end": 148.56,
+          "probability": 0.9609
+        },
+        {
+          "word": "check,",
+          "start": 148.56,
+          "end": 148.9,
+          "probability": 0.8691
+        },
+        {
+          "word": "too,",
+          "start": 149.04,
+          "end": 149.4,
+          "probability": 0.9468
+        },
+        {
+          "word": "is",
+          "start": 149.68,
+          "end": 149.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "awaiting",
+          "start": 149.88,
+          "end": 150.2,
+          "probability": 0.9507
+        },
+        {
+          "word": "submission.",
+          "start": 150.2,
+          "end": 150.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "Finally,",
+          "start": 151.28,
+          "end": 151.84,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 152.12,
+          "end": 152.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "need",
+          "start": 152.32,
+          "end": 152.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 152.48,
+          "end": 152.6,
+          "probability": 0.9966
+        },
+        {
+          "word": "process",
+          "start": 152.6,
+          "end": 152.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 152.96,
+          "end": 153.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "payment",
+          "start": 153.14,
+          "end": 153.44,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 153.44,
+          "end": 153.66,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 153.66,
+          "end": 153.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "third",
+          "start": 153.78,
+          "end": 153.96,
+          "probability": 0.916
+        },
+        {
+          "word": "party.",
+          "start": 153.96,
+          "end": 154.34,
+          "probability": 0.9546
+        },
+        {
+          "word": "There",
+          "start": 154.68,
+          "end": 155.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "are",
+          "start": 155.08,
+          "end": 155.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "$4",
+          "start": 155.24,
+          "end": 155.52,
+          "probability": 0.8896
+        },
+        {
+          "word": ",700",
+          "start": 155.52,
+          "end": 156.48,
+          "probability": 0.9771
+        },
+        {
+          "word": "remaining",
+          "start": 156.48,
+          "end": 157.2,
+          "probability": 0.9902
+        },
+        {
+          "word": "on",
+          "start": 157.2,
+          "end": 157.5,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 157.5,
+          "end": 157.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "reserve",
+          "start": 157.68,
+          "end": 158.06,
+          "probability": 0.9668
+        },
+        {
+          "word": "line,",
+          "start": 158.06,
+          "end": 158.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "and",
+          "start": 158.68,
+          "end": 158.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "I",
+          "start": 158.94,
+          "end": 159.04,
+          "probability": 0.9971
+        },
+        {
+          "word": "have",
+          "start": 159.04,
+          "end": 159.22,
+          "probability": 0.9956
+        },
+        {
+          "word": "been",
+          "start": 159.22,
+          "end": 159.32,
+          "probability": 0.5874
+        },
+        {
+          "word": "hand",
+          "start": 159.32,
+          "end": 159.48,
+          "probability": 0.5566
+        },
+        {
+          "word": "a",
+          "start": 159.48,
+          "end": 159.68,
+          "probability": 0.8774
+        },
+        {
+          "word": "bill",
+          "start": 159.68,
+          "end": 159.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "for",
+          "start": 159.8,
+          "end": 160.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "$2",
+          "start": 160.0,
+          "end": 160.26,
+          "probability": 0.9785
+        },
+        {
+          "word": ",000.",
+          "start": 160.26,
+          "end": 160.7,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 169.02,
+      "end": 170.88,
+      "start_formatted": "00:02:49.020",
+      "end_formatted": "00:02:50.880",
+      "text": "The third party is Bob Smith.",
+      "words": [
+        {
+          "word": "The",
+          "start": 169.02,
+          "end": 169.58,
+          "probability": 0.9868
+        },
+        {
+          "word": "third",
+          "start": 169.58,
+          "end": 169.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "party",
+          "start": 169.84,
+          "end": 170.16,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 170.16,
+          "end": 170.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "Bob",
+          "start": 170.32,
+          "end": 170.54,
+          "probability": 0.9692
+        },
+        {
+          "word": "Smith.",
+          "start": 170.54,
+          "end": 170.88,
+          "probability": 0.9814
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 175.18,
+      "end": 188.68,
+      "start_formatted": "00:02:55.180",
+      "end_formatted": "00:03:08.680",
+      "text": "The third party will be approved for the treatment of the treatment of the treatment of the treatment of the treatment of the treatment of the treatment of the treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment of treatment treatment of treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment treatment",
+      "words": [
+        {
+          "word": "The",
+          "start": 175.18,
+          "end": 175.46,
+          "probability": 0.0234
+        },
+        {
+          "word": "third",
+          "start": 175.46,
+          "end": 175.64,
+          "probability": 0.0006
+        },
+        {
+          "word": "party",
+          "start": 175.64,
+          "end": 175.64,
+          "probability": 0.0002
+        },
+        {
+          "word": "will",
+          "start": 175.64,
+          "end": 175.64,
+          "probability": 0.1638
+        },
+        {
+          "word": "be",
+          "start": 175.64,
+          "end": 175.72,
+          "probability": 0.4834
+        },
+        {
+          "word": "approved",
+          "start": 175.72,
+          "end": 175.92,
+          "probability": 0.0219
+        },
+        {
+          "word": "for",
+          "start": 175.92,
+          "end": 175.92,
+          "probability": 0.2377
+        },
+        {
+          "word": "the",
+          "start": 175.92,
+          "end": 175.92,
+          "probability": 0.2786
+        },
+        {
+          "word": "treatment",
+          "start": 175.92,
+          "end": 176.08,
+          "probability": 0.0004
+        },
+        {
+          "word": "of",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.2625
+        },
+        {
+          "word": "the",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.2666
+        },
+        {
+          "word": "treatment",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.0067
+        },
+        {
+          "word": "of",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.2388
+        },
+        {
+          "word": "the",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.4419
+        },
+        {
+          "word": "treatment",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.2456
+        },
+        {
+          "word": "of",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.2734
+        },
+        {
+          "word": "the",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.6025
+        },
+        {
+          "word": "treatment",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.7827
+        },
+        {
+          "word": "of",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.3289
+        },
+        {
+          "word": "the",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.688
+        },
+        {
+          "word": "treatment",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.9258
+        },
+        {
+          "word": "of",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.3677
+        },
+        {
+          "word": "the",
+          "start": 176.08,
+          "end": 176.08,
+          "probability": 0.7163
+        },
+        {
+          "word": "treatment",
+          "start": 176.08,
+          "end": 176.48,
+          "probability": 0.9619
+        },
+        {
+          "word": "of",
+          "start": 176.48,
+          "end": 176.72,
+          "probability": 0.429
+        },
+        {
+          "word": "the",
+          "start": 176.72,
+          "end": 176.92,
+          "probability": 0.7437
+        },
+        {
+          "word": "treatment",
+          "start": 176.92,
+          "end": 176.92,
+          "probability": 0.9736
+        },
+        {
+          "word": "of",
+          "start": 176.92,
+          "end": 177.02,
+          "probability": 0.4963
+        },
+        {
+          "word": "the",
+          "start": 177.02,
+          "end": 177.02,
+          "probability": 0.7695
+        },
+        {
+          "word": "treatment",
+          "start": 177.02,
+          "end": 177.02,
+          "probability": 0.979
+        },
+        {
+          "word": "of",
+          "start": 177.02,
+          "end": 177.2,
+          "probability": 0.5718
+        },
+        {
+          "word": "treatment",
+          "start": 177.2,
+          "end": 177.2,
+          "probability": 0.1268
+        },
+        {
+          "word": "of",
+          "start": 177.2,
+          "end": 177.2,
+          "probability": 0.1599
+        },
+        {
+          "word": "treatment",
+          "start": 177.2,
+          "end": 177.22,
+          "probability": 0.2539
+        },
+        {
+          "word": "of",
+          "start": 177.22,
+          "end": 177.22,
+          "probability": 0.1407
+        },
+        {
+          "word": "treatment",
+          "start": 177.22,
+          "end": 177.22,
+          "probability": 0.4805
+        },
+        {
+          "word": "of",
+          "start": 177.22,
+          "end": 177.22,
+          "probability": 0.1927
+        },
+        {
+          "word": "treatment",
+          "start": 177.22,
+          "end": 177.28,
+          "probability": 0.6528
+        },
+        {
+          "word": "of",
+          "start": 177.28,
+          "end": 177.44,
+          "probability": 0.2515
+        },
+        {
+          "word": "treatment",
+          "start": 177.44,
+          "end": 177.44,
+          "probability": 0.7354
+        },
+        {
+          "word": "of",
+          "start": 177.44,
+          "end": 177.46,
+          "probability": 0.3118
+        },
+        {
+          "word": "treatment",
+          "start": 177.46,
+          "end": 177.46,
+          "probability": 0.791
+        },
+        {
+          "word": "of",
+          "start": 177.46,
+          "end": 177.46,
+          "probability": 0.334
+        },
+        {
+          "word": "treatment",
+          "start": 177.46,
+          "end": 177.46,
+          "probability": 0.8364
+        },
+        {
+          "word": "of",
+          "start": 177.46,
+          "end": 177.48,
+          "probability": 0.3518
+        },
+        {
+          "word": "treatment",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.8579
+        },
+        {
+          "word": "of",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.3853
+        },
+        {
+          "word": "treatment",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.8765
+        },
+        {
+          "word": "of",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.387
+        },
+        {
+          "word": "treatment",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.8892
+        },
+        {
+          "word": "of",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.3523
+        },
+        {
+          "word": "treatment",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.8994
+        },
+        {
+          "word": "treatment",
+          "start": 177.48,
+          "end": 177.48,
+          "probability": 0.3586
+        },
+        {
+          "word": "of",
+          "start": 177.48,
+          "end": 181.74,
+          "probability": 0.6821
+        },
+        {
+          "word": "treatment",
+          "start": 181.74,
+          "end": 182.62,
+          "probability": 0.8999
+        },
+        {
+          "word": "treatment",
+          "start": 182.62,
+          "end": 182.64,
+          "probability": 0.623
+        },
+        {
+          "word": "treatment",
+          "start": 182.64,
+          "end": 182.66,
+          "probability": 0.1711
+        },
+        {
+          "word": "treatment",
+          "start": 182.66,
+          "end": 182.68,
+          "probability": 0.3015
+        },
+        {
+          "word": "treatment",
+          "start": 182.68,
+          "end": 182.7,
+          "probability": 0.5845
+        },
+        {
+          "word": "treatment",
+          "start": 182.7,
+          "end": 182.72,
+          "probability": 0.7695
+        },
+        {
+          "word": "treatment",
+          "start": 182.72,
+          "end": 183.02,
+          "probability": 0.8765
+        },
+        {
+          "word": "treatment",
+          "start": 183.02,
+          "end": 183.04,
+          "probability": 0.9233
+        },
+        {
+          "word": "treatment",
+          "start": 183.04,
+          "end": 183.04,
+          "probability": 0.9487
+        },
+        {
+          "word": "treatment",
+          "start": 183.04,
+          "end": 183.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "treatment",
+          "start": 183.04,
+          "end": 183.04,
+          "probability": 0.9707
+        },
+        {
+          "word": "treatment",
+          "start": 183.04,
+          "end": 183.04,
+          "probability": 0.9766
+        },
+        {
+          "word": "treatment",
+          "start": 183.04,
+          "end": 183.04,
+          "probability": 0.98
+        },
+        {
+          "word": "treatment",
+          "start": 183.04,
+          "end": 183.06,
+          "probability": 0.9834
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9849
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9858
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9863
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9878
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9888
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9893
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9893
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9902
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9907
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9907
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.06,
+          "end": 183.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9912
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9907
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.08,
+          "probability": 0.9907
+        },
+        {
+          "word": "treatment",
+          "start": 183.08,
+          "end": 183.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9902
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9897
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9893
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "treatment",
+          "start": 183.18,
+          "end": 183.56,
+          "probability": 0.9868
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9863
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9858
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9854
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9854
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9849
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9844
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9839
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9829
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9824
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 183.56,
+          "probability": 0.9814
+        },
+        {
+          "word": "treatment",
+          "start": 183.56,
+          "end": 184.76,
+          "probability": 0.981
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9805
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9805
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9795
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9785
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9775
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9771
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9766
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9741
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9751
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9741
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9731
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9712
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 184.76,
+          "probability": 0.9712
+        },
+        {
+          "word": "treatment",
+          "start": 184.76,
+          "end": 185.0,
+          "probability": 0.9692
+        },
+        {
+          "word": "treatment",
+          "start": 185.0,
+          "end": 185.0,
+          "probability": 0.9697
+        },
+        {
+          "word": "treatment",
+          "start": 185.0,
+          "end": 185.0,
+          "probability": 0.9678
+        },
+        {
+          "word": "treatment",
+          "start": 185.0,
+          "end": 186.66,
+          "probability": 0.9678
+        },
+        {
+          "word": "treatment",
+          "start": 186.66,
+          "end": 186.66,
+          "probability": 0.9653
+        },
+        {
+          "word": "treatment",
+          "start": 186.66,
+          "end": 186.66,
+          "probability": 0.9653
+        },
+        {
+          "word": "treatment",
+          "start": 186.66,
+          "end": 186.66,
+          "probability": 0.9629
+        },
+        {
+          "word": "treatment",
+          "start": 186.66,
+          "end": 186.66,
+          "probability": 0.9629
+        },
+        {
+          "word": "treatment",
+          "start": 186.66,
+          "end": 187.62,
+          "probability": 0.9614
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.62,
+          "probability": 0.96
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.62,
+          "probability": 0.9585
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.62,
+          "probability": 0.9585
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.62,
+          "probability": 0.9565
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.62,
+          "probability": 0.9551
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.62,
+          "probability": 0.9526
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.62,
+          "probability": 0.9517
+        },
+        {
+          "word": "treatment",
+          "start": 187.62,
+          "end": 187.7,
+          "probability": 0.9507
+        },
+        {
+          "word": "treatment",
+          "start": 187.7,
+          "end": 187.7,
+          "probability": 0.9487
+        },
+        {
+          "word": "treatment",
+          "start": 187.7,
+          "end": 187.7,
+          "probability": 0.9473
+        },
+        {
+          "word": "treatment",
+          "start": 187.7,
+          "end": 187.96,
+          "probability": 0.9458
+        },
+        {
+          "word": "treatment",
+          "start": 187.96,
+          "end": 187.96,
+          "probability": 0.9414
+        },
+        {
+          "word": "treatment",
+          "start": 187.96,
+          "end": 187.96,
+          "probability": 0.9399
+        },
+        {
+          "word": "treatment",
+          "start": 187.96,
+          "end": 187.96,
+          "probability": 0.939
+        },
+        {
+          "word": "treatment",
+          "start": 187.96,
+          "end": 187.96,
+          "probability": 0.9365
+        },
+        {
+          "word": "treatment",
+          "start": 187.96,
+          "end": 187.96,
+          "probability": 0.9355
+        },
+        {
+          "word": "treatment",
+          "start": 187.96,
+          "end": 187.96,
+          "probability": 0.9336
+        },
+        {
+          "word": "treatment",
+          "start": 187.96,
+          "end": 188.14,
+          "probability": 0.9307
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9307
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9277
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9253
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9233
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9209
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.918
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9175
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9141
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.14,
+          "probability": 0.9082
+        },
+        {
+          "word": "treatment",
+          "start": 188.14,
+          "end": 188.18,
+          "probability": 0.9092
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.9097
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.9043
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.9014
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.9019
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.894
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.8931
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.8857
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.8882
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.8828
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.8799
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.8735
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.18,
+          "probability": 0.8726
+        },
+        {
+          "word": "treatment",
+          "start": 188.18,
+          "end": 188.2,
+          "probability": 0.8687
+        },
+        {
+          "word": "treatment",
+          "start": 188.2,
+          "end": 188.2,
+          "probability": 0.8672
+        },
+        {
+          "word": "treatment",
+          "start": 188.2,
+          "end": 188.2,
+          "probability": 0.8652
+        },
+        {
+          "word": "treatment",
+          "start": 188.2,
+          "end": 188.26,
+          "probability": 0.8643
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8608
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8564
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8511
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8442
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8467
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8452
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8359
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.26,
+          "probability": 0.8325
+        },
+        {
+          "word": "treatment",
+          "start": 188.26,
+          "end": 188.56,
+          "probability": 0.832
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.8271
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.8252
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.8237
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.8164
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.813
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.8086
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.8066
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.56,
+          "probability": 0.8003
+        },
+        {
+          "word": "treatment",
+          "start": 188.56,
+          "end": 188.68,
+          "probability": 0.7939
+        },
+        {
+          "word": "treatment",
+          "start": 188.68,
+          "end": 188.68,
+          "probability": 0.7993
+        },
+        {
+          "word": "treatment",
+          "start": 188.68,
+          "end": 188.68,
+          "probability": 0.7905
+        },
+        {
+          "word": "treatment",
+          "start": 188.68,
+          "end": 188.68,
+          "probability": 0.7837
+        },
+        {
+          "word": "treatment",
+          "start": 188.68,
+          "end": 188.68,
+          "probability": 0.7803
+        },
+        {
+          "word": "treatment",
+          "start": 188.68,
+          "end": 188.68,
+          "probability": 0.7808
+        },
+        {
+          "word": "treatment",
+          "start": 188.68,
+          "end": 188.68,
+          "probability": 0.7656
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 188.68,
+      "end": 200.76,
+      "start_formatted": "00:03:08.680",
+      "end_formatted": "00:03:20.760",
+      "text": "$2,000. The status of this check is pending approval. While I have the authority to approve",
+      "words": [
+        {
+          "word": "$2",
+          "start": 188.68,
+          "end": 189.0,
+          "probability": 0.4019
+        },
+        {
+          "word": ",000.",
+          "start": 189.0,
+          "end": 189.44,
+          "probability": 0.9907
+        },
+        {
+          "word": "The",
+          "start": 196.26,
+          "end": 196.78,
+          "probability": 0.9526
+        },
+        {
+          "word": "status",
+          "start": 196.78,
+          "end": 197.1,
+          "probability": 0.98
+        },
+        {
+          "word": "of",
+          "start": 197.1,
+          "end": 197.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "this",
+          "start": 197.32,
+          "end": 197.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "check",
+          "start": 197.48,
+          "end": 197.68,
+          "probability": 0.9707
+        },
+        {
+          "word": "is",
+          "start": 197.68,
+          "end": 197.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "pending",
+          "start": 197.9,
+          "end": 198.2,
+          "probability": 0.6777
+        },
+        {
+          "word": "approval.",
+          "start": 198.2,
+          "end": 198.66,
+          "probability": 0.9668
+        },
+        {
+          "word": "While",
+          "start": 199.04,
+          "end": 199.44,
+          "probability": 0.9873
+        },
+        {
+          "word": "I",
+          "start": 199.44,
+          "end": 199.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "have",
+          "start": 199.58,
+          "end": 199.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 199.76,
+          "end": 199.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "authority",
+          "start": 199.86,
+          "end": 200.22,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 200.22,
+          "end": 200.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "approve",
+          "start": 200.48,
+          "end": 200.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 200.76,
+      "end": 205.66,
+      "start_formatted": "00:03:20.760",
+      "end_formatted": "00:03:25.660",
+      "text": "a check of this size, the total checks for this claim have exceeded my authority, so the check",
+      "words": [
+        {
+          "word": "a",
+          "start": 200.76,
+          "end": 200.9,
+          "probability": 0.9556
+        },
+        {
+          "word": "check",
+          "start": 200.9,
+          "end": 201.08,
+          "probability": 0.9941
+        },
+        {
+          "word": "of",
+          "start": 201.08,
+          "end": 201.24,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 201.24,
+          "end": 201.38,
+          "probability": 0.998
+        },
+        {
+          "word": "size,",
+          "start": 201.38,
+          "end": 201.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 202.04,
+          "end": 202.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "total",
+          "start": 202.24,
+          "end": 202.5,
+          "probability": 0.999
+        },
+        {
+          "word": "checks",
+          "start": 202.5,
+          "end": 202.84,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 202.84,
+          "end": 203.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "this",
+          "start": 203.02,
+          "end": 203.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 203.18,
+          "end": 203.48,
+          "probability": 0.999
+        },
+        {
+          "word": "have",
+          "start": 203.48,
+          "end": 203.66,
+          "probability": 0.998
+        },
+        {
+          "word": "exceeded",
+          "start": 203.66,
+          "end": 204.06,
+          "probability": 0.999
+        },
+        {
+          "word": "my",
+          "start": 204.06,
+          "end": 204.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "authority,",
+          "start": 204.28,
+          "end": 204.72,
+          "probability": 0.9932
+        },
+        {
+          "word": "so",
+          "start": 205.02,
+          "end": 205.28,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 205.28,
+          "end": 205.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "check",
+          "start": 205.44,
+          "end": 205.66,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 205.66,
+      "end": 210.12,
+      "start_formatted": "00:03:25.660",
+      "end_formatted": "00:03:30.120",
+      "text": "must be approved by my manager. This concludes the transaction approval demonstration.",
+      "words": [
+        {
+          "word": "must",
+          "start": 205.66,
+          "end": 205.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 205.9,
+          "end": 206.06,
+          "probability": 0.9995
+        },
+        {
+          "word": "approved",
+          "start": 206.06,
+          "end": 206.42,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 206.42,
+          "end": 206.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "my",
+          "start": 206.6,
+          "end": 206.84,
+          "probability": 0.998
+        },
+        {
+          "word": "manager.",
+          "start": 206.84,
+          "end": 207.18,
+          "probability": 0.9648
+        },
+        {
+          "word": "This",
+          "start": 207.52,
+          "end": 207.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "concludes",
+          "start": 207.9,
+          "end": 208.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 208.32,
+          "end": 208.54,
+          "probability": 0.999
+        },
+        {
+          "word": "transaction",
+          "start": 208.54,
+          "end": 208.96,
+          "probability": 0.9434
+        },
+        {
+          "word": "approval",
+          "start": 208.96,
+          "end": 209.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "demonstration.",
+          "start": 209.56,
+          "end": 210.12,
+          "probability": 0.9951
+        }
+      ]
+    }
+  ]
+}

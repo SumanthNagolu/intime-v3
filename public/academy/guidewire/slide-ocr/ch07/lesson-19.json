@@ -1,0 +1,302 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-19",
+    "slide_count": 26,
+    "slides_with_text": 24,
+    "total_words": 1150,
+    "avg_confidence": 84.39,
+    "processing_time_seconds": 11.26,
+    "extracted_at": "2026-02-13T12:20:46.566849"
+  },
+  "full_text": "Partial Page Update\n\nLesson\nobjectives ¢ Identify properties associated with dynamic\n\nwidget behaviors\n\n¢ Describe common ways to configure a partial\npage update\n\n¢ Enable and configure targeted Post On\nChange for a widget\n\nWidget properties\n\n| Two kinds of widget properties fa\nStatic Property Dynamic Property\n\n¢ Evaluates a static value that is ¢ After a user navigates to a page or clicks\n\nimmutable, never changes update, evaluates an expression and\n,\nreturns a value\n+ id requires a static value . . .\n* editable requires boolean expression\n* label returns a string expression\n\n* value returns an object expression\n\nProperties: | fe Layout config Reflection PostOnChange\nText Input\nBasic properties\neditable true\nid* FirstName\nlabel Displaykey. get (Training. FirstName\")\nrequired\n\nvalue* (anaBContact as ABPerson) .FirstName\n\n| Dynamic properties evaluate expressions\n\nAvailable\n\n* Boolean expression which, if false, grays out the widget and its children\nEditable\n\n* Boolean expression which, if false, makes the widget and its children read-only\nRequired\n\n* Boolean expression which, if true, then a value must be filled out by the user\nVisible\n\n* Boolean expression which, if false, completely hides the widget and its children\n\n| Example: required fa\n\naspersonSubtypelnfolnputSetABPerson.pcf *\n\n¢ When the boolean\n\nLicense Info expression evaluates to\nDriver's License|(anABContact as ABPerson).License.. true, the field is required\na\n¢ Required is true when\n\nPage Configuration Text there is a value for the\nProperties 3] Layout config Reflection PostOnChange LicenseNumber\nTypeKey Input\n\nBasic properties\n\neditable true\n\nid State\n\nlabel i\n\nrequired\n\nvalue* (anABContact as ABPerso¥) .LicenseState License Info\n\nvalueType* typekey. Jurisdiction \"A134214342\n\nExample: visible fa\n\nGB aspersonDetailsPage.pct * ¢ When the boolean\nPerson Info] Phone & Addresses Financial Summary] [Vendor Info| expression evaluates to\n\ntrue, the button is visible\n\nAd] Remove| * Visible only when there is\none or more bank\n\nPage Configuration| Text\n\nProperties = Properties account\n\nToolbar Button\n\nvisible\n\nanABContact . BankAccounts.Count>0|\n\nPolicy Perso: Exc Andy\nDetails\n\nPersoninfo | Phone é.Addresces\n\nBank Accounts | Financial Summary\n\nBe\nBankName = RoutingNumber > AccountNumber > AccountType > Verified? > Createdon >\nACMECreditUnion 123-999 117233445, Checking Pending 06/19/2018\nVaultsafe 225.03 54433222 Savings Pending 06/19/2018\n\n| Dynamic property and dynamic behavior fa\nDynamic Property = Dynamic Behavior\n\n« After a user navigates to a page or « While a user changes business data, the\n\nclicks Update, the widget property widget property expression is evaluated\n\nexpression is evaluated ¢ Reflects uncommitted data changes\n\n* Reflects committed data ¢ Applicable to the dynamic properties of a\n\nwidget\n¢ Partial page update configuration required\n* Two types:\n¢ Layout re-render\n\n* Data only\n\n| Partial page update: Layout re-render fa\n\n« Responds to a user changing business data while it happens and changes the\nlayout of widgets on the screen\n\n¢« Example:\n\n« While a user changes the Did agent inspect vehicles? field to Yes, a secondary question and\nthe Date Input widget becomes visible\n\nQualification Qualification\n\n‘when’\n\nAny vehicles customized, altered or\n\nWith exception of encumbrances, ae any epee eee nee Yes @)No\nvehicles not solely owned by and registered to © Yes @ No aa\napplicant? ith exception of encumbrances, re\n\nany vehicles not solely owned by and Yes (©) No\n‘Any past, present or planned operation rexjotered to apphcaret\n; ve en gstered to applicant?\n\n‘Any past, present or planned\n\noperation including manufacture, ves ©no\n\n-<none> : = installation, removal, encasement,\nor encapsulation of asbestos?\n\n| Partial page update: Layout re-render (continues fa\n\n¢ Layout re-rendered for the page\n\n¢ No data committed Gabi ves [o]No\n* Applies to following dynamic widget properties Value Changed =d)\n+ visible ‘\n* editable —— |\n* available Layout re-render\n\n* required\n\n| Partial page update: DATA_ONLY fa\n\n« Responds to a user changing business\ndata while it happens\n\n« Not after the user navigates to the page one\n\n« Not after the user commits or tries to\ncommit the data\n\n¢« Example:\n\n* While a user changes the Affinity Group\nName field, values for other fields are\nrendered with changes (read-only in Ul)\n\n| Partial page update: DATA_ONLY canes G\n\n¢ Data is updated for the page\n\n« No data committed\n¢ Applies to only one dynamic widget property: Yvatue changed =)\n\nAffinity Group.\n\n* value sone algae\n\nData updated\n\n| Demonstration G\n\n— Calculate the down payment and\n—= installment amounts\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Post On Change properties fa\n[__—steabiepestonentor = onChange\n\nIf evaluated true when page is ¢ Defines a Gosu expression to\nrendered, this field won’t trigger Post invoke when user changes the value\nOn Change of the widget\n¢ Default is false * Causes immediate post back to the\nserver\n\nResolution\ninvoicing Method! aPolicy.InvoicingMethod |\naflagEntry Resolution\n\nPage Contiguration| Text\n\nProperties: | = properties | [ESjtayout contig |i) Refecion [RE EERGRSEES Page Configuration] Text\n- Properties: Properties Layout config Reflection\n( Enable targeted Post On Change\nG =v: Enable targeted Post On Change\nPost hange PostOnChange\nisablePostOnEnter_ Policy. Premium cur != currency. 7¢_UsD isablePostOnénter\nonChange\n\n‘onChange aFlagEntry.setFieldsonResolution()\n\n| Target property (earlier versions) Gi\n— Layoutrerender = ataupdate\n\n« Widget ID\n¢ Target area re-rendered\n¢ All editable data refreshed\n\n¢ Widgets can also be grouped and .\nparent container can be targeted\n\nProperties: | Ee Properties | [=| Layout config) Reflection\nEnable targeted Post On Change\nPostOnChange\n\ndisablePostOnEnter\n\n‘onChange\n\njicet ESE\n\n* DATA_ONLY\n¢ No layout re-render\n¢ All editable data refreshed\n\nBetter performance\n\nProperties: ||) Properties | |=5|Layout config | Reflection\nEnable targeted Post On Change\nPostOnChange\n\ndisablePostOnEnter\n\n‘onChange\n\n([SREMENNN =>. cscs\n\nReview Questions\n\nQuestion G\n\n_— — Name two properties that evaluate expressions.\n\n4\n¢\n¢\n\nee ee a\n\nAnswer\n\n_— — Name two properties that evaluate expressions.\n\n4\n¢\n¢\n\nPossible answers include:\n* editable\n\n* required\n\n* visible\n\n* available\n\nSOOO ODD DOOD DODO DOOD\n\nQuestion G\n\n_- — Howis a partial page update implemented?\n4\n¢\n¢\n\nee ee a\n\nAnswer fa\n\nwoe How is a partial page update implemented?\n¢\n¢\n\nApartial page update is implemented by configuring dynamic widget behavior by\nenabling targeted post on change. Often the dynamic widget behavior configuration\nalso includes configuring an expression for a widget property.\n\n- SSS SSS SE See\n\nQuestion G\n\n_- — Whatare the three properties that you can configure for a widget with\n¢ targeted Post On Change enabled?\n\n¢\n¢\n\nee ee a\n\nAnswer fa\n\n_— — Whatare the three properties that you can configure for a widget with\nA targeted Post On Change enabled?\n\ndisablePostOnEnter, onChange, and (with earlier InsuranceSuite versions) target.\n\nSOOO ODD DOOD DODO DOOD\n\nLesson\nobj ectives * Identify properties associated with dynamic\nreview widget behaviors\n\n¢ Describe common ways to configure a partial\npage update\n\n¢ Enable and configure targeted Post On\nChange for a widget\n\n| Student exercise\n\nPartial Page Update",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Partial Page Update",
+      "word_count": 3,
+      "avg_confidence": 95.75,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Identify properties associated with dynamic\n\nwidget behaviors\n\n¢ Describe common ways to configure a partial\npage update\n\n¢ Enable and configure targeted Post On\nChange for a widget",
+      "word_count": 31,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Widget properties",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Two kinds of widget properties fa\nStatic Property Dynamic Property\n\n¢ Evaluates a static value that is ¢ After a user navigates to a page or clicks\n\nimmutable, never changes update, evaluates an expression and\n,\nreturns a value\n+ id requires a static value . . .\n* editable requires boolean expression\n* label returns a string expression\n\n* value returns an object expression\n\nProperties: | fe Layout config Reflection PostOnChange\nText Input\nBasic properties\neditable true\nid* FirstName\nlabel Displaykey. get (Training. FirstName\")\nrequired\n\nvalue* (anaBContact as ABPerson) .FirstName",
+      "word_count": 92,
+      "avg_confidence": 85.3,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Dynamic properties evaluate expressions\n\nAvailable\n\n* Boolean expression which, if false, grays out the widget and its children\nEditable\n\n* Boolean expression which, if false, makes the widget and its children read-only\nRequired\n\n* Boolean expression which, if true, then a value must be filled out by the user\nVisible\n\n* Boolean expression which, if false, completely hides the widget and its children",
+      "word_count": 64,
+      "avg_confidence": 93.44,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Example: required fa\n\naspersonSubtypelnfolnputSetABPerson.pcf *\n\n¢ When the boolean\n\nLicense Info expression evaluates to\nDriver's License|(anABContact as ABPerson).License.. true, the field is required\na\n¢ Required is true when\n\nPage Configuration Text there is a value for the\nProperties 3] Layout config Reflection PostOnChange LicenseNumber\nTypeKey Input\n\nBasic properties\n\neditable true\n\nid State\n\nlabel i\n\nrequired\n\nvalue* (anABContact as ABPerso¥) .LicenseState License Info\n\nvalueType* typekey. Jurisdiction \"A134214342",
+      "word_count": 68,
+      "avg_confidence": 85.63,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Example: visible fa\n\nGB aspersonDetailsPage.pct * ¢ When the boolean\nPerson Info] Phone & Addresses Financial Summary] [Vendor Info| expression evaluates to\n\ntrue, the button is visible\n\nAd] Remove| * Visible only when there is\none or more bank\n\nPage Configuration| Text\n\nProperties = Properties account\n\nToolbar Button\n\nvisible\n\nanABContact . BankAccounts.Count>0|\n\nPolicy Perso: Exc Andy\nDetails\n\nPersoninfo | Phone é.Addresces\n\nBank Accounts | Financial Summary\n\nBe\nBankName = RoutingNumber > AccountNumber > AccountType > Verified? > Createdon >\nACMECreditUnion 123-999 117233445, Checking Pending 06/19/2018\nVaultsafe 225.03 54433222 Savings Pending 06/19/2018",
+      "word_count": 91,
+      "avg_confidence": 76.74,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Dynamic property and dynamic behavior fa\nDynamic Property = Dynamic Behavior\n\n« After a user navigates to a page or « While a user changes business data, the\n\nclicks Update, the widget property widget property expression is evaluated\n\nexpression is evaluated ¢ Reflects uncommitted data changes\n\n* Reflects committed data ¢ Applicable to the dynamic properties of a\n\nwidget\n¢ Partial page update configuration required\n* Two types:\n¢ Layout re-render\n\n* Data only",
+      "word_count": 75,
+      "avg_confidence": 81.69,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Partial page update: Layout re-render fa\n\n« Responds to a user changing business data while it happens and changes the\nlayout of widgets on the screen\n\n¢« Example:\n\n« While a user changes the Did agent inspect vehicles? field to Yes, a secondary question and\nthe Date Input widget becomes visible\n\nQualification Qualification\n\n‘when’\n\nAny vehicles customized, altered or\n\nWith exception of encumbrances, ae any epee eee nee Yes @)No\nvehicles not solely owned by and registered to © Yes @ No aa\napplicant? ith exception of encumbrances, re\n\nany vehicles not solely owned by and Yes (©) No\n‘Any past, present or planned operation rexjotered to apphcaret\n; ve en gstered to applicant?\n\n‘Any past, present or planned\n\noperation including manufacture, ves ©no\n\n-<none> : = installation, removal, encasement,\nor encapsulation of asbestos?",
+      "word_count": 135,
+      "avg_confidence": 77.07,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Partial page update: Layout re-render (continues fa\n\n¢ Layout re-rendered for the page\n\n¢ No data committed Gabi ves [o]No\n* Applies to following dynamic widget properties Value Changed =d)\n+ visible ‘\n* editable —— |\n* available Layout re-render\n\n* required",
+      "word_count": 44,
+      "avg_confidence": 78.91,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Partial page update: DATA_ONLY fa\n\n« Responds to a user changing business\ndata while it happens\n\n« Not after the user navigates to the page one\n\n« Not after the user commits or tries to\ncommit the data\n\n¢« Example:\n\n* While a user changes the Affinity Group\nName field, values for other fields are\nrendered with changes (read-only in Ul)",
+      "word_count": 62,
+      "avg_confidence": 89.64,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Partial page update: DATA_ONLY canes G\n\n¢ Data is updated for the page\n\n« No data committed\n¢ Applies to only one dynamic widget property: Yvatue changed =)\n\nAffinity Group.\n\n* value sone algae\n\nData updated",
+      "word_count": 37,
+      "avg_confidence": 77.03,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Demonstration G\n\n— Calculate the down payment and\n—= installment amounts\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 42,
+      "avg_confidence": 93.02,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Post On Change properties fa\n[__—steabiepestonentor = onChange\n\nIf evaluated true when page is ¢ Defines a Gosu expression to\nrendered, this field won’t trigger Post invoke when user changes the value\nOn Change of the widget\n¢ Default is false * Causes immediate post back to the\nserver\n\nResolution\ninvoicing Method! aPolicy.InvoicingMethod |\naflagEntry Resolution\n\nPage Contiguration| Text\n\nProperties: | = properties | [ESjtayout contig |i) Refecion [RE EERGRSEES Page Configuration] Text\n- Properties: Properties Layout config Reflection\n( Enable targeted Post On Change\nG =v: Enable targeted Post On Change\nPost hange PostOnChange\nisablePostOnEnter_ Policy. Premium cur != currency. 7¢_UsD isablePostOnénter\nonChange\n\n‘onChange aFlagEntry.setFieldsonResolution()",
+      "word_count": 107,
+      "avg_confidence": 76.31,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Target property (earlier versions) Gi\n— Layoutrerender = ataupdate\n\n« Widget ID\n¢ Target area re-rendered\n¢ All editable data refreshed\n\n¢ Widgets can also be grouped and .\nparent container can be targeted\n\nProperties: | Ee Properties | [=| Layout config) Reflection\nEnable targeted Post On Change\nPostOnChange\n\ndisablePostOnEnter\n\n‘onChange\n\njicet ESE\n\n* DATA_ONLY\n¢ No layout re-render\n¢ All editable data refreshed\n\nBetter performance\n\nProperties: ||) Properties | |=5|Layout config | Reflection\nEnable targeted Post On Change\nPostOnChange\n\ndisablePostOnEnter\n\n‘onChange\n\n([SREMENNN =>. cscs",
+      "word_count": 86,
+      "avg_confidence": 77.19,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Review Questions",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question G\n\n_— — Name two properties that evaluate expressions.\n\n4\n¢\n¢\n\nee ee a",
+      "word_count": 16,
+      "avg_confidence": 69.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer\n\n_— — Name two properties that evaluate expressions.\n\n4\n¢\n¢\n\nPossible answers include:\n* editable\n\n* required\n\n* visible\n\n* available\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 28,
+      "avg_confidence": 79.5,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question G\n\n_- — Howis a partial page update implemented?\n4\n¢\n¢\n\nee ee a",
+      "word_count": 16,
+      "avg_confidence": 69.69,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer fa\n\nwoe How is a partial page update implemented?\n¢\n¢\n\nApartial page update is implemented by configuring dynamic widget behavior by\nenabling targeted post on change. Often the dynamic widget behavior configuration\nalso includes configuring an expression for a widget property.\n\n- SSS SSS SE See",
+      "word_count": 48,
+      "avg_confidence": 84.19,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question G\n\n_- — Whatare the three properties that you can configure for a widget with\n¢ targeted Post On Change enabled?\n\n¢\n¢\n\nee ee a",
+      "word_count": 27,
+      "avg_confidence": 81.58,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer fa\n\n_— — Whatare the three properties that you can configure for a widget with\nA targeted Post On Change enabled?\n\ndisablePostOnEnter, onChange, and (with earlier InsuranceSuite versions) target.\n\nSOOO ODD DOOD DODO DOOD",
+      "word_count": 35,
+      "avg_confidence": 86.1,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Lesson\nobj ectives * Identify properties associated with dynamic\nreview widget behaviors\n\n¢ Describe common ways to configure a partial\npage update\n\n¢ Enable and configure targeted Post On\nChange for a widget",
+      "word_count": 33,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Student exercise\n\nPartial Page Update",
+      "word_count": 6,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 668
+      }
+    }
+  ]
+}

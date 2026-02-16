@@ -1,0 +1,4613 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_10_01.mp4",
+    "video_stem": "In_10_01",
+    "duration_seconds": 293.86,
+    "duration_formatted": "00:04:53.860",
+    "segment_count": 55,
+    "word_count": 644,
+    "avg_confidence": 0.899,
+    "transcription_time_seconds": 36.17,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:49:07.080446"
+  },
+  "full_text": "This demonstration will create a plugin that retrieves exchange rate values from an external system that requires authentication. This demonstration requires that you use Training App, External App, Guidewire Studio, and a supported web browser. Begin by creating a new package for the new plugin. Right-click on the demo.ta package. Select New and then Package. Type the new package name. Goza class. Click OK to save. Create a new pre-defined plugin. Goza class. Right-click on exchange rate package. Select New and then Goza class. Type the name of the new Goza class. Click OK to save. the Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Press ALT plus ENTER to import the initializable plugin interface. Note that the uses statement automatically populate for each interface imported. The methods still need to be imported for each interface. Select either interface and press ALT plus ENTER to implement methods. Select Implement methods. Note, the methods for both plugins are automatically selected. Click OK to implement selected methods. The methods for both interfaces are implemented. Enter code to implement the requirements. Examine the code. Lines 8 to 11 class variables are defined that will be used by methods. Lines 13 to 40 implement create exchange rate set method. Retrieve exchange rate values from external app API. Lines 42 to 45 retrieve plugin parameters that will be used to authenticate the method. Select the SOAP web service call to external app. Edit the iExchange Rate Set plugin registry so that the plugin points to the new demo iExchange Rate Set plugin GOSA class. Double click on the iExchange Rate Set plugin registry. Select the plugin entry and add a new plugin of the other type. Select the ellipsis icon and search for the new plugin class. In the search field, type the name of the new GOSA class plugin. Double click on the GOSA Plugin class. Add two plugin parameters that will be used by the class. Click on the add parameter icon. Type the name of the parameter. Type the value of the parameter. Click on the add parameter icon. Type the name of the second parameter. Type the value of the parameter. Restart the training app server since a new class was created and the plugin registry was updated. Click the stop server icon. Click the debug server icon to start the server. Make sure external app server is started prior to testing. To test, log in to training app. Type the username for super user. Type the password for super user. Click the login button. Click the administration link. Click the training, plugins link. Click the invoke exchange rate set plugin button. The exchange rates are retrieved from external app. There are two ways to confirm new exchange rates were retrieved. 1. The retrieved on column shows the date and time the exchange rates were retrieved. 2. The rate for each USD to non-USD currency is a decimal value that goes to at least 4 digits. The whole number part of the first two digits are always the same each time you run a plugin. The third and fourth digits vary based on the current minute. For example, the USD to EUR rate is 0.75 XX, where XX is the current minute. This ends the configuring of plugin with parameters demonstration. Filogy of theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount you",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.62,
+      "end": 29.22,
+      "start_formatted": "00:00:01.620",
+      "end_formatted": "00:00:29.220",
+      "text": "This demonstration will create a plugin that retrieves exchange rate values from an external system that requires authentication. This demonstration requires that you use Training App, External App, Guidewire Studio, and a supported web browser. Begin by creating a new package for the new plugin. Right-click on the demo.ta package. Select New and then Package. Type the new package name.",
+      "words": [
+        {
+          "word": "This",
+          "start": 1.62,
+          "end": 2.34,
+          "probability": 0.8901
+        },
+        {
+          "word": "demonstration",
+          "start": 2.34,
+          "end": 2.98,
+          "probability": 0.9761
+        },
+        {
+          "word": "will",
+          "start": 2.98,
+          "end": 3.34,
+          "probability": 0.9971
+        },
+        {
+          "word": "create",
+          "start": 3.34,
+          "end": 3.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 3.72,
+          "end": 3.9,
+          "probability": 0.998
+        },
+        {
+          "word": "plugin",
+          "start": 3.9,
+          "end": 4.18,
+          "probability": 0.8584
+        },
+        {
+          "word": "that",
+          "start": 4.18,
+          "end": 4.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "retrieves",
+          "start": 4.48,
+          "end": 5.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "exchange",
+          "start": 5.0,
+          "end": 5.36,
+          "probability": 0.7563
+        },
+        {
+          "word": "rate",
+          "start": 5.36,
+          "end": 5.82,
+          "probability": 0.978
+        },
+        {
+          "word": "values",
+          "start": 5.82,
+          "end": 6.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "from",
+          "start": 6.36,
+          "end": 6.68,
+          "probability": 0.9976
+        },
+        {
+          "word": "an",
+          "start": 6.68,
+          "end": 6.88,
+          "probability": 0.9985
+        },
+        {
+          "word": "external",
+          "start": 6.88,
+          "end": 7.28,
+          "probability": 0.9878
+        },
+        {
+          "word": "system",
+          "start": 7.28,
+          "end": 7.72,
+          "probability": 0.9961
+        },
+        {
+          "word": "that",
+          "start": 7.72,
+          "end": 7.92,
+          "probability": 0.998
+        },
+        {
+          "word": "requires",
+          "start": 7.92,
+          "end": 8.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "authentication.",
+          "start": 8.42,
+          "end": 9.04,
+          "probability": 0.9629
+        },
+        {
+          "word": "This",
+          "start": 9.76,
+          "end": 10.38,
+          "probability": 0.9878
+        },
+        {
+          "word": "demonstration",
+          "start": 10.38,
+          "end": 10.98,
+          "probability": 0.9932
+        },
+        {
+          "word": "requires",
+          "start": 10.98,
+          "end": 11.62,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 11.62,
+          "end": 11.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 11.86,
+          "end": 12.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "use",
+          "start": 12.02,
+          "end": 12.28,
+          "probability": 0.9961
+        },
+        {
+          "word": "Training",
+          "start": 12.28,
+          "end": 12.6,
+          "probability": 0.7046
+        },
+        {
+          "word": "App,",
+          "start": 12.6,
+          "end": 13.04,
+          "probability": 0.8013
+        },
+        {
+          "word": "External",
+          "start": 13.2,
+          "end": 13.66,
+          "probability": 0.9443
+        },
+        {
+          "word": "App,",
+          "start": 13.66,
+          "end": 14.06,
+          "probability": 0.9849
+        },
+        {
+          "word": "Guidewire",
+          "start": 14.24,
+          "end": 14.92,
+          "probability": 0.9639
+        },
+        {
+          "word": "Studio,",
+          "start": 14.92,
+          "end": 15.34,
+          "probability": 0.937
+        },
+        {
+          "word": "and",
+          "start": 15.64,
+          "end": 15.94,
+          "probability": 0.9932
+        },
+        {
+          "word": "a",
+          "start": 15.94,
+          "end": 16.06,
+          "probability": 0.9902
+        },
+        {
+          "word": "supported",
+          "start": 16.06,
+          "end": 16.52,
+          "probability": 0.9238
+        },
+        {
+          "word": "web",
+          "start": 16.52,
+          "end": 16.74,
+          "probability": 0.9072
+        },
+        {
+          "word": "browser.",
+          "start": 16.74,
+          "end": 17.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "Begin",
+          "start": 17.76,
+          "end": 18.44,
+          "probability": 0.9858
+        },
+        {
+          "word": "by",
+          "start": 18.44,
+          "end": 18.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "creating",
+          "start": 18.7,
+          "end": 19.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 19.18,
+          "end": 19.4,
+          "probability": 0.999
+        },
+        {
+          "word": "new",
+          "start": 19.4,
+          "end": 19.56,
+          "probability": 0.9746
+        },
+        {
+          "word": "package",
+          "start": 19.56,
+          "end": 19.96,
+          "probability": 0.9756
+        },
+        {
+          "word": "for",
+          "start": 19.96,
+          "end": 20.24,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 20.24,
+          "end": 20.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 20.4,
+          "end": 20.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "plugin.",
+          "start": 20.58,
+          "end": 20.94,
+          "probability": 0.9863
+        },
+        {
+          "word": "Right",
+          "start": 21.46,
+          "end": 22.08,
+          "probability": 0.9902
+        },
+        {
+          "word": "-click",
+          "start": 22.08,
+          "end": 22.34,
+          "probability": 0.8232
+        },
+        {
+          "word": "on",
+          "start": 22.34,
+          "end": 22.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 22.64,
+          "end": 22.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "demo",
+          "start": 22.8,
+          "end": 23.08,
+          "probability": 0.4336
+        },
+        {
+          "word": ".ta",
+          "start": 23.08,
+          "end": 23.74,
+          "probability": 0.9487
+        },
+        {
+          "word": "package.",
+          "start": 23.74,
+          "end": 24.12,
+          "probability": 0.9624
+        },
+        {
+          "word": "Select",
+          "start": 24.78,
+          "end": 25.5,
+          "probability": 0.9775
+        },
+        {
+          "word": "New",
+          "start": 25.5,
+          "end": 25.72,
+          "probability": 0.7544
+        },
+        {
+          "word": "and",
+          "start": 25.72,
+          "end": 25.94,
+          "probability": 0.9814
+        },
+        {
+          "word": "then",
+          "start": 25.94,
+          "end": 26.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "Package.",
+          "start": 26.14,
+          "end": 26.72,
+          "probability": 0.9819
+        },
+        {
+          "word": "Type",
+          "start": 27.32,
+          "end": 28.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 28.04,
+          "end": 28.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 28.22,
+          "end": 28.4,
+          "probability": 0.9629
+        },
+        {
+          "word": "package",
+          "start": 28.4,
+          "end": 28.84,
+          "probability": 0.9922
+        },
+        {
+          "word": "name.",
+          "start": 28.84,
+          "end": 29.22,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 34.76,
+      "end": 58.2,
+      "start_formatted": "00:00:34.760",
+      "end_formatted": "00:00:58.200",
+      "text": "Goza class. Click OK to save. Create a new pre-defined plugin. Goza class. Right-click on exchange rate package. Select New and then Goza class. Type the name of the new Goza class. Click OK to save.",
+      "words": [
+        {
+          "word": "Goza",
+          "start": 34.76,
+          "end": 35.44,
+          "probability": 0.034
+        },
+        {
+          "word": "class.",
+          "start": 35.44,
+          "end": 35.44,
+          "probability": 0.4707
+        },
+        {
+          "word": "Click",
+          "start": 35.44,
+          "end": 35.44,
+          "probability": 0.6763
+        },
+        {
+          "word": "OK",
+          "start": 35.44,
+          "end": 35.72,
+          "probability": 0.688
+        },
+        {
+          "word": "to",
+          "start": 35.72,
+          "end": 36.0,
+          "probability": 0.9766
+        },
+        {
+          "word": "save.",
+          "start": 36.0,
+          "end": 36.38,
+          "probability": 0.8794
+        },
+        {
+          "word": "Create",
+          "start": 37.78,
+          "end": 38.46,
+          "probability": 0.9434
+        },
+        {
+          "word": "a",
+          "start": 38.46,
+          "end": 38.64,
+          "probability": 0.9917
+        },
+        {
+          "word": "new",
+          "start": 38.64,
+          "end": 38.8,
+          "probability": 0.9883
+        },
+        {
+          "word": "pre",
+          "start": 38.8,
+          "end": 39.06,
+          "probability": 0.9326
+        },
+        {
+          "word": "-defined",
+          "start": 39.06,
+          "end": 39.5,
+          "probability": 0.5498
+        },
+        {
+          "word": "plugin.",
+          "start": 39.5,
+          "end": 39.94,
+          "probability": 0.6768
+        },
+        {
+          "word": "Goza",
+          "start": 40.22,
+          "end": 40.38,
+          "probability": 0.9009
+        },
+        {
+          "word": "class.",
+          "start": 40.38,
+          "end": 40.86,
+          "probability": 0.9316
+        },
+        {
+          "word": "Right",
+          "start": 41.38,
+          "end": 42.0,
+          "probability": 0.9551
+        },
+        {
+          "word": "-click",
+          "start": 42.0,
+          "end": 42.24,
+          "probability": 0.7119
+        },
+        {
+          "word": "on",
+          "start": 42.24,
+          "end": 42.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "exchange",
+          "start": 42.54,
+          "end": 42.88,
+          "probability": 0.2312
+        },
+        {
+          "word": "rate",
+          "start": 42.88,
+          "end": 43.22,
+          "probability": 0.4707
+        },
+        {
+          "word": "package.",
+          "start": 43.22,
+          "end": 43.68,
+          "probability": 0.9351
+        },
+        {
+          "word": "Select",
+          "start": 44.84,
+          "end": 45.14,
+          "probability": 0.9624
+        },
+        {
+          "word": "New",
+          "start": 45.14,
+          "end": 45.36,
+          "probability": 0.3062
+        },
+        {
+          "word": "and",
+          "start": 45.36,
+          "end": 45.6,
+          "probability": 0.9409
+        },
+        {
+          "word": "then",
+          "start": 45.6,
+          "end": 45.8,
+          "probability": 0.9868
+        },
+        {
+          "word": "Goza",
+          "start": 45.8,
+          "end": 46.14,
+          "probability": 0.959
+        },
+        {
+          "word": "class.",
+          "start": 46.14,
+          "end": 46.68,
+          "probability": 0.9551
+        },
+        {
+          "word": "Type",
+          "start": 47.22,
+          "end": 47.78,
+          "probability": 0.979
+        },
+        {
+          "word": "the",
+          "start": 47.78,
+          "end": 47.96,
+          "probability": 0.9941
+        },
+        {
+          "word": "name",
+          "start": 47.96,
+          "end": 48.18,
+          "probability": 0.9746
+        },
+        {
+          "word": "of",
+          "start": 48.18,
+          "end": 48.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 48.38,
+          "end": 48.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "new",
+          "start": 48.5,
+          "end": 48.68,
+          "probability": 0.98
+        },
+        {
+          "word": "Goza",
+          "start": 48.68,
+          "end": 49.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "class.",
+          "start": 49.04,
+          "end": 49.58,
+          "probability": 0.9883
+        },
+        {
+          "word": "Click",
+          "start": 56.58,
+          "end": 57.26,
+          "probability": 0.9663
+        },
+        {
+          "word": "OK",
+          "start": 57.26,
+          "end": 57.54,
+          "probability": 0.978
+        },
+        {
+          "word": "to",
+          "start": 57.54,
+          "end": 57.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "save.",
+          "start": 57.8,
+          "end": 58.2,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.5,
+      "end": 88.18,
+      "start_formatted": "00:00:59.500",
+      "end_formatted": "00:01:28.180",
+      "text": "the Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class. Right-click. The Goza class.",
+      "words": [
+        {
+          "word": "the",
+          "start": 59.5,
+          "end": 60.02,
+          "probability": 0.0728
+        },
+        {
+          "word": "Goza",
+          "start": 60.02,
+          "end": 60.44,
+          "probability": 0.0208
+        },
+        {
+          "word": "class.",
+          "start": 60.44,
+          "end": 60.58,
+          "probability": 0.5791
+        },
+        {
+          "word": "Right",
+          "start": 60.58,
+          "end": 60.58,
+          "probability": 0.0
+        },
+        {
+          "word": "-click.",
+          "start": 60.58,
+          "end": 60.58,
+          "probability": 0.4824
+        },
+        {
+          "word": "The",
+          "start": 60.58,
+          "end": 60.58,
+          "probability": 0.3315
+        },
+        {
+          "word": "Goza",
+          "start": 60.58,
+          "end": 60.58,
+          "probability": 0.5493
+        },
+        {
+          "word": "class.",
+          "start": 60.58,
+          "end": 60.64,
+          "probability": 0.9233
+        },
+        {
+          "word": "Right",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.012
+        },
+        {
+          "word": "-click.",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9902
+        },
+        {
+          "word": "The",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.1025
+        },
+        {
+          "word": "Goza",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.8398
+        },
+        {
+          "word": "class.",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9497
+        },
+        {
+          "word": "Right",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.2896
+        },
+        {
+          "word": "-click.",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9937
+        },
+        {
+          "word": "The",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.196
+        },
+        {
+          "word": "Goza",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.8945
+        },
+        {
+          "word": "class.",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9771
+        },
+        {
+          "word": "Right",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.6006
+        },
+        {
+          "word": "-click.",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.3491
+        },
+        {
+          "word": "Goza",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9395
+        },
+        {
+          "word": "class.",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9868
+        },
+        {
+          "word": "Right",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.7588
+        },
+        {
+          "word": "-click.",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9956
+        },
+        {
+          "word": "The",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.457
+        },
+        {
+          "word": "Goza",
+          "start": 60.64,
+          "end": 60.64,
+          "probability": 0.9536
+        },
+        {
+          "word": "class.",
+          "start": 60.64,
+          "end": 60.66,
+          "probability": 0.9883
+        },
+        {
+          "word": "Right",
+          "start": 60.66,
+          "end": 60.84,
+          "probability": 0.8047
+        },
+        {
+          "word": "-click.",
+          "start": 60.84,
+          "end": 60.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 60.84,
+          "end": 60.84,
+          "probability": 0.5054
+        },
+        {
+          "word": "Goza",
+          "start": 60.84,
+          "end": 60.84,
+          "probability": 0.9648
+        },
+        {
+          "word": "class.",
+          "start": 60.84,
+          "end": 60.84,
+          "probability": 0.9854
+        },
+        {
+          "word": "Right",
+          "start": 61.38,
+          "end": 61.9,
+          "probability": 0.8047
+        },
+        {
+          "word": "-click.",
+          "start": 61.9,
+          "end": 61.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 62.02,
+          "end": 62.54,
+          "probability": 0.522
+        },
+        {
+          "word": "Goza",
+          "start": 62.54,
+          "end": 62.54,
+          "probability": 0.9746
+        },
+        {
+          "word": "class.",
+          "start": 62.54,
+          "end": 62.54,
+          "probability": 0.9814
+        },
+        {
+          "word": "Right",
+          "start": 62.54,
+          "end": 62.54,
+          "probability": 0.832
+        },
+        {
+          "word": "-click.",
+          "start": 62.54,
+          "end": 62.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 62.54,
+          "end": 62.56,
+          "probability": 0.5562
+        },
+        {
+          "word": "Goza",
+          "start": 62.56,
+          "end": 62.84,
+          "probability": 0.9824
+        },
+        {
+          "word": "class.",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.9746
+        },
+        {
+          "word": "Right",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.8687
+        },
+        {
+          "word": "-click.",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.6016
+        },
+        {
+          "word": "Goza",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.9873
+        },
+        {
+          "word": "class.",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.9663
+        },
+        {
+          "word": "Right",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.8789
+        },
+        {
+          "word": "-click.",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 62.84,
+          "end": 62.84,
+          "probability": 0.6465
+        },
+        {
+          "word": "Goza",
+          "start": 62.84,
+          "end": 62.94,
+          "probability": 0.9902
+        },
+        {
+          "word": "class.",
+          "start": 62.94,
+          "end": 62.94,
+          "probability": 0.9502
+        },
+        {
+          "word": "Right",
+          "start": 62.94,
+          "end": 62.94,
+          "probability": 0.8784
+        },
+        {
+          "word": "-click.",
+          "start": 62.94,
+          "end": 62.94,
+          "probability": 0.9956
+        },
+        {
+          "word": "The",
+          "start": 63.0,
+          "end": 63.0,
+          "probability": 0.6851
+        },
+        {
+          "word": "Goza",
+          "start": 63.0,
+          "end": 63.0,
+          "probability": 0.9912
+        },
+        {
+          "word": "class.",
+          "start": 63.0,
+          "end": 63.0,
+          "probability": 0.9448
+        },
+        {
+          "word": "Right",
+          "start": 63.0,
+          "end": 63.0,
+          "probability": 0.8779
+        },
+        {
+          "word": "-click.",
+          "start": 63.0,
+          "end": 63.0,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 63.08,
+          "end": 63.1,
+          "probability": 0.7095
+        },
+        {
+          "word": "Goza",
+          "start": 63.1,
+          "end": 63.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "class.",
+          "start": 63.36,
+          "end": 63.36,
+          "probability": 0.9277
+        },
+        {
+          "word": "Right",
+          "start": 63.36,
+          "end": 63.36,
+          "probability": 0.875
+        },
+        {
+          "word": "-click.",
+          "start": 63.36,
+          "end": 63.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "The",
+          "start": 63.36,
+          "end": 63.56,
+          "probability": 0.7256
+        },
+        {
+          "word": "Goza",
+          "start": 63.56,
+          "end": 63.56,
+          "probability": 0.9922
+        },
+        {
+          "word": "class.",
+          "start": 63.56,
+          "end": 63.56,
+          "probability": 0.9185
+        },
+        {
+          "word": "Right",
+          "start": 63.56,
+          "end": 63.56,
+          "probability": 0.8804
+        },
+        {
+          "word": "-click.",
+          "start": 63.56,
+          "end": 63.56,
+          "probability": 0.9941
+        },
+        {
+          "word": "The",
+          "start": 63.74,
+          "end": 63.74,
+          "probability": 0.7344
+        },
+        {
+          "word": "Goza",
+          "start": 63.74,
+          "end": 64.2,
+          "probability": 0.9922
+        },
+        {
+          "word": "class.",
+          "start": 64.2,
+          "end": 64.2,
+          "probability": 0.916
+        },
+        {
+          "word": "Right",
+          "start": 64.2,
+          "end": 64.2,
+          "probability": 0.8833
+        },
+        {
+          "word": "-click.",
+          "start": 64.2,
+          "end": 64.6,
+          "probability": 0.9932
+        },
+        {
+          "word": "The",
+          "start": 65.02,
+          "end": 65.52,
+          "probability": 0.7251
+        },
+        {
+          "word": "Goza",
+          "start": 65.52,
+          "end": 66.36,
+          "probability": 0.9927
+        },
+        {
+          "word": "class.",
+          "start": 66.36,
+          "end": 66.48,
+          "probability": 0.8989
+        },
+        {
+          "word": "Right",
+          "start": 66.54,
+          "end": 66.72,
+          "probability": 0.8848
+        },
+        {
+          "word": "-click.",
+          "start": 66.72,
+          "end": 66.72,
+          "probability": 0.9922
+        },
+        {
+          "word": "The",
+          "start": 66.82,
+          "end": 67.16,
+          "probability": 0.7236
+        },
+        {
+          "word": "Goza",
+          "start": 67.16,
+          "end": 67.66,
+          "probability": 0.9927
+        },
+        {
+          "word": "class.",
+          "start": 67.66,
+          "end": 67.66,
+          "probability": 0.8716
+        },
+        {
+          "word": "Right",
+          "start": 67.66,
+          "end": 67.66,
+          "probability": 0.8921
+        },
+        {
+          "word": "-click.",
+          "start": 67.66,
+          "end": 67.66,
+          "probability": 0.9912
+        },
+        {
+          "word": "The",
+          "start": 67.82,
+          "end": 67.86,
+          "probability": 0.7344
+        },
+        {
+          "word": "Goza",
+          "start": 67.86,
+          "end": 68.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "class.",
+          "start": 68.46,
+          "end": 68.46,
+          "probability": 0.8677
+        },
+        {
+          "word": "Right",
+          "start": 68.46,
+          "end": 68.46,
+          "probability": 0.8965
+        },
+        {
+          "word": "-click.",
+          "start": 68.46,
+          "end": 68.46,
+          "probability": 0.9902
+        },
+        {
+          "word": "The",
+          "start": 68.76,
+          "end": 69.02,
+          "probability": 0.7314
+        },
+        {
+          "word": "Goza",
+          "start": 69.02,
+          "end": 69.12,
+          "probability": 0.9922
+        },
+        {
+          "word": "class.",
+          "start": 69.12,
+          "end": 69.12,
+          "probability": 0.8418
+        },
+        {
+          "word": "Right",
+          "start": 69.12,
+          "end": 69.12,
+          "probability": 0.897
+        },
+        {
+          "word": "-click.",
+          "start": 69.12,
+          "end": 75.88,
+          "probability": 0.9893
+        },
+        {
+          "word": "The",
+          "start": 75.88,
+          "end": 75.88,
+          "probability": 0.7417
+        },
+        {
+          "word": "Goza",
+          "start": 75.88,
+          "end": 76.42,
+          "probability": 0.9917
+        },
+        {
+          "word": "class.",
+          "start": 76.42,
+          "end": 76.44,
+          "probability": 0.8076
+        },
+        {
+          "word": "Right",
+          "start": 76.44,
+          "end": 76.46,
+          "probability": 0.8965
+        },
+        {
+          "word": "-click.",
+          "start": 76.46,
+          "end": 78.18,
+          "probability": 0.9888
+        },
+        {
+          "word": "The",
+          "start": 78.18,
+          "end": 78.32,
+          "probability": 0.7256
+        },
+        {
+          "word": "Goza",
+          "start": 78.32,
+          "end": 79.26,
+          "probability": 0.9912
+        },
+        {
+          "word": "class.",
+          "start": 79.26,
+          "end": 79.26,
+          "probability": 0.7681
+        },
+        {
+          "word": "Right",
+          "start": 79.26,
+          "end": 79.26,
+          "probability": 0.9004
+        },
+        {
+          "word": "-click.",
+          "start": 79.26,
+          "end": 79.26,
+          "probability": 0.9868
+        },
+        {
+          "word": "The",
+          "start": 82.32,
+          "end": 82.84,
+          "probability": 0.7407
+        },
+        {
+          "word": "Goza",
+          "start": 82.84,
+          "end": 83.5,
+          "probability": 0.9907
+        },
+        {
+          "word": "class.",
+          "start": 83.5,
+          "end": 83.5,
+          "probability": 0.73
+        },
+        {
+          "word": "Right",
+          "start": 83.76,
+          "end": 83.76,
+          "probability": 0.8955
+        },
+        {
+          "word": "-click.",
+          "start": 83.76,
+          "end": 83.82,
+          "probability": 0.9844
+        },
+        {
+          "word": "The",
+          "start": 83.92,
+          "end": 83.92,
+          "probability": 0.7305
+        },
+        {
+          "word": "Goza",
+          "start": 83.92,
+          "end": 84.92,
+          "probability": 0.9902
+        },
+        {
+          "word": "class.",
+          "start": 84.92,
+          "end": 85.22,
+          "probability": 0.7246
+        },
+        {
+          "word": "Right",
+          "start": 85.32,
+          "end": 85.32,
+          "probability": 0.8955
+        },
+        {
+          "word": "-click.",
+          "start": 85.32,
+          "end": 85.84,
+          "probability": 0.9819
+        },
+        {
+          "word": "The",
+          "start": 85.94,
+          "end": 85.94,
+          "probability": 0.7397
+        },
+        {
+          "word": "Goza",
+          "start": 85.94,
+          "end": 86.28,
+          "probability": 0.9893
+        },
+        {
+          "word": "class.",
+          "start": 86.28,
+          "end": 86.28,
+          "probability": 0.6914
+        },
+        {
+          "word": "Right",
+          "start": 86.48,
+          "end": 86.48,
+          "probability": 0.8931
+        },
+        {
+          "word": "-click.",
+          "start": 86.48,
+          "end": 87.46,
+          "probability": 0.9805
+        },
+        {
+          "word": "The",
+          "start": 87.46,
+          "end": 87.52,
+          "probability": 0.728
+        },
+        {
+          "word": "Goza",
+          "start": 87.52,
+          "end": 88.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "class.",
+          "start": 88.1,
+          "end": 88.18,
+          "probability": 0.6528
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 88.18,
+      "end": 91.4,
+      "start_formatted": "00:01:28.180",
+      "end_formatted": "00:01:31.400",
+      "text": "Press ALT plus ENTER to import the initializable plugin interface.",
+      "words": [
+        {
+          "word": "Press",
+          "start": 88.18,
+          "end": 88.18,
+          "probability": 0.2922
+        },
+        {
+          "word": "ALT",
+          "start": 88.18,
+          "end": 88.4,
+          "probability": 0.7397
+        },
+        {
+          "word": "plus",
+          "start": 88.4,
+          "end": 88.64,
+          "probability": 0.0567
+        },
+        {
+          "word": "ENTER",
+          "start": 88.64,
+          "end": 88.96,
+          "probability": 0.9507
+        },
+        {
+          "word": "to",
+          "start": 88.96,
+          "end": 89.1,
+          "probability": 0.9961
+        },
+        {
+          "word": "import",
+          "start": 89.1,
+          "end": 89.46,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 89.46,
+          "end": 89.66,
+          "probability": 0.9985
+        },
+        {
+          "word": "initializable",
+          "start": 89.66,
+          "end": 90.4,
+          "probability": 0.9639
+        },
+        {
+          "word": "plugin",
+          "start": 90.4,
+          "end": 90.86,
+          "probability": 0.6909
+        },
+        {
+          "word": "interface.",
+          "start": 90.86,
+          "end": 91.4,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 92.14,
+      "end": 97.0,
+      "start_formatted": "00:01:32.140",
+      "end_formatted": "00:01:37.000",
+      "text": "Note that the uses statement automatically populate for each interface imported.",
+      "words": [
+        {
+          "word": "Note",
+          "start": 92.14,
+          "end": 92.86,
+          "probability": 0.9834
+        },
+        {
+          "word": "that",
+          "start": 92.86,
+          "end": 93.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 93.04,
+          "end": 93.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "uses",
+          "start": 93.22,
+          "end": 93.48,
+          "probability": 0.647
+        },
+        {
+          "word": "statement",
+          "start": 93.48,
+          "end": 93.98,
+          "probability": 0.9927
+        },
+        {
+          "word": "automatically",
+          "start": 93.98,
+          "end": 94.62,
+          "probability": 0.9897
+        },
+        {
+          "word": "populate",
+          "start": 94.62,
+          "end": 95.36,
+          "probability": 0.9897
+        },
+        {
+          "word": "for",
+          "start": 95.36,
+          "end": 95.56,
+          "probability": 0.999
+        },
+        {
+          "word": "each",
+          "start": 95.56,
+          "end": 95.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "interface",
+          "start": 95.84,
+          "end": 96.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "imported.",
+          "start": 96.38,
+          "end": 97.0,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 97.28,
+      "end": 100.5,
+      "start_formatted": "00:01:37.280",
+      "end_formatted": "00:01:40.500",
+      "text": "The methods still need to be imported for each interface.",
+      "words": [
+        {
+          "word": "The",
+          "start": 97.28,
+          "end": 97.72,
+          "probability": 0.9927
+        },
+        {
+          "word": "methods",
+          "start": 97.72,
+          "end": 98.08,
+          "probability": 0.7427
+        },
+        {
+          "word": "still",
+          "start": 98.08,
+          "end": 98.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "need",
+          "start": 98.4,
+          "end": 98.66,
+          "probability": 0.5425
+        },
+        {
+          "word": "to",
+          "start": 98.66,
+          "end": 98.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 98.84,
+          "end": 99.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "imported",
+          "start": 99.0,
+          "end": 99.42,
+          "probability": 0.998
+        },
+        {
+          "word": "for",
+          "start": 99.42,
+          "end": 99.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "each",
+          "start": 99.66,
+          "end": 99.94,
+          "probability": 0.999
+        },
+        {
+          "word": "interface.",
+          "start": 99.94,
+          "end": 100.5,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 101.84,
+      "end": 105.22,
+      "start_formatted": "00:01:41.840",
+      "end_formatted": "00:01:45.220",
+      "text": "Select either interface and press ALT plus ENTER to implement methods.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 101.5,
+          "end": 101.86,
+          "probability": 0.9917
+        },
+        {
+          "word": "either",
+          "start": 101.86,
+          "end": 102.08,
+          "probability": 0.9814
+        },
+        {
+          "word": "interface",
+          "start": 102.08,
+          "end": 102.64,
+          "probability": 0.9814
+        },
+        {
+          "word": "and",
+          "start": 102.64,
+          "end": 102.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "press",
+          "start": 102.98,
+          "end": 103.3,
+          "probability": 0.9897
+        },
+        {
+          "word": "ALT",
+          "start": 103.3,
+          "end": 103.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "plus",
+          "start": 103.54,
+          "end": 103.74,
+          "probability": 0.98
+        },
+        {
+          "word": "ENTER",
+          "start": 103.74,
+          "end": 104.14,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 104.14,
+          "end": 104.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "implement",
+          "start": 104.32,
+          "end": 104.7,
+          "probability": 0.981
+        },
+        {
+          "word": "methods.",
+          "start": 104.7,
+          "end": 105.22,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 106.62,
+      "end": 107.48,
+      "start_formatted": "00:01:46.620",
+      "end_formatted": "00:01:47.480",
+      "text": "Select Implement methods.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 106.28,
+          "end": 106.64,
+          "probability": 0.9727
+        },
+        {
+          "word": "Implement",
+          "start": 106.64,
+          "end": 107.14,
+          "probability": 0.8682
+        },
+        {
+          "word": "methods.",
+          "start": 107.14,
+          "end": 107.48,
+          "probability": 0.6558
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 108.6,
+      "end": 112.5,
+      "start_formatted": "00:01:48.600",
+      "end_formatted": "00:01:52.500",
+      "text": "Note, the methods for both plugins are automatically selected.",
+      "words": [
+        {
+          "word": "Note,",
+          "start": 108.6,
+          "end": 109.32,
+          "probability": 0.6211
+        },
+        {
+          "word": "the",
+          "start": 109.5,
+          "end": 109.74,
+          "probability": 0.9854
+        },
+        {
+          "word": "methods",
+          "start": 109.74,
+          "end": 110.06,
+          "probability": 0.9956
+        },
+        {
+          "word": "for",
+          "start": 110.06,
+          "end": 110.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "both",
+          "start": 110.28,
+          "end": 110.54,
+          "probability": 0.999
+        },
+        {
+          "word": "plugins",
+          "start": 110.54,
+          "end": 110.96,
+          "probability": 0.9688
+        },
+        {
+          "word": "are",
+          "start": 110.96,
+          "end": 111.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "automatically",
+          "start": 111.26,
+          "end": 111.86,
+          "probability": 0.999
+        },
+        {
+          "word": "selected.",
+          "start": 111.86,
+          "end": 112.5,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 113.56,
+      "end": 115.72,
+      "start_formatted": "00:01:53.560",
+      "end_formatted": "00:01:55.720",
+      "text": "Click OK to implement selected methods.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 113.22,
+          "end": 113.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "OK",
+          "start": 113.58,
+          "end": 113.82,
+          "probability": 0.9771
+        },
+        {
+          "word": "to",
+          "start": 113.82,
+          "end": 114.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "implement",
+          "start": 114.28,
+          "end": 114.68,
+          "probability": 0.9663
+        },
+        {
+          "word": "selected",
+          "start": 114.68,
+          "end": 115.34,
+          "probability": 0.9756
+        },
+        {
+          "word": "methods.",
+          "start": 115.34,
+          "end": 115.72,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 115.72,
+      "end": 119.3,
+      "start_formatted": "00:01:55.720",
+      "end_formatted": "00:01:59.300",
+      "text": "The methods for both interfaces are implemented.",
+      "words": [
+        {
+          "word": "The",
+          "start": 115.72,
+          "end": 116.9,
+          "probability": 0.7881
+        },
+        {
+          "word": "methods",
+          "start": 116.9,
+          "end": 117.26,
+          "probability": 0.978
+        },
+        {
+          "word": "for",
+          "start": 117.26,
+          "end": 117.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "both",
+          "start": 117.54,
+          "end": 117.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "interfaces",
+          "start": 117.82,
+          "end": 118.5,
+          "probability": 0.9814
+        },
+        {
+          "word": "are",
+          "start": 118.5,
+          "end": 118.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "implemented.",
+          "start": 118.76,
+          "end": 119.3,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 119.84,
+      "end": 122.24,
+      "start_formatted": "00:01:59.840",
+      "end_formatted": "00:02:02.240",
+      "text": "Enter code to implement the requirements.",
+      "words": [
+        {
+          "word": "Enter",
+          "start": 119.84,
+          "end": 120.36,
+          "probability": 0.9702
+        },
+        {
+          "word": "code",
+          "start": 120.36,
+          "end": 120.66,
+          "probability": 0.9619
+        },
+        {
+          "word": "to",
+          "start": 120.66,
+          "end": 120.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "implement",
+          "start": 120.86,
+          "end": 121.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 121.24,
+          "end": 121.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "requirements.",
+          "start": 121.52,
+          "end": 122.24,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 123.8,
+      "end": 124.3,
+      "start_formatted": "00:02:03.800",
+      "end_formatted": "00:02:04.300",
+      "text": "Examine the code.",
+      "words": [
+        {
+          "word": "Examine",
+          "start": 123.43,
+          "end": 123.82,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 123.82,
+          "end": 123.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "code.",
+          "start": 123.94,
+          "end": 124.3,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 125.34,
+      "end": 129.66,
+      "start_formatted": "00:02:05.340",
+      "end_formatted": "00:02:09.660",
+      "text": "Lines 8 to 11 class variables are defined that will be used by methods.",
+      "words": [
+        {
+          "word": "Lines",
+          "start": 125.03,
+          "end": 125.42,
+          "probability": 0.9834
+        },
+        {
+          "word": "8",
+          "start": 125.42,
+          "end": 125.62,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 125.62,
+          "end": 125.78,
+          "probability": 0.8618
+        },
+        {
+          "word": "11",
+          "start": 125.78,
+          "end": 126.2,
+          "probability": 1.0
+        },
+        {
+          "word": "class",
+          "start": 126.2,
+          "end": 126.68,
+          "probability": 0.4382
+        },
+        {
+          "word": "variables",
+          "start": 126.68,
+          "end": 127.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "are",
+          "start": 127.3,
+          "end": 127.54,
+          "probability": 0.999
+        },
+        {
+          "word": "defined",
+          "start": 127.54,
+          "end": 127.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 127.98,
+          "end": 128.2,
+          "probability": 0.998
+        },
+        {
+          "word": "will",
+          "start": 128.2,
+          "end": 128.42,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 128.42,
+          "end": 128.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "used",
+          "start": 128.6,
+          "end": 128.98,
+          "probability": 0.999
+        },
+        {
+          "word": "by",
+          "start": 128.98,
+          "end": 129.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "methods.",
+          "start": 129.2,
+          "end": 129.66,
+          "probability": 0.9897
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 131.08,
+      "end": 134.88,
+      "start_formatted": "00:02:11.080",
+      "end_formatted": "00:02:14.880",
+      "text": "Lines 13 to 40 implement create exchange rate set method.",
+      "words": [
+        {
+          "word": "Lines",
+          "start": 130.73,
+          "end": 131.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "13",
+          "start": 131.12,
+          "end": 131.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 131.58,
+          "end": 131.9,
+          "probability": 0.998
+        },
+        {
+          "word": "40",
+          "start": 131.9,
+          "end": 132.28,
+          "probability": 0.998
+        },
+        {
+          "word": "implement",
+          "start": 132.28,
+          "end": 132.78,
+          "probability": 0.7241
+        },
+        {
+          "word": "create",
+          "start": 132.78,
+          "end": 133.28,
+          "probability": 0.9248
+        },
+        {
+          "word": "exchange",
+          "start": 133.28,
+          "end": 133.78,
+          "probability": 0.6904
+        },
+        {
+          "word": "rate",
+          "start": 133.78,
+          "end": 134.18,
+          "probability": 0.9883
+        },
+        {
+          "word": "set",
+          "start": 134.18,
+          "end": 134.44,
+          "probability": 0.998
+        },
+        {
+          "word": "method.",
+          "start": 134.44,
+          "end": 134.88,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 135.34,
+      "end": 139.0,
+      "start_formatted": "00:02:15.340",
+      "end_formatted": "00:02:19.000",
+      "text": "Retrieve exchange rate values from external app API.",
+      "words": [
+        {
+          "word": "Retrieve",
+          "start": 135.34,
+          "end": 136.12,
+          "probability": 0.9961
+        },
+        {
+          "word": "exchange",
+          "start": 136.12,
+          "end": 136.44,
+          "probability": 0.9868
+        },
+        {
+          "word": "rate",
+          "start": 136.44,
+          "end": 136.88,
+          "probability": 0.999
+        },
+        {
+          "word": "values",
+          "start": 136.88,
+          "end": 137.42,
+          "probability": 0.999
+        },
+        {
+          "word": "from",
+          "start": 137.42,
+          "end": 137.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "external",
+          "start": 137.78,
+          "end": 138.24,
+          "probability": 0.981
+        },
+        {
+          "word": "app",
+          "start": 138.24,
+          "end": 138.62,
+          "probability": 0.7935
+        },
+        {
+          "word": "API.",
+          "start": 138.62,
+          "end": 139.0,
+          "probability": 0.915
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 140.38,
+      "end": 145.7,
+      "start_formatted": "00:02:20.380",
+      "end_formatted": "00:02:25.700",
+      "text": "Lines 42 to 45 retrieve plugin parameters that will be used to authenticate the method.",
+      "words": [
+        {
+          "word": "Lines",
+          "start": 140.13,
+          "end": 140.52,
+          "probability": 0.999
+        },
+        {
+          "word": "42",
+          "start": 140.52,
+          "end": 141.02,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 141.02,
+          "end": 141.3,
+          "probability": 0.999
+        },
+        {
+          "word": "45",
+          "start": 141.3,
+          "end": 141.98,
+          "probability": 0.999
+        },
+        {
+          "word": "retrieve",
+          "start": 141.98,
+          "end": 142.6,
+          "probability": 0.6221
+        },
+        {
+          "word": "plugin",
+          "start": 142.6,
+          "end": 143.28,
+          "probability": 0.7451
+        },
+        {
+          "word": "parameters",
+          "start": 143.28,
+          "end": 143.86,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 143.86,
+          "end": 144.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "will",
+          "start": 144.14,
+          "end": 144.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "be",
+          "start": 144.32,
+          "end": 144.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "used",
+          "start": 144.48,
+          "end": 144.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 144.76,
+          "end": 144.94,
+          "probability": 0.998
+        },
+        {
+          "word": "authenticate",
+          "start": 144.94,
+          "end": 145.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 145.58,
+          "end": 145.7,
+          "probability": 0.7432
+        },
+        {
+          "word": "method.",
+          "start": 145.7,
+          "end": 145.7,
+          "probability": 0.0347
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 145.7,
+      "end": 148.28,
+      "start_formatted": "00:02:25.700",
+      "end_formatted": "00:02:28.280",
+      "text": "Select the SOAP web service call to external app.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 145.7,
+          "end": 145.7,
+          "probability": 0.0069
+        },
+        {
+          "word": "the",
+          "start": 145.7,
+          "end": 145.82,
+          "probability": 0.9692
+        },
+        {
+          "word": "SOAP",
+          "start": 145.82,
+          "end": 146.14,
+          "probability": 0.917
+        },
+        {
+          "word": "web",
+          "start": 146.14,
+          "end": 146.42,
+          "probability": 0.5464
+        },
+        {
+          "word": "service",
+          "start": 146.42,
+          "end": 146.88,
+          "probability": 0.9351
+        },
+        {
+          "word": "call",
+          "start": 146.88,
+          "end": 147.2,
+          "probability": 0.8784
+        },
+        {
+          "word": "to",
+          "start": 147.2,
+          "end": 147.4,
+          "probability": 0.9941
+        },
+        {
+          "word": "external",
+          "start": 147.4,
+          "end": 147.9,
+          "probability": 0.647
+        },
+        {
+          "word": "app.",
+          "start": 147.9,
+          "end": 148.28,
+          "probability": 0.9482
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 149.32,
+      "end": 154.32,
+      "start_formatted": "00:02:29.320",
+      "end_formatted": "00:02:34.320",
+      "text": "Edit the iExchange Rate Set plugin registry so that the plugin points to the new demo iExchange",
+      "words": [
+        {
+          "word": "Edit",
+          "start": 149.12,
+          "end": 149.44,
+          "probability": 0.9829
+        },
+        {
+          "word": "the",
+          "start": 149.44,
+          "end": 149.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "iExchange",
+          "start": 149.62,
+          "end": 150.36,
+          "probability": 0.8916
+        },
+        {
+          "word": "Rate",
+          "start": 150.36,
+          "end": 150.6,
+          "probability": 0.2286
+        },
+        {
+          "word": "Set",
+          "start": 150.6,
+          "end": 150.88,
+          "probability": 0.5264
+        },
+        {
+          "word": "plugin",
+          "start": 150.88,
+          "end": 151.26,
+          "probability": 0.5137
+        },
+        {
+          "word": "registry",
+          "start": 151.26,
+          "end": 151.78,
+          "probability": 0.9746
+        },
+        {
+          "word": "so",
+          "start": 151.78,
+          "end": 152.1,
+          "probability": 0.9922
+        },
+        {
+          "word": "that",
+          "start": 152.1,
+          "end": 152.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 152.32,
+          "end": 152.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "plugin",
+          "start": 152.46,
+          "end": 152.86,
+          "probability": 0.9531
+        },
+        {
+          "word": "points",
+          "start": 152.86,
+          "end": 153.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 153.32,
+          "end": 153.52,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 153.52,
+          "end": 153.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "new",
+          "start": 153.62,
+          "end": 153.78,
+          "probability": 0.9614
+        },
+        {
+          "word": "demo",
+          "start": 153.78,
+          "end": 154.14,
+          "probability": 0.9209
+        },
+        {
+          "word": "iExchange",
+          "start": 154.14,
+          "end": 154.46,
+          "probability": 0.9824
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 154.9,
+      "end": 156.74,
+      "start_formatted": "00:02:34.900",
+      "end_formatted": "00:02:36.740",
+      "text": "Rate Set plugin GOSA class.",
+      "words": [
+        {
+          "word": "Rate",
+          "start": 154.9,
+          "end": 155.12,
+          "probability": 0.9648
+        },
+        {
+          "word": "Set",
+          "start": 155.12,
+          "end": 155.44,
+          "probability": 0.9897
+        },
+        {
+          "word": "plugin",
+          "start": 155.44,
+          "end": 155.84,
+          "probability": 0.8057
+        },
+        {
+          "word": "GOSA",
+          "start": 155.84,
+          "end": 156.3,
+          "probability": 0.8423
+        },
+        {
+          "word": "class.",
+          "start": 156.3,
+          "end": 156.74,
+          "probability": 0.9058
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 157.28,
+      "end": 160.94,
+      "start_formatted": "00:02:37.280",
+      "end_formatted": "00:02:40.940",
+      "text": "Double click on the iExchange Rate Set plugin registry.",
+      "words": [
+        {
+          "word": "Double",
+          "start": 157.28,
+          "end": 157.92,
+          "probability": 0.9878
+        },
+        {
+          "word": "click",
+          "start": 157.92,
+          "end": 158.14,
+          "probability": 0.5044
+        },
+        {
+          "word": "on",
+          "start": 158.14,
+          "end": 158.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 158.4,
+          "end": 158.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "iExchange",
+          "start": 158.54,
+          "end": 159.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "Rate",
+          "start": 159.3,
+          "end": 159.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "Set",
+          "start": 159.54,
+          "end": 159.84,
+          "probability": 0.9937
+        },
+        {
+          "word": "plugin",
+          "start": 159.84,
+          "end": 160.28,
+          "probability": 0.9038
+        },
+        {
+          "word": "registry.",
+          "start": 160.28,
+          "end": 160.94,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 170.52,
+      "end": 175.0,
+      "start_formatted": "00:02:50.520",
+      "end_formatted": "00:02:55.000",
+      "text": "Select the plugin entry and add a new plugin of the other type.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 170.52,
+          "end": 171.16,
+          "probability": 0.0001
+        },
+        {
+          "word": "the",
+          "start": 171.16,
+          "end": 171.68,
+          "probability": 0.8867
+        },
+        {
+          "word": "plugin",
+          "start": 171.68,
+          "end": 172.02,
+          "probability": 0.0023
+        },
+        {
+          "word": "entry",
+          "start": 172.02,
+          "end": 172.74,
+          "probability": 0.1034
+        },
+        {
+          "word": "and",
+          "start": 172.74,
+          "end": 173.14,
+          "probability": 0.439
+        },
+        {
+          "word": "add",
+          "start": 173.14,
+          "end": 173.34,
+          "probability": 0.2069
+        },
+        {
+          "word": "a",
+          "start": 173.34,
+          "end": 173.48,
+          "probability": 0.9497
+        },
+        {
+          "word": "new",
+          "start": 173.48,
+          "end": 173.64,
+          "probability": 0.9697
+        },
+        {
+          "word": "plugin",
+          "start": 173.64,
+          "end": 174.06,
+          "probability": 0.9775
+        },
+        {
+          "word": "of",
+          "start": 174.06,
+          "end": 174.22,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 174.22,
+          "end": 174.34,
+          "probability": 0.9941
+        },
+        {
+          "word": "other",
+          "start": 174.34,
+          "end": 174.6,
+          "probability": 0.9902
+        },
+        {
+          "word": "type.",
+          "start": 174.6,
+          "end": 175.0,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 175.46,
+      "end": 179.3,
+      "start_formatted": "00:02:55.460",
+      "end_formatted": "00:02:59.300",
+      "text": "Select the ellipsis icon and search for the new plugin class.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 175.46,
+          "end": 176.1,
+          "probability": 0.917
+        },
+        {
+          "word": "the",
+          "start": 176.1,
+          "end": 176.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "ellipsis",
+          "start": 176.32,
+          "end": 176.86,
+          "probability": 0.9497
+        },
+        {
+          "word": "icon",
+          "start": 176.86,
+          "end": 177.3,
+          "probability": 0.9878
+        },
+        {
+          "word": "and",
+          "start": 177.3,
+          "end": 177.74,
+          "probability": 0.5654
+        },
+        {
+          "word": "search",
+          "start": 177.74,
+          "end": 177.98,
+          "probability": 0.9917
+        },
+        {
+          "word": "for",
+          "start": 177.98,
+          "end": 178.2,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 178.2,
+          "end": 178.36,
+          "probability": 0.9785
+        },
+        {
+          "word": "new",
+          "start": 178.36,
+          "end": 178.52,
+          "probability": 0.6313
+        },
+        {
+          "word": "plugin",
+          "start": 178.52,
+          "end": 178.84,
+          "probability": 0.897
+        },
+        {
+          "word": "class.",
+          "start": 178.84,
+          "end": 179.3,
+          "probability": 0.9854
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 179.84,
+      "end": 183.9,
+      "start_formatted": "00:02:59.840",
+      "end_formatted": "00:03:03.900",
+      "text": "In the search field, type the name of the new GOSA class plugin.",
+      "words": [
+        {
+          "word": "In",
+          "start": 179.84,
+          "end": 180.4,
+          "probability": 0.9878
+        },
+        {
+          "word": "the",
+          "start": 180.4,
+          "end": 180.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "search",
+          "start": 180.54,
+          "end": 180.78,
+          "probability": 0.9268
+        },
+        {
+          "word": "field,",
+          "start": 180.78,
+          "end": 181.26,
+          "probability": 0.998
+        },
+        {
+          "word": "type",
+          "start": 181.48,
+          "end": 181.7,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 181.7,
+          "end": 181.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "name",
+          "start": 181.88,
+          "end": 182.1,
+          "probability": 0.9912
+        },
+        {
+          "word": "of",
+          "start": 182.1,
+          "end": 182.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 182.3,
+          "end": 182.44,
+          "probability": 0.998
+        },
+        {
+          "word": "new",
+          "start": 182.44,
+          "end": 182.64,
+          "probability": 0.9746
+        },
+        {
+          "word": "GOSA",
+          "start": 182.64,
+          "end": 183.12,
+          "probability": 0.4915
+        },
+        {
+          "word": "class",
+          "start": 183.12,
+          "end": 183.44,
+          "probability": 0.6606
+        },
+        {
+          "word": "plugin.",
+          "start": 183.44,
+          "end": 183.9,
+          "probability": 0.9717
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 184.48,
+      "end": 186.92,
+      "start_formatted": "00:03:04.480",
+      "end_formatted": "00:03:06.920",
+      "text": "Double click on the GOSA Plugin class.",
+      "words": [
+        {
+          "word": "Double",
+          "start": 184.48,
+          "end": 185.1,
+          "probability": 0.9912
+        },
+        {
+          "word": "click",
+          "start": 185.1,
+          "end": 185.42,
+          "probability": 0.3962
+        },
+        {
+          "word": "on",
+          "start": 185.42,
+          "end": 185.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 185.68,
+          "end": 185.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "GOSA",
+          "start": 185.82,
+          "end": 186.18,
+          "probability": 0.9824
+        },
+        {
+          "word": "Plugin",
+          "start": 186.18,
+          "end": 186.52,
+          "probability": 0.5254
+        },
+        {
+          "word": "class.",
+          "start": 186.52,
+          "end": 186.92,
+          "probability": 0.874
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 186.92,
+      "end": 191.32,
+      "start_formatted": "00:03:06.920",
+      "end_formatted": "00:03:11.320",
+      "text": "Add two plugin parameters that will be used by the class.",
+      "words": [
+        {
+          "word": "Add",
+          "start": 186.92,
+          "end": 188.18,
+          "probability": 0.7451
+        },
+        {
+          "word": "two",
+          "start": 188.18,
+          "end": 188.46,
+          "probability": 0.5825
+        },
+        {
+          "word": "plugin",
+          "start": 188.46,
+          "end": 188.92,
+          "probability": 0.7769
+        },
+        {
+          "word": "parameters",
+          "start": 188.92,
+          "end": 189.56,
+          "probability": 0.9917
+        },
+        {
+          "word": "that",
+          "start": 189.56,
+          "end": 189.8,
+          "probability": 0.9932
+        },
+        {
+          "word": "will",
+          "start": 189.8,
+          "end": 189.98,
+          "probability": 0.998
+        },
+        {
+          "word": "be",
+          "start": 189.98,
+          "end": 190.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "used",
+          "start": 190.16,
+          "end": 190.48,
+          "probability": 0.998
+        },
+        {
+          "word": "by",
+          "start": 190.48,
+          "end": 190.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 190.68,
+          "end": 190.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "class.",
+          "start": 190.82,
+          "end": 191.32,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 191.6,
+      "end": 193.78,
+      "start_formatted": "00:03:11.600",
+      "end_formatted": "00:03:13.780",
+      "text": "Click on the add parameter icon.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 191.6,
+          "end": 192.06,
+          "probability": 0.9756
+        },
+        {
+          "word": "on",
+          "start": 192.06,
+          "end": 192.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 192.26,
+          "end": 192.42,
+          "probability": 0.9946
+        },
+        {
+          "word": "add",
+          "start": 192.42,
+          "end": 192.64,
+          "probability": 0.5474
+        },
+        {
+          "word": "parameter",
+          "start": 192.64,
+          "end": 193.16,
+          "probability": 0.9863
+        },
+        {
+          "word": "icon.",
+          "start": 193.16,
+          "end": 193.78,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 194.22,
+      "end": 196.08,
+      "start_formatted": "00:03:14.220",
+      "end_formatted": "00:03:16.080",
+      "text": "Type the name of the parameter.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 194.22,
+          "end": 194.86,
+          "probability": 0.98
+        },
+        {
+          "word": "the",
+          "start": 194.86,
+          "end": 195.06,
+          "probability": 0.9937
+        },
+        {
+          "word": "name",
+          "start": 195.06,
+          "end": 195.28,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 195.28,
+          "end": 195.44,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 195.44,
+          "end": 195.54,
+          "probability": 0.998
+        },
+        {
+          "word": "parameter.",
+          "start": 195.54,
+          "end": 196.08,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 198.9,
+      "end": 200.98,
+      "start_formatted": "00:03:18.900",
+      "end_formatted": "00:03:20.980",
+      "text": "Type the value of the parameter.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 198.9,
+          "end": 199.54,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 199.54,
+          "end": 199.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "value",
+          "start": 199.74,
+          "end": 200.12,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 200.12,
+          "end": 200.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 200.36,
+          "end": 200.48,
+          "probability": 0.999
+        },
+        {
+          "word": "parameter.",
+          "start": 200.48,
+          "end": 200.98,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 204.46,
+      "end": 206.84,
+      "start_formatted": "00:03:24.460",
+      "end_formatted": "00:03:26.840",
+      "text": "Click on the add parameter icon.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 204.46,
+          "end": 205.1,
+          "probability": 0.8965
+        },
+        {
+          "word": "on",
+          "start": 205.1,
+          "end": 205.32,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 205.32,
+          "end": 205.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "add",
+          "start": 205.5,
+          "end": 205.7,
+          "probability": 0.9785
+        },
+        {
+          "word": "parameter",
+          "start": 205.7,
+          "end": 206.24,
+          "probability": 0.998
+        },
+        {
+          "word": "icon.",
+          "start": 206.24,
+          "end": 206.84,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 207.3,
+      "end": 209.6,
+      "start_formatted": "00:03:27.300",
+      "end_formatted": "00:03:29.600",
+      "text": "Type the name of the second parameter.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 207.3,
+          "end": 207.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 207.88,
+          "end": 208.08,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 208.08,
+          "end": 208.28,
+          "probability": 0.9927
+        },
+        {
+          "word": "of",
+          "start": 208.28,
+          "end": 208.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 208.48,
+          "end": 208.62,
+          "probability": 0.999
+        },
+        {
+          "word": "second",
+          "start": 208.62,
+          "end": 208.96,
+          "probability": 0.9595
+        },
+        {
+          "word": "parameter.",
+          "start": 208.96,
+          "end": 209.6,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 212.92,
+      "end": 214.5,
+      "start_formatted": "00:03:32.920",
+      "end_formatted": "00:03:34.500",
+      "text": "Type the value of the parameter.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 212.72,
+          "end": 213.04,
+          "probability": 0.9912
+        },
+        {
+          "word": "the",
+          "start": 213.04,
+          "end": 213.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "value",
+          "start": 213.26,
+          "end": 213.62,
+          "probability": 0.999
+        },
+        {
+          "word": "of",
+          "start": 213.62,
+          "end": 213.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 213.86,
+          "end": 213.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "parameter.",
+          "start": 213.98,
+          "end": 214.5,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 215.28,
+      "end": 220.98,
+      "start_formatted": "00:03:35.280",
+      "end_formatted": "00:03:40.980",
+      "text": "Restart the training app server since a new class was created and the plugin registry was updated.",
+      "words": [
+        {
+          "word": "Restart",
+          "start": 215.28,
+          "end": 215.96,
+          "probability": 0.917
+        },
+        {
+          "word": "the",
+          "start": 215.96,
+          "end": 216.1,
+          "probability": 0.9912
+        },
+        {
+          "word": "training",
+          "start": 216.1,
+          "end": 216.4,
+          "probability": 0.2795
+        },
+        {
+          "word": "app",
+          "start": 216.4,
+          "end": 216.72,
+          "probability": 0.8848
+        },
+        {
+          "word": "server",
+          "start": 216.72,
+          "end": 217.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "since",
+          "start": 217.12,
+          "end": 217.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "a",
+          "start": 217.4,
+          "end": 217.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "new",
+          "start": 217.56,
+          "end": 217.72,
+          "probability": 0.999
+        },
+        {
+          "word": "class",
+          "start": 217.72,
+          "end": 218.06,
+          "probability": 0.9917
+        },
+        {
+          "word": "was",
+          "start": 218.06,
+          "end": 218.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "created",
+          "start": 218.34,
+          "end": 218.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 218.78,
+          "end": 219.04,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 219.04,
+          "end": 219.18,
+          "probability": 0.998
+        },
+        {
+          "word": "plugin",
+          "start": 219.18,
+          "end": 219.52,
+          "probability": 0.874
+        },
+        {
+          "word": "registry",
+          "start": 219.52,
+          "end": 220.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "was",
+          "start": 220.04,
+          "end": 220.46,
+          "probability": 0.999
+        },
+        {
+          "word": "updated.",
+          "start": 220.46,
+          "end": 220.98,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 221.48,
+      "end": 223.38,
+      "start_formatted": "00:03:41.480",
+      "end_formatted": "00:03:43.380",
+      "text": "Click the stop server icon.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 221.48,
+          "end": 222.06,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 222.06,
+          "end": 222.24,
+          "probability": 0.999
+        },
+        {
+          "word": "stop",
+          "start": 222.24,
+          "end": 222.52,
+          "probability": 0.4475
+        },
+        {
+          "word": "server",
+          "start": 222.52,
+          "end": 222.9,
+          "probability": 0.9902
+        },
+        {
+          "word": "icon.",
+          "start": 222.9,
+          "end": 223.38,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 223.94,
+      "end": 227.18,
+      "start_formatted": "00:03:43.940",
+      "end_formatted": "00:03:47.180",
+      "text": "Click the debug server icon to start the server.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 223.94,
+          "end": 224.6,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 224.6,
+          "end": 224.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "debug",
+          "start": 224.74,
+          "end": 225.06,
+          "probability": 0.9897
+        },
+        {
+          "word": "server",
+          "start": 225.06,
+          "end": 225.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "icon",
+          "start": 225.44,
+          "end": 225.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 225.9,
+          "end": 226.24,
+          "probability": 0.999
+        },
+        {
+          "word": "start",
+          "start": 226.24,
+          "end": 226.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 226.6,
+          "end": 226.82,
+          "probability": 1.0
+        },
+        {
+          "word": "server.",
+          "start": 226.82,
+          "end": 227.18,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 227.78,
+      "end": 231.3,
+      "start_formatted": "00:03:47.780",
+      "end_formatted": "00:03:51.300",
+      "text": "Make sure external app server is started prior to testing.",
+      "words": [
+        {
+          "word": "Make",
+          "start": 227.78,
+          "end": 228.28,
+          "probability": 0.9956
+        },
+        {
+          "word": "sure",
+          "start": 228.28,
+          "end": 228.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "external",
+          "start": 228.52,
+          "end": 228.98,
+          "probability": 0.9438
+        },
+        {
+          "word": "app",
+          "start": 228.98,
+          "end": 229.32,
+          "probability": 0.9741
+        },
+        {
+          "word": "server",
+          "start": 229.32,
+          "end": 229.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 229.7,
+          "end": 229.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "started",
+          "start": 229.96,
+          "end": 230.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "prior",
+          "start": 230.3,
+          "end": 230.62,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 230.62,
+          "end": 230.9,
+          "probability": 1.0
+        },
+        {
+          "word": "testing.",
+          "start": 230.9,
+          "end": 231.3,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 232.0,
+      "end": 234.06,
+      "start_formatted": "00:03:52.000",
+      "end_formatted": "00:03:54.060",
+      "text": "To test, log in to training app.",
+      "words": [
+        {
+          "word": "To",
+          "start": 232.0,
+          "end": 232.14,
+          "probability": 0.9976
+        },
+        {
+          "word": "test,",
+          "start": 232.14,
+          "end": 232.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "log",
+          "start": 232.8,
+          "end": 233.14,
+          "probability": 0.7817
+        },
+        {
+          "word": "in",
+          "start": 233.14,
+          "end": 233.28,
+          "probability": 0.7134
+        },
+        {
+          "word": "to",
+          "start": 233.28,
+          "end": 233.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "training",
+          "start": 233.42,
+          "end": 233.72,
+          "probability": 0.8975
+        },
+        {
+          "word": "app.",
+          "start": 233.72,
+          "end": 234.06,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 234.42,
+      "end": 236.56,
+      "start_formatted": "00:03:54.420",
+      "end_formatted": "00:03:56.560",
+      "text": "Type the username for super user.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 234.42,
+          "end": 234.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 234.98,
+          "end": 235.16,
+          "probability": 0.999
+        },
+        {
+          "word": "username",
+          "start": 235.16,
+          "end": 235.54,
+          "probability": 0.9282
+        },
+        {
+          "word": "for",
+          "start": 235.54,
+          "end": 235.86,
+          "probability": 1.0
+        },
+        {
+          "word": "super",
+          "start": 235.86,
+          "end": 236.16,
+          "probability": 0.894
+        },
+        {
+          "word": "user.",
+          "start": 236.16,
+          "end": 236.56,
+          "probability": 0.3896
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 237.16,
+      "end": 239.46,
+      "start_formatted": "00:03:57.160",
+      "end_formatted": "00:03:59.460",
+      "text": "Type the password for super user.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 237.16,
+          "end": 237.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 237.76,
+          "end": 237.98,
+          "probability": 1.0
+        },
+        {
+          "word": "password",
+          "start": 237.98,
+          "end": 238.38,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 238.38,
+          "end": 238.68,
+          "probability": 1.0
+        },
+        {
+          "word": "super",
+          "start": 238.68,
+          "end": 239.04,
+          "probability": 0.998
+        },
+        {
+          "word": "user.",
+          "start": 239.04,
+          "end": 239.46,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 240.22,
+      "end": 241.74,
+      "start_formatted": "00:04:00.220",
+      "end_formatted": "00:04:01.740",
+      "text": "Click the login button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 240.22,
+          "end": 240.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 240.9,
+          "end": 241.08,
+          "probability": 1.0
+        },
+        {
+          "word": "login",
+          "start": 241.08,
+          "end": 241.4,
+          "probability": 0.9351
+        },
+        {
+          "word": "button.",
+          "start": 241.4,
+          "end": 241.74,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 242.78,
+      "end": 245.12,
+      "start_formatted": "00:04:02.780",
+      "end_formatted": "00:04:05.120",
+      "text": "Click the administration link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 242.78,
+          "end": 243.62,
+          "probability": 0.8496
+        },
+        {
+          "word": "the",
+          "start": 243.62,
+          "end": 243.88,
+          "probability": 0.9902
+        },
+        {
+          "word": "administration",
+          "start": 243.88,
+          "end": 244.4,
+          "probability": 0.149
+        },
+        {
+          "word": "link.",
+          "start": 244.4,
+          "end": 245.12,
+          "probability": 0.9771
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 245.6,
+      "end": 248.1,
+      "start_formatted": "00:04:05.600",
+      "end_formatted": "00:04:08.100",
+      "text": "Click the training, plugins link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 245.6,
+          "end": 246.36,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 246.36,
+          "end": 246.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "training,",
+          "start": 246.56,
+          "end": 246.9,
+          "probability": 0.9204
+        },
+        {
+          "word": "plugins",
+          "start": 247.18,
+          "end": 247.74,
+          "probability": 0.9707
+        },
+        {
+          "word": "link.",
+          "start": 247.74,
+          "end": 248.1,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 248.62,
+      "end": 251.54,
+      "start_formatted": "00:04:08.620",
+      "end_formatted": "00:04:11.540",
+      "text": "Click the invoke exchange rate set plugin button.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 248.62,
+          "end": 249.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 249.18,
+          "end": 249.36,
+          "probability": 1.0
+        },
+        {
+          "word": "invoke",
+          "start": 249.36,
+          "end": 249.72,
+          "probability": 0.792
+        },
+        {
+          "word": "exchange",
+          "start": 249.72,
+          "end": 250.16,
+          "probability": 0.9731
+        },
+        {
+          "word": "rate",
+          "start": 250.16,
+          "end": 250.58,
+          "probability": 0.9595
+        },
+        {
+          "word": "set",
+          "start": 250.58,
+          "end": 250.82,
+          "probability": 0.9814
+        },
+        {
+          "word": "plugin",
+          "start": 250.82,
+          "end": 251.2,
+          "probability": 0.9878
+        },
+        {
+          "word": "button.",
+          "start": 251.2,
+          "end": 251.54,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 252.2,
+      "end": 255.44,
+      "start_formatted": "00:04:12.200",
+      "end_formatted": "00:04:15.440",
+      "text": "The exchange rates are retrieved from external app.",
+      "words": [
+        {
+          "word": "The",
+          "start": 252.2,
+          "end": 252.84,
+          "probability": 0.936
+        },
+        {
+          "word": "exchange",
+          "start": 252.84,
+          "end": 253.3,
+          "probability": 0.8916
+        },
+        {
+          "word": "rates",
+          "start": 253.3,
+          "end": 253.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 253.7,
+          "end": 253.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "retrieved",
+          "start": 253.92,
+          "end": 254.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "from",
+          "start": 254.42,
+          "end": 254.62,
+          "probability": 0.999
+        },
+        {
+          "word": "external",
+          "start": 254.62,
+          "end": 255.06,
+          "probability": 0.812
+        },
+        {
+          "word": "app.",
+          "start": 255.06,
+          "end": 255.44,
+          "probability": 0.9731
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 255.74,
+      "end": 259.4,
+      "start_formatted": "00:04:15.740",
+      "end_formatted": "00:04:19.400",
+      "text": "There are two ways to confirm new exchange rates were retrieved.",
+      "words": [
+        {
+          "word": "There",
+          "start": 255.74,
+          "end": 256.12,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 256.12,
+          "end": 256.26,
+          "probability": 1.0
+        },
+        {
+          "word": "two",
+          "start": 256.26,
+          "end": 256.46,
+          "probability": 0.8867
+        },
+        {
+          "word": "ways",
+          "start": 256.46,
+          "end": 256.78,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 256.78,
+          "end": 256.96,
+          "probability": 1.0
+        },
+        {
+          "word": "confirm",
+          "start": 256.96,
+          "end": 257.38,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 257.38,
+          "end": 257.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "exchange",
+          "start": 257.66,
+          "end": 258.1,
+          "probability": 0.999
+        },
+        {
+          "word": "rates",
+          "start": 258.1,
+          "end": 258.52,
+          "probability": 1.0
+        },
+        {
+          "word": "were",
+          "start": 258.52,
+          "end": 258.76,
+          "probability": 1.0
+        },
+        {
+          "word": "retrieved.",
+          "start": 258.76,
+          "end": 259.4,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 259.56,
+      "end": 259.96,
+      "start_formatted": "00:04:19.560",
+      "end_formatted": "00:04:19.960",
+      "text": "1.",
+      "words": [
+        {
+          "word": "1.",
+          "start": 259.56,
+          "end": 259.96,
+          "probability": 0.8916
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 260.4,
+      "end": 264.96,
+      "start_formatted": "00:04:20.400",
+      "end_formatted": "00:04:24.960",
+      "text": "The retrieved on column shows the date and time the exchange rates were retrieved.",
+      "words": [
+        {
+          "word": "The",
+          "start": 260.4,
+          "end": 260.7,
+          "probability": 0.999
+        },
+        {
+          "word": "retrieved",
+          "start": 260.7,
+          "end": 261.2,
+          "probability": 0.9229
+        },
+        {
+          "word": "on",
+          "start": 261.2,
+          "end": 261.34,
+          "probability": 0.9614
+        },
+        {
+          "word": "column",
+          "start": 261.34,
+          "end": 261.66,
+          "probability": 0.999
+        },
+        {
+          "word": "shows",
+          "start": 261.66,
+          "end": 262.02,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 262.02,
+          "end": 262.2,
+          "probability": 1.0
+        },
+        {
+          "word": "date",
+          "start": 262.2,
+          "end": 262.46,
+          "probability": 0.9995
+        },
+        {
+          "word": "and",
+          "start": 262.46,
+          "end": 262.64,
+          "probability": 0.999
+        },
+        {
+          "word": "time",
+          "start": 262.64,
+          "end": 263.0,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 263.0,
+          "end": 263.28,
+          "probability": 1.0
+        },
+        {
+          "word": "exchange",
+          "start": 263.28,
+          "end": 263.74,
+          "probability": 1.0
+        },
+        {
+          "word": "rates",
+          "start": 263.74,
+          "end": 264.08,
+          "probability": 1.0
+        },
+        {
+          "word": "were",
+          "start": 264.08,
+          "end": 264.28,
+          "probability": 1.0
+        },
+        {
+          "word": "retrieved.",
+          "start": 264.28,
+          "end": 264.96,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 265.28,
+      "end": 265.6,
+      "start_formatted": "00:04:25.280",
+      "end_formatted": "00:04:25.600",
+      "text": "2.",
+      "words": [
+        {
+          "word": "2.",
+          "start": 265.28,
+          "end": 265.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 266.0,
+      "end": 272.06,
+      "start_formatted": "00:04:26.000",
+      "end_formatted": "00:04:32.060",
+      "text": "The rate for each USD to non-USD currency is a decimal value that goes to at least 4 digits.",
+      "words": [
+        {
+          "word": "The",
+          "start": 266.0,
+          "end": 266.3,
+          "probability": 1.0
+        },
+        {
+          "word": "rate",
+          "start": 266.3,
+          "end": 266.52,
+          "probability": 1.0
+        },
+        {
+          "word": "for",
+          "start": 266.52,
+          "end": 266.72,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 266.72,
+          "end": 266.98,
+          "probability": 1.0
+        },
+        {
+          "word": "USD",
+          "start": 266.98,
+          "end": 267.54,
+          "probability": 0.981
+        },
+        {
+          "word": "to",
+          "start": 267.54,
+          "end": 267.82,
+          "probability": 0.998
+        },
+        {
+          "word": "non",
+          "start": 267.82,
+          "end": 268.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "-USD",
+          "start": 268.06,
+          "end": 268.66,
+          "probability": 0.9746
+        },
+        {
+          "word": "currency",
+          "start": 268.66,
+          "end": 269.1,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 269.1,
+          "end": 269.42,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 269.42,
+          "end": 269.52,
+          "probability": 1.0
+        },
+        {
+          "word": "decimal",
+          "start": 269.52,
+          "end": 269.88,
+          "probability": 1.0
+        },
+        {
+          "word": "value",
+          "start": 269.88,
+          "end": 270.34,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 270.34,
+          "end": 270.52,
+          "probability": 1.0
+        },
+        {
+          "word": "goes",
+          "start": 270.52,
+          "end": 270.76,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 270.76,
+          "end": 270.94,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 270.94,
+          "end": 271.14,
+          "probability": 1.0
+        },
+        {
+          "word": "least",
+          "start": 271.14,
+          "end": 271.32,
+          "probability": 1.0
+        },
+        {
+          "word": "4",
+          "start": 271.32,
+          "end": 271.64,
+          "probability": 0.6992
+        },
+        {
+          "word": "digits.",
+          "start": 271.64,
+          "end": 272.06,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 272.06,
+      "end": 277.46,
+      "start_formatted": "00:04:32.060",
+      "end_formatted": "00:04:37.460",
+      "text": "The whole number part of the first two digits are always the same each time you run a plugin.",
+      "words": [
+        {
+          "word": "The",
+          "start": 272.06,
+          "end": 272.78,
+          "probability": 0.7231
+        },
+        {
+          "word": "whole",
+          "start": 272.78,
+          "end": 273.06,
+          "probability": 0.9858
+        },
+        {
+          "word": "number",
+          "start": 273.06,
+          "end": 273.42,
+          "probability": 0.98
+        },
+        {
+          "word": "part",
+          "start": 273.42,
+          "end": 273.74,
+          "probability": 0.9917
+        },
+        {
+          "word": "of",
+          "start": 273.74,
+          "end": 273.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 273.9,
+          "end": 274.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "first",
+          "start": 274.02,
+          "end": 274.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "two",
+          "start": 274.3,
+          "end": 274.58,
+          "probability": 0.8281
+        },
+        {
+          "word": "digits",
+          "start": 274.58,
+          "end": 274.96,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 274.96,
+          "end": 275.18,
+          "probability": 0.998
+        },
+        {
+          "word": "always",
+          "start": 275.18,
+          "end": 275.56,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 275.56,
+          "end": 275.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "same",
+          "start": 275.74,
+          "end": 275.98,
+          "probability": 1.0
+        },
+        {
+          "word": "each",
+          "start": 275.98,
+          "end": 276.26,
+          "probability": 0.998
+        },
+        {
+          "word": "time",
+          "start": 276.26,
+          "end": 276.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "you",
+          "start": 276.54,
+          "end": 276.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "run",
+          "start": 276.8,
+          "end": 277.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 277.06,
+          "end": 277.2,
+          "probability": 0.418
+        },
+        {
+          "word": "plugin.",
+          "start": 277.2,
+          "end": 277.46,
+          "probability": 0.915
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 277.88,
+      "end": 281.44,
+      "start_formatted": "00:04:37.880",
+      "end_formatted": "00:04:41.440",
+      "text": "The third and fourth digits vary based on the current minute.",
+      "words": [
+        {
+          "word": "The",
+          "start": 277.88,
+          "end": 278.32,
+          "probability": 0.9946
+        },
+        {
+          "word": "third",
+          "start": 278.32,
+          "end": 278.58,
+          "probability": 0.9009
+        },
+        {
+          "word": "and",
+          "start": 278.58,
+          "end": 278.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "fourth",
+          "start": 278.88,
+          "end": 279.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "digits",
+          "start": 279.32,
+          "end": 279.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "vary",
+          "start": 279.72,
+          "end": 280.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "based",
+          "start": 280.1,
+          "end": 280.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 280.48,
+          "end": 280.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 280.68,
+          "end": 280.82,
+          "probability": 0.9976
+        },
+        {
+          "word": "current",
+          "start": 280.82,
+          "end": 281.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "minute.",
+          "start": 281.1,
+          "end": 281.44,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 281.78,
+      "end": 289.12,
+      "start_formatted": "00:04:41.780",
+      "end_formatted": "00:04:49.120",
+      "text": "For example, the USD to EUR rate is 0.75 XX, where XX is the current minute.",
+      "words": [
+        {
+          "word": "For",
+          "start": 281.78,
+          "end": 282.24,
+          "probability": 0.9941
+        },
+        {
+          "word": "example,",
+          "start": 282.24,
+          "end": 282.7,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 283.16,
+          "end": 283.26,
+          "probability": 0.981
+        },
+        {
+          "word": "USD",
+          "start": 283.26,
+          "end": 283.58,
+          "probability": 0.2006
+        },
+        {
+          "word": "to",
+          "start": 283.58,
+          "end": 284.16,
+          "probability": 0.0948
+        },
+        {
+          "word": "EUR",
+          "start": 284.16,
+          "end": 284.36,
+          "probability": 0.7998
+        },
+        {
+          "word": "rate",
+          "start": 284.36,
+          "end": 284.74,
+          "probability": 0.9829
+        },
+        {
+          "word": "is",
+          "start": 284.74,
+          "end": 284.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "0",
+          "start": 284.88,
+          "end": 285.18,
+          "probability": 0.9785
+        },
+        {
+          "word": ".75",
+          "start": 285.18,
+          "end": 286.18,
+          "probability": 0.9961
+        },
+        {
+          "word": "XX,",
+          "start": 286.18,
+          "end": 286.8,
+          "probability": 0.2158
+        },
+        {
+          "word": "where",
+          "start": 287.36,
+          "end": 287.64,
+          "probability": 0.9927
+        },
+        {
+          "word": "XX",
+          "start": 287.64,
+          "end": 288.04,
+          "probability": 0.9634
+        },
+        {
+          "word": "is",
+          "start": 288.04,
+          "end": 288.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 288.32,
+          "end": 288.46,
+          "probability": 0.998
+        },
+        {
+          "word": "current",
+          "start": 288.46,
+          "end": 288.78,
+          "probability": 0.998
+        },
+        {
+          "word": "minute.",
+          "start": 288.78,
+          "end": 289.12,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 289.88,
+      "end": 293.4,
+      "start_formatted": "00:04:49.880",
+      "end_formatted": "00:04:53.400",
+      "text": "This ends the configuring of plugin with parameters demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 289.88,
+          "end": 290.6,
+          "probability": 0.7729
+        },
+        {
+          "word": "ends",
+          "start": 290.6,
+          "end": 290.84,
+          "probability": 0.9824
+        },
+        {
+          "word": "the",
+          "start": 290.84,
+          "end": 291.0,
+          "probability": 0.9946
+        },
+        {
+          "word": "configuring",
+          "start": 291.0,
+          "end": 291.64,
+          "probability": 0.9795
+        },
+        {
+          "word": "of",
+          "start": 291.64,
+          "end": 291.84,
+          "probability": 0.5391
+        },
+        {
+          "word": "plugin",
+          "start": 291.84,
+          "end": 292.12,
+          "probability": 0.894
+        },
+        {
+          "word": "with",
+          "start": 292.12,
+          "end": 292.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "parameters",
+          "start": 292.4,
+          "end": 292.96,
+          "probability": 0.9277
+        },
+        {
+          "word": "demonstration.",
+          "start": 292.96,
+          "end": 293.4,
+          "probability": 0.9458
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 293.4,
+      "end": 293.84,
+      "start_formatted": "00:04:53.400",
+      "end_formatted": "00:04:53.840",
+      "text": "Filogy of theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+      "words": [
+        {
+          "word": "Filogy",
+          "start": 293.4,
+          "end": 293.4,
+          "probability": 0.0
+        },
+        {
+          "word": "of",
+          "start": 293.4,
+          "end": 293.4,
+          "probability": 0.3147
+        },
+        {
+          "word": "theountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountountount",
+          "start": 293.4,
+          "end": 293.84,
+          "probability": 0.9048
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 293.84,
+      "end": 293.86,
+      "start_formatted": "00:04:53.840",
+      "end_formatted": "00:04:53.860",
+      "text": "you",
+      "words": [
+        {
+          "word": "you",
+          "start": 293.84,
+          "end": 293.86,
+          "probability": 0.2126
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,423 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-15",
+    "slide_count": 37,
+    "slides_with_text": 35,
+    "total_words": 2255,
+    "avg_confidence": 84.76,
+    "processing_time_seconds": 15.46,
+    "extracted_at": "2026-02-15T18:22:08.235284"
+  },
+  "full_text": "Sending Messages\n\nLesson\nobjectives\n\n¢ Describe and configure the plugin used to\nsend messages\n\n¢ Describe the functionality of safe ordering\n\n¢ Describe how a sending message error is\nhandled\n\nUse case\n\n¢ The bank account verification\npayload must be sent to an external\nsystem\n\n* Configure the system to handle\nsend errors\n\n* Configure the system to ensure a\ncontact message is not sent until its\nprevious message is acknowledged\n\nGi\n\na Fe N\n\nCreate message transport plugin\nclass\n\nCreate plugin registry\nConfigure the plugin\nConfigure the destination\n\nDeploy changes\n\n| Guidewire servers and messaging transactions\n\n: Application Context )) Integration Context i\n\nyy ,\nEvent triggering & 4 Sending message &\nPayload Process synchronous\n\n( ») Message generation transformation Ki led t\n‘event fired rules, | Message | 0 acknowledgmen'\nPY d Messce (request plugin) (transport plugin)\n\n¢ ==\n\nProcess asynchronous\nacknowledgement\n(reply plugin or API)\n\n¢ All activity from sending messages takes place in transaction 3\n« Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back\n\ni External\ni System\n\n—\n\nTransport plugin\n\n| Message transport plugin Gi\n\n3\n\nDestination LoS\n\nv\n\n)\n\ni Secon System\nPlugi\n\n* The message transport plugin is responsible for sending the message\n* The message transport plugin may also become responsible for:\n+ Persisting the SenderReflD in a message if the SenderReflD is provided by an external system\n\n+ Acknowledging in case of synchronous message exchange with an external system\n\n| Create a message transport plugin class\n\n¢ Use a package naming convention recommendation:\n\n* <company>.<app_code>.messaging.<functional_area>\n\n© BankAccountVerfcaton Transport.gs\npackage trainingepp.meosaging.bank\n\nuses gv.plugin.messaging.MessageTransport\nuses trainingapp. webservice. bank.bankaccountveri ficationwsc.bankverificationapi.BankVerificationAPT\n\nclass BankAccountVerificationTransport implements MessageTransport {\n\nvar bankApi: BankVerificationAPT\n\nGParam(\"aMessage\", \"Message object\")\n@Paran(\"transformedPayload”, \"Payload sent by request plugin\")\n\nWl 44\n\ni © override function send(aMessage : Message, transformedPayload : String) (...}\n1 © override function resune() (...)\n\ni © override property set DestinationID(destinationID : int) (...}\n\nfl © override function shutdown () (...)\n\n1 © override function suspend() (.-}\n\n| Implement destination plugin methods Gi\n\n© ExampleTransportPlugin.gs\n\nse\n\n13 a\n\na\n\na\n\nset\n\npackage trn.ta.plugin.messaging. example\n\nuses gw.plugin.messaging.MessageTransport,\n\nclass\n\nn implements MessageTransport {\n\nprivate var destinationID : int = -1\n\noverride function send(message : Message, transformedPayload : String) (\n\ny\n\noverride function shutdown() {\n\n1\n\noverride function suspend() [\n\n}\n\noverride function resume() {\n\n1\n\nLE; Select Methods to implement\n\n#@ rt\n) gu plugin messaging MessageTronsport\n\nI ® sendimessageMessagetransfermedPayleadSting)void\n\nMessagePlugin\n\nD Copy davadoc\n\n© inser Coverde oe\n\nCancel\n\noverride property set DestinationID(destinationID : int) (\n\nd\ny\n\nthis. destinationID = destinationID\n\nImplement control methods and\nproperty for messaging plugins:\nshutdown\n+ When application server shuts down\nsuspend\n\n+ When messaging destination is\nsuspended\n\nresume\n+ When messaging destination resumes\nset DestinationID\n\n« When messaging plugin instance is\ninitialized\n\n| resume and suspend methods example Gi\n\na override function resume() {\n\n—> _bankApi = new BankVerificationAPI()\n_bankapi .config.Http.Authentication.Basic.Username = \"externalappuser”\n_bankApi .Config.Http.Authentication.Basic.Password = \"gw\"\n~bankApi .Config.Cal1Timeout = 30000\n}\n\noe override property set DestinationID(destinationID : int) {...}\n@ override function shutdown() {.--}\na override function suspend() {\n\n—> _bankApi = null\n\n}\n\n¢ To resume a destination, call the resume method\n* resume method establishes and configures the connection\n* To suspend a destination, call the suspend method\n\n* suspend method releases any resources\n\n| Send payload to web service example Gi\n\n@Param(\"aMessage\", \"Message object\")\n@Param(\"transformedPayload\", \"Payload sent by request plugin\")\n@ override function send(aMessage : Message, transformedPayload : String) {\nvar acclumber = (aMessage.MessageRoot as BankAccount) .AccountNumber\n—> var ackCode = bankApi.verifyAccount (aMessage.SenderRefID, transformedPayload, accNumber)\n\n* To send a message, implement the send method, which the application calls with\na Message entity instance argument\n\n* The send method has two arguments:\n* aMessage is the original payload\n\n¢ transformedPayload is the transformed payload if that destination implemented\na MessageRequest plugin\n\n| Send payload to file example Gi\n\not override function send(aMessage: Message, transformedPayload: String) {\nprint(\"\\n*#* Stage 3(b) -- Sending the message *#*\")\nprint(\" Transport plugin: VendorRecommendationTransport -- send()\")\n\nprint(\" Sending payload to file c:/Guidewire/Vendor\" + aMessage.ABContact.PublicID + \".txt\")\nvar file = \"c:/Guidewire/Vendor\" + aMessage.ABContact.PublicID + \".txt\"\n\nvar output = new Bufferediriter (new FileWriter(new File(file)))\n\noutput. write (transformedPayload)\n\n4 output.close()\n\nAE\n\n« VendorRecommendationTransport plugin\n* The send method uses Gosu's Java file I/O capabilities to write the payload to a simple flat file\n\n¢ The payload contains information about the evaluations for that vendor\n\n| Create plugin registry\n\nY Db Plugins\nY DWregistry\n AuthenticationServicePlugin.gwp\ntits Alte Shiftelnsert :\n\n@ AuthenticationSourceCreatorPlugin.gwp 6 Cut\n\n1@ BackgroundTaskFailoverPlugin.gwp Tl Copy\n\nA BackgroundTaskLoadBalencingPlugin.gwp Copy Path\n\n& BankAccountVerficationRequest.gwp Coy Reference\n& BankAccountVerficationTransport.gwp [il paste\n\n* configuration.config.Plugins.registry\n\nCtrt+x | [B Groovy Class\n\nCte\n\nCtrt+Shift+C | i Scratch File\n\nCirle Alte Shift+C\nCttev\n\n* Specify a new request plugin registry entry name\n\n* Specify the interface to be implemented\n\na File\n\nPackage\nitm HTML File\n\nGi\n\nPlugin\n\nName: BankAccountVerificationTransport\n\nInterface: |MessageTransport\n\ncen\n\nCancel\n\n¢ Add the type of plugin to be implemented in the plugin name\n\n| Configure the plugin G\n\n1 BonkdAccountVerificationTranspor.gup\nName: BankAccountVerficationTransport\n\nInterface: MessageTransport\n\nGosy Class: trainingapp.messaging bank BankAccountVerificationTransport\n\netfication Transport}\n\nEnvironment:\nServer:\n9 CO Disabled\n‘Add Java Plugin Parameters: = Value | Environment | __ Server\n\nAdd OSGi Plugin\n\nG\n\nSearch by Name | Project\nD7 Include non-project classes\n\nQ BankAccountVerificationTransport\n\n¢ Add Gosu Plugin\n* Optionally, select Java or OSGi plugin\n\n* Click the ellipse (...) and select the plugin\nimplementation class in the dialog\n\n| Configure the destination\n\neh messaging-configam!\nDefault Server:\n\nMessaging Config: | Default\n\nae 10: 13\n1D, Name ;\n65 Java.MessageDestination.Email Name Greer\nRUE Have MeszageDestinst icysyster frensportNeme Name: Bank Account Verification\nTl Java.MessageDestinati imSystemTransport.Name\nie aie Mesaceesinaton saad imevo Nene ean Host Name\n\n15 Legal Case Report After Send Plugin:\n20 Safe Ordering Demo\n21 Message Generator Request Plugin:\n\n30. Fraud Check Reoly Plugin;\n\n« Navigate to:\n\n¢ configuration.config.Messaging.messaging-config.xml\n\nBankAccountVerificationRequest\n\nCO. Disable destination\n\nTransport Plugin: BankAccountVerificationTransport\n\n¢ The destination must point to a plugin registry element that references the\n\nappropriate Message Transport plugin\n\nDeploy code changes\n\n¢ New transport plugin class\n¢ New or modified plugin registry\n¢ New or modified destination\n\nTools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nlun ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\n\n& Debug... Alt+Shift+F9\n\njy Attach to Local Process...\n\n[PP Edit Configurations...\n\nBl import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified transport plugin class\n\nTools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD Run...\n\nWE Debug...\n\n2m Attach to Local Process...\n\n[> Edit Configurations...\n\nB] Import Test Results\n\nI Stop ‘Server’\n\nEY Show Running List\n\nSto\n\nSafe ordering\n\ng Account 117 Who is\n\naccount\n\n(lost or delayed) 117?\n2\n==\n2M External\nchanged System\n117\nchanged changed M\n\n« Some destinations create multiple messages for a single entity or a single set of\nrelated entities\n\n* Typically, they should not be sent at the same time\n« Later messages reference work done in earlier messages\n\n¢ If an earlier message gets lost or arrives late, a later message will not make sense\n\n| Safe ordering\ng Account 117\n\na) &\n\n==\nExternal\nSystem\n\nchanged\n* Guidewire has a built-in mechanism called safe ordering\n\n+ Its primary purpose is to ensure that the external system gets related messages one at a time\n« When safe ordering is enforced:\n\n+ For a given destination/entity pair, only one message is sent\n\n+ The external system must acknowledge the first message before the next message is sent\n\n| Default ordering and sending behavior Gi\n\n. regionA\n¢ Non-safe ordering messages sent... added M4\n\n10:01\n\n* Before safe-ordering message\naccount B\n\n« In message creation order added\n10:02\n\n* Immediately\naccount B\nchanged\n10:03\n\n¢ Safe-ordering messages sent... region C\nadded\n« After non-safe messages 10:04 4]\n\n* In message creation order account D,\nadded\n¢ Per entity instance, only one message ata 10:05\ntime account D.\nchanged\n10:06\n\n| InsuranceSuite safe ordering Gi\n\n* Safe ordering applies only to» Safe ordering applies * Safe ordering is not used for\n\nmessages related directly or only to messages any primary entity messages\nou’ tly to instances of related directly or ¢ For any destination, you can\n\nindirectly to instances of — enable safe ordering for one\n\n¢ Alternative Primary Entity of the supported primary\n\ncan be configured in a Account entity types:\n\ndestination to safe order for + Alternative Primary Entity . . . ;\n\nthe Contact entity can be configured in a Account PolicyPeriod\ndestination to safe order for * Contact + Producer\nthe Contact entity\n\nTa configuration\nCy contig\n© Entity Names\nC9 Extensions Es\n£9 Localizations\nP Messaging\n\nPE ca Reply Plugin:\n\n‘Alternative Primary Entity:\n\nconiigaan\n\n| ContactManager safe ordering Gi\n\nE) S]_ Cl Disable destination\n\nEnvironment:\n\n¢ In ContactManager (and TrainingApp), a Fraud Check\nmessages are safe ordered based on me a ——\nABContact te Send Pg\n\nRegie Pai Fondren\n* This is true for every destination CD\n* There are no alternative primary entity types chunk Sa one ‘\nPoll interval: 10000 ZS] shutdown Timeout: 30000 ra\nMax Retries: 3 o\nInitial Retry Interval. 1000 | Retry Backott Multiples 2 $\nMessage Without Primary: ©) iti Thread «Single Thread O Strict Mode\n\nDirbte Request Processing: C]\nServer\nChunk\n\nRequest Procesting Nodes:\n\nPersist Transformed Payot Request Processing Thread:\nAlways Cll Before Send:\nBefore Send Plugin:\nEvents: ae\nName\n\nABContactChonged\nABContacthdded\n\n| Safe ordering demo in TrainingApp Gi\n\nAdministration > Training: Messaging > Safe Ordering\n\nGi TrainingApp\n\nUtilities\n\nTraining: Plugins\n\nSearch ¥\n\nContact |~ Administration\n\nSafe Ordering\n\nDisplay instructions\n\nsafe Ordering\n1) Select an ABPerson william Andy a\n2) Change occupation Employee\n3) Acknowledge message?\n\n$4) send message Send\n\nNon-Safe Ordering\n\n1) Select a user Alice Applegate bd\n2) Change occupation Team Lead\n3) Acknowledge message?\n\n4) Send message\n\n| Transport or Request plugin error\n\nSe -: —\n\n¢ When Transport or Request plugins throws an exception, the Guidewire\napplication automatically:\n\n* Compares message send attempts to Max Retries\n\n« Waits the Initial Retry Interval\n\n* Retries to send message\n\n* Increases the time between resends (Retry Backoff Multiplier)\n* Continues until reaching Max Retries\n\n* Parameters defined in message destination\n\n| Error administration\n\nom\nGes\n\n¢ Guidewire automatically suspends a destination when exceeding Max Retries\n* No further messages are sent for destination\n\n¢ An administrator must manually resume the destination\n\n* The message that caused the suspend will be resent, up to the maximum retries if necessary\nMessage Queues\n\nMessage Queues\nDs Status > Destination > DS Status >\nBank Account Verification B Suspended\n\nBank Account Verification 13 Started\n\n| Retry and skip messages Gi\n\n= ——_-—- &\n\nMessage Queues\n\nDestination: Bank Account Verification (ID: 13)\n\nDetailed Statistics | [Contacts wit ished messages| Be\nContact ‘Send Time Failed Retryable Error Inflight Unsent Error Message\n\n0 C) C) 1\n\nBankAccountChanged Bank Ac\n\n| Contrasting retry scenarios\n\nWhat is the problem?\n\nWhat executes the\nretry?\n\nShould each attempt\nuse the same\nSenderRefiID\n\nWhat specifies the max\nretry number?\n\nWhat happens when\nthe max number of\nretires is reached?\n\nInitial send error External system error\n(Automatic retry (Automatic retry\nduring send after send\n\nException thrownin * Discussed in Message\nbeforeSend or send Acknowledgment\nmethods\n\nInternal Guidewire *\nbehavior\n\nYes *\n\nMax Retries *\nproperty for\n\nmessaging\n\ndestination\n\nThe destination is bd\nsuspended\n\nGi\n\nMessage needs\nmanual\nintervention\n\nAdministrator using\nRetry button\n\nYes\n\nn/a\n\nn/a\n\n| Demonstration G\n\nExamine message send and send error\n= recovery\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — Every destination can optionally have a request plugin, but it must have a\n¢ transport plugin. Why is the transport plugin required?\n\n¢\n¢\n\nSeo e Soo e esses see sen\n\nGi\n\nAnswer Gi\n\n_— — Every destination can optionally have a request plugin, but it must have a\nY transport plugin. Why is the transport plugin required?\n¢\n\nThe transport plugin is required because it is used to send the message when it is\nprocessed from the Message table. Without a transport plugin, messages for a given\ndestination would have no way of being sent to the corresponding external system.\n\nSoo ee See eo eS se ese\n\nQuestion\n\n,- — Can one destination have two transport plugins? Can one transport\n¢ plugin be used by two destinations?\n\n¢\n¢\n\nSeo e Soo e esses see sen\n\nGi\n\nAnswer Gi\n\n,~ — Can one destination have two transport plugins? Can one transport\nY plugin be used by two destinations?\n¢\n\nA destination can’t have two transport plugins, but a transport plugin class can be used\nby two (or more) similar destinations.\n\nSoo ee See eo eS se ese\n\nQuestion\n\n_- — Why should the send method never send a message to multiple external\n\nY systems?\n¢\n\nSeo e Soo e esses see sen\n\nGi\n\nAnswer Gi\n\n_- — Why should the send method never send a message to multiple external\nY systems?\n¢\n\nThe message acknowledgement architecture assumes that each message is sent to\nonly one destination. If a given send method sent a message to multiple destinations,\nthen there could be multiple acknowledgements, errors, or unprocessed messages,\nand the messaging architecture would not be able to identify the state of the message.\n\nSoo ee See eo eS se ese\n\nLesson\nobjectives * Describe and configure the plugin used to\nreview send messages\n\n¢ Describe the functionality of safe ordering\n¢ Describe how a sending message error is\nhandled\n\n| Student exercise\n\nConfigure sending a message",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Sending Messages",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe and configure the plugin used to\nsend messages\n\n¢ Describe the functionality of safe ordering\n\n¢ Describe how a sending message error is\nhandled",
+      "word_count": 28,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Use case\n\n¢ The bank account verification\npayload must be sent to an external\nsystem\n\n* Configure the system to handle\nsend errors\n\n* Configure the system to ensure a\ncontact message is not sent until its\nprevious message is acknowledged\n\nGi\n\na Fe N\n\nCreate message transport plugin\nclass\n\nCreate plugin registry\nConfigure the plugin\nConfigure the destination\n\nDeploy changes",
+      "word_count": 61,
+      "avg_confidence": 90.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Guidewire servers and messaging transactions\n\n: Application Context )) Integration Context i\n\nyy ,\nEvent triggering & 4 Sending message &\nPayload Process synchronous\n\n( ») Message generation transformation Ki led t\n‘event fired rules, | Message | 0 acknowledgmen'\nPY d Messce (request plugin) (transport plugin)\n\n¢ ==\n\nProcess asynchronous\nacknowledgement\n(reply plugin or API)\n\n¢ All activity from sending messages takes place in transaction 3\n« Messaging occurs across multiple transactions\n\n¢ If an exception is thrown, work in the current transaction is rolled back\n\ni External\ni System\n\n—",
+      "word_count": 93,
+      "avg_confidence": 81.66,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Transport plugin",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Message transport plugin Gi\n\n3\n\nDestination LoS\n\nv\n\n)\n\ni Secon System\nPlugi\n\n* The message transport plugin is responsible for sending the message\n* The message transport plugin may also become responsible for:\n+ Persisting the SenderReflD in a message if the SenderReflD is provided by an external system\n\n+ Acknowledging in case of synchronous message exchange with an external system",
+      "word_count": 63,
+      "avg_confidence": 86.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Create a message transport plugin class\n\n¢ Use a package naming convention recommendation:\n\n* <company>.<app_code>.messaging.<functional_area>\n\n© BankAccountVerfcaton Transport.gs\npackage trainingepp.meosaging.bank\n\nuses gv.plugin.messaging.MessageTransport\nuses trainingapp. webservice. bank.bankaccountveri ficationwsc.bankverificationapi.BankVerificationAPT\n\nclass BankAccountVerificationTransport implements MessageTransport {\n\nvar bankApi: BankVerificationAPT\n\nGParam(\"aMessage\", \"Message object\")\n@Paran(\"transformedPayload”, \"Payload sent by request plugin\")\n\nWl 44\n\ni © override function send(aMessage : Message, transformedPayload : String) (...}\n1 © override function resune() (...)\n\ni © override property set DestinationID(destinationID : int) (...}\n\nfl © override function shutdown () (...)\n\n1 © override function suspend() (.-}",
+      "word_count": 86,
+      "avg_confidence": 69.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Implement destination plugin methods Gi\n\n© ExampleTransportPlugin.gs\n\nse\n\n13 a\n\na\n\na\n\nset\n\npackage trn.ta.plugin.messaging. example\n\nuses gw.plugin.messaging.MessageTransport,\n\nclass\n\nn implements MessageTransport {\n\nprivate var destinationID : int = -1\n\noverride function send(message : Message, transformedPayload : String) (\n\ny\n\noverride function shutdown() {\n\n1\n\noverride function suspend() [\n\n}\n\noverride function resume() {\n\n1\n\nLE; Select Methods to implement\n\n#@ rt\n) gu plugin messaging MessageTronsport\n\nI ® sendimessageMessagetransfermedPayleadSting)void\n\nMessagePlugin\n\nD Copy davadoc\n\n© inser Coverde oe\n\nCancel\n\noverride property set DestinationID(destinationID : int) (\n\nd\ny\n\nthis. destinationID = destinationID\n\nImplement control methods and\nproperty for messaging plugins:\nshutdown\n+ When application server shuts down\nsuspend\n\n+ When messaging destination is\nsuspended\n\nresume\n+ When messaging destination resumes\nset DestinationID\n\n« When messaging plugin instance is\ninitialized",
+      "word_count": 130,
+      "avg_confidence": 76.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| resume and suspend methods example Gi\n\na override function resume() {\n\n—> _bankApi = new BankVerificationAPI()\n_bankapi .config.Http.Authentication.Basic.Username = \"externalappuser”\n_bankApi .Config.Http.Authentication.Basic.Password = \"gw\"\n~bankApi .Config.Cal1Timeout = 30000\n}\n\noe override property set DestinationID(destinationID : int) {...}\n@ override function shutdown() {.--}\na override function suspend() {\n\n—> _bankApi = null\n\n}\n\n¢ To resume a destination, call the resume method\n* resume method establishes and configures the connection\n* To suspend a destination, call the suspend method\n\n* suspend method releases any resources",
+      "word_count": 85,
+      "avg_confidence": 80.36,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Send payload to web service example Gi\n\n@Param(\"aMessage\", \"Message object\")\n@Param(\"transformedPayload\", \"Payload sent by request plugin\")\n@ override function send(aMessage : Message, transformedPayload : String) {\nvar acclumber = (aMessage.MessageRoot as BankAccount) .AccountNumber\n—> var ackCode = bankApi.verifyAccount (aMessage.SenderRefID, transformedPayload, accNumber)\n\n* To send a message, implement the send method, which the application calls with\na Message entity instance argument\n\n* The send method has two arguments:\n* aMessage is the original payload\n\n¢ transformedPayload is the transformed payload if that destination implemented\na MessageRequest plugin",
+      "word_count": 87,
+      "avg_confidence": 87.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Send payload to file example Gi\n\not override function send(aMessage: Message, transformedPayload: String) {\nprint(\"\\n*#* Stage 3(b) -- Sending the message *#*\")\nprint(\" Transport plugin: VendorRecommendationTransport -- send()\")\n\nprint(\" Sending payload to file c:/Guidewire/Vendor\" + aMessage.ABContact.PublicID + \".txt\")\nvar file = \"c:/Guidewire/Vendor\" + aMessage.ABContact.PublicID + \".txt\"\n\nvar output = new Bufferediriter (new FileWriter(new File(file)))\n\noutput. write (transformedPayload)\n\n4 output.close()\n\nAE\n\n« VendorRecommendationTransport plugin\n* The send method uses Gosu's Java file I/O capabilities to write the payload to a simple flat file\n\n¢ The payload contains information about the evaluations for that vendor",
+      "word_count": 94,
+      "avg_confidence": 85.98,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Create plugin registry\n\nY Db Plugins\nY DWregistry\n AuthenticationServicePlugin.gwp\ntits Alte Shiftelnsert :\n\n@ AuthenticationSourceCreatorPlugin.gwp 6 Cut\n\n1@ BackgroundTaskFailoverPlugin.gwp Tl Copy\n\nA BackgroundTaskLoadBalencingPlugin.gwp Copy Path\n\n& BankAccountVerficationRequest.gwp Coy Reference\n& BankAccountVerficationTransport.gwp [il paste\n\n* configuration.config.Plugins.registry\n\nCtrt+x | [B Groovy Class\n\nCte\n\nCtrt+Shift+C | i Scratch File\n\nCirle Alte Shift+C\nCttev\n\n* Specify a new request plugin registry entry name\n\n* Specify the interface to be implemented\n\na File\n\nPackage\nitm HTML File\n\nGi\n\nPlugin\n\nName: BankAccountVerificationTransport\n\nInterface: |MessageTransport\n\ncen\n\nCancel\n\n¢ Add the type of plugin to be implemented in the plugin name",
+      "word_count": 94,
+      "avg_confidence": 71.44,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Configure the plugin G\n\n1 BonkdAccountVerificationTranspor.gup\nName: BankAccountVerficationTransport\n\nInterface: MessageTransport\n\nGosy Class: trainingapp.messaging bank BankAccountVerificationTransport\n\netfication Transport}\n\nEnvironment:\nServer:\n9 CO Disabled\n‘Add Java Plugin Parameters: = Value | Environment | __ Server\n\nAdd OSGi Plugin\n\nG\n\nSearch by Name | Project\nD7 Include non-project classes\n\nQ BankAccountVerificationTransport\n\n¢ Add Gosu Plugin\n* Optionally, select Java or OSGi plugin\n\n* Click the ellipse (...) and select the plugin\nimplementation class in the dialog",
+      "word_count": 74,
+      "avg_confidence": 76.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Configure the destination\n\neh messaging-configam!\nDefault Server:\n\nMessaging Config: | Default\n\nae 10: 13\n1D, Name ;\n65 Java.MessageDestination.Email Name Greer\nRUE Have MeszageDestinst icysyster frensportNeme Name: Bank Account Verification\nTl Java.MessageDestinati imSystemTransport.Name\nie aie Mesaceesinaton saad imevo Nene ean Host Name\n\n15 Legal Case Report After Send Plugin:\n20 Safe Ordering Demo\n21 Message Generator Request Plugin:\n\n30. Fraud Check Reoly Plugin;\n\n« Navigate to:\n\n¢ configuration.config.Messaging.messaging-config.xml\n\nBankAccountVerificationRequest\n\nCO. Disable destination\n\nTransport Plugin: BankAccountVerificationTransport\n\n¢ The destination must point to a plugin registry element that references the\n\nappropriate Message Transport plugin",
+      "word_count": 93,
+      "avg_confidence": 73.43,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Deploy code changes\n\n¢ New transport plugin class\n¢ New or modified plugin registry\n¢ New or modified destination\n\nTools VCS Window Help\n\nD> Run ‘Server’ Shift+F10\nlun ‘Server’ with Coverage\n\nD Run... Alt+Shift+F10\n\n& Debug... Alt+Shift+F9\n\njy Attach to Local Process...\n\n[PP Edit Configurations...\n\nBl import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\nGi\n\n¢ Modified transport plugin class\n\nTools VCS Window Help\nD> Run ‘Server’\n\n%& Debug ‘Server\n\nWE Run ‘Server’ with Coverage\n\nD Run...\n\nWE Debug...\n\n2m Attach to Local Process...\n\n[> Edit Configurations...\n\nB] Import Test Results\n\nI Stop ‘Server’\n\nEY Show Running List\n\nSto",
+      "word_count": 99,
+      "avg_confidence": 77.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Safe ordering",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "g Account 117 Who is\n\naccount\n\n(lost or delayed) 117?\n2\n==\n2M External\nchanged System\n117\nchanged changed M\n\n« Some destinations create multiple messages for a single entity or a single set of\nrelated entities\n\n* Typically, they should not be sent at the same time\n« Later messages reference work done in earlier messages\n\n¢ If an earlier message gets lost or arrives late, a later message will not make sense",
+      "word_count": 74,
+      "avg_confidence": 89.51,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Safe ordering\ng Account 117\n\na) &\n\n==\nExternal\nSystem\n\nchanged\n* Guidewire has a built-in mechanism called safe ordering\n\n+ Its primary purpose is to ensure that the external system gets related messages one at a time\n« When safe ordering is enforced:\n\n+ For a given destination/entity pair, only one message is sent\n\n+ The external system must acknowledge the first message before the next message is sent",
+      "word_count": 71,
+      "avg_confidence": 89.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Default ordering and sending behavior Gi\n\n. regionA\n¢ Non-safe ordering messages sent... added M4\n\n10:01\n\n* Before safe-ordering message\naccount B\n\n« In message creation order added\n10:02\n\n* Immediately\naccount B\nchanged\n10:03\n\n¢ Safe-ordering messages sent... region C\nadded\n« After non-safe messages 10:04 4]\n\n* In message creation order account D,\nadded\n¢ Per entity instance, only one message ata 10:05\ntime account D.\nchanged\n10:06",
+      "word_count": 71,
+      "avg_confidence": 84.76,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| InsuranceSuite safe ordering Gi\n\n* Safe ordering applies only to» Safe ordering applies * Safe ordering is not used for\n\nmessages related directly or only to messages any primary entity messages\nou’ tly to instances of related directly or ¢ For any destination, you can\n\nindirectly to instances of — enable safe ordering for one\n\n¢ Alternative Primary Entity of the supported primary\n\ncan be configured in a Account entity types:\n\ndestination to safe order for + Alternative Primary Entity . . . ;\n\nthe Contact entity can be configured in a Account PolicyPeriod\ndestination to safe order for * Contact + Producer\nthe Contact entity\n\nTa configuration\nCy contig\n© Entity Names\nC9 Extensions Es\n£9 Localizations\nP Messaging\n\nPE ca Reply Plugin:\n\n‘Alternative Primary Entity:\n\nconiigaan",
+      "word_count": 129,
+      "avg_confidence": 84.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| ContactManager safe ordering Gi\n\nE) S]_ Cl Disable destination\n\nEnvironment:\n\n¢ In ContactManager (and TrainingApp), a Fraud Check\nmessages are safe ordered based on me a ——\nABContact te Send Pg\n\nRegie Pai Fondren\n* This is true for every destination CD\n* There are no alternative primary entity types chunk Sa one ‘\nPoll interval: 10000 ZS] shutdown Timeout: 30000 ra\nMax Retries: 3 o\nInitial Retry Interval. 1000 | Retry Backott Multiples 2 $\nMessage Without Primary: ©) iti Thread «Single Thread O Strict Mode\n\nDirbte Request Processing: C]\nServer\nChunk\n\nRequest Procesting Nodes:\n\nPersist Transformed Payot Request Processing Thread:\nAlways Cll Before Send:\nBefore Send Plugin:\nEvents: ae\nName\n\nABContactChonged\nABContacthdded",
+      "word_count": 115,
+      "avg_confidence": 62.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Safe ordering demo in TrainingApp Gi\n\nAdministration > Training: Messaging > Safe Ordering\n\nGi TrainingApp\n\nUtilities\n\nTraining: Plugins\n\nSearch ¥\n\nContact |~ Administration\n\nSafe Ordering\n\nDisplay instructions\n\nsafe Ordering\n1) Select an ABPerson william Andy a\n2) Change occupation Employee\n3) Acknowledge message?\n\n$4) send message Send\n\nNon-Safe Ordering\n\n1) Select a user Alice Applegate bd\n2) Change occupation Team Lead\n3) Acknowledge message?\n\n4) Send message",
+      "word_count": 68,
+      "avg_confidence": 86.27,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Transport or Request plugin error\n\nSe -: —\n\n¢ When Transport or Request plugins throws an exception, the Guidewire\napplication automatically:\n\n* Compares message send attempts to Max Retries\n\n« Waits the Initial Retry Interval\n\n* Retries to send message\n\n* Increases the time between resends (Retry Backoff Multiplier)\n* Continues until reaching Max Retries\n\n* Parameters defined in message destination",
+      "word_count": 62,
+      "avg_confidence": 85.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Error administration\n\nom\nGes\n\n¢ Guidewire automatically suspends a destination when exceeding Max Retries\n* No further messages are sent for destination\n\n¢ An administrator must manually resume the destination\n\n* The message that caused the suspend will be resent, up to the maximum retries if necessary\nMessage Queues\n\nMessage Queues\nDs Status > Destination > DS Status >\nBank Account Verification B Suspended\n\nBank Account Verification 13 Started",
+      "word_count": 70,
+      "avg_confidence": 87.49,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Retry and skip messages Gi\n\n= ——_-—- &\n\nMessage Queues\n\nDestination: Bank Account Verification (ID: 13)\n\nDetailed Statistics | [Contacts wit ished messages| Be\nContact ‘Send Time Failed Retryable Error Inflight Unsent Error Message\n\n0 C) C) 1\n\nBankAccountChanged Bank Ac",
+      "word_count": 42,
+      "avg_confidence": 78.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Contrasting retry scenarios\n\nWhat is the problem?\n\nWhat executes the\nretry?\n\nShould each attempt\nuse the same\nSenderRefiID\n\nWhat specifies the max\nretry number?\n\nWhat happens when\nthe max number of\nretires is reached?\n\nInitial send error External system error\n(Automatic retry (Automatic retry\nduring send after send\n\nException thrownin * Discussed in Message\nbeforeSend or send Acknowledgment\nmethods\n\nInternal Guidewire *\nbehavior\n\nYes *\n\nMax Retries *\nproperty for\n\nmessaging\n\ndestination\n\nThe destination is bd\nsuspended\n\nGi\n\nMessage needs\nmanual\nintervention\n\nAdministrator using\nRetry button\n\nYes\n\nn/a\n\nn/a",
+      "word_count": 90,
+      "avg_confidence": 93.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Demonstration G\n\nExamine message send and send error\n= recovery\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 41,
+      "avg_confidence": 94.66,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question\n\n_— — Every destination can optionally have a request plugin, but it must have a\n¢ transport plugin. Why is the transport plugin required?\n\n¢\n¢\n\nSeo e Soo e esses see sen\n\nGi",
+      "word_count": 35,
+      "avg_confidence": 86.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer Gi\n\n_— — Every destination can optionally have a request plugin, but it must have a\nY transport plugin. Why is the transport plugin required?\n¢\n\nThe transport plugin is required because it is used to send the message when it is\nprocessed from the Message table. Without a transport plugin, messages for a given\ndestination would have no way of being sent to the corresponding external system.\n\nSoo ee See eo eS se ese",
+      "word_count": 76,
+      "avg_confidence": 87.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question\n\n,- — Can one destination have two transport plugins? Can one transport\n¢ plugin be used by two destinations?\n\n¢\n¢\n\nSeo e Soo e esses see sen\n\nGi",
+      "word_count": 30,
+      "avg_confidence": 83.76,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer Gi\n\n,~ — Can one destination have two transport plugins? Can one transport\nY plugin be used by two destinations?\n¢\n\nA destination can’t have two transport plugins, but a transport plugin class can be used\nby two (or more) similar destinations.\n\nSoo ee See eo eS se ese",
+      "word_count": 50,
+      "avg_confidence": 80.74,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Question\n\n_- — Why should the send method never send a message to multiple external\n\nY systems?\n¢\n\nSeo e Soo e esses see sen\n\nGi",
+      "word_count": 26,
+      "avg_confidence": 85.05,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "Answer Gi\n\n_- — Why should the send method never send a message to multiple external\nY systems?\n¢\n\nThe message acknowledgement architecture assumes that each message is sent to\nonly one destination. If a given send method sent a message to multiple destinations,\nthen there could be multiple acknowledgements, errors, or unprocessed messages,\nand the messaging architecture would not be able to identify the state of the message.\n\nSoo ee See eo eS se ese",
+      "word_count": 76,
+      "avg_confidence": 87.3,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "Lesson\nobjectives * Describe and configure the plugin used to\nreview send messages\n\n¢ Describe the functionality of safe ordering\n¢ Describe how a sending message error is\nhandled",
+      "word_count": 29,
+      "avg_confidence": 89.52,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Student exercise\n\nConfigure sending a message",
+      "word_count": 7,
+      "avg_confidence": 95.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

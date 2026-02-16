@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-11",
+    "slide_count": 29,
+    "slides_with_text": 27,
+    "total_words": 1181,
+    "avg_confidence": 86.62,
+    "processing_time_seconds": 11.06,
+    "extracted_at": "2026-02-13T12:19:15.691371"
+  },
+  "full_text": "Code Generation and Debugging\n\nLesson\nobjectives\n\n¢ Describe the Guidewire code generation\nprocess\n\n¢ Differentiate between incremental and bulk\ncode generation\n\n¢ Use Studio debugger\n\nCode Generation\n\nCode generation (1 of 2) G\n\n¢ Acode generator processes a Guidewire resource defined in XML format (such as\nPCF file, entities, typelists, etc.) and produces a Gosu or Java class\n\n¢ In Studio, code generators process these resources and produce Gosu and Java\nclasses\n\n* The generated classes are explicit and can be debugged\nEAlasperson.eti\n\nFAasperson.etx\n\nHava (configura’\n\nCode generation (2 of 2)\n\n* Two types\n* Incremental code generators process one or more changed resource files in isolation\n¢ Bulk code generators process a set of resources as a whole, therefore they take longer\n\n¢ Incremental code generation is not an option for all resource types\n\nIncremental vs Bulk code generators G&G\n\n« Invoked * Invoked\n* On Save * From CodeGen menu\n¢ During project make ¢ During project rebuild\n* Supported Guidewire resources ¢ Supported Guidewire resources\n« PCF files * All resources\n« Entities [REEPEMN Analyze Refactor Build Run\n\nA Generate Metadata Classes\nGenerate Page Configuration Classes\n* Permissions w Generate Permission Classes\n\n[ Generate Localization Classes\n\nfe) Generate Xml Classes\n\n* Typelists\n\nbe ad Generate Everything\n\nOutput of code generation G\n\n¢ The code generation of a PCF file results in the following\n\n: (J Include non-project files (Ctrl+Shift+N) Fo #\n\n[| apcontactaddressesLDV.pcfe (configuration\\generated\\pefc\\config)\n@ascontactAddressesLDVExpressions.gs (configuration\\generated\\pefc\\expressions)\nress Ctrl+Up or Ctrl+Down to navigate through the history\n\nEnter file name: (_] Include non-project files (Ctrl+Shift+N) Wo #\n\nQ apMedicalcareorg| )\n\n@apmMedicalcareorg.java (configuration\\generated\\entity)\n\n* The Expressions.gs and .java files can be debugged\n\nUI Debug Options\n\nBreakpoints G&G\n\n¢ Abreakpoint indicates a place where you want to suspend the execution of Gosu\nor Java code\n\n¢ When breakpoint is hit\n* Studio suspends code execution\n« File with breakpoint opens in Studio\n¢ Breakpoint line highlighted in blue\n* Debug tool window opens\n« You can debug\n¢ Plain old Gosu and Java resources, such as Gosu Rules, Enhancements, Classes\n\n* Generated Gosu and Java classes produced by the code generators\n\nMain debugging tools\n\n© ascontactAddressesLDVExpressions.gs *\n\n67\n68\n69\n70\n71\n72\n73\n\n*7\n\nfunction deleteABContactSecondaryAddresses(): void {\nfor (currentAddress in anABContact.SecondaryAddresses) { _currentaddress:\n\n| anaBcontact.\n\nAddress@1\n\n4983\n\n74\nDebug [F server\n\nDebugger | [=] Console +* EZTurxrAzAe*\n\n(Frames + & variables x\n\naction_10:21, ABContactAddressesLDVE>\n\nv\n\nDebug toolbar, stepping toolbar, Frames, Variables and Watches\n\nthis = (ABContactAddressesLOVExpre\ncurrentAddress = (Address@14983)\n= ascontact = null\n\ninvoke0Q:-1, NativeMethodAccessorimpl ES ABComtacthdress = {ABComact)\n\nUl Debug options G\n\nUnder the settings menu, some debug features for the UI are available\n\ntO} Settings [ie\n\n‘Appearance Dates\nDisable outines on focused elements Use complex date picker options\n‘Application font size\n\nGeneral\n‘Aways confem browser navigation\nDisable browser autocomplete\nsezeentothe top on any rors\nGlobal spacing moder ‘Serle. rponany)\nTheme\n\nLetealigntoptocbare\nHighlight changed values a\n\n— ere\npees dts\n\nighighe widgets wih PCE Wats and\neens\n\n‘Show widget typesasinine ites\n\n| Highlight widgets with PCF widths and heights G\n\n¢ In InsuranceSuite, developers Exrcteyceme™ Seveteoe|” lentes\nare encouraged to not use set\nwidth and height values for UI\nelements\n\n¢ The Highlight widgets with\nPCF widths and heights option\ncan be used to show developers\nUI elements that have set width\nor height values that should be\nchanged to be dynamic\n\nBatch Process Info\n\nan agate\n\nShow widget types as inline titles\n\nThe Show widget types\nas inline titles option\nmakes it easy for\ndevelopers to see all the\nelements on the screen\n\nMy Submissions\n\nDemonstration\n\nReview before the demo: PCF methods G&G\n\n¢ APCF method is a plain old Gosu function that is local in a PCF file\n* ...iS local (private) in the PCF file that defines it (not even referenced files can access it)\n\n* ...cannot be debugged at the place of definition (you have to open the generated\n<PCFFileName>Expressions.gs file after code generation, locate the method and put a\nbreakpoint there)\n\n* ...is called from a widget property (e.g.: action, value, available, editable, etc.)\n\n* PCF methods are defined on the Code tab of the main PCF Element — container\nor location — and have direct access to the root object(s)\n\n¢ The logic the function implements is typically tied to one or more widgets in that\nPCF file, and it is not needed anywhere else. For example:\n\n* determining the label (View or View/Edit) for a button\n* determining if a TextInput widget is editable or not editable\n* executing some initialization logic after navigating to a location\n\n| Demo: Fix the bug G\n\nWe have just received the following bug report from the testers:\n« Bug Description: /f / click on the ‘Delete Secondary Addresses’ button then the application\nremoves all the addresses - not only the secondary addresses but the primary one too. Please\nfix it ASAP!\n\n« Priority: High\n\nEiitrainingapp search|» contact |»\nPerson: Wiliam Andy\n\nAddresses\n\n1 Main Street, Santa Monica, CA 90402\n\n1 Old Harbor Lane, Marina Det Rey, CA90292\n\nUnited States| 5\n\nDemonstration G\n\nFix the bug\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_- — What does a code generator do?\n\n¢\n¢\n4\n\nMS SS\n\nAnswer\n\n_- — What does a code generator do?\n¢\noO” A code generator processes a Guidewire resource defined in XML format (such as\n\nPCF file, entity, etc.) and produces a Gosu or Java class.\n\nQuestion\n\n_- — Name atleast one difference between incremental and bulk code\nY generation.\n\nMS SS\n\nAnswer G\n\n_ — Name atleast one difference between incremental and bulk code\n\n¢\n\nY generation.\n4\n\nPossible answers:\n\n* incremental code generator can process a single file, while bulk code generator\nprocesses a set of files\n\n¢ incremental code generation is not supported for every resource type\n\nbulk code generation can be started from the CodeGen menu or during project\n\n¢\n1\nI\n1\nI\n1\nI\nI * incremental code generation can be started on save or during project make while\n1\n' rebuild\n\n1\n\n1\n\nI\n\n1\n\nI\n\nn\n\nQuestion\n\n_- — What is a breakpoint?\n\n¢\n¢\n4\n\nMS SS\n\nAnswer\n\n_- — What is a breakpoint?\n\n¢\noO” A breakpoint indicates a place where you want to suspend the execution of Gosu or\n\nJava code\n\nSS\n\nQuestion\n\n_- — What is a PCF method? How can you debug a PCF method?\n\n¢\n¢\n4\n\nMS SS\n\nAnswer\n\n_~- — What is a PCF method? How can you debug a PCF method?\n¢\noO” APCF method is a plain old Gosu function that is local in a PCF file and executes\nsome logic tied to that particular PCF file. You can open the\n<PCFFileName>Expressions.gs file, find the function and click on the gutter area at\n\nthe desired line to set a breakpoint.\n\nSS\n\nLesson\nobjectives ¢ Describe the Guidewire code generation\nreview ; process\n\nDifferentiate between incremental and bulk\ncode generation\n¢ Use Studio debugger\n\nStudent exercise\n\nCode generation and debugging",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Code Generation and Debugging",
+      "word_count": 4,
+      "avg_confidence": 95.4,
+      "image_size": {
+        "width": 1280,
+        "height": 538
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe the Guidewire code generation\nprocess\n\n¢ Differentiate between incremental and bulk\ncode generation\n\n¢ Use Studio debugger",
+      "word_count": 21,
+      "avg_confidence": 86.38,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Code Generation",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "Code generation (1 of 2) G\n\n¢ Acode generator processes a Guidewire resource defined in XML format (such as\nPCF file, entities, typelists, etc.) and produces a Gosu or Java class\n\n¢ In Studio, code generators process these resources and produce Gosu and Java\nclasses\n\n* The generated classes are explicit and can be debugged\nEAlasperson.eti\n\nFAasperson.etx\n\nHava (configura’",
+      "word_count": 59,
+      "avg_confidence": 89.8,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Code generation (2 of 2)\n\n* Two types\n* Incremental code generators process one or more changed resource files in isolation\n¢ Bulk code generators process a set of resources as a whole, therefore they take longer\n\n¢ Incremental code generation is not an option for all resource types",
+      "word_count": 49,
+      "avg_confidence": 90.37,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Incremental vs Bulk code generators G&G\n\n« Invoked * Invoked\n* On Save * From CodeGen menu\n¢ During project make ¢ During project rebuild\n* Supported Guidewire resources ¢ Supported Guidewire resources\n« PCF files * All resources\n« Entities [REEPEMN Analyze Refactor Build Run\n\nA Generate Metadata Classes\nGenerate Page Configuration Classes\n* Permissions w Generate Permission Classes\n\n[ Generate Localization Classes\n\nfe) Generate Xml Classes\n\n* Typelists\n\nbe ad Generate Everything",
+      "word_count": 74,
+      "avg_confidence": 81.17,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Output of code generation G\n\n¢ The code generation of a PCF file results in the following\n\n: (J Include non-project files (Ctrl+Shift+N) Fo #\n\n[| apcontactaddressesLDV.pcfe (configuration\\generated\\pefc\\config)\n@ascontactAddressesLDVExpressions.gs (configuration\\generated\\pefc\\expressions)\nress Ctrl+Up or Ctrl+Down to navigate through the history\n\nEnter file name: (_] Include non-project files (Ctrl+Shift+N) Wo #\n\nQ apMedicalcareorg| )\n\n@apmMedicalcareorg.java (configuration\\generated\\entity)\n\n* The Expressions.gs and .java files can be debugged",
+      "word_count": 63,
+      "avg_confidence": 80.96,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "UI Debug Options",
+      "word_count": 3,
+      "avg_confidence": 93.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Breakpoints G&G\n\n¢ Abreakpoint indicates a place where you want to suspend the execution of Gosu\nor Java code\n\n¢ When breakpoint is hit\n* Studio suspends code execution\n« File with breakpoint opens in Studio\n¢ Breakpoint line highlighted in blue\n* Debug tool window opens\n« You can debug\n¢ Plain old Gosu and Java resources, such as Gosu Rules, Enhancements, Classes\n\n* Generated Gosu and Java classes produced by the code generators",
+      "word_count": 75,
+      "avg_confidence": 87.16,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Main debugging tools\n\n© ascontactAddressesLDVExpressions.gs *\n\n67\n68\n69\n70\n71\n72\n73\n\n*7\n\nfunction deleteABContactSecondaryAddresses(): void {\nfor (currentAddress in anABContact.SecondaryAddresses) { _currentaddress:\n\n| anaBcontact.\n\nAddress@1\n\n4983\n\n74\nDebug [F server\n\nDebugger | [=] Console +* EZTurxrAzAe*\n\n(Frames + & variables x\n\naction_10:21, ABContactAddressesLDVE>\n\nv\n\nDebug toolbar, stepping toolbar, Frames, Variables and Watches\n\nthis = (ABContactAddressesLOVExpre\ncurrentAddress = (Address@14983)\n= ascontact = null\n\ninvoke0Q:-1, NativeMethodAccessorimpl ES ABComtacthdress = {ABComact)",
+      "word_count": 70,
+      "avg_confidence": 80.64,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "Ul Debug options G\n\nUnder the settings menu, some debug features for the UI are available\n\ntO} Settings [ie\n\n‘Appearance Dates\nDisable outines on focused elements Use complex date picker options\n‘Application font size\n\nGeneral\n‘Aways confem browser navigation\nDisable browser autocomplete\nsezeentothe top on any rors\nGlobal spacing moder ‘Serle. rponany)\nTheme\n\nLetealigntoptocbare\nHighlight changed values a\n\n— ere\npees dts\n\nighighe widgets wih PCE Wats and\neens\n\n‘Show widget typesasinine ites",
+      "word_count": 73,
+      "avg_confidence": 62.29,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Highlight widgets with PCF widths and heights G\n\n¢ In InsuranceSuite, developers Exrcteyceme™ Seveteoe|” lentes\nare encouraged to not use set\nwidth and height values for UI\nelements\n\n¢ The Highlight widgets with\nPCF widths and heights option\ncan be used to show developers\nUI elements that have set width\nor height values that should be\nchanged to be dynamic\n\nBatch Process Info\n\nan agate",
+      "word_count": 66,
+      "avg_confidence": 90.46,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Show widget types as inline titles\n\nThe Show widget types\nas inline titles option\nmakes it easy for\ndevelopers to see all the\nelements on the screen\n\nMy Submissions",
+      "word_count": 29,
+      "avg_confidence": 95.59,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Demonstration",
+      "word_count": 1,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Review before the demo: PCF methods G&G\n\n¢ APCF method is a plain old Gosu function that is local in a PCF file\n* ...iS local (private) in the PCF file that defines it (not even referenced files can access it)\n\n* ...cannot be debugged at the place of definition (you have to open the generated\n<PCFFileName>Expressions.gs file after code generation, locate the method and put a\nbreakpoint there)\n\n* ...is called from a widget property (e.g.: action, value, available, editable, etc.)\n\n* PCF methods are defined on the Code tab of the main PCF Element — container\nor location — and have direct access to the root object(s)\n\n¢ The logic the function implements is typically tied to one or more widgets in that\nPCF file, and it is not needed anywhere else. For example:\n\n* determining the label (View or View/Edit) for a button\n* determining if a TextInput widget is editable or not editable\n* executing some initialization logic after navigating to a location",
+      "word_count": 167,
+      "avg_confidence": 91.83,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Demo: Fix the bug G\n\nWe have just received the following bug report from the testers:\n« Bug Description: /f / click on the ‘Delete Secondary Addresses’ button then the application\nremoves all the addresses - not only the secondary addresses but the primary one too. Please\nfix it ASAP!\n\n« Priority: High\n\nEiitrainingapp search|» contact |»\nPerson: Wiliam Andy\n\nAddresses\n\n1 Main Street, Santa Monica, CA 90402\n\n1 Old Harbor Lane, Marina Det Rey, CA90292\n\nUnited States| 5",
+      "word_count": 80,
+      "avg_confidence": 83.8,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Demonstration G\n\nFix the bug\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.37,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Question\n\n_- — What does a code generator do?\n\n¢\n¢\n4\n\nMS SS",
+      "word_count": 14,
+      "avg_confidence": 74.76,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Answer\n\n_- — What does a code generator do?\n¢\noO” A code generator processes a Guidewire resource defined in XML format (such as\n\nPCF file, entity, etc.) and produces a Gosu or Java class.",
+      "word_count": 35,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Question\n\n_- — Name atleast one difference between incremental and bulk code\nY generation.\n\nMS SS",
+      "word_count": 16,
+      "avg_confidence": 76.68,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Answer G\n\n_ — Name atleast one difference between incremental and bulk code\n\n¢\n\nY generation.\n4\n\nPossible answers:\n\n* incremental code generator can process a single file, while bulk code generator\nprocesses a set of files\n\n¢ incremental code generation is not supported for every resource type\n\nbulk code generation can be started from the CodeGen menu or during project\n\n¢\n1\nI\n1\nI\n1\nI\nI * incremental code generation can be started on save or during project make while\n1\n' rebuild\n\n1\n\n1\n\nI\n\n1\n\nI\n\nn",
+      "word_count": 92,
+      "avg_confidence": 81.69,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Question\n\n_- — What is a breakpoint?\n\n¢\n¢\n4\n\nMS SS",
+      "word_count": 12,
+      "avg_confidence": 70.73,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Answer\n\n_- — What is a breakpoint?\n\n¢\noO” A breakpoint indicates a place where you want to suspend the execution of Gosu or\n\nJava code\n\nSS",
+      "word_count": 27,
+      "avg_confidence": 86.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n_- — What is a PCF method? How can you debug a PCF method?\n\n¢\n¢\n4\n\nMS SS",
+      "word_count": 20,
+      "avg_confidence": 79.52,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer\n\n_~- — What is a PCF method? How can you debug a PCF method?\n¢\noO” APCF method is a plain old Gosu function that is local in a PCF file and executes\nsome logic tied to that particular PCF file. You can open the\n<PCFFileName>Expressions.gs file, find the function and click on the gutter area at\n\nthe desired line to set a breakpoint.\n\nSS",
+      "word_count": 66,
+      "avg_confidence": 92.37,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Lesson\nobjectives ¢ Describe the Guidewire code generation\nreview ; process\n\nDifferentiate between incremental and bulk\ncode generation\n¢ Use Studio debugger",
+      "word_count": 22,
+      "avg_confidence": 86.64,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Student exercise\n\nCode generation and debugging",
+      "word_count": 6,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    }
+  ]
+}

@@ -1,0 +1,566 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-05",
+    "slide_count": 50,
+    "slides_with_text": 46,
+    "total_words": 1797,
+    "avg_confidence": 87.78,
+    "processing_time_seconds": 18.03,
+    "extracted_at": "2026-02-13T12:09:28.625902"
+  },
+  "full_text": "Claim Setup\n\nLesson\nobjectives\n\nDescribe segmentation\n\nDescribe how assignment works\nDescribe weighted assignment\nDescribe activities and the workplan\nDescribe basic claim validation\n\nWhen we set up our insurance business,\nwe needed a way to classify claims in order\nto manage them effectively. Complex\nclaims take more effort than simple claims.\nThose claims need to be given to\nexperienced adjusters with more\nspecialized skills.\n\nMi\nBu:\nAnalyst\n\n| Automated claim setup (1 of 5)\n\nclaim Automated Claim Setup\n\nAutomated Claim Setup is a series of actions designed to:\n\n| Automated claim setup (2 of 5)\n\nAutomated Claim Setup\n\nSegment\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim\n\n| Automated claim setup (3 of 5)\n\nAutomated Claim Setup\n\n—>\n\nSegment Assign\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim\n* Assign a claim to an appropriate group and user\n\n| Automated claim setup (4 of 5)\na Automated Claim Setup\n\n+ 2--\n\nSegment Assign Workplan\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim\n* Assign a claim to an appropriate group and user\n* Create any activities required for the claim that can be done automatically\n\n| Automated claim setup (5 of 5)\n\nclaim Automated Claim Setup\n\nro oh Be\n\nSegment Assign Workplan\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim\n\n* Assign a claim to an appropriate group and user\n\n* Create any activities required for the claim that can be done automatically\n* Ensure that the claim is ready for adjudication\n\n| Segmentation defined\n\nAutomated Claim Setup\n\nSegment\n\nSegment Assign Workplan\n\n¢ Is done only for claims and exposures\n¢ Sets a single field on the object to a value from a defined list\n\n¢ Is performed once for a given object\n\n¢ Determines the strategy for processing the object\n\n| Segmentation examples\n\nSegmentation .\nRules Claim 100-00-000027 * Purpose\n\n+ Identify high-level strategy for\nprocessing the object\n\n+ Segment type denotes strategy to\nbe used for claim processing\n\n« Examples\n\n+ For an injury accident with no lost\ntime, the object is segmented\n“we_med_only”\n\n+ When a lawsuit is expected, the\nobject is segmented “we_liability”\n\n| Segmentation logic in the base configuration fa\n\nThe base configuration includes these two segments for Workers’ Compensation:\n* med_only\n\n* indemnity\n\nWill worker\n\n. lose paid . .\n\n(wages)?\n\nmed_only\n\n| Demonstration G\n\nSegmentation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Assignment\n\nL,\n\n+ The claim\n\n+ Any exposures\n\nAutomated Claim Setup\n\nSegment Assign Workplan\n\n« Assignment is used to determine the owner of\n\n* The owner consists of a group and user\n\nAssign\n\n| Assignment\n\n¢ Purpose\n+ Assign a claim to a group and user\n+ Assign each exposure to a group and user\n\nObjects are assigned to a group first\n+ Based on group type,\n+ Based on group region\n\nNext, objects are assigned to a user within that group\n\nExample\n+ Assign claim with segment “wc_med_pay” to geographically appropriate “medical payments” group\n+ Assign the claim to an adjuster in the “medical payments” group\n\n| Group assignment Gi\n\nee ee\nr YY) e os\naOn aOn\n\n@ @\n¢\n. GAWwCc\nPm JR sacs pra & it” tiability\n\nRegions: a\n\n| User Assignment\n\naOn\n@\nWestern WC Lost\nTime Adjusters\nClaim 100-00-000027\n\n@@\noe\naOn\n\n@\nWestern WC\nMedical Adjusters\n\nion: Californi ee\nlocation: California YY}\naOn\n@\nEastern WC Lost\nTime Adjusters\n\nee\noo\n\n@ Dana Evans\n\n@ Hank Pym\n\n=) Janet Van Dyne\n\nBruce Banner\n\nb Tony Stark\n\n| Workload G\n\nTwo methods of workload assignment\n* Round robin - assigns work proportionately according to a statically-defined weight factor\n\n* Weighted workload assigns work to the user in a group with lightest workload\n\nRound robin Weighted workload\n\nWho should I be & 29 & oa\n\nassigned to?\n\nUser whose User with lightest\nturn is next workload\n\neasy\nmedium\nhard\n\nDetermines the strategy for processing the\n\nclaim\n\nIs done only for claims and exposures\n\nSets a single field on the object to a value\n\nfrom a predefined list\n\nIs done once for a given object\n\n| Contrasting segmentation and assignment\n\nSegmentation:\n\n£2\n\n>\n\nAssignment:\n\nay\n\nmA)\n\nVy\n\n5e ny\n\nSis\n\naon .\n\nee r\nXY\n\nSes ef\n\n* Determines the group and owner of the object\n\n* Is done for claims, exposures, and any\n\nassignable object\n\n« Assigns an object to a group and user\n\n* May occur many times for a given object\n\n| Demonstration G\n\nAssignment\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Workplan\n\n=\nL,\n\nAutomated Claim Setup\n\nCreate and\nassign\nactivities\n\n—>\n\nSegment Assign Workplan\n\nExamples\n\n| Workplan\n\nContains Activities\ne,\n\nManually created or\n\nAutomatically created\n\nContact insured\n“Contact insured\" activity\n\nIf claim is Workers’ Compensation, create special “claim_acceptance” activity\n\nIf claim is auto, create \"scene inspection\" activity\n\nUltimately assigned to a user responsible for completing the task\n\nIdentifies:\n\nWhen the task is to be completed\n\nWhether it has been done or not\n\nG  &@\n\nDana Evans\n\nGi\n\n| Workplan creation i\n\nyn\n\n2—8\n\nVerify Coverage Activity Verify Coverage\nPattern Activity\n\npriority: medium priority: medium\ndue days: 5 due: Oct. 12, 2016\n\nCreated from an Activity Pattern\n\n* An activity pattern is a template which specifies details about the activity (subject, priority,\nnumber of days until due, and so on)\n\n| Demonstration G\n\nWorkplan\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Validation\n\nAutomated Claim Setup\n\nro oh Be\n\nSegment Assign Workplan\n\n* ClaimCenter validates the claim after SAW\n¢ Validation is based on configurable rules and data requirements\n\n¢ Results in a validation level being assigned to the claim\n\n| Claim and exposure maturity (1 of 5) Gi\n\nValidation\nlevel\n\n¢ Validation levels measure the maturity level of claims and exposures\n\n¢ Every level has a series of conditions that must be met in order to reach that level\n¢ Validation levels are configurable\n\n¢ Lowest level is New Loss Completion\n\n¢ Highest level is Ability to Pay\n\n| Claim and exposure maturity (2 of 5)\n\nLoad save\n\n¢ Load save is used only for claims from external systems or portals\n¢ There is not enough information to process these draft claims\n\n* Once further information is added, the claim can move up in maturity\n\n| Claim and exposure maturity (3 of 5) Gi\n\ntotems fap\n\n¢ All required data must be supplied before a user can create a claim with the New\nClaim Wizard\n\n¢ The New Claim Wizard enforces this requirement\n\n¢ This is part of the validation process\n\n| Claim and exposure maturity (4 of 5)\n\n¢ ClaimCenter provides intermediate maturity levels\n¢ Intermediate levels are configurable (may be modified, added, or deleted)\n\n¢ Base configuration includes:\n+ Valid for ISO\n\n+ Send to external\n\nClaim and exposure maturity (5 of 5)\n\nic <\n\n¢ Ability to Pay validates that all required data for payment is on the claim or\nexposure\n\n¢ Ability to Pay is the highest maturity level\n¢ The claim must reach Ability to Pay before any exposure can be paid\n\n* Each exposure must reach Ability to Pay before the exposure can be paid\n\nThe maturing claim/exposure (1 of 2)\n\n= * | -\nmi >\n\nLer\n\n* To be saved as a new claim or exposure, the object must meet all conditions at the\nnew loss completion level\n\n¢ Ifa draft claim or exposure does not meet all conditions at this level, the save fails\nand the user is told which conditions the object does not yet meet\n\nThe maturing claim/exposure (2 of 2)\n\n-\n\na\n\n¢ Asclaims processing continues, the object satisfies more conditions\n¢ ClaimCenter automatically promotes it to the highest level it satisfies\n\n¢ ClaimCenter prevents changes that would force an object to backslide\n\n| Ability to pay\n\n___-\n\na\n\nEventually, objects reach Ability to Pay\n* Payment cannot be issued if claim is not at this level [e)\n\n« Payment cannot be issued against an exposure if the exposure is not at\nthis level\n\n| Validating maturity levels\n\nThe Claim Actions menu contains Validation\noptions\n\nOptions let you validate a claim or exposure\nfor any maturity level\n\nSelect the maturity level you want to evaluate\n\nReport shows conditions that are preventing\nthe object from reaching that level\n\nClaim Actions\nAssign Claim\nClose Claim\nPrint Claim\nSync Status\n\nValidate Claim Only\n\nValidate Claim + Exposures >\n\nValidate Policy\n\n> Assigned To\n\nNext Act\n\nGi\n\nDescription\n\nClaimant Adjus\n\nRobert Farley Andy\nWilliam Weeks Andy.\n\nLoad and save\n\nNew loss completion\n\nValid for ISO\n\nSend to external system\n\nAbility to pay\n\n| Demonstration G\n\nValidation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nClaim setup\n\nLesson\nobjectives\nreview\n\nDescribe segmentation\n\nDescribe how assignment works\nDescribe weighted assignment\nDescribe activities and the workplan\nDescribe basic claim validation\n\nQuestion G\n\n,~ — What are the three (3) steps of an Automated Claim Setup?\n\n4\n¢\n¢\n\nee\n\nQuestion G\n\n,~ — What are the three (3) steps of an Automated Claim Setup?\n\n4\n¢\n¢\n\nee\n\nQuestion G\n\nae What is the purpose or use of Segmentation?\n¢\n¢\n\nee\n\nAnswer a\n\nae What is the purpose or use of Segmentation?\n\n¢\n¢\n\nSegmentation is used to identify a high-level strategy for processing a claim or\nexposure.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n_~ — What is the purpose of Assignment in the Automated Claim Setup?\n\n4\n¢\n¢\n\nee\n\nAnswer a\n\nae What is the purpose of Assignment in the Automated Claim Setup?\n\n¢\n¢\n\nTo determine the owner(s) of both claims and exposures.\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n,~ — What are two attributes of a Group that are used in determining\n\nx assignment?\n\n¢\n\nee\n\nAnswer a\n\n,~ — What are two attributes of a Group that are used in determining\n\nx assignment?\n\n¢\n\nGroup Type\nGroup Region\n\nSOOO ODDDSDoOODDODOoOoS\n\nQuestion G\n\n_~ — What are the lowest and the highest levels of maturity of a claim and\n\nx exposure?\n¢\n\nee\n\nAnswer a\n\n_~ — What are the lowest and the highest levels of maturity of a claim and\n\nx exposure?\n¢\n\nNew Loss Completion\nAbility to Pay\n\nSOOO ODDDSDoOODDODOoOoS",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Claim Setup",
+      "word_count": 2,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 558
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\nDescribe segmentation\n\nDescribe how assignment works\nDescribe weighted assignment\nDescribe activities and the workplan\nDescribe basic claim validation",
+      "word_count": 20,
+      "avg_confidence": 95.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "When we set up our insurance business,\nwe needed a way to classify claims in order\nto manage them effectively. Complex\nclaims take more effort than simple claims.\nThose claims need to be given to\nexperienced adjusters with more\nspecialized skills.\n\nMi\nBu:\nAnalyst",
+      "word_count": 44,
+      "avg_confidence": 94.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Automated claim setup (1 of 5)\n\nclaim Automated Claim Setup\n\nAutomated Claim Setup is a series of actions designed to:",
+      "word_count": 21,
+      "avg_confidence": 88.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Automated claim setup (2 of 5)\n\nAutomated Claim Setup\n\nSegment\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim",
+      "word_count": 28,
+      "avg_confidence": 90.23,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Automated claim setup (3 of 5)\n\nAutomated Claim Setup\n\n—>\n\nSegment Assign\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim\n* Assign a claim to an appropriate group and user",
+      "word_count": 40,
+      "avg_confidence": 88.09,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Automated claim setup (4 of 5)\na Automated Claim Setup\n\n+ 2--\n\nSegment Assign Workplan\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim\n* Assign a claim to an appropriate group and user\n* Create any activities required for the claim that can be done automatically",
+      "word_count": 56,
+      "avg_confidence": 89.22,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Automated claim setup (5 of 5)\n\nclaim Automated Claim Setup\n\nro oh Be\n\nSegment Assign Workplan\n\nAutomated Claim Setup is a series of actions designed to:\n\n* Determine the classification of a claim\n\n* Assign a claim to an appropriate group and user\n\n* Create any activities required for the claim that can be done automatically\n* Ensure that the claim is ready for adjudication",
+      "word_count": 66,
+      "avg_confidence": 86.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| Segmentation defined\n\nAutomated Claim Setup\n\nSegment\n\nSegment Assign Workplan\n\n¢ Is done only for claims and exposures\n¢ Sets a single field on the object to a value from a defined list\n\n¢ Is performed once for a given object\n\n¢ Determines the strategy for processing the object",
+      "word_count": 49,
+      "avg_confidence": 90.42,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Segmentation examples\n\nSegmentation .\nRules Claim 100-00-000027 * Purpose\n\n+ Identify high-level strategy for\nprocessing the object\n\n+ Segment type denotes strategy to\nbe used for claim processing\n\n« Examples\n\n+ For an injury accident with no lost\ntime, the object is segmented\n“we_med_only”\n\n+ When a lawsuit is expected, the\nobject is segmented “we_liability”",
+      "word_count": 56,
+      "avg_confidence": 88.7,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Segmentation logic in the base configuration fa\n\nThe base configuration includes these two segments for Workers’ Compensation:\n* med_only\n\n* indemnity\n\nWill worker\n\n. lose paid . .\n\n(wages)?\n\nmed_only",
+      "word_count": 31,
+      "avg_confidence": 88.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Demonstration G\n\nSegmentation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Assignment\n\nL,\n\n+ The claim\n\n+ Any exposures\n\nAutomated Claim Setup\n\nSegment Assign Workplan\n\n« Assignment is used to determine the owner of\n\n* The owner consists of a group and user\n\nAssign",
+      "word_count": 34,
+      "avg_confidence": 89.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Assignment\n\n¢ Purpose\n+ Assign a claim to a group and user\n+ Assign each exposure to a group and user\n\nObjects are assigned to a group first\n+ Based on group type,\n+ Based on group region\n\nNext, objects are assigned to a user within that group\n\nExample\n+ Assign claim with segment “wc_med_pay” to geographically appropriate “medical payments” group\n+ Assign the claim to an adjuster in the “medical payments” group",
+      "word_count": 74,
+      "avg_confidence": 92.34,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Group assignment Gi\n\nee ee\nr YY) e os\naOn aOn\n\n@ @\n¢\n. GAWwCc\nPm JR sacs pra & it” tiability\n\nRegions: a",
+      "word_count": 26,
+      "avg_confidence": 59.25,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| User Assignment\n\naOn\n@\nWestern WC Lost\nTime Adjusters\nClaim 100-00-000027\n\n@@\noe\naOn\n\n@\nWestern WC\nMedical Adjusters\n\nion: Californi ee\nlocation: California YY}\naOn\n@\nEastern WC Lost\nTime Adjusters\n\nee\noo\n\n@ Dana Evans\n\n@ Hank Pym\n\n=) Janet Van Dyne\n\nBruce Banner\n\nb Tony Stark",
+      "word_count": 50,
+      "avg_confidence": 80.87,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Workload G\n\nTwo methods of workload assignment\n* Round robin - assigns work proportionately according to a statically-defined weight factor\n\n* Weighted workload assigns work to the user in a group with lightest workload\n\nRound robin Weighted workload\n\nWho should I be & 29 & oa\n\nassigned to?\n\nUser whose User with lightest\nturn is next workload",
+      "word_count": 58,
+      "avg_confidence": 90.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "easy\nmedium\nhard\n\nDetermines the strategy for processing the\n\nclaim\n\nIs done only for claims and exposures\n\nSets a single field on the object to a value\n\nfrom a predefined list\n\nIs done once for a given object\n\n| Contrasting segmentation and assignment\n\nSegmentation:\n\n£2\n\n>\n\nAssignment:\n\nay\n\nmA)\n\nVy\n\n5e ny\n\nSis\n\naon .\n\nee r\nXY\n\nSes ef\n\n* Determines the group and owner of the object\n\n* Is done for claims, exposures, and any\n\nassignable object\n\n« Assigns an object to a group and user\n\n* May occur many times for a given object",
+      "word_count": 97,
+      "avg_confidence": 85.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Demonstration G\n\nAssignment\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Workplan\n\n=\nL,\n\nAutomated Claim Setup\n\nCreate and\nassign\nactivities\n\n—>\n\nSegment Assign Workplan",
+      "word_count": 15,
+      "avg_confidence": 89.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Examples\n\n| Workplan\n\nContains Activities\ne,\n\nManually created or\n\nAutomatically created\n\nContact insured\n“Contact insured\" activity\n\nIf claim is Workers’ Compensation, create special “claim_acceptance” activity\n\nIf claim is auto, create \"scene inspection\" activity\n\nUltimately assigned to a user responsible for completing the task\n\nIdentifies:\n\nWhen the task is to be completed\n\nWhether it has been done or not\n\nG  &@\n\nDana Evans\n\nGi",
+      "word_count": 63,
+      "avg_confidence": 90.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Workplan creation i\n\nyn\n\n2—8\n\nVerify Coverage Activity Verify Coverage\nPattern Activity\n\npriority: medium priority: medium\ndue days: 5 due: Oct. 12, 2016\n\nCreated from an Activity Pattern\n\n* An activity pattern is a template which specifies details about the activity (subject, priority,\nnumber of days until due, and so on)",
+      "word_count": 52,
+      "avg_confidence": 90.45,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Demonstration G\n\nWorkplan\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Validation\n\nAutomated Claim Setup\n\nro oh Be\n\nSegment Assign Workplan\n\n* ClaimCenter validates the claim after SAW\n¢ Validation is based on configurable rules and data requirements\n\n¢ Results in a validation level being assigned to the claim",
+      "word_count": 39,
+      "avg_confidence": 85.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Claim and exposure maturity (1 of 5) Gi\n\nValidation\nlevel\n\n¢ Validation levels measure the maturity level of claims and exposures\n\n¢ Every level has a series of conditions that must be met in order to reach that level\n¢ Validation levels are configurable\n\n¢ Lowest level is New Loss Completion\n\n¢ Highest level is Ability to Pay",
+      "word_count": 59,
+      "avg_confidence": 90.65,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "| Claim and exposure maturity (2 of 5)\n\nLoad save\n\n¢ Load save is used only for claims from external systems or portals\n¢ There is not enough information to process these draft claims\n\n* Once further information is added, the claim can move up in maturity",
+      "word_count": 47,
+      "avg_confidence": 92.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "| Claim and exposure maturity (3 of 5) Gi\n\ntotems fap\n\n¢ All required data must be supplied before a user can create a claim with the New\nClaim Wizard\n\n¢ The New Claim Wizard enforces this requirement\n\n¢ This is part of the validation process",
+      "word_count": 46,
+      "avg_confidence": 87.2,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "| Claim and exposure maturity (4 of 5)\n\n¢ ClaimCenter provides intermediate maturity levels\n¢ Intermediate levels are configurable (may be modified, added, or deleted)\n\n¢ Base configuration includes:\n+ Valid for ISO\n\n+ Send to external",
+      "word_count": 37,
+      "avg_confidence": 89.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Claim and exposure maturity (5 of 5)\n\nic <\n\n¢ Ability to Pay validates that all required data for payment is on the claim or\nexposure\n\n¢ Ability to Pay is the highest maturity level\n¢ The claim must reach Ability to Pay before any exposure can be paid\n\n* Each exposure must reach Ability to Pay before the exposure can be paid",
+      "word_count": 63,
+      "avg_confidence": 91.69,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "The maturing claim/exposure (1 of 2)\n\n= * | -\nmi >\n\nLer\n\n* To be saved as a new claim or exposure, the object must meet all conditions at the\nnew loss completion level\n\n¢ Ifa draft claim or exposure does not meet all conditions at this level, the save fails\nand the user is told which conditions the object does not yet meet",
+      "word_count": 65,
+      "avg_confidence": 89.26,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "The maturing claim/exposure (2 of 2)\n\n-\n\na\n\n¢ Asclaims processing continues, the object satisfies more conditions\n¢ ClaimCenter automatically promotes it to the highest level it satisfies\n\n¢ ClaimCenter prevents changes that would force an object to backslide",
+      "word_count": 39,
+      "avg_confidence": 88.79,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "| Ability to pay\n\n___-\n\na\n\nEventually, objects reach Ability to Pay\n* Payment cannot be issued if claim is not at this level [e)\n\n« Payment cannot be issued against an exposure if the exposure is not at\nthis level",
+      "word_count": 41,
+      "avg_confidence": 88.73,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "| Validating maturity levels\n\nThe Claim Actions menu contains Validation\noptions\n\nOptions let you validate a claim or exposure\nfor any maturity level\n\nSelect the maturity level you want to evaluate\n\nReport shows conditions that are preventing\nthe object from reaching that level\n\nClaim Actions\nAssign Claim\nClose Claim\nPrint Claim\nSync Status\n\nValidate Claim Only\n\nValidate Claim + Exposures >\n\nValidate Policy\n\n> Assigned To\n\nNext Act\n\nGi\n\nDescription\n\nClaimant Adjus\n\nRobert Farley Andy\nWilliam Weeks Andy.\n\nLoad and save\n\nNew loss completion\n\nValid for ISO\n\nSend to external system\n\nAbility to pay",
+      "word_count": 94,
+      "avg_confidence": 88.99,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "| Demonstration G\n\nValidation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-39.png",
+      "slide_number": 39,
+      "text": "| Student exercise\n\nClaim setup",
+      "word_count": 5,
+      "avg_confidence": 95.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-40.png",
+      "slide_number": 40,
+      "text": "Lesson\nobjectives\nreview\n\nDescribe segmentation\n\nDescribe how assignment works\nDescribe weighted assignment\nDescribe activities and the workplan\nDescribe basic claim validation",
+      "word_count": 21,
+      "avg_confidence": 95.95,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-41.png",
+      "slide_number": 41,
+      "text": "Question G\n\n,~ — What are the three (3) steps of an Automated Claim Setup?\n\n4\n¢\n¢\n\nee",
+      "word_count": 19,
+      "avg_confidence": 71.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-42.png",
+      "slide_number": 42,
+      "text": "Question G\n\n,~ — What are the three (3) steps of an Automated Claim Setup?\n\n4\n¢\n¢\n\nee",
+      "word_count": 19,
+      "avg_confidence": 71.84,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-43.png",
+      "slide_number": 43,
+      "text": "Question G\n\nae What is the purpose or use of Segmentation?\n¢\n¢\n\nee",
+      "word_count": 14,
+      "avg_confidence": 82.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-44.png",
+      "slide_number": 44,
+      "text": "Answer a\n\nae What is the purpose or use of Segmentation?\n\n¢\n¢\n\nSegmentation is used to identify a high-level strategy for processing a claim or\nexposure.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 29,
+      "avg_confidence": 88.63,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-45.png",
+      "slide_number": 45,
+      "text": "Question G\n\n_~ — What is the purpose of Assignment in the Automated Claim Setup?\n\n4\n¢\n¢\n\nee",
+      "word_count": 19,
+      "avg_confidence": 75.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-46.png",
+      "slide_number": 46,
+      "text": "Answer a\n\nae What is the purpose of Assignment in the Automated Claim Setup?\n\n¢\n¢\n\nTo determine the owner(s) of both claims and exposures.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 27,
+      "avg_confidence": 87.88,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-47.png",
+      "slide_number": 47,
+      "text": "Question G\n\n,~ — What are two attributes of a Group that are used in determining\n\nx assignment?\n\n¢\n\nee",
+      "word_count": 20,
+      "avg_confidence": 82.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-48.png",
+      "slide_number": 48,
+      "text": "Answer a\n\n,~ — What are two attributes of a Group that are used in determining\n\nx assignment?\n\n¢\n\nGroup Type\nGroup Region\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 25,
+      "avg_confidence": 84.52,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-49.png",
+      "slide_number": 49,
+      "text": "Question G\n\n_~ — What are the lowest and the highest levels of maturity of a claim and\n\nx exposure?\n¢\n\nee",
+      "word_count": 22,
+      "avg_confidence": 78.68,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-50.png",
+      "slide_number": 50,
+      "text": "Answer a\n\n_~ — What are the lowest and the highest levels of maturity of a claim and\n\nx exposure?\n¢\n\nNew Loss Completion\nAbility to Pay\n\nSOOO ODDDSDoOODDODOoOoS",
+      "word_count": 29,
+      "avg_confidence": 85.11,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

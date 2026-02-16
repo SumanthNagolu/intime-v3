@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "chapter": "ch07",
+    "chapter_title": "InsuranceSuite Developer Fundamentals",
+    "lesson": "lesson-12",
+    "slide_count": 38,
+    "slides_with_text": 26,
+    "total_words": 1355,
+    "avg_confidence": 86.77,
+    "processing_time_seconds": 14.66,
+    "extracted_at": "2026-02-13T12:19:30.355135"
+  },
+  "full_text": "Creating New Entities\n\n0216221\n\nLesson\nobjectives ¢ Describe what a custom entity is and how to\n\ncreate a custom entity\n\n* Create entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n¢ Identify entity related data elements\nassociated with data model design\n\nUser Story — Policy Summaries\n\n[DEV mode - 1015] Cudewire Tronnghpp\n\nOO * 0 jee\n\nTrainingApp [enor]\n\nNome\n\nPubl 1D\n\nFlogged Entries\n\nWitiom Andy [Waw [Date Fooged—¥ | Reason ate Untaoged\nes WViewrEait ]06/02/2016 _|No-emall address for thie contact\n\nAssigned User\n\nrected On\n\n‘bce Applegate\n\n03/28/20\n\nPrimary Address\n\n[Premium JLscaton\n|s500 } Moin Steet Sante Monica CA 90401\n\n345 Fr Lone Le Canado, CA 1952\nHome\n\nHome ie where the hoor ie\nczvosrz0%4\n\nJs1500___|345 Fir Lane Le Canada CA 91352\n\nDefining New Entities\n\nReview: Entities in the data model (1 of 2)\n\nGi\n\n¢ Anentity is a business object used by the application, such as Policy, User,\n\nABContact, Producer, etc.\n\n¢ Entities are defined in ETI files\n\nconfiguration > [i config ) Eextensions ) entity )]BankAccounteti\n\n| Eleankaccounteti x\n§ tlamy) DY — (Vsouars)z = = BO\nG Element Primary Value | Secondary Value Name\nIContact bank occ. [a BankAccount\n\n§ events table bankaccount\n2] > column — BankName varchar type retireable\n| column —-RoutingNumber varchar desc Contact bank account\nV| > column —AccountNumber varchar abstract\n\ntypekey — AccountType BankAccountType | admin\n\ntypekey_ IsVerified VerificationStatus | autoSplit\n\nforeignkey ABContact ABContact cacheable\n\ncolumn —_OrginateDate datetime consistentchildren\n\nEeankAccounteti x\n\n[Eceuliversionse10=7>)\n<entity\nxmlns=\"http: //guidewire .com/datamodel\"\ndesc=\"Contact bank account\"\nentity=\"BankAccount\"\nexportable=\"true\"\ntable=\"bankaccount\"\ntype=\"retireable\">\n<events/>\n<column\ndeso=\"Bank name\"\nname=\"BankName\"\nnullok=\"true\"\ntype=\"varchar\">\n<columnParam\nname=\"size\"\nvalue=\"30\"/>\n</colunn>\n\nReview: Entities in the data model (2 of 2) a\n\n5)\n\n* Two main types:\n\neti + Base application entities\n\n+ Custom entities\n\n« Acustom entity is an entity\ncreated by the customer\n\neti\n* Acustom entity can be\n\ncreated only on the\napplication level and it will be\nlocal inside that application\n\nInvoice\n\nEntities, Java classes and database tables Gi\nDatabase - Application Server\n\n: generated Java class\n\net\n\nBankAccount_Ext BankAccount Ext\n\nEI a BankName Code generation | RoutingNumber\n\nBankAccount_Ext.eti RoutingNumber AccountNumber\nAccountNumber * AccountType\nAccountType\n\nDeployment f\n\nabx_bankaccount_ext\n\nee B, instance of Java class in\n\nBankName\n\naBankAccount variable\n\nEntities in the database Gi\n\nBankAccount_Ext\n\nselect bankname, routingnumber, accountnumber, accounttype from abx_bankaccount_ext;\n\nBANKNAME |ROUTINGNUMBER |ACCOUNTNUMBER |ACCOUNTTYPE |\n\nBankName\nACME Credit Union /123- 987 345678900 10001 ingNumb.\nNational Bank 745-222 | 232323566 {10001 A ie Non her\nACME Credit Union 123-987 112233445 10001 A nn umber\nACME Credit Union 123-987 554433221 10002 intlype\n(4 rows, 6 ms)\n\n¢ Often, an entity stores data in a database table named for the entity:\n* BankAccount_Ext entity in abx_bankaccount_ext table\n+ ABContact entity in ab_abcontact table\n\n¢ Exceptions are...\n\n* Entities that share the columns in an entity table such as a subtype entity\n\n« Virtual, non-persistent entities do not save data to the database. Guidewire recommends that\nyou do not create non-persistent entities as a general rule\n\nEntities in the object model G\n\n* Code generators generate Java classes from entities\n\n« Entities can also have enhancements associated with them with additional functions and\nproperties\n\nconfiguration ) [i generated )(Elentity » © BankAccount Ext\n¥| © BankAccount Extjava\n\nBE) 2 gr. invornat.gosu.parser.brtendedtype\n| 10 ogw.tang.sinplerropertyProcessing\nGi) i: egw.ontity. entityName (value = \"BankAccount_Ext\")\n=| 220 public class sankaccount_nxt extends com.gaidevire.pl.persistence.code.neantase inplenents encity.netireable, entity.Excractable, entity.Eventaware (\nJ) 22 “pubtse staese' inal geph persistence type. Sntisyiypeneferencecentity BankaccouneSxt> TIPE = new com guidewire, commons. netadaca. types. Bre ty2nerin\n8) 14\n| 25 public static final gw.pl.persistence.type.EntityPropertyInfoReference<gw.entity.ILinkPropertyInfo> ABCONTACT_PROP = new com.guidewire.connons.meta(\nVi) 16\n37 _ public static final gv.pl.persistence. type.EntityPropertyiafoneference<gw.entity.IColumPropertyinto> ACCOUNIMUMBER_PROP = new com. guidewire. common,\nae\n39. public static final gv.pl persistence. type.EntityPropertyintoReferencecg. entity. typekeyPropertyinfo> ACCOUNTTYFE_PROP = new com.guidewixe.comons\n20\n21 public static final gv.pl.persistence. type. EntityPropertyinfokeferencecgy. entity. ColumPropertyinfo> ARCHIVEPARTITION_FROP = new con.quidewire.com\n22\n\n23 public static final gy.pl.persistence. type.EntityPropertyinfoReference<gw.entity.IColumnPropertyinfo> BANKNAME_PROP = new com.guidewire.comons .met,\n\nForeign key\n\n¢ Pointer to single instance of some other entity\n\n« Example: each Contact can have one assigned user\n\nABContact\n\n| Aray Gi\n* Collection of pointers to instances of some other entity that is maintained by code\nduring runtime\n« Requires reverse foreign key\n¢ If entity A has array of entity B, then entity B must have foreign key pointing to entity A\n« Example: each ABContact can have zero to many contact notes\n\nABContact Contact Note\n\nTaxID\n\nEmailAddress1\n\nOne-to-one relationships Gi\n\n<onetoone> element defines a single-valued association to another entity that has\na one-to-one cardinality\n\nProvides a reverse pointer to an entity that is pointing at the <onetoone> entity\nthrough a foreign key\n\nOften splits logical entity across multiple physical entities\n\nExample: ABContact defines Financial Summary as one-to-one and\nFinancialSummary defines a foreign key to ABContact\n\nABContact\n\nFinancialSummary\n\nTaxiD\n\n. NumberOfClaims\nEmailAddress1. FinancialSummat MostRecentClaim\nFinancialSummary ABConta ABContact\n\nMany-to-many relationships (1 of 2) a\n\n¢ Requires an entity of type versionable that represents the many-to-many\nrelationship with the following:\n\n* Two or more non-nullable foreign keys\n« Unique index for all foreign keys\n\nUserRole\n\nMany-to-many relationships (2 of 2) a\n\nTo access the many-to-many relationship, add an array to one or both entities in\nthe relationship\n\n* Roles array in User specifies that there is zero or more UserRoles for a given user\n\n« Users array in Role specifies that there is zero or more UserRoles for a given role\n\nUserRole\n\nCircular relationships\n\n* <edgeForeignKey> creates an edge table\n« Links one entity to another or to self\n\n« Ensures the safe ordering of data insertion and deletion in cases where cyclic references\nprevent safe ordering\n\n¢ Examples:\n\nABContact\n\n* Child references parent\n« Reference between subtypes\n\nABPerson\n\nABCompany\n\nABCompanyVendor\n\nntGroup\n\nDemonstration G\nPolicy Summaries\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,— — What is the difference between an ETX file and an ETI file?\n\n¢\n¢\n4\n\nMS SS Se\n\nAnswer\n\n,— — What is the difference between an ETX file and an ETI file?\n4\n\n¢\n4\n\nAn ETX file extends a base application entity e.g. adding new columns. An ETI file\ndefines a new custom entity from scratch.\n\nSS Se\n\nQuestion\n\n_— — Does the base application have ETI files? Can developers create new ETI\nFa files? Where and how?\n\nMS SS Se\n\nGi\n\nAnswer\n_— — Does the base application have ETI files? Can developers create new ETI\noo files? Where and how?\n\nYes, ETI files are in the base application. Developers can create new ETI files in the\n...\\extensions\\entity\\ folder using Guidewire Studio and the Entity Editor.\n\nSS Se\n\nGi\n\nQuestion\n\n_— — 'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?\n\n¢\n4\n\nMS SS Se\n\nAnswer\n\n_— — 'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?\n\nThe Case entity requires a foreign key field in the ETI definition that specifies the\nfkentity attribute as the ABLawyer entity.\n\n¢\n4\n\nQuestion\n\n,- — lodeploy data model changes, are you required to\n\n¢\nA) Regenerate the Data Dictionary?\n\nB) Restart the application server?\nC) Restart Studio?\n\nMS SS Se\n\nAnswer Gi\n\na To deploy data model changes, are you required to:\nx A) No, you are not required to regenerate the data dictionary. Regenerating the data\ndictionary will identify any errors in the data model. If successful, the process will\n\nadd new and modified entities to the data dictionary.\n\nB) Yes, you must restart the application server to deploy the new and modified\nentities. The process creates new database tables and/or upgrades the database.\n\nC) No, Studio is immediately aware of the data model changes. It is not necessary to\nrestart Guidewire Studio.\n\nSS Se\n\nLesson\nobj ectives * Describe what is a custom entity and how to\nreview ; create a custom entity\n\nCreate entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n¢ Identify entity related data elements\nassociated with data model design\n\nStudent exercise\n\nCreating new entities",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Creating New Entities\n\n0216221",
+      "word_count": 4,
+      "avg_confidence": 83.2,
+      "image_size": {
+        "width": 1280,
+        "height": 543
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe what a custom entity is and how to\n\ncreate a custom entity\n\n* Create entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n¢ Identify entity related data elements\nassociated with data model design",
+      "word_count": 42,
+      "avg_confidence": 91.36,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "User Story — Policy Summaries\n\n[DEV mode - 1015] Cudewire Tronnghpp\n\nOO * 0 jee\n\nTrainingApp [enor]\n\nNome\n\nPubl 1D\n\nFlogged Entries\n\nWitiom Andy [Waw [Date Fooged—¥ | Reason ate Untaoged\nes WViewrEait ]06/02/2016 _|No-emall address for thie contact\n\nAssigned User\n\nrected On\n\n‘bce Applegate\n\n03/28/20\n\nPrimary Address\n\n[Premium JLscaton\n|s500 } Moin Steet Sante Monica CA 90401\n\n345 Fr Lone Le Canado, CA 1952\nHome\n\nHome ie where the hoor ie\nczvosrz0%4\n\nJs1500___|345 Fir Lane Le Canada CA 91352",
+      "word_count": 80,
+      "avg_confidence": 65.8,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "Defining New Entities",
+      "word_count": 3,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Review: Entities in the data model (1 of 2)\n\nGi\n\n¢ Anentity is a business object used by the application, such as Policy, User,\n\nABContact, Producer, etc.\n\n¢ Entities are defined in ETI files\n\nconfiguration > [i config ) Eextensions ) entity )]BankAccounteti\n\n| Eleankaccounteti x\n§ tlamy) DY — (Vsouars)z = = BO\nG Element Primary Value | Secondary Value Name\nIContact bank occ. [a BankAccount\n\n§ events table bankaccount\n2] > column — BankName varchar type retireable\n| column —-RoutingNumber varchar desc Contact bank account\nV| > column —AccountNumber varchar abstract\n\ntypekey — AccountType BankAccountType | admin\n\ntypekey_ IsVerified VerificationStatus | autoSplit\n\nforeignkey ABContact ABContact cacheable\n\ncolumn —_OrginateDate datetime consistentchildren\n\nEeankAccounteti x\n\n[Eceuliversionse10=7>)\n<entity\nxmlns=\"http: //guidewire .com/datamodel\"\ndesc=\"Contact bank account\"\nentity=\"BankAccount\"\nexportable=\"true\"\ntable=\"bankaccount\"\ntype=\"retireable\">\n<events/>\n<column\ndeso=\"Bank name\"\nname=\"BankName\"\nnullok=\"true\"\ntype=\"varchar\">\n<columnParam\nname=\"size\"\nvalue=\"30\"/>\n</colunn>",
+      "word_count": 137,
+      "avg_confidence": 73.32,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Review: Entities in the data model (2 of 2) a\n\n5)\n\n* Two main types:\n\neti + Base application entities\n\n+ Custom entities\n\n« Acustom entity is an entity\ncreated by the customer\n\neti\n* Acustom entity can be\n\ncreated only on the\napplication level and it will be\nlocal inside that application\n\nInvoice",
+      "word_count": 54,
+      "avg_confidence": 90.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "Entities, Java classes and database tables Gi\nDatabase - Application Server\n\n: generated Java class\n\net\n\nBankAccount_Ext BankAccount Ext\n\nEI a BankName Code generation | RoutingNumber\n\nBankAccount_Ext.eti RoutingNumber AccountNumber\nAccountNumber * AccountType\nAccountType\n\nDeployment f\n\nabx_bankaccount_ext\n\nee B, instance of Java class in\n\nBankName\n\naBankAccount variable",
+      "word_count": 46,
+      "avg_confidence": 84.31,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "Entities in the database Gi\n\nBankAccount_Ext\n\nselect bankname, routingnumber, accountnumber, accounttype from abx_bankaccount_ext;\n\nBANKNAME |ROUTINGNUMBER |ACCOUNTNUMBER |ACCOUNTTYPE |\n\nBankName\nACME Credit Union /123- 987 345678900 10001 ingNumb.\nNational Bank 745-222 | 232323566 {10001 A ie Non her\nACME Credit Union 123-987 112233445 10001 A nn umber\nACME Credit Union 123-987 554433221 10002 intlype\n(4 rows, 6 ms)\n\n¢ Often, an entity stores data in a database table named for the entity:\n* BankAccount_Ext entity in abx_bankaccount_ext table\n+ ABContact entity in ab_abcontact table\n\n¢ Exceptions are...\n\n* Entities that share the columns in an entity table such as a subtype entity\n\n« Virtual, non-persistent entities do not save data to the database. Guidewire recommends that\nyou do not create non-persistent entities as a general rule",
+      "word_count": 125,
+      "avg_confidence": 85.19,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "Entities in the object model G\n\n* Code generators generate Java classes from entities\n\n« Entities can also have enhancements associated with them with additional functions and\nproperties\n\nconfiguration ) [i generated )(Elentity » © BankAccount Ext\n¥| © BankAccount Extjava\n\nBE) 2 gr. invornat.gosu.parser.brtendedtype\n| 10 ogw.tang.sinplerropertyProcessing\nGi) i: egw.ontity. entityName (value = \"BankAccount_Ext\")\n=| 220 public class sankaccount_nxt extends com.gaidevire.pl.persistence.code.neantase inplenents encity.netireable, entity.Excractable, entity.Eventaware (\nJ) 22 “pubtse staese' inal geph persistence type. Sntisyiypeneferencecentity BankaccouneSxt> TIPE = new com guidewire, commons. netadaca. types. Bre ty2nerin\n8) 14\n| 25 public static final gw.pl.persistence.type.EntityPropertyInfoReference<gw.entity.ILinkPropertyInfo> ABCONTACT_PROP = new com.guidewire.connons.meta(\nVi) 16\n37 _ public static final gv.pl.persistence. type.EntityPropertyiafoneference<gw.entity.IColumPropertyinto> ACCOUNIMUMBER_PROP = new com. guidewire. common,\nae\n39. public static final gv.pl persistence. type.EntityPropertyintoReferencecg. entity. typekeyPropertyinfo> ACCOUNTTYFE_PROP = new com.guidewixe.comons\n20\n21 public static final gv.pl.persistence. type. EntityPropertyinfokeferencecgy. entity. ColumPropertyinfo> ARCHIVEPARTITION_FROP = new con.quidewire.com\n22\n\n23 public static final gy.pl.persistence. type.EntityPropertyinfoReference<gw.entity.IColumnPropertyinfo> BANKNAME_PROP = new com.guidewire.comons .met,",
+      "word_count": 154,
+      "avg_confidence": 65.45,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "Foreign key\n\n¢ Pointer to single instance of some other entity\n\n« Example: each Contact can have one assigned user\n\nABContact",
+      "word_count": 21,
+      "avg_confidence": 92.05,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Aray Gi\n* Collection of pointers to instances of some other entity that is maintained by code\nduring runtime\n« Requires reverse foreign key\n¢ If entity A has array of entity B, then entity B must have foreign key pointing to entity A\n« Example: each ABContact can have zero to many contact notes\n\nABContact Contact Note\n\nTaxID\n\nEmailAddress1",
+      "word_count": 61,
+      "avg_confidence": 88.58,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "One-to-one relationships Gi\n\n<onetoone> element defines a single-valued association to another entity that has\na one-to-one cardinality\n\nProvides a reverse pointer to an entity that is pointing at the <onetoone> entity\nthrough a foreign key\n\nOften splits logical entity across multiple physical entities\n\nExample: ABContact defines Financial Summary as one-to-one and\nFinancialSummary defines a foreign key to ABContact\n\nABContact\n\nFinancialSummary\n\nTaxiD\n\n. NumberOfClaims\nEmailAddress1. FinancialSummat MostRecentClaim\nFinancialSummary ABConta ABContact",
+      "word_count": 69,
+      "avg_confidence": 89.29,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Many-to-many relationships (1 of 2) a\n\n¢ Requires an entity of type versionable that represents the many-to-many\nrelationship with the following:\n\n* Two or more non-nullable foreign keys\n« Unique index for all foreign keys\n\nUserRole",
+      "word_count": 36,
+      "avg_confidence": 88.14,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Many-to-many relationships (2 of 2) a\n\nTo access the many-to-many relationship, add an array to one or both entities in\nthe relationship\n\n* Roles array in User specifies that there is zero or more UserRoles for a given user\n\n« Users array in Role specifies that there is zero or more UserRoles for a given role\n\nUserRole",
+      "word_count": 57,
+      "avg_confidence": 93.09,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Circular relationships\n\n* <edgeForeignKey> creates an edge table\n« Links one entity to another or to self\n\n« Ensures the safe ordering of data insertion and deletion in cases where cyclic references\nprevent safe ordering\n\n¢ Examples:\n\nABContact\n\n* Child references parent\n« Reference between subtypes\n\nABPerson\n\nABCompany\n\nABCompanyVendor\n\nntGroup",
+      "word_count": 50,
+      "avg_confidence": 90.48,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Demonstration G\nPolicy Summaries\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.41,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Question\n\n,— — What is the difference between an ETX file and an ETI file?\n\n¢\n¢\n4\n\nMS SS Se",
+      "word_count": 21,
+      "avg_confidence": 76.62,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "Answer\n\n,— — What is the difference between an ETX file and an ETI file?\n4\n\n¢\n4\n\nAn ETX file extends a base application entity e.g. adding new columns. An ETI file\ndefines a new custom entity from scratch.\n\nSS Se",
+      "word_count": 42,
+      "avg_confidence": 84.51,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Question\n\n_— — Does the base application have ETI files? Can developers create new ETI\nFa files? Where and how?\n\nMS SS Se\n\nGi",
+      "word_count": 24,
+      "avg_confidence": 78.89,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "Answer\n_— — Does the base application have ETI files? Can developers create new ETI\noo files? Where and how?\n\nYes, ETI files are in the base application. Developers can create new ETI files in the\n...\\extensions\\entity\\ folder using Guidewire Studio and the Entity Editor.\n\nSS Se\n\nGi",
+      "word_count": 48,
+      "avg_confidence": 87.29,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "Question\n\n_— — 'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?\n\n¢\n4\n\nMS SS Se",
+      "word_count": 28,
+      "avg_confidence": 79.97,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Answer\n\n_— — 'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?\n\nThe Case entity requires a foreign key field in the ETI definition that specifies the\nfkentity attribute as the ABLawyer entity.\n\n¢\n4",
+      "word_count": 46,
+      "avg_confidence": 89.91,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Question\n\n,- — lodeploy data model changes, are you required to\n\n¢\nA) Regenerate the Data Dictionary?\n\nB) Restart the application server?\nC) Restart Studio?\n\nMS SS Se",
+      "word_count": 28,
+      "avg_confidence": 83.4,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Answer Gi\n\na To deploy data model changes, are you required to:\nx A) No, you are not required to regenerate the data dictionary. Regenerating the data\ndictionary will identify any errors in the data model. If successful, the process will\n\nadd new and modified entities to the data dictionary.\n\nB) Yes, you must restart the application server to deploy the new and modified\nentities. The process creates new database tables and/or upgrades the database.\n\nC) No, Studio is immediately aware of the data model changes. It is not necessary to\nrestart Guidewire Studio.\n\nSS Se",
+      "word_count": 96,
+      "avg_confidence": 91.67,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Lesson\nobj ectives * Describe what is a custom entity and how to\nreview ; create a custom entity\n\nCreate entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n¢ Identify entity related data elements\nassociated with data model design",
+      "word_count": 44,
+      "avg_confidence": 91.7,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Student exercise\n\nCreating new entities",
+      "word_count": 5,
+      "avg_confidence": 95.67,
+      "image_size": {
+        "width": 1280,
+        "height": 676
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-35.png",
+      "slide_number": 35,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-36.png",
+      "slide_number": 36,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-37.png",
+      "slide_number": 37,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-38.png",
+      "slide_number": 38,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    }
+  ]
+}

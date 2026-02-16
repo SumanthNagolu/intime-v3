@@ -1,0 +1,3485 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_09_02.mp4",
+    "video_stem": "In_09_02",
+    "duration_seconds": 233.8,
+    "duration_formatted": "00:03:53.800",
+    "segment_count": 40,
+    "word_count": 507,
+    "avg_confidence": 0.938,
+    "transcription_time_seconds": 12.22,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:48:30.901124"
+  },
+  "full_text": "This demonstration will create a SOAP web service that returns the vacation status of a business user. This demonstration requires that you use Training App, Guidewire Studio, a supported web browser, and SOAP UI. Begin by creating a new package for the new SOAP web service. Right-click on the demo.ta package. Select New and then Package. Type the name of the new package. Click OK to save. Click OK to save. In order to return the desired user data, create a return type Gosu class that will be referenced by the API Gosu class. Right-click on the user package. Select New and then Gosu class. Type the name of the new Gosu class. Click OK to save. The Gosu class shell is created. Enter code to implement the requirements. Examine the code. Line 5. Required annotation ensuring that instances of the class are XML serializable. Line 6. Add final keyword ensuring the class can't be subtyped. Line 8. Add a private variable representing the field that will be returned by the SOAP web service. Create a new API Gosu class. Right-click on the user package. Select New and then Gosu class. Type the name of the new Gosu class. Click OK to save. The Gosu class shell is created. Enter code to implement the requirements. Examine the code. Line 10. Required annotation to declare the class as implementing a SOAP web service. Line 11 to 12. Added optional annotations. Lines 15 to 27. Define the getUserInfo method requiring two arguments and returning the user info object. Line 17 to 21. A query joining two entities, user and user contact. The foreign key name is contact. That is why in line 18, contact is used as the join parameter. Line 23 to 24. Create the return user info object. Since a new package and Gosu classes were created, a server restart is required to deploy the resources. Click the stop server icon. Click the debug server icon to start the server. In order to test from an external system, the SOAP web service WSDL URL must be determined. Open a web browser and enter the following URL, localhost colon 8880 slash AB slash WS to view local SOAP resources. Expand the document slash literal web services links until the user API resource is found. Click the user API link. Copy the WSDL URL from the browser address field. Use SOAP UI to test the new SOAP web service. Click file from the menu bar. Select new SOAP project. Type the project name. Type the URL of the initial WSDL. Click OK to save. Double click SOAP request 1. Type the GW underscore locale value. Type the GW underscore language value. Type SOAP username value. Type SOAP password value. Type user first name value. Type user last name value. Click the submit icon to submit request to specified endpoint URL. The output shows that the vacation status for Bruce Baker is at work. This ends the publishing SOAP web service demonstration. This ends the publishing SOAP web service demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.36,
+      "end": 27.96,
+      "start_formatted": "00:00:01.360",
+      "end_formatted": "00:00:27.960",
+      "text": "This demonstration will create a SOAP web service that returns the vacation status of a business user. This demonstration requires that you use Training App, Guidewire Studio, a supported web browser, and SOAP UI. Begin by creating a new package for the new SOAP web service. Right-click on the demo.ta package. Select New and then Package. Type the name of the new package.",
+      "words": [
+        {
+          "word": "This",
+          "start": 1.36,
+          "end": 2.0,
+          "probability": 0.9556
+        },
+        {
+          "word": "demonstration",
+          "start": 2.0,
+          "end": 2.54,
+          "probability": 0.9658
+        },
+        {
+          "word": "will",
+          "start": 2.54,
+          "end": 2.96,
+          "probability": 0.998
+        },
+        {
+          "word": "create",
+          "start": 2.96,
+          "end": 3.28,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 3.28,
+          "end": 3.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "SOAP",
+          "start": 3.5,
+          "end": 3.8,
+          "probability": 0.9053
+        },
+        {
+          "word": "web",
+          "start": 3.8,
+          "end": 3.96,
+          "probability": 0.5527
+        },
+        {
+          "word": "service",
+          "start": 3.96,
+          "end": 4.38,
+          "probability": 0.9766
+        },
+        {
+          "word": "that",
+          "start": 4.38,
+          "end": 4.66,
+          "probability": 0.9951
+        },
+        {
+          "word": "returns",
+          "start": 4.66,
+          "end": 5.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 5.08,
+          "end": 5.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "vacation",
+          "start": 5.34,
+          "end": 5.8,
+          "probability": 0.8677
+        },
+        {
+          "word": "status",
+          "start": 5.8,
+          "end": 6.3,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 6.3,
+          "end": 6.56,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 6.56,
+          "end": 6.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "business",
+          "start": 6.66,
+          "end": 6.96,
+          "probability": 0.916
+        },
+        {
+          "word": "user.",
+          "start": 6.96,
+          "end": 7.42,
+          "probability": 0.9976
+        },
+        {
+          "word": "This",
+          "start": 7.8,
+          "end": 8.38,
+          "probability": 0.9912
+        },
+        {
+          "word": "demonstration",
+          "start": 8.38,
+          "end": 9.04,
+          "probability": 0.9927
+        },
+        {
+          "word": "requires",
+          "start": 9.04,
+          "end": 9.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 9.6,
+          "end": 9.92,
+          "probability": 0.998
+        },
+        {
+          "word": "you",
+          "start": 9.92,
+          "end": 10.06,
+          "probability": 0.9961
+        },
+        {
+          "word": "use",
+          "start": 10.06,
+          "end": 10.32,
+          "probability": 0.9961
+        },
+        {
+          "word": "Training",
+          "start": 10.32,
+          "end": 10.62,
+          "probability": 0.5776
+        },
+        {
+          "word": "App,",
+          "start": 10.62,
+          "end": 11.06,
+          "probability": 0.7979
+        },
+        {
+          "word": "Guidewire",
+          "start": 11.22,
+          "end": 11.88,
+          "probability": 0.9629
+        },
+        {
+          "word": "Studio,",
+          "start": 11.88,
+          "end": 12.28,
+          "probability": 0.9468
+        },
+        {
+          "word": "a",
+          "start": 12.66,
+          "end": 12.88,
+          "probability": 0.9805
+        },
+        {
+          "word": "supported",
+          "start": 12.88,
+          "end": 13.34,
+          "probability": 0.8677
+        },
+        {
+          "word": "web",
+          "start": 13.34,
+          "end": 13.58,
+          "probability": 0.9341
+        },
+        {
+          "word": "browser,",
+          "start": 13.58,
+          "end": 13.98,
+          "probability": 0.9937
+        },
+        {
+          "word": "and",
+          "start": 14.22,
+          "end": 14.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "SOAP",
+          "start": 14.5,
+          "end": 14.86,
+          "probability": 0.9854
+        },
+        {
+          "word": "UI.",
+          "start": 14.86,
+          "end": 15.16,
+          "probability": 0.9248
+        },
+        {
+          "word": "Begin",
+          "start": 15.92,
+          "end": 16.56,
+          "probability": 0.9922
+        },
+        {
+          "word": "by",
+          "start": 16.56,
+          "end": 16.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "creating",
+          "start": 16.82,
+          "end": 17.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 17.26,
+          "end": 17.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 17.42,
+          "end": 17.6,
+          "probability": 0.9868
+        },
+        {
+          "word": "package",
+          "start": 17.6,
+          "end": 17.98,
+          "probability": 0.939
+        },
+        {
+          "word": "for",
+          "start": 17.98,
+          "end": 18.26,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 18.26,
+          "end": 18.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 18.38,
+          "end": 18.56,
+          "probability": 0.9932
+        },
+        {
+          "word": "SOAP",
+          "start": 18.56,
+          "end": 18.92,
+          "probability": 0.9922
+        },
+        {
+          "word": "web",
+          "start": 18.92,
+          "end": 19.12,
+          "probability": 0.9229
+        },
+        {
+          "word": "service.",
+          "start": 19.12,
+          "end": 19.62,
+          "probability": 0.9893
+        },
+        {
+          "word": "Right",
+          "start": 20.04,
+          "end": 20.68,
+          "probability": 0.9897
+        },
+        {
+          "word": "-click",
+          "start": 20.68,
+          "end": 20.88,
+          "probability": 0.8701
+        },
+        {
+          "word": "on",
+          "start": 20.88,
+          "end": 21.12,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 21.12,
+          "end": 21.24,
+          "probability": 0.9976
+        },
+        {
+          "word": "demo",
+          "start": 21.24,
+          "end": 21.5,
+          "probability": 0.5054
+        },
+        {
+          "word": ".ta",
+          "start": 21.5,
+          "end": 22.2,
+          "probability": 0.9243
+        },
+        {
+          "word": "package.",
+          "start": 22.2,
+          "end": 22.6,
+          "probability": 0.9575
+        },
+        {
+          "word": "Select",
+          "start": 23.38,
+          "end": 24.02,
+          "probability": 0.9824
+        },
+        {
+          "word": "New",
+          "start": 24.02,
+          "end": 24.24,
+          "probability": 0.7617
+        },
+        {
+          "word": "and",
+          "start": 24.24,
+          "end": 24.46,
+          "probability": 0.9736
+        },
+        {
+          "word": "then",
+          "start": 24.46,
+          "end": 24.64,
+          "probability": 0.9854
+        },
+        {
+          "word": "Package.",
+          "start": 24.64,
+          "end": 25.18,
+          "probability": 0.9731
+        },
+        {
+          "word": "Type",
+          "start": 25.9,
+          "end": 26.54,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 26.54,
+          "end": 26.72,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 26.72,
+          "end": 26.94,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 26.94,
+          "end": 27.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 27.16,
+          "end": 27.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 27.28,
+          "end": 27.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "package.",
+          "start": 27.44,
+          "end": 27.96,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 32.0,
+      "end": 59.16,
+      "start_formatted": "00:00:32.000",
+      "end_formatted": "00:00:59.160",
+      "text": "Click OK to save. Click OK to save. In order to return the desired user data, create a return type Gosu class that will be referenced by the API Gosu class. Right-click on the user package. Select New and then Gosu class. Type the name of the new Gosu class. Click OK to save. The Gosu class shell is created. Enter code to implement the requirements.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 32.0,
+          "end": 32.68,
+          "probability": 0.9155
+        },
+        {
+          "word": "OK",
+          "start": 32.68,
+          "end": 33.04,
+          "probability": 0.7705
+        },
+        {
+          "word": "to",
+          "start": 33.04,
+          "end": 33.38,
+          "probability": 0.9956
+        },
+        {
+          "word": "save.",
+          "start": 33.38,
+          "end": 33.68,
+          "probability": 0.8828
+        },
+        {
+          "word": "Click",
+          "start": 34.6,
+          "end": 35.28,
+          "probability": 0.0003
+        },
+        {
+          "word": "OK",
+          "start": 35.28,
+          "end": 35.28,
+          "probability": 0.8062
+        },
+        {
+          "word": "to",
+          "start": 35.28,
+          "end": 35.28,
+          "probability": 0.9014
+        },
+        {
+          "word": "save.",
+          "start": 35.28,
+          "end": 35.28,
+          "probability": 0.8438
+        },
+        {
+          "word": "In",
+          "start": 35.28,
+          "end": 35.28,
+          "probability": 0.9429
+        },
+        {
+          "word": "order",
+          "start": 35.28,
+          "end": 35.56,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 35.56,
+          "end": 35.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "return",
+          "start": 35.78,
+          "end": 36.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 36.08,
+          "end": 36.26,
+          "probability": 0.9937
+        },
+        {
+          "word": "desired",
+          "start": 36.26,
+          "end": 36.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "user",
+          "start": 36.68,
+          "end": 37.0,
+          "probability": 0.9785
+        },
+        {
+          "word": "data,",
+          "start": 37.0,
+          "end": 37.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "create",
+          "start": 37.68,
+          "end": 38.02,
+          "probability": 0.9634
+        },
+        {
+          "word": "a",
+          "start": 38.02,
+          "end": 38.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "return",
+          "start": 38.14,
+          "end": 38.5,
+          "probability": 0.8916
+        },
+        {
+          "word": "type",
+          "start": 38.5,
+          "end": 38.84,
+          "probability": 0.8828
+        },
+        {
+          "word": "Gosu",
+          "start": 38.84,
+          "end": 39.22,
+          "probability": 0.502
+        },
+        {
+          "word": "class",
+          "start": 39.22,
+          "end": 39.46,
+          "probability": 0.7739
+        },
+        {
+          "word": "that",
+          "start": 39.46,
+          "end": 39.7,
+          "probability": 0.9907
+        },
+        {
+          "word": "will",
+          "start": 39.7,
+          "end": 39.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "be",
+          "start": 39.84,
+          "end": 40.0,
+          "probability": 0.9985
+        },
+        {
+          "word": "referenced",
+          "start": 40.0,
+          "end": 40.4,
+          "probability": 0.9868
+        },
+        {
+          "word": "by",
+          "start": 40.4,
+          "end": 40.62,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 40.62,
+          "end": 40.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "API",
+          "start": 40.78,
+          "end": 41.18,
+          "probability": 0.8228
+        },
+        {
+          "word": "Gosu",
+          "start": 41.18,
+          "end": 41.64,
+          "probability": 0.9751
+        },
+        {
+          "word": "class.",
+          "start": 41.64,
+          "end": 42.06,
+          "probability": 0.9072
+        },
+        {
+          "word": "Right",
+          "start": 42.52,
+          "end": 43.08,
+          "probability": 0.9849
+        },
+        {
+          "word": "-click",
+          "start": 43.08,
+          "end": 43.3,
+          "probability": 0.8223
+        },
+        {
+          "word": "on",
+          "start": 43.3,
+          "end": 43.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 43.54,
+          "end": 43.68,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 43.68,
+          "end": 43.98,
+          "probability": 0.876
+        },
+        {
+          "word": "package.",
+          "start": 43.98,
+          "end": 44.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "Select",
+          "start": 45.28,
+          "end": 45.96,
+          "probability": 0.9688
+        },
+        {
+          "word": "New",
+          "start": 45.96,
+          "end": 46.2,
+          "probability": 0.6309
+        },
+        {
+          "word": "and",
+          "start": 46.2,
+          "end": 46.4,
+          "probability": 0.9849
+        },
+        {
+          "word": "then",
+          "start": 46.4,
+          "end": 46.58,
+          "probability": 0.9961
+        },
+        {
+          "word": "Gosu",
+          "start": 46.58,
+          "end": 46.92,
+          "probability": 0.9946
+        },
+        {
+          "word": "class.",
+          "start": 46.92,
+          "end": 47.34,
+          "probability": 0.8345
+        },
+        {
+          "word": "Type",
+          "start": 47.78,
+          "end": 48.38,
+          "probability": 0.9814
+        },
+        {
+          "word": "the",
+          "start": 48.38,
+          "end": 48.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "name",
+          "start": 48.54,
+          "end": 48.74,
+          "probability": 0.9722
+        },
+        {
+          "word": "of",
+          "start": 48.74,
+          "end": 48.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 48.9,
+          "end": 49.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 49.04,
+          "end": 49.22,
+          "probability": 0.9844
+        },
+        {
+          "word": "Gosu",
+          "start": 49.22,
+          "end": 49.62,
+          "probability": 0.9951
+        },
+        {
+          "word": "class.",
+          "start": 49.62,
+          "end": 50.04,
+          "probability": 0.9893
+        },
+        {
+          "word": "Click",
+          "start": 51.78,
+          "end": 52.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "OK",
+          "start": 52.46,
+          "end": 52.8,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 52.8,
+          "end": 53.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "save.",
+          "start": 53.1,
+          "end": 53.46,
+          "probability": 0.9912
+        },
+        {
+          "word": "The",
+          "start": 54.34,
+          "end": 55.02,
+          "probability": 0.9824
+        },
+        {
+          "word": "Gosu",
+          "start": 55.02,
+          "end": 55.4,
+          "probability": 0.9971
+        },
+        {
+          "word": "class",
+          "start": 55.4,
+          "end": 55.68,
+          "probability": 0.9375
+        },
+        {
+          "word": "shell",
+          "start": 55.68,
+          "end": 55.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "is",
+          "start": 55.98,
+          "end": 56.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "created.",
+          "start": 56.2,
+          "end": 56.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "Enter",
+          "start": 57.02,
+          "end": 57.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "code",
+          "start": 57.4,
+          "end": 57.72,
+          "probability": 0.9937
+        },
+        {
+          "word": "to",
+          "start": 57.72,
+          "end": 57.92,
+          "probability": 0.9985
+        },
+        {
+          "word": "implement",
+          "start": 57.92,
+          "end": 58.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 58.34,
+          "end": 58.58,
+          "probability": 0.999
+        },
+        {
+          "word": "requirements.",
+          "start": 58.58,
+          "end": 59.16,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 60.0,
+      "end": 67.5,
+      "start_formatted": "00:01:00.000",
+      "end_formatted": "00:01:07.500",
+      "text": "Examine the code. Line 5. Required annotation ensuring that instances of the class are XML serializable.",
+      "words": [
+        {
+          "word": "Examine",
+          "start": 60.0,
+          "end": 60.68,
+          "probability": 0.957
+        },
+        {
+          "word": "the",
+          "start": 60.68,
+          "end": 60.8,
+          "probability": 0.998
+        },
+        {
+          "word": "code.",
+          "start": 60.8,
+          "end": 61.14,
+          "probability": 0.9351
+        },
+        {
+          "word": "Line",
+          "start": 61.48,
+          "end": 62.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "5.",
+          "start": 62.14,
+          "end": 62.6,
+          "probability": 0.9648
+        },
+        {
+          "word": "Required",
+          "start": 62.84,
+          "end": 63.36,
+          "probability": 0.9951
+        },
+        {
+          "word": "annotation",
+          "start": 63.36,
+          "end": 63.96,
+          "probability": 0.9888
+        },
+        {
+          "word": "ensuring",
+          "start": 63.96,
+          "end": 64.36,
+          "probability": 0.9907
+        },
+        {
+          "word": "that",
+          "start": 64.36,
+          "end": 64.68,
+          "probability": 0.749
+        },
+        {
+          "word": "instances",
+          "start": 64.68,
+          "end": 65.22,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 65.22,
+          "end": 65.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 65.54,
+          "end": 65.66,
+          "probability": 1.0
+        },
+        {
+          "word": "class",
+          "start": 65.66,
+          "end": 65.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 65.98,
+          "end": 66.2,
+          "probability": 0.9722
+        },
+        {
+          "word": "XML",
+          "start": 66.2,
+          "end": 66.62,
+          "probability": 0.8999
+        },
+        {
+          "word": "serializable.",
+          "start": 66.62,
+          "end": 67.5,
+          "probability": 0.9629
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 68.08,
+      "end": 72.8,
+      "start_formatted": "00:01:08.080",
+      "end_formatted": "00:01:12.800",
+      "text": "Line 6. Add final keyword ensuring the class can't be subtyped.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 68.08,
+          "end": 68.76,
+          "probability": 0.999
+        },
+        {
+          "word": "6.",
+          "start": 68.76,
+          "end": 69.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Add",
+          "start": 69.5,
+          "end": 69.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "final",
+          "start": 69.7,
+          "end": 70.06,
+          "probability": 0.9902
+        },
+        {
+          "word": "keyword",
+          "start": 70.06,
+          "end": 70.52,
+          "probability": 0.9951
+        },
+        {
+          "word": "ensuring",
+          "start": 70.52,
+          "end": 71.02,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 71.02,
+          "end": 71.3,
+          "probability": 1.0
+        },
+        {
+          "word": "class",
+          "start": 71.3,
+          "end": 71.62,
+          "probability": 1.0
+        },
+        {
+          "word": "can't",
+          "start": 71.62,
+          "end": 71.96,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 71.96,
+          "end": 72.12,
+          "probability": 1.0
+        },
+        {
+          "word": "subtyped.",
+          "start": 72.12,
+          "end": 72.8,
+          "probability": 0.9297
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 73.18,
+      "end": 79.14,
+      "start_formatted": "00:01:13.180",
+      "end_formatted": "00:01:19.140",
+      "text": "Line 8. Add a private variable representing the field that will be returned by the SOAP web service.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 73.18,
+          "end": 73.86,
+          "probability": 0.999
+        },
+        {
+          "word": "8.",
+          "start": 73.86,
+          "end": 74.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "Add",
+          "start": 74.4,
+          "end": 74.58,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 74.58,
+          "end": 74.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "private",
+          "start": 74.74,
+          "end": 75.04,
+          "probability": 0.999
+        },
+        {
+          "word": "variable",
+          "start": 75.04,
+          "end": 75.54,
+          "probability": 1.0
+        },
+        {
+          "word": "representing",
+          "start": 75.54,
+          "end": 76.2,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 76.2,
+          "end": 76.48,
+          "probability": 1.0
+        },
+        {
+          "word": "field",
+          "start": 76.48,
+          "end": 76.78,
+          "probability": 1.0
+        },
+        {
+          "word": "that",
+          "start": 76.78,
+          "end": 77.02,
+          "probability": 1.0
+        },
+        {
+          "word": "will",
+          "start": 77.02,
+          "end": 77.18,
+          "probability": 1.0
+        },
+        {
+          "word": "be",
+          "start": 77.18,
+          "end": 77.34,
+          "probability": 1.0
+        },
+        {
+          "word": "returned",
+          "start": 77.34,
+          "end": 77.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "by",
+          "start": 77.7,
+          "end": 77.94,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 77.94,
+          "end": 78.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "SOAP",
+          "start": 78.12,
+          "end": 78.42,
+          "probability": 0.8491
+        },
+        {
+          "word": "web",
+          "start": 78.42,
+          "end": 78.6,
+          "probability": 0.9424
+        },
+        {
+          "word": "service.",
+          "start": 78.6,
+          "end": 79.14,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 79.76,
+      "end": 84.6,
+      "start_formatted": "00:01:19.760",
+      "end_formatted": "00:01:24.600",
+      "text": "Create a new API Gosu class. Right-click on the user package.",
+      "words": [
+        {
+          "word": "Create",
+          "start": 79.76,
+          "end": 80.44,
+          "probability": 0.9956
+        },
+        {
+          "word": "a",
+          "start": 80.44,
+          "end": 80.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 80.62,
+          "end": 80.76,
+          "probability": 0.9941
+        },
+        {
+          "word": "API",
+          "start": 80.76,
+          "end": 81.34,
+          "probability": 0.9482
+        },
+        {
+          "word": "Gosu",
+          "start": 81.34,
+          "end": 81.78,
+          "probability": 0.6641
+        },
+        {
+          "word": "class.",
+          "start": 81.78,
+          "end": 82.18,
+          "probability": 0.9795
+        },
+        {
+          "word": "Right",
+          "start": 82.66,
+          "end": 83.2,
+          "probability": 0.998
+        },
+        {
+          "word": "-click",
+          "start": 83.2,
+          "end": 83.44,
+          "probability": 0.8652
+        },
+        {
+          "word": "on",
+          "start": 83.44,
+          "end": 83.68,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 83.68,
+          "end": 83.82,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 83.82,
+          "end": 84.12,
+          "probability": 0.8853
+        },
+        {
+          "word": "package.",
+          "start": 84.12,
+          "end": 84.6,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 85.36,
+      "end": 90.16,
+      "start_formatted": "00:01:25.360",
+      "end_formatted": "00:01:30.160",
+      "text": "Select New and then Gosu class. Type the name of the new Gosu class.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 85.36,
+          "end": 86.0,
+          "probability": 0.6738
+        },
+        {
+          "word": "New",
+          "start": 86.0,
+          "end": 86.26,
+          "probability": 0.5908
+        },
+        {
+          "word": "and",
+          "start": 86.26,
+          "end": 86.48,
+          "probability": 0.9414
+        },
+        {
+          "word": "then",
+          "start": 86.48,
+          "end": 86.66,
+          "probability": 0.9761
+        },
+        {
+          "word": "Gosu",
+          "start": 86.66,
+          "end": 87.0,
+          "probability": 0.0484
+        },
+        {
+          "word": "class.",
+          "start": 87.0,
+          "end": 87.4,
+          "probability": 0.564
+        },
+        {
+          "word": "Type",
+          "start": 87.84,
+          "end": 88.48,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 88.48,
+          "end": 88.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "name",
+          "start": 88.66,
+          "end": 88.88,
+          "probability": 0.957
+        },
+        {
+          "word": "of",
+          "start": 88.88,
+          "end": 89.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 89.04,
+          "end": 89.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "new",
+          "start": 89.18,
+          "end": 89.36,
+          "probability": 0.9609
+        },
+        {
+          "word": "Gosu",
+          "start": 89.36,
+          "end": 89.76,
+          "probability": 0.9912
+        },
+        {
+          "word": "class.",
+          "start": 89.76,
+          "end": 90.16,
+          "probability": 0.9531
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 91.62,
+      "end": 93.22,
+      "start_formatted": "00:01:31.620",
+      "end_formatted": "00:01:33.220",
+      "text": "Click OK to save.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 91.62,
+          "end": 92.26,
+          "probability": 0.9883
+        },
+        {
+          "word": "OK",
+          "start": 92.26,
+          "end": 92.58,
+          "probability": 0.7949
+        },
+        {
+          "word": "to",
+          "start": 92.58,
+          "end": 92.9,
+          "probability": 0.9937
+        },
+        {
+          "word": "save.",
+          "start": 92.9,
+          "end": 93.22,
+          "probability": 0.8696
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 93.98,
+      "end": 98.72,
+      "start_formatted": "00:01:33.980",
+      "end_formatted": "00:01:38.720",
+      "text": "The Gosu class shell is created. Enter code to implement the requirements.",
+      "words": [
+        {
+          "word": "The",
+          "start": 93.98,
+          "end": 94.5,
+          "probability": 0.9814
+        },
+        {
+          "word": "Gosu",
+          "start": 94.5,
+          "end": 94.88,
+          "probability": 0.9937
+        },
+        {
+          "word": "class",
+          "start": 94.88,
+          "end": 95.14,
+          "probability": 0.8867
+        },
+        {
+          "word": "shell",
+          "start": 95.14,
+          "end": 95.46,
+          "probability": 0.9614
+        },
+        {
+          "word": "is",
+          "start": 95.46,
+          "end": 95.68,
+          "probability": 0.999
+        },
+        {
+          "word": "created.",
+          "start": 95.68,
+          "end": 96.18,
+          "probability": 0.998
+        },
+        {
+          "word": "Enter",
+          "start": 96.46,
+          "end": 96.88,
+          "probability": 0.9883
+        },
+        {
+          "word": "code",
+          "start": 96.88,
+          "end": 97.22,
+          "probability": 0.9629
+        },
+        {
+          "word": "to",
+          "start": 97.22,
+          "end": 97.4,
+          "probability": 0.998
+        },
+        {
+          "word": "implement",
+          "start": 97.4,
+          "end": 97.82,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 97.82,
+          "end": 98.06,
+          "probability": 0.998
+        },
+        {
+          "word": "requirements.",
+          "start": 98.06,
+          "end": 98.72,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 99.5,
+      "end": 106.36,
+      "start_formatted": "00:01:39.500",
+      "end_formatted": "00:01:46.360",
+      "text": "Examine the code. Line 10. Required annotation to declare the class as implementing a SOAP web service.",
+      "words": [
+        {
+          "word": "Examine",
+          "start": 99.5,
+          "end": 100.14,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 100.14,
+          "end": 100.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "code.",
+          "start": 100.24,
+          "end": 100.6,
+          "probability": 0.9292
+        },
+        {
+          "word": "Line",
+          "start": 101.32,
+          "end": 101.58,
+          "probability": 0.9751
+        },
+        {
+          "word": "10.",
+          "start": 101.58,
+          "end": 101.9,
+          "probability": 0.9653
+        },
+        {
+          "word": "Required",
+          "start": 102.12,
+          "end": 102.6,
+          "probability": 0.9858
+        },
+        {
+          "word": "annotation",
+          "start": 102.6,
+          "end": 102.92,
+          "probability": 0.9824
+        },
+        {
+          "word": "to",
+          "start": 102.92,
+          "end": 103.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "declare",
+          "start": 103.42,
+          "end": 103.78,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 103.78,
+          "end": 104.02,
+          "probability": 0.999
+        },
+        {
+          "word": "class",
+          "start": 104.02,
+          "end": 104.32,
+          "probability": 0.9902
+        },
+        {
+          "word": "as",
+          "start": 104.32,
+          "end": 104.6,
+          "probability": 0.9956
+        },
+        {
+          "word": "implementing",
+          "start": 104.6,
+          "end": 105.08,
+          "probability": 0.9785
+        },
+        {
+          "word": "a",
+          "start": 105.08,
+          "end": 105.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "SOAP",
+          "start": 105.4,
+          "end": 105.66,
+          "probability": 0.8115
+        },
+        {
+          "word": "web",
+          "start": 105.66,
+          "end": 105.82,
+          "probability": 0.7188
+        },
+        {
+          "word": "service.",
+          "start": 105.82,
+          "end": 106.36,
+          "probability": 0.9878
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 106.36,
+      "end": 110.5,
+      "start_formatted": "00:01:46.360",
+      "end_formatted": "00:01:50.500",
+      "text": "Line 11 to 12. Added optional annotations.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 106.36,
+          "end": 107.64,
+          "probability": 0.0051
+        },
+        {
+          "word": "11",
+          "start": 107.64,
+          "end": 108.02,
+          "probability": 0.8022
+        },
+        {
+          "word": "to",
+          "start": 108.02,
+          "end": 108.24,
+          "probability": 0.3069
+        },
+        {
+          "word": "12.",
+          "start": 108.24,
+          "end": 108.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "Added",
+          "start": 108.9,
+          "end": 109.22,
+          "probability": 0.9131
+        },
+        {
+          "word": "optional",
+          "start": 109.22,
+          "end": 109.58,
+          "probability": 0.7236
+        },
+        {
+          "word": "annotations.",
+          "start": 109.58,
+          "end": 110.5,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 111.14,
+      "end": 119.02,
+      "start_formatted": "00:01:51.140",
+      "end_formatted": "00:01:59.020",
+      "text": "Lines 15 to 27. Define the getUserInfo method requiring two arguments and returning the user info object.",
+      "words": [
+        {
+          "word": "Lines",
+          "start": 111.14,
+          "end": 111.8,
+          "probability": 0.6123
+        },
+        {
+          "word": "15",
+          "start": 111.8,
+          "end": 112.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 112.28,
+          "end": 112.54,
+          "probability": 0.999
+        },
+        {
+          "word": "27.",
+          "start": 112.54,
+          "end": 113.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "Define",
+          "start": 113.52,
+          "end": 114.08,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 114.08,
+          "end": 114.22,
+          "probability": 0.999
+        },
+        {
+          "word": "getUserInfo",
+          "start": 114.22,
+          "end": 115.12,
+          "probability": 0.8735
+        },
+        {
+          "word": "method",
+          "start": 115.12,
+          "end": 115.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "requiring",
+          "start": 115.48,
+          "end": 116.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "two",
+          "start": 116.04,
+          "end": 116.34,
+          "probability": 0.877
+        },
+        {
+          "word": "arguments",
+          "start": 116.34,
+          "end": 116.9,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 116.9,
+          "end": 117.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "returning",
+          "start": 117.22,
+          "end": 117.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 117.62,
+          "end": 117.84,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 117.84,
+          "end": 118.16,
+          "probability": 0.7168
+        },
+        {
+          "word": "info",
+          "start": 118.16,
+          "end": 118.5,
+          "probability": 0.2277
+        },
+        {
+          "word": "object.",
+          "start": 118.5,
+          "end": 119.02,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 119.72,
+      "end": 125.36,
+      "start_formatted": "00:01:59.720",
+      "end_formatted": "00:02:05.360",
+      "text": "Line 17 to 21. A query joining two entities, user and user contact.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 119.72,
+          "end": 120.38,
+          "probability": 0.687
+        },
+        {
+          "word": "17",
+          "start": 120.38,
+          "end": 120.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 120.9,
+          "end": 121.22,
+          "probability": 1.0
+        },
+        {
+          "word": "21.",
+          "start": 121.22,
+          "end": 121.78,
+          "probability": 0.999
+        },
+        {
+          "word": "A",
+          "start": 122.1,
+          "end": 122.26,
+          "probability": 0.9946
+        },
+        {
+          "word": "query",
+          "start": 122.26,
+          "end": 122.58,
+          "probability": 0.9941
+        },
+        {
+          "word": "joining",
+          "start": 122.58,
+          "end": 122.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "two",
+          "start": 122.98,
+          "end": 123.3,
+          "probability": 0.999
+        },
+        {
+          "word": "entities,",
+          "start": 123.3,
+          "end": 123.8,
+          "probability": 0.998
+        },
+        {
+          "word": "user",
+          "start": 124.06,
+          "end": 124.46,
+          "probability": 0.917
+        },
+        {
+          "word": "and",
+          "start": 124.46,
+          "end": 124.66,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 124.66,
+          "end": 124.96,
+          "probability": 0.9917
+        },
+        {
+          "word": "contact.",
+          "start": 124.96,
+          "end": 125.36,
+          "probability": 0.6855
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 125.74,
+      "end": 132.34,
+      "start_formatted": "00:02:05.740",
+      "end_formatted": "00:02:12.340",
+      "text": "The foreign key name is contact. That is why in line 18, contact is used as the join parameter.",
+      "words": [
+        {
+          "word": "The",
+          "start": 125.74,
+          "end": 126.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "foreign",
+          "start": 126.4,
+          "end": 126.8,
+          "probability": 0.9976
+        },
+        {
+          "word": "key",
+          "start": 126.8,
+          "end": 127.06,
+          "probability": 0.998
+        },
+        {
+          "word": "name",
+          "start": 127.06,
+          "end": 127.36,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 127.36,
+          "end": 127.54,
+          "probability": 1.0
+        },
+        {
+          "word": "contact.",
+          "start": 127.54,
+          "end": 128.04,
+          "probability": 0.9385
+        },
+        {
+          "word": "That",
+          "start": 128.36,
+          "end": 128.58,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 128.58,
+          "end": 128.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "why",
+          "start": 128.74,
+          "end": 128.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "in",
+          "start": 128.96,
+          "end": 129.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "line",
+          "start": 129.2,
+          "end": 129.46,
+          "probability": 0.9805
+        },
+        {
+          "word": "18,",
+          "start": 129.46,
+          "end": 129.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "contact",
+          "start": 130.4,
+          "end": 130.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 130.74,
+          "end": 131.06,
+          "probability": 1.0
+        },
+        {
+          "word": "used",
+          "start": 131.06,
+          "end": 131.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 131.32,
+          "end": 131.5,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 131.5,
+          "end": 131.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "join",
+          "start": 131.62,
+          "end": 131.86,
+          "probability": 0.9819
+        },
+        {
+          "word": "parameter.",
+          "start": 131.86,
+          "end": 132.34,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 132.34,
+      "end": 137.68,
+      "start_formatted": "00:02:12.340",
+      "end_formatted": "00:02:17.680",
+      "text": "Line 23 to 24. Create the return user info object.",
+      "words": [
+        {
+          "word": "Line",
+          "start": 132.34,
+          "end": 133.64,
+          "probability": 0.0161
+        },
+        {
+          "word": "23",
+          "start": 133.64,
+          "end": 134.36,
+          "probability": 0.9482
+        },
+        {
+          "word": "to",
+          "start": 134.36,
+          "end": 134.66,
+          "probability": 0.3994
+        },
+        {
+          "word": "24.",
+          "start": 134.66,
+          "end": 135.22,
+          "probability": 0.9946
+        },
+        {
+          "word": "Create",
+          "start": 135.52,
+          "end": 135.86,
+          "probability": 0.9058
+        },
+        {
+          "word": "the",
+          "start": 135.86,
+          "end": 136.02,
+          "probability": 0.9907
+        },
+        {
+          "word": "return",
+          "start": 136.02,
+          "end": 136.32,
+          "probability": 0.7676
+        },
+        {
+          "word": "user",
+          "start": 136.32,
+          "end": 136.7,
+          "probability": 0.7002
+        },
+        {
+          "word": "info",
+          "start": 136.7,
+          "end": 137.2,
+          "probability": 0.918
+        },
+        {
+          "word": "object.",
+          "start": 137.2,
+          "end": 137.68,
+          "probability": 0.9893
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 138.34,
+      "end": 144.92,
+      "start_formatted": "00:02:18.340",
+      "end_formatted": "00:02:24.920",
+      "text": "Since a new package and Gosu classes were created, a server restart is required to deploy the resources.",
+      "words": [
+        {
+          "word": "Since",
+          "start": 138.34,
+          "end": 139.02,
+          "probability": 0.9829
+        },
+        {
+          "word": "a",
+          "start": 139.02,
+          "end": 139.2,
+          "probability": 0.9912
+        },
+        {
+          "word": "new",
+          "start": 139.2,
+          "end": 139.36,
+          "probability": 0.998
+        },
+        {
+          "word": "package",
+          "start": 139.36,
+          "end": 139.76,
+          "probability": 0.9937
+        },
+        {
+          "word": "and",
+          "start": 139.76,
+          "end": 140.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "Gosu",
+          "start": 140.06,
+          "end": 140.4,
+          "probability": 0.0695
+        },
+        {
+          "word": "classes",
+          "start": 140.4,
+          "end": 140.78,
+          "probability": 0.9863
+        },
+        {
+          "word": "were",
+          "start": 140.78,
+          "end": 141.1,
+          "probability": 0.9951
+        },
+        {
+          "word": "created,",
+          "start": 141.1,
+          "end": 141.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 141.76,
+          "end": 141.98,
+          "probability": 0.9946
+        },
+        {
+          "word": "server",
+          "start": 141.98,
+          "end": 142.26,
+          "probability": 0.9526
+        },
+        {
+          "word": "restart",
+          "start": 142.26,
+          "end": 142.68,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 142.68,
+          "end": 143.04,
+          "probability": 0.999
+        },
+        {
+          "word": "required",
+          "start": 143.04,
+          "end": 143.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 143.48,
+          "end": 143.7,
+          "probability": 0.999
+        },
+        {
+          "word": "deploy",
+          "start": 143.7,
+          "end": 144.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 144.12,
+          "end": 144.38,
+          "probability": 0.9985
+        },
+        {
+          "word": "resources.",
+          "start": 144.38,
+          "end": 144.92,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 145.5,
+      "end": 147.4,
+      "start_formatted": "00:02:25.500",
+      "end_formatted": "00:02:27.400",
+      "text": "Click the stop server icon.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 145.5,
+          "end": 146.1,
+          "probability": 0.9834
+        },
+        {
+          "word": "the",
+          "start": 146.1,
+          "end": 146.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "stop",
+          "start": 146.3,
+          "end": 146.56,
+          "probability": 0.5977
+        },
+        {
+          "word": "server",
+          "start": 146.56,
+          "end": 146.88,
+          "probability": 0.9858
+        },
+        {
+          "word": "icon.",
+          "start": 146.88,
+          "end": 147.4,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 147.96,
+      "end": 151.02,
+      "start_formatted": "00:02:27.960",
+      "end_formatted": "00:02:31.020",
+      "text": "Click the debug server icon to start the server.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 147.96,
+          "end": 148.6,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 148.6,
+          "end": 148.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "debug",
+          "start": 148.78,
+          "end": 149.1,
+          "probability": 0.9888
+        },
+        {
+          "word": "server",
+          "start": 149.1,
+          "end": 149.52,
+          "probability": 0.999
+        },
+        {
+          "word": "icon",
+          "start": 149.52,
+          "end": 149.98,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 149.98,
+          "end": 150.18,
+          "probability": 0.9966
+        },
+        {
+          "word": "start",
+          "start": 150.18,
+          "end": 150.48,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 150.48,
+          "end": 150.68,
+          "probability": 0.999
+        },
+        {
+          "word": "server.",
+          "start": 150.68,
+          "end": 151.02,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 151.52,
+      "end": 158.06,
+      "start_formatted": "00:02:31.520",
+      "end_formatted": "00:02:38.060",
+      "text": "In order to test from an external system, the SOAP web service WSDL URL must be determined.",
+      "words": [
+        {
+          "word": "In",
+          "start": 151.52,
+          "end": 152.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "order",
+          "start": 152.14,
+          "end": 152.4,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 152.4,
+          "end": 152.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "test",
+          "start": 152.62,
+          "end": 152.9,
+          "probability": 0.998
+        },
+        {
+          "word": "from",
+          "start": 152.9,
+          "end": 153.08,
+          "probability": 0.998
+        },
+        {
+          "word": "an",
+          "start": 153.08,
+          "end": 153.26,
+          "probability": 0.999
+        },
+        {
+          "word": "external",
+          "start": 153.26,
+          "end": 153.74,
+          "probability": 0.999
+        },
+        {
+          "word": "system,",
+          "start": 153.74,
+          "end": 154.24,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 154.5,
+          "end": 154.7,
+          "probability": 0.9941
+        },
+        {
+          "word": "SOAP",
+          "start": 154.7,
+          "end": 155.0,
+          "probability": 0.6567
+        },
+        {
+          "word": "web",
+          "start": 155.0,
+          "end": 155.18,
+          "probability": 0.6387
+        },
+        {
+          "word": "service",
+          "start": 155.18,
+          "end": 155.64,
+          "probability": 0.978
+        },
+        {
+          "word": "WSDL",
+          "start": 155.64,
+          "end": 156.66,
+          "probability": 0.96
+        },
+        {
+          "word": "URL",
+          "start": 156.66,
+          "end": 157.06,
+          "probability": 0.9141
+        },
+        {
+          "word": "must",
+          "start": 157.06,
+          "end": 157.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "be",
+          "start": 157.48,
+          "end": 157.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "determined.",
+          "start": 157.68,
+          "end": 158.06,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 158.06,
+      "end": 167.62,
+      "start_formatted": "00:02:38.060",
+      "end_formatted": "00:02:47.620",
+      "text": "Open a web browser and enter the following URL, localhost colon 8880 slash AB slash WS to view local SOAP resources.",
+      "words": [
+        {
+          "word": "Open",
+          "start": 158.06,
+          "end": 159.22,
+          "probability": 0.9854
+        },
+        {
+          "word": "a",
+          "start": 159.22,
+          "end": 159.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "web",
+          "start": 159.38,
+          "end": 159.58,
+          "probability": 0.9771
+        },
+        {
+          "word": "browser",
+          "start": 159.58,
+          "end": 159.92,
+          "probability": 0.9976
+        },
+        {
+          "word": "and",
+          "start": 159.92,
+          "end": 160.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "enter",
+          "start": 160.28,
+          "end": 160.54,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 160.54,
+          "end": 160.66,
+          "probability": 1.0
+        },
+        {
+          "word": "following",
+          "start": 160.66,
+          "end": 161.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "URL,",
+          "start": 161.04,
+          "end": 161.7,
+          "probability": 0.9883
+        },
+        {
+          "word": "localhost",
+          "start": 161.94,
+          "end": 162.7,
+          "probability": 0.9741
+        },
+        {
+          "word": "colon",
+          "start": 162.7,
+          "end": 163.06,
+          "probability": 0.4539
+        },
+        {
+          "word": "8880",
+          "start": 163.06,
+          "end": 163.96,
+          "probability": 0.9868
+        },
+        {
+          "word": "slash",
+          "start": 163.96,
+          "end": 164.32,
+          "probability": 0.9922
+        },
+        {
+          "word": "AB",
+          "start": 164.32,
+          "end": 164.74,
+          "probability": 0.3125
+        },
+        {
+          "word": "slash",
+          "start": 164.74,
+          "end": 165.24,
+          "probability": 0.9951
+        },
+        {
+          "word": "WS",
+          "start": 165.24,
+          "end": 165.92,
+          "probability": 0.9375
+        },
+        {
+          "word": "to",
+          "start": 165.92,
+          "end": 166.1,
+          "probability": 0.9907
+        },
+        {
+          "word": "view",
+          "start": 166.1,
+          "end": 166.36,
+          "probability": 0.9976
+        },
+        {
+          "word": "local",
+          "start": 166.36,
+          "end": 166.76,
+          "probability": 0.9702
+        },
+        {
+          "word": "SOAP",
+          "start": 166.76,
+          "end": 167.14,
+          "probability": 0.8369
+        },
+        {
+          "word": "resources.",
+          "start": 167.14,
+          "end": 167.62,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 168.34,
+      "end": 174.36,
+      "start_formatted": "00:02:48.340",
+      "end_formatted": "00:02:54.360",
+      "text": "Expand the document slash literal web services links until the user API resource is found.",
+      "words": [
+        {
+          "word": "Expand",
+          "start": 168.34,
+          "end": 169.1,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 169.1,
+          "end": 169.22,
+          "probability": 1.0
+        },
+        {
+          "word": "document",
+          "start": 169.22,
+          "end": 169.66,
+          "probability": 0.9668
+        },
+        {
+          "word": "slash",
+          "start": 169.66,
+          "end": 170.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "literal",
+          "start": 170.14,
+          "end": 170.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "web",
+          "start": 170.52,
+          "end": 170.92,
+          "probability": 0.9546
+        },
+        {
+          "word": "services",
+          "start": 170.92,
+          "end": 171.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "links",
+          "start": 171.42,
+          "end": 171.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "until",
+          "start": 171.88,
+          "end": 172.22,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 172.22,
+          "end": 172.46,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 172.46,
+          "end": 172.78,
+          "probability": 0.7827
+        },
+        {
+          "word": "API",
+          "start": 172.78,
+          "end": 173.16,
+          "probability": 0.9897
+        },
+        {
+          "word": "resource",
+          "start": 173.16,
+          "end": 173.68,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 173.68,
+          "end": 174.0,
+          "probability": 1.0
+        },
+        {
+          "word": "found.",
+          "start": 174.0,
+          "end": 174.36,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 174.76,
+      "end": 176.78,
+      "start_formatted": "00:02:54.760",
+      "end_formatted": "00:02:56.780",
+      "text": "Click the user API link.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 174.76,
+          "end": 175.36,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 175.36,
+          "end": 175.56,
+          "probability": 1.0
+        },
+        {
+          "word": "user",
+          "start": 175.56,
+          "end": 175.9,
+          "probability": 0.9609
+        },
+        {
+          "word": "API",
+          "start": 175.9,
+          "end": 176.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "link.",
+          "start": 176.32,
+          "end": 176.78,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 177.16,
+      "end": 181.26,
+      "start_formatted": "00:02:57.160",
+      "end_formatted": "00:03:01.260",
+      "text": "Copy the WSDL URL from the browser address field.",
+      "words": [
+        {
+          "word": "Copy",
+          "start": 177.16,
+          "end": 177.92,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 177.92,
+          "end": 178.08,
+          "probability": 1.0
+        },
+        {
+          "word": "WSDL",
+          "start": 178.08,
+          "end": 179.08,
+          "probability": 0.9756
+        },
+        {
+          "word": "URL",
+          "start": 179.08,
+          "end": 179.42,
+          "probability": 0.9912
+        },
+        {
+          "word": "from",
+          "start": 179.42,
+          "end": 179.86,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 179.86,
+          "end": 180.0,
+          "probability": 1.0
+        },
+        {
+          "word": "browser",
+          "start": 180.0,
+          "end": 180.4,
+          "probability": 0.9922
+        },
+        {
+          "word": "address",
+          "start": 180.4,
+          "end": 180.78,
+          "probability": 1.0
+        },
+        {
+          "word": "field.",
+          "start": 180.78,
+          "end": 181.26,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 181.72,
+      "end": 184.9,
+      "start_formatted": "00:03:01.720",
+      "end_formatted": "00:03:04.900",
+      "text": "Use SOAP UI to test the new SOAP web service.",
+      "words": [
+        {
+          "word": "Use",
+          "start": 181.72,
+          "end": 182.38,
+          "probability": 0.9995
+        },
+        {
+          "word": "SOAP",
+          "start": 182.38,
+          "end": 182.64,
+          "probability": 0.9932
+        },
+        {
+          "word": "UI",
+          "start": 182.64,
+          "end": 182.84,
+          "probability": 0.9375
+        },
+        {
+          "word": "to",
+          "start": 182.84,
+          "end": 183.24,
+          "probability": 1.0
+        },
+        {
+          "word": "test",
+          "start": 183.24,
+          "end": 183.54,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 183.54,
+          "end": 183.7,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 183.7,
+          "end": 183.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "SOAP",
+          "start": 183.88,
+          "end": 184.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "web",
+          "start": 184.22,
+          "end": 184.4,
+          "probability": 0.9834
+        },
+        {
+          "word": "service.",
+          "start": 184.4,
+          "end": 184.9,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 184.9,
+      "end": 187.34,
+      "start_formatted": "00:03:04.900",
+      "end_formatted": "00:03:07.340",
+      "text": "Click file from the menu bar.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 184.9,
+          "end": 185.98,
+          "probability": 0.8701
+        },
+        {
+          "word": "file",
+          "start": 185.98,
+          "end": 186.34,
+          "probability": 0.3508
+        },
+        {
+          "word": "from",
+          "start": 186.34,
+          "end": 186.58,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 186.58,
+          "end": 186.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "menu",
+          "start": 186.72,
+          "end": 186.94,
+          "probability": 0.9668
+        },
+        {
+          "word": "bar.",
+          "start": 186.94,
+          "end": 187.34,
+          "probability": 0.9956
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 187.76,
+      "end": 189.64,
+      "start_formatted": "00:03:07.760",
+      "end_formatted": "00:03:09.640",
+      "text": "Select new SOAP project.",
+      "words": [
+        {
+          "word": "Select",
+          "start": 187.76,
+          "end": 188.6,
+          "probability": 0.96
+        },
+        {
+          "word": "new",
+          "start": 188.6,
+          "end": 188.82,
+          "probability": 0.8853
+        },
+        {
+          "word": "SOAP",
+          "start": 188.82,
+          "end": 189.2,
+          "probability": 0.9258
+        },
+        {
+          "word": "project.",
+          "start": 189.2,
+          "end": 189.64,
+          "probability": 0.9785
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 190.9,
+      "end": 192.24,
+      "start_formatted": "00:03:10.900",
+      "end_formatted": "00:03:12.240",
+      "text": "Type the project name.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 190.78,
+          "end": 191.2,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 191.2,
+          "end": 191.38,
+          "probability": 0.998
+        },
+        {
+          "word": "project",
+          "start": 191.38,
+          "end": 191.84,
+          "probability": 0.9849
+        },
+        {
+          "word": "name.",
+          "start": 191.84,
+          "end": 192.24,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 194.58,
+      "end": 197.22,
+      "start_formatted": "00:03:14.580",
+      "end_formatted": "00:03:17.220",
+      "text": "Type the URL of the initial WSDL.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 194.46,
+          "end": 194.88,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 194.88,
+          "end": 195.06,
+          "probability": 0.999
+        },
+        {
+          "word": "URL",
+          "start": 195.06,
+          "end": 195.4,
+          "probability": 0.8657
+        },
+        {
+          "word": "of",
+          "start": 195.4,
+          "end": 195.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 195.74,
+          "end": 195.86,
+          "probability": 0.999
+        },
+        {
+          "word": "initial",
+          "start": 195.86,
+          "end": 196.22,
+          "probability": 0.9883
+        },
+        {
+          "word": "WSDL.",
+          "start": 196.22,
+          "end": 197.22,
+          "probability": 0.9502
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 197.64,
+      "end": 199.24,
+      "start_formatted": "00:03:17.640",
+      "end_formatted": "00:03:19.240",
+      "text": "Click OK to save.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 197.64,
+          "end": 198.28,
+          "probability": 0.9966
+        },
+        {
+          "word": "OK",
+          "start": 198.28,
+          "end": 198.6,
+          "probability": 0.6445
+        },
+        {
+          "word": "to",
+          "start": 198.6,
+          "end": 198.92,
+          "probability": 0.999
+        },
+        {
+          "word": "save.",
+          "start": 198.92,
+          "end": 199.24,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 200.16,
+      "end": 202.36,
+      "start_formatted": "00:03:20.160",
+      "end_formatted": "00:03:22.360",
+      "text": "Double click SOAP request 1.",
+      "words": [
+        {
+          "word": "Double",
+          "start": 200.16,
+          "end": 200.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "click",
+          "start": 200.9,
+          "end": 201.22,
+          "probability": 0.7368
+        },
+        {
+          "word": "SOAP",
+          "start": 201.22,
+          "end": 201.68,
+          "probability": 0.9751
+        },
+        {
+          "word": "request",
+          "start": 201.68,
+          "end": 202.0,
+          "probability": 0.8174
+        },
+        {
+          "word": "1.",
+          "start": 202.0,
+          "end": 202.36,
+          "probability": 0.7266
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 202.92,
+      "end": 205.98,
+      "start_formatted": "00:03:22.920",
+      "end_formatted": "00:03:25.980",
+      "text": "Type the GW underscore locale value.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 202.92,
+          "end": 203.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 203.64,
+          "end": 203.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "GW",
+          "start": 203.82,
+          "end": 204.26,
+          "probability": 0.8857
+        },
+        {
+          "word": "underscore",
+          "start": 204.26,
+          "end": 204.86,
+          "probability": 0.7061
+        },
+        {
+          "word": "locale",
+          "start": 204.86,
+          "end": 205.58,
+          "probability": 0.9937
+        },
+        {
+          "word": "value.",
+          "start": 205.58,
+          "end": 205.98,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 206.5,
+      "end": 209.34,
+      "start_formatted": "00:03:26.500",
+      "end_formatted": "00:03:29.340",
+      "text": "Type the GW underscore language value.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 206.5,
+          "end": 207.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 207.14,
+          "end": 207.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "GW",
+          "start": 207.32,
+          "end": 207.72,
+          "probability": 0.9995
+        },
+        {
+          "word": "underscore",
+          "start": 207.72,
+          "end": 208.38,
+          "probability": 0.999
+        },
+        {
+          "word": "language",
+          "start": 208.38,
+          "end": 208.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "value.",
+          "start": 208.84,
+          "end": 209.34,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 209.88,
+      "end": 211.9,
+      "start_formatted": "00:03:29.880",
+      "end_formatted": "00:03:31.900",
+      "text": "Type SOAP username value.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 209.88,
+          "end": 210.52,
+          "probability": 0.998
+        },
+        {
+          "word": "SOAP",
+          "start": 210.52,
+          "end": 210.92,
+          "probability": 0.9922
+        },
+        {
+          "word": "username",
+          "start": 210.92,
+          "end": 211.3,
+          "probability": 0.9565
+        },
+        {
+          "word": "value.",
+          "start": 211.3,
+          "end": 211.9,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 211.9,
+      "end": 214.48,
+      "start_formatted": "00:03:31.900",
+      "end_formatted": "00:03:34.480",
+      "text": "Type SOAP password value.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 211.9,
+          "end": 213.14,
+          "probability": 0.7383
+        },
+        {
+          "word": "SOAP",
+          "start": 213.14,
+          "end": 213.56,
+          "probability": 0.9365
+        },
+        {
+          "word": "password",
+          "start": 213.56,
+          "end": 213.98,
+          "probability": 0.8086
+        },
+        {
+          "word": "value.",
+          "start": 213.98,
+          "end": 214.48,
+          "probability": 0.9463
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 214.86,
+      "end": 216.96,
+      "start_formatted": "00:03:34.860",
+      "end_formatted": "00:03:36.960",
+      "text": "Type user first name value.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 214.86,
+          "end": 215.54,
+          "probability": 0.9941
+        },
+        {
+          "word": "user",
+          "start": 215.54,
+          "end": 215.88,
+          "probability": 0.5352
+        },
+        {
+          "word": "first",
+          "start": 215.88,
+          "end": 216.22,
+          "probability": 0.9448
+        },
+        {
+          "word": "name",
+          "start": 216.22,
+          "end": 216.48,
+          "probability": 0.9746
+        },
+        {
+          "word": "value.",
+          "start": 216.48,
+          "end": 216.96,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 217.88,
+      "end": 220.1,
+      "start_formatted": "00:03:37.880",
+      "end_formatted": "00:03:40.100",
+      "text": "Type user last name value.",
+      "words": [
+        {
+          "word": "Type",
+          "start": 217.88,
+          "end": 218.64,
+          "probability": 0.9951
+        },
+        {
+          "word": "user",
+          "start": 218.64,
+          "end": 218.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "last",
+          "start": 218.98,
+          "end": 219.36,
+          "probability": 0.999
+        },
+        {
+          "word": "name",
+          "start": 219.36,
+          "end": 219.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "value.",
+          "start": 219.62,
+          "end": 220.1,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 221.1,
+      "end": 225.68,
+      "start_formatted": "00:03:41.100",
+      "end_formatted": "00:03:45.680",
+      "text": "Click the submit icon to submit request to specified endpoint URL.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 221.1,
+          "end": 221.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 221.78,
+          "end": 221.98,
+          "probability": 0.998
+        },
+        {
+          "word": "submit",
+          "start": 221.98,
+          "end": 222.26,
+          "probability": 0.7549
+        },
+        {
+          "word": "icon",
+          "start": 222.26,
+          "end": 222.74,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 222.74,
+          "end": 223.04,
+          "probability": 0.998
+        },
+        {
+          "word": "submit",
+          "start": 223.04,
+          "end": 223.38,
+          "probability": 0.9907
+        },
+        {
+          "word": "request",
+          "start": 223.38,
+          "end": 223.78,
+          "probability": 0.9878
+        },
+        {
+          "word": "to",
+          "start": 223.78,
+          "end": 223.96,
+          "probability": 0.9878
+        },
+        {
+          "word": "specified",
+          "start": 223.96,
+          "end": 224.52,
+          "probability": 0.9941
+        },
+        {
+          "word": "endpoint",
+          "start": 224.52,
+          "end": 224.98,
+          "probability": 0.8477
+        },
+        {
+          "word": "URL.",
+          "start": 224.98,
+          "end": 225.68,
+          "probability": 0.9253
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 226.3,
+      "end": 230.56,
+      "start_formatted": "00:03:46.300",
+      "end_formatted": "00:03:50.560",
+      "text": "The output shows that the vacation status for Bruce Baker is at work.",
+      "words": [
+        {
+          "word": "The",
+          "start": 226.3,
+          "end": 226.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "output",
+          "start": 226.96,
+          "end": 227.3,
+          "probability": 0.9976
+        },
+        {
+          "word": "shows",
+          "start": 227.3,
+          "end": 227.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 227.68,
+          "end": 227.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 227.92,
+          "end": 228.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "vacation",
+          "start": 228.04,
+          "end": 228.5,
+          "probability": 0.9512
+        },
+        {
+          "word": "status",
+          "start": 228.5,
+          "end": 228.96,
+          "probability": 0.999
+        },
+        {
+          "word": "for",
+          "start": 228.96,
+          "end": 229.24,
+          "probability": 0.999
+        },
+        {
+          "word": "Bruce",
+          "start": 229.24,
+          "end": 229.5,
+          "probability": 0.9766
+        },
+        {
+          "word": "Baker",
+          "start": 229.5,
+          "end": 229.84,
+          "probability": 0.9761
+        },
+        {
+          "word": "is",
+          "start": 229.84,
+          "end": 230.08,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 230.08,
+          "end": 230.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "work.",
+          "start": 230.22,
+          "end": 230.56,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 231.08,
+      "end": 233.74,
+      "start_formatted": "00:03:51.080",
+      "end_formatted": "00:03:53.740",
+      "text": "This ends the publishing SOAP web service demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 231.08,
+          "end": 231.52,
+          "probability": 0.9224
+        },
+        {
+          "word": "ends",
+          "start": 231.52,
+          "end": 231.74,
+          "probability": 0.8848
+        },
+        {
+          "word": "the",
+          "start": 231.74,
+          "end": 231.92,
+          "probability": 0.9956
+        },
+        {
+          "word": "publishing",
+          "start": 231.92,
+          "end": 232.34,
+          "probability": 0.8501
+        },
+        {
+          "word": "SOAP",
+          "start": 232.34,
+          "end": 232.86,
+          "probability": 0.5405
+        },
+        {
+          "word": "web",
+          "start": 232.86,
+          "end": 233.04,
+          "probability": 0.8174
+        },
+        {
+          "word": "service",
+          "start": 233.04,
+          "end": 233.52,
+          "probability": 0.98
+        },
+        {
+          "word": "demonstration.",
+          "start": 233.52,
+          "end": 233.74,
+          "probability": 0.9932
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 233.74,
+      "end": 233.8,
+      "start_formatted": "00:03:53.740",
+      "end_formatted": "00:03:53.800",
+      "text": "This ends the publishing SOAP web service demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 233.74,
+          "end": 233.74,
+          "probability": 0.0429
+        },
+        {
+          "word": "ends",
+          "start": 233.74,
+          "end": 233.74,
+          "probability": 0.813
+        },
+        {
+          "word": "the",
+          "start": 233.74,
+          "end": 233.74,
+          "probability": 0.9863
+        },
+        {
+          "word": "publishing",
+          "start": 233.74,
+          "end": 233.74,
+          "probability": 0.9453
+        },
+        {
+          "word": "SOAP",
+          "start": 233.74,
+          "end": 233.74,
+          "probability": 0.9863
+        },
+        {
+          "word": "web",
+          "start": 233.74,
+          "end": 233.74,
+          "probability": 0.9707
+        },
+        {
+          "word": "service",
+          "start": 233.74,
+          "end": 233.74,
+          "probability": 0.9624
+        },
+        {
+          "word": "demonstration.",
+          "start": 233.74,
+          "end": 233.8,
+          "probability": 0.9844
+        }
+      ]
+    }
+  ]
+}

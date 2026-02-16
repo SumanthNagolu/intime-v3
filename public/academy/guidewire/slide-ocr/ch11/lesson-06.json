@@ -1,0 +1,379 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-06",
+    "slide_count": 33,
+    "slides_with_text": 31,
+    "total_words": 2358,
+    "avg_confidence": 85.28,
+    "processing_time_seconds": 16.11,
+    "extracted_at": "2026-02-15T18:20:12.209904"
+  },
+  "full_text": "XML Modeler and Strongly Typed XML\n\nLesson\nobjectives ¢ Describe key XML concepts— XML elements,\n\nXSD, and Serialization\n\n¢ Import and export strongly typed XML using\nGosu and an XSD\n\n« Use XML models to extract data in XML\nformat\n\n« Use XML Modeler to create XML models\n\nXML Review\n\n| XML: Review\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n\n636\n\n<?xml version=\"1.0\"?>\n\n<config xmlns=\"http://guidewire.com/config\">\n<param name=\"CurrencyURL\" value=\"\">http://acme.x.com</param>\n<database name=\"TADatabase\" dbtype=\"h2\" autoupgrade=\"true\">\n<param name=\"jdbcURL\" value=\"jdbce:h2:file:ta/db/ta\"/>\n<param name=\"jdbcURLtest\" value=\"jdbc:h2:file:ta/db/test\"/>\n<param name=\"stmtPool.enabled\" value=\" false\"/>\n</database>\n<security sessiontimeoutsecs=\"10800\"/>\n\n</config>\n\nExtensible Markup Language (XML) is a hierarchy\ndata structure designed to transport and store data\n\n| XML elements\n\nOI HUVsrwW\n\n10\n\n<param name=\"CurrencyURL\" value=\"\">http://acme.x.com</param>\n<database name=\"TADatabase\" dbtype=\"h2\" autoupgrade=\"true\">\n<param name=\"jdbcURL\" value=\"jdbc:h2:file:ta/db/ta\"/>\n<param name=\"jdbcURLtest\" value=\"jdbc:h2:file:ta/db/test\"/>\n<param name=\"stmtPool.enabled\" value=\" false\"/>\n</database>\n\n<security sessiontimeoutsecs=\"10800\"/>\n\nXML elements have:\n\n« Acase sensitive name\n\n* An opening and closing declaration\n\n* One or more optional attribute name/value pairs\n\nContents can be Empty, have Text, and/or Child elements\n¢ Line 3 is Text\n\n¢ Line 4 is Children (5-7)\n\n* Line 10 is Empty\n\n| XML element class\n\n1\n2\n3\n4\n\n<?xml version=\"1.0\"?>\n\n<config xmlns=\"http://guidewire.com/config\">\n<param name=\"CurrencyURL\" value=\"\">http://acme.x.com</param>\n<database name=\"TADatabase\" dbtype=\"h2\" autoupgrade=\"true\">\n\nv\n\n<config...>\n\n<param...>\n\n<database...>\n\nRepresent elements from XML\nImport XML\n\nGet information about each\nelement\n\nCreate and modify elements\nExport XML\n\n| XSD (XML Schema Definition) G\n\n1\n2\n\n4\n5\n6\n8\n\n12\n13\n14\n90\n\n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<xsd:schema xmlns:xsd=\"http: //www.w3.org/2001/XMLSchema\" ... >\n<xsd:element name=\"config\" >\n<xsd:complexType>\n<xsd:choice minOccurs=\"1\" maxOccurs=\"unbounded\">\n<xsd:element name=\"param\"\nminOccurs=\"0\" maxOccurs=\"unbounded\"/>\n</xsd:choice>\n</xsd:complexType>\n</xsd:element>\n<xsd:schema/>\n\nAn XSD (XML Schema Definition) describes\n\nthe structure for elements in one or more\n\nXML documents\n\n¢ Informs how an XML document can be structured ell\n¢ Used to validate the structure of a document\n\n| Serialization G\n\nTOU 01010010 TN\n11001001\n——_—| ——_—\n\nfile.xml 01100100\n\nfile-clone.xml\n\n¢ XML serialization converts XML elements into a sequence of bits to be later\ndeserialized\n\n¢ Serialization logic can be complex for certain data types such as hexadecimal\nvalues or images\n\n| Untyped and strongly typed XML G\n— Untyped = Strongly typed\n\nIf no XSD exists, then the parsed\n\nIf an existing XSD validates and\nXML is untyped\n\ninforms the XML, then the parsed\nXML is strongly typed\n\nIe)\n\n| |\nxso <>,\n\n| Strongly Typed XML G\n\nmy cy\nfile.xsd file.xml\n\n¢ [fan existing XSD validates and informs the XML, then the parsed XML is strongly\ntyped\n* XML is validated against the XSD during import and export\n* XSD must be known to Guidewire\n* XSD parses the XML document\n\n| Making an XSD available to Guidewire Gi\n\n. : : [ilProject |\nconfiguration.gsre Soa vation\n« Put the XSD file in any subdirectory of gsrc & Epconfig\n&@- Ei deploy\n¢ Subdirectories become part of the package name - Diete\n@- Bgsre\n¢ There is no way to inject an XSD into the El acme\ntype system at run time ° ames\n* The XSD must be known to the application during Oe es\nstartup be\n. . Pry @- [y TestesP\nVarious definitions cause Gosu ae | N\nto create new types i) [Ey base XSD\n= FE] demo\n+ <xsd:element /> bpd el\n* <xsd:complexType /> SE\n\n* <xsd:attribute />\n\n| Parsing a strongly typed XML file\n\nPaul Monroe [Sj\n\nHas Children? = false\nHas Child Elements? = true\n\n* Syntax to call the parse method on the XSD type: i sy ane ta conade cr\n\n2121 W. Camden Drive Suite 17 Los Angeles CA\n\n* xsdFileName.rootElement.parse (xmlToParse) A\n\n+ xsdFileName: fully qualified name\n+ rootElement: the XSD root element\nDeclared elements and\n\nattributes in the XSD are\navailable as Gosu types\n\n+ Use dot notation to reference the\nelement types and attributes\n\nuses java.io.File\nuses demo.ta.xml.policyholder.PolicyHolder\n\nvar file = new File(\"./training/policyholder.xml\")\nvar xml = PolicyHolder.parse(file)\n\nprint (xml. FullName +\n+ \"Has Children? = \" + xml.Children + \"\\n\"\n+ \"Has Child Elements? = \" + xml.$Children.HasElements\n\nss entry\nvar addresses = xml.AllAddresses.Entry\naddresses.each(\\addr -> print (addr.AddressLine1\n+ (addr.AddressLine2 == null 2? \"\" : \" \" + addr.AddressLine2)\n+\" \" + addr.city\n+\" \" + addr. State)\n\n| Generate XML using an XSD Gi\n\n¢ Syntax to use an XSD to generate XML:\n\n1 uses gw.api.database.Query\n2 uses gw.api.database.Relop\n\n« xsdFileName: fully qualified name 3 uses gw.xml.XmlSerializationOptions\n—> < uses trainingapp.demo.xsd.policyholder.PolicyHolder\n\n* new xsdFileName.rootElement\n\n+ rootElement: the XSD root element\nvar queryObj = Query.make(ABPerson)\n\n¢ Declared elements and attributes 7 queryOb}.compare (ABPerson#PublicID, Relop.Equals, \"ab:98\")\n. . -ryObj. select () .AtMostOneRow\nin the XSD are available as a\n\nGosu types —pit0 ;\n11 xml.FullName = targetPerson.DisplayName\n\n+ Use dot notation to reference the 12 ym) .EmailAddressi = targetPerson.EmailAddressi\nelement types and attributes —p var sOpts = new XnlSerializationOptions() {\n\n:Sort = false,\n16 :Validate = false\n\n<?xml version=\"1.0\"2>\n<PolicyHolder xmlns=\"http: //acmePolicyPerson/ab/gx/sa.\n\n<fullName>Eric Andy</FullName> a7 }\n<EmailAddress1>eandy@albertsons.com</EmailAddress1> 8 //\n</Policy#older> 19 var payload = xml.asUIFString(sOpts)\n\n20 print (payload)\n\nXML Modeler\n\n| XML model\n\nmnt vereione\"1.0°2>\n‘BankAccount. mminse\"hetp://guidevire,con/ab/qn/trainingapp nessaging bank, bankaccountuminodel”>\nR < > <AecountType>\n\n<Description>Checking</Description>\n\n</aecountType>\n<Bankllane>ROME Credit Union</Bankliane>\ncta| ‘<Routingliumber>123-939¢/Routinglfumber>\n\n<aBContact>\n\n<PublicID>ab: 98</PublicID>\n</aBContact>\n\n« An XML (GX) model generates dynamic XML based on an input object\n¢ Accepts a single input object and can specify:\n* XML-formatted values from that object\n* XML-formatted values from related objects\n¢ Use model anytime XML must be generated\n\n+ Message payload, web service data, etc\n\n| XML model base types\n\n« Each model has a base type, which determines:\n* The type of object you must pass to the model\n\n* The data you can include in the model\n\n* Properties ° Properties ° Properties\ne Virtual e Seen as\ne Database getProperty\nbacked method\ne Related\n\nentities\n\n| XML Modeler editor G\n\n@ BankAccountModel.gx * |\n\n¢ XML Modeler editor = mon\ncreates XML models gL Asa\n\n> ABContac - enti. ASContact\n¢ File extension is .gx\n\n* Steps to create\n\n1. Create XML model Fields to add, based on input entity\n\n<2 version=\"1.0\"2>\n<BankAccount xmins=\"trainingapp.xmlmodels.bankaccountmodel\">\n\n2. Add fields to the model ~PublictD-javalang Strings PublelD~\n<BankName>java.lang.String</BankName>\n\n3. Use the model to <AccountType>typekey. BankAccountType</AccountType>\ngenerate the XML output “RontingNombersjve ang Sting RowtngNomber>\n<ABContact>\n« Sample XML tab shows <PublicID>java.lang String<PublicID>\n<EmailAddress1>java.lang.String</EmailAddress1>\ngenerated model output <Active>java ang. Boolean</Active>\n\n</ABContact>\n</BankAccount> Sample XM Schema\n([SanpERWE) Scheme |\n\n| Create the XML model G\n\n5 eee * To create a new XML\nGosu Program\nOGneram 5 Model:\n\n‘emmiplate =i GX Model x | |\nSo = 1. Right-click the parent\n[SE GxModel Class to model: k\nD& Web Service Collection _| Search by Name | Project package\n\nInclude non-project classes 2. Select New > GX\nQ BankAccount x Model\n\n3. Specify the Entity\n\n(© = BankAccountDataTemplate (\n(© BankAccountDataTemplate (\n\n+ System will automatically\n\n© & BankAccountEnhancement (t filter\n© % BankAccountEnhancement (trai 3. .\nene 4. Specify a model name\n\nBankAccountModel « Automatic naming is:\n\n[ox] Cancel <entity>Model\n\n| Add fields to the XML model\n\n(& BankAccountModel.gx\n\n2. Click Add\n\n1. Select field\n\n* Steps to add fields:\n\nFilter Depth: 2\n\nPubliciD - jov\n\nAdd >>\n\n1. Select field remeron nc ver\n\n2. Click Add >> button pene .\n\n3. Select property type\n\n4. Select XML model (if applicable) sbES Esta Lanes\n\n+ Avoid selecting fields multiple levels\n\ndown in an XML model\n\n+ ABContact.AssignedUser.Credential.Active <PublicID>java.lang.String</PublicID>\n. <BankName>java.lang.String</BankName> Co]\n* Create a separate model for the entity <Accounttype>typekey.BankAccountType</AccountType> (Foxe) [He\n\n<AccountNumber>java.lang.String</AccountNumber>\n\n* Sub-object field appear as nested Atzcane Rome\n\n<PublicID>java.lang.String</PublicID>\n\nelement in sample XML <EmailAddress1>java lang String-/EmailAddress1>\n\n<Active>java.lang.Boolean</Active>\n</ABContact>\n\n¢ Restart the server <BankAccount>\n\nGenerating XML output using XML model Gi\n\n<?xml version=\"1.0\"2>\n<BankAccount. xnlns=\"http: //guidewire.con/al\n\n* Syntax crotictipanecrheniat\n<BankName>First Savings Bank</BankName>\n= <hecountTypereavinge</RecountType>\n* var xml = new modelName.modelType (param1) rere henecsesaasasoie noceetunber>\n. -<Routingliunber>225-998¢/Routinglunber>\n* modelName: fully qualified name <aBContact>\n<PublicID mnlns=\"netp://guidewize.con/:\n+ i 3: ‘ss as=\"nvtp://guidewire.:\n* modelType: the XML model input type ‘ie\n‘<Activeptruec/Active>\n* var payload = xml.asUTFString aaa\n</aconvact>\n+ Serializes the generated xml object as UTF-encoded </BankAccount>\nstring uses gw.api.database.Query\n\nuses gw.api.database.Relop\nuses trainingapp. xmlmodels.bankaccountmodel.BankAccount\n\nvar queryObj = Query.make(ABPerson)\nqueryOb}. compare (ABPerson#PublicID, Relop.fquals, \"ab:98\")\nvar targetPerson\n\nfor(bankAce in targetPerson.BankAccounts) {\nvar xml = new BankAccount (bankAcc)\nvar payload = xml.asUTFString()\n\nprint (payload)\n,\n\n| Customizing XML model output with GXOptions Gi\n\nSyntax\n\n<oxml version=\"1.0\"2>\n\n<BankAccount xnlns=\"http: //guidewire.com/al\n<PublicID>ab: 4</PublicID>\n<Bankllame>First Savings Bank</Bankllame>\n\n* var xml = new modelName.modelType “<hecountType>savings</AccountType>\n\n<Accountitunber>$54433221</AccountNunber>\n\n(param1,new GXOptions() {:optionl = value}) <Routingliunber>225-999¢/RoutingMunber>\n\nAlternate constructor can be used to:\n\n* Incremental: export only those\n\nproperties that have changed\n\n* Verbose: export properties, even\n\nif their value is null\n\n¢ SuppressExceptions: suppress\n\nexceptions thrown during XML\nconstruction\n\nen\n\n<aBContace>\n<PublicID xmlns=\"hetp://guidewire.cow/é\nsemen <EmailAddresst xsi:nil=\"true” mmlns=\"ht\nnecp://quidewire.\n\n1 uses gw.api.database. Query <Activertrue</Active>\nuses gw.api.database.Relop </Credential>\nuses gw.api.gx.GXOptions </Aasigneddser>\n: <yaBContact>\n4 uses trainingapp.xmlmodels.bankaccount </:,tyxcccunts\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare (ABPerson#PublicID, Relop.quels, \"ab:98\")\nvar targetPerson = queryObj.select() .AtMostOneRow\n10 for(bankAcc in targetPerson.BankAccounts) {\nvar xml = new BankAccount (\nbankAcc,\nnew GXOptions() {:Incremental = false, :Verbose = true})\na var payload = xml.asUIFString()\n15 print (payload)\n}\n\n| Optimizing XML model output performance\n\n* To achieve the best performance,\n\nmake sure you use an\n\nXMLSerializationOptions object to turn\n\noff sorting and validation\n\n* Serialization is noticeably faster with\n\nthese options set\n\n<oxml version=\"1.0\"2>\n\n<BankAccount xmlns=\"http://g\n<PublicID>ab: 4</PublicID>\n\n</BankAccount>\n\n3\n\nWir\n\nGi\n\nuses gw.api.database.Query\n\nuses gw.api.database.Relop\n\nuses gw.api.gx.GxOptions\n\nuses gw.xml.XmlSerializationOptions\n\nuses trainingapp. xmlmodels.bankaccountmodel.BankAccount\n\nvar qu -make(ABPerson)\nqueryObj.compare (ABPerson#PublicID, Relop. Equals,\nvar targetPerson = queryObj.select () .AtMostOneRow\n\n\"ab:98\")\n\nvar gx0pts = new GXOptions() {\nIncremental = true,\nhose = true,\n\n:SuppressExceptions = true\n\n}\n\nvar sOpts = new XmlSerializationOptions() {\n:Sort = false,\n:Validate = false\n\n}\n\nvar xml = new BankAccount (bankAcc, gx0pts)\nvar payload = xml.asUTFString(sOpts)\nprint (payload)\n\n| XML models labels\n\nLabels enable an XML model's properties\n\nto be filtered\n\n+ When an instance of the model is created only a\nsubset of its properties are converted to XML\n\n+ Different properties can be included based on context\n\nUse case:\n\n+ System A needs to include the key property and the\n\nABContact normal property called SysA\n\n+ System B needs to include the key property and the four\nBankAccount normal properties called SysB\n\n+ With labels a single XML model can be used\n\nProperties can be assigned multiple labels\n\nMultiple systems use the same property\n\nGi\n\n1. Select field\nKey Property\n\n<< Remove\nRecategorize\n\nEdit Labels\n\n3. Add label(s)\n\nOK Cancel\n\n| Using XML model labels G\n\n© Andy\n\n¢ Add labels to the properties inthe XML = »= ierj0b3 = query. naze B78)\n\nqueryOb}. compare (ABPersonéPublicID, Relop.=quals, \"ab:98\")\nmodel\n\nvar targetPerson = queryObj-Seléct ()-AtiostineRow\n// Output eaci\nfor (bankAce in targetPerson.BankAccounts) {\n\nrialization options, and labels\n\nnsole\n\n¢ Pass label parameter to the constructor\n\nvar oxopts = new GxOptions() {\n:Incremental = false,\n:Verbose = true,\n:SuppressExceptions = false\n}\n\nvar sOpts = new XmlSerializationOptions() {\n\n<BankAccount xmins=\"http: //guidewire.com/ab,\n<PublicID>ab: 4</PublicID>\n<aBContact>\n<PublicID xnins=\"!\n<EmailAddressi xsi\n\n<Credential>\n<Active>true</Active> Sort = false,\n</Credenvial> :Validate = false\n</AssignedUser> }\nvar labelSysA = BankAccount.Label.Sysa\n\n</aBContact>\n</BankAccount> SysA\n\n<BankAccount xnlns=\"http: //guidewize.com/ab/\n<Accountiumber>S54433221</AccountNumber>\n<AccountType>savings</AccountType>\n<Bankllame>First Savings Bank</BankName>\n<RoutingNumber>225-999</Routinglumber>\n\n<PublictD>ab: 4</PublicID>\n</BankAccount> SysB\n\nvar labelSysB = BankAccount.Label.SysB\n// Create payload and display to console\n\nvar xmlSysA = new BankAccount(bankAcc, gx0pts, {labelSysA})\nvar xmlSysB = new BankAccount(bankAcc, gxOpts, {lebelSysB})\nvar payloadSysA = xmlSysA.asUTFString(s0pts)\n\nvar payloadSysB = xmlSysB.asUTFString(s0pts)\n\nprint (payloadsysA)\n\nprint (payloadSysB)\n\n| XML model properties\n\n¢ Every model has boolean properties\nspecific to XML models\n\n* $ShouldSend: has at least one Normal\nproperty in the model changed?\n\n+ $HasExceptions: were any exceptions\nthrown while generating the XML?\n\n+ True, even if GXOption SuppressExceptions\nis set to true\n\n<BankAccount xmlns=\"http://guidewire.c\n\n<AccountType>checking</AccountType> <——\n\n<PublicID>ab:4</PublicID>\n</BankAccount>\n\n|\n\nvar queryOb} = Query.make(ABPerson)\nqueryOb}.compare (ABPerson¢PublicID, Relop. Equals, \"ab:98\")\nvar targetPerson = queryObj.select () .AtMostOneRow\n\n‘Transaction. run¥#ithNevBundle(\\newBundle -> {\ntargetPerson = newBundle.add(targetPerson)\n\n:SuppressExceptions = false\n\n}\nvar labelSysAl:\n\nBankAccount.Label.default_label\nvar xmlSysAll = new BankAccount(bankAcc, gxOpts, {labelSysAl1})\nif (xmlSysA11.$ShouldSend ¢¢ !xmlSysAll.$HasExceptions) {\nvar sOpts = new XmlSerializationOptions() {\n:Sort = false,\n:Validate = false\n,\nvar payloadSysAll = xmlSysAll.asUTFString(sOpts)\nprint (payloadSysAll)\n\n| Deploy code changes Gi\n_—RestartServer. Generate XmiClasses\n\nNew XML Model Modified XML Model\n\nTools VCS Window Help Codegen Analyze Refactor Build Run T\nD> Run ‘Server’ Shifts F10 JA. Generate Metadata Classes\nIW, Debug ‘Server’ Shift+F9\n\nGenerate Page Configuration Classes\n\nBea Serre Covers {Generate Permission Classes\nD Run... Alt+Shift+F10 -\n\nG Local Classes\nWE Debug... Alt+ Shift+F9\n\n7m Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\n® Generate Everything\n\n| Demonstration G\n\nCreate an XML model\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n_— — |dentify if each statement about an XML model is True or False.\n\n“ A)\nB)\n©)\nD)\n\nE)\n\nSe Soe Se sees esse ese\n\nIt can take any number of input values.\nIt has a published XSD.\nIt can make use of conditional statements and for loops.\n\nIt can include values from both the object that triggered the message event and objects\nrelated to the triggering object.\n\nIt can be used only for payload generation\n\nAnswer Gi\n\naa Identify if each statement about an XML model is True or False.\n\nc A) Itcan take any number of input values. False — XML models always have a single input,\nwhich is the object upon which to base the XML to be generated.\n\nB) Ithasapublished XSD. True\nC) Itcan make use of conditional statements and forloops. False\n\nD)_ Itcan include values from both the object that triggered the message event and objects\nrelated to the triggering object. True — XML models can do this by including fields from the\nrelated objects in the XML model.\n\nE) Itcan be used only for payload generation False — XML models can be used anywhere.\n\nSoo eS oe ese Sse ese\n\nLesson\nobjectives ¢ Describe key XML concepts— XML elements,\nreview XSD, and Serialization\n\n¢ Import and export strongly typed XML using\nGosu and an XSD\n\n« Use XML models to extract data in XML\nformat\n\n« Use XML Modeler to create XML models\n\n| Student exercise G\n\nUse an XML model to generate an XML\nmessage payload\n\nGenerate an XML message payload\nusing an XSD",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "XML Modeler and Strongly Typed XML",
+      "word_count": 6,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Describe key XML concepts— XML elements,\n\nXSD, and Serialization\n\n¢ Import and export strongly typed XML using\nGosu and an XSD\n\n« Use XML models to extract data in XML\nformat\n\n« Use XML Modeler to create XML models",
+      "word_count": 42,
+      "avg_confidence": 90.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "XML Review",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| XML: Review\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n\n636\n\n<?xml version=\"1.0\"?>\n\n<config xmlns=\"http://guidewire.com/config\">\n<param name=\"CurrencyURL\" value=\"\">http://acme.x.com</param>\n<database name=\"TADatabase\" dbtype=\"h2\" autoupgrade=\"true\">\n<param name=\"jdbcURL\" value=\"jdbce:h2:file:ta/db/ta\"/>\n<param name=\"jdbcURLtest\" value=\"jdbc:h2:file:ta/db/test\"/>\n<param name=\"stmtPool.enabled\" value=\" false\"/>\n</database>\n<security sessiontimeoutsecs=\"10800\"/>\n\n</config>\n\nExtensible Markup Language (XML) is a hierarchy\ndata structure designed to transport and store data",
+      "word_count": 53,
+      "avg_confidence": 89.92,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| XML elements\n\nOI HUVsrwW\n\n10\n\n<param name=\"CurrencyURL\" value=\"\">http://acme.x.com</param>\n<database name=\"TADatabase\" dbtype=\"h2\" autoupgrade=\"true\">\n<param name=\"jdbcURL\" value=\"jdbc:h2:file:ta/db/ta\"/>\n<param name=\"jdbcURLtest\" value=\"jdbc:h2:file:ta/db/test\"/>\n<param name=\"stmtPool.enabled\" value=\" false\"/>\n</database>\n\n<security sessiontimeoutsecs=\"10800\"/>\n\nXML elements have:\n\n« Acase sensitive name\n\n* An opening and closing declaration\n\n* One or more optional attribute name/value pairs\n\nContents can be Empty, have Text, and/or Child elements\n¢ Line 3 is Text\n\n¢ Line 4 is Children (5-7)\n\n* Line 10 is Empty",
+      "word_count": 72,
+      "avg_confidence": 85.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| XML element class\n\n1\n2\n3\n4\n\n<?xml version=\"1.0\"?>\n\n<config xmlns=\"http://guidewire.com/config\">\n<param name=\"CurrencyURL\" value=\"\">http://acme.x.com</param>\n<database name=\"TADatabase\" dbtype=\"h2\" autoupgrade=\"true\">\n\nv\n\n<config...>\n\n<param...>\n\n<database...>\n\nRepresent elements from XML\nImport XML\n\nGet information about each\nelement\n\nCreate and modify elements\nExport XML",
+      "word_count": 40,
+      "avg_confidence": 92.32,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| XSD (XML Schema Definition) G\n\n1\n2\n\n4\n5\n6\n8\n\n12\n13\n14\n90\n\n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<xsd:schema xmlns:xsd=\"http: //www.w3.org/2001/XMLSchema\" ... >\n<xsd:element name=\"config\" >\n<xsd:complexType>\n<xsd:choice minOccurs=\"1\" maxOccurs=\"unbounded\">\n<xsd:element name=\"param\"\nminOccurs=\"0\" maxOccurs=\"unbounded\"/>\n</xsd:choice>\n</xsd:complexType>\n</xsd:element>\n<xsd:schema/>\n\nAn XSD (XML Schema Definition) describes\n\nthe structure for elements in one or more\n\nXML documents\n\n¢ Informs how an XML document can be structured ell\n¢ Used to validate the structure of a document",
+      "word_count": 75,
+      "avg_confidence": 88.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Serialization G\n\nTOU 01010010 TN\n11001001\n——_—| ——_—\n\nfile.xml 01100100\n\nfile-clone.xml\n\n¢ XML serialization converts XML elements into a sequence of bits to be later\ndeserialized\n\n¢ Serialization logic can be complex for certain data types such as hexadecimal\nvalues or images",
+      "word_count": 43,
+      "avg_confidence": 85.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Untyped and strongly typed XML G\n— Untyped = Strongly typed\n\nIf no XSD exists, then the parsed\n\nIf an existing XSD validates and\nXML is untyped\n\ninforms the XML, then the parsed\nXML is strongly typed\n\nIe)\n\n| |\nxso <>,",
+      "word_count": 43,
+      "avg_confidence": 84.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Strongly Typed XML G\n\nmy cy\nfile.xsd file.xml\n\n¢ [fan existing XSD validates and informs the XML, then the parsed XML is strongly\ntyped\n* XML is validated against the XSD during import and export\n* XSD must be known to Guidewire\n* XSD parses the XML document",
+      "word_count": 49,
+      "avg_confidence": 84.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Making an XSD available to Guidewire Gi\n\n. : : [ilProject |\nconfiguration.gsre Soa vation\n« Put the XSD file in any subdirectory of gsrc & Epconfig\n&@- Ei deploy\n¢ Subdirectories become part of the package name - Diete\n@- Bgsre\n¢ There is no way to inject an XSD into the El acme\ntype system at run time ° ames\n* The XSD must be known to the application during Oe es\nstartup be\n. . Pry @- [y TestesP\nVarious definitions cause Gosu ae | N\nto create new types i) [Ey base XSD\n= FE] demo\n+ <xsd:element /> bpd el\n* <xsd:complexType /> SE\n\n* <xsd:attribute />",
+      "word_count": 113,
+      "avg_confidence": 71.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Parsing a strongly typed XML file\n\nPaul Monroe [Sj\n\nHas Children? = false\nHas Child Elements? = true\n\n* Syntax to call the parse method on the XSD type: i sy ane ta conade cr\n\n2121 W. Camden Drive Suite 17 Los Angeles CA\n\n* xsdFileName.rootElement.parse (xmlToParse) A\n\n+ xsdFileName: fully qualified name\n+ rootElement: the XSD root element\nDeclared elements and\n\nattributes in the XSD are\navailable as Gosu types\n\n+ Use dot notation to reference the\nelement types and attributes\n\nuses java.io.File\nuses demo.ta.xml.policyholder.PolicyHolder\n\nvar file = new File(\"./training/policyholder.xml\")\nvar xml = PolicyHolder.parse(file)\n\nprint (xml. FullName +\n+ \"Has Children? = \" + xml.Children + \"\\n\"\n+ \"Has Child Elements? = \" + xml.$Children.HasElements\n\nss entry\nvar addresses = xml.AllAddresses.Entry\naddresses.each(\\addr -> print (addr.AddressLine1\n+ (addr.AddressLine2 == null 2? \"\" : \" \" + addr.AddressLine2)\n+\" \" + addr.city\n+\" \" + addr. State)",
+      "word_count": 147,
+      "avg_confidence": 85.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Generate XML using an XSD Gi\n\n¢ Syntax to use an XSD to generate XML:\n\n1 uses gw.api.database.Query\n2 uses gw.api.database.Relop\n\n« xsdFileName: fully qualified name 3 uses gw.xml.XmlSerializationOptions\n—> < uses trainingapp.demo.xsd.policyholder.PolicyHolder\n\n* new xsdFileName.rootElement\n\n+ rootElement: the XSD root element\nvar queryObj = Query.make(ABPerson)\n\n¢ Declared elements and attributes 7 queryOb}.compare (ABPerson#PublicID, Relop.Equals, \"ab:98\")\n. . -ryObj. select () .AtMostOneRow\nin the XSD are available as a\n\nGosu types —pit0 ;\n11 xml.FullName = targetPerson.DisplayName\n\n+ Use dot notation to reference the 12 ym) .EmailAddressi = targetPerson.EmailAddressi\nelement types and attributes —p var sOpts = new XnlSerializationOptions() {\n\n:Sort = false,\n16 :Validate = false\n\n<?xml version=\"1.0\"2>\n<PolicyHolder xmlns=\"http: //acmePolicyPerson/ab/gx/sa.\n\n<fullName>Eric Andy</FullName> a7 }\n<EmailAddress1>eandy@albertsons.com</EmailAddress1> 8 //\n</Policy#older> 19 var payload = xml.asUIFString(sOpts)\n\n20 print (payload)",
+      "word_count": 129,
+      "avg_confidence": 81.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "XML Modeler",
+      "word_count": 2,
+      "avg_confidence": 95.5,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| XML model\n\nmnt vereione\"1.0°2>\n‘BankAccount. mminse\"hetp://guidevire,con/ab/qn/trainingapp nessaging bank, bankaccountuminodel”>\nR < > <AecountType>\n\n<Description>Checking</Description>\n\n</aecountType>\n<Bankllane>ROME Credit Union</Bankliane>\ncta| ‘<Routingliumber>123-939¢/Routinglfumber>\n\n<aBContact>\n\n<PublicID>ab: 98</PublicID>\n</aBContact>\n\n« An XML (GX) model generates dynamic XML based on an input object\n¢ Accepts a single input object and can specify:\n* XML-formatted values from that object\n* XML-formatted values from related objects\n¢ Use model anytime XML must be generated\n\n+ Message payload, web service data, etc",
+      "word_count": 74,
+      "avg_confidence": 76.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| XML model base types\n\n« Each model has a base type, which determines:\n* The type of object you must pass to the model\n\n* The data you can include in the model\n\n* Properties ° Properties ° Properties\ne Virtual e Seen as\ne Database getProperty\nbacked method\ne Related\n\nentities",
+      "word_count": 53,
+      "avg_confidence": 86.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| XML Modeler editor G\n\n@ BankAccountModel.gx * |\n\n¢ XML Modeler editor = mon\ncreates XML models gL Asa\n\n> ABContac - enti. ASContact\n¢ File extension is .gx\n\n* Steps to create\n\n1. Create XML model Fields to add, based on input entity\n\n<2 version=\"1.0\"2>\n<BankAccount xmins=\"trainingapp.xmlmodels.bankaccountmodel\">\n\n2. Add fields to the model ~PublictD-javalang Strings PublelD~\n<BankName>java.lang.String</BankName>\n\n3. Use the model to <AccountType>typekey. BankAccountType</AccountType>\ngenerate the XML output “RontingNombersjve ang Sting RowtngNomber>\n<ABContact>\n« Sample XML tab shows <PublicID>java.lang String<PublicID>\n<EmailAddress1>java.lang.String</EmailAddress1>\ngenerated model output <Active>java ang. Boolean</Active>\n\n</ABContact>\n</BankAccount> Sample XM Schema\n([SanpERWE) Scheme |",
+      "word_count": 97,
+      "avg_confidence": 76.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Create the XML model G\n\n5 eee * To create a new XML\nGosu Program\nOGneram 5 Model:\n\n‘emmiplate =i GX Model x | |\nSo = 1. Right-click the parent\n[SE GxModel Class to model: k\nD& Web Service Collection _| Search by Name | Project package\n\nInclude non-project classes 2. Select New > GX\nQ BankAccount x Model\n\n3. Specify the Entity\n\n(© = BankAccountDataTemplate (\n(© BankAccountDataTemplate (\n\n+ System will automatically\n\n© & BankAccountEnhancement (t filter\n© % BankAccountEnhancement (trai 3. .\nene 4. Specify a model name\n\nBankAccountModel « Automatic naming is:\n\n[ox] Cancel <entity>Model",
+      "word_count": 101,
+      "avg_confidence": 73.83,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Add fields to the XML model\n\n(& BankAccountModel.gx\n\n2. Click Add\n\n1. Select field\n\n* Steps to add fields:\n\nFilter Depth: 2\n\nPubliciD - jov\n\nAdd >>\n\n1. Select field remeron nc ver\n\n2. Click Add >> button pene .\n\n3. Select property type\n\n4. Select XML model (if applicable) sbES Esta Lanes\n\n+ Avoid selecting fields multiple levels\n\ndown in an XML model\n\n+ ABContact.AssignedUser.Credential.Active <PublicID>java.lang.String</PublicID>\n. <BankName>java.lang.String</BankName> Co]\n* Create a separate model for the entity <Accounttype>typekey.BankAccountType</AccountType> (Foxe) [He\n\n<AccountNumber>java.lang.String</AccountNumber>\n\n* Sub-object field appear as nested Atzcane Rome\n\n<PublicID>java.lang.String</PublicID>\n\nelement in sample XML <EmailAddress1>java lang String-/EmailAddress1>\n\n<Active>java.lang.Boolean</Active>\n</ABContact>\n\n¢ Restart the server <BankAccount>",
+      "word_count": 106,
+      "avg_confidence": 81.15,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Generating XML output using XML model Gi\n\n<?xml version=\"1.0\"2>\n<BankAccount. xnlns=\"http: //guidewire.con/al\n\n* Syntax crotictipanecrheniat\n<BankName>First Savings Bank</BankName>\n= <hecountTypereavinge</RecountType>\n* var xml = new modelName.modelType (param1) rere henecsesaasasoie noceetunber>\n. -<Routingliunber>225-998¢/Routinglunber>\n* modelName: fully qualified name <aBContact>\n<PublicID mnlns=\"netp://guidewize.con/:\n+ i 3: ‘ss as=\"nvtp://guidewire.:\n* modelType: the XML model input type ‘ie\n‘<Activeptruec/Active>\n* var payload = xml.asUTFString aaa\n</aconvact>\n+ Serializes the generated xml object as UTF-encoded </BankAccount>\nstring uses gw.api.database.Query\n\nuses gw.api.database.Relop\nuses trainingapp. xmlmodels.bankaccountmodel.BankAccount\n\nvar queryObj = Query.make(ABPerson)\nqueryOb}. compare (ABPerson#PublicID, Relop.fquals, \"ab:98\")\nvar targetPerson\n\nfor(bankAce in targetPerson.BankAccounts) {\nvar xml = new BankAccount (bankAcc)\nvar payload = xml.asUTFString()\n\nprint (payload)\n,",
+      "word_count": 106,
+      "avg_confidence": 76.1,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Customizing XML model output with GXOptions Gi\n\nSyntax\n\n<oxml version=\"1.0\"2>\n\n<BankAccount xnlns=\"http: //guidewire.com/al\n<PublicID>ab: 4</PublicID>\n<Bankllame>First Savings Bank</Bankllame>\n\n* var xml = new modelName.modelType “<hecountType>savings</AccountType>\n\n<Accountitunber>$54433221</AccountNunber>\n\n(param1,new GXOptions() {:optionl = value}) <Routingliunber>225-999¢/RoutingMunber>\n\nAlternate constructor can be used to:\n\n* Incremental: export only those\n\nproperties that have changed\n\n* Verbose: export properties, even\n\nif their value is null\n\n¢ SuppressExceptions: suppress\n\nexceptions thrown during XML\nconstruction\n\nen\n\n<aBContace>\n<PublicID xmlns=\"hetp://guidewire.cow/é\nsemen <EmailAddresst xsi:nil=\"true” mmlns=\"ht\nnecp://quidewire.\n\n1 uses gw.api.database. Query <Activertrue</Active>\nuses gw.api.database.Relop </Credential>\nuses gw.api.gx.GXOptions </Aasigneddser>\n: <yaBContact>\n4 uses trainingapp.xmlmodels.bankaccount </:,tyxcccunts\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare (ABPerson#PublicID, Relop.quels, \"ab:98\")\nvar targetPerson = queryObj.select() .AtMostOneRow\n10 for(bankAcc in targetPerson.BankAccounts) {\nvar xml = new BankAccount (\nbankAcc,\nnew GXOptions() {:Incremental = false, :Verbose = true})\na var payload = xml.asUIFString()\n15 print (payload)\n}",
+      "word_count": 134,
+      "avg_confidence": 78.51,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Optimizing XML model output performance\n\n* To achieve the best performance,\n\nmake sure you use an\n\nXMLSerializationOptions object to turn\n\noff sorting and validation\n\n* Serialization is noticeably faster with\n\nthese options set\n\n<oxml version=\"1.0\"2>\n\n<BankAccount xmlns=\"http://g\n<PublicID>ab: 4</PublicID>\n\n</BankAccount>\n\n3\n\nWir\n\nGi\n\nuses gw.api.database.Query\n\nuses gw.api.database.Relop\n\nuses gw.api.gx.GxOptions\n\nuses gw.xml.XmlSerializationOptions\n\nuses trainingapp. xmlmodels.bankaccountmodel.BankAccount\n\nvar qu -make(ABPerson)\nqueryObj.compare (ABPerson#PublicID, Relop. Equals,\nvar targetPerson = queryObj.select () .AtMostOneRow\n\n\"ab:98\")\n\nvar gx0pts = new GXOptions() {\nIncremental = true,\nhose = true,\n\n:SuppressExceptions = true\n\n}\n\nvar sOpts = new XmlSerializationOptions() {\n:Sort = false,\n:Validate = false\n\n}\n\nvar xml = new BankAccount (bankAcc, gx0pts)\nvar payload = xml.asUTFString(sOpts)\nprint (payload)",
+      "word_count": 111,
+      "avg_confidence": 83.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| XML models labels\n\nLabels enable an XML model's properties\n\nto be filtered\n\n+ When an instance of the model is created only a\nsubset of its properties are converted to XML\n\n+ Different properties can be included based on context\n\nUse case:\n\n+ System A needs to include the key property and the\n\nABContact normal property called SysA\n\n+ System B needs to include the key property and the four\nBankAccount normal properties called SysB\n\n+ With labels a single XML model can be used\n\nProperties can be assigned multiple labels\n\nMultiple systems use the same property\n\nGi\n\n1. Select field\nKey Property\n\n<< Remove\nRecategorize\n\nEdit Labels\n\n3. Add label(s)\n\nOK Cancel",
+      "word_count": 114,
+      "avg_confidence": 91.15,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "| Using XML model labels G\n\n© Andy\n\n¢ Add labels to the properties inthe XML = »= ierj0b3 = query. naze B78)\n\nqueryOb}. compare (ABPersonéPublicID, Relop.=quals, \"ab:98\")\nmodel\n\nvar targetPerson = queryObj-Seléct ()-AtiostineRow\n// Output eaci\nfor (bankAce in targetPerson.BankAccounts) {\n\nrialization options, and labels\n\nnsole\n\n¢ Pass label parameter to the constructor\n\nvar oxopts = new GxOptions() {\n:Incremental = false,\n:Verbose = true,\n:SuppressExceptions = false\n}\n\nvar sOpts = new XmlSerializationOptions() {\n\n<BankAccount xmins=\"http: //guidewire.com/ab,\n<PublicID>ab: 4</PublicID>\n<aBContact>\n<PublicID xnins=\"!\n<EmailAddressi xsi\n\n<Credential>\n<Active>true</Active> Sort = false,\n</Credenvial> :Validate = false\n</AssignedUser> }\nvar labelSysA = BankAccount.Label.Sysa\n\n</aBContact>\n</BankAccount> SysA\n\n<BankAccount xnlns=\"http: //guidewize.com/ab/\n<Accountiumber>S54433221</AccountNumber>\n<AccountType>savings</AccountType>\n<Bankllame>First Savings Bank</BankName>\n<RoutingNumber>225-999</Routinglumber>\n\n<PublictD>ab: 4</PublicID>\n</BankAccount> SysB\n\nvar labelSysB = BankAccount.Label.SysB\n// Create payload and display to console\n\nvar xmlSysA = new BankAccount(bankAcc, gx0pts, {labelSysA})\nvar xmlSysB = new BankAccount(bankAcc, gxOpts, {lebelSysB})\nvar payloadSysA = xmlSysA.asUTFString(s0pts)\n\nvar payloadSysB = xmlSysB.asUTFString(s0pts)\n\nprint (payloadsysA)\n\nprint (payloadSysB)",
+      "word_count": 154,
+      "avg_confidence": 75.73,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| XML model properties\n\n¢ Every model has boolean properties\nspecific to XML models\n\n* $ShouldSend: has at least one Normal\nproperty in the model changed?\n\n+ $HasExceptions: were any exceptions\nthrown while generating the XML?\n\n+ True, even if GXOption SuppressExceptions\nis set to true\n\n<BankAccount xmlns=\"http://guidewire.c\n\n<AccountType>checking</AccountType> <——\n\n<PublicID>ab:4</PublicID>\n</BankAccount>\n\n|\n\nvar queryOb} = Query.make(ABPerson)\nqueryOb}.compare (ABPerson¢PublicID, Relop. Equals, \"ab:98\")\nvar targetPerson = queryObj.select () .AtMostOneRow\n\n‘Transaction. run¥#ithNevBundle(\\newBundle -> {\ntargetPerson = newBundle.add(targetPerson)\n\n:SuppressExceptions = false\n\n}\nvar labelSysAl:\n\nBankAccount.Label.default_label\nvar xmlSysAll = new BankAccount(bankAcc, gxOpts, {labelSysAl1})\nif (xmlSysA11.$ShouldSend ¢¢ !xmlSysAll.$HasExceptions) {\nvar sOpts = new XmlSerializationOptions() {\n:Sort = false,\n:Validate = false\n,\nvar payloadSysAll = xmlSysAll.asUTFString(sOpts)\nprint (payloadSysAll)",
+      "word_count": 113,
+      "avg_confidence": 82.21,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "| Deploy code changes Gi\n_—RestartServer. Generate XmiClasses\n\nNew XML Model Modified XML Model\n\nTools VCS Window Help Codegen Analyze Refactor Build Run T\nD> Run ‘Server’ Shifts F10 JA. Generate Metadata Classes\nIW, Debug ‘Server’ Shift+F9\n\nGenerate Page Configuration Classes\n\nBea Serre Covers {Generate Permission Classes\nD Run... Alt+Shift+F10 -\n\nG Local Classes\nWE Debug... Alt+ Shift+F9\n\n7m Attach to Local Process...\n[> Edit Configurations...\n\n2] Import Test Results >\n| Stop ‘Server’ Ctrl+F2\n\n® Generate Everything",
+      "word_count": 78,
+      "avg_confidence": 77.46,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "| Demonstration G\n\nCreate an XML model\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n_— — |dentify if each statement about an XML model is True or False.\n\n“ A)\nB)\n©)\nD)\n\nE)\n\nSe Soe Se sees esse ese\n\nIt can take any number of input values.\nIt has a published XSD.\nIt can make use of conditional statements and for loops.\n\nIt can include values from both the object that triggered the message event and objects\nrelated to the triggering object.\n\nIt can be used only for payload generation",
+      "word_count": 79,
+      "avg_confidence": 89.29,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer Gi\n\naa Identify if each statement about an XML model is True or False.\n\nc A) Itcan take any number of input values. False — XML models always have a single input,\nwhich is the object upon which to base the XML to be generated.\n\nB) Ithasapublished XSD. True\nC) Itcan make use of conditional statements and forloops. False\n\nD)_ Itcan include values from both the object that triggered the message event and objects\nrelated to the triggering object. True — XML models can do this by including fields from the\nrelated objects in the XML model.\n\nE) Itcan be used only for payload generation False — XML models can be used anywhere.\n\nSoo eS oe ese Sse ese",
+      "word_count": 120,
+      "avg_confidence": 88.55,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Lesson\nobjectives ¢ Describe key XML concepts— XML elements,\nreview XSD, and Serialization\n\n¢ Import and export strongly typed XML using\nGosu and an XSD\n\n« Use XML models to extract data in XML\nformat\n\n« Use XML Modeler to create XML models",
+      "word_count": 43,
+      "avg_confidence": 90.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "| Student exercise G\n\nUse an XML model to generate an XML\nmessage payload\n\nGenerate an XML message payload\nusing an XSD",
+      "word_count": 22,
+      "avg_confidence": 94.57,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

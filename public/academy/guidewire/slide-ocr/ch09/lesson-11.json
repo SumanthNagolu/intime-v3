@@ -1,0 +1,225 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "lesson": "lesson-11",
+    "slide_count": 19,
+    "slides_with_text": 17,
+    "total_words": 846,
+    "avg_confidence": 86.02,
+    "processing_time_seconds": 6.47,
+    "extracted_at": "2026-02-15T18:17:28.811809"
+  },
+  "full_text": "Configuring ClaimCenter Financials\nPart 2: Financial Holds\n\nLesson\nobjectives\n\n¢ Configure financial holds\n\n| Financial hold G\n\n* Acondition where expenses can Financial hold effects\nbe reserved and paid but\n\n: . : Transact Initial Reserve Valida'\nindemnities (claim costs) cannot rules rules\n¢ Inthe base configuration, no Claim cost reserves _| Prevented Prevented\nindemnity payments or claim\ncost reserves are allowed if: Expense reserves _| Allowed Allowed\nbn ft ‘ with warni\n* Coverage is in question\n* Claim is incident only Claim cost payments | n/a Prevented\n* Claim policy is unverified\n/a\n\n* Factors affecting financial holds [geil Zurn Sis ty Allowed\nare configurable\n\nwith warning\n\n| Determining whether financial hold applies\n\n¢ Is performed\n\n* In class FinancialHoldsImpl.gs\n\n« By the function applyFinancialHolds()\n¢ Its behavior is configurable\n\noverride function applyFinancialHolds() : Boolean {\nreturn _claim.CoverageInQuestion\nor claim. IncidentReport\nor not _claim.Policy.Verified\n\n| Financial holds in initial reserve rules Gi\n\n¢ Base application rules provide examples of how to integrate financial holds\nfunctionality into initial reserve rules\n\n¢ Takes logic of claim cost initial reserve creation, and wraps it in a test that ensures\nfinancial holds are “off’ before initial reserves are created\n\nvar finImpact = exposure. TripIncident.getTotalFinancialimpact (7C_APPROVE) -Amount\n\ni£(finImpact > 0 and finImpact < (exposure.Coverage.ExposureLimit as java-lang.Double))\nexposure.createInitialReserve (7C_CLAIMCOST, 7C_TRIP CANCEL DELAY, finImpact)\n\nelse if (exposure .HasCoverageLimit)\nexposure.createInitialReserve (TC CLAIMCOST, TC_TRIP CANCEL DELAY, exposure .Coverage-ExposureLimit) }\n\nEND\n\n| Coverage in Question (CiQ) Gi\n\n¢ ABoolean field based on configurable settings\n« Inthe base configuration, CiQ is true if:\n\n* Loss date is before policy effective date\n\n* Loss date is after policy expiration date\n\n* Policy status is something other than “In force” or “Archived”\n« Appears on the Claim Summary > Status screen\n\nCoverage in Question\nCoverage in Question? B Coverage in Question\n\nReason(s) Loss Date: Before policy effective date\n\n| Determining whether CiQ applies\n\n¢ GWClaimFinancialsHoldsEnhancement provides a Boolean function\nisCoveragelnQuestionFactorsNotEmpty()\n\n* Calls function getCoveragelnQuestionFactors()\n\nfunction isCoverageInquestionFactorsNotE=pty() : Boolean ( return !getCoverageInquestionFactors() .Bapty }\n\nfunction getCoverageInguestionFactors() :\nvar validPolicyStatuses = (PolicyStatu:\nvar coverageInguestionMap = new java.ut\n\ncil. HashMapcObject, Object> {\n, PolicyStatus. TC_INFORCE)\nMap ()\n\nAf(this.LossDate > this.Policy.ExpirationDate) {\ncoverageInquestiomap.put (\"Loss Date\", \"After policy effective date\")\n) else 4f( this.LossDate < this.Policy.EffectiveDate) {\ncoverageInquestionMap.put (\"Loss Date\", \"Before policy effective date\")\n,\n\nif(this.Policy-Status != mull) {\nAr (!validolicyScatuses. contains (this.Policy.Status)) {\ncoverageInquestionMap.put(\"Policy Status\", this.Policy.Status.toString())\n)\n)\nreturn coverageInquestioniap\n}\n\nCPU20000 and its children\n\n¢ Claim Pre-update rule CPU20000 is a “gatekeeper” rule that fires if coverage is in\n\nquestion\n\nFires if:\n\n* Coverage is in question\n\n* The CiQ field for the claim has been changed\n\n+ If either of these is true, child rules are executed\n\n*§\n\nCPU20000 - Coverage in question\n\ny]\n\nVv]\n\nMy\n\nCPU20100 - Set coverage in question\nCPU20200 - Activities\nCPU20300 - Create history\n\nUSES:\n\nCONDITION (claim : entity.Claim):\nreturn claim. isCoverageInQuestionFactorsNotEmpty ()\nor claim. isFieldchanged (\"Coverage InQuestion\")\n\nACTION (claim : entity.Claim, actions : gw.rules.Action) :\n\nEND\n\nGi\n\n| TXV15000 and its children Gi\n\n¢ Transaction Validation rule TXV15000 is a “gatekeeper” rule that fires if\n\n¢ There are financial holds\nAND\n\n¢ The evaluated TransactionSet is of a type to which financial holds apply\n¢ One child rule for each cause of financial holds\n\nv @ QZ 115000 - Financial Holds CONDITION (transactionSet : entity.TransactionSet) :\n‘ fe Pv35100 - Coverage InQuestion return transactionSet.Claim.applyFinancialHolds() == true\n‘ in| TXV15200 - Incident Only and (transactionSet.Subtype =\n\nor (transactionset. Subtype =\n\nand (transactionSet as Ch -checksetHasDeletedOrcancelledChecks() == false) )\n\n| Summary: configuring financial holds Gi\n\n* You can specify:\n\n* The factors that automatically trigger financial holds\n\n« The TransactionSets that are subject to financial holds\n¢ Three steps:\n\n1. If changing the factors that trigger financial holds, edit class\nFinancialHoldsImpl.gs\n\n2. If changing the transaction sets subject to financial holds, edit Transaction\nValidation Rule TXV15000\n\n3. Create or modify a child rule of TXV15000 to specify the action taken for each\nfactor triggering financial holds\n\n| Demonstration G\n\nConfiguring financial holds\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion G\n\n,~ — What kind of rules enforce financial holds?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505\n\nAnswer a\n\n,~ — What kind of rules enforce financial holds?\n¢\n4\n4\n\nThe correct answer is Transaction Validation rules\n\nse sSeSo SSeS SSeS e ee sSHeS\n\nQuestion G\n\n,~ — Inthe base ClaimCenter configuration, what happens when a policy’s\n¢ status is set to anything but “In force” or “Archived”?\n\n4\n¢\n\nsSesoeooce SSeS Seee5b505\n\nAnswer a\n\n,~ — Inthe base ClaimCenter configuration, what happens when a policy’s\noo status is set to anything but “In force” or “Archived”?\n¢\n\nThe correct answer is the claim’s Coverage in Question flag is set, resulting ina\nfinancial hold.\n\nse sSeSo SSeS SSeS e ee sSHeS\n\n| Student exercise G\n\nConfiguring financials rules\nPlease complete the lab called Configuring financials rules in\n\n@ aaD\noe = the Student Workbook.\nap\n\nLesson\nobjectives\nreview\n\n¢ Configure financial holds",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Configuring ClaimCenter Financials\nPart 2: Financial Holds",
+      "word_count": 7,
+      "avg_confidence": 94.75,
+      "image_size": {
+        "width": 1280,
+        "height": 546
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Configure financial holds",
+      "word_count": 6,
+      "avg_confidence": 85.83,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Financial hold G\n\n* Acondition where expenses can Financial hold effects\nbe reserved and paid but\n\n: . : Transact Initial Reserve Valida'\nindemnities (claim costs) cannot rules rules\n¢ Inthe base configuration, no Claim cost reserves _| Prevented Prevented\nindemnity payments or claim\ncost reserves are allowed if: Expense reserves _| Allowed Allowed\nbn ft ‘ with warni\n* Coverage is in question\n* Claim is incident only Claim cost payments | n/a Prevented\n* Claim policy is unverified\n/a\n\n* Factors affecting financial holds [geil Zurn Sis ty Allowed\nare configurable\n\nwith warning",
+      "word_count": 96,
+      "avg_confidence": 84.83,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Determining whether financial hold applies\n\n¢ Is performed\n\n* In class FinancialHoldsImpl.gs\n\n« By the function applyFinancialHolds()\n¢ Its behavior is configurable\n\noverride function applyFinancialHolds() : Boolean {\nreturn _claim.CoverageInQuestion\nor claim. IncidentReport\nor not _claim.Policy.Verified",
+      "word_count": 37,
+      "avg_confidence": 81.22,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Financial holds in initial reserve rules Gi\n\n¢ Base application rules provide examples of how to integrate financial holds\nfunctionality into initial reserve rules\n\n¢ Takes logic of claim cost initial reserve creation, and wraps it in a test that ensures\nfinancial holds are “off’ before initial reserves are created\n\nvar finImpact = exposure. TripIncident.getTotalFinancialimpact (7C_APPROVE) -Amount\n\ni£(finImpact > 0 and finImpact < (exposure.Coverage.ExposureLimit as java-lang.Double))\nexposure.createInitialReserve (7C_CLAIMCOST, 7C_TRIP CANCEL DELAY, finImpact)\n\nelse if (exposure .HasCoverageLimit)\nexposure.createInitialReserve (TC CLAIMCOST, TC_TRIP CANCEL DELAY, exposure .Coverage-ExposureLimit) }\n\nEND",
+      "word_count": 87,
+      "avg_confidence": 84.27,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Coverage in Question (CiQ) Gi\n\n¢ ABoolean field based on configurable settings\n« Inthe base configuration, CiQ is true if:\n\n* Loss date is before policy effective date\n\n* Loss date is after policy expiration date\n\n* Policy status is something other than “In force” or “Archived”\n« Appears on the Claim Summary > Status screen\n\nCoverage in Question\nCoverage in Question? B Coverage in Question\n\nReason(s) Loss Date: Before policy effective date",
+      "word_count": 74,
+      "avg_confidence": 88.45,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "| Determining whether CiQ applies\n\n¢ GWClaimFinancialsHoldsEnhancement provides a Boolean function\nisCoveragelnQuestionFactorsNotEmpty()\n\n* Calls function getCoveragelnQuestionFactors()\n\nfunction isCoverageInquestionFactorsNotE=pty() : Boolean ( return !getCoverageInquestionFactors() .Bapty }\n\nfunction getCoverageInguestionFactors() :\nvar validPolicyStatuses = (PolicyStatu:\nvar coverageInguestionMap = new java.ut\n\ncil. HashMapcObject, Object> {\n, PolicyStatus. TC_INFORCE)\nMap ()\n\nAf(this.LossDate > this.Policy.ExpirationDate) {\ncoverageInquestiomap.put (\"Loss Date\", \"After policy effective date\")\n) else 4f( this.LossDate < this.Policy.EffectiveDate) {\ncoverageInquestionMap.put (\"Loss Date\", \"Before policy effective date\")\n,\n\nif(this.Policy-Status != mull) {\nAr (!validolicyScatuses. contains (this.Policy.Status)) {\ncoverageInquestionMap.put(\"Policy Status\", this.Policy.Status.toString())\n)\n)\nreturn coverageInquestioniap\n}",
+      "word_count": 89,
+      "avg_confidence": 69.38,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "CPU20000 and its children\n\n¢ Claim Pre-update rule CPU20000 is a “gatekeeper” rule that fires if coverage is in\n\nquestion\n\nFires if:\n\n* Coverage is in question\n\n* The CiQ field for the claim has been changed\n\n+ If either of these is true, child rules are executed\n\n*§\n\nCPU20000 - Coverage in question\n\ny]\n\nVv]\n\nMy\n\nCPU20100 - Set coverage in question\nCPU20200 - Activities\nCPU20300 - Create history\n\nUSES:\n\nCONDITION (claim : entity.Claim):\nreturn claim. isCoverageInQuestionFactorsNotEmpty ()\nor claim. isFieldchanged (\"Coverage InQuestion\")\n\nACTION (claim : entity.Claim, actions : gw.rules.Action) :\n\nEND\n\nGi",
+      "word_count": 94,
+      "avg_confidence": 83.19,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "| TXV15000 and its children Gi\n\n¢ Transaction Validation rule TXV15000 is a “gatekeeper” rule that fires if\n\n¢ There are financial holds\nAND\n\n¢ The evaluated TransactionSet is of a type to which financial holds apply\n¢ One child rule for each cause of financial holds\n\nv @ QZ 115000 - Financial Holds CONDITION (transactionSet : entity.TransactionSet) :\n‘ fe Pv35100 - Coverage InQuestion return transactionSet.Claim.applyFinancialHolds() == true\n‘ in| TXV15200 - Incident Only and (transactionSet.Subtype =\n\nor (transactionset. Subtype =\n\nand (transactionSet as Ch -checksetHasDeletedOrcancelledChecks() == false) )",
+      "word_count": 90,
+      "avg_confidence": 81.35,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Summary: configuring financial holds Gi\n\n* You can specify:\n\n* The factors that automatically trigger financial holds\n\n« The TransactionSets that are subject to financial holds\n¢ Three steps:\n\n1. If changing the factors that trigger financial holds, edit class\nFinancialHoldsImpl.gs\n\n2. If changing the transaction sets subject to financial holds, edit Transaction\nValidation Rule TXV15000\n\n3. Create or modify a child rule of TXV15000 to specify the action taken for each\nfactor triggering financial holds",
+      "word_count": 77,
+      "avg_confidence": 89.83,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Demonstration G\n\nConfiguring financial holds\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 95.61,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "Question G\n\n,~ — What kind of rules enforce financial holds?\n\n¢\n4\n¢\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 17,
+      "avg_confidence": 82.69,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Answer a\n\n,~ — What kind of rules enforce financial holds?\n¢\n4\n4\n\nThe correct answer is Transaction Validation rules\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 28,
+      "avg_confidence": 83.05,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "Question G\n\n,~ — Inthe base ClaimCenter configuration, what happens when a policy’s\n¢ status is set to anything but “In force” or “Archived”?\n\n4\n¢\n\nsSesoeooce SSeS Seee5b505",
+      "word_count": 29,
+      "avg_confidence": 82.12,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Answer a\n\n,~ — Inthe base ClaimCenter configuration, what happens when a policy’s\noo status is set to anything but “In force” or “Archived”?\n¢\n\nThe correct answer is the claim’s Coverage in Question flag is set, resulting ina\nfinancial hold.\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "word_count": 48,
+      "avg_confidence": 89.6,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Student exercise G\n\nConfiguring financials rules\nPlease complete the lab called Configuring financials rules in\n\n@ aaD\noe = the Student Workbook.\nap",
+      "word_count": 24,
+      "avg_confidence": 89.88,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Lesson\nobjectives\nreview\n\n¢ Configure financial holds",
+      "word_count": 7,
+      "avg_confidence": 87.29,
+      "image_size": {
+        "width": 1280,
+        "height": 670
+      }
+    }
+  ]
+}

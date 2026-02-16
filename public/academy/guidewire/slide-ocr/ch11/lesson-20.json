@@ -1,0 +1,269 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "lesson": "lesson-20",
+    "slide_count": 23,
+    "slides_with_text": 18,
+    "total_words": 635,
+    "avg_confidence": 87.96,
+    "processing_time_seconds": 6.84,
+    "extracted_at": "2026-02-15T18:23:20.748361"
+  },
+  "full_text": "Integration in Guidewire Cloud\n\nv012612.0.1\n\nAudio Note\n\nThis presentation is enhanced with audio.\n\nAdjust the volume on your playback device before\ncontinuing.\n\nLesson\nobjectives\n\n¢ Describe the Integration Framework.\n\n¢ List the components that make up the\nIntegration Framework for Guidewire Cloud.\n\n¢ Describe how different components work\ntogether to simplify integration in the cloud.\n\ni Comparing integration in self-managed and cloud Gi\n\nSelf-managed\n\nBusiness logic\n\nGuidewire Cloud — Integration framework\n\nBusiness logic Integration logic\n\nIntegration logic\n\nP)\n\nLow-code/No-code\n\n* Integration and Business logic are\nseparated.\n\nCTS bo\n\nSeveral lines of Gosu\nand other code bundles within\nInsuranceSuite\n\n* Eliminating Gosu code where possible\nand providing no-code/low-code options\nto develop integrations\n\ni Cloud Integration Framework components G\n\nCloud API\nInbound HTTP calls\nApp Events\nPublishes events ==\n\nInsuranceSuite External systems\nIntegration Gateway\nIntegration apps\nREST API Client\nAPI callout\n\ni Why use the Integration Framework? a\n\nImproved speed in putting integrations in place\nallows more time for solving business problems\n\nBy using proven frameworks and industry best\npractices, integrations are more resilient and fault\ntolerant\n\nRemoving integration code from core apps reduces\nsize of application builds; standardized integrations\nreduce risk inherent in custom code\n\ni Base configuration Cloud APIs\n\n& &\n\nPolicyCenter\n\nClaimCenter\n/claims/v1 /policy/v1\n/common/v1 /account/v1\n/productdefinition/v1 [job/v1\n/apis /apis\n\nBillingCenter\n\n* Only system-level\nmaintenance\nAPIs.\n\n« More coming in\nfuture releases.\n\nAccess Cloud API Swagger documentation at <application URL>/resources/swagger-ui/\n\ni Cloud API fundamentals\n\n/claim/v1\n\n/claims/{claimld}\n\n/claims\n\nPATCH /claims/{claimld}/vehicle-\nincidents/{vehicleld}\n\n/claims/{claimld}/docume\nnts/{documentld}\n\n/account/v1\n\n/accounts/{accountld}\n\n/accounts\n\n/accounts/{accountld}/contacts/\n{contactld}\n\ni What does the REST API client do? Gi\n\nREST Client is a method or a tool to invoke a REST service API\n\nGET real-time traffic info\nREST Client a Google traffic\nREST API\nReal-time traffic info\n\nGET, POST,\nGuidewire ———_\nREST API PATCH, DELETE External\nClient Return resources or API\n\nresponse\n\ni REST API Client overview G\n\nGuidewire IS\n\n¢ Distributed as .zip file.\n\nInsuranceSuite ==» * Configured to generate\nand embed Client in\n\nintegrates .\ng InsuranceSuite.\n\nExternal\nAPI\n\nEvents in InsuranceSuite\n| Gi\n\nz= ClaimOpened Bite &\n: : _\nClaimChanged\nCalculates risk of\n\nBese = = = =\"! fraud ona claim\nusing events\n\nFraud scoring\nsystem\n\n——_ == >:\n\nApp Events refers to the infrastructure that:\n* Raises business events in InsuranceSuite\n\n+ Enables customers to send events to external systems that cares about it\n\ni Sending events from InsuranceSuite in self-managed Gi\nEvent messaging\n\nInsuranceSuite\n\nEvents Destinations plugins : External\nsystems\n\nCustom Gosu code\nwritten by customers\n\nSending events from InsuranceSuite in Guidewire Cloud\nApp Events\n\nGi\n\nApp Events: Preferred way of implementing outbound integrations in the cloud\n\nDevelopers use a form-like interface to connect InsuranceSuite to external systems.\n\na) Claim events\na\n\nClaimCenter\n\n&: Policy events\n—————_—>\n-\n\nPolicyCenter\n\nEvent data based on\nCloud Events 1.0\n\nDeveloper\n\nIntegration Gateway\n\ni What is Integration Gateway?\n\nGi\n\nIntegration Gateway b External system\ne outbound outbound e &\n——— — — = >\n\nXML\n= inbound\ne- —\n\nREST@+ —_——\n\ninbound\n\norg\n\ne@ Represents an Integration framework component\n\n* Orchestrate any interaction pattern -° Bridge between any API interface\n¢ Transform any data format\n\ni Apache Camel basics Gi\n\nEnterprise Integration\nEndpoint Patterns (EIP) Endpoint\nReceives the message Processes the message Sends the message\n\nRoute Camel Context Component\nAn integration Container where Provides common\nflow in Camel routes are run services in Camel\n\n| Education\n\nClaimcentr System APL\n\nEj | Education\n\nRESTAPICtent\n\ni EDU courses about each component\n\nGil education\n\nPlcyCenter System API\n\n| Education\n\nInsuranceSuite App Events\n\nGi\n\nGuidewire Education offers further, in-depth training on each of the components.\n\nEi| Education\n\nIneuranceSuite Cloud APL\n\nGi| Education\n\nInsuranceSuit Integration Gateway\n\nLesson\nobjectives ¢ Describe the Integration Framework.\n\nreview ¢ List the components that make up the\nIntegration Framework for Guidewire Cloud.\n\n¢ Describe how different components work\ntogether to simplify integration in the cloud.",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Integration in Guidewire Cloud\n\nv012612.0.1",
+      "word_count": 5,
+      "avg_confidence": 82.5,
+      "image_size": {
+        "width": 1280,
+        "height": 551
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Audio Note\n\nThis presentation is enhanced with audio.\n\nAdjust the volume on your playback device before\ncontinuing.",
+      "word_count": 17,
+      "avg_confidence": 95.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Lesson\nobjectives\n\n¢ Describe the Integration Framework.\n\n¢ List the components that make up the\nIntegration Framework for Guidewire Cloud.\n\n¢ Describe how different components work\ntogether to simplify integration in the cloud.",
+      "word_count": 33,
+      "avg_confidence": 91.36,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i Comparing integration in self-managed and cloud Gi\n\nSelf-managed\n\nBusiness logic\n\nGuidewire Cloud — Integration framework\n\nBusiness logic Integration logic\n\nIntegration logic\n\nP)\n\nLow-code/No-code\n\n* Integration and Business logic are\nseparated.\n\nCTS bo\n\nSeveral lines of Gosu\nand other code bundles within\nInsuranceSuite\n\n* Eliminating Gosu code where possible\nand providing no-code/low-code options\nto develop integrations",
+      "word_count": 56,
+      "avg_confidence": 86.69,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i Cloud Integration Framework components G\n\nCloud API\nInbound HTTP calls\nApp Events\nPublishes events ==\n\nInsuranceSuite External systems\nIntegration Gateway\nIntegration apps\nREST API Client\nAPI callout",
+      "word_count": 28,
+      "avg_confidence": 92.64,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Why use the Integration Framework? a\n\nImproved speed in putting integrations in place\nallows more time for solving business problems\n\nBy using proven frameworks and industry best\npractices, integrations are more resilient and fault\ntolerant\n\nRemoving integration code from core apps reduces\nsize of application builds; standardized integrations\nreduce risk inherent in custom code",
+      "word_count": 55,
+      "avg_confidence": 94.07,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Base configuration Cloud APIs\n\n& &\n\nPolicyCenter\n\nClaimCenter\n/claims/v1 /policy/v1\n/common/v1 /account/v1\n/productdefinition/v1 [job/v1\n/apis /apis\n\nBillingCenter\n\n* Only system-level\nmaintenance\nAPIs.\n\n« More coming in\nfuture releases.\n\nAccess Cloud API Swagger documentation at <application URL>/resources/swagger-ui/",
+      "word_count": 37,
+      "avg_confidence": 80.97,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Cloud API fundamentals\n\n/claim/v1\n\n/claims/{claimld}\n\n/claims\n\nPATCH /claims/{claimld}/vehicle-\nincidents/{vehicleld}\n\n/claims/{claimld}/docume\nnts/{documentld}\n\n/account/v1\n\n/accounts/{accountld}\n\n/accounts\n\n/accounts/{accountld}/contacts/\n{contactld}",
+      "word_count": 17,
+      "avg_confidence": 76.94,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "i What does the REST API client do? Gi\n\nREST Client is a method or a tool to invoke a REST service API\n\nGET real-time traffic info\nREST Client a Google traffic\nREST API\nReal-time traffic info\n\nGET, POST,\nGuidewire ———_\nREST API PATCH, DELETE External\nClient Return resources or API\n\nresponse",
+      "word_count": 52,
+      "avg_confidence": 90.67,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i REST API Client overview G\n\nGuidewire IS\n\n¢ Distributed as .zip file.\n\nInsuranceSuite ==» * Configured to generate\nand embed Client in\n\nintegrates .\ng InsuranceSuite.\n\nExternal\nAPI",
+      "word_count": 29,
+      "avg_confidence": 87.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Events in InsuranceSuite\n| Gi\n\nz= ClaimOpened Bite &\n: : _\nClaimChanged\nCalculates risk of\n\nBese = = = =\"! fraud ona claim\nusing events\n\nFraud scoring\nsystem\n\n——_ == >:\n\nApp Events refers to the infrastructure that:\n* Raises business events in InsuranceSuite\n\n+ Enables customers to send events to external systems that cares about it",
+      "word_count": 58,
+      "avg_confidence": 79.51,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Sending events from InsuranceSuite in self-managed Gi\nEvent messaging\n\nInsuranceSuite\n\nEvents Destinations plugins : External\nsystems\n\nCustom Gosu code\nwritten by customers",
+      "word_count": 23,
+      "avg_confidence": 84.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "Sending events from InsuranceSuite in Guidewire Cloud\nApp Events\n\nGi\n\nApp Events: Preferred way of implementing outbound integrations in the cloud\n\nDevelopers use a form-like interface to connect InsuranceSuite to external systems.\n\na) Claim events\na\n\nClaimCenter\n\n&: Policy events\n—————_—>\n-\n\nPolicyCenter\n\nEvent data based on\nCloud Events 1.0\n\nDeveloper",
+      "word_count": 51,
+      "avg_confidence": 91.56,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Integration Gateway",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "i What is Integration Gateway?\n\nGi\n\nIntegration Gateway b External system\ne outbound outbound e &\n——— — — = >\n\nXML\n= inbound\ne- —\n\nREST@+ —_——\n\ninbound\n\norg\n\ne@ Represents an Integration framework component\n\n* Orchestrate any interaction pattern -° Bridge between any API interface\n¢ Transform any data format",
+      "word_count": 52,
+      "avg_confidence": 77.61,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "i Apache Camel basics Gi\n\nEnterprise Integration\nEndpoint Patterns (EIP) Endpoint\nReceives the message Processes the message Sends the message\n\nRoute Camel Context Component\nAn integration Container where Provides common\nflow in Camel routes are run services in Camel",
+      "word_count": 39,
+      "avg_confidence": 92.53,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Education\n\nClaimcentr System APL\n\nEj | Education\n\nRESTAPICtent\n\ni EDU courses about each component\n\nGil education\n\nPlcyCenter System API\n\n| Education\n\nInsuranceSuite App Events\n\nGi\n\nGuidewire Education offers further, in-depth training on each of the components.\n\nEi| Education\n\nIneuranceSuite Cloud APL\n\nGi| Education\n\nInsuranceSuit Integration Gateway",
+      "word_count": 47,
+      "avg_confidence": 70.33,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "Lesson\nobjectives ¢ Describe the Integration Framework.\n\nreview ¢ List the components that make up the\nIntegration Framework for Guidewire Cloud.\n\n¢ Describe how different components work\ntogether to simplify integration in the cloud.",
+      "word_count": 34,
+      "avg_confidence": 91.44,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

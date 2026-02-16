@@ -1,0 +1,3101 @@
+{
+  "metadata": {
+    "chapter": "ch08",
+    "chapter_title": "PolicyCenter Product Model",
+    "filename": "PP_08_01.mp4",
+    "video_stem": "PP_08_01",
+    "duration_seconds": 228.36,
+    "duration_formatted": "00:03:48.360",
+    "segment_count": 25,
+    "word_count": 465,
+    "avg_confidence": 0.9398,
+    "transcription_time_seconds": 14.95,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:28:20.479375"
+  },
+  "full_text": "PolicyCenter uses validation classes to validate entities on the policy graph. Under configuration, GSRC, GW, Policy, there are the validation classes shared across all lines of business. For example, Policy Period Validation, Policy Line Validation, Policy Location Validation, etc. Line-specific validation classes are under configuration, GSRC, GW, etc. LOB, and in each line of business folder. For example, NBA for commercial auto. NPA for personal auto. So on and so forth. All validation classes implement the PC Validation interface or extend a base class that implements PC Validation. Entity validation classes extend PC Validation base, such as Business Vehicle Validation. The subclasses have a Validation method. Personal Vehicle Validation class is another example. Policy Line-specific validation classes extend Policy Line Validation, such as PA Line Validation or BOP Line Validation classes. The subclasses have a Do Validate method, which calls other validation methods. Control-click to open Vehicle Validation. Control-click to open Vehicle Validator.DoValidate method. The Validator class contains methods that test for a single issue, for example at least one vehicle method. Policy Center uses validation levels to verify entities at certain levels before continuing. In at least one vehicle method, it first checks if the PA Line has no vehicles in it, and the current level is default or higher, it creates an appropriate message. Then another check is done to see if the current level is at least quotable, it adds an error message, otherwise it adds a warning message. The result variable is an object of PC Validation results. Vehicles-Wizard-step is a static final variable defined with value Personal Vehicles, which is the ID of the Vehicles step in the Personal Auto Submission wizard. When the wizard step ID is supplied, it creates a link to that wizard step, when the validation is executed but the user is on another step. Log into Policy Center as Alice Applegate. Create a Personal Auto Submission that does not have a vehicle. On the Vehicles page, try to navigate away by clicking the Next button. A warning message is displayed, because the validation is performed at a level that is lower than quotable. Click the Quote button. An error message is displayed, because the validation is performed at the quotable level. There is no link on the message, since you are on the Vehicles page. Click Clear to get rid of the frame. Go to the policy review page. The warning is displayed again. It does not block navigation. Click policy review again. Click quote on the policy review page. An error is displayed with a link to the vehicle's step where the error occurred. Users can click on that link. It takes the users to the vehicle's page where they can fix the error. This is the end of demonstration for validation class space.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.18,
+      "end": 29.98,
+      "start_formatted": "00:00:01.180",
+      "end_formatted": "00:00:29.980",
+      "text": "PolicyCenter uses validation classes to validate entities on the policy graph. Under configuration, GSRC, GW, Policy, there are the validation classes shared across all lines of business. For example, Policy Period Validation, Policy Line Validation, Policy Location Validation, etc. Line-specific validation classes are under configuration, GSRC, GW, etc.",
+      "words": [
+        {
+          "word": "PolicyCenter",
+          "start": 1.18,
+          "end": 2.06,
+          "probability": 0.6675
+        },
+        {
+          "word": "uses",
+          "start": 2.06,
+          "end": 2.42,
+          "probability": 0.9878
+        },
+        {
+          "word": "validation",
+          "start": 2.42,
+          "end": 3.06,
+          "probability": 0.9712
+        },
+        {
+          "word": "classes",
+          "start": 3.06,
+          "end": 3.6,
+          "probability": 1.0
+        },
+        {
+          "word": "to",
+          "start": 3.6,
+          "end": 3.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "validate",
+          "start": 3.86,
+          "end": 4.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "entities",
+          "start": 4.3,
+          "end": 4.86,
+          "probability": 0.9932
+        },
+        {
+          "word": "on",
+          "start": 4.86,
+          "end": 5.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 5.2,
+          "end": 5.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "policy",
+          "start": 5.32,
+          "end": 5.78,
+          "probability": 0.7495
+        },
+        {
+          "word": "graph.",
+          "start": 5.78,
+          "end": 6.32,
+          "probability": 0.9966
+        },
+        {
+          "word": "Under",
+          "start": 6.62,
+          "end": 7.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "configuration,",
+          "start": 7.04,
+          "end": 7.82,
+          "probability": 0.5015
+        },
+        {
+          "word": "GSRC,",
+          "start": 8.14,
+          "end": 9.18,
+          "probability": 0.9644
+        },
+        {
+          "word": "GW,",
+          "start": 9.46,
+          "end": 9.98,
+          "probability": 0.9956
+        },
+        {
+          "word": "Policy,",
+          "start": 10.48,
+          "end": 11.02,
+          "probability": 0.7319
+        },
+        {
+          "word": "there",
+          "start": 11.34,
+          "end": 11.6,
+          "probability": 0.9985
+        },
+        {
+          "word": "are",
+          "start": 11.6,
+          "end": 11.76,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 11.76,
+          "end": 11.9,
+          "probability": 1.0
+        },
+        {
+          "word": "validation",
+          "start": 11.9,
+          "end": 12.48,
+          "probability": 0.999
+        },
+        {
+          "word": "classes",
+          "start": 12.48,
+          "end": 13.0,
+          "probability": 1.0
+        },
+        {
+          "word": "shared",
+          "start": 13.0,
+          "end": 13.38,
+          "probability": 1.0
+        },
+        {
+          "word": "across",
+          "start": 13.38,
+          "end": 13.68,
+          "probability": 1.0
+        },
+        {
+          "word": "all",
+          "start": 13.68,
+          "end": 14.12,
+          "probability": 1.0
+        },
+        {
+          "word": "lines",
+          "start": 14.12,
+          "end": 14.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "of",
+          "start": 14.46,
+          "end": 14.62,
+          "probability": 1.0
+        },
+        {
+          "word": "business.",
+          "start": 14.62,
+          "end": 15.06,
+          "probability": 0.9941
+        },
+        {
+          "word": "For",
+          "start": 15.42,
+          "end": 15.74,
+          "probability": 0.999
+        },
+        {
+          "word": "example,",
+          "start": 15.74,
+          "end": 16.18,
+          "probability": 1.0
+        },
+        {
+          "word": "Policy",
+          "start": 16.6,
+          "end": 17.04,
+          "probability": 0.7842
+        },
+        {
+          "word": "Period",
+          "start": 17.04,
+          "end": 17.5,
+          "probability": 0.2756
+        },
+        {
+          "word": "Validation,",
+          "start": 17.5,
+          "end": 18.5,
+          "probability": 0.9961
+        },
+        {
+          "word": "Policy",
+          "start": 18.72,
+          "end": 19.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "Line",
+          "start": 19.28,
+          "end": 19.68,
+          "probability": 0.9956
+        },
+        {
+          "word": "Validation,",
+          "start": 19.68,
+          "end": 20.44,
+          "probability": 1.0
+        },
+        {
+          "word": "Policy",
+          "start": 20.7,
+          "end": 21.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "Location",
+          "start": 21.22,
+          "end": 21.88,
+          "probability": 0.999
+        },
+        {
+          "word": "Validation,",
+          "start": 21.88,
+          "end": 22.62,
+          "probability": 0.9995
+        },
+        {
+          "word": "etc.",
+          "start": 22.84,
+          "end": 23.18,
+          "probability": 0.9956
+        },
+        {
+          "word": "Line",
+          "start": 24.04,
+          "end": 24.56,
+          "probability": 0.9888
+        },
+        {
+          "word": "-specific",
+          "start": 24.56,
+          "end": 25.0,
+          "probability": 0.9023
+        },
+        {
+          "word": "validation",
+          "start": 25.0,
+          "end": 25.74,
+          "probability": 0.9966
+        },
+        {
+          "word": "classes",
+          "start": 25.74,
+          "end": 26.34,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 26.34,
+          "end": 26.64,
+          "probability": 1.0
+        },
+        {
+          "word": "under",
+          "start": 26.64,
+          "end": 26.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "configuration,",
+          "start": 26.86,
+          "end": 27.6,
+          "probability": 0.9927
+        },
+        {
+          "word": "GSRC,",
+          "start": 28.06,
+          "end": 28.94,
+          "probability": 0.999
+        },
+        {
+          "word": "GW,",
+          "start": 29.24,
+          "end": 29.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "etc.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.4231
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 29.98,
+      "end": 40.48,
+      "start_formatted": "00:00:29.980",
+      "end_formatted": "00:00:40.480",
+      "text": "LOB, and in each line of business folder. For example, NBA for commercial auto. NPA for personal auto. So on and so forth.",
+      "words": [
+        {
+          "word": "LOB,",
+          "start": 29.98,
+          "end": 30.94,
+          "probability": 0.541
+        },
+        {
+          "word": "and",
+          "start": 31.26,
+          "end": 31.54,
+          "probability": 0.9927
+        },
+        {
+          "word": "in",
+          "start": 31.54,
+          "end": 31.7,
+          "probability": 0.9976
+        },
+        {
+          "word": "each",
+          "start": 31.7,
+          "end": 31.96,
+          "probability": 0.999
+        },
+        {
+          "word": "line",
+          "start": 31.96,
+          "end": 32.26,
+          "probability": 0.9824
+        },
+        {
+          "word": "of",
+          "start": 32.26,
+          "end": 32.44,
+          "probability": 0.8521
+        },
+        {
+          "word": "business",
+          "start": 32.44,
+          "end": 32.74,
+          "probability": 0.8169
+        },
+        {
+          "word": "folder.",
+          "start": 32.74,
+          "end": 33.32,
+          "probability": 0.999
+        },
+        {
+          "word": "For",
+          "start": 33.54,
+          "end": 33.98,
+          "probability": 0.9951
+        },
+        {
+          "word": "example,",
+          "start": 33.98,
+          "end": 34.44,
+          "probability": 0.999
+        },
+        {
+          "word": "NBA",
+          "start": 34.82,
+          "end": 35.3,
+          "probability": 0.4451
+        },
+        {
+          "word": "for",
+          "start": 35.3,
+          "end": 35.54,
+          "probability": 0.999
+        },
+        {
+          "word": "commercial",
+          "start": 35.54,
+          "end": 35.96,
+          "probability": 0.8188
+        },
+        {
+          "word": "auto.",
+          "start": 35.96,
+          "end": 36.32,
+          "probability": 0.9321
+        },
+        {
+          "word": "NPA",
+          "start": 36.72,
+          "end": 37.34,
+          "probability": 0.9824
+        },
+        {
+          "word": "for",
+          "start": 37.34,
+          "end": 37.64,
+          "probability": 1.0
+        },
+        {
+          "word": "personal",
+          "start": 37.64,
+          "end": 38.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "auto.",
+          "start": 38.06,
+          "end": 38.5,
+          "probability": 0.9985
+        },
+        {
+          "word": "So",
+          "start": 38.78,
+          "end": 39.2,
+          "probability": 0.9966
+        },
+        {
+          "word": "on",
+          "start": 39.2,
+          "end": 39.5,
+          "probability": 1.0
+        },
+        {
+          "word": "and",
+          "start": 39.5,
+          "end": 39.74,
+          "probability": 0.9995
+        },
+        {
+          "word": "so",
+          "start": 39.74,
+          "end": 40.02,
+          "probability": 1.0
+        },
+        {
+          "word": "forth.",
+          "start": 40.02,
+          "end": 40.48,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 42.98,
+      "end": 57.18,
+      "start_formatted": "00:00:42.980",
+      "end_formatted": "00:00:57.180",
+      "text": "All validation classes implement the PC Validation interface or extend a base class that implements PC Validation. Entity validation classes extend PC Validation base, such as Business Vehicle Validation.",
+      "words": [
+        {
+          "word": "All",
+          "start": 42.74,
+          "end": 43.14,
+          "probability": 0.9922
+        },
+        {
+          "word": "validation",
+          "start": 43.14,
+          "end": 43.74,
+          "probability": 0.8838
+        },
+        {
+          "word": "classes",
+          "start": 43.74,
+          "end": 44.3,
+          "probability": 1.0
+        },
+        {
+          "word": "implement",
+          "start": 44.3,
+          "end": 44.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 44.8,
+          "end": 45.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "PC",
+          "start": 45.08,
+          "end": 45.44,
+          "probability": 0.9922
+        },
+        {
+          "word": "Validation",
+          "start": 45.44,
+          "end": 46.22,
+          "probability": 0.8242
+        },
+        {
+          "word": "interface",
+          "start": 46.22,
+          "end": 46.7,
+          "probability": 0.6558
+        },
+        {
+          "word": "or",
+          "start": 46.7,
+          "end": 47.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "extend",
+          "start": 47.16,
+          "end": 47.56,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 47.56,
+          "end": 47.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "base",
+          "start": 47.82,
+          "end": 48.04,
+          "probability": 0.9678
+        },
+        {
+          "word": "class",
+          "start": 48.04,
+          "end": 48.32,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 48.32,
+          "end": 48.66,
+          "probability": 1.0
+        },
+        {
+          "word": "implements",
+          "start": 48.66,
+          "end": 49.36,
+          "probability": 1.0
+        },
+        {
+          "word": "PC",
+          "start": 49.36,
+          "end": 49.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "Validation.",
+          "start": 49.76,
+          "end": 50.6,
+          "probability": 0.9067
+        },
+        {
+          "word": "Entity",
+          "start": 50.92,
+          "end": 51.54,
+          "probability": 0.999
+        },
+        {
+          "word": "validation",
+          "start": 51.54,
+          "end": 52.12,
+          "probability": 0.5176
+        },
+        {
+          "word": "classes",
+          "start": 52.12,
+          "end": 52.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "extend",
+          "start": 52.7,
+          "end": 53.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "PC",
+          "start": 53.08,
+          "end": 53.56,
+          "probability": 0.999
+        },
+        {
+          "word": "Validation",
+          "start": 53.56,
+          "end": 54.38,
+          "probability": 0.9932
+        },
+        {
+          "word": "base,",
+          "start": 54.38,
+          "end": 54.86,
+          "probability": 0.8511
+        },
+        {
+          "word": "such",
+          "start": 55.08,
+          "end": 55.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 55.44,
+          "end": 55.64,
+          "probability": 1.0
+        },
+        {
+          "word": "Business",
+          "start": 55.64,
+          "end": 55.94,
+          "probability": 0.5835
+        },
+        {
+          "word": "Vehicle",
+          "start": 55.94,
+          "end": 56.46,
+          "probability": 0.9722
+        },
+        {
+          "word": "Validation.",
+          "start": 56.46,
+          "end": 57.18,
+          "probability": 0.9048
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 57.18,
+      "end": 65.68,
+      "start_formatted": "00:00:57.180",
+      "end_formatted": "00:01:05.680",
+      "text": "The subclasses have a Validation method. Personal Vehicle Validation class is another example.",
+      "words": [
+        {
+          "word": "The",
+          "start": 57.18,
+          "end": 57.8,
+          "probability": 0.9546
+        },
+        {
+          "word": "subclasses",
+          "start": 57.8,
+          "end": 58.58,
+          "probability": 0.9878
+        },
+        {
+          "word": "have",
+          "start": 58.58,
+          "end": 58.76,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 58.76,
+          "end": 58.9,
+          "probability": 1.0
+        },
+        {
+          "word": "Validation",
+          "start": 58.9,
+          "end": 59.42,
+          "probability": 0.4246
+        },
+        {
+          "word": "method.",
+          "start": 59.42,
+          "end": 59.74,
+          "probability": 0.2605
+        },
+        {
+          "word": "Personal",
+          "start": 62.02,
+          "end": 62.88,
+          "probability": 0.9917
+        },
+        {
+          "word": "Vehicle",
+          "start": 62.88,
+          "end": 63.4,
+          "probability": 0.8779
+        },
+        {
+          "word": "Validation",
+          "start": 63.4,
+          "end": 64.1,
+          "probability": 0.9878
+        },
+        {
+          "word": "class",
+          "start": 64.1,
+          "end": 64.38,
+          "probability": 0.98
+        },
+        {
+          "word": "is",
+          "start": 64.38,
+          "end": 64.72,
+          "probability": 0.999
+        },
+        {
+          "word": "another",
+          "start": 64.72,
+          "end": 65.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "example.",
+          "start": 65.04,
+          "end": 65.68,
+          "probability": 1.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 67.72,
+      "end": 82.8,
+      "start_formatted": "00:01:07.720",
+      "end_formatted": "00:01:22.800",
+      "text": "Policy Line-specific validation classes extend Policy Line Validation, such as PA Line Validation or BOP Line Validation classes. The subclasses have a Do Validate method, which calls other validation methods.",
+      "words": [
+        {
+          "word": "Policy",
+          "start": 67.72,
+          "end": 68.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "Line",
+          "start": 68.58,
+          "end": 69.0,
+          "probability": 0.4429
+        },
+        {
+          "word": "-specific",
+          "start": 69.0,
+          "end": 69.4,
+          "probability": 0.4009
+        },
+        {
+          "word": "validation",
+          "start": 69.4,
+          "end": 70.22,
+          "probability": 0.9468
+        },
+        {
+          "word": "classes",
+          "start": 70.22,
+          "end": 70.8,
+          "probability": 1.0
+        },
+        {
+          "word": "extend",
+          "start": 70.8,
+          "end": 71.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "Policy",
+          "start": 71.26,
+          "end": 71.8,
+          "probability": 0.792
+        },
+        {
+          "word": "Line",
+          "start": 71.8,
+          "end": 72.24,
+          "probability": 0.9917
+        },
+        {
+          "word": "Validation,",
+          "start": 72.24,
+          "end": 73.02,
+          "probability": 0.9072
+        },
+        {
+          "word": "such",
+          "start": 73.22,
+          "end": 73.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "as",
+          "start": 73.56,
+          "end": 73.78,
+          "probability": 1.0
+        },
+        {
+          "word": "PA",
+          "start": 73.78,
+          "end": 74.1,
+          "probability": 0.939
+        },
+        {
+          "word": "Line",
+          "start": 74.1,
+          "end": 74.46,
+          "probability": 0.9517
+        },
+        {
+          "word": "Validation",
+          "start": 74.46,
+          "end": 75.2,
+          "probability": 0.9893
+        },
+        {
+          "word": "or",
+          "start": 75.2,
+          "end": 75.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "BOP",
+          "start": 75.42,
+          "end": 75.78,
+          "probability": 0.9746
+        },
+        {
+          "word": "Line",
+          "start": 75.78,
+          "end": 76.12,
+          "probability": 0.9785
+        },
+        {
+          "word": "Validation",
+          "start": 76.12,
+          "end": 76.86,
+          "probability": 0.9434
+        },
+        {
+          "word": "classes.",
+          "start": 76.86,
+          "end": 77.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "The",
+          "start": 77.7,
+          "end": 78.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "subclasses",
+          "start": 78.1,
+          "end": 78.88,
+          "probability": 1.0
+        },
+        {
+          "word": "have",
+          "start": 78.88,
+          "end": 79.08,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 79.08,
+          "end": 79.2,
+          "probability": 1.0
+        },
+        {
+          "word": "Do",
+          "start": 79.2,
+          "end": 79.34,
+          "probability": 0.9595
+        },
+        {
+          "word": "Validate",
+          "start": 79.34,
+          "end": 79.96,
+          "probability": 0.9341
+        },
+        {
+          "word": "method,",
+          "start": 79.96,
+          "end": 80.26,
+          "probability": 0.999
+        },
+        {
+          "word": "which",
+          "start": 80.5,
+          "end": 80.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "calls",
+          "start": 80.78,
+          "end": 81.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "other",
+          "start": 81.24,
+          "end": 81.54,
+          "probability": 0.4519
+        },
+        {
+          "word": "validation",
+          "start": 81.54,
+          "end": 82.18,
+          "probability": 0.9546
+        },
+        {
+          "word": "methods.",
+          "start": 82.18,
+          "end": 82.8,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 82.8,
+      "end": 86.06,
+      "start_formatted": "00:01:22.800",
+      "end_formatted": "00:01:26.060",
+      "text": "Control-click to open Vehicle Validation.",
+      "words": [
+        {
+          "word": "Control",
+          "start": 82.8,
+          "end": 83.98,
+          "probability": 0.8291
+        },
+        {
+          "word": "-click",
+          "start": 83.98,
+          "end": 84.34,
+          "probability": 0.8193
+        },
+        {
+          "word": "to",
+          "start": 84.34,
+          "end": 84.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "open",
+          "start": 84.6,
+          "end": 84.96,
+          "probability": 0.9966
+        },
+        {
+          "word": "Vehicle",
+          "start": 84.96,
+          "end": 85.46,
+          "probability": 0.8311
+        },
+        {
+          "word": "Validation.",
+          "start": 85.46,
+          "end": 86.06,
+          "probability": 0.3494
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 86.06,
+      "end": 87.46,
+      "start_formatted": "00:01:26.060",
+      "end_formatted": "00:01:27.460",
+      "text": "Control-click to open Vehicle Validator.DoValidate method.",
+      "words": [
+        {
+          "word": "Control",
+          "start": 86.06,
+          "end": 86.06,
+          "probability": 0.0
+        },
+        {
+          "word": "-click",
+          "start": 86.06,
+          "end": 86.06,
+          "probability": 0.9629
+        },
+        {
+          "word": "to",
+          "start": 86.06,
+          "end": 86.06,
+          "probability": 0.8721
+        },
+        {
+          "word": "open",
+          "start": 86.06,
+          "end": 86.06,
+          "probability": 0.8916
+        },
+        {
+          "word": "Vehicle",
+          "start": 86.06,
+          "end": 86.06,
+          "probability": 0.9873
+        },
+        {
+          "word": "Validator",
+          "start": 86.06,
+          "end": 86.08,
+          "probability": 0.7627
+        },
+        {
+          "word": ".DoValidate",
+          "start": 86.08,
+          "end": 87.14,
+          "probability": 0.7935
+        },
+        {
+          "word": "method.",
+          "start": 87.14,
+          "end": 87.46,
+          "probability": 0.9819
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 91.78,
+      "end": 98.74,
+      "start_formatted": "00:01:31.780",
+      "end_formatted": "00:01:38.740",
+      "text": "The Validator class contains methods that test for a single issue, for example at least one vehicle method.",
+      "words": [
+        {
+          "word": "The",
+          "start": 91.78,
+          "end": 92.5,
+          "probability": 0.9712
+        },
+        {
+          "word": "Validator",
+          "start": 92.5,
+          "end": 93.1,
+          "probability": 0.9185
+        },
+        {
+          "word": "class",
+          "start": 93.1,
+          "end": 93.4,
+          "probability": 0.9961
+        },
+        {
+          "word": "contains",
+          "start": 93.4,
+          "end": 93.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "methods",
+          "start": 93.86,
+          "end": 94.46,
+          "probability": 0.9985
+        },
+        {
+          "word": "that",
+          "start": 94.46,
+          "end": 94.7,
+          "probability": 1.0
+        },
+        {
+          "word": "test",
+          "start": 94.7,
+          "end": 94.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 94.98,
+          "end": 95.18,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 95.18,
+          "end": 95.34,
+          "probability": 1.0
+        },
+        {
+          "word": "single",
+          "start": 95.34,
+          "end": 95.62,
+          "probability": 1.0
+        },
+        {
+          "word": "issue,",
+          "start": 95.62,
+          "end": 96.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "for",
+          "start": 96.36,
+          "end": 96.62,
+          "probability": 0.9395
+        },
+        {
+          "word": "example",
+          "start": 96.62,
+          "end": 97.08,
+          "probability": 1.0
+        },
+        {
+          "word": "at",
+          "start": 97.08,
+          "end": 97.36,
+          "probability": 0.9673
+        },
+        {
+          "word": "least",
+          "start": 97.36,
+          "end": 97.54,
+          "probability": 0.9834
+        },
+        {
+          "word": "one",
+          "start": 97.54,
+          "end": 97.86,
+          "probability": 0.9897
+        },
+        {
+          "word": "vehicle",
+          "start": 97.86,
+          "end": 98.24,
+          "probability": 0.8911
+        },
+        {
+          "word": "method.",
+          "start": 98.24,
+          "end": 98.74,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 103.52,
+      "end": 120.7,
+      "start_formatted": "00:01:43.520",
+      "end_formatted": "00:02:00.700",
+      "text": "Policy Center uses validation levels to verify entities at certain levels before continuing. In at least one vehicle method, it first checks if the PA Line has no vehicles in it, and the current level is default or higher, it creates an appropriate message.",
+      "words": [
+        {
+          "word": "Policy",
+          "start": 103.52,
+          "end": 104.24,
+          "probability": 0.7852
+        },
+        {
+          "word": "Center",
+          "start": 104.24,
+          "end": 104.74,
+          "probability": 0.7891
+        },
+        {
+          "word": "uses",
+          "start": 104.74,
+          "end": 105.12,
+          "probability": 0.9824
+        },
+        {
+          "word": "validation",
+          "start": 105.12,
+          "end": 105.68,
+          "probability": 0.9575
+        },
+        {
+          "word": "levels",
+          "start": 105.68,
+          "end": 106.26,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 106.26,
+          "end": 106.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "verify",
+          "start": 106.56,
+          "end": 106.98,
+          "probability": 0.999
+        },
+        {
+          "word": "entities",
+          "start": 106.98,
+          "end": 107.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "at",
+          "start": 107.66,
+          "end": 108.08,
+          "probability": 1.0
+        },
+        {
+          "word": "certain",
+          "start": 108.08,
+          "end": 108.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "levels",
+          "start": 108.44,
+          "end": 108.86,
+          "probability": 0.999
+        },
+        {
+          "word": "before",
+          "start": 108.86,
+          "end": 109.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "continuing.",
+          "start": 109.3,
+          "end": 109.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "In",
+          "start": 110.26,
+          "end": 110.66,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 110.66,
+          "end": 110.86,
+          "probability": 0.9878
+        },
+        {
+          "word": "least",
+          "start": 110.86,
+          "end": 111.1,
+          "probability": 0.9897
+        },
+        {
+          "word": "one",
+          "start": 111.1,
+          "end": 111.46,
+          "probability": 0.9961
+        },
+        {
+          "word": "vehicle",
+          "start": 111.46,
+          "end": 111.86,
+          "probability": 0.9941
+        },
+        {
+          "word": "method,",
+          "start": 111.86,
+          "end": 112.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 112.5,
+          "end": 112.74,
+          "probability": 0.999
+        },
+        {
+          "word": "first",
+          "start": 112.74,
+          "end": 113.1,
+          "probability": 1.0
+        },
+        {
+          "word": "checks",
+          "start": 113.1,
+          "end": 113.46,
+          "probability": 1.0
+        },
+        {
+          "word": "if",
+          "start": 113.46,
+          "end": 113.7,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 113.7,
+          "end": 113.8,
+          "probability": 1.0
+        },
+        {
+          "word": "PA",
+          "start": 113.8,
+          "end": 114.12,
+          "probability": 0.9883
+        },
+        {
+          "word": "Line",
+          "start": 114.12,
+          "end": 114.42,
+          "probability": 0.0145
+        },
+        {
+          "word": "has",
+          "start": 114.42,
+          "end": 114.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "no",
+          "start": 114.76,
+          "end": 115.02,
+          "probability": 0.9937
+        },
+        {
+          "word": "vehicles",
+          "start": 115.02,
+          "end": 115.52,
+          "probability": 0.9883
+        },
+        {
+          "word": "in",
+          "start": 115.52,
+          "end": 115.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "it,",
+          "start": 115.86,
+          "end": 116.06,
+          "probability": 0.999
+        },
+        {
+          "word": "and",
+          "start": 116.18,
+          "end": 116.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 116.4,
+          "end": 116.52,
+          "probability": 0.999
+        },
+        {
+          "word": "current",
+          "start": 116.52,
+          "end": 116.82,
+          "probability": 0.9849
+        },
+        {
+          "word": "level",
+          "start": 116.82,
+          "end": 117.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 117.18,
+          "end": 117.44,
+          "probability": 0.999
+        },
+        {
+          "word": "default",
+          "start": 117.44,
+          "end": 117.82,
+          "probability": 0.9458
+        },
+        {
+          "word": "or",
+          "start": 117.82,
+          "end": 118.1,
+          "probability": 0.999
+        },
+        {
+          "word": "higher,",
+          "start": 118.1,
+          "end": 118.5,
+          "probability": 0.9995
+        },
+        {
+          "word": "it",
+          "start": 118.68,
+          "end": 118.92,
+          "probability": 0.9951
+        },
+        {
+          "word": "creates",
+          "start": 118.92,
+          "end": 119.34,
+          "probability": 0.9995
+        },
+        {
+          "word": "an",
+          "start": 119.34,
+          "end": 119.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "appropriate",
+          "start": 119.56,
+          "end": 120.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "message.",
+          "start": 120.02,
+          "end": 120.7,
+          "probability": 0.9971
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 120.7,
+      "end": 129.5,
+      "start_formatted": "00:02:00.700",
+      "end_formatted": "00:02:09.500",
+      "text": "Then another check is done to see if the current level is at least quotable, it adds an error message, otherwise it adds a warning message.",
+      "words": [
+        {
+          "word": "Then",
+          "start": 120.7,
+          "end": 121.72,
+          "probability": 0.8516
+        },
+        {
+          "word": "another",
+          "start": 121.72,
+          "end": 122.08,
+          "probability": 0.9937
+        },
+        {
+          "word": "check",
+          "start": 122.08,
+          "end": 122.38,
+          "probability": 0.9863
+        },
+        {
+          "word": "is",
+          "start": 122.38,
+          "end": 122.64,
+          "probability": 0.999
+        },
+        {
+          "word": "done",
+          "start": 122.64,
+          "end": 122.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 122.84,
+          "end": 123.02,
+          "probability": 0.9985
+        },
+        {
+          "word": "see",
+          "start": 123.02,
+          "end": 123.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "if",
+          "start": 123.2,
+          "end": 123.36,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 123.36,
+          "end": 123.48,
+          "probability": 0.9971
+        },
+        {
+          "word": "current",
+          "start": 123.48,
+          "end": 123.74,
+          "probability": 0.9731
+        },
+        {
+          "word": "level",
+          "start": 123.74,
+          "end": 124.1,
+          "probability": 0.9883
+        },
+        {
+          "word": "is",
+          "start": 124.1,
+          "end": 124.38,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 124.38,
+          "end": 124.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "least",
+          "start": 124.6,
+          "end": 124.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "quotable,",
+          "start": 124.86,
+          "end": 125.48,
+          "probability": 0.9883
+        },
+        {
+          "word": "it",
+          "start": 125.66,
+          "end": 125.92,
+          "probability": 0.9858
+        },
+        {
+          "word": "adds",
+          "start": 125.92,
+          "end": 126.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 126.22,
+          "end": 126.42,
+          "probability": 0.9985
+        },
+        {
+          "word": "error",
+          "start": 126.42,
+          "end": 126.66,
+          "probability": 0.9878
+        },
+        {
+          "word": "message,",
+          "start": 126.66,
+          "end": 127.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "otherwise",
+          "start": 127.44,
+          "end": 127.8,
+          "probability": 0.998
+        },
+        {
+          "word": "it",
+          "start": 127.8,
+          "end": 128.24,
+          "probability": 0.999
+        },
+        {
+          "word": "adds",
+          "start": 128.24,
+          "end": 128.48,
+          "probability": 0.9688
+        },
+        {
+          "word": "a",
+          "start": 128.48,
+          "end": 128.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "warning",
+          "start": 128.64,
+          "end": 128.96,
+          "probability": 0.9893
+        },
+        {
+          "word": "message.",
+          "start": 128.96,
+          "end": 129.5,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 129.5,
+      "end": 134.3,
+      "start_formatted": "00:02:09.500",
+      "end_formatted": "00:02:14.300",
+      "text": "The result variable is an object of PC Validation results.",
+      "words": [
+        {
+          "word": "The",
+          "start": 129.5,
+          "end": 130.48,
+          "probability": 0.8809
+        },
+        {
+          "word": "result",
+          "start": 130.48,
+          "end": 130.86,
+          "probability": 0.9624
+        },
+        {
+          "word": "variable",
+          "start": 130.86,
+          "end": 131.36,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 131.36,
+          "end": 131.72,
+          "probability": 1.0
+        },
+        {
+          "word": "an",
+          "start": 131.72,
+          "end": 131.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "object",
+          "start": 131.86,
+          "end": 132.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 132.24,
+          "end": 132.54,
+          "probability": 0.9995
+        },
+        {
+          "word": "PC",
+          "start": 132.54,
+          "end": 132.9,
+          "probability": 0.9409
+        },
+        {
+          "word": "Validation",
+          "start": 132.9,
+          "end": 133.66,
+          "probability": 0.7388
+        },
+        {
+          "word": "results.",
+          "start": 133.66,
+          "end": 134.3,
+          "probability": 0.4912
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 135.08,
+      "end": 146.62,
+      "start_formatted": "00:02:15.080",
+      "end_formatted": "00:02:26.620",
+      "text": "Vehicles-Wizard-step is a static final variable defined with value Personal Vehicles, which is the ID of the Vehicles step in the Personal Auto Submission wizard.",
+      "words": [
+        {
+          "word": "Vehicles",
+          "start": 135.08,
+          "end": 135.6,
+          "probability": 0.9668
+        },
+        {
+          "word": "-Wizard",
+          "start": 135.6,
+          "end": 136.64,
+          "probability": 0.5815
+        },
+        {
+          "word": "-step",
+          "start": 136.64,
+          "end": 137.72,
+          "probability": 0.688
+        },
+        {
+          "word": "is",
+          "start": 137.72,
+          "end": 138.06,
+          "probability": 0.9922
+        },
+        {
+          "word": "a",
+          "start": 138.06,
+          "end": 138.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "static",
+          "start": 138.18,
+          "end": 138.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "final",
+          "start": 138.6,
+          "end": 139.02,
+          "probability": 0.9834
+        },
+        {
+          "word": "variable",
+          "start": 139.02,
+          "end": 139.64,
+          "probability": 1.0
+        },
+        {
+          "word": "defined",
+          "start": 139.64,
+          "end": 140.08,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 140.08,
+          "end": 140.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "value",
+          "start": 140.48,
+          "end": 140.98,
+          "probability": 0.9219
+        },
+        {
+          "word": "Personal",
+          "start": 140.98,
+          "end": 141.44,
+          "probability": 0.4409
+        },
+        {
+          "word": "Vehicles,",
+          "start": 141.44,
+          "end": 142.1,
+          "probability": 0.7222
+        },
+        {
+          "word": "which",
+          "start": 142.3,
+          "end": 142.6,
+          "probability": 1.0
+        },
+        {
+          "word": "is",
+          "start": 142.6,
+          "end": 142.78,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 142.78,
+          "end": 142.96,
+          "probability": 1.0
+        },
+        {
+          "word": "ID",
+          "start": 142.96,
+          "end": 143.34,
+          "probability": 0.9658
+        },
+        {
+          "word": "of",
+          "start": 143.34,
+          "end": 143.6,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 143.6,
+          "end": 143.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "Vehicles",
+          "start": 143.7,
+          "end": 144.22,
+          "probability": 0.7505
+        },
+        {
+          "word": "step",
+          "start": 144.22,
+          "end": 144.58,
+          "probability": 0.8823
+        },
+        {
+          "word": "in",
+          "start": 144.58,
+          "end": 144.8,
+          "probability": 0.9814
+        },
+        {
+          "word": "the",
+          "start": 144.8,
+          "end": 144.94,
+          "probability": 0.999
+        },
+        {
+          "word": "Personal",
+          "start": 144.94,
+          "end": 145.32,
+          "probability": 0.9277
+        },
+        {
+          "word": "Auto",
+          "start": 145.32,
+          "end": 145.62,
+          "probability": 0.8438
+        },
+        {
+          "word": "Submission",
+          "start": 145.62,
+          "end": 146.22,
+          "probability": 0.9541
+        },
+        {
+          "word": "wizard.",
+          "start": 146.22,
+          "end": 146.62,
+          "probability": 0.5679
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 146.62,
+      "end": 156.02,
+      "start_formatted": "00:02:26.620",
+      "end_formatted": "00:02:36.020",
+      "text": "When the wizard step ID is supplied, it creates a link to that wizard step, when the validation is executed but the user is on another step.",
+      "words": [
+        {
+          "word": "When",
+          "start": 146.62,
+          "end": 147.52,
+          "probability": 0.9336
+        },
+        {
+          "word": "the",
+          "start": 147.52,
+          "end": 147.66,
+          "probability": 0.998
+        },
+        {
+          "word": "wizard",
+          "start": 147.66,
+          "end": 148.02,
+          "probability": 0.729
+        },
+        {
+          "word": "step",
+          "start": 148.02,
+          "end": 148.4,
+          "probability": 0.3677
+        },
+        {
+          "word": "ID",
+          "start": 148.4,
+          "end": 148.84,
+          "probability": 0.8843
+        },
+        {
+          "word": "is",
+          "start": 148.84,
+          "end": 149.08,
+          "probability": 0.9985
+        },
+        {
+          "word": "supplied,",
+          "start": 149.08,
+          "end": 149.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "it",
+          "start": 149.86,
+          "end": 150.06,
+          "probability": 0.9951
+        },
+        {
+          "word": "creates",
+          "start": 150.06,
+          "end": 150.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 150.44,
+          "end": 150.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "link",
+          "start": 150.6,
+          "end": 150.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 150.78,
+          "end": 150.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 150.96,
+          "end": 151.16,
+          "probability": 0.999
+        },
+        {
+          "word": "wizard",
+          "start": 151.16,
+          "end": 151.52,
+          "probability": 0.9971
+        },
+        {
+          "word": "step,",
+          "start": 151.52,
+          "end": 151.96,
+          "probability": 0.9805
+        },
+        {
+          "word": "when",
+          "start": 152.18,
+          "end": 152.44,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 152.44,
+          "end": 152.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "validation",
+          "start": 152.56,
+          "end": 153.1,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 153.1,
+          "end": 153.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "executed",
+          "start": 153.42,
+          "end": 153.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "but",
+          "start": 153.96,
+          "end": 154.26,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 154.26,
+          "end": 154.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 154.42,
+          "end": 154.76,
+          "probability": 0.999
+        },
+        {
+          "word": "is",
+          "start": 154.76,
+          "end": 155.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 155.02,
+          "end": 155.22,
+          "probability": 0.999
+        },
+        {
+          "word": "another",
+          "start": 155.22,
+          "end": 155.54,
+          "probability": 0.999
+        },
+        {
+          "word": "step.",
+          "start": 155.54,
+          "end": 156.02,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 156.48,
+      "end": 168.02,
+      "start_formatted": "00:02:36.480",
+      "end_formatted": "00:02:48.020",
+      "text": "Log into Policy Center as Alice Applegate. Create a Personal Auto Submission that does not have a vehicle. On the Vehicles page, try to navigate away by clicking the Next button.",
+      "words": [
+        {
+          "word": "Log",
+          "start": 156.48,
+          "end": 157.06,
+          "probability": 0.9839
+        },
+        {
+          "word": "into",
+          "start": 157.06,
+          "end": 157.32,
+          "probability": 0.3213
+        },
+        {
+          "word": "Policy",
+          "start": 157.32,
+          "end": 157.78,
+          "probability": 0.9482
+        },
+        {
+          "word": "Center",
+          "start": 157.78,
+          "end": 158.32,
+          "probability": 0.7944
+        },
+        {
+          "word": "as",
+          "start": 158.32,
+          "end": 158.64,
+          "probability": 0.9893
+        },
+        {
+          "word": "Alice",
+          "start": 158.64,
+          "end": 158.96,
+          "probability": 0.6079
+        },
+        {
+          "word": "Applegate.",
+          "start": 158.96,
+          "end": 159.72,
+          "probability": 0.8931
+        },
+        {
+          "word": "Create",
+          "start": 159.94,
+          "end": 160.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 160.46,
+          "end": 160.6,
+          "probability": 0.9995
+        },
+        {
+          "word": "Personal",
+          "start": 160.6,
+          "end": 160.98,
+          "probability": 0.0617
+        },
+        {
+          "word": "Auto",
+          "start": 160.98,
+          "end": 161.26,
+          "probability": 0.8623
+        },
+        {
+          "word": "Submission",
+          "start": 161.26,
+          "end": 161.82,
+          "probability": 0.8896
+        },
+        {
+          "word": "that",
+          "start": 161.82,
+          "end": 162.04,
+          "probability": 0.9751
+        },
+        {
+          "word": "does",
+          "start": 162.04,
+          "end": 162.26,
+          "probability": 0.9897
+        },
+        {
+          "word": "not",
+          "start": 162.26,
+          "end": 162.48,
+          "probability": 0.9937
+        },
+        {
+          "word": "have",
+          "start": 162.48,
+          "end": 162.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 162.78,
+          "end": 162.88,
+          "probability": 0.999
+        },
+        {
+          "word": "vehicle.",
+          "start": 162.88,
+          "end": 163.24,
+          "probability": 0.9106
+        },
+        {
+          "word": "On",
+          "start": 163.66,
+          "end": 163.98,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 163.98,
+          "end": 164.08,
+          "probability": 0.9961
+        },
+        {
+          "word": "Vehicles",
+          "start": 164.08,
+          "end": 164.6,
+          "probability": 0.7832
+        },
+        {
+          "word": "page,",
+          "start": 164.6,
+          "end": 164.98,
+          "probability": 0.9761
+        },
+        {
+          "word": "try",
+          "start": 165.36,
+          "end": 165.68,
+          "probability": 0.9961
+        },
+        {
+          "word": "to",
+          "start": 165.68,
+          "end": 165.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "navigate",
+          "start": 165.9,
+          "end": 166.24,
+          "probability": 0.9961
+        },
+        {
+          "word": "away",
+          "start": 166.24,
+          "end": 166.58,
+          "probability": 0.9819
+        },
+        {
+          "word": "by",
+          "start": 166.58,
+          "end": 166.8,
+          "probability": 0.9995
+        },
+        {
+          "word": "clicking",
+          "start": 166.8,
+          "end": 167.1,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 167.1,
+          "end": 167.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "Next",
+          "start": 167.36,
+          "end": 167.58,
+          "probability": 0.8291
+        },
+        {
+          "word": "button.",
+          "start": 167.58,
+          "end": 168.02,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 170.0,
+      "end": 177.58,
+      "start_formatted": "00:02:50.000",
+      "end_formatted": "00:02:57.580",
+      "text": "A warning message is displayed, because the validation is performed at a level that is lower than quotable. Click the Quote button.",
+      "words": [
+        {
+          "word": "A",
+          "start": 170.0,
+          "end": 170.56,
+          "probability": 0.9438
+        },
+        {
+          "word": "warning",
+          "start": 170.56,
+          "end": 170.9,
+          "probability": 0.877
+        },
+        {
+          "word": "message",
+          "start": 170.9,
+          "end": 171.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 171.3,
+          "end": 171.56,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed,",
+          "start": 171.56,
+          "end": 172.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 172.26,
+          "end": 172.36,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 172.36,
+          "end": 172.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "validation",
+          "start": 172.58,
+          "end": 173.0,
+          "probability": 0.9888
+        },
+        {
+          "word": "is",
+          "start": 173.0,
+          "end": 173.5,
+          "probability": 0.998
+        },
+        {
+          "word": "performed",
+          "start": 173.5,
+          "end": 173.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "at",
+          "start": 173.98,
+          "end": 174.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "a",
+          "start": 174.2,
+          "end": 174.32,
+          "probability": 0.998
+        },
+        {
+          "word": "level",
+          "start": 174.32,
+          "end": 174.6,
+          "probability": 0.9961
+        },
+        {
+          "word": "that",
+          "start": 174.6,
+          "end": 174.8,
+          "probability": 0.9946
+        },
+        {
+          "word": "is",
+          "start": 174.8,
+          "end": 174.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "lower",
+          "start": 174.96,
+          "end": 175.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "than",
+          "start": 175.22,
+          "end": 175.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "quotable.",
+          "start": 175.5,
+          "end": 176.04,
+          "probability": 0.9517
+        },
+        {
+          "word": "Click",
+          "start": 176.3,
+          "end": 176.76,
+          "probability": 0.9868
+        },
+        {
+          "word": "the",
+          "start": 176.76,
+          "end": 176.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "Quote",
+          "start": 176.94,
+          "end": 177.2,
+          "probability": 0.5327
+        },
+        {
+          "word": "button.",
+          "start": 177.2,
+          "end": 177.58,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 179.6,
+      "end": 192.1,
+      "start_formatted": "00:02:59.600",
+      "end_formatted": "00:03:12.100",
+      "text": "An error message is displayed, because the validation is performed at the quotable level. There is no link on the message, since you are on the Vehicles page. Click Clear to get rid of the frame.",
+      "words": [
+        {
+          "word": "An",
+          "start": 179.6,
+          "end": 180.16,
+          "probability": 0.9902
+        },
+        {
+          "word": "error",
+          "start": 180.16,
+          "end": 180.46,
+          "probability": 0.8911
+        },
+        {
+          "word": "message",
+          "start": 180.46,
+          "end": 180.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 180.9,
+          "end": 181.16,
+          "probability": 0.9985
+        },
+        {
+          "word": "displayed,",
+          "start": 181.16,
+          "end": 181.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "because",
+          "start": 181.94,
+          "end": 182.3,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 182.3,
+          "end": 182.52,
+          "probability": 0.999
+        },
+        {
+          "word": "validation",
+          "start": 182.52,
+          "end": 183.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 183.04,
+          "end": 183.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "performed",
+          "start": 183.44,
+          "end": 183.88,
+          "probability": 0.9995
+        },
+        {
+          "word": "at",
+          "start": 183.88,
+          "end": 184.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 184.12,
+          "end": 184.24,
+          "probability": 0.999
+        },
+        {
+          "word": "quotable",
+          "start": 184.24,
+          "end": 184.7,
+          "probability": 0.9971
+        },
+        {
+          "word": "level.",
+          "start": 184.7,
+          "end": 185.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "There",
+          "start": 185.3,
+          "end": 185.68,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 185.68,
+          "end": 185.88,
+          "probability": 0.999
+        },
+        {
+          "word": "no",
+          "start": 185.88,
+          "end": 186.1,
+          "probability": 0.998
+        },
+        {
+          "word": "link",
+          "start": 186.1,
+          "end": 186.5,
+          "probability": 0.998
+        },
+        {
+          "word": "on",
+          "start": 186.5,
+          "end": 186.72,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 186.72,
+          "end": 186.82,
+          "probability": 0.999
+        },
+        {
+          "word": "message,",
+          "start": 186.82,
+          "end": 187.26,
+          "probability": 0.998
+        },
+        {
+          "word": "since",
+          "start": 187.48,
+          "end": 187.86,
+          "probability": 0.9985
+        },
+        {
+          "word": "you",
+          "start": 187.86,
+          "end": 188.1,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 188.1,
+          "end": 188.26,
+          "probability": 0.9971
+        },
+        {
+          "word": "on",
+          "start": 188.26,
+          "end": 188.42,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 188.42,
+          "end": 188.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "Vehicles",
+          "start": 188.52,
+          "end": 189.02,
+          "probability": 0.8032
+        },
+        {
+          "word": "page.",
+          "start": 189.02,
+          "end": 189.4,
+          "probability": 0.959
+        },
+        {
+          "word": "Click",
+          "start": 190.02,
+          "end": 190.58,
+          "probability": 0.9956
+        },
+        {
+          "word": "Clear",
+          "start": 190.58,
+          "end": 190.86,
+          "probability": 0.9365
+        },
+        {
+          "word": "to",
+          "start": 190.86,
+          "end": 191.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "get",
+          "start": 191.06,
+          "end": 191.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "rid",
+          "start": 191.24,
+          "end": 191.4,
+          "probability": 0.9995
+        },
+        {
+          "word": "of",
+          "start": 191.4,
+          "end": 191.56,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 191.56,
+          "end": 191.68,
+          "probability": 1.0
+        },
+        {
+          "word": "frame.",
+          "start": 191.68,
+          "end": 192.1,
+          "probability": 0.9868
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 193.98,
+      "end": 196.4,
+      "start_formatted": "00:03:13.980",
+      "end_formatted": "00:03:16.400",
+      "text": "Go to the policy review page.",
+      "words": [
+        {
+          "word": "Go",
+          "start": 193.98,
+          "end": 194.7,
+          "probability": 0.8418
+        },
+        {
+          "word": "to",
+          "start": 194.7,
+          "end": 194.9,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 194.9,
+          "end": 195.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "policy",
+          "start": 195.0,
+          "end": 195.44,
+          "probability": 0.5215
+        },
+        {
+          "word": "review",
+          "start": 195.44,
+          "end": 195.8,
+          "probability": 0.9888
+        },
+        {
+          "word": "page.",
+          "start": 195.8,
+          "end": 196.4,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 199.1,
+      "end": 200.64,
+      "start_formatted": "00:03:19.100",
+      "end_formatted": "00:03:20.640",
+      "text": "The warning is displayed again.",
+      "words": [
+        {
+          "word": "The",
+          "start": 198.84,
+          "end": 199.2,
+          "probability": 0.9756
+        },
+        {
+          "word": "warning",
+          "start": 199.2,
+          "end": 199.54,
+          "probability": 0.9561
+        },
+        {
+          "word": "is",
+          "start": 199.54,
+          "end": 199.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "displayed",
+          "start": 199.74,
+          "end": 200.22,
+          "probability": 0.9985
+        },
+        {
+          "word": "again.",
+          "start": 200.22,
+          "end": 200.64,
+          "probability": 0.9912
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 200.88,
+      "end": 202.76,
+      "start_formatted": "00:03:20.880",
+      "end_formatted": "00:03:22.760",
+      "text": "It does not block navigation.",
+      "words": [
+        {
+          "word": "It",
+          "start": 200.88,
+          "end": 201.22,
+          "probability": 0.9824
+        },
+        {
+          "word": "does",
+          "start": 201.22,
+          "end": 201.42,
+          "probability": 0.9971
+        },
+        {
+          "word": "not",
+          "start": 201.42,
+          "end": 201.68,
+          "probability": 0.9922
+        },
+        {
+          "word": "block",
+          "start": 201.68,
+          "end": 202.1,
+          "probability": 0.9971
+        },
+        {
+          "word": "navigation.",
+          "start": 202.1,
+          "end": 202.76,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 203.14,
+      "end": 204.98,
+      "start_formatted": "00:03:23.140",
+      "end_formatted": "00:03:24.980",
+      "text": "Click policy review again.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 203.14,
+          "end": 203.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "policy",
+          "start": 203.6,
+          "end": 204.06,
+          "probability": 0.5337
+        },
+        {
+          "word": "review",
+          "start": 204.06,
+          "end": 204.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "again.",
+          "start": 204.56,
+          "end": 204.98,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 207.78,
+      "end": 209.82,
+      "start_formatted": "00:03:27.780",
+      "end_formatted": "00:03:29.820",
+      "text": "Click quote on the policy review page.",
+      "words": [
+        {
+          "word": "Click",
+          "start": 207.46,
+          "end": 207.82,
+          "probability": 0.9849
+        },
+        {
+          "word": "quote",
+          "start": 207.82,
+          "end": 208.1,
+          "probability": 0.8979
+        },
+        {
+          "word": "on",
+          "start": 208.1,
+          "end": 208.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 208.3,
+          "end": 208.42,
+          "probability": 0.998
+        },
+        {
+          "word": "policy",
+          "start": 208.42,
+          "end": 208.86,
+          "probability": 0.9858
+        },
+        {
+          "word": "review",
+          "start": 208.86,
+          "end": 209.28,
+          "probability": 0.999
+        },
+        {
+          "word": "page.",
+          "start": 209.28,
+          "end": 209.82,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 212.16,
+      "end": 216.06,
+      "start_formatted": "00:03:32.160",
+      "end_formatted": "00:03:36.060",
+      "text": "An error is displayed with a link to the vehicle's step where the error occurred.",
+      "words": [
+        {
+          "word": "An",
+          "start": 211.88,
+          "end": 212.24,
+          "probability": 0.9868
+        },
+        {
+          "word": "error",
+          "start": 212.24,
+          "end": 212.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "is",
+          "start": 212.52,
+          "end": 212.74,
+          "probability": 0.999
+        },
+        {
+          "word": "displayed",
+          "start": 212.74,
+          "end": 213.2,
+          "probability": 0.999
+        },
+        {
+          "word": "with",
+          "start": 213.2,
+          "end": 213.4,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 213.4,
+          "end": 213.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "link",
+          "start": 213.52,
+          "end": 213.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 213.78,
+          "end": 213.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 213.96,
+          "end": 214.06,
+          "probability": 0.998
+        },
+        {
+          "word": "vehicle's",
+          "start": 214.06,
+          "end": 214.76,
+          "probability": 0.7808
+        },
+        {
+          "word": "step",
+          "start": 214.76,
+          "end": 214.92,
+          "probability": 0.9878
+        },
+        {
+          "word": "where",
+          "start": 214.92,
+          "end": 215.14,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 215.14,
+          "end": 215.28,
+          "probability": 0.999
+        },
+        {
+          "word": "error",
+          "start": 215.28,
+          "end": 215.56,
+          "probability": 0.999
+        },
+        {
+          "word": "occurred.",
+          "start": 215.56,
+          "end": 216.06,
+          "probability": 0.9917
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 216.38,
+      "end": 218.42,
+      "start_formatted": "00:03:36.380",
+      "end_formatted": "00:03:38.420",
+      "text": "Users can click on that link.",
+      "words": [
+        {
+          "word": "Users",
+          "start": 216.38,
+          "end": 216.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "can",
+          "start": 216.9,
+          "end": 217.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "click",
+          "start": 217.26,
+          "end": 217.52,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 217.52,
+          "end": 217.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "that",
+          "start": 217.78,
+          "end": 218.06,
+          "probability": 0.9976
+        },
+        {
+          "word": "link.",
+          "start": 218.06,
+          "end": 218.42,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 220.08,
+      "end": 224.16,
+      "start_formatted": "00:03:40.080",
+      "end_formatted": "00:03:44.160",
+      "text": "It takes the users to the vehicle's page where they can fix the error.",
+      "words": [
+        {
+          "word": "It",
+          "start": 220.08,
+          "end": 220.66,
+          "probability": 0.9185
+        },
+        {
+          "word": "takes",
+          "start": 220.66,
+          "end": 220.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 220.96,
+          "end": 221.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "users",
+          "start": 221.14,
+          "end": 221.5,
+          "probability": 0.9556
+        },
+        {
+          "word": "to",
+          "start": 221.5,
+          "end": 221.74,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 221.74,
+          "end": 221.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "vehicle's",
+          "start": 221.86,
+          "end": 222.44,
+          "probability": 0.5278
+        },
+        {
+          "word": "page",
+          "start": 222.44,
+          "end": 222.72,
+          "probability": 0.9897
+        },
+        {
+          "word": "where",
+          "start": 222.72,
+          "end": 222.96,
+          "probability": 0.9878
+        },
+        {
+          "word": "they",
+          "start": 222.96,
+          "end": 223.12,
+          "probability": 0.999
+        },
+        {
+          "word": "can",
+          "start": 223.12,
+          "end": 223.32,
+          "probability": 0.999
+        },
+        {
+          "word": "fix",
+          "start": 223.32,
+          "end": 223.64,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 223.64,
+          "end": 223.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "error.",
+          "start": 223.82,
+          "end": 224.16,
+          "probability": 0.9976
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 225.1,
+      "end": 228.36,
+      "start_formatted": "00:03:45.100",
+      "end_formatted": "00:03:48.360",
+      "text": "This is the end of demonstration for validation class space.",
+      "words": [
+        {
+          "word": "This",
+          "start": 224.85,
+          "end": 225.14,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 225.14,
+          "end": 225.32,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 225.32,
+          "end": 225.48,
+          "probability": 0.9976
+        },
+        {
+          "word": "end",
+          "start": 225.48,
+          "end": 225.76,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 225.76,
+          "end": 225.88,
+          "probability": 0.999
+        },
+        {
+          "word": "demonstration",
+          "start": 225.88,
+          "end": 226.48,
+          "probability": 0.939
+        },
+        {
+          "word": "for",
+          "start": 226.48,
+          "end": 226.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "validation",
+          "start": 226.92,
+          "end": 227.38,
+          "probability": 0.7803
+        },
+        {
+          "word": "class",
+          "start": 227.38,
+          "end": 228.02,
+          "probability": 0.981
+        },
+        {
+          "word": "space.",
+          "start": 228.02,
+          "end": 228.36,
+          "probability": 0.6582
+        }
+      ]
+    }
+  ]
+}

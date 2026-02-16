@@ -1,0 +1,3037 @@
+{
+  "metadata": {
+    "chapter": "ch11",
+    "chapter_title": "InsuranceSuite Integration",
+    "filename": "In_17_01.mp4",
+    "video_stem": "In_17_01",
+    "duration_seconds": 235.46,
+    "duration_formatted": "00:03:55.460",
+    "segment_count": 9,
+    "word_count": 479,
+    "avg_confidence": 0.8941,
+    "transcription_time_seconds": 11.8,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:51:43.538669"
+  },
+  "full_text": "This demonstration will illustrate user authentication flow by implementing the training app, authentication plugins and setting breakpoints. This demonstration requires that you use training app, Guidewire Studio, and a supported web browser. First, register the training app, authentication plugins. Navigate to the plugin registry located under config.plugins.registry. Double-click on authentication source creator plugin to open the plugin. Remove the OSGI plugin by clicking on the remove plugin icon. Click on the add plugin icon. Select add Gozu plugin. Click on the ellipsis icon to search for a Gozu class. Type the name of the Gozu class in the search field. Double-click on the Gozu class name to select. Double-click on authentication service plugin to open. Remove the Java plugin. Restart the plugin plugin by clicking on the plugin plugin by clicking on the remove plugin icon. Click on the add plugin icon. Select add Gozu plugin. Click on the ellipsis icon to search for a Gozu class. Type the name of the Gozu class in the search field. Double-click on the Gozu class name to select. Restart the server since the plugin registries were modified. Click the stop server icon. Click the debugger. bug server icon to start the server. Next, set some breakpoints in the plugin Gozu classes to demonstrate the progression of user authentication. Press ctrl plus shift plus n to search for a Gozu class. Type the name of the Gozu class in the search field. Double-click on the Gozu file name to open. Click at line 13 to set a breakpoint. Press ctrl plus shift plus n to search for a Gozu class. Double-click on the Gozu class. Double-click on the Gozu class name to open. Click at line 22 to set a breakpoint. Click at line 26 to set a breakpoint. Click at line 39 to set a breakpoint. Now that the breakpoints are set, log in to training app and observe the progression of user authentication. Type the user name for super user. Type the password for super user. Click the login button. The user authentication process is triggered. The system breaks at line 13 in the custom authentication source creator plugin class. The source object was of type username password since the method did not throw an exception. The user name and password are extracted from the source object. The underscore handler variable is not null. Click the resume program button. The system breaks at line 26. The public ID is not null. If the public ID were null, then the system would throw a failed login exception error. Click the resume program button. The system breaks at line 39. The method will return a string value, public ID. The user is not null. Click the resume program button. Click the resume program button. After the last breakpoint, the user is logged into the system. This ends the user authentication flow demonstration.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.94,
+      "end": 29.98,
+      "start_formatted": "00:00:00.940",
+      "end_formatted": "00:00:29.980",
+      "text": "This demonstration will illustrate user authentication flow by implementing the training app, authentication plugins and setting breakpoints. This demonstration requires that you use training app, Guidewire Studio, and a supported web browser. First, register the training app, authentication plugins. Navigate to the plugin registry located under config.plugins.registry. Double-click on authentication source creator plugin to open the plugin.",
+      "words": [
+        {
+          "word": "This",
+          "start": 0.94,
+          "end": 1.74,
+          "probability": 0.9263
+        },
+        {
+          "word": "demonstration",
+          "start": 1.74,
+          "end": 2.36,
+          "probability": 0.9712
+        },
+        {
+          "word": "will",
+          "start": 2.36,
+          "end": 2.7,
+          "probability": 0.998
+        },
+        {
+          "word": "illustrate",
+          "start": 2.7,
+          "end": 3.22,
+          "probability": 0.9951
+        },
+        {
+          "word": "user",
+          "start": 3.22,
+          "end": 3.56,
+          "probability": 0.9458
+        },
+        {
+          "word": "authentication",
+          "start": 3.56,
+          "end": 4.16,
+          "probability": 0.9619
+        },
+        {
+          "word": "flow",
+          "start": 4.16,
+          "end": 4.8,
+          "probability": 0.9951
+        },
+        {
+          "word": "by",
+          "start": 4.8,
+          "end": 5.0,
+          "probability": 0.9932
+        },
+        {
+          "word": "implementing",
+          "start": 5.0,
+          "end": 5.54,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 5.54,
+          "end": 5.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "training",
+          "start": 5.78,
+          "end": 6.12,
+          "probability": 0.3848
+        },
+        {
+          "word": "app,",
+          "start": 6.12,
+          "end": 6.52,
+          "probability": 0.9668
+        },
+        {
+          "word": "authentication",
+          "start": 6.66,
+          "end": 7.44,
+          "probability": 0.9453
+        },
+        {
+          "word": "plugins",
+          "start": 7.44,
+          "end": 8.02,
+          "probability": 0.8833
+        },
+        {
+          "word": "and",
+          "start": 8.02,
+          "end": 8.34,
+          "probability": 0.9653
+        },
+        {
+          "word": "setting",
+          "start": 8.34,
+          "end": 8.68,
+          "probability": 0.9937
+        },
+        {
+          "word": "breakpoints.",
+          "start": 8.68,
+          "end": 9.4,
+          "probability": 0.9375
+        },
+        {
+          "word": "This",
+          "start": 9.74,
+          "end": 10.44,
+          "probability": 0.9893
+        },
+        {
+          "word": "demonstration",
+          "start": 10.44,
+          "end": 11.06,
+          "probability": 0.9922
+        },
+        {
+          "word": "requires",
+          "start": 11.06,
+          "end": 11.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 11.68,
+          "end": 11.98,
+          "probability": 0.9976
+        },
+        {
+          "word": "you",
+          "start": 11.98,
+          "end": 12.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "use",
+          "start": 12.12,
+          "end": 12.38,
+          "probability": 0.9946
+        },
+        {
+          "word": "training",
+          "start": 12.38,
+          "end": 12.68,
+          "probability": 0.542
+        },
+        {
+          "word": "app,",
+          "start": 12.68,
+          "end": 13.14,
+          "probability": 0.9878
+        },
+        {
+          "word": "Guidewire",
+          "start": 13.3,
+          "end": 13.88,
+          "probability": 0.8066
+        },
+        {
+          "word": "Studio,",
+          "start": 13.88,
+          "end": 14.28,
+          "probability": 0.8633
+        },
+        {
+          "word": "and",
+          "start": 14.64,
+          "end": 14.86,
+          "probability": 0.9966
+        },
+        {
+          "word": "a",
+          "start": 14.86,
+          "end": 14.98,
+          "probability": 0.9912
+        },
+        {
+          "word": "supported",
+          "start": 14.98,
+          "end": 15.42,
+          "probability": 0.9912
+        },
+        {
+          "word": "web",
+          "start": 15.42,
+          "end": 15.68,
+          "probability": 0.9585
+        },
+        {
+          "word": "browser.",
+          "start": 15.68,
+          "end": 16.12,
+          "probability": 0.9937
+        },
+        {
+          "word": "First,",
+          "start": 16.7,
+          "end": 17.44,
+          "probability": 0.9702
+        },
+        {
+          "word": "register",
+          "start": 17.68,
+          "end": 18.2,
+          "probability": 0.9404
+        },
+        {
+          "word": "the",
+          "start": 18.2,
+          "end": 18.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "training",
+          "start": 18.38,
+          "end": 18.68,
+          "probability": 0.9082
+        },
+        {
+          "word": "app,",
+          "start": 18.68,
+          "end": 19.1,
+          "probability": 0.9966
+        },
+        {
+          "word": "authentication",
+          "start": 19.24,
+          "end": 19.88,
+          "probability": 0.8008
+        },
+        {
+          "word": "plugins.",
+          "start": 19.88,
+          "end": 20.64,
+          "probability": 0.9941
+        },
+        {
+          "word": "Navigate",
+          "start": 21.04,
+          "end": 21.82,
+          "probability": 0.9971
+        },
+        {
+          "word": "to",
+          "start": 21.82,
+          "end": 21.94,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 21.94,
+          "end": 22.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "plugin",
+          "start": 22.06,
+          "end": 22.44,
+          "probability": 0.9038
+        },
+        {
+          "word": "registry",
+          "start": 22.44,
+          "end": 22.92,
+          "probability": 0.9839
+        },
+        {
+          "word": "located",
+          "start": 22.92,
+          "end": 23.52,
+          "probability": 0.9961
+        },
+        {
+          "word": "under",
+          "start": 23.52,
+          "end": 23.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "config",
+          "start": 23.9,
+          "end": 24.34,
+          "probability": 0.9072
+        },
+        {
+          "word": ".plugins",
+          "start": 24.34,
+          "end": 25.18,
+          "probability": 0.9873
+        },
+        {
+          "word": ".registry.",
+          "start": 25.18,
+          "end": 26.04,
+          "probability": 0.9482
+        },
+        {
+          "word": "Double",
+          "start": 26.24,
+          "end": 27.02,
+          "probability": 0.9644
+        },
+        {
+          "word": "-click",
+          "start": 27.02,
+          "end": 27.28,
+          "probability": 0.9004
+        },
+        {
+          "word": "on",
+          "start": 27.28,
+          "end": 27.54,
+          "probability": 0.999
+        },
+        {
+          "word": "authentication",
+          "start": 27.54,
+          "end": 28.02,
+          "probability": 0.5854
+        },
+        {
+          "word": "source",
+          "start": 28.02,
+          "end": 28.7,
+          "probability": 0.9717
+        },
+        {
+          "word": "creator",
+          "start": 28.7,
+          "end": 29.26,
+          "probability": 0.9849
+        },
+        {
+          "word": "plugin",
+          "start": 29.26,
+          "end": 29.64,
+          "probability": 0.9741
+        },
+        {
+          "word": "to",
+          "start": 29.64,
+          "end": 29.88,
+          "probability": 0.9888
+        },
+        {
+          "word": "open",
+          "start": 29.88,
+          "end": 29.98,
+          "probability": 0.3579
+        },
+        {
+          "word": "the",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.2135
+        },
+        {
+          "word": "plugin.",
+          "start": 29.98,
+          "end": 29.98,
+          "probability": 0.3423
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.68,
+      "end": 59.94,
+      "start_formatted": "00:00:30.680",
+      "end_formatted": "00:00:59.940",
+      "text": "Remove the OSGI plugin by clicking on the remove plugin icon. Click on the add plugin icon. Select add Gozu plugin. Click on the ellipsis icon to search for a Gozu class. Type the name of the Gozu class in the search field. Double-click on the Gozu class name to select. Double-click on authentication service plugin to open. Remove the Java plugin.",
+      "words": [
+        {
+          "word": "Remove",
+          "start": 30.68,
+          "end": 31.32,
+          "probability": 0.252
+        },
+        {
+          "word": "the",
+          "start": 31.32,
+          "end": 31.58,
+          "probability": 0.9976
+        },
+        {
+          "word": "OSGI",
+          "start": 31.58,
+          "end": 32.38,
+          "probability": 0.7881
+        },
+        {
+          "word": "plugin",
+          "start": 32.38,
+          "end": 32.78,
+          "probability": 0.8765
+        },
+        {
+          "word": "by",
+          "start": 32.78,
+          "end": 33.04,
+          "probability": 0.9932
+        },
+        {
+          "word": "clicking",
+          "start": 33.04,
+          "end": 33.36,
+          "probability": 0.9927
+        },
+        {
+          "word": "on",
+          "start": 33.36,
+          "end": 33.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 33.68,
+          "end": 33.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "remove",
+          "start": 33.8,
+          "end": 34.12,
+          "probability": 0.1639
+        },
+        {
+          "word": "plugin",
+          "start": 34.12,
+          "end": 34.46,
+          "probability": 0.9272
+        },
+        {
+          "word": "icon.",
+          "start": 34.46,
+          "end": 34.98,
+          "probability": 0.9961
+        },
+        {
+          "word": "Click",
+          "start": 35.46,
+          "end": 36.08,
+          "probability": 0.9751
+        },
+        {
+          "word": "on",
+          "start": 36.08,
+          "end": 36.26,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 36.26,
+          "end": 36.38,
+          "probability": 0.9927
+        },
+        {
+          "word": "add",
+          "start": 36.38,
+          "end": 36.58,
+          "probability": 0.8022
+        },
+        {
+          "word": "plugin",
+          "start": 36.58,
+          "end": 36.9,
+          "probability": 0.9761
+        },
+        {
+          "word": "icon.",
+          "start": 36.9,
+          "end": 37.48,
+          "probability": 0.9941
+        },
+        {
+          "word": "Select",
+          "start": 39.2,
+          "end": 39.84,
+          "probability": 0.9761
+        },
+        {
+          "word": "add",
+          "start": 39.84,
+          "end": 40.1,
+          "probability": 0.8403
+        },
+        {
+          "word": "Gozu",
+          "start": 40.1,
+          "end": 40.44,
+          "probability": 0.4141
+        },
+        {
+          "word": "plugin.",
+          "start": 40.44,
+          "end": 40.8,
+          "probability": 0.9658
+        },
+        {
+          "word": "Click",
+          "start": 42.7,
+          "end": 43.34,
+          "probability": 0.9907
+        },
+        {
+          "word": "on",
+          "start": 43.34,
+          "end": 43.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 43.54,
+          "end": 43.68,
+          "probability": 0.998
+        },
+        {
+          "word": "ellipsis",
+          "start": 43.68,
+          "end": 44.2,
+          "probability": 0.9692
+        },
+        {
+          "word": "icon",
+          "start": 44.2,
+          "end": 44.56,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 44.56,
+          "end": 44.78,
+          "probability": 0.9971
+        },
+        {
+          "word": "search",
+          "start": 44.78,
+          "end": 45.06,
+          "probability": 0.9971
+        },
+        {
+          "word": "for",
+          "start": 45.06,
+          "end": 45.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 45.34,
+          "end": 45.44,
+          "probability": 0.9131
+        },
+        {
+          "word": "Gozu",
+          "start": 45.44,
+          "end": 45.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "class.",
+          "start": 45.74,
+          "end": 46.1,
+          "probability": 0.9595
+        },
+        {
+          "word": "Type",
+          "start": 46.78,
+          "end": 47.42,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 47.42,
+          "end": 47.6,
+          "probability": 0.9976
+        },
+        {
+          "word": "name",
+          "start": 47.6,
+          "end": 47.84,
+          "probability": 0.9922
+        },
+        {
+          "word": "of",
+          "start": 47.84,
+          "end": 48.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 48.06,
+          "end": 48.18,
+          "probability": 0.9878
+        },
+        {
+          "word": "Gozu",
+          "start": 48.18,
+          "end": 48.52,
+          "probability": 0.9863
+        },
+        {
+          "word": "class",
+          "start": 48.52,
+          "end": 48.8,
+          "probability": 0.9863
+        },
+        {
+          "word": "in",
+          "start": 48.8,
+          "end": 49.04,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 49.04,
+          "end": 49.16,
+          "probability": 0.9902
+        },
+        {
+          "word": "search",
+          "start": 49.16,
+          "end": 49.42,
+          "probability": 0.9839
+        },
+        {
+          "word": "field.",
+          "start": 49.42,
+          "end": 49.88,
+          "probability": 0.9976
+        },
+        {
+          "word": "Double",
+          "start": 50.24,
+          "end": 50.84,
+          "probability": 0.9902
+        },
+        {
+          "word": "-click",
+          "start": 50.84,
+          "end": 51.1,
+          "probability": 0.6641
+        },
+        {
+          "word": "on",
+          "start": 51.1,
+          "end": 51.34,
+          "probability": 0.9932
+        },
+        {
+          "word": "the",
+          "start": 51.34,
+          "end": 51.46,
+          "probability": 0.9956
+        },
+        {
+          "word": "Gozu",
+          "start": 51.46,
+          "end": 51.82,
+          "probability": 0.9932
+        },
+        {
+          "word": "class",
+          "start": 51.82,
+          "end": 52.1,
+          "probability": 0.9736
+        },
+        {
+          "word": "name",
+          "start": 52.1,
+          "end": 52.4,
+          "probability": 0.9927
+        },
+        {
+          "word": "to",
+          "start": 52.4,
+          "end": 52.56,
+          "probability": 0.998
+        },
+        {
+          "word": "select.",
+          "start": 52.56,
+          "end": 53.0,
+          "probability": 0.9961
+        },
+        {
+          "word": "Double",
+          "start": 54.3,
+          "end": 54.94,
+          "probability": 0.9927
+        },
+        {
+          "word": "-click",
+          "start": 54.94,
+          "end": 55.22,
+          "probability": 0.9717
+        },
+        {
+          "word": "on",
+          "start": 55.22,
+          "end": 55.46,
+          "probability": 0.9976
+        },
+        {
+          "word": "authentication",
+          "start": 55.46,
+          "end": 55.92,
+          "probability": 0.7275
+        },
+        {
+          "word": "service",
+          "start": 55.92,
+          "end": 56.74,
+          "probability": 0.98
+        },
+        {
+          "word": "plugin",
+          "start": 56.74,
+          "end": 57.16,
+          "probability": 0.9805
+        },
+        {
+          "word": "to",
+          "start": 57.16,
+          "end": 57.4,
+          "probability": 0.998
+        },
+        {
+          "word": "open.",
+          "start": 57.4,
+          "end": 57.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "Remove",
+          "start": 58.52,
+          "end": 59.16,
+          "probability": 0.9604
+        },
+        {
+          "word": "the",
+          "start": 59.16,
+          "end": 59.34,
+          "probability": 0.9985
+        },
+        {
+          "word": "Java",
+          "start": 59.34,
+          "end": 59.64,
+          "probability": 0.5605
+        },
+        {
+          "word": "plugin.",
+          "start": 59.64,
+          "end": 59.94,
+          "probability": 0.9766
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 59.94,
+      "end": 89.92,
+      "start_formatted": "00:00:59.940",
+      "end_formatted": "00:01:29.920",
+      "text": "Restart the plugin plugin by clicking on the plugin plugin by clicking on the remove plugin icon. Click on the add plugin icon. Select add Gozu plugin. Click on the ellipsis icon to search for a Gozu class. Type the name of the Gozu class in the search field. Double-click on the Gozu class name to select. Restart the server since the plugin registries were modified. Click the stop server icon. Click the debugger.",
+      "words": [
+        {
+          "word": "Restart",
+          "start": 59.94,
+          "end": 60.18,
+          "probability": 0.4978
+        },
+        {
+          "word": "the",
+          "start": 60.18,
+          "end": 60.18,
+          "probability": 0.8857
+        },
+        {
+          "word": "plugin",
+          "start": 60.18,
+          "end": 60.18,
+          "probability": 0.0677
+        },
+        {
+          "word": "plugin",
+          "start": 60.18,
+          "end": 60.18,
+          "probability": 0.0612
+        },
+        {
+          "word": "by",
+          "start": 60.18,
+          "end": 60.34,
+          "probability": 0.9678
+        },
+        {
+          "word": "clicking",
+          "start": 60.34,
+          "end": 60.66,
+          "probability": 0.9873
+        },
+        {
+          "word": "on",
+          "start": 60.66,
+          "end": 60.92,
+          "probability": 0.9922
+        },
+        {
+          "word": "the",
+          "start": 60.92,
+          "end": 61.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "plugin",
+          "start": 61.04,
+          "end": 61.32,
+          "probability": 0.0
+        },
+        {
+          "word": "plugin",
+          "start": 61.32,
+          "end": 61.32,
+          "probability": 0.2991
+        },
+        {
+          "word": "by",
+          "start": 61.32,
+          "end": 61.32,
+          "probability": 0.0042
+        },
+        {
+          "word": "clicking",
+          "start": 61.32,
+          "end": 61.32,
+          "probability": 0.9917
+        },
+        {
+          "word": "on",
+          "start": 61.32,
+          "end": 61.32,
+          "probability": 0.9722
+        },
+        {
+          "word": "the",
+          "start": 61.32,
+          "end": 61.32,
+          "probability": 0.9795
+        },
+        {
+          "word": "remove",
+          "start": 61.32,
+          "end": 61.32,
+          "probability": 0.2971
+        },
+        {
+          "word": "plugin",
+          "start": 61.32,
+          "end": 61.72,
+          "probability": 0.9736
+        },
+        {
+          "word": "icon.",
+          "start": 61.72,
+          "end": 62.32,
+          "probability": 0.9707
+        },
+        {
+          "word": "Click",
+          "start": 62.72,
+          "end": 63.28,
+          "probability": 0.9146
+        },
+        {
+          "word": "on",
+          "start": 63.28,
+          "end": 63.48,
+          "probability": 0.9722
+        },
+        {
+          "word": "the",
+          "start": 63.48,
+          "end": 63.6,
+          "probability": 0.9888
+        },
+        {
+          "word": "add",
+          "start": 63.6,
+          "end": 63.82,
+          "probability": 0.7368
+        },
+        {
+          "word": "plugin",
+          "start": 63.82,
+          "end": 64.14,
+          "probability": 0.9775
+        },
+        {
+          "word": "icon.",
+          "start": 64.14,
+          "end": 64.76,
+          "probability": 0.9639
+        },
+        {
+          "word": "Select",
+          "start": 67.08,
+          "end": 67.64,
+          "probability": 0.9531
+        },
+        {
+          "word": "add",
+          "start": 67.64,
+          "end": 67.9,
+          "probability": 0.8071
+        },
+        {
+          "word": "Gozu",
+          "start": 67.9,
+          "end": 68.24,
+          "probability": 0.281
+        },
+        {
+          "word": "plugin.",
+          "start": 68.24,
+          "end": 68.56,
+          "probability": 0.9658
+        },
+        {
+          "word": "Click",
+          "start": 71.02,
+          "end": 71.58,
+          "probability": 0.9751
+        },
+        {
+          "word": "on",
+          "start": 71.58,
+          "end": 71.84,
+          "probability": 0.9844
+        },
+        {
+          "word": "the",
+          "start": 71.84,
+          "end": 71.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "ellipsis",
+          "start": 71.98,
+          "end": 72.52,
+          "probability": 0.9624
+        },
+        {
+          "word": "icon",
+          "start": 72.52,
+          "end": 72.84,
+          "probability": 0.9746
+        },
+        {
+          "word": "to",
+          "start": 72.84,
+          "end": 73.1,
+          "probability": 0.9917
+        },
+        {
+          "word": "search",
+          "start": 73.1,
+          "end": 73.38,
+          "probability": 0.9927
+        },
+        {
+          "word": "for",
+          "start": 73.38,
+          "end": 73.64,
+          "probability": 0.9946
+        },
+        {
+          "word": "a",
+          "start": 73.64,
+          "end": 73.76,
+          "probability": 0.9268
+        },
+        {
+          "word": "Gozu",
+          "start": 73.76,
+          "end": 74.04,
+          "probability": 0.9868
+        },
+        {
+          "word": "class.",
+          "start": 74.04,
+          "end": 74.38,
+          "probability": 0.9487
+        },
+        {
+          "word": "Type",
+          "start": 75.16,
+          "end": 75.72,
+          "probability": 0.9756
+        },
+        {
+          "word": "the",
+          "start": 75.72,
+          "end": 75.92,
+          "probability": 0.9907
+        },
+        {
+          "word": "name",
+          "start": 75.92,
+          "end": 76.16,
+          "probability": 0.9834
+        },
+        {
+          "word": "of",
+          "start": 76.16,
+          "end": 76.36,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 76.36,
+          "end": 76.5,
+          "probability": 0.978
+        },
+        {
+          "word": "Gozu",
+          "start": 76.5,
+          "end": 76.84,
+          "probability": 0.9775
+        },
+        {
+          "word": "class",
+          "start": 76.84,
+          "end": 77.1,
+          "probability": 0.9731
+        },
+        {
+          "word": "in",
+          "start": 77.1,
+          "end": 77.34,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 77.34,
+          "end": 77.48,
+          "probability": 0.979
+        },
+        {
+          "word": "search",
+          "start": 77.48,
+          "end": 77.72,
+          "probability": 0.9844
+        },
+        {
+          "word": "field.",
+          "start": 77.72,
+          "end": 78.18,
+          "probability": 0.9946
+        },
+        {
+          "word": "Double",
+          "start": 78.58,
+          "end": 79.14,
+          "probability": 0.9761
+        },
+        {
+          "word": "-click",
+          "start": 79.14,
+          "end": 79.42,
+          "probability": 0.606
+        },
+        {
+          "word": "on",
+          "start": 79.42,
+          "end": 79.66,
+          "probability": 0.98
+        },
+        {
+          "word": "the",
+          "start": 79.66,
+          "end": 79.8,
+          "probability": 0.9912
+        },
+        {
+          "word": "Gozu",
+          "start": 79.8,
+          "end": 80.14,
+          "probability": 0.9844
+        },
+        {
+          "word": "class",
+          "start": 80.14,
+          "end": 80.4,
+          "probability": 0.9702
+        },
+        {
+          "word": "name",
+          "start": 80.4,
+          "end": 80.72,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 80.72,
+          "end": 80.88,
+          "probability": 0.9922
+        },
+        {
+          "word": "select.",
+          "start": 80.88,
+          "end": 81.3,
+          "probability": 0.9873
+        },
+        {
+          "word": "Restart",
+          "start": 82.96,
+          "end": 83.52,
+          "probability": 0.9873
+        },
+        {
+          "word": "the",
+          "start": 83.52,
+          "end": 83.66,
+          "probability": 0.9956
+        },
+        {
+          "word": "server",
+          "start": 83.66,
+          "end": 83.96,
+          "probability": 0.9697
+        },
+        {
+          "word": "since",
+          "start": 83.96,
+          "end": 84.22,
+          "probability": 0.9819
+        },
+        {
+          "word": "the",
+          "start": 84.22,
+          "end": 84.48,
+          "probability": 0.9893
+        },
+        {
+          "word": "plugin",
+          "start": 84.48,
+          "end": 84.76,
+          "probability": 0.9902
+        },
+        {
+          "word": "registries",
+          "start": 84.76,
+          "end": 85.4,
+          "probability": 0.9863
+        },
+        {
+          "word": "were",
+          "start": 85.4,
+          "end": 85.64,
+          "probability": 0.9785
+        },
+        {
+          "word": "modified.",
+          "start": 85.64,
+          "end": 86.12,
+          "probability": 0.9946
+        },
+        {
+          "word": "Click",
+          "start": 86.68,
+          "end": 87.24,
+          "probability": 0.9795
+        },
+        {
+          "word": "the",
+          "start": 87.24,
+          "end": 87.42,
+          "probability": 0.9858
+        },
+        {
+          "word": "stop",
+          "start": 87.42,
+          "end": 87.68,
+          "probability": 0.856
+        },
+        {
+          "word": "server",
+          "start": 87.68,
+          "end": 88.0,
+          "probability": 0.9541
+        },
+        {
+          "word": "icon.",
+          "start": 88.0,
+          "end": 88.52,
+          "probability": 0.9868
+        },
+        {
+          "word": "Click",
+          "start": 89.0,
+          "end": 89.56,
+          "probability": 0.9546
+        },
+        {
+          "word": "the",
+          "start": 89.56,
+          "end": 89.74,
+          "probability": 0.9751
+        },
+        {
+          "word": "debugger.",
+          "start": 89.74,
+          "end": 89.92,
+          "probability": 0.5312
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 89.92,
+      "end": 119.9,
+      "start_formatted": "00:01:29.920",
+      "end_formatted": "00:01:59.900",
+      "text": "bug server icon to start the server. Next, set some breakpoints in the plugin Gozu classes to demonstrate the progression of user authentication. Press ctrl plus shift plus n to search for a Gozu class. Type the name of the Gozu class in the search field. Double-click on the Gozu file name to open. Click at line 13 to set a breakpoint. Press ctrl plus shift plus n to search for a Gozu class.",
+      "words": [
+        {
+          "word": "bug",
+          "start": 89.92,
+          "end": 90.08,
+          "probability": 0.0613
+        },
+        {
+          "word": "server",
+          "start": 90.08,
+          "end": 90.46,
+          "probability": 0.959
+        },
+        {
+          "word": "icon",
+          "start": 90.46,
+          "end": 90.92,
+          "probability": 0.9907
+        },
+        {
+          "word": "to",
+          "start": 90.92,
+          "end": 91.16,
+          "probability": 0.9971
+        },
+        {
+          "word": "start",
+          "start": 91.16,
+          "end": 91.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "the",
+          "start": 91.44,
+          "end": 91.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "server.",
+          "start": 91.64,
+          "end": 92.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "Next,",
+          "start": 93.3,
+          "end": 93.86,
+          "probability": 0.9893
+        },
+        {
+          "word": "set",
+          "start": 94.1,
+          "end": 94.46,
+          "probability": 0.9727
+        },
+        {
+          "word": "some",
+          "start": 94.46,
+          "end": 94.7,
+          "probability": 0.998
+        },
+        {
+          "word": "breakpoints",
+          "start": 94.7,
+          "end": 95.3,
+          "probability": 0.9326
+        },
+        {
+          "word": "in",
+          "start": 95.3,
+          "end": 95.5,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 95.5,
+          "end": 95.6,
+          "probability": 0.999
+        },
+        {
+          "word": "plugin",
+          "start": 95.6,
+          "end": 95.9,
+          "probability": 0.876
+        },
+        {
+          "word": "Gozu",
+          "start": 95.9,
+          "end": 96.24,
+          "probability": 0.1002
+        },
+        {
+          "word": "classes",
+          "start": 96.24,
+          "end": 96.62,
+          "probability": 0.936
+        },
+        {
+          "word": "to",
+          "start": 96.62,
+          "end": 96.92,
+          "probability": 0.998
+        },
+        {
+          "word": "demonstrate",
+          "start": 96.92,
+          "end": 97.4,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 97.4,
+          "end": 97.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "progression",
+          "start": 97.68,
+          "end": 98.14,
+          "probability": 0.9946
+        },
+        {
+          "word": "of",
+          "start": 98.14,
+          "end": 98.44,
+          "probability": 0.9995
+        },
+        {
+          "word": "user",
+          "start": 98.44,
+          "end": 98.8,
+          "probability": 0.9849
+        },
+        {
+          "word": "authentication.",
+          "start": 98.8,
+          "end": 99.54,
+          "probability": 0.9937
+        },
+        {
+          "word": "Press",
+          "start": 100.26,
+          "end": 100.82,
+          "probability": 0.9937
+        },
+        {
+          "word": "ctrl",
+          "start": 100.82,
+          "end": 101.22,
+          "probability": 0.561
+        },
+        {
+          "word": "plus",
+          "start": 101.22,
+          "end": 101.58,
+          "probability": 0.2954
+        },
+        {
+          "word": "shift",
+          "start": 101.58,
+          "end": 101.86,
+          "probability": 0.9888
+        },
+        {
+          "word": "plus",
+          "start": 101.86,
+          "end": 102.12,
+          "probability": 0.9829
+        },
+        {
+          "word": "n",
+          "start": 102.12,
+          "end": 102.38,
+          "probability": 0.5239
+        },
+        {
+          "word": "to",
+          "start": 102.38,
+          "end": 102.54,
+          "probability": 0.999
+        },
+        {
+          "word": "search",
+          "start": 102.54,
+          "end": 102.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 102.82,
+          "end": 103.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 103.1,
+          "end": 103.26,
+          "probability": 0.9331
+        },
+        {
+          "word": "Gozu",
+          "start": 103.26,
+          "end": 103.46,
+          "probability": 0.9863
+        },
+        {
+          "word": "class.",
+          "start": 103.46,
+          "end": 103.92,
+          "probability": 0.9907
+        },
+        {
+          "word": "Type",
+          "start": 104.46,
+          "end": 105.02,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 105.02,
+          "end": 105.22,
+          "probability": 0.9995
+        },
+        {
+          "word": "name",
+          "start": 105.22,
+          "end": 105.46,
+          "probability": 0.998
+        },
+        {
+          "word": "of",
+          "start": 105.46,
+          "end": 105.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 105.66,
+          "end": 105.8,
+          "probability": 0.9971
+        },
+        {
+          "word": "Gozu",
+          "start": 105.8,
+          "end": 106.14,
+          "probability": 0.9922
+        },
+        {
+          "word": "class",
+          "start": 106.14,
+          "end": 106.44,
+          "probability": 0.9971
+        },
+        {
+          "word": "in",
+          "start": 106.44,
+          "end": 106.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 106.64,
+          "end": 106.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "search",
+          "start": 106.78,
+          "end": 107.04,
+          "probability": 0.9858
+        },
+        {
+          "word": "field.",
+          "start": 107.04,
+          "end": 107.48,
+          "probability": 0.999
+        },
+        {
+          "word": "Double",
+          "start": 108.56,
+          "end": 109.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "-click",
+          "start": 109.12,
+          "end": 109.38,
+          "probability": 0.7305
+        },
+        {
+          "word": "on",
+          "start": 109.38,
+          "end": 109.62,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 109.62,
+          "end": 109.74,
+          "probability": 0.999
+        },
+        {
+          "word": "Gozu",
+          "start": 109.74,
+          "end": 110.1,
+          "probability": 0.9805
+        },
+        {
+          "word": "file",
+          "start": 110.1,
+          "end": 110.36,
+          "probability": 0.9316
+        },
+        {
+          "word": "name",
+          "start": 110.36,
+          "end": 110.64,
+          "probability": 0.9966
+        },
+        {
+          "word": "to",
+          "start": 110.64,
+          "end": 110.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "open.",
+          "start": 110.82,
+          "end": 111.22,
+          "probability": 0.9937
+        },
+        {
+          "word": "Click",
+          "start": 112.66,
+          "end": 113.22,
+          "probability": 0.9966
+        },
+        {
+          "word": "at",
+          "start": 113.22,
+          "end": 113.42,
+          "probability": 0.979
+        },
+        {
+          "word": "line",
+          "start": 113.42,
+          "end": 113.64,
+          "probability": 0.98
+        },
+        {
+          "word": "13",
+          "start": 113.64,
+          "end": 114.14,
+          "probability": 0.9902
+        },
+        {
+          "word": "to",
+          "start": 114.14,
+          "end": 114.48,
+          "probability": 0.999
+        },
+        {
+          "word": "set",
+          "start": 114.48,
+          "end": 114.7,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 114.7,
+          "end": 114.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "breakpoint.",
+          "start": 114.84,
+          "end": 115.42,
+          "probability": 0.9888
+        },
+        {
+          "word": "Press",
+          "start": 116.78,
+          "end": 117.34,
+          "probability": 0.9854
+        },
+        {
+          "word": "ctrl",
+          "start": 117.34,
+          "end": 117.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "plus",
+          "start": 117.74,
+          "end": 118.08,
+          "probability": 0.9917
+        },
+        {
+          "word": "shift",
+          "start": 118.08,
+          "end": 118.36,
+          "probability": 0.9941
+        },
+        {
+          "word": "plus",
+          "start": 118.36,
+          "end": 118.62,
+          "probability": 0.9976
+        },
+        {
+          "word": "n",
+          "start": 118.62,
+          "end": 118.9,
+          "probability": 0.9893
+        },
+        {
+          "word": "to",
+          "start": 118.9,
+          "end": 119.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "search",
+          "start": 119.04,
+          "end": 119.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "for",
+          "start": 119.32,
+          "end": 119.6,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 119.6,
+          "end": 119.72,
+          "probability": 0.9868
+        },
+        {
+          "word": "Gozu",
+          "start": 119.72,
+          "end": 119.9,
+          "probability": 0.9858
+        },
+        {
+          "word": "class.",
+          "start": 119.9,
+          "end": 119.9,
+          "probability": 0.4246
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 120.78,
+      "end": 136.12,
+      "start_formatted": "00:02:00.780",
+      "end_formatted": "00:02:16.120",
+      "text": "Double-click on the Gozu class. Double-click on the Gozu class name to open. Click at line 22 to set a breakpoint. Click at line 26 to set a breakpoint. Click at line 39 to set a breakpoint.",
+      "words": [
+        {
+          "word": "Double",
+          "start": 120.78,
+          "end": 121.46,
+          "probability": 0.2328
+        },
+        {
+          "word": "-click",
+          "start": 121.46,
+          "end": 121.8,
+          "probability": 0.7866
+        },
+        {
+          "word": "on",
+          "start": 121.8,
+          "end": 122.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 122.04,
+          "end": 122.16,
+          "probability": 0.9946
+        },
+        {
+          "word": "Gozu",
+          "start": 122.16,
+          "end": 122.5,
+          "probability": 0.2739
+        },
+        {
+          "word": "class.",
+          "start": 122.5,
+          "end": 122.74,
+          "probability": 0.7817
+        },
+        {
+          "word": "Double",
+          "start": 122.74,
+          "end": 122.74,
+          "probability": 0.0873
+        },
+        {
+          "word": "-click",
+          "start": 122.74,
+          "end": 122.74,
+          "probability": 0.9375
+        },
+        {
+          "word": "on",
+          "start": 122.74,
+          "end": 122.74,
+          "probability": 0.9639
+        },
+        {
+          "word": "the",
+          "start": 122.74,
+          "end": 122.74,
+          "probability": 0.9766
+        },
+        {
+          "word": "Gozu",
+          "start": 122.74,
+          "end": 122.74,
+          "probability": 0.9595
+        },
+        {
+          "word": "class",
+          "start": 122.74,
+          "end": 122.78,
+          "probability": 0.9233
+        },
+        {
+          "word": "name",
+          "start": 122.78,
+          "end": 123.06,
+          "probability": 0.9648
+        },
+        {
+          "word": "to",
+          "start": 123.06,
+          "end": 123.28,
+          "probability": 0.9854
+        },
+        {
+          "word": "open.",
+          "start": 123.28,
+          "end": 123.66,
+          "probability": 0.9824
+        },
+        {
+          "word": "Click",
+          "start": 124.96,
+          "end": 125.64,
+          "probability": 0.9785
+        },
+        {
+          "word": "at",
+          "start": 125.64,
+          "end": 125.78,
+          "probability": 0.9507
+        },
+        {
+          "word": "line",
+          "start": 125.78,
+          "end": 125.98,
+          "probability": 0.7031
+        },
+        {
+          "word": "22",
+          "start": 125.98,
+          "end": 126.42,
+          "probability": 0.9663
+        },
+        {
+          "word": "to",
+          "start": 126.42,
+          "end": 126.78,
+          "probability": 0.9839
+        },
+        {
+          "word": "set",
+          "start": 126.78,
+          "end": 127.02,
+          "probability": 0.9941
+        },
+        {
+          "word": "a",
+          "start": 127.02,
+          "end": 127.14,
+          "probability": 0.9961
+        },
+        {
+          "word": "breakpoint.",
+          "start": 127.14,
+          "end": 127.7,
+          "probability": 0.9009
+        },
+        {
+          "word": "Click",
+          "start": 129.06,
+          "end": 129.74,
+          "probability": 0.9824
+        },
+        {
+          "word": "at",
+          "start": 129.74,
+          "end": 129.96,
+          "probability": 0.9902
+        },
+        {
+          "word": "line",
+          "start": 129.96,
+          "end": 130.12,
+          "probability": 0.9512
+        },
+        {
+          "word": "26",
+          "start": 130.12,
+          "end": 130.66,
+          "probability": 0.9858
+        },
+        {
+          "word": "to",
+          "start": 130.66,
+          "end": 131.02,
+          "probability": 0.9951
+        },
+        {
+          "word": "set",
+          "start": 131.02,
+          "end": 131.26,
+          "probability": 0.9976
+        },
+        {
+          "word": "a",
+          "start": 131.26,
+          "end": 131.36,
+          "probability": 0.998
+        },
+        {
+          "word": "breakpoint.",
+          "start": 131.36,
+          "end": 131.96,
+          "probability": 0.9888
+        },
+        {
+          "word": "Click",
+          "start": 133.22,
+          "end": 133.9,
+          "probability": 0.959
+        },
+        {
+          "word": "at",
+          "start": 133.9,
+          "end": 134.12,
+          "probability": 0.9917
+        },
+        {
+          "word": "line",
+          "start": 134.12,
+          "end": 134.3,
+          "probability": 0.9766
+        },
+        {
+          "word": "39",
+          "start": 134.3,
+          "end": 134.86,
+          "probability": 0.9839
+        },
+        {
+          "word": "to",
+          "start": 134.86,
+          "end": 135.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "set",
+          "start": 135.22,
+          "end": 135.44,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 135.44,
+          "end": 135.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "breakpoint.",
+          "start": 135.56,
+          "end": 136.12,
+          "probability": 0.9922
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 137.24,
+      "end": 161.0,
+      "start_formatted": "00:02:17.240",
+      "end_formatted": "00:02:41.000",
+      "text": "Now that the breakpoints are set, log in to training app and observe the progression of user authentication. Type the user name for super user. Type the password for super user. Click the login button. The user authentication process is triggered. The system breaks at line 13 in the custom authentication source creator plugin class.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 137.24,
+          "end": 137.96,
+          "probability": 0.856
+        },
+        {
+          "word": "that",
+          "start": 137.96,
+          "end": 138.2,
+          "probability": 0.9937
+        },
+        {
+          "word": "the",
+          "start": 138.2,
+          "end": 138.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "breakpoints",
+          "start": 138.36,
+          "end": 138.9,
+          "probability": 0.8916
+        },
+        {
+          "word": "are",
+          "start": 138.9,
+          "end": 139.16,
+          "probability": 0.999
+        },
+        {
+          "word": "set,",
+          "start": 139.16,
+          "end": 139.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "log",
+          "start": 139.82,
+          "end": 140.2,
+          "probability": 0.6362
+        },
+        {
+          "word": "in",
+          "start": 140.2,
+          "end": 140.38,
+          "probability": 0.5068
+        },
+        {
+          "word": "to",
+          "start": 140.38,
+          "end": 140.54,
+          "probability": 0.9961
+        },
+        {
+          "word": "training",
+          "start": 140.54,
+          "end": 140.8,
+          "probability": 0.5688
+        },
+        {
+          "word": "app",
+          "start": 140.8,
+          "end": 141.12,
+          "probability": 0.9302
+        },
+        {
+          "word": "and",
+          "start": 141.12,
+          "end": 141.3,
+          "probability": 0.9917
+        },
+        {
+          "word": "observe",
+          "start": 141.3,
+          "end": 141.62,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 141.62,
+          "end": 141.84,
+          "probability": 0.999
+        },
+        {
+          "word": "progression",
+          "start": 141.84,
+          "end": 142.3,
+          "probability": 0.9814
+        },
+        {
+          "word": "of",
+          "start": 142.3,
+          "end": 142.62,
+          "probability": 0.999
+        },
+        {
+          "word": "user",
+          "start": 142.62,
+          "end": 142.96,
+          "probability": 0.9028
+        },
+        {
+          "word": "authentication.",
+          "start": 142.96,
+          "end": 143.68,
+          "probability": 0.9775
+        },
+        {
+          "word": "Type",
+          "start": 144.36,
+          "end": 145.02,
+          "probability": 0.979
+        },
+        {
+          "word": "the",
+          "start": 145.02,
+          "end": 145.2,
+          "probability": 0.9961
+        },
+        {
+          "word": "user",
+          "start": 145.2,
+          "end": 145.48,
+          "probability": 0.1281
+        },
+        {
+          "word": "name",
+          "start": 145.48,
+          "end": 145.78,
+          "probability": 0.9844
+        },
+        {
+          "word": "for",
+          "start": 145.78,
+          "end": 146.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "super",
+          "start": 146.0,
+          "end": 146.36,
+          "probability": 0.6006
+        },
+        {
+          "word": "user.",
+          "start": 146.36,
+          "end": 146.78,
+          "probability": 0.5649
+        },
+        {
+          "word": "Type",
+          "start": 147.22,
+          "end": 147.8,
+          "probability": 0.9917
+        },
+        {
+          "word": "the",
+          "start": 147.8,
+          "end": 148.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "password",
+          "start": 148.0,
+          "end": 148.4,
+          "probability": 0.9917
+        },
+        {
+          "word": "for",
+          "start": 148.4,
+          "end": 148.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "super",
+          "start": 148.78,
+          "end": 149.16,
+          "probability": 0.9575
+        },
+        {
+          "word": "user.",
+          "start": 149.16,
+          "end": 149.6,
+          "probability": 0.9858
+        },
+        {
+          "word": "Click",
+          "start": 150.14,
+          "end": 150.86,
+          "probability": 0.9907
+        },
+        {
+          "word": "the",
+          "start": 150.86,
+          "end": 151.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "login",
+          "start": 151.08,
+          "end": 151.42,
+          "probability": 0.855
+        },
+        {
+          "word": "button.",
+          "start": 151.42,
+          "end": 151.78,
+          "probability": 0.9946
+        },
+        {
+          "word": "The",
+          "start": 152.16,
+          "end": 152.42,
+          "probability": 0.9922
+        },
+        {
+          "word": "user",
+          "start": 152.42,
+          "end": 152.72,
+          "probability": 0.9937
+        },
+        {
+          "word": "authentication",
+          "start": 152.72,
+          "end": 153.36,
+          "probability": 0.9932
+        },
+        {
+          "word": "process",
+          "start": 153.36,
+          "end": 154.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "is",
+          "start": 154.06,
+          "end": 154.36,
+          "probability": 0.999
+        },
+        {
+          "word": "triggered.",
+          "start": 154.36,
+          "end": 154.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 155.16,
+          "end": 155.78,
+          "probability": 0.9927
+        },
+        {
+          "word": "system",
+          "start": 155.78,
+          "end": 156.16,
+          "probability": 0.9951
+        },
+        {
+          "word": "breaks",
+          "start": 156.16,
+          "end": 156.52,
+          "probability": 0.9946
+        },
+        {
+          "word": "at",
+          "start": 156.52,
+          "end": 156.74,
+          "probability": 0.9956
+        },
+        {
+          "word": "line",
+          "start": 156.74,
+          "end": 157.0,
+          "probability": 0.9727
+        },
+        {
+          "word": "13",
+          "start": 157.0,
+          "end": 157.48,
+          "probability": 0.9897
+        },
+        {
+          "word": "in",
+          "start": 157.48,
+          "end": 157.84,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 157.84,
+          "end": 157.94,
+          "probability": 0.9985
+        },
+        {
+          "word": "custom",
+          "start": 157.94,
+          "end": 158.3,
+          "probability": 0.7041
+        },
+        {
+          "word": "authentication",
+          "start": 158.3,
+          "end": 158.94,
+          "probability": 0.8857
+        },
+        {
+          "word": "source",
+          "start": 158.94,
+          "end": 159.62,
+          "probability": 0.9497
+        },
+        {
+          "word": "creator",
+          "start": 159.62,
+          "end": 160.12,
+          "probability": 0.9819
+        },
+        {
+          "word": "plugin",
+          "start": 160.12,
+          "end": 160.48,
+          "probability": 0.9497
+        },
+        {
+          "word": "class.",
+          "start": 160.48,
+          "end": 161.0,
+          "probability": 0.9966
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 176.68,
+      "end": 190.98,
+      "start_formatted": "00:02:56.680",
+      "end_formatted": "00:03:10.980",
+      "text": "The source object was of type username password since the method did not throw an exception. The user name and password are extracted from the source object.",
+      "words": [
+        {
+          "word": "The",
+          "start": 176.68,
+          "end": 177.36,
+          "probability": 0.0044
+        },
+        {
+          "word": "source",
+          "start": 177.36,
+          "end": 178.04,
+          "probability": 0.0146
+        },
+        {
+          "word": "object",
+          "start": 178.04,
+          "end": 181.96,
+          "probability": 0.7568
+        },
+        {
+          "word": "was",
+          "start": 181.96,
+          "end": 182.26,
+          "probability": 0.8003
+        },
+        {
+          "word": "of",
+          "start": 182.26,
+          "end": 182.44,
+          "probability": 0.9263
+        },
+        {
+          "word": "type",
+          "start": 182.44,
+          "end": 182.68,
+          "probability": 0.9619
+        },
+        {
+          "word": "username",
+          "start": 182.68,
+          "end": 183.1,
+          "probability": 0.3135
+        },
+        {
+          "word": "password",
+          "start": 183.1,
+          "end": 183.74,
+          "probability": 0.4915
+        },
+        {
+          "word": "since",
+          "start": 183.74,
+          "end": 184.36,
+          "probability": 0.0
+        },
+        {
+          "word": "the",
+          "start": 184.36,
+          "end": 185.7,
+          "probability": 0.9683
+        },
+        {
+          "word": "method",
+          "start": 185.7,
+          "end": 186.0,
+          "probability": 0.9971
+        },
+        {
+          "word": "did",
+          "start": 186.0,
+          "end": 186.24,
+          "probability": 0.9956
+        },
+        {
+          "word": "not",
+          "start": 186.24,
+          "end": 186.48,
+          "probability": 0.998
+        },
+        {
+          "word": "throw",
+          "start": 186.48,
+          "end": 186.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "an",
+          "start": 186.7,
+          "end": 187.04,
+          "probability": 0.9961
+        },
+        {
+          "word": "exception.",
+          "start": 187.04,
+          "end": 187.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "The",
+          "start": 187.82,
+          "end": 188.36,
+          "probability": 0.9863
+        },
+        {
+          "word": "user",
+          "start": 188.36,
+          "end": 188.7,
+          "probability": 0.1216
+        },
+        {
+          "word": "name",
+          "start": 188.7,
+          "end": 188.94,
+          "probability": 0.9697
+        },
+        {
+          "word": "and",
+          "start": 188.94,
+          "end": 189.14,
+          "probability": 0.9966
+        },
+        {
+          "word": "password",
+          "start": 189.14,
+          "end": 189.62,
+          "probability": 0.998
+        },
+        {
+          "word": "are",
+          "start": 189.62,
+          "end": 189.94,
+          "probability": 0.9966
+        },
+        {
+          "word": "extracted",
+          "start": 189.94,
+          "end": 190.42,
+          "probability": 0.9946
+        },
+        {
+          "word": "from",
+          "start": 190.42,
+          "end": 190.68,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 190.68,
+          "end": 190.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "source",
+          "start": 190.84,
+          "end": 190.98,
+          "probability": 0.7944
+        },
+        {
+          "word": "object.",
+          "start": 190.98,
+          "end": 190.98,
+          "probability": 0.7021
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 191.78,
+      "end": 220.72,
+      "start_formatted": "00:03:11.780",
+      "end_formatted": "00:03:40.720",
+      "text": "The underscore handler variable is not null. Click the resume program button. The system breaks at line 26. The public ID is not null. If the public ID were null, then the system would throw a failed login exception error. Click the resume program button. The system breaks at line 39. The method will return a string value, public ID.",
+      "words": [
+        {
+          "word": "The",
+          "start": 191.78,
+          "end": 192.46,
+          "probability": 0.5669
+        },
+        {
+          "word": "underscore",
+          "start": 192.46,
+          "end": 193.0,
+          "probability": 0.3103
+        },
+        {
+          "word": "handler",
+          "start": 193.0,
+          "end": 193.46,
+          "probability": 0.8423
+        },
+        {
+          "word": "variable",
+          "start": 193.46,
+          "end": 194.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "is",
+          "start": 194.08,
+          "end": 194.4,
+          "probability": 0.9966
+        },
+        {
+          "word": "not",
+          "start": 194.4,
+          "end": 194.62,
+          "probability": 0.9858
+        },
+        {
+          "word": "null.",
+          "start": 194.62,
+          "end": 194.86,
+          "probability": 0.7603
+        },
+        {
+          "word": "Click",
+          "start": 195.28,
+          "end": 195.96,
+          "probability": 0.9839
+        },
+        {
+          "word": "the",
+          "start": 195.96,
+          "end": 196.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "resume",
+          "start": 196.16,
+          "end": 196.5,
+          "probability": 0.5015
+        },
+        {
+          "word": "program",
+          "start": 196.5,
+          "end": 197.0,
+          "probability": 0.9722
+        },
+        {
+          "word": "button.",
+          "start": 197.0,
+          "end": 197.44,
+          "probability": 0.9966
+        },
+        {
+          "word": "The",
+          "start": 198.82,
+          "end": 199.5,
+          "probability": 0.9941
+        },
+        {
+          "word": "system",
+          "start": 199.5,
+          "end": 199.86,
+          "probability": 0.9536
+        },
+        {
+          "word": "breaks",
+          "start": 199.86,
+          "end": 200.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "at",
+          "start": 200.2,
+          "end": 200.42,
+          "probability": 0.9951
+        },
+        {
+          "word": "line",
+          "start": 200.42,
+          "end": 200.68,
+          "probability": 0.9482
+        },
+        {
+          "word": "26.",
+          "start": 200.68,
+          "end": 201.32,
+          "probability": 0.9795
+        },
+        {
+          "word": "The",
+          "start": 202.34,
+          "end": 203.02,
+          "probability": 0.9932
+        },
+        {
+          "word": "public",
+          "start": 203.02,
+          "end": 203.4,
+          "probability": 0.9082
+        },
+        {
+          "word": "ID",
+          "start": 203.4,
+          "end": 203.72,
+          "probability": 0.7456
+        },
+        {
+          "word": "is",
+          "start": 203.72,
+          "end": 204.1,
+          "probability": 0.998
+        },
+        {
+          "word": "not",
+          "start": 204.1,
+          "end": 204.32,
+          "probability": 0.9985
+        },
+        {
+          "word": "null.",
+          "start": 204.32,
+          "end": 204.58,
+          "probability": 0.9883
+        },
+        {
+          "word": "If",
+          "start": 204.92,
+          "end": 205.46,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 205.46,
+          "end": 205.6,
+          "probability": 0.998
+        },
+        {
+          "word": "public",
+          "start": 205.6,
+          "end": 205.94,
+          "probability": 0.9844
+        },
+        {
+          "word": "ID",
+          "start": 205.94,
+          "end": 206.3,
+          "probability": 0.9922
+        },
+        {
+          "word": "were",
+          "start": 206.3,
+          "end": 206.52,
+          "probability": 0.9937
+        },
+        {
+          "word": "null,",
+          "start": 206.52,
+          "end": 206.78,
+          "probability": 0.9878
+        },
+        {
+          "word": "then",
+          "start": 206.98,
+          "end": 207.24,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 207.24,
+          "end": 207.38,
+          "probability": 0.999
+        },
+        {
+          "word": "system",
+          "start": 207.38,
+          "end": 207.72,
+          "probability": 0.998
+        },
+        {
+          "word": "would",
+          "start": 207.72,
+          "end": 207.98,
+          "probability": 0.9995
+        },
+        {
+          "word": "throw",
+          "start": 207.98,
+          "end": 208.18,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 208.18,
+          "end": 208.36,
+          "probability": 0.9995
+        },
+        {
+          "word": "failed",
+          "start": 208.36,
+          "end": 208.64,
+          "probability": 0.9829
+        },
+        {
+          "word": "login",
+          "start": 208.64,
+          "end": 209.0,
+          "probability": 0.8911
+        },
+        {
+          "word": "exception",
+          "start": 209.0,
+          "end": 209.44,
+          "probability": 0.9844
+        },
+        {
+          "word": "error.",
+          "start": 209.44,
+          "end": 209.9,
+          "probability": 0.9971
+        },
+        {
+          "word": "Click",
+          "start": 210.26,
+          "end": 210.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 210.72,
+          "end": 210.9,
+          "probability": 0.999
+        },
+        {
+          "word": "resume",
+          "start": 210.9,
+          "end": 211.24,
+          "probability": 0.9883
+        },
+        {
+          "word": "program",
+          "start": 211.24,
+          "end": 211.76,
+          "probability": 0.9985
+        },
+        {
+          "word": "button.",
+          "start": 211.76,
+          "end": 212.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 213.68,
+          "end": 214.36,
+          "probability": 0.9971
+        },
+        {
+          "word": "system",
+          "start": 214.36,
+          "end": 214.72,
+          "probability": 0.9956
+        },
+        {
+          "word": "breaks",
+          "start": 214.72,
+          "end": 215.06,
+          "probability": 0.999
+        },
+        {
+          "word": "at",
+          "start": 215.06,
+          "end": 215.3,
+          "probability": 0.9995
+        },
+        {
+          "word": "line",
+          "start": 215.3,
+          "end": 215.54,
+          "probability": 0.9985
+        },
+        {
+          "word": "39.",
+          "start": 215.54,
+          "end": 216.12,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 217.06,
+          "end": 217.74,
+          "probability": 0.9971
+        },
+        {
+          "word": "method",
+          "start": 217.74,
+          "end": 218.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "will",
+          "start": 218.04,
+          "end": 218.26,
+          "probability": 1.0
+        },
+        {
+          "word": "return",
+          "start": 218.26,
+          "end": 218.6,
+          "probability": 1.0
+        },
+        {
+          "word": "a",
+          "start": 218.6,
+          "end": 218.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "string",
+          "start": 218.82,
+          "end": 219.06,
+          "probability": 0.981
+        },
+        {
+          "word": "value,",
+          "start": 219.06,
+          "end": 219.64,
+          "probability": 0.9976
+        },
+        {
+          "word": "public",
+          "start": 219.86,
+          "end": 220.26,
+          "probability": 0.9775
+        },
+        {
+          "word": "ID.",
+          "start": 220.26,
+          "end": 220.72,
+          "probability": 0.9795
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 220.72,
+      "end": 235.46,
+      "start_formatted": "00:03:40.720",
+      "end_formatted": "00:03:55.460",
+      "text": "The user is not null. Click the resume program button. Click the resume program button. After the last breakpoint, the user is logged into the system. This ends the user authentication flow demonstration.",
+      "words": [
+        {
+          "word": "The",
+          "start": 220.72,
+          "end": 221.82,
+          "probability": 0.0021
+        },
+        {
+          "word": "user",
+          "start": 221.82,
+          "end": 222.1,
+          "probability": 0.5312
+        },
+        {
+          "word": "is",
+          "start": 222.1,
+          "end": 222.44,
+          "probability": 0.7495
+        },
+        {
+          "word": "not",
+          "start": 222.44,
+          "end": 222.58,
+          "probability": 0.0019
+        },
+        {
+          "word": "null.",
+          "start": 222.58,
+          "end": 223.34,
+          "probability": 0.0002
+        },
+        {
+          "word": "Click",
+          "start": 223.46,
+          "end": 224.02,
+          "probability": 0.3687
+        },
+        {
+          "word": "the",
+          "start": 224.02,
+          "end": 224.26,
+          "probability": 0.5317
+        },
+        {
+          "word": "resume",
+          "start": 224.26,
+          "end": 224.6,
+          "probability": 0.1718
+        },
+        {
+          "word": "program",
+          "start": 224.6,
+          "end": 225.14,
+          "probability": 0.9336
+        },
+        {
+          "word": "button.",
+          "start": 225.14,
+          "end": 225.56,
+          "probability": 0.9038
+        },
+        {
+          "word": "Click",
+          "start": 226.16,
+          "end": 226.16,
+          "probability": 0.006
+        },
+        {
+          "word": "the",
+          "start": 226.16,
+          "end": 226.16,
+          "probability": 0.5317
+        },
+        {
+          "word": "resume",
+          "start": 226.16,
+          "end": 226.16,
+          "probability": 0.4731
+        },
+        {
+          "word": "program",
+          "start": 226.16,
+          "end": 226.16,
+          "probability": 0.8481
+        },
+        {
+          "word": "button.",
+          "start": 226.16,
+          "end": 226.16,
+          "probability": 0.772
+        },
+        {
+          "word": "After",
+          "start": 227.6,
+          "end": 228.28,
+          "probability": 0.7876
+        },
+        {
+          "word": "the",
+          "start": 228.28,
+          "end": 228.44,
+          "probability": 0.9829
+        },
+        {
+          "word": "last",
+          "start": 228.44,
+          "end": 228.76,
+          "probability": 0.9668
+        },
+        {
+          "word": "breakpoint,",
+          "start": 228.76,
+          "end": 229.4,
+          "probability": 0.7119
+        },
+        {
+          "word": "the",
+          "start": 229.64,
+          "end": 229.84,
+          "probability": 0.9341
+        },
+        {
+          "word": "user",
+          "start": 229.84,
+          "end": 230.14,
+          "probability": 0.9907
+        },
+        {
+          "word": "is",
+          "start": 230.14,
+          "end": 230.42,
+          "probability": 0.98
+        },
+        {
+          "word": "logged",
+          "start": 230.42,
+          "end": 230.7,
+          "probability": 0.9775
+        },
+        {
+          "word": "into",
+          "start": 230.7,
+          "end": 231.0,
+          "probability": 0.8477
+        },
+        {
+          "word": "the",
+          "start": 231.0,
+          "end": 231.18,
+          "probability": 0.9873
+        },
+        {
+          "word": "system.",
+          "start": 231.18,
+          "end": 231.58,
+          "probability": 0.9722
+        },
+        {
+          "word": "This",
+          "start": 232.06,
+          "end": 232.74,
+          "probability": 0.9146
+        },
+        {
+          "word": "ends",
+          "start": 232.74,
+          "end": 233.04,
+          "probability": 0.8999
+        },
+        {
+          "word": "the",
+          "start": 233.04,
+          "end": 233.44,
+          "probability": 0.7422
+        },
+        {
+          "word": "user",
+          "start": 233.44,
+          "end": 233.74,
+          "probability": 0.9268
+        },
+        {
+          "word": "authentication",
+          "start": 233.74,
+          "end": 234.4,
+          "probability": 0.9727
+        },
+        {
+          "word": "flow",
+          "start": 234.4,
+          "end": 235.0,
+          "probability": 0.9741
+        },
+        {
+          "word": "demonstration.",
+          "start": 235.0,
+          "end": 235.46,
+          "probability": 0.9189
+        }
+      ]
+    }
+  ]
+}

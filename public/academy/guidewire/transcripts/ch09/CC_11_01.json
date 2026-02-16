@@ -1,0 +1,3287 @@
+{
+  "metadata": {
+    "chapter": "ch09",
+    "chapter_title": "ClaimCenter Configuration",
+    "filename": "CC_11_01.mp4",
+    "video_stem": "CC_11_01",
+    "duration_seconds": 254.62,
+    "duration_formatted": "00:04:14.620",
+    "segment_count": 29,
+    "word_count": 496,
+    "avg_confidence": 0.9473,
+    "transcription_time_seconds": 18.57,
+    "model_used": "mlx-community/whisper-large-v3-turbo",
+    "transcribed_at": "2026-02-13T12:41:00.489381"
+  },
+  "full_text": "Succeed Insurance requires that no reserves or payments can be made against claim cost when a claim is under SIU investigation. Such a claim should be put under financial hold. The first thing to do is to set up the cause for the financial hold. I navigate to the financial hold's enhancement. In the apply financial hold's function, I add a condition to the OR clause. The condition tests whether the claim is under SIU investigation. To save time, I have already added a condition to the OR clause. The condition tests whether the claim is under SIU investigation. I already created the rule I need. In the base configuration, there is a group of transaction set validation rules that deals with financial holds. The parent rule fires if the claim has a financial hold on it, as long as the transaction set type is reserve set or check set, and there are no deleted or cancelled checks. There are child rules that deal with the possible causes of financial holds. In the base configuration, there are three. Claims where coverage is in question. Incident only claims. And claims with unverified policies. I have placed my new rule under those three. The condition activates the rule only if the claim is under SIU investigation. The rule rejects the transaction set with an error if it has any component for claim cost. Otherwise, it rejects the transaction set with a warning. To test the rule I restart the server in debug mode. When the server is ready, I switch to Claim Center in the browser. And I log in as Sue Smith, a claims manager who has the right to set SIU status. Now I navigate to a claim. I look at the status screen. Where I see that the SIU status field for this claim is null. I'll change that. I navigate to the Special Investigation Details screen. Here, I click Edit. I refer the claim to the SIU team. In the Supervisor comment field that appears I indicate that this is a test. Now I save the changes I've made. Returning to the status screen. I verify that the SIU status is set. Now I'll try to create a reserve on the claim. Note that there are already several claim cost reserves on the claim. The new reserve is set to Claim Level from the start, so I'll set the cost type to Claim Cost. For Cost Category I'll simply select Other. And I'll set the amount to $5,000. Now I'll attempt to save the claim. As expected, the error message appears. If I attempt to save in this errored condition, nothing happens. I'll clear the error message. And change the cost type. Now, when I attempt to save. I see the warning message. I'll clear the message. Now when I click Save. The reserve is saved, with the status of Submitting. The rule is working correctly. This concludes the Configuring Financial Holds demonstration. .    ",
+  "segments": [
+    {
+      "id": 0,
+      "start": 1.5,
+      "end": 17.62,
+      "start_formatted": "00:00:01.500",
+      "end_formatted": "00:00:17.620",
+      "text": "Succeed Insurance requires that no reserves or payments can be made against claim cost when a claim is under SIU investigation. Such a claim should be put under financial hold. The first thing to do is to set up the cause for the financial hold. I navigate to the financial hold's enhancement.",
+      "words": [
+        {
+          "word": "Succeed",
+          "start": 1.5,
+          "end": 2.02,
+          "probability": 0.936
+        },
+        {
+          "word": "Insurance",
+          "start": 2.02,
+          "end": 2.32,
+          "probability": 0.2172
+        },
+        {
+          "word": "requires",
+          "start": 2.32,
+          "end": 2.92,
+          "probability": 0.9814
+        },
+        {
+          "word": "that",
+          "start": 2.92,
+          "end": 3.18,
+          "probability": 0.999
+        },
+        {
+          "word": "no",
+          "start": 3.18,
+          "end": 3.34,
+          "probability": 0.9844
+        },
+        {
+          "word": "reserves",
+          "start": 3.34,
+          "end": 3.74,
+          "probability": 0.9907
+        },
+        {
+          "word": "or",
+          "start": 3.74,
+          "end": 3.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "payments",
+          "start": 3.96,
+          "end": 4.32,
+          "probability": 0.9956
+        },
+        {
+          "word": "can",
+          "start": 4.32,
+          "end": 4.54,
+          "probability": 0.9976
+        },
+        {
+          "word": "be",
+          "start": 4.54,
+          "end": 4.68,
+          "probability": 0.9985
+        },
+        {
+          "word": "made",
+          "start": 4.68,
+          "end": 4.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "against",
+          "start": 4.9,
+          "end": 5.18,
+          "probability": 0.998
+        },
+        {
+          "word": "claim",
+          "start": 5.18,
+          "end": 5.5,
+          "probability": 0.9487
+        },
+        {
+          "word": "cost",
+          "start": 5.5,
+          "end": 5.9,
+          "probability": 0.8101
+        },
+        {
+          "word": "when",
+          "start": 5.9,
+          "end": 6.08,
+          "probability": 0.9888
+        },
+        {
+          "word": "a",
+          "start": 6.08,
+          "end": 6.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "claim",
+          "start": 6.18,
+          "end": 6.42,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 6.42,
+          "end": 6.62,
+          "probability": 0.998
+        },
+        {
+          "word": "under",
+          "start": 6.62,
+          "end": 6.86,
+          "probability": 0.999
+        },
+        {
+          "word": "SIU",
+          "start": 6.86,
+          "end": 7.34,
+          "probability": 0.9922
+        },
+        {
+          "word": "investigation.",
+          "start": 7.34,
+          "end": 8.0,
+          "probability": 0.873
+        },
+        {
+          "word": "Such",
+          "start": 8.42,
+          "end": 8.92,
+          "probability": 0.9902
+        },
+        {
+          "word": "a",
+          "start": 8.92,
+          "end": 9.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 9.0,
+          "end": 9.26,
+          "probability": 0.9941
+        },
+        {
+          "word": "should",
+          "start": 9.26,
+          "end": 9.46,
+          "probability": 0.999
+        },
+        {
+          "word": "be",
+          "start": 9.46,
+          "end": 9.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "put",
+          "start": 9.64,
+          "end": 9.82,
+          "probability": 0.9985
+        },
+        {
+          "word": "under",
+          "start": 9.82,
+          "end": 10.08,
+          "probability": 0.998
+        },
+        {
+          "word": "financial",
+          "start": 10.08,
+          "end": 10.48,
+          "probability": 0.5181
+        },
+        {
+          "word": "hold.",
+          "start": 10.48,
+          "end": 10.92,
+          "probability": 0.9971
+        },
+        {
+          "word": "The",
+          "start": 11.3,
+          "end": 11.76,
+          "probability": 0.9878
+        },
+        {
+          "word": "first",
+          "start": 11.76,
+          "end": 12.02,
+          "probability": 0.9961
+        },
+        {
+          "word": "thing",
+          "start": 12.02,
+          "end": 12.24,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 12.24,
+          "end": 12.4,
+          "probability": 0.998
+        },
+        {
+          "word": "do",
+          "start": 12.4,
+          "end": 12.58,
+          "probability": 0.9995
+        },
+        {
+          "word": "is",
+          "start": 12.58,
+          "end": 12.76,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 12.76,
+          "end": 12.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "set",
+          "start": 12.88,
+          "end": 13.12,
+          "probability": 0.9712
+        },
+        {
+          "word": "up",
+          "start": 13.12,
+          "end": 13.24,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 13.24,
+          "end": 13.36,
+          "probability": 0.999
+        },
+        {
+          "word": "cause",
+          "start": 13.36,
+          "end": 13.62,
+          "probability": 0.9688
+        },
+        {
+          "word": "for",
+          "start": 13.62,
+          "end": 13.78,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 13.78,
+          "end": 13.88,
+          "probability": 0.9971
+        },
+        {
+          "word": "financial",
+          "start": 13.88,
+          "end": 14.28,
+          "probability": 0.9907
+        },
+        {
+          "word": "hold.",
+          "start": 14.28,
+          "end": 14.76,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 14.98,
+          "end": 15.3,
+          "probability": 0.9893
+        },
+        {
+          "word": "navigate",
+          "start": 15.3,
+          "end": 15.7,
+          "probability": 0.9854
+        },
+        {
+          "word": "to",
+          "start": 15.7,
+          "end": 16.0,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 16.0,
+          "end": 16.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "financial",
+          "start": 16.12,
+          "end": 16.54,
+          "probability": 0.8555
+        },
+        {
+          "word": "hold's",
+          "start": 16.54,
+          "end": 17.02,
+          "probability": 0.8091
+        },
+        {
+          "word": "enhancement.",
+          "start": 17.02,
+          "end": 17.62,
+          "probability": 0.9688
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 30.86,
+      "end": 39.24,
+      "start_formatted": "00:00:30.860",
+      "end_formatted": "00:00:39.240",
+      "text": "In the apply financial hold's function, I add a condition to the OR clause. The condition tests whether the claim is under SIU investigation.",
+      "words": [
+        {
+          "word": "In",
+          "start": 30.86,
+          "end": 31.42,
+          "probability": 0.9395
+        },
+        {
+          "word": "the",
+          "start": 31.42,
+          "end": 31.54,
+          "probability": 0.9907
+        },
+        {
+          "word": "apply",
+          "start": 31.54,
+          "end": 31.82,
+          "probability": 0.334
+        },
+        {
+          "word": "financial",
+          "start": 31.82,
+          "end": 32.34,
+          "probability": 0.8027
+        },
+        {
+          "word": "hold's",
+          "start": 32.34,
+          "end": 32.78,
+          "probability": 0.1783
+        },
+        {
+          "word": "function,",
+          "start": 32.78,
+          "end": 33.2,
+          "probability": 0.9971
+        },
+        {
+          "word": "I",
+          "start": 33.46,
+          "end": 33.68,
+          "probability": 0.9912
+        },
+        {
+          "word": "add",
+          "start": 33.68,
+          "end": 33.9,
+          "probability": 0.9951
+        },
+        {
+          "word": "a",
+          "start": 33.9,
+          "end": 34.0,
+          "probability": 0.9888
+        },
+        {
+          "word": "condition",
+          "start": 34.0,
+          "end": 34.32,
+          "probability": 0.9771
+        },
+        {
+          "word": "to",
+          "start": 34.32,
+          "end": 34.56,
+          "probability": 0.9971
+        },
+        {
+          "word": "the",
+          "start": 34.56,
+          "end": 34.66,
+          "probability": 0.9932
+        },
+        {
+          "word": "OR",
+          "start": 34.66,
+          "end": 34.8,
+          "probability": 0.8652
+        },
+        {
+          "word": "clause.",
+          "start": 34.8,
+          "end": 35.3,
+          "probability": 0.9761
+        },
+        {
+          "word": "The",
+          "start": 35.66,
+          "end": 36.12,
+          "probability": 0.9878
+        },
+        {
+          "word": "condition",
+          "start": 36.12,
+          "end": 36.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "tests",
+          "start": 36.54,
+          "end": 36.94,
+          "probability": 0.9653
+        },
+        {
+          "word": "whether",
+          "start": 36.94,
+          "end": 37.22,
+          "probability": 0.9927
+        },
+        {
+          "word": "the",
+          "start": 37.22,
+          "end": 37.38,
+          "probability": 0.9976
+        },
+        {
+          "word": "claim",
+          "start": 37.38,
+          "end": 37.64,
+          "probability": 0.9917
+        },
+        {
+          "word": "is",
+          "start": 37.64,
+          "end": 37.84,
+          "probability": 0.9976
+        },
+        {
+          "word": "under",
+          "start": 37.84,
+          "end": 38.04,
+          "probability": 0.9946
+        },
+        {
+          "word": "SIU",
+          "start": 38.04,
+          "end": 38.56,
+          "probability": 0.9834
+        },
+        {
+          "word": "investigation.",
+          "start": 38.56,
+          "end": 39.24,
+          "probability": 0.9531
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 57.96,
+      "end": 59.98,
+      "start_formatted": "00:00:57.960",
+      "end_formatted": "00:00:59.980",
+      "text": "To save time, I have already added a condition to the OR clause. The condition tests whether the claim is under SIU investigation.",
+      "words": [
+        {
+          "word": "To",
+          "start": 57.96,
+          "end": 58.52,
+          "probability": 0.6973
+        },
+        {
+          "word": "save",
+          "start": 58.52,
+          "end": 58.8,
+          "probability": 0.9941
+        },
+        {
+          "word": "time,",
+          "start": 58.8,
+          "end": 59.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "I",
+          "start": 59.4,
+          "end": 59.58,
+          "probability": 0.9829
+        },
+        {
+          "word": "have",
+          "start": 59.58,
+          "end": 59.76,
+          "probability": 0.98
+        },
+        {
+          "word": "already",
+          "start": 59.76,
+          "end": 59.98,
+          "probability": 0.9429
+        },
+        {
+          "word": "added",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.0524
+        },
+        {
+          "word": "a",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.3672
+        },
+        {
+          "word": "condition",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.543
+        },
+        {
+          "word": "to",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.2281
+        },
+        {
+          "word": "the",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.5708
+        },
+        {
+          "word": "OR",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.8442
+        },
+        {
+          "word": "clause.",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9873
+        },
+        {
+          "word": "The",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.2522
+        },
+        {
+          "word": "condition",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9619
+        },
+        {
+          "word": "tests",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.8423
+        },
+        {
+          "word": "whether",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9478
+        },
+        {
+          "word": "the",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9253
+        },
+        {
+          "word": "claim",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9673
+        },
+        {
+          "word": "is",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9819
+        },
+        {
+          "word": "under",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9727
+        },
+        {
+          "word": "SIU",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9971
+        },
+        {
+          "word": "investigation.",
+          "start": 59.98,
+          "end": 59.98,
+          "probability": 0.9805
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 59.98,
+      "end": 61.5,
+      "start_formatted": "00:00:59.980",
+      "end_formatted": "00:01:01.500",
+      "text": "I already created the rule I need.",
+      "words": [
+        {
+          "word": "I",
+          "start": 59.98,
+          "end": 60.12,
+          "probability": 0.1377
+        },
+        {
+          "word": "already",
+          "start": 60.12,
+          "end": 60.12,
+          "probability": 0.4734
+        },
+        {
+          "word": "created",
+          "start": 60.12,
+          "end": 60.58,
+          "probability": 0.9951
+        },
+        {
+          "word": "the",
+          "start": 60.58,
+          "end": 60.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "rule",
+          "start": 60.76,
+          "end": 60.98,
+          "probability": 0.9082
+        },
+        {
+          "word": "I",
+          "start": 60.98,
+          "end": 61.16,
+          "probability": 0.9766
+        },
+        {
+          "word": "need.",
+          "start": 61.16,
+          "end": 61.5,
+          "probability": 0.9941
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 72.0,
+      "end": 87.8,
+      "start_formatted": "00:01:12.000",
+      "end_formatted": "00:01:27.800",
+      "text": "In the base configuration, there is a group of transaction set validation rules that deals with financial holds. The parent rule fires if the claim has a financial hold on it, as long as the transaction set type is reserve set or check set, and there are no deleted or cancelled checks.",
+      "words": [
+        {
+          "word": "In",
+          "start": 72.0,
+          "end": 72.48,
+          "probability": 0.9551
+        },
+        {
+          "word": "the",
+          "start": 72.48,
+          "end": 72.6,
+          "probability": 0.9946
+        },
+        {
+          "word": "base",
+          "start": 72.6,
+          "end": 72.82,
+          "probability": 0.9014
+        },
+        {
+          "word": "configuration,",
+          "start": 72.82,
+          "end": 73.5,
+          "probability": 0.9932
+        },
+        {
+          "word": "there",
+          "start": 73.9,
+          "end": 74.12,
+          "probability": 0.9932
+        },
+        {
+          "word": "is",
+          "start": 74.12,
+          "end": 74.26,
+          "probability": 0.9961
+        },
+        {
+          "word": "a",
+          "start": 74.26,
+          "end": 74.34,
+          "probability": 0.9976
+        },
+        {
+          "word": "group",
+          "start": 74.34,
+          "end": 74.54,
+          "probability": 0.9883
+        },
+        {
+          "word": "of",
+          "start": 74.54,
+          "end": 74.7,
+          "probability": 0.9985
+        },
+        {
+          "word": "transaction",
+          "start": 74.7,
+          "end": 75.24,
+          "probability": 0.8604
+        },
+        {
+          "word": "set",
+          "start": 75.24,
+          "end": 75.64,
+          "probability": 0.9121
+        },
+        {
+          "word": "validation",
+          "start": 75.64,
+          "end": 76.12,
+          "probability": 0.9736
+        },
+        {
+          "word": "rules",
+          "start": 76.12,
+          "end": 76.74,
+          "probability": 0.9946
+        },
+        {
+          "word": "that",
+          "start": 76.74,
+          "end": 76.98,
+          "probability": 0.9966
+        },
+        {
+          "word": "deals",
+          "start": 76.98,
+          "end": 77.26,
+          "probability": 0.9678
+        },
+        {
+          "word": "with",
+          "start": 77.26,
+          "end": 77.48,
+          "probability": 0.999
+        },
+        {
+          "word": "financial",
+          "start": 77.48,
+          "end": 77.9,
+          "probability": 0.9683
+        },
+        {
+          "word": "holds.",
+          "start": 77.9,
+          "end": 78.38,
+          "probability": 0.9907
+        },
+        {
+          "word": "The",
+          "start": 78.68,
+          "end": 79.04,
+          "probability": 0.9937
+        },
+        {
+          "word": "parent",
+          "start": 79.04,
+          "end": 79.32,
+          "probability": 0.9453
+        },
+        {
+          "word": "rule",
+          "start": 79.32,
+          "end": 79.58,
+          "probability": 0.9897
+        },
+        {
+          "word": "fires",
+          "start": 79.58,
+          "end": 79.98,
+          "probability": 0.9932
+        },
+        {
+          "word": "if",
+          "start": 79.98,
+          "end": 80.2,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 80.2,
+          "end": 80.3,
+          "probability": 0.9961
+        },
+        {
+          "word": "claim",
+          "start": 80.3,
+          "end": 80.54,
+          "probability": 0.9951
+        },
+        {
+          "word": "has",
+          "start": 80.54,
+          "end": 80.74,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 80.74,
+          "end": 80.86,
+          "probability": 0.9956
+        },
+        {
+          "word": "financial",
+          "start": 80.86,
+          "end": 81.22,
+          "probability": 0.9932
+        },
+        {
+          "word": "hold",
+          "start": 81.22,
+          "end": 81.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "on",
+          "start": 81.64,
+          "end": 81.78,
+          "probability": 0.998
+        },
+        {
+          "word": "it,",
+          "start": 81.78,
+          "end": 81.98,
+          "probability": 0.998
+        },
+        {
+          "word": "as",
+          "start": 82.16,
+          "end": 82.38,
+          "probability": 0.9961
+        },
+        {
+          "word": "long",
+          "start": 82.38,
+          "end": 82.58,
+          "probability": 0.999
+        },
+        {
+          "word": "as",
+          "start": 82.58,
+          "end": 82.78,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 82.78,
+          "end": 82.92,
+          "probability": 0.998
+        },
+        {
+          "word": "transaction",
+          "start": 82.92,
+          "end": 83.48,
+          "probability": 0.9888
+        },
+        {
+          "word": "set",
+          "start": 83.48,
+          "end": 83.84,
+          "probability": 0.9863
+        },
+        {
+          "word": "type",
+          "start": 83.84,
+          "end": 84.1,
+          "probability": 0.9941
+        },
+        {
+          "word": "is",
+          "start": 84.1,
+          "end": 84.28,
+          "probability": 0.9976
+        },
+        {
+          "word": "reserve",
+          "start": 84.28,
+          "end": 84.64,
+          "probability": 0.5791
+        },
+        {
+          "word": "set",
+          "start": 84.64,
+          "end": 84.88,
+          "probability": 0.9307
+        },
+        {
+          "word": "or",
+          "start": 84.88,
+          "end": 85.02,
+          "probability": 0.9927
+        },
+        {
+          "word": "check",
+          "start": 85.02,
+          "end": 85.28,
+          "probability": 0.9595
+        },
+        {
+          "word": "set,",
+          "start": 85.28,
+          "end": 85.62,
+          "probability": 0.9761
+        },
+        {
+          "word": "and",
+          "start": 85.8,
+          "end": 86.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "there",
+          "start": 86.0,
+          "end": 86.14,
+          "probability": 0.999
+        },
+        {
+          "word": "are",
+          "start": 86.14,
+          "end": 86.26,
+          "probability": 0.9985
+        },
+        {
+          "word": "no",
+          "start": 86.26,
+          "end": 86.38,
+          "probability": 0.998
+        },
+        {
+          "word": "deleted",
+          "start": 86.38,
+          "end": 86.78,
+          "probability": 0.9907
+        },
+        {
+          "word": "or",
+          "start": 86.78,
+          "end": 87.0,
+          "probability": 0.9956
+        },
+        {
+          "word": "cancelled",
+          "start": 87.0,
+          "end": 87.42,
+          "probability": 0.5073
+        },
+        {
+          "word": "checks.",
+          "start": 87.42,
+          "end": 87.8,
+          "probability": 0.9839
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 88.52,
+      "end": 94.64,
+      "start_formatted": "00:01:28.520",
+      "end_formatted": "00:01:34.640",
+      "text": "There are child rules that deal with the possible causes of financial holds. In the base configuration, there are three.",
+      "words": [
+        {
+          "word": "There",
+          "start": 88.52,
+          "end": 89.08,
+          "probability": 0.897
+        },
+        {
+          "word": "are",
+          "start": 89.08,
+          "end": 89.2,
+          "probability": 0.9995
+        },
+        {
+          "word": "child",
+          "start": 89.2,
+          "end": 89.46,
+          "probability": 0.9712
+        },
+        {
+          "word": "rules",
+          "start": 89.46,
+          "end": 89.78,
+          "probability": 0.999
+        },
+        {
+          "word": "that",
+          "start": 89.78,
+          "end": 90.02,
+          "probability": 0.9995
+        },
+        {
+          "word": "deal",
+          "start": 90.02,
+          "end": 90.24,
+          "probability": 1.0
+        },
+        {
+          "word": "with",
+          "start": 90.24,
+          "end": 90.4,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 90.4,
+          "end": 90.52,
+          "probability": 1.0
+        },
+        {
+          "word": "possible",
+          "start": 90.52,
+          "end": 90.9,
+          "probability": 1.0
+        },
+        {
+          "word": "causes",
+          "start": 90.9,
+          "end": 91.32,
+          "probability": 1.0
+        },
+        {
+          "word": "of",
+          "start": 91.32,
+          "end": 91.54,
+          "probability": 1.0
+        },
+        {
+          "word": "financial",
+          "start": 91.54,
+          "end": 91.96,
+          "probability": 0.9995
+        },
+        {
+          "word": "holds.",
+          "start": 91.96,
+          "end": 92.5,
+          "probability": 0.9976
+        },
+        {
+          "word": "In",
+          "start": 92.7,
+          "end": 92.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 92.9,
+          "end": 93.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "base",
+          "start": 93.0,
+          "end": 93.22,
+          "probability": 0.9961
+        },
+        {
+          "word": "configuration,",
+          "start": 93.22,
+          "end": 93.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "there",
+          "start": 93.9,
+          "end": 94.18,
+          "probability": 0.9995
+        },
+        {
+          "word": "are",
+          "start": 94.18,
+          "end": 94.36,
+          "probability": 1.0
+        },
+        {
+          "word": "three.",
+          "start": 94.36,
+          "end": 94.64,
+          "probability": 0.9595
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 95.3,
+      "end": 108.74,
+      "start_formatted": "00:01:35.300",
+      "end_formatted": "00:01:48.740",
+      "text": "Claims where coverage is in question. Incident only claims. And claims with unverified policies. I have placed my new rule under those three. The condition activates the rule only if the claim is under SIU investigation.",
+      "words": [
+        {
+          "word": "Claims",
+          "start": 95.3,
+          "end": 95.86,
+          "probability": 0.9912
+        },
+        {
+          "word": "where",
+          "start": 95.86,
+          "end": 96.04,
+          "probability": 0.9614
+        },
+        {
+          "word": "coverage",
+          "start": 96.04,
+          "end": 96.42,
+          "probability": 0.9756
+        },
+        {
+          "word": "is",
+          "start": 96.42,
+          "end": 96.58,
+          "probability": 1.0
+        },
+        {
+          "word": "in",
+          "start": 96.58,
+          "end": 96.72,
+          "probability": 1.0
+        },
+        {
+          "word": "question.",
+          "start": 96.72,
+          "end": 97.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "Incident",
+          "start": 97.82,
+          "end": 98.38,
+          "probability": 0.998
+        },
+        {
+          "word": "only",
+          "start": 98.38,
+          "end": 98.6,
+          "probability": 0.5435
+        },
+        {
+          "word": "claims.",
+          "start": 98.6,
+          "end": 99.04,
+          "probability": 0.998
+        },
+        {
+          "word": "And",
+          "start": 99.38,
+          "end": 99.84,
+          "probability": 0.9971
+        },
+        {
+          "word": "claims",
+          "start": 99.84,
+          "end": 100.16,
+          "probability": 0.9961
+        },
+        {
+          "word": "with",
+          "start": 100.16,
+          "end": 100.4,
+          "probability": 1.0
+        },
+        {
+          "word": "unverified",
+          "start": 100.4,
+          "end": 101.08,
+          "probability": 0.9995
+        },
+        {
+          "word": "policies.",
+          "start": 101.08,
+          "end": 101.62,
+          "probability": 1.0
+        },
+        {
+          "word": "I",
+          "start": 102.16,
+          "end": 102.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "have",
+          "start": 102.64,
+          "end": 102.8,
+          "probability": 1.0
+        },
+        {
+          "word": "placed",
+          "start": 102.8,
+          "end": 103.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "my",
+          "start": 103.1,
+          "end": 103.3,
+          "probability": 1.0
+        },
+        {
+          "word": "new",
+          "start": 103.3,
+          "end": 103.48,
+          "probability": 0.999
+        },
+        {
+          "word": "rule",
+          "start": 103.48,
+          "end": 103.74,
+          "probability": 1.0
+        },
+        {
+          "word": "under",
+          "start": 103.74,
+          "end": 103.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "those",
+          "start": 103.94,
+          "end": 104.2,
+          "probability": 1.0
+        },
+        {
+          "word": "three.",
+          "start": 104.2,
+          "end": 104.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 104.78,
+          "end": 105.14,
+          "probability": 0.9995
+        },
+        {
+          "word": "condition",
+          "start": 105.14,
+          "end": 105.52,
+          "probability": 0.9995
+        },
+        {
+          "word": "activates",
+          "start": 105.52,
+          "end": 106.1,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 106.1,
+          "end": 106.3,
+          "probability": 1.0
+        },
+        {
+          "word": "rule",
+          "start": 106.3,
+          "end": 106.52,
+          "probability": 1.0
+        },
+        {
+          "word": "only",
+          "start": 106.52,
+          "end": 106.78,
+          "probability": 0.999
+        },
+        {
+          "word": "if",
+          "start": 106.78,
+          "end": 106.94,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 106.94,
+          "end": 107.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "claim",
+          "start": 107.04,
+          "end": 107.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "is",
+          "start": 107.3,
+          "end": 107.48,
+          "probability": 1.0
+        },
+        {
+          "word": "under",
+          "start": 107.48,
+          "end": 107.7,
+          "probability": 0.9995
+        },
+        {
+          "word": "SIU",
+          "start": 107.7,
+          "end": 108.2,
+          "probability": 0.9902
+        },
+        {
+          "word": "investigation.",
+          "start": 108.2,
+          "end": 108.74,
+          "probability": 0.9937
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 109.38,
+      "end": 121.54,
+      "start_formatted": "00:01:49.380",
+      "end_formatted": "00:02:01.540",
+      "text": "The rule rejects the transaction set with an error if it has any component for claim cost. Otherwise, it rejects the transaction set with a warning. To test the rule I restart the server in debug mode.",
+      "words": [
+        {
+          "word": "The",
+          "start": 109.38,
+          "end": 109.9,
+          "probability": 0.8589
+        },
+        {
+          "word": "rule",
+          "start": 109.9,
+          "end": 110.1,
+          "probability": 0.9702
+        },
+        {
+          "word": "rejects",
+          "start": 110.1,
+          "end": 110.56,
+          "probability": 0.9956
+        },
+        {
+          "word": "the",
+          "start": 110.56,
+          "end": 110.66,
+          "probability": 0.9966
+        },
+        {
+          "word": "transaction",
+          "start": 110.66,
+          "end": 111.22,
+          "probability": 0.9497
+        },
+        {
+          "word": "set",
+          "start": 111.22,
+          "end": 111.58,
+          "probability": 0.9868
+        },
+        {
+          "word": "with",
+          "start": 111.58,
+          "end": 111.76,
+          "probability": 0.9927
+        },
+        {
+          "word": "an",
+          "start": 111.76,
+          "end": 111.9,
+          "probability": 0.9966
+        },
+        {
+          "word": "error",
+          "start": 111.9,
+          "end": 112.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "if",
+          "start": 112.14,
+          "end": 112.36,
+          "probability": 0.9829
+        },
+        {
+          "word": "it",
+          "start": 112.36,
+          "end": 112.44,
+          "probability": 0.9961
+        },
+        {
+          "word": "has",
+          "start": 112.44,
+          "end": 112.58,
+          "probability": 0.9966
+        },
+        {
+          "word": "any",
+          "start": 112.58,
+          "end": 112.76,
+          "probability": 0.9971
+        },
+        {
+          "word": "component",
+          "start": 112.76,
+          "end": 113.24,
+          "probability": 0.9888
+        },
+        {
+          "word": "for",
+          "start": 113.24,
+          "end": 113.48,
+          "probability": 0.9961
+        },
+        {
+          "word": "claim",
+          "start": 113.48,
+          "end": 113.76,
+          "probability": 0.8452
+        },
+        {
+          "word": "cost.",
+          "start": 113.76,
+          "end": 114.22,
+          "probability": 0.9883
+        },
+        {
+          "word": "Otherwise,",
+          "start": 114.96,
+          "end": 115.48,
+          "probability": 0.9927
+        },
+        {
+          "word": "it",
+          "start": 115.86,
+          "end": 116.06,
+          "probability": 0.9932
+        },
+        {
+          "word": "rejects",
+          "start": 116.06,
+          "end": 116.52,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 116.52,
+          "end": 116.62,
+          "probability": 0.998
+        },
+        {
+          "word": "transaction",
+          "start": 116.62,
+          "end": 117.14,
+          "probability": 0.9956
+        },
+        {
+          "word": "set",
+          "start": 117.14,
+          "end": 117.52,
+          "probability": 0.9976
+        },
+        {
+          "word": "with",
+          "start": 117.52,
+          "end": 117.68,
+          "probability": 0.999
+        },
+        {
+          "word": "a",
+          "start": 117.68,
+          "end": 117.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "warning.",
+          "start": 117.78,
+          "end": 118.04,
+          "probability": 0.9741
+        },
+        {
+          "word": "To",
+          "start": 118.48,
+          "end": 118.98,
+          "probability": 0.9941
+        },
+        {
+          "word": "test",
+          "start": 118.98,
+          "end": 119.2,
+          "probability": 0.998
+        },
+        {
+          "word": "the",
+          "start": 119.2,
+          "end": 119.34,
+          "probability": 0.9961
+        },
+        {
+          "word": "rule",
+          "start": 119.34,
+          "end": 119.5,
+          "probability": 0.9951
+        },
+        {
+          "word": "I",
+          "start": 119.5,
+          "end": 119.68,
+          "probability": 0.875
+        },
+        {
+          "word": "restart",
+          "start": 119.68,
+          "end": 120.08,
+          "probability": 0.9771
+        },
+        {
+          "word": "the",
+          "start": 120.08,
+          "end": 120.3,
+          "probability": 0.998
+        },
+        {
+          "word": "server",
+          "start": 120.3,
+          "end": 120.6,
+          "probability": 0.9932
+        },
+        {
+          "word": "in",
+          "start": 120.6,
+          "end": 120.8,
+          "probability": 0.9961
+        },
+        {
+          "word": "debug",
+          "start": 120.8,
+          "end": 121.08,
+          "probability": 0.8247
+        },
+        {
+          "word": "mode.",
+          "start": 121.08,
+          "end": 121.54,
+          "probability": 0.9985
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 127.18,
+      "end": 135.56,
+      "start_formatted": "00:02:07.180",
+      "end_formatted": "00:02:15.560",
+      "text": "When the server is ready, I switch to Claim Center in the browser. And I log in as Sue Smith, a claims manager who has the right to set SIU status.",
+      "words": [
+        {
+          "word": "When",
+          "start": 127.18,
+          "end": 127.62,
+          "probability": 0.9414
+        },
+        {
+          "word": "the",
+          "start": 127.62,
+          "end": 127.76,
+          "probability": 0.9946
+        },
+        {
+          "word": "server",
+          "start": 127.76,
+          "end": 128.04,
+          "probability": 0.9917
+        },
+        {
+          "word": "is",
+          "start": 128.04,
+          "end": 128.26,
+          "probability": 0.999
+        },
+        {
+          "word": "ready,",
+          "start": 128.26,
+          "end": 128.48,
+          "probability": 0.9985
+        },
+        {
+          "word": "I",
+          "start": 128.64,
+          "end": 128.66,
+          "probability": 0.9961
+        },
+        {
+          "word": "switch",
+          "start": 128.66,
+          "end": 128.94,
+          "probability": 0.9844
+        },
+        {
+          "word": "to",
+          "start": 128.94,
+          "end": 129.12,
+          "probability": 0.9976
+        },
+        {
+          "word": "Claim",
+          "start": 129.12,
+          "end": 129.4,
+          "probability": 0.9131
+        },
+        {
+          "word": "Center",
+          "start": 129.4,
+          "end": 129.76,
+          "probability": 0.8452
+        },
+        {
+          "word": "in",
+          "start": 129.76,
+          "end": 129.9,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 129.9,
+          "end": 129.98,
+          "probability": 0.9985
+        },
+        {
+          "word": "browser.",
+          "start": 129.98,
+          "end": 130.36,
+          "probability": 0.9849
+        },
+        {
+          "word": "And",
+          "start": 130.82,
+          "end": 131.26,
+          "probability": 0.9668
+        },
+        {
+          "word": "I",
+          "start": 131.26,
+          "end": 131.4,
+          "probability": 0.9912
+        },
+        {
+          "word": "log",
+          "start": 131.4,
+          "end": 131.64,
+          "probability": 0.8325
+        },
+        {
+          "word": "in",
+          "start": 131.64,
+          "end": 131.8,
+          "probability": 0.9932
+        },
+        {
+          "word": "as",
+          "start": 131.8,
+          "end": 131.96,
+          "probability": 0.9961
+        },
+        {
+          "word": "Sue",
+          "start": 131.96,
+          "end": 132.12,
+          "probability": 0.9702
+        },
+        {
+          "word": "Smith,",
+          "start": 132.12,
+          "end": 132.5,
+          "probability": 0.9863
+        },
+        {
+          "word": "a",
+          "start": 132.74,
+          "end": 132.9,
+          "probability": 0.9985
+        },
+        {
+          "word": "claims",
+          "start": 132.9,
+          "end": 133.14,
+          "probability": 0.7529
+        },
+        {
+          "word": "manager",
+          "start": 133.14,
+          "end": 133.56,
+          "probability": 0.999
+        },
+        {
+          "word": "who",
+          "start": 133.56,
+          "end": 133.78,
+          "probability": 0.9966
+        },
+        {
+          "word": "has",
+          "start": 133.78,
+          "end": 134.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 134.0,
+          "end": 134.12,
+          "probability": 0.999
+        },
+        {
+          "word": "right",
+          "start": 134.12,
+          "end": 134.32,
+          "probability": 0.999
+        },
+        {
+          "word": "to",
+          "start": 134.32,
+          "end": 134.48,
+          "probability": 0.9995
+        },
+        {
+          "word": "set",
+          "start": 134.48,
+          "end": 134.72,
+          "probability": 0.9966
+        },
+        {
+          "word": "SIU",
+          "start": 134.72,
+          "end": 135.22,
+          "probability": 0.9604
+        },
+        {
+          "word": "status.",
+          "start": 135.22,
+          "end": 135.56,
+          "probability": 0.9336
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 141.5,
+      "end": 157.28,
+      "start_formatted": "00:02:21.500",
+      "end_formatted": "00:02:37.280",
+      "text": "Now I navigate to a claim. I look at the status screen. Where I see that the SIU status field for this claim is null. I'll change that. I navigate to the Special Investigation Details screen.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 141.5,
+          "end": 142.14,
+          "probability": 0.8472
+        },
+        {
+          "word": "I",
+          "start": 142.14,
+          "end": 142.34,
+          "probability": 0.9575
+        },
+        {
+          "word": "navigate",
+          "start": 142.34,
+          "end": 142.7,
+          "probability": 0.9912
+        },
+        {
+          "word": "to",
+          "start": 142.7,
+          "end": 142.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "a",
+          "start": 142.96,
+          "end": 143.08,
+          "probability": 0.9873
+        },
+        {
+          "word": "claim.",
+          "start": 143.08,
+          "end": 143.36,
+          "probability": 0.877
+        },
+        {
+          "word": "I",
+          "start": 144.96,
+          "end": 145.6,
+          "probability": 0.9951
+        },
+        {
+          "word": "look",
+          "start": 145.6,
+          "end": 145.78,
+          "probability": 0.9937
+        },
+        {
+          "word": "at",
+          "start": 145.78,
+          "end": 145.9,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 145.9,
+          "end": 146.0,
+          "probability": 0.9976
+        },
+        {
+          "word": "status",
+          "start": 146.0,
+          "end": 146.34,
+          "probability": 0.6577
+        },
+        {
+          "word": "screen.",
+          "start": 146.34,
+          "end": 146.84,
+          "probability": 0.9985
+        },
+        {
+          "word": "Where",
+          "start": 148.56,
+          "end": 149.2,
+          "probability": 0.9126
+        },
+        {
+          "word": "I",
+          "start": 149.2,
+          "end": 149.32,
+          "probability": 0.9941
+        },
+        {
+          "word": "see",
+          "start": 149.32,
+          "end": 149.5,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 149.5,
+          "end": 149.68,
+          "probability": 0.9941
+        },
+        {
+          "word": "the",
+          "start": 149.68,
+          "end": 149.82,
+          "probability": 0.9922
+        },
+        {
+          "word": "SIU",
+          "start": 149.82,
+          "end": 150.34,
+          "probability": 0.9521
+        },
+        {
+          "word": "status",
+          "start": 150.34,
+          "end": 150.66,
+          "probability": 0.8833
+        },
+        {
+          "word": "field",
+          "start": 150.66,
+          "end": 151.08,
+          "probability": 0.9956
+        },
+        {
+          "word": "for",
+          "start": 151.08,
+          "end": 151.28,
+          "probability": 0.9951
+        },
+        {
+          "word": "this",
+          "start": 151.28,
+          "end": 151.46,
+          "probability": 0.9971
+        },
+        {
+          "word": "claim",
+          "start": 151.46,
+          "end": 151.76,
+          "probability": 0.9937
+        },
+        {
+          "word": "is",
+          "start": 151.76,
+          "end": 151.96,
+          "probability": 0.9976
+        },
+        {
+          "word": "null.",
+          "start": 151.96,
+          "end": 152.22,
+          "probability": 0.6724
+        },
+        {
+          "word": "I'll",
+          "start": 152.56,
+          "end": 152.9,
+          "probability": 0.9927
+        },
+        {
+          "word": "change",
+          "start": 152.9,
+          "end": 153.18,
+          "probability": 0.9985
+        },
+        {
+          "word": "that.",
+          "start": 153.18,
+          "end": 153.58,
+          "probability": 0.998
+        },
+        {
+          "word": "I",
+          "start": 153.9,
+          "end": 154.36,
+          "probability": 0.9946
+        },
+        {
+          "word": "navigate",
+          "start": 154.36,
+          "end": 154.74,
+          "probability": 0.9951
+        },
+        {
+          "word": "to",
+          "start": 154.74,
+          "end": 155.06,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 155.06,
+          "end": 155.18,
+          "probability": 0.998
+        },
+        {
+          "word": "Special",
+          "start": 155.18,
+          "end": 155.5,
+          "probability": 0.5894
+        },
+        {
+          "word": "Investigation",
+          "start": 155.5,
+          "end": 156.38,
+          "probability": 0.9888
+        },
+        {
+          "word": "Details",
+          "start": 156.38,
+          "end": 156.72,
+          "probability": 0.7505
+        },
+        {
+          "word": "screen.",
+          "start": 156.72,
+          "end": 157.28,
+          "probability": 0.9873
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 160.24,
+      "end": 175.98,
+      "start_formatted": "00:02:40.240",
+      "end_formatted": "00:02:55.980",
+      "text": "Here, I click Edit. I refer the claim to the SIU team. In the Supervisor comment field that appears I indicate that this is a test. Now I save the changes I've made.",
+      "words": [
+        {
+          "word": "Here,",
+          "start": 160.24,
+          "end": 160.86,
+          "probability": 0.9482
+        },
+        {
+          "word": "I",
+          "start": 161.06,
+          "end": 161.28,
+          "probability": 0.9888
+        },
+        {
+          "word": "click",
+          "start": 161.28,
+          "end": 161.54,
+          "probability": 0.9785
+        },
+        {
+          "word": "Edit.",
+          "start": 161.54,
+          "end": 161.8,
+          "probability": 0.5933
+        },
+        {
+          "word": "I",
+          "start": 163.12,
+          "end": 163.74,
+          "probability": 0.9941
+        },
+        {
+          "word": "refer",
+          "start": 163.74,
+          "end": 164.04,
+          "probability": 0.9849
+        },
+        {
+          "word": "the",
+          "start": 164.04,
+          "end": 164.24,
+          "probability": 0.998
+        },
+        {
+          "word": "claim",
+          "start": 164.24,
+          "end": 164.5,
+          "probability": 0.9492
+        },
+        {
+          "word": "to",
+          "start": 164.5,
+          "end": 164.66,
+          "probability": 0.999
+        },
+        {
+          "word": "the",
+          "start": 164.66,
+          "end": 164.8,
+          "probability": 0.9985
+        },
+        {
+          "word": "SIU",
+          "start": 164.8,
+          "end": 165.34,
+          "probability": 0.9766
+        },
+        {
+          "word": "team.",
+          "start": 165.34,
+          "end": 165.64,
+          "probability": 0.8311
+        },
+        {
+          "word": "In",
+          "start": 169.22,
+          "end": 169.84,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 169.84,
+          "end": 169.96,
+          "probability": 0.9971
+        },
+        {
+          "word": "Supervisor",
+          "start": 169.96,
+          "end": 170.56,
+          "probability": 0.7891
+        },
+        {
+          "word": "comment",
+          "start": 170.56,
+          "end": 170.92,
+          "probability": 0.6572
+        },
+        {
+          "word": "field",
+          "start": 170.92,
+          "end": 171.32,
+          "probability": 0.998
+        },
+        {
+          "word": "that",
+          "start": 171.32,
+          "end": 171.52,
+          "probability": 0.9849
+        },
+        {
+          "word": "appears",
+          "start": 171.52,
+          "end": 171.86,
+          "probability": 0.999
+        },
+        {
+          "word": "I",
+          "start": 171.86,
+          "end": 172.06,
+          "probability": 0.8364
+        },
+        {
+          "word": "indicate",
+          "start": 172.06,
+          "end": 172.46,
+          "probability": 0.9966
+        },
+        {
+          "word": "that",
+          "start": 172.46,
+          "end": 172.78,
+          "probability": 0.9956
+        },
+        {
+          "word": "this",
+          "start": 172.78,
+          "end": 172.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "is",
+          "start": 172.96,
+          "end": 173.08,
+          "probability": 0.998
+        },
+        {
+          "word": "a",
+          "start": 173.08,
+          "end": 173.22,
+          "probability": 0.9976
+        },
+        {
+          "word": "test.",
+          "start": 173.22,
+          "end": 173.54,
+          "probability": 0.9722
+        },
+        {
+          "word": "Now",
+          "start": 173.92,
+          "end": 174.44,
+          "probability": 0.9937
+        },
+        {
+          "word": "I",
+          "start": 174.44,
+          "end": 174.6,
+          "probability": 0.9629
+        },
+        {
+          "word": "save",
+          "start": 174.6,
+          "end": 174.84,
+          "probability": 0.9854
+        },
+        {
+          "word": "the",
+          "start": 174.84,
+          "end": 174.96,
+          "probability": 0.999
+        },
+        {
+          "word": "changes",
+          "start": 174.96,
+          "end": 175.32,
+          "probability": 0.9976
+        },
+        {
+          "word": "I've",
+          "start": 175.32,
+          "end": 175.66,
+          "probability": 0.9907
+        },
+        {
+          "word": "made.",
+          "start": 175.66,
+          "end": 175.98,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 178.2,
+      "end": 187.04,
+      "start_formatted": "00:02:58.200",
+      "end_formatted": "00:03:07.040",
+      "text": "Returning to the status screen. I verify that the SIU status is set. Now I'll try to create a reserve on the claim.",
+      "words": [
+        {
+          "word": "Returning",
+          "start": 178.2,
+          "end": 178.76,
+          "probability": 0.9883
+        },
+        {
+          "word": "to",
+          "start": 178.76,
+          "end": 178.92,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 178.92,
+          "end": 179.1,
+          "probability": 0.999
+        },
+        {
+          "word": "status",
+          "start": 179.1,
+          "end": 179.42,
+          "probability": 0.6211
+        },
+        {
+          "word": "screen.",
+          "start": 179.42,
+          "end": 179.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "I",
+          "start": 181.48,
+          "end": 182.04,
+          "probability": 0.999
+        },
+        {
+          "word": "verify",
+          "start": 182.04,
+          "end": 182.42,
+          "probability": 0.9937
+        },
+        {
+          "word": "that",
+          "start": 182.42,
+          "end": 182.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 182.68,
+          "end": 182.86,
+          "probability": 0.999
+        },
+        {
+          "word": "SIU",
+          "start": 182.86,
+          "end": 183.38,
+          "probability": 0.9722
+        },
+        {
+          "word": "status",
+          "start": 183.38,
+          "end": 183.7,
+          "probability": 0.9849
+        },
+        {
+          "word": "is",
+          "start": 183.7,
+          "end": 184.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "set.",
+          "start": 184.0,
+          "end": 184.26,
+          "probability": 0.9995
+        },
+        {
+          "word": "Now",
+          "start": 184.64,
+          "end": 185.2,
+          "probability": 0.9985
+        },
+        {
+          "word": "I'll",
+          "start": 185.2,
+          "end": 185.38,
+          "probability": 0.9951
+        },
+        {
+          "word": "try",
+          "start": 185.38,
+          "end": 185.56,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 185.56,
+          "end": 185.72,
+          "probability": 1.0
+        },
+        {
+          "word": "create",
+          "start": 185.72,
+          "end": 186.0,
+          "probability": 0.9995
+        },
+        {
+          "word": "a",
+          "start": 186.0,
+          "end": 186.16,
+          "probability": 1.0
+        },
+        {
+          "word": "reserve",
+          "start": 186.16,
+          "end": 186.5,
+          "probability": 0.9922
+        },
+        {
+          "word": "on",
+          "start": 186.5,
+          "end": 186.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 186.66,
+          "end": 186.74,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 186.74,
+          "end": 187.04,
+          "probability": 0.9946
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 190.84,
+      "end": 199.8,
+      "start_formatted": "00:03:10.840",
+      "end_formatted": "00:03:19.800",
+      "text": "Note that there are already several claim cost reserves on the claim. The new reserve is set to Claim Level from the start, so I'll set the cost type to Claim Cost.",
+      "words": [
+        {
+          "word": "Note",
+          "start": 190.84,
+          "end": 191.4,
+          "probability": 0.9976
+        },
+        {
+          "word": "that",
+          "start": 191.4,
+          "end": 191.56,
+          "probability": 1.0
+        },
+        {
+          "word": "there",
+          "start": 191.56,
+          "end": 191.72,
+          "probability": 1.0
+        },
+        {
+          "word": "are",
+          "start": 191.72,
+          "end": 191.86,
+          "probability": 0.9995
+        },
+        {
+          "word": "already",
+          "start": 191.86,
+          "end": 192.24,
+          "probability": 0.9995
+        },
+        {
+          "word": "several",
+          "start": 192.24,
+          "end": 192.6,
+          "probability": 1.0
+        },
+        {
+          "word": "claim",
+          "start": 192.6,
+          "end": 192.88,
+          "probability": 0.9062
+        },
+        {
+          "word": "cost",
+          "start": 192.88,
+          "end": 193.24,
+          "probability": 0.9971
+        },
+        {
+          "word": "reserves",
+          "start": 193.24,
+          "end": 193.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "on",
+          "start": 193.66,
+          "end": 193.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 193.9,
+          "end": 194.0,
+          "probability": 1.0
+        },
+        {
+          "word": "claim.",
+          "start": 194.0,
+          "end": 194.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "The",
+          "start": 194.58,
+          "end": 194.92,
+          "probability": 0.9995
+        },
+        {
+          "word": "new",
+          "start": 194.92,
+          "end": 195.12,
+          "probability": 0.9995
+        },
+        {
+          "word": "reserve",
+          "start": 195.12,
+          "end": 195.5,
+          "probability": 0.9956
+        },
+        {
+          "word": "is",
+          "start": 195.5,
+          "end": 195.72,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 195.72,
+          "end": 195.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "to",
+          "start": 195.9,
+          "end": 196.04,
+          "probability": 0.9995
+        },
+        {
+          "word": "Claim",
+          "start": 196.04,
+          "end": 196.3,
+          "probability": 0.5957
+        },
+        {
+          "word": "Level",
+          "start": 196.3,
+          "end": 196.54,
+          "probability": 0.7056
+        },
+        {
+          "word": "from",
+          "start": 196.54,
+          "end": 196.82,
+          "probability": 0.9995
+        },
+        {
+          "word": "the",
+          "start": 196.82,
+          "end": 196.96,
+          "probability": 1.0
+        },
+        {
+          "word": "start,",
+          "start": 196.96,
+          "end": 197.32,
+          "probability": 0.999
+        },
+        {
+          "word": "so",
+          "start": 197.52,
+          "end": 197.82,
+          "probability": 0.999
+        },
+        {
+          "word": "I'll",
+          "start": 197.82,
+          "end": 198.1,
+          "probability": 1.0
+        },
+        {
+          "word": "set",
+          "start": 198.1,
+          "end": 198.32,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 198.32,
+          "end": 198.44,
+          "probability": 1.0
+        },
+        {
+          "word": "cost",
+          "start": 198.44,
+          "end": 198.72,
+          "probability": 0.8247
+        },
+        {
+          "word": "type",
+          "start": 198.72,
+          "end": 198.96,
+          "probability": 0.9985
+        },
+        {
+          "word": "to",
+          "start": 198.96,
+          "end": 199.16,
+          "probability": 0.9995
+        },
+        {
+          "word": "Claim",
+          "start": 199.16,
+          "end": 199.4,
+          "probability": 0.9775
+        },
+        {
+          "word": "Cost.",
+          "start": 199.4,
+          "end": 199.8,
+          "probability": 0.9175
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 202.74,
+      "end": 205.76,
+      "start_formatted": "00:03:22.740",
+      "end_formatted": "00:03:25.760",
+      "text": "For Cost Category I'll simply select Other.",
+      "words": [
+        {
+          "word": "For",
+          "start": 202.74,
+          "end": 203.38,
+          "probability": 0.9575
+        },
+        {
+          "word": "Cost",
+          "start": 203.38,
+          "end": 203.76,
+          "probability": 0.354
+        },
+        {
+          "word": "Category",
+          "start": 203.76,
+          "end": 204.32,
+          "probability": 0.71
+        },
+        {
+          "word": "I'll",
+          "start": 204.32,
+          "end": 204.68,
+          "probability": 0.856
+        },
+        {
+          "word": "simply",
+          "start": 204.68,
+          "end": 205.02,
+          "probability": 0.9878
+        },
+        {
+          "word": "select",
+          "start": 205.02,
+          "end": 205.5,
+          "probability": 0.9751
+        },
+        {
+          "word": "Other.",
+          "start": 205.5,
+          "end": 205.76,
+          "probability": 0.8462
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 208.92,
+      "end": 211.28,
+      "start_formatted": "00:03:28.920",
+      "end_formatted": "00:03:31.280",
+      "text": "And I'll set the amount to $5,000.",
+      "words": [
+        {
+          "word": "And",
+          "start": 208.92,
+          "end": 209.56,
+          "probability": 0.9526
+        },
+        {
+          "word": "I'll",
+          "start": 209.56,
+          "end": 209.74,
+          "probability": 0.9961
+        },
+        {
+          "word": "set",
+          "start": 209.74,
+          "end": 209.94,
+          "probability": 0.9961
+        },
+        {
+          "word": "the",
+          "start": 209.94,
+          "end": 210.08,
+          "probability": 0.9966
+        },
+        {
+          "word": "amount",
+          "start": 210.08,
+          "end": 210.32,
+          "probability": 0.8188
+        },
+        {
+          "word": "to",
+          "start": 210.32,
+          "end": 210.52,
+          "probability": 0.9756
+        },
+        {
+          "word": "$5",
+          "start": 210.52,
+          "end": 210.8,
+          "probability": 0.8394
+        },
+        {
+          "word": ",000.",
+          "start": 210.8,
+          "end": 211.28,
+          "probability": 0.9883
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 213.44,
+      "end": 215.5,
+      "start_formatted": "00:03:33.440",
+      "end_formatted": "00:03:35.500",
+      "text": "Now I'll attempt to save the claim.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 213.44,
+          "end": 214.08,
+          "probability": 0.9922
+        },
+        {
+          "word": "I'll",
+          "start": 214.08,
+          "end": 214.4,
+          "probability": 0.9946
+        },
+        {
+          "word": "attempt",
+          "start": 214.4,
+          "end": 214.62,
+          "probability": 0.9946
+        },
+        {
+          "word": "to",
+          "start": 214.62,
+          "end": 214.84,
+          "probability": 0.9995
+        },
+        {
+          "word": "save",
+          "start": 214.84,
+          "end": 215.06,
+          "probability": 0.9858
+        },
+        {
+          "word": "the",
+          "start": 215.06,
+          "end": 215.2,
+          "probability": 0.999
+        },
+        {
+          "word": "claim.",
+          "start": 215.2,
+          "end": 215.5,
+          "probability": 0.9834
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 216.92,
+      "end": 223.8,
+      "start_formatted": "00:03:36.920",
+      "end_formatted": "00:03:43.800",
+      "text": "As expected, the error message appears. If I attempt to save in this errored condition, nothing happens.",
+      "words": [
+        {
+          "word": "As",
+          "start": 216.92,
+          "end": 217.56,
+          "probability": 0.998
+        },
+        {
+          "word": "expected,",
+          "start": 217.56,
+          "end": 218.04,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 218.36,
+          "end": 218.56,
+          "probability": 0.9985
+        },
+        {
+          "word": "error",
+          "start": 218.56,
+          "end": 218.84,
+          "probability": 0.9346
+        },
+        {
+          "word": "message",
+          "start": 218.84,
+          "end": 219.16,
+          "probability": 0.999
+        },
+        {
+          "word": "appears.",
+          "start": 219.16,
+          "end": 219.68,
+          "probability": 0.9995
+        },
+        {
+          "word": "If",
+          "start": 220.12,
+          "end": 220.66,
+          "probability": 0.9976
+        },
+        {
+          "word": "I",
+          "start": 220.66,
+          "end": 220.8,
+          "probability": 0.998
+        },
+        {
+          "word": "attempt",
+          "start": 220.8,
+          "end": 221.1,
+          "probability": 0.998
+        },
+        {
+          "word": "to",
+          "start": 221.1,
+          "end": 221.28,
+          "probability": 0.9995
+        },
+        {
+          "word": "save",
+          "start": 221.28,
+          "end": 221.56,
+          "probability": 0.9946
+        },
+        {
+          "word": "in",
+          "start": 221.56,
+          "end": 221.68,
+          "probability": 0.998
+        },
+        {
+          "word": "this",
+          "start": 221.68,
+          "end": 221.88,
+          "probability": 0.9961
+        },
+        {
+          "word": "errored",
+          "start": 221.88,
+          "end": 222.2,
+          "probability": 0.7246
+        },
+        {
+          "word": "condition,",
+          "start": 222.2,
+          "end": 222.64,
+          "probability": 0.9995
+        },
+        {
+          "word": "nothing",
+          "start": 222.96,
+          "end": 223.3,
+          "probability": 0.9971
+        },
+        {
+          "word": "happens.",
+          "start": 223.3,
+          "end": 223.8,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 224.68,
+      "end": 226.38,
+      "start_formatted": "00:03:44.680",
+      "end_formatted": "00:03:46.380",
+      "text": "I'll clear the error message.",
+      "words": [
+        {
+          "word": "I'll",
+          "start": 224.68,
+          "end": 225.3,
+          "probability": 0.9756
+        },
+        {
+          "word": "clear",
+          "start": 225.3,
+          "end": 225.46,
+          "probability": 0.9741
+        },
+        {
+          "word": "the",
+          "start": 225.46,
+          "end": 225.64,
+          "probability": 0.9985
+        },
+        {
+          "word": "error",
+          "start": 225.64,
+          "end": 225.9,
+          "probability": 0.9639
+        },
+        {
+          "word": "message.",
+          "start": 225.9,
+          "end": 226.38,
+          "probability": 0.9927
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 228.18,
+      "end": 229.86,
+      "start_formatted": "00:03:48.180",
+      "end_formatted": "00:03:49.860",
+      "text": "And change the cost type.",
+      "words": [
+        {
+          "word": "And",
+          "start": 228.18,
+          "end": 228.8,
+          "probability": 0.9009
+        },
+        {
+          "word": "change",
+          "start": 228.8,
+          "end": 229.12,
+          "probability": 0.9897
+        },
+        {
+          "word": "the",
+          "start": 229.12,
+          "end": 229.28,
+          "probability": 0.9985
+        },
+        {
+          "word": "cost",
+          "start": 229.28,
+          "end": 229.56,
+          "probability": 0.9385
+        },
+        {
+          "word": "type.",
+          "start": 229.56,
+          "end": 229.86,
+          "probability": 0.9951
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 233.98,
+      "end": 235.98,
+      "start_formatted": "00:03:53.980",
+      "end_formatted": "00:03:55.980",
+      "text": "Now, when I attempt to save.",
+      "words": [
+        {
+          "word": "Now,",
+          "start": 233.98,
+          "end": 234.6,
+          "probability": 0.9893
+        },
+        {
+          "word": "when",
+          "start": 234.78,
+          "end": 235.04,
+          "probability": 0.9941
+        },
+        {
+          "word": "I",
+          "start": 235.04,
+          "end": 235.14,
+          "probability": 0.9893
+        },
+        {
+          "word": "attempt",
+          "start": 235.14,
+          "end": 235.44,
+          "probability": 0.9941
+        },
+        {
+          "word": "to",
+          "start": 235.44,
+          "end": 235.66,
+          "probability": 0.9995
+        },
+        {
+          "word": "save.",
+          "start": 235.66,
+          "end": 235.98,
+          "probability": 0.9741
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 237.24,
+      "end": 240.72,
+      "start_formatted": "00:03:57.240",
+      "end_formatted": "00:04:00.720",
+      "text": "I see the warning message. I'll clear the message.",
+      "words": [
+        {
+          "word": "I",
+          "start": 237.24,
+          "end": 237.86,
+          "probability": 0.9971
+        },
+        {
+          "word": "see",
+          "start": 237.86,
+          "end": 238.06,
+          "probability": 0.9946
+        },
+        {
+          "word": "the",
+          "start": 238.06,
+          "end": 238.2,
+          "probability": 0.999
+        },
+        {
+          "word": "warning",
+          "start": 238.2,
+          "end": 238.48,
+          "probability": 0.9756
+        },
+        {
+          "word": "message.",
+          "start": 238.48,
+          "end": 239.02,
+          "probability": 0.999
+        },
+        {
+          "word": "I'll",
+          "start": 239.38,
+          "end": 239.98,
+          "probability": 0.998
+        },
+        {
+          "word": "clear",
+          "start": 239.98,
+          "end": 240.14,
+          "probability": 0.9985
+        },
+        {
+          "word": "the",
+          "start": 240.14,
+          "end": 240.32,
+          "probability": 0.9995
+        },
+        {
+          "word": "message.",
+          "start": 240.32,
+          "end": 240.72,
+          "probability": 0.9995
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 242.34,
+      "end": 243.92,
+      "start_formatted": "00:04:02.340",
+      "end_formatted": "00:04:03.920",
+      "text": "Now when I click Save.",
+      "words": [
+        {
+          "word": "Now",
+          "start": 242.34,
+          "end": 242.96,
+          "probability": 0.9951
+        },
+        {
+          "word": "when",
+          "start": 242.96,
+          "end": 243.14,
+          "probability": 0.9224
+        },
+        {
+          "word": "I",
+          "start": 243.14,
+          "end": 243.26,
+          "probability": 0.9951
+        },
+        {
+          "word": "click",
+          "start": 243.26,
+          "end": 243.52,
+          "probability": 0.998
+        },
+        {
+          "word": "Save.",
+          "start": 243.52,
+          "end": 243.92,
+          "probability": 0.3049
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 245.76,
+      "end": 250.76,
+      "start_formatted": "00:04:05.760",
+      "end_formatted": "00:04:10.760",
+      "text": "The reserve is saved, with the status of Submitting. The rule is working correctly.",
+      "words": [
+        {
+          "word": "The",
+          "start": 245.76,
+          "end": 246.38,
+          "probability": 0.9839
+        },
+        {
+          "word": "reserve",
+          "start": 246.38,
+          "end": 246.7,
+          "probability": 0.9395
+        },
+        {
+          "word": "is",
+          "start": 246.7,
+          "end": 246.92,
+          "probability": 0.9961
+        },
+        {
+          "word": "saved,",
+          "start": 246.92,
+          "end": 247.36,
+          "probability": 0.9966
+        },
+        {
+          "word": "with",
+          "start": 247.54,
+          "end": 247.76,
+          "probability": 0.9966
+        },
+        {
+          "word": "the",
+          "start": 247.76,
+          "end": 247.88,
+          "probability": 0.488
+        },
+        {
+          "word": "status",
+          "start": 247.88,
+          "end": 248.22,
+          "probability": 0.9819
+        },
+        {
+          "word": "of",
+          "start": 248.22,
+          "end": 248.44,
+          "probability": 0.9976
+        },
+        {
+          "word": "Submitting.",
+          "start": 248.44,
+          "end": 248.84,
+          "probability": 0.7607
+        },
+        {
+          "word": "The",
+          "start": 249.16,
+          "end": 249.54,
+          "probability": 0.9971
+        },
+        {
+          "word": "rule",
+          "start": 249.54,
+          "end": 249.74,
+          "probability": 0.9883
+        },
+        {
+          "word": "is",
+          "start": 249.74,
+          "end": 249.9,
+          "probability": 0.9995
+        },
+        {
+          "word": "working",
+          "start": 249.9,
+          "end": 250.2,
+          "probability": 0.998
+        },
+        {
+          "word": "correctly.",
+          "start": 250.2,
+          "end": 250.76,
+          "probability": 0.999
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 250.76,
+      "end": 254.1,
+      "start_formatted": "00:04:10.760",
+      "end_formatted": "00:04:14.100",
+      "text": "This concludes the Configuring Financial Holds demonstration.",
+      "words": [
+        {
+          "word": "This",
+          "start": 250.76,
+          "end": 251.74,
+          "probability": 0.9883
+        },
+        {
+          "word": "concludes",
+          "start": 251.74,
+          "end": 252.18,
+          "probability": 1.0
+        },
+        {
+          "word": "the",
+          "start": 252.18,
+          "end": 252.38,
+          "probability": 1.0
+        },
+        {
+          "word": "Configuring",
+          "start": 252.38,
+          "end": 252.94,
+          "probability": 0.6611
+        },
+        {
+          "word": "Financial",
+          "start": 252.94,
+          "end": 253.46,
+          "probability": 0.9854
+        },
+        {
+          "word": "Holds",
+          "start": 253.46,
+          "end": 253.96,
+          "probability": 0.9692
+        },
+        {
+          "word": "demonstration.",
+          "start": 253.96,
+          "end": 254.1,
+          "probability": 0.9414
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 254.1,
+      "end": 254.62,
+      "start_formatted": "00:04:14.100",
+      "end_formatted": "00:04:14.620",
+      "text": ".",
+      "words": [
+        {
+          "word": ".",
+          "start": 254.1,
+          "end": 254.62,
+          "probability": 0.0255
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 254.62,
+      "end": 254.62,
+      "start_formatted": "00:04:14.620",
+      "end_formatted": "00:04:14.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 26,
+      "start": 254.62,
+      "end": 254.62,
+      "start_formatted": "00:04:14.620",
+      "end_formatted": "00:04:14.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 27,
+      "start": 254.62,
+      "end": 254.62,
+      "start_formatted": "00:04:14.620",
+      "end_formatted": "00:04:14.620",
+      "text": "",
+      "words": []
+    },
+    {
+      "id": 28,
+      "start": 254.62,
+      "end": 254.62,
+      "start_formatted": "00:04:14.620",
+      "end_formatted": "00:04:14.620",
+      "text": "",
+      "words": []
+    }
+  ]
+}

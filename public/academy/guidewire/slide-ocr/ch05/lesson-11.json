@@ -1,0 +1,390 @@
+{
+  "metadata": {
+    "chapter": "ch05",
+    "chapter_title": "ClaimCenter Introduction",
+    "lesson": "lesson-11",
+    "slide_count": 34,
+    "slides_with_text": 30,
+    "total_words": 1603,
+    "avg_confidence": 88.03,
+    "processing_time_seconds": 14.33,
+    "extracted_at": "2026-02-13T12:11:07.320348"
+  },
+  "full_text": "Constraining payments - approvals\n\nLesson\nobjectives\n\n¢ Describe how approvals constrain payments\n\n¢ Modify authority limits\n\n¢ Assign authority limits to a user\n\n¢ Describe transaction approval rules\n\n¢ Approve transactions as a user with proper\nauthority\n\n| Discussion i\n\nJun\nClaims *\nSupervisor\n\nIncorrect payments can have a large effect\non the finances of an insurance company.\nAdjusters need to easily pay claims within a\nrange of costs that align with their skill and\nexperience. If payments are out of that range,\nthen | need to review those payments and\neither approve or reject them.\n\n| Financials i\n\n¢ ClaimCenter financials is the process of setting aside money for payments and\nthen issuing those payments\n\n¢ The general financial process is:\n\ner\ne\n\nLop\n\nfom + 1+ 8\n\n| Financials approval\n\nAW)\n\nClaimCenter reviews every transaction to determine if it requires approval\n\n| Constraining payments Gi\n\n+ Why?\n\n+ The goal of an insurance carrier is to pay the insured for a claim only the amount required to make the\ninsured whole\n\n+ The insurance company needs safeguards to prevent overpaying claims\n+ Ifa payment seems unreasonable, the company wants to constrain the payment by requiring\nadditional approvals\n* How?\n+ Authority limits: constraints defined to require approval above a set amount\n+ Transaction approval rules: Configuration level rules for when authority limits aren’t enough\n\n« What?\n+ Any transaction (payment, reserve, and so on)\n\n+ Transactions that require approval are flagged as “pending approval”\n+ Transactions that do not require approval are submitted\n\nAuthority limits\n\n] Authority limits vas G\n\n: Limits:\nClaim Total Reserves:\n$15,000\n$0K $10K $20K\n\n¢ An authority limit, limits the transactions an adjuster can create without approval\n¢ It consists of criteria (limit type, policy type, coverage, cost type) and an amount\n\n¢ In this example, Claim Total Reserves are limited to $15,000\n\n] Authority limits eos G\n\nsuccess rv) x)\n\n: Limits:\nClaim Total Reserves:\n$15,000\n\n$oK\n\n$0K $10K $20K\n\n¢ The $9,000 transaction does not push the claim total reserves above $15,000\n\n¢ Itdoes not require further approval\n\n] Authority limits oa G\n\ne\n\nrv) & Spproval\nsuccess x) >\n\n(oy,\nLimits:\nak Claim Total Reserves:\n$15,000\n$0K $10K $20K\n\n¢ The $23,000 transaction pushes the claim total reserves above $15,000\n\n¢ It does require further approval\n\n| How authority limits work G\n\n¢ Limiting amounts\n+ If there is a limit for a limit type, transactions over the limit require approval\n+ Example: Payment exceeds amount is $10,000\n+ Any transaction above $10,000 will require approval\n\n¢ Limiting access\n+ Without an authority limit, the user cannot create a transaction\n+ Without any reserve limit (claim total reserves, claim available reserves...) the user can’t create reserves\n+ Without any payment limit the user can’t create payments\n\n* Policy type, Coverage type, and Cost type restrict what a user can do\n+ If there is a value in any of those criterion, the user is restricted to create only transactions that\n\nfit the criterion\n+ Example: if there is a Worker’s Comp policy type, the user can only create transactions for that policy\n\ntype\n\n| Authority limit criteria i\n\nLimit types (examples)\n* Claim total reserves — total reserves for the claim cannot exceed the limit amount without approval\n* Claim payments to date — claim payments cannot exceed the limit amount without approval\n* Exposure total reserves — total reserves for any exposure cannot exceed the limit without approval\n\nPolicy type — restricts the type of policy the authority limit applies to\n\nCoverage (examples)\n+ Workers’ Comp\n\nAdjuster Upto Authority Limit Profile\n\n+ Workers’ Comp\noo. Name Adjuster\nEmployer Liability\nDescription Adjuster default authority\n* Cost type (examples) Authority Limits Limit Type Policy Type | Coverage Type | Cost Type | Amount\n. Payments exceed reserves $1,000.00\n* Claim cost Claim total reserves $15,000.00\n\n+ Expense Claim payments to date $15,000.00\n\n| Authority limit profiles\n\n@ Q\n\nDana Evans $0K $10K $20K\n\n(x)\n© :\n\nPeter Beebe $0K $10K $20K\n\n¢ An authority limit profile is a collection of authority limits\n\n« May be assigned to one or more users\n\n+ Are pre-defined (created once and applied to multiple users)\n\n* Can be overridden (for a single user)\n\nAdjuster Profile Gi\n\nExposure Reserves\n(for Collision):\n$10,000\n\nClaim Total\nReserves:\n$15,000\n\n« Assigned by an administrator on\nthe Administration > Users screens\n\n« Assignment is on the Authority\nLimits tab for each user\n\n« Auser may have only one\nauthority limit profile\n\n« May be customized\n\n* Once it has been customized, the\nuser is no longer linked to that\nprofile\n\n| Assigning authority limit profiles\n\nAndy Applegate\n\nBasics | Profile | Authority Limits Attributes | Regions | Details\n\nAuthority Limit Profile ‘Adjuster 5\nDescription Custom\nClaim: isor :\n\nAuthority Limits\n\nRegior\n\nLimit Type >\n\nPolicy Type > Coverage Type > Cost Type >\n\n(1-3 0f3)\nAmount\n$15,000.00\n\n$15,000.00\n$1,000.00\n\n| Demonstration G\n\nAuthority limits\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Transaction approval rules fa\n\n¢ Transaction approval rules are a configuration-level solution\n« Use GOSU code in the rules\n\n¢ Approval rules may be more in depth and can be used when\n+ Logic is beyond the given limit types\n+ Logic is tied to attributes other than policy type, coverage type, and cost type\n\n+ Logic applies regardless of the type of user\n\nTransaction If segment is low complexity\nApproval (o} AND total reserves > $30,000\n\nRules ES then require approval\n\n| Review: Objects that need attention i\n\n¢ Activities are created and assigned to a supervisor for action Al\n\n¢« Some examples include:\n\n* Claims:\n+ Claim reported two weeks ago and fault rating has not been specified\n+ Auto is total loss and salvage is now required\n\n+ Lawyer for third-party claimant has been added | vg, xs @\nui\n\n+ Activities:\n+ When still open as of escalation date\n\n* Transactions:\n+ Amount exceeds a given threshold (authority limits) fe) =)\n+ Given condition occurs (approval rules)\n\n-$10,000\n\n| Transaction approval conditions (1 of 2)\n\nTransaction\nApproval\nRules\n\nif segment is low complexity\n(o} AND total reserves > $30,000\ntop> then require approval\n\nNew transactions are checked against transaction approval rules\n\n| Transaction approval conditions (2 of 2) fa\n\nTransaction\nApproval\nRules\n\nif segment is low complexity\n(o} AND total reserves > $30,000\ntop> then require approval\n\na success & Penang\nvv) e {og> Spproval\n; Claim Total\nAuthority <>) $9K Reserves:\nLimits S) $23K $15,000\n$0K $10K $20K\n« New transactions are checked against transaction approval rules\n\n¢ If they pass, they are then checked against the user's authority limit profile\n\n¢ Either of these mechanisms can set the transaction to require approval\n\n| ClaimCenter response\n\n_rt4\n\nApproval\ngm Pending activity\n& approval\nre) [oy\n; = Claim Total\n\n$0K $10K $20K\n\nWhen a transaction is flagged as requiring approval:\n\n« The status of the transaction is set to \"Pending approval\"\n* An approval activity is created and routed to the appropriate user (typically the supervisor)\n¢ All transactions created at one time are included in a single approval activity\n\n| Supervisor response\n\noS\n\n—|% om\nXY Q\naf . Approval\nPendin ivi\n& sree activity C o>\n(2) a»\n‘ Paeced Og\n¢ Supervisors approve or reject a transaction set\n¢ All transactions in the set are approved or rejected together\n\n¢ Approval or rejection closes the activity\n\n¢ Approval may create an activity for their own supervisor’s approval\n\n| Demonstration G\n\nApprovals\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\n| Student exercise\n\nConstraining payments — approvals\n\nQuestion G\n\nae Does a transaction require approval when:\no A) tis not flagged by transaction approval rules but exceeds the user's authority\n\nlimits?\n\nB) Itdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\n\nC) It exceeds the user's authority limits and is flagged by transaction approval rules?\n\nen\n\nAnswer a\n\n_~ — Does a transaction require approval when:\n\n¢\n¢\n\n¢ A) Itis not flagged by transaction approval rules but exceeds the user's authority limits?\n\nB) lItdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\n\nC) lt exceeds the user's authority limits and is flagged by transaction approval rules?\n\nThe answer for all three is the same. The transaction requires approval in all three\ncases.\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n,~ — Anauthority limit consists of criteria and an amount. What three values\n\nx can optionally be specified to create the condition?\n\n¢\n\nen\n\nAnswer a\n\n,~ — Anauthority limit consists of criteria and an amount. What three values\n¢ can optionally be specified to create the condition?\n\n¢\n¢\n\nPolicy type, coverage type, and cost type.\n\nBoD DD DD DS SSS oe\n\nQuestion G\n\n,~ — What two things does ClaimCenter do when it determines that a\nx transaction requires approval?\n\nen\n\nAnswer a\n\n,~ — What two things does ClaimCenter do when it determines that a\nx transaction requires approval?\n\nIt sets the transaction status to pending approval and it creates an approval activity\n(which is typically routed to a supervisor).\n\nBoD DD DD DS SSS oe\n\nLesson\nobjectives\nreview\n\nDescribe how approvals constrain payments\nModify authority limits\n\nAssign authority limits to a user\n\nDescribe transaction approval rules\nApprove transactions as a user with proper\nauthority",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Constraining payments - approvals",
+      "word_count": 4,
+      "avg_confidence": 93.71,
+      "image_size": {
+        "width": 1280,
+        "height": 560
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe how approvals constrain payments\n\n¢ Modify authority limits\n\n¢ Assign authority limits to a user\n\n¢ Describe transaction approval rules\n\n¢ Approve transactions as a user with proper\nauthority",
+      "word_count": 33,
+      "avg_confidence": 87.18,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "| Discussion i\n\nJun\nClaims *\nSupervisor\n\nIncorrect payments can have a large effect\non the finances of an insurance company.\nAdjusters need to easily pay claims within a\nrange of costs that align with their skill and\nexperience. If payments are out of that range,\nthen | need to review those payments and\neither approve or reject them.",
+      "word_count": 59,
+      "avg_confidence": 94.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Financials i\n\n¢ ClaimCenter financials is the process of setting aside money for payments and\nthen issuing those payments\n\n¢ The general financial process is:\n\ner\ne\n\nLop\n\nfom + 1+ 8",
+      "word_count": 33,
+      "avg_confidence": 81.31,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| Financials approval\n\nAW)\n\nClaimCenter reviews every transaction to determine if it requires approval",
+      "word_count": 14,
+      "avg_confidence": 89.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "| Constraining payments Gi\n\n+ Why?\n\n+ The goal of an insurance carrier is to pay the insured for a claim only the amount required to make the\ninsured whole\n\n+ The insurance company needs safeguards to prevent overpaying claims\n+ Ifa payment seems unreasonable, the company wants to constrain the payment by requiring\nadditional approvals\n* How?\n+ Authority limits: constraints defined to require approval above a set amount\n+ Transaction approval rules: Configuration level rules for when authority limits aren’t enough\n\n« What?\n+ Any transaction (payment, reserve, and so on)\n\n+ Transactions that require approval are flagged as “pending approval”\n+ Transactions that do not require approval are submitted",
+      "word_count": 112,
+      "avg_confidence": 90.71,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Authority limits",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "] Authority limits vas G\n\n: Limits:\nClaim Total Reserves:\n$15,000\n$0K $10K $20K\n\n¢ An authority limit, limits the transactions an adjuster can create without approval\n¢ It consists of criteria (limit type, policy type, coverage, cost type) and an amount\n\n¢ In this example, Claim Total Reserves are limited to $15,000",
+      "word_count": 53,
+      "avg_confidence": 87.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "] Authority limits eos G\n\nsuccess rv) x)\n\n: Limits:\nClaim Total Reserves:\n$15,000\n\n$oK\n\n$0K $10K $20K\n\n¢ The $9,000 transaction does not push the claim total reserves above $15,000\n\n¢ Itdoes not require further approval",
+      "word_count": 37,
+      "avg_confidence": 83.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "] Authority limits oa G\n\ne\n\nrv) & Spproval\nsuccess x) >\n\n(oy,\nLimits:\nak Claim Total Reserves:\n$15,000\n$0K $10K $20K\n\n¢ The $23,000 transaction pushes the claim total reserves above $15,000\n\n¢ It does require further approval",
+      "word_count": 39,
+      "avg_confidence": 80.19,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| How authority limits work G\n\n¢ Limiting amounts\n+ If there is a limit for a limit type, transactions over the limit require approval\n+ Example: Payment exceeds amount is $10,000\n+ Any transaction above $10,000 will require approval\n\n¢ Limiting access\n+ Without an authority limit, the user cannot create a transaction\n+ Without any reserve limit (claim total reserves, claim available reserves...) the user can’t create reserves\n+ Without any payment limit the user can’t create payments\n\n* Policy type, Coverage type, and Cost type restrict what a user can do\n+ If there is a value in any of those criterion, the user is restricted to create only transactions that\n\nfit the criterion\n+ Example: if there is a Worker’s Comp policy type, the user can only create transactions for that policy\n\ntype",
+      "word_count": 137,
+      "avg_confidence": 91.37,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "| Authority limit criteria i\n\nLimit types (examples)\n* Claim total reserves — total reserves for the claim cannot exceed the limit amount without approval\n* Claim payments to date — claim payments cannot exceed the limit amount without approval\n* Exposure total reserves — total reserves for any exposure cannot exceed the limit without approval\n\nPolicy type — restricts the type of policy the authority limit applies to\n\nCoverage (examples)\n+ Workers’ Comp\n\nAdjuster Upto Authority Limit Profile\n\n+ Workers’ Comp\noo. Name Adjuster\nEmployer Liability\nDescription Adjuster default authority\n* Cost type (examples) Authority Limits Limit Type Policy Type | Coverage Type | Cost Type | Amount\n. Payments exceed reserves $1,000.00\n* Claim cost Claim total reserves $15,000.00\n\n+ Expense Claim payments to date $15,000.00",
+      "word_count": 128,
+      "avg_confidence": 89.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "| Authority limit profiles\n\n@ Q\n\nDana Evans $0K $10K $20K\n\n(x)\n© :\n\nPeter Beebe $0K $10K $20K\n\n¢ An authority limit profile is a collection of authority limits\n\n« May be assigned to one or more users\n\n+ Are pre-defined (created once and applied to multiple users)\n\n* Can be overridden (for a single user)\n\nAdjuster Profile Gi\n\nExposure Reserves\n(for Collision):\n$10,000\n\nClaim Total\nReserves:\n$15,000",
+      "word_count": 69,
+      "avg_confidence": 87.17,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "« Assigned by an administrator on\nthe Administration > Users screens\n\n« Assignment is on the Authority\nLimits tab for each user\n\n« Auser may have only one\nauthority limit profile\n\n« May be customized\n\n* Once it has been customized, the\nuser is no longer linked to that\nprofile\n\n| Assigning authority limit profiles\n\nAndy Applegate\n\nBasics | Profile | Authority Limits Attributes | Regions | Details\n\nAuthority Limit Profile ‘Adjuster 5\nDescription Custom\nClaim: isor :\n\nAuthority Limits\n\nRegior\n\nLimit Type >\n\nPolicy Type > Coverage Type > Cost Type >\n\n(1-3 0f3)\nAmount\n$15,000.00\n\n$15,000.00\n$1,000.00",
+      "word_count": 99,
+      "avg_confidence": 83.62,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "| Demonstration G\n\nAuthority limits\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.41,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "| Transaction approval rules fa\n\n¢ Transaction approval rules are a configuration-level solution\n« Use GOSU code in the rules\n\n¢ Approval rules may be more in depth and can be used when\n+ Logic is beyond the given limit types\n+ Logic is tied to attributes other than policy type, coverage type, and cost type\n\n+ Logic applies regardless of the type of user\n\nTransaction If segment is low complexity\nApproval (o} AND total reserves > $30,000\n\nRules ES then require approval",
+      "word_count": 83,
+      "avg_confidence": 92.08,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "| Review: Objects that need attention i\n\n¢ Activities are created and assigned to a supervisor for action Al\n\n¢« Some examples include:\n\n* Claims:\n+ Claim reported two weeks ago and fault rating has not been specified\n+ Auto is total loss and salvage is now required\n\n+ Lawyer for third-party claimant has been added | vg, xs @\nui\n\n+ Activities:\n+ When still open as of escalation date\n\n* Transactions:\n+ Amount exceeds a given threshold (authority limits) fe) =)\n+ Given condition occurs (approval rules)\n\n-$10,000",
+      "word_count": 90,
+      "avg_confidence": 86.14,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "| Transaction approval conditions (1 of 2)\n\nTransaction\nApproval\nRules\n\nif segment is low complexity\n(o} AND total reserves > $30,000\ntop> then require approval\n\nNew transactions are checked against transaction approval rules",
+      "word_count": 33,
+      "avg_confidence": 91.09,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "| Transaction approval conditions (2 of 2) fa\n\nTransaction\nApproval\nRules\n\nif segment is low complexity\n(o} AND total reserves > $30,000\ntop> then require approval\n\na success & Penang\nvv) e {og> Spproval\n; Claim Total\nAuthority <>) $9K Reserves:\nLimits S) $23K $15,000\n$0K $10K $20K\n« New transactions are checked against transaction approval rules\n\n¢ If they pass, they are then checked against the user's authority limit profile\n\n¢ Either of these mechanisms can set the transaction to require approval",
+      "word_count": 83,
+      "avg_confidence": 84.89,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| ClaimCenter response\n\n_rt4\n\nApproval\ngm Pending activity\n& approval\nre) [oy\n; = Claim Total\n\n$0K $10K $20K\n\nWhen a transaction is flagged as requiring approval:\n\n« The status of the transaction is set to \"Pending approval\"\n* An approval activity is created and routed to the appropriate user (typically the supervisor)\n¢ All transactions created at one time are included in a single approval activity",
+      "word_count": 67,
+      "avg_confidence": 88.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "| Supervisor response\n\noS\n\n—|% om\nXY Q\naf . Approval\nPendin ivi\n& sree activity C o>\n(2) a»\n‘ Paeced Og\n¢ Supervisors approve or reject a transaction set\n¢ All transactions in the set are approved or rejected together\n\n¢ Approval or rejection closes the activity\n\n¢ Approval may create an activity for their own supervisor’s approval",
+      "word_count": 60,
+      "avg_confidence": 78.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "| Demonstration G\n\nApprovals\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 34,
+      "avg_confidence": 95.39,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "| Student exercise\n\nConstraining payments — approvals",
+      "word_count": 7,
+      "avg_confidence": 93.4,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 95.0,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Question G\n\nae Does a transaction require approval when:\no A) tis not flagged by transaction approval rules but exceeds the user's authority\n\nlimits?\n\nB) Itdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\n\nC) It exceeds the user's authority limits and is flagged by transaction approval rules?\n\nen",
+      "word_count": 54,
+      "avg_confidence": 85.13,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "Answer a\n\n_~ — Does a transaction require approval when:\n\n¢\n¢\n\n¢ A) Itis not flagged by transaction approval rules but exceeds the user's authority limits?\n\nB) lItdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\n\nC) lt exceeds the user's authority limits and is flagged by transaction approval rules?\n\nThe answer for all three is the same. The transaction requires approval in all three\ncases.\n\nBoD DD DD DS SSS oe",
+      "word_count": 78,
+      "avg_confidence": 82.86,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-30.png",
+      "slide_number": 30,
+      "text": "Question G\n\n,~ — Anauthority limit consists of criteria and an amount. What three values\n\nx can optionally be specified to create the condition?\n\n¢\n\nen",
+      "word_count": 26,
+      "avg_confidence": 85.48,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-31.png",
+      "slide_number": 31,
+      "text": "Answer a\n\n,~ — Anauthority limit consists of criteria and an amount. What three values\n¢ can optionally be specified to create the condition?\n\n¢\n¢\n\nPolicy type, coverage type, and cost type.\n\nBoD DD DD DS SSS oe",
+      "word_count": 39,
+      "avg_confidence": 78.38,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-32.png",
+      "slide_number": 32,
+      "text": "Question G\n\n,~ — What two things does ClaimCenter do when it determines that a\nx transaction requires approval?\n\nen",
+      "word_count": 20,
+      "avg_confidence": 85.24,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-33.png",
+      "slide_number": 33,
+      "text": "Answer a\n\n,~ — What two things does ClaimCenter do when it determines that a\nx transaction requires approval?\n\nIt sets the transaction status to pending approval and it creates an approval activity\n(which is typically routed to a supervisor).\n\nBoD DD DD DS SSS oe",
+      "word_count": 46,
+      "avg_confidence": 82.06,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    },
+    {
+      "filename": "slide-34.png",
+      "slide_number": 34,
+      "text": "Lesson\nobjectives\nreview\n\nDescribe how approvals constrain payments\nModify authority limits\n\nAssign authority limits to a user\n\nDescribe transaction approval rules\nApprove transactions as a user with proper\nauthority",
+      "word_count": 29,
+      "avg_confidence": 95.9,
+      "image_size": {
+        "width": 1280,
+        "height": 671
+      }
+    }
+  ]
+}

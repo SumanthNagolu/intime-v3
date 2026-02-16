@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "chapter": "ch04",
+    "chapter_title": "PolicyCenter Introduction",
+    "lesson": "lesson-11",
+    "slide_count": 22,
+    "slides_with_text": 20,
+    "total_words": 893,
+    "avg_confidence": 87.23,
+    "processing_time_seconds": 11.1,
+    "extracted_at": "2026-02-13T12:05:08.495979"
+  },
+  "full_text": "Users and Groups\n\nLesson\nobjectives\n\n¢ Describe and manage Users\n* Describe and manage Groups\n« Use the Team tab\n\nMarci |\nConfiguration Yam\nDeveloper _.\n\nHow can | create and organize users who work\n_{ with PolicyCenter?\n\nJulia §\nImplementation\n\nYou can manage them through Architect We\nthe community model, which\nincludes users, groups,\norganizations, and producer\ncodes.\n\nbt\n\n| Users Gi\n\nA user is an individual who interacts with PolicyCenter\n\nProducer\n\nbd Underwriter\n. —9\n\n1\n@\nCc Supervisor\n\nAuditor\n\n| User types\n\nAn internal user is an employee of the insurer\n* Can potentially view an external user’s group and permissions\nAn external user is a person outside the company\n* Needs to access PolicyCenter data\n* Typically, producers\n« Must be associated with an organization\nCaptive agents are sometimes\n* Internal users when they are employees of the insurer or\n+ External users who have an exclusive contract to do business with an insurer\n\nAccess is controlled through roles and producer codes\n\nGroups ee Gi\n@1(@\naeOn\n~~)\nee\n@ &2\n@\n\nus\n@ sa\\@\n(=),\nq@ly|\" &\nyy 9\nProducer\nUsers codes Queues Regions Groups\n\nMarci\nConfiguration\nDeveloper\n\nHow to work with users and groups?\n\n| Managing users\n\n* Search, view, edit or create the users using the Administration tab\n¢ Every user has details about\n\n* what a user owns for assignment purposes(user type, etc.)\n\n* what a user can access (roles, underwriting (UW) authority, region, etc.)\n* Create a new user\n\n+ Administration > Actions > New User\n\n« External users must explicitly specify to which organization they belong\n\nUser Access\n\n¢ Turn on/off producer code security (Yes for user type Producer)\n\n¢ User inherits producer code from their group and can add additional producer\n\ncodes\nUser: Frede\n\nrick Dwight\n\nAttributes\n\nBasics\n\nAccess || Roles | Profile | Region | UWAuthority\n\n[peresiercose sco vs]\n\nGroup details = S™uPs\n\nGroup Member Manager Load Factor Permissions Load Factor\nProducers ‘Yes\nProducer codes Producer Codes from Groups\nCode Description Status Groups Actions\n\nTo add a producer code\nto this user\n\n301-008597 Cid Vicious agency Active\n\nAdditional Producer Codes\n\nCode Description Status > Actions\n\n| Managing groups fa\n¢ Search, view, edit and create groups using the Administration tab\n\n¢ Any user (internal or external) assigned to a group has access to all of the\nproducer codes available to that group\n\nProducer Codes tab lists all producer codes assigned to the group\n\nGroup: Eastern Mid-West Region\n\nBasics | Users Queues | Regions\n\nProducer codes can be selected here from those available to the parent group\n\nAvailable Code Description Status Branch\nQALPRODUCERCODEO1 Internal Producer Code-2 Active Los Angeles Branch UW\n\nStandard Code Internal Producer Code-1 Active Los Angeles Branch UW\n\n| Demonstration G\n\nManaging users and groups\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nAndri\nSupervisor\n\n| want to view the activity and job details for the\nusers within my group and be able to reassign\nthem.\n\n| Team tab i\n\n¢ Provides a visual management tool that helps supervisors and managers manage\ntheir groups\n\n* Each group can have only one supervisor\n\n« Users in the group can be set as managers\n¢ Reports all activities and jobs grouped by time and status\n* Can mass reassign the activities and jobs\n\n* Can view policy transactions by role or activity\n\nGi\n\nView by categories\n\n* By Role — displays jobs where a user is a participant, such as CSR\n\n« May not have any activities associated with job\n* By Activity — displays jobs where a user has an activity, such as an underwriter\n\n« An activity makes the underwriter aware that work is required on job\n\nMy Groups: Summary (Calculated on: Mon, Sep 24,\n2018 11:03:00 AM PDT)\n\nView Policy Transactions | ByRole\ni\nBy Role Submissions Renewals Other Policy\n“ eek) (this week) (this week) (this week)\nName @ | Bi\\vi@/r H\\@e\\x ibiIR\\|B|@/Xx\\o\nEastern Region Underwriting 0 Oo 0 oO 0 oO oO o oO 0 0 0 0 0\n132 | 126 0 4 0 8 15 1 2 0 0 6 1 16\n\nLos Angeles Branch UW\n\n| Reporting icons and their meanings fa\n\n¢ Hover over the icons to view their meanings on the team page\n* Common icon: Open > oO\n\nRenewed\n\nOverdue New New Non- New\n\nName @ix w\nEastern Region Underwriting 0 0 0 0 0 0 0 0 0 0 it) 0 (\\) 0\nLos Angeles Branch UW 132 | 126 0 4 0 8 15 1 2 0 0 6 1 16\n\n| Demonstration G\n\nTeam tab\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\nAnswer true or false:\n4\n\n_’ _ Anintemal user could be assigned a producer code for any organization.\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi\n\nAnswer\n\n_ _ Answer true or false:\n_,’  Aninternal user could be assigned a producer code for any organization.\n\n¢\n¢\n\nTrue\n\nSooo ooo ooo Oooo oOoD\n\nGi\n\nLesson\nobjectives ¢ Describe and manage Users\nreview * Describe and manage Groups\n\n¢ Use the Team tab\n\n| Student exercise\n\nUsers and Groups",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Users and Groups",
+      "word_count": 3,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 548
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives\n\n¢ Describe and manage Users\n* Describe and manage Groups\n« Use the Team tab",
+      "word_count": 17,
+      "avg_confidence": 85.18,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Marci |\nConfiguration Yam\nDeveloper _.\n\nHow can | create and organize users who work\n_{ with PolicyCenter?\n\nJulia §\nImplementation\n\nYou can manage them through Architect We\nthe community model, which\nincludes users, groups,\norganizations, and producer\ncodes.\n\nbt",
+      "word_count": 40,
+      "avg_confidence": 87.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "| Users Gi\n\nA user is an individual who interacts with PolicyCenter\n\nProducer\n\nbd Underwriter\n. —9\n\n1\n@\nCc Supervisor\n\nAuditor",
+      "word_count": 22,
+      "avg_confidence": 79.79,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "| User types\n\nAn internal user is an employee of the insurer\n* Can potentially view an external user’s group and permissions\nAn external user is a person outside the company\n* Needs to access PolicyCenter data\n* Typically, producers\n« Must be associated with an organization\nCaptive agents are sometimes\n* Internal users when they are employees of the insurer or\n+ External users who have an exclusive contract to do business with an insurer\n\nAccess is controlled through roles and producer codes",
+      "word_count": 84,
+      "avg_confidence": 91.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "Groups ee Gi\n@1(@\naeOn\n~~)\nee\n@ &2\n@\n\nus\n@ sa\\@\n(=),\nq@ly|\" &\nyy 9\nProducer\nUsers codes Queues Regions Groups",
+      "word_count": 24,
+      "avg_confidence": 59.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "Marci\nConfiguration\nDeveloper\n\nHow to work with users and groups?",
+      "word_count": 10,
+      "avg_confidence": 95.91,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "| Managing users\n\n* Search, view, edit or create the users using the Administration tab\n¢ Every user has details about\n\n* what a user owns for assignment purposes(user type, etc.)\n\n* what a user can access (roles, underwriting (UW) authority, region, etc.)\n* Create a new user\n\n+ Administration > Actions > New User\n\n« External users must explicitly specify to which organization they belong",
+      "word_count": 66,
+      "avg_confidence": 90.11,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "User Access\n\n¢ Turn on/off producer code security (Yes for user type Producer)\n\n¢ User inherits producer code from their group and can add additional producer\n\ncodes\nUser: Frede\n\nrick Dwight\n\nAttributes\n\nBasics\n\nAccess || Roles | Profile | Region | UWAuthority\n\n[peresiercose sco vs]\n\nGroup details = S™uPs\n\nGroup Member Manager Load Factor Permissions Load Factor\nProducers ‘Yes\nProducer codes Producer Codes from Groups\nCode Description Status Groups Actions\n\nTo add a producer code\nto this user\n\n301-008597 Cid Vicious agency Active\n\nAdditional Producer Codes\n\nCode Description Status > Actions",
+      "word_count": 91,
+      "avg_confidence": 90.39,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "| Managing groups fa\n¢ Search, view, edit and create groups using the Administration tab\n\n¢ Any user (internal or external) assigned to a group has access to all of the\nproducer codes available to that group\n\nProducer Codes tab lists all producer codes assigned to the group\n\nGroup: Eastern Mid-West Region\n\nBasics | Users Queues | Regions\n\nProducer codes can be selected here from those available to the parent group\n\nAvailable Code Description Status Branch\nQALPRODUCERCODEO1 Internal Producer Code-2 Active Los Angeles Branch UW\n\nStandard Code Internal Producer Code-1 Active Los Angeles Branch UW",
+      "word_count": 95,
+      "avg_confidence": 90.25,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "| Demonstration G\n\nManaging users and groups\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 37,
+      "avg_confidence": 95.41,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "Andri\nSupervisor\n\n| want to view the activity and job details for the\nusers within my group and be able to reassign\nthem.",
+      "word_count": 23,
+      "avg_confidence": 94.75,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "| Team tab i\n\n¢ Provides a visual management tool that helps supervisors and managers manage\ntheir groups\n\n* Each group can have only one supervisor\n\n« Users in the group can be set as managers\n¢ Reports all activities and jobs grouped by time and status\n* Can mass reassign the activities and jobs\n\n* Can view policy transactions by role or activity",
+      "word_count": 64,
+      "avg_confidence": 88.19,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "Gi\n\nView by categories\n\n* By Role — displays jobs where a user is a participant, such as CSR\n\n« May not have any activities associated with job\n* By Activity — displays jobs where a user has an activity, such as an underwriter\n\n« An activity makes the underwriter aware that work is required on job\n\nMy Groups: Summary (Calculated on: Mon, Sep 24,\n2018 11:03:00 AM PDT)\n\nView Policy Transactions | ByRole\ni\nBy Role Submissions Renewals Other Policy\n“ eek) (this week) (this week) (this week)\nName @ | Bi\\vi@/r H\\@e\\x ibiIR\\|B|@/Xx\\o\nEastern Region Underwriting 0 Oo 0 oO 0 oO oO o oO 0 0 0 0 0\n132 | 126 0 4 0 8 15 1 2 0 0 6 1 16\n\nLos Angeles Branch UW",
+      "word_count": 131,
+      "avg_confidence": 79.82,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "| Reporting icons and their meanings fa\n\n¢ Hover over the icons to view their meanings on the team page\n* Common icon: Open > oO\n\nRenewed\n\nOverdue New New Non- New\n\nName @ix w\nEastern Region Underwriting 0 0 0 0 0 0 0 0 0 0 it) 0 (\\) 0\nLos Angeles Branch UW 132 | 126 0 4 0 8 15 1 2 0 0 6 1 16",
+      "word_count": 71,
+      "avg_confidence": 87.56,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "| Demonstration G\n\nTeam tab\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 35,
+      "avg_confidence": 95.43,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Question\n\nAnswer true or false:\n4\n\n_’ _ Anintemal user could be assigned a producer code for any organization.\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "word_count": 28,
+      "avg_confidence": 75.4,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "Answer\n\n_ _ Answer true or false:\n_,’  Aninternal user could be assigned a producer code for any organization.\n\n¢\n¢\n\nTrue\n\nSooo ooo ooo Oooo oOoD\n\nGi",
+      "word_count": 28,
+      "avg_confidence": 79.44,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "Lesson\nobjectives ¢ Describe and manage Users\nreview * Describe and manage Groups\n\n¢ Use the Team tab",
+      "word_count": 18,
+      "avg_confidence": 87.22,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "| Student exercise\n\nUsers and Groups",
+      "word_count": 6,
+      "avg_confidence": 95.86,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}

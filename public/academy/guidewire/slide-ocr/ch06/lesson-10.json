@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "chapter": "ch06",
+    "chapter_title": "BillingCenter Introduction",
+    "lesson": "lesson-10",
+    "slide_count": 29,
+    "slides_with_text": 25,
+    "total_words": 1533,
+    "avg_confidence": 85.66,
+    "processing_time_seconds": 13.09,
+    "extracted_at": "2026-02-13T12:14:10.864351"
+  },
+  "full_text": "Applying Direct Bill Payments\n\nLesson\nobjectives ¢ Explain how a payment allocation plan filters\n\nand prioritizes payment allocation\n\n* Describe how payments are automatically\nallocated\n\n* Override the default allocation when making a\nsingle payment\n\nPayment allocation\n\ni Applying a payment\n\nMarcus:\n\nBusiness When BillingCenter\nAnalyst .\nreceives a payment, how\ndoes it apply the money?\n\nYou know about invoices\nand payments. Now let’s\nput them together. The\npayment allocation plan\nprovides the answer.\n\nZhang\nBilling Clerk\n\ni When an automated payment is received... Gi\n\nPayment allocation plan specifies how to apply funds\n\nez allocation\nde> ges Request sos]\n\npayment batch process\nrequest\nfi cas, (6 )\n\ninstitution (O)\ne =\npayment batch\nprocess a\ninvoices\n\nunapplied fund (any of 4)\n\nile\n\nBillingCenter\n\ni When a responsive payment is received... Gi\n\nPayment allocation plan specifies how to apply funds\n\npayment allocation\nAz a\n&) Invoice batch =\n@ voice Process\n\n@ —_—__\npolicyholder (e)\n\npayment\n\nbatch es\nprocess &\nunapplied (any of 4) invoices\nfund\n\na5 fl -\n\nBillingCenter\n\ni Steps for allocating a payment (1 of 3) G\n\n1. BillingCenter identifies the set of unsettled (not fully paid) invoice items to target\nfor payment.\n\n2. Partition &\nRank\n\nIdentify a set of unsettled invoice\nitems to target for payments\n\ni Steps for allocating a payment (2 of 3) G\n\n2. The eligible invoice items from the Filter step are grouped according to the\npriorities specified in the payment allocation plan\n\n« For example, pay invoice items in order of their placement dates\n\n2. Partition &\nRank\n\nIdentify a set of unsettled invoice\n\nitems to target for payments Partition items from step\n\n1 by priority\n\ni Steps for allocating a payment (3 of 3) G\n\n3. BillingCenter allocates the money to the eligible invoice items in each group until\nno more money is available.\n\n* Invoice items within the same partition have equal rank\n\n2. Partition &\nRank\n\nIdentify a set of unsettled invoice\nitems to target for payments Partition items from step\n1 by priority Pay items pro rata in each partition\nuntil money is exhausted or all\neligible items are settled\n\ni Payment allocation plan Gi\n\n* The payment allocation plan manages: Samet account\n\n« Automatic allocation of payments associated\nwith a policy or invoice Payment Allocation\n\nPayment Allocation Plan Default Payment Allocation Plan\n\n« Automatic allocation of money in unapplied funds\n\n* Default allocation of a payment in the\nDirect Bill Payment screen\n\n* The payment allocation plan specifies: < payment\ng 7.\n* The invoice items that are eligible to be paid allocation\n\nplan\n\n* The order to pay items if all eligible items cannot be fully paid\n¢ Every account has a single payment allocation plan\n\n* Same plan manages allocation for all policies paid by the account\n\ni Payment allocation plans Gi\n\nAdministration tab > Business Settings > Payment Allocation Plans\nDefault Payment Allocation Plan [aie |\n\nPayment Allocation Plan\nName Default Payment Allocation Plan\n\nThe default allocation plan for payment, excess unapplied, account negative\n\nDescription 7\nitems, and other forms of available \"cash\".\n\nEffective Date 01/01/1990\n\nExpiration Date\n\nWhat invoice items should be paid? (=\nName >\nPolicy Period -ms to those on the incoming payment's associated policy period. 41. Filters determine\nPositive sms to those with amounts greater than zero. eligible invoice\nBilled or Due sms to those that are billed or due. ite\nInvoice items to those on the incoming payment's associated invoice. ems\nWhat order do you want to pay them in? LM\nPriority Name > Description > Move Priority ==§== 2. Eligible invoice\n1 Recapture Ci Pay invoice items with recapture charges first. =, Are\nlecapture Charges Pay invoice items with recapture charges first == items are paid in\n\n2 Placement Date Pay invoice items in order of their placement dates.\n\npriority order\n\n3 ChargePattern Pay invoice items according to charge pattern priority.\n\ni Allocating money from unapplied Gi\n\nMa\nBusiness\nAnalyst\n\nWhat about applying money\n\nsitting in an unapplied fund?\n\\ Does BillingCenter use the\nyj payment allocation plan?\n\nBilling Clerk : z\n\nGood question! Let’s\ntake a look.\n\ni Allocating excess money in Default Unapplied Gi\n\nAccount-level billing example\n\nLe\npayment allocation plan filters [al planned\n2 5 Policy Period\ns roe Positive @ WS : eee\n> Billed or Due @ '® billed\nInvoice [x]\n\ntape moral\n\nLAR]\n& <j [\"**} bd |\nNew at A,\n\neit\n\nDefault batch process ri\nUnapplied\n\neu\n\ni Allocating excess money in designated unapplied [5\n\nPolicy-level billing example\n\npayment allocation plan filters\n\n© Policy Period €\n=o\n\n|e) Positve @\ne Billed or Due @\n\n2\n:\n\nZe ery\nbatch process\nDesignated\n\nUnapplied\n({HOO1)\n\nUelpom\n\noe:\n—— a tAN ,\nB\n\ni Demonstration G\n\nPayment allocation plan\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n,- — Complete each sentence by filling in the blanks with\n\nY the correct word or phrase.\n7 1. Aninvoice item that has not been fully paid is\n\nEvery has a single payment allocation plan.\n\n3. Given these payment allocation steps:\n\nstep 2 is relevant only if\nThe Spread Excess Even priority applies to invoice items only.\n\nAbatch process will never allocate money in an unapplied fund to invoice\nitems that are\n\n6. The Policy Period and Invoice filters apply when a batch process is\nallocating a but not when it is allocating\n\nsoe eeceseesesesesees\n\nAnswer\n\n¢\n74,\n\n2.\n\nSoe ee ee eee Soo eSeoe Ss\n\n_- — Complete each sentence by filling in the blanks with\nthe correct word or phrase.\n\nAn invoice item that has not been fully paid is (e) unsettled.\nEvery (g) account has a single payment allocation plan.\n\nGiven these payment allocation steps:\n\nstep 2 is relevant only if (f) there is not enough money to fully pay eligible items.\n\nThe Spread Excess Even priority applies to (c) planned invoice items only.\n\nAbatch process will never allocate money in an unapplied fund to invoice\nitems that are (d) from a policy with a different unapplied fund.\n\nThe Policy Period and Invoice filters apply when a batch process is\nallocating a (b) payment but not when it is allocating (a) money from an unapplied fund.\n\ni Overriding the payment allocation plan Gi\n\nMarcus\n\nBusiness\nAnalyst Is there anyway to override\n° the behavior of the\n\npayment allocation plan?\n\nZhang \\j\nBilling Clerk\n\nThere is! Let’s revisit the\nDirect Bill Payment screen.\n\ni Payment allocation plan controls default allocation [5\n\nAccount tab> Actions > New Payment > New Direct Bill Payment\nDirect Bill Payment { conc]\n\n‘Account Payment Details\n\nThis Payment\nSelected Account # Demoores Paymentinstrument | Cash - Available 202.00\nSelected Account Nome Lauren Ramirez Description Distributed $202.00\nPayment In Suspense\nReceived Date 10/18/2018 Collateral\n_— - Glam gy Payment —\nUnapplied Fund  ( Hoor-LRaminez . | allocation\nUse Unapped Fund plan\n‘Amount [$0.00] 7\nPreview Distribution H\n.\n.\n.\nGroup By Invoice > | Aggregate | Byltem > | Sort By InvoilR Date | GoTo# Go J ctear\n\nPolicyPeriod® Invoice Invoice BillDate Invoice DueDate Owner Payer\nInvoice # 1000000021 (Billed); Due On: 10/26/2018; Unpaid Balance: $202.00\nInstallment Premium HO01-LRAMIREZ-1 1000000021 10/18/2018 (Billed) 10/28/2018 DEMoo18s DEMoo18s\n\nOne-Time Invoice Fee 41000000021 _ 10/18/2018 (Billed) _ 10/28/2018 DEMoo18s _DEMoo18s\n‘Subtotal\n\n$202.00 ‘$202.00\n\ni Overriding the default allocation Gi\n\n¢ Override Distribution toolbar lets you:\n* Specify which items to include in the allocation\n¢ Specify the amount to allocate to each target (invoice item, invoice, policy period)\n« Add invoice items from other policies\n\nes Override Amount\nOverride Distribution toolbar fields\n\nPreview Distribution\n\nDistribution | Suspense tems | Collateral item\n\nSelect emawhere the | Payer +) 1 [Account ~) Include Only| Upto amount ied\nSEEEy| invoice + ET oy me ERT tree bare ~ OE\n\ntm Posy Peiodt_ | vsca #7] lrvote BDate] 7] voles Dus Date | Ovmer [Payers [Amount | Unpal Amount, | Anoent To ply | Overt Aroust\nInveee# 100000021 (Billed; Due On 10/28/2016; Unpaid Balance: $202.00\n\nInstaliment-Premium HOOLLRAMIREZ 1090000021. 188/2010(Biled) s07zy2018 _DEMOoIB5 _DEMoOLES $200.00 200.00 $200.00 fs\n\nOne-Tme-lnvoiee Fee 1000000021 20/8/2018 (Bed) 3070/2018 Moos DeMooues $2.00 $2.00 s200]s\n\nSubtotal $202.00 $202.00 $202.00\n\ni Demonstration G\n\nOverride payment allocation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.\n\nQuestion\n\n_— — Assuming an account with policy-level billing and cash separation, can\nY you add an invoice item from Policy A to a direct bill payment allocation\nfor Policy B?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi\n\nAnswer Gi\n\n_— — Assuming an account with policy-level billing and cash separation, can\n7 you add an invoice item from Policy A to a direct bill payment allocation\nfor Policy B?\n\nYes. Using the Direct Bill Payment screen:\n1.Click Override Distribution.\n2.Click Add Items.\n\nSoe ee ee eee Soo eSeoe Ss\n\nLesson\nobjectives ¢ Explain how a payment allocation plan filters\nreview and prioritizes payment allocation\n\n* Describe how payments are automatically\nallocated\n\n* Override the default allocation when making a\nsingle payment\n\ni Student exercise\n\nExplore payment allocation plans",
+  "slides": [
+    {
+      "filename": "slide-01.png",
+      "slide_number": 1,
+      "text": "Applying Direct Bill Payments",
+      "word_count": 4,
+      "avg_confidence": 95.6,
+      "image_size": {
+        "width": 1280,
+        "height": 544
+      }
+    },
+    {
+      "filename": "slide-02.png",
+      "slide_number": 2,
+      "text": "Lesson\nobjectives ¢ Explain how a payment allocation plan filters\n\nand prioritizes payment allocation\n\n* Describe how payments are automatically\nallocated\n\n* Override the default allocation when making a\nsingle payment",
+      "word_count": 31,
+      "avg_confidence": 89.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-03.png",
+      "slide_number": 3,
+      "text": "Payment allocation",
+      "word_count": 2,
+      "avg_confidence": 96.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-04.png",
+      "slide_number": 4,
+      "text": "i Applying a payment\n\nMarcus:\n\nBusiness When BillingCenter\nAnalyst .\nreceives a payment, how\ndoes it apply the money?\n\nYou know about invoices\nand payments. Now let’s\nput them together. The\npayment allocation plan\nprovides the answer.\n\nZhang\nBilling Clerk",
+      "word_count": 40,
+      "avg_confidence": 91.59,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-05.png",
+      "slide_number": 5,
+      "text": "i When an automated payment is received... Gi\n\nPayment allocation plan specifies how to apply funds\n\nez allocation\nde> ges Request sos]\n\npayment batch process\nrequest\nfi cas, (6 )\n\ninstitution (O)\ne =\npayment batch\nprocess a\ninvoices\n\nunapplied fund (any of 4)\n\nile\n\nBillingCenter",
+      "word_count": 46,
+      "avg_confidence": 79.19,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-06.png",
+      "slide_number": 6,
+      "text": "i When a responsive payment is received... Gi\n\nPayment allocation plan specifies how to apply funds\n\npayment allocation\nAz a\n&) Invoice batch =\n@ voice Process\n\n@ —_—__\npolicyholder (e)\n\npayment\n\nbatch es\nprocess &\nunapplied (any of 4) invoices\nfund\n\na5 fl -\n\nBillingCenter",
+      "word_count": 46,
+      "avg_confidence": 76.33,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-07.png",
+      "slide_number": 7,
+      "text": "i Steps for allocating a payment (1 of 3) G\n\n1. BillingCenter identifies the set of unsettled (not fully paid) invoice items to target\nfor payment.\n\n2. Partition &\nRank\n\nIdentify a set of unsettled invoice\nitems to target for payments",
+      "word_count": 41,
+      "avg_confidence": 93.3,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-08.png",
+      "slide_number": 8,
+      "text": "i Steps for allocating a payment (2 of 3) G\n\n2. The eligible invoice items from the Filter step are grouped according to the\npriorities specified in the payment allocation plan\n\n« For example, pay invoice items in order of their placement dates\n\n2. Partition &\nRank\n\nIdentify a set of unsettled invoice\n\nitems to target for payments Partition items from step\n\n1 by priority",
+      "word_count": 65,
+      "avg_confidence": 93.23,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-09.png",
+      "slide_number": 9,
+      "text": "i Steps for allocating a payment (3 of 3) G\n\n3. BillingCenter allocates the money to the eligible invoice items in each group until\nno more money is available.\n\n* Invoice items within the same partition have equal rank\n\n2. Partition &\nRank\n\nIdentify a set of unsettled invoice\nitems to target for payments Partition items from step\n1 by priority Pay items pro rata in each partition\nuntil money is exhausted or all\neligible items are settled",
+      "word_count": 78,
+      "avg_confidence": 92.99,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-10.png",
+      "slide_number": 10,
+      "text": "i Payment allocation plan Gi\n\n* The payment allocation plan manages: Samet account\n\n« Automatic allocation of payments associated\nwith a policy or invoice Payment Allocation\n\nPayment Allocation Plan Default Payment Allocation Plan\n\n« Automatic allocation of money in unapplied funds\n\n* Default allocation of a payment in the\nDirect Bill Payment screen\n\n* The payment allocation plan specifies: < payment\ng 7.\n* The invoice items that are eligible to be paid allocation\n\nplan\n\n* The order to pay items if all eligible items cannot be fully paid\n¢ Every account has a single payment allocation plan\n\n* Same plan manages allocation for all policies paid by the account",
+      "word_count": 110,
+      "avg_confidence": 86.49,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-11.png",
+      "slide_number": 11,
+      "text": "i Payment allocation plans Gi\n\nAdministration tab > Business Settings > Payment Allocation Plans\nDefault Payment Allocation Plan [aie |\n\nPayment Allocation Plan\nName Default Payment Allocation Plan\n\nThe default allocation plan for payment, excess unapplied, account negative\n\nDescription 7\nitems, and other forms of available \"cash\".\n\nEffective Date 01/01/1990\n\nExpiration Date\n\nWhat invoice items should be paid? (=\nName >\nPolicy Period -ms to those on the incoming payment's associated policy period. 41. Filters determine\nPositive sms to those with amounts greater than zero. eligible invoice\nBilled or Due sms to those that are billed or due. ite\nInvoice items to those on the incoming payment's associated invoice. ems\nWhat order do you want to pay them in? LM\nPriority Name > Description > Move Priority ==§== 2. Eligible invoice\n1 Recapture Ci Pay invoice items with recapture charges first. =, Are\nlecapture Charges Pay invoice items with recapture charges first == items are paid in\n\n2 Placement Date Pay invoice items in order of their placement dates.\n\npriority order\n\n3 ChargePattern Pay invoice items according to charge pattern priority.",
+      "word_count": 181,
+      "avg_confidence": 86.53,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-12.png",
+      "slide_number": 12,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-13.png",
+      "slide_number": 13,
+      "text": "i Allocating money from unapplied Gi\n\nMa\nBusiness\nAnalyst\n\nWhat about applying money\n\nsitting in an unapplied fund?\n\\ Does BillingCenter use the\nyj payment allocation plan?\n\nBilling Clerk : z\n\nGood question! Let’s\ntake a look.",
+      "word_count": 37,
+      "avg_confidence": 83.55,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-14.png",
+      "slide_number": 14,
+      "text": "i Allocating excess money in Default Unapplied Gi\n\nAccount-level billing example\n\nLe\npayment allocation plan filters [al planned\n2 5 Policy Period\ns roe Positive @ WS : eee\n> Billed or Due @ '® billed\nInvoice [x]\n\ntape moral\n\nLAR]\n& <j [\"**} bd |\nNew at A,\n\neit\n\nDefault batch process ri\nUnapplied\n\neu",
+      "word_count": 56,
+      "avg_confidence": 67.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-15.png",
+      "slide_number": 15,
+      "text": "i Allocating excess money in designated unapplied [5\n\nPolicy-level billing example\n\npayment allocation plan filters\n\n© Policy Period €\n=o\n\n|e) Positve @\ne Billed or Due @\n\n2\n:\n\nZe ery\nbatch process\nDesignated\n\nUnapplied\n({HOO1)\n\nUelpom\n\noe:\n—— a tAN ,\nB",
+      "word_count": 44,
+      "avg_confidence": 70.05,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-16.png",
+      "slide_number": 16,
+      "text": "i Demonstration G\n\nPayment allocation plan\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.81,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-17.png",
+      "slide_number": 17,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-18.png",
+      "slide_number": 18,
+      "text": "Question\n\n,- — Complete each sentence by filling in the blanks with\n\nY the correct word or phrase.\n7 1. Aninvoice item that has not been fully paid is\n\nEvery has a single payment allocation plan.\n\n3. Given these payment allocation steps:\n\nstep 2 is relevant only if\nThe Spread Excess Even priority applies to invoice items only.\n\nAbatch process will never allocate money in an unapplied fund to invoice\nitems that are\n\n6. The Policy Period and Invoice filters apply when a batch process is\nallocating a but not when it is allocating\n\nsoe eeceseesesesesees",
+      "word_count": 96,
+      "avg_confidence": 92.0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-19.png",
+      "slide_number": 19,
+      "text": "Answer\n\n¢\n74,\n\n2.\n\nSoe ee ee eee Soo eSeoe Ss\n\n_- — Complete each sentence by filling in the blanks with\nthe correct word or phrase.\n\nAn invoice item that has not been fully paid is (e) unsettled.\nEvery (g) account has a single payment allocation plan.\n\nGiven these payment allocation steps:\n\nstep 2 is relevant only if (f) there is not enough money to fully pay eligible items.\n\nThe Spread Excess Even priority applies to (c) planned invoice items only.\n\nAbatch process will never allocate money in an unapplied fund to invoice\nitems that are (d) from a policy with a different unapplied fund.\n\nThe Policy Period and Invoice filters apply when a batch process is\nallocating a (b) payment but not when it is allocating (a) money from an unapplied fund.",
+      "word_count": 134,
+      "avg_confidence": 90.61,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-20.png",
+      "slide_number": 20,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-21.png",
+      "slide_number": 21,
+      "text": "i Overriding the payment allocation plan Gi\n\nMarcus\n\nBusiness\nAnalyst Is there anyway to override\n° the behavior of the\n\npayment allocation plan?\n\nZhang \\j\nBilling Clerk\n\nThere is! Let’s revisit the\nDirect Bill Payment screen.",
+      "word_count": 36,
+      "avg_confidence": 89.92,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-22.png",
+      "slide_number": 22,
+      "text": "i Payment allocation plan controls default allocation [5\n\nAccount tab> Actions > New Payment > New Direct Bill Payment\nDirect Bill Payment { conc]\n\n‘Account Payment Details\n\nThis Payment\nSelected Account # Demoores Paymentinstrument | Cash - Available 202.00\nSelected Account Nome Lauren Ramirez Description Distributed $202.00\nPayment In Suspense\nReceived Date 10/18/2018 Collateral\n_— - Glam gy Payment —\nUnapplied Fund  ( Hoor-LRaminez . | allocation\nUse Unapped Fund plan\n‘Amount [$0.00] 7\nPreview Distribution H\n.\n.\n.\nGroup By Invoice > | Aggregate | Byltem > | Sort By InvoilR Date | GoTo# Go J ctear\n\nPolicyPeriod® Invoice Invoice BillDate Invoice DueDate Owner Payer\nInvoice # 1000000021 (Billed); Due On: 10/26/2018; Unpaid Balance: $202.00\nInstallment Premium HO01-LRAMIREZ-1 1000000021 10/18/2018 (Billed) 10/28/2018 DEMoo18s DEMoo18s\n\nOne-Time Invoice Fee 41000000021 _ 10/18/2018 (Billed) _ 10/28/2018 DEMoo18s _DEMoo18s\n‘Subtotal\n\n$202.00 ‘$202.00",
+      "word_count": 140,
+      "avg_confidence": 67.17,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-23.png",
+      "slide_number": 23,
+      "text": "i Overriding the default allocation Gi\n\n¢ Override Distribution toolbar lets you:\n* Specify which items to include in the allocation\n¢ Specify the amount to allocate to each target (invoice item, invoice, policy period)\n« Add invoice items from other policies\n\nes Override Amount\nOverride Distribution toolbar fields\n\nPreview Distribution\n\nDistribution | Suspense tems | Collateral item\n\nSelect emawhere the | Payer +) 1 [Account ~) Include Only| Upto amount ied\nSEEEy| invoice + ET oy me ERT tree bare ~ OE\n\ntm Posy Peiodt_ | vsca #7] lrvote BDate] 7] voles Dus Date | Ovmer [Payers [Amount | Unpal Amount, | Anoent To ply | Overt Aroust\nInveee# 100000021 (Billed; Due On 10/28/2016; Unpaid Balance: $202.00\n\nInstaliment-Premium HOOLLRAMIREZ 1090000021. 188/2010(Biled) s07zy2018 _DEMOoIB5 _DEMoOLES $200.00 200.00 $200.00 fs\n\nOne-Tme-lnvoiee Fee 1000000021 20/8/2018 (Bed) 3070/2018 Moos DeMooues $2.00 $2.00 s200]s\n\nSubtotal $202.00 $202.00 $202.00",
+      "word_count": 144,
+      "avg_confidence": 63.24,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-24.png",
+      "slide_number": 24,
+      "text": "i Demonstration G\n\nOverride payment allocation\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
+      "word_count": 36,
+      "avg_confidence": 93.97,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-25.png",
+      "slide_number": 25,
+      "text": "",
+      "word_count": 0,
+      "avg_confidence": 0,
+      "image_size": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "filename": "slide-26.png",
+      "slide_number": 26,
+      "text": "Question\n\n_— — Assuming an account with policy-level billing and cash separation, can\nY you add an invoice item from Policy A to a direct bill payment allocation\nfor Policy B?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "word_count": 39,
+      "avg_confidence": 83.18,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-27.png",
+      "slide_number": 27,
+      "text": "Answer Gi\n\n_— — Assuming an account with policy-level billing and cash separation, can\n7 you add an invoice item from Policy A to a direct bill payment allocation\nfor Policy B?\n\nYes. Using the Direct Bill Payment screen:\n1.Click Override Distribution.\n2.Click Add Items.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "word_count": 52,
+      "avg_confidence": 87.43,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-28.png",
+      "slide_number": 28,
+      "text": "Lesson\nobjectives ¢ Explain how a payment allocation plan filters\nreview and prioritizes payment allocation\n\n* Describe how payments are automatically\nallocated\n\n* Override the default allocation when making a\nsingle payment",
+      "word_count": 32,
+      "avg_confidence": 89.84,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    },
+    {
+      "filename": "slide-29.png",
+      "slide_number": 29,
+      "text": "i Student exercise\n\nExplore payment allocation plans",
+      "word_count": 7,
+      "avg_confidence": 88.62,
+      "image_size": {
+        "width": 1280,
+        "height": 669
+      }
+    }
+  ]
+}
